@@ -35,22 +35,25 @@ Calculate the relative number of correct/incorrect classifications and the follo
 
 
 \itemize{
- \item \code{TPR} True positive rate (Sensisivity, Recall)
- \item \code{FPR} False positve rate (Fall-out)
- \item \code{FNR} False negative rate (Miss rate)
- \item \code{TNR} True negative rate (Specifity)
- \item \code{PPV} Positive predictive value (Precision)
- \item \code{FOR} False omission rate
- \item \code{LRP} Positive likelihood ratio (LR+)
- \item \code{FDR} False discovery rate
- \item \code{NPV} Negative predictive value
- \item \code{ACC} Accuracy
- \item \code{LRM} Nevative likelihood ratio (LR-)
- \item \code{DOR} Diagnostic odds ratio)
+ \item \code{tpr} True positive rate (Sensisivity, Recall)
+ \item \code{fpr} False positve rate (Fall-out)
+ \item \code{fnr} False negative rate (Miss rate)
+ \item \code{tnr} True negative rate (Specifity)
+ \item \code{ppv} Positive predictive value (Precision)
+ \item \code{for} False omission rate
+ \item \code{lrp} Positive likelihood ratio (LR+)
+ \item \code{fdr} False discovery rate
+ \item \code{npv} Negative predictive value
+ \item \code{acc} Accuracy
+ \item \code{lrm} Nevative likelihood ratio (LR-)
+ \item \code{dor} Diagnostic odds ratio)
 }
 
 For details on the used measures see \code{\link{measures}} and also
 \url{https://en.wikipedia.org/wiki/Receiver_operating_characteristic}.
+
+The element for the false omission rate in the resulting object is not called \code{for} but
+\code{fomr} since \code{for} should never be used as a variable name in an object.
 }
 \section{Methods (by generic)}{
 \itemize{

@@ -14,14 +14,14 @@ test_that("calculateROCMeasures", {
   positive = pred$pred$task.desc$positive
   negative = pred$pred$task.desc$negative
   
-  expect_equal(r$measures$TPR, measureTPR(truth, response, positive))
-  expect_equal(r$measures$FNR, measureFNR(truth, response, negative, positive))
-  expect_equal(r$measures$FDR, measureFDR(truth, response, positive))
-  expect_equal(r$measures$TNR, measureTNR(truth, response, negative))
-  expect_equal(r$measures$PPV, measurePPV(truth, response, positive))
-  expect_equal(r$measures$FDR, 1 - measurePPV(truth, response, positive))
-  expect_equal(r$measures$NPV, measureNPV(truth, response, negative))
-  expect_equal(r$measures$FOR, 1 - measureNPV(truth, response, negative))
-  expect_equal(r$measures$ACC, measureACC(truth, response))
+  expect_equal(r$measures$tpr, measureTPR(truth, response, positive))
+  expect_equal(r$measures$fnr, measureFNR(truth, response, negative, positive))
+  expect_equal(r$measures$fdr, measureFDR(truth, response, positive))
+  expect_equal(r$measures$tnr, measureTNR(truth, response, negative))
+  expect_equal(r$measures$ppv, measurePPV(truth, response, positive))
+  expect_equal(r$measures$fdr, 1 - measurePPV(truth, response, positive))
+  expect_equal(r$measures$npv, measureNPV(truth, response, negative))
+  expect_equal(r$measures$fomr, 1 - measureNPV(truth, response, negative))
+  expect_equal(r$measures$acc, measureACC(truth, response))
 })
 

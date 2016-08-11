@@ -5,22 +5,25 @@
 #' 
 #' 
 #' \itemize{
-#'  \item \code{TPR} True positive rate (Sensisivity, Recall)
-#'  \item \code{FPR} False positve rate (Fall-out)
-#'  \item \code{FNR} False negative rate (Miss rate)
-#'  \item \code{TNR} True negative rate (Specifity)
-#'  \item \code{PPV} Positive predictive value (Precision)
-#'  \item \code{FOR} False omission rate
-#'  \item \code{LRP} Positive likelihood ratio (LR+)
-#'  \item \code{FDR} False discovery rate
-#'  \item \code{NPV} Negative predictive value
-#'  \item \code{ACC} Accuracy
-#'  \item \code{LRM} Nevative likelihood ratio (LR-)
-#'  \item \code{DOR} Diagnostic odds ratio)
+#'  \item \code{tpr} True positive rate (Sensisivity, Recall)
+#'  \item \code{fpr} False positve rate (Fall-out)
+#'  \item \code{fnr} False negative rate (Miss rate)
+#'  \item \code{tnr} True negative rate (Specifity)
+#'  \item \code{ppv} Positive predictive value (Precision)
+#'  \item \code{for} False omission rate
+#'  \item \code{lrp} Positive likelihood ratio (LR+)
+#'  \item \code{fdr} False discovery rate
+#'  \item \code{npv} Negative predictive value
+#'  \item \code{acc} Accuracy
+#'  \item \code{lrm} Nevative likelihood ratio (LR-)
+#'  \item \code{dor} Diagnostic odds ratio)
 #' }
 #' 
 #' For details on the used measures see \code{\link{measures}} and also
 #' \url{https://en.wikipedia.org/wiki/Receiver_operating_characteristic}.
+#' 
+#' The element for the false omission rate in the resulting object is not called \code{for} but
+#' \code{fomr} since \code{for} should never be used as a variable name in an object.
 #'
 #' @template arg_pred
 #' 
@@ -60,18 +63,18 @@ calculateROCMeasures = function(pred) {
   
   makeS3Obj("ROCMeasures",
     confusion.matrix = tab,
-    measures = list(TPR = r.tpr,
-      FNR = r.fnr,
-      FPR = r.fpr,
-      TNR = r.tnr,
-      PPV = r.ppv,
-      FDR = r.fdr,
-      NPV = r.npv,
-      FOR = r.for,
-      ACC = r.acc,
-      LRP = r.lr.plus,
-      LRM = r.lr.minus,
-      DOR = r.dor))
+    measures = list(tpr = r.tpr,
+      fnr = r.fnr,
+      fpr = r.fpr,
+      tnr = r.tnr,
+      ppv = r.ppv,
+      fdr = r.fdr,
+      npv = r.npv,
+      fomr = r.for,
+      acc = r.acc,
+      lrp = r.lr.plus,
+      lrm = r.lr.minus,
+      dor = r.dor))
 }
 
 #' @describeIn calculateROCMeasures
@@ -94,28 +97,31 @@ print.ROCMeasures = function(x, abbreviations = TRUE, digits = 2, ...) {
   x$measures = mapply(function(m, v) paste0(m, ": ", round(v, digits)), names(x$measures), x$measures)
   
   res = cbind(round(x$confusion.matrix, digits = digits), 
-    c(x$measures[["TPR"]], x$measures[["FPR"]]), 
-    c(x$measures[["FNR"]], x$measures[["TNR"]]))
+    c(x$measures[["tpr"]], x$measures[["fpr"]]), 
+    c(x$measures[["fnr"]], x$measures[["tnr"]]))
   res = rbind(res, 
-    c(x$measures[["PPV"]], x$measures[["FOR"]], x$measures[["LRP"]], x$measures[["ACC"]]),
-    c(x$measures[["FDR"]], x$measures[["NPV"]], x$measures[["LRM"]], x$measures[["DOR"]]))
+    c(x$measures[["ppv"]], x$measures[["fomr"]], x$measures[["lrp"]], x$measures[["acc"]]),
+    c(x$measures[["fdr"]], x$measures[["npv"]], x$measures[["lrm"]], x$measures[["dor"]]))
+  
+  #since we should not use "for" as a variable name in a list we replace it in the printer 
+  res[3, 2] = stri_replace_all_fixed(res[3, 2], "fomr", "for")
   
   names(dimnames(res)) = c("true", "predicted")
   print(noquote(res))
   if (abbreviations) {
     cat("\n\nAbbreviations:\n")
-    cat("TPR - True positive rate (Sensisivity, Recall)\n")
-    cat("FPR - False positve rate (Fall-out)\n")
-    cat("FNR - False negative rate (Miss rate)\n")
-    cat("TNR - True negative rate (Specifity)\n")
-    cat("PPV - Positive predictive value (Precision)\n")
-    cat("FOR - False omission rate\n")
-    cat("LRP - Positive likelihood ratio (LR+)\n")
-    cat("FDR - False discovery rate")
-    cat("NPV - Negative predictive value")
-    cat("ACC - Accuracy\n")
-    cat("LRM - Nevative likelihood ratio (LR-)\n")
-    cat("DOR - Diagnostic odds ratio)\n")
+    cat("tpr - True positive rate (Sensisivity, Recall)\n")
+    cat("fpr - False positve rate (Fall-out)\n")
+    cat("fnr - False negative rate (Miss rate)\n")
+    cat("tnr - True negative rate (Specifity)\n")
+    cat("ppv - Positive predictive value (Precision)\n")
+    cat("for - False omission rate\n")
+    cat("lrp - Positive likelihood ratio (LR+)\n")
+    cat("fdr - False discovery rate")
+    cat("npv - Negative predictive value")
+    cat("acc - Accuracy\n")
+    cat("lrm - Negative likelihood ratio (LR-)\n")
+    cat("dor - Diagnostic odds ratio)\n")
   }
 }
 
