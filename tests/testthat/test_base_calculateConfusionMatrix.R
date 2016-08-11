@@ -1,6 +1,6 @@
-context("getConfMatrix")
+context("calculateConfusionMatrix")
 
-test_that("getConfMatrix", {
+test_that("calculateConfusionMatrix", {
   
   test.confMatrix = function(p) {
     lvls = getTaskClassLevels(p$task.desc)
@@ -8,7 +8,7 @@ test_that("getConfMatrix", {
     l = length(lvls)
     
     #test absolute
-    cm = getConfMatrix(p, relative = FALSE)
+    cm = calculateConfusionMatrix(p, relative = FALSE)
     expect_true(is.matrix(cm$result) && nrow(cm$result) ==  l + 1 && ncol(cm$result) == l + 1)
     expect_set_equal(cm$result[1:l, l + 1], cm$result[l + 1, 1:l])
     #test absolute number of errors
@@ -17,7 +17,7 @@ test_that("getConfMatrix", {
     expect_true(sum(unlist(d)) == cm$result[l + 1,l + 1])
     
     #test absolute with sums 
-    cm = getConfMatrix(p, sums = TRUE)
+    cm = calculateConfusionMatrix(p, sums = TRUE)
     expect_true(is.matrix(cm$result) && nrow(cm$result) ==  l + 2 && ncol(cm$result) == l + 2)
     expect_set_equal(cm$result[1:l, l + 1], cm$result[l + 1, 1:l])
     #test absolute number of errors
@@ -26,7 +26,7 @@ test_that("getConfMatrix", {
     expect_true(sum(unlist(d)) == cm$result[l + 1,l + 1])
     
     #test relative
-    cm = getConfMatrix(p, relative = TRUE)
+    cm = calculateConfusionMatrix(p, relative = TRUE)
     
     #sums have to be 1 or 0 (if no observation in that group)
     expect_true(all(rowSums(cm$relative.row[, 1:l]) == 1 |
@@ -55,6 +55,6 @@ test_that("getConfMatrix", {
   lrn = makeLearner("classif.lda", config = list(on.learner.error = "quiet"))
   task = makeClassifTask(data = data, target = "Species")
   r = holdout(lrn, task, measures = ber)
-  expect_error(getConfMatrix(r$pred), "FailureModel")
+  expect_error(calculateConfusionMatrix(r$pred), "FailureModel")
   
 })

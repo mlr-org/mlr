@@ -2,77 +2,38 @@
 % Please edit documentation in R/getConfMatrix.R
 \name{getConfMatrix}
 \alias{getConfMatrix}
-\alias{print.ConfMatrix}
 \title{Confusion matrix.}
 \usage{
-getConfMatrix(pred, relative = FALSE, sums = FALSE)
-
-\method{print}{ConfMatrix}(x, both = TRUE, digits = 2, ...)
+getConfMatrix(pred, relative = FALSE)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
 Prediction object.}
 
 \item{relative}{[\code{logical(1)}]\cr
-If \code{TRUE} two additional matricies are calculated. One is normalized by rows and one by
-columns.}
-
-\item{sums}{{\code{logical(1)}}\cr
-If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
-of absolute values.}
-
-\item{x}{[\code{confMatrix}]\cr
-Result of \code{getConfMatrix}.}
-
-\item{both}{[\code{logical(1)}]\cr
-If \code{TRUE} both the absolute and relative confusion matricies are printed.}
-
-\item{digits}{[\code{numeric(1)}]\cr
-How many numbers after the decimal point should be printed, only relevant for relative confusion matricies.}
-
-\item{...}{[any]\cr
-Currently not used.}
+If \code{TRUE} rows are normalized to show relative frequencies.
+Default is \code{FALSE}.}
 }
 \value{
-[\code{\link{ConfMatrix}}]. A list containing one or three matricies 
-(one absolute and two relative) as well as additional information about the resampling.
+[\code{matrix}]. A confusion matrix.
 }
 \description{
-Calculates the confusion matrix for (possibly resampled) prediction.
-Rows indicate true classes, columns predicted classes.#The marginal elements count the number of 
-classification errors for the respective row or column, i.e., the number of errors
-when you condition on the corresponding true (rows) or predicted (columns) class. 
-The last element in the margin diagonal displays the total amount of errors.
+getConfMatrix is deprecated please use \code{\link{calculateConfusionMatrix}}.
 
-A list is returned that contains multiple matricies, if \code{relative = TRUE} we compute three
-matricies, one with absolute values and two with relative. The relative confusion matricies are 
-normalized based on rows and columns respectively. The \code{print} function returns the relative matricies in
-a compact way so that both row and column marginals can be seen in one matrix. For details see
-\code{\link{ConfMatrix}}.
+
+Calculates confusion matrix for (possibly resampled) prediction.
+Rows indicate true classes, columns predicted classes.
+
+The marginal elements count the number of classification
+errors for the respective row or column, i.e., the number of errors
+when you condition on the corresponding true (rows) or predicted
+(columns) class. The last element in the margin diagonal
+displays the total amount of errors.
 
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
 joined to a vector y. Then yhat is simply tabulated vs y, as if both were computed on
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.
-}
-\section{Methods (by generic)}{
-\itemize{
-\item \code{print}: 
-}}
-\examples{
-# get confusion matrix after simple manual prediction
-allinds = 1:150
-train = sample(allinds, 75)
-test = setdiff(allinds, train)
-mod = train("classif.lda", iris.task, subset = train)
-pred = predict(mod, iris.task, subset = test)
-print(getConfMatrix(pred))
-print(getConfMatrix(pred, sums = TRUE))
-print(getConfMatrix(pred, relative = TRUE))
-
-# now after cross-validation
-r = crossval("classif.lda", iris.task, iters = 2L)
-print(getConfMatrix(r$pred))
 }
 \seealso{
 \code{\link{predict.WrappedModel}}

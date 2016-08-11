@@ -322,7 +322,7 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
     if (anyMissing(pred$data$response))
       return(NA_real_)
     n = length(pred$task.desc$class.levels) + 1L
-    mean(getConfMatrix(pred, relative = TRUE)$relative.row[-n, n])
+    mean(calculateConfusionMatrix(pred, relative = TRUE)$relative.row[-n, n])
   }
 )
 
