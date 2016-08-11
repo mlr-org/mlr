@@ -100,7 +100,7 @@ print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")
   catf("Task: %s", x$task$task.desc$id)
   catf("Measures: %s", collapse(extractSubList(x$measures, "name")))
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Plot learning curve data using ggplot2.
 #'

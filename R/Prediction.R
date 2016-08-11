@@ -189,6 +189,6 @@ print.Prediction = function(x, ...) {
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
   catf("time: %.2f", x$time)
   if (!is.na(x$error)) catf("errors: %s", x$error)
-  print(head(as.data.frame(x)))
+  printHead(as.data.frame(x))
 }
 

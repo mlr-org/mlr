@@ -90,7 +90,7 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Calculates feature filter values.
 #'
