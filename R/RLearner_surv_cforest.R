@@ -10,15 +10,12 @@ makeRLearner.surv.cforest = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632),
       makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = "quad"),
-      makeLogicalLearnerParam(id = "pvalue", default = TRUE),
       makeDiscreteLearnerParam(id = "testtype", default = "Univariate",
         values = c("Bonferroni", "MonteCarlo", "Univariate", "Teststatistic")),
       makeNumericLearnerParam(id = "mincriterion", lower = 0, default = 0),
-      makeNumericLearnerParam(id = "minprob", lower = 0, default = 0.01),
       makeIntegerLearnerParam(id = "minsplit", lower = 1L, default = 20L),
       makeIntegerLearnerParam(id = "minbucket", lower = 1L, default = 7L),
       makeLogicalLearnerParam(id = "stump", default = FALSE),
-      makeLogicalLearnerParam(id = "randomsplits", default = TRUE),
       makeIntegerLearnerParam(id = "nresample", lower = 1L, default = 9999L),
       makeIntegerLearnerParam(id = "maxsurrogate", lower = 0L, default = 0L),
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
@@ -34,8 +31,8 @@ makeRLearner.surv.cforest = function() {
 
 #' @export
 trainLearner.surv.cforest = function(.learner, .task, .subset,
-  .weights = NULL, ntree, mtry, replace, fraction, trace, pvalue, teststat,
-  testtype, mincriterion, minprob, minsplit, minbucket, stump, randomsplits,
+  .weights = NULL, ntree, mtry, replace, fraction, trace, teststat,
+  testtype, mincriterion, minsplit, minbucket, stump,
   nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
@@ -46,8 +43,8 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
   if (missing(replace)) replace = defaults$replace
   if (missing(fraction)) fraction = defaults$fraction
   ctrl = learnerArgsToControl(party::cforest_control, ntree, mtry, replace,
-    fraction, trace, pvalue, teststat, testtype, mincriterion, minprob,
-    minsplit, minbucket, stump, randomsplits, nresample, maxsurrogate,
+    fraction, trace, teststat, testtype, mincriterion,
+    minsplit, minbucket, stump, nresample, maxsurrogate,
     maxdepth, savesplitstats)
   party::cforest(f, data = d, controls = ctrl, weights = .weights, ...)
 }

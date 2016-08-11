@@ -64,12 +64,51 @@ test_that("setting 'when' works for hyperpars", {
 
 test_that("fuzzy matching works for mistyped hyperpars", {
   expected = "classif.ksvm: couldn't find hyperparameter 'sigm'\nDid you mean one of these hyperparameters instead: sigma fit type"
+  warn.msg = "Setting parameter sigm without available description object!"
+  mlr.opts = getMlrOptions()
+
+  # test if config arg works properly in combination with show.info
+  cq = list(on.par.without.desc = "quiet")
+  cw = list(on.par.without.desc = "warn")
+  cs = list(on.par.without.desc = "stop")
+  # never print message when quiet, no matter hat show.info is
+  expect_silent(makeLearner("classif.ksvm", config = cq, sigm = 1, show.info = TRUE))
+  expect_silent(makeLearner("classif.ksvm", config = cq, sigm = 1, show.info = FALSE))
+  configureMlr(on.par.without.desc = "quiet")
+  expect_silent(makeLearner("classif.ksvm", sigm = 1, show.info = TRUE))
+  expect_silent(makeLearner("classif.ksvm", sigm = 1, show.info = FALSE))
+
+  # show.info on/off and warn -- need nested expectations here because we get 2 different kinds of messages
+  expect_message(expect_warning(makeLearner("classif.ksvm", config = cw, sigm = 1, show.info = TRUE),
+    warn.msg), expected)
+  expect_silent(expect_warning(makeLearner("classif.ksvm", config = cw, sigm = 1, show.info = FALSE),
+    warn.msg))
+  configureMlr(on.par.without.desc = "warn")
+  expect_message(expect_warning(makeLearner("classif.ksvm", sigm = 1, show.info = TRUE),
+    warn.msg), expected)
+  expect_silent(expect_warning(makeLearner("classif.ksvm", sigm = 1, show.info = FALSE),
+    warn.msg))
+
+  # show.info on/off and error
+  expect_message(expect_error(makeLearner("classif.ksvm", config = cs, sigm = 1, show.info = TRUE),
+    warn.msg), expected)
+  expect_silent(expect_error(makeLearner("classif.ksvm", config = cs, sigm = 1, show.info = FALSE),
+    warn.msg))
+  configureMlr(on.par.without.desc = "stop")
+  expect_message(expect_error(makeLearner("classif.ksvm", sigm = 1, show.info = TRUE),
+    warn.msg), expected)
+  expect_silent(expect_error(makeLearner("classif.ksvm", sigm = 1, show.info = FALSE),
+    warn.msg))
+
+  # docu says: for warn and quiet parameter is passed, check if this is true
   lrn = makeLearner("classif.ksvm",
     config = list(on.par.without.desc = "quiet"))
-  expect_message(setHyperPars(lrn, sigm = 1), expected)
+  expect_equal(getHyperPars(setHyperPars(lrn, sigm = 1))$sigm, 1)
   lrn = makeLearner("classif.ksvm",
     config = list(on.par.without.desc = "warn"))
-  expect_warning(setHyperPars(lrn, sigm = 1), "Setting parameter sigm without")
+  expect_warning(expect_equal(getHyperPars(setHyperPars(lrn, sigm = 1))$sigm, 1))
+
+  do.call(configureMlr, mlr.opts)
 })
 
 test_that("options are respected", {

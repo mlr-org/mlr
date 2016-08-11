@@ -11,6 +11,7 @@
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
+#' @template arg_showinfo
 #' @param use.mlr.defaults [\code{list}]\cr
 #'   Use the mlr.defaults for the given learner.
 #'   This is recommended as they guarantee that the learner works and the underlying function is called with all necessary arguments.
@@ -30,26 +31,27 @@
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE, update = TRUE) {
+setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
   args = list(...)
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
   assertFlag(use.mlr.defaults)
   assertFlag(update)
-  setHyperPars2(learner, insert(par.vals, args), use.mlr.defaults = use.mlr.defaults, update = update)
+  setHyperPars2(learner, insert(par.vals, args), use.mlr.defaults = use.mlr.defaults, update = update, show.info = show.info)
 }
 
 #' Only exported for internal use.
 #' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
+#' @template arg_showinfo
 #' @export
-setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE) {
+setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
   UseMethod("setHyperPars2")
 }
 
 #' @export
-setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE) {
+setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
 
   #use existing par.vals
   if (update) {
@@ -71,12 +73,14 @@ setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, upd
     pd = pars[[n]]
     if (is.null(pd)) {
       # since we couldn't find the par let's look for 3 most similar
-      parnames = names(pars)
-      indices = order(adist(n, parnames))[1:3]
-      possibles = na.omit(parnames[indices])
-      if (length(possibles) > 0) {
-        messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s",
-          learner$id, n, stri_flatten(possibles, collapse = " "))
+      if (show.info & on.par.without.desc != "quiet") {
+        parnames = names(pars)
+        indices = head(order(adist(n, parnames)), 3L)
+        possibles = parnames[indices]
+        if (length(possibles) > 0L) {
+          messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s",
+            learner$id, n, stri_flatten(possibles, collapse = " "))
+        }
       }
 
       # no description: stop warn or quiet

@@ -96,8 +96,8 @@ makeFilter(
   name = "mrmr",
   desc = "Minimum redundancy, maximum relevance filter",
   pkg  = "mRMRe",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.tasks = c("regr", "surv"),
+  supported.features = c("numerics", "ordered"),
   fun = function(task, nselect, ...) {
     if (inherits(task, "SurvTask")) {
       data = getTaskData(task, target.extra = TRUE, recode.target = "rcens")
@@ -109,8 +109,6 @@ makeFilter(
     }
 
     # some required conversions
-    ind = vlapply(data, is.factor)
-    data[ind] = lapply(data[ind], as.ordered)
     ind = which(vlapply(data, is.integer))
     data[ind] = lapply(data[ind], as.double)
     data = mRMRe::mRMR.data(data = data)
@@ -136,12 +134,12 @@ makeFilter(
   }
 )
 
-makeFilter(
-  name = "rf.importance",
+rf.importance = makeFilter(
+  name = "randomForestSRC.rfsrc",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, ...) {
     im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE, forest = FALSE, importance = "permute", ...)$importance
     if (inherits(task, "ClassifTask")) {
@@ -154,26 +152,38 @@ makeFilter(
     setNames(y, ns)
   }
 )
+.FilterRegister[["rf.importance"]] = rf.importance
+.FilterRegister[["rf.importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
+.FilterRegister[["rf.importance"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC.rfsrc'")
+  .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
+}
 
-makeFilter(
-  name = "rf.min.depth",
+rf.min.depth = makeFilter(
+  name = "randomForestSRC.var.select",
   desc = "Minimal depth of random forest fitted in package 'randomForestSRC'",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, method = "md", ...) {
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = "md", verbose = FALSE, ...)$md.obj$order
+      method = method, verbose = FALSE, ...)$md.obj$order
     setNames(-im[, 1L], rownames(im))
   }
 )
+.FilterRegister[["rf.min.depth"]] = rf.min.depth
+.FilterRegister[["rf.min.depth"]]$desc = "Minimal depth of random forest fitted in package 'randomForestSRC. (DEPRECATED)"
+.FilterRegister[["rf.min.depth"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC.var.select'")
+  .FilterRegister[["randomForestSRC.var.select"]]$fun(...)
+}
 
 makeFilter(
   name = "cforest.importance",
   desc = "Permutation importance of random forest fitted in package 'party'",
   pkg = "party",
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, mtry = 5L, ...) {
     args = list(...)
     # we need to set mtry, which is 5 by default in cforest, to p if p < mtry
@@ -192,6 +202,23 @@ makeFilter(
                                     cforest_args))
     im = do.call(party::varimp, c(list(obj = fit), varimp_args))
     im
+  }
+)
+
+makeFilter(
+  name = "randomForest.importance",
+  desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
+  pkg = "randomForest",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, method = "oob.accuracy", ...) {
+    assertChoice(method, choices = c("oob.accuracy", "node.impurity"))
+    type = if (method == "oob.accuracy") 1L else 2L
+    # no need to set importance = TRUE for node impurity (type = 2)
+    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task),
+      keep.forest = FALSE, importance = (type != 2L))
+    im = randomForest::importance(rf, type = type, ...)
+    setNames(im, rownames(im))
   }
 )
 
@@ -296,7 +323,7 @@ univariate = makeFilter(
   desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
   pkg  = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
     typ = getTaskType(task)
     if (is.null(perf.learner))
@@ -397,7 +424,7 @@ makeFilter(
   desc = "Aggregated difference between feature permuted and unpermuted predictions",
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
                  aggregation = mean, nperm = 1, replace = FALSE, nselect) {
     imp.learner = checkLearner(imp.learner)

@@ -17,7 +17,7 @@ test_that("filterFeatures", {
   feat.imp.new = generateFilterValuesData(binaryclass.task)
   expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "rf.importance"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC.rfsrc"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(getFilterValues(binaryclass.task, method = "anova.test"))
@@ -69,14 +69,14 @@ test_that("plotFilterValues", {
   #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
   ## plotFilterValuesGGVIS(fv)
 
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("anova.test", "rf.importance"))
+  fv2 = generateFilterValuesData(binaryclass.task, method = c("anova.test", "randomForestSRC.rfsrc"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
   ## plotFilterValuesGGVIS(fv2)
-  
+
   # facetting works:
   q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
   testFacetting(q, 2L)
@@ -86,12 +86,12 @@ test_that("plotFilterValues", {
 
 test_that("args are passed down to filter methods", { # we had an issue here, see #941
 
-  expect_error(generateFilterValuesData(binaryclass.task, method = c("mrmr","univariate.model.score"),
-    nselect = 3, perf.learner = "classif.lda"), "Please pass extra arguments")
+  expect_error(generateFilterValuesData(regr.num.task, method = c("mrmr","univariate.model.score"),
+    nselect = 3, perf.learner = "regr.lm"), "Please pass extra arguments")
 
   # check that we can pass down perf.learner to univariate.model.score, and get no error from mrmr call
-  f = generateFilterValuesData(iris.task, method = c("mrmr","univariate.model.score"),
-    nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "classif.lda")))
+  f = generateFilterValuesData(regr.num.task, method = c("mrmr","univariate.model.score"),
+    nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "regr.lm")))
 
   # create stupid dummy data and check that we can change the na.rm arg of filter "variance" in multiple ways
   d = iris; d[1L, 1L] = NA_real_
@@ -106,6 +106,12 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
   expect_false(is.na(f2$data$variance[1L]))
   expect_false(is.na(f3$data$variance[1L]))
   expect_false(is.na(f4$data$variance[1L]))
+})
+
+test_that("errors for unsupported task and feature types", {
+  expect_error(generateFilterValuesData(multiclass.task, method = c("mrmr", "anova.test", "linear.correlation")), "Filter(s) 'mrmr', 'linear.correlation' not compatible with task of type 'classif'", fixed = TRUE)
+  expect_error(generateFilterValuesData(regr.task, method = c("mrmr", "carscore")), "Filter(s) 'mrmr', 'carscore' not compatible with features of type 'factors', and 'factors' respectively", fixed = TRUE)
+  expect_error(generateFilterValuesData(regr.task, method = "carscore"), "Filter(s) 'carscore' not compatible with features of type 'factors' respectively", fixed = TRUE)
 })
 
 test_that("filter values are named and ordered correctly", { # we had an issue here, see #940

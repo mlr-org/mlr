@@ -4,7 +4,7 @@
 \alias{getFilterValues}
 \title{Calculates feature filter values.}
 \usage{
-getFilterValues(task, method = "rf.importance",
+getFilterValues(task, method = "randomForestSRC.rfsrc",
   nselect = getTaskNFeats(task), ...)
 }
 \arguments{
@@ -13,7 +13,7 @@ The task.}
 
 \item{method}{[\code{character(1)}]\cr
 Filter method, see above.
-Default is \dQuote{rf.importance}.}
+Default is \dQuote{randomForestSRC.rfsrc}.}
 
 \item{nselect}{[\code{integer(1)}]\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
