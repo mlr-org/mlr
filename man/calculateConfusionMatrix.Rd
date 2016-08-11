@@ -14,41 +14,42 @@ calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE)
 Prediction object.}
 
 \item{relative}{[\code{logical(1)}]\cr
-If \code{TRUE} two additional matricies are calculated. One is normalized by rows and one by
+If \code{TRUE} two additional matrices are calculated. One is normalized by rows and one by
 columns.}
 
 \item{sums}{{\code{logical(1)}}\cr
-If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
-of absolute values.}
+If \code{TRUE} add absolute number of observations in each group.}
 
-\item{x}{[\code{confMatrix}]\cr
-Result of \code{calculateConfusionMatrix}.}
+\item{x}{[\code{\link{ConfMatrix}}]\cr
+Object to print.}
 
 \item{both}{[\code{logical(1)}]\cr
-If \code{TRUE} both the absolute and relative confusion matricies are printed.}
+If \code{TRUE} both the absolute and relative confusion matrices are printed.}
 
-\item{digits}{[\code{numeric(1)}]\cr
-How many numbers after the decimal point should be printed, only relevant for relative confusion matricies.}
+\item{digits}{[\code{integer(1)}]\cr
+How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.}
 
 \item{...}{[any]\cr
 Currently not used.}
 }
 \value{
-[\code{\link{ConfMatrix}}]. A list containing one or three matricies 
-(one absolute and two relative) as well as additional information about the resampling.
+[\code{\link{ConfMatrix}}].
 }
 \description{
-Calculates the confusion matrix for (possibly resampled) prediction.
-Rows indicate true classes, columns predicted classes.#The marginal elements count the number of 
+Calculates the confusion matrix for a (possibly resampled) prediction.
+Rows indicate true classes, columns predicted classes. The marginal elements count the number of
 classification errors for the respective row or column, i.e., the number of errors
-when you condition on the corresponding true (rows) or predicted (columns) class. 
-The last element in the margin diagonal displays the total amount of errors.
+when you condition on the corresponding true (rows) or predicted (columns) class.
+The last bottom right element displays the total amount of errors.
 
-A list is returned that contains multiple matricies, if \code{relative = TRUE} we compute three
-matricies, one with absolute values and two with relative. The relative confusion matricies are 
-normalized based on rows and columns respectively. The \code{print} function returns the relative matricies in
-a compact way so that both row and column marginals can be seen in one matrix. For details see
-\code{\link{ConfMatrix}}.
+A list is returned that contains multiple matrices.
+If \code{relative = TRUE} we compute three matrices, one with absolute values and two with relative.
+The relative confusion matrices are normalized based on rows and columns respectively,
+if {FALSE} we only compute the absolute value matrix.
+
+The \code{print} function returns the relative matrices in
+a compact way so that both row and column marginals can be seen in one matrix.
+For details see \code{\link{ConfMatrix}}.
 
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
@@ -75,6 +76,10 @@ r = crossval("classif.lda", iris.task, iters = 2L)
 print(calculateConfusionMatrix(r$pred))
 }
 \seealso{
-\code{\link{predict.WrappedModel}}
+Other performance: \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}
 }
 

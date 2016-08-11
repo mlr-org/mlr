@@ -28,6 +28,7 @@
 #' @param sums {\code{logical(1)}}\cr
 #'   If \code{TRUE} add absolute number of observations in each group.
 #' @return [\code{\link{ConfMatrix}}].
+#' @family performance
 #' @export
 #' @examples
 #' # get confusion matrix after simple manual prediction
@@ -160,7 +161,7 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
   }
 }
 
-#' @title ConfMatrix
+#' @title Confusion matrix
 #'
 #' @description
 #' The result of \code{\link{calculateConfusionMatrix}}.
@@ -169,9 +170,7 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' \describe{
 #' \item{result [\code{matrix}]}{Confusion matrix of absolute values and marginals. Can also contain
 #'   row and column sums of observations.}
-#' \item{k [\code{integer(1)}]}{Number of classes.}
-#' \item{n [\code{integer(1)}]}{Number of observations.}
-#' \item{cls [\code{character}]}{Vector of class labels.}
+#' \item{task.desc [\code{\link{TaskDesc}}]}{Additional information about the used task.}
 #' \item{sums [\code{logical(1)}]}{Flag if marginal sums of observations are computed and should be printed.}
 #' \item{relative [\code{logical(1)}]}{Flag if the relative confusion matricies are calculated.}
 #' \item{relative.row [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by row.}
@@ -179,5 +178,4 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' \item{relative.error [\code{numeric(1)}]}{Relative error overall.}
 #' }
 #' @name ConfMatrix
-#' @rdname ConfMatrix
 NULL
