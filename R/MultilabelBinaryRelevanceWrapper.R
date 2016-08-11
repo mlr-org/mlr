@@ -56,6 +56,7 @@ predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .ne
   else
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
+}
 
 doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights) {
   setSlaveOptions()
