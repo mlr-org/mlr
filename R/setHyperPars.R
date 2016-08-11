@@ -4,14 +4,15 @@
 #' Takes the possiby defined mlr defsault of a learners and inserts/overwrites
 #' with the new settings.
 #'
-#' @inheritParams setHyperPars2
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
+#' @template arg_showinfo
 #' @param ... [any]\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
 #'   using the \code{par.vals} argument.
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
-#' @template arg_showinfo
 #' @param use.mlr.defaults [\code{list}]\cr
 #'   Use the mlr.defaults for the given learner.
 #'   This is recommended as they guarantee that the learner works and the underlying function is called with all necessary arguments.
@@ -19,6 +20,7 @@
 #' @param update
 #'   Whether to update the existing parameter values of the learner or to just give respect to the new ones.
 #'   Default is \code{TRUE} which means that the old parameter values will be kept as long as they are feasible.
+#' @template arg_showinfo
 #' @template ret_learner
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.
@@ -42,9 +44,8 @@ setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE
 }
 
 #' Only exported for internal use.
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @template arg_showinfo
+#' @internal
+#' @inheritParams setHyperPars
 #' @export
 setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
   UseMethod("setHyperPars2")
