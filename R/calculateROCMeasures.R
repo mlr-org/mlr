@@ -1,4 +1,4 @@
-#' @title Calculate the reciever operator measures
+#' @title Calculate receiver operator measures.
 #' 
 #' @description 
 #' Calculate the relative number of correct/incorrect classifications and the following evaluation measures:
@@ -19,19 +19,19 @@
 #'  \item \code{DOR} Diagnostic odds ratio)
 #' }
 #' 
-#' For details on the used measures see \code{\link{measures}}.
-#' 
+#' For details on the used measures see \code{\link{measures}} and also
+#' \url{https://en.wikipedia.org/wiki/Receiver_operating_characteristic}.
+#'
 #' @template arg_pred
 #' 
-#' @return [\code{ROCMeasures}] A list containing the above mentioned measures.
+#' @return [\code{ROCMeasures}]. A list containing the above mentioned measures.
 #' @export
 #' @examples 
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, sonar.task)
 #' pred = predict(fit, task = sonar.task)
 #' calculateROCMeasures(pred)
-#' 
-
+#'
 calculateROCMeasures = function(pred) {
   
   checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE, binary = TRUE)
@@ -71,19 +71,17 @@ calculateROCMeasures = function(pred) {
       DOR = r.dor))
 }
 
-#' @export
 #' @describeIn calculateROCMeasures
 #' 
-#' @param x \code{ROCMeasures}\cr
-#'  A list of ROC measures created by \code{\link{calculateROCMeasures}}.
-#' @param abbreviations \code{logical(1)}\cr
-#'  If \code{TRUE} a short paragraph with explainations of the used measures is printed additionally.
-#' @param digits \code{numeric(1)}\cr
-#'  Number of digits the measures are rounded to.
+#' @param x [\code{\link{ROCMeasures}}]\cr
+#'   Created by \code{\link{calculateROCMeasures}}.
+#' @param abbreviations [\code{logical(1)}]\cr
+#'   If \code{TRUE} a short paragraph with explainations of the used measures is printed additionally.
+#' @param digits [\code{integer(1)}]\cr
+#'   Number of digits the measures are rounded to.
 #' @param ... \code{[any]}\cr
 #'  Currently not used.
-#'  
-
+#' @export
 print.ROCMeasures = function(x, abbreviations = TRUE, digits = 2, ...) {
   
   checkFlag(abbreviations)
