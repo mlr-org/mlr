@@ -46,6 +46,9 @@
 generateLearningCurveData = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info"))  {
 
+  # if single learner is passed, wrap it in list
+  if (inherits(learners, "Learner"))
+    learners = list(learners)
   learners = lapply(learners, checkLearner)
   assertClass(task, "Task")
   assertNumeric(percs, lower = 0L, upper = 1L, min.len = 2L, any.missing = FALSE)
@@ -97,7 +100,7 @@ print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")
   catf("Task: %s", x$task$task.desc$id)
   catf("Measures: %s", collapse(extractSubList(x$measures, "name")))
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Plot learning curve data using ggplot2.
 #'

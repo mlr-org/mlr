@@ -96,8 +96,8 @@ makeFilter(
   name = "mrmr",
   desc = "Minimum redundancy, maximum relevance filter",
   pkg  = "mRMRe",
-  supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.tasks = c("regr", "surv"),
+  supported.features = c("numerics", "ordered"),
   fun = function(task, nselect, ...) {
     if (inherits(task, "SurvTask")) {
       data = getTaskData(task, target.extra = TRUE, recode.target = "rcens")
@@ -109,8 +109,6 @@ makeFilter(
     }
 
     # some required conversions
-    ind = vlapply(data, is.factor)
-    data[ind] = lapply(data[ind], as.ordered)
     ind = which(vlapply(data, is.integer))
     data[ind] = lapply(data[ind], as.double)
     data = mRMRe::mRMR.data(data = data)
@@ -185,7 +183,7 @@ makeFilter(
   desc = "Permutation importance of random forest fitted in package 'party'",
   pkg = "party",
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, mtry = 5L, ...) {
     args = list(...)
     # we need to set mtry, which is 5 by default in cforest, to p if p < mtry
@@ -325,7 +323,7 @@ univariate = makeFilter(
   desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
   pkg  = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
     typ = getTaskType(task)
     if (is.null(perf.learner))
@@ -426,7 +424,7 @@ makeFilter(
   desc = "Aggregated difference between feature permuted and unpermuted predictions",
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
                  aggregation = mean, nperm = 1, replace = FALSE, nselect) {
     imp.learner = checkLearner(imp.learner)

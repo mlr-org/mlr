@@ -30,12 +30,12 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
+    ParamHelpers (>= 1.8),
+Imports:
     BBmisc (>= 1.10),
     ggplot2,
-    ParamHelpers (>= 1.8),
     stats,
-    stringi
-Imports:
+    stringi,
     checkmate (>= 1.8.1),
     data.table,
     ggvis,
@@ -58,7 +58,7 @@ Suggests:
     class,
     clue,
     cluster,
-    clusterSim,
+    clusterSim (>= 0.44-5),
     clValid,
     cmaes,
     CoxBoost,
@@ -112,6 +112,7 @@ Suggests:
     pls,
     PMCMR (>= 4.1),
     pROC (>= 1.8),
+    quickcheck,
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.5.0),
