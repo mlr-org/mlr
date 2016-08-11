@@ -27,12 +27,12 @@ makeRLearner.classif.bst = function() {
       makeDiscreteLearnerParam(id = "Learner", default = "ls", values = c("ls", "sm", "tree"))
       # FIXME bst() seems to have no default for Learner. But if "ls" is correct, it is not needed in par.vals
     ),
-    mlr.defaults = list(Learner = "ls", maxdepth = 1L, xval = 0L),
+    mlr.defaults = list(xval = 0L),
     # FIXME par.vals default for maxdepth is the same as the default of LearnerParam and the function
     properties = c("numerics", "twoclass"),
     name = "Gradient Boosting",
     short.name = "bst",
-    note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.'
+    note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `xval = 0`.'
   )
 }
 
@@ -43,7 +43,12 @@ trainLearner.classif.bst = function(.learner, .task, .subset, .weights = NULL, m
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "-1+1")
   ctrl = learnerArgsToControl(bst::bst_control, mstop, nu, twinboost, f.init, xselect.init, center, trace, numsample, df)
   control.tree = learnerArgsToControl(list,  minsplit, minbucket, cp, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval)
-  bst::bst(x = d$data, y = d$target, ctrl = ctrl, control.tree = control.tree, learner = Learner, ...)
+  if (missing(Learner)) {
+    bst::bst(x = d$data, y = d$target, ctrl = ctrl, control.tree = control.tree, ...)  
+  } else {
+    bst::bst(x = d$data, y = d$target, ctrl = ctrl, control.tree = control.tree, learner = Learner, ...)
+  }
+
 }
 
 #' @export

@@ -26,7 +26,6 @@ makeRLearner.multilabel.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest"
   )

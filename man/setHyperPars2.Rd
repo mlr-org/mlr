@@ -4,19 +4,11 @@
 \alias{setHyperPars2}
 \title{Only exported for internal use.}
 \usage{
-setHyperPars2(learner, par.vals, reset = "no")
+setHyperPars2(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}}]\cr
 The learner.}
-
-\item{par.vals}{[\code{list}]\cr
-List of named (hyper)parameter settings.}
-
-\item{reset}{[\code{character}]\cr
-Can take values \code{soft} for setting the hyper parameters while keeping the \code{mlr.defaults} as far as they are feasible. 
-\code{no} for updating the old parameter values with new ones without dropping old ones. A feasibility error then might occur later.
-\code{hard} for completely dropping old parameter values and just unsing the new ones.}
 }
 \description{
 Only exported for internal use.

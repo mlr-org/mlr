@@ -14,7 +14,7 @@ makeRLearner.regr.GPfit = function(){
       makeIntegerLearnerParam(id = "matern_nu_k", default = 0L, lower = 0L, requires = quote(type == "matern")), 
       makeNumericLearnerParam(id = "power", default = 1.95, lower = 1.0, upper = 2.0, requires = quote(type == "exponential"))
     ),
-    mlr.defaults = list(scale = TRUE, type = "exponential",  matern_nu_k = 0L, power = 1.95),
+    mlr.defaults = list(scale = TRUE, type = "exponential", power = 1.95),
     properties = c("numerics","se"),
     name = "Gaussian Process",
     short.name = "GPfit",
@@ -38,7 +38,13 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
   }
-  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k+0.5 ), ...)
+  if (type == "matern") {
+    matern_nu_k = matern_nu_k %??% 0
+    corr = list(type = type, nu = matern_nu_k+0.5)
+  } else {
+    corr = list(type = type, power = power)
+  }
+  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = corr, ...)
   res = attachTrainingInfo(res, mlist)
   return(res)
 }

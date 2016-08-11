@@ -1,4 +1,8 @@
-#' Set the hyperparameters of a learner object.
+#' @title Set the hyperparameters of a learner object.
+#'
+#' @description
+#' Takes the possiby defined mlr defsault of a learners and inserts/overwrites
+#' with the new settings.
 #'
 #' @inheritParams setHyperPars2
 #' @param ... [any]\cr
@@ -7,6 +11,13 @@
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
+#' @param use.mlr.defaults [\code{list}]\cr
+#'   Use the mlr.defaults for the given learner.
+#'   This is recommended as they guarantee that the learner works and the underlying function is called with all necessary arguments.
+#'   Default is \code{TRUE} which means that the mlr.defaults will be kept as long as they are feasible.
+#' @param update
+#'   Whether to update the existing parameter values of the learner or to just give respect to the new ones.
+#'   Default is \code{TRUE} which means that the old parameter values will be kept as long as they are feasible.
 #' @template ret_learner
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.
@@ -19,41 +30,37 @@
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals = list(), reset = "no") {
+setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE, update = TRUE) {
   args = list(...)
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
-  assertChoice(reset, c("no", "soft", "hard"))
-  setHyperPars2(learner, insert(par.vals, args), reset = reset)
+  assertFlag(use.mlr.defaults)
+  assertFlag(update)
+  setHyperPars2(learner, insert(par.vals, args), use.mlr.defaults = use.mlr.defaults, update = update)
 }
 
 #' Only exported for internal use.
 #' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
-#' @param par.vals [\code{list}]\cr
-#'   List of named (hyper)parameter settings.
-#' @param reset [\code{character}]\cr
-#'   Can take values \code{soft} for setting the hyper parameters while keeping the \code{mlr.defaults} as far as they are feasible. 
-#'   \code{no} for updating the old parameter values with new ones without dropping old ones. A feasibility error then might occur later.
-#'   \code{hard} for completely dropping old parameter values and just unsing the new ones.
 #' @export
-setHyperPars2 = function(learner, par.vals, reset = "no") {
+setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE) {
   UseMethod("setHyperPars2")
 }
 
 #' @export
-setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
-    
-  #load mlr-default pars of learner
-  if (reset == "soft") {
-    par.vals = updateParVals(learner$par.set, learner$mlr.defaults, par.vals)  
-  } else if (reset == "no") {
-    par.vals = insert(learner$par.vals, par.vals)
-  } else if (reset == "hard") {
-    par.vals = par.vals
+setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE) {
+
+  #use existing par.vals
+  if (update) {
+    par.vals = updateParVals(getParamSet(learner), learner$par.vals, par.vals)
   }
-  
+  #load mlr-default pars of learner
+  if (use.mlr.defaults) {
+    mlr.defaults = coalesce(learner$mlr.defaults, list()) # Wrappers can have NULL here
+    par.vals = updateParVals(getParamSet(learner), mlr.defaults, par.vals)
+  }
+
   ns = names(par.vals)
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
@@ -68,14 +75,14 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
       indices = order(adist(n, parnames))[1:3]
       possibles = na.omit(parnames[indices])
       if (length(possibles) > 0) {
-        messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s", 
+        messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s",
           learner$id, n, stri_flatten(possibles, collapse = " "))
       }
-      
+
       # no description: stop warn or quiet
-      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!", 
+      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!",
         learner$id, n)
-      
+
       if (on.par.without.desc == "stop") {
         stop(msg)
       } else if (on.par.without.desc == "warn") {

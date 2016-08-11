@@ -48,7 +48,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   test = df[-inds,]
 
   lrn = makeLearner(t.name)
-  lrn = setHyperPars(lrn, par.vals = parset, reset = "hard")
+  lrn = setHyperPars(lrn, par.vals = parset, use.mlr.defaults = FALSE, update = FALSE)
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data = df)
@@ -62,7 +62,8 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     task = makeMultilabelTask(data = df, target = target)
   else
     stop("Should not happen!")
-  m = try(train(lrn, task, subset = inds))
+  #m = try(train(lrn, task, subset = inds))
+  m = train(lrn, task, subset = inds)
 
   if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
@@ -95,7 +96,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-  
+
   if(length(target) == 1) {
     task = makeClassifTask(data = df, target = target)
   } else {

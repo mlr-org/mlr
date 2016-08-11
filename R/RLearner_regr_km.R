@@ -9,7 +9,7 @@ makeRLearner.regr.km = function() {
       makeNumericVectorLearnerParam(id = "coef.trend"),
       makeNumericVectorLearnerParam(id = "coef.cov"),
       makeNumericVectorLearnerParam(id = "coef.var"),
-      makeNumericLearnerParam(id = "nugget"),
+      makeNumericLearnerParam(id = "nugget", default = NULL, special.vals = list(NULL)),
       makeLogicalLearnerParam(id = "nugget.estim", default = FALSE),
       makeNumericVectorLearnerParam(id = "noise.var"),
       makeDiscreteLearnerParam(id = "estim.method", default = "MLE",
