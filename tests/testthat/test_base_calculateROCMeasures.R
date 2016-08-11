@@ -7,7 +7,7 @@ test_that("calculateROCMeasures", {
   
   expect_list(r$measures, types = "double", any.missing = FALSE, len = 12)
   expect_matrix(r$confusion.matrix, mode = "double", any.missing = FALSE, nrows = 2, ncols = 2)
-  expect_true(all(rowSums(r$confusionMatrix) == 1))
+  expect_true(all(rowSums(r$confusion.matrix) == 1))
   
   response = getPredictionResponse(pred$pred)
   truth = getPredictionTruth(pred$pred)
