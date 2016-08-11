@@ -90,11 +90,10 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
     bw.size = if (bw.replace) 1 else 0.632
   .task = subsetTask(.task, subset = .subset)
   n = getTaskSize(.task)
-  m = round(n * bw.size)
-  if (bw.feats < 1L)
-    k = max(round(bw.feats * getTaskNFeats(.task)), 1)
-  else
-    k = NULL
+  # number of observations to sample
+  m = round(n * bw.size) 
+  # number of features to sample
+  k = max(round(bw.feats * getTaskNFeats(.task)), 1)
 
   args = list("n" = n, "m" = m, "k" = k, "bw.replace" = bw.replace, "bw.feats" = bw.feats,
               "task" = .task, "learner" = .learner, "weights" = .weights)
