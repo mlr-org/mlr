@@ -322,6 +322,39 @@ test_that("check measure calculations", {
   expect_equal(logloss.test, logloss$fun(pred = pred.classif))
   expect_equal(logloss.test, as.numeric(logloss.perf))
 
+  #ssr
+  pred.probs = getPredictionProbabilities(pred.classif)
+  ssr.test = mean(vnapply(seq_row(pred.probs), function(i) {pred.probs[i, tar.classif[i]]})/sqrt(rowSums(pred.probs^2)))
+  ssr.perf = performance(pred.classif, measures = ssr, model = mod.classif)
+  expect_equal(ssr.test, ssr$fun(pred = pred.classif))
+  expect_equal(ssr.test, as.numeric(ssr.perf))
+  expect_equal(measureSSR(p1, y1), 0.5 * (0.1/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p1, y2), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p2, y1), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.2/sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p2[1,,drop=FALSE], y2[1]), 0.1/sqrt(0.1^2 + 0.9^2))
+  expect_equal(measureSSR(p2[1,,drop=FALSE], y1[1]), 0.9/sqrt(0.1^2 + 0.9^2))
+  #qsr
+  qsr.test = 1-mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
+  qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
+  expect_equal(qsr.test, qsr$fun(pred = pred.classif))
+  expect_equal(qsr.test, as.numeric(qsr.perf))
+  expect_equal(measureQSR(p1, y1), 1 - 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
+  expect_equal(measureQSR(p1, y2), 1 - 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
+  expect_equal(measureQSR(p2, y1), 1 - 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
+  expect_equal(measureQSR(p2[1,,drop=FALSE], y2[1]), 1-(1-0.1)^2+(0-0.9)^2)
+  expect_equal(measureQSR(p2[1,,drop=FALSE], y1[1]), 1-(1-0.9)^2+(0-0.1)^2)
+  #lsr
+  lsr.test = mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
+  lsr.perf = performance(pred.classif, measures = lsr, model = mod.classif)
+  expect_equal(lsr.test, lsr$fun(pred = pred.classif))
+  expect_equal(lsr.test, as.numeric(lsr.perf))
+  expect_equal(measureLSR(p1, y1), mean(log(c(0.1, 0.8))))
+  expect_equal(measureLSR(p1, y2), mean(log(c(0.9, 0.8))))
+  expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
+  expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
+  expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
+
+ 
   #test binaryclass measures
 
   #brier
