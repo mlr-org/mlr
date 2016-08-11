@@ -117,11 +117,11 @@ print.ROCMeasures = function(x, abbreviations = TRUE, digits = 2, ...) {
     cat("ppv - Positive predictive value (Precision)\n")
     cat("for - False omission rate\n")
     cat("lrp - Positive likelihood ratio (LR+)\n")
-    cat("fdr - False discovery rate")
-    cat("npv - Negative predictive value")
+    cat("fdr - False discovery rate\n")
+    cat("npv - Negative predictive value\n")
     cat("acc - Accuracy\n")
     cat("lrm - Negative likelihood ratio (LR-)\n")
-    cat("dor - Diagnostic odds ratio)\n")
+    cat("dor - Diagnostic odds ratio\n")
   }
 }
 
