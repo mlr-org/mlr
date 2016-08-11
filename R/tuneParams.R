@@ -26,7 +26,6 @@
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
-#' @template arg_dict
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
 #' @note If you would like to include results from the training data set, make
@@ -77,15 +76,15 @@
 #' print(head(as.data.frame(res$opt.path)))
 #' }
 #' @seealso \code{\link{generateHyperParsEffectData}}
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), dict = NULL) {
+tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
-    learner = evaluateLearner(learner = learner, task = task, dict = dict)
+    learner = evaluateLearner(learner = learner, task = task)
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
   if (ParamHelpers::hasExpression(par.set))
-    par.set = evaluateParset(par.set = par.set, task = task, dict = dict)
+    par.set = evaluateParset(par.set = par.set, task = task)
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")

@@ -11,7 +11,6 @@
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 #'   Weights from the task will be overwritten.
-#' @template arg_dict
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
@@ -29,7 +28,7 @@
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset, weights = NULL, dict = NULL) {
+train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
   if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
     learner = evaluateLearner(learner = learner, task = task)

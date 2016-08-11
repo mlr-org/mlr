@@ -34,15 +34,13 @@ test_that("expressions in learners", {
 
 test_that("expressions in parameter sets", {
   ps1 = makeParamSet(
-    makeNumericParam("C", lower = expression(a), upper = expression(b), trafo = function(x) 2^x),
-    makeDiscreteParam("sigma", values = 2^c(-1, 1)),
-    makeDiscreteParam("kernel", values = expression(list(e, f)))
+    makeNumericParam("C", lower = expression(k), upper = expression(n), trafo = function(x) 2^x),
+    makeDiscreteParam("sigma", values = expression(list(p, k)))
   )
-  ps2 = evaluateParset(par.set = ps1, task = binaryclass.task,
-    dict = list(a = -2L, b = 3L, e = "rbfdot", f = "laplacedot"))
+  ps2 = evaluateParset(par.set = ps1, task = binaryclass.task)
   
   ## expressions within parameter sets
-  expect_equal(ps2$pars$C$lower, -2L)
-  expect_equal(ps2$pars$C$upper, 3L)
-  expect_equal(ps2$pars$kernel$values, list(rbfdot = "rbfdot", laplacedot = "laplacedot"))
+  expect_equal(ps2$pars$C$lower, 2L)
+  expect_equal(ps2$pars$C$upper, 208L)
+  expect_equal(ps2$pars$sigma$values, list("60" = 60, "2" = 2))
 })
