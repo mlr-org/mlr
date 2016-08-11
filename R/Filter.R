@@ -92,6 +92,13 @@ print.Filter = function(x, ...) {
   catf("Supported features: %s", collapse(x$supported.features))
 }
 
+#' Minimum redundancy, maximum relevance filter \dQuote{mrmr} computes the
+#' mutual information between the target and each individual feature minus the
+#' average mutual information of previously selected features and this feature
+#' using the \pkg{mRMRe} package.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "mrmr",
   desc = "Minimum redundancy, maximum relevance filter",
@@ -176,10 +183,16 @@ rf.importance = makeFilter(
   .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
 }
 
+#' Filter \dQuote{randomForestSRC.var.select} uses the minimal depth variable
+#' selection proposed by Ishwaran et al. (2010) (\code{method = "md"}) or a
+#' variable hunting approach (\code{method = "vh"} or \code{method = "vh.vimp"}).
+#' The minimal depth measure is the default.
 #'
+#' @rdname makeFilter
+#' @name makeFilter
 rf.min.depth = makeFilter(
   name = "randomForestSRC.var.select",
-  desc = "Minimal depth of random forest fitted in package 'randomForestSRC'",
+  desc = "Minimal depth of / variable hunting via method var.select on random forests fitted in package 'randomForestSRC'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
@@ -196,6 +209,13 @@ rf.min.depth = makeFilter(
   .FilterRegister[["randomForestSRC.var.select"]]$fun(...)
 }
 
+#' Permutation importance of random forests fitted in package \pkg{party}.
+#' The implementation follows the principle of mean decrese in accuracy used
+#' by the \pkg{randomForest} package (see description of \dQuote{randomForest.importance})
+#' filter.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "cforest.importance",
   desc = "Permutation importance of random forest fitted in package 'party'",
