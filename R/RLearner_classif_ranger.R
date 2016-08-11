@@ -45,6 +45,6 @@ predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-getOOBPreds.classif.ranger = function(.learner, .model) {
+getOOBPredsLearner.classif.ranger = function(.learner, .model) {
   .model$learner.model$predictions
 }

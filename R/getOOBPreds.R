@@ -18,7 +18,7 @@
 #' {Only for classification.}
 #' }
 #'
-#' @template arg_train
+#' @template arg_wrappedmod
 #' @template arg_task
 #' @return [\code{\link{Prediction}}].
 #' @export
@@ -50,5 +50,5 @@ getOOBPreds = function(object, task) {
 }
 
 getOOBPredsLearner = function(.learner, .model) {
-  UseMethod("getOOBPreds")
+  UseMethod("getOOBPredsLearner")
 }

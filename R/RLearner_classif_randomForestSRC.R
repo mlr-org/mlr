@@ -65,7 +65,7 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
 }
 
 #' @export
-getOOBPreds.classif.randomForestSRC = function(.learner, .model) {
+getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
   preds = .model$learner.model$predicted.oob
   if (.learner$predict.type == "response") {
     factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
