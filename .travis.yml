@@ -44,6 +44,7 @@ before_install:
 
 before_script:
   - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+  - R --no-save <<< 'library("devtools"); document()'
 
 after_success:
   - git checkout master
@@ -66,7 +67,6 @@ notifications:
     recipients:
       - bernd_bischl@gmx.net
       - michellang@gmail.com
-      - travis.mlr@jakob-r.de
       - larsko@cs.ubc.ca
       - schiffner@math.uni-duesseldorf.de
       - erich.studerus@gmail.com
