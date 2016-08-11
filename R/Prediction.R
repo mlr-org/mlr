@@ -28,6 +28,9 @@
 NULL
 
 #' @keywords internal
+#' @rdname Prediction
+#' @description
+#' Internal, do not use!
 #' @export
 makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
   UseMethod("makePrediction")
