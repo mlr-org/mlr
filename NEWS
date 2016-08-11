@@ -28,7 +28,8 @@ mlr_2.10:
 
 - learners - general
 -- classif.ada: fixed some param problem with rpart.control params
--- classif.cforest: removed parameters "minprob", "pvalue", "randomsplits"
+-- classif.cforest, regr.cforest, surv.cforest:
+   removed parameters "minprob", "pvalue", "randomsplits"
    as these are set internally and cannot be changed by the user
 -- regr.GPfit: some more params for correlation kernel
 -- classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing)
