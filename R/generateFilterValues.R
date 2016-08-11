@@ -114,7 +114,7 @@ print.FilterValues = function(x, ...) {
 #' @family filter
 #' @export
 getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ...) {
-  warning("getFilterValues is deprecated. Use generateFilterValuesData.")
+  .Deprecated("generateFilterValuesData")
   assertChoice(method, choices = ls(.FilterRegister))
   out = generateFilterValuesData(task, method, nselect, ...)
   colnames(out$data)[3] = "val"
