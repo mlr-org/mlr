@@ -3,7 +3,7 @@
 \name{calculateROCMeasures}
 \alias{calculateROCMeasures}
 \alias{print.ROCMeasures}
-\title{Calculate the reciever operator measures}
+\title{Calculate receiver operator measures.}
 \usage{
 calculateROCMeasures(pred)
 
@@ -13,20 +13,22 @@ calculateROCMeasures(pred)
 \item{pred}{[\code{\link{Prediction}}]\cr
 Prediction object.}
 
-\item{x}{\code{ROCMeasures}\cr
-A list of ROC measures created by \code{\link{calculateROCMeasures}}.}
+\item{x}{[\code{\link{ROCMeasures}}]\cr
+Created by \code{\link{calculateROCMeasures}}.}
 
-\item{abbreviations}{\code{logical(1)}\cr
+\item{abbreviations}{[\code{logical(1)}]\cr
 If \code{TRUE} a short paragraph with explainations of the used measures is printed additionally.}
 
-\item{digits}{\code{numeric(1)}\cr
+\item{digits}{[\code{integer(1)}]\cr
 Number of digits the measures are rounded to.}
 
 \item{...}{\code{[any]}\cr
 Currently not used.}
 }
 \value{
-[\code{ROCMeasures}] A list containing the above mentioned measures.
+[\code{ROCMeasures}]. 
+   A list containing two elements \code{confusion.matrix} which is 
+   the 2 times 2 confusion matrix of relative frequencies and \code{measures}, a list of the above mentioned measures.
 }
 \description{
 Calculate the relative number of correct/incorrect classifications and the following evaluation measures:
@@ -47,7 +49,8 @@ Calculate the relative number of correct/incorrect classifications and the follo
  \item \code{DOR} Diagnostic odds ratio)
 }
 
-For details on the used measures see \code{\link{measures}}.
+For details on the used measures see \code{\link{measures}} and also
+\url{https://en.wikipedia.org/wiki/Receiver_operating_characteristic}.
 }
 \section{Methods (by generic)}{
 \itemize{

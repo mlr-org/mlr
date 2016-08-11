@@ -24,8 +24,11 @@
 #'
 #' @template arg_pred
 #' 
-#' @return [\code{ROCMeasures}]. A list containing the above mentioned measures.
+#' @return [\code{ROCMeasures}]. 
+#'    A list containing two elements \code{confusion.matrix} which is 
+#'    the 2 times 2 confusion matrix of relative frequencies and \code{measures}, a list of the above mentioned measures. 
 #' @export
+#' @family roc performance
 #' @examples 
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, sonar.task)
@@ -56,7 +59,7 @@ calculateROCMeasures = function(pred) {
   r.dor = r.lr.plus / r.lr.minus
   
   makeS3Obj("ROCMeasures",
-    confusionMatrix = tab,
+    confusion.matrix = tab,
     measures = list(TPR = r.tpr,
       FNR = r.fnr,
       FPR = r.fpr,
@@ -90,7 +93,7 @@ print.ROCMeasures = function(x, abbreviations = TRUE, digits = 2, ...) {
   #format measures
   x$measures = mapply(function(m, v) paste0(m, ": ", round(v, digits)), names(x$measures), x$measures)
   
-  res = cbind(round(x$confusionMatrix, digits = digits), 
+  res = cbind(round(x$confusion.matrix, digits = digits), 
     c(x$measures[["TPR"]], x$measures[["FPR"]]), 
     c(x$measures[["FNR"]], x$measures[["TNR"]]))
   res = rbind(res, 
