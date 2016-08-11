@@ -126,8 +126,8 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 }
 #' Plot filter values using ggplot2.
 #'
-#' @family plot
 #' @family filter
+#' @family generate_plot_data
 #'
 #' @param fvalues [\code{\link{FilterValues}}]\cr
 #'   Filter values.
