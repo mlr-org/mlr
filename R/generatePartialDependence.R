@@ -250,7 +250,7 @@ generatePartialDependenceData = function(obj, input, features,
       else
         doIndividualPartialDependence(out, td, nrow(data), rng, target, x, centerpred)
     })
-    out = ldply(out)
+    out = setDF(rbindlist(out, fill = TRUE))
   } else {
     if (derivative) {
       args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
