@@ -225,12 +225,16 @@ generatePartialDependenceData = function(obj, input, features,
   }  else
     target = "Risk"
 
+  parallelLibrary("mlr", master = FALSE, level = "mlr.partialPredictions", show.info = FALSE)
+  exportMlrOptions(level = "mlr.partialPredictions")
+
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
       if (derivative) {
-        args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual,
-                    bounds = bounds, ...)
-        out = parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
+        args = c(list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual,
+                      bounds = bounds), list(...))
+        out = parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args,
+                          level = "mlr.partialPredictions")
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
         centerpred = NULL

@@ -98,8 +98,83 @@ test_that("parallel partial dependence", {
     expect_true(nrow(pd$data) == 2L)
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore")
-    doit("mpi")
+    doit("multicore", "mlr.partialPredictions")
+    doit("mpi", "mlr.partialPredictions")
   }
-  doit("socket")
+  doit("socket", "mlr.partialPredictions")
+})
+
+test_that("parallel ensembles", {
+  doit = function(mode, level) {
+    on.exit(parallelStop())
+    parallelStart(mode = mode, cpus = 2L, show.info = FALSE)
+
+    ## bagging wrapper
+    lrn = makeBaggingWrapper(makeLearner("regr.rpart"), bw.iters = 2L)
+    fit = train(lrn, regr.task)
+    models = getLearnerModel(fit, more.unwrap = TRUE)
+    expect_equal(length(models), 2L)
+    expect_equal(class(models[[1]]), "rpart")
+    p = predict(fit, regr.task)
+
+    ## multiclass wrapper
+    lrn = makeMulticlassWrapper(makeLearner("classif.rpart"))
+    fit = train(lrn, multiclass.task)
+    models = getLearnerModel(fit)
+    expect_equal(length(models), length(getTaskClassLevels(multiclass.task)))
+    levs = do.call("rbind", extractSubList(models, "factor.levels"))
+    expect_equal(unique(levs[, 1]), "-1")
+    expect_equal(unique(levs[, 2]), "1")
+    p = predict(fit, multiclass.task)
+
+    ## overbagging wrapper
+    lrn = makeOverBaggingWrapper(makeLearner("classif.rpart"), 2L)
+    fit = train(lrn, binaryclass.task)
+    models = getLearnerModel(fit)
+    expect_equal(length(models), 2L)
+    p = predict(fit, binaryclass.task) ## calls predictHomogeneousEnsemble
+
+    ## costsensregrwrapper
+    lrn = makeCostSensRegrWrapper(makeLearner("regr.rpart"))
+    fit = train(lrn, costsens.task)
+    models = getLearnerModel(fit)
+    expect_equal(length(models), ncol(getTaskCosts(costsens.task)))
+    p = predict(fit, costsens.task)
+
+    ## MultilabelBinaryRelevanceWrapper
+    lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
+    lrn = setPredictType(lrn, "prob")
+    fit = train(lrn, multilabel.task)
+    p = predict(fit, multilabel.task)
+    
+    ## CostSensWeightedPairsWrapper
+    
+    ## StackedLearner
+    base.lrns = list(makeLearner("regr.ksvm"), makeLearner("regr.rpart"))
+    super.lrn = makeLearner("regr.rpart")
+    lrn = makeStackedLearner(base.lrns, method = "average", predict.type = "response")
+    fit = train(lrn, regr.task)
+    p = predict(fit, regr.task)
+
+    lrn = makeStackedLearner(base.lrns, method = "stack.nocv", super.learner = super.lrn)
+    fit = train(lrn, regr.task)
+    p = predict(fit, regr.task)
+
+    lrn = makeStackedLearner(base.learners = base.lrns, method = "stack.cv", super.learner = super.lrn)
+    fit = train(lrn, regr.task)
+    p = predict(fit, regr.task)
+
+    lrn = makeStackedLearner(base.learners = base.lrns, method = "compress")
+    fit = train(lrn, regr.task)
+    p = predict(fit, regr.task)
+
+    lrn = makeStackedLearner(base.learners = base.lrns, method = "hill.climb", predict.type = "response")
+    fit = train(lrn, regr.task)
+    p = predict(fit, regr.task)
+  }
+  if (Sys.info()["sysname"] != "Windows") {
+    doit("multicore", "mlr.ensemble")
+    doit("mpi", "mlr.ensemble")
+  }
+  doit("socket", "mlr.ensemble")
 })
