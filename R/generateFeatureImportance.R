@@ -52,6 +52,8 @@
 #' \item{interaction}{[\code{logical(1)}]\cr
 #'   Whether or not the importance of the \code{features} was computed jointly rather than individually.
 #' }
+#' \item{measure}{[\code{Measure}]}\cr
+#'   The measure used to compute performance.
 #' \item{contrast}{[\code{function}]\cr
 #'   The function used to compare the performance of predictions.
 #' }
@@ -111,6 +113,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
     task.desc = getTaskDescription(task),
     interaction = interaction,
     learner = learner,
+    measure = measure,
     contrast = contrast,
     aggregation = aggregation,
     nmc = nmc,
@@ -207,8 +210,9 @@ print.FeatureImportance = function(x, ...) {
   catf("Task: %s", x$task.desc$id)
   catf("Interaction: %s", x$interaction)
   catf("Learner: %s", x$learner$id)
+  catf("Measure: %s", x$measure$id)
   catf("Contrast: %s", stri_paste(format(x$contrast), collapse = " "))
-  catf("Aggregation: %s", as.character(bquote(x$aggregation)))
+  catf("Aggregation: %s", stri_paste(format(x$aggregation), collapse = " "))
   catf("Replace: %s", x$replace)
   catf("Number of Monte-Carlo iterations: %s", x$nmc)
   catf("Local: %s", x$local)
