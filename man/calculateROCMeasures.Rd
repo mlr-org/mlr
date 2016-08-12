@@ -13,7 +13,7 @@ calculateROCMeasures(pred)
 \item{pred}{[\code{\link{Prediction}}]\cr
 Prediction object.}
 
-\item{x}{[\code{\link{ROCMeasures}}]\cr
+\item{x}{[\code{ROCMeasures}]\cr
 Created by \code{\link{calculateROCMeasures}}.}
 
 \item{abbreviations}{[\code{logical(1)}]\cr

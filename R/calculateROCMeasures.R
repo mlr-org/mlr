@@ -79,7 +79,7 @@ calculateROCMeasures = function(pred) {
 
 #' @describeIn calculateROCMeasures
 #' 
-#' @param x [\code{\link{ROCMeasures}}]\cr
+#' @param x [\code{ROCMeasures}]\cr
 #'   Created by \code{\link{calculateROCMeasures}}.
 #' @param abbreviations [\code{logical(1)}]\cr
 #'   If \code{TRUE} a short paragraph with explainations of the used measures is printed additionally.
