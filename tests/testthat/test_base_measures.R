@@ -341,8 +341,8 @@ test_that("check measure calculations", {
   expect_equal(measureQSR(p1, y1), 1 - 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
   expect_equal(measureQSR(p1, y2), 1 - 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
   expect_equal(measureQSR(p2, y1), 1 - 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
-  expect_equal(measureQSR(p2[1,,drop=FALSE], y2[1]), 1-(1-0.1)^2+(0-0.9)^2)
-  expect_equal(measureQSR(p2[1,,drop=FALSE], y1[1]), 1-(1-0.9)^2+(0-0.1)^2)
+  expect_equal(measureQSR(p2[1,,drop=FALSE], y2[1]), 1-(1-0.1)^2-(0-0.9)^2)
+  expect_equal(measureQSR(p2[1,,drop=FALSE], y1[1]), 1-(1-0.9)^2-(0-0.1)^2)
   #lsr
   lsr.test = mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
   lsr.perf = performance(pred.classif, measures = lsr, model = mod.classif)
