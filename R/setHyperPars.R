@@ -6,7 +6,6 @@
 #'
 #' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
-#' @template arg_showinfo
 #' @param ... [any]\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
 #'   using the \code{par.vals} argument.
@@ -44,7 +43,7 @@ setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE
 }
 
 #' Only exported for internal use.
-#' @internal
+#' @keywords internal
 #' @inheritParams setHyperPars
 #' @export
 setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
