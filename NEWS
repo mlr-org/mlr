@@ -21,6 +21,7 @@ mlr_2.10:
 - functions - new
 -- filter: randomForest.importance
 -- generateFeatureImportanceData: permutation-based featuree importance and local importance
+-- getFeatureImportanceLearner: extract learner-specific feature importance information
 
 - functions - removed
 
