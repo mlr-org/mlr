@@ -11,11 +11,11 @@
 #' \item{randomForest} \cr
 #' {Support for classification and regression.}
 #' \item{randomForestSRC} \cr
-#' {Regression, classification as well as for survival.}
+#' {Support for classification, regression and survival.}
 #' \item{ranger} \cr
 #' {Support for classification and regression.}
 #' \item{rFerns} \cr
-#' {Only for classification.}
+#' {Support for classification.}
 #' }
 #'
 #' @template arg_wrappedmod
