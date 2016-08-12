@@ -471,6 +471,7 @@ ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureSSR = function(probabilities, truth){
+  truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)
   mean(p/sqrt(rowSums(probabilities^2)))
 }
@@ -493,7 +494,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
 #' @format none
 measureQSR = function(probabilities, truth){
   #We add this line because binary tasks only output one probability column
-  if (nlevels(truth) == 2L) probabilities = cbind(probabilities,1 - probabilities)
+  if (is.null(dim(probabilities))) probabilities = cbind(probabilities,1 - probabilities)
   1 - mean(rowSums((probabilities - model.matrix( ~ as.factor(truth) + 0))^2))
 }
 
