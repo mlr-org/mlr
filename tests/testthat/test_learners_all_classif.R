@@ -52,6 +52,10 @@ test_that("learners work: classif ", {
   # classif with oobpreds
   lrns = mylist("classif", properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  # classif with oobpreds and probability
+  lrns = mylist("classif", properties = c("oobpreds", "prob"), create = TRUE)
+  lrns = lapply(lrns, setPredictType, predict.type = "prob")
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
 })
 
 

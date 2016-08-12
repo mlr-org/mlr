@@ -53,6 +53,11 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
 
 #' @export
 getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
-  unname(.model$learner.model$predicted)
+  if (.learner$predict.type == "response") {
+    unname(.model$learner.model$predicted)
+  } else {
+    mod$learner.model$votes
+  }
+  
 }
 

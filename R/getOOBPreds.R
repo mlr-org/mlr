@@ -3,8 +3,14 @@
 #' @description
 #' Learners like \code{randomForest} produce out of bag predictions. 
 #' \code{getOOBPreds} extracts this information from trained models and builds a 
-#' prediction object like provided by predict. 
-#' See \sQuote{Details} for a list of learners for which this is implemented.
+#' prediction object like provided by predict (with prediction time set to NA). 
+#' In the classification case: 
+#' What is stored exactly in the [\code{\link{Prediction}}] object depends
+#' on the \code{predict.type} setting of the \code{\link{Learner}}.
+#' If \code{predict.type} was set to \dQuote{prob} probability thresholding
+#' can be done calling the \code{\link{setThreshold}} function on the
+#' prediction object.
+#' See \sQuote{Details} for a list of learners for which this is implemented. 
 #'
 #' The following learners support out of bag predictions:
 #' \itemize{
@@ -45,6 +51,7 @@ getOOBPreds = function(object, task) {
   
   p = getOOBPredsLearner(object$learner, object)
   # time is set to NA, as "no" time is required for getting the out of bag predictions
+  checkPredictLearnerOutput(object$learner, object, p)
   makePrediction(task.desc = td, row.names = rownames(data), id = subset, truth = truth,
                  predict.type = object$learner$predict.type, predict.threshold = object$learner$predict.threshold, y = p, time = NA)
 }
