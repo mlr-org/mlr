@@ -25,6 +25,19 @@ Optional list of named (hyper)parameter settings. The arguments in
 \description{
 Set the hyperparameters of a learner object.
 }
+\details{
+Note that learners can also contain task dependent expressions, which can be based on any
+information provided by the task. For convenience, the most often used keys are available directly
+\itemize{
+  \item{\code{task}:} the task itself, allowing to access any of its elements
+  \item{\code{p}:} the number of features in the task
+  \item{\code{n}:} the number of observations in the task
+  \item{\code{type}:} the task type, i.e. "classif", "regr", "surv", "cluster", "costcens" or "multilabel"
+  \item{\code{k}:} the number of classes of the target variable (only available for classification tasks)
+}
+However, if one wants to access any other parts of the \code{task}, one can do so. For instance, one could
+access the "blocking" via \code{task$task.desc$has.blocking}.
+}
 \note{
 If a named (hyper)parameter can't be found for the given learner, the 3
 closest (hyper)parameter names will be output in case the user mistyped.
@@ -32,9 +45,11 @@ closest (hyper)parameter names will be output in case the user mistyped.
 \examples{
 cl1 = makeLearner("classif.ksvm", sigma = 1)
 cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
+cl3 = setHyperPars(cl2, C = expression(round(n / p)))
 print(cl1)
 # note the now set and altered hyperparameters:
 print(cl2)
+print(cl3)
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},

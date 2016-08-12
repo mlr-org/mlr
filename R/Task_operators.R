@@ -466,5 +466,6 @@ makeTaskDictionary = function(task) {
   dict$type = getTaskType(task)
   if (dict$type == "classif")
     dict$k = length(getTaskClassLevels(task))
+  # dict$keys = setdiff(c(names(task$task.desc), names(task), "data", names(task$env$data)), names(dict))
   return(dict)
 }

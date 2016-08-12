@@ -27,16 +27,30 @@ Dependent parameters with a \code{requires} field must use \code{quote} and not
 }
 \description{
 Updates learners and/or parameter sets by evaluating their expressions
-based on a specific task.
+based on a specific task. An overview of the possible expressions can be found in the details.
+}
+\details{
+The expressions can be based on any information provided by the task. For convenience,
+the most often used keys are available directly
+\itemize{
+  \item{\code{task}:} the task itself, allowing to access any of its elements
+  \item{\code{p}:} the number of features in the task
+  \item{\code{n}:} the number of observations in the task
+  \item{\code{type}:} the task type, i.e. "classif", "regr", "surv", "cluster", "costcens" or "multilabel"
+  \item{\code{k}:} the number of classes of the target variable (only available for classification tasks)
+}
+However, if one wants to access any other parts of the \code{task}, one can do so. For instance, one could
+access the "blocking" via \code{task$task.desc$has.blocking}.
 }
 \examples{
 ## (1) evaluation of a learner's hyperparameters
 task = makeClassifTask(data = iris, target = "Species")
-lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))
+lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p),
+  minbucket = expression(3L + 4L * task$task.desc$has.blocking))
 lrn2 = evaluateLearner(learner = lrn1, task = task)
 
-lrn1$par.vals$minsplit
-lrn2$par.vals$minsplit
+lrn1$par.vals
+lrn2$par.vals
 
 ## (2) evaluation of a learner's entire parameter set
 task = makeClassifTask(data = iris, target = "Species")
