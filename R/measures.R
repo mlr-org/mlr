@@ -495,6 +495,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
 measureQSR = function(probabilities, truth){
   #We add this line because binary tasks only output one probability column
   if (is.null(dim(probabilities))) probabilities = cbind(probabilities,1 - probabilities)
+  truth = factor(truth, levels = colnames(probabilities))
   1 - mean(rowSums((probabilities - model.matrix( ~ as.factor(truth) + 0))^2))
 }
 
