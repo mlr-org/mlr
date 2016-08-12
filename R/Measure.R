@@ -141,8 +141,8 @@ getDefaultMeasure = function(x) {
     x$task.desc$type
   else if (inherits(x, "Learner"))
     x$type
-  else if (!inherits(try(checkLearner(x), silent = TRUE), "try-error"))
-    checkLearner(x)$type
+  else if (x %in% listLearners()$class)
+    stri_split_fixed(x, ".", simplify = TRUE)[1]
   else
     x
   switch(type,
