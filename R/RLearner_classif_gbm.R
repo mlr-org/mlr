@@ -15,7 +15,7 @@ makeRLearner.classif.gbm = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights", "featimp"),
     par.vals = list(keep.data = FALSE),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
@@ -68,4 +68,10 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(factor(cns[ind], levels = cns))
     }
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.gbm = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  gbm::relative.influence(mod, mod$n.trees, ...)
 }

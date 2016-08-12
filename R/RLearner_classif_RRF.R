@@ -29,7 +29,7 @@ makeRLearner.classif.RRF = function() {
       makeUntypedLearnerParam(id = "strata"),
       makeIntegerVectorLearnerParam(id = "sampsize", lower = 0)
     ),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
     note = ""
@@ -37,15 +37,30 @@ makeRLearner.classif.RRF = function() {
 }
 
 #' @export
-trainLearner.classif.RRF <- function(.learner, .task, .subset, .weights, ...) {
+trainLearner.classif.RRF = function(.learner, .task, .subset, .weights, ...) {
   args = list(...)
   RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset), 
            keep.forest= TRUE, ...)
 }
 
 #' @export
-predictLearner.classif.RRF <- function(.learner, .model, .newdata, ...) {
+predictLearner.classif.RRF = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   p = predict(object = .model$learner.model, newdata = .newdata, type = type, ...)
   return(p)
+}
+
+#' @export
+getFeatureImportanceLearner.classif.RRF = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  ctrl = list(...)
+  if (is.null(ctrl$type)) {
+    ctrl$type = 2L
+  } else if (ctrl$type == 1L) {
+    has.fiv = .learner$par.vals$importance
+    if (is.null(has.fiv) || has.fiv != TRUE)
+      stop("You need to train the learner with parameter 'importance' set to TRUE")
+  }
+  
+  RRF::importance(mod, ctrl$type)[,1]
 }
