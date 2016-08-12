@@ -147,10 +147,7 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_,
   if (resamp) id.vars = c(id.vars, "iter")
   if ("learner" %in% colnames(obj$data)) id.vars = c(id.vars, "learner")
 
-  data = reshape2::melt(obj$data,
-              measure.vars = mnames,
-              variable.name = "measure", value.name = "performance",
-              id.vars = id.vars)
+  data = setDF(melt(as.data.table(obj$data), measure.vars = mnames, variable.name = "measure", value.name = "performance", id.vars = id.vars))
   if (!is.null(data$learner))
     nlearn = length(unique(data$learner))
   else
@@ -242,10 +239,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   if (resamp) id.vars = c(id.vars, "iter")
   if ("learner" %in% colnames(obj$data)) id.vars = c(id.vars, "learner")
 
-  data = reshape2::melt(obj$data,
-              measure.vars = mnames,
-              variable.name = "measure", value.name = "performance",
-              id.vars = id.vars)
+  data = setDF(data.table(melt(as.data.table(obj$data), measure.vars = mnames, variable.name = "measure", value.name = "performance", id.vars = id.vars)))
   nmeas = length(unique(data$measure))
 
   if (!is.null(data$learner))

@@ -90,7 +90,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   out = lapply(obj, function(pred) {
     df = data.table("truth" = getPredictionTruth(pred),
                     getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
-    df = data.table::melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
+    df = melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
 
     if (is.null(groups)) {
       break.points = hist(df$Probability, breaks = breaks, plot = FALSE)$breaks
@@ -116,7 +116,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   max_bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
                    function(x) as.numeric(x[length(x)]))
   proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max_bin)])
-  proportion = data.table::melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
+  proportion = melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
   data$bin = ordered(data$bin, levels = levels(data$bin)[order(max_bin)])
   setDF(data)
   setDF(proportion)

@@ -135,9 +135,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
       names(obj$measures), mnames)
   }
 
-  data = reshape2::melt(obj$data,
-    id.vars = c("learner", "percentage"),
-    variable.name = "measure", value.name = "performance")
+  data = melt(as.data.table(obj$data), id.vars = c("learner", "percentage"), variable.name = "measure", value.name = "performance")
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
@@ -195,9 +193,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
                                    mnames)
   }
 
-  data = reshape2::melt(obj$data,
-                        id.vars = c("learner", "percentage"),
-                        variable.name = "measure", value.name = "performance")
+  data = setDF(melt(as.data.table(obj$data), id.vars = c("learner", "percentage"), variable.name = "measure", value.name = "performance"))
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))
 
