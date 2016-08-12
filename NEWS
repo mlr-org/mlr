@@ -15,6 +15,7 @@ mlr_2.10:
    these now also print info on the total nr of rows and cols and are less
    confusing
 -- setHyperPars: added "show.info" arg
+-- calculateConfusionMatrix: better, more flexible output than the older getConfMatrix
 
 
 - functions - new
@@ -26,6 +27,8 @@ mlr_2.10:
 - functions - renamed
 -- Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 -- Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
+-- Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
+
 
 - learners - general
 -- classif.ada: fixed some param problem with rpart.control params
