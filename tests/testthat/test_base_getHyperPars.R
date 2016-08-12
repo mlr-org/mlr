@@ -20,5 +20,12 @@ test_that("getHyperPars", {
   expect_true(setequal(getHyperPars(lrn), list()))
 
   lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")  
-  expect_true(setequal(getHyperPars(lrn), list(xval=0)))
+  expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
+  
+  #Missing values should not be ommited and printed
+  lrn = makeLearner("classif.xgboost")
+  expect_true(setequal(getHyperPars(lrn), list(nrounds = 1, missing = NA)))
+  
+  expect_output(print(lrn), "missing=NA")
+  
 })

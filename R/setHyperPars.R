@@ -7,21 +7,25 @@
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
+#' @template arg_showinfo
 #' @template ret_learner
+#' @note If a named (hyper)parameter can't be found for the given learner, the 3
+#' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
 #' @family learner
+#' @importFrom utils adist
 #' @examples
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)
 #' cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals = list()) {
+setHyperPars = function(learner, ..., par.vals = list(), show.info = getMlrOption("show.info")) {
   args = list(...)
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
-  setHyperPars2(learner, insert(par.vals, args))
+  setHyperPars2(learner, insert(par.vals, args), show.info = show.info)
 }
 
 #' Only exported for internal use.
@@ -29,13 +33,14 @@ setHyperPars = function(learner, ..., par.vals = list()) {
 #'   The learner.
 #' @param par.vals [\code{list}]\cr
 #'   List of named (hyper)parameter settings.
+#' @template arg_showinfo
 #' @export
-setHyperPars2 = function(learner, par.vals) {
+setHyperPars2 = function(learner, par.vals, show.info = getMlrOption("show.info")) {
   UseMethod("setHyperPars2")
 }
 
 #' @export
-setHyperPars2.Learner = function(learner, par.vals) {
+setHyperPars2.Learner = function(learner, par.vals, show.info = getMlrOption("show.info")) {
   ns = names(par.vals)
   # ensure that even the empty list is named, we had problems here, see #759
   if (is.null(ns) && is.null(names(learner$par.vals))) {
@@ -49,8 +54,21 @@ setHyperPars2.Learner = function(learner, par.vals) {
     p = par.vals[[i]]
     pd = pars[[n]]
     if (is.null(pd)) {
+      # since we couldn't find the par let's look for 3 most similar
+      if (show.info & on.par.without.desc != "quiet") {
+        parnames = names(pars)
+        indices = head(order(adist(n, parnames)), 3L)
+        possibles = parnames[indices]
+        if (length(possibles) > 0L) {
+          messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s",
+            learner$id, n, stri_flatten(possibles, collapse = " "))
+        }
+      }
+
       # no description: stop warn or quiet
-      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!", learner$id, n)
+      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!",
+        learner$id, n)
+
       if (on.par.without.desc == "stop") {
         stop(msg)
       } else if (on.par.without.desc == "warn") {

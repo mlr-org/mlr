@@ -11,7 +11,7 @@
 #' @template arg_task
 #' @param method [\code{character}]\cr
 #'   Filter method(s), see above.
-#'   Default is \dQuote{rf.importance}.
+#'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect [\code{integer(1)}]\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
@@ -32,7 +32,7 @@
 #'                   the feature importance values.
 #'     }}
 #' @export
-generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDescription(task)
@@ -41,15 +41,15 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
   check_task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check_task))
-    stopf("Filter(s) '%s' not campatible with task of type '%s'",
-          stri_paste(method[check_task], collapse = ", ", sep = " "), td$type)
+    stopf("Filter(s) %s not compatible with task of type '%s'",
+          stri_paste("'", method[check_task], "'", collapse = ", "), td$type)
 
-  check_feat = lapply(filter, function(x) setdiff(names(td$nfeat[td$n.feat > 0L]), x$supported.features))
+  check_feat = lapply(filter, function(x) setdiff(names(td$n.feat[td$n.feat > 0L]), x$supported.features))
   check_length = sapply(check_feat, length) > 0L
   if (any(check_length)) {
-    stopf("Filter(s) '%s' not compatible with features of type '%s' respectively.",
-          method[check_length],
-          stri_paste(sapply(check_feat[check_length], function(x) stri_paste(x, collapse = ", ", sep = " ")), collapse = ", and", sep = " "))
+    stopf("Filter(s) %s not compatible with features of type %s respectively",
+          stri_paste("'", method[check_length], "'", collapse = ", "),
+          stri_paste(sapply(check_feat[check_length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
   }
   assertCount(nselect)
   assertList(more.args, names = "unique", max.len = length(method))
@@ -73,7 +73,7 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
     x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
-    x[match(names(x), fn)]
+    x[match(fn, names(x))]
   })
 
   fval = do.call(cbind, fval)
@@ -90,7 +90,7 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Calculates feature filter values.
 #'
@@ -104,7 +104,7 @@ print.FilterValues = function(x, ...) {
 #' @template arg_task
 #' @param method [\code{character(1)}]\cr
 #'   Filter method, see above.
-#'   Default is \dQuote{rf.importance}.
+#'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect [\code{integer(1)}]\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
@@ -113,8 +113,8 @@ print.FilterValues = function(x, ...) {
 #' @note \code{getFilterValues} is deprecated in favor of \code{\link{generateFilterValuesData}}.
 #' @family filter
 #' @export
-getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
-  warning("getFilterValues is deprecated. Use generateFilterValuesData.")
+getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ...) {
+  .Deprecated("generateFilterValuesData")
   assertChoice(method, choices = ls(.FilterRegister))
   out = generateFilterValuesData(task, method, nselect, ...)
   colnames(out$data)[3] = "val"
@@ -126,8 +126,8 @@ getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFea
 }
 #' Plot filter values using ggplot2.
 #'
-#' @family plot
 #' @family filter
+#' @family generate_plot_data
 #'
 #' @param fvalues [\code{\link{FilterValues}}]\cr
 #'   Filter values.

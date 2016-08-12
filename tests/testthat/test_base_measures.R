@@ -75,7 +75,7 @@ test_that("db with single cluster doesn't give warnings", {
 test_that("mcc is implemented correctly", { # see issue 363
   r = holdout("classif.rpart", sonar.task, measure = mcc)
   p = as.data.frame(r$pred)
-  cm = getConfMatrix(r$pred)[1:2, 1:2]
+  cm = calculateConfusionMatrix(r$pred)$result[1:2, 1:2]
 
   # taken from psych::phi. the phi measure is another name for mcc
   r.sum = rowSums(cm)
@@ -297,9 +297,9 @@ test_that("check measure calculations", {
   expect_equal(colauc2[,1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[,1]))
   # multiclass.auc
   expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
-    multiclass.aunp, multiclass.au1u, multiclass.au1p))), 
+    multiclass.aunp, multiclass.au1u, multiclass.au1p))),
     as.numeric(rep(performance(pred.bin, measures = auc), 4)))
-  
+
   p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
   colnames(p1) = c("a", "b")
   colnames(p2) = c("b", "a")
@@ -500,20 +500,19 @@ test_that("check measure calculations", {
 
   #test clustering
 
+  #db
+  c2 = c(3, 1)
+  c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
+  s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
+    sum((data.cluster[4, ] - c1)^2)) / 3L)
+  M = sqrt(sum((c2 - c1)^2))
+  db.test = s1 / M
+  db.perf = performance(pred.cluster, measures = db,
+    model = mod.cluster, feats = data.cluster)
+  expect_equal(db.test,db$fun(task = task.cluster,
+   pred = pred.cluster, feats = data.cluster))
+  expect_equal(db.test, as.numeric(db.perf))
 
-  # FIXME: clusterSim is currently broken, see issue #1054
-  # #db
-  # c2 = c(3, 1)
-  # c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
-  # s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
-  #   sum((data.cluster[4, ] - c1)^2)) / 3L)
-  # M = sqrt(sum((c2 - c1)^2))
-  # db.test = s1 / M
-  # db.perf = performance(pred.cluster, measures = db,
-  #   model = mod.cluster, feats = data.cluster)
-  # expect_equal(db.test,db$fun(task = task.cluster,
-  #  pred = pred.cluster, feats = data.cluster))
-  # expect_equal(db.test, as.numeric(db.perf))
   #dunn
   exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
     sqrt(sum((c(4, 3) - c(3, 2))^2)))
@@ -564,4 +563,39 @@ test_that("check measure calculations", {
     model = mod.cluster, feats = data.cluster)
   expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
+})
+
+test_that("getDefaultMeasure", {
+  expect_equal(mmce, getDefaultMeasure(iris.task))
+  expect_equal(mmce, getDefaultMeasure(getTaskDescription(iris.task)))
+  expect_equal(mmce, getDefaultMeasure(makeLearner("classif.rpart")))
+  expect_equal(mmce, getDefaultMeasure("classif.rpart"))
+  expect_equal(mmce, getDefaultMeasure("classif"))
+})
+
+test_that("measures quickcheck", {
+  options(warn = 2)
+  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
+  lrn = makeLearner("classif.rpart")
+      
+  quickcheckTest(
+    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
+      {
+        classes = factor(c("foo", "bar"))
+        data$target = rep_len(classes, length.out = nrow(data))
+  
+        trainIds = 1:(2*nrow(data)/3)
+        testIds = setdiff(1:nrow(data), trainIds)
+        task = makeClassifTask(data = data, target = "target")
+  
+        mod = train(lrn, task = task, subset = trainIds)
+        pred = predict(mod, task = task, subset = testIds)
+        perf = performance(pred, measures = ms)
+  
+        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
+      }
+    ),
+    about = "binary classification measures",
+    sample.size = 100
+  )
 })
