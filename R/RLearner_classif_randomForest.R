@@ -56,7 +56,7 @@ getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
   if (.learner$predict.type == "response") {
     unname(.model$learner.model$predicted)
   } else {
-    mod$learner.model$votes
+   .model$learner.model$votes
   }
   
 }
