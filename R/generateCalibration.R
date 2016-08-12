@@ -88,9 +88,9 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   td = obj[[1L]]$task.desc
 
   out = lapply(obj, function(pred) {
-    df = data.frame("truth" = getPredictionTruth(pred),
+    df = data.table("truth" = getPredictionTruth(pred),
                     getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
-    df = reshape2::melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
+    df = data.table::melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
 
     if (is.null(groups)) {
       break.points = hist(df$Probability, breaks = breaks, plot = FALSE)$breaks
@@ -100,25 +100,26 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
       assertInt(groups, lower = 2, upper = length(unique(df$Probability)))
       df$bin = Hmisc::cut2(df$Probability, g = groups, digits = 3)
     }
-    proportion = plyr::ddply(df, "bin", function(x) {
+    fun = function(x) {
       tab = table(x$Class, x$truth)
       s = rowSums(tab)
-      ifelse(s == 0, 0, diag(tab) / s)
-    })
-    list(data = df, proportion = proportion)
+      as.list(ifelse(s == 0, 0, diag(tab) / s))
+    }
+    list(data = df, proportion = df[, fun(.SD), by = "bin"])
   })
-  data = plyr::ldply(lapply(out, function(x) x$data), .id = "Learner")
-  proportion = plyr::ldply(lapply(out, function(x) x$proportion), .id = "Learner")
+  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner")
+  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner")
   if (length(td$class.levels) == 2L) {
-    proportion = proportion[, -which(td$negative == colnames(proportion))]
-    data = data[!data$Class == td$negative, ]
+    proportion = proportion[, !td$negative, with = FALSE]
+    data = data[data$Class != td$negative, ]
   }
   max_bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
                    function(x) as.numeric(x[length(x)]))
   proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max_bin)])
-  proportion = reshape2::melt(proportion, id.vars = c("Learner", "bin"),
-                              value.name = "Proportion", variable.name = "Class")
+  proportion = data.table::melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
   data$bin = ordered(data$bin, levels = levels(data$bin)[order(max_bin)])
+  setDF(data)
+  setDF(proportion)
 
   makeS3Obj("CalibrationData",
             proportion = proportion,
