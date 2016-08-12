@@ -26,10 +26,10 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
   #   dtrain = do.call("rbind", lapply(seq_along(pr.tr), function(X)
   #     cbind(pr.tr[[X]]$data, iter = X, set = "train") ))
 
-  dtest = plyr::rbind.fill(lapply(seq_along(pr.te), function(X)
-    cbind(pr.te[[X]]$data, iter = X, set = "test") ))
-  dtrain = plyr::rbind.fill(lapply(seq_along(pr.tr), function(X)
-    cbind(pr.tr[[X]]$data, iter = X, set = "train") ))
+  dtest = as.data.frame(bind_rows(lapply(seq_along(pr.te), function(X)
+    cbind(pr.te[[X]]$data, iter = X, set = "test") )))
+  dtrain = as.data.frame(bind_rows(lapply(seq_along(pr.tr), function(X)
+    cbind(pr.tr[[X]]$data, iter = X, set = "train") )))
 
   data = rbind(dtest, dtrain)
 

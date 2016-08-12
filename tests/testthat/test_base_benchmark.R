@@ -119,7 +119,7 @@ test_that("benchmark", {
   expect_is(trd, "data.frame")
   expect_equal(ncol(trd), 5)
   expect_equal(nrow(trd), 4)
-  expect_equal(unique(trd$task.id), factor(task.names))
+  expect_equal(unique(trd$task.id), task.names)
   expect_equal(unique(trd$learner.id), factor(c("classif.rpart.tuned")))
   expect_equal(unique(trd$iter), 1:2)
 

@@ -250,7 +250,7 @@ generatePartialDependenceData = function(obj, input, features,
       else
         doIndividualPartialDependence(out, td, nrow(data), rng, target, x, centerpred)
     })
-    out = ldply(out)
+    out = as.data.frame(bind_rows(out))
   } else {
     if (derivative) {
       args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
@@ -454,7 +454,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   })
   names(f) = effects
   makeS3Obj(c("FunctionalANOVAData", "PartialDependenceData"),
-            data = ldply(f[which(depths == depth)], .id = "effect"),
+            data = as.data.frame(bind_rows(f[which(depths == depth)], .id = "effect")),
             task.desc = td,
             target = target[!target %in% c("upper", "lower")],
             features = features,

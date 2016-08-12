@@ -88,7 +88,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
     out = out[[1L]]
     colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
   } else {
-    out = plyr::ldply(out, .id = "learner")
+    out = as.data.frame(bind_rows(lapply(out, as.data.frame), .id = "learner"))
     colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
   }
 

@@ -107,8 +107,8 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     })
     list(data = df, proportion = proportion)
   })
-  data = plyr::ldply(lapply(out, function(x) x$data), .id = "Learner")
-  proportion = plyr::ldply(lapply(out, function(x) x$proportion), .id = "Learner")
+  data = as.data.frame(bind_rows(lapply(out, function(x) x$data), .id = "Learner"))
+  proportion = as.data.frame(bind_rows(lapply(out, function(x) x$proportion), .id = "Learner"))
   if (length(td$class.levels) == 2L) {
     proportion = proportion[, -which(td$negative == colnames(proportion))]
     data = data[!data$Class == td$negative, ]
