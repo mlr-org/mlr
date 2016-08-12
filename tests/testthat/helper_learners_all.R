@@ -158,8 +158,8 @@ testThatGetOOBPredsWorks = function(lrn, task) {
   
   if (type == "classif") {
     if(lrn$predict.type == "response") {
-    expect_is(oob$data, "data.frame")
-    expect_equal(levels(oob$data$response), task$task.desc$class.levels)
+      expect_is(oob$data, "data.frame")
+      expect_equal(levels(oob$data$response), task$task.desc$class.levels)
     } else {
       expect_is(oob$data, "data.frame")
       expect_numeric(getPredictionProbabilities(oob))
@@ -171,4 +171,3 @@ testThatGetOOBPredsWorks = function(lrn, task) {
   }
   expect_equal(nrow(oob$data), nrow(getTaskData(task)))
 }
-
