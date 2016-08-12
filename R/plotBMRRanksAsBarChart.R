@@ -36,7 +36,6 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   assertChoice(pos, c("tile", "stack", "dodge"))
 
   df = as.data.frame(convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation))
-  df = (convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation))
   df$learner.id = rownames(df)
   setDT(df)
   df = melt(df, id.vars = "learner.id")
