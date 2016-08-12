@@ -8,7 +8,7 @@ getDefaultMeasure(x)
 }
 \arguments{
 \item{x}{[\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
-Task type, task, task description or a learner.}
+Task type or learner name, task, task description or a learner.}
 }
 \value{
 [\code{\link{Measure}}].

@@ -565,6 +565,14 @@ test_that("check measure calculations", {
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
 })
 
+test_that("getDefaultMeasure", {
+  expect_equal(mmce, getDefaultMeasure(iris.task))
+  expect_equal(mmce, getDefaultMeasure(getTaskDescription(iris.task)))
+  expect_equal(mmce, getDefaultMeasure(makeLearner("classif.rpart")))
+  expect_equal(mmce, getDefaultMeasure("classif.rpart"))
+  expect_equal(mmce, getDefaultMeasure("classif"))
+})
+
 test_that("measures quickcheck", {
   options(warn = 2)
   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
