@@ -242,7 +242,7 @@ measureRSQ = function(truth, response) {
 expvar = makeMeasure(id = "expvar", minimize = FALSE, best = 1, worst = 0,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Explained variance",
-  note = "Similar to measaure rsq (R-squared). Defined as explained_sum_of_squares / total_sum_of_squares.",
+  note = "Similar to measure rsq (R-squared). Defined as explained_sum_of_squares / total_sum_of_squares.",
   fun = function(task, model, pred, feats, extra.args) {
     measureEXPVAR(pred$data$truth, pred$data$response)
   }
@@ -263,7 +263,7 @@ measureEXPVAR = function(truth, response) {
 arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Adjusted coefficient of determination",
-  note = "Adjusted R-squared is only defined for normal linear regression",
+  note = "Adjusted R-squared is only defined for normal linear regression.",
   fun = function(task, model, pred, feats, extra.args) {
     n = length(pred$data$truth)
     p = length(model$features)
@@ -331,8 +331,8 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
 #' @format none
 multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
-  name = "Average multiclass AUC",
-  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, where classes are assumed to have uniform distribution, in order to have a measure which is independent of class distribution change. See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
+  name = "Average 1 vs. rest multiclass AUC",
+  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, where classes are assumed to have uniform distribution, in order to have a measure which is independent of class distribution change. See Ferri et al.: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureAUNU(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
@@ -350,8 +350,8 @@ measureAUNU = function(probabilities, truth) {
 #' @format none
 multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
-  name = "Weighted average multiclass AUC",
-  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, taking into account the prior probability of each class (p(j)). See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
+  name = "Weighted average 1 vs. rest multiclass AUC",
+  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, taking into account the prior probability of each class. See Ferri et al.: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureAUNP(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
@@ -370,7 +370,7 @@ measureAUNP = function(probabilities, truth) {
 multiclass.au1u = makeMeasure(id = "multiclass.au1u", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Average 1 vs. 1 multiclass AUC",
-  note =  "Computes AUC of c(c - 1) binary classifiers (all possible pairwise combinations) while considering uniform distribution of the classes. See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
+  note =  "Computes AUC of c(c - 1) binary classifiers (all possible pairwise combinations) while considering uniform distribution of the classes. See Ferri et al.: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureAU1U(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
@@ -391,7 +391,7 @@ measureAU1U = function(probabilities, truth) {
 multiclass.au1p = makeMeasure(id = "multiclass.au1p", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Weighted average 1 vs. 1 multiclass AUC",
-  note = "Computes AUC of c(c - 1) binary classifiers while considering the a priori distribution of the classes. See Ferri et. al paper: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",                             
+  note = "Computes AUC of c(c - 1) binary classifiers while considering the a priori distribution of the classes. See Ferri et al.: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureAU1P(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
@@ -414,7 +414,7 @@ measureAU1P = function(probabilities, truth) {
 multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 0, worst = 2,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Multiclass Brier score",
-  note = "Defined as: (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j. From http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",
+  note = "Defined as: (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probability of observation i for class j. From http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
@@ -839,7 +839,7 @@ multilabel.hamloss = makeMeasure(id = "multilabel.hamloss", minimize = TRUE, bes
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Hamming loss",
   note = "Proportion of labels whose relevance is incorrectly predicted,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelHamloss(getPredictionTruth.PredictionMultilabel(pred),
       getPredictionResponse.PredictionMultilabel(pred))
@@ -858,8 +858,8 @@ measureMultilabelHamloss = function(truth, response) {
 multilabel.subset01 = makeMeasure(id = "multilabel.subset01", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Subset-0-1 loss",
-  note = "Proportion of observations where the complete multilabel set (all 0-1-lables) is not correctly predicted,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
+  note = "Proportion of observations where the complete multilabel set (all 0-1-labels) is not correctly predicted,
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelSubset01(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -880,7 +880,7 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "F1 measure (multilabel)",
   note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1),
-  following the definition by Montanes et al.: http://www.sciencedirect.com/science/article/pii/S0031320313004019",
+  following the definition by Montanes et al.: http://www.sciencedirect.com/science/article/pii/S0031320313004019.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultiLabelF1(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -909,7 +909,7 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Accuracy (multilabel)",
   note = "Mean of proportion of correctly predicted labels with respect to the total number of labels for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelACC(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -936,9 +936,9 @@ measureMultilabelACC = function(truth, response) {
 #' @format none
 multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
-  name = "Postive predicive value (multilabel)",
+  name = "Positive predictive value (multilabel)",
   note = "Also called precision. Mean of ratio of truly predicted labels for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelPPV(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -967,7 +967,7 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "TPR (multilabel)",
   note = "Also called recall. Mean of proportion of predicted labels which are relevant for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelTPR(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -1050,7 +1050,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
 db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Davies-Bouldin cluster separation measure",
-  note ="See `?clusterSim::index.DB`.",
+  note = "See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
     if (length(unique(pred$data$response)) > 1L) {
       requirePackages("clusterSim", default.method = "load")
