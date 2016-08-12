@@ -73,6 +73,8 @@ Object members:
 \item{interaction}{[\code{logical(1)}]\cr
   Whether or not the importance of the \code{features} was computed jointly rather than individually.
 }
+\item{measure}{[\code{Measure}]}\cr
+  The measure used to compute performance.
 \item{contrast}{[\code{function}]\cr
   The function used to compare the performance of predictions.
 }
