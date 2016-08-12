@@ -210,7 +210,7 @@ print.FeatureImportance = function(x, ...) {
   catf("Task: %s", x$task.desc$id)
   catf("Interaction: %s", x$interaction)
   catf("Learner: %s", x$learner$id)
-  catf("Measure: %s", x$measure$id)
+  catf("Measure: %s", if (!is.na(imp$measure)) imp$measure$id else NA)
   catf("Contrast: %s", stri_paste(format(x$contrast), collapse = " "))
   catf("Aggregation: %s", stri_paste(format(x$aggregation), collapse = " "))
   catf("Replace: %s", x$replace)
