@@ -250,7 +250,7 @@ generatePartialDependenceData = function(obj, input, features,
       else
         doIndividualPartialDependence(out, td, nrow(data), rng, target, x, centerpred)
     })
-    out = ldply(out)
+    out = setDF(rbindlist(out, fill = TRUE))
   } else {
     if (derivative) {
       args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
@@ -453,8 +453,9 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
     hoe
   })
   names(f) = effects
+
   makeS3Obj(c("FunctionalANOVAData", "PartialDependenceData"),
-            data = ldply(f[which(depths == depth)], .id = "effect"),
+            data = setDF(rbindlist(f[depths == depth], fill = TRUE, idcol = "effect")),
             task.desc = td,
             target = target[!target %in% c("upper", "lower")],
             features = features,
@@ -691,8 +692,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
                  length(features) < 3L & geom == "line")
 
   if (geom == "line") {
-    obj$data = reshape2::melt(obj$data, id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
-                    variable = "Feature", value.name = "Value", na.rm = TRUE)
+    obj$data = setDF(melt(data.table(obj$data), id.vars = colnames(obj$data)[!colnames(obj$data) %in% features], variable = "Feature", value.name = "Value", na.rm = TRUE))
     if (!obj$individual) {
       if (obj$task.desc$type %in% c("regr", "surv"))
         plt = ggplot(obj$data, aes_string("Value", target)) +
