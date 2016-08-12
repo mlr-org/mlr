@@ -131,7 +131,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #' }
 #'
 #' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
-#'  Task type, task, task description or a learner.
+#'  Task type or learner name, task, task description or a learner.
 #' @return [\code{\link{Measure}}].
 #' @export
 getDefaultMeasure = function(x) {
@@ -141,6 +141,10 @@ getDefaultMeasure = function(x) {
     x$task.desc$type
   else if (inherits(x, "Learner"))
     x$type
+  else if (!inherits(try(checkLearner(x), silent = TRUE), "try-error"))
+    checkLearner(x)$type
+  else
+    x
   switch(type,
     classif = mmce,
     cluster = db,
