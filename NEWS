@@ -15,7 +15,6 @@ mlr_2.10:
    these now also print info on the total nr of rows and cols and are less
    confusing
 -- setHyperPars: added "show.info" arg
--- calculateConfusionMatrix: better, more flexible output than the older getConfMatrix
 
 
 - functions - new
@@ -23,6 +22,9 @@ mlr_2.10:
 -- generateFeatureImportanceData: permutation-based featuree importance and local importance
 -- getFeatureImportanceLearner: new Learner API function
 -- getFeatureImportance: top level function to extract feature importance information
+-- calculateROCMeasures
+-- calculateConfusionMatrix: new confusion-matrix like function that calculates
+   and tables many receiver operator measures
 
 - functions - removed
 
