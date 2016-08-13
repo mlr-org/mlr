@@ -30,4 +30,5 @@ Default is set via \code{\link{configureMlr}}.}
 \description{
 Only exported for internal use.
 }
+\keyword{internal}
 

@@ -4,9 +4,9 @@ test_that("regr_bdk", {
   requirePackagesOrSkip("kohonen", default.method = "load")
 
   parset.list1 = list(
-    list(),
-    list(grid = class::somgrid(xdim = 2L, ydim = 4L)),
-    list(rlen = 50L)
+    list(keep.data = FALSE),
+    list(keep.data = FALSE, grid = class::somgrid(xdim = 2L, ydim = 4L)),
+    list(keep.data = FALSE, rlen = 50L)
   )
   parset.list2 = list(
     list(),

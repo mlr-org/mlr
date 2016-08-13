@@ -30,10 +30,6 @@ Default is \code{TRUE} which means that the old parameter values will be kept as
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
-
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{Learner}}].

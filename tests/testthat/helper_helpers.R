@@ -48,7 +48,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   test = df[-inds,]
 
   lrn = makeLearner(t.name)
-  lrn = setHyperPars(lrn, par.vals = parset, use.mlr.defaults = FALSE, update = FALSE)
+  lrn = setHyperPars(lrn, par.vals = parset, use.mlr.defaults = TRUE, update = TRUE)
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data = df)
