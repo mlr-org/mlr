@@ -20,6 +20,4 @@ test_that("DummyFeaturesWrapper", {
     expect_equal(getPredictionResponse(pred), getPredictionResponse(pred.w))
   }
   
-  expect_error()
-  
 }
