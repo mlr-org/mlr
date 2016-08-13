@@ -30,7 +30,7 @@
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
-  if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
+  if (hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
     learner = evaluateLearner(learner = learner, task = task)
   assertClass(task, classes = "Task")
   if (missing(subset)) {

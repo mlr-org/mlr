@@ -61,9 +61,9 @@ evaluateLearner = function(learner, task) {
 #' @export
 evaluateParset = function(par.set, task) {
   dict = makeTaskDictionary(task = task)
-  if (ParamHelpers::hasExpression(par = par.set)) {
-    ParamHelpers::checkParamSet(par.set = par.set, dict = dict)
-    par.set = ParamHelpers::evaluateParamSet(par.set = par.set, dict = dict)
+  if (hasExpression(par = par.set)) {
+    checkParamSet(par.set = par.set, dict = dict)
+    par.set = evaluateParamSet(par.set = par.set, dict = dict)
     ## assure that the value names are also shown if the values list was unnamed
     par.set$pars = lapply(par.set$pars, function(x) {
       if (is.null(x$values) || !is.null(names(x$values)))

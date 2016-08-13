@@ -79,11 +79,11 @@
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
+  if (hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
     learner = evaluateLearner(learner = learner, task = task)
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
-  if (ParamHelpers::hasExpression(par.set))
+  if (hasExpression(par.set))
     par.set = evaluateParset(par.set = par.set, task = task)
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
