@@ -23,13 +23,8 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
-<<<<<<< HEAD
     mlr.defaults = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
-    properties = c("numerics", "factors", "ordered", "rcens", "prob"),
-=======
-    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
     properties = c("numerics", "factors", "ordered", "rcens", "prob", "featimp"),
->>>>>>> master
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE` and ranger's .forest object is kept for prediction (`keep.forest` = `TRUE`). All settings are changeable."
