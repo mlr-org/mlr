@@ -334,7 +334,7 @@ test_that("check measure calculations", {
   expect_equal(measureSSR(p2[1,,drop=FALSE], y2[1]), 0.1/sqrt(0.1^2 + 0.9^2))
   expect_equal(measureSSR(p2[1,,drop=FALSE], y1[1]), 0.9/sqrt(0.1^2 + 0.9^2))
   #qsr
-  qsr.test = 1-mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
+  qsr.test = 1 - mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
   qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
   expect_equal(qsr.test, qsr$fun(pred = pred.classif))
   expect_equal(qsr.test, as.numeric(qsr.perf))
@@ -596,6 +596,20 @@ test_that("check measure calculations", {
     model = mod.cluster, feats = data.cluster)
   expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
+
+  #test that some measures are only transformations of each other
+  
+  #qsr is identical to the 1 - multiclass brier
+  expect_equal(1 - measureMulticlassBrier(p1, y1), measureQSR(p1, y1), check.names = FALSE)
+  qsr.bin.perf = performance(pred.bin, measures = qsr, model = mod.bin)
+  expect_equal(1 - 2 * brier.perf, qsr.bin.perf, check.names = FALSE)
+  
+  expect_equal(lsr.perf, -1 * logloss.perf, check.names = FALSE)
+  
+  #multiclass brier for a two class problem should be two times the binary brier score.
+  multiclass.brier.twoclass.perf = performance(pred.bin, measures = multiclass.brier, model = mod.bin)
+  expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, check.names = FALSE)
+  
 })
 
 test_that("getDefaultMeasure", {

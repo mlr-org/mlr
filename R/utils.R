@@ -1,5 +1,7 @@
-# get one el from each row of a matrix, given indices or col names
+# get one el from each row of a matrix, given indices or col names (factors for colnames are converted to characters)
 getRowEls = function(mat, inds) {
+  if (is.factor(inds))
+    inds = as.character(inds)
   if (is.character(inds))
     inds = match(inds, colnames(mat))
   inds = cbind(seq_row(mat), inds)
