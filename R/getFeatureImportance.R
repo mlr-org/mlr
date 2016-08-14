@@ -61,16 +61,8 @@ getFeatureImportance = function(object, ...) {
   lrn = checkLearner(object$learner, props = "featimp")
   imp = getFeatureImportanceLearner(lrn, object, ...)
   
-  if (!check_numeric(imp, names = "named")) {
-    stop("getFeatureImportanceLearner did not return a named vector.")
-  }
-  if (!check_subset(names(imp), object$features)) {
-    stop("getFeatureImportanceLearner returned at least one named value that could not be matched to the task features.")
-  }
-  if (length(imp) > length(object$features)) {
-    stop("getFeatureImportanceLearner returned more values than there are features in the task.")
-  }
-  
+  if (!check_numeric(imp, names = "unique") && !check_subset(names(imp), object$features)) 
+    stop("getFeatureImportanceLearner did not return a named vector with names of the task features.")
   
   #We need to add missing pars with zero and order them
   imp[setdiff(object$features, names(imp))] = 0
