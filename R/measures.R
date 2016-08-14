@@ -702,16 +702,38 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   name = "Positive predictive value",
   note = "Also called precision.",
   fun = function(task, model, pred, feats, extra.args) {
-    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive)
+    if(pred$predict.type == "prob"){
+      prob = getPredictionProbabilities(pred)
+      if(!is.null(dim(df))){
+        stop('more than one column probability, currently ppv does not support multiclass')
+      }
+    } 
+    else{
+      prob = NULL
+    }
+    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive, prob)
   }
 )
 
 #' @export measurePPV
 #' @rdname measures
 #' @format none
-measurePPV = function(truth, response, positive) {
-  measureTP(truth, response, positive) / sum(response == positive)
+measurePPV = function(truth, response, positive, prob = NULL) {
+  denominator = sum(response == positive)
+  ifelse(denominator == 0, measureEdgeCase(truth, positive, prob), measureTP(truth, response, positive) / denominator)
+} 
+
+measureEdgeCase = function(truth, positive, prob){
+  if (!is.null(prob)) {
+    rs = sort(prob, index.return =TRUE)
+    erst = ifelse(truth[getLast(rs$ix)]==positive, 1, 0)   
+  } else {
+    erst = NA
+  }
+  #if(is.na(erst)) browser()
+  erst
 }
+
 
 #' @export npv
 #' @rdname measures
