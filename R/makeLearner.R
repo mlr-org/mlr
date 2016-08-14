@@ -57,7 +57,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   assertFlag(fix.factors.prediction)
   assertList(config, names = "named")
   if ("show.info" %in% names(config)) {
-    stop("show.info cannot be set in makeLearner please use configureMlr() instead.")
+    stop("'show.info' cannot be set in 'makeLearner', please use 'configureMlr' instead.")
   }
   assertSubset(names(config), choices = names(getMlrOptions()))
   constructor = try(getS3method("makeRLearner", class = cl), silent = TRUE)
