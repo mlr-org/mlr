@@ -48,3 +48,10 @@ test_that("generateLearningCurve", {
   testFacetting(q, ncol = 2L)
 
 })
+
+test_that("generateLearningCurve works if single learner is passed (not wrapped in list)", {
+  # see issue #1046
+  r = generateLearningCurveData(makeLearner("classif.rpart"), task = binaryclass.task,
+    percs = c(0.1, 0.7), measures = list(acc, timeboth))
+  expect_true(all(c("learner", "percentage", "acc", "timeboth") %in% colnames(r$data)))
+})

@@ -52,17 +52,19 @@ setHyperPars2.Learner = function(learner, par.vals) {
     p = par.vals[[i]]
     pd = pars[[n]]
     if (is.null(pd)) {
-      # since we couldn't find the par let's look for 3 most similar
-      possibles = getNameProposals(n, names(pars))
-
-      if (length(possibles) > 0) {
-        messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s",
-          learner$id, n, stri_flatten(possibles, collapse = " "))
+      if (on.par.without.desc != "quiet") {
+        # no description: stop warn or quiet
+        msg = sprintf("%s: Setting parameter %s without available description object!",
+          learner$id, n)
+        # since we couldn't find the par let's look for 3 most similar
+        parnames = names(pars)
+        indices = head(order(adist(n, parnames)), 3L)
+        possibles = parnames[indices]
+        if (length(possibles) > 0L) {
+          msg = paste(msg, sprintf("\nDid you mean one of these hyperparameters instead: %s", stri_flatten(possibles, collapse = " ")))
+        }
+        msg = paste(msg, "\nYou can switch off this check by using configureMlr!")
       }
-
-      # no description: stop warn or quiet
-      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!",
-        learner$id, n)
 
       if (on.par.without.desc == "stop") {
         stop(msg)

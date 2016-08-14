@@ -35,13 +35,14 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(pos, c("tile", "stack", "dodge"))
 
-  df = convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation)
-
-  # melt back into plotable form:
-  df = reshape2::melt(df)
-  colnames(df) = c("learner.id", "task.id", "rank")
+  df = as.data.frame(convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation))
+  df$learner.id = rownames(df)
+  setDT(df)
+  df = melt(df, id.vars = "learner.id")
+  setnames(df, c("variable", "value"), c("task.id", "rank"))
   df = orderBMRLrns(bmr, df, order.lrns)
   df = orderBMRTasks(bmr, df, order.tsks)
+  setDF(df)
 
   df = as.data.frame(sapply(df, as.factor))
   if (pos == "tile") {
@@ -58,6 +59,6 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
     lrns.short = getBMRLearnerShortNames(bmr)
     p = p + scale_fill_discrete(labels = lrns.short)
   }
-  
+
   return(p)
 }
