@@ -646,3 +646,21 @@ test_that("measures quickcheck", {
     sample.size = 100
   )
 })
+
+
+test_that("measures edge case ppv", {
+  set.seed(1)
+  task = sonar.task
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  r = holdout(lrn, task)
+  d = generateThreshVsPerfData(r, measures = list(tpr, ppv), gridsize = 5)
+  expect_equal(length(which(is.na(d$data))), 0)
+  lrns = list(makeLearner("classif.randomForest",predict.type = "prob"), makeLearner("classif.rpart",predict.type = "prob"))
+  tasks = list(bc.task, sonar.task)
+  rdesc = makeResampleDesc("CV", iters = 2L)
+  meas = list(acc, ber)
+  bmrk = benchmark(lrns, tasks, rdesc, measures = meas)
+  pr = generateThreshVsPerfData(bmrk, measures=list(tpr, ppv))
+  expect_equal(length(which(is.na(pr$data))), 0)
+})
+
