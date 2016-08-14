@@ -483,6 +483,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Quadratic Scoring Rule",
   note = "Defined as: 1 - (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j.
+  This scoring rule is the same as 1 - Brier score.
 	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureQSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
@@ -506,7 +507,8 @@ lsr = makeMeasure(id = "lsr", minimize = FALSE, best = 0, worst = -Inf,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Logarithmic Scoring Rule",
   note = "Defined as: mean(log(p_i)), where p_i is the predicted probability of the true class of observation i.
-	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+	This scoring rule is the same as the negative self-information or surprisal, a common measure in information theory.
+  See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureLSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
   }
@@ -550,6 +552,9 @@ measureAUC = function(probabilities, truth, negative, positive) {
 brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth", "req.prob"),
   name = "Brier score",
+  note = "The Brier score is defined as the quadratic difference between the probability and the value (1,0) for the class.
+  That means we use the numeric representation 1 and 0 for our target classes. It is similiar to the mean squared error in regression.
+  For multiclass classification the brier score is defined as the sum over all one vs. all comparisons for the binary brier score.",
   fun = function(task, model, pred, feats, extra.args) {
     measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
   }
