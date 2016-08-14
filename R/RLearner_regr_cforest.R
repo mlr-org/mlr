@@ -22,7 +22,7 @@ makeRLearner.regr.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "ordered", "weights", "missings"),
+    properties = c("numerics", "factors", "ordered", "weights", "missings", "featimp"),
     mlr.defaults = list(),
     name = "Random Forest Based on Conditional Inference Trees",
     short.name = "cforest",
@@ -55,4 +55,9 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
   as.vector(predict(.model$learner.model, newdata = .newdata, ...))
+}
+
+#' @export
+getFeatureImportanceLearner.regr.cforest = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.cforest(.learner, .model, auc = FALSE, ...)
 }

@@ -19,6 +19,7 @@
     ```
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
+* [We are on Slack](https://mlr-org.slack.com/)
 
 
 mlr - How to Cite and Citing Publications

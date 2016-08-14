@@ -66,7 +66,6 @@ notifications:
   email:
     recipients:
       - bernd_bischl@gmx.net
-      - michellang@gmail.com
       - larsko@cs.ubc.ca
       - schiffner@math.uni-duesseldorf.de
       - erich.studerus@gmail.com

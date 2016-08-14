@@ -48,10 +48,12 @@ Other filter: \code{\link{filterFeatures}},
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
-  \code{\link{generateThreshVsPerfData}}
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{plotFilterValues}}
 }
 

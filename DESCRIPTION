@@ -22,7 +22,10 @@ Authors@R: c(
     person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
     person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "ctb"),
     person("Pascal", "Kerschke", email = "kerschke@uni-muenster.de", role = "ctb"),
-    person("Florian", "Fendt", email = "flo_fendt@gmx.de", role = "ctb"))
+    person("Florian", "Fendt", email = "flo_fendt@gmx.de", role = "ctb"),
+    person("Philipp", "Probst", email = "philipp_probst@gmx.de", role = "ctb"),
+    person("Xudong", "Sun", email = "xudong.sun@stat.uni-muenchen.de", role = "ctb"),
+    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -41,8 +44,6 @@ Imports:
     ggvis,
     methods,
     parallelMap (>= 1.3),
-    plyr,
-    reshape2,
     shiny,
     survival,
     utils
@@ -86,6 +87,7 @@ Suggests:
     h2o (>= 3.6.0.8),
     GPfit,
     Hmisc,
+    ipred,
     irace (>= 1.0.7),
     kernlab,
     kknn,

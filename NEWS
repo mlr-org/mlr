@@ -19,12 +19,20 @@ mlr_2.10:
 
 - functions - new
 -- filter: randomForest.importance
+-- generateFeatureImportanceData: permutation-based featuree importance and local importance
+-- getFeatureImportanceLearner: new Learner API function
+-- getFeatureImportance: top level function to extract feature importance information
+-- calculateROCMeasures
+-- calculateConfusionMatrix: new confusion-matrix like function that calculates
+   and tables many receiver operator measures
 
 - functions - removed
 
 - functions - renamed
 -- Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 -- Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
+-- Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
+
 
 - learners - general
 -- classif.ada: fixed some param problem with rpart.control params
