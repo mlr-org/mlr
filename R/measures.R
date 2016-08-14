@@ -454,6 +454,71 @@ measureLogloss = function(probabilities, truth){
   -1*mean(log(p))
 }
 
+#' @export ssr
+#' @rdname measures
+#' @format none
+ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
+  properties = c("classif", "classif.multi", "req.truth", "req.prob"),
+  name = "Spherical Scoring Rule",
+  note = "Defined as: mean(p_i(sum_j(p_ij))), where p_i is the predicted probability of the true class of observation i and p_ij is the predicted probablity of observation i for class j.
+	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureSSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureSSR
+#' @rdname measures
+#' @format none
+measureSSR = function(probabilities, truth){
+  truth = match(as.character(truth), colnames(probabilities))
+  p = getRowEls(probabilities, truth)
+  mean(p/sqrt(rowSums(probabilities^2)))
+}
+
+#' @export qsr
+#' @rdname measures
+#' @format none
+qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
+  properties = c("classif", "classif.multi", "req.truth", "req.prob"),
+  name = "Quadratic Scoring Rule",
+  note = "Defined as: 1 - (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j.
+	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureQSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureQSR
+#' @rdname measures
+#' @format none
+measureQSR = function(probabilities, truth){
+  #We add this line because binary tasks only output one probability column
+  if (is.null(dim(probabilities))) probabilities = cbind(probabilities,1 - probabilities)
+  truth = factor(truth, levels = colnames(probabilities))
+  1 - mean(rowSums((probabilities - model.matrix( ~ as.factor(truth) + 0))^2))
+}
+
+#' @export lsr
+#' @rdname measures
+#' @format none
+lsr = makeMeasure(id = "lsr", minimize = FALSE, best = 0, worst = -Inf,
+  properties = c("classif", "classif.multi", "req.truth", "req.prob"),
+  name = "Logarithmic Scoring Rule",
+  note = "Defined as: mean(log(p_i)), where p_i is the predicted probability of the true class of observation i.
+	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureLSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureLSR
+#' @rdname measures
+#' @format none
+measureLSR = function(probabilities, truth){
+  -1*measureLogloss(probabilities, truth)
+}
+
 ###############################################################################
 ### classif binary ###
 ###############################################################################
