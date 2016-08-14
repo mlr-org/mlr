@@ -4,8 +4,7 @@
 \alias{setHyperPars}
 \title{Set the hyperparameters of a learner object.}
 \usage{
-setHyperPars(learner, ..., par.vals = list(),
-  show.info = getMlrOption("show.info"))
+setHyperPars(learner, ..., par.vals = list())
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -19,10 +18,6 @@ using the \code{par.vals} argument.}
 \item{par.vals}{[\code{list}]\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
-
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{Learner}}].
