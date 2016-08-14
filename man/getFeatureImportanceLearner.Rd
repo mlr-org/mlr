@@ -26,6 +26,10 @@ generating function.}
 }
 \description{
 This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.
+
+The return value is a named numeric vector. There does not need to be one value for each feature in the dataset.
+In \code{\link{getFeatureImportance}} missing features will get an importance of zero and if the vector contains \code{NA}
+they will also be replaced with zero.
 }
 \keyword{internal}
 
