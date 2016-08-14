@@ -45,11 +45,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
   m = .model$learner.model
   tridots = list(...)
-  if(is.null(tridots$n.trees))
-    m.n.trees = m$n.trees
-  else{
-    m.n.trees = tridots$n.trees
-  }
+  m.n.trees = coalesce(tridots$n.trees, m$n.trees)
   p = gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m.n.trees, single.tree = FALSE, ...)
   if (length(td$class.levels) == 2L) {
     levs = c(td$negative, td$positive)
