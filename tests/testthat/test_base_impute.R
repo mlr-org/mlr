@@ -47,7 +47,7 @@ test_that("Impute data frame", {
   expect_false(hasLearnerProperties(lrn, "missings"))
   imputed = impute(data2, target = target, cols = list(col = imputeLearner(lrn, features = "V1")))$data
   expect_true(all(imputed$col[8:10] == "2"))
-  # case 2: feature used for imputation (V2) has missings only where col has missings
+  # case 2: feature used for imputation (V2) has missings only in rows where col has missings
   # in this case the imputation task does not have property "missings", but a learner with property "missings" is
   # required for imputation
   expect_error(impute(data2, target = target, cols = list(col = imputeLearner("classif.lda", features = "V2"))), "used for imputation has/have missing values, but learner")
@@ -55,7 +55,7 @@ test_that("Impute data frame", {
   expect_true(hasLearnerProperties(lrn, "missings"))
   imputed = impute(data2, target = target, cols = list(col = imputeLearner(lrn, features = "V2")))$data
   expect_true(all(imputed$col[8:10] == "2"))
-  # case 3: feature used for imputation (V3) has missings only where col does not have missings
+  # case 3: feature used for imputation (V3) has missings only in rows where col does not have missings
   # in this case the imputation task has property "missings"
   expect_error(impute(data2, target = target, cols = list(col = imputeLearner("classif.lda", features = "V3"))), "used for imputation has/have missing values, but learner")
   imputed = impute(data2, target = target, cols = list(col = imputeLearner("classif.naiveBayes", features = "V3")))$data
@@ -63,9 +63,10 @@ test_that("Impute data frame", {
 
   # we had an issue here (see #26) where e.g. imputation for integer/numeric features via a classif learner showed
   # inconsistent behavior and resulted in weird error messages
-  # case 1: impute an integer (data2$V2) with a classif learner (integers are coerced to factors by checkTaskData)
-  # using learner classif.lvq1 because it doesn't work with integer targets (see #26)
   data2$col2 = as.integer(data2$col)
+  # case 1: impute an integer (data2$col2) with a classif learner (integers are coerced to factors by checkTaskData)
+  # using learner classif.lvq1 because it doesn't work with integer targets (see #26)
+  set.seed(getOption("mlr.debug.seed"))
   imputed = impute(data2, cols = list(col2 = imputeLearner("classif.lvq1", features = "V1")))$data
   expect_true(all(imputed$col2[8:10] == "2"))
   # case 2: impute a numeric (data$x) with a classif learner
