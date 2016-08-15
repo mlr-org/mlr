@@ -76,3 +76,7 @@ getSupportedLearnerProperties = function(type = NA_character_) {
     p[[type]]
 }
 
+#' @export
+hasExpression.Learner = function(par) {
+  any(hasExpression(par$par.set)) || any(vlapply(par$par.vals, is.expression))
+}

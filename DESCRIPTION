@@ -33,10 +33,11 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
-    ParamHelpers (>= 1.8),
+    ParamHelpers (>= 1.9)
 Imports:
     BBmisc (>= 1.10),
     ggplot2,
+    ParamHelpers (>= 1.9),
     stats,
     stringi,
     checkmate (>= 1.8.1),

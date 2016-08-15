@@ -24,7 +24,7 @@ test_that("expressions in learners", {
   expect_true(is.expression(x1))
   expect_true(!is.expression(x2))
   expect_equal(x2, binaryclass.task$task.desc$has.blocking)
-  
+
   ## (4) expressions within hyperparameters
   x1 = lrn1$par.vals$minsplit
   x2 = lrn2$par.vals$minsplit
@@ -48,9 +48,22 @@ test_that("expressions in parameter sets", {
     makeDiscreteParam("sigma", values = expression(list(p, k)))
   )
   ps2 = evaluateParset(par.set = ps1, task = binaryclass.task)
-  
+
   ## expressions within parameter sets
   expect_equal(ps2$pars$C$lower, 2L)
   expect_equal(ps2$pars$C$upper, 208L)
   expect_equal(ps2$pars$sigma$values, list("60" = 60, "2" = 2))
+})
+
+test_that("tuning works with expressions", {
+  task = multiclass.small.task
+  lrn = makeLearner("classif.rpart")
+  lrn = makeFilterWrapper(lrn, fw.method = "kruskal.test")
+  ps = makeParamSet(
+    makeIntegerParam("fw.abs", lower = 1, upper = expression(ceiling(n/2)))
+  )
+  ctrl = makeTuneControlRandom(maxit = 5)
+  res = tuneParams(lrn, task = task, resampling = hout, par.set = ps, control = ctrl)
+  res = as.data.frame(res$opt.path)
+  expect_integer(res$fw.abs, lower = 1, upper = ceiling(getTaskSize(task)/2), any.missing = FALSE)
 })

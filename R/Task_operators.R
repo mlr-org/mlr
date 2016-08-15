@@ -254,7 +254,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
   checkTask(task, "Task")
 
   if (missing(subset)) {
-    subset = NULL 
+    subset = NULL
   } else {
     assert(checkIntegerish(subset), checkLogical(subset))
     if (is.logical(subset))
@@ -266,7 +266,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
   assertLogical(target.extra)
 
   task.features = getTaskFeatureNames(task)
-  
+
   # if supplied check if the input is right and always convert 'features'
   # to character vec
   if (!missing(features)) {
@@ -459,13 +459,13 @@ getTaskWeights = function(task) {
 # features (p), the number of observations (n), the task type (type) and in
 # case of classification tasks the number of class levels (k)
 makeTaskDictionary = function(task) {
-  dict = list()
-  dict$task = task
-  dict$p = getTaskNFeats(task)
-  dict$n = getTaskSize(task)
-  dict$type = getTaskType(task)
+  dict = list(
+    task = task,
+    p = getTaskNFeats(task),
+    n = getTaskSize(task),
+    type = getTaskType(task)
+  )
   if (dict$type == "classif")
     dict$k = length(getTaskClassLevels(task))
-  # dict$keys = setdiff(c(names(task$task.desc), names(task), "data", names(task$env$data)), names(dict))
   return(dict)
 }
