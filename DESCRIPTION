@@ -37,7 +37,6 @@ Depends:
 Imports:
     BBmisc (>= 1.10),
     ggplot2,
-    ParamHelpers (>= 1.9),
     stats,
     stringi,
     checkmate (>= 1.8.1),
