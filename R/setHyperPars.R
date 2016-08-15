@@ -19,7 +19,6 @@
 #' @param update
 #'   Whether to update the existing parameter values of the learner or to just give respect to the new ones.
 #'   Default is \code{TRUE} which means that the old parameter values will be kept as long as they are feasible.
-#' @template arg_showinfo
 #' @template ret_learner
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.
@@ -39,7 +38,7 @@ setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE
   assertList(par.vals, names = "named", .var.name = "parameter settings")
   assertFlag(use.mlr.defaults)
   assertFlag(update)
-  setHyperPars2(learner, insert(par.vals, args), use.mlr.defaults = use.mlr.defaults, update = update, show.info = show.info)
+  setHyperPars2(learner, insert(par.vals, args), use.mlr.defaults = use.mlr.defaults, update = update)
 }
 
 #' Only exported for internal use.

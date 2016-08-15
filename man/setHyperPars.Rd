@@ -4,12 +4,12 @@
 \alias{setHyperPars}
 \title{Set the hyperparameters of a learner object.}
 \usage{
-setHyperPars(learner, ..., par.vals = list())
+setHyperPars(learner, ..., par.vals = list(), use.mlr.defaults = TRUE,
+  update = TRUE)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+\item{learner}{[\code{\link{Learner}}]\cr
+The learner.}
 
 \item{...}{[any]\cr
 Named (hyper)parameters with new setting. Alternatively these can be passed
@@ -18,12 +18,21 @@ using the \code{par.vals} argument.}
 \item{par.vals}{[\code{list}]\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
+
+\item{use.mlr.defaults}{[\code{list}]\cr
+Use the mlr.defaults for the given learner.
+This is recommended as they guarantee that the learner works and the underlying function is called with all necessary arguments.
+Default is \code{TRUE} which means that the mlr.defaults will be kept as long as they are feasible.}
+
+\item{update}{Whether to update the existing parameter values of the learner or to just give respect to the new ones.
+Default is \code{TRUE} which means that the old parameter values will be kept as long as they are feasible.}
 }
 \value{
 [\code{\link{Learner}}].
 }
 \description{
-Set the hyperparameters of a learner object.
+Takes the possiby defined mlr defsault of a learners and inserts/overwrites
+with the new settings.
 }
 \note{
 If a named (hyper)parameter can't be found for the given learner, the 3
