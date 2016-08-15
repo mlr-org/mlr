@@ -4,31 +4,16 @@
 \alias{setHyperPars2}
 \title{Only exported for internal use.}
 \usage{
-setHyperPars2(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE,
-  show.info = getMlrOption("show.info"))
+setHyperPars2(learner, par.vals)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}}]\cr
 The learner.}
 
 \item{par.vals}{[\code{list}]\cr
-Optional list of named (hyper)parameter settings. The arguments in
-\code{...} take precedence over values in this list.}
-
-\item{use.mlr.defaults}{[\code{list}]\cr
-Use the mlr.defaults for the given learner.
-This is recommended as they guarantee that the learner works and the underlying function is called with all necessary arguments.
-Default is \code{TRUE} which means that the mlr.defaults will be kept as long as they are feasible.}
-
-\item{update}{Whether to update the existing parameter values of the learner or to just give respect to the new ones.
-Default is \code{TRUE} which means that the old parameter values will be kept as long as they are feasible.}
-
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
+List of named (hyper)parameter settings.}
 }
 \description{
 Only exported for internal use.
 }
-\keyword{internal}
 

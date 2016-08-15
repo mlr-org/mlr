@@ -32,7 +32,7 @@
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
+setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE, update = TRUE) {
   args = list(...)
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
@@ -46,12 +46,12 @@ setHyperPars = function(learner, ..., par.vals = list(), use.mlr.defaults = TRUE
 #' @keywords internal
 #' @inheritParams setHyperPars
 #' @export
-setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
+setHyperPars2 = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE) {
   UseMethod("setHyperPars2")
 }
 
 #' @export
-setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE, show.info = getMlrOption("show.info")) {
+setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, update = TRUE) {
 
   #use existing par.vals
   if (update) {
@@ -72,20 +72,19 @@ setHyperPars2.Learner = function(learner, par.vals, use.mlr.defaults = TRUE, upd
     n = ns[i]
     pd = pars[[n]]
     if (is.null(pd)) {
-      # since we couldn't find the par let's look for 3 most similar
-      if (show.info & on.par.without.desc != "quiet") {
+      if (on.par.without.desc != "quiet") {
+        # no description: stop warn or quiet
+        msg = sprintf("%s: Setting parameter %s without available description object!",
+          learner$id, n)
+        # since we couldn't find the par let's look for 3 most similar
         parnames = names(pars)
         indices = head(order(adist(n, parnames)), 3L)
         possibles = parnames[indices]
         if (length(possibles) > 0L) {
-          messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s",
-            learner$id, n, stri_flatten(possibles, collapse = " "))
+          msg = paste(msg, sprintf("\nDid you mean one of these hyperparameters instead: %s", stri_flatten(possibles, collapse = " ")))
         }
+        msg = paste(msg, "\nYou can switch off this check by using configureMlr!")
       }
-
-      # no description: stop warn or quiet
-      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!",
-        learner$id, n)
 
       if (on.par.without.desc == "stop") {
         stop(msg)
