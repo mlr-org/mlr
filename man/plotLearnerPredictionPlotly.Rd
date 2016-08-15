@@ -9,10 +9,8 @@ plotLearnerPredictionPlotly(learner, task, features = NULL, measures,
   show.colorbar = TRUE, show.err.legend = TRUE, pointsize = 2,
   point.col = NULL, point.alpha = 1, err.mark = "train",
   err.size = pointsize, err.col = NULL, err.alpha = point.alpha,
-  regr.greyscale = FALSE, pretty.names = TRUE, show = NULL,
-  bounding.alpha = 0.5, bounding.point.size = pointsize,
-  bounding.point.legend = FALSE, bounding.region.alphahull = -1,
-  region.alpha = 0.5)
+  regr.greyscale = FALSE, pretty.names = TRUE, show.bounding = TRUE,
+  bounding.alpha = 0.5)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -96,28 +94,12 @@ Default is \code{FALSE}.}
 \item{pretty.names}{[\code{logical{1}}]\cr
 Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 
-\item{show}{[\code{character(1)}]\cr
-For classification: Set the separating method. 3 Possiable values: "bounding.point", "bounding.region" and "region".
-Default is \code{NULL}.}
+\item{show.bounding}{[\code{logical(1)}]\cr
+For classification: Show the bounding region?
+Default is \code{TRUE}.}
 
 \item{bounding.alpha}{[\code{numeric(1)}]\cr
-For \code{show = "bounding.point"}: Set the transparancy of bounding point.
-Default is 0.5.}
-
-\item{bounding.point.size}{[\code{numeric(1)}]\cr
-For \code{show = "bounding.point"}: Set the size of bounding point.
-Default is \code{pointsize}.}
-
-\item{bounding.point.legend}{[\code{logical(1)}]\cr
-For \code{show = "bounding.point"}: Show the legend of bounding point?
-Default is \code{FALSE}.}
-
-\item{bounding.region.alphahull}{[\code{integer(1)}]\cr
-For \code{show = "bounding.region"}: Set the alpha shapes. See \url{https://plot.ly/python/alpha-shapes/}.
-Default is -1.}
-
-\item{region.alpha}{[\code{numeric(1)}]\cr
-For \code{show = "region"}: Set the transparancy of the separating region.
+For \code{show.bounding = TRUE}: Set the transparancy of bounding point.
 Default is 0.5.}
 }
 \value{
@@ -127,8 +109,7 @@ The plotly object.
 Trains the model for 2 or 3 selected features, then displays it via \code{\link[plotly]{plotly}}.
 Good for teaching or exploring models.
 
-For classification, only 3D plots are supported. The separating area will be displayed 
-in three ways "region", "bounding.point" and "bounding.region"
+For classification, only 3D plots are supported.
 
 For regression, only 3D plots are supported. 
 

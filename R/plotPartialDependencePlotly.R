@@ -76,22 +76,13 @@ plotPartialDependencePlotly = function(obj, p = 1,
   
   # Plot classification
   if (obj$task.desc$type == "classif") {
-    grid.dcast.tmp = obj$data
-    grid.dcast.tmp = plyr::ddply(grid.dcast.tmp, c(x1n, x2n), function (x) {x$.id = 1:nrow(x); x})
-    grid.dcast = reshape2::dcast(grid.dcast.tmp, 
-                                 as.formula(paste(paste(x1n, ".id", sep = "+"), x2n, sep = "~")), 
-                                 value.var = "Probability")[, -2]
-    grid.3d = list(x = grid.dcast[,1],
-                   y = as.numeric(colnames(grid.dcast)[-1]),
-                   z = t(as.matrix(grid.dcast[,-1])))
-    
     if (greyscale)
-      plt = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
-                    type = "surface", colorbar = list(title = target), showscale = show.colorbar,
+      plt = plot_ly(data = obj$data, x = get(x1n), y = get(x2n), z = obj$data$Probability,
+                    type = "mesh3d", group = obj$data$Class,
                     colorscale = "Greys")
     else
-      plt = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
-                    type = "surface", colorbar = list(title = target), showscale = show.colorbar)
+      plt = plot_ly(data = obj$data, x = get(x1n), y = get(x2n), z = obj$data$Probability,
+                    type = "mesh3d", group = obj$data$Class)
     
     plt = plt %>% layout(title = title,
                          scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),

@@ -4,8 +4,7 @@
 #' Trains the model for 2 or 3 selected features, then displays it via \code{\link[plotly]{plotly}}.
 #' Good for teaching or exploring models.
 #'
-#' For classification, only 3D plots are supported. The separating area will be displayed 
-#' in three ways "region", "bounding.point" and "bounding.region"
+#' For classification, only 3D plots are supported.
 #'
 #' For regression, only 3D plots are supported. 
 #'
@@ -67,23 +66,11 @@
 #'   For regression: Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
 #' @template arg_prettynames
-#' @param show [\code{character(1)}]\cr
-#'   For classification: Set the separating method. 3 Possiable values: "bounding.point", "bounding.region" and "region".
-#'   Default is \code{NULL}.
+#' @param show.bounding [\code{logical(1)}]\cr
+#'   For classification: Show the bounding region?
+#'   Default is \code{TRUE}.
 #' @param bounding.alpha [\code{numeric(1)}]\cr
-#'   For \code{show = "bounding.point"}: Set the transparancy of bounding point.
-#'   Default is 0.5.
-#' @param bounding.point.size [\code{numeric(1)}]\cr
-#'   For \code{show = "bounding.point"}: Set the size of bounding point.
-#'   Default is \code{pointsize}.
-#' @param bounding.point.legend [\code{logical(1)}]\cr
-#'   For \code{show = "bounding.point"}: Show the legend of bounding point?
-#'   Default is \code{FALSE}.
-#' @param bounding.region.alphahull [\code{integer(1)}]\cr
-#'   For \code{show = "bounding.region"}: Set the alpha shapes. See \url{https://plot.ly/python/alpha-shapes/}.
-#'   Default is -1.
-#' @param region.alpha [\code{numeric(1)}]\cr
-#'   For \code{show = "region"}: Set the transparancy of the separating region.
+#'   For \code{show.bounding = TRUE}: Set the transparancy of bounding point.
 #'   Default is 0.5.
 #' @return The plotly object.
 #' @importFrom data.table dcast
@@ -96,11 +83,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                  pointsize = 2, point.col = NULL, point.alpha = 1, 
                                  err.mark = "train", err.size = pointsize, err.col = NULL, err.alpha = point.alpha,
                                  regr.greyscale = FALSE, pretty.names = TRUE,
-                                 show = NULL, bounding.alpha = 0.5, 
-                                 bounding.point.size = pointsize, 
-                                 bounding.point.legend = FALSE,
-                                 bounding.region.alphahull = -1,
-                                 region.alpha = 0.5) {
+                                 show.bounding = TRUE, bounding.alpha = 0.5) {
   learner = checkLearner(learner)
   assert(
     checkClass(task, "ClassifTask"),
@@ -123,10 +106,6 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     stopf("Classification: currently only 2 or 3 features plots supported in plotLearnerPredictionPlotly(), not: %i", taskdim)
   if (td$type == "regr" && taskdim != 2L)
     stopf("Regression: currently only 2 features plots supported in plotLearnerPredictionPlotly(), not: %i", taskdim)
-  if (taskdim != 2L && !show.point && missing(show))
-    stopf("Either 'show.point' is given TRUE, or 'show' is given a type in ('bounding.point', 'bounding.region', 'region')")
-  if (taskdim != 2L && !missing(show) && show %nin% c("bounding.point", "bounding.region", "region"))
-    stopf("'show' must be one of ('bounding.point', 'bounding.region', 'region')")
   
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -291,55 +270,13 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                       marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])),
                       showlegend = show.err.legend)
         
-        if (!missing(show)) {
-          if (show == "region")
-            p = add_trace(p, data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
-                          type = "mesh3d", mode = "markers", opacity = region.alpha,
-                          color = grid[, target], alphahull = 0)
-          else {
-            index = NULL
-            for (i in 1:c(nrow(pred.grid$data) - 1)) {
-              if (pred.grid$data[i, "response"] != pred.grid$data[i + 1, "response"] && (i %% (gridsize / 5)) != 0) {
-                index = append(index, i)
-              }
-            }
-            index = index[!duplicated(index)]
-            
-            if (show == "bounding.region")
-              p = add_trace(p, data = grid[index, ], x = get(x1n), y = get(x2n), z = get(x3n),
-                            type = "mesh3d", color = get(target), 
-                            alphahull = bounding.region.alphahull, opacity = bounding.alpha)
-            else if (show == "bounding.point")
-              p = add_trace(p, data = grid[index, ], x = get(x1n), y = get(x2n), z = get(x3n),
-                            type = "scatter3d", mode = "markers", opacity = bounding.alpha,
-                            marker = list(size = bounding.point.size), color = grid[index, target],
-                            showlegend = bounding.point.legend)
-          }
-        }
+        if (show.bounding) 
+          p = add_trace(p, data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
+                        type = "mesh3d", group = get(target), opacity = bounding.alpha)
       } else {
-        if (show == "region")
+        if (show.bounding)
           p = plot_ly(data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
-                      type = "mesh3d", mode = "markers", opacity = region.alpha,
-                      color = grid[, target], alphahull = 0)
-        else {
-          index = NULL
-          for (i in 1:c(nrow(pred.grid$data) - 1)) {
-            if (pred.grid$data[i, "response"] != pred.grid$data[i + 1, "response"] && (i %% (gridsize / 5)) != 0) {
-              index = append(index, i)
-            }
-          }
-          index = index[!duplicated(index)]
-          
-          if (show == "bounding.region")
-            p = plot_ly(data = grid[index, ], x = get(x1n), y = get(x2n), z = get(x3n),
-                        type = "mesh3d", color = grid[index, target], 
-                        alphahull = bounding.region.alphahull, opacity = bounding.alpha)
-          else if (show == "bounding.point")
-            p = plot_ly(data = grid[index, ], x = get(x1n), y = get(x2n), z = get(x3n),
-                        type = "scatter3d", mode = "markers", opacity = bounding.alpha,
-                        marker = list(size = bounding.point.size), color = grid[index, target],
-                        showlegend = bounding.point.legend)
-        }
+                      type = "mesh3d", group = get(target), opacity = bounding.alpha)
       }
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
