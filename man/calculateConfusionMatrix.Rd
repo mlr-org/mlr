@@ -2,12 +2,12 @@
 % Please edit documentation in R/calculateConfusionMatrix.R
 \name{calculateConfusionMatrix}
 \alias{calculateConfusionMatrix}
-\alias{print.ConfMatrix}
+\alias{print.ConfusionMatrix}
 \title{Confusion matrix.}
 \usage{
 calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE)
 
-\method{print}{ConfMatrix}(x, both = TRUE, digits = 2, ...)
+\method{print}{ConfusionMatrix}(x, both = TRUE, digits = 2, ...)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -20,7 +20,7 @@ columns.}
 \item{sums}{{\code{logical(1)}}\cr
 If \code{TRUE} add absolute number of observations in each group.}
 
-\item{x}{[\code{\link{ConfMatrix}}]\cr
+\item{x}{[\code{\link{ConfusionMatrix}}]\cr
 Object to print.}
 
 \item{both}{[\code{logical(1)}]\cr
@@ -33,7 +33,7 @@ How many numbers after the decimal point should be printed, only relevant for re
 Currently not used.}
 }
 \value{
-[\code{\link{ConfMatrix}}].
+[\code{\link{ConfusionMatrix}}].
 }
 \description{
 Calculates the confusion matrix for a (possibly resampled) prediction.
@@ -45,15 +45,15 @@ The last bottom right element displays the total amount of errors.
 A list is returned that contains multiple matrices.
 If \code{relative = TRUE} we compute three matrices, one with absolute values and two with relative.
 The relative confusion matrices are normalized based on rows and columns respectively,
-if {FALSE} we only compute the absolute value matrix.
+if \code{FALSE} we only compute the absolute value matrix.
 
 The \code{print} function returns the relative matrices in
 a compact way so that both row and column marginals can be seen in one matrix.
-For details see \code{\link{ConfMatrix}}.
+For details see \code{\link{ConfusionMatrix}}.
 
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
-joined to a vector y. Then yhat is simply tabulated vs y, as if both were computed on
+joined to a vector y. Then yhat is simply tabulated vs. y, as if both were computed on
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 }
 \section{Methods (by generic)}{
@@ -76,7 +76,8 @@ r = crossval("classif.lda", iris.task, iters = 2L)
 print(calculateConfusionMatrix(r$pred))
 }
 \seealso{
-Other performance: \code{\link{ConfMatrix}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},

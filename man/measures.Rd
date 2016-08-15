@@ -355,8 +355,9 @@ He, H. & Garcia, E. A. (2009)
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 }
 \seealso{
-Other performance: \code{\link{ConfMatrix}},
+Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
