@@ -22,7 +22,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "featimp"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
@@ -47,6 +47,23 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 
 #' @export
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "response", "prob")
+  type = ifelse(.learner$predict.type == "response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+#' @export
+getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  ctrl = list(...)
+  if (is.null(ctrl$type)) {
+    ctrl$type = 2L
+  } else {
+    if (ctrl$type == 1L) {
+      has.fiv = .learner$par.vals$importance
+      if (is.null(has.fiv) || has.fiv != TRUE)
+        stop("You need to train the learner with parameter 'importance' set to TRUE")
+    }
+  }
+  
+  randomForest::importance(mod, ctrl$type)[, 1]
 }

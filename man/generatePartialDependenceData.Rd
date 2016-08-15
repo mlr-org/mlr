@@ -157,11 +157,13 @@ Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Mac
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 
 Other partial_dependence: \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependencePlotly}},
