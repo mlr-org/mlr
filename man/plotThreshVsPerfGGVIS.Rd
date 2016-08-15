@@ -54,6 +54,7 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependencePlotly}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerf}}

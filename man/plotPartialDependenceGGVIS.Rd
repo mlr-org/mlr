@@ -33,6 +33,7 @@ Plot partial dependence from \code{\link{generatePartialDependenceData}} using g
 }
 \seealso{
 Other partial_dependence: \code{\link{generatePartialDependenceData}},
+  \code{\link{plotPartialDependencePlotly}},
   \code{\link{plotPartialDependence}}
 
 Other plot: \code{\link{plotBMRBoxplots}},
@@ -44,6 +45,7 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotFilterValues}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependencePlotly}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
