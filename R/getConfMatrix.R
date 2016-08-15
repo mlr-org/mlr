@@ -2,7 +2,7 @@
 #'
 #' @description
 #' 
-#' getConfMatrix is deprecated please use \code{\link{calculateConfusionMatrix}}.
+#' \code{getConfMatrix} is deprecated. Please use \code{\link{calculateConfusionMatrix}}.
 #' 
 #' 
 #' Calculates confusion matrix for (possibly resampled) prediction.
