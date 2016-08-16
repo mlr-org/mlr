@@ -16,6 +16,8 @@ mlr_2.10:
    confusing
 -- setHyperPars: added "show.info" arg
 -- plotThreshVsPerf: added "measures" arg
+-- new "mlrFamilies" manual page which lists all families and the functions
+belonging to it
 
 
 - functions - new
