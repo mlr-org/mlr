@@ -15,6 +15,7 @@ mlr_2.10:
    these now also print info on the total nr of rows and cols and are less
    confusing
 -- setHyperPars: added "show.info" arg
+-- plotThreshVsPerf: added "measures" arg
 
 
 - functions - new
