@@ -117,7 +117,7 @@ test_that("generatePartialDependenceData", {
                                       interaction = TRUE, gridsize = gridsize)
   nfacet = length(unique(dcp$data$Petal.Length))
   ntarget = length(dcp$target)
-  ## removed plotting for this. only facet with integer/factor features
+  plotPartialDependence(dcp, "tile")
 
   ## check that probability outputting classifiers work with ICE
   dcp = generatePartialDependenceData(fcp, input = multiclass.task, features = c("Petal.Width", "Petal.Length"),
@@ -202,7 +202,6 @@ test_that("generatePartialDependenceData", {
                                        bounds = c(-2, 2), gridsize = gridsize)
 
   ## check that tile + contour plots work for two and three features with regression and survival
-  expect_error(plotPartialDependence(dcp, geom = "tile")) ## no multiclass support
   expect_error(plotPartialDependence(ds, geom = "tile")) ## interaction == FALSE
   tfr = generatePartialDependenceData(fr, regr.df, features = c("lstat", "crim", "chas"),
                                       interaction = TRUE, gridsize = gridsize)
