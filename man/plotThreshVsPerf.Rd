@@ -35,10 +35,6 @@ Default is \code{TRUE}.}
 \item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
 In this case ggplot's \code{facet_wrap} will choose the layout itself.}
-
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 }
 \value{
 ggplot2 plot object.
