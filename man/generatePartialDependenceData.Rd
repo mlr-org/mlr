@@ -166,6 +166,7 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{plotFilterValues}}
 
 Other partial_dependence: \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependencePlotly}},
   \code{\link{plotPartialDependence}}
 }
 
