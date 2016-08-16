@@ -1,7 +1,7 @@
-\\\name{mlrFamilies}
-\\\title{mlr documentation families}
-\\\description{List of all mlr documentation families with members.}
-\\\arguments{
+\name{mlrFamilies}
+\title{mlr documentation families}
+\description{List of all mlr documentation families with members.}
+\arguments{
 \item{featsel}{analyzeFeatSelResult, makeFeatSelControl, getFeatSelResult, selectFeatures}
 \item{thresh_vs_perf}{generateThreshVsPerfData, plotThreshVsPerf, plotThreshVsPerfGGVIS, plotROCCurves}
 \item{multilabel}{getMultilabelBinaryPerformances, makeMultilabelBinaryRelevanceWrapper, makeMultilabelClassifierChainsWrapper, makeMultilabelDBRWrapper, makeMultilabelNestedStackingWrapper, makeMultilabelStackingWrapper}
