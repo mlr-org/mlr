@@ -47,6 +47,22 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}}
 
+<<<<<<< HEAD
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotLearningCurveGGVIS}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependencePlotly}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}},
+  \code{\link{plotThreshVsPerfGGVIS}},
+  \code{\link{plotThreshVsPerf}}
+=======
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
@@ -56,5 +72,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
+>>>>>>> upstream/master
 }
 

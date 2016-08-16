@@ -54,7 +54,8 @@ Plot a partial dependence from \code{\link{generatePartialDependenceData}} using
 }
 \seealso{
 Other partial_dependence: \code{\link{generatePartialDependenceData}},
-  \code{\link{plotPartialDependenceGGVIS}}
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependencePlotly}}
 
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
@@ -65,6 +66,7 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependencePlotly}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
