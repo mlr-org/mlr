@@ -142,22 +142,20 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
   measures = checkMeasures(measures, obj)
-  if (class(measures) == "Measure") {
-    measures = list(measures)
-  }
   checkSubset(extractSubList(measures, "id"), extractSubList(obj$measures, "id"))
-
-  if (pretty.names) {
-    mnames = replaceDupeMeasureNames(measures, "name")
-    colnames(obj$data) = mapValues(colnames(obj$data), names(measures), mnames)
-  } else {
-    mnames = names(measures)
-  }
+  mids = replaceDupeMeasureNames(measures, "id")
+  names(measures) = mids
 
   id.vars = "threshold"
   resamp = "iter" %in% colnames(obj$data)
   if (resamp) id.vars = c(id.vars, "iter")
   if ("learner" %in% colnames(obj$data)) id.vars = c(id.vars, "learner")
+  obj$data = obj$data[, c(id.vars, names(measures))]
+
+  if (pretty.names) {
+    mnames = replaceDupeMeasureNames(measures, "name")
+    colnames(obj$data) = mapValues(colnames(obj$data), names(measures), mnames)
+  }
 
   data = setDF(melt(as.data.table(obj$data), measure.vars = mnames, variable.name = "measure", value.name = "performance", id.vars = id.vars))
   if (!is.null(data$learner))
