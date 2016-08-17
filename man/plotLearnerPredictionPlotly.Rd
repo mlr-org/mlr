@@ -5,12 +5,11 @@
 \title{Visualizes a learning algorithm on a 3D data set.}
 \usage{
 plotLearnerPredictionPlotly(learner, task, features = NULL, measures,
-  cv = 10L, ..., gridsize, show.point = TRUE, show.point.legend = TRUE,
-  show.colorbar = TRUE, show.err.legend = TRUE, pointsize = 2,
-  point.col = NULL, point.alpha = 1, err.mark = "train",
-  err.size = pointsize, err.col = NULL, err.alpha = point.alpha,
-  regr.greyscale = FALSE, pretty.names = TRUE, show.bounding = TRUE,
-  bounding.alpha = 0.5)
+  cv = 10L, ..., gridsize, show.point = TRUE, show.legend = TRUE,
+  show.colorbar = TRUE, pointsize = 2, point.col = NULL,
+  point.alpha = 1, err.mark = "train", err.size = pointsize,
+  err.col = NULL, err.alpha = point.alpha, pretty.names = TRUE,
+  show.bounding = TRUE, bounding.alpha = 0.5)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -44,16 +43,12 @@ Default is 500 for 1D and 100 for 2D.}
 Show the input data point?
 Default is \code{TRUE}.}
 
-\item{show.point.legend}{[\code{logical(1)}]\cr
+\item{show.legend}{[\code{logical(1)}]\cr
 For classification: Show the legend of right classified points?
 Default is \code{TRUE}.}
 
 \item{show.colorbar}{[\code{logical(1)}]\cr
 Show the colorbar?
-Default is \code{TRUE}.}
-
-\item{show.err.legend}{[\code{logical(1)}]\cr
-For classification: Show the legend of missclassified points?
 Default is \code{TRUE}.}
 
 \item{pointsize}{[\code{numeric(1)}]\cr
@@ -62,8 +57,9 @@ Default is 2.}
 
 \item{point.col}{= NULL [\code{character(1)}]\cr
 For classification: Set points colors. The color vector muss have either the same length with
-the number of classes of response variable, or just a single color. Colors are accepted in 
-several different ways, see "Color Specification" section in \code{\link[graphics]{par}}.
+the number of classes of response variable, or just a single color.
+For regression: Only single color is supported.
+Colors are accepted in several different ways, see "Color Specification" section in \code{\link[graphics]{par}}.
 Defaul is \code{NULL}.}
 
 \item{point.alpha}{[\code{numeric(1)}]\cr
@@ -80,16 +76,12 @@ For classification: Set misclassified point size.
 Default is \code{pointsize}.}
 
 \item{err.col}{[\code{character(1)}]\cr
-For classification: Set the colors of missclassified data points. 
+For classification: Set the colors of missclassified data points.
 Default value is \code{NULL} with black color.}
 
 \item{err.alpha}{[\code{numeric(1)}]\cr
 For classification: Set the transparancy of missclassified data points.
 Default value is \code{point.alpha}.}
-
-\item{regr.greyscale}{[\code{logical(1)}]\cr
-For regression: Should the plot be greyscale completely?
-Default is \code{FALSE}.}
 
 \item{pretty.names}{[\code{logical{1}}]\cr
 Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
@@ -111,7 +103,7 @@ Good for teaching or exploring models.
 
 For classification, only 3D plots are supported.
 
-For regression, only 3D plots are supported. 
+For regression, only 3D plots are supported.
 
 The plot title displays the model id, its parameters, the training performance
 and the cross-validation performance.

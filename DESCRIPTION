@@ -44,7 +44,7 @@ Imports:
     ggvis,
     methods,
     parallelMap (>= 1.3),
-    plotly,
+    plotly (>= 4.0),
     RColorBrewer,
     shiny,
     survival,

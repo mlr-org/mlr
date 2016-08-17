@@ -5,7 +5,7 @@
 \title{Plot a partial dependence with plotly.}
 \usage{
 plotPartialDependencePlotly(obj, p = 1, show.colorbar = TRUE,
-  greyscale = FALSE, title = NULL)
+  title = NULL)
 }
 \arguments{
 \item{obj}{[\code{PartialDependenceData}]\cr
@@ -19,10 +19,6 @@ Default is \code{1}.}
 \item{show.colorbar}{[\code{logical(1)}]\cr
 Show the colorbar?
 Default is \code{TRUE}.}
-
-\item{greyscale}{[\code{logical(1)}]\cr
-Should the plot be greyscale completely?
-Default is \code{FALSE}.}
 
 \item{title}{[\code{character(1)}]\cr
 Set main title for plots.

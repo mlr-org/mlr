@@ -14,18 +14,14 @@
 #' @param show.colorbar [\code{logical(1)}]\cr
 #'   Show the colorbar?
 #'   Default is \code{TRUE}.
-#' @param greyscale [\code{logical(1)}]\cr
-#'   Should the plot be greyscale completely?
-#'   Default is \code{FALSE}.
 #' @param title [\code{character(1)}]\cr
 #'   Set main title for plots.
 #'   Default is \code{NULL}.
 #' @importFrom data.table dcast
-#' @importFrom plotly plot_ly add_trace %>% layout
+#' @importFrom plotly plot_ly add_trace %>% layout hide_colorbar
 #' @export
 plotPartialDependencePlotly = function(obj, p = 1,
                                        show.colorbar = TRUE,
-                                       greyscale = FALSE,
                                        title = NULL) {
   assertClass(obj, "PartialDependenceData")
   if (length(obj$features) %nin% c(2L, 3L) & obj$interaction)
@@ -59,29 +55,21 @@ plotPartialDependencePlotly = function(obj, p = 1,
                    y = as.numeric(colnames(grid.dcast)[-1]),
                    z = t(as.matrix(grid.dcast[,-1])))
 
-    if (greyscale)
-      plt = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
-                    type = "surface", colorbar = list(title = target), showscale = show.colorbar,
-                    colorscale = "Greys")
-    else
-      plt = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
-                    type = "surface", colorbar = list(title = target), showscale = show.colorbar)
+    plt = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
+                  type = "surface", colorbar = list(title = target))
 
     plt = plt %>% layout(title = title,
                          scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
                                       yaxis = list(title = paste("y: ", x2n, sep = "")),
                                       zaxis = list(title = paste("z: ", target, sep = ""))))
+    if (!show.colorbar)
+      plt = plt %>% hide_colorbar()
   }
 
   # Plot classification
   if (obj$task.desc$type == "classif") {
-    if (greyscale)
-      plt = plot_ly(data = obj$data, x = get(x1n), y = get(x2n), z = obj$data$Probability,
-                    type = "mesh3d", group = obj$data$Class,
-                    colorscale = "Greys")
-    else
-      plt = plot_ly(data = obj$data, x = get(x1n), y = get(x2n), z = obj$data$Probability,
-                    type = "mesh3d", group = obj$data$Class)
+    plt = plot_ly(data = obj$data, x = ~get(x1n), y = ~get(x2n), z = ~obj$data$Probability,
+                  type = "mesh3d", color = ~obj$data$Class)
 
     plt = plt %>% layout(title = title,
                          scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
