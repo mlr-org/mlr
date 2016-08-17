@@ -5,7 +5,7 @@
 \title{Plot a partial dependence with plotly.}
 \usage{
 plotPartialDependencePlotly(obj, p = 1, show.colorbar = TRUE,
-  title = NULL)
+  classif.alpha = 0.5, title = NULL)
 }
 \arguments{
 \item{obj}{[\code{PartialDependenceData}]\cr
@@ -19,6 +19,10 @@ Default is \code{1}.}
 \item{show.colorbar}{[\code{logical(1)}]\cr
 Show the colorbar?
 Default is \code{TRUE}.}
+
+\item{classif.alpha}{[\code{numeric(1)}]\cr
+For classification: Set transparancy of partial dependence region. Accepted value from 0 to 1.
+Default is 0.5.}
 
 \item{title}{[\code{character(1)}]\cr
 Set main title for plots.

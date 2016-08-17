@@ -14,6 +14,9 @@
 #' @param show.colorbar [\code{logical(1)}]\cr
 #'   Show the colorbar?
 #'   Default is \code{TRUE}.
+#' @param classif.alpha [\code{numeric(1)}]\cr
+#'   For classification: Set transparancy of partial dependence region. Accepted value from 0 to 1.
+#'   Default is 0.5.
 #' @param title [\code{character(1)}]\cr
 #'   Set main title for plots.
 #'   Default is \code{NULL}.
@@ -21,13 +24,15 @@
 #' @importFrom plotly plot_ly add_trace %>% layout hide_colorbar
 #' @export
 plotPartialDependencePlotly = function(obj, p = 1,
-                                       show.colorbar = TRUE,
+                                       show.colorbar = TRUE, classif.alpha = 0.5,
                                        title = NULL) {
   assertClass(obj, "PartialDependenceData")
   if (length(obj$features) %nin% c(2L, 3L) & obj$interaction)
     stop("generatePartialDependencePlotly must be called with two or three features to use this argument!")
   if (!obj$interaction)
     stop("generatePartialDependenceData was called with interaction = FALSE!")
+  if (classif.alpha > 1 || classif.alpha < 0)
+    warning("Valid value for classif.alpha is between 0 and 1.")
 
   features = obj$features
 
@@ -69,7 +74,7 @@ plotPartialDependencePlotly = function(obj, p = 1,
   # Plot classification
   if (obj$task.desc$type == "classif") {
     plt = plot_ly(data = obj$data, x = ~get(x1n), y = ~get(x2n), z = ~obj$data$Probability,
-                  type = "mesh3d", color = ~obj$data$Class)
+                  type = "mesh3d", color = ~obj$data$Class, opacity = classif.alpha)
 
     plt = plt %>% layout(title = title,
                          scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
