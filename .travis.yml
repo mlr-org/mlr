@@ -32,6 +32,7 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
+  - ropensci/plotly
 
 before_install:
   - mkdir $HOME/bin
