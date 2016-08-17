@@ -257,9 +257,15 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
 
 
         # Plot missclassified points
-        p = add_trace(p, data = data[data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
-                      type = "scatter3d", mode = "markers", color = ~get(target),
-                      marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])))
+        if (nrow(data[data$.err, ]) == 1L)
+          # fix bug for just one missclassified data.
+          p = add_trace(p, data = data[data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
+                        type = "scatter3d", mode = "markers", name = ~get(target),
+                        marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])))
+        else
+          p = add_trace(p, data = data[data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
+                        type = "scatter3d", mode = "markers",
+                        marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])))
 
         if (show.bounding)
           p = add_trace(p, data = grid, x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
