@@ -31,8 +31,8 @@ test_that("generateThreshVsPerfData", {
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
   ## plotThreshVsPerfGGVIS(pvs)
 
-  pvs = generateThreshVsPerfData(r, list(tpr, fpr), aggregate = FALSE)
-  plotThreshVsPerf(pvs)
+  pvs = generateThreshVsPerfData(r, list(tpr, fpr, acc), aggregate = FALSE)
+  plotThreshVsPerf(pvs, measures = list(tpr, fpr))
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
