@@ -51,15 +51,9 @@
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
-#' @param err.size [\code{numeric(1)}]\cr
-#'   For classification: Set misclassified point size.
-#'   Default is \code{pointsize}.
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Set the colors of misclassified data points.
 #'   Default value is \code{NULL} with black color.
-#' @param err.alpha [\code{numeric(1)}]\cr
-#'   For classification: Set the transparancy of misclassified data points.
-#'   Default value is \code{point.alpha}.
 #' @template arg_prettynames
 #' @param show.bounding [\code{logical(1)}]\cr
 #'   For classification: Show the bounding region?
@@ -70,13 +64,13 @@
 #' @return The plotly object.
 #' @importFrom data.table dcast
 #' @importFrom stringi stri_paste
-#' @importFrom RColorBrewer brewer.pal
+#' @importFrom grDevices palette
 #' @importFrom plotly plot_ly add_trace %>% layout toRGB hide_colorbar hide_legend
 #' @export
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                        gridsize, show.point = TRUE, show.legend = TRUE, show.colorbar = TRUE,
                                        pointsize = 2, point.col = NULL, point.alpha = 1,
-                                       err.mark = "train", err.size = pointsize, err.col = NULL, err.alpha = point.alpha,
+                                       err.mark = "train", err.col = NULL,
                                        pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5) {
   learner = checkLearner(learner)
   assert(
@@ -192,23 +186,34 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
 
     if (!is.null(point.col)){
       if (length(point.col) == length(levels(y)))
-        data$.cols = factor(data[, target], levels = levels(data[, target]), labels = point.col)
+        data$.cols = toRGB(factor(data[, target], levels = levels(data[, target]), labels = point.col))
       else if (length(point.col) == 1L)
-        data$.cols = point.col
+        data$.cols = toRGB(point.col)
       else
         warning("point.col must have either the same length with classes of response variable, or just single color!")
     }
+    else if (all(suppressWarnings(palette() == c("black", "red", "green3", "blue", "cyan", "magenta", "yellow", "gray")))) {
+      palette(palette()[-1])
+      data$.cols = toRGB(as.numeric(data[, target]))
+    }
+    else
+      data$.cols = toRGB(as.numeric(data[, target]))
 
     if (!is.null(err.col)){
       if (length(err.col) == length(levels(y)))
-        data$.errcols = factor(data[, target], levels = levels(data[, target]), labels = err.col)
+        data$.errcols = toRGB(factor(data[, target], levels = levels(data[, target]), labels = err.col))
       else if (length(err.col) == 1L)
-        data$.errcols = err.col
+        data$.errcols = toRGB(err.col)
       else
         warning("err.col must have either the same length with classes of response variable, or just a single color!")
     }
     else
-      data$.errcols = "black"
+      data$.errcols = toRGB("black")
+
+    if (any(toRGB(unique(data$.errcols)) %in% toRGB(unique(data$.cols))))
+      warning("At least one of the err.col have the same color with point.col!")
+
+    data[data$.err, ".cols"] = data[data$.err, ".errcols"]
 
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
@@ -244,27 +249,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     }
     if (taskdim == 3L) {
       if (show.point) {
-        # Plot right classified points
-        if (!is.null(point.col))
-          p = plot_ly(data = data[!data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
-                      type = "scatter3d", mode = "markers", color = ~get(target),
-                      marker = list(size = pointsize, opacity = point.alpha, color = toRGB(data[!data$.err, ".cols"])))
-        else
-          p = plot_ly(data = data[!data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
-                      type = "scatter3d", mode = "markers", color = ~get(target),
-                      marker = list(size = pointsize, opacity = point.alpha))
-
-
-        # Plot misclassified points
-        if (nrow(data[data$.err, ]) == 1L)
-          # fix bug for just one misclassified data.
-          p = add_trace(p, data = data[data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
-                        type = "scatter3d", mode = "markers", name = ~get(target),
-                        marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])))
-        else
-          p = add_trace(p, data = data[data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
-                        type = "scatter3d", mode = "markers",
-                        marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])))
+        p = plot_ly(data = data, x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
+                    type = "scatter3d", mode = "markers", symbol = ~get(target),
+                    marker = list(size = pointsize, opacity = point.alpha, color = data[, ".cols"]))
 
         if (show.bounding)
           p = add_trace(p, data = grid, x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),

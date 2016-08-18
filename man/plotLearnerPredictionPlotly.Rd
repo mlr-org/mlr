@@ -7,9 +7,8 @@
 plotLearnerPredictionPlotly(learner, task, features = NULL, measures,
   cv = 10L, ..., gridsize, show.point = TRUE, show.legend = TRUE,
   show.colorbar = TRUE, pointsize = 2, point.col = NULL,
-  point.alpha = 1, err.mark = "train", err.size = pointsize,
-  err.col = NULL, err.alpha = point.alpha, pretty.names = TRUE,
-  show.bounding = TRUE, bounding.alpha = 0.5)
+  point.alpha = 1, err.mark = "train", err.col = NULL,
+  pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -71,17 +70,9 @@ For classification: Either mark error of the model on the training data (\dQuote
 during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 Default is \dQuote{train}.}
 
-\item{err.size}{[\code{numeric(1)}]\cr
-For classification: Set misclassified point size.
-Default is \code{pointsize}.}
-
 \item{err.col}{[\code{character(1)}]\cr
 For classification: Set the colors of misclassified data points.
 Default value is \code{NULL} with black color.}
-
-\item{err.alpha}{[\code{numeric(1)}]\cr
-For classification: Set the transparancy of misclassified data points.
-Default value is \code{point.alpha}.}
 
 \item{pretty.names}{[\code{logical{1}}]\cr
 Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
