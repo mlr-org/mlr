@@ -104,11 +104,11 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
 
-  if (missing(gridsize)) {
+  if (missing(gridsize))
     gridsize = ifelse(taskdim == 1L, 500, 100)
-  } else {
-    gridsize = asCount(gridsize)
-  }
+  else
+    assertNumeric(gridsize)
+
   assertNumber(pointsize, lower = 0)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
 
