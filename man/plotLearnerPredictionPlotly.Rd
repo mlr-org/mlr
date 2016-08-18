@@ -76,11 +76,11 @@ For classification: Set misclassified point size.
 Default is \code{pointsize}.}
 
 \item{err.col}{[\code{character(1)}]\cr
-For classification: Set the colors of missclassified data points.
+For classification: Set the colors of misclassified data points.
 Default value is \code{NULL} with black color.}
 
 \item{err.alpha}{[\code{numeric(1)}]\cr
-For classification: Set the transparancy of missclassified data points.
+For classification: Set the transparancy of misclassified data points.
 Default value is \code{point.alpha}.}
 
 \item{pretty.names}{[\code{logical{1}}]\cr

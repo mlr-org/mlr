@@ -55,10 +55,10 @@
 #'   For classification: Set misclassified point size.
 #'   Default is \code{pointsize}.
 #' @param err.col [\code{character(1)}]\cr
-#'   For classification: Set the colors of missclassified data points.
+#'   For classification: Set the colors of misclassified data points.
 #'   Default value is \code{NULL} with black color.
 #' @param err.alpha [\code{numeric(1)}]\cr
-#'   For classification: Set the transparancy of missclassified data points.
+#'   For classification: Set the transparancy of misclassified data points.
 #'   Default value is \code{point.alpha}.
 #' @template arg_prettynames
 #' @param show.bounding [\code{logical(1)}]\cr
@@ -80,8 +80,8 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                        pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5) {
   learner = checkLearner(learner)
   assert(
-    assertClass(task, "ClassifTask"),
-    assertClass(task, "RegrTask")
+    checkClass(task, "ClassifTask"),
+    checkClass(task, "RegrTask")
   )
   td = getTaskDescription(task)
 
@@ -257,9 +257,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                       marker = list(size = pointsize, opacity = point.alpha))
 
 
-        # Plot missclassified points
+        # Plot misclassified points
         if (nrow(data[data$.err, ]) == 1L)
-          # fix bug for just one missclassified data.
+          # fix bug for just one misclassified data.
           p = add_trace(p, data = data[data$.err, ], x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
                         type = "scatter3d", mode = "markers", name = ~get(target),
                         marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])))
