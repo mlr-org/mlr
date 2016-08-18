@@ -25,7 +25,7 @@
 #'   Parameters for \code{learner}.
 #' @param gridsize [\code{integer(1)}]\cr
 #'   Grid resolution per axis for background predictions.
-#'   Default is 500 for 1D and 100 for 2D.
+#'   Default is 100 for 2D and 20 for 3D.
 #' @param show.point [\code{logical(1)}]\cr
 #'   Show the input data point?
 #'   Default is \code{TRUE}.
@@ -105,7 +105,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   cv = asCount(cv)
 
   if (missing(gridsize))
-    gridsize = ifelse(taskdim == 1L, 500, 100)
+    gridsize = ifelse(taskdim == 2L, 100, 20)
   else
     assertNumeric(gridsize)
 
@@ -156,9 +156,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   }
 
   # grid for predictions
-  if (taskdim == 1L) {
-    grid = data.frame(x = seq(min(x1), max(x1), length.out = gridsize))
-  } else if (taskdim == 2L) {
+  if (taskdim == 2L) {
     # setup data frames for ggplot. grid = background, data = points
     grid = expand.grid(
       seq(min(x1), max(x1), length.out = gridsize),
@@ -166,9 +164,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     )
   } else if (taskdim == 3L) {
     grid = expand.grid(
-      seq(min(x1), max(x1), length.out = gridsize / 5),
-      seq(min(x2), max(x2), length.out = gridsize / 5),
-      seq(min(x3), max(x3), length.out = gridsize / 5)
+      seq(min(x1), max(x1), length.out = gridsize),
+      seq(min(x2), max(x2), length.out = gridsize),
+      seq(min(x3), max(x3), length.out = gridsize)
     )
   }
   colnames(grid) = features

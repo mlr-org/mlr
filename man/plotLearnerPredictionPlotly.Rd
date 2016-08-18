@@ -37,7 +37,7 @@ Parameters for \code{learner}.}
 
 \item{gridsize}{[\code{integer(1)}]\cr
 Grid resolution per axis for background predictions.
-Default is 500 for 1D and 100 for 2D.}
+Default is 100 for 2D and 20 for 3D.}
 
 \item{show.point}{[\code{logical(1)}]\cr
 Show the input data point?
