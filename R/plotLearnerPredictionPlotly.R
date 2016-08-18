@@ -69,6 +69,7 @@
 #'   Default is 0.5.
 #' @return The plotly object.
 #' @importFrom data.table dcast
+#' @importFrom stringi stri_paste
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom plotly plot_ly add_trace %>% layout toRGB hide_colorbar hide_legend
 #' @export
@@ -95,7 +96,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type == "classif" && taskdim %nin% c(2L, 3L))
+  if (td$type == "classif" && !(taskdim %in% c(2L, 3L)))
     stopf("Classification: currently only 2 or 3 features plots supported in plotLearnerPredictionPlotly(), not: %i", taskdim)
   if (td$type == "regr" && taskdim != 2L)
     stopf("Regression: currently only 2 features plots supported in plotLearnerPredictionPlotly(), not: %i", taskdim)
@@ -184,12 +185,12 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
 
   if (td$type == "classif") {
-    data$.err = if (err.mark == "train")
-      (y != yhat)
+    if (err.mark == "train")
+      data$.err = (y != yhat)
     else if (err.mark == "cv")
-      y != pred.cv$data[order(pred.cv$data$id), "response"]
+      data$.err = (y != pred.cv$data[order(pred.cv$data$id), "response"])
     else
-      NULL
+      data$.err = NULL
 
     if (!is.null(point.col)){
       if (length(point.col) == length(levels(y)))
@@ -215,7 +216,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       cdata = cbind(pred.grid, grid)
       cdata$nresponse = apply(pred.grid$data[, -ncol(pred.grid$data)], 1, max)
 
-      grid.dcast = data.table::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
+      grid.dcast = data.table::dcast(cdata, as.formula(stri_paste(x1n, x2n, sep = "~")), value.var = "nresponse")
       grid.3d = list(x = grid.dcast[,1],
                      y = as.numeric(colnames(grid.dcast)[-1]),
                      z = t(as.matrix(grid.dcast[,-1])))
@@ -238,8 +239,8 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       if (!show.colorbar)
         p = p %>% hide_colorbar()
       p = p %>% layout(title = title,
-                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
-                                    yaxis = list(title = paste("y: ", x2n, sep = "")),
+                       scene = list(xaxis = list(title = stri_paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = stri_paste("y: ", x2n, sep = "")),
                                     zaxis = list(title = "z: f(x,y)", range = c(0, 1))),
                        legend = list(xanchor = "right"))
     }
@@ -278,13 +279,13 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       if (!show.legend)
         p = p %>% hide_legend()
       p = p %>% layout(title = title,
-                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
-                                    yaxis = list(title = paste("y: ", x2n, sep = "")),
-                                    zaxis = list(title = paste("z: ", x3n, sep = ""))))
+                       scene = list(xaxis = list(title = stri_paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = stri_paste("y: ", x2n, sep = "")),
+                                    zaxis = list(title = stri_paste("z: ", x3n, sep = ""))))
     }
   } else if (td$type == "regr" && taskdim == 2L) {
     # reform grid data
-    grid.dcast = data.table::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
+    grid.dcast = data.table::dcast(grid, as.formula(stri_paste(x1n, x2n, sep = "~")), value.var = target)
     # generate 3D plots data list
     grid.3d = list(x = grid.dcast[,1],
                    y = as.numeric(colnames(grid.dcast)[-1]),
@@ -295,9 +296,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                 type = "surface",  name = "Learned Value", colorbar = list(title = target))
     # set plot parameters
     p = p %>% layout(title = title,
-                     scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
-                                  yaxis = list(title = paste("y: ", x2n, sep = "")),
-                                  zaxis = list(title = paste("z: ", target, sep = ""))))
+                     scene = list(xaxis = list(title = stri_paste("x: ", x1n, sep = "")),
+                                  yaxis = list(title = stri_paste("y: ", x2n, sep = "")),
+                                  zaxis = list(title = stri_paste("z: ", target, sep = ""))))
     # add real value trace
     if (show.point) {
       if (is.null(point.col))
