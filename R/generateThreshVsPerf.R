@@ -155,6 +155,8 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
   if (pretty.names) {
     mnames = replaceDupeMeasureNames(measures, "name")
     colnames(obj$data) = mapValues(colnames(obj$data), names(measures), mnames)
+  } else {
+    mnames = names(measures)
   }
 
   data = setDF(melt(as.data.table(obj$data), measure.vars = mnames, variable.name = "measure", value.name = "performance", id.vars = id.vars))
