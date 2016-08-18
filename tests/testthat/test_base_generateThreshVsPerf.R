@@ -24,15 +24,15 @@ test_that("generateThreshVsPerfData", {
   rdesc = makeResampleDesc("CV", iters = 2L)
   r = resample(lrn, binaryclass.task, rdesc)
   pvs = generateThreshVsPerfData(r, list(tpr, fpr))
-  plotThreshVsPerf(pvs)
+  plotThreshVsPerf(pvs, pretty.names = FALSE)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(pvs$measures)))
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
   ## plotThreshVsPerfGGVIS(pvs)
 
-  pvs = generateThreshVsPerfData(r, list(tpr, fpr), aggregate = FALSE)
-  plotThreshVsPerf(pvs)
+  pvs = generateThreshVsPerfData(r, list(tpr, fpr, acc), aggregate = FALSE)
+  plotThreshVsPerf(pvs, measures = list(tpr, fpr))
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
