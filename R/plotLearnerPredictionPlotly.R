@@ -80,8 +80,8 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                        pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5) {
   learner = checkLearner(learner)
   assert(
-    checkClass(task, "ClassifTask"),
-    checkClass(task, "RegrTask")
+    testClass(task, "ClassifTask"),
+    testClass(task, "RegrTask")
   )
   td = getTaskDescription(task)
 
