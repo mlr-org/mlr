@@ -3,12 +3,15 @@
 \name{LearnerProperties}
 \alias{LearnerProperties}
 \alias{getLearnerProperties}
+\alias{hasExpression.Learner}
 \alias{hasLearnerProperties}
 \title{Query properties of learners.}
 \usage{
 getLearnerProperties(learner)
 
 hasLearnerProperties(learner, props)
+
+\method{hasExpression}{Learner}(obj)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -17,6 +20,9 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{props}{[\code{character}]\cr
 Vector of properties to query.}
+
+\item{obj}{[\code{\link{Learner}} | \code{character(1)}]\cr
+Same as \code{learner} above.}
 }
 \value{
 \code{getLearnerProperties} returns a character vector with learner properties.

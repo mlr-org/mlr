@@ -76,7 +76,10 @@ getSupportedLearnerProperties = function(type = NA_character_) {
     p[[type]]
 }
 
+#' @param obj [\code{\link{Learner}} | \code{character(1)}]\cr
+#' Same as \code{learner} above.
+#' @rdname LearnerProperties
 #' @export
-hasExpression.Learner = function(par) {
-  any(hasExpression(par$par.set)) || any(vlapply(par$par.vals, is.expression))
+hasExpression.Learner = function(obj) {
+  any(hasExpression(obj$par.set)) || any(vlapply(obj$par.vals, is.expression))
 }

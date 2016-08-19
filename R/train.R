@@ -30,9 +30,11 @@
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
-  if (hasExpression(learner))
-    learner = evaluateLearner(learner = learner, task = task)
   assertClass(task, classes = "Task")
+  if (hasExpression(learner)) {
+    dict = getTaskDictionary(task = task)
+    learner = evaluateParamExpressions(obj = learner, dict = dict)
+  }
   if (missing(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {

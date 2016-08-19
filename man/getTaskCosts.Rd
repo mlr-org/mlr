@@ -24,6 +24,7 @@ Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskData}},
   \code{\link{getTaskDescription}},
+  \code{\link{getTaskDictionary}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},

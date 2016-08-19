@@ -29,14 +29,13 @@ Set the hyperparameters of a learner object.
 If a named (hyper)parameter can't be found for the given learner, the 3
 closest (hyper)parameter names will be output in case the user mistyped.
 
-Learners can contain task dependent expressions, see \code{\link{evaluateLearner}} for more information.
+Learners can contain task dependent expressions, see \code{\link{evaluateParamExpressions}} for more information.
 }
 \examples{
 cl1 = makeLearner("classif.ksvm", sigma = 1)
 cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 cl3 = setHyperPars(cl2, C = expression(round(n / p)))
 print(cl1)
-# note the now set and altered hyperparameters:
 print(cl2)
 print(cl3)
 }

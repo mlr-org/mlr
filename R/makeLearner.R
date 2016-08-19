@@ -43,7 +43,7 @@
 #' @return [\code{\link{Learner}}].
 #' @family learner
 #' @export
-#' @note Learners can contain task dependent expressions, see \code{\link{evaluateLearner}} for more information.
+#' @note Learners can contain task dependent expressions, see \code{\link{evaluateParamExpressions}} for more information.
 #' @aliases Learner
 #' @seealso [\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]
 #' @examples
