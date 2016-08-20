@@ -170,7 +170,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   }
 
   # Check point.col
-  if (length(point.col) != length(levels(data[, target])))
+  if (!is.null(point.col) && length(point.col) != length(levels(data[, target])))
     warning("point.col have different length with the levels of target!")
 
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
