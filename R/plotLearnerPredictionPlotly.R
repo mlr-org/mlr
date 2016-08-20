@@ -188,8 +188,6 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     else
       data$.err = NULL
 
-    data$.correct = factor(data$.err, levels = levels(as.factor(data$.err)), labels = c("Correct", "Misclassified"))
-
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
 
@@ -228,6 +226,11 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                        legend = list(xanchor = "right"))
     }
     if (taskdim == 3L) {
+      if (all(!data$.err))
+        data$.correct = as.factor("Correct")
+      else
+        data$.correct = factor(data$.err, levels = levels(as.factor(data$.err)), labels = c("Correct", "Misclassified"))
+
       if (show.point) {
         p = plot_ly(data = data, x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
                     type = "scatter3d", mode = "markers", symbol = data$.correct,
