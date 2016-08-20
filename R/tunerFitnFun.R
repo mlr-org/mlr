@@ -33,10 +33,16 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   ps2 = par.set
   for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
-  f = smoof::makeSingleObjectiveFunction(
+  
+  smooffun = if (inherits(ctrl,"TuneMultiCritControl")) 
+    function(...) smoof::makeMultiObjectiveFunction(n.objectives = length(measures),  ...) 
+  else 
+    smoof::makeSingleObjectiveFunction
+  
+  f = smooffun(
     fn = function(x) {
       tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
-  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
+  }, par.set = ps2, has.simple.signature = FALSE)
 }
 
 # multiple xs in parallel
