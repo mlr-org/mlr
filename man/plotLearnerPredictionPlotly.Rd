@@ -8,7 +8,7 @@ plotLearnerPredictionPlotly(learner, task, features = NULL, measures,
   cv = 10L, ..., gridsize, show.point = TRUE, show.legend = TRUE,
   show.colorbar = TRUE, pointsize = 2, point.col = NULL,
   point.alpha = 1, err.mark = "train", pretty.names = TRUE,
-  show.bounding = TRUE, bounding.alpha = 0.5)
+  show.bounding = TRUE, bounding.alpha = 0.5, posClass = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -65,7 +65,7 @@ Defaul is \code{NULL}.}
 For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
 Default is 1.}
 
-\item{err.mark}{[\code{character(1)}]:
+\item{err.mark}{[\code{character(1)}]\cr
 For classification: Either mark error of the model on the training data (\dQuote{train}) or
 during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 Default is \dQuote{train}.}
@@ -80,6 +80,10 @@ Default is \code{TRUE}.}
 \item{bounding.alpha}{[\code{numeric(1)}]\cr
 For \code{show.bounding = TRUE}: Set the transparancy of bounding point.
 Default is 0.5.}
+
+\item{posClass}{[\code{character(1)}]\cr
+For multiclass problem: Set the positive class for plotting probability surface.
+Default is \code{NULL}.}
 }
 \value{
 The plotly object.

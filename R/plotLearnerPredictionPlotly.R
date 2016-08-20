@@ -47,7 +47,7 @@
 #' @param point.alpha [\code{numeric(1)}]\cr
 #'   For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
 #'   Default is 1.
-#' @param err.mark [\code{character(1)}]:
+#' @param err.mark [\code{character(1)}]\cr
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
@@ -58,6 +58,9 @@
 #' @param bounding.alpha [\code{numeric(1)}]\cr
 #'   For \code{show.bounding = TRUE}: Set the transparancy of bounding point.
 #'   Default is 0.5.
+#' @param posClass [\code{character(1)}]\cr
+#'   For multiclass problem: Set the positive class for plotting probability surface.
+#'   Default is \code{NULL}.
 #' @return The plotly object.
 #' @importFrom data.table dcast
 #' @importFrom stringi stri_paste
@@ -67,7 +70,8 @@
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                        gridsize, show.point = TRUE, show.legend = TRUE, show.colorbar = TRUE,
                                        pointsize = 2, point.col = NULL, point.alpha = 1, err.mark = "train",
-                                       pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5) {
+                                       pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5,
+                                       posClass = NULL) {
   learner = checkLearner(learner)
   assert(
     testClass(task, "ClassifTask"),
@@ -188,7 +192,14 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
 
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
-      posClass = task$task.desc$positive
+
+      if (is.null(posClass))
+        if (is.na(task$task.desc$positive))
+          posClass = levels(data[, target])[1]
+        else
+          posClass = task$task.desc$positive
+      else
+        posClass = posClass
 
       grid.dcast = data.table::dcast(cdata, as.formula(stri_paste(x1n, x2n, sep = "~")),
                                      value.var = stri_paste("prob.", posClass))
@@ -198,14 +209,23 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
 
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
                   type = "surface", name = "Probability",
-                  colorbar = list(title = stri_paste("P(y = \"", posClass, "\" | X)")))
+                  colorbar = list(title = "P(y|X)"))
+
+      if (show.point) {
+        data$.z = 0
+        p = add_trace(p, data = data, x = ~get(x1n), y = ~get(x2n), z = ~.z,
+                      type = "scatter3d", mode = "markers",
+                      color = ~get(target), colors = point.col,
+                      marker = list(size = pointsize, opacity = point.alpha))
+      }
 
       if (!show.colorbar)
         p = p %>% hide_colorbar()
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = stri_paste("x: ", x1n, sep = "")),
                                     yaxis = list(title = stri_paste("y: ", x2n, sep = "")),
-                                    zaxis = list(title = stri_paste("z : P(y = \"", posClass, "\" | X)"), range = c(0, 1))))
+                                    zaxis = list(title = stri_paste("z : P(y = \"", posClass, "\" | X)"), range = c(0, 1))),
+                       legend = list(xanchor = "right"))
     }
     if (taskdim == 3L) {
       if (show.point) {
