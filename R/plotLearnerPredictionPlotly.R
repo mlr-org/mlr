@@ -51,9 +51,6 @@
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
-#' @param err.col [\code{character(1)}]\cr
-#'   For classification: Set the colors of misclassified data points.
-#'   Default value is \code{NULL} with black color.
 #' @template arg_prettynames
 #' @param show.bounding [\code{logical(1)}]\cr
 #'   For classification: Show the bounding region?
@@ -69,8 +66,7 @@
 #' @export
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                        gridsize, show.point = TRUE, show.legend = TRUE, show.colorbar = TRUE,
-                                       pointsize = 2, point.col = NULL, point.alpha = 1,
-                                       err.mark = "train", err.col = NULL,
+                                       pointsize = 2, point.col = NULL, point.alpha = 1, err.mark = "train",
                                        pretty.names = TRUE, show.bounding = TRUE, bounding.alpha = 0.5) {
   learner = checkLearner(learner)
   assert(
@@ -119,7 +115,6 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   y = getTaskTargets(task)
   x1n = features[1L]
   x1 = data[, x1n]
-
 
   # predictions
   # if learner supports prob or se, enable it
@@ -173,6 +168,11 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   } else {
     lrn.str = learner$id
   }
+
+  # Check point.col
+  if (length(point.col) != length(levels(data[, target])))
+    warning("point.col have different length with the levels of target!")
+
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
 
@@ -184,74 +184,35 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     else
       data$.err = NULL
 
-    if (!is.null(point.col)){
-      if (length(point.col) == length(levels(y)))
-        data$.cols = toRGB(factor(data[, target], levels = levels(data[, target]), labels = point.col))
-      else if (length(point.col) == 1L)
-        data$.cols = toRGB(point.col)
-      else
-        warning("point.col must have either the same length with classes of response variable, or just single color!")
-    }
-    else if (all(suppressWarnings(palette() == c("black", "red", "green3", "blue", "cyan", "magenta", "yellow", "gray")))) {
-      palette(palette()[-1])
-      data$.cols = toRGB(as.numeric(data[, target]))
-    }
-    else
-      data$.cols = toRGB(as.numeric(data[, target]))
-
-    if (!is.null(err.col)){
-      if (length(err.col) == length(levels(y)))
-        data$.errcols = toRGB(factor(data[, target], levels = levels(data[, target]), labels = err.col))
-      else if (length(err.col) == 1L)
-        data$.errcols = toRGB(err.col)
-      else
-        warning("err.col must have either the same length with classes of response variable, or just a single color!")
-    }
-    else
-      data$.errcols = toRGB("black")
-
-    if (any(toRGB(unique(data$.errcols)) %in% toRGB(unique(data$.cols))))
-      warning("At least one of the err.col have the same color with point.col!")
-
-    data[data$.err, ".cols"] = data[data$.err, ".errcols"]
+    data$.correct = factor(data$.err, levels = levels(as.factor(data$.err)), labels = c("Correct", "Misclassified"))
 
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
-      cdata$nresponse = apply(pred.grid$data[, -ncol(pred.grid$data)], 1, max)
+      posClass = task$task.desc$positive
 
-      grid.dcast = data.table::dcast(cdata, as.formula(stri_paste(x1n, x2n, sep = "~")), value.var = "nresponse")
+      grid.dcast = data.table::dcast(cdata, as.formula(stri_paste(x1n, x2n, sep = "~")),
+                                     value.var = stri_paste("prob.", posClass))
       grid.3d = list(x = grid.dcast[,1],
                      y = as.numeric(colnames(grid.dcast)[-1]),
                      z = t(as.matrix(grid.dcast[,-1])))
 
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
-                  type = "surface", colorbar = list(title = "f(x,y)"), name = "Density")
-      if (show.point) {
-        data$.z = 0
-        if (!is.null(point.col))
-          p = add_trace(p, data = data, x = ~get(x1n), y = ~get(x2n), z = ~data$.z,
-                        type = "scatter3d", mode = "markers", color = ~get(target),
-                        marker = list(size = pointsize, color = toRGB(data$.cols)))
-        else
-          p = add_trace(p, data = data, x = ~get(x1n), y = ~get(x2n), z = ~data$.z,
-                        type = "scatter3d", mode = "markers", color = ~get(target),
-                        marker = list(size = pointsize))
-      }
-      if (!show.legend)
-        p = p %>% hide_legend()
+                  type = "surface", name = "Probability",
+                  colorbar = list(title = stri_paste("P(y = \"", posClass, "\" | X)")))
+
       if (!show.colorbar)
         p = p %>% hide_colorbar()
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = stri_paste("x: ", x1n, sep = "")),
                                     yaxis = list(title = stri_paste("y: ", x2n, sep = "")),
-                                    zaxis = list(title = "z: f(x,y)", range = c(0, 1))),
-                       legend = list(xanchor = "right"))
+                                    zaxis = list(title = stri_paste("z : P(y = \"", posClass, "\" | X)"), range = c(0, 1))))
     }
     if (taskdim == 3L) {
       if (show.point) {
         p = plot_ly(data = data, x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
-                    type = "scatter3d", mode = "markers", symbol = ~get(target),
-                    marker = list(size = pointsize, opacity = point.alpha, color = data[, ".cols"]))
+                    type = "scatter3d", mode = "markers", symbol = data$.correct,
+                    color = ~get(target), colors = point.col,
+                    marker = list(size = pointsize, opacity = point.alpha))
 
         if (show.bounding)
           p = add_trace(p, data = grid, x = ~get(x1n), y = ~get(x2n), z = ~get(x3n),
