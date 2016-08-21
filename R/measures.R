@@ -770,16 +770,13 @@ measureFNR = function(truth, response, negative, positive) {
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
-  note = "Also called precision.",
+  note = "Also called precision. For the edge case, PPV is set to be either 1 or 0 depending on the highest probability prediction is positive(1) or not(0)",
   fun = function(task, model, pred, feats, extra.args) {
     if(pred$predict.type == "prob") {
       prob = getPredictionProbabilities(pred)
-      if(!is.null(dim(df))) {
-        stop('more than one column probability, currently ppv does not support multiclass')
-      }
-    } else{
+    } else {
       prob = NULL
-    }
+      }
     measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive, prob)
   }
 )
@@ -787,23 +784,22 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
 #' @export measurePPV
 #' @rdname measures
 #' @format none
-measurePPV = function(truth, response, positive) {
-  measurePPV = function(truth, response, positive, prob = NULL) {
-    denominator = sum(response == positive)
-    ifelse(denominator == 0, measureEdgeCase(truth, positive, prob), measureTP(truth, response, positive) / denominator)
-    } 
-  measureEdgeCase = function(truth, positive, prob) {
-    if (!is.null(prob)) {
-      rs = sort(prob, index.return =TRUE)
-      erst = ifelse(truth[getLast(rs$ix)]==positive, 1, 0)   
-        } else {
-          erst = NA
-     }
-    #if(is.na(erst)) browser()
-    erst
-  }
-    
 
+measurePPV = function(truth, response, positive, prob = NULL) {
+  denominator = sum(response == positive)
+  ifelse(denominator == 0, measureEdgeCase(truth, positive, prob), measureTP(truth, response, positive) / denominator)
+} 
+measureEdgeCase = function(truth, positive, prob) {
+  if (!is.null(prob)) {
+    rs = sort(prob, index.return =TRUE)
+    erst = ifelse(truth[getLast(rs$ix)]==positive, 1, 0)   
+  } else {
+    erst = NA
+  }
+  erst
+}
+
+  
 #' @export npv
 #' @rdname measures
 #' @format none

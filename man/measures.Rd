@@ -251,7 +251,7 @@ measureFNR(truth, response, negative, positive)
 
 ppv
 
-measurePPV(truth, response, positive)
+measurePPV(truth, response, positive, prob = NULL)
 
 npv
 
