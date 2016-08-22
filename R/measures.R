@@ -785,9 +785,9 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 
-measurePPV = function(truth, response, positive, prob = NULL) {
+measurePPV = function(truth, response, positive, probabilities = NULL) {
   denominator = sum(response == positive)
-  ifelse(denominator == 0, measureEdgeCase(truth, positive, prob), measureTP(truth, response, positive) / denominator)
+  ifelse(denominator == 0, measureEdgeCase(truth, positive, probabilities), measureTP(truth, response, positive) / denominator)
 } 
 measureEdgeCase = function(truth, positive, prob) {
   if (!is.null(prob)) {
