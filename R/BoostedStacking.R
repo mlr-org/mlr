@@ -260,7 +260,7 @@ makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.
   j = sapply(opt.grid, is.factor)
   opt.grid[j] = lapply(opt.grid[j], as.character)
   # checks2
-  if(NROW(opt.grid) < x.best) {
+  if (NROW(opt.grid) < x.best) {
     stopf("'x.best' is %s and cannot be set larger than the number of tuning results in '%s", x.best, quote(tune.result))
   }
   #
@@ -279,7 +279,8 @@ makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.
     #names(trafo) = pars.names
     #pars.list = Map(do.call, trafo, lapply(par.list[names(trafo)], list)) #mapply(do.call, trafo, lapply(par.list[names(trafo)], list))
     # get fix parameters, and final parameter set
-    pars.list.fix = model.multiplexer$base.learners[[cl]]$par.vals
+browser()
+    pars.list.fix = getHyperPars(model.multiplexer$base.learners[[cl]])
     idx = setdiff(names(pars.list.fix), names(pars.list))
     pars.fin = c(pars.list, pars.list.fix[idx])
     # apply all parameters

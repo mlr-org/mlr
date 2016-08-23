@@ -31,7 +31,7 @@ getResponse = function(pred, full.matrix = NULL) {
     }
   } else {
     # for regression case
-    pred$data$response
+    getPredictionResponse(pred)
   }
 }
 
@@ -45,15 +45,7 @@ getPredictionDataNonMulticoll = function(pred) {
     pred = pred$pred
   }
   pt = pred$predict.type
-  td = pred$task.desc
-  # for prediction from predict
-  #if (!is.null(pred$predict.type)) {
-  #  pt = pred$predict.type
-  #  td = pred$task.desc
-  #} else { # from predictions from resample
-  #  pt = pred$pred$predict.type
-  #  td = pred$pred$task.desc
-  #}
+  td = getTaskDescription(pred)
   # if classification with probabilities
   if (pt == "prob") {
       pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
@@ -62,7 +54,7 @@ getPredictionDataNonMulticoll = function(pred) {
       return(pred.matrix)
   } else {
     # for perdict.type = "response"
-    pred$data$response
+    getPredictionResponse(pred)
   }
 }
 
@@ -136,7 +128,6 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
       messagef("[Base Learner] %s is applied. ", bls$id)
     X = list(base.models = model, pred = pred)
   }
-  #print(paste(object.size(r)[1]/1000000, "MB"))
  X 
 }
 
@@ -311,7 +302,6 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
 #'  Named vector containing the frequency of the chosen predictions. 
 #'  Vector names must be set to the model names.
 #' @export
-# FIXME: clean up naming
 
 expandPredList = function(pred.list, freq) {
   assertClass(pred.list, "list")
@@ -321,16 +311,16 @@ expandPredList = function(pred.list, freq) {
   if (!only.preds) stopf("List elements in 'pred.list' are not all of class 'Prediction'")
   
   keep = names(which(freq > 0))
-  freq1 = freq[keep]
-  pred.list1 = pred.list[keep]
-  grid = data.frame(model = names(freq1), freq1, row.names = NULL)
-  expand = as.character(rep(grid$model, grid$freq1)) 
-  pred.list2 = vector("list", length(expand))
-  names(pred.list2) = paste(expand, 1:length(expand), sep = "_")
+  freq = freq[keep]
+  pred.list = pred.list[keep]
+  grid = data.frame(model = names(freq), freq, row.names = NULL)
+  expand = as.character(rep(grid$model, grid$freq)) 
+  pred.list = vector("list", length(expand))
+  names(pred.list) = paste(expand, 1:length(expand), sep = "_")
   
   for (i in seq_along(expand)) {
     use = expand[i]
-    pred.list2[i] = pred.list1[use] 
+    pred.list[i] = pred.list[use] 
   }
- pred.list2
+ pred.list
 }
