@@ -20,6 +20,7 @@
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/)
+* [We have a blog on mlr](https://mlr-org.github.io/)
 
 
 mlr - How to Cite and Citing Publications
