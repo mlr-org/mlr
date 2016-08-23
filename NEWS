@@ -17,8 +17,10 @@ mlr_2.10:
 -- setHyperPars: added "show.info" arg
 -- plotThreshVsPerf: added "measures" arg
 -- new "mlrFamilies" manual page which lists all families and the functions
-belonging to it
-
+   belonging to it
+-- the filter methods have better R docs
+-- we are converging on data.table as a standard internally, this should not
+   change any API behavior on the outside, though
 
 - functions - new
 -- filter: randomForest.importance
@@ -55,6 +57,7 @@ belonging to it
 - measures - general
 
 - measures - new
+-- ssr, qsr, lsr
 
 - measures - renamed
 
