@@ -279,7 +279,6 @@ makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.
     #names(trafo) = pars.names
     #pars.list = Map(do.call, trafo, lapply(par.list[names(trafo)], list)) #mapply(do.call, trafo, lapply(par.list[names(trafo)], list))
     # get fix parameters, and final parameter set
-browser()
     pars.list.fix = getHyperPars(model.multiplexer$base.learners[[cl]])
     idx = setdiff(names(pars.list.fix), names(pars.list))
     pars.fin = c(pars.list, pars.list.fix[idx])

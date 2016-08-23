@@ -315,12 +315,12 @@ expandPredList = function(pred.list, freq) {
   pred.list = pred.list[keep]
   grid = data.frame(model = names(freq), freq, row.names = NULL)
   expand = as.character(rep(grid$model, grid$freq)) 
-  pred.list = vector("list", length(expand))
-  names(pred.list) = paste(expand, 1:length(expand), sep = "_")
+  final.pred.list = vector("list", length(expand))
+  names(final.pred.list) = paste(expand, 1:length(expand), sep = "_")
   
   for (i in seq_along(expand)) {
     use = expand[i]
-    pred.list[i] = pred.list[use] 
+    final.pred.list[i] = pred.list[use] 
   }
- pred.list
+ final.pred.list
 }
