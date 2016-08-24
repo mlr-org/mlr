@@ -12,6 +12,7 @@
 #' \describe{
 #' \item{id [\code{character(1)}]}{Name of the aggregation method.}
 #' \item{name [\code{character(1)}]}{Long name of the aggregation method.}
+#' \item{properties [\code{character}]}{Properties of the aggregation.}
 #' \item{fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]}{Aggregation function.}
 #' }
 #' @name Aggregation
@@ -30,6 +31,12 @@ NULL
 #'   Name of the aggregation method (preferably the same name as the generated function).
 #' @param name [\code{character(1)}]\cr
 #'   Long name of the aggregation method. Default is \code{id}.
+#' @param properties [\code{character}]\cr
+#'   Set of aggregation properties.
+#'   \describe{
+#'     \item{req.train}{Is prediction on train sets required to calculate the aggregation?}
+#'     \item{req.test}{Is prediction on test sets required to calculate the aggregation?}
+#'   }
 #' @param fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]\cr
 #'   Calculates the aggregated performance. In most cases you will only need the performances
 #'   \code{perf.test} and optionally \code{perf.train} on the test and training data sets.
@@ -52,12 +59,13 @@ NULL
 #' @examples
 #' # computes the interquartile range on all performance values
 #' test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",
+#'   properties = "req.test",
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
-makeAggregation = function(id, name = id, fun) {
+makeAggregation = function(id, name = id, properties, fun) {
   assertString(id)
   assertString(name)
-  setClasses(list(id = id, name = name, fun = fun), "Aggregation")
+  makeS3Obj("Aggregation", id = id, name = name, fun = fun, properties = properties)
 }
 
 #' @export

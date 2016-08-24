@@ -16,8 +16,10 @@ measureAggrPrettyName = function(measure) {
   stri_paste(measure$name, measure$aggr$name, sep = ": ")
 }
 
-perfsToString = function(y) {
-  stri_paste(stri_paste(names(y), "=", formatC(y, digits = 3L), sep = ""), 
+# convert a named numvec of perf values (think 'aggr' from resample) into flat string
+# ala <name><sep><value>,...,<name><sep><value>
+perfsToString = function(y, sep = "=") {
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = 3L), sep = ""),
              collapse = ",", sep = " ")
 }
 
