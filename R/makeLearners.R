@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Small helper function that can save some typing when creating mutiple learner objects.
-#' Basically simply calls \code{\link{makeLearner}} multiple times, see there for details.
+#' Calls \code{\link{makeLearner}} multiple times internally.
 #'
 #' @param cls [\code{character}]\cr
 #'   Classes of learners.
@@ -15,13 +15,14 @@
 #' @inheritParams makeLearner
 #' @return [named list of \code{\link{Learner}}]. Named by \code{ids}.
 #' @family learner
+#' @seealso [\code{\link{makeLearner}}]
 #' @export
 #' @examples
 #' makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
 makeLearners = function(cls, ids = NULL, type = NULL, ...) {
   if (!is.null(type)) {
     assertChoice(type, getSupportedTaskTypes())
-    cls = paste(type, cls, sep = ".")
+    cls = stri_paste(type, cls, sep = ".")
   }
   assertCharacter(cls, any.missing = FALSE)
   assertCharacter(ids, any.missing = FALSE, len = length(cls), unique = TRUE, null.ok = TRUE)
