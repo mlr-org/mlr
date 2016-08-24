@@ -21,6 +21,8 @@ mlr_2.10:
 -- the filter methods have better R docs
 -- we are converging on data.table as a standard internally, this should not
    change any API behavior on the outside, though
+-- plotPartialDependence: can create tile plots with joint partial dependence
+   on two features for multiclass classification by facetting across the classes
 
 - functions - new
 -- filter: randomForest.importance
