@@ -21,7 +21,8 @@
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/)
 * [We have a blog on mlr](https://mlr-org.github.io/)
-
+* We are on rank 21 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
+* **If you like the package, please "star" it on Github.**
 
 mlr - How to Cite and Citing Publications
 =========================================
@@ -108,7 +109,6 @@ Features
 * Unit-testing
 * Detailed tutorial
 
-*If you like the package, please "star" it on Github.*
 
 
 News
