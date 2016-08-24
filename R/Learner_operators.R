@@ -52,7 +52,6 @@ getLearnerPackages = function(learner) {
 #' @template ret_ps
 #' @export
 #' @family learner
-#' @seealso [\code{\link{getParamSet}}]
 getLearnerParamSet = function(learner) {
   getParamSet(learner)
 }
@@ -68,7 +67,6 @@ getLearnerParamSet = function(learner) {
 #' @return [\code{list}]. A named list of values.
 #' @export
 #' @family learner
-#' @seealso [\code{\link{getHyperPars}}]
 getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
   learner = checkLearner(learner)
   getHyperPars(learner, for.fun)
