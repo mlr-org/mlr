@@ -1,5 +1,6 @@
 #' @title Get the type of the learner.
 #'
+#' @description Get the type of the learner.
 #' @template arg_learner
 #' @return [\code{character(1)}].
 #' @export
@@ -11,6 +12,7 @@ getLearnerType = function(learner) {
 
 #' @title Get the ID of the learner.
 #'
+#' @description Get the ID of the learner.
 #' @template arg_learner
 #' @return [\code{character(1)}].
 #' @export
@@ -22,6 +24,7 @@ getLearnerId = function(learner) {
 
 #' @title Get the predict type of the learner.
 #'
+#' @description Get the predict type of the learner.
 #' @template arg_learner
 #' @return [\code{character(1)}].
 #' @export
@@ -33,6 +36,7 @@ getLearnerPredictType = function(learner) {
 
 #' @title Get the required R packages of the learner.
 #'
+#' @description Get the R packages the learner requires.
 #' @template arg_learner
 #' @return [\code{character}].
 #' @export
@@ -74,6 +78,7 @@ getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
 
 #' @title Set the ID of a learner object.
 #'
+#' @description Set the ID of the learner.
 #' @template arg_learner
 #' @param id [\code{character(1)}]\cr
 #'    New ID for learner.
