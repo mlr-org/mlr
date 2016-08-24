@@ -73,17 +73,6 @@ getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
   getHyperPars(learner, for.fun)
 }
 
-#' @title Get the id of the learner.
-#'
-#' @template arg_learner
-#' @return [\code{character(1)}].
-#' @export
-#' @family learner
-getLearnerId = function(learner) {
-  learner = checkLearner(learner)
-  return(learner$id)
-}
-
 #' @title Set the id of a learner object.
 #'
 #' @template arg_learner
