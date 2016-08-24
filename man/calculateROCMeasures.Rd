@@ -69,7 +69,7 @@ calculateROCMeasures(pred)
 \seealso{
 Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
-  \code{\link{estimateRelativeOverfitting.ResampleDesc}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
