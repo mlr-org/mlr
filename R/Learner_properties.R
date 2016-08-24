@@ -14,6 +14,7 @@
 #'   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
 #'   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
 #'   \item{se}{Only for regr: Can standard errors be predicted?}
+#'   \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 #' }
 #'
 #' @template arg_learner
@@ -62,11 +63,11 @@ hasProperties = function(learner, props) {
 
 getSupportedLearnerProperties = function(type = NA_character_) {
   p = list(
-    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights"),
+    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp"),
     multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
-    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se"),
+    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp"),
     cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens"),
+    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp"),
     costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
   )
   if (is.na(type))

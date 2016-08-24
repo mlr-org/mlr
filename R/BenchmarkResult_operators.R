@@ -106,13 +106,13 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
       return(p)
     })
     if (as.df)
-      xs = do.call(plyr::rbind.fill, xs)
+      xs = setDF(rbindlist(xs, fill = TRUE))
     else
       xs = setNames(xs, learner.ids)
     return(xs)
   })
   if (as.df)
-    res = do.call(plyr::rbind.fill, res)
+    res = setDF(rbindlist(res, fill = TRUE))
   else
     res = setNames(res, task.ids)
   return(res)
@@ -201,8 +201,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
     function(x) {
       if (inherits(x$learner, wrapper.class)) {
         xs = lapply(x$extract, fun)
-        xs = lapply(1:length(xs), function(i) cbind(iter = i, xs[[i]]))
-        do.call(plyr::rbind.fill, xs)
+        xs = setDF(rbindlist(lapply(seq_along(xs), function(i) cbind(iter = i, xs[[i]])), fill = TRUE))
       } else {
         NULL
       }

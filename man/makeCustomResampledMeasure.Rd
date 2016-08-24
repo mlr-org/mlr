@@ -85,7 +85,10 @@ only calculate an aggregated value. If you can define a function that makes sens
 for every single training / test set, implement your own \code{\link{Measure}}.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
   \code{\link{measures}}, \code{\link{performance}}
 }

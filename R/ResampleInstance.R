@@ -46,10 +46,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     desc = makeResampleDesc(desc, ...)
   if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
-  } else {
-    if (inherits(desc, "DPSDesc") && missing(task))
-      stop("'size' not supported for DPSDesc objects, please use 'task'")
-  }
+  } 
   if (!missing(task)) {
     assertClass(task, classes = "Task")
     size = getTaskSize(task)
@@ -57,8 +54,6 @@ makeResampleInstance = function(desc, task, size, ...) {
   } else {
     task = NULL
     blocking = factor()
-    #if (inherits(desc, "DPSDesc"))
-    #  stop("task must be supplied")
   }
   if (!missing(size))
     size = asCount(size)

@@ -25,6 +25,10 @@ Optional list of named (hyper)parameter settings. The arguments in
 \description{
 Set the hyperparameters of a learner object.
 }
+\note{
+If a named (hyper)parameter can't be found for the given learner, the 3
+closest (hyper)parameter names will be output in case the user mistyped.
+}
 \examples{
 cl1 = makeLearner("classif.ksvm", sigma = 1)
 cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
@@ -35,9 +39,16 @@ print(cl2)
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
-  \code{\link{setId}}, \code{\link{setPredictThreshold}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{makeLearners}}, \code{\link{makeLearner}},
+  \code{\link{removeHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
+  \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
 

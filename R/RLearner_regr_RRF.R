@@ -27,7 +27,7 @@ makeRLearner.regr.RRF = function() {
       makeUntypedLearnerParam(id = "strata"),
       makeIntegerVectorLearnerParam(id = "sampsize", lower = 0)
     ),
-    properties = c("numerics", "factors", "ordered"),
+    properties = c("numerics", "factors", "ordered", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
     note = ""
@@ -45,4 +45,9 @@ trainLearner.regr.RRF <- function(.learner, .task, .subset, .weights, ...) {
 predictLearner.regr.RRF <- function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, newdata = .newdata, ...)
   return(p)
+}
+
+#' @export
+getFeatureImportanceLearner.regr.RRF = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.RRF(.learner, .model, ...)
 }

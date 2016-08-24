@@ -3,7 +3,8 @@ context("measures")
 test_that("measures", {
   ct = binaryclass.task
   options(warn = 2)
-  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "predtype.response", "predtype.prob"),
+  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
+    "regr", "predtype.response", "predtype.prob"),
     fun = function(task, model, pred, feats, extra.args) {
       tt = pred
       1
@@ -19,9 +20,11 @@ test_that("measures", {
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
   expect_equal(names(r$measures.train),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+      "fnr", "ppv", "npv", "mcc", "f1", "foo"))
   expect_equal(names(r$measures.test),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+      "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # test that measures work for se
   ms = list(mse, timetrain, timepredict, timeboth, featperc)
@@ -35,7 +38,8 @@ test_that("measures", {
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
   mod = train(lrn, task = multiclass.task, subset = multiclass.train.inds)
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
-  perf = performance(pred, measures = multiclass.auc)
+  perf = performance(pred, measures = list(multiclass.aunu, multiclass.aunp,
+    multiclass.au1u, multiclass.au1p))
   expect_is(perf, "numeric")
 
   # test survival measure
@@ -71,7 +75,7 @@ test_that("db with single cluster doesn't give warnings", {
 test_that("mcc is implemented correctly", { # see issue 363
   r = holdout("classif.rpart", sonar.task, measure = mcc)
   p = as.data.frame(r$pred)
-  cm = getConfMatrix(r$pred)[1:2, 1:2]
+  cm = calculateConfusionMatrix(r$pred)$result[1:2, 1:2]
 
   # taken from psych::phi. the phi measure is another name for mcc
   r.sum = rowSums(cm)
@@ -151,7 +155,7 @@ test_that("check measure calculations", {
   lrn.surv = makeLearner("surv.coxph")
   # lm does not converge due to small data and warns
   suppressWarnings({
-  mod.surv = train(lrn.surv, task.surv)
+    mod.surv = train(lrn.surv, task.surv)
   })
   pred.surv = predict(mod.surv, task.surv)
   pred.surv$data[,"response"] = pred.art.surv
@@ -245,28 +249,56 @@ test_that("check measure calculations", {
   acc.perf = performance(pred.classif, measures = acc, model = mod.classif)
   expect_equal(acc.test, acc$fun(pred = pred.classif))
   expect_equal(acc.test, as.numeric(acc.perf))
-  #multiclass.auc
-  n.cl = length(levels(tar.classif))
-  pred.probs = getPredictionProbabilities(pred.classif)
-  predictor = vnapply(1:length(pred.art.classif), function(i) {
-    pred.probs[i, pred.art.classif[i]]
-  })
-  names(predictor) = pred.art.classif
-  level.grid = t(combn(as.numeric(levels(tar.classif)), m = 2L))
-  level.grid = rbind(level.grid, level.grid[, ncol(level.grid):1])
-  aucs = numeric(nrow(level.grid))
-  for (i in 1:nrow(level.grid)){
-    ranks = sort(rank(predictor[names(predictor) %in% level.grid[i, ]]))
-    ranks = ranks[names(ranks) == level.grid[i]]
-    n = length(ranks)
-    ranks.sum = sum(ranks)
-    aucs[i] = ranks.sum - n * (n + 1) / 2
+  # colAUC binary
+  colauc.tab = as.matrix(table(tar.bin, pred.art.bin)) # confusion matrix
+  colauc.truepos = unname(rev(cumsum(rev(colauc.tab[2, ])))) # Number of true positives
+  colauc.falsepos = unname(rev(cumsum(rev(colauc.tab[1, ])))) # Number of false positives
+  colauc.totpos = sum(colauc.tab[2, ]) # The total number of positives (one number)
+  colauc.totneg = sum(colauc.tab[1, ]) # The total number of negatives (one number)
+  colauc.sens = colauc.truepos / colauc.totpos # Sensitivity (fraction true positives)
+  colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity (false positives)
+  colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
+  colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
+  colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
+  colauc.width = -diff(colauc.omspec) # = diff(rev(omspec))
+  expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
+  # colAUC multiclass
+  colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
+  tab = t(utils::combn(0:2, 2)) # all possible 1 vs. 1 combinations
+  colauc2 = matrix(NA, 3, 1)
+  for (i in 1:3) {
+    cind = c(which(colnames(colauc.tab) == tab[i,1]), which(colnames(colauc.tab) == tab[i,2])) # column indices of i-th combination
+    rind = c(which(rownames(colauc.tab) == tab[i,1]), which(rownames(colauc.tab) == tab[i,2])) # row indices of i-th combination
+    colauc.tab.part = colauc.tab[rind, cind] # resulting patrial matrix
+    colauc.truepos = unname(rev(cumsum(rev(colauc.tab.part[2, ])))) # Number of true positives
+    colauc.falsepos = unname(rev(cumsum(rev(colauc.tab.part[1, ])))) # Number of false positives
+    colauc.totpos = sum(colauc.tab.part[2, ]) # The total number of positives (one number)
+    colauc.totneg = sum(colauc.tab.part[1, ]) # The total number of negatives (one number)
+    if (colauc.totpos > 0) {
+      colauc.sens = colauc.truepos / colauc.totpos # Sensitivity (fraction true positives)
+    } else {
+      colauc.sens = c(1, 1)
+    }
+    if (colauc.totneg > 0) {
+      colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity (false positives)
+    } else {
+      colauc.omspec = c(1, 1)
+    }
+    colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
+    colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
+    colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
+    colauc.width = -diff(colauc.omspec) # = diff(rev(colauc.omspec))
+  if (sum(colauc.height * colauc.width) < 0.5) {
+    colauc2[i,1] = 1 - sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+  } else {
+    colauc2[i,1] = sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
   }
-  multiclass.auc.test = 1 / (n.cl * (n.cl - 1)) * sum(aucs)
-  multiclass.auc.perf = performance(pred.classif,
-   measures = multiclass.auc, model = mod.classif)
-  expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
-  expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
+}
+  expect_equal(colauc2[,1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[,1]))
+  # multiclass.auc
+  expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
+    multiclass.aunp, multiclass.au1u, multiclass.au1p))),
+    as.numeric(rep(performance(pred.bin, measures = auc), 4)))
 
   p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
   colnames(p1) = c("a", "b")
@@ -290,6 +322,39 @@ test_that("check measure calculations", {
   expect_equal(logloss.test, logloss$fun(pred = pred.classif))
   expect_equal(logloss.test, as.numeric(logloss.perf))
 
+  #ssr
+  pred.probs = getPredictionProbabilities(pred.classif)
+  ssr.test = mean(vnapply(seq_row(pred.probs), function(i) {pred.probs[i, tar.classif[i]]})/sqrt(rowSums(pred.probs^2)))
+  ssr.perf = performance(pred.classif, measures = ssr, model = mod.classif)
+  expect_equal(ssr.test, ssr$fun(pred = pred.classif))
+  expect_equal(ssr.test, as.numeric(ssr.perf))
+  expect_equal(measureSSR(p1, y1), 0.5 * (0.1/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p1, y2), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p2, y1), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.2/sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p2[1,,drop=FALSE], y2[1]), 0.1/sqrt(0.1^2 + 0.9^2))
+  expect_equal(measureSSR(p2[1,,drop=FALSE], y1[1]), 0.9/sqrt(0.1^2 + 0.9^2))
+  #qsr
+  qsr.test = 1 - mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
+  qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
+  expect_equal(qsr.test, qsr$fun(pred = pred.classif))
+  expect_equal(qsr.test, as.numeric(qsr.perf))
+  expect_equal(measureQSR(p1, y1), 1 - 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
+  expect_equal(measureQSR(p1, y2), 1 - 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
+  expect_equal(measureQSR(p2, y1), 1 - 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
+  expect_equal(measureQSR(p2[1,,drop=FALSE], y2[1]), 1-(1-0.1)^2-(0-0.9)^2)
+  expect_equal(measureQSR(p2[1,,drop=FALSE], y1[1]), 1-(1-0.9)^2-(0-0.1)^2)
+  #lsr
+  lsr.test = mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
+  lsr.perf = performance(pred.classif, measures = lsr, model = mod.classif)
+  expect_equal(lsr.test, lsr$fun(pred = pred.classif))
+  expect_equal(lsr.test, as.numeric(lsr.perf))
+  expect_equal(measureLSR(p1, y1), mean(log(c(0.1, 0.8))))
+  expect_equal(measureLSR(p1, y2), mean(log(c(0.9, 0.8))))
+  expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
+  expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
+  expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
+
+ 
   #test binaryclass measures
 
   #brier
@@ -480,6 +545,7 @@ test_that("check measure calculations", {
   expect_equal(db.test,db$fun(task = task.cluster,
    pred = pred.cluster, feats = data.cluster))
   expect_equal(db.test, as.numeric(db.perf))
+
   #dunn
   exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
     sqrt(sum((c(4, 3) - c(3, 2))^2)))
@@ -530,4 +596,53 @@ test_that("check measure calculations", {
     model = mod.cluster, feats = data.cluster)
   expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
+
+  #test that some measures are only transformations of each other
+  
+  #qsr is identical to the 1 - multiclass brier
+  expect_equal(1 - measureMulticlassBrier(p1, y1), measureQSR(p1, y1), check.names = FALSE)
+  qsr.bin.perf = performance(pred.bin, measures = qsr, model = mod.bin)
+  expect_equal(1 - 2 * brier.perf, qsr.bin.perf, check.names = FALSE)
+  
+  expect_equal(lsr.perf, -1 * logloss.perf, check.names = FALSE)
+  
+  #multiclass brier for a two class problem should be two times the binary brier score.
+  multiclass.brier.twoclass.perf = performance(pred.bin, measures = multiclass.brier, model = mod.bin)
+  expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, check.names = FALSE)
+  
+})
+
+test_that("getDefaultMeasure", {
+  expect_equal(mmce, getDefaultMeasure(iris.task))
+  expect_equal(mmce, getDefaultMeasure(getTaskDescription(iris.task)))
+  expect_equal(mmce, getDefaultMeasure(makeLearner("classif.rpart")))
+  expect_equal(mmce, getDefaultMeasure("classif.rpart"))
+  expect_equal(mmce, getDefaultMeasure("classif"))
+})
+
+test_that("measures quickcheck", {
+  options(warn = 2)
+  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
+  lrn = makeLearner("classif.rpart")
+      
+  quickcheckTest(
+    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
+      {
+        classes = factor(c("foo", "bar"))
+        data$target = rep_len(classes, length.out = nrow(data))
+  
+        trainIds = 1:(2*nrow(data)/3)
+        testIds = setdiff(1:nrow(data), trainIds)
+        task = makeClassifTask(data = data, target = "target")
+  
+        mod = train(lrn, task = task, subset = trainIds)
+        pred = predict(mod, task = task, subset = testIds)
+        perf = performance(pred, measures = ms)
+  
+        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
+      }
+    ),
+    about = "binary classification measures",
+    sample.size = 100
+  )
 })
