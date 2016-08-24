@@ -21,7 +21,7 @@ Object members:
 \seealso{
 Other performance: \code{\link{calculateConfusionMatrix}},
   \code{\link{calculateROCMeasures}},
-  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{estimateRelativeOverfitting.ResampleDesc}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},

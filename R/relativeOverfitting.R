@@ -60,7 +60,7 @@ estimateRelativeOverfitting.ResamplePrediction = function(rpred, measures, task)
   mids = vcapply(measures, function(m) m$id)
 
   iterations = unique(rpred$data$iter)
-  rbind.fill(lapply(iterations, function(i) {
+  rbindlist(lapply(iterations, function(i) {
     data = rpred$data[rpred$data$iter == i & rpred$data$set == "test",]
     pred.test = makePrediction(task$task.desc, row.names(data), data$id, data$truth, rpred$predict.type, rpred$predict.threshold, data$response, rpred$time[i])
 

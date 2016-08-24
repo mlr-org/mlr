@@ -88,7 +88,7 @@ for every single training / test set, implement your own \code{\link{Measure}}.
 Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
   \code{\link{calculateROCMeasures}},
-  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{estimateRelativeOverfitting.ResampleDesc}},
   \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
   \code{\link{measures}}, \code{\link{performance}}
 }
