@@ -15,7 +15,6 @@
 #' @inheritParams makeLearner
 #' @return [named list of \code{\link{Learner}}]. Named by \code{ids}.
 #' @family learner
-#' @seealso [\code{\link{makeLearner}}]
 #' @export
 #' @examples
 #' makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
