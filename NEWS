@@ -33,6 +33,8 @@ mlr_2.10:
 -- calculateConfusionMatrix: new confusion-matrix like function that calculates
    and tables many receiver operator measures
 -- makeLearners: create multiple learners at once
+-- getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages
+-- getLearnerParamSet, getLearnerParVals
 
 - functions - removed
 
@@ -40,6 +42,7 @@ mlr_2.10:
 -- Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 -- Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 -- Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
+-- Renamed setId (now deprecated) to setLearnerId
 
 
 - learners - general
