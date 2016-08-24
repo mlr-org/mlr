@@ -67,7 +67,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
         lrn.id = lrn$id,
-        lrn = setId(dsw, stri_paste(lrn$id, ".", p.id)),
+        lrn = setLearnerId(dsw, stri_paste(lrn$id, ".", p.id)),
         perc = perc
       )
     })
