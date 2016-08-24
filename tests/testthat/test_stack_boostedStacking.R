@@ -97,7 +97,7 @@ test_that("Check makeXBestLearnersFromMMTuneResult", {
   
   mm.lrns = list(
     makeLearner("classif.xgboost", predict.type = "prob", fix.factors.prediction = TRUE,
-      max_depth = 3, nrounds = 10, verbose = 0),
+      max_depth = 3, nrounds = 10, verbose = 0, missing = -99),
     makeLearner("classif.randomForest", predict.type = "prob", fix.factors.prediction = TRUE))
   mm = makeModelMultiplexer(mm.lrns)
   
