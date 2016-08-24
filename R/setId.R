@@ -1,7 +1,7 @@
 #' @title Set the id of a learner object.
 #'
 #' @description
-#' Deprecated, use \code{link{setLearnerId}} instead.
+#' Deprecated, use \code{\link{setLearnerId}} instead.
 #'
 #' @template arg_learner
 #' @param id [\code{character(1)}]\cr
