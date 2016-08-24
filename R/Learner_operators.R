@@ -9,7 +9,7 @@ getLearnerType = function(learner) {
   return(learner$type)
 }
 
-#' @title Get the id of the learner.
+#' @title Get the ID of the learner.
 #'
 #' @template arg_learner
 #' @return [\code{character(1)}].
@@ -43,41 +43,42 @@ getLearnerPackages = function(learner) {
 }
 
 
-#' @title Get the param set of the learner.
+#' @title Get the parameter set of the learner.
 #'
 #' @description
-#' Simply an alternative name for \code{\link{getParamSet}}.
+#' Alias for \code{\link{getParamSet}}.
 #'
 #' @template arg_learner
 #' @template ret_ps
 #' @export
 #' @family learner
+#' @seealso [\code{\link{getParamSet}}]
 getLearnerParamSet = function(learner) {
-  learner = checkLearner(learner)
   getParamSet(learner)
 }
 
 
-#' @title Get the param values of the learner.
+#' @title Get the parameter values of the learner.
 #'
 #' @description
-#' Simply an alternative name for \code{\link{getHyperPars}}.
+#' Alias for \code{\link{getHyperPars}}.
 #'
 #' @template arg_learner
 #' @inheritParams getHyperPars
 #' @return [\code{list}]. A named list of values.
 #' @export
 #' @family learner
+#' @seealso [\code{\link{getHyperPars}}]
 getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
   learner = checkLearner(learner)
   getHyperPars(learner, for.fun)
 }
 
-#' @title Set the id of a learner object.
+#' @title Set the ID of a learner object.
 #'
 #' @template arg_learner
 #' @param id [\code{character(1)}]\cr
-#'    New id for learner.
+#'    New ID for learner.
 #' @template ret_learner
 #' @export
 #' @family learner
