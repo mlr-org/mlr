@@ -72,6 +72,7 @@ getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
   } else {
     preds
   }
+}
 
 getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
