@@ -106,7 +106,10 @@ f = function(task, model, pred, extra.args)
 makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{measures}}, \code{\link{performance}}

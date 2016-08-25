@@ -24,7 +24,7 @@ makeRLearner.classif.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered", "oobpreds"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered", "oobpreds", "featimp"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE` and ranger's .forest object is kept for prediction (`keep.forest` = `TRUE`). All settings are changeable."
@@ -45,6 +45,17 @@ predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
+<<<<<<< HEAD
 getOOBPredsLearner.classif.ranger = function(.learner, .model) {
   .model$learner.model$predictions
+=======
+getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
+  has.fiv = .learner$par.vals$importance
+  if (is.null(has.fiv) || has.fiv == "none") {
+    stop("You must set the learners parameter value for importance to
+      'impurity' or 'permutation' to compute feature importance")
+  }
+  mod = getLearnerModel(.model)
+  ranger::importance(mod)
+>>>>>>> master
 }

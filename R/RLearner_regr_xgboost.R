@@ -32,8 +32,8 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = FALSE)
     ),
-    par.vals = list(nrounds = 1, missing = NA_real_, tunable = FALSE),
-    properties = c("numerics", "factors", "weights"),
+    par.vals = list(nrounds = 1, missing = NA_real_),
+    properties = c("numerics", "factors", "weights", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
     note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default. `missing` is set by default to NA, as this is how mlr expects missing values to be encoded."
@@ -64,4 +64,9 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   xgboost::predict(m, newdata = data.matrix(.newdata), ...)
+}
+
+#' @export
+getFeatureImportanceLearner.regr.xgboost = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.xgboost(.learner, .model, ...)
 }

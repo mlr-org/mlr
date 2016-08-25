@@ -1,7 +1,6 @@
 context("test_CritDifferences")
 
 test_that("test_CritDifferences", {
-
   lrns = list(makeLearner("classif.rpart"),
               makeLearner("classif.nnet"))
   tasks = list(multiclass.task, binaryclass.task)

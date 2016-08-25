@@ -34,17 +34,45 @@ test_that("Impute data frame", {
   expect_equal(imputed$x[6], 0.5)
   expect_equal(imputed$x[6], 0.5)
   expect_true(imputed$y[6] >= 0 && imputed$y[6] <= 5)
-  
+
   # learner
-  # we specifically want to check functionality with a learner that does not 
-  # support NAs. We don't check the data again when we create the task to train and the 
-  # observations we want to impute have to be removed in training.
-  lrn = makeLearner("classif.fnn")
-  expect_false(hasLearnerProperties(lrn, "missings")) 
-  data2 = data[1:5, 1:3]
-  data2[1,1] = NA
-  imputed = impute(data2, cols = list(f = imputeLearner(lrn)))$data
-  expect_true(imputed$f[1] == "a")
+  data2 = data.frame(V1 = 1:10, V2 = 1:10, V3 = 1:10, col = factor(rep(1:2, c(3,7))), z = 1:10)
+  data2$V2[9:10] = NA
+  data2$V3[1:2] = NA
+  data2$col[8:10] = NA
+  # we impute col
+  # case 1: feature used for imputation (V1) does not have missings
+  # used to check functionality with a learner that does not have property "missings" (see #1035)
+  lrn = makeLearner("classif.lda")
+  expect_false(hasLearnerProperties(lrn, "missings"))
+  imputed = impute(data2, target = target, cols = list(col = imputeLearner(lrn, features = "V1")))$data
+  expect_true(all(imputed$col[8:10] == "2"))
+  # case 2: feature used for imputation (V2) has missings only in rows where col has missings
+  # in this case the imputation task does not have property "missings", but a learner with property "missings" is
+  # required for imputation
+  expect_error(impute(data2, target = target, cols = list(col = imputeLearner("classif.lda", features = "V2"))), "used for imputation has/have missing values, but learner")
+  lrn = makeLearner("classif.naiveBayes")
+  expect_true(hasLearnerProperties(lrn, "missings"))
+  imputed = impute(data2, target = target, cols = list(col = imputeLearner(lrn, features = "V2")))$data
+  expect_true(all(imputed$col[8:10] == "2"))
+  # case 3: feature used for imputation (V3) has missings only in rows where col does not have missings
+  # in this case the imputation task has property "missings"
+  expect_error(impute(data2, target = target, cols = list(col = imputeLearner("classif.lda", features = "V3"))), "used for imputation has/have missing values, but learner")
+  imputed = impute(data2, target = target, cols = list(col = imputeLearner("classif.naiveBayes", features = "V3")))$data
+  expect_true(all(imputed$col[8:10] == "2"))
+
+  # we had an issue here (see #26) where e.g. imputation for integer/numeric features via a classif learner showed
+  # inconsistent behavior and resulted in weird error messages
+  data2$col2 = as.integer(data2$col)
+  # case 1: impute an integer (data2$col2) with a classif learner (integers are coerced to factors by checkTaskData)
+  # using learner classif.lvq1 because it doesn't work with integer targets (see #26)
+  set.seed(getOption("mlr.debug.seed"))
+  imputed = impute(data2, cols = list(col2 = imputeLearner("classif.lvq1", features = "V1")))$data
+  expect_true(all(imputed$col2[8:10] == "2"))
+  # case 2: impute a numeric (data$x) with a classif learner
+  expect_error(impute(data, target = target, cols = list(x = imputeLearner("classif.naiveBayes"))), "Assertion on 'x' failed")
+  # case 3: impute a factor (data$f) with a regr learner
+  expect_error(impute(data, target = target, cols = list(f = imputeLearner("regr.rpart"))), "Assertion on 'f' failed")
 
   # constant replacements
   imputed = impute(data, target = target, cols = list(f = "xxx", x = 999, y = 1000))$data

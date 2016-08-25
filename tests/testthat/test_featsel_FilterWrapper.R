@@ -27,7 +27,7 @@ test_that("FilterWrapper univariate (issue #516)", {
 
 test_that("Filterwrapper permutation.importance (issue #814)", {
   lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeFilterWrapper(lrn1, fw.method = "permutation.importance", imp.learner = "classif.rpart", fw.perc = 1L)
+  lrn2 = makeFilterWrapper(lrn1, fw.method = "permutation.importance", imp.learner = "classif.rpart", fw.perc = 1L, nmc = 1L)
   m = train(lrn2, binaryclass.task)
   res = makeResampleDesc("CV", iters = 2)
   r = resample(lrn2, binaryclass.task, res)

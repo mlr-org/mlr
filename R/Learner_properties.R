@@ -15,6 +15,7 @@
 #'   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
 #'   \item{se}{Only for regr: Can standard errors be predicted?}
 #'   \item{oobpreds}{Only for classif, regr and surv: Can out of bag predictions be extracted from the trained model?}
+#'   \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 #' }
 #'
 #' @template arg_learner
@@ -63,11 +64,11 @@ hasProperties = function(learner, props) {
 
 getSupportedLearnerProperties = function(type = NA_character_) {
   p = list(
-    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "oobpreds"),
+    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "oobpreds", "featimp"),
     multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
-    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "oobpreds"),
+    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "oobpreds", "featimp"),
     cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "oobpreds"),
+    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "oobpreds", "featimp"),
     costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
   )
   if (is.na(type))

@@ -50,6 +50,7 @@
 #' print(head(generateHyperParsEffectData(res)))
 #' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
 #'
+#' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
 #' # note how we use dependent params (requires = ...) and iterated F-racing here
 #' ps = makeParamSet(
@@ -61,7 +62,7 @@
 #'     requires = quote(kernel == "polydot"))
 #' )
 #' print(ps)
-#' ctrl = makeTuneControlIrace(maxExperiments = 200L)
+#' ctrl = makeTuneControlIrace(maxExperiments = 5, nbIterations = 1, minNbSurvival = 1)
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
@@ -73,6 +74,7 @@
 #'   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
+#' }
 #' @seealso \code{\link{generateHyperParsEffectData}}
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)

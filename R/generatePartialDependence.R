@@ -1,7 +1,3 @@
-#' @importFrom plyr ldply
-#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
-#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
-#' 
 #' @title Generate partial dependence.
 #'
 #' @description
@@ -254,7 +250,7 @@ generatePartialDependenceData = function(obj, input, features,
       else
         doIndividualPartialDependence(out, td, nrow(data), rng, target, x, centerpred)
     })
-    out = ldply(out)
+    out = setDF(rbindlist(out, fill = TRUE))
   } else {
     if (derivative) {
       args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
@@ -382,7 +378,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
     assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
     assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
   }
-  
+
   if (!td$type == "regr")
     stop("only regression tasks are permitted")
   excluded = colnames(data)
@@ -421,7 +417,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   ## generate list of effects to evaluate and associate with grid
   U = unlist(lapply(1:depth, function(x) combn(features, x, simplify = FALSE)), recursive = FALSE)
   depths = sapply(U, length)
-  
+
   effects = sapply(U, function(u) stri_paste(u, collapse = ":"))
   fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
   names(fixed_grid) = effects
@@ -457,8 +453,9 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
     hoe
   })
   names(f) = effects
+
   makeS3Obj(c("FunctionalANOVAData", "PartialDependenceData"),
-            data = ldply(f[which(depths == depth)], .id = "effect"),
+            data = setDF(rbindlist(f[depths == depth], fill = TRUE, idcol = "effect")),
             task.desc = td,
             target = target[!target %in% c("upper", "lower")],
             features = features,
@@ -476,7 +473,7 @@ print.FunctionalANOVAData = function(x, ...) {
   catf("Target: %s", stri_paste(x$target, collapse = ", "))
   catf("Interaction Depth: %s", x$depth)
   catf("Effects Computed: %s", stri_paste(levels(x$data$effect), collapse = ", "))
-  print(head(x$data))
+  printHead(x$data)
 }
 
 doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
@@ -531,27 +528,6 @@ doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bo
     apply(getPredictionProbabilities(pred), 2, fun)
 }
 
-generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
-  sapply(features, function(feature) {
-      nunique = length(unique(data[[feature]]))
-      cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
-
-      if (is.factor(data[[feature]])) {
-        factor(rep(levels(data[[feature]]), length.out = cutoff),
-               levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
-      } else {
-        if (resample != "none") {
-          sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
-        } else {
-          if (is.integer(data[[feature]]))
-            sort(rep(fmin[[feature]]:fmax[[feature]], length.out = cutoff))
-          else
-            seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
-        }
-      }
-    }, simplify = FALSE)
-}
-
 doAggregatePartialDependence = function(out, td, target, features, rng) {
   out = as.data.frame(do.call("rbind", out))
   if (td$type == "regr" & ncol(out) == 3L)
@@ -564,7 +540,7 @@ doAggregatePartialDependence = function(out, td, target, features, rng) {
       stop("function argument must return a sorted numeric vector ordered lowest to highest.")
 
   if (all(target %in% td$class.levels)) {
-    out = melt(out, id.vars = features, variable = "Class", value.name = "Probability")
+    out = melt(out, id.vars = features, variable = "Class", value.name = "Probability", variable.factor = TRUE)
     out$Class = stri_replace_all(out$Class, "", regex = "^prob\\.")
   }
   out
@@ -580,7 +556,7 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
     rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
     out = cbind(out, rng, idx, row.names = NULL)
     out = melt(out, id.vars = c(features, "idx"),
-               variable.name = "Class", value.name = "Probability")
+      variable.name = "Class", value.name = "Probability", variable.factor = TRUE)
     out$idx = interaction(out$idx, out$Class)
   } else {
     out = as.data.frame(do.call("rbind", out))
@@ -590,7 +566,8 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
     out = cbind(out, rng)
     out = melt(out, id.vars = features, variable.name = "idx", value.name = target)
     if (td$type == "classif")
-      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability", variable.name = "Class")
+      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability", variable.name = "Class",
+        variable.factor = TRUE)
   }
   out
 }
@@ -606,7 +583,7 @@ print.PartialDependenceData = function(x, ...) {
   catf("Individual: %s", x$individual)
   if (x$individual)
     catf("Predictions centered: %s", x$center)
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Plot a partial dependence with ggplot2.
 #' @description
@@ -655,10 +632,6 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
   if (obj$interaction & length(obj$features) > 2L & geom != "tile")
     stop("Cannot plot more than 2 features together with line plots.")
   if (geom == "tile") {
-    if (!(obj$task.desc$type %in% c("regr", "surv"))) {
-      if (length(obj$task.desc$class.levels) > 2L)
-        stop("Only visualization of binary classification works with tiling!")
-    }
     feat_classes = sapply(obj$data, class)
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
@@ -681,14 +654,19 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       stop("obj argument created by generatePartialDependenceData must be called with two or three features to use this argument!")
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData must be called with interaction = TRUE to use this argument!")
-    
+
     features = obj$features[which(obj$features != facet)]
-    
-    if (!is.factor(obj$data[[facet]]))
-      obj$data[[facet]] = stri_paste(facet, "=", as.factor(obj$data[[facet]]), sep = " ")
-    else
+
+    if (is.factor(obj$data[[facet]])) {
       obj$data[[facet]] = stri_paste(facet, "=", obj$data[[facet]], sep = " ")
-    
+    } else if (is.character(obj$data[[facet]])) {
+      obj$data[[facet]] = stri_paste(facet, "=", as.factor(obj$data[[facet]]), sep = " ")
+    } else if (is.numeric(obj$data[[facet]])) {
+      obj$data[[facet]] = stri_paste(facet, "=", as.factor(signif(obj$data[[facet]], 3L)), sep = " ")
+    } else {
+      stop("Invalid input to facet arg. Must refer to a numeric/integer, character, or facet feature.")
+    }
+
     scales = "fixed"
   } else {
     features = obj$features
@@ -716,22 +694,27 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
                  length(features) < 3L & geom == "line")
 
   if (geom == "line") {
-    obj$data = reshape2::melt(obj$data, id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
-                    variable = "Feature", value.name = "Value", na.rm = TRUE)
+    idx = which(sapply(obj$data, class) == "factor" & colnames(obj$data) %in% features)
+    # explicit casting previously done implicitly by reshape2::melt.data.frame
+    for (id in idx) obj$data[, id] = as.numeric(obj$data[, id])
+    obj$data = setDF(melt(data.table(obj$data),
+      id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
+      variable = "Feature", value.name = "Value", na.rm = TRUE, variable.factor = TRUE))
     if (!obj$individual) {
       if (obj$task.desc$type %in% c("regr", "surv"))
         plt = ggplot(obj$data, aes_string("Value", target)) +
-          geom_line(color = ifelse(is.null(data), "black", "red"))
+          geom_line(color = ifelse(is.null(data), "black", "red")) + geom_point()
       else
         plt = ggplot(obj$data, aes_string("Value", "Probability", group = "Class", color = "Class")) +
-          geom_line()
+          geom_line() + geom_point()
     } else {
-      if (obj$task.desc$type %in% c("regr", "surv"))
+      if (obj$task.desc$type %in% c("regr", "surv")) {
         plt = ggplot(obj$data, aes_string("Value", target, group = "idx")) +
-          geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red"))
-      else
+          geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red")) + geom_point()
+      } else {
         plt = ggplot(obj$data, aes_string("Value", "Probability", group = "idx", color = "Class")) +
-          geom_line(alpha = .25)
+          geom_line(alpha = .25) + geom_point()
+      }
     }
 
     if (length(features) == 1L) {
@@ -741,9 +724,11 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
         plt = plt + labs(x = features)
     }
 
+    # bounds from fun or se estimation
     if (bounds)
       plt = plt + geom_ribbon(aes_string(ymin = "lower", ymax = "upper"), alpha = .5)
 
+    # labels for ice plots
     if (obj$center)
       plt = plt + ylab(stri_paste(target, "(centered)", sep = " "))
 
@@ -751,9 +736,15 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + ylab(stri_paste(target, "(derivative)", sep = " "))
 
   } else { ## tiling
+    if (obj$task.desc$type == "classif") {
+      target = "Probability"
+      facet = "Class"
+      scales = "free"
+    }
     plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], fill = target))
     plt = plt + geom_raster(aes_string(fill = target))
 
+    # labels for ICE plots
     if (obj$center)
       plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(centered)", sep = " ")))
 
@@ -761,17 +752,19 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(derivative)", sep = " ")))
   }
 
+  # facetting
   if (!is.null(facet)) {
     plt = plt + facet_wrap(as.formula(stri_paste("~", facet)), scales = scales,
       nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
   }
 
+  # data overplotting
   if (!is.null(data)) {
     data = data[, colnames(data) %in% c(obj$features, obj$task.desc$target)]
     if (!is.null(facet)) {
       if (!facet %in% obj$features)
         data = melt(data, id.vars = c(obj$task.desc$target, obj$features[obj$features == facet]),
-                    variable = "Feature", value.name = "Value", na.rm = TRUE)
+                    variable = "Feature", value.name = "Value", na.rm = TRUE, variable.factor = TRUE)
       if (facet %in% obj$features) {
         if (!is.factor(data[[facet]]))
           data[[facet]] = stri_paste(facet, "=", as.factor(signif(data[[facet]], 2)), sep = " ")
@@ -779,7 +772,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
           data[[facet]] = stri_paste(facet, "=", data[[facet]], sep = " ")
       }
     }
-    
+
     if (geom == "line") {
       if (obj$task.desc$type %in% c("classif", "surv")) {
         if (obj$task.desc$type == "classif") {
@@ -803,7 +796,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + geom_point(aes_string(plt$labels$x, plt$labels$y), data, alpha = .25, inherit.aes = FALSE)
     }
   }
-  
+
   plt
 }
 #' @title Plot a partial dependence using ggvis.
@@ -860,7 +853,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
   } else if (!obj$interaction & length(obj$features) > 1L) {
     id = colnames(obj$data)[!colnames(obj$data) %in% obj$features]
     obj$data = melt(obj$data, id.vars = id, variable.name = "Feature",
-                    value.name = "Value", na.rm = TRUE)
+                    value.name = "Value", na.rm = TRUE, variable.factor = TRUE)
     interact = "Feature"
     choices = obj$features
   } else
@@ -888,7 +881,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
         plt = ggvis(data, prop("x", as.name(x)),
                     prop("y", as.name("Probability")),
                     prop("stroke", as.name("Class")))
-      
+
     } else { ## regression/survival
       if (interaction)
         plt = ggvis(data, prop("x", as.name(x)),

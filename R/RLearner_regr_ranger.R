@@ -23,7 +23,7 @@ makeRLearner.regr.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
-    properties = c("numerics", "factors", "ordered", "oobpreds"),
+    properties = c("numerics", "factors", "ordered", "oobpreds", "featimp"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE` and ranger's .forest object is kept for prediction (`keep.forest` = `TRUE`). All settings are changeable."
@@ -43,6 +43,12 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
+<<<<<<< HEAD
 getOOBPredsLearner.regr.ranger = function(.learner, .model) {
   .model$learner.model$predictions
 }
+=======
+getFeatureImportanceLearner.regr.ranger = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
+}
+>>>>>>> master

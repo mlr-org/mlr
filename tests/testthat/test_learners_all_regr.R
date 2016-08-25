@@ -20,6 +20,7 @@ test_that("learners work: regr ", {
   
   # normal regr
   lrns = mylist("regr", create = TRUE)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
 
   # regr with factors
@@ -44,6 +45,10 @@ test_that("learners work: regr ", {
   # regr with missing
   lrns = mylist("regr", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars) 
+  
+  # regr variable importance
+  lrns = mylist("regr", properties = "featimp", create = TRUE)
+  lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars) 
 
   # regr with oobpreds
   lrns = mylist("regr", properties = "oobpreds", create = TRUE)

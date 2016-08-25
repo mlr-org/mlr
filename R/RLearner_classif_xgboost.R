@@ -33,7 +33,7 @@ makeRLearner.classif.xgboost = function() {
       makeLogicalLearnerParam(id = "maximize", default = TRUE)
     ),
     par.vals = list(nrounds = 1, missing = NA_real_),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
     note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default. `num_class` is set internally, so do not set this manually. `missing` is set by default to NA, as this is how mlr expects missing values to be encoded."
@@ -112,3 +112,15 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
     }
   }
 }
+
+#' @export
+getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  imp = xgboost::xgb.importance(feature_names = .model$features,
+                                model = mod, ...)
+  
+  fiv = imp$Gain
+  setNames(fiv, imp$Feature)
+}
+
+

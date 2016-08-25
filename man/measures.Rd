@@ -25,6 +25,7 @@
 \alias{gmean}
 \alias{gpr}
 \alias{logloss}
+\alias{lsr}
 \alias{mae}
 \alias{mcc}
 \alias{mcp}
@@ -46,6 +47,7 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
 \alias{measureMCC}
@@ -62,10 +64,12 @@
 \alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
+\alias{measureQSR}
 \alias{measureRMSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
+\alias{measureSSR}
 \alias{measureTN}
 \alias{measureTNR}
 \alias{measureTP}
@@ -88,11 +92,13 @@
 \alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
+\alias{qsr}
 \alias{rmse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
 \alias{sse}
+\alias{ssr}
 \alias{timeboth}
 \alias{timepredict}
 \alias{timetrain}
@@ -182,6 +188,18 @@ measureMulticlassBrier(probabilities, truth)
 logloss
 
 measureLogloss(probabilities, truth)
+
+ssr
+
+measureSSR(probabilities, truth)
+
+qsr
+
+measureQSR(probabilities, truth)
+
+lsr
+
+measureLSR(probabilities, truth)
 
 auc
 
@@ -337,7 +355,10 @@ He, H. & Garcia, E. A. (2009)
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{performance}}

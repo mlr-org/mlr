@@ -1,10 +1,12 @@
 getLearnerTable = function() {
-  ids = as.character(.S3methods("makeRLearner"))
+  ids = as.character(methods("makeRLearner"))
   ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
   ids = stri_replace_first_fixed(ids, "makeRLearner.", "")
+  slots = c("cl", "name", "short.name", "package", "properties", "note")
+  ee = asNamespace("mlr")
   tab = rbindlist(lapply(ids, function(id) {
     fun = getS3method("makeRLearner", id)
-    row = lapply(as.list(functionBody(fun)[[2L]])[c("cl", "name", "short.name", "package", "properties", "note")], eval)
+    row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
     data.table(
       id = row$cl,
       name = row$name,
