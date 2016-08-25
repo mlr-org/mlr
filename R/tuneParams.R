@@ -61,7 +61,7 @@
 #' )
 #' rdesc = makeResampleDesc("Subsample")
 #' ctrl = makeTuneControlRandom(maxit = 2L)
-#' res = tuneParams(task = iris.task, learner = "classif.ksvm", par.set = ps, control = ctrl, resampling = rdesc)
+#' res = tuneParams("classif.ksvm", iris.task, par.set = ps, control = ctrl, resampling = rdesc)
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
