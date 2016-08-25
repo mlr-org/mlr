@@ -64,6 +64,7 @@ mlr_2.10:
 
 - measures - new
 -- ssr, qsr, lsr
+-- rrse, rae, mape
 
 - measures - renamed
 
