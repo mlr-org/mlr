@@ -110,13 +110,12 @@ costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costs
 
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
 
-black.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(0%,0%,0%);')]"
-grey.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(85.098039%,85.098039%,85.098039%);')]"
-lightgrey.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(92.156863%,92.156863%,92.156863%);')]"
-red.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(97.254902%,46.27451%,42.745098%);')]"
-blue.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(38.039216%,61.176471%,100%);')]"
-green.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(0%,72.941176%,21.960784%);')]"
-black.line.xpath = "/svg:svg//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);')]"
-blue.line.xpath = "/svg:svg//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,74.901961%,76.862745%);')]"
-red.line.xpath = "/svg:svg//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(97.254902%,46.27451%,42.745098%);')]"
-black.bar.xpath = "/svg:svg//svg:path[contains(@style, 'stroke:none;fill-rule:nonzero;fill:rgb(34.901961%,34.901961%,34.901961%);fill-opacity:1')]"
+black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
+grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"
+red.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #F8766D')]"
+blue.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #619CFF')]"
+green.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #00BA38')]"
+black.line.xpath = "/svg:svg//svg:polyline[not(contains(@style, 'stroke:'))]"
+blue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #00BFC4;')]"
+red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
+black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"

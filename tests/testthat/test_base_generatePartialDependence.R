@@ -65,8 +65,8 @@ test_that("generatePartialDependenceData", {
   path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfacet * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize))
   # plotPartialDependenceGGVIS(dr, interact = "chas")
 
   # check that if the input is a data.frame things work
@@ -81,12 +81,12 @@ test_that("generatePartialDependenceData", {
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat * n))
 
-  plotPartialDependence(dr, facet = "chas", data = regr.df, p = .25)
+  plotPartialDependence(dr, facet = "chas", data = regr.df, p = 1)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  # black.xpath counts points which are omitted when individual = TRUE
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfacet * gridsize * n))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  # black.circle.xpath counts points which are omitted when individual = TRUE
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize * n + n))
   # plotPartialDependenceGGVIS(dr, interact = "chas")
 
   # check that multiple features w/o interaction work with a label outputting classifier with
@@ -100,10 +100,10 @@ test_that("generatePartialDependenceData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   # minus one because the of the legend
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
-  # expect_that(length(XML::getNodeSet(doc, red.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
-  # expect_that(length(XML::getNodeSet(doc, blue.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
-  # expect_that(length(XML::getNodeSet(doc, green.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, red.circle.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, blue.circle.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, green.circle.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
   # plotPartialDependenceGGVIS(dc)
 
   # test that an inappropriate function for a classification task throws an error
@@ -131,8 +131,8 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(ds, data = surv.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(gridsize * nfeat))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(gridsize * nfeat))
   # plotPartialDependenceGGVIS(ds)
 
   # issue 1180 test
@@ -150,8 +150,8 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(db, facet = "chas", data = regr.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfacet * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize + n))
   # plotPartialDependenceGGVIS(db, interact = "chas")
 
   # check derivative and factor feature failure
@@ -170,8 +170,8 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(db2, data = regr.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfeat * gridsize + n * nfacet))
   # plotPartialDependenceGGVIS(db2)
 
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
@@ -182,9 +182,9 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(bc, data = binaryclass.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
   # again, omission of points for individual = TRUE
-  # expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)) - 1, equals(nfeat * n))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(nfeat * n))
   # plotPartialDependenceGGVIS(bc)
 
   # check that derivative estimation works for ICE and pd for classification and regression
