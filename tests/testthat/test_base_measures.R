@@ -257,9 +257,9 @@ test_that("check measure calculations", {
   # mape
   expect_equal(NA, mape$fun(pred = pred.regr))
   expect_equal(NA, measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
-  mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
+  mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
   mape.test = mean(abs((5-4)/5)+abs((10-11)/10)+abs((1-0)/1)+abs((5-4)/5))
   expect_equal(mape.test, rae$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
