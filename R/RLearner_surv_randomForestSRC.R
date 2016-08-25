@@ -61,12 +61,10 @@ predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-<<<<<<< HEAD
 getOOBPredsLearner.surv.randomForestSRC = function(.learner, .model) {
   .model$learner.model$predicted.oob
 }
-=======
+
 getFeatureImportanceLearner.surv.randomForestSRC = function(.learner, .model, ...) {
   getFeatureImportanceLearner.regr.randomForestSRC(.learner, .model, ...)
 }
->>>>>>> master

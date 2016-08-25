@@ -43,12 +43,10 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-<<<<<<< HEAD
 getOOBPredsLearner.regr.ranger = function(.learner, .model) {
   .model$learner.model$predictions
 }
-=======
+
 getFeatureImportanceLearner.regr.ranger = function(.learner, .model, ...) {
   getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }
->>>>>>> master

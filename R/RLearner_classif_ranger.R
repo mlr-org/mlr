@@ -45,10 +45,10 @@ predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-<<<<<<< HEAD
 getOOBPredsLearner.classif.ranger = function(.learner, .model) {
   .model$learner.model$predictions
-=======
+}
+  
 getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
   has.fiv = .learner$par.vals$importance
   if (is.null(has.fiv) || has.fiv == "none") {
@@ -57,5 +57,4 @@ getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
   }
   mod = getLearnerModel(.model)
   ranger::importance(mod)
->>>>>>> master
 }

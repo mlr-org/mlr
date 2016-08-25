@@ -62,14 +62,12 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-<<<<<<< HEAD
 getOOBPredsLearner.regr.randomForestSRC = function(.learner, .model) {
   as.numeric(.model$learner.model$predicted.oob)
 }
-=======
+
 #' @rdname getFeatureImportanceLearner
 getFeatureImportanceLearner.regr.randomForestSRC = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   randomForestSRC::vimp(mod)$importance
 }
->>>>>>> master

@@ -65,7 +65,6 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
 }
 
 #' @export
-<<<<<<< HEAD
 getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
   preds = .model$learner.model$predicted.oob
   if (.learner$predict.type == "response") {
@@ -73,9 +72,8 @@ getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
   } else {
     preds
   }
-=======
+
 getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   randomForestSRC::vimp(mod, ...)$importance[, "all"]
->>>>>>> master
 }
