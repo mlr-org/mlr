@@ -81,12 +81,12 @@ test_that("generatePartialDependenceData", {
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat * n))
 
-  plotPartialDependence(dr, facet = "chas", data = regr.df, p = .25)
+  plotPartialDependence(dr, facet = "chas", data = regr.df, p = 1)
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
   # black.circle.xpath counts points which are omitted when individual = TRUE
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize * n))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize * n + n))
   # plotPartialDependenceGGVIS(dr, interact = "chas")
 
   # check that multiple features w/o interaction work with a label outputting classifier with
@@ -151,7 +151,7 @@ test_that("generatePartialDependenceData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize + n))
   # plotPartialDependenceGGVIS(db, interact = "chas")
 
   # check derivative and factor feature failure
@@ -171,7 +171,7 @@ test_that("generatePartialDependenceData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
-  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfeat * gridsize + n * nfacet))
   # plotPartialDependenceGGVIS(db2)
 
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
