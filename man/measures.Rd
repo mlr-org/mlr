@@ -27,6 +27,7 @@
 \alias{logloss}
 \alias{lsr}
 \alias{mae}
+\alias{mape}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
@@ -50,6 +51,7 @@
 \alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
+\alias{measureMAPE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
@@ -65,7 +67,9 @@
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureQSR}
+\alias{measureRAE}
 \alias{measureRMSE}
+\alias{measureRRSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
@@ -93,7 +97,9 @@
 \alias{npv}
 \alias{ppv}
 \alias{qsr}
+\alias{rae}
 \alias{rmse}
+\alias{rrse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
@@ -154,6 +160,18 @@ expvar
 measureEXPVAR(truth, response)
 
 arsq
+
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
 
 mmce
 
