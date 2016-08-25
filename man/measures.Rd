@@ -27,6 +27,7 @@
 \alias{logloss}
 \alias{lsr}
 \alias{mae}
+\alias{mape}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
@@ -50,6 +51,7 @@
 \alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
+\alias{measureMAPE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
@@ -65,7 +67,9 @@
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureQSR}
+\alias{measureRAE}
 \alias{measureRMSE}
+\alias{measureRRSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
@@ -93,7 +97,9 @@
 \alias{npv}
 \alias{ppv}
 \alias{qsr}
+\alias{rae}
 \alias{rmse}
+\alias{rrse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
@@ -154,6 +160,18 @@ expvar
 measureEXPVAR(truth, response)
 
 arsq
+
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
 
 mmce
 
@@ -355,8 +373,9 @@ He, H. & Garcia, E. A. (2009)
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 }
 \seealso{
-Other performance: \code{\link{ConfMatrix}},
+Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},

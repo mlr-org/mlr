@@ -20,7 +20,9 @@
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/)
-
+* [We have a blog on mlr](https://mlr-org.github.io/)
+* We are on rank 21 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
+* **If you like the package, please "star" it on Github.**
 
 mlr - How to Cite and Citing Publications
 =========================================
@@ -56,7 +58,7 @@ Lang, Michel, Helena Kotthaus, Peter Marwedel, Claus Weihs, Jörg Rahnenführer,
 Bischl, Bernd, Tobias Kühn, and Gero Szepannek. "On Class Imbalance Correction for Classification Algorithms in Credit Scoring." In Operations Research Proceedings 2014, pp. 37-43. Springer International Publishing, 2016.
 
 
-**A list of publications that cite mlr can be found in the wiki [here](https://help.github.com/articles/adding-links-to-wikis/).**
+**A list of publications that cite mlr can be found in the wiki [here](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).**
 
 
 Introduction
@@ -107,7 +109,6 @@ Features
 * Unit-testing
 * Detailed tutorial
 
-*If you like the package, please "star" it on Github.*
 
 
 News
@@ -116,6 +117,8 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
 
+* 2016-08-24: 
+  * We have a (still smallish) blog on thing related to mlr. See link above.
 * 2016-08-06:
   * We are hosting the first mlr workshop! It is in Palermo, and more like a sprint, as 11 core developers meet to get stuff done. Thanks to Giuseppe for organizing this! We are thinking about hosting the 2017 one in Munich and possibly opening this up more for the public. If you are interested in potentially joining, email Bernd.
 * 2016-08-06:

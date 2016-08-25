@@ -17,7 +17,7 @@ Prediction object.}
 Created by \code{\link{calculateROCMeasures}}.}
 
 \item{abbreviations}{[\code{logical(1)}]\cr
-If \code{TRUE} a short paragraph with explainations of the used measures is printed additionally.}
+If \code{TRUE} a short paragraph with explanations of the used measures is printed additionally.}
 
 \item{digits}{[\code{integer(1)}]\cr
 Number of digits the measures are rounded to.}
@@ -35,17 +35,17 @@ Calculate the relative number of correct/incorrect classifications and the follo
 
 
 \itemize{
- \item \code{tpr} True positive rate (Sensisivity, Recall)
- \item \code{fpr} False positve rate (Fall-out)
+ \item \code{tpr} True positive rate (Sensitivity, Recall)
+ \item \code{fpr} False positive rate (Fall-out)
  \item \code{fnr} False negative rate (Miss rate)
- \item \code{tnr} True negative rate (Specifity)
+ \item \code{tnr} True negative rate (Specificity)
  \item \code{ppv} Positive predictive value (Precision)
  \item \code{for} False omission rate
  \item \code{lrp} Positive likelihood ratio (LR+)
  \item \code{fdr} False discovery rate
  \item \code{npv} Negative predictive value
  \item \code{acc} Accuracy
- \item \code{lrm} Nevative likelihood ratio (LR-)
+ \item \code{lrm} Negative likelihood ratio (LR-)
  \item \code{dor} Diagnostic odds ratio
 }
 
@@ -65,5 +65,17 @@ fit = train(lrn, sonar.task)
 pred = predict(fit, task = sonar.task)
 calculateROCMeasures(pred)
 
+}
+\seealso{
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{makeCostMeasure}},
+  \code{\link{makeCustomResampledMeasure}},
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}
+
+Other roc: \code{\link{asROCRPrediction}},
+  \code{\link{plotViperCharts}}
 }
 

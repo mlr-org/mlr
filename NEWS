@@ -15,7 +15,14 @@ mlr_2.10:
    these now also print info on the total nr of rows and cols and are less
    confusing
 -- setHyperPars: added "show.info" arg
-
+-- plotThreshVsPerf: added "measures" arg
+-- new "mlrFamilies" manual page which lists all families and the functions
+   belonging to it
+-- the filter methods have better R docs
+-- we are converging on data.table as a standard internally, this should not
+   change any API behavior on the outside, though
+-- plotPartialDependence: can create tile plots with joint partial dependence
+   on two features for multiclass classification by facetting across the classes
 
 - functions - new
 -- filter: randomForest.importance
@@ -25,6 +32,9 @@ mlr_2.10:
 -- calculateROCMeasures
 -- calculateConfusionMatrix: new confusion-matrix like function that calculates
    and tables many receiver operator measures
+-- makeLearners: create multiple learners at once
+-- getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages
+-- getLearnerParamSet, getLearnerParVals
 
 - functions - removed
 
@@ -32,6 +42,7 @@ mlr_2.10:
 -- Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 -- Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 -- Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
+-- Renamed setId (now deprecated) to setLearnerId
 
 
 - learners - general
@@ -52,6 +63,8 @@ mlr_2.10:
 - measures - general
 
 - measures - new
+-- ssr, qsr, lsr
+-- rrse, rae, mape
 
 - measures - renamed
 

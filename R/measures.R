@@ -271,6 +271,77 @@ arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
+#' @export rrse
+#' @rdname measures
+#' @format none
+rrse = makeMeasure(id = "rrse", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Root relative squared error",
+  note = "Defined as sqrt (sum_of_squared_errors / total_sum_of_squares). Undefined for single instances and when every truth value is identical. In this case the output will be NA.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRRSE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRRSE
+#' @rdname measures
+#' @format none
+measureRRSE = function(truth, response){
+  tss = sum((truth-mean(truth))^2L)
+  if (tss == 0){
+    warning("RAE is undefined if all truth values are equal.")
+    return(NA)
+  }
+  sqrt(measureSSE(truth, response)/tss)
+}
+
+#' @export rae
+#' @rdname measures
+#' @format none
+rae = makeMeasure(id = "rae", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Relative absolute error",
+  note = "Defined as sum_of_absolute_errors / mean_absolute_deviation. Undefined for single instances and when every truth value is identical. In this case the output will be NA.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRAE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRAE
+#' @rdname measures
+#' @format none
+measureRAE = function(truth, response){
+  meanad = sum(abs(truth-mean(truth)))
+  if (meanad == 0){
+    warning("RAE is undefined if all truth values are equal.")
+    return(NA)
+  }
+  return(measureSAE(truth, response)/meanad)
+}
+
+#' @export mape
+#' @rdname measures
+#' @format none
+mape = makeMeasure(id = "mape", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Mean absolute percentage error",
+  note = "Defined as the abs(truth_i - response_i)/truth_i. Won't work if any truth value is equal to zero. In this case the output will be NA.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureMAPE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureMAPE
+#' @rdname measures
+#' @format none
+measureMAPE = function(truth, response){
+  if (any(truth == 0)){
+    warning("MAPE is undefined if any truth value is equal to 0.")
+    return(NA)
+  }
+  return(mean(abs((truth-response)/truth)))
+}
+
 ###############################################################################
 ### classif multi ###
 ###############################################################################

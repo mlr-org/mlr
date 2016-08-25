@@ -236,7 +236,38 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
-
+  # rrse
+  rrse.test = sqrt(sum((pred.art.regr - tar.regr)^2L) / sum((tar.regr - mean(tar.regr))^2L))
+  rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
+  expect_equal(rrse.test, rrse$fun(pred = pred.regr))
+  expect_equal(rrse.test, as.numeric(rrse.perf))
+  expect_equal(sqrt((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/sqrt((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRRSE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  expect_warning(measureRRSE(0,0))
+  expect_warning(measureRRSE(c(1,1,1,1),c(1,2,3,4)))
+  expect_silent(measureRRSE(c(1,1,1,0),c(2,2,2,2)))
+  # rae
+  rae.test = sum(abs(pred.art.regr - tar.regr)) / sum(abs(tar.regr - mean(tar.regr)))
+  rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
+  expect_equal(rae.test, rae$fun(pred = pred.regr))
+  expect_equal(rae.test, as.numeric(rae.perf))
+  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/(abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  expect_warning(measureRAE(0,0))
+  expect_warning(measureRAE(c(1,1,1,1),c(1,2,3,4)))
+  expect_silent(measureRAE(c(1,1,1,0),c(2,2,2,2)))
+  # mape
+  expect_equal(NA, mape$fun(pred = pred.regr))
+  expect_equal(NA, measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  pred.regr.mape = pred.regr
+  pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
+  mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
+  mape.test = mean(c(abs((5-4)/5),abs((10-11)/10),abs((1-0)/1),abs((5-4)/5)))
+  expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
+  expect_equal(mape.test, as.numeric(mape.perf))
+  expect_equal(1/4*(abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5),c(4, 11, 0, 4)))
+  expect_warning(measureMAPE(0,0))
+  expect_warning(measureMAPE(c(1,1,1,0),c(2,2,2,2)))
+  expect_silent(measureMAPE(c(1,1,1,1),c(2,2,2,2)))
+  
   #test multiclass measures
 
   #mmce

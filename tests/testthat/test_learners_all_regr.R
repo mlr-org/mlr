@@ -20,6 +20,7 @@ test_that("learners work: regr ", {
   
   # normal regr
   lrns = mylist("regr", create = TRUE)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
 
   # regr with factors

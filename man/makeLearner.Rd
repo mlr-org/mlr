@@ -83,13 +83,18 @@ lrn = makeLearner("classif.lda", method = "t", nu = 10)
 print(lrn$par.vals)
 }
 \seealso{
-[\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]
-
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{makeLearners}},
   \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
