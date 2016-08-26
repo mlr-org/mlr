@@ -98,13 +98,13 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' @template arg_wrappedmod
 #' @return [\code{logical(1)}].
 #' @export
-isFailureModel = function(model) {
+isFailureModel = function(object) {
   UseMethod("isFailureModel")
 }
 
 #' @export
 # by default the model is never a failure. if a failure happens we have the derived class FailureModel
-isFailureModel.WrappedModel = function(model) {
+isFailureModel.WrappedModel = function(object) {
   return(FALSE)
 }
 
@@ -119,12 +119,12 @@ isFailureModel.WrappedModel = function(model) {
 #' @template arg_wrappedmod
 #' @return [\code{character(1)}].
 #' @export
-getFailureModelMsg = function(model) {
+getFailureModelMsg = function(object) {
   UseMethod("getFailureModelMsg")
 }
 
 #' @export
-getFailureModelMsg.WrappedModel = function(model) {
+getFailureModelMsg.WrappedModel = function(object) {
   return(NA_character_)
 }
 
