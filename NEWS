@@ -23,6 +23,7 @@ mlr_2.10:
    change any API behavior on the outside, though
 -- plotPartialDependence: can create tile plots with joint partial dependence
    on two features for multiclass classification by facetting across the classes
+-- generatePartialDependenceData and generateFunctionalANOVAData: added "weight.fun" argument
 
 - functions - new
 -- filter: randomForest.importance
