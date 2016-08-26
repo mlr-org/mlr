@@ -60,6 +60,10 @@
 #'   target feature.
 #'   The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 #'   in which case the default is the proportion of observations predicted to be in each class.
+#' @param weight.fun [\code{function}]\cr
+#'   A function which takes a numeric vector \code{x} and a \code{data.frame} \code{data} and returns a
+#'   numeric weight. The length of \code{x} must match the column dimension of \code{data}.
+#'   By default \code{weight.fun} returns a weight of 1 for every input.
 #' @param bounds [\code{numeric(2)}]\cr
 #'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 #'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
@@ -131,11 +135,10 @@
 #' plotPartialDependence(pd, data = getTaskData(iris.task))
 #' @export
 generatePartialDependenceData = function(obj, input, features,
-                                         interaction = FALSE, derivative = FALSE,
-                                         individual = FALSE, center = NULL,
-                                         fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
-                                         resample = "none",
-                                         fmin, fmax, gridsize = 10L, ...) {
+  interaction = FALSE, derivative = FALSE, individual = FALSE, center = NULL,
+  fun = mean, weight.fun = function(x, data) 1, bounds = c(qnorm(.025), qnorm(.975)),
+  resample = "none", fmin, fmax, gridsize = 10L, ...) {
+
   assertClass(obj, "WrappedModel")
   if (obj$learner$predict.type == "se" & individual)
     stop("individual = TRUE not compatabile with predict.type = 'se'!")
@@ -178,6 +181,19 @@ generatePartialDependenceData = function(obj, input, features,
     center = as.data.frame(do.call("cbind", center))
   }
   assertFunction(fun)
+  test = fun(1:3)
+  if (!is.numeric(test))
+    stop("fun argument must return a numeric vector")
+  if (!(length(test) %in% c(1L, 3L)))
+    stop("function argument must return a numeric vector of length 1 or 3.")
+
+  assertFunction(weight.fun)
+  x = c(0, 0)
+  test = as.matrix(replicate(2, rnorm(5)))
+  weights = weight.fun(x, test)
+  if (!is.numeric(weights) && length(weights) == 1L)
+    stop("Invalid weight.fun.")
+  
   assertNumeric(bounds, len = 2L)
   assertNumber(bounds[1], upper = 0)
   assertNumber(bounds[2], lower = 0)
@@ -185,10 +201,10 @@ generatePartialDependenceData = function(obj, input, features,
 
   if (missing(fmin))
     fmin = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   if (missing(fmax))
     fmax = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   assertList(fmin, len = length(features))
   if (!all(names(fmin) %in% features))
     stop("fmin must be a named list with an NA or value corresponding to each feature.")
@@ -225,11 +241,14 @@ generatePartialDependenceData = function(obj, input, features,
   }  else
     target = "Risk"
 
+  args = list(obj = obj, data = data, fun = fun, td = td, individual = individual,
+    bounds = bounds, weight.fun = weight.fun, ...)
+
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
+      args$features = x
       if (derivative) {
-        args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual,
-                    bounds = bounds, ...)
+        args$bounds = NULL
         out = parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
@@ -237,11 +256,11 @@ generatePartialDependenceData = function(obj, input, features,
       } else {
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
-        args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, bounds = bounds, ...)
+        args$rng = rng
         out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
           centerpred = doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
-                                                    x, fun, td, 1, bounds = bounds)
+            x, fun, td, 1, bounds = bounds)
         else
           centerpred = NULL
       }
@@ -252,8 +271,9 @@ generatePartialDependenceData = function(obj, input, features,
     })
     out = setDF(rbindlist(out, fill = TRUE))
   } else {
+    args$features = features
     if (derivative) {
-      args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
+      args$bounds = NULL
       out = parallelMap(doPartialDerivativeIteration, x = rng[[features]], more.args = args)
       centerpred = NULL
       rng = as.data.frame(rng)
@@ -261,7 +281,7 @@ generatePartialDependenceData = function(obj, input, features,
     } else {
       rng = as.data.frame(rng)
       colnames(rng) = features
-      args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, bounds = bounds, ...)
+      args$rng = rng
       out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
         centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center, features, fun, td, 1, bounds))
@@ -278,17 +298,17 @@ generatePartialDependenceData = function(obj, input, features,
     out = out[, c(target, features, colnames(out)[!colnames(out) %in% c(target, features)])]
   else
     out = out[, c("Class", "Probability", features,
-                  colnames(out)[!colnames(out) %in% c("Class", "Probability", features)])]
+      colnames(out)[!colnames(out) %in% c("Class", "Probability", features)])]
 
   makeS3Obj("PartialDependenceData",
-            data = out,
-            task.desc = td,
-            target = target,
-            features = features,
-            interaction = interaction,
-            derivative = derivative,
-            individual = individual,
-            center = !is.null(center))
+    data = out,
+    task.desc = td,
+    target = target,
+    features = features,
+    interaction = interaction,
+    derivative = derivative,
+    individual = individual,
+    center = !is.null(center))
 }
 #' @title Generate a functional ANOVA decomposition
 #'
@@ -313,6 +333,10 @@ generatePartialDependenceData = function(obj, input, features,
 #'   such as a measure of location such as the mean, or three numbers, which give a lower bound,
 #'   a measure of location, and an upper bound. Note if three numbers are returned they must be
 #'   in this order. The default is the mean.
+#' @param weight.fun [\code{function}]\cr
+#'   A function which takes a numeric vector \code{x} and a \code{data.frame} \code{data} and returns a
+#'   numeric weight. The length of \code{x} must match the column dimension of \code{data}.
+#'   By default \code{weight.fun} returns a weight of 1 for every input.
 #' @param bounds [\code{numeric(2)}]\cr
 #'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 #'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
@@ -364,8 +388,9 @@ generatePartialDependenceData = function(obj, input, features,
 #' plotPartialDependence(fa)
 #' @export
 generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = mean,
-                                       bounds = c(qnorm(.025), qnorm(.975)),
-                                       resample = "none", fmin, fmax, gridsize = 10L) {
+  weight.fun = function(x, data) 1, bounds = c(qnorm(.025), qnorm(.975)),
+  resample = "none", fmin, fmax, gridsize = 10L, ...) {
+
   assertClass(obj, "WrappedModel")
   if (!inherits(input, c("Task", "data.frame")))
     stop("input must be a Task or a data.frame!")
@@ -387,10 +412,10 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
 
   if (missing(fmin))
     fmin = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   if (missing(fmax))
     fmax = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   assertList(fmin, len = length(features))
   if (!all(names(fmin) %in% features))
     stop("fmin must be a named list with an NA or value corresponding to each feature.")
@@ -400,6 +425,13 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   assertCount(gridsize, positive = TRUE)
   assertIntegerish(depth, lower = 1L, upper = length(features), len = 1L)
 
+  assertFunction(weight.fun)
+  x = c(0, 0)
+  test = as.matrix(replicate(2, rnorm(5)))
+  weights = weight.fun(x, test)
+  if (!is.numeric(weights) && length(weights) == 1L)
+    stop("Invalid weight.fun.")
+  
   assertFunction(fun)
   test = fun(1:3)
   if (!is.numeric(test))
@@ -426,7 +458,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   target = td$target
 
   ## generate each effect
-  args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds)
+  args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, weight.fun = weight.fun, ...)
   pd = lapply(U, function(u) {
     args$features = u
     args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
@@ -455,14 +487,14 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   names(f) = effects
 
   makeS3Obj(c("FunctionalANOVAData", "PartialDependenceData"),
-            data = setDF(rbindlist(f[depths == depth], fill = TRUE, idcol = "effect")),
-            task.desc = td,
-            target = target[!target %in% c("upper", "lower")],
-            features = features,
-            interaction = depth > 1L,
-            derivative = FALSE,
-            individual = FALSE,
-            center = FALSE)
+    data = setDF(rbindlist(f[depths == depth], fill = TRUE, idcol = "effect")),
+    task.desc = td,
+    target = target[!target %in% c("upper", "lower")],
+    features = features,
+    interaction = depth > 1L,
+    derivative = FALSE,
+    individual = FALSE,
+    center = FALSE)
 }
 
 #' @export
@@ -476,18 +508,22 @@ print.FunctionalANOVAData = function(x, ...) {
   printHead(x$data)
 }
 
-doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
+doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, weight.fun, ...) {
   if (!individual) {
-    ## construct function appropriate for numDeriv w/ aggregate predictions
+    # construct function appropriate for numDeriv w/ aggregate predictions
     f = function(x, obj, data, features, fun, td, ...) {
-      data[features] = x
-      pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+      newdata = data
+      newdata[features] = x
+      weights = apply(newdata[, obj$features, drop = FALSE], 1, function(x)
+        do.call("weight.fun", c(list("x" = x, "data" = data[, obj$features, drop = FALSE]), list(...))))
+      if (sum(weights) == 0) weights = rep(NA, length(weights))
+      pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
       if (obj$learner$predict.type == "response")
-        fun(getPredictionResponse(pred))
+        fun((getPredictionResponse(pred) * weights) / sum(weights))
       else if (length(obj$task.desc$class.levels) == 2L)
-        fun(getPredictionProbabilities(pred))
+        fun((getPredictionProbabilities(pred) * weights) / sum(weights))
       else
-        apply(getPredictionProbabilities(pred), 2, fun)
+        apply((getPredictionProbabilities(pred) * weights) / sum(weights), 2, fun)
     }
     if (obj$learner$predict.type == "response")
       numDeriv::grad(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td)
@@ -495,37 +531,55 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
       t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td, ...))
   } else {
     f = function(x, obj, data, features, fun, td, ...) {
-      data[features] = x
-      pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+      newdata = data
+      newdata[features] = x
+      weights = apply(newdata[, obj$features, drop = FALSE], 1, function(x)
+        do.call("weight.fun", c(list("x" = x, "data" = data[, obj$features, drop = FALSE]), list(...))))
+      if (sum(weights) == 0) weights = rep(NA, length(weights))
+      pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
       if (obj$learner$predict.type == "response")
-        getPredictionResponse(pred)
+        (getPredictionResponse(pred) * weights) / sum(weights)
       else
-        as.numeric(getPredictionProbabilities(pred))
+        (as.numeric(getPredictionProbabilities(pred)) * weights) / sum(weights)
     }
     if (obj$learner$predict.type == "response")
       sapply(1:nrow(data), function(idx)
-        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE], features = features,
-                       fun = fun, td = td))
+        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
+          features = features, fun = fun, td = td))
     else
       t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
-                                                              data = data[idx,, drop = FALSE],
-                                                              features = features, fun = fun, td = td, ...)))
+        data = data[idx,, drop = FALSE], features = features, fun = fun, td = td, ...)))
   }
 }
 
-doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bounds, ...) {
-  data[features] = rng[i, ]
-  pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
-  if (obj$learner$predict.type == "response")
-    fun(getPredictionResponse(pred))
-  else if (length(obj$task.desc$class.levels) == 2L)
-    fun(getPredictionProbabilities(pred))
-  else if (obj$learner$predict.type == "se") {
+doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bounds,
+  weight.fun, individual = FALSE, ...) {
+
+  newdata = data
+  newdata[features] = rng[i, ]
+  weights = apply(newdata[, obj$features, drop = FALSE], 1, function(x)
+    do.call("weight.fun", c(list("x" = x, "data" = data[, obj$features, drop = FALSE]), list(...))))
+  if (sum(weights) == 0) weights = rep(NA, length(weights))
+  pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
+  if (obj$learner$predict.type == "response") {
+    if (td$type == "classif") {
+      if (identical(functionBody(weight.fun), functionBody(function(x, data) 1)))
+        fun(getPredictionResponse(pred))
+      else
+        stop('Classification with predict.type = "response" is incompatible with weights.')
+    } else {
+      fun((getPredictionResponse(pred) * weights) / sum(weights))
+    }
+  } else if (length(obj$task.desc$class.levels) == 2L) {
+    fun((getPredictionProbabilities(pred) * weights) / sum(weights))
+  } else if (obj$learner$predict.type == "se") {
     point = getPredictionResponse(pred)
     out = cbind(point + outer(getPredictionSE(pred), bounds), point)[, c(1, 3, 2)]
+    out = (out * weights) / sum(weights)
     unname(apply(out, 2, fun))
-  } else
-    apply(getPredictionProbabilities(pred), 2, fun)
+  } else {
+    apply((getPredictionProbabilities(pred) * weights) / sum(weights), 2, fun)
+  }
 }
 
 doAggregatePartialDependence = function(out, td, target, features, rng) {
@@ -566,8 +620,8 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
     out = cbind(out, rng)
     out = melt(out, id.vars = features, variable.name = "idx", value.name = target)
     if (td$type == "classif")
-      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability", variable.name = "Class",
-        variable.factor = TRUE)
+      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability",
+        variable.name = "Class", variable.factor = TRUE)
   }
   out
 }
