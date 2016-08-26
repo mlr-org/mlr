@@ -73,14 +73,30 @@ plotPartialDependencePlotly = function(obj, p = 1,
 
   # Plot classification
   if (obj$task.desc$type == "classif") {
-    plt = plot_ly(data = obj$data, x = ~get(x1n), y = ~get(x2n), z = ~obj$data$Probability,
-                  type = "mesh3d", color = ~obj$data$Class, opacity = classif.alpha)
+    if (length(obj$task.desc$class.levels) == 2L) {
+      grid.dcast = data.table::dcast(obj$data, as.formula(paste(x1n, x2n, sep = "~")), value.var = "Probability")
+      grid.3d = list(x = grid.dcast[,1],
+                     y = as.numeric(colnames(grid.dcast)[-1]),
+                     z = t(as.matrix(grid.dcast[,-1])))
 
-    plt = plt %>% layout(title = title,
-                         scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
-                                      yaxis = list(title = paste("y: ", x2n, sep = "")),
-                                      zaxis = list(title = "z: Probability")))
+      plt = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
+                    type = "surface", colorbar = list(title = target))
+
+      plt = plt %>% layout(title = title,
+                           scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                        yaxis = list(title = paste("y: ", x2n, sep = "")),
+                                        zaxis = list(title = "z: Probability")))
+    }
+    else {
+      plt = plot_ly(data = obj$data, x = ~get(x1n), y = ~get(x2n), z = ~obj$data$Probability,
+                    type = "mesh3d", color = ~obj$data$Class, opacity = classif.alpha)
+
+      plt = plt %>% layout(title = title,
+                           scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                        yaxis = list(title = paste("y: ", x2n, sep = "")),
+                                        zaxis = list(title = "z: Probability")))
+    }
   }
 
-  plt
+  return(plt)
 }
