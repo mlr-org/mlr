@@ -118,7 +118,8 @@ isFailureModel.WrappedModel = function(model) {
 #' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 #'
 #' @param model [\code{\link{WrappedModel}}]\cr
-#'  Wrapped model, result of \code{\link{train}}.#' @return [\code{character(1)}].
+#'  Wrapped model, result of \code{\link{train}}.
+#' @return [\code{character(1)}].
 #' @export
 getFailureModelMsg = function(model) {
   UseMethod("getFailureModelMsg")
