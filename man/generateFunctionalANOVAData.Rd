@@ -6,8 +6,8 @@
 \title{Generate a functional ANOVA decomposition}
 \usage{
 generateFunctionalANOVAData(obj, input, features, depth = 1L, fun = mean,
-  bounds = c(qnorm(0.025), qnorm(0.975)), resample = "none", fmin, fmax,
-  gridsize = 10L)
+  weight.fun = function(x, data) 1, bounds = c(qnorm(0.025), qnorm(0.975)),
+  resample = "none", fmin, fmax, gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -28,6 +28,11 @@ A function that accepts a numeric vector and returns either a single number
 such as a measure of location such as the mean, or three numbers, which give a lower bound,
 a measure of location, and an upper bound. Note if three numbers are returned they must be
 in this order. The default is the mean.}
+
+\item{weight.fun}{[\code{function}]\cr
+A function which takes a numeric vector \code{x} and a \code{data.frame} \code{data} and returns a
+numeric weight. The length of \code{x} must match the column dimension of \code{data}.
+By default \code{weight.fun} returns a weight of 1 for every input.}
 
 \item{bounds}{[\code{numeric(2)}]\cr
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
