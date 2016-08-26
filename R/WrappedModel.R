@@ -96,7 +96,8 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
 #'
 #' @param model [\code{\link{WrappedModel}}]\cr
-#'  Wrapped model, result of \code{\link{train}}.#' @return [\code{logical(1)}].
+#'  Wrapped model, result of \code{\link{train}}.
+#' @return [\code{logical(1)}].
 #' @export
 isFailureModel = function(model) {
   UseMethod("isFailureModel")
