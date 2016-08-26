@@ -2,7 +2,28 @@
 % Please edit documentation in R/StackedLearner_resample.R
 \name{resampleStackedLearnerAgain}
 \alias{resampleStackedLearnerAgain}
-\title{Rerun a resampling procedure for a \code{StackedLearner} with a new setting to save computing time.}
+\title{Instead of rerun \code{resample} with a new setting just use 
+\code{resampleStackedLearnerAgain}. \code{resampleStackedLearnerAgain} reuses 
+the already done work from a \code{ResampleResult}, i.e. 
+reuse fitted base models (needed for level 1 test data) and reuse level 1 training data. 
+Note: This function does not support resample objects with single broken base models (no error 
+handling implemented). Moreover models need to present (i.e. \code{save.preds = TRUE} in 
+\code{makeStackedLearner}). When using \code{save.on.disc = TRUE} in \code{makeStackedLearner} 
+resampling procedure \code{"Holdout"} is allowed only (model names are not unique 
+regarding CV fold number).
+This function does four things internally (in that order) to obtain the new predictions:
+\describe{
+\item{1.}{Use saved base models (from \code{obj}) on test data to predict level 1 test data.}
+\item{2.}{Extract level 1 train data (from \code{obj}).}
+\item{3.}{Fit new super learner or apply new ensemble selection setting using level 1 train data from (2).}
+\item{4.}{Apply model from (3) on level 1 test data from (1) to obtain final prediction.}
+}
+Following parameters need to be set for the single methods. For
+\describe{
+\item{method  = "superlearner"}{\code{super.learner} and \code{use.feat} need to be set.}
+\item{method = "ensembleselection"}{\code{es.par.vals} need to be set.} 
+\item{method = "aggregate"}{no arguemnt of those abvoe need to be set.} 
+}}
 \usage{
 resampleStackedLearnerAgain(id = NULL, obj, task, measures = NULL,
   super.learner = NULL, use.feat = NULL, es.par.vals = NULL)

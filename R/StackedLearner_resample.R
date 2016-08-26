@@ -1,4 +1,3 @@
-#' Rerun a resampling procedure for a \code{StackedLearner} with a new setting to save computing time.
 #' 
 #' Instead of rerun \code{resample} with a new setting just use 
 #' \code{resampleStackedLearnerAgain}. \code{resampleStackedLearnerAgain} reuses 
@@ -162,9 +161,8 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL,
     for (f in seq_len(folds)) {
       test.idx = test.idxs_f[[f]]
       pred.list = createPreds(fold.i = f, bls = base.models_f[[f]], idx = test.idx, task, save.on.disc)
-      test.bls.perfs_f[[f]] = ldply(lapply(pred.list, function(x)performance(x, measures)), .id = "bls")
-      #preds = lapply(seq_len(length(base.models[[i]])), function(b) 
-      #  predict(base.models[[i]][[b]], subsetTask(task, idxs)))
+      #test.bls.perfs_f[[f]] = ldply(lapply(pred.list, function(x) performance(x, measures)), .id = "bls")
+      test.bls.perfs_f[[f]] = stack(lapply(pred.list, function(x) performance(x, measures))) # names: value,ind
       pred.data.list = lapply(seq_len(length(pred.list)), 
         function(x) getPredictionDataNonMulticoll(pred.list[[x]]))
       names(pred.data.list) = bls.names
@@ -244,7 +242,7 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL,
       ### get level 1 TEST preds, i.e. apply bls models from training on testing data
       # saved as "test.level1.preds"
       test.level1.preds = createPreds(fold.i = f, bls = base.models_f[[f]], idx = test.idxs_f[[f]], task, save.on.disc)
-      test.bls.perfs_f[[f]] =  ldply(lapply(test.level1.preds, function(x)performance(x, measures)), .id = "bls")
+      test.bls.perfs_f[[f]] = stack(lapply(test.level1.preds, function(x) performance(x, measures)))
       ### 3.
       ### Run Ensemble Selection on level 1 TRAIN preds (1) with new parameters.
       if (method == "ensembleselection") {

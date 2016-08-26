@@ -34,7 +34,8 @@ Performance measures.}
 Number of boosting iterations.}
 
 \item{tolerance}{[\code{numeric}]\cr
-Tolerance for stopping criterion.}
+Tolerance for stopping criterion. For measures which are to minimize: Positive values indicate that in each iteration an improvement is forced. 
+Worsening of performance is allowed for negative values. For measures to maximize the opposite is true.}
 
 \item{subsemble.prop}{[\code{numeric}]\cr 
 Proportion of data where tuning is run on.}
