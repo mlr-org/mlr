@@ -95,8 +95,7 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #'
 #' For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
 #'
-#' @param model [\code{\link{WrappedModel}}]\cr
-#'  Wrapped model, result of \code{\link{train}}.
+#' @template arg_wrappedmod
 #' @return [\code{logical(1)}].
 #' @export
 isFailureModel = function(model) {
@@ -117,8 +116,7 @@ isFailureModel.WrappedModel = function(model) {
 #'
 #' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 #'
-#' @param model [\code{\link{WrappedModel}}]\cr
-#'  Wrapped model, result of \code{\link{train}}.
+#' @template arg_wrappedmod
 #' @return [\code{character(1)}].
 #' @export
 getFailureModelMsg = function(model) {

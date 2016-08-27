@@ -1,4 +1,4 @@
-#' @title Extracts out of bag predictions from trained models
+#' @title Extracts out of bag predictions from trained models.
 #'
 #' @description
 #' Learners like \code{randomForest} produce out of bag predictions. 
@@ -24,7 +24,8 @@
 #' {Support for classification.}
 #' }
 #'
-#' @template arg_wrappedmod
+#' @param object [\code{\link{WrappedModel}}]\cr
+#'   Wrapped model, result of \code{\link{train}}, has to correspond to the learner.
 #' @template arg_task
 #' @return [\code{\link{Prediction}}].
 #' @export
@@ -53,9 +54,25 @@ getOOBPreds = function(object, task) {
   # time is set to NA, as "no" time is required for getting the out of bag predictions
   checkPredictLearnerOutput(object$learner, object, p)
   makePrediction(task.desc = td, row.names = rownames(data), id = subset, truth = truth,
-                 predict.type = object$learner$predict.type, predict.threshold = object$learner$predict.threshold, y = p, time = NA)
+    predict.type = object$learner$predict.type, predict.threshold = object$learner$predict.threshold, y = p, time = NA)
 }
 
+#' @title Provides out of bag predictions for a given model and the corresponding learner.
+#' 
+#' @description 
+#' 
+#' This function is mostly for internal usage. To get out-of-bag predictions use \code{\link{getOOBPreds}}.
+#' 
+#' @param .learner [\code{\link{Learner}} | \code{character(1)}]\cr
+#'   The learner.
+#' @param .model [\code{\link{WrappedModel}}]\cr
+#'   Wrapped model, result of \code{\link{train}}, has to correspond to the learner.
+#' @return The return value depends on the learner. If the learner is a classification learner and 
+#' prediction type is probability, the outcome is a numeric matrix, each column corresponding to a 
+#' level. If prediction type is response it is a factor vector with the levels of the target variable.
+#' If the learner is a regression learner the outcome is a numeric vector. 
+#' @export
+#' @keywords internal
 getOOBPredsLearner = function(.learner, .model) {
   UseMethod("getOOBPredsLearner")
 }

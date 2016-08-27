@@ -1,2 +1,2 @@
-#' @param object [\code{\link{WrappedModel}}]\cr
-#'  Wrapped model, result of \code{\link{train}}.
+#' @param model [\code{\link{WrappedModel}}]\cr
+#'   The model.

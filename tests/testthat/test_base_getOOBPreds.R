@@ -3,7 +3,7 @@ context("getOOBPreds")
 test_that("getOOBPreds", {
   lrn = makeLearner("classif.randomForest")
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
-                    features = getTaskFeatureNames(binaryclass.task)[12:15])
+    features = getTaskFeatureNames(binaryclass.task)[12:15])
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
   pred = predict(mod, task)
