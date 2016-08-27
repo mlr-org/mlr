@@ -49,7 +49,7 @@ getOOBPreds = function(model, task) {
 #'   The learner.
 #' @param .model [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model.
-#' @return Same as predictLearner.
+#' @return Same output structure as in [\code{\link{predictLearner}}].
 #' @export
 #' @keywords internal
 getOOBPredsLearner = function(.learner, .model) {
