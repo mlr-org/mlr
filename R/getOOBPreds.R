@@ -24,8 +24,7 @@
 #' {Support for classification.}
 #' }
 #'
-#' @param object [\code{\link{WrappedModel}}]\cr
-#'   Wrapped model, result of \code{\link{train}}, has to correspond to the learner.
+#' @template arg_wrappedmod
 #' @template arg_task
 #' @return [\code{\link{Prediction}}].
 #' @export
@@ -36,25 +35,25 @@
 #' oob = getOOBPreds(mod, sonar.task)
 #' oob
 #' performance(oob, measures = list(auc, mmce))
-getOOBPreds = function(object, task) {
-  assertClass(object, classes = "WrappedModel")
+getOOBPreds = function(model, task) {
+  assertClass(model, classes = "WrappedModel")
   assertClass(task, classes = "Task")
-  checkModelCorrespondsTask(object, task)
+  checkModelCorrespondsTask(model, task)
 
-  td = object$task.desc
+  td = model$task.desc
   # extract truth column
-  subset = object$subset
+  subset = model$subset
   data = getTaskData(task, subset)
   t.col = match(td$target, colnames(data)) 
   truth = data[, t.col, drop = TRUE]
   if (is.list(truth))
     truth = data.frame(truth)
   
-  p = getOOBPredsLearner(object$learner, object)
+  p = getOOBPredsLearner(model$learner, model)
   # time is set to NA, as "no" time is required for getting the out of bag predictions
-  checkPredictLearnerOutput(object$learner, object, p)
+  checkPredictLearnerOutput(model$learner, model, p)
   makePrediction(task.desc = td, row.names = rownames(data), id = subset, truth = truth,
-    predict.type = object$learner$predict.type, predict.threshold = object$learner$predict.threshold, y = p, time = NA)
+    predict.type = model$learner$predict.type, predict.threshold = model$learner$predict.threshold, y = p, time = NA)
 }
 
 #' @title Provides out of bag predictions for a given model and the corresponding learner.
