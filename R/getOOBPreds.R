@@ -49,11 +49,7 @@ getOOBPreds = function(model, task) {
 #'   The learner.
 #' @param .model [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model.
-#' @return [\code{matrix} | \code{factor} | \code{numeric}]\cr
-#' The return value depends on the learner. If the learner is a classification learner and 
-#' prediction type is probability, the outcome is a numeric matrix, each column corresponding to a 
-#' level. If prediction type is response, it is a factor vector with the levels of the target variable.
-#' If the learner is a regression learner the outcome is a numeric vector. 
+#' @return Same as predictLearner.
 #' @export
 #' @keywords internal
 getOOBPredsLearner = function(.learner, .model) {
