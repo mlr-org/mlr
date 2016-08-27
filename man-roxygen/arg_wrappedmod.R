@@ -1,2 +1,2 @@
 #' @param model [\code{\link{WrappedModel}}]\cr
-#'   The model.
+#'  The model.
