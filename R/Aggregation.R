@@ -34,8 +34,8 @@ NULL
 #' @param properties [\code{character}]\cr
 #'   Set of aggregation properties.
 #'   \describe{
-#'     \item{req.train}{Is prediction on train sets required to calculate the aggregation?}
-#'     \item{req.test}{Is prediction on test sets required to calculate the aggregation?}
+#'     \item{req.train}{Are prediction or train sets required to calculate the aggregation?}
+#'     \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 #'   }
 #' @param fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]\cr
 #'   Calculates the aggregated performance. In most cases you will only need the performances
