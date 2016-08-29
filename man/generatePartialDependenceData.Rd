@@ -7,8 +7,8 @@
 \usage{
 generatePartialDependenceData(obj, input, features, interaction = FALSE,
   derivative = FALSE, individual = FALSE, center = NULL, fun = mean,
-  weight.fun = function(x, data) 1, bounds = c(qnorm(0.025), qnorm(0.975)),
-  resample = "none", fmin, fmax, gridsize = 10L, ...)
+  weight.fun = function(x, data) rep(1, nrow(x)), bounds = c(qnorm(0.025),
+  qnorm(0.975)), resample = "none", fmin, fmax, gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -69,9 +69,10 @@ The default is the mean, unless \code{obj} is classification with \code{predict.
 in which case the default is the proportion of observations predicted to be in each class.}
 
 \item{weight.fun}{[\code{function}]\cr
-A function which takes a numeric vector \code{x} and a \code{data.frame} \code{data} and returns a
-numeric weight. The length of \code{x} must match the column dimension of \code{data}.
-By default \code{weight.fun} returns a weight of 1 for every input.}
+A function which takes a \code{data.frame} \code{x} and a \code{data.frame} \code{data}
+(both of which are coerced to numeric matrices) and returns a non-negative
+numeric weight. The number of columns in \code{x} must match the column dimension of \code{data}.
+By default \code{weight.fun} returns a weight of 1.}
 
 \item{bounds}{[\code{numeric(2)}]\cr
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
