@@ -232,8 +232,12 @@ test_that("generatePartialDependenceData", {
   fit = train("regr.rpart", test.task)
   pd = generatePartialDependenceData(fit, test.task,
     weight.fun = function(x, data) ifelse(x > .5, 0, 1),
-    fmin = list("x" = 0), fmax = list("x" = 1))
+    fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
   expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
+
+  # issue 55 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {
