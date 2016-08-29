@@ -61,9 +61,10 @@
 #'   The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 #'   in which case the default is the proportion of observations predicted to be in each class.
 #' @param weight.fun [\code{function}]\cr
-#'   A function which takes a numeric vector \code{x} and a \code{data.frame} \code{data} and returns a
-#'   numeric weight. The length of \code{x} must match the column dimension of \code{data}.
-#'   By default \code{weight.fun} returns a weight of 1 for every input.
+#'   A function which takes a \code{data.frame} \code{x} and a \code{data.frame} \code{data}
+#'   (both of which are coerced to numeric matrices) and returns a non-negative
+#'   numeric weight. The number of columns in \code{x} must match the column dimension of \code{data}.
+#'   By default \code{weight.fun} returns a weight of 1.
 #' @param bounds [\code{numeric(2)}]\cr
 #'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 #'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
@@ -136,7 +137,8 @@
 #' @export
 generatePartialDependenceData = function(obj, input, features,
   interaction = FALSE, derivative = FALSE, individual = FALSE, center = NULL,
-  fun = mean, weight.fun = function(x, data) 1, bounds = c(qnorm(.025), qnorm(.975)),
+  fun = mean, weight.fun = function(x, data) rep(1, nrow(x)),
+  bounds = c(qnorm(.025), qnorm(.975)),
   resample = "none", fmin, fmax, gridsize = 10L, ...) {
 
   assertClass(obj, "WrappedModel")
@@ -188,10 +190,10 @@ generatePartialDependenceData = function(obj, input, features,
     stop("function argument must return a numeric vector of length 1 or 3.")
 
   assertFunction(weight.fun)
-  x = c(0, 0)
+  x = matrix(0, 2, 2)
   test = as.matrix(replicate(2, rnorm(5)))
   weights = weight.fun(x, test)
-  if (!is.numeric(weights) && length(weights) == 1L)
+  if (!is.numeric(weights) && length(weights) == 2L)
     stop("Invalid weight.fun.")
   
   assertNumeric(bounds, len = 2L)
@@ -334,9 +336,10 @@ generatePartialDependenceData = function(obj, input, features,
 #'   a measure of location, and an upper bound. Note if three numbers are returned they must be
 #'   in this order. The default is the mean.
 #' @param weight.fun [\code{function}]\cr
-#'   A function which takes a numeric vector \code{x} and a \code{data.frame} \code{data} and returns a
-#'   numeric weight. The length of \code{x} must match the column dimension of \code{data}.
-#'   By default \code{weight.fun} returns a weight of 1 for every input.
+#'   A function which takes a \code{data.frame} \code{x} and a \code{data.frame} \code{data}
+#'   (both of which are coerced to numeric matrices) and returns a non-negative
+#'   numeric weight. The number of columns in \code{x} must match the column dimension of \code{data}.
+#'   By default \code{weight.fun} returns a weight of 1.
 #' @param bounds [\code{numeric(2)}]\cr
 #'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 #'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
@@ -388,7 +391,8 @@ generatePartialDependenceData = function(obj, input, features,
 #' plotPartialDependence(fa)
 #' @export
 generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = mean,
-  weight.fun = function(x, data) 1, bounds = c(qnorm(.025), qnorm(.975)),
+  weight.fun = function(x, data) rep(1, nrow(x)),
+  bounds = c(qnorm(.025), qnorm(.975)),
   resample = "none", fmin, fmax, gridsize = 10L, ...) {
 
   assertClass(obj, "WrappedModel")
@@ -426,10 +430,10 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   assertIntegerish(depth, lower = 1L, upper = length(features), len = 1L)
 
   assertFunction(weight.fun)
-  x = c(0, 0)
+  x = matrix(0, 2, 2)
   test = as.matrix(replicate(2, rnorm(5)))
   weights = weight.fun(x, test)
-  if (!is.numeric(weights) && length(weights) == 1L)
+  if (!is.numeric(weights) && length(weights) == 2L)
     stop("Invalid weight.fun.")
   
   assertFunction(fun)
@@ -514,8 +518,9 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
     f = function(x, obj, data, features, fun, td, ...) {
       newdata = data
       newdata[features] = x
-      weights = apply(newdata[, obj$features, drop = FALSE], 1, function(x)
-        do.call("weight.fun", c(list("x" = x, "data" = data[, obj$features, drop = FALSE]), list(...))))
+      weights = do.call("weight.fun", list("x" = newdata[, obj$features, drop = FALSE],
+        "data" = data[, obj$features, drop = FALSE], ...))
+      assertNumeric(weights, lower = 0, finite = TRUE, all.missing = FALSE, len = nrow(newdata))
       if (sum(weights) == 0) weights = rep(NA, length(weights))
       pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
       if (obj$learner$predict.type == "response")
@@ -533,8 +538,9 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
     f = function(x, obj, data, features, fun, td, ...) {
       newdata = data
       newdata[features] = x
-      weights = apply(newdata[, obj$features, drop = FALSE], 1, function(x)
-        do.call("weight.fun", c(list("x" = x, "data" = data[, obj$features, drop = FALSE]), list(...))))
+      weights = do.call("weight.fun", list("x" = newdata[, obj$features, drop = FALSE],
+        "data" = data[, obj$features, drop = FALSE], ...))
+      assertNumeric(weights, lower = 0, finite = TRUE, all.missing = FALSE, len = nrow(newdata))
       if (sum(weights) == 0) weights = rep(NA, length(weights))
       pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
       if (obj$learner$predict.type == "response")
@@ -557,13 +563,14 @@ doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bo
 
   newdata = data
   newdata[features] = rng[i, ]
-  weights = apply(newdata[, obj$features, drop = FALSE], 1, function(x)
-    do.call("weight.fun", c(list("x" = x, "data" = data[, obj$features, drop = FALSE]), list(...))))
+  weights = do.call("weight.fun", list("x" = newdata[, obj$features, drop = FALSE],
+    "data" = data[, obj$features, drop = FALSE], ...))
+  assertNumeric(weights, lower = 0, finite = TRUE, all.missing = FALSE, len = nrow(newdata))
   if (sum(weights) == 0) weights = rep(NA, length(weights))
   pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
   if (obj$learner$predict.type == "response") {
     if (td$type == "classif") {
-      if (identical(functionBody(weight.fun), functionBody(function(x, data) 1)))
+      if (identical(functionBody(weight.fun), functionBody(function(x, data) rep(1, nrow(x)))))
         fun(getPredictionResponse(pred))
       else
         stop('Classification with predict.type = "response" is incompatible with weights.')

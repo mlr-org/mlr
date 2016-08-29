@@ -224,14 +224,14 @@ test_that("generatePartialDependenceData", {
 
   # with the joint distribution as the weight function generatePartialDependenceData
   # should return NA for regions with zero probability
-  x = runif(10)
+  x = runif(50L)
   y = 2 * x
-  idx = x > .5
+  idx = which(x > .5)
   x[idx] = NA
   test.task = makeRegrTask(data = data.frame(x = x[-idx], y = y[-idx]), target = "y")
   fit = train("regr.rpart", test.task)
   pd = generatePartialDependenceData(fit, test.task,
-    weight.fun = function(x, data) ifelse(x > .5, 0, 1),
+    weight.fun = function(x, data) apply(x, 1, function(z) ifelse(z > .5, 0, 1)),
     fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
   expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
 
