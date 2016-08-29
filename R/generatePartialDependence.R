@@ -260,7 +260,7 @@ generatePartialDependenceData = function(obj, input, features,
         out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
           centerpred = doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
-            x, fun, td, 1, bounds = bounds)
+            x, fun, td, 1, bounds = bounds, weight.fun = function(x, data) 1)
         else
           centerpred = NULL
       }
@@ -284,7 +284,7 @@ generatePartialDependenceData = function(obj, input, features,
       args$rng = rng
       out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
-        centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center, features, fun, td, 1, bounds))
+        centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center, features, fun, td, 1, bounds, weight.fun = function(x, data) 1))
       else
         centerpred = NULL
     }
