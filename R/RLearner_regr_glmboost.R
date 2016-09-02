@@ -29,7 +29,9 @@ trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL,
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  family = switch(family,
+  defaults = getDefaults(getParamSet(.learner))
+  if (missing(family)) family = defaults$family
+    family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
     Huber = mboost::Huber(d),
