@@ -4,15 +4,17 @@ test_that("regr_glmboost", {
 
   parset.list1 = list(
     list(family = mboost::Gaussian(), control = mboost::boost_control(nu = 0.03)),
-    list(family = mboost::Gaussian(), control = mboost::boost_control(mstop = 600), center = TRUE),
+    list(family = mboost::GammaReg(nuirange = c(0,50)), control = mboost::boost_control(mstop = 600), center = TRUE),
     list(family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
-      loss = function(y, f) (y - f)^2, name = "My Gauss Variant"))
+      loss = function(y, f) (y - f)^2,
+      name = "My Gauss Variant"))
   )
   parset.list2 = list(
-    list(family=mboost::Gaussian(), nu = 0.03),
-    list(family=mboost::Gaussian(), mstop = 600, center = TRUE),
-    list(custom.family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
-      loss = function(y, f) (y - f)^2, name = "My Gauss Variant"))
+    list(family = "Gaussian", nu = 0.03),
+    list(family= "GammaReg", nuirange = c(0,50), mstop = 600, center = TRUE),
+    list(family = "custom.family", custom.family.definition =  mboost::Family(ngradient = function(y, f, w = 1) y - f,
+    loss = function(y, f) (y - f)^2,
+    name = "My Gauss Variant"))
   )
   old.predicts.list = list()
   for (i in 1:length(parset.list1)) {
@@ -33,7 +35,7 @@ test_that("regr_glmboost works with poisson", {
   d = regr.df
   d[, regr.target] = sample(1:100, getTaskSize(regr.task), replace = TRUE)
   task = makeRegrTask(data = d, target = regr.target)
-  lrn = makeLearner("regr.glmboost", par.vals = list(family = mboost::Poisson()))
+  lrn = makeLearner("regr.glmboost", par.vals = list(family = "Poisson"))
   r = holdout(lrn, task)
   expect_true(!is.na(r$aggr))
 })
