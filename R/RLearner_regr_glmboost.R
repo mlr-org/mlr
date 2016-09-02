@@ -6,7 +6,7 @@ makeRLearner.regr.glmboost = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
-      makeUntypedLearnerParam(id = "custom.family.defintion", requires = quote(family == "custom.family")),
+      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
       makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
@@ -25,7 +25,7 @@ makeRLearner.regr.glmboost = function() {
 }
 
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family, custom.family.defintion, nuirange, d = NULL, ...) {
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family, custom.family.definition, nuirange, d = NULL, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
@@ -37,7 +37,7 @@ trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL,
     GammaReg = mboost::GammaReg(nuirange = nuirange),
     NBinomial = mboost::NBinomial(nuirange = nuirange),
     Hurdle = mboost::Hurdle(nuirange = nuirange),
-    custom.family = custom.family.defintion
+    custom.family = custom.family.definition
     )
   if (is.null(.weights)) {
     model = mboost::glmboost(f, data = d, control = ctrl, family = family, ...)
