@@ -4,11 +4,11 @@ makeRLearner.regr.glmboost = function() {
     cl = "regr.glmboost",
     package = "mboost",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = mboost::Gaussian(),
-        values = list(Gaussian = mboost::Gaussian(), Laplace = mboost::Laplace(),
-          Huber = mboost::Huber(), Poisson = mboost::Poisson(), GammaReg = mboost::GammaReg(nuirange = c(0,100)),
-          NBinomial = mboost::NBinomial(), Hurdle = mboost::Hurdle())),
-      #makeUntypedLearnerParam(id = "custom.family.defintion", requires = quote(family = "custom.family")),
+      makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
+        "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
+      makeUntypedLearnerParam(id = "custom.family.defintion", requires = quote(family == "custom.family")),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
+      makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
@@ -25,19 +25,24 @@ makeRLearner.regr.glmboost = function() {
 }
 
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family, ...) {
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family, custom.family.defintion, nuirange, d = NULL, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  # if (!is.null(custom.family)) {
-  #  family = custom.family
-  # } else {
-  #   family = family
-  # }
+  family = switch(family,
+    Gaussian = mboost::Gaussian(),
+    Laplace = mboost::Laplace(),
+    Huber = mboost::Huber(d),
+    Poisson = mboost::Poisson(),
+    GammaReg = mboost::GammaReg(nuirange = nuirange),
+    NBinomial = mboost::NBinomial(nuirange = nuirange),
+    Hurdle = mboost::Hurdle(nuirange = nuirange),
+    custom.family = custom.family.defintion
+    )
   if (is.null(.weights)) {
-    model = mboost::glmboost(f, data = d, control = ctrl, ...)
+    model = mboost::glmboost(f, data = d, control = ctrl, family = family, ...)
   } else {
-    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, ...)
+    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, family = family, ...)
   }
   model
 }
