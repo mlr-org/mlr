@@ -5,6 +5,7 @@
 \alias{listLearners.Task}
 \alias{listLearners.character}
 \alias{listLearners.default}
+\alias{print.listLearners}
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
@@ -22,6 +23,8 @@ listLearners(obj = NA_character_, properties = character(0L),
 \method{listLearners}{Task}(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
   create = FALSE)
+
+\method{print}{listLearners}(obj)
 }
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{Task}}]\cr

@@ -132,8 +132,8 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
   tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
   tab$properties = NULL
   setnames(tab, "id", "class")
-  setDF(tab)
-  return(tab)
+  tab = structure(tab, class = "listLearners")
+  print(tab)
 }
 
 #' @export
@@ -156,4 +156,36 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
   }
 
   listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, check.packages, create)
+}
+
+#' @export
+#' @rdname listLearners
+print.listLearners = function(obj, ...) {
+  l = length(obj$name)
+  if (l == 0) {
+    return("No learner of mlr matches your search criteria!")
+  } else {
+    if (l == 1) {
+      catf("The following learner of mlr matches your search criteria:", "\n")
+      catf("\n")
+    } else {
+      catf("The following %s learners of mlr match your search criteria:", l, "\n")
+      catf("\n")
+    }
+    for (i in 1:l) {
+      cat("Learner:", obj$name[i], "\n")
+      catf("Short name: %s", obj$short.name[i], "\n")
+      catf("Type: %s", obj$type[i], "\n")
+      catf("Properties:", "\n")
+      catf("Numerics: %s, Factors: %s, Weights: %s, Probabilities: %s",
+        obj$numerics[i], obj$factors[i], obj$weights[i], obj$prob[i], "\n")
+      if (obj$type[i] == "classif") {
+        catf("One Class: %s, Two Class: %s, Multiclass: %s, Class weights: %s",
+          obj$oneclass[i], obj$twoclass[i], obj$multiclass[i], obj$class.weights[i], "\n")
+      } else if (obj$type[i] == "regr") {
+        catf("Std. error: %s", obj$se[i], "\n")
+      }
+    catf("\n")
+    }
+  }
 }
