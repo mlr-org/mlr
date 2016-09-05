@@ -83,7 +83,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
   learner, features = getTaskFeatureNames(task), interaction = FALSE, measure,
   contrast = function(x, y) x - y, aggregation = mean, nmc = 50L, replace = TRUE,
   local = FALSE) {
-  
+
   learner = checkLearner(learner)
   measure = checkMeasures(measure, learner)
   if (length(measure) > 1L)
@@ -124,7 +124,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
 
 doPermutationImportance = function(task, learner, features, interaction, measure,
   contrast, aggregation, nmc, replace, local) {
-  
+
   ## train learner to get baseline performance
   fit = train(learner, task)
 
@@ -138,9 +138,9 @@ doPermutationImportance = function(task, learner, features, interaction, measure
     })
     perf = as.numeric(perf)
   } else {
-    perf = performance(pred, measure)    
+    perf = performance(pred, measure)
   }
-  
+
   data = getTaskData(task)
 
   ## indices for resampled data to be used for permuting features
@@ -163,28 +163,27 @@ doPermutationImportance = function(task, learner, features, interaction, measure
   } else {
     indices = replicate(nmc, sample.int(getTaskSize(task), replace = replace))
   }
-  
+
   args = list(measure = measure, contrast = contrast, data = data,
               perf = perf, fit = fit, indices = indices)
 
   doPermutationImportanceIteration = function(perf, fit, data, measure,
     contrast, indices, i, x) {
-  
+
     data[, x] = data[indices[, i], x]
-    pred = predict(fit, newdata = data)
 
     if (local) {
-      perf.permuted = lapply(1:getTaskSize(task), function(i) {
+      perf.permuted = lapply(seq_len(getTaskSize(task)), function(i, pred) {
         pred$data = pred$data[i, ]
         performance(pred, measure)
-      })
+      }, pred = predict(fit, newdata = data))
       perf.permuted = as.numeric(perf.permuted)
     } else {
       perf.permuted = performance(predict(fit, newdata = data), measure)
     }
     contrast(perf.permuted, perf)
   }
-  
+
   if (interaction) {
     args$x = features
     out = parallelMap(doPermutationImportanceIteration, i = seq_len(nmc), more.args = args)

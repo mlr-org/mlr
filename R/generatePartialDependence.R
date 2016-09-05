@@ -195,7 +195,7 @@ generatePartialDependenceData = function(obj, input, features,
   weights = weight.fun(x, test)
   if (!is.numeric(weights) && length(weights) == 2L)
     stop("Invalid weight.fun.")
-  
+
   assertNumeric(bounds, len = 2L)
   assertNumber(bounds[1], upper = 0)
   assertNumber(bounds[2], lower = 0)
@@ -435,7 +435,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   weights = weight.fun(x, test)
   if (!is.numeric(weights) && length(weights) == 2L)
     stop("Invalid weight.fun.")
-  
+
   assertFunction(fun)
   test = fun(1:3)
   if (!is.numeric(test))
@@ -458,17 +458,15 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
   names(fixed_grid) = effects
 
-  type = td$type
   target = td$target
 
   ## generate each effect
-  args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, weight.fun = weight.fun, ...)
-  pd = lapply(U, function(u) {
+  pd = lapply(U, function(u, args) {
     args$features = u
     args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
     out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(args$rng)), more.args = args)
     doAggregatePartialDependence(out, td, target, u, args$rng)
-  })
+  }, args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, weight.fun = weight.fun, ...))
   names(pd) = effects
 
   if (length(test) == 3L | obj$learner$predict.type == "se")
@@ -693,7 +691,6 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
   if (obj$interaction & length(obj$features) > 2L & geom != "tile")
     stop("Cannot plot more than 2 features together with line plots.")
   if (geom == "tile") {
-    feat_classes = sapply(obj$data, class)
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
   }

@@ -1,7 +1,7 @@
 # colAUC calculates for a vector with true values the Area Under the ROC Curve (AUC) for a matrix of samples.
-# Matrix rows contain samples while the columns contain features/variables. 
+# Matrix rows contain samples while the columns contain features/variables.
 # The function is used to calculate different multiclass AUC measures AU1P, AU1U, AUNP, AUNU,
-# following the definition by Ferri et al.: 
+# following the definition by Ferri et al.:
 # https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf
 
 colAUC = function(samples, truth) {
@@ -14,13 +14,13 @@ colAUC = function(samples, truth) {
   ny = table(y)
   ul = as.factor(rownames(ny))
   nl = length(ny)
-  if (nl <= 1) 
+  if (nl <= 1)
     stop("colAUC: List of labels 'y' have to contain at least 2 class labels.")
-  if (!is.numeric(X)) 
+  if (!is.numeric(X))
     stop("colAUC: 'X' must be numeric")
-  if (nr != length(y)) 
+  if (nr != length(y))
     stop("colAUC: length(y) and nrow(X) must be the same")
-  l = matrix(rep(ul, each = nr), nr, nl)
+  # l = matrix(rep(ul, each = nr), nr, nl)
   per = t(utils::combn(1:nl, 2))
   np = nrow(per)
   auc = matrix(0.5, np, nc)
