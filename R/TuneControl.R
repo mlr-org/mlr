@@ -23,7 +23,7 @@
 #'     candidates found by irace in the last race. Its estimated performance is the mean of all
 #'     evaluations ever done for that candidate. More information on irace can be found in the TR at
 #'     \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
-#'   \item{makeTuneControlGA}{Genetic algorithm (\code{\link[GA]{GA}}) tuning method. Can handle numeric(vector) and 
+#'   \item{makeTuneControlGA}{Genetic algorithm (\code{\link[GA]{GA}}) tuning method. Can handle numeric(vector) and
 #'     integer(vector) hyperparameters, but no dependencies. For integers the internally proposed numeric
 #'     values are automatically rounded. }
 #'   \item{makeTuneControlPSO}{Particle Swarm Optimization (\code{\link[PSO]{PSO}}) implementation consistent with the
@@ -88,13 +88,13 @@
 #'   \code{irace}, \code{budget} is passed to \code{maxExperiments}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} arguments of
-#'   \code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[PSO]{PSO}}, 
+#'   \code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[PSO]{PSO}},
 #'   \code{\link[EDA]{EDA}}, \code{\link[GenSA]{GenSA}}, as well as
 #'   towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.
 #' @return [\code{\link{TuneControl}}]. The specific subclass is one of
 #'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
 #'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
-#'   \code{\link{TuneControlIrace}}, \code{\link{TuneControlGA}}, 
+#'   \code{\link{TuneControlIrace}}, \code{\link{TuneControlGA}},
 #'   \code{\link{TuneControlPSO}}, \code{\link{TuneControlEDA}}.
 #' @family tune
 #' @name TuneControl

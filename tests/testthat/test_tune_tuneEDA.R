@@ -155,12 +155,12 @@ test_that("tuneEDA with budget", {
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
 
- ctrl = makeTuneControlEDA(start = list(cp = 0.05, minsplit = 5L), maxit = 2L, 
+ ctrl = makeTuneControlEDA(start = list(cp = 0.05, minsplit = 5L), maxit = 2L,
     popSize = 10L, budget = 50L)
   expect_error(tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl))
 
-  ctrl1 = makeTuneControlEDA(start = list(cp = 0.05, minsplit = 5L), maxit = 3, 
+  ctrl1 = makeTuneControlEDA(start = list(cp = 0.05, minsplit = 5L), maxit = 3,
     popSize = 10L, budget = 30)
   expect_null(ctrl1$extra.args$type)
   expect_equal(ctrl1$extra.args$maxit, 3L)

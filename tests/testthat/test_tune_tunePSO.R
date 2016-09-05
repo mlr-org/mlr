@@ -10,7 +10,7 @@ test_that("tunePSO", {
     makeNumericParam("cp", lower = 0.001, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
-  ctrl1 = makeTuneControlPSO(start = list(cp = 0.05, minsplit = 5L), maxit = 5L, 
+  ctrl1 = makeTuneControlPSO(start = list(cp = 0.05, minsplit = 5L), maxit = 5L,
     nParticles = 10L)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
@@ -48,12 +48,12 @@ test_that("tunePSO with budget", {
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
 
-  ctrl = makeTuneControlPSO(start = list(cp = 0.05, minsplit = 5L), maxit = 2L, 
+  ctrl = makeTuneControlPSO(start = list(cp = 0.05, minsplit = 5L), maxit = 2L,
     nParticles = 10L, budget = 50L)
   expect_error(tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl))
 
-  ctrl1 = makeTuneControlPSO(start = list(cp = 0.05, minsplit = 5L), maxit = 3L, 
+  ctrl1 = makeTuneControlPSO(start = list(cp = 0.05, minsplit = 5L), maxit = 3L,
     nParticles = 10L, budget = 30)
   expect_null(ctrl1$extra.args$type)
   expect_equal(ctrl1$extra.args$maxit, 3L)

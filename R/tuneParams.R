@@ -116,5 +116,3 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)
 }
-
-

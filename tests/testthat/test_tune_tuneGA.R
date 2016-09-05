@@ -11,7 +11,7 @@ test_that("tuneGA", {
     makeNumericParam("cp", lower = 0.001, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
-  ctrl1 = makeTuneControlGA(start = list(cp = 0.05, minsplit = 5L), 
+  ctrl1 = makeTuneControlGA(start = list(cp = 0.05, minsplit = 5L),
     maxit = 5, popSize = 10)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
@@ -26,7 +26,7 @@ test_that("tuneGA", {
      maxit = 5, popSize = 10)
   tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res,
     par.set = ps2, control = ctrl2)
-  
+
   expect_equal(ncol(as.data.frame(tr2$opt.path)), 4+1+2+2)
   expect_true(is.numeric(tr2$y))
   expect_equal(length(tr2$y), 1)
@@ -44,19 +44,19 @@ test_that("tuneGA", {
 # -----------------------------------------------------------------------------------------------
 
 test_that("tuneGA with budget", {
-  
+
   res = makeResampleDesc("CV", iters = 2)
   ps1 = makeParamSet(
     makeNumericParam("cp", lower = 0.001, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
 
-  ctrl = makeTuneControlGA(start = list(cp = 0.05, minsplit = 5L), maxit = 2, 
+  ctrl = makeTuneControlGA(start = list(cp = 0.05, minsplit = 5L), maxit = 2,
     popSize = 10, budget = 50)
   expect_error(tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl))
-  
-  ctrl1 = makeTuneControlGA(start = list(cp = 0.05, minsplit = 5L), maxit = 3, 
+
+  ctrl1 = makeTuneControlGA(start = list(cp = 0.05, minsplit = 5L), maxit = 3,
     popSize = 10, budget = 30)
   expect_null(ctrl1$extra.args$parallel)
   expect_equal(ctrl1$extra.args$maxit, 3)
@@ -65,6 +65,6 @@ test_that("tuneGA with budget", {
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
 
-  # FIXME: opth.path's size returned is not equal the budget size (it is a GA Package's behavior) 
-  # expect_identical(getOptPathLength(tr1$opt.path), ctrl1$budget) 
+  # FIXME: opth.path's size returned is not equal the budget size (it is a GA Package's behavior)
+  # expect_identical(getOptPathLength(tr1$opt.path), ctrl1$budget)
 })
