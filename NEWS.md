@@ -61,6 +61,7 @@
 ## learners - new
 * multilabel.cforest
 * surv.gbm
+* regr.cvglmnet
 
 ## learners - removed
 
