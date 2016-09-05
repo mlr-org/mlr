@@ -45,7 +45,7 @@ url = {https://CRAN.R-project.org/package=mlr},
 }
 ```
 
-Some parts of the package were created as part of other publications. 
+Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately:
 
 
@@ -115,9 +115,9 @@ News
 ====
 Most NEWS regarding extensions and changes of the packages can be accessed here for the
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
-[devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
+[devel](https://github.com/mlr-org/mlr/blob/master/NEWS.md) version on Github.
 
-* 2016-08-24: 
+* 2016-08-24:
   * We have a (still smallish) blog on thing related to mlr. See link above.
 * 2016-08-06:
   * We are hosting the first mlr workshop! It is in Palermo, and more like a sprint, as 11 core developers meet to get stuff done. Thanks to Giuseppe for organizing this! We are thinking about hosting the 2017 one in Munich and possibly opening this up more for the public. If you are interested in potentially joining, email Bernd.
