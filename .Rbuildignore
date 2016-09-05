@@ -2,6 +2,7 @@ todo-files
 ^test*.R$
 
 .gitignore
+.agignore
 .travis.yml
 
 ^.*tar.gz$

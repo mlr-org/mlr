@@ -25,6 +25,7 @@
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
 #' \donttest{
+#' library(BBmisc)
 #' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")
@@ -123,6 +124,6 @@ getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
 
 #' @export
 isFailureModel.ModelMultiplexerModel = function(model) {
-  !inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model)
+  NextMethod() || (!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
 

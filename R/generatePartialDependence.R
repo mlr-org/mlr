@@ -1,7 +1,3 @@
-#' @importFrom plyr ldply
-#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
-#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
-#' 
 #' @title Generate partial dependence.
 #'
 #' @description
@@ -64,6 +60,11 @@
 #'   target feature.
 #'   The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 #'   in which case the default is the proportion of observations predicted to be in each class.
+#' @param weight.fun [\code{function}]\cr
+#'   A function which takes a \code{data.frame} \code{x} and a \code{data.frame} \code{data}
+#'   (both of which are coerced to numeric matrices) and returns a non-negative
+#'   numeric weight. The number of columns in \code{x} must match the column dimension of \code{data}.
+#'   By default \code{weight.fun} returns a weight of 1.
 #' @param bounds [\code{numeric(2)}]\cr
 #'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 #'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
@@ -135,11 +136,11 @@
 #' plotPartialDependence(pd, data = getTaskData(iris.task))
 #' @export
 generatePartialDependenceData = function(obj, input, features,
-                                         interaction = FALSE, derivative = FALSE,
-                                         individual = FALSE, center = NULL,
-                                         fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
-                                         resample = "none",
-                                         fmin, fmax, gridsize = 10L, ...) {
+  interaction = FALSE, derivative = FALSE, individual = FALSE, center = NULL,
+  fun = mean, weight.fun = function(x, data) rep(1, nrow(x)),
+  bounds = c(qnorm(.025), qnorm(.975)),
+  resample = "none", fmin, fmax, gridsize = 10L, ...) {
+
   assertClass(obj, "WrappedModel")
   if (obj$learner$predict.type == "se" & individual)
     stop("individual = TRUE not compatabile with predict.type = 'se'!")
@@ -182,6 +183,19 @@ generatePartialDependenceData = function(obj, input, features,
     center = as.data.frame(do.call("cbind", center))
   }
   assertFunction(fun)
+  test = fun(1:3)
+  if (!is.numeric(test))
+    stop("fun argument must return a numeric vector")
+  if (!(length(test) %in% c(1L, 3L)))
+    stop("function argument must return a numeric vector of length 1 or 3.")
+
+  assertFunction(weight.fun)
+  x = matrix(0, 2, 2)
+  test = as.matrix(replicate(2, rnorm(5)))
+  weights = weight.fun(x, test)
+  if (!is.numeric(weights) && length(weights) == 2L)
+    stop("Invalid weight.fun.")
+  
   assertNumeric(bounds, len = 2L)
   assertNumber(bounds[1], upper = 0)
   assertNumber(bounds[2], lower = 0)
@@ -189,10 +203,10 @@ generatePartialDependenceData = function(obj, input, features,
 
   if (missing(fmin))
     fmin = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   if (missing(fmax))
     fmax = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   assertList(fmin, len = length(features))
   if (!all(names(fmin) %in% features))
     stop("fmin must be a named list with an NA or value corresponding to each feature.")
@@ -229,11 +243,14 @@ generatePartialDependenceData = function(obj, input, features,
   }  else
     target = "Risk"
 
+  args = list(obj = obj, data = data, fun = fun, td = td, individual = individual,
+    bounds = bounds, weight.fun = weight.fun, ...)
+
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
+      args$features = x
       if (derivative) {
-        args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual,
-                    bounds = bounds, ...)
+        args$bounds = NULL
         out = parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
@@ -241,11 +258,11 @@ generatePartialDependenceData = function(obj, input, features,
       } else {
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
-        args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, bounds = bounds, ...)
+        args$rng = rng
         out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
           centerpred = doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
-                                                    x, fun, td, 1, bounds = bounds)
+            x, fun, td, 1, bounds = bounds, weight.fun = function(x, data) rep(1, nrow(x)))
         else
           centerpred = NULL
       }
@@ -254,10 +271,11 @@ generatePartialDependenceData = function(obj, input, features,
       else
         doIndividualPartialDependence(out, td, nrow(data), rng, target, x, centerpred)
     })
-    out = ldply(out)
+    out = setDF(rbindlist(out, fill = TRUE))
   } else {
+    args$features = features
     if (derivative) {
-      args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
+      args$bounds = NULL
       out = parallelMap(doPartialDerivativeIteration, x = rng[[features]], more.args = args)
       centerpred = NULL
       rng = as.data.frame(rng)
@@ -265,10 +283,10 @@ generatePartialDependenceData = function(obj, input, features,
     } else {
       rng = as.data.frame(rng)
       colnames(rng) = features
-      args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, bounds = bounds, ...)
+      args$rng = rng
       out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
-        centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center, features, fun, td, 1, bounds))
+        centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center, features, fun, td, 1, bounds, weight.fun = function(x, data) rep(1, nrow(x))))
       else
         centerpred = NULL
     }
@@ -282,31 +300,235 @@ generatePartialDependenceData = function(obj, input, features,
     out = out[, c(target, features, colnames(out)[!colnames(out) %in% c(target, features)])]
   else
     out = out[, c("Class", "Probability", features,
-                  colnames(out)[!colnames(out) %in% c("Class", "Probability", features)])]
+      colnames(out)[!colnames(out) %in% c("Class", "Probability", features)])]
 
   makeS3Obj("PartialDependenceData",
-            data = out,
-            task.desc = td,
-            target = target,
-            features = features,
-            interaction = interaction,
-            derivative = derivative,
-            individual = individual,
-            center = !is.null(center))
+    data = out,
+    task.desc = td,
+    target = target,
+    features = features,
+    interaction = interaction,
+    derivative = derivative,
+    individual = individual,
+    center = !is.null(center))
+}
+#' @title Generate a functional ANOVA decomposition
+#'
+#' @description
+#' Decompose a learned prediction function as a sum of components estimated via partial dependence.
+#'
+#' @family partial_dependence functional_anova
+#' @family generate_plot_data
+#' @aliases FunctionalANOVAData
+#'
+#' @param obj [\code{\link{WrappedModel}}]\cr
+#'   Result of \code{\link{train}}.
+#' @param input [\code{data.frame} | \code{\link{Task}}]\cr
+#'   Input data.
+#' @param features [\code{character}]\cr
+#'   A vector of feature names contained in the training data.
+#'   If not specified all features in the \code{input} will be used.
+#' @param depth [\code{integer(1)}]\cr
+#'   An integer indicating the depth of interaction amongst the features to compute. Default 1.
+#' @param fun [\code{function}]\cr
+#'   A function that accepts a numeric vector and returns either a single number
+#'   such as a measure of location such as the mean, or three numbers, which give a lower bound,
+#'   a measure of location, and an upper bound. Note if three numbers are returned they must be
+#'   in this order. The default is the mean.
+#' @param weight.fun [\code{function}]\cr
+#'   A function which takes a \code{data.frame} \code{x} and a \code{data.frame} \code{data}
+#'   (both of which are coerced to numeric matrices) and returns a non-negative
+#'   numeric weight. The number of columns in \code{x} must match the column dimension of \code{data}.
+#'   By default \code{weight.fun} returns a weight of 1.
+#' @param bounds [\code{numeric(2)}]\cr
+#'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
+#'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
+#'   Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.
+#' @param resample [\code{character(1)}]\cr
+#'   Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
+#'   values are sampled with replacement from the training data. If \dQuote{subsample} then
+#'   values are sampled without replacement from the training data. If \dQuote{none} an evenly spaced
+#'   grid between either the empirical minimum and maximum, or the minimum and maximum defined by
+#'   \code{fmin} and \code{fmax}, is created.
+#'   Default is \dQuote{none}.
+#' @param fmin [\code{numeric}]\cr
+#'   The minimum value that each element of \code{features} can take.
+#'   This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
+#'   than the theoretical minimum for a given feature. This only applies to numeric features and a
+#'   \code{NA} should be inserted into the vector if the corresponding feature is a factor.
+#'   Default is the empirical minimum of each numeric feature and NA for factor features.
+#' @param fmax [\code{numeric}]\cr
+#'   The maximum value that each element of \code{features} can take.
+#'   This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
+#'   than the theoretical maximum for a given feature. This only applies to numeric features and a
+#'   \code{NA} should be inserted into the vector if the corresponding feature is a factor.
+#'   Default is the empirical maximum of each numeric feature and NA for factor features.
+#' @param gridsize [\code{integer(1)}]\cr
+#'   The length of the prediction grid created for each feature.
+#'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
+#'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
+#'   length of the evenly spaced grid created. Default 10.
+#' @param ... additional arguments to be passed to \code{\link{predict}}.
+#' @return [\code{FunctionalANOVAData}]. A named list, which contains the computed effects of the specified
+#'   depth amongst the features.
+#'
+#' Object members:
+#'   \item{data}{[\code{data.frame}]\cr
+#'     Has columns for the prediction: one column for regression and an additional two if bounds are used.
+#'     The \dQuote{effect} column specifies which features the prediction corresponds to.}
+#'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
+#'     Task description.}
+#'   \item{target}{The target feature for regression.}
+#'   \item{features}{[\code{character}]\cr
+#'     Features argument input.}
+#'   \item{interaction}{[\code{logical(1)}]\cr
+#'     Whether or not the \code{depth} is greater than 1.}
+#' @references
+#' Giles Hooker, \dQuote{Discovering additive structure in black box functions.} Proceedings of the 10th ACM SIGKDD international conference on Knowledge discovery and data mining (2004): 575-580.
+#' @examples
+#' fit = train("regr.rpart", bh.task)
+#' fa = generateFunctionalANOVAData(fit, bh.task, c("lstat", "crim"), depth = 2L)
+#' plotPartialDependence(fa)
+#' @export
+generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = mean,
+  weight.fun = function(x, data) rep(1, nrow(x)),
+  bounds = c(qnorm(.025), qnorm(.975)),
+  resample = "none", fmin, fmax, gridsize = 10L, ...) {
+
+  assertClass(obj, "WrappedModel")
+  if (!inherits(input, c("Task", "data.frame")))
+    stop("input must be a Task or a data.frame!")
+  if (inherits(input, "Task")) {
+    data = getTaskData(input)
+    td = input$task.desc
+  } else {
+    data = input
+    td = obj$task.desc
+    assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
+    assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
+  }
+
+  if (!td$type == "regr")
+    stop("only regression tasks are permitted")
+  excluded = colnames(data)
+  excluded = excluded[!excluded %in% c(features, td$target)]
+  assertChoice(resample, c("none", "bootstrap", "subsample"))
+
+  if (missing(fmin))
+    fmin = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+  if (missing(fmax))
+    fmax = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+  assertList(fmin, len = length(features))
+  if (!all(names(fmin) %in% features))
+    stop("fmin must be a named list with an NA or value corresponding to each feature.")
+  assertList(fmax, len = length(features))
+  if (!all(names(fmax) %in% features))
+    stop("fmax must be a named list with an NA or value corresponding to each feature.")
+  assertCount(gridsize, positive = TRUE)
+  assertIntegerish(depth, lower = 1L, upper = length(features), len = 1L)
+
+  assertFunction(weight.fun)
+  x = matrix(0, 2, 2)
+  test = as.matrix(replicate(2, rnorm(5)))
+  weights = weight.fun(x, test)
+  if (!is.numeric(weights) && length(weights) == 2L)
+    stop("Invalid weight.fun.")
+  
+  assertFunction(fun)
+  test = fun(1:3)
+  if (!is.numeric(test))
+    stop("fun argument must return a numeric vector")
+  if (!(length(test) %in% c(1L, 3L)))
+    stop("function argument must return a numeric vector of length 1 or 3.")
+
+  assertNumeric(bounds, len = 2L)
+  assertNumber(bounds[1], upper = 0)
+  assertNumber(bounds[2], lower = 0)
+
+  ## generate grid
+  fixed = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
+
+  ## generate list of effects to evaluate and associate with grid
+  U = unlist(lapply(1:depth, function(x) combn(features, x, simplify = FALSE)), recursive = FALSE)
+  depths = sapply(U, length)
+
+  effects = sapply(U, function(u) stri_paste(u, collapse = ":"))
+  fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
+  names(fixed_grid) = effects
+
+  type = td$type
+  target = td$target
+
+  ## generate each effect
+  args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, weight.fun = weight.fun, ...)
+  pd = lapply(U, function(u) {
+    args$features = u
+    args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
+    out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(args$rng)), more.args = args)
+    doAggregatePartialDependence(out, td, target, u, args$rng)
+  })
+  names(pd) = effects
+
+  if (length(test) == 3L | obj$learner$predict.type == "se")
+    target = c("upper", "lower", target)
+
+  ## remove lower order effects
+  f = lapply(U, function(u) {
+    hoe = pd[[stri_paste(u, collapse = ":")]]
+    if (length(u) > 1) {
+      sub = combn(u, length(u) - 1, simplify = FALSE)
+      loe = lapply(pd[unlist(sub)], function(x) {
+        to_match = colnames(x)[!(colnames(x) %in% target)]
+        out = merge(x, hoe[, to_match, drop = FALSE], by = to_match)
+        out[, colnames(out) %in% target]
+      })
+      hoe[, target] = hoe[, target] - Reduce('+', loe)
+    }
+    hoe
+  })
+  names(f) = effects
+
+  makeS3Obj(c("FunctionalANOVAData", "PartialDependenceData"),
+    data = setDF(rbindlist(f[depths == depth], fill = TRUE, idcol = "effect")),
+    task.desc = td,
+    target = target[!target %in% c("upper", "lower")],
+    features = features,
+    interaction = depth > 1L,
+    derivative = FALSE,
+    individual = FALSE,
+    center = FALSE)
 }
 
-doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
+#' @export
+print.FunctionalANOVAData = function(x, ...) {
+  catf("FunctionalANOVAData")
+  catf("Task: %s", x$task.desc$id)
+  catf("Features: %s", stri_paste(x$features, collapse = ", "))
+  catf("Target: %s", stri_paste(x$target, collapse = ", "))
+  catf("Interaction Depth: %s", x$depth)
+  catf("Effects Computed: %s", stri_paste(levels(x$data$effect), collapse = ", "))
+  printHead(x$data)
+}
+
+doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, weight.fun, ...) {
   if (!individual) {
-    ## construct function appropriate for numDeriv w/ aggregate predictions
+    # construct function appropriate for numDeriv w/ aggregate predictions
     f = function(x, obj, data, features, fun, td, ...) {
-      data[features] = x
-      pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+      newdata = data
+      newdata[features] = x
+      weights = do.call("weight.fun", list("x" = newdata[, obj$features, drop = FALSE],
+        "data" = data[, obj$features, drop = FALSE], ...))
+      assertNumeric(weights, lower = 0, finite = TRUE, all.missing = FALSE, len = nrow(newdata))
+      if (sum(weights) == 0) weights = rep(NA, length(weights))
+      pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
       if (obj$learner$predict.type == "response")
-        fun(getPredictionResponse(pred))
+        fun((getPredictionResponse(pred) * weights) / sum(weights))
       else if (length(obj$task.desc$class.levels) == 2L)
-        fun(getPredictionProbabilities(pred))
+        fun((getPredictionProbabilities(pred) * weights) / sum(weights))
       else
-        apply(getPredictionProbabilities(pred), 2, fun)
+        apply((getPredictionProbabilities(pred) * weights) / sum(weights), 2, fun)
     }
     if (obj$learner$predict.type == "response")
       numDeriv::grad(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td)
@@ -314,58 +536,57 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
       t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td, ...))
   } else {
     f = function(x, obj, data, features, fun, td, ...) {
-      data[features] = x
-      pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+      newdata = data
+      newdata[features] = x
+      weights = do.call("weight.fun", list("x" = newdata[, obj$features, drop = FALSE],
+        "data" = data[, obj$features, drop = FALSE], ...))
+      assertNumeric(weights, lower = 0, finite = TRUE, all.missing = FALSE, len = nrow(newdata))
+      if (sum(weights) == 0) weights = rep(NA, length(weights))
+      pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
       if (obj$learner$predict.type == "response")
-        getPredictionResponse(pred)
+        (getPredictionResponse(pred) * weights) / sum(weights)
       else
-        as.numeric(getPredictionProbabilities(pred))
+        (as.numeric(getPredictionProbabilities(pred)) * weights) / sum(weights)
     }
     if (obj$learner$predict.type == "response")
       sapply(1:nrow(data), function(idx)
-        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE], features = features,
-                       fun = fun, td = td))
+        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
+          features = features, fun = fun, td = td))
     else
       t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
-                                                              data = data[idx,, drop = FALSE],
-                                                              features = features, fun = fun, td = td, ...)))
+        data = data[idx,, drop = FALSE], features = features, fun = fun, td = td, ...)))
   }
 }
 
-doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bounds, ...) {
-  data[features] = rng[i, ]
-  pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
-  if (obj$learner$predict.type == "response")
-    fun(getPredictionResponse(pred))
-  else if (length(obj$task.desc$class.levels) == 2L)
-    fun(getPredictionProbabilities(pred))
-  else if (obj$learner$predict.type == "se") {
+doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bounds,
+  weight.fun, individual = FALSE, ...) {
+
+  newdata = data
+  newdata[features] = rng[i, ]
+  weights = do.call("weight.fun", list("x" = newdata[, obj$features, drop = FALSE],
+    "data" = data[, obj$features, drop = FALSE], ...))
+  assertNumeric(weights, lower = 0, finite = TRUE, all.missing = FALSE, len = nrow(newdata))
+  if (sum(weights) == 0) weights = rep(NA, length(weights))
+  pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
+  if (obj$learner$predict.type == "response") {
+    if (td$type == "classif") {
+      if (identical(functionBody(weight.fun), functionBody(function(x, data) rep(1, nrow(x)))))
+        fun(getPredictionResponse(pred))
+      else
+        stop('Classification with predict.type = "response" is incompatible with weights.')
+    } else {
+      fun((getPredictionResponse(pred) * weights) / sum(weights))
+    }
+  } else if (length(obj$task.desc$class.levels) == 2L) {
+    fun((getPredictionProbabilities(pred) * weights) / sum(weights))
+  } else if (obj$learner$predict.type == "se") {
     point = getPredictionResponse(pred)
     out = cbind(point + outer(getPredictionSE(pred), bounds), point)[, c(1, 3, 2)]
+    out = (out * weights) / sum(weights)
     unname(apply(out, 2, fun))
-  } else
-    apply(getPredictionProbabilities(pred), 2, fun)
-}
-
-generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
-  sapply(features, function(feature) {
-      nunique = length(unique(data[[feature]]))
-      cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
-
-      if (is.factor(data[[feature]])) {
-        factor(rep(levels(data[[feature]]), length.out = cutoff),
-               levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
-      } else {
-        if (resample != "none") {
-          sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
-        } else {
-          if (is.integer(data[[feature]]))
-            sort(rep(fmin[[feature]]:fmax[[feature]], length.out = cutoff))
-          else
-            seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
-        }
-      }
-    }, simplify = FALSE)
+  } else {
+    apply((getPredictionProbabilities(pred) * weights) / sum(weights), 2, fun)
+  }
 }
 
 doAggregatePartialDependence = function(out, td, target, features, rng) {
@@ -380,7 +601,7 @@ doAggregatePartialDependence = function(out, td, target, features, rng) {
       stop("function argument must return a sorted numeric vector ordered lowest to highest.")
 
   if (all(target %in% td$class.levels)) {
-    out = melt(out, id.vars = features, variable = "Class", value.name = "Probability")
+    out = melt(out, id.vars = features, variable = "Class", value.name = "Probability", variable.factor = TRUE)
     out$Class = stri_replace_all(out$Class, "", regex = "^prob\\.")
   }
   out
@@ -396,7 +617,7 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
     rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
     out = cbind(out, rng, idx, row.names = NULL)
     out = melt(out, id.vars = c(features, "idx"),
-               variable.name = "Class", value.name = "Probability")
+      variable.name = "Class", value.name = "Probability", variable.factor = TRUE)
     out$idx = interaction(out$idx, out$Class)
   } else {
     out = as.data.frame(do.call("rbind", out))
@@ -406,7 +627,8 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
     out = cbind(out, rng)
     out = melt(out, id.vars = features, variable.name = "idx", value.name = target)
     if (td$type == "classif")
-      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability", variable.name = "Class")
+      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability",
+        variable.name = "Class", variable.factor = TRUE)
   }
   out
 }
@@ -422,7 +644,7 @@ print.PartialDependenceData = function(x, ...) {
   catf("Individual: %s", x$individual)
   if (x$individual)
     catf("Predictions centered: %s", x$center)
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Plot a partial dependence with ggplot2.
 #' @description
@@ -463,22 +685,22 @@ print.PartialDependenceData = function(x, ...) {
 #'   Default is \code{NULL}.
 #' @template ret_gg2
 #' @export
-
 plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL,p = 1, data = NULL) {
+  facet.wrap.ncol = NULL, p = 1, data = NULL) {
 
   assertClass(obj, "PartialDependenceData")
   assertChoice(geom, c("tile", "line"))
   if (obj$interaction & length(obj$features) > 2L & geom != "tile")
     stop("Cannot plot more than 2 features together with line plots.")
   if (geom == "tile") {
-    if (!(obj$task.desc$type %in% c("regr", "surv"))) {
-      if (length(obj$task.desc$class.levels) > 2L)
-        stop("Only visualization of binary classification works with tiling!")
-    }
     feat_classes = sapply(obj$data, class)
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
+  }
+
+  if ("FunctionalANOVAData" %in% class(obj)) {
+    if (length(unique(obj$data$effect)) > 1L & obj$interaction)
+      stop("Cannot plot multiple ANOVA effects of depth > 1.")
   }
 
   if (!is.null(data)) {
@@ -493,14 +715,19 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       stop("obj argument created by generatePartialDependenceData must be called with two or three features to use this argument!")
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData must be called with interaction = TRUE to use this argument!")
-    
+
     features = obj$features[which(obj$features != facet)]
-    
-    if (!is.factor(obj$data[[facet]]))
-      obj$data[[facet]] = stri_paste(facet, "=", as.factor(obj$data[[facet]]), sep = " ")
-    else
+
+    if (is.factor(obj$data[[facet]])) {
       obj$data[[facet]] = stri_paste(facet, "=", obj$data[[facet]], sep = " ")
-    
+    } else if (is.character(obj$data[[facet]])) {
+      obj$data[[facet]] = stri_paste(facet, "=", as.factor(obj$data[[facet]]), sep = " ")
+    } else if (is.numeric(obj$data[[facet]])) {
+      obj$data[[facet]] = stri_paste(facet, "=", as.factor(signif(obj$data[[facet]], 3L)), sep = " ")
+    } else {
+      stop("Invalid input to facet arg. Must refer to a numeric/integer, character, or facet feature.")
+    }
+
     scales = "fixed"
   } else {
     features = obj$features
@@ -528,22 +755,27 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
                  length(features) < 3L & geom == "line")
 
   if (geom == "line") {
-    obj$data = reshape2::melt(obj$data, id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
-                    variable = "Feature", value.name = "Value", na.rm = TRUE)
+    idx = which(sapply(obj$data, class) == "factor" & colnames(obj$data) %in% features)
+    # explicit casting previously done implicitly by reshape2::melt.data.frame
+    for (id in idx) obj$data[, id] = as.numeric(obj$data[, id])
+    obj$data = setDF(melt(data.table(obj$data),
+      id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
+      variable = "Feature", value.name = "Value", na.rm = TRUE, variable.factor = TRUE))
     if (!obj$individual) {
       if (obj$task.desc$type %in% c("regr", "surv"))
         plt = ggplot(obj$data, aes_string("Value", target)) +
-          geom_line(color = ifelse(is.null(data), "black", "red"))
+          geom_line(color = ifelse(is.null(data), "black", "red")) + geom_point()
       else
         plt = ggplot(obj$data, aes_string("Value", "Probability", group = "Class", color = "Class")) +
-          geom_line()
+          geom_line() + geom_point()
     } else {
-      if (obj$task.desc$type %in% c("regr", "surv"))
+      if (obj$task.desc$type %in% c("regr", "surv")) {
         plt = ggplot(obj$data, aes_string("Value", target, group = "idx")) +
-          geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red"))
-      else
+          geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red")) + geom_point()
+      } else {
         plt = ggplot(obj$data, aes_string("Value", "Probability", group = "idx", color = "Class")) +
-          geom_line(alpha = .25)
+          geom_line(alpha = .25) + geom_point()
+      }
     }
 
     if (length(features) == 1L) {
@@ -553,9 +785,11 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
         plt = plt + labs(x = features)
     }
 
+    # bounds from fun or se estimation
     if (bounds)
       plt = plt + geom_ribbon(aes_string(ymin = "lower", ymax = "upper"), alpha = .5)
 
+    # labels for ice plots
     if (obj$center)
       plt = plt + ylab(stri_paste(target, "(centered)", sep = " "))
 
@@ -563,9 +797,15 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + ylab(stri_paste(target, "(derivative)", sep = " "))
 
   } else { ## tiling
+    if (obj$task.desc$type == "classif") {
+      target = "Probability"
+      facet = "Class"
+      scales = "free"
+    }
     plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], fill = target))
     plt = plt + geom_raster(aes_string(fill = target))
 
+    # labels for ICE plots
     if (obj$center)
       plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(centered)", sep = " ")))
 
@@ -573,17 +813,19 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(derivative)", sep = " ")))
   }
 
+  # facetting
   if (!is.null(facet)) {
     plt = plt + facet_wrap(as.formula(stri_paste("~", facet)), scales = scales,
       nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
   }
 
+  # data overplotting
   if (!is.null(data)) {
     data = data[, colnames(data) %in% c(obj$features, obj$task.desc$target)]
     if (!is.null(facet)) {
       if (!facet %in% obj$features)
         data = melt(data, id.vars = c(obj$task.desc$target, obj$features[obj$features == facet]),
-                    variable = "Feature", value.name = "Value", na.rm = TRUE)
+                    variable = "Feature", value.name = "Value", na.rm = TRUE, variable.factor = TRUE)
       if (facet %in% obj$features) {
         if (!is.factor(data[[facet]]))
           data[[facet]] = stri_paste(facet, "=", as.factor(signif(data[[facet]], 2)), sep = " ")
@@ -591,7 +833,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
           data[[facet]] = stri_paste(facet, "=", data[[facet]], sep = " ")
       }
     }
-    
+
     if (geom == "line") {
       if (obj$task.desc$type %in% c("classif", "surv")) {
         if (obj$task.desc$type == "classif") {
@@ -615,7 +857,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + geom_point(aes_string(plt$labels$x, plt$labels$y), data, alpha = .25, inherit.aes = FALSE)
     }
   }
-  
+
   plt
 }
 #' @title Plot a partial dependence using ggvis.
@@ -672,7 +914,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
   } else if (!obj$interaction & length(obj$features) > 1L) {
     id = colnames(obj$data)[!colnames(obj$data) %in% obj$features]
     obj$data = melt(obj$data, id.vars = id, variable.name = "Feature",
-                    value.name = "Value", na.rm = TRUE)
+                    value.name = "Value", na.rm = TRUE, variable.factor = TRUE)
     interact = "Feature"
     choices = obj$features
   } else
@@ -700,7 +942,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
         plt = ggvis(data, prop("x", as.name(x)),
                     prop("y", as.name("Probability")),
                     prop("stroke", as.name("Class")))
-      
+
     } else { ## regression/survival
       if (interaction)
         plt = ggvis(data, prop("x", as.name(x)),

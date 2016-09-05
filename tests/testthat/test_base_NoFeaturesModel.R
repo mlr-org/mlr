@@ -26,7 +26,7 @@ test_that("NoFeaturesModel", {
 
 test_that("NoFeaturesModel works with FilterWrapper", {
   lrn = makeLearner("classif.rpart")
-  lrn = makeFilterWrapper(lrn, fw.method = "chi.squared", fw.perc = 0.1)
+  lrn = makeFilterWrapper(lrn, fw.method = "anova.test", fw.perc = 0.1)
   m = train(lrn, multiclass.task)
   p = predict(m, multiclass.task)
   expect_true(!is.na(performance(p)))

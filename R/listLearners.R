@@ -1,10 +1,12 @@
 getLearnerTable = function() {
-  ids = as.character(.S3methods("makeRLearner"))
+  ids = as.character(methods("makeRLearner"))
   ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
   ids = stri_replace_first_fixed(ids, "makeRLearner.", "")
+  slots = c("cl", "name", "short.name", "package", "properties", "note")
+  ee = asNamespace("mlr")
   tab = rbindlist(lapply(ids, function(id) {
     fun = getS3method("makeRLearner", id)
-    row = lapply(as.list(functionBody(fun)[[2L]])[c("cl", "name", "short.name", "package", "properties", "note")], eval)
+    row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
     data.table(
       id = row$cl,
       name = row$name,
@@ -56,7 +58,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' Note that for general cost-sensitive learning, mlr currently supports mainly
 #' \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 #' which are not listed, as they are not basic R learning algorithms.
-#' The same applies for multilabel classification, see \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
+#' The same applies for many multilabel methods, see, e.g., \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
 #'
 #' @template arg_task_or_type
 #' @param properties [\code{character}]\cr
@@ -104,7 +106,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.default  = function(obj, properties = character(0L),
+listLearners.default  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
@@ -112,7 +114,7 @@ listLearners.default  = function(obj, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.character  = function(obj, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
   if (!isScalarNA(obj))
     assertSubset(obj, getSupportedTaskTypes())
   tab = getLearnerTable()
@@ -136,7 +138,7 @@ listLearners.character  = function(obj, properties = character(0L), quiet = TRUE
 
 #' @export
 #' @rdname listLearners
-listLearners.Task = function(obj, properties = character(0L),
+listLearners.Task = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   task = obj

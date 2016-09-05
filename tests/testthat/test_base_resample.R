@@ -6,9 +6,13 @@ test_that("resample", {
   rin3 = makeResampleInstance(makeResampleDesc("Subsample", iters = 2), task = multiclass.task)
 
   lrn = makeLearner("classif.lda")
-  p1 = resample(lrn, multiclass.task, rin1)$pred
-  p2 = resample(lrn, multiclass.task, rin2)$pred
-  p3 = resample(lrn, multiclass.task, rin3)$pred
+  r1 = resample(lrn, multiclass.task, rin1)
+  r2 = resample(lrn, multiclass.task, rin2)
+  r3 = resample(lrn, multiclass.task, rin3)
+
+  p1 = r1$pred
+  p2 = r2$pred
+  p3 = r3$pred
 
   inds = Reduce(c, rin1$test.inds)
   y = getTaskTargets(multiclass.task)[inds]
@@ -22,6 +26,9 @@ test_that("resample", {
   y = getTaskTargets(multiclass.task)[inds]
   expect_equal(p3$data$id, inds)
   expect_equal(p3$data$truth, y)
+  # test printer
+  expect_output(print(r1), "Resample Result")
+
 
   cv.i = makeResampleInstance(makeResampleDesc("CV", iters = 3), binaryclass.task)
 
@@ -51,22 +58,21 @@ test_that("resample", {
 test_that("resampling, predicting train set works", {
   rdesc = makeResampleDesc("CV", iters = 2, predict = "train")
   lrn = makeLearner("classif.rpart")
-  r = resample(lrn, multiclass.task, rdesc)
-  expect_true(as.logical(is.na(r$aggr["mmce.test.mean"])))
+  expect_error(resample(lrn, multiclass.task, rdesc), "not compatible with resampling")
 
   rdesc = makeResampleDesc("CV", iters = 2, predict = "train")
   lrn = makeLearner("classif.rpart")
   m = setAggregation(mmce, train.mean)
   r = resample(lrn, multiclass.task, rdesc, measures = m)
-  expect_true(!as.logical(is.na(r$aggr["mmce.train.mean"])))
+  expect_false(is.na(r$aggr["mmce.train.mean"]))
 
   rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
   lrn = makeLearner("classif.rpart")
   m1 = setAggregation(mmce, train.mean)
   m2 = setAggregation(mmce, test.mean)
   r = resample(lrn, multiclass.task, rdesc, measures = list(m1, m2))
-  expect_true(!as.logical(is.na(r$aggr["mmce.train.mean"])))
-  expect_true(!as.logical(is.na(r$aggr["mmce.test.mean"])))
+  expect_false(is.na(r$aggr["mmce.train.mean"]))
+  expect_false(is.na(r$aggr["mmce.test.mean"]))
 
 })
 
@@ -110,4 +116,23 @@ test_that("resample returns errors", {
   expect_true(all(is.na(z$err.msgs$predict)))
 
   configureMlr(on.learner.error = "stop")
+})
+
+# issue #668
+test_that("resample has error messages when prediction fails", {
+  on.learner.error.saved = getMlrOptions()$on.learner.error
+  on.learner.warning.saved = getMlrOptions()$on.learner.warning
+  configureMlr(on.learner.error = "quiet")
+  configureMlr(on.learner.warning = "quiet")
+
+  lrn = makeLearner("classif.knn")
+  lrn$properties = c(lrn$properties, c("missings"))
+
+  task = makeClassifTask("test", data = Sonar, target = "Class")
+  task$env$data$V1[1:2] = NA
+  r = crossval(lrn, task)
+  expect_false(all(is.na(r$err.msgs$predict)))
+
+  configureMlr(on.learner.error = on.learner.error.saved)
+  configureMlr(on.learner.warning = on.learner.warning.saved)
 })

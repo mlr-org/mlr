@@ -15,6 +15,12 @@ test_that("listLearners", {
   expect_data_frame(x, min.rows = 20, min.cols = 3)
   expect_true(all(x$type == "classif"))
 
-  x = listLearners("surv", properties = c("factors", "missings", "weights"), create = TRUE, warn.missing.packages = FALSE)
+  x = listLearners("surv", properties = c("factors", "missings", "weights"), create = TRUE,
+    warn.missing.packages = FALSE)
   expect_list(x, "Learner", min.len = 1L)
+
+  # test that listLearners works without a type and just requested properties, we had a bug here
+  x = listLearners(properties = "factors", create = FALSE)
+  expect_data_frame(x, min.rows = 20, min.cols = 3)
+  expect_true(length(unique(x$type)) > 3L)
 })

@@ -36,17 +36,19 @@ Models can easily be accessed via \code{\link{getLearnerModel}}.
 \examples{
 d = getTaskData(yeast.task)
 # drop some labels so example runs faster
-d = d[, c(1:3, 15:117)]
-task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-lrn = makeMultilabelNestedStackingWrapper("classif.rpart", order = c("label2", "label3", "label1"))
+d = d[seq(1, nrow(d), by = 20), c(1:2, 15:17)]
+task = makeMultilabelTask(data = d, target = c("label1", "label2"))
+lrn = makeLearner("classif.rpart")
+lrn = makeMultilabelBinaryRelevanceWrapper(lrn)
 lrn = setPredictType(lrn, "prob")
 # train, predict and evaluate
 mod = train(lrn, task)
 pred = predict(mod, task)
-p = performance(pred)
-performance(pred, measure = multilabel.hamloss)
+performance(pred, measure = list(multilabel.hamloss, multilabel.subset01, multilabel.f1))
+# the next call basically has the same structure for any multilabel meta wrapper
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
+
 }
 \references{
 Montanes, E. et al. (2013),

@@ -36,13 +36,21 @@ The learner properties are defined as follows:
   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
   \item{se}{Only for regr: Can standard errors be predicted?}
+  \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 }
 }
 \seealso{
 Other learner: \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{makeLearners}}, \code{\link{makeLearner}},
+  \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }

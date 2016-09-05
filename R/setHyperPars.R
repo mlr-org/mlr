@@ -8,8 +8,11 @@
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
 #' @template ret_learner
+#' @note If a named (hyper)parameter can't be found for the given learner, the 3
+#' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
 #' @family learner
+#' @importFrom utils adist
 #' @examples
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)
 #' cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
@@ -49,8 +52,20 @@ setHyperPars2.Learner = function(learner, par.vals) {
     p = par.vals[[i]]
     pd = pars[[n]]
     if (is.null(pd)) {
-      # no description: stop warn or quiet
-      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!", learner$id, n)
+      if (on.par.without.desc != "quiet") {
+        # no description: stop warn or quiet
+        msg = sprintf("%s: Setting parameter %s without available description object!",
+          learner$id, n)
+        # since we couldn't find the par let's look for 3 most similar
+        parnames = names(pars)
+        indices = head(order(adist(n, parnames)), 3L)
+        possibles = parnames[indices]
+        if (length(possibles) > 0L) {
+          msg = paste(msg, sprintf("\nDid you mean one of these hyperparameters instead: %s", stri_flatten(possibles, collapse = " ")))
+        }
+        msg = paste(msg, "\nYou can switch off this check by using configureMlr!")
+      }
+
       if (on.par.without.desc == "stop") {
         stop(msg)
       } else if (on.par.without.desc == "warn") {

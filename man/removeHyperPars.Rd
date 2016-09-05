@@ -25,9 +25,16 @@ Which means that the default behavior for that param will now be used.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
-  \code{\link{makeLearner}}, \code{\link{setHyperPars}},
-  \code{\link{setId}}, \code{\link{setPredictThreshold}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{makeLearners}}, \code{\link{makeLearner}},
+  \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
+  \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
 

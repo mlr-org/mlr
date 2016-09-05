@@ -10,7 +10,7 @@
 \alias{bac}
 \alias{ber}
 \alias{brier}
-\alias{brier.sc}
+\alias{brier.scaled}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
@@ -25,15 +25,21 @@
 \alias{gmean}
 \alias{gpr}
 \alias{logloss}
+\alias{lsr}
 \alias{mae}
+\alias{mape}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
 \alias{measureACC}
+\alias{measureAU1P}
+\alias{measureAU1U}
 \alias{measureAUC}
+\alias{measureAUNP}
+\alias{measureAUNU}
 \alias{measureBAC}
 \alias{measureBrier}
-\alias{measureBrier.sc}
+\alias{measureBrierScaled}
 \alias{measureEXPVAR}
 \alias{measureFDR}
 \alias{measureFN}
@@ -42,8 +48,10 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
+\alias{measureMAPE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
@@ -58,10 +66,14 @@
 \alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
+\alias{measureQSR}
+\alias{measureRAE}
 \alias{measureRMSE}
+\alias{measureRRSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
+\alias{measureSSR}
 \alias{measureTN}
 \alias{measureTNR}
 \alias{measureTP}
@@ -71,7 +83,10 @@
 \alias{medse}
 \alias{mmce}
 \alias{mse}
-\alias{multiclass.auc}
+\alias{multiclass.au1p}
+\alias{multiclass.au1u}
+\alias{multiclass.aunp}
+\alias{multiclass.aunu}
 \alias{multiclass.brier}
 \alias{multilabel.acc}
 \alias{multilabel.f1}
@@ -81,11 +96,15 @@
 \alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
+\alias{qsr}
+\alias{rae}
 \alias{rmse}
+\alias{rrse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
 \alias{sse}
+\alias{ssr}
 \alias{timeboth}
 \alias{timepredict}
 \alias{timetrain}
@@ -142,6 +161,18 @@ measureEXPVAR(truth, response)
 
 arsq
 
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
+
 mmce
 
 measureMMCE(truth, response)
@@ -152,7 +183,21 @@ measureACC(truth, response)
 
 ber
 
-multiclass.auc
+multiclass.aunu
+
+measureAUNU(probabilities, truth)
+
+multiclass.aunp
+
+measureAUNP(probabilities, truth)
+
+multiclass.au1u
+
+measureAU1U(probabilities, truth)
+
+multiclass.au1p
+
+measureAU1P(probabilities, truth)
 
 multiclass.brier
 
@@ -162,6 +207,18 @@ logloss
 
 measureLogloss(probabilities, truth)
 
+ssr
+
+measureSSR(probabilities, truth)
+
+qsr
+
+measureQSR(probabilities, truth)
+
+lsr
+
+measureLSR(probabilities, truth)
+
 auc
 
 measureAUC(probabilities, truth, negative, positive)
@@ -170,9 +227,9 @@ brier
 
 measureBrier(probabilities, truth, negative, positive)
 
-brier.sc
+brier.scaled
 
-measureBrier.sc(probabilities, truth, negative, positive)
+measureBrierScaled(probabilities, truth, negative, positive)
 
 bac
 
@@ -316,7 +373,10 @@ He, H. & Garcia, E. A. (2009)
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{performance}}

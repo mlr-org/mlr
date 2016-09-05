@@ -27,7 +27,7 @@ print.Learner = function(x, ...) {
     "Class: ", class(x)[1L], "\n",
     "Properties: ", collapse(getLearnerProperties(x)), "\n",
     "Predict-Type: ", x$predict.type, "\n",
-    "Hyperparameters: ", getHyperParsString(x), "\n\n",
+    "Hyperparameters: ", getHyperParsString(x, show.missing.values = TRUE), "\n\n",
     sep =""
   )
 }

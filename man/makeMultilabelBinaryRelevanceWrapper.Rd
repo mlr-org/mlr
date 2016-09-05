@@ -30,21 +30,21 @@ Or to tune these thresholds with \code{\link{tuneThreshold}}; especially when yo
 unabalanced class distributions for each binary label.
 }
 \examples{
-\donttest{
 d = getTaskData(yeast.task)
 # drop some labels so example runs faster
-d = d[, c(1:3, 15:117)]
-task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
+d = d[seq(1, nrow(d), by = 20), c(1:2, 15:17)]
+task = makeMultilabelTask(data = d, target = c("label1", "label2"))
+lrn = makeLearner("classif.rpart")
+lrn = makeMultilabelBinaryRelevanceWrapper(lrn)
 lrn = setPredictType(lrn, "prob")
 # train, predict and evaluate
-mod = train(lrn, yeast.task)
-pred = predict(mod, yeast.task)
-p = performance(pred)
-performance(pred, measure = multilabel.hamloss)
+mod = train(lrn, task)
+pred = predict(mod, task)
+performance(pred, measure = list(multilabel.hamloss, multilabel.subset01, multilabel.f1))
+# the next call basically has the same structure for any multilabel meta wrapper
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
-}
+
 }
 \references{
 Tsoumakas, G., & Katakis, I. (2006)

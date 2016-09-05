@@ -4,7 +4,7 @@
 \alias{makeAggregation}
 \title{Specify your own aggregation of measures.}
 \usage{
-makeAggregation(id, name = id, fun)
+makeAggregation(id, name = id, properties, fun)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -12,6 +12,13 @@ Name of the aggregation method (preferably the same name as the generated functi
 
 \item{name}{[\code{character(1)}]\cr
 Long name of the aggregation method. Default is \code{id}.}
+
+\item{properties}{[\code{character}]\cr
+Set of aggregation properties.
+\describe{
+  \item{req.train}{Are prediction or train sets required to calculate the aggregation?}
+  \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
+}}
 
 \item{fun}{[\code{function(task, perf.test, perf.train, measure, group, pred)}]\cr
 Calculates the aggregated performance. In most cases you will only need the performances
@@ -41,6 +48,7 @@ inner workings so the result might not be compatible with everything!
 \examples{
 # computes the interquartile range on all performance values
 test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",
+  properties = "req.test",
   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 }
 \seealso{
