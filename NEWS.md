@@ -60,6 +60,7 @@
 
 ## learners - new
 * multilabel.cforest
+* surv.gbm
 
 ## learners - removed
 
@@ -629,7 +630,7 @@
 
 # mlr 2.0:
 * mlr now supports survival analysis models (experimental)
-* mlr now supports cost-sensitive learning with example-specific costs 
+* mlr now supports cost-sensitive learning with example-specific costs
   experimental)
 * Some example tasks and data sets were added for simple access
 * added FeatSelWrapper and getFeatSelResult
