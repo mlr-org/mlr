@@ -5,7 +5,7 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @param obj [\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
+#' @param predish [\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
 #'   Resampling strategy or resampling prediction or test predictions.
 #' @template arg_measures
 #' @template arg_task
@@ -27,8 +27,6 @@
 #' estimateRelativeOverfitting(rpred, acc, task)
 #' @name estimateRelativeOverfitting
 #' @rdname estimateRelativeOverfitting
-NULL
-
 estimateRelativeOverfitting = function(predish, measures, task, learner = NULL, pred.train = NULL, iter = 1) {
   assertClass(task, classes = "Task")
   UseMethod("estimateRelativeOverfitting")
@@ -36,7 +34,6 @@ estimateRelativeOverfitting = function(predish, measures, task, learner = NULL, 
 
 #' @export
 estimateRelativeOverfitting.ResampleDesc = function(predish, measures, task, learner, ...) {
-  assertClass(predish, classes = "ResampleDesc")
   assertClass(learner, classes = "Learner")
   measures = checkMeasures(measures, task)
 
@@ -48,7 +45,6 @@ estimateRelativeOverfitting.ResampleDesc = function(predish, measures, task, lea
 
 #' @export
 estimateRelativeOverfitting.ResamplePrediction = function(predish, measures, task, ...) {
-  assertClass(predish, classes = "ResamplePrediction")
   measures = checkMeasures(measures, task)
   mids = vcapply(measures, function(m) m$id)
 
@@ -66,7 +62,6 @@ estimateRelativeOverfitting.ResamplePrediction = function(predish, measures, tas
 
 #' @export
 estimateRelativeOverfitting.Prediction = function(predish, measures, task, learner, pred.train, iter = 1) {
-  assertClass(predish, classes = "Prediction")
   assertClass(pred.train, classes = "Prediction")
   measures = checkMeasures(measures, task)
   mids = vcapply(measures, function(m) m$id)
@@ -76,6 +71,7 @@ estimateRelativeOverfitting.Prediction = function(predish, measures, task, learn
 
   nrows = nrow(predish$data) + nrow(pred.train$data)
   pred.permuted = predish
+  # generate all permutations of the predictions
   pred.permuted$data = data.frame(truth = rep(c(predish$data$truth, pred.train$data$truth), each = nrows),
     response = rep(c(predish$data$response, pred.train$data$response), times = nrows))
   perf.permuted = performance(pred.permuted, measures = measures, task = task)
