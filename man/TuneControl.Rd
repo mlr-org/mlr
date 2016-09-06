@@ -112,7 +112,7 @@ the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
 (\code{maxit}) and the number of offsprings per generation
 (\code{lambda}). \code{\link[GA]{GA}} defines the \code{budget} as the product of
 the number of generations (\code{maxit}) and the population's size (\code{popSize}).
-\code{\link[EDA]{EDAs}} does the same. The \code{\link[PSO]{PSO}} defines it as the
+\pkg{copulaedas} does the same. \pkg{pso} defines it as the
 product of the number of generations (\code{maxit}) and the number of swarm particles (\code{nParticles}).
 \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 the argument \code{max.call}. However, one should note that this algorithm
@@ -122,8 +122,8 @@ to an extension of the defined budget and will result in a warning. In
 
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} arguments of
-\code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[PSO]{PSO}},
-\code{\link[EDA]{EDA}}, \code{\link[GenSA]{GenSA}}, as well as
+\code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[pso]{psoptim}},
+functions in \pkg{copulaedas}, \code{\link[GenSA]{GenSA}}, as well as
 towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 
 \item{design}{[\code{data.frame}]\cr

@@ -71,8 +71,8 @@ in the same order as your measures.}
 
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} arguments of
-\code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[PSO]{PSO}},
-\code{\link[EDA]{EDA}}, \code{\link[GenSA]{GenSA}}, as well as
+\code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[pso]{psoptim}},
+functions in \pkg{copulaedas}, \code{\link[GenSA]{GenSA}}, as well as
 towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 
 \item{maxit}{[\code{integer(1)}]\cr
