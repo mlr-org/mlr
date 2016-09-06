@@ -45,6 +45,7 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
     doMultilabelBinaryRelevanceTrainIteration, tn = targets,
     more.args = list(weights = .weights, learner = .learner$next.learner, task = .task), 
     level = "mlr.ensemble")
+  names(models) = targets
   makeHomChainModel(.learner, models)
 }
 
