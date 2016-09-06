@@ -106,7 +106,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
 doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weights) {
   setSlaveOptions()
   bag = sample(seq_len(n), m, replace = bw.replace)
-  .task = subsetTask(task, features = sample(getTaskFeatureNames(task), k, replace = FALSE))
+  task = subsetTask(task, features = sample(getTaskFeatureNames(task), k, replace = FALSE))
   train(learner$next.learner, task, subset = bag, weights = weights[bag])
 }
 

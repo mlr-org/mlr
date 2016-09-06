@@ -67,7 +67,7 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
 
 doMulticlassTrainIteration = function(x, i, learner, task, weights) {
   setSlaveOptions()
-  d = getTaskData(.task)
+  d = getTaskData(task)
   tn = getTaskTargetNames(task)
   data2 = d[x$row.inds[[i]],, drop = FALSE]
   data2[, tn] = x$targets[[i]]

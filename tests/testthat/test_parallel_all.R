@@ -144,6 +144,7 @@ test_that("parallel ensembles", {
     lrn = setPredictType(lrn, "prob")
     fit = train(lrn, multilabel.task)
     p = predict(fit, multilabel.task)
+  }
     
     ## CostSensWeightedPairsWrapper
   if (Sys.info()["sysname"] != "Windows") {
