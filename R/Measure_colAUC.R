@@ -20,7 +20,6 @@ colAUC = function(samples, truth) {
     stop("colAUC: 'X' must be numeric")
   if (nr != length(y))
     stop("colAUC: length(y) and nrow(X) must be the same")
-  # l = matrix(rep(ul, each = nr), nr, nl)
   per = t(utils::combn(1:nl, 2))
   np = nrow(per)
   auc = matrix(0.5, np, nc)
