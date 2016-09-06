@@ -50,8 +50,6 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
 #' @export
 trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = NULL, mcw.method, ...) {
   .task = subsetTask(.task, .subset)
-  tn = getTaskTargetNames(.task)
-  d = getTaskData(.task)
   y = getTaskTargets(.task)
   cm = buildCMatrix(mcw.method, .task)
   x = multi.to.binary(y, cm)
