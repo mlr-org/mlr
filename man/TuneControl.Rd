@@ -183,11 +183,11 @@ The following tuners are available:
   \item{makeTuneControlGA}{Genetic algorithm (\code{\link[GA]{GA}}) tuning method. Can handle numeric(vector) and
     integer(vector) hyperparameters, but no dependencies. For integers the internally proposed numeric
     values are automatically rounded. }
-  \item{makeTuneControlPSO}{Particle Swarm Optimization (\code{\link[PSO]{PSO}}) implementation consistent with the
+  \item{makeTuneControlPSO}{Particle Swarm Optimization (\code{\link[pso]{psoptim}}) implementation consistent with the
     standard PSO 2007/2011 by Maurice Clerc et al.
     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
     For integers the internally proposed numeric values are automatically rounded.}
-  \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms (\code{\link[EDA]{EDAs}}) based on copula and vines functions.
+  \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms in package \pkg{copulaedas}) based on copula and vines functions.
     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
     For integers the internally proposed numeric values are automatically rounded.}
 }
