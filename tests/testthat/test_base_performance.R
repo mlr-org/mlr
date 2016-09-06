@@ -40,7 +40,7 @@ test_that("performance", {
 
   # custom measure
   mymeasure = makeCustomResampledMeasure(measure.id = "mym", aggregation.id = "train.mean",
-                                         properties = c("classif", "predtype.response"),
+    properties = c("classif", "predtype.response"),
     fun = function(task, group, pred, feats, extra.args) {
       mean(pred$data$truth != pred$data$response)
     })

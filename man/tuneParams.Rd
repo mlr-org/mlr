@@ -97,7 +97,7 @@ res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 print(res)
 print(head(as.data.frame(res$opt.path)))
- }
+}
 }
 \seealso{
 \code{\link{generateHyperParsEffectData}}

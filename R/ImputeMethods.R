@@ -57,7 +57,7 @@ simpleImpute = function(data, target, col, const) {
 #'     from the data if not provided.
 #'   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
 #'     with probabilities calculated using \code{table} or \code{hist}.
-#'   \item \code{imputeLearner(learner, preimpute)} for imputations using the response
+#'   \item \code{imputeLearner(learner, features = NULL)} for imputations using the response
 #'     of a classification or regression learner.
 #' }
 #' @name imputations
@@ -254,8 +254,9 @@ imputeHist = function(breaks, use.mids = TRUE) {
   )
 }
 
-#' @param learner [\code{Learner}]\cr
+#' @param learner [\code{\link{Learner}} | \code{character(1)}]\cr
 #'  Supervised learner. Its predictions will be used for imputations.
+#'  If you pass a string the learner will be created via \code{\link{makeLearner}}.
 #'  Note that the target column is not available for this operation.
 #' @param features [\code{character}]\cr
 #'  Features to use in \code{learner} for prediction.
@@ -264,7 +265,7 @@ imputeHist = function(breaks, use.mids = TRUE) {
 #' @rdname imputations
 #' @export
 imputeLearner = function(learner, features = NULL) {
-  assertClass(learner, classes = "Learner")
+  learner = checkLearner(learner)
   if (!is.null(features))
     assertCharacter(features, any.missing = FALSE)
 
@@ -277,18 +278,26 @@ imputeLearner = function(learner, features = NULL) {
         not.ok = which(features %nin% names(data))
         if (length(not.ok))
           stopf("Features for imputation not found in data: '%s'", collapse(features[not.ok]))
-        not.ok = which.first(target %in% names(data))
+        not.ok = which.first(target %in% features)
         if (length(not.ok))
           stopf("Target column used as feature for imputation: '%s'", target[not.ok])
         if (col %nin% features)
           features = c(col, features)
       }
-      # Remove all observations with missing values in the target for training. This is required
-      # because it should not be possible to have tasks with missing values in the target.
-      ind = !is.na(data[[col]]) 
-      task = constructor("impute", data = subset(data[ind, ], select = features), target = col,
-        check.data = FALSE, fixup.data = "quiet")
-      list(model = train(learner, subsetTask(task, features = features)), features = features)
+      # features used for imputation might have NAs, but the learner might not support that
+      # we need an extra check, otherwise this might not get noticed by checkLearnerBeforeTrain because
+      # we remove observations with NAs in column col before generating the task
+      impute.feats = setdiff(features, col)
+      if (anyMissing(data[impute.feats]) && !hasLearnerProperties(learner, "missings")) {
+      	has.na = vlapply(data[impute.feats], function(x) any(is.na(x)))
+      	wrong.feats = clipString(collapse(colnames(data[impute.feats])[has.na], ", "), 50L)
+        stopf("Feature(s) '%s' used for imputation has/have missing values, but learner '%s' does not support that!", wrong.feats, learner$id)
+      }
+      # remove all observations with missing values in column col (which is the target in the imputation task)
+      ind = !is.na(data[[col]])
+      task = constructor("impute", data = subset(data, subset = ind, select = features), target = col,
+        check.data = TRUE, fixup.data = "quiet")
+      list(model = train(learner, task), features = features)
     },
 
     impute = function(data, target, col, model, features) {

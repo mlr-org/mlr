@@ -37,16 +37,13 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
   assertNumber(jitter, lower = 0)
 
   df = getBMRAggrPerformances(bmr, as.df = TRUE)
-
-
   xlab.string = meas.name
 
   # trafo to ranks manually here
   if (trafo == "rank") {
-    df = plyr::ddply(df, "task.id", function(d) {
-      d[, meas.name] = rank(d[, meas.name], ties.method = "average")
-      return(d)
-    })
+    setDT(df)
+    df[, get("meas.name") := rank(.SD[[meas.name]], ties.method = "average"), by = "task.id"]
+    setDF(df)
     xlab.string = stri_paste("rank of", xlab.string, sep = " ")
   }
 

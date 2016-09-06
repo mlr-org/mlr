@@ -12,9 +12,15 @@ Returns the \code{\link[ParamHelpers]{ParamSet}} from a \code{\link{Learner}}.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }

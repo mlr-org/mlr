@@ -25,7 +25,9 @@
 \alias{gmean}
 \alias{gpr}
 \alias{logloss}
+\alias{lsr}
 \alias{mae}
+\alias{mape}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
@@ -46,8 +48,10 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
+\alias{measureMAPE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
@@ -62,10 +66,14 @@
 \alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
+\alias{measureQSR}
+\alias{measureRAE}
 \alias{measureRMSE}
+\alias{measureRRSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
+\alias{measureSSR}
 \alias{measureTN}
 \alias{measureTNR}
 \alias{measureTP}
@@ -88,11 +96,15 @@
 \alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
+\alias{qsr}
+\alias{rae}
 \alias{rmse}
+\alias{rrse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
 \alias{sse}
+\alias{ssr}
 \alias{timeboth}
 \alias{timepredict}
 \alias{timetrain}
@@ -149,6 +161,18 @@ measureEXPVAR(truth, response)
 
 arsq
 
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
+
 mmce
 
 measureMMCE(truth, response)
@@ -182,6 +206,18 @@ measureMulticlassBrier(probabilities, truth)
 logloss
 
 measureLogloss(probabilities, truth)
+
+ssr
+
+measureSSR(probabilities, truth)
+
+qsr
+
+measureQSR(probabilities, truth)
+
+lsr
+
+measureLSR(probabilities, truth)
 
 auc
 
@@ -337,7 +373,10 @@ He, H. & Garcia, E. A. (2009)
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{performance}}
