@@ -26,7 +26,7 @@ makeRLearner.classif.gamboost = function() {
 }
 
 #' @export
-trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, mstop, nu, risk, stopintern, trace, family, Binomial.link, ...) {
+trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, mstop, nu, risk, stopintern, trace, family = "Binomial", Binomial.link = "logit", ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
@@ -35,6 +35,9 @@ trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NU
     d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }
   f = getTaskFormula(.task)
+  # defaults = getDefaults(getParamSet(.learner))
+  # if (missing(family)) family = defaults$family
+  # if (missing(Binomial.link)) Binomial.link = defaults$Binomial.link
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
     AdaExp = mboost::AdaExp(),
