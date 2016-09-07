@@ -115,18 +115,21 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   )
 }
 
+
+# this wrappes around calculateREsampleIterationResult and contains the subsetting of the 
+# for a specific fold i
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
     messagef("[Resample] %s iter %i: ", rin$desc$id, i, .newline = FALSE)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
-  
   calculateResampleIterationResult(learner = learner, task = task, train.i = train.i, test.i = test.i, measures = measures, 
     weights = weights, rdesc = rin$desc, model = model, extract = extract)
 }
 
 
+#Evaluate one train/test split of the resample function and get one or more performance values
 calculateResampleIterationResult = function(learner, task, train.i, test.i, measures, weights, rdesc, model, extract) {
   
   err.msgs = c(NA_character_, NA_character_)
@@ -194,6 +197,7 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
 }
 
 
+#Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
 mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)

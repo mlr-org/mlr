@@ -138,14 +138,13 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
 #' @family benchmark
 NULL
 
+
 benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info) {
   setSlaveOptions()
   if (show.info)
     messagef("Task: %s, Learner: %s", task, learner)
-
   lrn = learners[[learner]]
   extract.this = getExtractor(lrn)
-
   r = resample(lrn, tasks[[task]], resamplings[[task]],
     measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
   # store used learner in result
@@ -153,6 +152,7 @@ benchmarkParallel = function(task, learner, learners, tasks, resamplings, measur
   return(r)
 }
 
+# get extractor function for different wrapped models
 getExtractor = function(lrn) {
   cl = class(lrn)
   if ("FeatSelWrapper" %in% cl) {
