@@ -52,6 +52,7 @@ Suggests:
     ada,
     adabag,
     bartMachine,
+    batchtools,
     brnn,
     bst,
     C50,
@@ -149,6 +150,8 @@ Suggests:
     TH.data,
     xgboost (>= 0.6-2),
     XML
+Remotes:
+    github::mllg/batchtools
 LazyData: yes
 ByteCompile: yes
 Version: 2.11

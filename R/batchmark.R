@@ -29,14 +29,14 @@
 #'   If missing, the default measure of the first task is used.
 #' @template arg_models
 #' @param reg [\code{\link[batchtools]{Registry}}]\cr
-#'   Registry, created by \code{\link[bacthtools]{makeExperimentRegistry}}. If not explicitly passed, 
+#'   Registry, created by \code{\link[batchtools]{makeExperimentRegistry}}. If not explicitly passed, 
 #'   uses the last created registry.
 #' @return [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
 #' @export
 #' @family benchmark
 batchmark = function(learners, tasks, resamplings, measures = NULL, models = TRUE, reg = batchtools::getDefaultRegistry()) {
   
-  requirePackages("batchtools", why = "batchmark", default.method = "attach")
+  requirePackages("batchtools", why = "batchmark", default.method = "load")
   assertList(learners, types = "Learner", min.len = 1L)
   learner.ids = vcapply(learners, "[[", "id")
   if (anyDuplicated(learner.ids))
@@ -119,22 +119,26 @@ getAlgoFun = function(lrn, measures, models) {
 #'   If not set, defaults to all jobs.
 #' @template arg_keep_pred
 #' @param reg [\code{\link[batchtools]{Registry}}]\cr
-#'   Registry, created by \code{\link[bacthtools]{makeExperimentRegistry}}. If not explicitly passed, 
+#'   Registry, created by \code{\link[batchtools]{makeExperimentRegistry}}. If not explicitly passed, 
 #'   uses the last created registry.
 #' @return [\code{\link{BenchmarkResult}}].
 #' @export
 #' @family benchmark
 reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, reg = batchtools::getDefaultRegistry()) {
   
+  requirePackages("batchtools", why = "batchmark", default.method = "load")
   assertFlag(keep.pred)
+  
+  result = list()
   
   problems = batchtools::getProblemIds(reg)
   algorithms = batchtools::getAlgorithmIds(reg)
   
-  result = lapply(problems, function(p) {
-    problem = readRDS(paste0(reg$file.dir, "/problems/", p, ".rds"))
+  for (p in problems) {
+    problem = batchtools::makeJob(id = batchtools::findExperiments(prob.name = p, ids = ids)[1, ])$problem 
     rin = makeResampleInstance(problem$data$rdesc, problem$data$task)
-    rr = lapply(algorithms, function(a) {
+  
+    for (a in algorithms) {
       res = batchtools::reduceResultsList(batchtools::findExperiments(prob.name = p, algo.name = a, ids = ids))
       models = !is.null(res[[1]]$model)
       lrn = problem$data$learner[[a]]
@@ -142,15 +146,11 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, reg = batchtools
       rs = mergeResampleResult(learner.id = a, task = problem$data$task, iter.results = res, measures = problem$data$measures, 
         rin = rin, keep.pred = keep.pred, models = models, show.info = FALSE, runtime = NA, extract = extract.this)
       rs$learner = lrn
-      addClasses(rs, "ResampleResult")
-    })
-    setNames(rr, algorithms)
-  })
+      result[[p]][[a]] = addClasses(rs, "ResampleResult")
+    }
+    
+  }
   
-  names(result) = problems
-  
-  problem = readRDS(paste0(reg$file.dir, "/problems/", problems[1], ".rds"))
-
   makeS3Obj(classes = "BenchmarkResult",
     results = result,
     measures = problem$data$measures,
