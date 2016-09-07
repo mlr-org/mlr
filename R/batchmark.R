@@ -1,4 +1,4 @@
-#' @title Run Machine Learning Benchmarks as Experiments
+#' @title Run Machine Learning Benchmarks as distributed Experiments
 #' @description
 #' This function is a very parallel version of \code{\link{benchmark}}.
 #' Experiments are created in the provided registry for each combination of
@@ -6,6 +6,15 @@
 #' runs can be started via \code{\link[batchtools]{submitJobs}]}. For details on the usage
 #' and support backends have a look at the batchtools tutorial page: 
 #' \url{https://github.com/mllg/batchtools}.
+#' 
+#' The general workflow with \code{\link{batchmark}} looks like that:
+#' \itemize{
+#' \item{1.}{\code{batchtools::createExperimentRegistry()}}
+#' \item{2.}{\code{batchmark(...)}}
+#' \item{3.}{\code{batchtools:submitJobs()}}
+#' \item{3.5}{wait until the jobs are finished...}
+#' \item{4.}{\code{reduceBatchtoolsResult()}}
+#' }
 #'
 #' @param learners [(list of) \code{\link{Learner}}]\cr
 #'   Learning algorithms which should be compared.
@@ -24,10 +33,10 @@
 #'   uses the last created registry.
 #' @return [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
 #' @export
-batchmark = function(learners, tasks, resamplings, measures = NULL, models = TRUE, reg = getDefaultRegistry()) {
+#' @family benchmark
+batchmark = function(learners, tasks, resamplings, measures = NULL, models = TRUE, reg = batchtools::getDefaultRegistry()) {
   
   requirePackages("batchtools", why = "batchmark", default.method = "attach")
-  batchtools:::assertRegistry(reg)
   assertList(learners, types = "Learner", min.len = 1L)
   learner.ids = vcapply(learners, "[[", "id")
   if (anyDuplicated(learner.ids))
@@ -57,22 +66,26 @@ batchmark = function(learners, tasks, resamplings, measures = NULL, models = TRU
   }
 
   reg$packages = union(reg$packages, "mlr")
+  
+  #set name of learner list
+  lrn.ids = vapply(learners, getLearnerId, FUN.VALUE = character(1))
+  names(learners) = lrn.ids
 
   # generate problems
   pdes = Map(function(id, task, rdesc, seed) {
-    addProblem(id, data = list(rdesc = rdesc, task = task, measures = measures, learners = learners), fun = resample.fun, seed = seed, reg = reg)
+    batchtools::addProblem(id, data = list(rdesc = rdesc, task = task, measures = measures, learners = learners), fun = resample.fun, seed = seed, reg = reg)
     data.table(i = seq_len(rdesc$iters))
   }, id = task.ids, task = tasks, rdesc = resamplings, seed = reg$seed + seq_along(tasks))
 
   # generate algos
   ades = Map(function(id, learner) {
     apply.fun = getAlgoFun(learner, measures, models)
-    addAlgorithm(id, apply.fun, reg = reg)
+    batchtools::addAlgorithm(id, apply.fun, reg = reg)
     data.table()
   }, id = learner.ids, learner = learners)
 
   # add experiments
-  addExperiments(reg = reg, prob.designs = pdes, algo.designs = ades, repls = 1L)
+  batchtools::addExperiments(reg = reg, prob.designs = pdes, algo.designs = ades, repls = 1L)
 }
 
 resample.fun = function(job, data, i) {
@@ -90,38 +103,53 @@ getAlgoFun = function(lrn, measures, models) {
 
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test, 
       measures = measures, weights = instance$weights, rdesc = data$rdesc, model = models, extract = extract.this)
-    
   }
 }
 
-
-reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, reg = getDefaultRegistry()) {
+#' @title Reduce results of a batch-distributed benchmark
+#' @description
+#' 
+#' This creates a \code{\link{BenchmarkResult}} from a \code{\link[batchtools]{Registry}}.
+#' To setup the benchmark have a look at \code{\link{batchmark}}.
+#' 
+#' @param ids [\code{\link[base]{data.frame}} or \code{integer}]\cr
+#'   A \code{\link[base]{data.frame}} (or \code{\link[data.table]{data.table}})
+#'   with a column named \dQuote{job.id}.
+#'   Alternatively, you may also pass a vector of integerish job ids.
+#'   If not set, defaults to all jobs.
+#' @template arg_keep_pred
+#' @param reg [\code{\link[batchtools]{Registry}}]\cr
+#'   Registry, created by \code{\link[bacthtools]{makeExperimentRegistry}}. If not explicitly passed, 
+#'   uses the last created registry.
+#' @return [\code{\link{BenchmarkResult}}].
+#' @export
+#' @family benchmark
+reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, reg = batchtools::getDefaultRegistry()) {
   
-  batchtools:::assertRegistry(reg)
   assertFlag(keep.pred)
   
-  problems = getProblemIds(reg)
-  algorithms = getAlgorithmIds(reg)
+  problems = batchtools::getProblemIds(reg)
+  algorithms = batchtools::getAlgorithmIds(reg)
   
-  result = lapply(seq_along(problems), function(p) {
-    problem = readRDS(paste0(reg$file.dir, "/problems/", problems[p], ".rds"))
+  result = lapply(problems, function(p) {
+    problem = readRDS(paste0(reg$file.dir, "/problems/", p, ".rds"))
     rin = makeResampleInstance(problem$data$rdesc, problem$data$task)
-    rr = lapply(seq_along(algorithms), function(a) {
-      res = reduceResultsList(findExperiments(prob.name = problems[p], algo.name = algorithms[a], ids = ids))
+    rr = lapply(algorithms, function(a) {
+      res = batchtools::reduceResultsList(batchtools::findExperiments(prob.name = p, algo.name = a, ids = ids))
       models = !is.null(res[[1]]$model)
       lrn = problem$data$learner[[a]]
       extract.this = getExtractor(lrn)
-      mergeResampleResult(learner.id = problems[a], task = problem$data$task, iter.results = res, measures = problem$data$measures, 
+      rs = mergeResampleResult(learner.id = a, task = problem$data$task, iter.results = res, measures = problem$data$measures, 
         rin = rin, keep.pred = keep.pred, models = models, show.info = FALSE, runtime = NA, extract = extract.this)
+      rs$learner = lrn
+      addClasses(rs, "ResampleResult")
     })
     setNames(rr, algorithms)
   })
   
   names(result) = problems
   
-  
   problem = readRDS(paste0(reg$file.dir, "/problems/", problems[1], ".rds"))
-  
 
   makeS3Obj(classes = "BenchmarkResult",
     results = result,
