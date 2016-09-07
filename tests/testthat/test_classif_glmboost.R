@@ -4,13 +4,13 @@ test_that("classif_glmboost", {
   requirePackagesOrSkip("mboost", default.method = "load")
 
   parset.list1 = list(
-    list(family=mboost::Binomial(), control=mboost::boost_control(nu=0.03)),
-    list(family=mboost::Binomial(), control=mboost::boost_control(mstop=600), center=TRUE)
+    list(family = mboost::Binomial(), control = mboost::boost_control(nu = 0.03)),
+    list(family = mboost::Binomial(link = "probit"), control = mboost::boost_control(mstop = 600), center = TRUE)
   )
 
   parset.list2 = list(
-    list(family=mboost::Binomial(), nu=0.03),
-    list(family=mboost::Binomial(), mstop=600, center=TRUE)
+    list(family = "Binomial", nu=0.03),
+    list(family = "Binomial", Binomial.link = "probit", mstop = 600, center = TRUE)
   )
 
   old.predicts.list = list()
