@@ -5,7 +5,7 @@ makeRLearner.classif.glmboost = function() {
     package = "mboost",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
-        values = c("AdaExp", "Binomial", "PropOdds", "cumstom.family")),
+        values = c("AdaExp", "Binomial", "PropOdds", "custom.family")),
       # FIXME default of glmboost() for family is Gaussian()
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
