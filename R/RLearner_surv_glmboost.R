@@ -4,16 +4,19 @@ makeRLearner.surv.glmboost = function() {
     cl = "surv.glmboost",
     package = c("!survival", "mboost"),
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = mboost::CoxPH(),
-        values = list(CoxPH = mboost::CoxPH(), Weibull = mboost::Weibull(),
-          Loglog = mboost::Loglog(), Lognormal = mboost::Lognormal(), Gehan = mboost::Gehan())),
+      makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan", "custom.family")),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
+      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE),
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv")),
       makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "both")
     ),
-    par.vals = list(family = mboost::CoxPH(), use.formula = TRUE),
+    par.vals = list(
+      family = "CoxPH",
+      use.formula = TRUE
+    ),
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
@@ -22,8 +25,16 @@ makeRLearner.surv.glmboost = function() {
 }
 
 #' @export
-trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, use.formula, ...) {
+trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, nuirange = c(0, 100), custom.family.definition, mstop, nu, use.formula, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
+  family = switch(family,
+    CoxPH = mboost::CoxPH(),
+    Weibull = mboost::Weibull(nuirange = nuirange),
+    Loglog = mboost::Loglog(nuirange = nuirange),
+    Lognormal = mboost::Lognormal(nuirange = nuirange),
+    Gehan = mboost::Gehan(),
+    custom.family = custom.family.definition
+    )
   if (use.formula) {
     f = getTaskFormula(.task)
     model = if (is.null(.weights)) {
@@ -42,7 +53,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
     }
     model = attachTrainingInfo(model, info)
   }
-
+  
   if (m == "cv") {
     mboost::mstop(model) = mboost::mstop(mboost::cvrisk(model, papply = lapply))
   }
