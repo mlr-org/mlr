@@ -110,7 +110,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   time2 = Sys.time()
   runtime = as.numeric(difftime(time2, time1, units = "secs"))
   addClasses(
-    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
+    mergeResampleResult(learner$id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
     "ResampleResult"
   )
 }
@@ -121,12 +121,20 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     messagef("[Resample] %s iter %i: ", rin$desc$id, i, .newline = FALSE)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
+  
+  calculateResampleIterationResult(learner = learner, task = task, train.i = train.i, test.i = test.i, measures = measures, 
+    weights = weights, rdesc = rin$desc, model = model, extract = extract)
+}
 
+
+calculateResampleIterationResult = function(learner, task, train.i, test.i, measures, weights, rdesc, model, extract) {
+  
   err.msgs = c(NA_character_, NA_character_)
   m = train(learner, task, subset = train.i, weights = weights[train.i])
   if (isFailureModel(m))
     err.msgs[1L] = getFailureModelMsg(m)
 
+  # does a measure require to calculate pred.train?
   ms.train = rep(NA, length(measures))
   ms.test = rep(NA, length(measures))
   pred.train = NULL
@@ -182,11 +190,11 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     pred.test = pred.test,
     pred.train = pred.train,
     err.msgs = err.msgs,
-    extract = ex
-  )
+    extract = ex)
 }
 
-mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
+
+mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 

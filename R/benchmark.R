@@ -20,9 +20,7 @@
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_keep_pred
-#' @param models [\code{logical(1)}]\cr
-#'   Should all fitted models be stored in the \code{\link{ResampleResult}}?
-#'   Default is \code{TRUE}.
+#' @template arg_models
 #' @template arg_showinfo
 #' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
@@ -145,6 +143,19 @@ benchmarkParallel = function(task, learner, learners, tasks, resamplings, measur
   if (show.info)
     messagef("Task: %s, Learner: %s", task, learner)
   cl = class(learners[[learner]])
+
+  extract.this = getExtractor(learners[[learner]])
+  
+  lrn = learners[[learner]]
+  r = resample(learners[[learner]], tasks[[task]], resamplings[[task]],
+    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
+  # store used learner in result
+  r$learner = lrn
+  return(r)
+}
+
+getExtractor = function(lrn) {
+  cl = class(lrn)
   if ("FeatSelWrapper" %in% cl) {
     extract.this = getFeatSelResult
   } else if ("TuneWrapper" %in% cl) {
@@ -154,13 +165,9 @@ benchmarkParallel = function(task, learner, learners, tasks, resamplings, measur
   } else {
     extract.this = function(model) { NULL }
   }
-  lrn = learners[[learner]]
-  r = resample(learners[[learner]], tasks[[task]], resamplings[[task]],
-    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
-  # store used learner in result
-  r$learner = lrn
-  return(r)
+  extract.this
 }
+
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
