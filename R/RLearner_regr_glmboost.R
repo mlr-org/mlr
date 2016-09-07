@@ -25,13 +25,11 @@ makeRLearner.regr.glmboost = function() {
 }
 
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family, custom.family.definition, nuirange, d = NULL, ...) {
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family = "Gaussian", custom.family.definition, nuirange, d = NULL, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  defaults = getDefaults(getParamSet(.learner))
-  if (missing(family)) family = defaults$family
-    family = switch(family,
+  family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
     Huber = mboost::Huber(d),
