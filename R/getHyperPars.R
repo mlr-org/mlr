@@ -27,7 +27,7 @@ getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")
   pv[ns]
 }
 
-getHyperParsString = function(learner, show.missing.values = FALSE) {
+getHyperParsString = function(learner, show.missing.values = TRUE) {
   hps = getHyperPars(learner)
   ns = names(hps)
   pars = getParamSet(learner)$pars[ns]
