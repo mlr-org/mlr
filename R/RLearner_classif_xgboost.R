@@ -22,7 +22,8 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "eval_metric", default = "error"),
       makeNumericLearnerParam(id = "base_score", default = 0.5),
 
-      makeNumericLearnerParam(id = "missing", default = 0, tunable = FALSE, when = "both"),
+      makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
+        special.vals = list(NA, NA_real_, NULL)),
       makeIntegerLearnerParam(id = "nthread", default = 16,lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
@@ -118,7 +119,7 @@ getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   imp = xgboost::xgb.importance(feature_names = .model$features,
                                 model = mod, ...)
-  
+
   fiv = imp$Gain
   setNames(fiv, imp$Feature)
 }
