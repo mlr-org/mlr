@@ -58,7 +58,6 @@ getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
   } else {
    .model$learner.model$votes
   }
-  
 }
 
 getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
