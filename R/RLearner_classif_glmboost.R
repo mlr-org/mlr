@@ -5,7 +5,7 @@ makeRLearner.classif.glmboost = function() {
     package = "mboost",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
-        values = c("AdaExp", "Binomial", "PropOdds", "custom.family")),
+        values = c("Binomial", "AdaExp", "AUC", "PropOdds", "custom.family")),
       # FIXME default of glmboost() for family is Gaussian()
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
@@ -30,8 +30,9 @@ makeRLearner.classif.glmboost = function() {
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, family, custom.family.definition, nuirange = c(-0.5,-1), offrange = c(-5,5), Binomial.link = "logit", ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
-    Binomial = mboost::Binomial(Binomial.link),
+    Binomial = mboost::Binomial(link = Binomial.link),
     AdaExp = mboost::AdaExp(),
+    AUC = mboost::AUC(),
     PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
@@ -55,7 +56,7 @@ predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   fam = getLearnerParVals(.learner)$family
   if (.learner$predict.type  == "prob") {
-    if (fam == "AdaExp") {
+    if (fam %in% c("AdaExp", "AUC")) {
       stopf("prediction.type = 'prob' not implemented for family %s", fam)
     } else {
       td = .model$task.desc
