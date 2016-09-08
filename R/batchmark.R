@@ -93,7 +93,7 @@ batchmark = function(learners, tasks, data.ids, resamplings, measures, models = 
 }
 
 resample.fun = function(job, data, i) {
-  if (checkInt(data$task))
+  if (is.numeric(data$task))
     data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(data$task))
   rin = makeResampleInstance(desc = data$rdesc, task = data$task)
   list(train = rin$train.inds[[i]], test = rin$test.inds[[i]], weights = rin$weights[[i]])
@@ -106,7 +106,7 @@ getAlgoFun = function(lrn, measures, models) {
   function(job, data, instance) {
 
     extract.this = getExtractor(lrn)
-    if (checkInt(data$task))
+    if (is.numeric(data$task))
       data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(data$task))
 
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test, 
@@ -150,7 +150,7 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
     
     if (nrow(exps) > 0){
       problem = batchtools::makeJob(id = exps[1, ])$problem
-      if (checkInt(problem$data$task))
+      if (is.numeric(problem$data$task))
         problem$data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(problem$data$task))
       rin = makeResampleInstance(problem$data$rdesc, problem$data$task)
       
