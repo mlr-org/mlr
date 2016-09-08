@@ -7,17 +7,20 @@ makeRLearner.classif.gamboost = function() {
       makeDiscreteLearnerParam(id = "baselearner", default = "bbs", values = c("bbs", "bols", "btree")),
       makeIntegerLearnerParam(id = "dfbase", default = 4),
       makeNumericLearnerParam(id = "offset"),
-      makeDiscreteLearnerParam(id = "family", default = "Binomial", values = c("AdaExp", "Binomial", "AUC")),
-      # FIXME default of glmboost() for family is Gaussian()
+      makeDiscreteLearnerParam(id = "family", default = "Binomial", values = c("AdaExp", "Binomial", "AUC", "PropOdds", "custom.family")),
+      # FIXME default of glmboost() for family is Gaussian(), for PropOdds response needs to be ordered
+      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeDiscreteLearnerParam(id = "Binomial.link", default = "logit", values = c("logit", "probit"),
         requires = quote(family == "Binomial")),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5, -1), requires = quote(family == "PropOdds")),
+      makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(),
+    par.vals = list(family = "Binomial"),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Gradient boosting with smooth components",
     short.name = "gambst",
@@ -26,8 +29,14 @@ makeRLearner.classif.gamboost = function() {
 }
 
 #' @export
-trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, mstop, nu, risk, stopintern, trace, family = "Binomial", Binomial.link = "logit", ...) {
+trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, mstop, nu, risk, stopintern, trace, family, Binomial.link = "logit", custom.family.definition, nuirange = c(-0.5, -1), offrange = c(-5,5), ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
+  family = switch(family,
+    Binomial = mboost::Binomial(link = Binomial.link),
+    AdaExp = mboost::AdaExp(),
+    AUC = mboost::AUC(),
+    PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
+    custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
     td = getTaskDescription(.task)
@@ -35,14 +44,6 @@ trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NU
     d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }
   f = getTaskFormula(.task)
-  # defaults = getDefaults(getParamSet(.learner))
-  # if (missing(family)) family = defaults$family
-  # if (missing(Binomial.link)) Binomial.link = defaults$Binomial.link
-  family = switch(family,
-    Binomial = mboost::Binomial(link = Binomial.link),
-    AdaExp = mboost::AdaExp(),
-    AUC = mboost::AUC()
-    )
   if (is.null(.weights)) {
     model = mboost::gamboost(f, data = d, control = ctrl, family = family, ...)
   } else  {
@@ -63,7 +64,7 @@ predictLearner.classif.gamboost = function(.learner, .model, .newdata, ...) {
       levs = c(td$negative, td$positive)
       return(propVectorToMatrix(p, levs))
     } else {
-      stopf("Predict.type needs to be 'response' for family = '%s'.", fam)
+      stopf("prediction.type = 'prob' not implemented for family %s", fam)
     }
   } else {
     return(p)
