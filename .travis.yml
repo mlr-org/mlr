@@ -31,8 +31,8 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
-  - mllg/batchtools
   - mllg/checkmate
+  - mllg/batchtools
 
 before_install:
   # we want to see libpaths and installed packages from cache
