@@ -153,6 +153,7 @@ test_that("Learner defined with expression in param requires, see #369 and PH #5
 })
 
 
+# %FIXME% we should reactivate the test when ParamHelpers 1.9 is on CRAN
 # test_that("tuning does not break with small discrete values, see bug in #1115", {
 #   ctrl  = makeTuneControlGrid()
 #   ps = makeParamSet(
