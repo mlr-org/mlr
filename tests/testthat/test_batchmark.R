@@ -12,7 +12,7 @@ test_that("batchmark", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
   
-  ids = batchmark(learners = list(makeLearner("classif.lda", predict.type = "prob")), task = list(binaryclass.task), resampling = rin)
+  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin)
   
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
@@ -216,7 +216,7 @@ test_that("keep.preds and models are passed down to resample()", {
   rin = makeResampleDesc("CV", iters = 2L)
   
   reg = makeExperimentRegistry(file.dir = NA)
-  res = batchmark(learners = list(makeLearner("classif.lda", predict.type = "prob")), task = list(binaryclass.task), resampling = rin, models = TRUE)
+  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = TRUE)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   res = reduceBatchmarkResults(reg = reg, keep.pred = TRUE)
@@ -240,7 +240,7 @@ test_that("keep.preds and models are passed down to resample()", {
   
   
   reg = makeExperimentRegistry(file.dir = NA)
-  res = batchmark(learners = list(makeLearner("classif.lda", predict.type = "prob")), task = list(binaryclass.task), resampling = rin, models = FALSE)
+  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = FALSE)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   res = reduceBatchmarkResults(reg = reg, keep.pred = FALSE)

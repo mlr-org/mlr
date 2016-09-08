@@ -39,32 +39,21 @@
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
-  learners = ensureVector(learners, 1L, "Learner")
-  learners = lapply(learners, checkLearner)
+  
+  
+  learners = ensureBenchmarkLearners(learners)
   learner.ids = extractSubList(learners, "id")
   if (anyDuplicated(learner.ids))
     stop("Learners need unique ids!")
   names(learners) = learner.ids
 
-  # check tasks
-  tasks = ensureVector(tasks, 1L, "Task")
-  assertList(tasks, min.len = 1L)
-  checkListElementClass(tasks, "Task")
+  tasks = ensureBenchmarkTasks(tasks)
   task.ids = extractSubList(tasks, c("task.desc", "id"))
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
   names(tasks) = task.ids
 
-  # check resamplings
-  if (missing(resamplings)) {
-     resamplings = replicate(length(tasks), makeResampleDesc("CV", iters = 10L), simplify = FALSE)
-  } else if (inherits(resamplings, "ResampleInstance") || inherits(resamplings, "ResampleDesc")) {
-    resamplings = replicate(length(tasks), resamplings, simplify = FALSE)
-  } else {
-    assertList(resamplings)
-    if (length(resamplings) != length(tasks))
-      stop("Number of resampling strategies and number of tasks differ!")
-  }
+  resamplings = ensureBenchmarkResamplings(resamplings, tasks)
   resamplings = Map(function(res, tt) {
     if (inherits(res, "ResampleInstance"))
       return(res)
@@ -73,15 +62,9 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
     stop("All objects in 'resamplings' must be of class 'ResampleDesc' or 'ResampleInstance'")
   }, resamplings, tasks)
   names(resamplings) = task.ids
-
-  # check measures
-  if (missing(measures)) {
-    measures = list(getDefaultMeasure(tasks[[1L]]))
-  } else {
-    measures = ensureVector(measures, 1L, "Measure")
-    assertList(measures)
-    checkListElementClass(measures, "Measure")
-  }
+  
+  measures = ensureBenchmarkMeasures(measures, tasks)
+  
   assertFlag(models)
   assertFlag(keep.pred)
 
