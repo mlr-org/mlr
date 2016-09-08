@@ -221,6 +221,28 @@ test_that("generatePartialDependenceData", {
   q = plotPartialDependence(dr, facet = "chas", facet.wrap.ncol = 2L,
     data = regr.df)
   testFacetting(q, ncol = 2L)
+
+  # with the joint distribution as the weight function generatePartialDependenceData
+  # should return NA for regions with zero probability
+  x = runif(50L)
+  y = 2 * x
+  idx = which(x > .5)
+  x[idx] = NA
+  test.task = makeRegrTask(data = data.frame(x = x[-idx], y = y[-idx]), target = "y")
+  fit = train("regr.rpart", test.task)
+  pd = generatePartialDependenceData(fit, test.task,
+    weight.fun = function(x, data) apply(x, 1, function(z) ifelse(z > .5, 0, 1)),
+    fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
+  expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
+
+  # issue 55 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
+
+  # subsequent bug found in pr #1206
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    individual = TRUE,
+    center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {

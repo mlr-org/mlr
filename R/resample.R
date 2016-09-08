@@ -92,6 +92,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     stop(stri_paste("Size of data set:", n, "and resampling instance:", r, "differ!", sep = " "))
 
   checkLearnerBeforeTrain(task, learner, weights)
+  checkAggrsBeforeResample(measures, resampling$desc)
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
