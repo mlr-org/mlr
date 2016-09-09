@@ -148,10 +148,14 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
     
     exps = batchtools::findExperiments(prob.name = p, ids = ids)
     
-    if (nrow(exps) > 0){
+    if (nrow(exps) > 0) {
       problem = batchtools::makeJob(id = exps[1, ])$problem
-      if (is.numeric(problem$data$task))
+      pname = p
+      if (is.numeric(problem$data$task)) {
         problem$data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(problem$data$task))
+        pname = getTaskId(problem$data$task)
+      }
+      
       rin = makeResampleInstance(problem$data$rdesc, problem$data$task)
       
       for (a in algorithms) {
@@ -162,7 +166,7 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
         rs = mergeResampleResult(learner.id = a, task = problem$data$task, iter.results = res, measures = problem$data$measures, 
           rin = rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
         rs$learner = lrn
-        result[[p]][[a]] = addClasses(rs, "ResampleResult")
+        result[[pname]][[a]] = addClasses(rs, "ResampleResult")
         }
     }
   }
