@@ -8,8 +8,9 @@ benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
   models = TRUE, show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learners}{[(list of) \code{\link{Learner}}]\cr
-Learning algorithms which should be compared.}
+\item{learners}{[(list of) \code{\link{Learner}} | \code{character}]\cr
+Learning algorithms which should be compared, can also be a single learner.
+If you pass strings the learners will be created via \code{\link{makeLearner}}.}
 
 \item{tasks}{[(list of) \code{\link{Task}}]\cr
 Tasks that learners should be run on.}

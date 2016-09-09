@@ -9,6 +9,7 @@
   usesfuzzy matching to suggest the 3 closest names in the message
 * tuneParams: tuning with irace is now also parallelized, i.e., different
   learner config are evaluated in parallel.
+* benchmark: mini fix, arg 'learners' now also accepts class strings
 * randomForestSRC.var.select: new arg "method"
 * mrmr filter: fixed some smaller bugs and updated properties
 * generateLearningCurveData: also accepts single learner, does not require a list
