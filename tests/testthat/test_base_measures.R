@@ -255,8 +255,12 @@ test_that("check measure calculations", {
   expect_warning(measureRAE(c(1,1,1,1),c(1,2,3,4)))
   expect_silent(measureRAE(c(1,1,1,0),c(2,2,2,2)))
   # mape
-  expect_equal(NA, mape$fun(pred = pred.regr))
-  expect_equal(NA, measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  suppressWarnings({
+    expect_equal(NA, mape$fun(pred = pred.regr))
+    expect_equal(NA, measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  })
+  expect_warning(mape$fun(pred = pred.regr), regexp = "MAPE is undefined if any truth value is equal to 0.")
+  expect_warning(measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)), regexp = "MAPE is undefined if any truth value is equal to 0.")
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
   mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
