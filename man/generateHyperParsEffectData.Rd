@@ -5,15 +5,15 @@
 \title{Generate hyperparameter effect data.}
 \usage{
 generateHyperParsEffectData(tune.result, include.diagnostics = FALSE,
-  trafo = FALSE)
+  trafo = FALSE, partial.dep = FALSE)
 }
 \arguments{
 \item{tune.result}{[\code{\link{TuneResult}} | \code{\link{ResampleResult}}]\cr
 Result of \code{\link{tuneParams}} (or \code{\link{resample}} ONLY when used
-for nested cross-validation). The tuning result (or results if the
-output is from nested cross-validation), also containing the
-optimizer results. If nested CV output is passed, each element in the list
-will be considered a separate run, and the data from each run will be
+for nested cross-validation). The tuning result (or results if the 
+output is from nested cross-validation), also containing the 
+optimizer results. If nested CV output is passed, each element in the list 
+will be considered a separate run, and the data from each run will be 
 included in the dataframe within the returned \code{HyperParsEffectData}.}
 
 \item{include.diagnostics}{[\code{logical(1)}]\cr
@@ -21,22 +21,25 @@ Should diagnostic info (eol and error msg) be included?
 Default is \code{FALSE}.}
 
 \item{trafo}{[\code{logical(1)}]\cr
-Should the units of the hyperparameter path be converted to the
+Should the units of the hyperparameter path be converted to the 
 transformed scale? This is only useful when trafo was used to create the
 path.
 Default is \code{FALSE}.}
+
+\item{partial.dep}{[\code{logical(1)}]\cr
+Should partial dependency be generated based on converting to reg task?}
 }
 \value{
 [\code{HyperParsEffectData}]
- Object containing the hyperparameter effects dataframe, the tuning
- performance measures used, the hyperparameters used, a flag for including
- diagnostic info, a flag for whether nested cv was used, and the optimization
+ Object containing the hyperparameter effects dataframe, the tuning 
+ performance measures used, the hyperparameters used, a flag for including 
+ diagnostic info, a flag for whether nested cv was used, and the optimization 
  algorithm used.
 }
 \description{
-Generate cleaned hyperparameter effect data from a tuning result or from a
-nested cross-validation tuning result. The object returned can be used for
-custom visualization or passed downstream to an out of the box mlr method,
+Generate cleaned hyperparameter effect data from a tuning result or from a 
+nested cross-validation tuning result. The object returned can be used for 
+custom visualization or passed downstream to an out of the box mlr method, 
 \code{\link{plotHyperParsEffect}}.
 }
 \examples{
@@ -56,7 +59,7 @@ ctrl = makeTuneControlGrid()
 rdesc = makeResampleDesc("CV", iters = 3L)
 lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
                       resampling = rdesc, par.set = ps)
-res = resample(lrn, task = pid.task, resampling = cv2,
+res = resample(lrn, task = pid.task, resampling = cv2, 
                extract = getTuneResult)
 data = generateHyperParsEffectData(res)
 plotHyperParsEffect(data, x = "C", y = "mmce.test.mean", plot.type = "line")
