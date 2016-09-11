@@ -267,3 +267,90 @@ test_that("2 hyperparams nested", {
   expect_equal(plt$labels$shape, "learner_status")
 })
 
+test_that("2+ hyperparams", {
+  # generate data
+  ps = makeParamSet(
+    makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
+    makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x),
+    makeDiscreteParam("degree", values = 2:5))
+  ctrl = makeTuneControlRandom(maxit = 100L)
+  rdesc = makeResampleDesc("Holdout", predict = "both")
+  learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
+  res = tuneParams(learn, task = pid.task, control = ctrl,
+    measures = list(acc,setAggregation(acc, train.mean)), resampling = rdesc,
+    par.set = ps, show.info = F)
+  data = generateHyperParsEffectData(res, partial.dep = TRUE)
+
+
+  # test single hyperparam creation
+  plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
+    plot.type = "line")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
+    c("GeomLine", "GeomPoint"))
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Accuracy")
+
+  # test bivariate
+  plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
+    plot.type = "heatmap")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  expect_equal(class(plt$layers[[1]]$geom)[1], c("GeomTile"))
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "sigma")
+  expect_equal(plt$labels$fill, "Accuracy")
+
+
+  # simple example with nested cv
+  ps = makeParamSet(
+    makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
+    makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x),
+    makeDiscreteParam("degree", values = 2:5))
+  ctrl = makeTuneControlRandom(maxit = 100L)
+  rdesc = makeResampleDesc("Holdout", predict = "both")
+  learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
+  lrn = makeTuneWrapper(learn, control = ctrl,
+    measures = list(acc, mmce), resampling = rdesc, par.set = ps,
+    show.info = F)
+  res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult)
+  data = generateHyperParsEffectData(res, partial.dep = TRUE)
+  plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
+    plot.type = "line")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
+    c("GeomLine", "GeomPoint"))
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Accuracy")
+
+  # learner crash with imputation works
+  ps = makeParamSet(
+    makeDiscreteParam("C", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)),
+    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)))
+  ctrl = makeTuneControlGrid()
+  rdesc = makeResampleDesc("Holdout")
+  learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
+  res = tuneParams(learn, task = pid.task, control = ctrl, measures = acc,
+    resampling = rdesc, par.set = ps, show.info = F)
+  data = generateHyperParsEffectData(res, partial.dep = TRUE)
+  plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
+    plot.type = "line")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
+    c("GeomLine", "GeomPoint"))
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Accuracy")
+
+  # FIXME: make sure plots looks as expected
+})

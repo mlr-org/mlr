@@ -368,15 +368,15 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       d$iteration = 1:nrow(d)
     }
   }
-  print(d)
+
   # just x, y
   if ((length(x) == 1) && (length(y) == 1) && !(z.flag)){
-    if (hyperpars.effect.data$nested){
+    if (hyperpars.effect.data$nested && !partial.flag) {
       plt = ggplot(d, aes_string(x = x, y = y, color = "nested_cv_run"))
     } else {
       plt = ggplot(d, aes_string(x = x, y = y))
     }
-    if (na.flag){
+    if (na.flag && !partial.flag){
       plt = plt + geom_point(aes_string(shape = "learner_status",
         color = "learner_status")) +
         scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
@@ -404,7 +404,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
           geom_tile()
       }
-      if ((na.flag || show.experiments) && !(show.interpolated)){
+      if ((na.flag || show.experiments) && !show.interpolated && !partial.flag){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success",
           "Failure"), ],
           aes_string(shape = "learner_status"),
