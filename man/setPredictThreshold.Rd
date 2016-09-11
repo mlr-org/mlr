@@ -27,6 +27,7 @@ For complex wrappers only the top-level \code{predict.type} is currently set.
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{forecast.WrappedModel}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},

@@ -9,7 +9,6 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
-
 #' @export
 getTaskDesc.default = function(x) {
   # FIXME: would be much cleaner to specialize here
@@ -235,6 +234,12 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
   stop("There is no target available for costsens tasks.")
 }
 
+#' @export
+getTaskTargets.MultiForecastRegrTask = function(task, recode.target = "no") {
+  y = task$env$data[, task$task.desc$target, drop = TRUE]
+  y
+}
+
 
 #' @title Extract data in task.
 #'
@@ -453,7 +458,9 @@ changeData = function(task, data, costs, weights) {
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$is.spatial),
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$is.spatial),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial)
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
+    "fcregr" = makeForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$frequency, td$is.spatial),
+    "mfcregr" = makeMultiForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$frequency, td$is.spatial)
   )
 
   return(task)
@@ -469,4 +476,15 @@ getTaskFactorLevels = function(task) {
 
 getTaskWeights = function(task) {
   task$weights
+}
+
+#' @title Get the dates of the task.
+#'
+#' @description Returns the dates from a task if they exist.
+#' @template arg_task_or_desc
+#' @return [\code{character(1)}]
+#' @export
+#' @family task
+getTaskDates = function(x) {
+  getTaskDesc(x)$dates
 }

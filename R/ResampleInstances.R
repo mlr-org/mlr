@@ -67,3 +67,77 @@ instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL, coor
   g = as.factor(rep(seq_len(desc$reps), each = folds))
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
+
+instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL) {
+  thin = function(x, skip = 0) {
+    n = length(x)
+    x[seq(1, n, by = skip)]
+  }
+
+  initial.window.abs = floor(desc$initial.window * size)
+  assertInt(initial.window.abs, lower = 1)
+  if (size - initial.window.abs < desc$horizon)
+    stop(catf("ERROR: The initial window is %i observations while the data is %i observations. \n
+      There is not enough data left (%i observations) to create a test set for a %i size horizon",
+      initial.window.abs, size, initial.window.abs - size, desc$horizon))
+  skip = desc$skip
+  stops  = (seq(size))[initial.window.abs:(size - desc$horizon)]
+  starts = stops - initial.window.abs + 1
+  if (skip > 0) {
+    stops = thin(stops, skip = skip)
+    starts = thin(starts, skip = skip)
+  }
+
+  train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
+  test.inds  = mapply(seq, stops + 1, stops + desc$horizon, SIMPLIFY = FALSE)
+
+  if (length(test.inds) == 0)
+    stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
+
+  # If the last value is not included, shift everything over by one
+  if (test.inds[[length(test.inds)]][desc$horizon] != size) {
+
+    train.inds = lapply(train.inds, function(x) x + 1)
+    test.inds = lapply(test.inds, function(x) x + 1)
+  }
+  desc$iters = length(test.inds)
+  makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds )
+}
+
+instantiateResampleInstance.GrowingCVDesc = function(desc, size, task = NULL) {
+  thin = function(x, skip = 0) {
+    n = length(x)
+    x[seq(1, n, by = skip)]
+  }
+
+  initial.window.abs = floor(desc$initial.window * size)
+  assertInt(initial.window.abs, lower = 1)
+  if (size - initial.window.abs < desc$horizon)
+    stop(catf("The initial window is %i observations while the data is %i observations. \n
+      There is not enough data left (%i observations) to create a test set for a %i size horizon",
+      initial.window.abs, size, initial.window.abs - size, desc$horizon))
+  skip = desc$skip
+  stops  = (seq(from = 1, to = size))[initial.window.abs:(size - desc$horizon)]
+  starts = rep(1, length(stops))
+
+  if (skip > 0) {
+    stops = thin(stops, skip = skip + 1)
+    starts  = thin(starts, skip = skip + 1)
+  }
+
+  train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
+  test.inds  = mapply(seq, stops + 1, stops + desc$horizon, SIMPLIFY = FALSE)
+
+
+  if (length(test.inds) == 0)
+    stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
+
+  # If the last value is not included, shift everything over by one
+  if (test.inds[[length(test.inds)]][desc$horizon] != size) {
+
+    train.inds = lapply(train.inds, function(x) x + 1)
+    test.inds = lapply(test.inds, function(x) x + 1)
+  }
+  desc$iters = length(test.inds)
+  makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds )
+}

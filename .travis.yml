@@ -17,7 +17,9 @@ addons:
     packages:
       - libgmp-dev
       - libgsl0-dev
-
+      - gcc-6
+      - g++-6
+      - gfortran-6
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
@@ -29,6 +31,7 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
+<<<<<<< HEAD
 jobs:
   include:
     - stage: warmup-1
@@ -65,6 +68,43 @@ jobs:
         - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+=======
+before_install:
+  # we want to see libpaths and installed packages from cache
+  - Rscript -e 'message("LIBPATHS:"); .libPaths()'
+  - Rscript -e 'message("INSTALLED PACKS:"); installed.packages()[,1:3]'  # we need a very fresh version of survival for Hmisc, needs be done early in the script
+  # we need a very fresh version of survival for Hmisc, needs be done early in the script
+  - Rscript -e 'install.packages("survival")'
+  - mkdir $HOME/bin
+  - ln -s $(which gcc-6) $HOME/bin/gcc
+  - ln -s $(which g++-6) $HOME/bin/g++
+  - ln -s $(which gfortran-6) $HOME/bin/gfortran
+  - export PATH=$HOME/bin:$PATH
+  - echo $LD_LIBRARY_PATH
+  - echo $LIBRARY_PATH
+
+before_script:
+  - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+  - R --no-save <<< 'library("devtools"); document()'
+
+after_success:
+  - git checkout master
+  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+  - R --no-save <<< 'library("devtools"); document()'
+  - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+  - git config user.name $GN
+  - git config user.email $GM
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://$GT:@github.com" >> .git/credentials
+  - git config push.default matching
+  - git add man/*
+  - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
+  - git push
+  - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+
+after_failure:
+  - ./travis-tool.sh dump_logs
+>>>>>>> NEWS
 
 notifications:
   email:

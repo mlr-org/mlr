@@ -66,3 +66,26 @@ bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measur
   measures = checkMeasures(measures, task, aggr = b632plus)
   resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
 }
+
+#' @rdname resample
+#' @export
+growingcv = function(learner, task, horizon = 10L, initialWindow = 10L, size = 100L, skip = 0L, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner, ...)
+  assertClass(task, classes = "ForecastTask")
+  rdesc = makeResampleDesc("GrowingCV", predict = "both", horizon = horizon, initialWindow = initialWindow,
+                           size = size, skip = skip)
+  measures = checkMeasures(measures, task, aggr = b632plus)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+fixedcv = function(learner, task, horizon = 10L, initialWindow = 10L, size = 100L, skip = 0L, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner, ...)
+  assertClass(task, classes = "ForecastTask")
+  rdesc = makeResampleDesc("FixedCV", predict = "both", horizon = horizon, initialWindow = initialWindow,
+                           size = size, skip = skip)
+  measures = checkMeasures(measures, task, aggr = b632plus)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+

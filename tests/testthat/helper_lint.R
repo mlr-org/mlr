@@ -56,6 +56,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
   left.assign.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
         parsed = lintr:::with_id(source_file, id)
+        line = source_file$lines[as.character(parsed$line1)]
+        if (substr(line, parsed$col1, parsed$col2) == ":=") {
+          return(NULL)
+        }
         Lint(filename = source_file$filename, line_number = parsed$line1,
           column_number = parsed$col1, type = "style", message = "Use =, not <-, for assignment.",
           line = source_file$lines[as.character(parsed$line1)],
@@ -67,6 +71,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
   right.assign.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "RIGHT_ASSIGN"), function(id) {
         parsed = lintr:::with_id(source_file, id)
+        line = source_file$lines[as.character(parsed$line1)]
+        if (substr(line, parsed$col1, parsed$col2) == ":=") {
+          return(NULL)
+        }
         Lint(filename = source_file$filename, line_number = parsed$line1,
           column_number = parsed$col1, type = "style", message = "Use =, not ->, for assignment.",
           line = source_file$lines[as.character(parsed$line1)],

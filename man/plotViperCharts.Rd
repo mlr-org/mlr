@@ -62,6 +62,7 @@ Other roc: \code{\link{asROCRPrediction}},
   \code{\link{calculateROCMeasures}}
 
 Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{forecast.WrappedModel}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
