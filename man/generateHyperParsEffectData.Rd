@@ -5,7 +5,7 @@
 \title{Generate hyperparameter effect data.}
 \usage{
 generateHyperParsEffectData(tune.result, include.diagnostics = FALSE,
-  trafo = FALSE)
+  trafo = FALSE, partial.dep = FALSE)
 }
 \arguments{
 \item{tune.result}{[\code{\link{TuneResult}} | \code{\link{ResampleResult}}]\cr
@@ -24,6 +24,11 @@ Default is \code{FALSE}.}
 Should the units of the hyperparameter path be converted to the
 transformed scale? This is only useful when trafo was used to create the
 path.
+Default is \code{FALSE}.}
+
+\item{partial.dep}{[\code{logical(1)}]\cr
+Should partial dependence be generated based on converting to reg task? This
+sets a flag so that we know to use partial dependence downstream.
 Default is \code{FALSE}.}
 }
 \value{
