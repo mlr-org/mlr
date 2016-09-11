@@ -28,6 +28,7 @@ The following types are returned, depending on task type:
    cluster     \tab integer\cr
    surv        \tab numeric\cr
    multilabel  \tab logical matrix, columns named with labels\cr
+   fcregr      \tab numeric\cr
 }
 }
 \seealso{

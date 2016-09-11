@@ -106,6 +106,7 @@ getProbabilities = function(pred, cl) {
 #'    cluster     \tab integer\cr
 #'    surv        \tab numeric\cr
 #'    multilabel  \tab logical matrix, columns named with labels\cr
+#'    fcregr      \tab numeric\cr
 #' }
 #'
 #' @template arg_pred

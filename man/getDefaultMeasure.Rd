@@ -23,5 +23,6 @@ Currently these are:
    surv        \tab cindex\cr
    costsens    \tab mcp\cr
    multilabel  \tab multilabel.hamloss\cr
+   fcregr      \tab mse
 }
 }

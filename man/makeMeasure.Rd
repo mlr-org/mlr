@@ -24,6 +24,7 @@ Set of measure properties. Some standard property names include:
   \item{classif.multi}{Is the measure applicable for multi-class classification?}
   \item{multilabel}{Is the measure applicable for multilabel classification?}
   \item{regr}{Is the measure applicable for regression?}
+  \item{fcregr}{Is the measure applicable for forecasting regression?}
   \item{surv}{Is the measure applicable for survival?}
   \item{cluster}{Is the measure applicable for cluster?}
   \item{costsens}{Is the measure applicable for cost-sensitive learning?}

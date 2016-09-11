@@ -67,7 +67,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   requirePackages(package, why = stri_paste("learner", id, sep = " "), default.method = "load")
 
   assertString(id)
-  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens"))
+  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens", "fcregr"))
   assertSubset(properties, listLearnerProperties(type))
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
@@ -164,4 +164,14 @@ makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), propert
   )
 
   return(lrn)
+}
+
+
+#' @export
+#' @rdname RLearner
+makeRLearnerForecastRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
+  addClasses(
+    makeRLearnerInternal(cl, "fcregr", package, par.set, par.vals, properties, name, short.name, note, callees),
+    c(cl, "RLearnerForecastRegr")
+  )
 }

@@ -133,6 +133,47 @@ costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
+### forecasting
+set.seed(getOption("mlr.debug.seed"))
+fcregr.df = arima.sim(model = list(ar = c(.5, .2), ma = .4, order = c(2, 0, 1)), n = 300)
+times = as.POSIXct("1992-01-14") + 1:300 * 86400
+fcregr.df = data.frame(test_data = fcregr.df, dates = times)
+fcregr.target = "test_data"
+fcregr.train.inds = seq_len(299)
+fcregr.test.inds  = setdiff(seq_len(nrow(fcregr.df)), fcregr.train.inds)
+fcregr.train = fcregr.df[fcregr.train.inds, ]
+fcregr.test  = fcregr.df[fcregr.test.inds, ]
+fcregr.task = makeForecastRegrTask("fcregrtask", data = fcregr.df, target = fcregr.target, date.col = "dates")
+
+fcregr.update.df = fcregr.df[1:111, ]
+fcregr.update.target = "test_data"
+fcregr.update.train.inds = 1:100
+fcregr.update.update.inds = 101:110
+fcregr.update.test.inds  = 111
+fcregr.update.train = fcregr.update.df[fcregr.update.train.inds, ]
+fcregr.update.update = fcregr.update.df[fcregr.update.update.inds, ]
+fcregr.update.test  = fcregr.update.df[fcregr.update.test.inds, ]
+fcregr.update.task = makeForecastRegrTask("fcregrtask", data = fcregr.update.train, target = fcregr.update.target, date.col = "dates")
+
+fcregr.small.df = fcregr.df[1:10, , drop = FALSE]
+fcregr.small.target = "test_data"
+fcregr.small.train.inds = seq_len(9)
+fcregr.small.test.inds  = setdiff(seq_len(nrow(fcregr.small.df)), fcregr.small.train.inds)
+fcregr.small.train = fcregr.small.df[fcregr.small.train.inds, ]
+fcregr.small.test  = fcregr.small.df[fcregr.small.test.inds, ]
+fcregr.small.task = makeForecastRegrTask("fcregrtask", data = fcregr.small.df, target = fcregr.small.target, date.col = "dates")
+# NOTE: Note using BBmisc:: here was failing for some reason?
+fcregr.num.df = fcregr.df#[, BBmisc::vlapply(fcregr.df, is.numeric), drop = FALSE]
+fcregr.num.target = fcregr.target
+fcregr.num.train.inds = fcregr.train.inds
+fcregr.num.test.inds  = fcregr.test.inds
+fcregr.num.train = fcregr.num.df[fcregr.num.train.inds, ]
+fcregr.num.test  = fcregr.num.df[fcregr.num.test.inds, ]
+fcregr.num.task = makeForecastRegrTask("fcregrnumtask", data = fcregr.num.df, target = fcregr.num.target, date.col = "dates")
+###########
+
+
+
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
 black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
 grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"

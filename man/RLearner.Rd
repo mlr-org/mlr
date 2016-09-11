@@ -14,6 +14,7 @@
 \alias{makeRLearnerSurv}
 \alias{makeRLearnerCluster}
 \alias{makeRLearnerCostSens}
+\alias{makeRLearnerForecastRegr}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
@@ -39,6 +40,10 @@ makeRLearnerCluster(cl, package, par.set, par.vals = list(),
   callees = character(0L))
 
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
+
+makeRLearnerForecastRegr(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
   callees = character(0L))
 }

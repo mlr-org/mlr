@@ -73,10 +73,17 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
+#' @param frequency [\code{Integer(1)}]\cr
+#'   The seasonality of the data. A frequency of 7L for daily data means a weekly seasonality,
+#'   52L is weekly data with a yearly seasonality, 365L is daily data with a yearly seasonality, etc.
+#'   Default is 1L for no seasonality.
+#' @param date.col [\code{character(1)}]\cr
+#'   The column which contains the dates for your data. These dates should be unique, in a POSIXt format, and in ascending order.
+#'   If \code{check.data} is TRUE, the first two conditions will be checked. If \code{fixup.data} is not 'no', then unorded data will be placed in ascending order.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
-#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
+#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask ForecastRegrTask
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)
@@ -148,6 +155,9 @@ checkTaskData = function(data, cols = names(data)) {
     } else if (is.factor(x)) {
       if (hasEmptyLevels(x))
         stopf("Column '%s' contains empty factor levels.", cn)
+    } else if (is.POSIXt(x)) {
+      if (any(duplicated(x)))
+        warning(catf("There are duplicate dates for %s", unique(x[duplicated(x)])))
     } else {
       stopf("Unsupported feature type (%s) in column '%s'.", class(x)[1L], cn)
     }

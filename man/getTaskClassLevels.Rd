@@ -19,7 +19,8 @@ actually return the same thing.
 }
 \seealso{
 Other task: \code{\link{getTaskCosts}},
-  \code{\link{getTaskData}}, \code{\link{getTaskDesc}},
+  \code{\link{getTaskData}}, \code{\link{getTaskDates}},
+  \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},

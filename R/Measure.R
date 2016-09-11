@@ -35,6 +35,7 @@
 #'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
 #'     \item{multilabel}{Is the measure applicable for multilabel classification?}
 #'     \item{regr}{Is the measure applicable for regression?}
+#'     \item{fcregr}{Is the measure applicable for forecasting regression?}
 #'     \item{surv}{Is the measure applicable for survival?}
 #'     \item{cluster}{Is the measure applicable for cluster?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
@@ -130,6 +131,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    surv        \tab cindex\cr
 #'    costsens    \tab mcp\cr
 #'    multilabel  \tab multilabel.hamloss\cr
+#'    fcregr      \tab mse
 #' }
 #'
 #' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
@@ -153,7 +155,8 @@ getDefaultMeasure = function(x) {
     regr = mse,
     surv = cindex,
     costsens = mcp,
-    multilabel = multilabel.hamloss
+    multilabel = multilabel.hamloss,
+    fcregr = mse
   )
 }
 

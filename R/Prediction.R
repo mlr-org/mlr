@@ -195,6 +195,57 @@ makePrediction.CostSensTaskDesc = function(task.desc, row.names, id, truth, pred
 }
 
 #' @export
+makePrediction.ForecastRegrTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+  data = namedList(c("id", "truth", "response", "se"))
+  if (any(inherits(y, "matrix"))) {
+    size.y = nrow(y)
+  } else {
+    size.y = length(y)
+  }
+
+  # This will only happen when there is a task with no subset
+  #  aka, we predict future values and have to get their times
+  if (length(truth) > size.y) {
+    row.dates = as.POSIXct(task.desc$dates)
+    diff.time = difftime(row.dates[2], row.dates[1], units = "auto")
+    start = row.dates[length(row.dates)] + diff.time
+    end = start + diff.time * size.y
+    row.dates = seq.POSIXt(start, end, by = diff.time)
+    data$id = NULL
+    data$truth = NULL
+  } else {
+    row.dates = row.names[seq_len(length(truth))]
+    if (inherits(y, "matrix")) {
+      y = y[seq_len(length(truth)), , drop = FALSE]
+    } else {
+      y = y[seq_len(length(truth))]
+    }
+    data$id = id
+    data$truth = truth
+  }
+  if (predict.type == "response") {
+    data$response = y
+    data = filterNull(data)
+  } else {
+    y = as.data.frame(y)
+    data$response = y[, 1L, drop = FALSE]
+    colnames(data$response) = NULL
+    data$se = y[, -1, drop = FALSE]
+    data = filterNull(data)
+  }
+
+  makeS3Obj(c("PredictionForecastRegr", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(as.data.frame(data, row.names = NULL), row.dates),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time,
+    error = error,
+    dump = dump
+  )
+}
+
+#' @export
 print.Prediction = function(x, ...) {
   catf("Prediction: %i observations", nrow(x$data))
   catf("predict.type: %s", x$predict.type)

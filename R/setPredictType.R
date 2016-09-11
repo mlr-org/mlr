@@ -34,12 +34,15 @@ setPredictType.Learner = function(learner, predict.type) {
     regr = c("response", "se"),
     surv = c("response", "prob"),
     costsens = "response",
-    cluster = c("response", "prob")
+    cluster = c("response", "prob"),
+    fcregr = c("response", "quantile")
   ))
   if (predict.type == "prob" && !hasLearnerProperties(learner, "prob"))
     stopf("Trying to predict probs, but %s does not support that!", learner$id)
   if (predict.type == "se" && !hasLearnerProperties(learner, "se"))
     stopf("Trying to predict standard errors, but %s does not support that!", learner$id)
+  if (predict.type == "quantile" && !hasLearnerProperties(learner, "quantile"))
+    stopf("Trying to predict quantiles, but %s does not support that!", learner$id)
   learner$predict.type = predict.type
   return(learner)
 }

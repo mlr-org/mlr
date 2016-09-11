@@ -49,6 +49,11 @@ predictFailureModel = function(model, newdata) {
       rep(NA_real_, n)
     else
       matrix(NA_real_, nrow = n, ncol = 2L, dimnames = list(NULL, c("response", "se")))
+  } else if (type == "fcregr") {
+    res = if (ptype == "response")
+      rep(NA_real_, n)
+    else
+      matrix(NA_real_, nrow = n, ncol = 2L, dimnames = list(NULL, c("response", "quantile")))
   } else if (type == "surv") {
     if (ptype == "response")
       res = rep.int(NA_real_, n)

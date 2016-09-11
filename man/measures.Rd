@@ -8,6 +8,8 @@
 \alias{timepredict}
 \alias{timeboth}
 \alias{sse}
+\alias{mase}
+\alias{measureMASE}
 \alias{measureSSE}
 \alias{mse}
 \alias{measureMSE}
@@ -141,6 +143,10 @@ timepredict
 timeboth
 
 sse
+
+none
+
+measureMASE(truth, response, target, frequency)
 
 measureSSE(truth, response)
 
@@ -390,6 +396,11 @@ Vector of the true class.}
 
 \item{response}{[\code{factor}]\cr
 Vector of the predicted class.}
+
+\item{target}{[character(1)]
+The target variable from the training data}
+
+\item{frequency}{The seasonality of the data}
 
 \item{probabilities}{[\code{numeric} | \code{matrix}]\cr
 a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
