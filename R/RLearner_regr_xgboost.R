@@ -33,11 +33,11 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = FALSE)
     ),
-    par.vals = list(nrounds = 1, missing = NA_real_),
+    par.vals = list(nrounds = 1),
     properties = c("numerics", "factors", "weights", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default. `missing` is set by default to NA, as this is how mlr expects missing values to be encoded."
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default."
   )
 }
 
