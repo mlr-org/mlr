@@ -6,7 +6,7 @@ test_that("regr_xgboost", {
   set.seed(getOption("mlr.debug.seed"))
   model = xgboost::xgboost(data = data.matrix(regr.train[,1:13]),
     label = as.numeric(regr.train[,14]),
-    nrounds = 20, objective = "reg:linear", missing = NA_real_)
+    nrounds = 20, objective = "reg:linear", missing = NULL)
   pred = xgboost::predict(model, data.matrix(regr.test[,1:13]))
 
   set.seed(getOption("mlr.debug.seed"))
