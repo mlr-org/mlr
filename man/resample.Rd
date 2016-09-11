@@ -9,6 +9,8 @@
 \alias{bootstrapOOB}
 \alias{bootstrapB632}
 \alias{bootstrapB632plus}
+\alias{growingcv}
+\alias{fixedcv}
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
@@ -41,6 +43,14 @@ bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
 
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
   models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+growingcv(learner, task, horizon = 1, initial.window = 0.5, skip = 0,
+  measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+fixedcv(learner, task, horizon = 1L, initial.window = 0.5, skip = 0,
+  measures, models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
@@ -102,6 +112,15 @@ See \code{\link{ResampleDesc}}.}
 See \code{\link{ResampleDesc}}.}
 
 \item{split}{[\code{numeric(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{horizon}{[\code{integer(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{initial.window}{[\code{integer(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{skip}{[\code{integer(1)}]\cr
 See \code{\link{ResampleDesc}}.}
 }
 \value{

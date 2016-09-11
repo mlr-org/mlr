@@ -19,7 +19,7 @@ See title.
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskDesc}},
+  \code{\link{getTaskDates}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},

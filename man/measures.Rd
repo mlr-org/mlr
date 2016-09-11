@@ -8,6 +8,7 @@
 \alias{timepredict}
 \alias{timeboth}
 \alias{sse}
+\alias{mase}
 \alias{measureSSE}
 \alias{mse}
 \alias{measureMSE}
@@ -141,6 +142,8 @@ timepredict
 timeboth
 
 sse
+
+none
 
 measureSSE(truth, response)
 

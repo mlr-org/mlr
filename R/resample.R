@@ -29,6 +29,12 @@
 #'   See \code{\link{ResampleDesc}}.
 #' @param stratify [\code{logical(1)}]\cr
 #'   See \code{\link{ResampleDesc}}.
+#' @param horizon [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param initial.window [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param skip [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
 #' @template arg_measures
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.

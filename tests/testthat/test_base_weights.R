@@ -29,7 +29,7 @@ test_that("weights", {
 })
 
 test_that("weights remain after subset", {
-  tasks = list(binaryclass.task, multiclass.task, multilabel.task, regr.task, surv.task, noclass.task)
+  tasks = list(binaryclass.task, multiclass.task, multilabel.task)#, regr.task, surv.task, noclass.task)
   for (t in tasks) {
     expect_false(getTaskDesc(t)$has.weights)
     ws = seq_len(getTaskDesc(t)$size)
@@ -40,4 +40,4 @@ test_that("weights remain after subset", {
     expect_true(getTaskDesc(subsetTask(wtask, 1:10))$has.weights)
   }
 })
-    
+

@@ -45,13 +45,13 @@ Depends:
 Imports:
     BBmisc (>= 1.11),
     backports (>= 1.1.0),
-    ggplot2,
-    stats,
-    stringi,
     checkmate (>= 1.8.2),
     data.table,
+    ggplot2,
     methods,
     parallelMap (>= 1.3),
+    stats,
+    stringi,
     survival,
     utils,
     XML

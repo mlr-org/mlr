@@ -122,3 +122,6 @@ suppressWarning = function(expr, str) {
 hasEmptyLevels = function(x) {
   !all(levels(x) %chin% as.character(unique(x)))
 }
+
+# Check if something is POSIXt, added so we don't need to import lubridate
+is.POSIXt = function(x) inherits(x, "POSIXt")

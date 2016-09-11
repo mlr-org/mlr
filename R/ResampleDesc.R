@@ -32,7 +32,8 @@
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout.
+#'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingCV} for growing window, and
+#'    \dQuote{FixedCV} for fixed windowing. Note that \dQuote{GrowingCV} and \dQuote{FixedCV} are for forecasting.
 #' @param predict [\code{character(1)}]\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
@@ -45,8 +46,13 @@
 #'     \dQuote{Subsample} between 0 and 1. Default is 2 / 3.}
 #'   \item{reps [\code{integer(1)}]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
 #'     Default is 10.}
-#'   \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
+#'   \item{folds [\code{integer(1)}]}{Folds in the repeated CV for \code{RepCV}.
 #'     Here \code{iters = folds * reps}. Default is 10.}
+#'   \item{horizon [\code{integer(1)}]}{Number of observations to forecast for \code{GrowthCV}
+#'    and \code{FixedCV}. Default is 1}
+#'   \item{initial.window [\code{numeric(1)}]}{Fraction of observations to start with
+#'    in \code{GrowthCV} and \code{FixedCV}. Default is 0.5}
+#'   \item{skip [\code{integer(1)}]}{ The number of windows to skip in \code{GrowingCV} and \code{FixedCV}. Default is horizon - 1}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
 #'   Should stratification be done for the target variable?
@@ -76,12 +82,12 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "SpCV", "SpRepCV"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "SpCV", "SpRepCV", "GrowingCV", "FixedCV"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
-  if (stratify && ! is.null(stratify.cols))
+  if (stratify && !is.null(stratify.cols))
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
   d = do.call(stri_paste("makeResampleDesc", method), list(...))
   d$predict = predict
@@ -152,6 +158,23 @@ makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
   makeResampleDescInternal("repeated spatial cross-validation", iters = folds * reps, folds = folds, reps = reps)
 }
 
+makeResampleDescFixedCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+  horizon = asInteger(horizon, lower = 1L, upper = Inf)
+  assertNumeric(initial.window, lower = 0, upper = 1)
+  skip = asInteger(skip, lower = 0L, upper = Inf)
+  makeResampleDescInternal("Fixed", iters = NA_integer_,  horizon = horizon,
+    initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
+makeResampleDescGrowingCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+  horizon = asInteger(horizon, lower = 1L, upper = Inf)
+  assertNumeric(initial.window, lower = 0, upper = 1)
+  skip = asInteger(skip, lower = 0L, upper = Inf)
+  makeResampleDescInternal("Growing", iters = NA_integer_, horizon = horizon,
+    initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
+
 ##############################################################################################
 
 #' @export
@@ -174,6 +197,22 @@ print.SubsampleDesc = function(x, ...) {
 print.RepCVDesc = function(x, ...) {
   catf("Resample description: %s with %i iterations: %i folds and %i reps.",
     x$id, x$iters, x$iters / x$reps, x$reps)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+}
+
+#' @export
+print.GrowingCVDesc = function(x, ...) {
+  catf("Window description:\n %s: %.2f %% in initial window, horizon of %i, and skipping %i windows.",
+    x$id, x$initial.window * 100, x$horizon, x$skip)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+}
+
+#' @export
+print.FixedCVDesc = function(x, ...) {
+  catf("Window description:\n %s: %.2f %% in initial window, horizon of %i, and skipping %i windows.",
+    x$id, x$initial.window * 100, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }

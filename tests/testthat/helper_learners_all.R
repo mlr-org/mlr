@@ -79,6 +79,14 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
     s = p$data$se
     expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
+  # check that quantile works and is > 0
+  if (pred.type == "quantile") {
+    quantiles = p$data[, -1, drop = FALSE]
+    for (i in seq_len(ncol(quantiles))) {
+      expect_numeric(info = info, quantiles[, i], lower = Inf, finite = TRUE,
+        any.missing = FALSE, len = getTaskSize(task))
+    }
+  }
 
   # check that probs works, and are in [0,1] and sum to 1
   if (pred.type == "prob") {
