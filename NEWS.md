@@ -12,6 +12,8 @@
 * benchmark: mini fix, arg 'learners' now also accepts class strings
 * object printers: some mlr printers show head previews of data.frames.
   these now also print info on the total nr of rows and cols and are less confusing
+* aggregations: have better properties now, they know whether they require training or
+  test set evals
 * the filter methods have better R docs
 * filter randomForestSRC.var.select: new arg "method"
 * filter mrmr: fixed some smaller bugs and updated properties
