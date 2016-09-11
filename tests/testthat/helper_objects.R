@@ -108,6 +108,48 @@ costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
+### forecasting
+set.seed(getOption("mlr.debug.seed"))
+fcregr.xts <- arima.sim(model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 300)
+times <- (as.POSIXlt("1992-01-14")) + lubridate::days(1:300)
+fcregr.xts <- xts::xts(fcregr.xts,order.by = times, frequency = 1L)
+colnames(fcregr.xts) = "test_data"
+fcregr.target = "test_data"
+fcregr.train.inds = seq(1, 299, 1)
+fcregr.test.inds  = setdiff(1:nrow(fcregr.xts), fcregr.train.inds)
+fcregr.train = fcregr.xts[fcregr.train.inds, ]
+fcregr.test  = fcregr.xts[fcregr.test.inds, ]
+fcregr.task = makeForecastRegrTask("fcregrtask", data = fcregr.xts, target = fcregr.target)
+
+fcregr.update.xts = fcregr.xts[1:111,]
+fcregr.update.target = "test_data"
+fcregr.update.train.inds = 1:100
+fcregr.update.update.inds = 101:110
+fcregr.update.test.inds  = 111
+fcregr.update.train = fcregr.update.xts[fcregr.update.train.inds, ]
+fcregr.update.update = fcregr.update.xts[fcregr.update.update.inds,]
+fcregr.update.test  = fcregr.update.xts[fcregr.update.test.inds, ]
+fcregr.update.task = makeForecastRegrTask("fcregrtask", data = fcregr.update.train, target = fcregr.update.target)
+
+
+
+fcregr.small.xts = fcregr.xts[1:10,]
+fcregr.small.target = "test_data"
+fcregr.small.train.inds = 1:9
+fcregr.small.test.inds  = setdiff(1:nrow(fcregr.small.xts), fcregr.small.train.inds)
+fcregr.small.train = fcregr.small.xts[fcregr.small.train.inds, ]
+fcregr.small.test  = fcregr.small.xts[fcregr.small.test.inds, ]
+fcregr.small.task = makeForecastRegrTask("fcregrtask", data = fcregr.small.xts, target = fcregr.small.target)
+
+fcregr.num.xts = fcregr.xts[,sapply(fcregr.xts, is.numeric)]
+fcregr.num.target = fcregr.target
+fcregr.num.train.inds = fcregr.train.inds
+fcregr.num.test.inds  = fcregr.test.inds
+fcregr.num.train = fcregr.num.xts[fcregr.num.train.inds, ]
+fcregr.num.test  = fcregr.num.xts[fcregr.num.test.inds, ]
+fcregr.num.task = makeForecastRegrTask("fcregrnumtask", data = fcregr.num.xts, target = fcregr.num.target)
+###########333
+
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
 
 black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"

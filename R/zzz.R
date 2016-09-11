@@ -11,6 +11,12 @@
 #' @import stats
 #' @import stringi
 #' @import data.table
+#' @importFrom xts xts lag.xts diff.xts
+#' @importFrom zoo index
+#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
+#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
+
+
 
 .onAttach = function(libname, pkgname) {
   configureMlr()

@@ -29,6 +29,7 @@
 \alias{lsr}
 \alias{mae}
 \alias{mape}
+\alias{mase}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
@@ -99,6 +100,7 @@
 \alias{multilabel.ppv}
 \alias{multilabel.subset01}
 \alias{multilabel.tpr}
+\alias{multivar.mase}
 \alias{npv}
 \alias{ppv}
 \alias{qsr}
@@ -131,6 +133,8 @@ timepredict
 timeboth
 
 sse
+
+none
 
 measureSSE(truth, response)
 
@@ -353,6 +357,8 @@ G1
 G2
 
 silhouette
+
+none
 }
 \arguments{
 \item{truth}{[\code{factor}]\cr

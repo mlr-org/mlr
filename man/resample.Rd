@@ -5,6 +5,8 @@
 \alias{bootstrapB632plus}
 \alias{bootstrapOOB}
 \alias{crossval}
+\alias{fixedcv}
+\alias{growingcv}
 \alias{holdout}
 \alias{repcv}
 \alias{resample}
@@ -41,6 +43,14 @@ bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
 
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
   models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+growingcv(learner, task, horizon = 10L, initialWindow = 10L, size = 100L,
+  skip = 0L, measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+fixedcv(learner, task, horizon = 10L, initialWindow = 10L, size = 100L,
+  skip = 0L, measures, models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
@@ -102,6 +112,18 @@ See \code{\link{ResampleDesc}}.}
 See \code{\link{ResampleDesc}}.}
 
 \item{split}{[\code{numeric(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{horizon}{[\code{integer(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{initialWindow}{[\code{integer(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{size}{[\code{integer(1)}]\cr
+See \code{\link{ResampleDesc}}.}
+
+\item{skip}{[\code{integer(1)}]\cr
 See \code{\link{ResampleDesc}}.}
 }
 \value{

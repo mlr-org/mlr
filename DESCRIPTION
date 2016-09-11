@@ -47,7 +47,12 @@ Imports:
     methods,
     parallelMap (>= 1.3),
     survival,
-    utils
+    utils,
+    xts,
+    lubridate,
+    zoo,
+    ggvis,
+    shiny
 Suggests:
     ada,
     adabag,
@@ -147,7 +152,10 @@ Suggests:
     tgp,
     TH.data,
     xgboost (>= 0.4-4),
-    XML
+    XML,
+    forecast,
+    rugarch,
+    LambertW
 LazyData: yes
 ByteCompile: yes
 Version: 2.10

@@ -29,6 +29,14 @@
 #'   See \code{\link{ResampleDesc}}.
 #' @param stratify [\code{logical(1)}]\cr
 #'   See \code{\link{ResampleDesc}}.
+#' @param horizon [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param initialWindow [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param size [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param skip [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
 #' @template arg_measures
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
@@ -125,6 +133,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   m = train(learner, task, subset = train.i, weights = weights[train.i])
   if (isFailureModel(m))
     err.msgs[1L] = getFailureModelMsg(m)
+
 
   # does a measure require to calculate pred.train?
   ms.train = rep(NA, length(measures))

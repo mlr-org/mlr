@@ -53,7 +53,7 @@ propVectorToMatrix = function(p, levs) {
 }
 
 getSupportedTaskTypes = function() {
-  c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  c("classif", "regr", "surv", "costsens", "cluster", "multilabel", "fcregr")
 }
 
 # find duplicate measure names or ids and paste together those

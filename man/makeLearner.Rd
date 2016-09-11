@@ -5,8 +5,8 @@
 \alias{makeLearner}
 \title{Create learner object.}
 \usage{
-makeLearner(cl, id = cl, predict.type = "response",
-  predict.threshold = NULL, fix.factors.prediction = FALSE, ...,
+makeLearner(cl, id = cl, ..., predict.type = "response",
+  predict.threshold = NULL, fix.factors.prediction = FALSE,
   par.vals = list(), config = list())
 }
 \arguments{
@@ -22,6 +22,10 @@ A list of all integrated learners is available on the
 \item{id}{[\code{character(1)}]\cr
 Id string for object. Used to display object.
 Default is \code{cl}.}
+
+\item{...}{[any]\cr
+Optional named (hyper)parameters.
+Alternatively these can be given using the \code{par.vals} argument.}
 
 \item{predict.type}{[\code{character(1)}]\cr
 Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
@@ -46,10 +50,6 @@ In this case one can repair this problem by setting this option to \code{TRUE}.
 We will simply add the missing factor levels missing from the test feature
 (but present in training) to that feature.
 Default is \code{FALSE}.}
-
-\item{...}{[any]\cr
-Optional named (hyper)parameters.
-Alternatively these can be given using the \code{par.vals} argument.}
 
 \item{par.vals}{[\code{list}]\cr
 Optional list of named (hyper)parameters. The arguments in
