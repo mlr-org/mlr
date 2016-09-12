@@ -27,6 +27,8 @@
   belonging to it
 * we are converging on data.table as a standard internally, this should not
   change any API behavior on the outside, though
+* generateHyperParsEffectData and plotHyperParsEffect now support more than 2
+  hyperparameters
 
 ## functions - new
 * filter: randomForest.importance
