@@ -151,7 +151,7 @@ measureRMSE = function(truth, response) {
 medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Median of squared errors",
-  note = "50 percent quantile of distribution of the squared errors.",
+  note = "Defined as: median((response - truth)^2).",
   fun = function(task, model, pred, feats, extra.args) {
     measureMEDSE(pred$data$truth, pred$data$response)
   }
@@ -208,7 +208,7 @@ measureMAE = function(truth, response) {
 medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Median of absolute errors",
-  note = "50 percent quantile of distribution of the absolute errors.",
+  note = "Defined as: median(abs(response - truth)).",
   fun = function(task, model, pred, feats, extra.args) {
     measureMEDAE(pred$data$truth, pred$data$response)
   }
@@ -357,7 +357,7 @@ measureMAPE = function(truth, response){
 mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Mean misclassification error",
-  note = "Percentage of misclassified observations.",
+  note = "Defined as: mean(response != truth)",
   fun = function(task, model, pred, feats, extra.args) {
     measureMMCE(pred$data$truth, pred$data$response)
   }
@@ -376,7 +376,7 @@ measureMMCE = function(truth, response) {
 acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Accuracy",
-  note = "Percentage of correctly classified observations",
+  note = "Defined as: mean(response == truth)",
   fun = function(task, model, pred, feats, extra.args) {
     measureACC(pred$data$truth, pred$data$response)
   }
@@ -852,7 +852,7 @@ measureFNR = function(truth, response, negative, positive) {
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
-  note = "Defined as: (number of true positives) / (number of true positives + number of false positives). Also called precision.",
+  note = "Defined as: tp / (tp + number of fp). Also called precision.",
   fun = function(task, model, pred, feats, extra.args) {
     measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -871,7 +871,7 @@ measurePPV = function(truth, response, positive) {
 npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Negative predictive value",
-  note = "Defined as: (number of true negatives) / (number of true negatives + number of false negatives).",
+  note = "Defined as: (tn) / (tn + fn).",
   fun = function(task, model, pred, feats, extra.args) {
     measureNPV(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -890,7 +890,7 @@ measureNPV = function(truth, response, negative) {
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False discovery rate",
-  note = "Defined as: (number of false positives) / (number of true negatives + number of false negatives).",
+  note = "Defined as: (fp) / (tn + fn).",
   fun = function(task, model, pred, feats, extra.args) {
     measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -1175,7 +1175,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf,
   properties = c("costsens", "req.pred", "req.task"),
   name = "Mean costs of the predicted choices",
-  note = "Mean of the task specific costs for all misclassified observations.",
+  note = "Defined as: mean(y), where y is the vector of costs for the predicted classes.",
   fun = function(task, model, pred, feats, extra.args) {
     classes = as.character(pred$data$response)
     ids = pred$data$id
