@@ -22,12 +22,13 @@
 #'  path.
 #'  Default is \code{FALSE}.
 #' @param partial.dep [\code{logical(1)}]\cr
-#'  Should partial dependence be generated based on converting to reg task? This
+#'  Should partial dependence be requested based on converting to reg task? This
 #'  sets a flag so that we know to use partial dependence downstream. This
 #'  should most likely be set to \code{TRUE} if 2 or more hyperparameters were
-#'  tuned simultaneously. Setting to \code{TRUE} will cause
-#'  \code{\link{plotHyperParsEffect}} to automatically plot partial dependence
-#'  when called downstream.
+#'  tuned simultaneously. Partial dependence should always be requested when
+#'  more than 2 hyperparameters were tuned simultaneously. Setting to
+#'  \code{TRUE} will cause \code{\link{plotHyperParsEffect}} to automatically
+#'  plot partial dependence when called downstream.
 #'  Default is \code{FALSE}.
 #'
 #' @return [\code{HyperParsEffectData}]
@@ -60,17 +61,21 @@
 #' @export
 #' @importFrom utils type.convert
 generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
-                                       trafo = FALSE, partial.dep = FALSE) {
+  trafo = FALSE, partial.dep = FALSE) {
+
   assert(
     checkClass(tune.result, "ResampleResult"),
     checkClass(tune.result, classes = "TuneResult")
   )
   assertFlag(include.diagnostics)
+  assertFlag(partial.dep)
 
   # in case we have nested CV
   if (getClass1(tune.result) == "ResampleResult"){
     d = getNestedTuneResultsOptPathDf(tune.result, trafo = trafo)
     num_hypers = length(tune.result$extract[[1]]$x)
+    if ((num_hypers > 2) && !partial.dep)
+      stopf("Partial dependence must be requested with partial.dep when tuning more than 2 hyperparameters")
     for (hyp in 1:num_hypers) {
       if (!is.numeric(d[, hyp]))
         d[, hyp] = type.convert(as.character(d[, hyp]))
@@ -91,6 +96,8 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
     }
     # what if we have numerics that were discretized upstream
     num_hypers = length(tune.result$x)
+    if ((num_hypers > 2) && !partial.dep)
+      stopf("Partial dependence must be requested with partial.dep when tuning more than 2 hyperparameters")
     for (hyp in 1:num_hypers) {
       if (!is.numeric(d[, hyp]))
         d[, hyp] = type.convert(as.character(d[, hyp]))
@@ -201,6 +208,12 @@ print.HyperParsEffectData = function(x, ...) {
 #'  hyperparameters. This is also used for nested aggregation in partial
 #'  dependence.
 #'  Default is \code{mean}.
+#' @param partial.dep.fun [\code{\link{Learner}} | \code{character(1)}]\cr
+#'  The function used to learn partial dependence. Must be specified if
+#'  \dQuote{partial.dep} is set to \code{TRUE} in
+#'  \code{\link{generateHyperParsEffectData}}. Accepts either a \link{Learner}
+#'  object or the learner as a string for learning partial dependence.
+#'  Default is \code{NULL}.
 #' @template ret_gg2
 #'
 #' @note Any NAs incurred from learning algorithm crashes will be indicated in
@@ -217,11 +230,11 @@ print.HyperParsEffectData = function(x, ...) {
 #' @examples
 #' # see generateHyperParsEffectData
 plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
-                               z = NULL, plot.type = "scatter",
-                               loess.smooth = FALSE, facet = NULL,
-                               pretty.names = TRUE, global.only = TRUE,
-                               interpolate = NULL, show.experiments = FALSE,
-                               show.interpolated = FALSE, nested.agg = mean) {
+  z = NULL, plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
+  pretty.names = TRUE, global.only = TRUE, interpolate = NULL,
+  show.experiments = FALSE, show.interpolated = FALSE, nested.agg = mean,
+  partial.dep.fun = NULL) {
+
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -240,6 +253,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
   assertFlag(show.experiments)
   assertFunction(nested.agg)
+  # assign learner for partial dep
+  assert(checkClass(partial.dep.fun, "Learner"), checkString(partial.dep.fun),
+    checkNull(partial.dep.fun))
+  if (checkClass(partial.dep.fun, "Learner") == TRUE ||
+      checkString(partial.dep.fun) == TRUE) {
+    lrn = checkLearnerRegr(partial.dep.fun)
+  }
 
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
     stopf("Greater than 1 length x, y, z or facet not yet supported")
@@ -258,6 +278,9 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   facet.flag = !is.null(facet)
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
   partial.flag = hyperpars.effect.data$partial
+
+  if (partial.flag && is.null(partial.dep.fun))
+    stopf("Partial dependence requested but partial.dep.fun not specified!")
 
   # deal with NAs where optimizer failed
   if (na.flag){

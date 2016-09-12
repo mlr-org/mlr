@@ -27,12 +27,13 @@ path.
 Default is \code{FALSE}.}
 
 \item{partial.dep}{[\code{logical(1)}]\cr
-Should partial dependence be generated based on converting to reg task? This
+Should partial dependence be requested based on converting to reg task? This
 sets a flag so that we know to use partial dependence downstream. This
 should most likely be set to \code{TRUE} if 2 or more hyperparameters were
-tuned simultaneously. Setting to \code{TRUE} will cause
-\code{\link{plotHyperParsEffect}} to automatically plot partial dependence
-when called downstream.
+tuned simultaneously. Partial dependence should always be requested when
+more than 2 hyperparameters were tuned simultaneously. Setting to
+\code{TRUE} will cause \code{\link{plotHyperParsEffect}} to automatically
+plot partial dependence when called downstream.
 Default is \code{FALSE}.}
 }
 \value{
