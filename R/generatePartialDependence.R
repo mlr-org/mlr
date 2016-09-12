@@ -135,7 +135,7 @@
 #'
 #' # simulated example with weights computed via the joint distribution
 #' # in practice empirical weights could be constructed by estimating the joint
-#' # density from the training data (the data arg to fun) and computing the probabilty
+#' # density from the training data (the data arg to fun) and computing the probability
 #' # of the prediction grid under this estimated density (the newdata arg) or
 #' # by using something like data depth or outlier classification to weight the
 #' # unusualness of points in arg newdata.
