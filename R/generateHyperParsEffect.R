@@ -208,8 +208,8 @@ print.HyperParsEffectData = function(x, ...) {
 #'  hyperparameters. This is also used for nested aggregation in partial
 #'  dependence.
 #'  Default is \code{mean}.
-#' @param partial.dep.fun [\code{\link{Learner}} | \code{character(1)}]\cr
-#'  The function used to learn partial dependence. Must be specified if
+#' @param partial.dep.learn [\code{\link{Learner}} | \code{character(1)}]\cr
+#'  The learner used to learn partial dependence. Must be specified if
 #'  \dQuote{partial.dep} is set to \code{TRUE} in
 #'  \code{\link{generateHyperParsEffectData}}. Accepts either a \link{Learner}
 #'  object or the learner as a string for learning partial dependence.
@@ -233,7 +233,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   z = NULL, plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
   pretty.names = TRUE, global.only = TRUE, interpolate = NULL,
   show.experiments = FALSE, show.interpolated = FALSE, nested.agg = mean,
-  partial.dep.fun = NULL) {
+  partial.dep.learn = NULL) {
 
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
@@ -254,11 +254,11 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertFlag(show.experiments)
   assertFunction(nested.agg)
   # assign learner for partial dep
-  assert(checkClass(partial.dep.fun, "Learner"), checkString(partial.dep.fun),
-    checkNull(partial.dep.fun))
-  if (checkClass(partial.dep.fun, "Learner") == TRUE ||
-      checkString(partial.dep.fun) == TRUE) {
-    lrn = checkLearnerRegr(partial.dep.fun)
+  assert(checkClass(partial.dep.learn, "Learner"), checkString(partial.dep.learn),
+    checkNull(partial.dep.learn))
+  if (checkClass(partial.dep.learn, "Learner") == TRUE ||
+      checkString(partial.dep.learn) == TRUE) {
+    lrn = checkLearnerRegr(partial.dep.learn)
   }
 
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
@@ -279,8 +279,8 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
   partial.flag = hyperpars.effect.data$partial
 
-  if (partial.flag && is.null(partial.dep.fun))
-    stopf("Partial dependence requested but partial.dep.fun not specified!")
+  if (partial.flag && is.null(partial.dep.learn))
+    stopf("Partial dependence requested but partial.dep.learn not specified!")
 
   # deal with NAs where optimizer failed
   if (na.flag){

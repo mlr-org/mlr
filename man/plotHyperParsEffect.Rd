@@ -8,7 +8,7 @@ plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
   pretty.names = TRUE, global.only = TRUE, interpolate = NULL,
   show.experiments = FALSE, show.interpolated = FALSE, nested.agg = mean,
-  partial.dep.fun = NULL)
+  partial.dep.learn = NULL)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -89,8 +89,8 @@ hyperparameters. This is also used for nested aggregation in partial
 dependence.
 Default is \code{mean}.}
 
-\item{partial.dep.fun}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The function used to learn partial dependence. Must be specified if
+\item{partial.dep.learn}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner used to learn partial dependence. Must be specified if
 \dQuote{partial.dep} is set to \code{TRUE} in
 \code{\link{generateHyperParsEffectData}}. Accepts either a \link{Learner}
 object or the learner as a string for learning partial dependence.
