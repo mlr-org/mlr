@@ -21,8 +21,8 @@
 * plotThreshVsPerf: added "measures" arg
 * plotPartialDependence: can create tile plots with joint partial dependence
   on two features for multiclass classification by facetting across the classes
-* generatePartialDependenceData and generateFunctionalANOVAData: added
-  "weight.fun" argument
+* generatePartialDependenceData and generateFunctionalANOVAData: expanded
+  "fun" argument to allow for calculation of weights
 * new "?mlrFamilies" manual page which lists all families and the functions
   belonging to it
 * we are converging on data.table as a standard internally, this should not
