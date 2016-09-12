@@ -284,7 +284,7 @@ test_that("2+ hyperparams", {
 
   # test single hyperparam creation
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.fun = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.randomForest")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
@@ -296,7 +296,7 @@ test_that("2+ hyperparams", {
 
   # test bivariate
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
-    plot.type = "heatmap", partial.dep.fun = "regr.randomForest")
+    plot.type = "heatmap", partial.dep.learn = "regr.randomForest")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
@@ -321,7 +321,7 @@ test_that("2+ hyperparams", {
   res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.fun = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.randomForest")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
@@ -342,7 +342,7 @@ test_that("2+ hyperparams", {
     resampling = rdesc, par.set = ps, show.info = F)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.fun = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.randomForest")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
