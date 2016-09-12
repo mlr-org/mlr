@@ -17,6 +17,7 @@ Authors@R: c(
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
     person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut"),
+    person("Mason", "Gallo", email = "masonagallo@gmail.com", role = "aut"),
     person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb"),
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb"),
     person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
