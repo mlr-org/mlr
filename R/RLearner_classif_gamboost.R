@@ -7,9 +7,7 @@ makeRLearner.classif.gamboost = function() {
       makeDiscreteLearnerParam(id = "baselearner", default = "bbs", values = c("bbs", "bols", "btree")),
       makeIntegerLearnerParam(id = "dfbase", default = 4),
       makeNumericLearnerParam(id = "offset"),
-      makeDiscreteLearnerParam(id = "family", default = "Binomial", values = c("AdaExp", "Binomial", "AUC", "PropOdds", "custom.family")),
-      # FIXME default of glmboost() for family is Gaussian(), for PropOdds response needs to be ordered
-      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
+      makeDiscreteLearnerParam(id = "family", default = "Binomial", values = c("AdaExp", "Binomial", "AUC", "PropOdds", "custom.family")),      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeDiscreteLearnerParam(id = "Binomial.link", default = "logit", values = c("logit", "probit"),
         requires = quote(family == "Binomial")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5, -1), requires = quote(family == "PropOdds")),
@@ -30,6 +28,8 @@ makeRLearner.classif.gamboost = function() {
 
 #' @export
 trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, mstop, nu, risk, stopintern, trace, family, Binomial.link = "logit", custom.family.definition, nuirange = c(-0.5, -1), offrange = c(-5,5), ...) {
+  requirePackages("mboost", why = "argument baselearner require package")
+  # FIXME: Should warnings be suppressed?
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
@@ -58,13 +58,15 @@ predictLearner.classif.gamboost = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   fam = getLearnerParVals(.learner)$family
   if (.learner$predict.type  == "prob") {
-    if (fam == "Binomial") {
+    if (fam %in% c("AUC", "AdaExp")) { 
+      # FIXME: predictions of type 'response' (corresponds to mlr's 'prob') produce 'NA'
+      # for family AUC and AdaExp but not for Binomial and PropOdds
+      stopf("prediction.type = 'prob' not implemented for family %s", fam)
+    } else {
       td = .model$task.desc
       p = p[, 1L]
       levs = c(td$negative, td$positive)
       return(propVectorToMatrix(p, levs))
-    } else {
-      stopf("prediction.type = 'prob' not implemented for family %s", fam)
     }
   } else {
     return(p)
