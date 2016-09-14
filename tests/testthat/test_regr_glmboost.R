@@ -32,12 +32,33 @@ test_that("regr_glmboost", {
 })
 
 
-test_that("regr_glmboost works with poisson", {
+test_that("regr_glmboost works with families for count data", {
   # set some dummy counts
-  d = regr.df
-  d[, regr.target] = sample(1:100, getTaskSize(regr.task), replace = TRUE)
-  task = makeRegrTask(data = d, target = regr.target)
-  lrn = makeLearner("regr.glmboost", par.vals = list(family = "Poisson"))
-  r = holdout(lrn, task)
-  expect_true(!is.na(r$aggr))
+  new.regr.df = regr.df
+  new.regr.df[, regr.target] = as.integer(floor(new.regr.df[,regr.target]))
+  new.regr.train = new.regr.df[regr.train.inds,]
+  new.regr.test = new.regr.df[regr.test.inds,]
+  parset.list1 = list(
+    list(),
+    list(family = mboost::Poisson(), control = mboost::boost_control(nu = 0.02)),
+    list(family = mboost::NBinomial()),
+    list(family = mboost::Hurdle())
+  )
+  parset.list2 = list(
+    list(),
+    list(family = "Poisson", nu = 0.02),
+    list(family= "NBinomial"),
+    list(family = "Hurdle")
+  )
+  old.predicts.list = list()
+  for (i in 1:length(parset.list1)) {
+    parset = parset.list1[[i]]
+    pars = list(regr.formula, data = new.regr.train)
+    pars = c(pars, parset)
+    set.seed(getOption("mlr.debug.seed"))
+    m = do.call(mboost::glmboost, pars)
+    set.seed(getOption("mlr.debug.seed"))
+    old.predicts.list[[i]] = as.vector(predict(m, newdata=new.regr.test))
+  }
+  testSimpleParsets("regr.glmboost", new.regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })
