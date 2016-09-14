@@ -6,6 +6,7 @@ makeRLearner.regr.glmboost = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
+      # families 'Poisson', 'NBinomial' and 'Hurdle' are for count data
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
       makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
@@ -13,11 +14,11 @@ makeRLearner.regr.glmboost = function() {
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
+      # 'risk' and 'stopintern' will be kept for completeness sake
       makeLogicalLearnerParam(id = "center", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
       ),
     par.vals = list(),
-    # FIXME Parameter m not found in help of glmboost() or mboost_fit() nor in mstop(), par.vals and LernerParam default are same
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmboost"
@@ -25,9 +26,9 @@ makeRLearner.regr.glmboost = function() {
 }
 
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family = "Gaussian", custom.family.definition, nuirange, d = NULL, ...) {
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, trace, stopintern, family = "Gaussian", custom.family.definition, nuirange = c(0,100), d = NULL, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
-  d = getTaskData(.task, .subset)
+  data = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
   family = switch(family,
     Gaussian = mboost::Gaussian(),
@@ -40,9 +41,9 @@ trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL,
     custom.family = custom.family.definition
     )
   if (is.null(.weights)) {
-    model = mboost::glmboost(f, data = d, control = ctrl, family = family, ...)
+    model = mboost::glmboost(f, data = data, control = ctrl, family = family, ...)
   } else {
-    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, family = family, ...)
+    model = mboost::glmboost(f, data = data, control = ctrl, weights = .weights, family = family, ...)
   }
   model
 }

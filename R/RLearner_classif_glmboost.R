@@ -6,7 +6,6 @@ makeRLearner.classif.glmboost = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
         values = c("Binomial", "AdaExp", "AUC", "PropOdds", "custom.family")),
-      # FIXME default of glmboost() for family is Gaussian()
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
       makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
@@ -15,6 +14,7 @@ makeRLearner.classif.glmboost = function() {
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
+      # 'risk' and 'stopintern' will be kept for completeness sake
       makeLogicalLearnerParam(id = "center", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
@@ -22,7 +22,7 @@ makeRLearner.classif.glmboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmbst",
-    note = "`family` has been set to `Binomial()` by default."
+    note = "`family` has been set to `Binomial` by default. For 'family' 'AUC', 'AdaExp' or 'custom.family' probabilities cannot be predcited."
   )
 }
 
@@ -54,16 +54,12 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
 predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  fam = getLearnerParVals(.learner)$family
+  fam = getLearnerParVals(.learner)$family 
   if (.learner$predict.type  == "prob") {
-    if (fam %in% c("AdaExp", "AUC")) {
-      stopf("prediction.type = 'prob' not implemented for family %s", fam)
-    } else {
-      td = .model$task.desc
-      p = p[, 1L]
-      levs = c(td$negative, td$positive)
-      return(propVectorToMatrix(p, levs))
-    }
+    td = .model$task.desc
+    p = p[, 1L]
+    levs = c(td$negative, td$positive)
+    return(propVectorToMatrix(p, levs))
   } else {
     return(p)
   }
