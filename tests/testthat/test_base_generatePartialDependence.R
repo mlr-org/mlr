@@ -253,6 +253,10 @@ test_that("generatePartialDependenceData", {
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
     individual = TRUE,
     center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
+
+  # issue 63 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    individual = TRUE, derivative = TRUE, gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {

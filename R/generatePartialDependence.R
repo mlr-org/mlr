@@ -499,52 +499,45 @@ print.FunctionalANOVAData = function(x, ...) {
 }
 
 doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
-  if (!individual) {
-    fun.wrapper = function(x, newdata, data, ...) {
-      args = formals(fun)
-      if (all(c("newdata", "data") %in% names(args))) {
-        fun(x, newdata = newdata, data = data, ...)
-      } else if ("newdata" %in% names(args)) {
-        fun(x, newdata = newdata, ...)
-      } else if ("data" %in% names(args)) {
+  fun.wrapper = function(x, newdata, data, ...) {
+    args = formals(fun)
+    if (all(c("newdata", "data") %in% names(args))) {
+      fun(x, newdata = newdata, data = data, ...)
+    } else if ("newdata" %in% names(args)) {
+      fun(x, newdata = newdata, ...)
+    } else if ("data" %in% names(args)) {
         fun(x, data = data, ...)
-      } else {
-        fun(x, ...)
-      }
+    } else {
+      fun(x, ...)
     }
-    # construct function appropriate for numDeriv w/ aggregate predictions
-    f = function(x, obj, data, features, fun, td, ...) {
-      newdata = data
-      newdata[features] = x
-      pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
-      if (obj$learner$predict.type == "response")
-        fun.wrapper(getPredictionResponse(pred), ...)
-      else if (length(obj$task.desc$class.levels) == 2L)
-        fun.wrapper(getPredictionProbabilities(pred), ...)
-      else
-        apply(getPredictionProbabilities(pred), 2, fun.wrapper, ...)
-    }
+  }
+
+  f = function(x, obj, data, features, fun, td, ...) {
+    newdata = data
+    newdata[features] = x
+    pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
     if (obj$learner$predict.type == "response")
-      numDeriv::grad(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td)
+      fun(getPredictionResponse(pred), ...)
+    else if (length(obj$task.desc$class.levels) == 2L)
+      fun(getPredictionProbabilities(pred), ...)
     else
-      t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td, ...))
+      apply(getPredictionProbabilities(pred), 2, fun, ...)
+  }
+  
+  if (!individual) {
+    # construct function appropriate for numDeriv w/ aggregate predictions
+    if (obj$learner$predict.type == "response")
+      numDeriv::grad(func = f, x = x, obj = obj, data = data, features = features, fun = fun.wrapper, td = td, ...)
+    else
+      t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun.wrapper, td = td, ...))
   } else {
-    f = function(x, obj, data, features, fun, td, ...) {
-      newdata = data
-      newdata[features] = x
-      pred = do.call("predict", c(list("object" = obj, "newdata" = newdata), list(...)))
-      if (obj$learner$predict.type == "response")
-        getPredictionResponse(pred)
-      else
-        getPredictionProbabilities(pred)
-    }
     if (obj$learner$predict.type == "response")
       sapply(1:nrow(data), function(idx)
         numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
-          features = features, fun = fun, td = td))
-    else
+          features = features, fun = fun.wrapper, td = td, ...))
+    else      
       t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
-        data = data[idx,, drop = FALSE], features = features, fun = fun, td = td, ...)))
+        data = data[idx,, drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
   }
 }
 
