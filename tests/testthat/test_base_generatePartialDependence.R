@@ -5,7 +5,6 @@ test_that("generateFunctionalANOVAData", {
 
   fr = train("regr.rpart", regr.task)
   dr1 = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 1L, mean, gridsize = gridsize)
-  
   plotPartialDependence(dr1)
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -60,6 +59,8 @@ test_that("generatePartialDependenceData", {
   expect_that(max(dr$data$lstat), equals(40.))
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat))
+  expect_true(all(dr$data$medv >= min(regr.df$medv) | dr$data$medv <= max(regr.df$medv)))
+
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -230,8 +231,17 @@ test_that("generatePartialDependenceData", {
   x[idx] = NA
   test.task = makeRegrTask(data = data.frame(x = x[-idx], y = y[-idx]), target = "y")
   fit = train("regr.rpart", test.task)
-  pd = generatePartialDependenceData(fit, test.task,
-    weight.fun = function(x, data) apply(x, 1, function(z) ifelse(z > .5, 0, 1)),
+
+  fun = function(x, newdata) {
+    w = ifelse(newdata$x > .5, 0, 1)
+    if (sum(w) == 0) {
+      NA
+    } else {
+      weighted.mean(x, w)
+    }
+  }
+  
+  pd = generatePartialDependenceData(fit, test.task, fun = fun,
     fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
   expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
 
@@ -243,6 +253,10 @@ test_that("generatePartialDependenceData", {
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
     individual = TRUE,
     center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
+
+  # issue 63 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    individual = TRUE, derivative = TRUE, gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {

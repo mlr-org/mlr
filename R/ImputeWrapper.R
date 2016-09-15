@@ -29,6 +29,7 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
+  lrn$id = stri_replace(lrn$id, replacement = ".imputed", regex = "[.]preproc$")
   addClasses(lrn, "ImputeWrapper")
 }
 

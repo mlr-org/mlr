@@ -17,6 +17,7 @@ Authors@R: c(
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
     person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut"),
+    person("Mason", "Gallo", email = "masonagallo@gmail.com", role = "aut"),
     person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb"),
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb"),
     person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
@@ -25,7 +26,8 @@ Authors@R: c(
     person("Florian", "Fendt", email = "flo_fendt@gmx.de", role = "ctb"),
     person("Philipp", "Probst", email = "philipp_probst@gmx.de", role = "ctb"),
     person("Xudong", "Sun", email = "xudong.sun@stat.uni-muenchen.de", role = "ctb"),
-    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"))
+    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"),
+    person("Bruno", "Vieira", email = "bruno.hebling.vieira@usp.br", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE

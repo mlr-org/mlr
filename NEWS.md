@@ -6,31 +6,33 @@
 * print.Learner: if a learner hyperpar was set to value "NA" this was not
   displayed in printer
 * makeLearner, setHyperPars: if you mistype a learner or hyperpar name, mlr
-  usesfuzzy matching to suggest the 3 closest names in the message
+  uses fuzzy matching to suggest the 3 closest names in the message
 * tuneParams: tuning with irace is now also parallelized, i.e., different
-  learner config are evaluated in parallel.
+  learner configs are evaluated in parallel.
 * benchmark: mini fix, arg 'learners' now also accepts class strings
-* randomForestSRC.var.select: new arg "method"
-* mrmr filter: fixed some smaller bugs and updated properties
-* generateLearningCurveData: also accepts single learner, does not require a list
-* object printers: some mlr printers show head previews of data.frame data.
-  these now also print info on the total nr of rows and cols and are less
-  confusing
-* setHyperPars: added "show.info" arg
-* plotThreshVsPerf: added "measures" arg
-* new "mlrFamilies" manual page which lists all families and the functions
-  belonging to it
+* object printers: some mlr printers show head previews of data.frames.
+  these now also print info on the total nr of rows and cols and are less confusing
+* aggregations: have better properties now, they know whether they require training or
+  test set evals
 * the filter methods have better R docs
-* we are converging on data.table as a standard internally, this should not
-  change any API behavior on the outside, though
+* filter randomForestSRC.var.select: new arg "method"
+* filter mrmr: fixed some smaller bugs and updated properties
+* generateLearningCurveData: also accepts single learner, does not require a list
+* plotThreshVsPerf: added "measures" arg
 * plotPartialDependence: can create tile plots with joint partial dependence
   on two features for multiclass classification by facetting across the classes
-* generatePartialDependenceData and generateFunctionalANOVAData: added
-  "weight.fun" argument
+* generatePartialDependenceData and generateFunctionalANOVAData: expanded
+  "fun" argument to allow for calculation of weights
+* new "?mlrFamilies" manual page which lists all families and the functions
+  belonging to it
+* we are converging on data.table as a standard internally, this should not
+  change any API behavior on the outside, though
+* generateHyperParsEffectData and plotHyperParsEffect now support more than 2
+  hyperparameters
 
 ## functions - new
 * filter: randomForest.importance
-* generateFeatureImportanceData: permutation-based featuree importance and local
+* generateFeatureImportanceData: permutation-based feature importance and local
   importance
 * getFeatureImportanceLearner: new Learner API function
 * getFeatureImportance: top level function to extract feature importance
@@ -41,8 +43,6 @@
 * makeLearners: create multiple learners at once
 * getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages
 * getLearnerParamSet, getLearnerParVals
-
-## functions - removed
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
@@ -56,23 +56,17 @@
   removed parameters "minprob", "pvalue", "randomsplits"
   as these are set internally and cannot be changed by the user
 * regr.GPfit: some more params for correlation kernel
-* classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing)
-  and param 'missing' set to NA by default
+* classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing and other
+  problems)
 
 ## learners - new
 * multilabel.cforest
 * surv.gbm
 * regr.cvglmnet
 
-## learners - removed
-
-## measures - general
-
 ## measures - new
 * ssr, qsr, lsr
 * rrse, rae, mape
-
-## measures - renamed
 
 # mlr 2.9:
 
