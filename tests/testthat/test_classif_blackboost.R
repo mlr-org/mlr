@@ -7,7 +7,7 @@ test_that("classif_blackboost", {
     #list(),
     list(family = mboost::Binomial(), tree_control = party::ctree_control(maxdepth = 2),
       control = mboost::boost_control(mstop = 10L)),
-    list(family = mboost::Binomial(), tree_controls = party::ctree_control(maxdepth = 4),
+    list(family = mboost::Binomial(link = "probit"), tree_controls = party::ctree_control(maxdepth = 4),
       control = mboost::boost_control(mstop = 10L, nu = 0.03))
   )
 
@@ -29,7 +29,7 @@ test_that("classif_blackboost", {
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
-    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[,1]
+    old.probs.list[[i]] = predict(m, newdata = binaryclass.test, type = "response")[,1]
   }
 
   testSimpleParsets("classif.blackboost", binaryclass.df, binaryclass.target,
