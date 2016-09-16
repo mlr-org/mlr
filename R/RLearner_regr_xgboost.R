@@ -14,7 +14,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "min_child_weight", default = 1, lower = 0),
       makeNumericLearnerParam(id = "subsample", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "colsample_bytree", default = 1, lower = 0, upper = 1),
-      makeIntegerLearnerParam(id = "num_parallel_tree", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "num_parallel_tree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "lambda", default = 0, lower = 0),
       makeNumericLearnerParam(id = "lambda_bias", default = 0, lower = 0),
       makeNumericLearnerParam(id = "alpha", default = 0, lower = 0),
@@ -24,14 +24,14 @@ makeRLearner.regr.xgboost = function() {
 
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
-      makeIntegerLearnerParam(id = "nthread", default = 16, lower = 1),
-      makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "nthread", default = 16L, lower = 1L),
+      makeIntegerLearnerParam(id = "nrounds", default = 1L, lower = 1L),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
       makeUntypedLearnerParam(id = "feval", default = NULL),
-      makeIntegerLearnerParam(id = "verbose", default = 1, lower = 0, upper = 2, tunable = FALSE),
-      makeIntegerLearnerParam(id = "print.every.n", default = 1, lower = 1, tunable = FALSE,
+      makeIntegerLearnerParam(id = "verbose", default = 1L, lower = 0L, upper = 2L, tunable = FALSE),
+      makeIntegerLearnerParam(id = "print.every.n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
-      makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "early.stop.round", default = 1L, lower = 1L),
       makeLogicalLearnerParam(id = "maximize", default = FALSE)
     ),
     par.vals = list(nrounds = 1),
