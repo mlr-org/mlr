@@ -7,10 +7,10 @@ makeRLearner.regr.xgboost = function() {
       # we pass all of what goes in 'params' directly to ... of xgboost
       #makeUntypedLearnerParam(id = "params", default = list()),
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear")),
-      makeIntegerLearnerParam(id = "silent", default = 0),
-      makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0),
+      makeIntegerLearnerParam(id = "silent", default = 0L),
+      makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "gamma", default = 0, lower = 0),
-      makeIntegerLearnerParam(id = "max_depth", default = 6, lower = 0),
+      makeIntegerLearnerParam(id = "max_depth", default = 6L, lower = 1L),
       makeNumericLearnerParam(id = "min_child_weight", default = 1, lower = 0),
       makeNumericLearnerParam(id = "subsample", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "colsample_bytree", default = 1, lower = 0, upper = 1),
@@ -28,8 +28,9 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
       makeUntypedLearnerParam(id = "feval", default = NULL),
-      makeIntegerLearnerParam(id = "verbose", default = 1, lower = 0, upper = 2),
-      makeIntegerLearnerParam(id = "print.every.n", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "verbose", default = 1, lower = 0, upper = 2, tunable = FALSE),
+      makeIntegerLearnerParam(id = "print.every.n", default = 1, lower = 1, tunable = FALSE,
+        requires = quote(verbose == 1L)),
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = FALSE)
     ),
