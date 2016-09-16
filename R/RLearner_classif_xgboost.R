@@ -14,6 +14,7 @@ makeRLearner.classif.xgboost = function() {
       makeNumericLearnerParam(id = "min_child_weight", default = 1, lower = 0),
       makeNumericLearnerParam(id = "subsample", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "colsample_bytree", default = 1, lower = 0, upper = 1),
+      makeNumericLearnerParam(id = "colsample_bylevel", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "num_parallel_tree", default = 1, lower = 1),
       makeNumericLearnerParam(id = "lambda", default = 0, lower = 0),
       makeNumericLearnerParam(id = "lambda_bias", default = 0, lower = 0),
