@@ -144,7 +144,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost,
+    xgboost (>= 0.4-4),
     XML
 LazyData: yes
 ByteCompile: yes

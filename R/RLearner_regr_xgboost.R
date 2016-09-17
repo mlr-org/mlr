@@ -14,6 +14,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "min_child_weight", default = 1, lower = 0),
       makeNumericLearnerParam(id = "subsample", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "colsample_bytree", default = 1, lower = 0, upper = 1),
+      makeNumericLearnerParam(id = "colsample_bylevel", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "num_parallel_tree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "lambda", default = 0, lower = 0),
       makeNumericLearnerParam(id = "lambda_bias", default = 0, lower = 0),
@@ -38,7 +39,7 @@ makeRLearner.regr.xgboost = function() {
     properties = c("numerics", "factors", "weights", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default."
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default."
   )
 }
 
