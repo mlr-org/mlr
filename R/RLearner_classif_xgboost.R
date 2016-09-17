@@ -25,17 +25,17 @@ makeRLearner.classif.xgboost = function() {
       
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
-      makeIntegerLearnerParam(id = "nthread", default = 16L,lower = 1L),
+      makeIntegerLearnerParam(id = "nthread", lower = 1L, tunable = FALSE),
       makeIntegerLearnerParam(id = "nrounds", default = 1L, lower = 1L),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
       makeUntypedLearnerParam(id = "feval", default = NULL),
       makeIntegerLearnerParam(id = "verbose", default = 1L, lower = 0L, upper = 2L, tunable = FALSE),
       makeIntegerLearnerParam(id = "print.every.n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
-      makeIntegerLearnerParam(id = "early.stop.round", default = 1L, lower = 1L),
-      makeLogicalLearnerParam(id = "maximize", default = TRUE)
+      makeIntegerLearnerParam(id = "early.stop.round", default = NULL, lower = 1L, special.vals = list(NULL)),
+      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL))
     ),
-    par.vals = list(nrounds = 1),
+    par.vals = list(nrounds = 1L, verbose = 0L),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
