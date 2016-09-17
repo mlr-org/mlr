@@ -4,7 +4,7 @@ test_that("classif_xgboost", {
   requirePackagesOrSkip("xgboost", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
-  model = xgboost::xgboost(data = data.matrix(binaryclass.train[,1:60]),
+  model = xgboost::xgboost(data = data.matrix(binaryclass.train[,1:60]), verbose = 0L,
     label = as.numeric(binaryclass.train[,61])-1,
     nrounds = 20, objective = "binary:logistic", missing = NULL)
   pred = xgboost::predict(model, data.matrix(binaryclass.test[,1:60]))
