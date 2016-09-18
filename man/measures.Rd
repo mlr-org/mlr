@@ -56,7 +56,6 @@
 \alias{measureMEDAE}
 \alias{measureMEDSE}
 \alias{measureMMCE}
-\alias{measureMQWK}
 \alias{measureMSE}
 \alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
@@ -79,11 +78,11 @@
 \alias{measureTNR}
 \alias{measureTP}
 \alias{measureTPR}
+\alias{measureWK}
 \alias{measures}
 \alias{medae}
 \alias{medse}
 \alias{mmce}
-\alias{mqwk}
 \alias{mse}
 \alias{multiclass.au1p}
 \alias{multiclass.au1u}
@@ -114,6 +113,7 @@
 \alias{tnr}
 \alias{tp}
 \alias{tpr}
+\alias{wk}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -221,9 +221,9 @@ lsr
 
 measureLSR(probabilities, truth)
 
-mqwk
+wk
 
-measureMQWK(truth, response)
+measureWK(truth, response)
 
 auc
 
