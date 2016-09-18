@@ -392,10 +392,10 @@ test_that("check measure calculations", {
   conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
   expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))
   weights = matrix(c(0, 1, 4, 1, 0, 1, 4, 1, 0), nrow = 3L)
-  lsr.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
-  lsr.perf = performance(pred.classif, measures = mqwk, model = mod.classif)
-  expect_equal(measureMQWK(tar.classif, pred.art.classif), lsr.test)
-  expect_equal(measureMQWK(tar.classif, pred.art.classif), as.numeric(lsr.perf))
+  mqwk.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+  mqwk.perf = performance(pred.classif, measures = mqwk, model = mod.classif)
+  expect_equal(measureMQWK(tar.classif, pred.art.classif), mqwk.test)
+  expect_equal(measureMQWK(tar.classif, pred.art.classif), as.numeric(mqwk.perf))
   
   #test binaryclass measures
 
