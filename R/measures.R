@@ -601,11 +601,11 @@ wk = makeMeasure(id = "wk", minimize = TRUE, best = 0, worst = 1,
   note = "Defined as: 1 - sum(weights * conf.mat) / sum(weights * expected.mat),
     the weight matrix measures seriousness of disagreement with the squared euclidean metric.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureMQWK(pred$data$truth, pred$data$response)
+    measureWK(pred$data$truth, pred$data$response)
   }
 )
 
-#' @export measureMK
+#' @export measureWK
 #' @rdname measures
 #' @format none
 measureWK = function(truth, response) {
