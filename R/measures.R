@@ -598,6 +598,8 @@ measureLSR = function(probabilities, truth){
 mqwk = makeMeasure(id = "mqwk", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Mean quadratic weighted kappa",
+  note = "Defined as: 1 - 1 - sum(weights * conf.mat) / sum(weights * expected.mat),
+    the weight matrix measures seriousness of disagreement with the euclidean metric.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMQWK(pred$data$truth, pred$data$response)
   }
