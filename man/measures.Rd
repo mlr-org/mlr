@@ -56,6 +56,7 @@
 \alias{measureMEDAE}
 \alias{measureMEDSE}
 \alias{measureMMCE}
+\alias{measureMQWK}
 \alias{measureMSE}
 \alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
@@ -82,6 +83,7 @@
 \alias{medae}
 \alias{medse}
 \alias{mmce}
+\alias{mqwk}
 \alias{mse}
 \alias{multiclass.au1p}
 \alias{multiclass.au1u}
@@ -218,6 +220,10 @@ measureQSR(probabilities, truth)
 lsr
 
 measureLSR(probabilities, truth)
+
+mqwk
+
+measureMQWK(truth, response)
 
 auc
 

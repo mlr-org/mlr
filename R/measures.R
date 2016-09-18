@@ -592,6 +592,38 @@ measureLSR = function(probabilities, truth){
   -1*measureLogloss(probabilities, truth)
 }
 
+#' @export mqwk
+#' @rdname measures
+#' @format none
+mqwk = makeMeasure(id = "mqwk", minimize = TRUE, best = 0, worst = 1,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  name = "Mean quadratic weighted kappa",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureMQWK(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureMQWK
+#' @rdname measures
+#' @format none
+measureMQWK = function(truth, response) {
+  # get confusion matrix
+  conf.mat = table(truth, response)
+  conf.mat = conf.mat / sum(conf.mat)
+
+  # get expected probs under independence
+  rowsum = rowSums(conf.mat)
+  colsum = colSums(conf.mat)
+  expected.mat = rowsum %*% t(colsum) 
+
+  # get weights
+  class.values = as.numeric(levels(truth))
+  weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
+  
+  # calculate kappa
+  1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+}
+
 ###############################################################################
 ### classif binary ###
 ###############################################################################

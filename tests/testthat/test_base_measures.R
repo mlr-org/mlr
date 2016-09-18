@@ -388,8 +388,15 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
-
- 
+  #mqwk
+  conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
+  expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))
+  weights = matrix(c(0, 1, 4, 1, 0, 1, 4, 1, 0), nrow = 3L)
+  lsr.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+  lsr.perf = performance(pred.classif, measures = mqwk, model = mod.classif)
+  expect_equal(measureMQWK(tar.classif, pred.art.classif), lsr.test)
+  expect_equal(measureMQWK(tar.classif, pred.art.classif), as.numeric(lsr.perf))
+  
   #test binaryclass measures
 
   #brier
