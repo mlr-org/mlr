@@ -595,7 +595,7 @@ measureLSR = function(probabilities, truth){
 #' @export kappa
 #' @rdname measures
 #' @format none
-kappa = makeMeasure(id = "kappa", minimize = TRUE, best = 0, worst = 1,
+kappa = makeMeasure(id = "kappa", minimize = FALSE, best = 1, worst = -1,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Cohen's kappa",
   note = "Defined as: 1 - (1 - p0) / (1 - pe). With: p0 = 'observed frequency of
@@ -628,7 +628,7 @@ measureKAPPA = function(truth, response) {
 #' @export wkappa
 #' @rdname measures
 #' @format none
-wkappa = makeMeasure(id = "wkappa", minimize = TRUE, best = 0, worst = 1,
+wkappa = makeMeasure(id = "wkappa", minimize = FALSE, best = 1, worst = -1,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Mean quadratic weighted kappa",
   note = "Defined as: 1 - sum(weights * conf.mat) / sum(weights * expected.mat),
@@ -655,7 +655,7 @@ measureWKAPPA = function(truth, response) {
   class.values = as.numeric(levels(truth))
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
   
-  # calculate kappa
+  # calculate weighted kappa
   1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
 

@@ -295,7 +295,7 @@ test_that("check measure calculations", {
   colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
   colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
   colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
-  colauc.width = -diff(colauc.omspec) # = diff(rev(omspec))
+  colauc.width = - diff(colauc.omspec) # = diff(rev(omspec))
   expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
   # colAUC multiclass
   colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
