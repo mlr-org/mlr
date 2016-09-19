@@ -133,8 +133,7 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
   tab$properties = NULL
   setnames(tab, "id", "class")
   setDF(tab)
-  # FIXME BBmisc::addClasses() seems not to work with data.frame objects
-  class(tab) = c("ListLearners", class(tab))
+  tab = BBmisc::addClasses(tab, "ListLearners")
   return(tab)
 }
 
@@ -161,7 +160,6 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
 }
 
 #' @export
-#' @rdname listLearners
-print.ListLearners = function(obj, ...) {
-  print(head(as.data.frame(obj[, -5])))
+print.ListLearners = function(x, ...) {
+  printHead(as.data.frame(dropNamed(x, drop = "note")))
 }
