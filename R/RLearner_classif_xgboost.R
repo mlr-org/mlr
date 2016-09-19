@@ -7,7 +7,7 @@ makeRLearner.classif.xgboost = function() {
       # we pass all of what goes in 'params' directly to ... of xgboost
       # makeUntypedLearnerParam(id = "params", default = list()),
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear")),
-      makeIntegerLearnerParam(id = "silent", default = 0L),
+      makeIntegerLearnerParam(id = "silent", default = 0L, tunable = FALSE),
       makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "gamma", default = 0, lower = 0),
       makeIntegerLearnerParam(id = "max_depth", default = 6L, lower = 1L),
@@ -20,7 +20,7 @@ makeRLearner.classif.xgboost = function() {
       makeNumericLearnerParam(id = "lambda_bias", default = 0, lower = 0),
       makeNumericLearnerParam(id = "alpha", default = 0, lower = 0),
       makeUntypedLearnerParam(id = "objective", default = "binary:logistic"),
-      makeUntypedLearnerParam(id = "eval_metric", default = "error"),
+      makeUntypedLearnerParam(id = "eval_metric", default = "error", tunable = FALSE),
       makeNumericLearnerParam(id = "base_score", default = 0.5),
       
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
@@ -28,7 +28,7 @@ makeRLearner.classif.xgboost = function() {
       makeIntegerLearnerParam(id = "nthread", lower = 1L, tunable = FALSE),
       makeIntegerLearnerParam(id = "nrounds", default = 1L, lower = 1L),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
-      makeUntypedLearnerParam(id = "feval", default = NULL),
+      makeUntypedLearnerParam(id = "feval", default = NULL, tunable = FALSE),
       makeIntegerLearnerParam(id = "verbose", default = 1L, lower = 0L, upper = 2L, tunable = FALSE),
       makeIntegerLearnerParam(id = "print.every.n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
