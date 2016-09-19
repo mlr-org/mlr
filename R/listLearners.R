@@ -133,8 +133,7 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
   tab$properties = NULL
   setnames(tab, "id", "class")
   setDF(tab)
-  tab = BBmisc::addClasses(tab, "ListLearners")
-  return(tab)
+  addClasses(tab, "ListLearners")
 }
 
 #' @export
