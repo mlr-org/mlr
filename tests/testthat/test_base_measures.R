@@ -388,6 +388,13 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
+  #kappa
+  p0 = 0.5
+  pe = (0.25 * 0.25 + 0.5 * 0.5 + 0.25 * 0.25) / 1
+  kappa.test = 1 - (1 - p0) / (1 - pe)
+  kappa.perf = performance(pred.classif, measures = kappa, model = mod.classif)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), kappa.test)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), as.numeric(kappa.perf))
   #wkappa
   conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
   expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))

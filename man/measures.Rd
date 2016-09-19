@@ -24,6 +24,7 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
+\alias{kappa}
 \alias{logloss}
 \alias{lsr}
 \alias{mae}
@@ -48,6 +49,7 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureKAPPA}
 \alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
@@ -78,7 +80,7 @@
 \alias{measureTNR}
 \alias{measureTP}
 \alias{measureTPR}
-\alias{measureWK}
+\alias{measureWKAPPA}
 \alias{measures}
 \alias{medae}
 \alias{medse}
@@ -113,7 +115,7 @@
 \alias{tnr}
 \alias{tp}
 \alias{tpr}
-\alias{wk}
+\alias{wkappa}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -221,9 +223,13 @@ lsr
 
 measureLSR(probabilities, truth)
 
-wk
+kappa
 
-measureWK(truth, response)
+measureKAPPA(truth, response)
+
+wkappa
+
+measureWKAPPA(truth, response)
 
 auc
 
