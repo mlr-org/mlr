@@ -592,6 +592,73 @@ measureLSR = function(probabilities, truth){
   -1*measureLogloss(probabilities, truth)
 }
 
+#' @export kappa
+#' @rdname measures
+#' @format none
+kappa = makeMeasure(id = "kappa", minimize = FALSE, best = 1, worst = -1,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  name = "Cohen's kappa",
+  note = "Defined as: 1 - (1 - p0) / (1 - pe). With: p0 = 'observed frequency of
+    agreement' and pe = 'expected agremeent frequency under independence",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureKAPPA(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureKAPPA
+#' @rdname measures
+#' @format none
+measureKAPPA = function(truth, response) {
+  # get confusion matrix
+  conf.mat = table(truth, response)
+  conf.mat = conf.mat / sum(conf.mat)
+  
+  # observed agreement frequency 
+  p0 = sum(diag(conf.mat))
+
+  # get expected probs under independence
+  rowsum = rowSums(conf.mat)
+  colsum = colSums(conf.mat)
+  pe = sum(rowsum * colsum) / sum(conf.mat)^2
+  
+  # calculate kappa
+  1 - (1 - p0) / (1 - pe)
+}
+
+#' @export wkappa
+#' @rdname measures
+#' @format none
+wkappa = makeMeasure(id = "wkappa", minimize = FALSE, best = 1, worst = -1,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  name = "Mean quadratic weighted kappa",
+  note = "Defined as: 1 - sum(weights * conf.mat) / sum(weights * expected.mat),
+    the weight matrix measures seriousness of disagreement with the squared euclidean metric.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureWKAPPA(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureWKAPPA
+#' @rdname measures
+#' @format none
+measureWKAPPA = function(truth, response) {
+  # get confusion matrix
+  conf.mat = table(truth, response)
+  conf.mat = conf.mat / sum(conf.mat)
+
+  # get expected probs under independence
+  rowsum = rowSums(conf.mat)
+  colsum = colSums(conf.mat)
+  expected.mat = rowsum %*% t(colsum) 
+
+  # get weights
+  class.values = as.numeric(levels(truth))
+  weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
+  
+  # calculate weighted kappa
+  1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+}
+
 ###############################################################################
 ### classif binary ###
 ###############################################################################
