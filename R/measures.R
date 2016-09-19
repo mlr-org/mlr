@@ -592,23 +592,23 @@ measureLSR = function(probabilities, truth){
   -1*measureLogloss(probabilities, truth)
 }
 
-#' @export wk
+#' @export wkappa
 #' @rdname measures
 #' @format none
-wk = makeMeasure(id = "wk", minimize = TRUE, best = 0, worst = 1,
+wkappa = makeMeasure(id = "wkappa", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Mean quadratic weighted kappa",
   note = "Defined as: 1 - sum(weights * conf.mat) / sum(weights * expected.mat),
     the weight matrix measures seriousness of disagreement with the squared euclidean metric.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureWK(pred$data$truth, pred$data$response)
+    measureWKAPPA(pred$data$truth, pred$data$response)
   }
 )
 
-#' @export measureWK
+#' @export measureWKAPPA
 #' @rdname measures
 #' @format none
-measureWK = function(truth, response) {
+measureWKAPPA = function(truth, response) {
   # get confusion matrix
   conf.mat = table(truth, response)
   conf.mat = conf.mat / sum(conf.mat)

@@ -388,14 +388,14 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
-  #wk
+  #wkappa
   conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
   expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))
   weights = matrix(c(0, 1, 4, 1, 0, 1, 4, 1, 0), nrow = 3L)
-  wk.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
-  wk.perf = performance(pred.classif, measures = wk, model = mod.classif)
-  expect_equal(measureWK(tar.classif, pred.art.classif), wk.test)
-  expect_equal(measureWK(tar.classif, pred.art.classif), as.numeric(wk.perf))
+  wkappa.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+  wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
   
   #test binaryclass measures
 
