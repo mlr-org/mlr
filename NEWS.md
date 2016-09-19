@@ -66,6 +66,7 @@
 ## measures - new
 * ssr, qsr, lsr
 * rrse, rae, mape
+* kappa, wkappa
 
 # mlr 2.9:
 
