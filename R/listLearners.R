@@ -133,7 +133,7 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
   tab$properties = NULL
   setnames(tab, "id", "class")
   setDF(tab)
-  return(tab)
+  addClasses(tab, "ListLearners")
 }
 
 #' @export
@@ -156,4 +156,9 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
   }
 
   listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, check.packages, create)
+}
+
+#' @export
+print.ListLearners = function(x, ...) {
+  printHead(as.data.frame(dropNamed(x, drop = "note")))
 }
