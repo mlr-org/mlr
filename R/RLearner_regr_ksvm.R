@@ -26,8 +26,8 @@ makeRLearner.regr.ksvm = function() {
         requires = quote(kernel == "besseldot")),
       makeNumericLearnerParam(id = "tol", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
-      makeLogicalLearnerParam(id = "fit", default = TRUE),
-      makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L, tunable = FALSE)
+      makeLogicalLearnerParam(id = "fit", default = TRUE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L)
     ),
     par.vals = list(fit = FALSE),
     properties = c("numerics", "factors"),
