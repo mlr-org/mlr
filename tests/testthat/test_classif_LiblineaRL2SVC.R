@@ -4,6 +4,7 @@ test_that("classif_LiblineaRL2SVC", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(type = 1),
     list(type = 2),
     list(type = 1, cost = 5L),

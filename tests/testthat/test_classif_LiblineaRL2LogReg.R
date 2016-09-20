@@ -4,6 +4,7 @@ test_that("classif_LiblineaRL2LogReg", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(type = 0),
     list(type = 7),
     list(type = 0, cost = 5L),

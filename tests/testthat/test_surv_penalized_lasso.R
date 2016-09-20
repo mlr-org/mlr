@@ -4,6 +4,7 @@ test_that("surv_penalized_lasso", {
   requirePackages("survival", default.method = "load")
   requirePackages("penalized", default.method = "load")
   parset.list = list(
+    list(),
     list(lambda1 = 1),
     list(lambda1 = 2)
   )

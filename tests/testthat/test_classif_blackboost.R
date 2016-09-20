@@ -4,6 +4,7 @@ test_that("classif_blackboost", {
   requirePackagesOrSkip(c("mboost", "party"), default.method = "load")
 
   parset.list1 = list(
+    list(),
     list(family = mboost::Binomial(), tree_control = party::ctree_control(maxdepth = 2),
       control = mboost::boost_control(mstop = 10L)),
     list(family = mboost::Binomial(), tree_controls = party::ctree_control(maxdepth = 4),
@@ -11,6 +12,7 @@ test_that("classif_blackboost", {
   )
 
   parset.list2 = list(
+    list(),
     list(family = mboost::Binomial(), mstop = 10L, maxdepth = 2),
     list(family = mboost::Binomial(), mstop = 10L, maxdepth = 4, nu = 0.03)
   )

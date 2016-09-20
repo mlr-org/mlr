@@ -4,6 +4,7 @@ test_that("surv_cv.CoxBoost", {
   requirePackagesOrSkip(c("!Matrix", "!CoxBoost"), default.method = "load")
 
   parset.list = list(
+    list(),
     list(penalty = 5, maxstepno = 200)
   )
   old.predicts.list = list()

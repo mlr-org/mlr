@@ -4,6 +4,7 @@ test_that("regr_LiblineaRL2L2SVR", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(type = 11, svr_eps = 0.01),
     list(type = 12, svr_eps = 0.1),
     list(type = 11, cost = 5L),
@@ -25,6 +26,7 @@ test_that("regr_LiblineaRL2L2SVR", {
     old.predicts.list[[i]] = p$predictions
   }
   parset.list = list(
+    list(),
     list(svr_eps = 0.01),
     list(type = 12, svr_eps = 0.1),
     list(cost = 5L),

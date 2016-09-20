@@ -4,6 +4,7 @@ test_that("classif_C50", {
   
 requirePackages("C50", default.method = "load")
   parset.list = list(
+    list(),
     list(control = C50::C5.0Control(seed = getOption("mlr.debug.seed"))),
     list(trials = 5L, control = C50::C5.0Control(minCases = 10L,
       seed = getOption("mlr.debug.seed"))),
@@ -32,6 +33,7 @@ requirePackages("C50", default.method = "load")
   }
   
   parset.list = list(
+    list(),
     list(seed = getOption("mlr.debug.seed")),
     list(trials = 5L, minCases = 10L, seed = getOption("mlr.debug.seed")),
     list(rules = TRUE, bands = 100L, seed = getOption("mlr.debug.seed")),

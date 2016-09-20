@@ -4,6 +4,7 @@ test_that("surv_penalized_ridge", {
   requirePackages("survival", default.method = "load")
   requirePackages("penalized", default.method = "load")
   parset.list = list(
+    list(),
     list(lambda2 = 1),
     list(lambda2 = 2, maxiter = 15L)
   )

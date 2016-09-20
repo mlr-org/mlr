@@ -4,6 +4,7 @@ test_that("surv_glmboost", {
   requirePackagesOrSkip(c("survival", "mboost"), default.method = "load")
 
   parset.list = list(
+    list(),
     list(mstop = 100L, nu = 0.1),
     list(mstop = 50L, nu = 1),
     list(mstop = 100L, nu = 0.5)

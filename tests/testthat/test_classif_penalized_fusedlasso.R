@@ -3,6 +3,7 @@ context("classif_penalized_fusedlasso")
 test_that("classif_penalized_fusedlasso", {
   requirePackages("!penalized", default.method = "load")
   parset.list = list(
+    list(),
     list(maxiter = 10L),
     list(lambda1 = 2, maxiter = 10L),
     list(lambda1 = 2, lambda2 = 1, maxiter = 5L),
@@ -31,6 +32,7 @@ test_that("classif_penalized_fusedlasso", {
     binaryclass.train.inds, old.probs.list, parset.list)
 
   parset.list = list(
+    list(),
     list(lambda1 = 2, lambda2 = 1, maxiter = 2L),
     list(lambda1 = 1, lambda2 = 2, maxiter = 4L)
   )

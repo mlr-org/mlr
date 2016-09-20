@@ -4,6 +4,7 @@ test_that("regr_mob", {
   requirePackagesOrSkip("party", default.method = "load")
 
   parset.list = list(
+    list(),
     list(term.feats=c("lstat", "rm"), part.feats=c("zn", "indus")),
     list(alpha=0.10, minsplit=40, term.feats=c("lstat", "rm", "crim"),
       part.feats=c("zn", "indus", "chas", "dis")),

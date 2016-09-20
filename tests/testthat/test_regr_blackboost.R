@@ -4,11 +4,13 @@ test_that("regr_blackboost", {
   requirePackagesOrSkip(c("mboost","party"), default.method = "load")
 
   parset.list1 = list(
+    list(),
     list(family=mboost::GaussReg(), tree_controls=party::ctree_control(maxdepth=2)),
     list(family=mboost::GaussReg(), tree_controls=party::ctree_control(maxdepth=4), control=mboost::boost_control(nu=0.03))
   )
 
   parset.list2 = list(
+    list(),
     list(family=mboost::Gaussian(), maxdepth=2),
     list(family=mboost::Gaussian(), maxdepth=4, nu=0.03)
   )

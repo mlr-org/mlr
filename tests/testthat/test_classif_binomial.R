@@ -3,6 +3,7 @@ context("classif_binomial")
 test_that("classif_binomial", {
 
   parset.list = list(
+    list(),
     list(link = "logit"),
     list(link = "cloglog")
   )

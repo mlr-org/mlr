@@ -3,6 +3,7 @@ context("regr_penalized_fusedlasso")
 test_that("regr_penalized_fusedlasso", {
   requirePackages("!penalized", default.method = "load")
   parset.list = list(
+    list(),
     list(maxiter = 2L),
     list(lambda1 = 2, maxiter = 4L),
     list(lambda1 = 2, lambda2 = 1, maxiter = 2L),
@@ -33,6 +34,7 @@ test_that("regr_penalized_fusedlasso", {
     regr.train.inds, old.predicts.list, parset.list)
 
   parset.list = list(
+    list(),
     list(lambda1 = 2, lambda2 = 1, maxiter = 2L),
     list(lambda1 = 1, lambda2 = 2, maxiter = 4L)
   )

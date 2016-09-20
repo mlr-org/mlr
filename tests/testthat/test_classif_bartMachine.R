@@ -4,6 +4,7 @@ test_that("classif_bartMachine", {
   requirePackagesOrSkip("bartMachine", default.method = "load")
 
   parset.list = list(
+    list(),
     list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, run_in_sample = FALSE, seed = getOption("mlr.debug.seed")),
     list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L, run_in_sample = FALSE, seed = getOption("mlr.debug.seed"))
   )
