@@ -30,7 +30,7 @@
 #'     standard PSO 2007/2011 by Maurice Clerc et al.
 #'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #'     For integers the internally proposed numeric values are automatically rounded.}
-#'   \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms in package \pkg{copulaedas}) based on copula and vines functions.
+#'   \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms (in package \pkg{copulaedas}) based on copula and vines functions.
 #'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #'     For integers the internally proposed numeric values are automatically rounded.}
 #' }
@@ -78,9 +78,9 @@
 #'   \code{budget} corresponds to the product of the number of generations
 #'   (\code{maxit}) and the number of offsprings per generation
 #'   (\code{lambda}). \code{\link[GA]{GA}} defines the \code{budget} as the product of
-#'   the number of generations (\code{maxit}) and the population's size (\code{popSize}).
+#'   the number of generations (\code{maxit}) and the population's size (\code{pop.size}).
 #'   \pkg{copulaedas} does the same. \pkg{pso} defines it as the
-#'   product of the number of generations (\code{maxit}) and the number of swarm particles (\code{nParticles}).
+#'   product of the number of generations (\code{maxit}) and the number of swarm particles (\code{n.particles}).
 #'   \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 #'   the argument \code{max.call}. However, one should note that this algorithm
 #'   does not stop its local search before its end. This behaviour might lead

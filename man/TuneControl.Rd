@@ -31,11 +31,14 @@ makeTuneControlDesign(same.resampling.instance = TRUE, impute.val = NULL,
 
 makeTuneControlEDA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...)
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL,
+  eda.impl = "UMDA", maxit = 100L, pop.size = 50L, ...)
 
 makeTuneControlGA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...)
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL,
+  prob.crossover = 0.8, prob.mutation = 0.1, pop.size = 50L,
+  maxit = 100L, ...)
 
 makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
@@ -52,7 +55,8 @@ makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
 
 makeTuneControlPSO(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...)
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL,
+  pso.impl = "SPSO2007", maxit = 100L, ...)
 
 makeTuneControlRandom(same.resampling.instance = TRUE, maxit = NULL,
   tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL,
@@ -111,9 +115,9 @@ the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
 \code{budget} corresponds to the product of the number of generations
 (\code{maxit}) and the number of offsprings per generation
 (\code{lambda}). \code{\link[GA]{GA}} defines the \code{budget} as the product of
-the number of generations (\code{maxit}) and the population's size (\code{popSize}).
+the number of generations (\code{maxit}) and the population's size (\code{pop.size}).
 \pkg{copulaedas} does the same. \pkg{pso} defines it as the
-product of the number of generations (\code{maxit}) and the number of swarm particles (\code{nParticles}).
+product of the number of generations (\code{maxit}) and the number of swarm particles (\code{n.particles}).
 \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 the argument \code{max.call}. However, one should note that this algorithm
 does not stop its local search before its end. This behaviour might lead
@@ -131,6 +135,29 @@ towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 The columns have to be named according to the \code{ParamSet} which will be used in \code{tune()}.
 Proper designs can be created with \code{\link[ParamHelpers]{generateDesign}} for instance.}
 
+\item{eda.impl}{[\code{character}]\cr
+Implementation of the Copula EDA used. The possible values are: 
+UMDA - Univariate Marginal Distribution Algorithm, GCEDA - Gaussian Copula 
+Estimation of Distribution Algorithm, CVEDA - C-Vine EDA, and DVEDA - D-Vine EDA.
+Default is UMDA.}
+
+\item{maxit}{[\code{integer(1)} | NULL]\cr
+Number of iterations for search.
+Default is 100.}
+
+\item{pop.size}{[\code{integer(1)}]\cr
+Size of the initial population.
+Default is 50.}
+
+\item{prob.crossover}{[\code{numeric(1)}]\cr
+The GA probability of crossover between pairs of chromosomes.   
+Typically this is a large value. Default is 0.8.}
+
+\item{prob.mutation}{[\code{numeric(1)}]\cr
+The GA probability of mutation in a parent chromosome. 
+Usually mutation occurs with a small probability.
+Default is 0.1.}
+
 \item{resolution}{[\code{integer}]\cr
 Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 For vector parameters, it is the resolution per dimension.
@@ -146,9 +173,10 @@ Default is 100.}
 Show console output of irace while tuning?
 Default is \code{FALSE}.}
 
-\item{maxit}{[\code{integer(1)} | NULL]\cr
-Number of iterations for random search.
-Default is 100.}
+\item{pso.impl}{[\code{character}]\cr
+PSO algorithm implementation.
+The possible values are: SPSO2007 and SPSO2011.
+Default is SPSO2007.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of
@@ -187,7 +215,7 @@ The following tuners are available:
     standard PSO 2007/2011 by Maurice Clerc et al.
     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
     For integers the internally proposed numeric values are automatically rounded.}
-  \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms in package \pkg{copulaedas}) based on copula and vines functions.
+  \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms (in package \pkg{copulaedas}) based on copula and vines functions.
     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
     For integers the internally proposed numeric values are automatically rounded.}
 }

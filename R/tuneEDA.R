@@ -1,6 +1,6 @@
 tuneEDA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
   requirePackages("copulaedas", why = "tuneEDA", default.method = "load")
-
+  
   low = getLower(par.set)
   upp = getUpper(par.set)
   start = control$start
@@ -9,17 +9,12 @@ tuneEDA = function(learner, task, resampling, measures, par.set, control, opt.pa
     start = sampleValue(par.set, start, trafo = FALSE)
   start = convertStartToNumeric(start, par.set)
 
-  ctrl.eda = list(popSize = 100L, maxit = 50L, type = "UMDA")
-  ctrl.eda = insert(ctrl.eda, control$extra.args)
+  ctrl.eda = control$extra.args
   cx = function(x, par.set) convertXNumeric(x, par.set)
 
-  if (is.null(ctrl.eda$type) || ctrl.eda$type %nin% c("UMDA", "GCEDA", "CVEDA", "DVEDA"))
-    ctrl.eda$type = "UMDA"
-
-  maxf = ctrl.eda$popSize * ctrl.eda$maxit
-
+  maxf = ctrl.eda$pop.size * ctrl.eda$maxit
   if (is.null(control$budget)) {
-      control$budget = maxf
+    control$budget = maxf
   } else {
     if (maxf != control$budget) {
       stopf("The given budget (%i) contradicts to the maximum number of function evaluations (maxf = %i).",
@@ -27,18 +22,18 @@ tuneEDA = function(learner, task, resampling, measures, par.set, control, opt.pa
     }
   }
 
-  if (ctrl.eda$type == "UMDA") {
-	  model = copulaedas::CEDA(copula = "indep", margin = "truncnorm", popSize = ctrl.eda$popSize,
+  if (ctrl.eda$eda.impl == "UMDA") {
+	  model = copulaedas::CEDA(copula = "indep", margin = "truncnorm", popSize = ctrl.eda$pop.size,
 	    maxGens = ctrl.eda$maxit)
-  } else if (ctrl.eda$type == "GCEDA") {
-	  model = copulaedas::CEDA(copula = "normal", margin = "truncnorm", popSize = ctrl.eda$popSize,
+  } else if (ctrl.eda$eda.impl == "GCEDA") {
+	  model = copulaedas::CEDA(copula = "normal", margin = "truncnorm", popSize = ctrl.eda$pop.size,
 	    maxGens = ctrl.eda$maxit)
-  } else if (ctrl.eda$type == "CVEDA") {
+  } else if (ctrl.eda$eda.impl == "CVEDA") {
   	model = copulaedas::VEDA(vine = "CVine", indepTestSigLevel = 0.01, copulas = c("normal"),
-  	  margin = "truncnorm", popSize = ctrl.eda$popSize, maxGens = ctrl.eda$maxit)
+  	  margin = "truncnorm", popSize = ctrl.eda$pop.size, maxGens = ctrl.eda$maxit)
   } else {
  	  model = copulaedas::VEDA(vine = "DVine", indepTestSigLevel = 0.01, copulas = c("normal"),
- 	    margin = "truncnorm", popSize = ctrl.eda$popSize, maxGens = ctrl.eda$maxit)
+ 	    margin = "truncnorm", popSize = ctrl.eda$pop.size, maxGens = ctrl.eda$maxit)
   }
 
   copulaedas::edaSeedUniform(model, lower = low, upper = upp)

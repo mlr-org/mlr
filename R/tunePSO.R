@@ -12,30 +12,32 @@ tunePSO = function(learner, task, resampling, measures, par.set, control, opt.pa
   cx = function(x, par.set) convertXNumeric(x, par.set)
   ctrl.pso = list(trace = 0, trace.stats = NULL)
   ctrl.pso = insert(ctrl.pso, control$extra.args)
+  assertInt(x = ctrl.pso$n.particles, lower = 10, null.ok = TRUE, .var.name = "n.particles")
 
-  if (is.null(ctrl.pso$type) || ctrl.pso$type %nin% c("SPSO2011", "SPSO2007")) {
-    ctrl.pso$type = "SPSO2007"
-  }
+  if(is.null(ctrl.pso$maxit))
+    ctrl.pso$maxit = 100L
 
-  if (is.null(ctrl.pso$nParticles)) {
-    if (ctrl.pso$type == "SPSO2011") {
-    ctrl.pso$s = 40L
+  if (is.null(ctrl.pso$n.particles)) {
+    if (ctrl.pso$pso.impl == "SPSO2011") {
+      ctrl.pso$s = 40L
     } else {
       ctrl.pso$s = floor(10+2*sqrt(length(par.set)))
     }
   } else {
-    ctrl.pso$s = ctrl.pso$nParticles
+    ctrl.pso$s = ctrl.pso$n.particles
+    # cannot be in the control or package 'pso' throws a warning
+    ctrl.pso$n.particles = NULL
   }
-
-  ctrl.pso$nParticles = NULL
+  # cannot be in the control or package 'pso' throws a warning
+  ctrl.pso$pso.impl = NULL
+  
   ctrl.pso$maxf = (ctrl.pso$s * ctrl.pso$maxit)
-
-  if (is.null(control$budget)) {
-      control$budget = ctrl.pso$maxf
+  if (is.null(control$budget)){
+    control$budget = ctrl.pso$maxf
   } else {
-    if (ctrl.pso$maxf != control$budget) {
+    if(ctrl.pso$maxf != control$budget) {
       stopf("The given budget (%i) contradicts to the maximum number of function evaluations (maxf = %i).",
-        control$budget, ctrl.pso$maxf)
+      control$budget, ctrl.pso$maxf)
     }
   }
 

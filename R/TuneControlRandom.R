@@ -1,5 +1,5 @@
 #' @param maxit [\code{integer(1)} | NULL]\cr
-#'   Number of iterations for random search.
+#'   Number of iterations for search.
 #'   Default is 100.
 #' @export
 #' @rdname TuneControl

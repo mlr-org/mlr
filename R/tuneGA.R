@@ -10,11 +10,8 @@ tuneGA = function(learner, task, resampling, measures, par.set, control, opt.pat
   start = convertStartToNumeric(start, par.set)
 
   cx = function(x, par.set) convertXNumeric(x, par.set)
-  ctrl.ga = list(pcrossover = 0.8, pmutation = 0.1, parallel = FALSE, popSize = 50L, maxit = 100L)
-  ctrl.ga = insert(ctrl.ga, control$extra.args)
-
-  ctrl.ga$run = ctrl.ga$maxit
-  maxf = ctrl.ga$popSize * ctrl.ga$maxit
+  ctrl.ga = control$extra.args
+  maxf = ctrl.ga$pop.size  * ctrl.ga$maxit
 
   if (is.null(control$budget)) {
     control$budget = maxf
@@ -28,9 +25,9 @@ tuneGA = function(learner, task, resampling, measures, par.set, control, opt.pat
   res = GA::ga(type = "real-valued", fitness = tunerFitnFun, learner = learner, task = task,
     resampling = resampling, measures = measures, par.set = par.set, ctrl = control,
     opt.path = opt.path, show.info = show.info, convertx = cx, remove.nas = FALSE, min = low,
-    max = upp, maxiter = ctrl.ga$maxit, run = ctrl.ga$run, popSize = ctrl.ga$popSize,
-    pcrossover = ctrl.ga$pcrossover, pmutation = ctrl.ga$pmutation, suggestions = start,
-    parallel = ctrl.ga$parallel, monitor = NULL)
+    max = upp, maxiter = ctrl.ga$maxit, run = ctrl.ga$maxit, popSize = ctrl.ga$pop.size ,
+    pcrossover = ctrl.ga$prob.crossover, pmutation = ctrl.ga$prob.mutation, suggestions = start,
+    monitor = NULL)
 
   tune.result = makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
   return(tune.result)
