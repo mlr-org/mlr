@@ -49,15 +49,18 @@ getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) 
 predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # for classif we convert factor to char, nicer to handle later on
-  preds = lapply(models, function(mod) {
-    p = predict(mod, newdata = .newdata, ...)$data$response
-    if (is.factor(p))
-      p = as.character(p)
-    return(p)
-  })
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  preds = parallelMap(doHomogeneousPredictIteration, mod = models, more.args = list(.newdata = .newdata,...))
   do.call(cbind, preds)
 }
 
+doHomogeneousPredictIteration = function(mod, .newdata, .getPredictionFun = getPredictionResponse, ...) {
+  p = .getPredictionFun(predict(mod, newdata = .newdata, ...))
+  if (is.factor(p))
+    p = as.character(p)
+  return(p)
+}
 
 # call this at end of trainLearner.CostSensRegrWrapper
 # FIXME: potentially remove this when ChainModel is removed

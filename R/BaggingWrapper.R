@@ -114,10 +114,10 @@ doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weight
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
-  p = asMatrixCols(lapply(models, function(m) {
-    nd = .newdata[, m$features, drop = FALSE]
-    g(predict(m, newdata = nd, ...)$data$response)
-  }))
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  p = parallelMap(doBaggingPredictIteration, m = models, more.args = list(.newdata = .newdata, g = g, ...))
+  p = asMatrixCols(p)
   if (.learner$predict.type == "response") {
     if (.learner$type == "classif")
       as.factor(apply(p, 1L, computeMode))
@@ -135,6 +135,11 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
       cbind(rowMeans(p), apply(p, 1L, sd))
     }
   }
+}
+
+doBaggingPredictIteration = function(m, .newdata, g, ...) {
+  nd = .newdata[, m$features, drop = FALSE]
+  g(getPredictionResponse(predict(m, newdata = nd, ...)))
 }
 
 # we need to override here. while the predtype of the encapsulated learner must always

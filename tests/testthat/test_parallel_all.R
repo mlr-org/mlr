@@ -102,6 +102,8 @@ test_that("parallel partial dependence", {
     doit("mpi")
   }
   doit("socket")
+})
+
 test_that("parallel ensembles", {
   doit = function(mode, level) {
     on.exit(parallelStop())

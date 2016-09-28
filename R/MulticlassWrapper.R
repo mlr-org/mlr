@@ -81,12 +81,10 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
   cm = .model$learner.model$cm
   # predict newdata with every binary model, get n x n.models matrix of +1,-1
   # FIXME: this will break for length(models) == 1? do not use sapply!
-  p = sapply(models, function(m) {
-    pred = predict(m, newdata = .newdata, ...)$data$response
-    if (is.factor(pred))
-      pred = as.numeric(pred == "1") * 2 - 1
-    pred
-  })
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  p = parallelMap(doMulticlassPredictIteration, m = models, more.args = list(.newdata = .newdata, ...))
+  p = do.call(cbind, p)
   rns = rownames(cm)
   # we use hamming decoding here, see http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf
   y = apply(p, 1L, function(v) {
@@ -94,6 +92,13 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
     rns[getMinIndex(d)]
   })
   as.factor(y)
+}
+
+doMulticlassPredictIteration = function(m, .newdata, ...) {
+  pred = predict(m, newdata = .newdata, ...)$data$response
+  if (is.factor(pred))
+    pred = as.numeric(pred == "1") * 2 - 1
+  pred
 }
 
 #' @export
