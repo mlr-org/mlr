@@ -118,7 +118,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [devel](https://github.com/mlr-org/mlr/blob/master/NEWS.md) version on Github.
 
 * 2016-08-24:
-  * We have a (still smallish) blog on thing related to mlr. See link above.
+  * We have a (still smallish) [blog](https://mlr-org.github.io/) on things related to mlr.
 * 2016-08-06:
   * We are hosting the first mlr workshop! It is in Palermo, and more like a sprint, as 11 core developers meet to get stuff done. Thanks to Giuseppe for organizing this! We are thinking about hosting the 2017 one in Munich and possibly opening this up more for the public. If you are interested in potentially joining, email Bernd.
 * 2016-08-06:
