@@ -19,9 +19,9 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "lambda", default = 0, lower = 0),
       makeNumericLearnerParam(id = "lambda_bias", default = 0, lower = 0),
       makeNumericLearnerParam(id = "alpha", default = 0, lower = 0),
-      makeUntypedLearnerParam(id = "objective", default = "reg:linear"),
+      makeUntypedLearnerParam(id = "objective", default = "reg:linear", tunable = FALSE),
       makeUntypedLearnerParam(id = "eval_metric", default = "rmse", tunable = FALSE),
-      makeNumericLearnerParam(id = "base_score", default = 0.5),
+      makeNumericLearnerParam(id = "base_score", default = 0.5, tunable = FALSE),
 
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
@@ -33,7 +33,7 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "print.every.n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
       makeIntegerLearnerParam(id = "early.stop.round", default = NULL, lower = 1L, special.vals = list(NULL)),
-      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL))
+      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE)
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
     properties = c("numerics", "factors", "weights", "featimp"),
