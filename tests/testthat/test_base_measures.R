@@ -295,7 +295,7 @@ test_that("check measure calculations", {
   colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
   colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
   colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
-  colauc.width = -diff(colauc.omspec) # = diff(rev(omspec))
+  colauc.width = - diff(colauc.omspec) # = diff(rev(omspec))
   expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
   # colAUC multiclass
   colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
@@ -388,8 +388,22 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
-
- 
+  #kappa
+  p0 = 0.5
+  pe = (0.25 * 0.25 + 0.5 * 0.5 + 0.25 * 0.25) / 1
+  kappa.test = 1 - (1 - p0) / (1 - pe)
+  kappa.perf = performance(pred.classif, measures = kappa, model = mod.classif)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), kappa.test)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), as.numeric(kappa.perf))
+  #wkappa
+  conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
+  expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))
+  weights = matrix(c(0, 1, 4, 1, 0, 1, 4, 1, 0), nrow = 3L)
+  wkappa.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+  wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
+  
   #test binaryclass measures
 
   #brier

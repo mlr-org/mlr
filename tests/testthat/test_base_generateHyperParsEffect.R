@@ -5,7 +5,7 @@ test_that("generate data", {
   ps = makeParamSet(makeNumericParam("C", lower = -5, upper = 5,
     trafo = function(x) 2^x)
   )
-  ctrl = makeTuneControlRandom(maxit = 10L)
+  ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
     resampling = rdesc, par.set = ps,
@@ -29,7 +29,7 @@ test_that("generate data", {
 
 test_that("1 numeric hyperparam", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = 2^(-5:5)))
+  ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
@@ -87,8 +87,7 @@ test_that("1 discrete hyperparam", {
 
 test_that("1 numeric hyperparam with optimizer failure", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3,
-    0.4))
+  ps = makeParamSet(makeDiscreteParam("C", values = c(-1, 0.5, 1.5))
   )
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
@@ -119,7 +118,7 @@ test_that("1 numeric hyperparam with nested cv", {
   # generate data
   ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2)
   )
-  ctrl = makeTuneControlRandom(maxit = 10L)
+  ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
     resampling = rdesc, par.set = ps,
@@ -151,7 +150,7 @@ test_that("2 hyperparams", {
   ps = makeParamSet(
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x))
-  ctrl = makeTuneControlRandom(maxit = 10L)
+  ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "rbfdot"))
   res = tuneParams(learn, task = pid.task, control = ctrl, measures = acc,
@@ -188,8 +187,8 @@ test_that("2 hyperparams", {
 
   # learner crash
   ps = makeParamSet(
-    makeDiscreteParam("C", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)),
-    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)))
+    makeDiscreteParam("C", values = c(-1, 0.5, 1.5)),
+    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "rbfdot"))
@@ -217,7 +216,7 @@ test_that("2 hyperparams nested", {
   ps = makeParamSet(
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x))
-  ctrl = makeTuneControlRandom(maxit = 10L)
+  ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "rbfdot"))
   lrn = makeTuneWrapper(learn, control = ctrl,
@@ -244,8 +243,8 @@ test_that("2 hyperparams nested", {
 
   # learner crashes
   ps = makeParamSet(
-    makeDiscreteParam("C", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)),
-    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)))
+    makeDiscreteParam("C", values = c(-1, 0.5, 1.5)),
+    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5)))
   lrn = makeTuneWrapper(learn, control = ctrl,
     measures = list(acc, mmce), resampling = rdesc,
     par.set = ps, show.info = F)
@@ -273,7 +272,7 @@ test_that("2+ hyperparams", {
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeDiscreteParam("degree", values = 2:5))
-  ctrl = makeTuneControlRandom(maxit = 100L)
+  ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout", predict = "both")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
   res = tuneParams(learn, task = pid.task, control = ctrl,
@@ -312,7 +311,7 @@ test_that("2+ hyperparams", {
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeDiscreteParam("degree", values = 2:5))
-  ctrl = makeTuneControlRandom(maxit = 100L)
+  ctrl = makeTuneControlRandom(maxit = 5L)
   rdesc = makeResampleDesc("Holdout", predict = "both")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
   lrn = makeTuneWrapper(learn, control = ctrl,
@@ -333,8 +332,8 @@ test_that("2+ hyperparams", {
 
   # learner crash with imputation works
   ps = makeParamSet(
-    makeDiscreteParam("C", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)),
-    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5, 1, 0.2, 0.3, 0.4, 5)))
+    makeDiscreteParam("C", values = c(-1, 0.5, 1.5)),
+    makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
