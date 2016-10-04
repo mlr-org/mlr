@@ -33,3 +33,28 @@ test_that("classif_glmboost", {
   testSimpleParsets("classif.glmboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
   testProbParsets("classif.glmboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
 })
+
+test_that("classif_glmboost works with family PropOdds", {
+  new.binary.df = binaryclass.df
+  new.binary.df[,binaryclass.target] = as.ordered(new.binary.df[,binaryclass.target])
+  new.classif.train = new.binary.df[binaryclass.train.inds,]
+  new.classif.test = new.binary.df[binaryclass.test.inds,]
+  parset.list1 = list(family = mboost::PropOdds())
+  parset.list2 = list(family = "PropOdds")
+  old.predicts.list = list()
+  old.probs.list = list()
+  parset = parset.list1#[[i]]
+  pars = list(binaryclass.formula, data = new.classif.train)
+  pars = c(pars, parset)
+  set.seed(getOption("mlr.debug.seed"))
+  m = do.call(mboost::glmboost, pars)
+  set.seed(getOption("mlr.debug.seed"))
+  old.predicts.list = predict(m, newdata = new.classif.test, type = "class")
+  set.seed(getOption("mlr.debug.seed"))
+  old.probs.list = 1 - predict(m, newdata = new.classif.test, type = "response")[,1]
+  
+  testSimple("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
+  testProb("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
+  
+})
+
