@@ -39,13 +39,11 @@ test_that("regr_glmboost works with families for count data", {
   new.regr.train = new.regr.df[regr.train.inds,]
   new.regr.test = new.regr.df[regr.test.inds,]
   parset.list1 = list(
-    list(),
     list(family = mboost::Poisson(), control = mboost::boost_control(nu = 0.02)),
     list(family = mboost::NBinomial()),
     list(family = mboost::Hurdle())
   )
   parset.list2 = list(
-    list(),
     list(family = "Poisson", nu = 0.02),
     list(family= "NBinomial"),
     list(family = "Hurdle")
