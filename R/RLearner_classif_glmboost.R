@@ -54,7 +54,6 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
 predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  fam = getLearnerParVals(.learner)$family 
   if (.learner$predict.type  == "prob") {
     td = .model$task.desc
     p = p[, 1L]
