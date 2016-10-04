@@ -21,7 +21,7 @@ makeRLearner.regr.blackboost = function() {
       makeNumericLearnerParam(id = "mincriterion", default = 0, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", default = 7L, lower = 1L),
-      makeLogicalLearnerParam(id = "stump", default = TRUE),
+      makeLogicalLearnerParam(id = "stump", default = FALSE),
       makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = quote(testtype=="MonteCarlo")),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
       makeIntegerLearnerParam(id = "mtry", default = 0L, lower = 0L),
@@ -35,10 +35,16 @@ makeRLearner.regr.blackboost = function() {
   )
 }
 
-trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth, family = "Gaussian", custom.family.definition, nuirange = c(0,100), d = NULL, ...) {
+trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, family = "Gaussian", custom.family.definition, nuirange = c(0,100), d = NULL, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
-  tc = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
-    minsplit, minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth)
+  defaults = getDefaults(getParamSet(.learner))
+  if (missing(teststat)) teststat = defaults$teststat
+  if (missing(testtype)) testtype = defaults$testtype
+  if (missing(mincriterion)) mincriterion = defaults$mincriterion
+  if (missing(maxdepth)) maxdepth = defaults$maxdepth
+  if (missing(savesplitstats)) savesplitstats = defaults$savesplitstats
+  tc =  learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
+    maxdepth, savesplitstats, ...)
   family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
