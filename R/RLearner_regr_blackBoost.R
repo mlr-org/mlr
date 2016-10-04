@@ -22,7 +22,7 @@ makeRLearner.regr.blackboost = function() {
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", default = 7L, lower = 1L),
       makeLogicalLearnerParam(id = "stump", default = FALSE),
-      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = quote(testtype=="MonteCarlo")),
+      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = quote(testtype == "MonteCarlo")),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
       makeIntegerLearnerParam(id = "mtry", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE),
@@ -57,9 +57,9 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NUL
   )
   f = getTaskFormula(.task)
   if (!is.null(.weights))
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family)
+    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
   else
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family)
+    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
 }
 
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {
