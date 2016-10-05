@@ -49,7 +49,7 @@ test_that("classif_blackboost works with family PropOdds", {
   parset.list2 = list(family = "PropOdds")
   old.predicts.list = list()
   old.probs.list = list()
-  parset = parset.list1#[[i]]
+  parset = parset.list1
   pars = list(binaryclass.formula, data = new.classif.train)
   pars = c(pars, parset)
   set.seed(getOption("mlr.debug.seed"))
