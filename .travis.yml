@@ -3,7 +3,7 @@ sudo: false
 cache: packages
 r:
   - release
-  # - devel
+  - devel
 
 addons:
   apt:
