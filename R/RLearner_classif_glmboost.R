@@ -54,11 +54,16 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
 predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
+  fam = getHyperPars(.learner)$family
   if (.learner$predict.type  == "prob") {
-    td = .model$task.desc
-    p = p[, 1L]
-    levs = c(td$negative, td$positive)
-    return(propVectorToMatrix(p, levs))
+    if (fam %in% c("AdaExp", "AUC", "custom.family")){
+      stopf("Predictions of probabilities are not implemented for family %s", fam)
+    } else {
+      td = .model$task.desc
+      p = p[, 1L]
+      levs = c(td$negative, td$positive)
+      return(propVectorToMatrix(p, levs))
+    }
   } else {
     return(p)
   }
