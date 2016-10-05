@@ -348,6 +348,45 @@ measureMAPE = function(truth, response){
   return(mean(abs((truth-response)/truth)))
 }
 
+#' @export sle
+#' @rdname measures
+#' @format none
+sle = makeMeasure(id = "sle", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Sum of squared logarithmic errors",
+  note = "Defined as: mean((log(response + 1, exp(1)) - log(truth + 1, exp(1)))^2),
+  this measure is mostly used for count data, note that all predicted and actual target values must be greater or equal '-1'
+  to compute the measure.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureSLE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureSLE
+#' @rdname measures
+#' @format none
+measureSLE = function(truth, response) {
+  if (any(truth < -1))
+    stop("All truth values must be greater or equal -1")
+  if (any(response < -1))
+    stop("All predicted values must be greater or equal -1")
+
+  mean((log(response + 1) - log(truth + 1))^2)
+}
+
+#' @export rsle
+#' @rdname measures
+#' @format none
+rsle = makeMeasure(id = "rsle", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Root squared logarithmic errors",
+  note = "Defined as: sqrt(sle), this measure is mostly used for count data, note that all predicted and actual target values
+  must be greater or equal '-1' to compute the measure.",
+  fun = function(task, model, pred, feats, extra.args) {
+    sqrt(measureSLE(pred$data$truth, pred$data$response))
+  }
+)
+
 ###############################################################################
 ### classif multi ###
 ###############################################################################

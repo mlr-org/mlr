@@ -74,6 +74,7 @@
 \alias{measureRRSE}
 \alias{measureRSQ}
 \alias{measureSAE}
+\alias{measureSLE}
 \alias{measureSSE}
 \alias{measureSSR}
 \alias{measureTN}
@@ -103,9 +104,11 @@
 \alias{rae}
 \alias{rmse}
 \alias{rrse}
+\alias{rsle}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
+\alias{sle}
 \alias{sse}
 \alias{ssr}
 \alias{timeboth}
@@ -176,6 +179,12 @@ measureRAE(truth, response)
 mape
 
 measureMAPE(truth, response)
+
+sle
+
+measureSLE(truth, response)
+
+rsle
 
 mmce
 
