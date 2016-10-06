@@ -670,6 +670,7 @@ test_that("getDefaultMeasure", {
 })
 
 test_that("measures quickcheck", {
+  skip_on_cran()
   options(warn = 2)
   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
   lrn = makeLearner("classif.rpart")
