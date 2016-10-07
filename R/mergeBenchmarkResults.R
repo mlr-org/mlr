@@ -37,7 +37,7 @@ mergeBenchmarkResults = function(...) {
   td = peelList(lapply(set, getBMRTaskDescriptions))
   inequal.td = vlapply(td, function(x) length(unique(x)) > 1)
   if (any(inequal.td))
-    stopf("Task descriptions not equal for tasks: %s", collapse(names(unique.td)[!unique.td]))
+    stopf("Task descriptions not equal for tasks: %s", collapse(names(inequal.td)[!inequal.td]))
 
   # check if BMR use same measures
   # measures = lapply(set, function(x) unique(getBMRMeasureIds(x)))
