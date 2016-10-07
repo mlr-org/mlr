@@ -271,21 +271,22 @@ test_that("check measure calculations", {
   expect_warning(measureMAPE(0,0))
   expect_warning(measureMAPE(c(1,1,1,0),c(2,2,2,2)))
   expect_silent(measureMAPE(c(1,1,1,1),c(2,2,2,2)))
-  # sle
-  sle.test = mean((log(pred.art.regr + 1) - log(tar.regr + 1))^2)
-  sle.perf = performance(pred.regr, measures = sle, model = mod.regr)
-  expect_equal(sle.test, sle$fun(pred = pred.regr))
-  expect_equal(sle.test, as.numeric(sle.perf))
-  # sle throws error for values smaller than -1
+  # msle
+  msle.test = ((log(4 + 1) - log(5 + 1))^2 + (log(11 + 1) - log(10 + 1))^2 +
+  (log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
+  msle.perf = performance(pred.regr, measures = msle, model = mod.regr)
+  expect_equal(msle.test, msle$fun(pred = pred.regr))
+  expect_equal(msle.test, as.numeric(msle.perf))
+  # msle throws error for values smaller than -1
   pred.art.regr.neg = pred.art.regr
   pred.art.regr.neg[[1L]] = -3
   expect_error(measureSLE(tar.regr, pred.art.regr.neg),
     "values must be greater or equal -1")
-  # rsle
-  rsle.test = sqrt(sle.test)
-  rsle.perf = performance(pred.regr, measures = rsle, model = mod.regr)
-  expect_equal(rsle.test, rsle$fun(pred = pred.regr))
-  expect_equal(rsle.test, as.numeric(rsle.perf))
+  # rmsle
+  rmsle.test = sqrt(msle.test)
+  rmsle.perf = performance(pred.regr, measures = rmsle, model = mod.regr)
+  expect_equal(rmsle.test, rmsle$fun(pred = pred.regr))
+  expect_equal(rmsle.test, as.numeric(rmsle.perf))
   
   #test multiclass measures
 
