@@ -280,7 +280,7 @@ test_that("check measure calculations", {
   # msle throws error for values smaller than -1
   pred.art.regr.neg = pred.art.regr
   pred.art.regr.neg[[1L]] = -3
-  expect_error(measureSLE(tar.regr, pred.art.regr.neg),
+  expect_error(measureMSLE(tar.regr, pred.art.regr.neg),
     "values must be greater or equal -1")
   # rmsle
   rmsle.test = sqrt(msle.test)
