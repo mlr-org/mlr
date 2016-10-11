@@ -90,7 +90,7 @@ Suggests:
     GPfit,
     Hmisc,
     ipred,
-    irace (>= 1.0.7),
+    irace (>= 2.0),
     kernlab,
     kknn,
     klaR,
