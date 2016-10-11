@@ -38,8 +38,14 @@ test_that("classif_penalized_fusedlasso", {
   )
 
   tt = function(formula, data, subset = 1:nrow(data), ...) {
+    args = list(...)
+    if (is.null(args$lambda1) & is.null(args$lambda2)) {
+      penalized::penalized(formula, data = data[subset, ],
+        fusedl = TRUE, trace = FALSE, lambda1 = 1, lambda2 = 1, ...)
+    } else {
     penalized::penalized(formula, data = data[subset, ],
       fusedl = TRUE, trace = FALSE, ...)
+    }
   }
 
   tp = function(model, newdata, ...) {

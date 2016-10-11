@@ -27,12 +27,12 @@ test_that("classif_LiblineaRL2LogReg", {
     old.probs.list[[i]] = p$probabilities[, 2L]
   }
 
-  parset.list = list(
-    list(),
-    list(type = 7),
-    list(cost = 5L),
-    list(type = 7, cost = 5L)
-  )
+  # parset.list = list(
+  #   list(),
+  #   list(type = 7),
+  #   list(cost = 5L),
+  #   list(type = 7, cost = 5L)
+  # )
 
   testSimpleParsets("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
