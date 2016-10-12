@@ -34,6 +34,7 @@ test_that("classif_glmboost", {
   testProbParsets("classif.glmboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
 })
 
+
 test_that("classif_glmboost works with family PropOdds", {
   new.binary.df = binaryclass.df
   new.binary.df[,binaryclass.target] = as.ordered(new.binary.df[,binaryclass.target])
@@ -57,4 +58,14 @@ test_that("classif_glmboost works with family PropOdds", {
   testProb("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
   
 })
+
+
+test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaExp'", {
+  families = list("AUC", "AdaExp")
+  lapply(families, FUN = function(x){
+    lrn = makeLearner("classif.glmboost", par.vals = list(family = x), predict.type = "prob")
+    mod = train(lrn, binaryclass.task)
+    expect_error(predict(mod, binaryclass.task), "Predictions of probabilities")
+  })
+}) 
 
