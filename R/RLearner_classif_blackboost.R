@@ -32,7 +32,7 @@ makeRLearner.classif.blackboost = function() {
     properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting With Regression Trees",
     short.name = "blackbst",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC', 'AdaExp' or 'custom.family' probabilities cannot be predcited."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
   )
 }
 
@@ -68,7 +68,7 @@ predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   fam = getHyperPars(.learner)$family
   if (.learner$predict.type == "prob") {
-    if (fam %in% c("AdaExp", "AUC", "custom.family")){
+    if (fam %in% c("AdaExp", "AUC")){
       stopf("Predictions of probabilities are not implemented for family %s", fam)
     } else {
       td = .model$task.desc

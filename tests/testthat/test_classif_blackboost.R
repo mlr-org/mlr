@@ -61,7 +61,19 @@ test_that("classif_blackboost works with family PropOdds", {
   
   testSimple("classif.blackboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
   testProb("classif.blackboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
-  
+
 })
+
+
+test_that("classif_blackboost probability predictions with family 'AUC' and 'AdaExp'", {
+  families = list("AUC", "AdaExp")
+  lapply(families, FUN = function(x){
+    lrn = makeLearner("classif.blackboost", par.vals = list(family = x), predict.type = "prob")
+    mod = train(lrn, binaryclass.task)
+    expect_error(predict(mod, binaryclass.task), "Predictions of probabilities")
+  })
+}) 
+   
+
 
 
