@@ -1,5 +1,9 @@
 # mlr 2.10:
 
+## general
+* update to irace 2.0 -- there are algorithmic changes in irace that may affect
+  performance
+
 ## functions - general
 * generateFilterValuesData: fixed a bug wrt feature ordering
 * imputeLearner: fixed a bug when data actually contained no NAs
@@ -29,6 +33,8 @@
   change any API behavior on the outside, though
 * generateHyperParsEffectData and plotHyperParsEffect now support more than 2
   hyperparameters
+* linear.correlation, rank.correlation, anova.test: use Rfast instead of
+  FSelector/custom implementation now, performance should be much better
 
 ## functions - new
 * filter: randomForest.importance
