@@ -1,5 +1,9 @@
 # mlr 2.10:
 
+## general
+* update to irace 2.0 -- there are algorithmic changes in irace that may affect
+  performance
+
 ## functions - general
 * generateFilterValuesData: fixed a bug wrt feature ordering
 * imputeLearner: fixed a bug when data actually contained no NAs
