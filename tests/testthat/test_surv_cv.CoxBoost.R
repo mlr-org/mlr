@@ -4,11 +4,12 @@ test_that("surv_cv.CoxBoost", {
   requirePackagesOrSkip(c("!Matrix", "!CoxBoost"), default.method = "load")
   
   parset.list = list(
+    list(),
     list(penalty = 5, maxstepno = 200)
   )
   old.predicts.list = list()
   
-  i = 1
+  #i = 1
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     y = as.matrix(surv.train[, surv.target])
@@ -17,6 +18,9 @@ test_that("surv_cv.CoxBoost", {
     
     info = getFixDataInfo(surv.train, factors.to.dummies = TRUE, ordered.to.int = TRUE)
     pars = c(list(time = unname(y[, surv.target[1]]), status=unname(y[, surv.target[2]]), x = as.matrix(fixDataForLearner(x, info))), parset)
+    if (is.null(pars$penalty)) {
+      pars$penalty = penalty = 9 * sum(unname(y[, surv.target[2]]))
+    }
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(CoxBoost::cv.CoxBoost, pars)
     
