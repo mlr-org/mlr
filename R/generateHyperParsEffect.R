@@ -187,7 +187,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
 #'  cases of irregular hyperparameter paths, you will most likely need to use
 #'  this to have a meaningful visualization. Accepts either a regression \link{Learner}
-#'  object or the learner as a string for interpolation. This should not be used with partial
+#'  object or the learner as a string for interpolation. This cannot be used with partial
 #'  dependence.
 #'  Default is \code{NULL}.
 #' @param show.experiments [\code{logical(1)}]\cr
