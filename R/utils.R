@@ -45,13 +45,14 @@ generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
         factor(rep(levels(data[[feature]]), length.out = cutoff),
                levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
       } else {
+        if (nunique <= 5L) {
+          warningf("Number of unique observations for %s is %i. Are you sure you have enough data?",
+            feature, nunique)
+        }
         if (resample != "none") {
           sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
         } else {
-          if (is.integer(data[[feature]]))
-            sort(rep(fmin[[feature]]:fmax[[feature]], length.out = cutoff))
-          else
-            seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
+          seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
         }
       }
     }, simplify = FALSE)
