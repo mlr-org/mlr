@@ -52,7 +52,10 @@ generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
         if (resample != "none") {
           sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
         } else {
-          seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
+          if (is.integer(data[[feature]]))
+            seq.int(fmin[[feature]], fmax[[feature]], length.out = cutoff)
+          else
+            seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
         }
       }
     }, simplify = FALSE)
