@@ -261,21 +261,43 @@ test_that("generatePartialDependenceData", {
 
 test_that("generateFeatureGrid", {
   data = data.frame(
-    w = seq(0, 1, length.out = 3),
-    x = factor(letters[1:3]),
-    y = ordered(1:3),
-    z = 1:3
+    w = seq(0, 1, length.out = 5),
+    x = factor(letters[1:5]),
+    y = ordered(1:5),
+    z = 1:5
   )
+  gridsize = 3
   features = colnames(data)
   fmin = sapply(features, function(x)
-    ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+    ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   fmax = sapply(features, function(x)
-    ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
-  out = generateFeatureGrid(features, data, "none", gridsize = 3, fmin, fmax)
+    ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
 
+  out = generateFeatureGrid(features, data, "none", gridsize = gridsize, fmin, fmax)
+  expect_true(all(sapply(out, length) == gridsize))
   expect_that(out$w, is_a("numeric"))
+  expect_that(range(out$w), equals(range(data$w)))
+  expect_that(length(out$w), equals(gridsize))
   expect_that(out$x, is_a("factor"))
-  expect_that(levels(out$x), equals(letters[1:3]))
+  expect_that(length(out$x), equals(gridsize))
+  expect_that(levels(out$x), equals(levels(data$x)))
   expect_that(out$y, is_a("ordered"))
+  expect_that(levels(out$y), equals(levels(data$y)))
+  expect_that(range(out$y), equals(range(data$y)))
   expect_that(out$z, is_a("integer"))
+  expect_that(range(out$z), equals(range(data$z)))
+
+  out_sub = generateFeatureGrid(features, data, "subsample",
+    gridsize = gridsize, fmin, fmax)
+  expect_true(all(sapply(out_sub, length) == gridsize))
+  expect_that(out_sub$w, is_a("numeric"))
+  expect_that(length(out_sub$w), equals(gridsize))
+  expect_that(out_sub$x, is_a("factor"))
+  expect_that(length(out_sub$x), equals(gridsize))
+  expect_that(levels(out_sub$x), equals(levels(data$x)))
+  expect_that(out_sub$y, is_a("ordered"))
+  expect_that(levels(out_sub$y), equals(levels(data$y)))
+  expect_that(out_sub$z, is_a("integer"))
 })
