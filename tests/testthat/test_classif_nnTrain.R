@@ -16,7 +16,7 @@ test_that("classif_nnTrain", {
       onehot[ind,i] = 1
     }
 
-    m = deepnet::nn.train(x = x, y = onehot, hidden = 7, output = "softmax")
+    m = deepnet::nn.train(x = x, y = onehot, output = "softmax")
     p = deepnet::nn.predict(m, data.matrix(binaryclass.test[,-ncol(binaryclass.test)]))
     colnames(p) = binaryclass.class.levs
     p = as.factor(colnames(p)[max.col(p)])
@@ -24,7 +24,7 @@ test_that("classif_nnTrain", {
 
   set.seed(getOption("mlr.debug.seed"))
   testSimple("classif.nnTrain", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
-             parset = list(hidden = 7))
+             parset = list())
 
   lrn = makeLearner("classif.nnTrain", max.number.of.layers = 2, hidden = 1:3)
   m = getLearnerModel(train(lrn, binaryclass.task))
