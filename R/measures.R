@@ -348,6 +348,47 @@ measureMAPE = function(truth, response){
   return(mean(abs((truth-response)/truth)))
 }
 
+#' @export msle
+#' @rdname measures
+#' @format none
+msle = makeMeasure(id = "msle", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Mean squared logarithmic error",
+  note = "Defined as: mean((log(response + 1, exp(1)) - log(truth + 1, exp(1)))^2).
+  This measure is mostly used for count data, note that all predicted and actual target values must be greater or equal '-1'
+  to compute the measure.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureMSLE(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureMSLE
+#' @rdname measures
+#' @format none
+measureMSLE = function(truth, response) {
+  if (any(truth < -1))
+    stop("All truth values must be greater or equal -1")
+  if (any(response < -1))
+    stop("All predicted values must be greater or equal -1")
+
+  mean((log(response + 1) - log(truth + 1))^2)
+}
+
+#' @export rmsle
+#' @rdname measures
+#' @format none
+rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Root mean squared logarithmic error",
+  note = "Defined as: sqrt(msle). Definition taken from:
+  Definition taken from: https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError.
+  This measure is mostly used for count data, note that all predicted and actual target values
+  must be greater or equal '-1' to compute the measure.",
+  fun = function(task, model, pred, feats, extra.args) {
+    sqrt(measureMSLE(pred$data$truth, pred$data$response))
+  }
+)
+
 ###############################################################################
 ### classif multi ###
 ###############################################################################
