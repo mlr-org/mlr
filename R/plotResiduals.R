@@ -1,40 +1,61 @@
-#' @title Create box or violin plots for a BenchmarkResult.
+#' @title Create residual plots for prediction objects or benchmark results.
 #'
 #' @description
-#' Plots box or violin plots for a selected \code{measure} across all iterations
-#' of the resampling strategy, faceted by the \code{task.id}.
+#' FIXME
 #'
-#' @template arg_bmr
-#' @template arg_measure
-#' @param style [\code{character(1)}]\cr
-#'   Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
-#'   Default is \dQuote{box}.
+#' @param obj [\code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
+#'   Input data.
+#' @param type Type of plot. Can be \dQuote{scatterplot}, the default. Or
+#' @param loess.smooth [\code{logical(1)}]\cr
+#'   Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
+#'   Only applicable if \code{type} is set to \code{scatterplot}.
 #' @param pretty.names [\code{logical(1)}]\cr
-#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
-#'   Default is \code{TRUE}.
-#' @template arg_facet_nrow_ncol
-#' @template arg_order_lrns
-#' @template arg_order_tsks
+#'   If \code{TRUE}, the default, learner short names will be printed.
 #' @template ret_gg2
 #' @family plot
 #' @export
 #' @examples
 #' # see benchmark
-plotResiduals = function(pred) {
-# , measure = NULL, style = "box", order.lrns = NULL,
-#  order.tsks = NULL, pretty.names = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
+plotResiduals = function(obj, loess.smooth = TRUE) {
+  assertLogical(loess.smooth, len = 1L)
+  UseMethod("plotResiduals")
+}
 
-  # assertClass(pred, c("PredictionClassif", "PredictionRegr"))
-  assertClass(pred, "Prediction")
+#' @export
+plotResiduals.Prediction = function(obj, loess.smooth = TRUE) {
 
-  df = as.data.frame(pred)
+  task.type = obj$task.desc$type
+  if (task.type %nin% c("regr", "classif"))
+    stop("Unsupported type")
+
+  df = as.data.frame(obj)
 
   p = ggplot(df, aes_string("truth", "response")) + geom_point()
-  # p = p + theme(axis.title.x = element_blank(), axis.text.x = element_text(angle = -45, hjust = 0))
-
+  p = p + ggtitle("True value vs. fitted value")
   
-  # if (pretty.names)
-  #  p = p + ylab(measure$name)
+  if (loess.smooth)
+    p = p + stat_smooth(se = FALSE)
 
   return(p)
 }
+
+#' @export
+plotResiduals.BenchmarkResult = function(obj, loess.smooth = TRUE) {
+  # FIXME: We want a getter for the task.desc. PR 914 will implement this.
+  bmr.preds = unlist(getBMRPredictions(bmr), recursive = FALSE)
+  task.types = extractSubList(bmr.preds, c("task.desc", "type"))
+  if (any(task.types %nin% c("regr", "classif")))
+    stop("Unsupported type")
+
+  preds = getBMRPredictions(obj, as.df = TRUE)
+
+  p = ggplot(preds, aes_string("truth", "response")) + geom_point()
+  p = p + facet_wrap(learner.id ~ task.id)
+  p = p + ggtitle("True value vs. fitted value")
+  
+  if (loess.smooth)
+    p = p + stat_smooth(se = FALSE)
+
+  return(p)
+}
+
