@@ -10,7 +10,7 @@ bibentry(
     person("Jakob", "Richter"),
     person("Erich", "Studerus"),
     person("Giuseppe", "Casalicchio"),
-    person(given = "Zachary M.", "Jones")
+    person("Zachary M.", "Jones")
   ),
   journal = "Journal of Machine Learning Research",
   year = 2016L,
