@@ -238,7 +238,7 @@ test.join = makeAggregation(
       if (pred$predict.type == "response") y = df$response
       if (pred$predict.type == "prob") {
         y = df[, stri_startswith_fixed(colnames(df), "prob."), drop = FALSE]
-        colnames(y) = stri_replace_first_fixed("prob.", "", colnames(y))
+        colnames(y) = stri_sub(colnames(y), 6L)
       }
       npred = makePrediction(task.desc = pred$task.desc, row.names = rownames(df),
         id = NULL, truth = df$truth, predict.type = pred$predict.type, y = y,
