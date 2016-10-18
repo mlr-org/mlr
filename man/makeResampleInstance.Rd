@@ -58,6 +58,7 @@ rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 Other resample: \code{\link{ResamplePrediction}},
   \code{\link{ResampleResult}},
   \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}}, \code{\link{resample}}
 }
 
