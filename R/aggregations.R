@@ -237,8 +237,8 @@ test.join = makeAggregation(
     mean(vnapply(split(df, f), function(df) {
       if (pred$predict.type == "response") y = df$response
       if (pred$predict.type == "prob") {
-        y = df[,grepl("^prob[.]", colnames(df))]
-        colnames(y) = gsub("^prob[.]", "", colnames(y))
+        y = df[, stri_startswith_fixed(colnames(df), "prob."), drop = FALSE]
+        colnames(y) = stri_replace_first_fixed("prob.", "", colnames(y))
       }
       npred = makePrediction(task.desc = pred$task.desc, row.names = rownames(df),
         id = NULL, truth = df$truth, predict.type = pred$predict.type, y = y,
