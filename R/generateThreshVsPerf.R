@@ -232,7 +232,7 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' plotThreshVsPerfGGVIS(pvs)
 #' }
 plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real_, pretty.names = TRUE) {
-  requirePackages("_shiny")
+  requirePackages("_ggvis")
   assertClass(obj, classes = "ThreshVsPerfData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
