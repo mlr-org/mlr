@@ -136,7 +136,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 plotThreshVsPerf = function(obj, measures = obj$measures,
   facet = "measure", mark.th = NA_real_,
   pretty.names = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
-  
+
   assertClass(obj, classes = "ThreshVsPerfData")
   mappings = c("measure", "learner")
   assertChoice(facet, mappings)
@@ -232,6 +232,7 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' plotThreshVsPerfGGVIS(pvs)
 #' }
 plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real_, pretty.names = TRUE) {
+  requirePackages("_shiny")
   assertClass(obj, classes = "ThreshVsPerfData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
@@ -302,6 +303,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   }
 
   if (!is.null(interaction)) {
+    requirePackages("_shiny")
     ui = shiny::shinyUI(
       shiny::pageWithSidebar(
         shiny::headerPanel("Threshold vs. Performance"),
