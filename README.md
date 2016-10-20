@@ -92,6 +92,8 @@ News
 ====
 Changes of the packages can be accessed in the [NEWS file](https://github.com/mlr-org/mlr/blob/master/NEWS.md) shipped with the package.
 
+* 2016-10-20:
+  * The JMLR paper on mlr is finally published! See "How to cite" section above.
 * 2016-08-24:
   * We have a (still smallish) [blog](https://mlr-org.github.io/) on things related to mlr.
 * 2016-08-06:
