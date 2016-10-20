@@ -6,7 +6,7 @@ makeRLearner.regr.xgboost = function() {
     par.set = makeParamSet(
       # we pass all of what goes in 'params' directly to ... of xgboost
       #makeUntypedLearnerParam(id = "params", default = list()),
-      makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear")),
+      makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear", "dart")),
       makeIntegerLearnerParam(id = "silent", default = 0L, tunable = FALSE),
       makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "gamma", default = 0, lower = 0),
@@ -33,7 +33,10 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "print.every.n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
       makeIntegerLearnerParam(id = "early.stop.round", default = NULL, lower = 1L, special.vals = list(NULL)),
-      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE)
+      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE),
+      makeDiscreteLearnerParam(id = "normalize_type", default = "tree", values = c("tree", "forest"), requires = quote(booster == "dart")),
+      makeNumericLearnerParam(id = "rate_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
+      makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart"))
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
     properties = c("numerics", "factors", "weights", "featimp"),
