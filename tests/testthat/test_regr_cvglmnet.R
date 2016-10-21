@@ -4,6 +4,7 @@ test_that("regr_cvglmnet", {
   requirePackagesOrSkip("glmnet", default.method = "load")
 
   parset.list = list(
+    list(),
     list(nlambda = 20L, nfolds = 5L),
     list(family = "poisson", alpha = 0.5)
   )

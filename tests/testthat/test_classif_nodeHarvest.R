@@ -4,6 +4,7 @@ test_that("classif_nodeHarvest", {
   requirePackagesOrSkip("nodeHarvest", default.method = "load")
 
   parset.list = list(
+    list(),
     list(nodes = 100L),
     list(nodes = 100L, maxinter = 1L),
     list(nodes = 100L, mode = "outbag")
