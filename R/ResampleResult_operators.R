@@ -67,10 +67,10 @@ getRRPredictionList = function(res, ...) {
     p.split = lapply(p.split, function (p) {
       # get predictions based on predict.type
       if (predict.type == "prob") {
-        y = p[,grepl("^prob[.]", colnames(p))]
+        y = p[,stri_detect_regex(colnames(p), "^prob[.]")]
         # we need to remove the "prob." part in the colnames, otherwise
         # makePrediction thinks that the factor starts with "prob."
-        colnames(y) =  gsub("^prob[.]", "", colnames(y))
+        colnames(y) = stri_replace_first(colnames(y), replacement =  "", regex = "^prob[.]")
       } else {
         y = p$response
       }
