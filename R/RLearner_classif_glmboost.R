@@ -54,12 +54,12 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
 predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  fam = getHyperPars(.learner)$family
   if (.learner$predict.type  == "prob") {
-    if (fam %in% c("AdaExp", "AUC")){
-      stopf("Predictions of probabilities are not implemented for family %s", fam)
+    if (!is.matrix(p) && is.na(p)){
+      stopf("Predictions of probabilities are not implemented for family %s", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc
+      if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) # one observation prediction + family PropOddas returns a numeric vector instead of matrix
       p = p[, 1L]
       levs = c(td$negative, td$positive)
       return(propVectorToMatrix(p, levs))
