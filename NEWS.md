@@ -73,6 +73,7 @@
 * ssr, qsr, lsr
 * rrse, rae, mape
 * kappa, wkappa
+* msle, rmsle
 
 # mlr 2.9:
 

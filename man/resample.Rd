@@ -144,6 +144,7 @@ print(r$aggr)
 Other resample: \code{\link{ResamplePrediction}},
   \code{\link{ResampleResult}},
   \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}}
 }

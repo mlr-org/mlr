@@ -14,3 +14,17 @@ getRRPredictions = function(res) {
   else
     res$pred
 }
+
+#' @title Get task description from resample results.
+#'
+#' @description
+#' Get a summarizing task description.
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [\code{TaskDesc}].
+#' @export
+#' @family resample
+getRRTaskDescription = function(res) {
+  res$task.desc
+}

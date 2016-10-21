@@ -51,8 +51,6 @@ trainLearner.regr.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
   if (!is.null(.weights))
     args$weights = .weights
 
-  td = getTaskDescription(.task)
-
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
   if (any(is.ctrl.arg)) {
