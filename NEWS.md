@@ -49,6 +49,7 @@
 * makeLearners: create multiple learners at once
 * getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages
 * getLearnerParamSet, getLearnerParVals
+* getRRPredictionList
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
