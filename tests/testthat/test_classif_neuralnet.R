@@ -3,6 +3,7 @@ context("classif_neuralnet")
 test_that("classif_neuralnet", {
   requirePackagesOrSkip("neuralnet", default.method = "load")
   
+  # test with empty paramset
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
     # neuralnet is not dealing with formula with `.` well
@@ -26,7 +27,7 @@ test_that("classif_neuralnet", {
   testSimple("classif.neuralnet", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
     parset = list())
 
-  
+  # test with params passed
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
     # neuralnet is not dealing with formula with `.` well
@@ -47,9 +48,10 @@ test_that("classif_neuralnet", {
   })
 
   set.seed(getOption("mlr.debug.seed"))
-  testSimple("classif.neuralnet", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
-             parset = list(hidden = 7, err.fct = "ce"))
-  # Neuralnet doesn't have the `predict` method
+  testSimple("classif.neuralnet", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, p, parset = list(hidden = 7, err.fct = "ce"))
+
+# Neuralnet doesn't have the `predict` method
 #   set.seed(getOption("mlr.debug.seed"))
 #   lrn = makeLearner("classif.neuralnet",hidden=7)
 #   task = makeClassifTask(data = binaryclass.df, target = binaryclass.target)

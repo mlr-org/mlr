@@ -34,7 +34,6 @@ test_that("classif_dbnDNN", {
     pars = list(x = x, y = onehot)
     pars = c(pars, parset)
     m = do.call(deepnet::dbn.dnn.train, pars)
-    #m = deepnet::dbn.dnn.train(x = x, y = onehot, hidden = 7, output = "softmax")
     p = deepnet::nn.predict(m, data.matrix(binaryclass.test[,-ncol(binaryclass.test)]))
     colnames(p) = binaryclass.class.levs
     old.predicts.list[[i]] = as.factor(colnames(p)[max.col(p)])
