@@ -68,7 +68,7 @@ predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (.learner$predict.type == "prob") {
     if (!is.matrix(p) && is.na(p)){
-      stopf("Predictions of probabilities are not implemented for family %s", getHyperPars(.learner)$family)
+      stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc
       if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) # one observation prediction + family PropOddas returns a numeric vector instead of matrix
