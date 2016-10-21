@@ -447,13 +447,12 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   target = td$target
 
   ## generate each effect
-  args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, ...)
-  pd = lapply(U, function(u) {
+  pd = lapply(U, function(u, args) {
     args$features = u
     args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
     out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(args$rng)), more.args = args)
     doAggregatePartialDependence(out, td, target, u, args$rng)
-  })
+  }, args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, ...))
   names(pd) = effects
 
   if (all(c("upper", "lower") %in% colnames(pd[[1]])) |
@@ -523,7 +522,7 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
     else
       apply(getPredictionProbabilities(pred), 2, fun, ...)
   }
-  
+
   if (!individual) {
     # construct function appropriate for numDeriv w/ aggregate predictions
     if (obj$learner$predict.type == "response")
@@ -535,7 +534,7 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
       sapply(1:nrow(data), function(idx)
         numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
           features = features, fun = fun.wrapper, td = td, ...))
-    else      
+    else
       t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
         data = data[idx,, drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
   }
@@ -866,6 +865,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
 #' @template ret_ggv
 #' @export
 plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
+  requirePackages("_ggvis")
   assertClass(obj, "PartialDependenceData")
   if (!is.null(interact))
     assertChoice(interact, obj$features)
@@ -912,42 +912,50 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
     classif = td$type == "classif" & all(target %in% td$class.levels)
     if (classif) {
       if (interaction)
-        plt = ggvis(data, prop("x", as.name(x)),
-                    prop("y", as.name("Probability")),
-                    prop("stroke", as.name("Class")))
+        plt = ggvis::ggvis(data,
+          ggvis::prop("x", as.name(x)),
+          ggvis::prop("y", as.name("Probability")),
+          ggvis::prop("stroke", as.name("Class")))
       else if (!interaction & !is.null(interact)) ## no interaction but multiple features
-        plt = ggvis(data, prop("x", as.name("Value")),
-                    prop("y", as.name("Probability")),
-                    prop("stroke", as.name("Class")))
+        plt = ggvis::ggvis(data,
+          ggvis::prop("x", as.name("Value")),
+          ggvis::prop("y", as.name("Probability")),
+          ggvis::prop("stroke", as.name("Class")))
       else
-        plt = ggvis(data, prop("x", as.name(x)),
-                    prop("y", as.name("Probability")),
-                    prop("stroke", as.name("Class")))
+        plt = ggvis::ggvis(data,
+          ggvis::prop("x", as.name(x)),
+          ggvis::prop("y", as.name("Probability")),
+          ggvis::prop("stroke", as.name("Class")))
 
     } else { ## regression/survival
       if (interaction)
-        plt = ggvis(data, prop("x", as.name(x)),
-                    prop("y", as.name(target)))
+        plt = ggvis::ggvis(data,
+          ggvis::prop("x", as.name(x)),
+          ggvis::prop("y", as.name(target)))
       else if (!interaction & !is.null(interact))
-        plt = ggvis(data, prop("x", as.name("Value")),
-                    prop("y", as.name(target)))
+        plt = ggvis::ggvis(data,
+          ggvis::prop("x", as.name("Value")),
+          ggvis::prop("y", as.name(target)))
       else
-        plt = ggvis(data, prop("x", as.name(x)), prop("y", as.name(target)))
+        plt = ggvis::ggvis(data,
+          ggvis::prop("x", as.name(x)),
+          ggvis::prop("y", as.name(target)))
     }
 
     if (bounds)
-      plt = layer_ribbons(plt, prop("y", as.name("lower")),
-                          prop("y2", as.name("upper")),
-                          prop("opacity", .5))
+      plt = ggvis::layer_ribbons(plt,
+        ggvis::prop("y", as.name("lower")),
+        ggvis::prop("y2", as.name("upper")),
+        ggvis::prop("opacity", .5))
     if (individual) {
       plt = ggvis::group_by_.ggvis(plt, as.name("idx"))
-      plt = layer_paths(plt, prop("opacity", .25))
+      plt = ggvis::layer_paths(plt, ggvis::prop("opacity", .25))
     } else {
       if (classif)
-        plt = layer_points(plt, prop("fill", as.name("Class")))
+        plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("Class")))
       else
-        plt = layer_points(plt)
-      plt = layer_lines(plt)
+        plt = ggvis::layer_points(plt)
+      plt = ggvis::layer_lines(plt)
     }
 
     plt
@@ -961,23 +969,24 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
     header = target
 
   if (!is.null(interact)) {
-    panel = selectInput("interaction_select", interact, choices)
-    ui = shinyUI(
-      pageWithSidebar(
-        headerPanel(header),
-        sidebarPanel(panel),
-        mainPanel(
-          uiOutput("ggvis_ui"),
-          ggvisOutput("ggvis")
+    requirePackages("_shiny")
+    panel = shiny::selectInput("interaction_select", interact, choices)
+    ui = shiny::shinyUI(
+      shiny::pageWithSidebar(
+        shiny::headerPanel(header),
+        shiny::sidebarPanel(panel),
+        shiny::mainPanel(
+          shiny::uiOutput("ggvis_ui"),
+          ggvis::ggvisOutput("ggvis")
         )
       ))
-    server = shinyServer(function(input, output) {
-      plt = reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
-                                 obj$data[obj$data[[interact]] == input$interaction_select, ],
-                                 x, bounds))
-      bind_shiny(plt, "ggvis", "ggvis_ui")
-    })
-    shinyApp(ui, server)
+    server = shiny::shinyServer(function(input, output) {
+      plt = shiny::reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
+          obj$data[obj$data[[interact]] == input$interaction_select, ],
+          x, bounds))
+      ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
+      })
+    shiny::shinyApp(ui, server)
   } else
     create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
 }

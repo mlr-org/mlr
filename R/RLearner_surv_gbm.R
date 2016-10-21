@@ -27,7 +27,7 @@ makeRLearner.surv.gbm = function() {
 trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  
+
   if (is.null(.weights)) {
     gbm::gbm(f, data = d, distribution = "coxph", ...)
   } else  {
@@ -37,7 +37,6 @@ trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
 
 #' @export
 predictLearner.surv.gbm = function(.learner, .model, .newdata, ...) {
-  td = .model$task.desc
   m = .model$learner.model
   gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
 }

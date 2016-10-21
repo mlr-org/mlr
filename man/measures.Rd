@@ -59,6 +59,7 @@
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMSLE}
 \alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
 \alias{measureMultilabelACC}
@@ -86,6 +87,7 @@
 \alias{medse}
 \alias{mmce}
 \alias{mse}
+\alias{msle}
 \alias{multiclass.au1p}
 \alias{multiclass.au1u}
 \alias{multiclass.aunp}
@@ -102,6 +104,7 @@
 \alias{qsr}
 \alias{rae}
 \alias{rmse}
+\alias{rmsle}
 \alias{rrse}
 \alias{rsq}
 \alias{sae}
@@ -176,6 +179,12 @@ measureRAE(truth, response)
 mape
 
 measureMAPE(truth, response)
+
+msle
+
+measureMSLE(truth, response)
+
+rmsle
 
 mmce
 
