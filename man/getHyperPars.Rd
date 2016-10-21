@@ -26,9 +26,16 @@ Retrieves the current hyperparameter settings of a learner.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getParamSet}}, \code{\link{makeLearner}},
+  \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{makeLearners}}, \code{\link{makeLearner}},
   \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }

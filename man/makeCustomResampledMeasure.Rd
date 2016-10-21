@@ -21,20 +21,7 @@ Should the measure be minimized?
 Default is \code{TRUE}.}
 
 \item{properties}{[\code{character}]\cr
-Set of measure properties. Some standard property names include:
-\describe{
-  \item{classif}{Is the measure applicable for classification?}
-  \item{classif.multi}{Is the measure applicable for multi-class classification?}
-  \item{regr}{Is the measure applicable for regression?}
-  \item{surv}{Is the measure applicable for survival?}
-  \item{costsens}{Is the measure applicable for cost-sensitive learning?}
-  \item{req.pred}{Is prediction object required in calculation? Usually the case.}
-  \item{req.truth}{Is truth column required in calculation? Usually the case.}
-  \item{req.task}{Is task object required in calculation? Usually not the case}
-  \item{req.model}{Is model object required in calculation? Usually not the case.}
-  \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-  \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
-}
+Set of measure properties. For a list of values see \code{\link{Measure}}.
 Default is \code{character(0)}.}
 
 \item{fun}{[\code{function(task, group, pred, extra.args)}]\cr

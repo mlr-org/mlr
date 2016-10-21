@@ -2,13 +2,21 @@ context("regr_penalized_fusedlasso")
 
 test_that("regr_penalized_fusedlasso", {
   requirePackages("!penalized", default.method = "load")
+  
   parset.list = list(
+    list(),
     list(maxiter = 2L),
     list(lambda1 = 2, maxiter = 4L),
     list(lambda1 = 2, lambda2 = 1, maxiter = 2L),
     list(lambda2 = 2, maxiter = 4L)
   )
 
+  # to make test of empty list feasable (in terms of time), number of obs need to be reduced
+  regr.train.inds = sample(seq(1,506), size = 150)
+  regr.test.inds  = setdiff(1:nrow(regr.df), regr.train.inds)
+  regr.train = regr.df[regr.train.inds, ]
+  regr.test  = regr.df[regr.test.inds, ]
+  
   old.predicts.list = list()
   old.probs.list = list()
 
@@ -33,12 +41,20 @@ test_that("regr_penalized_fusedlasso", {
     regr.train.inds, old.predicts.list, parset.list)
 
   parset.list = list(
+    list(),
     list(lambda1 = 2, lambda2 = 1, maxiter = 2L),
     list(lambda1 = 1, lambda2 = 2, maxiter = 4L)
   )
 
   tt = function(formula, data, subset = 1:nrow(data), ...) {
-    penalized::penalized(formula, data = data[subset, ], fusedl = TRUE, ...)
+    args = list(...)
+    if (is.null(args$lambda1) & is.null(args$lambda2)) {
+      penalized::penalized(formula, data = data[subset, ],
+        fusedl = TRUE, trace = FALSE, lambda1 = 1, lambda2 = 1, ...)
+    } else {
+      penalized::penalized(formula, data = data[subset, ],
+        fusedl = TRUE, trace = FALSE, ...)
+    }
   }
 
   tp = function(model, newdata, ...) {

@@ -14,6 +14,7 @@ test_that("surv_ranger", {
   expect_is(p, "PredictionSurv")
 
   parset.list = list(
+    list(),
     list(num.trees = 10)
   )
 

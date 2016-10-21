@@ -2,9 +2,7 @@ language: r
 sudo: false
 cache: packages
 r:
-  - oldrel
   - release
-  - devel
 
 addons:
   apt:
@@ -15,6 +13,7 @@ addons:
       - g++-4.9
       - gfortran-4.9
       - libgmp-dev
+      - libgsl0-dev
 env:
   global:
     - _R_CHECK_TIMINGS_=0

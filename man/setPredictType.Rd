@@ -33,9 +33,16 @@ encapsulated learner in a recursive fashion.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{makeLearners}}, \code{\link{makeLearner}},
+  \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}}
 
 Other predict: \code{\link{asROCRPrediction}},

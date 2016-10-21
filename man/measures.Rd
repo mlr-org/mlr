@@ -24,9 +24,11 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
+\alias{kappa}
 \alias{logloss}
 \alias{lsr}
 \alias{mae}
+\alias{mape}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
@@ -47,14 +49,17 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureKAPPA}
 \alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
+\alias{measureMAPE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMSLE}
 \alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
 \alias{measureMultilabelACC}
@@ -65,7 +70,9 @@
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureQSR}
+\alias{measureRAE}
 \alias{measureRMSE}
+\alias{measureRRSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
@@ -74,11 +81,13 @@
 \alias{measureTNR}
 \alias{measureTP}
 \alias{measureTPR}
+\alias{measureWKAPPA}
 \alias{measures}
 \alias{medae}
 \alias{medse}
 \alias{mmce}
 \alias{mse}
+\alias{msle}
 \alias{multiclass.au1p}
 \alias{multiclass.au1u}
 \alias{multiclass.aunp}
@@ -93,7 +102,10 @@
 \alias{npv}
 \alias{ppv}
 \alias{qsr}
+\alias{rae}
 \alias{rmse}
+\alias{rmsle}
+\alias{rrse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
@@ -106,6 +118,7 @@
 \alias{tnr}
 \alias{tp}
 \alias{tpr}
+\alias{wkappa}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -155,6 +168,24 @@ measureEXPVAR(truth, response)
 
 arsq
 
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
+
+msle
+
+measureMSLE(truth, response)
+
+rmsle
+
 mmce
 
 measureMMCE(truth, response)
@@ -200,6 +231,14 @@ measureQSR(probabilities, truth)
 lsr
 
 measureLSR(probabilities, truth)
+
+kappa
+
+measureKAPPA(truth, response)
+
+wkappa
+
+measureWKAPPA(truth, response)
 
 auc
 

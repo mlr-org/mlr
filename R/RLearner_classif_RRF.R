@@ -7,11 +7,11 @@ makeRLearner.classif.RRF = function() {
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       # FIXME: Add default value when data dependent defaults are implemented:
       # mtry = floor(ncol(x)/3)
-      makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L), 
-      makeIntegerLearnerParam(id = "nodesize", lower = 1L), 
+      makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L),
+      makeIntegerLearnerParam(id = "nodesize", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0), 
-      makeNumericLearnerParam(id = "coefReg", default = 0.8, 
+      makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0),
+      makeNumericLearnerParam(id = "coefReg", default = 0.8,
                               requires = quote(flagReg == 1L)),
       makeIntegerVectorLearnerParam(id = "feaIni", lower = 0, upper = Inf,
                                     requires = quote(flagReg == 1L)),
@@ -38,8 +38,7 @@ makeRLearner.classif.RRF = function() {
 
 #' @export
 trainLearner.classif.RRF = function(.learner, .task, .subset, .weights, ...) {
-  args = list(...)
-  RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset), 
+  RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
            keep.forest= TRUE, ...)
 }
 
@@ -61,6 +60,6 @@ getFeatureImportanceLearner.classif.RRF = function(.learner, .model, ...) {
     if (is.null(has.fiv) || has.fiv != TRUE)
       stop("You need to train the learner with parameter 'importance' set to TRUE")
   }
-  
+
   RRF::importance(mod, ctrl$type)[,1]
 }

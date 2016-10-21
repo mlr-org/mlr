@@ -7,7 +7,7 @@
 \usage{
 generateFunctionalANOVAData(obj, input, features, depth = 1L, fun = mean,
   bounds = c(qnorm(0.025), qnorm(0.975)), resample = "none", fmin, fmax,
-  gridsize = 10L)
+  gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -27,7 +27,11 @@ An integer indicating the depth of interaction amongst the features to compute. 
 A function that accepts a numeric vector and returns either a single number
 such as a measure of location such as the mean, or three numbers, which give a lower bound,
 a measure of location, and an upper bound. Note if three numbers are returned they must be
-in this order. The default is the mean.}
+in this order. Two variables, \code{data} and \code{newdata} are made available to \code{fun} internally via a
+wrapper. `data` is the training data from `input` and `newdata` contains a single point from the
+prediction grid for \code{features} along with the training data for features not in \code{features}.
+This allows the computation of weights based on comparisons of the prediction grid to the training data.
+The default is the mean.}
 
 \item{bounds}{[\code{numeric(2)}]\cr
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
