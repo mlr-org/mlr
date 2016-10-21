@@ -19,6 +19,7 @@ Get a summarizing task description.
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
   \code{\link{ResampleResult}},
+  \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},

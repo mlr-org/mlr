@@ -19,6 +19,7 @@ Very simple getter.
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
   \code{\link{ResampleResult}},
+  \code{\link{getRRPredictionList}},
   \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},
