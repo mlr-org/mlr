@@ -136,3 +136,31 @@ test_that("resample has error messages when prediction fails", {
   configureMlr(on.learner.error = on.learner.error.saved)
   configureMlr(on.learner.warning = on.learner.warning.saved)
 })
+
+
+test_that("resample is extended by an additional measure", {
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+
+  # check if it works with test, both
+  # FIXME: add "train" after https://github.com/mlr-org/mlr/issues/1284 has been fixed
+  predict = c("test", "both")
+  for (p in predict) {
+    rdesc = makeResampleDesc("CV", iter = 3, predict = p)
+    measures = list(mmce, ber, auc, brier)
+    #if (p == "train") measures = lapply(measures, setAggregation, train.mean)
+    # create ResampleResult with all measures
+    res.all = resample(lrn, binaryclass.task, rdesc, measures)
+    # create ResampleResult with one measure and add the other ones afterwards
+    res = resample(lrn, binaryclass.task, rdesc, measures[[1]])
+    res.add = addRRMeasure(res, measures[-1])
+
+    # check if both ResampleResult objects are equal
+    expect_equal(res.all$measures.train, res.add$measures.train)
+    expect_equal(res.all$measures.test, res.add$measures.test)
+    expect_equal(res.all$aggr, res.add$aggr)
+  }
+
+  # keep.pred must be TRUE
+  res = resample(lrn, binaryclass.task, cv3, mmce, keep.pred = FALSE)
+  expect_error(addRRMeasure(res, auc), "keep.pred")
+})
