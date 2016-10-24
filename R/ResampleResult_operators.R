@@ -129,7 +129,10 @@ addRRMeasure = function(res, measures) {
     aggr = vnapply(measures[measures.id %in% missing.measures], function(m) {
       m$aggr$fun(task = NULL,
         perf.test = res$measures.test[, m$id],
-        perf.train = res$measures.train[, m$id], measure = m)
+        perf.train = res$measures.train[, m$id],
+        measure = m,
+        pred = getRRPredictions(res),
+        group = res$pred$instance$group)
     })
     names(aggr) = vcapply(measures[measures.id %in% missing.measures], measureAggrName)
     res$aggr = c(res$aggr, aggr)

@@ -144,20 +144,27 @@ test_that("resample is extended by an additional measure", {
   # check if it works with test, both
   # FIXME: add "train" after https://github.com/mlr-org/mlr/issues/1284 has been fixed
   predict = c("test", "both")
-  for (p in predict) {
-    rdesc = makeResampleDesc("CV", iter = 3, predict = p)
-    measures = list(mmce, ber, auc, brier)
-    #if (p == "train") measures = lapply(measures, setAggregation, train.mean)
-    # create ResampleResult with all measures
-    res.all = resample(lrn, binaryclass.task, rdesc, measures)
-    # create ResampleResult with one measure and add the other ones afterwards
-    res = resample(lrn, binaryclass.task, rdesc, measures[[1]])
-    res.add = addRRMeasure(res, measures[-1])
+  # check if it works with different aggregation methods
+  aggr = list(test.mean, test.median, test.sd, test.range, test.join)
+  for (a in aggr) {
+    cat(".")
+    for (p in predict) {
+      rdesc = makeResampleDesc("CV", iter = 3, predict = p)
+      measures = list(mmce, ber, auc, brier)
+      # set aggregation method
+      measures = lapply(measures, setAggregation, a)
+      #if (p == "train") measures = lapply(measures, setAggregation, train.mean)
+      # create ResampleResult with all measures
+      res.all = resample(lrn, binaryclass.task, rdesc, measures)
+      # create ResampleResult with one measure and add the other ones afterwards
+      res = resample(lrn, binaryclass.task, rdesc, measures[[1]])
+      res.add = addRRMeasure(res, measures[-1])
 
-    # check if both ResampleResult objects are equal
-    expect_equal(res.all$measures.train, res.add$measures.train)
-    expect_equal(res.all$measures.test, res.add$measures.test)
-    expect_equal(res.all$aggr, res.add$aggr)
+      # check if both ResampleResult objects are equal
+      expect_equal(res.all$measures.train, res.add$measures.train)
+      expect_equal(res.all$measures.test, res.add$measures.test)
+      expect_equal(res.all$aggr, res.add$aggr)
+    }
   }
 
   # keep.pred must be TRUE
