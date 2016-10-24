@@ -5,7 +5,7 @@ lrn = makeLearner("regr.rpart")
 mod = train(lrn, tsk)
 pred = predict(mod, tsk)
 
-plotResiduals(pred)
+plotResiduals(pred, type = "hist")
 
 
 
@@ -18,4 +18,4 @@ bmr = benchmark(lrns, tsks)
 
 plotResiduals(bmr)
 
-plotResiduals(bmr, loess.smooth = FALSE)
+plotResiduals(bmr, type = "scatterplot", loess.smooth = FALSE)
