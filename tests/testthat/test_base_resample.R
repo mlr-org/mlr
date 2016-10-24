@@ -147,7 +147,6 @@ test_that("resample is extended by an additional measure", {
   # check if it works with different aggregation methods
   aggr = list(test.mean, test.median, test.sd, test.range, test.join)
   for (a in aggr) {
-    cat(".")
     for (p in predict) {
       rdesc = makeResampleDesc("CV", iter = 3, predict = p)
       measures = list(mmce, ber, auc, brier)
