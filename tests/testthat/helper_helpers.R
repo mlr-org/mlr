@@ -98,7 +98,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-  
+
   if(length(target) == 1) {
     task = makeClassifTask(data = df, target = target)
   } else {
