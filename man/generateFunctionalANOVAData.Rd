@@ -6,8 +6,8 @@
 \title{Generate a functional ANOVA decomposition}
 \usage{
 generateFunctionalANOVAData(obj, input, features, depth = 1L, fun = mean,
-  weight.fun = function(x, data) rep(1, nrow(x)), bounds = c(qnorm(0.025),
-  qnorm(0.975)), resample = "none", fmin, fmax, gridsize = 10L, ...)
+  bounds = c(qnorm(0.025), qnorm(0.975)), resample = "none", fmin, fmax,
+  gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -27,13 +27,11 @@ An integer indicating the depth of interaction amongst the features to compute. 
 A function that accepts a numeric vector and returns either a single number
 such as a measure of location such as the mean, or three numbers, which give a lower bound,
 a measure of location, and an upper bound. Note if three numbers are returned they must be
-in this order. The default is the mean.}
-
-\item{weight.fun}{[\code{function}]\cr
-A function which takes a \code{data.frame} \code{x} and a \code{data.frame} \code{data}
-(both of which are coerced to numeric matrices) and returns a non-negative
-numeric weight. The number of columns in \code{x} must match the column dimension of \code{data}.
-By default \code{weight.fun} returns a weight of 1.}
+in this order. Two variables, \code{data} and \code{newdata} are made available to \code{fun} internally via a
+wrapper. `data` is the training data from `input` and `newdata` contains a single point from the
+prediction grid for \code{features} along with the training data for features not in \code{features}.
+This allows the computation of weights based on comparisons of the prediction grid to the training data.
+The default is the mean.}
 
 \item{bounds}{[\code{numeric(2)}]\cr
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a

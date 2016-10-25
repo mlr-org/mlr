@@ -24,8 +24,10 @@ for details on \dQuote{default}.}
 \description{
 Performs a \code{\link[stats]{friedman.test}} for a selected measure.
 The null hypothesis is that apart from an effect of the different
-[\code{\link{Task}}], the location parameter (aggregated performance-measure)
+[\code{\link{Task}}], the location parameter (aggregated performance measure)
 is the same for each \code{\link{Learner}}.
+Note that benchmark results for at least two learners on at least two tasks
+are required.
 }
 \examples{
 # see benchmark

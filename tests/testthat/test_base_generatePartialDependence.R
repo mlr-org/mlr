@@ -5,7 +5,6 @@ test_that("generateFunctionalANOVAData", {
 
   fr = train("regr.rpart", regr.task)
   dr1 = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 1L, mean, gridsize = gridsize)
-  
   plotPartialDependence(dr1)
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -60,6 +59,8 @@ test_that("generatePartialDependenceData", {
   expect_that(max(dr$data$lstat), equals(40.))
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat))
+  expect_true(all(dr$data$medv >= min(regr.df$medv) | dr$data$medv <= max(regr.df$medv)))
+
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -230,8 +231,17 @@ test_that("generatePartialDependenceData", {
   x[idx] = NA
   test.task = makeRegrTask(data = data.frame(x = x[-idx], y = y[-idx]), target = "y")
   fit = train("regr.rpart", test.task)
-  pd = generatePartialDependenceData(fit, test.task,
-    weight.fun = function(x, data) apply(x, 1, function(z) ifelse(z > .5, 0, 1)),
+
+  fun = function(x, newdata) {
+    w = ifelse(newdata$x > .5, 0, 1)
+    if (sum(w) == 0) {
+      NA
+    } else {
+      weighted.mean(x, w)
+    }
+  }
+  
+  pd = generatePartialDependenceData(fit, test.task, fun = fun,
     fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
   expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
 
@@ -243,25 +253,51 @@ test_that("generatePartialDependenceData", {
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
     individual = TRUE,
     center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
+
+  # issue 63 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    individual = TRUE, derivative = TRUE, gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {
   data = data.frame(
-    w = seq(0, 1, length.out = 3),
-    x = factor(letters[1:3]),
-    y = ordered(1:3),
-    z = 1:3
+    w = seq(0, 1, length.out = 5),
+    x = factor(letters[1:5]),
+    y = ordered(1:5),
+    z = 1:5
   )
+  gridsize = 3
   features = colnames(data)
   fmin = sapply(features, function(x)
-    ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+    ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   fmax = sapply(features, function(x)
-    ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
-  out = generateFeatureGrid(features, data, "none", gridsize = 3, fmin, fmax)
+    ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
 
+  out = generateFeatureGrid(features, data, "none", gridsize = gridsize, fmin, fmax)
+  expect_true(all(sapply(out, length) == gridsize))
   expect_that(out$w, is_a("numeric"))
+  expect_that(range(out$w), equals(range(data$w)))
+  expect_that(length(out$w), equals(gridsize))
   expect_that(out$x, is_a("factor"))
-  expect_that(levels(out$x), equals(letters[1:3]))
+  expect_that(length(out$x), equals(gridsize))
+  expect_that(levels(out$x), equals(levels(data$x)))
   expect_that(out$y, is_a("ordered"))
+  expect_that(levels(out$y), equals(levels(data$y)))
+  expect_that(range(out$y), equals(range(data$y)))
   expect_that(out$z, is_a("integer"))
+  expect_that(range(out$z), equals(range(data$z)))
+
+  out_sub = generateFeatureGrid(features, data, "subsample",
+    gridsize = gridsize, fmin, fmax)
+  expect_true(all(sapply(out_sub, length) == gridsize))
+  expect_that(out_sub$w, is_a("numeric"))
+  expect_that(length(out_sub$w), equals(gridsize))
+  expect_that(out_sub$x, is_a("factor"))
+  expect_that(length(out_sub$x), equals(gridsize))
+  expect_that(levels(out_sub$x), equals(levels(data$x)))
+  expect_that(out_sub$y, is_a("ordered"))
+  expect_that(levels(out_sub$y), equals(levels(data$y)))
+  expect_that(out_sub$z, is_a("integer"))
 })

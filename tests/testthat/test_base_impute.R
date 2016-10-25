@@ -161,6 +161,7 @@ test_that("ImputeWrapper", {
   mm = getLearnerModel(m, more.unwrap = FALSE)
   expect_output(print(mm), "Model")
   expect_is(mm, "WrappedModel")
+  expect_match(lrn$id, "[.]imputed$")
 })
 
 test_that("Impute works on non missing data", { # we had issues here: 848,893

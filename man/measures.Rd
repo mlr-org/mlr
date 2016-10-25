@@ -24,6 +24,7 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
+\alias{kappa}
 \alias{logloss}
 \alias{lsr}
 \alias{mae}
@@ -48,6 +49,7 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureKAPPA}
 \alias{measureLSR}
 \alias{measureLogloss}
 \alias{measureMAE}
@@ -57,6 +59,7 @@
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMSLE}
 \alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
 \alias{measureMultilabelACC}
@@ -78,11 +81,13 @@
 \alias{measureTNR}
 \alias{measureTP}
 \alias{measureTPR}
+\alias{measureWKAPPA}
 \alias{measures}
 \alias{medae}
 \alias{medse}
 \alias{mmce}
 \alias{mse}
+\alias{msle}
 \alias{multiclass.au1p}
 \alias{multiclass.au1u}
 \alias{multiclass.aunp}
@@ -99,6 +104,7 @@
 \alias{qsr}
 \alias{rae}
 \alias{rmse}
+\alias{rmsle}
 \alias{rrse}
 \alias{rsq}
 \alias{sae}
@@ -112,6 +118,7 @@
 \alias{tnr}
 \alias{tp}
 \alias{tpr}
+\alias{wkappa}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -173,6 +180,12 @@ mape
 
 measureMAPE(truth, response)
 
+msle
+
+measureMSLE(truth, response)
+
+rmsle
+
 mmce
 
 measureMMCE(truth, response)
@@ -218,6 +231,14 @@ measureQSR(probabilities, truth)
 lsr
 
 measureLSR(probabilities, truth)
+
+kappa
+
+measureKAPPA(truth, response)
+
+wkappa
+
+measureWKAPPA(truth, response)
 
 auc
 

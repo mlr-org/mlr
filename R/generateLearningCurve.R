@@ -180,6 +180,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #' @template ret_ggv
 #' @export
 plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = TRUE) {
+  requirePackages("_ggvis")
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
@@ -217,6 +218,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
   }
 
   if (!is.null(interaction)) {
+    requirePackages("_shiny")
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
             shiny::headerPanel("learning curve"),
