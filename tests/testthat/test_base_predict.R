@@ -137,3 +137,10 @@ test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
   expect_true(inherits(mod, "FailureModel"))
   expect_warning(predict(mod, multiclass.task), NA)
 })
+
+test_that("predict works with data.table as newdata", {
+  lrn = makeLearner("classif.qda")
+  mod = train(lrn, iris.task)
+  expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
+})
+

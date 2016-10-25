@@ -52,6 +52,10 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     size = getTaskSize(task)
   } else {
     assertDataFrame(newdata, min.rows = 1L)
+    if (class(newdata)[1] != "data.frame") {
+      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
+      newdata = as.data.frame(newdata)
+    }
     size = nrow(newdata)
   }
   if (missing(subset)) {
