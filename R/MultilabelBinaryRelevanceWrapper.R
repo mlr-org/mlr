@@ -61,11 +61,8 @@ doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights)
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(pred) as.logical(getPredictionResponse(pred))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   else
-    function(pred) getPredictionProbabilities(pred, cl = "TRUE")
-  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
-  exportMlrOptions(level = "mlr.ensemble")
-  preds = parallelMap(doHomogeneousPredictIteration, mod = models, more.args = list(.newdata = .newdata, .getPredictionFun = f, ...))
-  asMatrixCols(preds, col.names = .model$task.desc$class.levels)
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
+  asMatrixCols(lapply(models, f))
 }
