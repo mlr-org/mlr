@@ -274,7 +274,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   measures = hyperpars.effect.data$measures
 
   # set flags for building plots
-  na.flag = any(is.na(d[, hyperpars.effect.data$measures]))
+  na.flag = anyMissing(d[, hyperpars.effect.data$measures])
   z.flag = !is.null(z)
   facet.flag = !is.null(facet)
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
