@@ -249,7 +249,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   # assign learner for interpolation
   if (checkClass(interpolate, "Learner") == TRUE ||
       checkString(interpolate) == TRUE) {
-    lrn = checkLearnerRegr(interpolate)
+    lrn = checkLearner(interpolate, "regr")
   }
   assertFlag(show.experiments)
   assertFunction(nested.agg)
@@ -258,7 +258,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     checkNull(partial.dep.learn))
   if (checkClass(partial.dep.learn, "Learner") == TRUE ||
       checkString(partial.dep.learn) == TRUE) {
-    lrn = checkLearnerRegr(partial.dep.learn)
+    lrn = checkLearner(partial.dep.learn, "regr")
   }
   if (!is.null(partial.dep.learn) && !is.null(interpolate))
     stopf("partial.dep.learn and interpolate can't be simultaneously requested!")
