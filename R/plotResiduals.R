@@ -1,7 +1,8 @@
 #' @title Create residual plots for prediction objects or benchmark results.
 #'
 #' @description
-#' FIXME
+#' Plots for model diagnostics. Provides scatterplots of true vs. predicted values
+#' and histograms of the model's residuals. 
 #'
 #' @param obj [\code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
 #'   Input data.
@@ -14,12 +15,13 @@
 #'   Should marginal distributions be added to the plot? Defaults to \code{TRUE}.
 #'   Only applicable if \code{type} is set to \code{scatterplot}.
 #' @param pretty.names [\code{logical(1)}]\cr
-#'   If \code{TRUE}, the default, learner short names will be printed.
+#'   Whether to use the short name of the learner instead of its ID in labels.
+#'   Defaults to \code{TRUE}. \cr
+#'   Only applicable if a \code{\link{BenchmarkResult}}
+#'   is passed to \code{obj} in the function call, ignored otherwise.
 #' @template ret_gg2
 #' @family plot
 #' @export
-#' @examples
-#' # see benchmark
 plotResiduals = function(obj, type = "scatterplot", loess.smooth = TRUE,
   rug = TRUE, pretty.names = TRUE) {
   
@@ -40,7 +42,7 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
 
   df = as.data.frame(obj)
 
-  p = makeResidualPlot(df, type, loess.smooth, rug)
+  p = makeResidualPlot(df, type, loess.smooth, rug, task.type)
 
   return(p)
 }
@@ -49,27 +51,37 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
 plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth = TRUE,
   rug = TRUE, pretty.names = TRUE) {
 
-  # FIXME: We want a getter for the task.desc. PR 914 will implement this.
-  bmr.preds = unlist(getBMRPredictions(bmr), recursive = FALSE)
-  task.type = unique(extractSubList(bmr.preds, c("task.desc", "type")))
+  task.type = getBMRObjects(obj, as.df = TRUE, f = function(X){
+    getRRTaskDescription(X)$type
+  })
+  task.type = unique(task.type$p)
+  
   if (task.type %nin% c("regr", "classif"))
     stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
 
   df = getBMRPredictions(obj, as.df = TRUE)
 
-  p = makeResidualPlot(df, type, loess.smooth, rug)
+  if (pretty.names) {
+    levels(df$learner.id) = getBMRLearnerShortNames(obj)
+  }
+
+  p = makeResidualPlot(df, type, loess.smooth, rug, task.type)
 
   p = p + facet_wrap(learner.id ~ task.id)
 
   return(p)
 }
 
-
 makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
-  rug = TRUE) {
+  rug = TRUE, task.type) {
 
   if (type == "scatterplot") {
-    p = ggplot(df, aes_string("truth", "response")) + geom_count()
+    p = ggplot(df, aes_string("truth", "response"))
+    if (task.type == "classif") {
+      p = p + geom_count()
+    } else {
+      p = p + geom_point()
+    }
 
     if (loess.smooth)
       p = p + geom_smooth(se = FALSE)
@@ -86,4 +98,3 @@ makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
 
   return(p)
 }
-
