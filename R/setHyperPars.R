@@ -39,19 +39,14 @@ setHyperPars2 = function(learner, par.vals) {
 
 #' @export
 setHyperPars2.Learner = function(learner, par.vals) {
-  # ensure that even the empty list is named, we had problems here, see #759
-  # FIXME: PROFILE
-  # if (is.null(ns) && is.null(names(learner$par.vals))) {
-  #   names(learner$par.vals) = character(0L)
-  # }
-
   if (length(par.vals) == 0L)
     return(learner)
 
   ns = names(par.vals)
   pars = learner$par.set$pars
-  on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
-  on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
+  on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOption("on.par.without.desc"))
+  on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOption("on.par.out.of.bounds"))
+
   for (i in seq_along(par.vals)) {
     n = ns[i]
     p = par.vals[[i]]
@@ -59,16 +54,15 @@ setHyperPars2.Learner = function(learner, par.vals) {
     if (is.null(pd)) {
       if (on.par.without.desc != "quiet") {
         # no description: stop warn or quiet
-        msg = sprintf("%s: Setting parameter %s without available description object!",
-          learner$id, n)
+        msg = sprintf("%s: Setting parameter %s without available description object!", learner$id, n)
         # since we couldn't find the par let's look for 3 most similar
         parnames = names(pars)
         indices = head(order(adist(n, parnames)), 3L)
         possibles = parnames[indices]
         if (length(possibles) > 0L) {
-          msg = paste(msg, sprintf("\nDid you mean one of these hyperparameters instead: %s", stri_flatten(possibles, collapse = " ")))
+          msg = paste0(msg, sprintf("\nDid you mean one of these hyperparameters instead: %s", stri_flatten(possibles, collapse = " ")))
         }
-        msg = paste(msg, "\nYou can switch off this check by using configureMlr!")
+        msg = paste0(msg, "\nYou can switch off this check by using configureMlr!")
       }
 
       if (on.par.without.desc == "stop") {
@@ -87,11 +81,13 @@ setHyperPars2.Learner = function(learner, par.vals) {
           warning(msg)
         }
       }
+
       ## if valname of discrete par was used, transform it to real value
       #if (pd$type == "discrete" && is.character(p) && length(p) == 1 && p %in% names(pd$values))
       #  p = pd$values[[p]]
       learner$par.vals[[n]] = p
     }
   }
+
   return(learner)
 }
