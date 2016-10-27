@@ -17,9 +17,8 @@ setMlrOption = function(name, val) {
   do.call(options, setNames(list(val), name))
 }
 
-getMlrOption = function(name, default) {
-  name = sprintf("mlr.%s", name)
-  getOption(name, default)
+getMlrOption = function(name, default = NULL) {
+  getOption(stri_paste("mlr.", name), default)
 }
 
 # FIXME: the mechanism here is not perfect.

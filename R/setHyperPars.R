@@ -41,14 +41,14 @@ setHyperPars2 = function(learner, par.vals) {
 setHyperPars2.Learner = function(learner, par.vals) {
   # ensure that even the empty list is named, we had problems here, see #759
   # FIXME: PROFILE
-  ns = names(par.vals)
-  if (is.null(ns) && is.null(names(learner$par.vals))) {
-    names(learner$par.vals) = character(0L)
-  }
+  # if (is.null(ns) && is.null(names(learner$par.vals))) {
+  #   names(learner$par.vals) = character(0L)
+  # }
 
   if (length(par.vals) == 0L)
     return(learner)
 
+  ns = names(par.vals)
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
   on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
