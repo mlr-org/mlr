@@ -4,7 +4,7 @@
 \alias{predict.WrappedModel}
 \title{Predict new data.}
 \usage{
-predict.WrappedModel(object, task, newdata, subset, ...)
+\method{predict}{WrappedModel}(object, task, newdata, subset, ...)
 }
 \arguments{
 \item{object}{[\code{\link{WrappedModel}}]\cr
