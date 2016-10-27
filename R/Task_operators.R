@@ -259,7 +259,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     assert(checkIntegerish(subset), checkLogical(subset))
     if (is.logical(subset))
       subset = which(subset)
-    if (is.numeric(subset))
+    if (is.numeric(subset) && !is.integer(subset))
       subset = asInteger(subset)
   }
 
@@ -272,7 +272,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
   if (!missing(features)) {
     assert(checkIntegerish(features, lower = 1L, upper = length(task.features)),
       checkLogical(features), checkCharacter(features))
-    if (is.numeric(features))
+    if (is.numeric(features) && !is.integer(features))
       features = asInteger(features)
     if (!is.character(features))
       features = task.features[features]
