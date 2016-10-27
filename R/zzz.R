@@ -16,3 +16,16 @@
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams"))
 }
+
+mlr = new.env(parent = emptyenv())
+
+### Learner properties
+mlr$learner.properties = list(
+  classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp"),
+  multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
+  regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp"),
+  cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
+  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp"),
+  costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
+)
+mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
