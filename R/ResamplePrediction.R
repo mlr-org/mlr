@@ -26,14 +26,22 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
     rbindlist(lapply(seq_along(pr.tr), function(X) cbind(pr.tr[[X]]$data, iter = X, set = "train")))
   ))
 
-  p1 = preds.test[[1L]]
+  if (!any(tenull) && rin$desc$predict %in% c("test", "both")) {
+    p1 = preds.test[[1L]]
+    preds = preds.test
+  } else if (!any(trnull) && rin$desc$predict == "train") {
+    p1 = preds.train[[1L]]
+    preds = preds.train
+  }
+  
+  
   makeS3Obj(c("ResamplePrediction", class(p1)),
     instance = instance,
     predict.type = p1$predict.type,
     data = data,
     threshold = p1$threshold,
     task.desc = p1$task.desc,
-    time = extractSubList(preds.test, "time")
+    time = extractSubList(preds, "time")
   )
 }
 
