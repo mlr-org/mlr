@@ -56,6 +56,13 @@ getSupportedTaskTypes = function() {
   c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
 }
 
+# Maybe move to BBmisc at some point
+measureTime = function(expr, ee = parent.frame()) {
+  before = proc.time()[3L]
+  force(expr)
+  as.numeric(proc.time()[3L] - before)
+}
+
 # find duplicate measure names or ids and paste together those
 # with the associated aggregation ids or names
 replaceDupeMeasureNames = function(measures, x = "id") {

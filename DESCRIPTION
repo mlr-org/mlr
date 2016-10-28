@@ -38,6 +38,7 @@ Depends:
     ParamHelpers (>= 1.8),
 Imports:
     BBmisc (>= 1.10),
+    backports,
     ggplot2,
     stats,
     stringi,

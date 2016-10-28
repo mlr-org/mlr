@@ -50,6 +50,7 @@
 * getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages
 * getLearnerParamSet, getLearnerParVals
 * getRRPredictionList
+* addRRMeasure
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
