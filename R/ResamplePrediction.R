@@ -26,12 +26,12 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
     rbindlist(lapply(seq_along(pr.tr), function(X) cbind(pr.tr[[X]]$data, iter = X, set = "train")))
   ))
 
-  if (!any(tenull) && rin$desc$predict %in% c("test", "both")) {
+  if (!any(tenull) && instance$desc$predict %in% c("test", "both")) {
     p1 = preds.test[[1L]]
-    preds = preds.test
-  } else if (!any(trnull) && rin$desc$predict == "train") {
+    pall = preds.test
+  } else if (!any(trnull) && instance$desc$predict == "train") {
     p1 = preds.train[[1L]]
-    preds = preds.train
+    pall = preds.train
   }
   
   
@@ -41,7 +41,7 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
     data = data,
     threshold = p1$threshold,
     task.desc = p1$task.desc,
-    time = extractSubList(preds, "time")
+    time = extractSubList(pall, "time")
   )
 }
 
