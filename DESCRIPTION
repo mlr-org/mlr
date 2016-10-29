@@ -45,12 +45,9 @@ Imports:
     data.table,
     methods,
     parallelMap (>= 1.3),
-<<<<<<< HEAD
-    plotly (>= 4.0),
+    plotly (>= 4.5.2),
     RColorBrewer,
     shiny,
-=======
->>>>>>> upstream/master
     survival,
     utils
 Suggests:
