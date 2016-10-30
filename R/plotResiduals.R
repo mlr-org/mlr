@@ -10,10 +10,10 @@
 #'   \dQuote{hist}, for a histogram of the residuals.
 #' @param loess.smooth [\code{logical(1)}]\cr
 #'   Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
-#'   Only applicable if \code{type} is set to \code{scatterplot}.
+#'   Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.
 #' @param rug [\code{logical(1)}]\cr
 #'   Should marginal distributions be added to the plot? Defaults to \code{TRUE}.
-#'   Only applicable if \code{type} is set to \code{scatterplot}.
+#'   Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.
 #' @param pretty.names [\code{logical(1)}]\cr
 #'   Whether to use the short name of the learner instead of its ID in labels.
 #'   Defaults to \code{TRUE}. \cr
@@ -51,7 +51,7 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
 plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth = TRUE,
   rug = TRUE, pretty.names = TRUE) {
 
-  task.type = getBMRObjects(obj, as.df = TRUE, f = function(X){
+  task.type = getBMRObjects(obj, as.df = TRUE, fun = function(X){
     getRRTaskDescription(X)$type
   })
   task.type = unique(task.type$p)
@@ -67,7 +67,7 @@ plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth
 
   p = makeResidualPlot(df, type, loess.smooth, rug, task.type)
 
-  p = p + facet_wrap(learner.id ~ task.id)
+  p = p + facet_wrap(learner.id ~ task.id, scales = "free")
 
   return(p)
 }
@@ -81,15 +81,13 @@ makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
       p = p + geom_count()
     } else {
       p = p + geom_point()
+
+      if (loess.smooth)
+        p = p + geom_smooth(se = FALSE)
+      if (rug)
+        p = p + geom_rug(color = "red")
     }
-
-    if (loess.smooth)
-      p = p + geom_smooth(se = FALSE)
-    if (rug)
-      p = p + geom_rug(color = "red")
-
     p = p + ggtitle("True value vs. fitted value")
-
   } else {
     df$residuals = as.numeric(df$truth) - as.numeric(df$response)
     p = ggplot(df, aes_string("residuals")) + geom_histogram()

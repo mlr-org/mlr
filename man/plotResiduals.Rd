@@ -16,11 +16,11 @@ Input data.}
 
 \item{loess.smooth}{[\code{logical(1)}]\cr
 Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
-Only applicable if \code{type} is set to \code{scatterplot}.}
+Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.}
 
 \item{rug}{[\code{logical(1)}]\cr
 Should marginal distributions be added to the plot? Defaults to \code{TRUE}.
-Only applicable if \code{type} is set to \code{scatterplot}.}
+Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.}
 
 \item{pretty.names}{[\code{logical(1)}]\cr
 Whether to use the short name of the learner instead of its ID in labels.
