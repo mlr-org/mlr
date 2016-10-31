@@ -41,11 +41,7 @@ predictLearner = function(.learner, .model, .newdata, ...) {
   if (inherits(lmod, "NoFeaturesModel")) {
     predict_nofeatures(.model, .newdata)
   } else {
-    # FIXME: When we only supply a task with no subset and our fcregr has only a yvar
-    #  we want to allow newdata to be empty since we are forecasting and
-    #  and we actually have no newdata related to our future observations
-    if (.learner$type != "fcregr" && .learner$type != "mfcregr")
-      assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
+    assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
     UseMethod("predictLearner")
   }
 }
@@ -92,7 +88,8 @@ checkPredictLearnerOutput = function(learner, model, p) {
     }
   } else if (learner$type == "regr") {
     if (learner$predict.type == "response") {
-      if (cl != "numeric")
+      # changed to include ts objects
+      if (cl != "numeric" & cl != "ts")
         stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
      } else if (learner$predict.type == "se") {
       if (!is.matrix(p))
@@ -103,7 +100,7 @@ checkPredictLearnerOutput = function(learner, model, p) {
     }
   } else if (learner$type == "fcregr"){
     if (learner$predict.type == "response") {
-      if (cl != "numeric" & cl != "ts" & cl != "matrix")
+      if (cl != "numeric" & cl != "ts")
         stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
     } else if (learner$predict.type == "quantile") {
       if (!is.matrix(p))
