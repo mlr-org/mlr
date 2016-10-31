@@ -151,7 +151,6 @@ fcregr.num.task = makeForecastRegrTask("fcregrnumtask", data = fcregr.num.xts, t
 ###########333
 
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
-
 black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
 grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"
 red.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #F8766D')]"
@@ -159,5 +158,7 @@ blue.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #619CFF')]"
 green.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #00BA38')]"
 black.line.xpath = "/svg:svg//svg:polyline[not(contains(@style, 'stroke:'))]"
 blue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #00BFC4;')]"
+mediumblue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #3366FF;')]"
 red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
+red.rug.line.xpath = "/svg:svg//svg:line[contains(@style, 'stroke: #FF0000;')]"
 black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"

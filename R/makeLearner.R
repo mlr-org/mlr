@@ -71,8 +71,9 @@ makeLearner = function(cl, id = cl, ..., predict.type = "response", predict.thre
     assertString(id)
     wl$id = id
   }
+
   # predict.threshold is checked in setter below
-  assertList(par.vals)
+  assertList(par.vals, names = "unique")
   if (stri_isempty(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))

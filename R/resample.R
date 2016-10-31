@@ -77,7 +77,8 @@
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
   extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
-  learner = checkLearner(learner, ...)
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
   assertClass(task, classes = "Task")
   n = getTaskSize(task)
   # instantiate resampling
