@@ -72,8 +72,28 @@ test_that("classif_blackboost probability predictions with family 'AUC' and 'Ada
     mod = train(lrn, binaryclass.task)
     expect_error(predict(mod, binaryclass.task), "support probabilities")
   })
-}) 
-   
+})
+
+
+test_that("classif_blackboost with family `PropOdds` works with one observation", {
+  data = getTaskData(binaryclass.task)
+  data[,binaryclass.target] = as.ordered(data[,binaryclass.target])
+  ordered.task = makeClassifTask(data = data, target = binaryclass.target)
+  mini.data = data[1,]
+  mini.task = makeClassifTask(data = mini.data, target = binaryclass.target)
+  lrn = makeLearner("classif.blackboost", par.vals = list(family = "PropOdds"),
+    predict.type = "prob")
+  mod = train(lrn, ordered.task)
+  pred = predict(mod, mini.task)
+  orig.mod = mboost::blackboost(binaryclass.formula, data = data, family = mboost::PropOdds())
+  orig.pred = predict(orig.mod, newdata = mini.data, type = "response")
+  expect_equal(getPredictionProbabilities(pred), orig.pred[1])
+})
+
+
+
+
+ 
 
 
 
