@@ -18,7 +18,7 @@
 \item{learning_curve}{generateLearningCurveData, plotLearningCurveGGVIS}
 \item{multilabel}{getMultilabelBinaryPerformances, makeMultilabelBinaryRelevanceWrapper, makeMultilabelClassifierChainsWrapper, makeMultilabelDBRWrapper, makeMultilabelNestedStackingWrapper, makeMultilabelStackingWrapper}
 \item{performance}{calculateConfusionMatrix, calculateROCMeasures, makeCustomResampledMeasure, makeCostMeasure, makeMeasure, featperc, performance, estimateRelativeOverfitting}
-\item{plot}{plotLearningCurve, plotPartialDependence, plotPartialDependenceGGVIS, plotBMRSummary}
+\item{plot}{plotLearningCurve, plotPartialDependence, plotPartialDependenceGGVIS, plotBMRSummary, plotResiduals}
 \item{predict}{asROCRPrediction, plotViperCharts, getPredictionProbabilities, getPredictionResponse, predict.WrappedModel}
 \item{resample}{makeResampleDesc, makeResampleInstance, makeResamplePrediction, resample, getRRPredictions, getRRTaskDescription, getRRPredictionList, addRRMeasure, print.ResampleResult}
 \item{task}{getTaskDescription, getTaskType, getTaskId, getTaskTargetNames, getTaskClassLevels, getTaskFeatureNames, getTaskNFeats, getTaskSize, getTaskFormula, getTaskTargets, getTaskData, getTaskCosts, subsetTask}
