@@ -59,7 +59,10 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
     } else if (type == "mfcregr") {
       if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
-        stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
+        # FIXME: We can either have it return one truth or multiple
+        #  How do we make this correct?
+        if (is.null(pred$data$truth))
+          stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
     } else {
       if (is.null(pred$data$truth))
         stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)

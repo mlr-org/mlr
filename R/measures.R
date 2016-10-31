@@ -1432,10 +1432,12 @@ multivar.mase = makeMeasure(
   fun = function(task, model, pred, feats, extra.args) {
     Tn     = nrow(getTaskData(task))
     truth  = getPredictionTruth(pred)
+    pred.names = getTaskTargetNames(task)
     pred   = getPredictionResponse(pred)
-    target = getTaskTargets(task)
+    pred   = pred[,pred.names,drop = FALSE]
+    target = as.matrix(getTaskTargets(task))
     top_error   = apply(abs(truth - pred),2,sum)
-    bottom_diff = (Tn / (Tn - 1)) * apply(target,2, function(x)sum(abs(diff(x))))
+    bottom_diff = (Tn / (Tn - 1)) * apply(as.matrix(target),2, function(x)sum(abs(diff(x))))
     mean(top_error / bottom_diff)
   }
 )

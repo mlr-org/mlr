@@ -33,7 +33,7 @@ makeRLearner.fcregr.nnetar = function() {
       makeUntypedLearnerParam(id = "level", default = c(80,95), when = "predict"),
       makeIntegerLearnerParam(id = "npaths", default = 1000, when = "predict")
       ),
-    properties = c("numerics", "ts", "quantile"),
+    properties = c("numerics", "quantile"),
     name = "Neural Network Time Series Forecasts",
     short.name = "nnetar",
     note = ""

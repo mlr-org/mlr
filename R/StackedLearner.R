@@ -105,7 +105,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   if (!is.null(resampling) & method != "stack.cv" & method != "growing.cv") {
     stop("No resampling needed for this method")
   }
-  if (is.null(resampling) && method == "stack.cv") {
+  if (is.null(resampling)) {
     resampling = makeResampleDesc("CV", iters= 5L,
       stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
@@ -224,6 +224,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     type = "regr"
   } else if (td$type == "fcregr"){
     type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
   } else if (length(td$class.levels) == 2L){
     type = "classif"
   } else if (length(td$class.levels) > 2L){
@@ -344,6 +346,8 @@ stackNoCV = function(learner, task) {
     type = "regr"
   } else if (td$type == "fcregr"){
     type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
   } else if (length(td$class.levels) == 2L){
     type = "classif"
   } else if (length(td$class.levels) > 2L){
@@ -397,6 +401,8 @@ stackCV = function(learner, task) {
     type = "regr"
   } else if (td$type == "fcregr"){
     type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
   } else if (length(td$class.levels) == 2L){
     type = "classif"
   } else if (length(td$class.levels) > 2L){
@@ -461,6 +467,8 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     type = "regr"
   } else if (td$type == "fcregr"){
     type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
   } else if (length(td$class.levels) == 2L){
     type = "classif"
   } else if (length(td$class.levels) > 2L){
@@ -482,7 +490,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertFunction(metric)
 
   bls = learner$base.learners
-  if (type != "regr" || type != "fcregr" || type != "mfcregr") {
+  if (type != "regr" && type != "fcregr" && type != "mfcregr") {
     for (i in 1:length(bls)) {
       if (bls[[i]]$predict.type == "response")
         stop("Hill climbing algorithm only takes probability predict type for classification.")
@@ -593,6 +601,8 @@ compressBaseLearners = function(learner, task, parset = list()) {
     type = "regr"
   } else if (td$type == "fcregr"){
     type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
   } else if (length(td$class.levels) == 2L){
     type = "classif"
   } else if (length(td$class.levels) > 2L){
@@ -639,7 +649,9 @@ getResponse = function(pred, full.matrix = TRUE) {
       # return only vector of probabilities for binary classification
       return(getPredictionProbabilities(pred))
     }
-  } else {
+  } else if (pred$task.desc$type == "mfcregr"){
+    getPredictionResponse(pred)
+  }else {
     # if regression task
     pred$data$response
   }
@@ -782,12 +794,12 @@ stackGrowingCV = function(learner, task) {
     type = "regr"
   } else if (td$type == "fcregr"){
     type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
   } else if (length(td$class.levels) == 2L){
     type = "classif"
   } else if (length(td$class.levels) > 2L){
     type = "multiclassif"
-  } else if (td$type == "mfcregr") {
-    type = "mfcregr"
   } else {
     stop("This is not currently supported.")
   }
@@ -825,7 +837,11 @@ stackGrowingCV = function(learner, task) {
   #learner$resampling$initial.window = learner$resampling$initial.window + 1
   pred.train = as.list(probs[order(test.inds), , drop = FALSE])
 
-  probs[[tn]] = getTaskTargets(task)[test.inds]
+  # Have to change index with multiple targets
+  if (length(task$task.desc$target) > 1L)
+    probs[[tn]] = getTaskTargets(task)[test.inds,]
+  else
+    probs[[tn]] = getTaskTargets(task)[test.inds]
 
   # now fit the super learner for predicted_probs --> target
   probs = probs[order(test.inds), , drop = FALSE]

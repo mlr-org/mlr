@@ -457,7 +457,7 @@ predict(gbmMod, task = Timeregr.gbm.update, subset = 184:188)
 
 #### Ensemble's of Forecasts
 
-This is how we should actually do forecasting with machine learning.
+It's known that ensembles of forecasts tend to outperform standard forecasting techniques. Here we use mlr's stacked modeling functionality to ensemble multiple forecast techniques by a super learner.
 
 ```{r}
 library(xts)
@@ -511,7 +511,11 @@ performance(testp, mase, task = timeregr.task)
 
 ## Multivariate Forecasting
 
+One common problem with forecasting is that it is difficult to use additional explanatory variables. If we are at time `t` and want to forecast 10 periods in the future, we need to know the values of the explanatory variables at time `t+10`, which is often not possible. A new set of models which treats explanatory variables endogenously instead of exogenously allows us to forecast not only our target, but addititional explanatory variables. This is done by treating all the variables as targets.
+
 ```{r}
+library(lubridate)
+library(xts)
 data("EuStockMarkets")
 stock.times = date_decimal(as.numeric(time(EuStockMarkets)))
 stock.data  = xts(as.data.frame(EuStockMarkets), order.by = stock.times)
@@ -519,21 +523,21 @@ stock.data.train = stock.data[1:1850,]
 stock.data.test  = stock.data[1851:1855,]
 multfore.task = makeMultiForecastRegrTask(id = "bigvar", data = stock.data.train, target = "all")
 multfore.task
-Supervised task: bigvar
-Type: mfcregr
-Target: DAX,SMI,CAC,FTSE
-Observations: 1850
-Features:
-numerics  factors  ordered 
-       0        0        0 
-Missings: FALSE
-Has weights: FALSE
-Has blocking: FALSE
+# Supervised task: bigvar
+# Type: mfcregr
+# Target: DAX,SMI,CAC,FTSE
+# Observations: 1850
+# Features:
+# numerics  factors  ordered 
+#        0        0        0 
+# Missings: FALSE
+# Has weights: FALSE
+# Has blocking: FALSE
 
 bigvar.learn = makeLearner("mfcregr.BigVAR", p = 4, struct = "Basic", gran = c(25, 10),
                     h = 5, n.ahead = 5)
-multi.train = train(testm, test)
-pred  = predict(testt, newdata = stock.data.test)
+multi.train = train(bigvar.learn, multfore.task)
+pred  = predict(multi.train, newdata = stock.data.test)
 pred
 ```
 <!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
@@ -551,4 +555,74 @@ pred
 performance(pred, multivar.mase, task = test)
 # multivar.mase 
 #   0.02458401 
+```
+
+### Multivariate Forecasting with ML stacking
+
+Now that we have a multivariate form of forecasting, we can use these forecasts stacked with a machine learning super learner.
+
+```{r}
+resamp.sub = makeResampleDesc("GrowingCV",
+                              horizon = 5L,
+                              initial.window = .97,
+                              size = nrow(getTaskData(multfore.task)),
+                              skip = .01
+)
+
+resamp.super = makeResampleDesc("CV", iters = 3)
+
+base = c("mfcregr.BigVAR")
+lrns = lapply(base, makeLearner)
+lrns = lapply(lrns, setPredictType, "response")
+stack.forecast = makeStackedLearner(base.learners = lrns,
+                                    predict.type = "response",
+                                    super.learner = makeLearner("regr.earth", penalty = 2),
+                                    method = "growing.cv",
+                                    resampling = resamp.sub)
+
+ps = makeParamSet(
+  makeDiscreteParam("mfcregr.BigVAR.p", values = 5),
+  makeDiscreteParam("mfcregr.BigVAR.struct", values = "Basic"),
+  makeNumericVectorParam("mfcregr.BigVAR.gran", len = 2L, lower = 25, upper = 26),
+  makeDiscreteParam("mfcregr.BigVAR.h", values = 5),
+  makeDiscreteParam("mfcregr.BigVAR.n.ahead", values = 5)
+)
+
+## tuning
+
+multfore.task = makeMultiForecastRegrTask(id = "bigvar", data = stock.data.train, target = "FTSE")
+
+multfore.tune = tuneParams(stack.forecast, multfore.task, resampling = resamp,
+                   par.set = ps, control = makeTuneControlGrid(),
+                   measures = multivar.mase)
+multfore.tune
+# Tune result:
+# Op. pars: mfcregr.BigVAR.p=5; mfcregr.BigVAR.struct=Basic; mfcregr.BigVAR.gran=26,25; 
+# mfcregr.BigVAR.h=5; mfcregr.BigVAR.n.ahead=5
+# multivar.mase.test.mean=0.0183
+
+stack.forecast.f  = setHyperPars2(stack.forecast,multfore.tune$x)
+multfore.train = train(stack.forecast.f,multfore.task)
+multfore.train
+# Model for learner.id=stack; learner.class=StackedLearner
+# Trained on: task.id = bigvar; obs = 1850; features = 3
+# Hyperparameters: mfcregr.BigVAR.p=5,mfcregr.BigVAR.struct=Basic,mfcregr.BigVAR.gran=26,25,mfcregr.
+# BigVAR.h=5,mfcregr.BigVAR.n.ahead=5
+
+multfore.pred = predict(multfore.train, newdata = stock.data.test)
+multfore.pred
+# Prediction: 5 observations
+# predict.type: response
+# threshold: 
+# time: 0.01
+#                      truth response
+# 1998-08-12 05:04:36 5809.7 6024.293
+# 1998-08-13 14:46:09 5736.1 6022.679
+# 1998-08-15 00:27:41 5632.5 6022.640
+# 1998-08-16 10:09:13 5594.1 6024.083
+# 1998-08-17 19:50:46 5680.4 6025.666
+
+performance(multfore.pred, mase, task = multfore.task)
+#      mase 
+# 0.04215817 
 ```

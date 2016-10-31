@@ -116,11 +116,19 @@ getPredictionResponse.PredictionMultilabel = function(pred) {
   setColNames(m, pred$task.desc$class.levels)
 }
 
+
+
+
 #' @export
 getPredictionResponse.PredictionMultiForecastRegr = function(pred) {
-  i = stri_detect_regex(colnames(pred$data), "^response\\.")
-  m = as.matrix(pred$data[, i])
-  setColNames(m, pred$task.desc$target)
+  if (!any(stri_detect_regex(colnames(pred$data), "^response\\."))){
+    m = as.matrix(pred$data[["response"]])
+    setColNames(m, pred$task.desc$target)
+  } else {
+    i = stri_detect_regex(colnames(pred$data), "^response\\.")
+    m = as.matrix(pred$data[, i])
+    setColNames(m, pred$task.desc$col.names)
+  }
 }
 
 
@@ -167,8 +175,12 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionMultiForecastRegr = function(pred) {
-  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
-  m = as.matrix(pred$data[, i])
+  if (!any(stri_detect_regex(colnames(pred$data), "^truth\\."))){
+    m = as.matrix(pred$data[["truth"]])
+  } else {
+    i = stri_detect_regex(colnames(pred$data), "^truth\\.")
+    m = as.matrix(pred$data[, i])
+  }
   setColNames(m, pred$task.desc$target)
 }
 

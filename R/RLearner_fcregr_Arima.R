@@ -27,7 +27,7 @@ makeRLearner.fcregr.Arima = function() {
       makeIntegerLearnerParam(id = "npaths", default = 5000, when = "predict"),
       makeUntypedLearnerParam(id = "xreg", default = NULL)
     ),
-    properties = c("numerics","ts","quantile"),
+    properties = c("numerics","quantile"),
     name = "AutoRegressive Integrated Moving Average",
     short.name = "Arima",
     note = ""

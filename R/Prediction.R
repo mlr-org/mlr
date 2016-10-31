@@ -248,10 +248,15 @@ makePrediction.TaskDescMultiForecastRegr = function(task.desc, row.names, id, tr
   } else {
     size.y = nrow(y)
   }
-  if (class(truth != "matrix")){
-    size.truth = length(truth)
+  # FIXME: This is kind of gross and should be done better
+  if (!is.null(truth)){
+    if (class(truth) != "data.frame" && class(truth) != "matrix"){
+        size.truth = length(truth)
+      } else {
+        size.truth = nrow(truth)
+      }
   } else {
-    size.truth = nrow(truth)
+    size.truth = size.y
   }
   # This will only happen when there is a task with no subset
   #  aka, we predict future values and have to get their times
@@ -266,7 +271,10 @@ makePrediction.TaskDescMultiForecastRegr = function(task.desc, row.names, id, tr
     data$truth = NULL
   } else {
     row.names = row.names[1:size.truth]
-    y = y[1:size.truth,]
+    if (class(y) == "matrix")
+      y = y[1:size.truth,]
+    else
+      y = y[1:size.truth]
     data$id = id
     data$truth = truth
   }

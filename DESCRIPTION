@@ -155,7 +155,8 @@ Suggests:
     XML,
     forecast,
     rugarch,
-    LambertW
+    LambertW,
+    BigVAR
 LazyData: yes
 ByteCompile: yes
 Version: 2.10

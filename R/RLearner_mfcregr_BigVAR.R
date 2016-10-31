@@ -39,7 +39,7 @@ trainLearner.mfcregr.BigVAR = function(.learner, .task, .subset, .weights = NULL
   dates = rownames(data)
   data  = as.matrix(data)
   model = BigVAR::constructModel(Y = data, ..., dates = dates)
-  cv.BigVAR(model)
+  BigVAR::cv.BigVAR(model)
 }
 
 #'@export

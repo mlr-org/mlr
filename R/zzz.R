@@ -32,6 +32,8 @@ mlr$learner.properties = list(
   regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp"),
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
   surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp"),
-  costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
+  costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass"),
+  fcregr       = c("numerics", "quantile", "weights", "featimp"),
+  mfcregr       = c("numerics", "quantile")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))

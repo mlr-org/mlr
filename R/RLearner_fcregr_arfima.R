@@ -41,7 +41,7 @@ makeRLearner.fcregr.arfima = function() {
       makeUntypedLearnerParam(id = "level", default = c(80,95), when = "predict"),
       makeIntegerLearnerParam(id = "npaths", default = 5000, when = "predict")
     ),
-    properties = c("numerics","ts","quantile"),
+    properties = c("numerics","quantile"),
     name = "AutoRegressive Fractionally Integrated Moving Average",
     short.name = "arfima",
     note = ""

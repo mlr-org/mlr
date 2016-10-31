@@ -58,7 +58,7 @@ makeRLearner.fcregr.garch = function() {
       makeIntegerLearnerParam("n.roll", lower = 0L, default = 0L, when = "predict"),
       makeUntypedLearnerParam("probs", default = c(.05, .95), when = "predict")
     ),
-    properties = c("numerics","ts", "quantile"),
+    properties = c("numerics","quantile"),
     name = "Generalized AutoRegressive Conditional Heteroskedasticity",
     short.name = "garch",
     note = ""

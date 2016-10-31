@@ -213,6 +213,12 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
   stop("There is no target available for costsens tasks.")
 }
 
+#' @export
+getTaskTargets.MultiForecastRegrTask = function(task, recode.target = "no") {
+  y = task$env$data[, task$task.desc$target, drop = TRUE]
+  y
+}
+
 
 #' Extract data in task.
 #'

@@ -83,7 +83,7 @@ updateModel = function(object, task, newdata, subset, weights = NULL, ...){
     if (is.list(truth))
       truth = data.frame(truth)
     #FIXME: Patchjob, need to find a way to identify that new data can be same as y.
-    if (!any(learner$properties == "ts"))
+    if (learner$type != "fcregr" && learner$type != "mfcregr")
       newdata = newdata[, -t.col, drop = FALSE]
   } else {
     truth = NULL
@@ -194,7 +194,8 @@ updateLearner = function(.learner, .model, .newdata, ...) {
   if (inherits(lmod, "NoFeaturesModel")) {
     predict_nofeatures(.model, .newdata)
   } else {
-    assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
+    if (.learner$type != "fcregr" && .learner$type != "mfcregr")
+      assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
     UseMethod("updateLearner")
   }
 }

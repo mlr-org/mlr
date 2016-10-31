@@ -48,7 +48,7 @@ makeRLearner.fcregr.tbats = function() {
       makeUntypedLearnerParam(id = "level", default = c(80,95), when = "predict"),
       makeIntegerLearnerParam(id = "npaths", default = 5000, when = "predict")
     ),
-    properties = c("numerics","ts", "quantile"),
+    properties = c("numerics", "quantile"),
     name = "Exponential smoothing state space model with Box-Cox transformation,
     ARMA errors, Trend and Seasonal Fourier components",
     short.name = "tbats",

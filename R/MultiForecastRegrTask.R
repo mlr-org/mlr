@@ -27,7 +27,7 @@ makeMultiForecastRegrTask = function(id = deparse(substitute(data)), data, targe
     if (is.integer(data[[target]]))
       data[[target]] = as.double(data[[target]])
   } else if (fixup.data != "no"){
-    is.int = vapply(ytest,is.integer,TRUE)
+    is.int = vapply(data,is.integer,TRUE)
     if (all(is.int)){
       data = lapply(data,as.double)
       data = as.data.frame(row.names = row.names, data)
