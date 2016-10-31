@@ -66,7 +66,8 @@ test_that("resampling, predicting train set works", {
   r = resample(lrn, multiclass.task, rdesc, measures = m)
   expect_false(is.na(r$aggr["mmce.train.mean"]))
   expect_false(anyNA(r$pred$time))
-  expect_true(is.data.frame(r$pred$data))
+  expect_false(is.null(r$pred$predict.type))
+  expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDescription(multiclass.task), r$pred$task.desc)
   
   rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
@@ -77,7 +78,8 @@ test_that("resampling, predicting train set works", {
   expect_false(is.na(r$aggr["mmce.train.mean"]))
   expect_false(is.na(r$aggr["mmce.test.mean"]))
   expect_false(anyNA(r$pred$time))
-  expect_true(is.data.frame(r$pred$data))
+  expect_false(is.null(r$pred$predict.type))
+  expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDescription(multiclass.task), r$pred$task.desc)
   
   
