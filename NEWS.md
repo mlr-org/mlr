@@ -4,6 +4,9 @@
 * update to irace 2.0 -- there are algorithmic changes in irace that may affect
   performance
 
+## Bug fixes
+* fixed bug in resample when using predict = "train" (issue #1284)
+
 ## functions - general
 * generateFilterValuesData: fixed a bug wrt feature ordering
 * imputeLearner: fixed a bug when data actually contained no NAs
