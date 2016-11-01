@@ -131,8 +131,6 @@ fcregr.update.update = fcregr.update.xts[fcregr.update.update.inds,]
 fcregr.update.test  = fcregr.update.xts[fcregr.update.test.inds, ]
 fcregr.update.task = makeForecastRegrTask("fcregrtask", data = fcregr.update.train, target = fcregr.update.target)
 
-
-
 fcregr.small.xts = fcregr.xts[1:10,]
 fcregr.small.target = "test_data"
 fcregr.small.train.inds = 1:9
@@ -148,7 +146,20 @@ fcregr.num.test.inds  = fcregr.test.inds
 fcregr.num.train = fcregr.num.xts[fcregr.num.train.inds, ]
 fcregr.num.test  = fcregr.num.xts[fcregr.num.test.inds, ]
 fcregr.num.task = makeForecastRegrTask("fcregrnumtask", data = fcregr.num.xts, target = fcregr.num.target)
-###########333
+###########
+
+## mfcregr test data
+data("EuStockMarkets")
+mfcregr.times = lubridate::date_decimal(as.numeric(time(EuStockMarkets)))
+mfcregr.xts  = xts::xts(as.data.frame(EuStockMarkets), order.by = mfcregr.times)
+mfcregr.xts = mfcregr.xts[1:300,]
+mfcregr.target = "all"
+mfcregr.train.inds = seq(1, 299, 1)
+mfcregr.test.inds  = 300
+mfcregr.train = mfcregr.xts[mfcregr.train.inds, ]
+mfcregr.test  = mfcregr.xts[mfcregr.test.inds, ]
+mfcregr.task = makeMultiForecastRegrTask("mfcregrtask", data = mfcregr.xts, target = mfcregr.target)
+###
 
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
 black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"

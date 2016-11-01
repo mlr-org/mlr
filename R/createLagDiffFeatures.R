@@ -161,7 +161,7 @@ createLagDiffFeatures.ForecastRegrTask = function(obj, lag = 0L, difference = 0L
   data <- as.data.frame(data, row.names = as.character(index(data)))
 
   obj = changeData(obj,data = data)
-  if (is.null(cols)){
+  if (any(is.null(cols)) || any(cols == target)){
     class(obj)[1] = "RegrTask"
     obj$type = obj$task.desc$type = "regr"
   }

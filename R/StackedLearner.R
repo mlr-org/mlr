@@ -808,12 +808,6 @@ stackGrowingCV = function(learner, task) {
 
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
   base.models = probs = vector("list", length(bls))
-  # FIXME: We need our window to progress forward with each nested sample
-  # This is a very gross way to check that we will have the right amount of iterations
-  #learner$resampling$initial.window = task$task.desc$size -
-  #  (learner$resampling$horizon * 2 + learner$resampling$skip)
-  #while ( (task$task.desc$size - learner$resampling$initial.window)  > learner$resampling$iter)
-  #  learner$resampling$initial.window = learner$resampling$initial.window + 1
   rin = makeResampleInstance(learner$resampling, task = task)
   #rin$desc$iters = length(rin$test.inds)
   for (i in seq_along(bls)) {

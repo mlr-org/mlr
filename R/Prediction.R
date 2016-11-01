@@ -272,7 +272,7 @@ makePrediction.TaskDescMultiForecastRegr = function(task.desc, row.names, id, tr
   } else {
     row.names = row.names[1:size.truth]
     if (class(y) == "matrix")
-      y = y[1:size.truth,]
+      y = y[1:size.truth, , drop =FALSE]
     else
       y = y[1:size.truth]
     data$id = id
@@ -291,7 +291,7 @@ makePrediction.TaskDescMultiForecastRegr = function(task.desc, row.names, id, tr
 
   makeS3Obj(c("PredictionMultiForecastRegr", "Prediction"),
             predict.type = predict.type,
-            data = setRowNames(as.data.frame(data, row.names = NULL), row.names),
+            data = setRowNames(as.data.frame(data), row.names),
             threshold = NA_real_,
             task.desc = task.desc,
             time = time,

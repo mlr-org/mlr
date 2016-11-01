@@ -2,7 +2,7 @@
 ![mlr](https://mlr-org.github.io/mlr-tutorial/images/mlrLogo_blue_141x64.png): Machine Learning in R
 
 
-Updates to MLR for Forecasting: October 15th, 2016
+Updates to MLR for Forecasting: October 31st, 2016
 ==========================
 
 The goal of this project is to develop:
@@ -26,6 +26,8 @@ colnames(dat) = c("arma_test")
 # Forecast Regression Tasks
 
 Just like with `makeRegrTask()` we will use `makeForecastRegrTask()` to create a task for forecasting. The main difference between `Forecast` tasks and the normal tasks is that our data must be an xts object.
+
+
 ```{r}
 Timeregr.task = makeForecastRegrTask(id = "test", data = dat, target = "arma_test",
                                      frequency = 7L)
@@ -45,10 +47,12 @@ Timeregr.task
 # Has blocking: FALSE
 ```
 
-## makeLearner for forecast regression tasks
-Notice that we still inheret a Supervised task and our type is a forecast regression. We also specify a frequency in the task which is equal to our 'seasonality'. Examples of frequency include 7 for weekly seasonal data, 365 for yearly seasonal data, and 52 for yearly weekly data. 
+ While `xts` is robust, it assumes all dates are continuous, unique, and have a frequency of one. While this gives a robust structure, many of the methods in forecast are dependent on the data's frequency. As such we manually set the frequency we desire in the task. Frequency can be throught of as the seasonality of the time series. A frequency of seven with daily data would represent a weekly seasonality. A frequency of 52 on weekly data would represent yearly seasonality.
 
-Now we create an arima model from the package `forecast` using `makeLearner()` by calling the learner class `fcregr.Arima`. An important parameter is the `h` parameter, which is used to specify that we are forecasting 10 periods ahead
+
+## Making Learners for Forecasting
+
+We create an arima model from the package `forecast` using `makeLearner()` by calling the learner class `fcregr.Arima`. An important parameter is the `h` parameter, which is used to specify that we are forecasting 10 periods ahead.
 
 ```{r}
 arm = makeLearner("fcregr.Arima", order = c(2L,0L,1L), h = 10L, include.mean = FALSE)
@@ -64,16 +68,16 @@ arm
 
 ## Resampling
 
-We now have two new cross validation resampling strategies, `GrowingCV` and `FixedCV`. They are both rolling forecasting origin techniques established in [Hyndman and Athanasopoulos (2013)](https://www.otexts.org/fpp/2/5) and first made popular in R by the `caret` package's `createTimeSlices()` function. We specify:
+We now have two new cross validation resampling strategies, `GrowingCV` and `FixedCV`. They are both rolling forecasting origin techniques established in [Hyndman and Athanasopoulos (2013)](https://www.otexts.org/fpp/2/5) and first widely available for machine learning in R by the `caret` package's `createTimeSlices()` function. We specify:
 
 1. horizon - the number of periods to forecast
-2. initialWindow - our left-most starting time slice (needs to be changed to initial.window for standards)
-3. size - The number of rows in our time series
-4. skip - An optional parameter that allow to skip every n'th window.
+2. initial.window - The proportion of data that will be used in the initial window
+3. size - The numberof rows in the training set
+4. skip - the proportion of windows to skip over, which can be used to save time
 ```{r}
 resamp_desc = makeResampleDesc("GrowingCV", horizon = 10L,
-                               initialWindow = 100L,
-                               size = nrow(dat), skip = 15L)
+                               initial.window = .90,
+                               size = nrow(dat), skip = .01)
 resamp_desc
 # Window description:
 #  growing with 6 iterations:
@@ -82,7 +86,7 @@ resamp_desc
 # Stratification: FALSE
 ```
 
-Note that we should need to remove stratification, as it does not really make sense in the context of time series to stratify our data (unless we can somehow use this for panel data). The wonderful graphic posted below comes from the `caret` website and gives an intuitive idea of the sliding windows for both the growth and fixed options.
+Note that we should stratification, as it does not really make sense in the context of time series to stratify our data (unless we can somehow use this for panel data). The wonderful graphic posted below comes from the `caret` website and gives an intuitive idea of the sliding windows for both the growth and fixed options.
 
 ![Build Status](http://topepo.github.io/caret/main_files/figure-html/Split_time-1.png)
 
@@ -93,8 +97,8 @@ resamp_arm
 # Resample Result
 # Task: test
 # Learner: fcregr.Arima
-# Aggr perf: mase.test.mean=0.0629
-# Runtime: 0.238438
+# Aggr perf: mase.test.mean=0.0631
+# Runtime: 0.137119
 ```
 ## Tuning
 
@@ -104,97 +108,60 @@ The forecasting features fully integrate into mlr, allowing us to also make a pa
 par_set = makeParamSet(
   makeIntegerVectorParam(id = "order",
                          len = 3L,
-                         lower = c(0L,0L,0L),
-                         upper = c(2L,1L,1L),
+                         lower = 0,
+                         upper = 2,
                          tunable = TRUE),
-  makeLogicalParam(id = "include.mean", default = FALSE, tunable = TRUE),
-  makeIntegerParam(id = "h", default = 10L, lower = 10L, upper = 11L, tunable = FALSE)
-)
+  makeLogicalParam(id = "include.mean", default = FALSE, tunable = TRUE)
+  )
 
 #Specify tune by grid estimation
 ctrl = makeTuneControlIrace(maxExperiments = 180L)
 
-#
-
 configureMlr(on.learner.error = "warn")
-res = tuneParams("fcregr.Arima", task = Timeregr.task, resampling = resamp_desc, par.set = par_set,
-                 control = ctrl, measures = mase)
+res = tuneParams(makeLearner("fcregr.Arima",h=10), task = Timeregr.task, resampling = resamp_desc, par.set = par_set, control = ctrl, measures = mase)
 
 ```
 Note that we have to do something very odd when specifying `h`. We specify the upper bound of `h` as 11 as irace will not work if the lower and upper bound of a parameter is the same value, even if the parameter has been specified to `tune = FALSE`. What this means is that inside of `makePrediction.TaskDescForecastRegr` we have to do a weird thing where, even though our prediction will at times be length 11, we cut it by the length of the truth variable `y[1:length(truth)]`. This is only going to complicate things in the future I'm sure. But irace works.
 
-It is interesting to note that Arima does not select our sample data's original underlying process and instead selects a (1,0,1) model.
+It is interesting to note that Arima does not select our sample data's original underlying process and instead selects a (2,0,0) model.
 ```{r}
 res
 
 # Tune result:
-# Op. pars: order=1,0,1; include.mean=FALSE; h=10
-# mase.test.mean=0.0618
+# Op. pars: order=2,0,0; include.mean=FALSE; h=10
+# mase.test.mean=0.0623
 ```
 
-This may be due to how small the data set is.
+This may be due to how small the data set is. Note that the original process still performed very well.
 ```{r}
-as.data.frame(res$opt.path)[4,]
-#   order1 order2 order3 include.mean  h mase.test.mean dob eol error.message exec.time
-# 4      2      0      1        FALSE 10     0.06288381   1  NA          <NA>     0.156
+as.data.frame(res$opt.path)[140,]
+#     order1 order2 order3 include.mean  h mase.test.mean dob eol error.message exec.time
+# 140      2      0      1        FALSE 10      0.0630864  20  NA          <NA>     0.115
 ```
 
-We can now use our learned model with tuning to pass over the entire data set and give our final prediction. However there is currently a bug in the predict function.
+We can now use our learned model with tuning to pass over the entire data set and give our final prediction.
+
 ```{r}
 lrn = setHyperPars(makeLearner("fcregr.Arima"), par.vals = res$x)
 m = train(lrn, Timeregr.task)
+m
+# Model for learner.id=fcregr.Arima; learner.class=fcregr.Arima
+# Trained on: task.id = test; obs = 200; features = 0
+# Hyperparameters: order=2,0,0,include.mean=FALSE,h=10
 
-# Should give back the following error
 predict(m, task = Timeregr.task)
- 
-#  Error in (function (..., row.names = NULL, check.rows = FALSE, check.names = TRUE,  : 
-#   arguments imply differing number of rows: 200, 10
-```
-This error is caused by `y[1:length(truth)]` in `makePrediction.TaskDescForecastRegr`. We are only generating 10 new observations (forecasts), but the `predict` function returns a data frame the same size as task data with `NA`s after 10 response observations. Furthermore, predict requires either newdata or task, but for forecasting models we will sometimes not have new data
-
-```{r}
-predict(m)
-# Error in predict.WrappedModel(m) : 
-# Pass either a task object or a newdata data.frame to predict, but not both!
-```
-
-We can get back the raw estimates with no truth by making newdata a data frame of `NA`'s, though this is more likely to be a bug as it is a solution. In addition, this requires some strange if loops in `makePrediction.TaskDescForecastRegr` to get around when there is no truth values.
-```{r}
-predict(m, newdata = data.frame(rep(NA, 10)))
 # Prediction: 10 observations
 # predict.type: response
 # threshold: 
-# time: 0.00
-#   response
-# 1        0
-# 2        0
-# 3        0
-# 4        0
-# 5        0
-# 6        0
-# ... (10 rows, 1 cols)
+# time: 0.01
+#                      response
+# 1992-08-01 23:59:41 1.3139165
+# 1992-08-02 23:59:23 0.9143794
+# 1992-08-03 23:59:05 0.6571046
+# 1992-08-04 23:58:47 0.4790978
+# 1992-08-05 23:58:29 0.3515189
+# 1992-08-06 23:58:11 0.2586106
 ```
-
-Issues with frequency have arisen when working with the `forecast` package due to frequency. While `xts` is robust, it assumes all dates are continuous, unique, and have a frequency of one. While this gives a robust structure, many of the methods in forecast are dependent on the datas frequency. To allow both packages to mesh we include a new parameter in `makeForecastRegrTask()` for frequency.
-
-```{r}
-Timeregr.task = makeForecastRegrTask(id = "test", data = dat,
-                                     target = "arma_test", frequency = 1L)
-# Task: test
-# Type: regr
-# Observations: 2000
-# Dates:
-#  Start: 2016-09-23 23:16:50 
-#  End: 2022-03-15 23:16:50
-# Frequency: 1
-# Features:
-# numerics  factors  ordered 
-#        1        0        0 
-# Missings: FALSE
-# Has weights: FALSE
-# Has blocking: FALSE
-```
-A new print statement for objects of class `TimeTask` was created for including dates and frequency.
 
 
 # Pre-processing
@@ -202,20 +169,20 @@ A new print statement for objects of class `TimeTask` was created for including 
 A new function to create arbitrary lags and differences `createLagDiffFeatures()` has also been added. Notice that we get a weird doubel date thing, but our column names look nice
 
 ```{r}
-Timeregr.task.lag = createLagDiffFeatures(Timeregr.task,lag = 2L:4L, difference = 0L, 
+Timeregr.task.lag = createLagDiffFeatures(Timeregr.task,lag = 2L:4L, difference = 1L, 
                                           seasonal.lag = 1L:2L)
 tail(Timeregr.task.lag$env$data)
 ```
 <!-- html table generated in R 3.3.1 by xtable 1.8-2 package -->
-<!-- Sun Oct 16 01:26:45 2016 -->
+<!-- Mon Oct 31 20:48:43 2016 -->
 <table border=1>
-<tr> <th>  </th> <th> dates </th> <th> arma_test_lag2_diff0 </th> <th> arma_test_lag3_diff0 </th> <th> arma_test_lag4_diff0 </th> <th> arma_test_lag7_diff0 </th> <th> arma_test_lag14_diff0 </th>  </tr>
-  <tr> <td align="right"> 1992-07-27 </td> <td align="right"> 712209600.00 </td> <td align="right"> -1.90 </td> <td align="right"> -0.62 </td> <td align="right"> 0.39 </td> <td align="right"> -0.01 </td> <td align="right"> -2.98 </td> </tr>
-  <tr> <td align="right"> 1992-07-28 </td> <td align="right"> 712296000.00 </td> <td align="right"> -0.18 </td> <td align="right"> -1.90 </td> <td align="right"> -0.62 </td> <td align="right"> 0.53 </td> <td align="right"> -3.07 </td> </tr>
-  <tr> <td align="right"> 1992-07-29 </td> <td align="right"> 712382400.00 </td> <td align="right"> 0.36 </td> <td align="right"> -0.18 </td> <td align="right"> -1.90 </td> <td align="right"> 0.32 </td> <td align="right"> -3.04 </td> </tr>
-  <tr> <td align="right"> 1992-07-30 </td> <td align="right"> 712468800.00 </td> <td align="right"> -0.16 </td> <td align="right"> 0.36 </td> <td align="right"> -0.18 </td> <td align="right"> 0.39 </td> <td align="right"> -0.77 </td> </tr>
-  <tr> <td align="right"> 1992-07-31 </td> <td align="right"> 712555200.00 </td> <td align="right"> 0.16 </td> <td align="right"> -0.16 </td> <td align="right"> 0.36 </td> <td align="right"> -0.62 </td> <td align="right"> 1.29 </td> </tr>
-  <tr> <td align="right"> 1992-08-01 </td> <td align="right"> 712641600.00 </td> <td align="right"> 2.24 </td> <td align="right"> 0.16 </td> <td align="right"> -0.16 </td> <td align="right"> -1.90 </td> <td align="right"> 1.87 </td> </tr>
+<tr> <th>  </th> <th> arma_test </th> <th> arma_test_lag2_diff1 </th> <th> arma_test_lag3_diff1 </th> <th> arma_test_lag4_diff1 </th> <th> arma_test_lag7_diff0 </th> <th> arma_test_lag14_diff0 </th>  </tr>
+  <tr> <td align="right"> 1992-07-27 </td> <td align="right"> 0.89 </td> <td align="right"> -0.20 </td> <td align="right"> -0.60 </td> <td align="right"> -0.08 </td> <td align="right"> 0.02 </td> <td align="right"> 3.16 </td> </tr>
+  <tr> <td align="right"> 1992-07-28 </td> <td align="right"> 1.44 </td> <td align="right"> 0.84 </td> <td align="right"> -0.20 </td> <td align="right"> -0.60 </td> <td align="right"> -0.68 </td> <td align="right"> 3.75 </td> </tr>
+  <tr> <td align="right"> 1992-07-29 </td> <td align="right"> 3.44 </td> <td align="right"> 1.02 </td> <td align="right"> 0.84 </td> <td align="right"> -0.20 </td> <td align="right"> -0.08 </td> <td align="right"> 2.98 </td> </tr>
+  <tr> <td align="right"> 1992-07-30 </td> <td align="right"> 4.09 </td> <td align="right"> 0.55 </td> <td align="right"> 1.02 </td> <td align="right"> 0.84 </td> <td align="right"> -0.16 </td> <td align="right"> 1.14 </td> </tr>
+  <tr> <td align="right"> 1992-07-31 </td> <td align="right"> 3.49 </td> <td align="right"> 2.00 </td> <td align="right"> 0.55 </td> <td align="right"> 1.02 </td> <td align="right"> -0.76 </td> <td align="right"> 1.14 </td> </tr>
+  <tr> <td align="right"> 1992-08-01 </td> <td align="right"> 2.02 </td> <td align="right"> 0.65 </td> <td align="right"> 2.00 </td> <td align="right"> 0.55 </td> <td align="right"> -0.96 </td> <td align="right"> 0.56 </td> </tr>
    </table>
    
 A new preprocessing wrapper `makePreprocWrapperLambert()` has been added. This function uses the
@@ -230,8 +197,12 @@ print(lrn)
 # Class: PreprocWrapperLambert
 # Properties: numerics,factors,prob,twoclass,multiclass
 # Predict-Type: response
-# Hyperparameters: target.proc=FALSE,type=h,methods=IGMM,verbose=FALSE
-# train(lrn, iris.task)
+# Hyperparameters: type=h,methods=IGMM,verbose=FALSE
+
+train(lrn, iris.task)
+# Model for learner.id=classif.lda.preproc; learner.class=PreprocWrapperLambert
+# Trained on: task.id = iris-example; obs = 150; features = 4
+# Hyperparameters: type=h,methods=IGMM,verbose=FALSE
 ```
 
 The lambert W transform is a bijective function, but the current preprocessing wrapper does not allow us to invert our predictions back to the actual values when we make new predictions. This would be helpful if we wanted to use LambertW on our target, then get back answers that match with our real values instead of the transformed values.
@@ -244,48 +215,39 @@ Several new models have been included from forecast:
 2. Exponential smoothing state space model with Box-Cox transformation, ARMA errors, Trend and Seasonal Fourier components (tbats)
 3. Exponential smoothing state space model (ets)
 4. Neural Network Autoregressive model (nnetar)
+5. Automated Arima (auto.arima)
+6. General Autoregressive Conditional Heteroskedasticity models (GARCH)
 
-
-The below code will run with the `Timeregr.task` we states above.
+The below code will run with the `Timeregr.task` we state above.
 ```{r}
 batMod = makeLearner("fcregr.bats", h = 10)
 m = train(batMod, Timeregr.task)
-predict(m, newdata = data.frame(rep(NA, 10)))
+predict(m, task = Timeregr.task)
 
 #fc.tbats
 tBatsMod = makeLearner("fcregr.tbats", h = 10)
 m = train(tBatsMod, Timeregr.task)
-predict(m, newdata = data.frame(rep(NA, 10)))
+predict(m, task = Timeregr.task)
 
 #fc.ets
 etsMod = makeLearner("fcregr.ets", h = 10)
 m = train(etsMod, Timeregr.task)
-predict(m, newdata = data.frame(rep(NA, 10)))
-
-# NOTE: Sometimes, this produces the error
-## Error in .Call("etsTargetFunctionInit", y = y, nstate = nstate, errortype = switch(errortype,  : 
-##   "etsTargetFunctionInit" not resolved from current namespace (forecast) 
-
-# This is caused by the namespace of forecast and requires re-downloading forecast.
-# Sometimes this can be fixed simply by resetting R.
+predict(m, task = Timeregr.task)
 
 #fc.nnetar
 nnetarMod = makeLearner("fcregr.nnetar", h = 10)
 nnetarMod
 m = train(nnetarMod, Timeregr.task)
-predict(m, newdata = data.frame(rep(NA, 10)))
+predict(m, task = Timeregr.task)
 ```
-
-And now we can also do GARCH models! Though we need to talk about how I am coalescing the parameters. The GARCH models come from the package `rugarch`, which has lists of parameter controls. Similar to ada's control function we have to do a little work to translate the GARCH models to `mlr`'s format.
-
- they set the predict.type to quantile. Fixed typo in tbats unit test. added fcregr to regression measures. Created test files to run all fcregr models. createLagDiffFeatures had a bug that did not return the target variable which is now resolved. iracing now works with forecast models, but a strange line of code that sets predict length to truth length had to be included. mase moved to measures file. Error found in ets that only happens during test. etsInitialFunc... cannot load from forecast namespace. Created makeForecastRegrLearner function and added checks in predict and train specific to fcregr models. Previously this was done by adding bits to regr tests, but enough has been added to become a new branch.
+The GARCH models come from the package `rugarch`, which has lists of parameter controls. 
 
 ```{r}
 garchMod = makeLearner("fcregr.garch", model = "sGARCH",
                        garchOrder = c(1,1), n.ahead = 10,
                        armaOrder = c(2, 1))
 m = train(garchMod, Timeregr.task)
-predict(m, newdata = as.data.frame(rep(NA,10)))
+predict(m,task = Timeregr.task)
 ```
 
 ### Tests
@@ -344,25 +306,25 @@ armMod = train(arm, Timeregr.task)
 updateArmMod = updateModel(armMod, Timeregr.task, newdata = dat[192:200,])
 updateArmMod
 # Model for learner.id=fcregr.Arima; learner.class=fcregr.Arima
-# Trained on: task.id = test; obs = 9; features = 1
+# Trained on: task.id = test; obs = 9; features = 0
 # Hyperparameters: order=2,0,1,h=10,include.mean=FALSE
 ```
 
 This works by making a call to `updateLearner.fcregr.Arima()` and updating the model and task data with `newdata`. `predict()` works as it would on a normal model.
 
 ```{r}
-# predict(updateArmMod, newdata = as.data.frame(rep(NA,10)))
+predict(updateArmMod, task = Timeregr.task)
 # Prediction: 10 observations
 # predict.type: response
 # threshold: 
-# time: 4.29
-#    response
-# 1 1.3631309
-# 2 1.0226897
-# 3 0.7818986
-# 4 0.5996956
-# 5 0.4601914
-# 6 0.3531699
+# time: 0.01
+#                      response
+# 1992-07-22 23:59:40 1.3631309
+# 1992-07-23 23:59:21 1.0226897
+# 1992-07-24 23:59:02 0.7818986
+# 1992-07-25 23:58:43 0.5996956
+# 1992-07-26 23:58:24 0.4601914
+# 1992-07-27 23:58:05 0.3531699
 # ... (10 rows, 1 cols)
 ```
 
@@ -408,7 +370,7 @@ There are two important things to note here.
 1. We are forecasting 5 periods ahead and so we start our lags 5 periods in the past.
 2. Our type is now `regr`.
 
-(1) happens because we want to forecast 5 periods ahead. The regular schema for forecasting models when you have only one variable is to use prediction `y_{t+1}` to predict `y_{t+2}` ,etc. This is reasonable when your target's forecast is only decided by past forecasts, however when you have multiple variables predicting your target this becomes very difficult. Take for example estimating `y_{t+2}` with `y_{t+1}` and `x_{1,t+1}` and `x_{2,t+1}` when you are at time `t`. In future iterations this may be done in a cleaner manner with a multivariate Kalman filter or a Copula, but for an ad-hoc multivariate forecast our method of lagging `k` forecast periods will suffice.
+(1) happens because we want to forecast 5 periods ahead. The regular schema for forecasting models when you have only one variable is to use prediction `y_{t+1}` to predict `y_{t+2}` ,etc. This is reasonable when your target's forecast is only decided by past forecasts, however when you have multiple variables predicting your target this becomes very difficult. Take for example estimating `y_{t+2}` with `y_{t+1}` and `x_{1,t+1}` and `x_{2,t+1}` when you are at time `t`. Below we do this by using a forecasting model that treats all of the data as endogeneous and then stacking an ML model on top of our forecasts.
 
 (2) happens because we did not select any particular columns to lag. If we selected no columns to lag we lag our target variable, which is not something that happens inside of `fcregr` models. If we had other variables and specified them in cols then we would receive back a `fcregr` task type.
 
@@ -474,38 +436,68 @@ timeregr.task = makeForecastRegrTask(id = "test", data = dat.train, target = "ar
                                      frequency = 7L)
                                      
 resamp.sub = makeResampleDesc("GrowingCV",
-                          horizon = 5L,
-                          initial.window = .85,
-                          size = getTaskData(timeregr.task)
+                          horizon = 10L,
+                          initial.window = .90,
+                          size = nrow(getTaskData(timeregr.task)),
+                          skip = .01
                           )
                           
-resamp.super = makeResampleDesc("CV", iters = 10)
+resamp.super = makeResampleDesc("CV", iters = 5)
 
 base = c("fcregr.tbats", "fcregr.bats")
 lrns = lapply(base, makeLearner)
 lrns = lapply(lrns, setPredictType, "response")
+
+super.ps = makeParamSet(
+  makeIntegerParam("penalty", lower = 1, upper = 2)
+)
+# Making a tune wrapped super learner lets us tune the super learner as well
+super.mod = makeTuneWrapper(makeLearner("regr.earth"), resampling = resamp.super,
+                            par.set = super.ps, control = makeTuneControlGrid() )
+                            
 stack.forecast = makeStackedLearner(base.learners = lrns,
                        predict.type = "response",
                        method = "growing.cv",
-                       super.learner = makeLearner("regr.earth", penalty = 2),
+                       super.learner = super.mod,
                        resampling = resamp.sub)
 
 ps = makeParamSet(
-  makeDiscreteParam("fcregr.tbats.h", values = 5),
-  makeDiscreteParam("fcregr.bats.h", values = 5)
+  makeDiscreteParam("fcregr.tbats.h", values = 10),
+  makeDiscreteParam("fcregr.bats.h", values = 10)
 )
 
 ## tuning
-testm = tuneParams(stack.forecast, timeregr.task, resampling = resamp.super,
+fore.tune = tuneParams(stack.forecast, timeregr.task, resampling = resamp.sub,
                    par.set = ps, control = makeTuneControlGrid(),
                    measures = mase)
 
-mm = makeStackedLearner(base.learners = lrns,
-                        predict.type = "response", super.learner = makeLearner("regr.earth", penalty = 2),
-                        parset = testm$x)
-testmm = train(m,timeregr.task)
-testp = predict(testmm, newdata = dat.test)
-performance(testp, mase, task = timeregr.task)
+stack.forecast.tune  = setHyperPars2(stack.forecast,fore.tune$x)
+stack.forecast.tune
+# Learner stack from package forecast
+# Type: fcregr
+# Name: ; Short name: 
+# Class: StackedLearner
+# Properties: numerics,quantile
+# Predict-Type: response
+# Hyperparameters: fcregr.tbats.h=10,fcregr.bats.h=10
+stack.forecast.mod = train(stack.forecast.tune,timeregr.task)
+stack.forecast.pred = predict(stack.forecast.mod, newdata = dat.test)
+stack.forecast.pred
+# Prediction: 10 observations
+# predict.type: response
+# threshold: 
+# time: 0.01
+#                  truth  response
+# 1993-05-19 -1.01871981 1.0345043
+# 1993-05-20 -0.46402313 1.0345043
+# 1993-05-21 -1.35142909 1.0345043
+# 1993-05-22 -1.36870018 1.0345043
+# 1993-05-23 -0.06109219 0.4907984
+# 1993-05-24 -0.02565932 0.8070644
+# ... (10 rows, 2 cols)
+performance(stack.forecast.pred, mase, task = timeregr.task)
+#       mase 
+# 0.03487724 
 ```
 
 
