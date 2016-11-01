@@ -61,6 +61,7 @@ hasProperties = function(learner, props) {
   hasLearnerProperties(learner, props)
 }
 
+
 getSupportedLearnerProperties = function(type = "any") {
   mlr$learner.properties[[type]]
 }

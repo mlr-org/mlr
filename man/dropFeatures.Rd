@@ -22,6 +22,7 @@ Drop some features of task.
 \seealso{
 Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{createDummyFeatures}},
+  \code{\link{createLagDiffFeatures}},
   \code{\link{mergeSmallFactorLevels}},
   \code{\link{normalizeFeatures}},
   \code{\link{removeConstantFeatures}},

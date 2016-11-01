@@ -91,6 +91,7 @@
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
 
+  # BEGIN Tests
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
     super.learner = makeLearner(stri_paste(base.learners[[1]]$type, '.nnet'))
@@ -101,15 +102,16 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   }
 
   baseType = unique(extractSubList(base.learners, "type"))
-  if (!is.null(resampling) & method != "stack.cv") {
+  if (!is.null(resampling) & method != "stack.cv" & method != "growing.cv") {
     stop("No resampling needed for this method")
   }
   if (is.null(resampling)) {
     resampling = makeResampleDesc("CV", iters= 5L,
       stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
-  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
-  assertClass(resampling, "ResampleDesc")
+  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress", "growing.cv"))
+  if (!is.null(resampling))
+    assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
   if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") |
@@ -125,9 +127,9 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   #  stop("Predict type has to be specified within the super learner.")
   if ((method == "average" | method == "hill.climb") & use.feat)
     stop("The original features can not be used for this method")
-  if (!inherits(resampling, "CVDesc"))
-    stop("Currently only CV is allowed for resampling!")
-
+  #if (!inherits(resampling, "CVDesc") && !inherits(resampling, "GrowingCVDesc") && !inherits(resampling, "FixedCVDesc"))
+  #  stop("Currently only CV is allowed for resampling!")
+  # END Tests
   # lrn$predict.type is "response" by default change it using setPredictType
   lrn =  makeBaseEnsemble(
     id = "stack",
@@ -149,6 +151,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   lrn$super.learner = super.learner
   lrn$resampling = resampling
   lrn$parset = parset
+  lrn$par.vals = parset
   return(lrn)
 }
 
@@ -171,7 +174,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
   bms = model$learner.model$base.models
   method = model$learner.model$method
 
-  if (is.null(newdata)) {
+  if (is.null(newdata) || ncol(newdata) == 0) {
     probs = model$learner.model$pred.train
   } else {
     # if (model == "stack.cv") warning("Crossvalidated predictions for new data is not possible for this method.")
@@ -195,6 +198,7 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
     average = averageBaseLearners(.learner, .task),
     stack.nocv = stackNoCV(.learner, .task),
     stack.cv = stackCV(.learner, .task),
+    growing.cv = stackGrowingCV(.learner, .task),
     # hill.climb = hillclimbBaseLearners(.learner, .task, ...)
     hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset)),
     compress = compressBaseLearners(.learner, .task, .learner$parset)
@@ -216,8 +220,19 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   # get task information (classif)
   td = .model$task.desc
-  type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (td$type == "regr"){
+    type = "regr"
+  } else if (td$type == "fcregr"){
+    type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
+  } else if (length(td$class.levels) == 2L){
+    type = "classif"
+  } else if (length(td$class.levels) > 2L){
+    type = "multiclassif"
+  } else {
+    stop("This is not currently supported.")
+  }
 
   # predict prob vectors with each base model
   if (.learner$method != "compress") {
@@ -262,7 +277,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
           return(factor(apply(probs, 1L, computeMode), td$class.levels))
         }
       }
-      if (type == "regr") {
+      if (type == "regr" | type == "fcregr" | type == "mfcregr") {
         # if base learner predictions are responses for regression
         prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
         return(prob)
@@ -327,8 +342,19 @@ averageBaseLearners = function(learner, task) {
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
   td = getTaskDescription(task)
-  type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (td$type == "regr"){
+    type = "regr"
+  } else if (td$type == "fcregr"){
+    type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
+  } else if (length(td$class.levels) == 2L){
+    type = "classif"
+  } else if (length(td$class.levels) > 2L){
+    type = "multiclassif"
+  } else {
+    stop("This is not currently supported.")
+  }
   bls = learner$base.learners
   use.feat = learner$use.feat
   base.models = probs = vector("list", length(bls))
@@ -343,13 +369,15 @@ stackNoCV = function(learner, task) {
 
   pred.train = probs
 
-  if (type == "regr" | type == "classif") {
+  if (type == "regr" | type == "classif" | type == "fcregr" | type == "mfcregr") {
     probs = as.data.frame(probs)
   } else {
     probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
   }
 
   # now fit the super learner for predicted_probs --> target
+  targets = getTaskTargets(task)
+
   probs[[td$target]] = getTaskTargets(task)
   if (use.feat) {
     # add data with normal features
@@ -369,8 +397,19 @@ stackNoCV = function(learner, task) {
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task) {
   td = getTaskDescription(task)
-  type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (td$type == "regr"){
+    type = "regr"
+  } else if (td$type == "fcregr"){
+    type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
+  } else if (length(td$class.levels) == 2L){
+    type = "classif"
+  } else if (length(td$class.levels) > 2L){
+    type = "multiclassif"
+  } else {
+    stop("This is not currently supported.")
+  }
   bls = learner$base.learners
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
@@ -385,7 +424,7 @@ stackCV = function(learner, task) {
   }
   names(probs) = names(bls)
 
-  if (type == "regr" | type == "classif") {
+  if (type == "regr" | type == "classif" | type == "fcregr" | type == "mfcregr") {
     probs = as.data.frame(probs)
   } else {
     probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
@@ -424,10 +463,21 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertInt(bagtime, lower = 1)
 
   td = getTaskDescription(task)
-  type = ifelse(td$type == "regr", "regr",
-                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (td$type == "regr"){
+    type = "regr"
+  } else if (td$type == "fcregr"){
+    type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
+  } else if (length(td$class.levels) == 2L){
+    type = "classif"
+  } else if (length(td$class.levels) > 2L){
+    type = "multiclassif"
+  } else {
+    stop("This is not currently supported.")
+  }
   if (is.null(metric)) {
-    if (type == "regr") {
+    if (type == "regr" || type == "fcregr") {
       metric = function(pred, true) mean((pred-true)^2)
     } else {
       metric = function(pred, true) {
@@ -440,7 +490,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertFunction(metric)
 
   bls = learner$base.learners
-  if (type != "regr") {
+  if (type != "regr" && type != "fcregr" && type != "mfcregr") {
     for (i in 1:length(bls)) {
       if (bls[[i]]$predict.type == "response")
         stop("Hill climbing algorithm only takes probability predict type for classification.")
@@ -452,7 +502,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   for (i in seq_along(bls)) {
     bl = bls[[i]]
     r = resample(bl, task, rin, show.info = FALSE)
-    if (type == "regr") {
+    if (type == "regr" | type == "fcregr" | type == "mfcregr") {
       probs[[i]] = matrix(getResponse(r$pred), ncol = 1)
     } else {
       probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
@@ -547,13 +597,24 @@ compressBaseLearners = function(learner, task, parset = list()) {
   pseudo.data = data.frame(pseudo.data, target = pseudo.target$data$response)
 
   td = ensemble.model$task.desc
-  type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (td$type == "regr"){
+    type = "regr"
+  } else if (td$type == "fcregr"){
+    type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
+  } else if (length(td$class.levels) == 2L){
+    type = "classif"
+  } else if (length(td$class.levels) > 2L){
+    type = "multiclassif"
+  } else {
+    stop("This is not currently supported.")
+  }
 
-  if (type == "regr") {
+  if (type == "regr" | type == "fcregr" | type == "mfcregr") {
     new.task = makeRegrTask(data = pseudo.data, target = "target")
     if (is.null(learner$super.learner)) {
-      m = makeLearner("regr.nnet", predict.type = )
+      m = makeLearner("regr.nnet", predict.type = "response")
     } else {
       m = learner$super.learner
     }
@@ -588,7 +649,9 @@ getResponse = function(pred, full.matrix = TRUE) {
       # return only vector of probabilities for binary classification
       return(getPredictionProbabilities(pred))
     }
-  } else {
+  } else if (pred$task.desc$type == "mfcregr"){
+    getPredictionResponse(pred)
+  }else {
     # if regression task
     pred$data$response
   }
@@ -723,6 +786,73 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     res[[i]] = factor(res[[i]], labels = ori.labels[[i]])
   return(res)
 }
+
+# stacking where we growing crossval the training set with the base learners, then super-learn on that
+stackGrowingCV = function(learner, task) {
+  td = getTaskDescription(task)
+  if (td$type == "regr"){
+    type = "regr"
+  } else if (td$type == "fcregr"){
+    type = "fcregr"
+  } else if (td$type == "mfcregr"){
+    type = "mfcregr"
+  } else if (length(td$class.levels) == 2L){
+    type = "classif"
+  } else if (length(td$class.levels) > 2L){
+    type = "multiclassif"
+  } else {
+    stop("This is not currently supported.")
+  }
+  bls = learner$base.learners
+  use.feat = learner$use.feat
+
+  # cross-validate all base learners and get a prob vector for the whole dataset for each learner
+  base.models = probs = vector("list", length(bls))
+  rin = makeResampleInstance(learner$resampling, task = task)
+  #rin$desc$iters = length(rin$test.inds)
+  for (i in seq_along(bls)) {
+    bl = bls[[i]]
+    r = resample(learner = bl,task = task,resampling = rin, show.info = FALSE)
+    probs[[i]] = getResponse(r$pred, full.matrix = FALSE)
+    # also fit all base models again on the complete original data set
+    base.models[[i]] = train(bl, task)
+  }
+  names(probs) = names(bls)
+
+  if (type == "regr" | type == "classif" | type == "fcregr" | type == "mfcregr") {
+    probs = as.data.frame(probs)
+  } else {
+    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+  }
+
+  # add true target column IN CORRECT ORDER
+  tn = getTaskTargetNames(task)
+  test.inds = unlist(rin$test.inds)
+  #learner$resampling$initial.window = learner$resampling$initial.window + 1
+  pred.train = as.list(probs[order(test.inds), , drop = FALSE])
+
+  # Have to change index with multiple targets
+  if (length(task$task.desc$target) > 1L)
+    probs[[tn]] = getTaskTargets(task)[test.inds,]
+  else
+    probs[[tn]] = getTaskTargets(task)[test.inds]
+
+  # now fit the super learner for predicted_probs --> target
+  probs = probs[order(test.inds), , drop = FALSE]
+  if (use.feat) {
+    # add data with normal features IN CORRECT ORDER
+    feat = getTaskData(task)#[test.inds, ]
+    feat = feat[, !colnames(feat)%in%tn, drop = FALSE]
+    predData = cbind(probs, feat)
+    super.task = makeSuperLearnerTask(learner, data = predData, target = tn)
+  } else {
+    super.task = makeSuperLearnerTask(learner, data = probs, target = tn)
+  }
+  super.model = train(learner$super.learner, super.task)
+  list(method = "growing.cv", base.models = base.models,
+       super.model = super.model, pred.train = pred.train)
+}
+
 
 # TODOs:
 # - document + test + export

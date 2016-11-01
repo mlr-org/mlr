@@ -51,6 +51,11 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data = df)
+  # This is almost guranteed to break
+  else if (xts::is.xts(df) && ncol(df) > 1)
+    task = makeMultiForecastRegrTask(data = df, target = target)
+  else if (xts::is.xts(df))
+    task = makeForecastRegrTask(data = df, target = target)
   else if (is.numeric(df[, target]))
     task = makeRegrTask(data = df, target = target)
   else if (is.factor(df[, target]))
@@ -61,11 +66,13 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     task = makeMultilabelTask(data = df, target = target)
   else
     stop("Should not happen!")
+  set.seed(getOption("mlr.debug.seed"))
   m = try(train(lrn, task, subset = inds))
 
   if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
   } else {
+    set.seed(getOption("mlr.debug.seed"))
     cp = predict(m, newdata = test)
     # Multilabel has a special data structure
     if (class(task)[1] == "MultilabelTask") {
@@ -73,7 +80,10 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
       expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
     } else {
     # to avoid issues with dropped levels in the class factor we only check the elements as chars
-    if (is.numeric(cp$data$response) && is.numeric(old.predicts))
+    if (any(class(task) == "MultiForecastRegrTask"))
+      expect_equal(unname(as.matrix(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), force = TRUE),
+                   unname(as.matrix(old.predicts)))
+    else if (is.numeric(cp$data$response) && is.numeric(old.predicts))
       expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
     else
       expect_equal(as.character(cp$data$response), as.character(old.predicts))
@@ -240,4 +250,59 @@ quickcheckTest = function(...) {
   }
 
   expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
+}
+
+testSimpleUpdate = function(t.name, target, train.df, update.df,
+                      test.df, old.predicts, parset = list()) {
+
+  lrn = do.call("makeLearner", c(list(t.name), parset))
+  # FIXME this heuristic will backfire eventually
+  if (length(target) == 0)
+    task = makeClusterTask(data = train.df)
+  else if (xts::is.xts(train.df))
+    task = makeForecastRegrTask(data = train.df, target = target)
+  else if (is.numeric(train.df[, target]))
+    task = makeRegrTask(data = train.df, target = target)
+  else if (is.factor(train.df[, target]))
+    task = makeClassifTask(data = train.df, target = target)
+  else if (is.data.frame(train.df[, target]) && is.numeric(train.df[, target[1L]]) && is.logical(train.df[, target[2L]]))
+    task = makeSurvTask(data = train.df, target = target)
+  else if (is.data.frame(train.df[, target]) && is.logical(train.df[, target[1L]]))
+    task = makeMultilabelTask(data = train.df, target = target)
+  else
+    stop("Should not happen!")
+  set.seed(getOption("mlr.debug.seed"))
+  m = try(train(lrn, task))
+  m = try(updateModel(m, task, update.df))
+  if (inherits(m, "FailureModel")){
+    expect_is(old.predicts, "try-error")
+  } else {
+    set.seed(getOption("mlr.debug.seed"))
+    cp = predict(m, newdata = test.df)
+    # Multilabel has a special data structure
+    if (class(task)[1] == "MultilabelTask") {
+      rownames(cp$data) = NULL
+      expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
+    } else {
+      # to avoid issues with dropped levels in the class factor we only check the elements as chars
+      if (is.numeric(cp$data$response) && is.numeric(old.predicts))
+        expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      else
+        expect_equal(as.character(cp$data$response), as.character(old.predicts))
+    }
+  }
+}
+
+testSimpleParsetsUpdate = function(t.name, df, target,update.inds, train.inds,
+                                   test.inds, old.predicts.list, parset.list) {
+
+  train.df = df[train.inds,]
+  update.df = df[update.inds]
+  test.df = df[test.inds,]
+
+  for (i in 1:length(parset.list)) {
+    parset = parset.list[[i]]
+    old.predicts = old.predicts.list[[i]]
+    testSimpleUpdate(t.name,target, train.df, update.df, test.df, old.predicts, parset)
+  }
 }

@@ -36,6 +36,9 @@ makePrediction = function(task.desc, row.names, id, truth, predict.type, predict
   UseMethod("makePrediction")
 }
 
+
+
+
 #' @export
 makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
   data = namedList(c("id", "truth", "response", "se"))
@@ -189,6 +192,115 @@ makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, pred
 }
 
 #' @export
+#' @importFrom lubridate dseconds int_diff
+makePrediction.TaskDescForecastRegr = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+  data = namedList(c("id", "truth", "response", "se"))
+  if (class(y) != "matrix")
+    size.y = length(y)
+  else
+    size.y = nrow(y)
+
+  # This will only happen when there is a task with no subset
+  #  aka, we predict future values and have to get their times
+  if (length(truth) > size.y){
+    sec <- lubridate::dseconds(lubridate::int_diff(as.POSIXct(row.names)))
+    # We take the median seconds between intervals as this won't get
+    # a wrong day until about 200 months in the future.
+    med_sec <- mean(sec)
+    start = as.POSIXct(row.names[length(row.names)])
+    row.names <- start + rep(med_sec,size.y) * 1:size.y
+    data$id = NULL
+    data$truth = NULL
+  } else {
+    row.names = row.names[1:length(truth)]
+    y = y[1:length(truth)]
+    data$id = id
+    data$truth = truth
+  }
+  if (predict.type == "response") {
+    data$response = y
+    data = filterNull(data)
+  } else {
+    y = as.data.frame(y)
+    data$response = y[, 1L, drop = FALSE]
+    colnames(data$response) = NULL
+    data$se = y[, 2L:I(ncol(y)), drop = FALSE]
+    data = filterNull(data)
+  }
+
+  makeS3Obj(c("PredictionForecastRegr", "Prediction"),
+            predict.type = predict.type,
+            data = setRowNames(as.data.frame(data, row.names = NULL), row.names),
+            threshold = NA_real_,
+            task.desc = task.desc,
+            time = time,
+            error = error
+  )
+}
+
+
+#' @export
+#' @importFrom lubridate dseconds int_diff
+makePrediction.TaskDescMultiForecastRegr = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+  data = namedList(c("id", "truth", "response", "se"))
+  if (class(y) != "matrix"){
+    size.y = length(y)
+  } else {
+    size.y = nrow(y)
+  }
+  # FIXME: This is kind of gross and should be done better
+  if (!is.null(truth)){
+    if (class(truth) != "data.frame" && class(truth) != "matrix"){
+        size.truth = length(truth)
+      } else {
+        size.truth = nrow(truth)
+      }
+  } else {
+    size.truth = size.y
+  }
+  # This will only happen when there is a task with no subset
+  #  aka, we predict future values and have to get their times
+  if (size.truth > size.y){
+    sec <- lubridate::dseconds(lubridate::int_diff(as.POSIXct(row.names)))
+    # We take the median seconds between intervals as this won't get
+    # a wrong day until about 200 months in the future.
+    med_sec <- mean(sec)
+    start = as.POSIXct(row.names[length(row.names)])
+    row.names <- start + rep(med_sec,size.y) * 1:size.y
+    data$id = NULL
+    data$truth = NULL
+  } else {
+    row.names = row.names[1:size.truth]
+    if (class(y) == "matrix")
+      y = y[1:size.truth, , drop =FALSE]
+    else
+      y = y[1:size.truth]
+    data$id = id
+    data$truth = truth
+  }
+  if (predict.type == "response") {
+    data$response = y
+    data = filterNull(data)
+  } else {
+    y = as.data.frame(y)
+    data$response = y[, 1L, drop = FALSE]
+    colnames(data$response) = NULL
+    data$se = y[, 2L:I(ncol(y)), drop = FALSE]
+    data = filterNull(data)
+  }
+
+  makeS3Obj(c("PredictionMultiForecastRegr", "Prediction"),
+            predict.type = predict.type,
+            data = setRowNames(as.data.frame(data), row.names),
+            threshold = NA_real_,
+            task.desc = task.desc,
+            time = time,
+            error = error
+  )
+}
+
+
+#' @export
 print.Prediction = function(x, ...) {
   catf("Prediction: %i observations", nrow(x$data))
   catf("predict.type: %s", x$predict.type)
@@ -197,4 +309,3 @@ print.Prediction = function(x, ...) {
   if (!is.na(x$error)) catf("errors: %s", x$error)
   printHead(as.data.frame(x))
 }
-

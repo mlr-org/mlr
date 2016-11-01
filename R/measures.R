@@ -41,7 +41,7 @@ NULL
 #' @rdname measures
 #' @format none
 featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
+  properties = c("classif", "classif.multi", "multilabel", "regr", "fcregr", "surv", "costsens", "cluster", "req.model", "req.pred"),
   name = "Percentage of original features used for model",
   note =  "Useful for feature selection.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -53,7 +53,7 @@ featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
 #' @rdname measures
 #' @format none
 timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model"),
+  properties = c("classif", "classif.multi", "multilabel", "regr", "fcregr", "surv", "costsens", "cluster", "req.model"),
   name = "Time of fitting the model",
   fun = function(task, model, pred, feats, extra.args) {
     model$time
@@ -64,7 +64,7 @@ timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf
 #' @rdname measures
 #' @format none
 timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.pred"),
+  properties = c("classif", "classif.multi", "multilabel", "regr", "fcregr", "surv", "costsens", "cluster", "req.pred"),
   name = "Time of predicting test set",
   fun = function(task, model, pred, feats, extra.args) {
     pred$time
@@ -75,7 +75,7 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst =
 #' @rdname measures
 #' @format none
 timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
+  properties = c("classif", "classif.multi", "multilabel", "regr", "fcregr", "surv", "costsens", "cluster", "req.model", "req.pred"),
   name = "timetrain + timepredict",
   fun = function(task, model, pred, feats, extra.args) {
     model$time + pred$time
@@ -90,13 +90,39 @@ timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
 #' @rdname measures
 #' @format none
 sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Sum of squared errors",
   note = "Defined as: sum((response - truth)^2)",
   fun = function(task, model, pred, feats, extra.args) {
     measureSSE(pred$data$truth, pred$data$response)
   }
 )
+
+#' @export mase
+#' @rdname measures
+#' @usage  none
+#' @format none
+mase = makeMeasure(
+  id = "mase",
+  minimize = TRUE,
+  name = "Mean Absolute Scaled Error",
+  properties = c("regr", "fcregr", "mfcregr", "req.pred", "req.truth", "req.task"),
+  best = 0,
+  worst = Inf,
+  fun = function(task, model, pred, feats, extra.args) {
+    Tn     = nrow(getTaskData(task))
+    truth  = getPredictionTruth(pred)
+    pred   = getPredictionResponse(pred)
+    target = getTaskTargets(task)
+    top_error   = sum(abs(truth - pred))
+    bottom_diff = (Tn / (Tn - 1)) * sum(abs(diff(target)))
+    top_error / bottom_diff
+  }
+)
+
+
+
+
 
 #' @export measureSSE
 #' @rdname measures
@@ -109,13 +135,14 @@ measureSSE = function(truth, response) {
 #' @rdname measures
 #' @format none
 mse = makeMeasure(id = "mse", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Mean of squared errors",
   note = "Defined as: mean((response - truth)^2)",
   fun = function(task, model, pred, feats, extra.args) {
     measureMSE(pred$data$truth, pred$data$response)
   }
 )
+
 
 #' @export measureMSE
 #' @rdname measures
@@ -129,7 +156,7 @@ measureMSE = function(truth, response) {
 #' @rdname measures
 #' @format none
 rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Root mean squared error",
   note = "The RMSE is aggregated as sqrt(mean(rmse.vals.on.test.sets^2)). If you don't want that, you could also use `test.mean`.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -149,7 +176,7 @@ measureRMSE = function(truth, response) {
 #' @rdname measures
 #' @format none
 medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Median of squared errors",
   note = "Defined as: median((response - truth)^2).",
   fun = function(task, model, pred, feats, extra.args) {
@@ -168,7 +195,7 @@ measureMEDSE = function(truth, response) {
 #' @rdname measures
 #' @format none
 sae = makeMeasure(id = "sae", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Sum of absolute errors",
   note = "Defined as: sum(abs(response - truth))",
   fun = function(task, model, pred, feats, extra.args) {
@@ -187,7 +214,7 @@ measureSAE = function(truth, response) {
 #' @rdname measures
 #' @format none
 mae = makeMeasure(id = "mae", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Mean of absolute errors",
   note = "Defined as: mean(abs(response - truth))",
   fun = function(task, model, pred, feats, extra.args) {
@@ -206,7 +233,7 @@ measureMAE = function(truth, response) {
 #' @rdname measures
 #' @format none
 medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Median of absolute errors",
   note = "Defined as: median(abs(response - truth)).",
   fun = function(task, model, pred, feats, extra.args) {
@@ -225,7 +252,7 @@ measureMEDAE = function(truth, response) {
 #' @rdname measures
 #' @format none
 rsq = makeMeasure(id = "rsq", minimize = FALSE, best = 1, worst = -Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Coefficient of determination",
   note = "Also called R-squared, which is 1 - residual_sum_of_squares / total_sum_of_squares.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -246,7 +273,7 @@ measureRSQ = function(truth, response) {
 #' @rdname measures
 #' @format none
 expvar = makeMeasure(id = "expvar", minimize = FALSE, best = 1, worst = 0,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Explained variance",
   note = "Similar to measure rsq (R-squared). Defined as explained_sum_of_squares / total_sum_of_squares.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -267,7 +294,7 @@ measureEXPVAR = function(truth, response) {
 #' @rdname measures
 #' @format none
 arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Adjusted coefficient of determination",
   note = "Defined as: 1 - (1 - rsq) * (p / (n - p - 1L)). Adjusted R-squared is only defined for normal linear regression.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -281,7 +308,7 @@ arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 rrse = makeMeasure(id = "rrse", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Root relative squared error",
   note = "Defined as sqrt (sum_of_squared_errors / total_sum_of_squares). Undefined for single instances and when every truth value is identical. In this case the output will be NA.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -305,7 +332,7 @@ measureRRSE = function(truth, response){
 #' @rdname measures
 #' @format none
 rae = makeMeasure(id = "rae", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Relative absolute error",
   note = "Defined as sum_of_absolute_errors / mean_absolute_deviation. Undefined for single instances and when every truth value is identical. In this case the output will be NA.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -329,7 +356,7 @@ measureRAE = function(truth, response){
 #' @rdname measures
 #' @format none
 mape = makeMeasure(id = "mape", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("regr", "req.pred", "req.truth"),
+  properties = c("regr", "fcregr", "req.pred", "req.truth"),
   name = "Mean absolute percentage error",
   note = "Defined as the abs(truth_i - response_i) / truth_i. Won't work if any truth value is equal to zero. In this case the output will be NA.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -481,7 +508,7 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -661,15 +688,15 @@ measureKAPPA = function(truth, response) {
   # get confusion matrix
   conf.mat = table(truth, response)
   conf.mat = conf.mat / sum(conf.mat)
-  
-  # observed agreement frequency 
+
+  # observed agreement frequency
   p0 = sum(diag(conf.mat))
 
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
   pe = sum(rowsum * colsum) / sum(conf.mat)^2
-  
+
   # calculate kappa
   1 - (1 - p0) / (1 - pe)
 }
@@ -698,12 +725,12 @@ measureWKAPPA = function(truth, response) {
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
-  expected.mat = rowsum %*% t(colsum) 
+  expected.mat = rowsum %*% t(colsum)
 
   # get weights
   class.values = as.numeric(levels(truth))
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
-  
+
   # calculate weighted kappa
   1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
@@ -1383,5 +1410,34 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
     requirePackages("clusterSim", default.method = "load")
     r = as.integer(as.factor(pred$data$response))
     clusterSim::index.S(clusterSim::dist.GDM(feats), r)
+  }
+)
+
+
+########################################
+### Multivariate Forecast Regression
+########################################
+
+#' @export multivar.mase
+#' @rdname measures
+#' @usage  none
+#' @format none
+multivar.mase = makeMeasure(
+  id = "multivar.mase",
+  minimize = TRUE,
+  name = "Mean Absolute Scaled Error",
+  properties = c("mfcregr", "req.pred", "req.truth", "req.task"),
+  best = 0,
+  worst = Inf,
+  fun = function(task, model, pred, feats, extra.args) {
+    Tn     = nrow(getTaskData(task))
+    truth  = getPredictionTruth(pred)
+    pred.names = getTaskTargetNames(task)
+    pred   = getPredictionResponse(pred)
+    pred   = pred[,pred.names,drop = FALSE]
+    target = as.matrix(getTaskTargets(task))
+    top_error   = apply(abs(truth - pred),2,sum)
+    bottom_diff = (Tn / (Tn - 1)) * apply(as.matrix(target),2, function(x)sum(abs(diff(x))))
+    mean(top_error / bottom_diff)
   }
 )

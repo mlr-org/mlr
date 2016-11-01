@@ -53,7 +53,7 @@ propVectorToMatrix = function(p, levs) {
 }
 
 getSupportedTaskTypes = function() {
-  c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  c("classif", "regr", "surv", "costsens", "cluster", "multilabel", "fcregr", "mfcregr")
 }
 
 # Maybe move to BBmisc at some point

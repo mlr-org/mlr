@@ -49,8 +49,8 @@
 #' makeLearner("classif.lda", predict.type = "prob")
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
-makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold = NULL,
-  fix.factors.prediction = FALSE, ..., par.vals = list(), config = list()) {
+makeLearner = function(cl, id = cl, ..., predict.type = "response", predict.threshold = NULL,
+  fix.factors.prediction = FALSE, par.vals = list(), config = list()) {
 
   assertString(cl)
   assertFlag(fix.factors.prediction)

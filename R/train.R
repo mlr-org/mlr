@@ -64,7 +64,7 @@ train = function(learner, task, subset, weights = NULL) {
   vars = getTaskFeatureNames(task)
   # no vars? then use no vars model
 
-  if (length(vars) == 0L) {
+  if (length(vars) == 0L && learner$type != "fcregr" && learner$type != "mfcregr") {
     learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDescription(task))
     time.train = 0
   } else {
