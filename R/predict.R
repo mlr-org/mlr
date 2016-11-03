@@ -52,6 +52,10 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     size = getTaskSize(task)
   } else {
     assertDataFrame(newdata, min.rows = 1L)
+    if (class(newdata)[1] != "data.frame") {
+      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
+      newdata = as.data.frame(newdata)
+    }
     size = nrow(newdata)
   }
   if (missing(subset)) {
@@ -108,8 +112,8 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
-    time.predict = as.numeric(st[3L])
+    time.predict = measureTime(fun1(p <- fun2(do.call(predictLearner2, pars))))
+
     # was there an error during prediction?
     if (is.error(p)) {
       if (opts$on.learner.error == "warn")

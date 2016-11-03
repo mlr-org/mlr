@@ -235,8 +235,13 @@ test.join = makeAggregation(
     df = as.data.frame(pred)
     f = if (length(group)) group[df$iter] else factor(rep(1L, nrow(df)))
     mean(vnapply(split(df, f), function(df) {
+      if (pred$predict.type == "response") y = df$response
+      if (pred$predict.type == "prob") {
+        y = df[, stri_startswith_fixed(colnames(df), "prob."), drop = FALSE]
+        colnames(y) = stri_sub(colnames(y), 6L)
+      }
       npred = makePrediction(task.desc = pred$task.desc, row.names = rownames(df),
-        id = NULL, truth = df$truth, predict.type = pred$predict.type, y = df$response,
+        id = NULL, truth = df$truth, predict.type = pred$predict.type, y = y,
         time = NA_real_)
       performance(npred, measure)
     }))

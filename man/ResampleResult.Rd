@@ -52,7 +52,10 @@ task and learner ids, aggregated measures and runtime for the resampling.
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
+  \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
