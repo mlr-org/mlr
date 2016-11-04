@@ -4,8 +4,9 @@ makeRLearner.classif.blackboost = function() {
     cl = "classif.blackboost",
     package = c("mboost", "party"),
     par.set = makeParamSet(
+      # FIXME: add family PropOdds, when mlr supports ordered factors as tasks
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
-        values = c("Binomial", "AdaExp", "AUC", "PropOdds", "custom.family")),
+        values = c("Binomial", "AdaExp", "AUC", "custom.family")),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
       makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
@@ -71,7 +72,10 @@ predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
       stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc
-      if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) # one observation prediction + family PropOddas returns a numeric vector instead of matrix
+      # one observation prediction + family PropOdds returns a numeric vector instead of matrix
+      # FIXME: add/change the outcommented line below to enable predicting one obs
+      # (caution: check whether the right class is assigned)
+      # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) 
       p = p[, 1L]
       levs = c(td$negative, td$positive)
       return(propVectorToMatrix(p, levs))

@@ -4,12 +4,14 @@ test_that("surv_glmboost", {
   requirePackagesOrSkip(c("survival", "mboost"), default.method = "load")
 
   parset.list1 = list(
+    list(family = mboost::CoxPH()),
     list(family = mboost::CoxPH(), control = mboost::boost_control(mstop = 100L, nu = 0.1)),
     list(family = mboost::Weibull(nuirange = c(0,50.5)), control = mboost::boost_control(mstop = 50L, nu = 1)),
     list(family = mboost::Gehan(), control = mboost::boost_control(mstop = 100L, nu = 0.5))  
   )
   
   parset.list2 = list(
+    list(),
     list(mstop = 100L, nu = 0.1),
     list(family = "Weibull", nuirange = c(0,50.5), mstop = 50L, nu = 1),
     list(family = "Gehan", mstop = 100L, nu = 0.5)
