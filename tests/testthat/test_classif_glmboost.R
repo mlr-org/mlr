@@ -69,6 +69,7 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
   })
 }) 
 
+<<<<<<< HEAD
 
 test_that("classif_glmboost with family `PropOdds` works with one observation", {
   data = getTaskData(binaryclass.task)
@@ -87,3 +88,5 @@ test_that("classif_glmboost with family `PropOdds` works with one observation", 
 })
 
 
+=======
+>>>>>>> f0e7e04f51f96f27c6c65cffa156e2993fca3e68
