@@ -248,3 +248,10 @@ testDocForStrings = function(doc, x, grid.size = 1L) {
   nodes = XML::getNodeSet(doc, text.paths, ns.svg)
   expect_equal(length(nodes), length(x) * grid.size)
 }
+
+testDocForStrings = function(doc, x, grid.size = 1L) {
+  text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
+    x, "')]]", sep = "")
+  nodes = XML::getNodeSet(doc, text.paths, ns.svg)
+  expect_equal(length(nodes), length(x) * grid.size)
+}
