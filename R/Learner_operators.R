@@ -92,5 +92,32 @@ setLearnerId = function(learner, id) {
   return(learner)
 }
 
+#' @title Get the short name of the learner.
+#'
+#' @description For an ordinary learner simply its short name is returned.
+#'   For wrapped learners, the wrapper id is successively attached to the short
+#'   name of the base learner. E.g: \dQuote{rf.bagged.imputed}
+#' @template arg_learner
+#' @return [\code{character(1)}].
+#' @export
+#' @family learner
+getLearnerShortName = function(learner) {
+  learner = checkLearner(learner)
+  learner.short.name = learner$short.name
+
+  if (is.null(learner.short.name)) {
+    learner.id.split = unlist(strsplit(getLearnerId(learner), "[.]"))
+    wrapper.ids = learner.id.split[3:length(learner.id.split)]
+    base.learner.path = c(rep("next.learner", length(wrapper.ids)),
+      "short.name")
+    base.learner.short.name = extractSubList(list(learner),
+      base.learner.path)
+    learner.short.name = paste(c(base.learner.short.name, wrapper.ids),
+      collapse = ".")
+  }
+
+  return(learner.short.name)
+}
+
 
 
