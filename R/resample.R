@@ -118,7 +118,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
-    messagef("[Resample] %s iter: %i", rin$desc$id, i)
+    messagef("[Resample] Start %s iter: %i", rin$desc$id, i)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
 
@@ -150,6 +150,12 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
+  if (show.info) {
+    mids = vcapply(measures, function(m) m$id)
+    for (i in 1:length(mids)) {
+      messagef("[Resample] Result: %s = %f", mids[i] , ms.test[i])
+    }
+  }
   list(
     measures.test = ms.test,
     measures.train = ms.train,
@@ -161,7 +167,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   )
 }
 
-mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
+ mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
