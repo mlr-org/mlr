@@ -61,27 +61,29 @@ getRRPredictionList = function(res, ...) {
   # get prediction objects for train and test set
   prediction = lapply(set, function(s) {
     # split by resample iterations
-    p.split = subset(pred$data, set == s)
+    p.split = pred$data[pred$data$set == s,, drop = FALSE]
     p.split = split(p.split, as.factor(p.split$iter))
     # create prediction object for each resample iteration
     p.split = lapply(p.split, function (p) {
       # get predictions based on predict.type
       if (predict.type == "prob") {
-        y = p[,stri_detect_regex(colnames(p), "^prob[.]")]
+        y = p[, stri_startswith_fixed(colnames(p), "prob."), drop = FALSE]
         # we need to remove the "prob." part in the colnames, otherwise
         # makePrediction thinks that the factor starts with "prob."
-        colnames(y) = stri_replace_first(colnames(y), replacement =  "", regex = "^prob[.]")
+        colnames(y) = stri_replace_first_fixed(colnames(y), "prob.", replacement =  "")
       } else {
         y = p$response
       }
       makePrediction(task.desc, id = p$id,
         truth = p$truth, y = y, row.names = p$id,
-        predict.type = predict.type, time = NA, ...)
+        predict.type = predict.type, time = NA_real_, ...)
     })
     # add time info afterwards
-    for(i in 1:length(p.split)) p.split[[i]]$time = time[i]
+    for(i in seq_along(p.split))
+      p.split[[i]]$time = time[i]
     return(p.split)
   })
+
   ret = setNames(prediction, set)
   if (is.null(ret$train)) ret = append(ret, list(train = NULL))
   if (is.null(ret$test)) ret = append(ret, list(test = NULL))
