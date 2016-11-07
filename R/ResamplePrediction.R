@@ -16,8 +16,8 @@ NULL
 
 
 makeResamplePrediction = function(instance, preds.test, preds.train) {
-  tenull = sapply(preds.test, is.null)
-  trnull = sapply(preds.train, is.null)
+  tenull = vapply(preds.test, is.null, FUN.VALUE = logical(1))
+  trnull = vapply(preds.train, is.null, FUN.VALUE = logical(1))
   if (any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
   if (any(trnull)) pr.tr = preds.train[!trnull] else pr.tr = preds.train
 
@@ -27,11 +27,11 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
   ))
 
   if (!any(tenull) && instance$desc$predict %in% c("test", "both")) {
-    p1 = preds.test[[1L]]
-    pall = preds.test
+    p1 = pr.te[[1L]]
+    pall = pr.te
   } else if (!any(trnull) && instance$desc$predict == "train") {
-    p1 = preds.train[[1L]]
-    pall = preds.train
+    p1 = pr.tr[[1L]]
+    pall = pr.tr
   }
   
   
