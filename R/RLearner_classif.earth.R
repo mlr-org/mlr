@@ -57,7 +57,7 @@ predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$factor.levels[[1]]
   if (.learner$predict.type == "prob") {
-    p = setColNames(cbind(p,1-p), levs)
+    p = setColNames(cbind(p, 1-p), levs)
   } else {
     p = as.factor(ifelse(p > 0.5, levs[1L], levs[2L]))
   }
