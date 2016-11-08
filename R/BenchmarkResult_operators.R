@@ -51,7 +51,7 @@ getBMRLearnerIds = function(bmr) {
 #' @family benchmark
 getBMRLearnerShortNames = function(bmr) {
   assertClass(bmr, "BenchmarkResult")
-  extractSubList(bmr$learners, "short.name", use.names = FALSE)
+  vcapply(bmr$learners, getLearnerShortName, use.names = FALSE)
 }
 
 #' @title Return measures used in benchmark.

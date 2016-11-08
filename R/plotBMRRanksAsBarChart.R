@@ -36,7 +36,10 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   assertChoice(pos, c("tile", "stack", "dodge"))
 
   df = as.data.frame(convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation))
-  df$learner.id = rownames(df)
+  df$learner.id = as.factor(rownames(df))
+  if (pretty.names) {
+    levels(df$learner.id) = getBMRLearnerShortNames(bmr)
+  }
   setDT(df)
   df = melt(df, id.vars = "learner.id")
   setnames(df, c("variable", "value"), c("task.id", "rank"))
@@ -54,11 +57,8 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
     p = p + geom_bar(position = pos)
     p = p + ylab(NULL)
   }
-
-  if (pretty.names) {
-    lrns.short = getBMRLearnerShortNames(bmr)
-    p = p + scale_fill_discrete(labels = lrns.short)
-  }
+  
+  # p = p + scale_fill_discrete(labels = lev)
 
   return(p)
 }

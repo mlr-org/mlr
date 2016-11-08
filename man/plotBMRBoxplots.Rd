@@ -27,8 +27,8 @@ Character vector with \code{learner.ids} in new order.}
 Character vector with \code{task.ids} in new order.}
 
 \item{pretty.names}{[\code{logical(1)}]\cr
-Whether to use the \code{\link{Measure}} name instead of the id in the plot.
-Default is \code{TRUE}.}
+Whether to use the \code{\link{Measure}} name and the \code{\link{Learner}}
+short name instead of the id. Default is \code{TRUE}.}
 
 \item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
