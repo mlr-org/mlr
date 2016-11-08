@@ -35,7 +35,7 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
   expect_true(!is.na(perf2), info = lrn$id)
   expect_true(!is.na(perf3), info = lrn$id)
   expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id, tolerance = 0.0001, scale = 1)
-  expect_false(all.equal(get.pred.fun(p1), get.pred.fun(p3), tolerance = 0.0001, scale = 1), info = lrn$id)
+  expect_false(isTRUE(all.equal(get.pred.fun(p1), get.pred.fun(p3))), info = lrn$id)
 }
 
 
