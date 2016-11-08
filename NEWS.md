@@ -75,6 +75,9 @@
 * surv.gbm
 * regr.cvglmnet
 
+## learner - removed
+* classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
+
 ## measures - new
 * ssr, qsr, lsr
 * rrse, rae, mape
