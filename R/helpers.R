@@ -58,9 +58,9 @@ getSupportedTaskTypes = function() {
 
 # Maybe move to BBmisc at some point
 measureTime = function(expr, ee = parent.frame()) {
-  before = proc.time()[3L]
+  before = proc.time()[[3L]]
   force(expr)
-  as.numeric(proc.time()[3L] - before)
+  proc.time()[[3L]] - before
 }
 
 # find duplicate measure names or ids and paste together those

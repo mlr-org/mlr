@@ -33,6 +33,8 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
 
 before_install:
+  # we need a very fresh version of survival for Hmisc, needs be done early in the script
+  - Rscript -e 'install.packages("survival")'
   - mkdir $HOME/bin
   - ln -s $(which gcc-4.9) $HOME/bin/gcc
   - ln -s $(which g++-4.9) $HOME/bin/g++
