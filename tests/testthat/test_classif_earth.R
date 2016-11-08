@@ -20,7 +20,6 @@ test_that("classif_earth", {
     list(degree = 5, nprune = 4)
   )
   
-  
   old.predicts.list = list()
   levs = binaryclass.class.levs
   for (i in 1:length(parset.list)) {
@@ -36,6 +35,5 @@ test_that("classif_earth", {
   }
   
   testSimpleParsets("classif.earth", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list)
-  
 })
 
