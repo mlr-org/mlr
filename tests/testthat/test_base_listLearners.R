@@ -24,3 +24,8 @@ test_that("listLearners", {
   expect_data_frame(x, min.rows = 20, min.cols = 3)
   expect_true(length(unique(x$type)) > 3L)
 })
+
+test_that("listLearners printer (#1336)", {
+  x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
+  capture.output(print(x1), file = NULL)
+})
