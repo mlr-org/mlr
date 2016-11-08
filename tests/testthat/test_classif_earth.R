@@ -9,7 +9,6 @@ test_that("classif_earth", {
   set.seed(getOption("mlr.debug.seed"))
   p = predict(m, newdata = binaryclass.test, type = "response")[,1]
   levs = binaryclass.class.levs
-  #p.prob = setColNames(cbind(1 - p, p), levs)
   p.class = as.factor(ifelse(p > 0.5, levs[1L], levs[2L]))
 
   testSimple("classif.earth", binaryclass.df, binaryclass.target, binaryclass.train.inds, p.class,list(maxit = 50))
