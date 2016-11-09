@@ -55,4 +55,14 @@ test_that("plotResiduals with BenchmarkResult", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), grid.size * 30L)
+  
+  # check pretty names
+  testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
+
+  plotResiduals(bmr, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
 })

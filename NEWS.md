@@ -55,6 +55,7 @@
 * getRRPredictionList
 * addRRMeasure
 * plotResiduals
+* getLearnerShortName
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
@@ -74,6 +75,9 @@
 * multilabel.cforest
 * surv.gbm
 * regr.cvglmnet
+
+## learner - removed
+* classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
 
 ## measures - new
 * ssr, qsr, lsr

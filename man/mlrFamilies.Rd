@@ -14,7 +14,7 @@
 \item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData, generateFunctionalANOVAData}
 \item{imbalancy}{oversample, smote}
 \item{impute}{makeImputeMethod, imputeConstant, impute, reimpute}
-\item{learner}{getClassWeightParam, getHyperPars, getParamSet.Learner, getLearnerType, getLearnerId, getLearnerPredictType, getLearnerPackages, getLearnerParamSet, getLearnerParVals, setLearnerId, getLearnerProperties, makeLearner, makeLearners, removeHyperPars, setHyperPars, setId, setPredictThreshold, setPredictType}
+\item{learner}{getClassWeightParam, getHyperPars, getParamSet.Learner, getLearnerType, getLearnerId, getLearnerPredictType, getLearnerPackages, getLearnerParamSet, getLearnerParVals, setLearnerId, getLearnerShortName, getLearnerProperties, makeLearner, makeLearners, removeHyperPars, setHyperPars, setId, setPredictThreshold, setPredictType}
 \item{learning_curve}{generateLearningCurveData, plotLearningCurveGGVIS}
 \item{multilabel}{getMultilabelBinaryPerformances, makeMultilabelBinaryRelevanceWrapper, makeMultilabelClassifierChainsWrapper, makeMultilabelDBRWrapper, makeMultilabelNestedStackingWrapper, makeMultilabelStackingWrapper}
 \item{performance}{calculateConfusionMatrix, calculateROCMeasures, makeCustomResampledMeasure, makeCostMeasure, makeMeasure, featperc, performance, estimateRelativeOverfitting}

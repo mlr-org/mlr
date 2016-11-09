@@ -49,15 +49,16 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
 
   df = orderBMRTasks(bmr, df, order.tsks)
 
+  if (pretty.names) {
+    df$learners.id = getBMRLearnerShortNames(bmr)
+  }
+
   p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id"))
   p = p + geom_point(size = pointsize, position = position_jitter(width = 0, height = jitter))
   # we dont need y label, the task names speak for themselves
   p = p + ylab("")
   p = p + xlab(xlab.string)
-  if (pretty.names) {
-    lrns.short = getBMRLearnerShortNames(bmr)
-    p = p + scale_colour_discrete(labels = lrns.short)
-  }
+
   return(p)
 }
 
