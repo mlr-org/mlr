@@ -8,7 +8,7 @@
 #' What is stored exactly in the [\code{\link{Prediction}}] object depends
 #' on the \code{predict.type} setting of the \code{\link{Learner}}.
 #' 
-#' You can call \code{listLearners(obj = NA, properties = "oobpreds")} to get a list of learners 
+#' You can call \code{listLearners(properties = "oobpreds")} to get a list of learners 
 #' which provide this. 
 #'
 #' @template arg_wrappedmod

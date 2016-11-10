@@ -74,6 +74,7 @@ getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
   }
 }
 
+#' @export
 getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   randomForestSRC::vimp(mod, ...)$importance[, "all"]

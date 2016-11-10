@@ -48,7 +48,8 @@ predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
 getOOBPredsLearner.classif.ranger = function(.learner, .model) {
   .model$learner.model$predictions
 }
-  
+
+#' @export
 getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
   has.fiv = .learner$par.vals$importance
   if (is.null(has.fiv) || has.fiv == "none") {

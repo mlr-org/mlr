@@ -60,6 +60,7 @@ getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
   }
 }
 
+#' @export
 getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   ctrl = list(...)

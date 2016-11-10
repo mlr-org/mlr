@@ -47,6 +47,7 @@ getOOBPredsLearner.regr.ranger = function(.learner, .model) {
   .model$learner.model$predictions
 }
 
+#' @export
 getFeatureImportanceLearner.regr.ranger = function(.learner, .model, ...) {
   getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }
