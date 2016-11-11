@@ -1,10 +1,10 @@
 #' @title Confusion matrix.
 #'
 #' @description
-#' 
+#'
 #' \code{getConfMatrix} is deprecated. Please use \code{\link{calculateConfusionMatrix}}.
-#' 
-#' 
+#'
+#'
 #' Calculates confusion matrix for (possibly resampled) prediction.
 #' Rows indicate true classes, columns predicted classes.
 #'

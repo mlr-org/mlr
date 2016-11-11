@@ -13,6 +13,17 @@ test_that("RankMatrix", {
   plotBMRRanksAsBarChart(res, pos = "stack")
   plotBMRRanksAsBarChart(res, pos = "dodge")
   # pretty.names works
-  plotBMRRanksAsBarChart(res, pretty.names = FALSE)
+  plotBMRRanksAsBarChart(res)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(res))
 
+  plotBMRRanksAsBarChart(res, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerIds(res))
 })

@@ -186,8 +186,8 @@ print.HyperParsEffectData = function(x, ...) {
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
 #'  cases of irregular hyperparameter paths, you will most likely need to use
-#'  this to have a meaningful visualization. Accepts either a \link{Learner}
-#'  object or the learner as a string for interpolation. Not used with partial
+#'  this to have a meaningful visualization. Accepts either a regression \link{Learner}
+#'  object or the learner as a string for interpolation. This cannot be used with partial
 #'  dependence.
 #'  Default is \code{NULL}.
 #' @param show.experiments [\code{logical(1)}]\cr
@@ -209,7 +209,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  dependence.
 #'  Default is \code{mean}.
 #' @param partial.dep.learn [\code{\link{Learner}} | \code{character(1)}]\cr
-#'  The learner used to learn partial dependence. Must be specified if
+#'  The regression learner used to learn partial dependence. Must be specified if
 #'  \dQuote{partial.dep} is set to \code{TRUE} in
 #'  \code{\link{generateHyperParsEffectData}}. Accepts either a \link{Learner}
 #'  object or the learner as a string for learning partial dependence.
@@ -249,7 +249,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   # assign learner for interpolation
   if (checkClass(interpolate, "Learner") == TRUE ||
       checkString(interpolate) == TRUE) {
-    lrn = checkLearnerRegr(interpolate)
+    lrn = checkLearner(interpolate, "regr")
   }
   assertFlag(show.experiments)
   assertFunction(nested.agg)
@@ -258,9 +258,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     checkNull(partial.dep.learn))
   if (checkClass(partial.dep.learn, "Learner") == TRUE ||
       checkString(partial.dep.learn) == TRUE) {
-    lrn = checkLearnerRegr(partial.dep.learn)
+    lrn = checkLearner(partial.dep.learn, "regr")
   }
-
+  if (!is.null(partial.dep.learn) && !is.null(interpolate))
+    stopf("partial.dep.learn and interpolate can't be simultaneously requested!")
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
     stopf("Greater than 1 length x, y, z or facet not yet supported")
 
@@ -273,7 +274,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   measures = hyperpars.effect.data$measures
 
   # set flags for building plots
-  na.flag = any(is.na(d[, hyperpars.effect.data$measures]))
+  na.flag = anyMissing(d[, hyperpars.effect.data$measures])
   z.flag = !is.null(z)
   facet.flag = !is.null(facet)
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
@@ -316,7 +317,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
     partial.task = makeRegrTask(id = "par_dep",
       data = d[, c(hypers, measures[1])], target = measures[1])
-    partial.fit = train("regr.randomForest", partial.task)
+    partial.fit = train(lrn, partial.task)
     if ((length(x) == 1) && (length(y) == 1) && !(z.flag)) {
       # we only care about each feature by itself for this case
       d = generatePartialDependenceData(partial.fit, partial.task, x)$data

@@ -63,8 +63,8 @@ If not \code{NULL}, will interpolate non-complete grids in order to visualize a 
 complete path. Only meaningful when attempting to plot a heatmap or contour.
 This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
 cases of irregular hyperparameter paths, you will most likely need to use
-this to have a meaningful visualization. Accepts either a \link{Learner}
-object or the learner as a string for interpolation. Not used with partial
+this to have a meaningful visualization. Accepts either a regression \link{Learner}
+object or the learner as a string for interpolation. This cannot be used with partial
 dependence.
 Default is \code{NULL}.}
 
@@ -90,7 +90,7 @@ dependence.
 Default is \code{mean}.}
 
 \item{partial.dep.learn}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner used to learn partial dependence. Must be specified if
+The regression learner used to learn partial dependence. Must be specified if
 \dQuote{partial.dep} is set to \code{TRUE} in
 \code{\link{generateHyperParsEffectData}}. Accepts either a \link{Learner}
 object or the learner as a string for learning partial dependence.

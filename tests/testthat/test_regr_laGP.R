@@ -4,6 +4,7 @@ test_that("regr_laGP", {
   requirePackagesOrSkip("laGP", default.method = "load")
 
   parset.list = list(
+    list(),
     list(start = 6, end = 50, close = 50)
   )
   dd = regr.df[1:100, c(1:3, 14)]
