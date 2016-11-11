@@ -4,6 +4,7 @@ test_that("regr_bcart", {
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(
+    list(),
     list(bprior = "bflat"),
     list(bprior = "b0", tree = c(0.5, 3)),
     list(bprior = "bmle", tree = c(0.1, 2))

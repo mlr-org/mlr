@@ -6,7 +6,7 @@
 \usage{
 makeImputeWrapper(learner, classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L),
-  dummy.type = "factor", impute.new.levels = TRUE,
+  dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE,
   recode.factor.levels = TRUE)
 }
 \arguments{
@@ -36,6 +36,13 @@ How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 or as \dQuote{factor}.
 Default is \dQuote{factor}.}
 
+\item{force.dummies}{[\code{logical(1)}]\cr
+Force dummy creation even if the respective data column does not
+contain any NAs. Note that (a) most learners will complain about
+constant columns created this way but (b) your feature set might
+be stochastic if you turn this off.
+Default is \code{FALSE}.}
+
 \item{impute.new.levels}{[\code{logical(1)}]\cr
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
@@ -62,6 +69,7 @@ Other impute: \code{\link{imputations}},
   \code{\link{reimpute}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
@@ -70,6 +78,10 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},

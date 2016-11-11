@@ -23,11 +23,16 @@ test_that("learners work: classif ", {
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
   lrns = mylist("classif", properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
+
+  # binary classif with ordered factors
+  lrns = mylist("classif", properties = "ordered", create = TRUE)
+  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with prob
   lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
@@ -37,14 +42,17 @@ test_that("learners work: classif ", {
   # binary classif with weights
   lrns = mylist("classif", properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
-    task = binaryclass.task, train.inds = binaryclass.train.inds, binaryclass.test.inds,
+    task = binaryclass.task, train.inds = binaryclass.train.inds, test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
-  
+
+  # classif with variable importance
+  lrns = mylist("classif", properties = "featimp", create = TRUE)
+  lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 })
 
 
@@ -55,7 +63,7 @@ test_that("weightedClassWrapper on all binary learners",  {
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
     p = predict(m, binaryclass.task)
-    cm = getConfMatrix(p)
+    cm = calculateConfusionMatrix(p)$result
   }
 
   learners = listLearners(binaryclass.task, "class.weights")
@@ -77,7 +85,7 @@ test_that("WeightedClassWrapper on all multiclass learners",  {
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, multiclass.task)
     p = predict(m, multiclass.task)
-    cm = getConfMatrix(p)
+    cm = calculateConfusionMatrix(p)$result
   }
 
   learners = listLearners(multiclass.task, "class.weights")

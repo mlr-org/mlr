@@ -47,18 +47,14 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}}
 
-Other plot: \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerfGGVIS}},
-  \code{\link{plotThreshVsPerf}}
+Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
+  \code{\link{generateLearningCurveData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{getFilterValues}}
 }
 

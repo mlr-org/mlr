@@ -49,6 +49,9 @@
 #' @template arg_showinfo
 #' @return [\code{\link{ResampleResult}}].
 #' @family resample
+#' @note If you would like to include results from the training data set, make
+#' sure to appropriately adjust the resampling strategy and the aggregation for
+#' the measure. See example code below.
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
@@ -57,10 +60,17 @@
 #' print(r$aggr)
 #' print(r$measures.test)
 #' print(r$pred)
+#'
+#' # include the training set performance as well
+#' rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
+#' r = resample(makeLearner("classif.qda"), task, rdesc,
+#'   measures = list(mmce, setAggregation(mmce, train.mean)))
+#' print(r$aggr)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
   extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
-  learner = checkLearner(learner, ...)
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
   assertClass(task, classes = "Task")
   n = getTaskSize(task)
   # instantiate resampling
@@ -83,6 +93,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     stop(stri_paste("Size of data set:", n, "and resampling instance:", r, "differ!", sep = " "))
 
   checkLearnerBeforeTrain(task, learner, weights)
+  checkAggrsBeforeResample(measures, resampling$desc)
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
@@ -107,7 +118,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
-    messagef("[Resample] %s iter: %i", rin$desc$id, i)
+    messagef("[Resample] Start %s iter: %i", rin$desc$id, i)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
 
@@ -124,17 +135,27 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
+    if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
+    if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
+    if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
     pred.test = predict(m, task, subset = test.i)
+    if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
+  if (show.info) {
+    mids = vcapply(measures, function(m) m$id)
+    for (i in 1:length(mids)) {
+      messagef("[Resample] Result: %s = %f", mids[i] , ms.test[i])
+    }
+  }
   list(
     measures.test = ms.test,
     measures.train = ms.train,
@@ -188,6 +209,7 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
   list(
     learner.id = learner$id,
     task.id = getTaskId(task),
+    task.desc = getTaskDescription(task),
     measures.train = ms.train,
     measures.test = ms.test,
     aggr = aggr,

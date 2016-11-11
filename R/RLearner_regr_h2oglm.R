@@ -32,7 +32,7 @@ trainLearner.regr.h2o.glm = function(.learner, .task, .subset, .weights = NULL, 
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }  
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
@@ -53,5 +53,3 @@ predictLearner.regr.h2o.glm = function(.learner, .model, .newdata, ...) {
   p.df = as.data.frame(p)
   return(p.df$predict)
 }
-
-
