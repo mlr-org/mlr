@@ -1,9 +1,9 @@
-#' @title Merge different learners of BenchmarkResult objects
+#' @title Merge different learners of BenchmarkResult objects.
 #' @description Combines the \code{\link{BenchmarkResult}} objects that were performed 
 #'   with different learners on the same set of Task(s). 
 #'   This can be helpful if you, e.g. forgot to run one learner on the set of tasks you used.
-#' @param ... [\code{\link{BenchmarkResult}}] \cr 
-#'   \code{BenchmarkResult} objects that should be merged
+#' @param ... [\code{\link{BenchmarkResult}}]\cr 
+#'   \code{BenchmarkResult} objects that should be merged.
 #' @export
 mergeBenchmarkResultLearner = function(...) {
   mergeLearner = function(x, y) {
@@ -25,12 +25,12 @@ mergeBenchmarkResultLearner = function(...) {
   Reduce(function(...) mergeLearner(...), list(...))
 }
 
-#' @title Merge different tasks of BenchmarkResult objects
+#' @title Merge different tasks of BenchmarkResult objects.
 #' @description Combines the \code{\link{BenchmarkResult}} objects that were performed
 #'   on different tasks with the same set of learner(s). 
 #'   This can be helpful if you, e.g. forgot to run the set of learners on a new task
-#' @param ... [\code{\link{BenchmarkResult}}] \cr 
-#'   \code{BenchmarkResult} objects that should be merged
+#' @param ... [\code{\link{BenchmarkResult}}]\cr 
+#'   \code{BenchmarkResult} objects that should be merged.
 #' @export
 mergeBenchmarkResultTask = function(...) {
   mergeTask = function(x, y) {

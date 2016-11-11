@@ -11,7 +11,7 @@ makeRLearner.classif.plr = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Logistic Regression with a L2 Penalty",
     short.name = "plr",
-    note = "AIC and BIC penalty types can be selected via the new parameter `cp.type`"
+    note = "AIC and BIC penalty types can be selected via the new parameter `cp.type`."
   )
 }
 
@@ -37,7 +37,7 @@ trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, c
 predictLearner.classif.plr = function(.learner, .model, .newdata, ...) {
   p = stepPlr::predict.plr(.model$learner.model, newx = .newdata, type = "response", ...)
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
-  if(.learner$predict.type == "prob"){
+  if (.learner$predict.type == "prob"){
     y = propVectorToMatrix(p, levs)
     return(y)
   } else {

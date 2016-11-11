@@ -1,8 +1,8 @@
 context("classif_pamr")
 
 test_that("classif_pamr", {
-  requirePackages("pamr", default.method = "load")
-  
+  requirePackagesOrSkip("pamr", default.method = "load")
+
   parset.list = list(
     list(),
     list(threshold.predict = 2, n.threshold = 40L)
@@ -10,7 +10,7 @@ test_that("classif_pamr", {
 
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     d = list(x = t(binaryclass.train[, -binaryclass.class.col]), y = binaryclass.train[, binaryclass.class.col])
@@ -26,7 +26,7 @@ test_that("classif_pamr", {
     old.predicts.list[[i]] = pamr::pamr.predict(m, newdata, threshold = threshold.predict)
     old.probs.list[[i]] = pamr::pamr.predict(m, newdata, type = "posterior", threshold = threshold.predict)[,1L]
   }
-  
+
   testSimpleParsets("classif.pamr", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
   testProbParsets("classif.pamr", binaryclass.df, binaryclass.target, binaryclass.train.inds,

@@ -7,12 +7,13 @@ makeRLearner.regr.elmNN = function() {
       makeIntegerLearnerParam(id = "nhid", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "actfun", default = "sig", values = c("sig", "sin", "radbas",
         "hardlim", "hardlims", "satlins", "tansig", "tribas", "poslin", "purelin"))
+      # FIXME default of nhid and actfun not in the help, if the defaults are correct, par.vals is redundant
     ),
     par.vals = list(nhid = 1L, actfun = "sig"),
     properties = c("numerics"),
     name = "Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks",
     short.name = "elmNN",
-    note = "nhid has been set to 1 and actfun has been set to \"sig\" by default"
+    note = '`nhid` has been set to `1` and `actfun` has been set to `"sig"` by default.'
   )
 }
 

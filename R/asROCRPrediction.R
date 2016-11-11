@@ -14,7 +14,7 @@ asROCRPredictionIntern = function(probabilites, truth, negative, positive) {
 
 #' @export
 asROCRPrediction.Prediction = function(pred) {
-  if(length(pred$task.desc$class.levels) != 2L) {
+  if (length(pred$task.desc$class.levels) != 2L) {
     stop("More than 2 classes!")
   }
   asROCRPredictionIntern(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
@@ -22,7 +22,7 @@ asROCRPrediction.Prediction = function(pred) {
 
 #' @export
 asROCRPrediction.ResamplePrediction = function(pred) {
-  if(length(pred$task.desc$class.levels) != 2L) {
+  if (length(pred$task.desc$class.levels) != 2L) {
     stop("More than 2 classes!")
   }
   prob = getPredictionProbabilities(pred)

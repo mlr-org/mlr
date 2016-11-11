@@ -11,8 +11,7 @@ makeRLearner.classif.fnn = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Fast k-Nearest Neighbour",
-    short.name = "fnn",
-    note = ""
+    short.name = "fnn"
   )
 }
 

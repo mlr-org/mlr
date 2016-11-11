@@ -17,17 +17,17 @@
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
-#' ## create task and train learner (LDA)
+#' # create task and train learner (LDA)
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda", predict.type = "prob")
 #' mod = train(lrn, task)
 #'
-#' ## predict probabilities and compute performance
+#' # predict probabilities and compute performance
 #' pred = predict(mod, newdata = iris)
 #' performance(pred, measures = mmce)
 #' head(as.data.frame(pred))
-
-#' ## adjust threshold and predict probabilities again
+#'
+#' # adjust threshold and predict probabilities again
 #' threshold = c(setosa = 0.4, versicolor = 0.3, virginica = 0.3)
 #' pred = setThreshold(pred, threshold = threshold)
 #' performance(pred, measures = mmce)
@@ -59,7 +59,7 @@ setThreshold = function(pred, threshold) {
   } else if (ttype == "multilabel") {
     # substract threshold from every entry, then check if > 0, then set response level
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "-", threshold)
-    i = paste0("response.", levs)
+    i = stri_paste("response.", levs)
     pred$data[, i] = p > 0
   }
   pred$threshold = threshold

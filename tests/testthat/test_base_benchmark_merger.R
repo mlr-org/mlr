@@ -1,4 +1,4 @@
-context("benchmark merger")
+context("benchmark_merger")
 
 test_that("benchmark merger", {
   rdesc = makeResampleDesc("CV", iters = 2)

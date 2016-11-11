@@ -1,8 +1,10 @@
 context("regr_btgp")
 
 test_that("regr_btgp", {
-  requirePackages("tgp", default.method = "load")
+  requirePackagesOrSkip("tgp", default.method = "load")
+
   parset.list = list(
+    list(),
     list(meanfn = "linear", bprior = "bflat", corr = "expsep")
   )
 
@@ -30,6 +32,3 @@ test_that("regr_btgp", {
   }
   testSimpleParsets("regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds, old.predicts.list, parset.list)
 })
-
-
-

@@ -1,5 +1,8 @@
 #' @title Get current parameter settings for a learner.
 #'
+#' @description
+#' Retrieves the current hyperparameter settings of a learner.
+#'
 #' @template arg_learner
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}
@@ -24,11 +27,11 @@ getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")
   pv[ns]
 }
 
-getHyperParsString = function(learner) {
+getHyperParsString = function(learner, show.missing.values = TRUE) {
   hps = getHyperPars(learner)
   ns = names(hps)
   pars = getParamSet(learner)$pars[ns]
-  s = Map(paramValueToString, pars, hps)
-  paste(ns, s, sep = "=", collapse = ",")
+  s = mapply(paramValueToString, pars, hps, MoreArgs = list(show.missing.values = show.missing.values))
+  stri_paste(ns, s, sep = "=", collapse = ",")
 }
 

@@ -57,6 +57,7 @@
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
+#' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
 plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
@@ -65,7 +66,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   err.mark = "train",
   bg.cols = c("darkblue", "green", "darkred"),
   err.col = "white", err.size = pointsize,
-  greyscale = FALSE) {
+  greyscale = FALSE, pretty.names = TRUE) {
 
   learner = checkLearner(learner)
   assert(
@@ -173,7 +174,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
-          show_guide = TRUE)
+          show.legend = TRUE)
         p = p + scale_alpha(limits = range(grid$.prob.pred.class))
       } else {
         p = p + geom_tile(mapping = aes_string(fill = target))
@@ -185,14 +186,14 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       if (err.mark != "none" && any(data$.err)) {
         p = p + geom_point(data = subset(data, data$.err),
           mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1.5, show_guide = FALSE)
+          size = err.size + 1.5, show.legend = FALSE)
         p = p + geom_point(data = subset(data, data$.err),
           mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1, col = err.col, show_guide = FALSE)
+          size = err.size + 1, col = err.col, show.legend = FALSE)
       }
       # print error points
       p = p + geom_point(data = subset(data, data$.err),
-        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show_guide = FALSE)
+        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
       p  = p + guides(alpha = FALSE)
     }
   } else if (td$type == "cluster") {
@@ -219,20 +220,25 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       # plot background from model / grid
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
       p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
-      p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L])
+      p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       # plot point, with circle and interior color for y
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),
         size = pointsize)
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n),
         size = pointsize, colour = "black", shape = 1)
       # plot point, with circle and interior color for y
-      p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L])
+      p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       p  = p + guides(colour = FALSE)
     }
   }
 
   # set title
-  title = sprintf("%s: %s", learner$id, paramValueToString(learner$par.set, learner$par.vals))
+  if (pretty.names) {
+    lrn.str = getLearnerShortName(learner)
+  } else {
+    lrn.str = getLearnerId(learner)
+  }
+  title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   p = p + ggtitle(title)
 

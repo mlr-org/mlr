@@ -1,7 +1,8 @@
 context("regr_IBk")
 
 test_that("regr_IBk", {
-  requirePackages("RWeka", default.method = "load")
+  requirePackagesOrSkip("RWeka", default.method = "load")
+
   parset.list = list(
     list(),
     list(K = 2)

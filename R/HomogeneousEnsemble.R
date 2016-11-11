@@ -47,7 +47,6 @@ getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) 
 # rows = newdata points, cols = ensembles members
 # does only work for responses, not probs, se, etc
 predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
-  classes = .model$task.desc$class.levels
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # for classif we convert factor to char, nicer to handle later on
   preds = lapply(models, function(mod) {

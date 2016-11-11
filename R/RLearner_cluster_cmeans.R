@@ -17,14 +17,14 @@ makeRLearner.cluster.cmeans = function() {
     par.vals = list(centers = 2L),
     properties = c("numerics", "prob"),
     name = "Fuzzy C-Means Clustering",
-    note = "The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.",
+    note = "The `predict` method uses `cl_predict` from the `clue` package to compute the cluster memberships for new data. The default `centers = 2` is added so the method runs without setting parameters, but this must in reality of course be changed by the user.",
     short.name = "cmeans"
   )
 }
 
 #' @export
 trainLearner.cluster.cmeans = function(.learner, .task, .subset, .weights = NULL, ...) {
-  e1071::cmeans(getTaskData(.task, .subset), method = "cmeans", ...)
+  e1071::cmeans(getTaskData(.task, .subset), ...)
 }
 
 #' @export

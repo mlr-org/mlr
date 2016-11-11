@@ -33,18 +33,16 @@
 #' @examples
 #' library(caret)
 #' classifTask = makeClassifTask(data = iris, target = "Species")
-#' 
+#'
 #' # (1) classification (random forest) with discretized parameters
 #' getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
-#' 
+#'
 #' # (2) regression (gradient boosting machine) without discretized parameters
 #' library(mlbench)
 #' data(BostonHousing)
 #' regrTask = makeRegrTask(data = BostonHousing, target = "medv")
 #' getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
-  # define caret's var_seq function within this environment
-  var_seq = caret::var_seq
   td = getTaskData(task, target.extra = TRUE)
   caret.grid = caret::getModelInfo(learner)[[learner]]$grid(
     x = td$data, y = td$target, len = length)
@@ -89,7 +87,7 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
       return(x[1L])
     })
     # convert integerish variables into integer
-    par.vals[vlapply(par.vals, testIntegerish)] = 
+    par.vals[vlapply(par.vals, testIntegerish)] =
       lapply(par.vals[vlapply(par.vals, testIntegerish)], as.integer)
   }
 

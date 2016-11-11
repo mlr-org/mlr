@@ -27,10 +27,10 @@ print.BaseWrapper = function(x, ...) {
   s = ""
   y = x
   while (inherits(y, "BaseWrapper")) {
-    s = paste(s, class(y)[1L], "->", sep = "")
+    s = stri_paste(s, class(y)[1L], "->", sep = "")
     y = y$next.learner
   }
-  s = paste(s, class(y)[1L])
+  s = stri_paste(s, class(y)[1L], sep = " ")
   print.Learner(x)
 }
 

@@ -1,7 +1,7 @@
-context("tune")
+context("tuning")
 
 test_that("tune", {
-  requirePackages("e1071", default.method = "load")
+  requirePackagesOrSkip("e1071", default.method = "load")
   cp = c(0.05, 0.9)
   minsplit = 1:2
   ps1 = makeParamSet(
@@ -96,8 +96,7 @@ test_that("tuning works with tuneThreshold and multiple measures", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 0.2)
   )
-  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc),
-    par.set = ps, control = ctrl)
+  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc), par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 
 # also check with infeasible stuff
@@ -142,13 +141,26 @@ test_that("tuning allows usage of budget", {
   expect_identical(getOptPathLength(res$opt.path), 3L)
 })
 
-test_that("Learner cannot use expression in param requires, see #369", {
-  rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlRandom()
+test_that("Learner defined with expression in param requires, see #369 and PH #52", {
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
-    makeNumericLearnerParam(id = "b", requires = expression(a == "x"))
+      makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
   )
-  expect_error(tuneParams("classif.rpart", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl),
-    "used 'expression'")
+
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlRandom()
+  tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
 })
+
+
+test_that("tuning does not break with small discrete values, see bug in #1115", {
+  ctrl  = makeTuneControlGrid()
+  ps = makeParamSet(
+    makeDiscreteParam("cp", values = c(1e-8, 1e-9))
+  )
+  # this next line created an exception in the bug
+  tuneParams("classif.rpart",multiclass.task, hout, par.set = ps, control = ctrl)
+})
+
+
+

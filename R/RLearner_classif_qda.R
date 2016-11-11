@@ -12,7 +12,7 @@ makeRLearner.classif.qda = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Quadratic Discriminant Analysis",
     short.name = "qda",
-    note = "Learner param 'predict.method' maps to 'method' in predict.lda."
+    note = "Learner parameter `predict.method` maps to `method` in `predict.qda`."
   )
 }
 
@@ -25,7 +25,7 @@ trainLearner.classif.qda = function(.learner, .task, .subset, .weights = NULL,  
 #' @export
 predictLearner.classif.qda = function(.learner, .model, .newdata, predict.method = "plug-in", ...) {
   p = predict(.model$learner.model, newdata = .newdata, method = predict.method, ...)
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     return(p$class)
   else
     return(p$posterior)

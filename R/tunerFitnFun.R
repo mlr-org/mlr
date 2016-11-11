@@ -8,7 +8,7 @@
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas) {
 
-  x = convertx(x)
+  x = convertx(x, par.set)
   # transform parameters
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
@@ -18,18 +18,38 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   convertYForTuner(res$y, measures, ctrl)
 }
 
+tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas) {
+  force(learner)
+  force(task)
+  force(resampling)
+  force(measures)
+  force(par.set)
+  force(ctrl)
+  force(opt.path)
+  force(show.info)
+  force(convertx)
+  force(remove.nas)
+  # remove trafos for mbo, we do this in tunerFitnFun
+  ps2 = par.set
+  for (i in seq_along(ps2$pars))
+    ps2$pars[[i]]$trafo = NULL
+  smoof::makeSingleObjectiveFunction(
+    fn = function(x) {
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
+  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
+}
+
 # multiple xs in parallel
 tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas) {
 
-  xs = convertx(xs)
+  xs = convertx(xs, par.set)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res.list = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
     opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
   ys = extractSubList(res.list, "y")
   # we return a numeric vec of y-values
-  # FIXME: convertYForTuner can return vectors! do not use sapply!
-  sapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
+  vnapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
 }
 
 # short helper that imputes illegal values and also negates for maximization problems

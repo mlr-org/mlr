@@ -45,12 +45,12 @@
 #' # using the direct parameter of the SVM (which is already defined in the learner)
 #' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 #' res = holdout(lrn, sonar.task)
-#' print(getConfMatrix(res$pred))
+#' print(calculateConfusionMatrix(res$pred))
 #'
 #' # using the observation weights of logreg
 #' lrn = makeWeightedClassesWrapper("classif.logreg", wcw.weight = 0.01)
 #' res = holdout(lrn, sonar.task)
-#' print(getConfMatrix(res$pred))
+#' print(calculateConfusionMatrix(res$pred))
 #'
 #' # tuning the imbalancy param and the SVM param in one go
 #' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights")
@@ -65,7 +65,7 @@
 #' print(res)
 #' print(res$opt.path)
 makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1) {
-  learner = checkLearnerClassif(learner)
+  learner = checkLearner(learner, "classif")
   pv = list()
 
   if (is.null(wcw.param))
@@ -85,7 +85,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
     assertNumeric(wcw.weight, lower = 0, any.missing = FALSE)
     pv$wcw.weight = wcw.weight
   }
-  id = paste("weightedclasses", learner$id, sep = ".")
+  id = stri_paste("weightedclasses", learner$id, sep = ".")
   ps = makeParamSet(
     makeNumericVectorLearnerParam(id = "wcw.weight", len = NA_integer_, lower = 0)
   )

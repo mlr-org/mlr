@@ -31,4 +31,3 @@ test_that("predict.type works with BaggingWrapper, special case", {
   prob = getPredictionProbabilities(p)
   expect_true(is.data.frame(prob) && nrow(prob) == nrow(iris))
 })
-

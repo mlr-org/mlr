@@ -1,7 +1,8 @@
 context("classif_lda")
 
 test_that("classif_lda", {
-  requirePackages("MASS", default.method = "load")
+  requirePackagesOrSkip("MASS", default.method = "load")
+
   set.seed(getOption("mlr.debug.seed"))
   m = MASS::lda(formula = multiclass.formula, data = multiclass.train)
   set.seed(getOption("mlr.debug.seed"))

@@ -1,7 +1,7 @@
 context("classif_plr")
 
 test_that("classif_plr", {
-  requirePackages("stepPlr", default.method = "load")
+  requirePackagesOrSkip("stepPlr", default.method = "load")
 
   parset.list1 = list(
     list(),

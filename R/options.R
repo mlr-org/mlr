@@ -1,14 +1,15 @@
-#' @title Returns a list of mlr's options
+#' @title Returns a list of mlr's options.
+#'
+#' @description
+#' Gets the options for mlr.
 #'
 #' @return [\code{list}].
 #' @export
 #' @family configure
 getMlrOptions = function() {
-  mlr.inds = substr(names(options()), start = 1L, stop = 4L) == "mlr."
-  mlr.options = options()[mlr.inds]
-  names(mlr.options) = substring(names(mlr.options), first = 5L)
-  mlr.debug.inds = substr(names(mlr.options), start = 1L, stop = 6L) == "debug."
-  mlr.options[!mlr.debug.inds]
+  mlr.options = .Options[stri_startswith_fixed(names(.Options), "mlr.")]
+  names(mlr.options) = stri_sub(names(mlr.options), from = 5L)
+  mlr.options[!stri_startswith_fixed(names(mlr.options), "debug.")]
 }
 
 setMlrOption = function(name, val) {
@@ -16,9 +17,8 @@ setMlrOption = function(name, val) {
   do.call(options, setNames(list(val), name))
 }
 
-getMlrOption = function(name, default) {
-  name = sprintf("mlr.%s", name)
-  getOption(name, default)
+getMlrOption = function(name, default = NULL) {
+  getOption(stri_paste("mlr.", name), default)
 }
 
 # FIXME: the mechanism here is not perfect.

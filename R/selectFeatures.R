@@ -32,10 +32,12 @@
 #' @family featsel
 #' @export
 #' @examples
+#' \donttest{
 #' rdesc = makeResampleDesc("Holdout")
 #' ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
 #' res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
 #' analyzeFeatSelResult(res)
+#' }
 selectFeatures = function(learner, task, resampling, measures,
   bit.names, bits.to.features, control, show.info = getMlrOption("show.info")) {
 

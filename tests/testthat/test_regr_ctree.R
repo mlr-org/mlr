@@ -1,7 +1,8 @@
 context("regr_ctree")
 
 test_that("regr_ctree", {
-  requirePackages("party", default.method = "load")
+  requirePackagesOrSkip("party", default.method = "load")
+
   parset.list = list(
     list(),
     list(minsplit = 10, mincriterion = 0.005),

@@ -1,4 +1,4 @@
-context("RankMatrix")
+context("plotRankMatrixAsBar")
 
 test_that("RankMatrix", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -9,46 +9,21 @@ test_that("RankMatrix", {
   n.tsks = length(getBMRTaskIds(res))
   n.lrns = length(getBMRLearnerIds(res))
 
-  # test for convertBMRToRankMatrix
-  # measure = NULL
-  r = convertBMRToRankMatrix(res)
-  expect_is(r, "matrix")
-  expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(colnames(r), getBMRTaskIds(res))
-  expect_equivalent(rownames(r), getBMRLearnerIds(res))
-  expect_equal(sum(r), sum(1:n.lrns * n.tsks))
+  plotBMRRanksAsBarChart(res)
+  plotBMRRanksAsBarChart(res, pos = "stack")
+  plotBMRRanksAsBarChart(res, pos = "dodge")
+  # pretty.names works
+  plotBMRRanksAsBarChart(res)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(res))
 
-  # measure = ber
-  r = convertBMRToRankMatrix(res, ber)
-  expect_is(r, "matrix")
-  expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(rownames(r), getBMRLearnerIds(res))
-  expect_equal(sum(r), sum(1:n.lrns * n.tsks))
-
-  # aggregation = "mean"
-  r = convertBMRToRankMatrix(res, aggregation = "mean")
-  expect_is(r, "matrix")
-  expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(rownames(r), getBMRLearnerIds(res))
-  expect_equal(sum(r), sum(1:n.lrns * n.tsks))
-
-  # For generateRankMatrixAsBarData
-  r = generateRankMatrixAsBarData(res)
-  expect_is(r, "RankMatrixAsBarData")
-  r2 = generateRankMatrixAsBarData(res, acc)
-  expect_is(r2, "RankMatrixAsBarData")
-  r3 = generateRankMatrixAsBarData(res, featperc)
-  expect_is(r3, "RankMatrixAsBarData")
-
-  # For plotRankMatrixAsBar
-  plotRankMatrixAsBar(r)
-  ggsave(tempfile(fileext = ".png"))
-  plotRankMatrixAsBar(r2)
-  ggsave(tempfile(fileext = ".png"))
-  plotRankMatrixAsBar(r3)
-  ggsave(tempfile(fileext = ".png"))
-  plotRankMatrixAsBar(r2, pos = "stack")
-  ggsave(tempfile(fileext = ".png"))
-  plotRankMatrixAsBar(r, pos = "dodge")
-  ggsave(tempfile(fileext = ".png"))
+  plotBMRRanksAsBarChart(res, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerIds(res))
 })

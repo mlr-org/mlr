@@ -11,6 +11,9 @@
 #' In order to avoid name clashes all parameter names are prefixed
 #' with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
 #'
+#' The predict.type of the Multiplexer is inherited from the predict.type of the
+#' base learners.
+#'
 #' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
 #'  List of Learners with unique IDs.
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
@@ -21,6 +24,8 @@
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
+#' \donttest{
+#' library(BBmisc)
 #' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")
@@ -62,6 +67,7 @@
 #' )
 #'
 #' # all three ps-objects are exactly the same internally.
+#' }
 makeModelMultiplexer = function(base.learners) {
   lrn = makeBaseEnsemble(
     id = "ModelMultiplexer",
@@ -70,6 +76,9 @@ makeModelMultiplexer = function(base.learners) {
     ens.type = NULL,
     cl = "ModelMultiplexer"
   )
+  # the super contructor checks that all predict.types are same
+  # now inherit this type from the base.learners for the MM
+  lrn = setPredictType(lrn, lrn$base.learners[[1L]]$predict.type)
   # add extra param to parset, after we did all checks and so on in the base function
   ps = makeParamSet(makeDiscreteLearnerParam("selected.learner", values = names(lrn$base.learners)))
   lrn$par.set = c(lrn$par.set, ps)
@@ -91,7 +100,10 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
   # simply predict with the model
   sl = .learner$par.vals$selected.learner
   bl = .learner$base.learners[[sl]]
-  predictLearner(bl, .model$learner.model$next.model, .newdata)
+  # we need to pass the changed setting of the base learner for the predict function further down
+  args = list(.learner = bl, .model = .model$learner.model$next.model, .newdata = .newdata)
+  args = c(args, getHyperPars(bl, for.fun = c("predict", "both")))
+  do.call(predictLearner, args)
 }
 
 #' @export
@@ -101,6 +113,9 @@ makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, 
 
 #' @export
 getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
+  if (inherits(model$learner.model, "NoFeaturesModel")) {
+    return(model$learner.model)
+  }
   if (more.unwrap)
     model$learner.model$next.model$learner.model
   else
@@ -109,6 +124,6 @@ getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
 
 #' @export
 isFailureModel.ModelMultiplexerModel = function(model) {
-  isFailureModel(model$learner.model$next.model)
+  NextMethod() || (!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
 

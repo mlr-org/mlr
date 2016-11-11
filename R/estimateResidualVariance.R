@@ -1,4 +1,4 @@
-#' Estimate the residual variance
+#' Estimate the residual variance.
 #'
 #' Estimate the residual variance of a regression model on a given task.
 #' If a regression learner is provided instead of a model, the model is
@@ -22,19 +22,14 @@ estimateResidualVariance = function(x, task, data, target) {
 
 #' @export
 estimateResidualVariance.Learner = function(x, task, data, target) {
-  if (missing(task)) {
-    assertDataFrame(data)
-    assertString(target)
+  if (missing(task))
     task = makeRegrTask(data = data, target = target)
-  }
   estimateResidualVariance.WrappedModel(train(x, task), task)
 }
 
 #' @export
 estimateResidualVariance.WrappedModel = function(x, task, data, target) {
   if (missing(task)) {
-    assertDataFrame(data)
-    assertString(target)
     task = makeRegrTask(data = data, target = target)
   } else {
     assertClass(task, classes = "RegrTask")

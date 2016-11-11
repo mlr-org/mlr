@@ -1,4 +1,4 @@
-context("resample: stratification")
+context("resample_stratify")
 
 test_that("stratification instances work", {
 

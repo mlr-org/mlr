@@ -4,6 +4,9 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
   assertString(id)
   assertDataFrame(data)
   assertString(target)
+  # some code on cran passed stuff like positive=1, we can live with the convert here
+  if (isScalarNumeric(positive))
+    positive = as.character(positive)
   assertString(positive, na.ok = TRUE)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
@@ -44,8 +47,8 @@ makeTaskDesc.ClassifTask = function(task, id, target, positive) {
   td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
-    td$negative = paste0("not_", positive)
-  else if(length(td$class.levels) == 2L)
+    td$negative = stri_paste("not_", positive)
+  else if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, positive)
   return(addClasses(td, c("TaskDescClassif", "TaskDescSupervised")))
 }

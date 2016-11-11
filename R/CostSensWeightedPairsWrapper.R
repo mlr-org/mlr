@@ -15,14 +15,14 @@
 #' multiple binary ones and aggregates by voting.
 #'
 #' @template arg_learner_classif
-#' @return [\code{\link[mlr]{Learner}}].
+#' @return [\code{\link{Learner}}].
 #' @export
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
-  learner = checkLearnerClassif(learner, weights = TRUE)
+  learner = checkLearner(learner, "classif", props = "weights")
   learner = setPredictType(learner, "response")
-  id = paste("costsens", learner$id, sep = ".")
+  id = stri_paste("costsens", learner$id, sep = ".")
   makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
     learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
 }
@@ -57,7 +57,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
       counter = counter + 1L
     }
   }
-  m = makeHomChainModel(.learner, models)
+  makeHomChainModel(.learner, models)
 }
 
 
@@ -72,4 +72,3 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }
-

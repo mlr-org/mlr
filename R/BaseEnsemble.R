@@ -27,6 +27,11 @@ makeBaseEnsemble = function(id, base.learners, bls.type = NULL,
   if (length(ids) != length(base.learners))
     stop("Base learners must all have unique ids!")
 
+  # check that all predict.types are the same
+  pts = unique(extractSubList(base.learners, "predict.type"))
+  if (length(pts) > 1L)
+    stopf("Base learners must all have same predict.type, but have: %s", collapse(pts))
+
   # join all parsets of base.learners + prefix param names with base learner id
   # (we could also do this operation on-the.fly in getParamSet.BaseEnsemble,
   # like we do in getParamSet.BaseWrapper, but this would require expensive (?)
@@ -50,7 +55,7 @@ makeBaseEnsemble = function(id, base.learners, bls.type = NULL,
     package = unique(unlist(extractSubList(base.learners, "package"))),
     par.set = par.set.all,
     par.vals = par.vals,
-    properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
+    properties = Reduce(intersect, lapply(base.learners, getLearnerProperties)),
     predict.type = "response")
 
   lrn$base.learners = setNames(base.learners, ids)

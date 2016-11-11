@@ -10,9 +10,10 @@
 #'
 #' @family generate_plot_data
 #' @family calibration
+#' @aliases CalibrationData
 #'
 #' @template arg_plotroc_obj
-#' @param breaks [\code{character(1)}] or [\code{numeric}]\cr
+#' @param breaks [\code{character(1)} | \code{numeric}]\cr
 #'   If \code{character(1)}, the algorithm to use in generating probability bins.
 #'   See \code{\link{hist}} for details.
 #'   If \code{numeric}, the cut points for the bins.
@@ -24,6 +25,27 @@
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
+#'
+#' @return [CalibrationData]. A \code{list} containing:
+#'   \item{proportion}{[\code{data.frame}] with columns:
+#'     \itemize{
+#'       \item \code{Learner} Name of learner.
+#'       \item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
+#'       \item \code{Class} Class labels (for binary classification only the positive class).
+#'       \item \code{Proportion} Proportion of observations from class \code{Class} among all
+#'         observations with posterior probabilities of class \code{Class} within the
+#'         interval given in \code{bin}.
+#'     }}
+#'   \item{data}{[\code{data.frame}] with columns:
+#'     \itemize{
+#'       \item \code{Learner} Name of learner.
+#'       \item \code{truth} True class label.
+#'       \item \code{Class} Class labels (for binary classification only the positive class).
+#'       \item \code{Probability} Predicted posterior probability of \code{Class}.
+#'       \item \code{bin} Bin corresponding to \code{Probability}.
+#'     }}
+#'   \item{task}{[\code{\link{TaskDesc}}]\cr
+#'     Task description.}
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
 #' @export
@@ -66,9 +88,9 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
   td = obj[[1L]]$task.desc
 
   out = lapply(obj, function(pred) {
-    df = data.frame("truth" = getPredictionTruth(pred),
+    df = data.table("truth" = getPredictionTruth(pred),
                     getPredictionProbabilities(pred, cl = getTaskClassLevels(td)))
-    df = reshape2::melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
+    df = melt(df, id.vars = "truth", value.name = "Probability", variable.name = "Class")
 
     if (is.null(groups)) {
       break.points = hist(df$Probability, breaks = breaks, plot = FALSE)$breaks
@@ -78,24 +100,26 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
       assertInt(groups, lower = 2, upper = length(unique(df$Probability)))
       df$bin = Hmisc::cut2(df$Probability, g = groups, digits = 3)
     }
-    proportion = plyr::ddply(df, "bin", function(x) {
+    fun = function(x) {
       tab = table(x$Class, x$truth)
       s = rowSums(tab)
-      ifelse(s == 0, 0, diag(tab) / s)
-    })
-    list(data = df, proportion = proportion)
+      as.list(ifelse(s == 0, 0, diag(tab) / s))
+    }
+    list(data = df, proportion = df[, fun(.SD), by = "bin"])
   })
-  data = plyr::ldply(lapply(out, function(x) x$data), .id = "Learner")
-  proportion = plyr::ldply(lapply(out, function(x) x$proportion), .id = "Learner")
+  data = rbindlist(lapply(out, function(x) x$data), idcol = "Learner")
+  proportion = rbindlist(lapply(out, function(x) x$proportion), idcol = "Learner")
   if (length(td$class.levels) == 2L) {
-    proportion = proportion[, -which(td$negative == colnames(proportion))]
-    data = data[!data$Class == td$negative, ]
+    proportion = proportion[, !td$negative, with = FALSE]
+    data = data[data$Class != td$negative, ]
   }
-  max_bin = sapply(strsplit(levels(proportion$bin), ",|]|)"), function(x) as.numeric(x[length(x)]))
+  max_bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
+                   function(x) as.numeric(x[length(x)]))
   proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max_bin)])
-  proportion = reshape2::melt(proportion, id.vars = c("Learner", "bin"),
-                              value.name = "Proportion", variable.name = "Class")
+  proportion = melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
   data$bin = ordered(data$bin, levels = levels(data$bin)[order(max_bin)])
+  setDF(data)
+  setDF(proportion)
 
   makeS3Obj("CalibrationData",
             proportion = proportion,
@@ -104,11 +128,14 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 }
 #' @title Plot calibration data using ggplot2.
 #'
+#' @description
+#' Plots calibration data from \code{\link{generateCalibrationData}}.
+#'
 #' @family plot
 #' @family calibration
 #'
 #' @param obj [\code{CalibrationData}]\cr
-#'   Result of \code{\link{generateCalibrationData}}
+#'   Result of \code{\link{generateCalibrationData}}.
 #' @param smooth [\code{logical(1)}]\cr
 #'   Whether to use a loess smoother.
 #'   Default is \code{FALSE}.
@@ -119,6 +146,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #'   Whether to include a rag plot which shows a rug plot on the top which pertains to
 #'   positive cases and on the bottom which pertains to negative cases.
 #'   Default is \code{TRUE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
@@ -137,7 +165,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' out = generateCalibrationData(pred)
 #' plotCalibration(out)
 #' }
-plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
+plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(obj, "CalibrationData")
   assertFlag(smooth)
   assertFlag(reference)
@@ -153,8 +181,9 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   else
     p = p + geom_point() + geom_line()
 
-  if (length(unique(obj$proportion$Learner)) > 1L)
-    p = p + facet_wrap(~ Learner)
+  if (length(unique(obj$proportion$Learner)) > 1L) {
+    p = p + facet_wrap(~ Learner, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
 
   if (reference)
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")

@@ -1,8 +1,10 @@
 context("regr_blm")
 
 test_that("regr_blm", {
-  requirePackages("tgp", default.method = "load")
+  requirePackagesOrSkip("tgp", default.method = "load")
+
   parset.list = list(
+    list(),
     list(meanfn = "linear", bprior = "bflat"),
     list(meanfn = "linear", bprior = "bmle"),
     list(meanfn = "constant")
@@ -20,4 +22,3 @@ test_that("regr_blm", {
   }
   testSimpleParsets("regr.blm", regr.df[, c(1:3, 14)], regr.target, regr.train.inds, old.predicts.list, parset.list)
 })
-

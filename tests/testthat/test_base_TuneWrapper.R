@@ -38,13 +38,12 @@ test_that("TuneWrapper", {
   expect_equal(lrn2$predict.type, "prob")
   r = resample(lrn2, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::auc)
   expect_true(!is.na(r$aggr[["auc.test.mean"]]))
-  expect_class(r$extract[[1L]], "TuneResult")
 })
 
 # see bug in issue 205
 test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   lrn = makeLearner("classif.glmnet", predict.type = "prob")
-  rdesc = makeResampleDesc("Holdout", split = 0.2)
+  rdesc = makeResampleDesc("Holdout", split = 0.3)
   ctrl = makeTuneControlRandom(maxit = 1L)
   ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
   tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
@@ -57,7 +56,7 @@ test_that("TuneWrapper uses tune.threshold", {
   rdesc = makeResampleDesc("Holdout")
   costs = matrix(c(0, 5, 1, 0), 2)
   colnames(costs) = rownames(costs) = getTaskDescription(binaryclass.task)$class.levels
-  mm = makeCostMeasure(id = "costs", costs = costs, task = binaryclass.task, best = 0, worst = 5)
+  mm = makeCostMeasure(id = "costs", costs = costs, best = 0, worst = 5)
   ps = makeParamSet(makeDiscreteParam("method", "moment"))
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
   lrn = makeTuneWrapper(lrn, resampling = rdesc, measures = mm, par.set = ps, control = ctrl)
@@ -82,6 +81,18 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   opdf = getNestedTuneResultsOptPathDf(r)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 4)
+  
+  # check trafo arg
+  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2, 
+    trafo = function(x) 2^x))
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2, 
+    control = makeTuneControlGrid())
+  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, 
+    extract = getTuneResult)
+  opdf = getNestedTuneResultsOptPathDf(r, trafo = TRUE)
+  expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
+  expect_equal(nrow(opdf), 20)
+  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))                   
 })
 
 

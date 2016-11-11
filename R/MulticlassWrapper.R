@@ -38,7 +38,7 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
     checkFunction(mcw.method, args = "task")
   )
   pv = list(mcw.method = mcw.method)
-  id = paste(learner$id, "multiclass", sep = ".")
+  id = stri_paste(learner$id, "multiclass", sep = ".")
 
   x = makeHomogeneousEnsemble(id = id, type = "classif", next.learner = learner,
     package = learner$package,  par.set = ps, par.vals = pv,
@@ -108,7 +108,7 @@ buildCMatrix = function (mcw.method, .task) {
       onevsrest = cm.onevsrest,
       onevsone = cm.onevsone)
   }
-  levs = getTaskFactorLevels(.task)[[1]]
+  levs = getTaskClassLevels(.task)
   cm = meth(.task)
   if (!setequal(rownames(cm), levs))
     stop("Rownames of codematrix must be class levels!")
@@ -123,7 +123,6 @@ multi.to.binary = function(target, codematrix) {
   if (anyMissing(codematrix))
     stop("Code matrix contains missing values!")
   levs = levels(target)
-  no.class = length(levs)
   rns = rownames(codematrix)
   if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")
@@ -136,21 +135,21 @@ multi.to.binary = function(target, codematrix) {
 }
 
 cm.onevsrest = function(task) {
-  td = getTaskDescription(task)
-  n = length(td$class.levels)
+  tcl = getTaskClassLevels(task)
+  n = length(tcl)
   cm = matrix(-1, n, n)
   diag(cm) = 1
-  setRowNames(cm, td$class.levels)
+  setRowNames(cm, tcl)
 }
 
 cm.onevsone = function(task) {
-  td = getTaskDescription(task)
-  n = length(td$class.levels)
+  tcl = getTaskClassLevels(task)
+  n = length(tcl)
   cm = matrix(0, n, choose(n, 2))
   combs = combn(n, 2)
   for (i in seq_col(combs)) {
     j = combs[, i]
     cm[j, i] = c(1, -1)
   }
-  setRowNames(cm, td$class.levels)
+  setRowNames(cm, tcl)
 }
