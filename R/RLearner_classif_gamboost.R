@@ -4,38 +4,41 @@ makeRLearner.classif.gamboost = function() {
     cl = "classif.gamboost",
     package = "mboost",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "baselearner", default = "bbs", values = c("bbs", "bols", "btree")),
+      makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
       makeIntegerLearnerParam(id = "dfbase", default = 4),
       makeNumericLearnerParam(id = "offset"),
-      makeDiscreteLearnerParam(id = "family", default = "Binomial", values = c("AdaExp", "Binomial", "AUC", "PropOdds", "custom.family")),      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      makeDiscreteLearnerParam(id = "Binomial.link", default = "logit", values = c("logit", "probit"),
-        requires = quote(family == "Binomial")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5, -1), requires = quote(family == "PropOdds")),
-      makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
+      # FIXME: add family PropOdds, when mlr supports ordered factors as tasks
+      makeDiscreteLearnerParam(id = "family", default = "Binomial",
+        values = c("AdaExp", "Binomial", "AUC", "custom.family")),
+      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
+      makeDiscreteLearnerParam(id = "Binomial.link", default = "logit",
+        values = c("logit", "probit"), requires = quote(family == "Binomial")),
+      #makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5, -1), requires = quote(family == "PropOdds")),
+      #makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
+      # 'risk' and 'stopintern' will be kept for completeness sake
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(family = "Binomial"),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Gradient boosting with smooth components",
     short.name = "gambst",
-    note = "`family` has been set to `Binomial()` by default."
+    note = "`family` has been set to `Binomial()` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
   )
 }
 
 #' @export
-trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, mstop, nu, risk, stopintern, trace, family, Binomial.link = "logit", custom.family.definition, nuirange = c(-0.5, -1), offrange = c(-5,5), ...) {
-  requirePackages("mboost", why = "argument baselearner require package")
-  # FIXME: Should warnings be suppressed?
+trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, family, custom.family.definition,  ...) {
+  requirePackages("mboost", why = "argument baselearner require package", suppress.warnings = TRUE)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
     AdaExp = mboost::AdaExp(),
     AUC = mboost::AUC(),
-    PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
+    #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
@@ -56,12 +59,9 @@ trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NU
 predictLearner.classif.gamboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  fam = getLearnerParVals(.learner)$family
   if (.learner$predict.type  == "prob") {
-    if (fam %in% c("AUC", "AdaExp")) { 
-      # FIXME: predictions of type 'response' (corresponds to mlr's 'prob') produce 'NA'
-      # for family AUC and AdaExp but not for Binomial and PropOdds
-      stopf("prediction.type = 'prob' not implemented for family %s", fam)
+    if (!is.matrix(p) && is.na(p)){
+      stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
     } else {
       td = .model$task.desc
       p = p[, 1L]

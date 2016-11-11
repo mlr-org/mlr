@@ -4,11 +4,13 @@ test_that("classif_gamboost", {
   requirePackagesOrSkip("mboost", default.method = "attach")
   
   parset.list1 = list(
+    list(family = mboost::Binomial()),
     list(family = mboost::Binomial(), baselearner = "bols", control = mboost::boost_control(nu = 0.03)),
     list(family = mboost::Binomial(link = "probit"), baselearner = "btree", control = mboost::boost_control(mstop = 600))
   )
   
   parset.list2 = list(
+    list(),
     list(family = "Binomial", baselearner = "bols", nu = 0.03),
     list(family = "Binomial", Binomial.link = "probit", baselearner = "btree", mstop = 600)
   )
