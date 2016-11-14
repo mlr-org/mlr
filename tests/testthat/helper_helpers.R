@@ -227,8 +227,8 @@ mylist = function(..., create = FALSE) {
 }
 
 testFacetting = function(obj, nrow = NULL, ncol = NULL) {
-  expect_equal(obj$facet$nrow, nrow)
-  expect_equal(obj$facet$ncol, ncol)
+  expect_equal(obj$facet$params$nrow, nrow)
+  expect_equal(obj$facet$params$ncol, ncol)
 }
 
 quickcheckTest = function(...) {

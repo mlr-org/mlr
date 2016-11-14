@@ -76,7 +76,7 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
       xgboost::xgboost(data = data, label = target, objective = obj, num_class = num_class, ...)
     } else {
       xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
-      xgboost::xgboost(data = data, label = NULL, objective = obj, num_class = num_class, ...)
+      xgboost::xgboost(data = xgb.dmat, label = NULL, objective = obj, num_class = num_class, ...)
     }
   }
 }
