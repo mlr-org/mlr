@@ -730,8 +730,8 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-  rpreds = asROCRPredictionIntern(probabilities, truth, negative, positive)
-  ROCR::performance(rpreds, "auc")@y.values[[1L]]
+  truth = (truth != positive) # convert truth to FALSE/TRUE vector (FALSE is treated as TRUE in colAUC)
+  colAUC(probabilities, truth, maximum = FALSE)
 }
 
 #' @export brier
