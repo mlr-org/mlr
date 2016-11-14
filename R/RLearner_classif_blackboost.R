@@ -4,7 +4,7 @@ makeRLearner.classif.blackboost = function() {
     cl = "classif.blackboost",
     package = c("mboost", "party"),
     par.set = makeParamSet(
-      # FIXME: add family PropOdds, when mlr supports ordered factors as tasks
+      # FIXME: add family PropOdds, when mlr supports ordered factors as targets
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
         values = c("Binomial", "AdaExp", "AUC", "custom.family")),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
@@ -32,13 +32,13 @@ makeRLearner.classif.blackboost = function() {
     par.vals = list(family = "Binomial"),
     properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting With Regression Trees",
-    short.name = "blackbst",
+    short.name = "blackboost",
     note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
   )
 }
 
 #' @export
-trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, family, custom.family.definition,  ...) {
+trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", family, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   # learner defaults need to be passed to ctree_control since tree_controls defaults
   # of blackboost differ from party::ctree_control defaults

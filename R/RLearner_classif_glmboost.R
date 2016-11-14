@@ -4,7 +4,7 @@ makeRLearner.classif.glmboost = function() {
     cl = "classif.glmboost",
     package = "mboost",
     par.set = makeParamSet(
-      # FIXME: add family PropOdds, when mlr supports ordered factors as tasks
+      # FIXME: add family PropOdds, when mlr supports ordered factors as targets
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
         values = c("Binomial", "AdaExp", "AUC", "custom.family")),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
@@ -22,13 +22,13 @@ makeRLearner.classif.glmboost = function() {
     par.vals = list(family = "Binomial"),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
-    short.name = "glmbst",
+    short.name = "glmboost",
     note = "`family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
   )
 }
 
 #' @export
-trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, family, custom.family.definition,  ...) {
+trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", custom.family.definition, mstop, nu, risk, stopintern, trace, family,  ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
