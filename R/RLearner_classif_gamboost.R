@@ -7,7 +7,7 @@ makeRLearner.classif.gamboost = function() {
       makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
       makeIntegerLearnerParam(id = "dfbase", default = 4),
       makeNumericLearnerParam(id = "offset"),
-      # FIXME: add family PropOdds, when mlr supports ordered factors as tasks
+      # FIXME: add family PropOdds, when mlr supports ordered factors as targets
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
         values = c("AdaExp", "Binomial", "AUC", "custom.family")),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
@@ -25,14 +25,14 @@ makeRLearner.classif.gamboost = function() {
     par.vals = list(family = "Binomial"),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Gradient boosting with smooth components",
-    short.name = "gambst",
+    short.name = "gamboost",
     note = "`family` has been set to `Binomial()` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
   )
 }
 
 #' @export
-trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, offset = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, family, custom.family.definition,  ...) {
-  requirePackages("mboost", why = "argument baselearner require package", suppress.warnings = TRUE)
+trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", mstop, nu, risk, stopintern, trace, family, custom.family.definition,  ...) {
+  requirePackages("mboost", why = "argument 'baselearner' requires package", suppress.warnings = TRUE)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),

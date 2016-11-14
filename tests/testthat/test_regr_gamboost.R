@@ -4,16 +4,16 @@ test_that("regr_gamboost", {
   
   parset.list1 = list(
     list(),
-    list(family = mboost::Gaussian(), control = mboost::boost_control(nu = 0.03, mstop = 400)),
-    list(family = mboost::GammaReg(nuirange = c(0,50)), control = mboost::boost_control(mstop = 600)),
+    list(family = mboost::Gaussian(), control = mboost::boost_control(nu = 0.03, mstop = 200)),
+    list(family = mboost::GammaReg(nuirange = c(0,50)), control = mboost::boost_control(mstop = 100)),
     list(family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
   )
   parset.list2 = list(
     list(),
-    list(family = "Gaussian", nu = 0.03, mstop = 400),
-    list(family= "GammaReg", nuirange = c(0,50), mstop = 600),
+    list(family = "Gaussian", nu = 0.03, mstop = 200),
+    list(family= "GammaReg", nuirange = c(0,50), mstop = 100),
     list(family = "custom.family", custom.family.definition =  mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
@@ -28,6 +28,7 @@ test_that("regr_gamboost", {
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
   }
+  # bbs-baselearner can only be applied to numeric variables --> remove "chas" (factor)
   testSimpleParsets("regr.gamboost", regr.df[, names(regr.df) != "chas"], regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })
 
