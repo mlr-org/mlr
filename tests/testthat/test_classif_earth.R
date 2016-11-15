@@ -6,7 +6,7 @@ test_that("classif_earth", {
 
   parset.list = list(
     list(),
-    list(degree = 3, nprune = 2),
+    list(degree = 3L, nprune = 2L),
     list(penalty = 2, nk = 2L, thres = 0.1),
     list(fast.k = 2L, fast.beta = 0.5)
   )
