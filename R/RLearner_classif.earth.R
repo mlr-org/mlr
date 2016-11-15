@@ -40,18 +40,6 @@ trainLearner.classif.earth = function(.learner, .task, .subset, .weights = NULL,
   earth::earth(f, data = getTaskData(.task, .subset), glm = list(family = binomial(link = link) , maxit = maxit), ...)
 }
 
-#' #' @export
-#' predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
-#'   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
-#'   levs = .model$factor.levels[[1]]
-#'   if (.learner$predict.type == "prob") {
-#'     p = setColNames(cbind(1 - p, p), levs)
-#'   } else {
-#'     p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
-#'   }
-#'   return(p)
-#' }
-
 #' @export
 predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
