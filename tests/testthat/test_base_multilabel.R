@@ -52,6 +52,15 @@ test_that("multilabel learning", {
   expect_true(!is.na(p))
 })
 
+test_that("MultilabelBinaryRelevanceWrapper with glmnet", {
+  # multilabelBinaryRelevanceWrapper was not working properly for classif.glmnet, we had a bug here
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn)
+  mod = train(lrn2, multilabel.task)
+  pred = predict(mod, multilabel.task)
+  expect_error(pred, NA)
+})
+
 testMultilabelWrapper = function(fun, ...) {
   desc = fun("classif.rpart")$model.subclass[1]
   test_that(desc, {
@@ -91,7 +100,7 @@ testMultilabelWrapper = function(fun, ...) {
     expect_true(is.data.frame(p))
     p = getPredictionProbabilities(r$pred, getTaskClassLevels(multilabel.task))
     expect_true(is.data.frame(p))
-    
+
     lrn1 = makeLearner("classif.rpart")
     lrn2 = fun(lrn1, ...)
     lrn2 = setPredictType(lrn2, "prob")

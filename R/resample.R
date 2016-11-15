@@ -69,7 +69,8 @@
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
   extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
-  learner = checkLearner(learner, ...)
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
   assertClass(task, classes = "Task")
   n = getTaskSize(task)
   # instantiate resampling
@@ -117,7 +118,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
-    messagef("[Resample] %s iter: %i", rin$desc$id, i)
+    messagef("[Resample] Start %s iter: %i", rin$desc$id, i)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
 
@@ -149,6 +150,12 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
+  if (show.info) {
+    mids = vcapply(measures, function(m) m$id)
+    for (i in 1:length(mids)) {
+      messagef("[Resample] Result: %s = %f", mids[i] , ms.test[i])
+    }
+  }
   list(
     measures.test = ms.test,
     measures.train = ms.train,

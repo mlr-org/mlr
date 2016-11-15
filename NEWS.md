@@ -4,6 +4,9 @@
 * update to irace 2.0 -- there are algorithmic changes in irace that may affect
   performance
 
+## Bug fixes
+* fixed bug in resample when using predict = "train" (issue #1284)
+
 ## functions - general
 * generateFilterValuesData: fixed a bug wrt feature ordering
 * imputeLearner: fixed a bug when data actually contained no NAs
@@ -49,6 +52,10 @@
 * makeLearners: create multiple learners at once
 * getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages
 * getLearnerParamSet, getLearnerParVals
+* getRRPredictionList
+* addRRMeasure
+* plotResiduals
+* getLearnerShortName
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
@@ -68,6 +75,9 @@
 * multilabel.cforest
 * surv.gbm
 * regr.cvglmnet
+
+## learner - removed
+* classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
 
 ## measures - new
 * ssr, qsr, lsr

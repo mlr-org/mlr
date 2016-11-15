@@ -160,5 +160,5 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 print.ListLearners = function(x, ...) {
-  printHead(as.data.frame(dropNamed(x, drop = "note")))
+  printHead(as.data.frame(dropNamed(x, drop = "note")), ...)
 }

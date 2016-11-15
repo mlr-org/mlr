@@ -14,6 +14,8 @@ a numeric vector, its length equals the number of iterations.
 }
 \seealso{
 Other resample: \code{\link{ResampleResult}},
+  \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
   \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}},

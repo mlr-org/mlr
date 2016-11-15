@@ -38,6 +38,7 @@ Depends:
     ParamHelpers (>= 1.8),
 Imports:
     BBmisc (>= 1.10),
+    backports,
     ggplot2,
     stats,
     stringi,
@@ -118,7 +119,7 @@ Suggests:
     quickcheck,
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.5.0),
+    ranger (>= 0.6.0),
     RCurl,
     Rfast,
     rFerns,
