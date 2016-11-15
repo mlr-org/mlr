@@ -38,6 +38,8 @@
   hyperparameters
 * linear.correlation, rank.correlation, anova.test: use Rfast instead of
   FSelector/custom implementation now, performance should be much better
+* use of our own colAUC function instead of the ROCR package for AUC calculation
+  to improve performance
 
 ## functions - new
 * filter: randomForest.importance
