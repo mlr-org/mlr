@@ -99,6 +99,9 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     TuneControlGenSA = tuneGenSA,
     TuneControlMBO = tuneMBO,
     TuneControlIrace = tuneIrace,
+    TuneControlGA = tuneGA,
+    TuneControlPSO = tunePSO,
+    TuneControlEDA = tuneEDA,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
   opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = (control$tune.threshold))
@@ -113,5 +116,3 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)
 }
-
-
