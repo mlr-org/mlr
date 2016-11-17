@@ -15,7 +15,7 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
     opt.path, show.info, dob, x, remove.nas)
   extra = getTuneThresholdExtra(ctrl, res)
   addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,
-    exec.time = res$exec.time, error.message = res$errmsg)
+    exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
   convertYForTuner(res$y, measures, ctrl)
 }
 
