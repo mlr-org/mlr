@@ -26,7 +26,7 @@ test_that("tuheThreshold works with all tuning methods", {
     cmaes = makeTuneControlCMAES(start = list(nu = 2.5), maxit = 1, tune.threshold = TRUE),
     design = makeTuneControlDesign(design = generateDesign(n = 2, par.set = ps),  tune.threshold = TRUE),
     grid = makeTuneControlGrid(resolution = 2L, tune.threshold = TRUE),
-    irace = makeTuneControlIrace(maxExperiments = 2, nbIterations = 1L, minNbSurvival = 1, tune.threshold = TRUE)
+    irace = makeTuneControlIrace(maxExperiments = 12, nbIterations = 1L, minNbSurvival = 1, tune.threshold = TRUE)
   )
   for (ctrl in ctrls) {
     lrn.tuned = makeTuneWrapper(lrn, resampling = cv2, measures = acc, par.set = ps, control = ctrl)
