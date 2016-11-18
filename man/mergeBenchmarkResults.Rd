@@ -7,15 +7,15 @@
 mergeBenchmarkResults(...)
 }
 \arguments{
-\item{...}{[\code{\link{BenchmarkResult}}]\cr 
+\item{...}{[\code{\link{BenchmarkResult}}]\cr
 \code{BenchmarkResult} objects that should be merged.}
 }
 \value{
 \code{\link{BenchmarkResult}}
 }
 \description{
-Combines the \code{\link{BenchmarkResult}} objects that were performed 
-  with different learners and tasks. 
+Combines the \code{\link{BenchmarkResult}} objects that were performed
+  with different learners and tasks.
   This can be helpful if you, e.g. forgot to run one learner on the set of tasks you used.
 }
 \details{
