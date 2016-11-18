@@ -4,6 +4,9 @@ makeRLearner.surv.gamboost = function() {
     cl = "surv.gamboost",
     package = c("!survival", "mboost"),
     par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
+      makeIntegerLearnerParam(id = "dfbase", default = 4),
+      makeNumericLearnerParam(id = "offset"),
       makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan", "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
@@ -12,7 +15,6 @@ makeRLearner.surv.gamboost = function() {
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
       # 'risk' and 'stopintern' will be kept for completeness sake
-      makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "both"),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(
