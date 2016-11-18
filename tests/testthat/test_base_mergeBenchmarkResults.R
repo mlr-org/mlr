@@ -13,7 +13,7 @@ test_that("mergeBenchmarkResults", {
     rbinded = do.call("rbind", lapply(list, as.data.frame))
     res = merge(rbinded, merged, by = c("task.id", "learner.id", "iter"), all = TRUE)
     expect_true(nrow(res) == nrow(rbinded))
-    expect_true(all(c("mmce.x", "mmce.y")%in%colnames(res)))
+    expect_true(all(c("mmce.x", "mmce.y") %in% colnames(res)))
     expect_true(identical(res$mmce.x, res$mmce.y))
   }
 
@@ -59,14 +59,21 @@ test_that("mergeBenchmarkResults", {
   #l1t1.acc = benchmark(learners[[1L]], tasks[[1L]], cv2, measures = acc)
   #expect_error(mergeBenchmarkResults(l2t1, l1t1.acc), "same measures")
 
-  # check measures
+  # check measure order
   bench1 = benchmark(learners[1:2], tasks[[1L]], cv2, measures = list(acc, mmce))
   bench2 = benchmark(learners[2:1], tasks[[2L]], cv2, measures = list(mmce, acc))
-  bench2 = benchmark(learners[2:1], tasks[[2L]], cv2, measures = list(mmce, acc))
+  result = mergeBenchmarkResults(bench1, bench2)
+  checkBenchmarkResults(list(bench1, bench2), result)
+  
+  # check if recomputing of missing meausures works
+  bench1 = benchmark(learners[1:2], tasks[[1L]], cv2, measures = mmce)
+  bench2 = benchmark(learners[2:1], tasks[[2L]], cv2, measures = acc)
+  result = mergeBenchmarkResults(bench1, bench2)
+  result = as.data.frame(result)
+  expect_true(all(c("acc", "mmce") %in% colnames(result)))
+  expect_true(!any(is.na(c(result$add, result$mmce))))
 
   # check inequal task descriptions
-
-  # check if recomputing of missing meausures works
 
   # allow merging of different resamplings???
 })
