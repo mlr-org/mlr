@@ -313,6 +313,11 @@ test_that("check measure calculations", {
   colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
   colauc.width = - diff(colauc.omspec) # = diff(rev(omspec))
   expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
+  # colAUC with "maximum = FALSE"
+  colauc.min = colAUC(c(1, 0, 1, 1), truth = tar.bin, maximum = FALSE)
+  colauc.max = colAUC(c(1, 0, 1, 1), truth = tar.bin, maximum = TRUE)
+  expect_equal(colauc.min[[1]], 0.25)
+  expect_equal(colauc.min, 1 - colauc.max)
   # colAUC multiclass
   colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
   tab = t(utils::combn(0:2, 2)) # all possible 1 vs. 1 combinations
