@@ -89,7 +89,7 @@ test_that("parallel exporting of options works", {
 })
 
 test_that("parallel partial dependence", {
-  doit = function(level) {
+  doit = function(mode) {
     lrn = makeLearner("regr.rpart")
     fit = train(lrn, regr.task)
     on.exit(parallelStop())

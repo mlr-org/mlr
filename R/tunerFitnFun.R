@@ -13,8 +13,9 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
     opt.path, show.info, dob, x, remove.nas)
+  extra = getTuneThresholdExtra(ctrl, res)
   addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,
-    exec.time = res$exec.time, error.message = res$errmsg)
+    exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
   convertYForTuner(res$y, measures, ctrl)
 }
 
@@ -33,7 +34,7 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   ps2 = par.set
   for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
-  f = smoof::makeSingleObjectiveFunction(
+  smoof::makeSingleObjectiveFunction(
     fn = function(x) {
       tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
   }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)

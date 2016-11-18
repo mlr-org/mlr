@@ -31,8 +31,8 @@ getNestedTuneResultsX = function(r) {
 #' @param r [\code{\link{ResampleResult}}] \cr
 #'   The result of resampling of a tuning wrapper.
 #' @param trafo [\code{logical(1)}]\cr
-#'   Should the units of the hyperparameter path be converted to the 
-#'   transformed scale? This is only necessary when trafo was used to create 
+#'   Should the units of the hyperparameter path be converted to the
+#'   transformed scale? This is only necessary when trafo was used to create
 #'   the \code{opt.path}s. Note that \code{opt.path}s are always stored on the
 #'   untransformed scale.
 #'   Default is \code{FALSE}.
@@ -49,10 +49,8 @@ getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
   ops = extractSubList(r$extract, "opt.path", simplify = FALSE)
   if (trafo) ops = lapply(ops, trafoOptPath)
   op.dfs = lapply(ops, as.data.frame)
-  op.dfs = lapply(seq_along(op.dfs), function(i) {
+  op.dfs = setDF(rbindlist(lapply(seq_along(op.dfs), function(i) {
     op.dfs[[i]][,"iter"] = i
     op.dfs[[i]]
-  })
-  do.call(plyr::rbind.fill, op.dfs)
+  }), fill = TRUE))
 }
-

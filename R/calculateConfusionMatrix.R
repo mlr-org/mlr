@@ -10,15 +10,15 @@
 #' A list is returned that contains multiple matrices.
 #' If \code{relative = TRUE} we compute three matrices, one with absolute values and two with relative.
 #' The relative confusion matrices are normalized based on rows and columns respectively,
-#' if {FALSE} we only compute the absolute value matrix.
+#' if \code{FALSE} we only compute the absolute value matrix.
 #'
 #' The \code{print} function returns the relative matrices in
 #' a compact way so that both row and column marginals can be seen in one matrix.
-#' For details see \code{\link{ConfMatrix}}.
+#' For details see \code{\link{ConfusionMatrix}}.
 #'
 #' Note that for resampling no further aggregation is currently performed.
 #' All predictions on all test sets are joined to a vector yhat, as are all labels
-#' joined to a vector y. Then yhat is simply tabulated vs y, as if both were computed on
+#' joined to a vector y. Then yhat is simply tabulated vs. y, as if both were computed on
 #' a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 #'
 #' @template arg_pred
@@ -27,7 +27,7 @@
 #'   columns.
 #' @param sums {\code{logical(1)}}\cr
 #'   If \code{TRUE} add absolute number of observations in each group.
-#' @return [\code{\link{ConfMatrix}}].
+#' @return [\code{\link{ConfusionMatrix}}].
 #' @family performance
 #' @export
 #' @examples
@@ -96,13 +96,13 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
     result$relative.error = sum(result$result[k+1, 1:(k+1)])/n
   }
 
-  addClasses(result, "ConfMatrix")
+  addClasses(result, "ConfusionMatrix")
 }
 
 #' @export
 #' @describeIn calculateConfusionMatrix
 #'
-#' @param x [\code{\link{ConfMatrix}}]\cr
+#' @param x [\code{\link{ConfusionMatrix}}]\cr
 #'   Object to print.
 #' @param both [\code{logical(1)}]\cr
 #'   If \code{TRUE} both the absolute and relative confusion matrices are printed.
@@ -110,7 +110,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
 #'   How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.
 #' @param ... [any]\cr
 #'  Currently not used.
-print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
+print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 
   assertFlag(both)
   assertInt(digits, lower = 1)
@@ -177,6 +177,6 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' \item{relative.col [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by column.}
 #' \item{relative.error [\code{numeric(1)}]}{Relative error overall.}
 #' }
-#' @name ConfMatrix
+#' @name ConfusionMatrix
 #' @family performance
 NULL

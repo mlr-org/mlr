@@ -98,7 +98,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-  
+
   if(length(target) == 1) {
     task = makeClassifTask(data = df, target = target)
   } else {
@@ -227,8 +227,8 @@ mylist = function(..., create = FALSE) {
 }
 
 testFacetting = function(obj, nrow = NULL, ncol = NULL) {
-  expect_equal(obj$facet$nrow, nrow)
-  expect_equal(obj$facet$ncol, ncol)
+  expect_equal(obj$facet$params$nrow, nrow)
+  expect_equal(obj$facet$params$ncol, ncol)
 }
 
 quickcheckTest = function(...) {
@@ -240,4 +240,11 @@ quickcheckTest = function(...) {
   }
 
   expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
+}
+
+testDocForStrings = function(doc, x, grid.size = 1L) {
+  text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
+    x, "')]]", sep = "")
+  nodes = XML::getNodeSet(doc, text.paths, ns.svg)
+  expect_equal(length(nodes), length(x) * grid.size)
 }

@@ -45,8 +45,9 @@ estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.lda"))
 Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.
 }
 \seealso{
-Other performance: \code{\link{ConfMatrix}},
+Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},

@@ -21,26 +21,27 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
   if (any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
   if (any(trnull)) pr.tr = preds.train[!trnull] else pr.tr = preds.train
 
-  #   dtest = do.call("rbind", lapply(seq_along(pr.te), function(X)
-  #     cbind(pr.te[[X]]$data, iter = X, set = "test") ))
-  #   dtrain = do.call("rbind", lapply(seq_along(pr.tr), function(X)
-  #     cbind(pr.tr[[X]]$data, iter = X, set = "train") ))
+  data = setDF(rbind(
+    rbindlist(lapply(seq_along(pr.te), function(X) cbind(pr.te[[X]]$data, iter = X, set = "test"))),
+    rbindlist(lapply(seq_along(pr.tr), function(X) cbind(pr.tr[[X]]$data, iter = X, set = "train")))
+  ))
 
-  dtest = plyr::rbind.fill(lapply(seq_along(pr.te), function(X)
-    cbind(pr.te[[X]]$data, iter = X, set = "test") ))
-  dtrain = plyr::rbind.fill(lapply(seq_along(pr.tr), function(X)
-    cbind(pr.tr[[X]]$data, iter = X, set = "train") ))
-
-  data = rbind(dtest, dtrain)
-
-  p1 = preds.test[[1L]]
+  if (!any(tenull) && instance$desc$predict %in% c("test", "both")) {
+    p1 = preds.test[[1L]]
+    pall = preds.test
+  } else if (!any(trnull) && instance$desc$predict == "train") {
+    p1 = preds.train[[1L]]
+    pall = preds.train
+  }
+  
+  
   makeS3Obj(c("ResamplePrediction", class(p1)),
     instance = instance,
     predict.type = p1$predict.type,
     data = data,
     threshold = p1$threshold,
     task.desc = p1$task.desc,
-    time = extractSubList(preds.test, "time")
+    time = extractSubList(pall, "time")
   )
 }
 

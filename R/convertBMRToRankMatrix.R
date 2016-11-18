@@ -24,29 +24,23 @@ convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average", 
 
   # aggregate mean over iterations
   if (aggregation == "mean") {
-    df = as.data.frame(bmr)
-    df = aggregate(df[[measure$id]],
-                   by = list(task.id = df$task.id,
-                             learner.id = df$learner.id),
-                   FUN = mean)
+    df = setDT(as.data.frame(bmr))
+    df = df[, list(x = mean(get(measure$id))), by = c("task.id", "learner.id")]
   } else if (aggregation == "default") {
     aggr.meas = measureAggrName(measure)
-    df = getBMRAggrPerformances(bmr, as.df = TRUE)
-    df = df[, c("task.id", "learner.id", aggr.meas)]
-    names(df)[names(df) == aggr.meas] = c("x")
+    df = setDT(getBMRAggrPerformances(bmr, as.df = TRUE))
+    df = df[, c("task.id", "learner.id", aggr.meas), with = FALSE]
+    setnames(df, aggr.meas, "x")
   }
 
   # calculate ranks, rank according to minimize option of the measure
   if (!measure$minimize)
     df$x = -df$x
-  df = plyr::ddply(df, "task.id", function(d) {
-    d$alg.rank = rank(d$x, ties.method = ties.method)
-    return(d)
-  })
+  df[, "alg.rank" := rank(.SD$x, ties.method = ties.method), by = "task.id"]
 
   # convert into matrix, rows = leaner, cols = tasks
-  df = reshape2::melt(df, c("task.id", "learner.id"), "alg.rank")
-  df = reshape2::dcast(df, learner.id ~ task.id )
+  df = melt(setDF(df), c("task.id", "learner.id"), "alg.rank")
+  df = dcast(df, learner.id ~ task.id)
   task.id.names = setdiff(colnames(df), "learner.id")
   mat = as.matrix(df[, task.id.names])
   rownames(mat) = df$learner.id

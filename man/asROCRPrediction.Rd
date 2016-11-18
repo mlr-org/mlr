@@ -21,6 +21,7 @@ Other predict: \code{\link{getPredictionProbabilities}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 
-Other roc: \code{\link{plotViperCharts}}
+Other roc: \code{\link{calculateROCMeasures}},
+  \code{\link{plotViperCharts}}
 }
 

@@ -5,7 +5,7 @@
 \title{Generate hyperparameter effect data.}
 \usage{
 generateHyperParsEffectData(tune.result, include.diagnostics = FALSE,
-  trafo = FALSE)
+  trafo = FALSE, partial.dep = FALSE)
 }
 \arguments{
 \item{tune.result}{[\code{\link{TuneResult}} | \code{\link{ResampleResult}}]\cr
@@ -25,13 +25,23 @@ Should the units of the hyperparameter path be converted to the
 transformed scale? This is only useful when trafo was used to create the
 path.
 Default is \code{FALSE}.}
+
+\item{partial.dep}{[\code{logical(1)}]\cr
+Should partial dependence be requested based on converting to reg task? This
+sets a flag so that we know to use partial dependence downstream. This
+should most likely be set to \code{TRUE} if 2 or more hyperparameters were
+tuned simultaneously. Partial dependence should always be requested when
+more than 2 hyperparameters were tuned simultaneously. Setting to
+\code{TRUE} will cause \code{\link{plotHyperParsEffect}} to automatically
+plot partial dependence when called downstream.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{HyperParsEffectData}]
  Object containing the hyperparameter effects dataframe, the tuning
  performance measures used, the hyperparameters used, a flag for including
- diagnostic info, a flag for whether nested cv was used, and the optimization
- algorithm used.
+ diagnostic info, a flag for whether nested cv was used, a flag for whether
+ partial dependence should be generated, and the optimization algorithm used.
 }
 \description{
 Generate cleaned hyperparameter effect data from a tuning result or from a

@@ -46,8 +46,9 @@ ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 performance(pred, measures = ms, task, mod)
 }
 \seealso{
-Other performance: \code{\link{ConfMatrix}},
+Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},

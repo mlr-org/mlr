@@ -8,6 +8,7 @@ test_that("learners work: cluster", {
   # clustering, response
   task = noclass.task
   lrns = mylist(task, create = TRUE)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
   
   # clustering, prob

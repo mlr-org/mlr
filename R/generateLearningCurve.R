@@ -67,7 +67,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
         lrn.id = lrn$id,
-        lrn = setId(dsw, stri_paste(lrn$id, ".", p.id)),
+        lrn = setLearnerId(dsw, stri_paste(lrn$id, ".", p.id)),
         perc = perc
       )
     })
@@ -135,9 +135,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
       names(obj$measures), mnames)
   }
 
-  data = reshape2::melt(obj$data,
-    id.vars = c("learner", "percentage"),
-    variable.name = "measure", value.name = "performance")
+  data = melt(as.data.table(obj$data), id.vars = c("learner", "percentage"), variable.name = "measure", value.name = "performance")
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
@@ -182,6 +180,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #' @template ret_ggv
 #' @export
 plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = TRUE) {
+  requirePackages("_ggvis")
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
@@ -195,9 +194,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
                                    mnames)
   }
 
-  data = reshape2::melt(obj$data,
-                        id.vars = c("learner", "percentage"),
-                        variable.name = "measure", value.name = "performance")
+  data = setDF(melt(as.data.table(obj$data), id.vars = c("learner", "percentage"), variable.name = "measure", value.name = "performance"))
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))
 
@@ -221,6 +218,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
   }
 
   if (!is.null(interaction)) {
+    requirePackages("_shiny")
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
             shiny::headerPanel("learning curve"),
