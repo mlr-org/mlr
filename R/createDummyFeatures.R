@@ -38,28 +38,18 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   on.exit(options(na.action = old.na.action))
   options(na.action = "na.pass")
 
-  dummies = lapply(work.cols, function(colname) {
-    if (method == "1-of-n") {
-      form = stri_paste("~", colname, "-1")
-      res = model.matrix(as.formula(form), data = obj)
-      colnames(res) = levels(obj[[colname]])
-    } else {
-      form = stri_paste("~", colname, "-1")
-      res = model.matrix(as.formula(form), data = obj)[, -1, drop = FALSE]
-      colnames(res) = tail(levels(obj[[colname]]), -1)
-    }
-    if (ncol(res) == 1) {
-      colnames(res) = stri_paste(colname, colnames(res), sep = ".")
-    }
-    res
-  })
+  colname = colnames(obj[work.cols])
+  dfcol = obj[,work.cols]
+
+  dummies = lapply(obj[work.cols], createDummyFeatures.factor, method = method, colname = colname)
   #some effort to preserve order
-  names(dummies) = work.cols
-  col.list = convertColsToList(obj, factors.as.char = FALSE)
-  for (col in work.cols) {
-    col.list[[col]] = dummies[[col]]
-  }
-  do.call(cbind.data.frame, c(col.list, stringsAsFactors = FALSE))
+  # names(dummies) = work.cols
+  # col.list = convertColsToList(obj, factors.as.char = FALSE)
+  # for (col in work.cols) {
+  #   col.list[[col]] = dummies[[col]]
+  # }
+  # do.call(cbind.data.frame, c(col.list, stringsAsFactors = FALSE))
+  cbind(dropNamed(obj,work.cols),dummies)
 }
 
 #' @export
@@ -68,3 +58,24 @@ createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-
   d = createDummyFeatures(obj = getTaskData(obj), target = target, method = method, cols = cols)
   changeData(obj, d)
 }
+
+
+#' @export
+createDummyFeatures.factor = function (obj, method = "1-of-n", colname = "factor") {
+  dcol = as.data.frame(obj)
+  colnames(dcol) = colname
+  if (method == "1-of-n") {
+    form = stri_paste("~", colname, "-1")
+    res = model.matrix(as.formula(form), data = dcol)
+    colnames(res) = levels(obj)
+  } else {
+    form = stri_paste("~", colname, "-1")
+    res = model.matrix(as.formula(form), data = dcol)[, -1, drop = FALSE]
+    colnames(res) = tail(levels(obj), -1)
+  }
+  if (ncol(res) == 1) {
+    colnames(res) = stri_paste(colname, colnames(res), sep = ".")
+  }
+  as.data.frame(res)
+}
+
