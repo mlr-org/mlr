@@ -36,6 +36,7 @@
   FSelector/custom implementation now, performance should be much better
 * use of our own colAUC function instead of the ROCR package for AUC calculation
   to improve performance
+* We output resample performance messages for every iteration now
 
 ## functions - new
 * filter: randomForest.importance
