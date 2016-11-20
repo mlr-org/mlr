@@ -24,8 +24,8 @@ test_that("classif_earth", {
     m = do.call(earth::earth, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = binaryclass.test, type = "response")[,1]
-    old.probs.list[[i]] = p
-    old.predicts.list[[i]] = as.factor(ifelse(p > 0.5, levs[1L], levs[2L]))
+    old.probs.list[[i]] = 1 - p
+    old.predicts.list[[i]] = as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }
 
   testSimpleParsets("classif.earth", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list)

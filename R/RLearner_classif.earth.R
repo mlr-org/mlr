@@ -37,17 +37,18 @@ makeRLearner.classif.earth = function() {
 #' @export
 trainLearner.classif.earth = function(.learner, .task, .subset, .weights = NULL, link = "logit", maxit = 25L, ...) {
   f = getTaskFormula(.task)
-  earth::earth(f, data = getTaskData(.task, .subset), glm = list(family = binomial(link = link) , maxit = maxit), ...)
+  earth::earth(f, data = getTaskData(.task, .subset), weights = .weights, glm = list(family = binomial(link = link) , maxit = maxit), ...)
 }
 
 #' @export
 predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
-  levs = .model$factor.levels[[1]]
+  levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {
-    p = setColNames(cbind(p, 1-p), levs)
+    p = setColNames(cbind(1 - p, p), levs)
   } else {
-    p = as.factor(ifelse(p > 0.5, levs[1L], levs[2L]))
+    p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
+    p = unname(p)
   }
   return(p)
 }
