@@ -1,13 +1,9 @@
 # mlr 2.10:
 
-## general
+## functions - general
+* fixed bug in resample when using predict = "train" (issue #1284)
 * update to irace 2.0 -- there are algorithmic changes in irace that may affect
   performance
-
-## Bug fixes
-* fixed bug in resample when using predict = "train" (issue #1284)
-
-## functions - general
 * generateFilterValuesData: fixed a bug wrt feature ordering
 * imputeLearner: fixed a bug when data actually contained no NAs
 * print.Learner: if a learner hyperpar was set to value "NA" this was not
@@ -78,7 +74,7 @@
 * surv.gbm
 * regr.cvglmnet
 
-## learner - removed
+## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
 
 ## measures - new
