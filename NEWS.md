@@ -69,6 +69,7 @@
   as these are set internally and cannot be changed by the user
 * regr.GPfit: some more params for correlation kernel
 * classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing and other problems), added "colsample_bylevel" parameter
+* adapted {classif,regr,surv}.ranger parameters for new ranger version
 
 ## learners - new
 * multilabel.cforest
