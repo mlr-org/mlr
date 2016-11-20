@@ -1,0 +1,133 @@
+---
+title: "mlr: Curve Data"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+
+# mlr: Curve Data
+
+This is a short demo for the `mlr` branch `curve\_data`. The main goal of `curve\_data ` is to provide a tool for processing curvature data, i.e. data with temporal structure, within `mlr`. To create a non-temporal representation of the data, feature extraction methods are used. Currently, fourier feature transformation and discrete wavelet feature transformation are available within `curve_data`. The major structure of the `mlr` workflow remains unchanged. 
+As example data, we use the gun-point data set available from the UCR time series archive (www.cs.ucr.edu/~eamonn/time_series_data/), which is a binary classification problem, with the given train-test split. 
+
+```{r}
+library(devtools)
+library(BBmisc)
+load_all()
+
+## Load curve data
+gp = load2("gunpoint.RData")
+```
+
+
+## Non temporal 
+
+First, handling curvature data when ignoring the temporal structure, i.e. the temporal measurements are treated as (independent) covariates. The first step is to create a time series classification task in which the relevant information is stored, i.e. data, target variable, etc .
+
+```{r}
+## Define the task:
+taskCl = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
+print(taskCl)
+
+```
+
+Next, the basic `mlr` step is to define which learner is used for classification. We choose a CART tree. The last steps are training the model i.e. the learner, predicting and evaluation. 
+
+```{r}
+## Define the learner:
+lrn = makeLearner("classif.rpart")
+print(lrn)
+
+
+## Train the model on the training data of specified task:
+model = train(lrn, taskCl, subset = 1:50)
+
+## ...and predict for the test data:
+pred = predict(model, taskCl, subset = 51:200)
+
+## Get the mean misclassification error and true positive rate:
+p = performance(pred, measures = list(mmce, tpr))
+print(p)
+```
+
+
+## Wavelet transform
+
+Now we use the `curve_data` functions to extract non-temporal features from the temporal data. To begin with, we choose the discrete wavelet feature transformation based on haar wavelets. 
+For this, we first have to create a general time series classification task which is the input for the feature extraction method. We can specify which feature extraction method is used via the `method` parameter and add additional parameters (i.e. the `filter` and the `boundary`) in the `pars` argument. This functions returns a statndard classification task since the transformed data  does not inherit temporal structure anymore:
+
+```{r}
+## Define the general temporal task:
+taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
+
+## Specify the feature extraction method and generate new task.
+## Here, we use the Haar filter:
+taskW = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list(filter ="haar"))
+print(taskW)
+```
+
+We also want to evaluate a the Daubechie wavelet with filter length of 4. 
+
+```{r}
+## Use the Daubechie wavelet with filter length 4.
+taskWD4 = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list(filter ="d4"))
+print(taskWD4)
+```
+
+The following steps are equal to the non-temporal evaluation: train, predict and evaluate.
+
+```{r}
+## Train the model...:
+model = train(lrn, taskW, subset = 1:50)
+
+## ...and predict:
+pred = predict(model, taskW, subset = 51:200)
+
+## Get the mean misclassification error and true positive rate:
+p = performance(pred, measures = list(mmce, tpr))
+print(p)
+
+
+## Do the same for the daubechie wavelet of length 4
+model = train(lrn, taskWD4, subset = 1:50)
+pred = predict(model, taskWD4, subset = 51:200)
+p = performance(pred, measures = list(mmce, tpr))
+print(p)
+```
+
+
+## Fourier transform
+
+Now, we use the fourier feature transformation. Either the amplitude or the phase of the complex fourier coefficients can be used for analysis and can be specified in the additional `fft.coeff` argument:
+
+```{r}
+## Define the general temporal task:
+taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
+
+## Specify the feature extraction method and generate  new task.
+## We use the fourier features and the amplitude:
+taskFa = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
+print(taskFa)
+
+## ... or we prefer the phase:
+taskFp = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "phase"))
+print(taskFp)
+```
+
+The evaluation steps remain the same:
+
+```{r}
+
+## Train and predict. First, the amplitude features:
+model = train(lrn, taskFa, subset = 1:50)
+pred = predict(model, taskFa, subset = 51:200)
+p = performance(pred, measures = list(mmce, tpr))
+print(p)
+
+## Train and predict with the phase features:
+model = train(lrn, taskFp, subset = 1:50)
+pred = predict(model, taskFp, subset = 51:200)
+p = performance(pred, measures = list(mmce, tpr))
+print(p)
+```
