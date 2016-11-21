@@ -1,9 +1,9 @@
 load_all()
-
+library('BBmisc')
 configureMlr(show.info = TRUE)
 
 # load gunpoint data
-gp = load2("gunpoint.RData")
+gp = load2("demo4TS/gunpoint.RData")
 
 
 # create our new tsclassif task (yuhu...)

@@ -3,7 +3,7 @@ load_all()
 configureMlr(show.info = TRUE)
 
 # load gunpoint data
-gp = load2("gunpoint.RData")
+gp = load2("demo4TS/gunpoint.RData")
 
 
 task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")

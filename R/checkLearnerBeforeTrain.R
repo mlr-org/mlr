@@ -7,7 +7,9 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
 
   td = getTaskDescription(task)
 
-  if (td$type != learner$type) {
+  # FIXME: this seems a bit bad style, but the other option would be to somehow create
+  # a wrapper for normal classif and regr learners? more code for user and and a bit unintuitive...?
+  if (td$type != learner$type && !(td$type == "tsclassif" && learner$type == "classif")) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)
   }
 

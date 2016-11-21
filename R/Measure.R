@@ -151,7 +151,8 @@ getDefaultMeasure = function(x) {
     regr = mse,
     surv = cindex,
     costsens = mcp,
-    multilabel = multilabel.hamloss
+    multilabel = multilabel.hamloss,
+    tsclassif = mmce
   )
 }
 
