@@ -75,6 +75,7 @@
 * multilabel.cforest
 * surv.gbm
 * regr.cvglmnet
+* {classif,regr,surv}.gamboost
 
 ## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
