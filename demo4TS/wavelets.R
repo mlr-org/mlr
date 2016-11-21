@@ -3,7 +3,7 @@ load_all()
 configureMlr(show.info = TRUE)
 
 # load gunpoint data
-gp = load2("gunpoint.RData")
+gp = load2("demo4TS/gunpoint.RData")
 
 gp.x = gp[,-1]
 gp.y = gp[,1]
