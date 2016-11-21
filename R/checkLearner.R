@@ -21,3 +21,10 @@ checkLearner = function(learner, type = NULL, props = NULL) {
 
   return(learner)
 }
+
+
+# FIXME: this is a deprecated function, which is only need RBPCurve, needs to be removed soon, see #1351
+checkLearnerClassif = function(learner, props = NULL) {
+  checkLearner(learner, type = "classif", props = props)
+}
+
