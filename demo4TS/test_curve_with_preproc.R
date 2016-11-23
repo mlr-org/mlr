@@ -33,25 +33,25 @@ pred = predict(model, task, subset = 51:200)
 p = performance(pred, measures = list(mmce, tpr))
 print(p)
 
-# ptrain = function(data, target, args) {
-#   feats = setdiff(colnames(data), target)
-#   feats = sample(feats, 2)
-#   # print(feats)
-#   data = data[, c(feats, target)]
-#   control = list(feats = feats)
-#   list(data = data, control = control)
-# }
-#
-# ppredict = function(data, target, args, control) {
-#   data = data[, control$feats]
-#   return(data)
-# }
-#
-# lrn2 = makePreprocWrapper(lrn, train = ptrain, predict = ppredict)
-#
-# # m = train(lrn2, task)
-# # p = predict(m, task)
-# r = crossval(lrn2, task)
+ptrain = function(data, target, args) {
+  feats = setdiff(colnames(data), target)
+  feats = sample(feats, 2)
+  # print(feats)
+  data = data[, c(feats, target)]
+  control = list(feats = feats)
+  list(data = data, control = control)
+}
+
+ppredict = function(data, target, args, control) {
+  data = data[, control$feats]
+  return(data)
+}
+
+lrn2 = makePreprocWrapper(lrn, train = ptrain, predict = ppredict)
+
+# m = train(lrn2, task)
+# p = predict(m, task)
+r = crossval(lrn2, task)
 
 
 

@@ -45,7 +45,7 @@ creatDTWFeature = function (curves, ref = c(1,2) ){
 }
 
 
-gp = load2("gunpoint.RData")
+gp = load2("demo4TS/gunpoint.RData")
 gp.x = gp[,-1]
 gp.y = gp[,1]
 gpw.x = createDWTFeature(gp.x)
@@ -72,7 +72,7 @@ ppredict = function(data, target, args, control) {
  }
 
 library('stringi')
-lrn2 = makePreprocWrapper(lrn, train = ptrain, predict = ppredict, par.vals = list(positive ="1"))
+lrn2 = makePreprocWrapper(lrn, train = ptrain, predict = ppredict, par.vals = list(positive = "1"))
 lrn2$id = stri_replace(lrn$id, replacement = ".wavelet", regex = "\\.preproc$")
 lrn2 = addClasses(lrn2, "WaveletFeaturesWrapper")
 
