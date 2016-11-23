@@ -42,7 +42,7 @@ getTSFourierFeatures = function(curves, fft.coeff = NULL) {
     fftPA = as.data.frame(matrix(fftPA, nrow = 1)) else
       fftPA = as.data.frame(fftPA)
 
-  return(fftPA)
+  return(list(data = fftPA))
 }
 
 #' @export

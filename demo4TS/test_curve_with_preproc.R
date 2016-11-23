@@ -3,11 +3,13 @@ load_all()
 set.seed(2)
 configureMlr(show.info = TRUE, show.learner.output= TRUE)
 
-gp = load2("gunpoint.RData")
+gp = load2("demo4TS/gunpoint.RData")
 
 task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
 task.wd = makeTSFeaturesClassifTask(task = task, method = "wavelets", pars = list(filter = "haar"))
 task.ft = makeTSFeaturesClassifTask(task = task, method = "fourier", pars = list(fft.coeff = "amplitude"))
+
+sh = makeTSFeaturesClassifTask(task = task, method = "shapelets")
 
 lrn = makeLearner("classif.rpart")
 

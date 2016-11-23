@@ -33,5 +33,5 @@ getTSWaveletFeatures = function(curves, filter = NULL, boundary = NULL) {
     wtdata = rbind(wtdata, unlist(c(wt@W,wt@V[[wt@level]])))
   }
   wtdata = as.data.frame(wtdata)
-  return(wtdata)
+  return(list(data = wtdata))
 }

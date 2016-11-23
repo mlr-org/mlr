@@ -26,22 +26,28 @@ makeTSFeaturesClassifTask = function(task, method, pars = NULL) {
   if ( !any(class(task) == "TimeSeriesClassifTask") )
     stop("Task is not a 'TimeSeriesClassifTask'. Please check task.")
   #check valid feature extraction method
-  if ( !(method %in%  c("wavelets", "fourier")) )
-    stop("Method for feature extraction must be one of 'wavelets' or 'fourier'. Please check method.")
+  if ( !(method %in%  c("wavelets", "fourier", "shapelets")) )
+    stop("Method for feature extraction must be one of 'wavelets' or 'fourier' or 'shapelets'. Please check method.")
   #check for valid pars
   if ( !(all(names(pars) %in% c("filter", "boundary", "fft.coeff"))) )
     stop("Pars includes non valid arguments. Must be filter or boundary (wavelets) or fft.coeff (fourier).")
 
 
 
-  z = getTaskData(task, target.extra = TRUE)
+  z = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")
   switch(method,
          wavelets = {tsf = getTSWaveletFeatures(curves = z$data, filter = pars$filter, boundary = pars$boundary)},
          fourier = {tsf = getTSFourierFeatures(curves = z$data, fft.coeff = pars$fft.coeff)}
          )
-  tsf = cbind(as.factor(z$target), tsf)
-  colnames(tsf)[1] <- task$task.desc$target  # rename target column
-  newtask = makeClassifTask(data = tsf, target = task$task.desc$target, positive = task$task.desc$positive)
+
+  if(method == "shapelets") {
+    modelSh = getTSShapeletFeatures(curves = z$data, label.train = z$target, max.iter = 10)
+    return(modelSh)
+  }
+
+  newdata = cbind(as.factor(z$target), tsf$data)
+  colnames(newdata)[1] <- task$task.desc$target  # rename target column
+  newtask = makeClassifTask(data = newdata, target = task$task.desc$target, positive = task$task.desc$positive)
   return(newtask)
 
 }
