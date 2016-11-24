@@ -729,9 +729,10 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @export measureAUC
 #' @rdname measures
 #' @format none
+#' @importFrom ModelMetrics auc
 measureAUC = function(probabilities, truth, negative, positive) {
   truth = (truth != positive) # convert truth to FALSE/TRUE vector (FALSE is treated as TRUE in colAUC)
-  as.numeric(colAUC(probabilities, truth, maximum = FALSE))
+  as.numeric(auc(truth, probabilities))
 }
 
 #' @export brier

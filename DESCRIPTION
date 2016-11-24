@@ -47,7 +47,8 @@ Imports:
     methods,
     parallelMap (>= 1.3),
     survival,
-    utils
+    utils,
+    ModelMetrics (>= 1.1.0)
 Suggests:
     ada,
     adabag,
