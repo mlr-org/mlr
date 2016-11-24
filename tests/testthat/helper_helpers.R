@@ -231,16 +231,16 @@ testFacetting = function(obj, nrow = NULL, ncol = NULL) {
   expect_equal(obj$facet$params$ncol, ncol)
 }
 
-quickcheckTest = function(...) {
-  qc = quickcheck::test(...)
-
-  if (any(!qc$pass)) {
-    print("Quickcheck tests failed with input:")
-    print(qc$cases[[which.first(!qc$pass)]])
-  }
-
-  expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
-}
+# quickcheckTest = function(...) {
+#   qc = quickcheck::test(...)
+# 
+#   if (any(!qc$pass)) {
+#     print("Quickcheck tests failed with input:")
+#     print(qc$cases[[which.first(!qc$pass)]])
+#   }
+# 
+#   expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
+# }
 
 testDocForStrings = function(doc, x, grid.size = 1L) {
   text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
