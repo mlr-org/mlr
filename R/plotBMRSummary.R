@@ -50,7 +50,7 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
   df = orderBMRTasks(bmr, df, order.tsks)
 
   if (pretty.names) {
-    df$learners.id = getBMRLearnerShortNames(bmr)
+    levels(df$learner.id) = getBMRLearnerShortNames(bmr)
   }
 
   p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id"))
