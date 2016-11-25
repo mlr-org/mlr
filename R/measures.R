@@ -730,8 +730,12 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-  pos.level = which(levels(truth) == positive)
-	i = as.integer(truth) == pos.level
+	if (is.logical(truth)) {
+     i = truth == positive
+  } else {
+     pos.level = which(levels(truth) == positive)
+	   i = as.integer(truth) == pos.level
+  }
   y = probabilities[i]
   x = probabilities[!i]
   y = sort.int(y)
