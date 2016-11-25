@@ -730,8 +730,15 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-  truth = (truth != positive) # convert truth to FALSE/TRUE vector (FALSE is treated as TRUE in colAUC)
-  as.numeric(colAUC(probabilities, truth, maximum = FALSE))
+  pos.level = which(levels(truth) == positive)
+	i = as.integer(truth) == pos.level
+  y = probabilities[i]
+  x = probabilities[!i]
+  y = sort.int(y)
+  x = sort.int(x)
+  nx = as.numeric(length(x))
+  ny = as.numeric(length(y))
+  (nx * ny + nx * (nx + 1)/2 - sum(rank(c(x, y))[1:nx]))/(nx * ny)
 }
 
 #' @export brier
