@@ -125,7 +125,6 @@ measureMSE = function(truth, response) {
 }
 
 #' @export rmse
-#' @format none
 #' @rdname measures
 #' @format none
 rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
@@ -481,7 +480,7 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -661,15 +660,15 @@ measureKAPPA = function(truth, response) {
   # get confusion matrix
   conf.mat = table(truth, response)
   conf.mat = conf.mat / sum(conf.mat)
-  
-  # observed agreement frequency 
+
+  # observed agreement frequency
   p0 = sum(diag(conf.mat))
 
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
   pe = sum(rowsum * colsum) / sum(conf.mat)^2
-  
+
   # calculate kappa
   1 - (1 - p0) / (1 - pe)
 }
@@ -698,12 +697,12 @@ measureWKAPPA = function(truth, response) {
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
-  expected.mat = rowsum %*% t(colsum) 
+  expected.mat = rowsum %*% t(colsum)
 
   # get weights
   class.values = as.numeric(levels(truth))
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
-  
+
   # calculate weighted kappa
   1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
@@ -1272,6 +1271,23 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
     # FIXME: we need to convert to he correct survival type
     s = Surv(pred$data$truth.time, pred$data$truth.event)
     Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
+  }
+)
+
+#' @export cindex.uno
+#' @rdname measures
+#' @format none
+cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth"),
+  name = "Uno's Concordance index",
+  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages(c("!survival", "_survC1"))
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    data = cbind(as.matrix(getPredictionTruth(pred)), score = y)
+    survC1::Est.Cval(data, tau = max(data[, 1L]), nofit = TRUE)$Dhat
   }
 )
 

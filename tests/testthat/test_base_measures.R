@@ -16,6 +16,7 @@ test_that("measures", {
   mod = train(lrn, task = ct, subset = binaryclass.train.inds)
   pred = predict(mod, task = ct, subset = binaryclass.test.inds)
   perf = performance(pred, measures = ms)
+  expect_numeric(perf, any.missing = FALSE)
 
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
@@ -42,13 +43,23 @@ test_that("measures", {
     multiclass.au1u, multiclass.au1p))
   expect_is(perf, "numeric")
 
-  # test survival measure
+  # test cindex measure
   ms = list(cindex)
   lrn = makeLearner("surv.coxph")
   mod = train(lrn, task = surv.task, subset = surv.train.inds)
   pred = predict(mod, task = surv.task, subset = surv.test.inds)
   perf = performance(pred, measures = ms)
-  expect_is(perf, "numeric")
+  r = sort(c(ms[[1L]]$worst, ms[[1L]]$best))
+  expect_number(perf, lower = r[1L], upper = r[2L])
+
+  # test cindex.uno measure
+  ms = list(cindex.uno)
+  lrn = makeLearner("surv.coxph")
+  mod = train(lrn, task = surv.task, subset = surv.train.inds)
+  pred = predict(mod, task = surv.task, subset = surv.test.inds)
+  perf = performance(pred, measures = ms)
+  r = sort(c(ms[[1L]]$worst, ms[[1L]]$best))
+  expect_number(perf, lower = r[1L], upper = r[2L])
 })
 
 

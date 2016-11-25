@@ -12,6 +12,7 @@
 \alias{brier}
 \alias{brier.scaled}
 \alias{cindex}
+\alias{cindex.uno}
 \alias{db}
 \alias{dunn}
 \alias{expvar}
@@ -339,6 +340,8 @@ multilabel.tpr
 measureMultilabelTPR(truth, response)
 
 cindex
+
+cindex.uno
 
 meancosts
 
