@@ -287,7 +287,7 @@ test_that("check measure calculations", {
   rmsle.perf = performance(pred.regr, measures = rmsle, model = mod.regr)
   expect_equal(rmsle.test, rmsle$fun(pred = pred.regr))
   expect_equal(rmsle.test, as.numeric(rmsle.perf))
-  
+
   #test multiclass measures
 
   #mmce
@@ -424,7 +424,7 @@ test_that("check measure calculations", {
   wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
   expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
   expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
-  
+
   #test binaryclass measures
 
   #brier
@@ -668,18 +668,18 @@ test_that("check measure calculations", {
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
 
   #test that some measures are only transformations of each other
-  
+
   #qsr is identical to the 1 - multiclass brier
   expect_equal(1 - measureMulticlassBrier(p1, y1), measureQSR(p1, y1), check.names = FALSE)
   qsr.bin.perf = performance(pred.bin, measures = qsr, model = mod.bin)
   expect_equal(1 - 2 * brier.perf, qsr.bin.perf, check.names = FALSE)
-  
+
   expect_equal(lsr.perf, -1 * logloss.perf, check.names = FALSE)
-  
+
   #multiclass brier for a two class problem should be two times the binary brier score.
   multiclass.brier.twoclass.perf = performance(pred.bin, measures = multiclass.brier, model = mod.bin)
   expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, check.names = FALSE)
-  
+
 })
 
 test_that("getDefaultMeasure", {
@@ -690,30 +690,30 @@ test_that("getDefaultMeasure", {
   expect_equal(mmce, getDefaultMeasure("classif"))
 })
 
-# test_that("measures quickcheck", {
-#   skip_on_cran()
-#   options(warn = 2)
-#   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
-#   lrn = makeLearner("classif.rpart")
-#       
-#   quickcheckTest(
-#     quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
-#       {
-#         classes = factor(c("foo", "bar"))
-#         data$target = rep_len(classes, length.out = nrow(data))
-#   
-#         trainIds = 1:(2*nrow(data)/3)
-#         testIds = setdiff(1:nrow(data), trainIds)
-#         task = makeClassifTask(data = data, target = "target")
-#   
-#         mod = train(lrn, task = task, subset = trainIds)
-#         pred = predict(mod, task = task, subset = testIds)
-#         perf = performance(pred, measures = ms)
-#   
-#         is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
-#       }
-#     ),
-#     about = "binary classification measures",
-#     sample.size = 100
-#   )
-# })
+test_that("measures quickcheck", {
+  skip_on_cran()
+  options(warn = 2)
+  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
+  lrn = makeLearner("classif.rpart")
+
+  quickcheckTest(
+    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
+      {
+        classes = factor(c("foo", "bar"))
+        data$target = rep_len(classes, length.out = nrow(data))
+
+        trainIds = 1:(2*nrow(data)/3)
+        testIds = setdiff(1:nrow(data), trainIds)
+        task = makeClassifTask(data = data, target = "target")
+
+        mod = train(lrn, task = task, subset = trainIds)
+        pred = predict(mod, task = task, subset = testIds)
+        perf = performance(pred, measures = ms)
+
+        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
+      }
+    ),
+    about = "binary classification measures",
+    sample.size = 100
+  )
+})
