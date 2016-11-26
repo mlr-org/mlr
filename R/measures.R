@@ -730,19 +730,23 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-	if (is.logical(truth)) {
-     i = truth == positive
+	if (is.factor(truth)) {
+  	i = as.integer(truth) == which(levels(truth) == positive)
   } else {
-     pos.level = which(levels(truth) == positive)
-	   i = as.integer(truth) == pos.level
+	  i = truth == positive
   }
+	if (length(unique(i)) < 2L) {
+		stop("truth vector must have at least two classes")
+	}
   y = probabilities[i]
   x = probabilities[!i]
-  y = sort.int(y)
-  x = sort.int(x)
-  nx = as.numeric(length(x))
-  ny = as.numeric(length(y))
-  (nx * ny + nx * (nx + 1)/2 - sum(rank(c(x, y))[1:nx]))/(nx * ny)
+  #Use fast ranking function from data.table for larger vectors
+  if (length(i) > 10000L) {
+  	r = frankv(c(x, y))
+  } else {
+  	r = rank(c(sort.int(x), sort.int(y)))
+  }
+  (nx * ny + nx * (nx + 1)/2 - sum(r[1:nx]))/(nx * ny)
 }
 
 #' @export brier
