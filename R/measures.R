@@ -744,7 +744,7 @@ measureAUC = function(probabilities, truth, negative, positive) {
   	r = rank(probabilities)
   }
   n_pos = as.numeric(sum(i))
-  n_neg = as.numeric(sum(!i))
+  n_neg = length(i) - n_pos
   (sum(r[i]) - n_pos * (n_pos + 1)/2)/(n_pos * n_neg)
 }
 
