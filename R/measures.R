@@ -740,6 +740,8 @@ measureAUC = function(probabilities, truth, negative, positive) {
 	}
   y = probabilities[i]
   x = probabilities[!i]
+  nx = as.numeric(length(x))
+  ny = as.numeric(length(y))
   #Use fast ranking function from data.table for larger vectors
   if (length(i) > 10000L) {
   	r = frankv(c(x, y))
