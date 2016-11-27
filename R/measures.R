@@ -719,7 +719,6 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
   name = "Area under the curve",
   note = "Integral over the graph that results from computing fpr and tpr for many different thresholds.",
   fun = function(task, model, pred, feats, extra.args) {
-    # ROCR does not work with NAs
     if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
     measureAUC(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
@@ -730,8 +729,23 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-  truth = (truth != positive) # convert truth to FALSE/TRUE vector (FALSE is treated as TRUE in colAUC)
-  as.numeric(colAUC(probabilities, truth, maximum = FALSE))
+	if (is.factor(truth)) {
+  	i = as.integer(truth) == which(levels(truth) == positive)
+  } else {
+	  i = truth == positive
+  }
+	if (length(unique(i)) < 2L) {
+		stop("truth vector must have at least two classes")
+	}
+  #Use fast ranking function from data.table for larger vectors
+  if (length(i) > 5000L) {
+  	r = frankv(probabilities)
+  } else {
+  	r = rank(probabilities)
+  }
+  n_pos = as.numeric(sum(i))
+  n_neg = length(i) - n_pos
+  (sum(r[i]) - n_pos * (n_pos + 1)/2)/(n_pos * n_neg)
 }
 
 #' @export brier
