@@ -37,6 +37,7 @@
 * use of our own colAUC function instead of the ROCR package for AUC calculation
   to improve performance
 * We output resample performance messages for every iteration now
+* performance improvements for the auc measure
 
 ## functions - new
 * filter: randomForest.importance
