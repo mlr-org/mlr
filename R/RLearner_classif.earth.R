@@ -4,7 +4,7 @@ makeRLearner.classif.earth = function() {
     cl = "classif.earth",
     package = "earth",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id = "trace", default = 0, upper = 10, tunable = FALSE),
+      makeNumericLearnerParam(id = "trace", default = 0, upper = 5, tunable = FALSE),
       makeLogicalLearnerParam(id = "keepxy",default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "penalty"),
