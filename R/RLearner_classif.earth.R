@@ -33,7 +33,7 @@ makeRLearner.classif.earth = function() {
       makeLogicalLearnerParam(id = "Get.leverages", default = TRUE, tunable = FALSE),
       makeNumericLearnerParam(id = "Exhaustive.tol", default = 1e-10, tunable = FALSE)
     ),
-    properties = c("twoclass", "numerics", "factors", "prob","weights"),
+    properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Flexible Discriminant Analysis",
     short.name = "fda",
     note = "This learner performs flexible discriminant analysis using the earth algorithm. na.action is set to na.fail and only this is supported."
@@ -49,11 +49,12 @@ trainLearner.classif.earth = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
-  levs = .model$factor.levels[[1]]
+  levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {
-    p = setColNames(cbind(1-p, p), levs)
+    p = propVectorToMatrix(p, levs)
   } else {
     p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
+    p = unname(p)
   }
   return(p)
 }
