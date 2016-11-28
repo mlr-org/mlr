@@ -7,13 +7,19 @@ test_that("classif_xgboost", {
     list(),
     list(nrounds = 20L)
   )
-  
+
+  parset.probs.list = list(
+    list(),
+    list(objective = "multi:softprob") #We had a bug here that 'multi:softprob' didn't work with binaryclass
+  )
+
   old.predicts.list = list()
-  
+  old.probs.list = list()
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(data = data.matrix(binaryclass.train[,1:60]),
-      label = as.numeric(binaryclass.train[,61])-1)
+      label = as.numeric(binaryclass.train[, 61]) - 1)
     if (is.null(parset$objective)) parset$objective = "binary:logistic"
     if (is.null(parset$verbose)) parset$verbose = 0L
     if (is.null(parset$nround)) parset$nrounds = 1L
@@ -21,11 +27,40 @@ test_that("classif_xgboost", {
     set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
     pred = xgboost::predict(model, data.matrix(binaryclass.test[,1:60]))
-    old.predicts.list[[i]] = factor(as.numeric(pred>0.5), labels = binaryclass.class.levs)
+    old.predicts.list[[i]] = factor(as.numeric(pred > 0.5), labels = binaryclass.class.levs)
+  }
+
+  for (i in 1:length(parset.probs.list)) {
+    parset = parset.probs.list[[i]]
+    pars = list(data = data.matrix(binaryclass.train[,1:60]),
+      label = as.numeric(binaryclass.train[, 61]) - 1)
+    if (is.null(parset$objective)) parset$objective = "binary:logistic"
+    if (is.null(parset$verbose)) parset$verbose = 0L
+    if (is.null(parset$nround)) parset$nrounds = 1L
+    if (parset$objective == "multi:softprob")
+      parset$num_class = length(binaryclass.class.levs)
+    pars = c(pars, parset)
+    set.seed(getOption("mlr.debug.seed"))
+    model = do.call(xgboost::xgboost, pars)
+    pred = xgboost::predict(model, data.matrix(binaryclass.test[,1:60]))
+    if (parset$objective == "multi:softprob") {
+      y = matrix(pred, nrow = length(pred) / length(binaryclass.class.levs), ncol = length(binaryclass.class.levs), byrow = TRUE)
+      colnames(y) = binaryclass.class.levs
+      old.probs.list[[i]] = y
+    } else {
+      y = matrix(0, ncol = 2L, nrow = nrow(binaryclass.test))
+      colnames(y) = binaryclass.class.levs
+      y[, 1L] = 1 - pred
+      y[, 2L] = pred
+      old.probs.list[[i]] = y
+    }
   }
 
   testSimpleParsets("classif.xgboost", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
+
+  testProbParsets("classif.xgboost", binaryclass.df, binaryclass.target,
+    binaryclass.train.inds, old.probs.list, parset.probs.list)
 })
 
 test_that("xgboost works with different 'missing' arg vals", {
@@ -34,4 +69,6 @@ test_that("xgboost works with different 'missing' arg vals", {
   lrn = makeLearner("classif.xgboost", missing = NULL)
 })
 
-
+test_that("xgboost objective 'multi:softmax' does not work with predict.type = 'prob'", {
+  expect_error(train(makeLearner("classif.xgboost", predict.type = "prob", objective = "multi:softmax"), binaryclass.task))
+})
