@@ -45,14 +45,9 @@ test_that("classif_xgboost", {
     pred = xgboost::predict(model, data.matrix(binaryclass.test[,1:60]))
     if (parset$objective == "multi:softprob") {
       y = matrix(pred, nrow = length(pred) / length(binaryclass.class.levs), ncol = length(binaryclass.class.levs), byrow = TRUE)
-      colnames(y) = binaryclass.class.levs
-      old.probs.list[[i]] = y
+      old.probs.list[[i]] = y[,1]
     } else {
-      y = matrix(0, ncol = 2L, nrow = nrow(binaryclass.test))
-      colnames(y) = binaryclass.class.levs
-      y[, 1L] = 1 - pred
-      y[, 2L] = pred
-      old.probs.list[[i]] = y
+      old.probs.list[[i]] = 1 - pred
     }
   }
 
