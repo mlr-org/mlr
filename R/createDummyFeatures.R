@@ -17,7 +17,8 @@
 #' @family eda_and_preprocess
 createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
   assertChoice(method, choices = c("1-of-n", "reference"))
-  checkTargetPreproc(obj, target, cols)
+  if (!is.factor(obj))
+    checkTargetPreproc(obj, target, cols)
   UseMethod("createDummyFeatures")
 }
 
@@ -49,7 +50,11 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   #   col.list[[col]] = dummies[[col]]
   # }
   # do.call(cbind.data.frame, c(col.list, stringsAsFactors = FALSE))
-  cbind(dropNamed(obj,work.cols),dummies)
+  if (length(dummies) != 0) {
+    cbind(dropNamed(obj, work.cols),dummies)
+  } else {
+    obj
+  }
 }
 
 #' @export
