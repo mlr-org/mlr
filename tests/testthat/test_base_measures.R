@@ -51,6 +51,13 @@ test_that("measures", {
   expect_is(perf, "numeric")
 })
 
+test_that("classif measures do not produce integer overflow", {
+  tsk = oversample(subsetTask(pid.task), 1000)
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  ms = listMeasures("classif", create = TRUE)
+  r = holdout(lrn, tsk, measures = ms, show.info = FALSE)
+  expect_numeric(r$aggr, any.missing = FALSE)
+})
 
 test_that("measures with same id still work", {
   m1 = mmce
