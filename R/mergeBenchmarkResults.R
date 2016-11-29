@@ -2,7 +2,7 @@
 #' @description Combines the \code{\link{BenchmarkResult}} objects that were performed
 #'   with different learners and tasks.
 #'   This can be helpful if you, e.g. forgot to run one learner on the set of tasks you used.
-#' @param ... [\code{\link{BenchmarkResult}}]\cr
+#' @param bmrs [list of \code{\link{BenchmarkResult}}]\cr
 #'   \code{BenchmarkResult} objects that should be merged.
 #' @return \code{\link{BenchmarkResult}}
 #' @details Note that if you want to merge several \code{\link{BenchmarkResult}}
@@ -11,20 +11,33 @@
 #'   Furthermore all given objects must have been calculated on the same
 #'   set of measures.
 #' @export
-mergeBenchmarkResults = function(...) {
+mergeBenchmarkResults = function(bmrs) {
   # check all objects have the class BenchmarkResult
-  set = list(...)
-  assertList(set, types = "BenchmarkResult")
+  assertList(bmrs, types = "BenchmarkResult")
 
-  # check for duplicated and missing task-learner combinations
-  learner.names = unique(unlist(lapply(set, getBMRLearnerIds)))
-  task.names = unique(unlist(lapply(set, getBMRTaskIds)))
-  all.combos = expand.grid(task = task.names, learner = learner.names)
-  all.combos = apply(all.combos, 1L, collapse, " - ")
-  existing.combos = rbindlist(lapply(set, function(bmr) {
+  # check if all task types are equal
+  unique.tt = unique(unlist(lapply(bmrs, function(x) getBMRObjects(x, fun = getTaskType))))
+  if (length(unique.tt) != 1)
+    stopf("Different task types found: %s", collapse(unique.tt))
+
+  # check if resample descriptions are equal for each task
+  task.rin = peelList(lapply(bmrs, function(bmr) getBMRObjects(bmr, fun = function(x) getRRPredictions(x)$instance$desc)))
+  task.rin = groupNamedListByNames(task.rin)
+  unique.rin = vlapply(task.rin, function(x) length(unique(x)) == 1)
+  if (any(!unique.rin))
+    stopf("Different resample description found for tasks: %s", collapse(names(unique.rin)[!unique.rin]))
+
+  # get unique learner ids and task ids
+  learner.ids = unique(unlist(lapply(bmrs, getBMRLearnerIds)))
+  task.ids = unique(unlist(lapply(bmrs, getBMRTaskIds)))
+
+  # check for duplicated or missing task-learner combinations
+  all.combos = expand.grid(task.id = task.ids, learner.id = learner.ids)
+  all.combos = paste(all.combos$task.id, all.combos$learner.id, sep = " - ")
+  existing.combos = rbindlist(lapply(bmrs, function(bmr) {
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
   }))
-  existing.combos = apply(existing.combos, 1L, collapse, " - ")
+  existing.combos = paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
   if (!identical(sort(existing.combos), sort(all.combos))) {
     dupls = existing.combos[duplicated(existing.combos)]
     diff = setdiff(all.combos, existing.combos)
@@ -33,35 +46,17 @@ mergeBenchmarkResults = function(...) {
     stopf("The following task - learner combination(s) occur either multiple times or are missing: \n* %s\n", msg)
   }
 
-  # check if all task.desc are equal for each task and stop if there are tasks with more than 1 unique td
-  td = peelList(lapply(set, getBMRTaskDescriptions))
-  inequal.td = vlapply(td, function(x) length(unique(x)) > 1)
-  if (any(inequal.td))
-    stopf("Task descriptions not equal for tasks: %s", collapse(names(inequal.td)[!inequal.td]))
+  # get all learners from bmrs and merge
+  lrns.merged = peelList(lapply(bmrs, getBMRLearners))
+  lrns.merged = unique(lrns.merged) #lrns.merged[!duplicated(lrns.merged)]
 
-  # check if BMR use same measures
-  # measures = lapply(set, function(x) unique(getBMRMeasureIds(x)))
-  # intersect.measures = Reduce(intersect, measures)
-  # all.measures = unique(peelList(lapply(set, getBMRMeasures)))
-  # names(all.measures) = vcapply(all.measures, function(x) x$id)
-  # measures.merged = unname(all.measures[intersect.measures])
-  measures.merged = peelList(lapply(set, getBMRMeasures))
-  measures.merged = measures.merged[!duplicated(measures.merged)]
+  # get ResampleResults from bmrs and merge them by setting the correct structure
+  res.merged = peelList(extractSubList(bmrs, "results", simplify = FALSE))
+  res.merged = groupNamedListByNames(res.merged)
 
-  # get all actual learners and merge
-  lrns.merged = peelList(lapply(set, getBMRLearners))
-  lrns.merged = lrns.merged[!duplicated(lrns.merged)]
-
-  # get BMR results, merge and set correct structure
-  res.merged = peelList(extractSubList(set, "results", simplify = FALSE))
-  res.merged = lapply(task.names, function(x) {
-    ret = res.merged[names(res.merged) == x]
-    names(ret) = NULL
-    peelList(ret)
-  })
-  names(res.merged) = task.names
-  res.merged = res.merged[order(names(res.merged))]
-  # recompute missing measures
+    # get all unique measures used in the bmr objects and recompute missing measures in RR
+  measures.merged = peelList(lapply(bmrs, getBMRMeasures))
+  measures.merged = unique(measures.merged) # measures.merged[!duplicated(measures.merged)]
   for(i in 1:length(res.merged)) {
     for(j in 1:length(res.merged[[i]])) {
       res.merged[[i]][[j]] = addRRMeasure(res.merged[[i]][[j]], measures.merged)
@@ -77,4 +72,17 @@ mergeBenchmarkResults = function(...) {
 # simple wrapper for unlist() with recursive set to FALSE
 peelList = function(x) {
   unlist(x, recursive = FALSE)
+}
+
+groupNamedListByNames = function(xs, name = sort(unique(names(xs)))) {
+  assertList(xs, names = "named")
+  assertCharacter(name)
+
+  res = lapply(name, function(x) {
+    ret = xs[names(xs) == x]
+    names(ret) = NULL
+    peelList(ret)
+  })
+  names(res) = name
+  res[order(names(res))]
 }

@@ -4,10 +4,10 @@
 \alias{mergeBenchmarkResults}
 \title{Merge different BenchmarkResult objects.}
 \usage{
-mergeBenchmarkResults(...)
+mergeBenchmarkResults(bmrs)
 }
 \arguments{
-\item{...}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmrs}{[list of \code{\link{BenchmarkResult}}]\cr
 \code{BenchmarkResult} objects that should be merged.}
 }
 \value{
