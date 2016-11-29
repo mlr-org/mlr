@@ -701,7 +701,7 @@ measureWKAPPA = function(truth, response) {
   expected.mat = rowsum %*% t(colsum) 
 
   # get weights
-  class.values = as.numeric(levels(truth))
+  class.values = seq_along(levels(truth)) - 1L
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
   
   # calculate weighted kappa
