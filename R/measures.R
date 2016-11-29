@@ -1041,10 +1041,10 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE,
 #' @rdname measures
 #' @format none
 measureMCC = function(truth, response, negative, positive) {
-  tn = measureTN(truth, response, negative)
-  tp = measureTP(truth, response, positive)
-  fn = measureFN(truth, response, negative)
-  fp = measureFP(truth, response, positive)
+  tn = as.numeric(measureTN(truth, response, negative))
+  tp = as.numeric(measureTP(truth, response, positive))
+  fn = as.numeric(measureFN(truth, response, negative))
+  fp = as.numeric(measureFP(truth, response, positive))
   (tp * tn - fp * fn) /
     sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 }
