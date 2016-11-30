@@ -108,7 +108,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
   time2 = Sys.time()
-  runtime = as.numeric(difftime(time2, time1, "sec"))
+  runtime = as.numeric(difftime(time2, time1, units = "secs"))
   addClasses(
     mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
     "ResampleResult"
