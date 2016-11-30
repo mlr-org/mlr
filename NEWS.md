@@ -56,12 +56,16 @@
 * addRRMeasure
 * plotResiduals
 * getLearnerShortName
+* mergeBenchmarkResults
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 * Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 * Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
 * Renamed setId (now deprecated) to setLearnerId
+
+## functions - removed
+* mergeBenchmarkResultLearner, mergeBenchmarkResultTask
 
 ## learners - general
 * classif.ada: fixed some param problem with rpart.control params
