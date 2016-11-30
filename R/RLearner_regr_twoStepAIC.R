@@ -1,4 +1,4 @@
-selectForward2Step = function(d, target, muffle = FALSE) {
+selectForward2Step = function(d, target, muffle = FALSE, secondStepIters = 100) {
   feats = setdiff(colnames(d), target)
   f1 = reformulate(termlabels = "1", response = target)
   print(f1)
@@ -17,19 +17,22 @@ selectForward2Step = function(d, target, muffle = FALSE) {
   cc1 = coef(m1)
   #print(cc1)
   messagef("size of model: %i; runtime[s]: %g", length(cc1) - 1L, runtime)
-  #save2(model1 = m1, runtime = runtime, file = "steplm1.RData")
+  filename = paste("steplm1", "-",format(Sys.time(), "%b%d%H%M%S"),rnorm(1), ".RData" , sep="")
+  save2(model1 = m1, runtime = runtime, df = d, file = filename)
   f3 = sprintf("%s ~ (%s)^2 - 1", target, collapse(names(cc1)[-1], "+"))
   #print(f3)
   system.time({
     g({
-      m2 = MASS::stepAIC(m0, direction = "forward", scope = list(lower = f1, upper = f3), trace = -1, k = log(n))
+      m2 = MASS::stepAIC(m0, direction = "forward", scope = list(lower = f1, upper = f3), trace = -1, steps = secondStepIters, k = log(n))
     })
   })
   cc2 = coef(m2)
   #print(cc2)
   runtime = st[3L]
   messagef("size of model: %i; runtime[s]: %g", length(cc2) - 1L, runtime)
-  #save2(model2 = m2, runtime = runtime, file = "steplm2.RData")
+  #filename = paste("file_base", "-",format(Sys.time(), "%b%d%H%M%S"),rnorm(1), "-output.txt" , sep="")
+  filename = paste("steplm2", "-",format(Sys.time(), "%b%d%H%M%S"),rnorm(1), ".RData" , sep="")
+  save2(model2 = m2, runtime = runtime, df = d, file = filename)
   return(m2)
 }
 
@@ -39,6 +42,7 @@ makeRLearner.regr.twoStepAIC = function() {
     cl = "regr.twoStepAIC",
     package = "MASS",
     par.set = makeParamSet(
+      #makeLogicalLearnerParam(id = "secondStepIters", default = 100, tunable = TRUE),
       makeLogicalLearnerParam(id = "muffle", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors"),
@@ -51,8 +55,8 @@ makeRLearner.regr.twoStepAIC = function() {
 trainLearner.regr.twoStepAIC = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  
-  mmodel = selectForward2Step(d = d, target = getTaskTargetNames(.task), muffle = FALSE)
+  #Fixme: I don't know how to handle the default parameter here
+  mmodel = selectForward2Step(d = d, target = getTaskTargetNames(.task), muffle = FALSE, secondStepIters = 100)
   return(mmodel)
   #stats::lm(f, data = d, weights = .weights, ...)
 }
