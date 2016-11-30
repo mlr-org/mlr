@@ -14,15 +14,16 @@ mergeBenchmarkResults(bmrs)
 \code{\link{BenchmarkResult}}
 }
 \description{
-Combines the \code{\link{BenchmarkResult}} objects that were performed
-  with different learners and tasks.
-  This can be helpful if you, e.g. forgot to run one learner on the set of tasks you used.
+The function automatically combines a list of \code{\link{BenchmarkResult}}
+  objects into a single \code{\link{BenchmarkResult}} object as long as the full
+  crossproduct of all task-learner combinations are available.
 }
 \details{
 Note that if you want to merge several \code{\link{BenchmarkResult}}
-  objects you must ensure that all possible learner and task combinations will be
-  contained in the return object.\cr
-  Furthermore all given objects must have been calculated on the same
-  set of measures.
+  objects, you must ensure that all possible learner and task combinations will be
+  contained in the returned object. Otherwise, the user will be notified which
+  task-learner combinations are missing or duplicated.
+  When merging \code{\link{BenchmarkResult}} objects with different measures,
+  all missing measures will automatically be recomputed.
 }
 

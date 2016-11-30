@@ -1,15 +1,16 @@
 #' @title Merge different BenchmarkResult objects.
-#' @description Combines the \code{\link{BenchmarkResult}} objects that were performed
-#'   with different learners and tasks.
-#'   This can be helpful if you, e.g. forgot to run one learner on the set of tasks you used.
+#' @description The function automatically combines a list of \code{\link{BenchmarkResult}}
+#'   objects into a single \code{\link{BenchmarkResult}} object as long as the full
+#'   crossproduct of all task-learner combinations are available.
 #' @param bmrs [list of \code{\link{BenchmarkResult}}]\cr
 #'   \code{BenchmarkResult} objects that should be merged.
 #' @return \code{\link{BenchmarkResult}}
 #' @details Note that if you want to merge several \code{\link{BenchmarkResult}}
-#'   objects you must ensure that all possible learner and task combinations will be
-#'   contained in the return object.\cr
-#'   Furthermore all given objects must have been calculated on the same
-#'   set of measures.
+#'   objects, you must ensure that all possible learner and task combinations will be
+#'   contained in the returned object. Otherwise, the user will be notified which
+#'   task-learner combinations are missing or duplicated.
+#'   When merging \code{\link{BenchmarkResult}} objects with different measures,
+#'   all missing measures will automatically be recomputed.
 #' @export
 mergeBenchmarkResults = function(bmrs) {
   # check all objects have the class BenchmarkResult
@@ -33,11 +34,11 @@ mergeBenchmarkResults = function(bmrs) {
 
   # check for duplicated or missing task-learner combinations
   all.combos = expand.grid(task.id = task.ids, learner.id = learner.ids)
-  all.combos = paste(all.combos$task.id, all.combos$learner.id, sep = " - ")
+  all.combos = stri_paste(all.combos$task.id, all.combos$learner.id, sep = " - ")
   existing.combos = rbindlist(lapply(bmrs, function(bmr) {
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
   }))
-  existing.combos = paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
+  existing.combos = stri_paste(existing.combos$task.id, existing.combos$learner.id, sep = " - ")
   if (!identical(sort(existing.combos), sort(all.combos))) {
     dupls = existing.combos[duplicated(existing.combos)]
     diff = setdiff(all.combos, existing.combos)
@@ -54,7 +55,7 @@ mergeBenchmarkResults = function(bmrs) {
   res.merged = peelList(extractSubList(bmrs, "results", simplify = FALSE))
   res.merged = groupNamedListByNames(res.merged)
 
-    # get all unique measures used in the bmr objects and recompute missing measures in RR
+  # get all unique measures used in the bmr objects and recompute missing measures in RR
   measures.merged = peelList(lapply(bmrs, getBMRMeasures))
   measures.merged = unique(measures.merged) # measures.merged[!duplicated(measures.merged)]
   for(i in 1:length(res.merged)) {
