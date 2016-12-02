@@ -1289,64 +1289,64 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
-# measureTDROCKW = function(task, model, pred, feats, extra.args) {
+# tdAUCKW = makeMeasure(
+#   id = "tdAUCKW",
+#   name = "Time-dependent AUC estimated using kernel weighting method",
+#   properties = c("surv", "req.pred", "req.truth"),
+#   minimize = FALSE, best = 1, worst = 0,
+#   fun = measureTDAUCKW
+#   )
+
+# measureTDAUCKW = function(task, model, pred, feats, extra.args) {
 #   s = getPredictionTruth(pred)
 #   X = getPredictionResponse(pred)
 #   tdROC::tdROC(X = X, Y = s[,1L], delta = s[,2L], tau = 3)$AUC$value
 # }
 
-# tdrocKW = makeMeasure(
-#   id = "tdROCKW",
-#   name = "Time-dependent AUC estimated using kernel weighting method",
+# tdAUCKM = makeMeasure(
+#   id = "tdAUCKM",
+#   name = "Time-dependent AUC estimated using Kaplan Meier method",
 #   properties = c("surv", "req.pred", "req.truth"),
 #   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDROCKW
+#   fun = measureTDAUCKM
 #   )
 
-# measureTDROCKM = function(task, model, pred, feats, extra.args) {
+# measureTDAUCKM = function(task, model, pred, feats, extra.args) {
 #   s = getPredictionTruth(pred)
 #   y = getPredictionResponse(pred)
 #   survivalROC::survivalROC(Stime = s[,1L], status = s[,2L], marker = y,
 #     predict.time = 3, method = "KM")$AUC
 # }
 
-# tdrocKM = makeMeasure(
-#   id = "tdROCKM",
-#   name = "Time-dependent AUC estimated using Kaplan Meier method",
+# tdAUCNNE = makeMeasure(
+#   id = "tdAUCNNE",
+#   name = "Time-dependent AUC estimated using nearest neighbor method",
 #   properties = c("surv", "req.pred", "req.truth"),
 #   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDROCKM
+#   fun = measureTDAUCNNE
 #   )
 
-# measureTDROCNNE = function(task, model, pred, feats, extra.args) {
+# measureTDAUCNNE = function(task, model, pred, feats, extra.args) {
 #   s = getPredictionTruth(pred)
 #   y = getPredictionResponse(pred)
 #   survivalROC::survivalROC.C(Stime = s[,1L], status = s[,2L], marker = y,
 #     predict.time = 3, span = 0.1)$AUC
 # }
 
-# tdrocNNE = makeMeasure(
-#   id = "tdROCNNE",
-#   name = "Time-dependent AUC estimated using nearest neighbor method",
+# tdAUCIPCW = makeMeasure(
+#   id = "tdAUCIPCW",
+#   name = "Time-dependent AUC estimated using inverse probability of censoring weighting",
 #   properties = c("surv", "req.pred", "req.truth"),
 #   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDROCNNE
-#   )
+#   fun = measureTDAUCIPCW
+# )
 
-# measureTDROCIPCW = function(task, model, pred, feats, extra.args) {
+# measureTDAUCIPCW = function(task, model, pred, feats, extra.args) {
 #   s = getPredictionTruth(pred)
 #   y = getPredictionResponse(pred)
 #   timeROC::timeROC(T = s[,1L], delta = s[,2L], marker = y, times = 3,
 #     cause = 1L)$AUC[[2L]]
 # }
-
-# tdrocIPCW = makeMeasure(
-#   id = "tdROCIPCW",
-#   name = "Time-dependent AUC estimated using inverse probability of censoring weighting",
-#   properties = c("surv", "req.pred", "req.truth"),
-#   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDROCIPCW
-# )
 
 ###############################################################################
 ### cost-sensitive ###
