@@ -1061,6 +1061,9 @@ f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
+#' @export measureF1
+#' @rdname measures
+#' @format none
 measureF1 = function(truth, response, positive) {
   2 * measureTP(truth, response, positive) /
     (sum(truth == positive) + sum(response == positive))
@@ -1289,64 +1292,74 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
-# tdAUCKW = makeMeasure(
-#   id = "tdAUCKW",
-#   name = "Time-dependent AUC estimated using kernel weighting method",
-#   properties = c("surv", "req.pred", "req.truth"),
-#   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDAUCKW
-#   )
+td.auc.kw = makeMeasure(
+  id = "td.auc.kw",
+  name = "Time-dependent AUC estimated using kernel weighting method",
+  properties = c("surv", "req.pred", "req.truth"),
+  minimize = FALSE, best = 1, worst = 0,
+  fun = function(task, model, pred, feats, extra.args) {
+    measureTDAUCKW(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
+  }
+)
 
-# measureTDAUCKW = function(task, model, pred, feats, extra.args) {
-#   s = getPredictionTruth(pred)
-#   X = getPredictionResponse(pred)
-#   tdROC::tdROC(X = X, Y = s[,1L], delta = s[,2L], tau = 3)$AUC$value
-# }
+measureTDAUCKW = function(truth, response, max.time) {
+  if(is.null(max.time))
+    max.time = max(truth[,1L])
+  tdROC::tdROC(X = response, Y = truth[,1L], delta = truth[,2L], tau = max.time)$AUC$value
+}
 
-# tdAUCKM = makeMeasure(
-#   id = "tdAUCKM",
-#   name = "Time-dependent AUC estimated using Kaplan Meier method",
-#   properties = c("surv", "req.pred", "req.truth"),
-#   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDAUCKM
-#   )
 
-# measureTDAUCKM = function(task, model, pred, feats, extra.args) {
-#   s = getPredictionTruth(pred)
-#   y = getPredictionResponse(pred)
-#   survivalROC::survivalROC(Stime = s[,1L], status = s[,2L], marker = y,
-#     predict.time = 3, method = "KM")$AUC
-# }
+td.auc.km = makeMeasure(
+  id = "td.auc.km",
+  name = "Time-dependent AUC estimated using Kaplan Meier method",
+  properties = c("surv", "req.pred", "req.truth"),
+  minimize = FALSE, best = 1, worst = 0,
+  fun = function(task, model, pred, feats, extra.args) {
+    measureTDAUCKM(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
+  }
+)
 
-# tdAUCNNE = makeMeasure(
-#   id = "tdAUCNNE",
-#   name = "Time-dependent AUC estimated using nearest neighbor method",
-#   properties = c("surv", "req.pred", "req.truth"),
-#   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDAUCNNE
-#   )
+measureTDAUCKM = function(truth, response, max.time) {
+  if(is.null(max.time))
+    max.time = max(truth[,1L])
+  survivalROC::survivalROC(Stime = truth[,1L], status = truth[,2L], marker = response,
+                           predict.time = max(truth[,1L]), method = "KM")$AUC
+}
 
-# measureTDAUCNNE = function(task, model, pred, feats, extra.args) {
-#   s = getPredictionTruth(pred)
-#   y = getPredictionResponse(pred)
-#   survivalROC::survivalROC.C(Stime = s[,1L], status = s[,2L], marker = y,
-#     predict.time = 3, span = 0.1)$AUC
-# }
+td.auc.nne = makeMeasure(
+  id = "td.auc.nne",
+  name = "Time-dependent AUC estimated using nearest neighbor method",
+  properties = c("surv", "req.pred", "req.truth"),
+  minimize = FALSE, best = 1, worst = 0,
+  fun = function(task, model, pred, feats, extra.args) {
+    measureTDAUCNNE(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
+  }
+)
 
-# tdAUCIPCW = makeMeasure(
-#   id = "tdAUCIPCW",
-#   name = "Time-dependent AUC estimated using inverse probability of censoring weighting",
-#   properties = c("surv", "req.pred", "req.truth"),
-#   minimize = FALSE, best = 1, worst = 0,
-#   fun = measureTDAUCIPCW
-# )
+measureTDAUCNNE = function(truth, response, max.time) {
+  if(is.null(max.time))
+    max.time = max(truth[,1L])
+  survivalROC::survivalROC.C(Stime = truth[,1L], status = truth[,2L], marker = response,
+                             predict.time = max(truth[,1L]), span = 0.1)$AUC
+}
 
-# measureTDAUCIPCW = function(task, model, pred, feats, extra.args) {
-#   s = getPredictionTruth(pred)
-#   y = getPredictionResponse(pred)
-#   timeROC::timeROC(T = s[,1L], delta = s[,2L], marker = y, times = 3,
-#     cause = 1L)$AUC[[2L]]
-# }
+td.auc.ipcw = makeMeasure(
+  id = "td.auc.ipcw",
+  name = "Time-dependent AUC estimated using inverse probability of censoring weighting",
+  properties = c("surv", "req.pred", "req.truth"),
+  minimize = FALSE, best = 1, worst = 0,
+  fun = function(task, model, pred, feats, extra.args) {
+    measureTDAUCIPCW(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
+  }
+)
+
+measureTDAUCIPCW = function(truth, response, max.time) {
+  if(is.null(max.time))
+    max.time = max(truth[,1L])
+  # biggest time value has to be adapted as it does not provide results otherwise
+  timeROC::timeROC(T = truth[,1L], delta = truth[,2L], marker = response, times = max(truth[,1L])-10^(-13), 
+                   cause = 1L)$AUC[[2L]] 
+}
 
 ###############################################################################
 ### cost-sensitive ###
