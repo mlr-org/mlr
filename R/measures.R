@@ -1323,7 +1323,7 @@ measureTDAUCKM = function(truth, response, max.time) {
   if(is.null(max.time))
     max.time = max(truth[,1L])
   survivalROC::survivalROC(Stime = truth[,1L], status = truth[,2L], marker = response,
-                           predict.time = max(truth[,1L]), method = "KM")$AUC
+    predict.time = max(truth[,1L]), method = "KM")$AUC
 }
 
 td.auc.nne = makeMeasure(
@@ -1340,7 +1340,7 @@ measureTDAUCNNE = function(truth, response, max.time) {
   if(is.null(max.time))
     max.time = max(truth[,1L])
   survivalROC::survivalROC.C(Stime = truth[,1L], status = truth[,2L], marker = response,
-                             predict.time = max(truth[,1L]), span = 0.1)$AUC
+    predict.time = max(truth[,1L]), span = 0.1)$AUC
 }
 
 td.auc.ipcw = makeMeasure(
@@ -1358,7 +1358,7 @@ measureTDAUCIPCW = function(truth, response, max.time) {
     max.time = max(truth[,1L])
   # biggest time value has to be adapted as it does not provide results otherwise
   timeROC::timeROC(T = truth[,1L], delta = truth[,2L], marker = response, times = max(truth[,1L])-10^(-13), 
-                   cause = 1L)$AUC[[2L]] 
+    cause = 1L)$AUC[[2L]] 
 }
 
 ###############################################################################
