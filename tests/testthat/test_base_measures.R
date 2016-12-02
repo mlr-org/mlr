@@ -51,6 +51,13 @@ test_that("measures", {
   expect_is(perf, "numeric")
 })
 
+test_that("classif measures do not produce integer overflow", {
+  tsk = oversample(subsetTask(pid.task), 1000)
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  ms = listMeasures("classif", create = TRUE)
+  r = holdout(lrn, tsk, measures = ms, show.info = FALSE)
+  expect_numeric(r$aggr, any.missing = FALSE)
+})
 
 test_that("measures with same id still work", {
   m1 = mmce
@@ -424,6 +431,11 @@ test_that("check measure calculations", {
   wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
   expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
   expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
+  tar.classif2 = tar.classif
+  pred.art.classif2 = pred.art.classif
+  levels(tar.classif2) = as.numeric(levels(tar.classif))^2
+  levels(pred.art.classif2) = as.numeric(levels(pred.art.classif))^2
+  expect_equal(measureWKAPPA(tar.classif2, pred.art.classif2), wkappa.test)
 
   #test binaryclass measures
 

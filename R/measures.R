@@ -701,7 +701,7 @@ measureWKAPPA = function(truth, response) {
   expected.mat = rowsum %*% t(colsum) 
 
   # get weights
-  class.values = as.numeric(levels(truth))
+  class.values = seq_along(levels(truth)) - 1L
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
   
   # calculate weighted kappa
@@ -1041,10 +1041,10 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE,
 #' @rdname measures
 #' @format none
 measureMCC = function(truth, response, negative, positive) {
-  tn = measureTN(truth, response, negative)
-  tp = measureTP(truth, response, positive)
-  fn = measureFN(truth, response, negative)
-  fp = measureFP(truth, response, positive)
+  tn = as.numeric(measureTN(truth, response, negative))
+  tp = as.numeric(measureTP(truth, response, positive))
+  fn = as.numeric(measureFN(truth, response, negative))
+  fp = as.numeric(measureFP(truth, response, positive))
   (tp * tn - fp * fn) /
     sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 }
