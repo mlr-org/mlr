@@ -431,6 +431,11 @@ test_that("check measure calculations", {
   wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
   expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
   expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
+  tar.classif2 = tar.classif
+  pred.art.classif2 = pred.art.classif
+  levels(tar.classif2) = as.numeric(levels(tar.classif))^2
+  levels(pred.art.classif2) = as.numeric(levels(pred.art.classif))^2
+  expect_equal(measureWKAPPA(tar.classif2, pred.art.classif2), wkappa.test)
 
   #test binaryclass measures
 
