@@ -481,7 +481,7 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -661,15 +661,15 @@ measureKAPPA = function(truth, response) {
   # get confusion matrix
   conf.mat = table(truth, response)
   conf.mat = conf.mat / sum(conf.mat)
-  
-  # observed agreement frequency 
+
+  # observed agreement frequency
   p0 = sum(diag(conf.mat))
 
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
   pe = sum(rowsum * colsum) / sum(conf.mat)^2
-  
+
   # calculate kappa
   1 - (1 - p0) / (1 - pe)
 }
@@ -698,12 +698,12 @@ measureWKAPPA = function(truth, response) {
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
-  expected.mat = rowsum %*% t(colsum) 
+  expected.mat = rowsum %*% t(colsum)
 
   # get weights
   class.values = as.numeric(levels(truth))
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
-  
+
   # calculate weighted kappa
   1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
@@ -1288,6 +1288,65 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
     Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
   }
 )
+
+# measureTDROCKW = function(task, model, pred, feats, extra.args) {
+#   s = getPredictionTruth(pred)
+#   X = getPredictionResponse(pred)
+#   tdROC::tdROC(X = X, Y = s[,1L], delta = s[,2L], tau = 3)$AUC$value
+# }
+
+# tdrocKW = makeMeasure(
+#   id = "tdROCKW",
+#   name = "Time-dependent AUC estimated using kernel weighting method",
+#   properties = c("surv", "req.pred", "req.truth"),
+#   minimize = FALSE, best = 1, worst = 0,
+#   fun = measureTDROCKW
+#   )
+
+# measureTDROCKM = function(task, model, pred, feats, extra.args) {
+#   s = getPredictionTruth(pred)
+#   y = getPredictionResponse(pred)
+#   survivalROC::survivalROC(Stime = s[,1L], status = s[,2L], marker = y,
+#     predict.time = 3, method = "KM")$AUC
+# }
+
+# tdrocKM = makeMeasure(
+#   id = "tdROCKM",
+#   name = "Time-dependent AUC estimated using Kaplan Meier method",
+#   properties = c("surv", "req.pred", "req.truth"),
+#   minimize = FALSE, best = 1, worst = 0,
+#   fun = measureTDROCKM
+#   )
+
+# measureTDROCNNE = function(task, model, pred, feats, extra.args) {
+#   s = getPredictionTruth(pred)
+#   y = getPredictionResponse(pred)
+#   survivalROC::survivalROC.C(Stime = s[,1L], status = s[,2L], marker = y,
+#     predict.time = 3, span = 0.1)$AUC
+# }
+
+# tdrocNNE = makeMeasure(
+#   id = "tdROCNNE",
+#   name = "Time-dependent AUC estimated using nearest neighbor method",
+#   properties = c("surv", "req.pred", "req.truth"),
+#   minimize = FALSE, best = 1, worst = 0,
+#   fun = measureTDROCNNE
+#   )
+
+# measureTDROCIPCW = function(task, model, pred, feats, extra.args) {
+#   s = getPredictionTruth(pred)
+#   y = getPredictionResponse(pred)
+#   timeROC::timeROC(T = s[,1L], delta = s[,2L], marker = y, times = 3,
+#     cause = 1L)$AUC[[2L]]
+# }
+
+# tdrocIPCW = makeMeasure(
+#   id = "tdROCIPCW",
+#   name = "Time-dependent AUC estimated using inverse probability of censoring weighting",
+#   properties = c("surv", "req.pred", "req.truth"),
+#   minimize = FALSE, best = 1, worst = 0,
+#   fun = measureTDROCIPCW
+# )
 
 ###############################################################################
 ### cost-sensitive ###
