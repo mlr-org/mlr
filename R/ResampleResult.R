@@ -1,6 +1,5 @@
 #' @title ResampleResult object.
-#' @name ResampleResult
-#' @rdname ResampleResult
+#'
 #' @description
 #' A resample result is created by \code{\link{resample}} and
 #' contains the following object members:
@@ -47,6 +46,8 @@
 #' }
 #' The print method of this object gives a short overview, including
 #' task and learner ids, aggregated measures and runtime for the resampling.
+#' @name ResampleResult
+#' @rdname ResampleResult
 #' @family resample
 NULL
 
