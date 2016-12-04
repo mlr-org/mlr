@@ -508,7 +508,7 @@ makeFilter(
         an[i, ] <- Rfast::anovas(X[j, i, drop = FALSE], y[j]) 
       }
     }
-    setNames(y[, "stat"], getTaskFeatureNames(task))
+    setNames(an[, "F value"], getTaskFeatureNames(task))
   }
 )
 
