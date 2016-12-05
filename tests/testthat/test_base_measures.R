@@ -16,6 +16,7 @@ test_that("measures", {
   mod = train(lrn, task = ct, subset = binaryclass.train.inds)
   pred = predict(mod, task = ct, subset = binaryclass.test.inds)
   perf = performance(pred, measures = ms)
+  expect_numeric(perf, any.missing = FALSE)
 
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
@@ -43,12 +44,28 @@ test_that("measures", {
   expect_is(perf, "numeric")
 
   # test survival measure
-  ms = list(cindex)
   lrn = makeLearner("surv.coxph")
-  mod = train(lrn, task = surv.task, subset = surv.train.inds)
-  pred = predict(mod, task = surv.task, subset = surv.test.inds)
-  perf = performance(pred, measures = ms)
-  expect_is(perf, "numeric")
+  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw)) {
+    mod = train(lrn, task = surv.task, subset = surv.train.inds)
+    pred = predict(mod, task = surv.task, subset = surv.test.inds)
+    perf = performance(pred, measures = ms)
+    r = range(c(ms$worst, ms$best))
+    expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+  }
+
+  lrn = makeLearner("surv.coxph")
+  data = data.frame(time = rexp(100), status = 1)
+  data$x = data$time + runif(100, min = -0.1, max = 0.1)
+  task = makeSurvTask(data = data, target = c("time", "status"))
+  train.inds = 1:50
+  test.inds = 51:100
+  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw)) {
+    mod = train(lrn, task = task, subset = train.inds)
+    pred = predict(mod, task = task, subset = test.inds)
+    perf = performance(pred, measures = ms)
+    r = range(c(ms$worst, ms$best))
+    expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+  }
 })
 
 

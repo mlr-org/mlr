@@ -140,6 +140,7 @@ Suggests:
     sparsediscrim,
     sparseLDA,
     stepPlr,
+    survAUC,
     survivalROC,
     SwarmSVM,
     svglite,

@@ -1,27 +1,27 @@
 context("learners_all_surv")
 
 test_that("learners work: surv ", {
-  
   # settings to make learners faster and deal with small sample size
   hyperpars = list(
-    surv.cforest = list(mtry = 1L)
+    surv.cforest = list(mtry = 1L),
+    surv.ranger = list(num.trees = 50),
+    surv.randomForestSRC = list(ntree = 50)
   )
-  
+
   # normal survival analysis
-  sub.task = subsetTask(surv.task, subset = c(1:70),
-    features = getTaskFeatureNames(surv.task)[c(1,2)])
+  sub.task = subsetTask(surv.task, subset = c(1:70), features = getTaskFeatureNames(surv.task)[c(1,2)])
   lrns = mylist("surv", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testThatLearnerCanTrainPredict, task = sub.task, hyperpars = hyperpars)
-  
+
   # survival analysis with factors
   lrns = mylist("surv", properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = sub.task, hyperpars = hyperpars)
-  
+
   # survival analysis with ordered factors
   lrns = mylist("surv", properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = sub.task, hyperpars = hyperpars)
-  
+
   # surv with weights
   # normal size of surv.task necessary otherwise cvglmnet does not converge
   lrns = mylist("surv", properties = "weights", create = TRUE)
@@ -37,6 +37,6 @@ test_that("learners work: surv ", {
 
   # survival variable importance
   lrns = mylist("surv", properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesMissings, task = surv.task, hyperpars = hyperpars) 
+  lapply(lrns, testThatLearnerHandlesMissings, task = surv.task, hyperpars = hyperpars)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = surv.task, hyperpars = hyperpars)
 })

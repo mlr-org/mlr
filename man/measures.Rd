@@ -12,6 +12,7 @@
 \alias{brier}
 \alias{brier.scaled}
 \alias{cindex}
+\alias{cindex.uno}
 \alias{db}
 \alias{dunn}
 \alias{expvar}
@@ -42,6 +43,7 @@
 \alias{measureBrier}
 \alias{measureBrierScaled}
 \alias{measureEXPVAR}
+\alias{measureF1}
 \alias{measureFDR}
 \alias{measureFN}
 \alias{measureFNR}
@@ -111,6 +113,10 @@
 \alias{silhouette}
 \alias{sse}
 \alias{ssr}
+\alias{td.auc.ipcw}
+\alias{td.auc.km}
+\alias{td.auc.kw}
+\alias{td.auc.nne}
 \alias{timeboth}
 \alias{timepredict}
 \alias{timetrain}
@@ -306,6 +312,8 @@ measureMCC(truth, response, negative, positive)
 
 f1
 
+measureF1(truth, response, positive)
+
 gmean
 
 measureGMEAN(truth, response, negative, positive)
@@ -339,6 +347,16 @@ multilabel.tpr
 measureMultilabelTPR(truth, response)
 
 cindex
+
+cindex.uno
+
+td.auc.kw
+
+td.auc.km
+
+td.auc.nne
+
+td.auc.ipcw
 
 meancosts
 
