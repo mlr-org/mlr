@@ -5,7 +5,7 @@
 \title{Generate dummy variables for factor features.}
 \usage{
 createDummyFeatures(obj, target = character(0L), method = "1-of-n",
-  cols = NULL)
+  cols = NULL, prefix = NULL)
 }
 \arguments{
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr

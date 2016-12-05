@@ -15,9 +15,9 @@
 #' @template ret_taskdf
 #' @export
 #' @family eda_and_preprocess
-createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", cols = NULL, prefix = NULL) {
   assertChoice(method, choices = c("1-of-n", "reference"))
-  if (!is.factor(obj))
+  if (!is.factor(obj) && !is.character(obj))
     checkTargetPreproc(obj, target, cols)
   UseMethod("createDummyFeatures")
 }
@@ -39,10 +39,10 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   on.exit(options(na.action = old.na.action))
   options(na.action = "na.pass")
 
-  colname = colnames(obj[work.cols])
+  prefix = colnames(obj[work.cols])
   dfcol = obj[,work.cols]
 
-  dummies = lapply(obj[work.cols], createDummyFeatures.factor, method = method, colname = colname)
+  dummies = lapply(obj[work.cols], createDummyFeatures, method = method, prefix = prefix)
   if (length(dummies) != 0) {
     cbind(dropNamed(obj, work.cols),dummies)
   } else {
@@ -59,21 +59,29 @@ createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-
 
 
 #' @export
-createDummyFeatures.factor = function(obj, method = "1-of-n", colname = "factor") {
+createDummyFeatures.factor = function(obj, method = "1-of-n", prefix = NULL) {
+
+  if (is.null(prefix))
+    prefix = "factor"
+
   dcol = as.data.frame(obj)
-  colnames(dcol) = colname
+  colnames(dcol) = prefix
   if (method == "1-of-n") {
-    form = stri_paste("~", colname, "-1")
+    form = stri_paste("~", prefix, "-1")
     res = model.matrix(as.formula(form), data = dcol)
     colnames(res) = levels(obj)
   } else {
-    form = stri_paste("~", colname, "-1")
+    form = stri_paste("~", prefix, "-1")
     res = model.matrix(as.formula(form), data = dcol)[, -1, drop = FALSE]
     colnames(res) = tail(levels(obj), -1)
   }
   if (ncol(res) == 1) {
-    colnames(res) = stri_paste(colname, colnames(res), sep = ".")
+    colnames(res) = stri_paste(prefix, colnames(res), sep = ".")
   }
   as.data.frame(res)
 }
 
+#' @export
+createDummyFeatures.character = function(obj, method = "1-of-n", prefix = NULL) {
+  createDummyFeatures(as.factor(obj), method = method, prefix = prefix)
+}
