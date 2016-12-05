@@ -53,7 +53,7 @@ makeRLearner.surv.randomForestSRC = function() {
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   mod = randomForestSRC::rfsrc(f, data = getTaskData(.task, subset = .subset), case.wt = .weights, ...)
-  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset)))
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export

@@ -30,7 +30,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
   } else  {
     mod = survival::coxph(formula = f, data = data, weights = .weights, ...)
   }
-  attachTrainingInfo(mod, getTaskTargets(.task, .subset))
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export

@@ -25,6 +25,7 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
+\alias{iauc.uno}
 \alias{kappa}
 \alias{logloss}
 \alias{lsr}
@@ -349,6 +350,8 @@ measureMultilabelTPR(truth, response)
 cindex
 
 cindex.uno
+
+iauc.uno
 
 td.auc.kw
 

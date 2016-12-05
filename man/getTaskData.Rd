@@ -30,7 +30,7 @@ If not, a single data.frame including the target columns is returned, otherwise 
 with the input data.frame and an extra vector or data.frame for the targets.
 Default is \code{FALSE}.}
 
-\item{recode.target}{[\code{character(1)}]\cr
+\item{recode.target}{[\code{character(1)}] \cr
 Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 In the two latter cases the target vector is converted into a numeric vector.

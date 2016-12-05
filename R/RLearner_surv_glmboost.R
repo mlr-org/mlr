@@ -38,7 +38,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
     Gehan = mboost::Gehan(),
     custom.family = custom.family.definition
     )
-  info = list(surv.train = getTaskTargets(.task, .subset))
+  info = list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens"))
   if (use.formula) {
     f = getTaskFormula(.task)
     model = if (is.null(.weights)) {

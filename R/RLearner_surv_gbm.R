@@ -33,7 +33,7 @@ trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
   } else  {
     mod = gbm::gbm(f, data = d, weights = .weights, distribution = "coxph", ...)
   }
-  attachTrainingInfo(mod, getTaskTargets(.task, .subset))
+  attachTrainingInfo(mod, getTaskTargets(.task, .subset, recode.target = "rcens"))
 }
 
 #' @export

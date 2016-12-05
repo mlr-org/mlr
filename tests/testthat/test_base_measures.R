@@ -45,10 +45,10 @@ test_that("measures", {
 
   # test survival measure
   lrn = makeLearner("surv.coxph")
-  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw)) {
-    mod = train(lrn, task = surv.task, subset = surv.train.inds)
-    pred = predict(mod, task = surv.task, subset = surv.test.inds)
-    perf = performance(pred, measures = ms)
+  mod = train(lrn, task = surv.task, subset = surv.train.inds)
+  pred = predict(mod, task = surv.task, subset = surv.test.inds)
+  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw, iauc.uno)) {
+    perf = performance(pred, measures = ms, model = mod, task = surv.task)
     r = range(c(ms$worst, ms$best))
     expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
   }
@@ -59,10 +59,10 @@ test_that("measures", {
   task = makeSurvTask(data = data, target = c("time", "status"))
   train.inds = 1:50
   test.inds = 51:100
-  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw)) {
-    mod = train(lrn, task = task, subset = train.inds)
-    pred = predict(mod, task = task, subset = test.inds)
-    perf = performance(pred, measures = ms)
+  mod = train(lrn, task = task, subset = train.inds)
+  pred = predict(mod, task = task, subset = test.inds)
+  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw, iauc.uno)) {
+    perf = performance(pred, measures = ms, model = mod, task = task)
     r = range(c(ms$worst, ms$best))
     expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
   }

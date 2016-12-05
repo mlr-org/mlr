@@ -25,7 +25,7 @@ makeRLearner.surv.CoxBoost = function() {
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, unpen.index = NULL, ...) {
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
   info = list(fix.data.info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE),
-    surv.train = getTaskTargets(.task, .subset))
+    surv.train = getTaskTargets(.task, .subset, recode.target = "rcens"))
   data$data = as.matrix(fixDataForLearner(data$data, info$fix.data.info))
 
   if (is.null(penalty))

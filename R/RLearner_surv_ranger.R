@@ -39,7 +39,7 @@ trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
   tn = getTaskTargetNames(.task)
   mod = ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
     status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
-  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset)))
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export

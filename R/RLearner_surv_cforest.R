@@ -47,7 +47,7 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
     minsplit, minbucket, stump, nresample, maxsurrogate,
     maxdepth, savesplitstats)
   mod = party::cforest(f, data = d, controls = ctrl, weights = .weights, ...)
-  attachTrainingInfo(mod, getTaskTargets(.task, .subset))
+  attachTrainingInfo(mod, getTaskTargets(.task, .subset, recode.target = "rcens"))
 }
 
 #' @export

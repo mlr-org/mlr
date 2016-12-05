@@ -1294,7 +1294,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
-  properties = c("surv", "req.pred", "req.truth"),
+  properties = c("surv", "req.pred", "req.truth", "req.model"),
   name = "Uno's Concordance index",
   note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1303,6 +1303,25 @@ cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 
     if (anyMissing(y))
       return(NA_real_)
     survAUC::UnoC(getTrainingInfo(model)$surv.train, getPredictionTruth(pred), y)
+  }
+)
+
+
+#' @export iauc.uno
+#' @rdname measures
+#' @format none
+iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
+  name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
+  note = "To set an upper time limit, set argument max.time.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    times = seq(from = 0, to = max.time, length.out = 1000)
+    survAUC::AUC.uno(getTrainingInfo(model)$surv.train, getPredictionTruth(pred), times = times, lpnew = y)$iauc
   }
 )
 

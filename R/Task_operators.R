@@ -181,12 +181,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #'
 #' @template arg_task
 #' @template arg_subset
-#' @param recode.target [\code{character(1)}] \cr
-#'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
-#'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as +1 and the negative class either as 0 or -1.
-#'   Default is \dQuote{no}.
+#' @template arg_recode_target
 #' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
 #'   of logical columns for multilabel.
 #' @family task
@@ -227,17 +222,7 @@ getTaskTargets.CostSensTask = function(task, subset, recode.target = "no") {
 #'   If not, a single data.frame including the target columns is returned, otherwise a list
 #'   with the input data.frame and an extra vector or data.frame for the targets.
 #'   Default is \code{FALSE}.
-#' @param recode.target [\code{character(1)}]\cr
-#'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
-#'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
-#'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
-#'   \dQuote{drop.levels} will remove empty factor levels in the target column.
-#'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
-#'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
-#'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
-#'   See \code{\link[survival]{Surv}} for the format specification.
-#'   Default for both binary classification and survival is \dQuote{no} (do nothing).
+#' @template arg_recode_target
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export

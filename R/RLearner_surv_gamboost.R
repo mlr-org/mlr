@@ -47,7 +47,7 @@ trainLearner.surv.gamboost = function(.learner, .task, .subset, .weights = NULL,
   } else  {
     model = mboost::gamboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
   }
-  attachTrainingInfo(model, list(surv.train = getTaskTargets(.task, .subset)))
+  attachTrainingInfo(model, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export

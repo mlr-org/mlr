@@ -34,7 +34,7 @@ trainLearner.surv.rpart = function(.learner, .task, .subset, .weights = NULL, ..
   } else  {
     rpart::rpart(f, data = d, weights = .weights, method = "exp", ...)
   }
-  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset)))
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export
