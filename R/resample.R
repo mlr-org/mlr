@@ -132,8 +132,15 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pred.train = NULL
   pred.test = NULL
   pp = rin$desc$predict
+  train.task = task
   if (pp == "train") {
-    pred.train = predict(m, task, subset = train.i)
+    lm = getLearnerModel(m)
+    if ("BaseWrapper" %in% class(learner) && !is.null(lm$train.task)) {
+      # the learner was wrapped in a sampling wrapper
+      train.task = lm$train.task
+      train.i = lm$subset
+    }
+    pred.train = predict(m, train.task, subset = train.i)
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
@@ -143,10 +150,17 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
   } else { # "both"
-    pred.train = predict(m, task, subset = train.i)
+    lm = getLearnerModel(m)
+    if ("BaseWrapper" %in% class(learner) && !is.null(lm$train.task)) {
+      # the learner was wrapped in a sampling wrapper
+      train.task = lm$train.task
+      train.i = lm$subset
+    }
+    pred.train = predict(m, train.task, subset = train.i)
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
+
     pred.test = predict(m, task, subset = test.i)
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
