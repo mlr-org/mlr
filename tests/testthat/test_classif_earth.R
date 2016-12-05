@@ -33,7 +33,7 @@ test_that("classif_earth can do binary classification", {
 })
 
 test_that("classif_earth can do multiclass classification", {
-  requirePackagesOrSkip("earth", default.method = "load")
+  requirePackagesOrSkip("earth", default.method = "attach")
 
   parset.list = list(
     list(),
