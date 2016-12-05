@@ -43,13 +43,6 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   dfcol = obj[,work.cols]
 
   dummies = lapply(obj[work.cols], createDummyFeatures.factor, method = method, colname = colname)
-  #some effort to preserve order
-  # names(dummies) = work.cols
-  # col.list = convertColsToList(obj, factors.as.char = FALSE)
-  # for (col in work.cols) {
-  #   col.list[[col]] = dummies[[col]]
-  # }
-  # do.call(cbind.data.frame, c(col.list, stringsAsFactors = FALSE))
   if (length(dummies) != 0) {
     cbind(dropNamed(obj, work.cols),dummies)
   } else {
@@ -66,7 +59,7 @@ createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-
 
 
 #' @export
-createDummyFeatures.factor = function (obj, method = "1-of-n", colname = "factor") {
+createDummyFeatures.factor = function(obj, method = "1-of-n", colname = "factor") {
   dcol = as.data.frame(obj)
   colnames(dcol) = colname
   if (method == "1-of-n") {
