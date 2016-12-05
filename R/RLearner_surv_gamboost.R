@@ -39,14 +39,15 @@ trainLearner.surv.gamboost = function(.learner, .task, .subset, .weights = NULL,
     Gehan = mboost::Gehan(),
     custom.family = custom.family.definition
   )
-  
-    f = getTaskFormula(.task)
-    data = getTaskData(.task, subset = .subset, recode.target = "rcens")
-    if (is.null(.weights)) {
-      model = mboost::gamboost(f, data = data, control = ctrl, family = family, ...)
-    } else  {
-      model = mboost::gamboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
-    }
+
+  f = getTaskFormula(.task)
+  data = getTaskData(.task, subset = .subset, recode.target = "rcens")
+  if (is.null(.weights)) {
+    model = mboost::gamboost(f, data = data, control = ctrl, family = family, ...)
+  } else  {
+    model = mboost::gamboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
+  }
+  attachTrainingInfo(model, list(surv.train = getTaskTargets(.task, .subset)))
 }
 
 #' @export

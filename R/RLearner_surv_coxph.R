@@ -30,8 +30,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
   } else  {
     mod = survival::coxph(formula = f, data = data, weights = .weights, ...)
   }
-  tn = getTaskTargetNames(.task)
-  attachTrainingInfo(mod, list(surv.train = Surv(data[, tn[1L]], data[, tn[2L]])))
+  attachTrainingInfo(mod, getTaskTargets(.task, .subset))
 }
 
 #' @export
@@ -39,9 +38,4 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
   }
-    # else if (.learner$predict.type == "prob") {
-    # surv.range = getTrainingInfo(.model$learner.model)$surv.range
-    # times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
-    # t(summary(survival::survfit(.model$learner.model, newdata = .newdata, se.fit = FALSE, conf.int = FALSE), times = times)$surv)
-    # }
 }

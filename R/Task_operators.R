@@ -180,6 +180,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' Get target data of task.
 #'
 #' @template arg_task
+#' @template arg_subset
 #' @param recode.target [\code{character(1)}] \cr
 #'   Should target classes be recoded? Only for binary classification.
 #'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
@@ -193,23 +194,23 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
-getTaskTargets = function(task, recode.target = "no") {
+getTaskTargets = function(task, subset, recode.target = "no") {
   UseMethod("getTaskTargets")
 }
 
 #' @export
-getTaskTargets.SupervisedTask = function(task, recode.target = "no") {
-  y = task$env$data[, task$task.desc$target, drop = TRUE]
+getTaskTargets.SupervisedTask = function(task, subset, recode.target = "no") {
+  y = task$env$data[subset, task$task.desc$target, drop = TRUE]
   recodeY(y, recode.target, task$task.desc)
 }
 
 #' @export
-getTaskTargets.UnsupervisedTask = function(task, recode.target = "no") {
+getTaskTargets.UnsupervisedTask = function(task, subset, recode.target = "no") {
   stop("There is no target available for unsupervised tasks.")
 }
 
 #' @export
-getTaskTargets.CostSensTask = function(task, recode.target = "no") {
+getTaskTargets.CostSensTask = function(task, subset, recode.target = "no") {
   stop("There is no target available for costsens tasks.")
 }
 

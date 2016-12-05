@@ -27,8 +27,8 @@ makeRLearner.surv.penalized.ridge = function() {
 #' @export
 trainLearner.surv.penalized.ridge = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  penalized::penalized(f, data = getTaskData(.task, subset = .subset),
-    model = "cox", fusedl = FALSE, ...)
+  mod = penalized::penalized(f, data = getTaskData(.task, subset = .subset), model = "cox", fusedl = FALSE, ...)
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset)))
 }
 
 #' @export

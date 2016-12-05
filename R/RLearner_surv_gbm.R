@@ -29,10 +29,11 @@ trainLearner.surv.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
   f = getTaskFormula(.task)
 
   if (is.null(.weights)) {
-    gbm::gbm(f, data = d, distribution = "coxph", ...)
+    mod = gbm::gbm(f, data = d, distribution = "coxph", ...)
   } else  {
-    gbm::gbm(f, data = d, weights = .weights, distribution = "coxph", ...)
+    mod = gbm::gbm(f, data = d, weights = .weights, distribution = "coxph", ...)
   }
+  attachTrainingInfo(mod, getTaskTargets(.task, .subset))
 }
 
 #' @export

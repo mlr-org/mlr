@@ -4,11 +4,15 @@
 \alias{getTaskTargets}
 \title{Get target data of task.}
 \usage{
-getTaskTargets(task, recode.target = "no")
+getTaskTargets(task, subset, recode.target = "no")
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
+
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
 
 \item{recode.target}{[\code{character(1)}] \cr
 Should target classes be recoded? Only for binary classification.

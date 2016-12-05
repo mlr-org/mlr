@@ -27,14 +27,12 @@ makeRLearner.surv.penalized.lasso = function() {
 #' @export
 trainLearner.surv.penalized.lasso = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  penalized::penalized(f, data = getTaskData(.task, subset = .subset),
-    model = "cox", fusedl = FALSE, ...)
+  mod = penalized::penalized(f, data = getTaskData(.task, subset = .subset), model = "cox", fusedl = FALSE, ...)
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset)))
 }
 
 #' @export
 predictLearner.surv.penalized.lasso = function(.learner, .model, .newdata, ...) {
-  #info = getTrainingInfo(.model)
-  #.newdata = as.matrix(fixDataForLearner(.newdata, info))
   # Note: this is a rather ugly hack but should work according to Jelle
   penalized::survival(penalized::predict(.model$learner.model, data = .newdata), Inf)
 }

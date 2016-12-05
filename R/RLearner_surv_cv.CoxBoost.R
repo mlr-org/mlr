@@ -27,7 +27,8 @@ makeRLearner.surv.cv.CoxBoost = function() {
 #' @export
 trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, unpen.index = NULL, ...) {
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
-  info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  info = list(fix.data.info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE),
+    surv.train = getTaskTargets(.task, .subset))
 
   if (is.null(penalty))
     penalty = 9 * sum(data$target[, 2L])
@@ -35,7 +36,7 @@ trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NU
   pars = c(list(
     time = data$target[, 1L],
     status = data$target[, 2L],
-    x = as.matrix(fixDataForLearner(data$data, info)),
+    x = as.matrix(fixDataForLearner(data$data, info$fix.data.info)),
     penalty = penalty,
     weights = .weights
   ), list(...))
@@ -53,7 +54,7 @@ trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.surv.cv.CoxBoost = function(.learner, .model, .newdata, ...) {
-  info = getTrainingInfo(.model)
+  info = getTrainingInfo(.model)$fix.data.info
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))
 }

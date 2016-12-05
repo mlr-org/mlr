@@ -29,11 +29,12 @@ makeRLearner.surv.rpart = function() {
 trainLearner.surv.rpart = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, subset = .subset)
   f = getTaskFormula(.task)
-  if (is.null(.weights)) {
+  mod = if (is.null(.weights)) {
     rpart::rpart(f, data = d, method = "exp", ...)
   } else  {
     rpart::rpart(f, data = d, weights = .weights, method = "exp", ...)
   }
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset)))
 }
 
 #' @export
