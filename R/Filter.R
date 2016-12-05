@@ -285,7 +285,7 @@ makeFilter(
     d = getTaskData(task, target.extra = TRUE)
     y = Rfast::correls(d$target, d$data, type = "pearson")
     for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] <- cor(d$target, d$data[,i], use = "complete.obs")
+      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs")
     }
     setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
@@ -306,7 +306,7 @@ makeFilter(
     d = getTaskData(task, target.extra = TRUE)
     y = Rfast::correls(d$target, d$data, type = "spearman")
     for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] <- cor(d$target, d$data[,i], use = "complete.obs", method = "spearman")
+      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs", method = "spearman")
     }
     setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
@@ -505,7 +505,7 @@ makeFilter(
     for (i in which(is.na(an[, "F value"]))) {
       j = !is.na(X[,i])
       if (any(j)) {
-        an[i, ] <- Rfast::anovas(X[j, i, drop = FALSE], y[j]) 
+        an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j]) 
       }
     }
     setNames(an[, "F value"], getTaskFeatureNames(task))
