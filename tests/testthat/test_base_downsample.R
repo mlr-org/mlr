@@ -62,4 +62,17 @@ test_that("downsample wrapper works with weights, we had issue #838",  {
   expect_true(length(u) == 5 && all(u %in% 1:10))
 })
 
+test_that("training performance works as expected (#1357)", {
+  num = makeMeasure(id = "num", minimize = FALSE,
+    properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+    name = "Number",
+    fun = function(task, model, pred, feats, extra.args) {
+      length(pred$data$response)
+    }
+  )
 
+  rdesc = makeResampleDesc("Holdout", predict = "both")
+  lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.1)
+  r = resample(lrn, multiclass.task, rdesc, measures = list(setAggregation(num, train.mean)))
+  expect_lte(r$measures.train$num, getTaskSize(multiclass.task) * 0.1)
+})
