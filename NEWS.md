@@ -81,6 +81,7 @@
 * surv.gbm
 * regr.cvglmnet
 * {classif,regr,surv}.gamboost
+* classif.earth
 
 ## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
