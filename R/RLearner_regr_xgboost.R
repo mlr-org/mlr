@@ -32,7 +32,7 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "verbose", default = 1L, lower = 0L, upper = 2L, tunable = FALSE),
       makeIntegerLearnerParam(id = "print_every_n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
-      makeIntegerLearnerParam(id = "early_stop_round", default = NULL, lower = 1L, special.vals = list(NULL)),
+      makeIntegerLearnerParam(id = "early_stopping_rounds", default = NULL, lower = 1L, special.vals = list(NULL), tunable = FALSE),
       makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE),
       makeDiscreteLearnerParam(id = "normalize_type", default = "tree", values = c("tree", "forest"), requires = quote(booster == "dart")),
       makeNumericLearnerParam(id = "rate_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
@@ -69,7 +69,7 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 #' @export
 predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  xgboost::predict(m, newdata = data.matrix(.newdata), ...)
+  predict(m, newdata = data.matrix(.newdata), ...)
 }
 
 #' @export

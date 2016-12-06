@@ -22,7 +22,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "objective", default = "binary:logistic", tunable = FALSE),
       makeUntypedLearnerParam(id = "eval_metric", default = "error", tunable = FALSE),
       makeNumericLearnerParam(id = "base_score", default = 0.5, tunable = FALSE),
-      makeNumericLearnerParam(id = "max_delta_step", min = 0, default = 0),
+      makeNumericLearnerParam(id = "max_delta_step", lower = 0, default = 0),
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
       makeIntegerLearnerParam(id = "nthread", lower = 1L, tunable = FALSE),
@@ -32,7 +32,7 @@ makeRLearner.classif.xgboost = function() {
       makeIntegerLearnerParam(id = "verbose", default = 1L, lower = 0L, upper = 2L, tunable = FALSE),
       makeIntegerLearnerParam(id = "print_every_n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
-      makeIntegerLearnerParam(id = "early_stop_round", default = NULL, lower = 1L, special.vals = list(NULL)),
+      makeIntegerLearnerParam(id = "early_stopping_rounds", default = NULL, lower = 1L, special.vals = list(NULL), tunable = FALSE),
       makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE),
       makeDiscreteLearnerParam(id = "sample_type", default = "uniform", values = c("uniform", "weighted"), requires = quote(booster == "dart")),
       makeDiscreteLearnerParam(id = "normalize_type", default = "tree", values = c("tree", "forest"), requires = quote(booster == "dart")),
@@ -89,7 +89,7 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
 predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
   m = .model$learner.model
-  p = xgboost::predict(m, newdata = data.matrix(.newdata), ...)
+  p = predict(m, newdata = data.matrix(.newdata), ...)
   nc = length(td$class.levels)
 
   if (nc == 2L) {
