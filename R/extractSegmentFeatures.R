@@ -1,0 +1,60 @@
+
+getSegmentFeatures = function(x) {
+  mean(x)
+}
+
+getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
+  m = length(x)
+  start = 1L
+  feats = numeric(0L)
+  ssize = m
+  for (rl in 1:res.level) {
+    soffset = ceiling(shift * ssize)
+    messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
+    sstart = 1L
+    send = sstart + ssize - 1L
+    while(send <= m) {
+      # messagef("start, end: %i, %i", sstart, send)
+      f = getSegmentFeatures(x[sstart:send])
+      # print(f)
+      feats = c(feats, f)
+      sstart = sstart + soffset
+      send = send + soffset
+    }
+    ssize = ceiling(ssize / 2)
+    if (ssize < 1L)
+      break
+  }
+  return(feats)
+}
+
+extractMultiResFeatures = function(data, curve.lens, res.level = 3, shift = 0.5) {
+  n.obs = nrow(data)
+  n.curves = length(curve.lens)
+  feat.list = vector("list", n.obs)
+  for (i in 1:n.obs) {
+    # print(i)
+    featvec = numeric(0L)
+    for (j in 1:n.curves) {
+      clen = curve.lens[j]
+      sstart = ifelse(j == 1L, 1L, send + 1L)
+      send = sstart + clen - 1L
+      # messagef("curve start, end: %i, %i", sstart, send)
+      f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
+      # print(f)
+      featvec = c(featvec, f)
+    }
+    feat.list[[i]] = featvec
+  }
+  do.call(rbind, feat.list)
+}
+
+extractMultiResFeatures2 = function(data, curve.lens, res.level = 3, shift = 0.5) {
+  resmat = matrix(NA_real_, nrow = 1L, ncol = 100000L)
+  .Call(c_get_multires_curve_features, data[1L,,drop = FALSE], curve.lens, resmat, res.level, shift)
+  p = which.first(is.na(resmat[1L,])) - 1L
+  resmat = matrix(0, nrow = nrow(data), ncol = p)
+  .Call(c_get_multires_curve_features, data, curve.lens, resmat, res.level, shift)
+  return(resmat)
+}
+
