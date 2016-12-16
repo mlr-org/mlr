@@ -21,3 +21,24 @@ print(p)
 # print(r)
 
 
+# create the sample GP splits as on UCR page, they used the first 50 for train, last 150 for test
+# then resample (this is holdout eval)
+rin = makeFixedHoldoutInstance(size = 200, train.inds = 1:50, test.inds = 51:200)
+r = resample(lrn, task, rin)
+print(r)
+
+
+
+
+ctrl = makeTuneControlRandom(maxit = 20)
+ps = makeParamSet(
+  makeNumericParam("K", lower = 0.1, upper = 0.2)
+)
+
+
+tr = tuneParams(lrn, task, rin, par.set = ps, control = ctrl)
+opd = as.data.frame(tr$opt.path)
+op2 = trafoOptPath(tr$opt.path)
+opd2 = as.data.frame(op2)
+#parallelStop()
+print(tr)
