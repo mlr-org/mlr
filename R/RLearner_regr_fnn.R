@@ -5,8 +5,8 @@ makeRLearner.regr.fnn = function() {
     package = "FNN",
     # l is for reject option. cannot be done with mlr atm
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "k", default = 1L, lower = 1L),
-      makeDiscreteLearnerParam(id = "algorithm", default = "cover_tree", 
+      makeIntegerLearnerParam(id = "k", default = 3L, lower = 1L),
+      makeDiscreteLearnerParam(id = "algorithm", default = "cover_tree",
         values = list("kd_tree", "cover_tree", "brute"))
     ),
     properties = c("numerics"),
