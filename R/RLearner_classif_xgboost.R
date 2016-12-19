@@ -49,50 +49,27 @@ makeRLearner.classif.xgboost = function() {
 
 #' @export
 trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  
   td = getTaskDescription(.task)
-  data = getTaskData(.task, .subset, target.extra = TRUE)
-  target = data$target
-  target = match(as.character(target), td$class.levels) - 1
-  data = data.matrix(data$data)
-  cls = td$class.levels
-  nc = length(cls)
   parlist = list(...)
-  obj = parlist$objective
+  parlist$data = data.matrix(getTaskData(.task, .subset, target.extra = TRUE)$data)
+  parlist$label = match(as.character(getTaskData(.task, .subset, target.extra = TRUE)$target), td$class.levels) - 1
+  nc = length(td$class.levels)
+  
+  if (is.null(parlist$objective))
+    parlist$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
 
-  if (nc == 2L) {
-    if (is.null(obj))
-      obj = "binary:logistic"
-  } else {
-    if (is.null(obj))
-      obj = "multi:softprob"
-  }
-
-  if (.learner$predict.type == "prob" && obj == "multi:softmax")
+  if (.learner$predict.type == "prob" && parlist$objective == "multi:softmax")
     stop("objective = 'multi:softmax' does not work with predict.type = 'prob'")
 
-
-  if (obj %in% c("multi:softprob", "multi:softmax")) {
-    if (is.null(.weights)) {
-      xgboost::xgboost(data = data, label = target, objective = obj, num_class = nc, ...)
-    } else {
-      xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
-      xgboost::xgboost(data = xgb.dmat, label = NULL, objective = obj, num_class = nc, ...)
-    }
-  } else {
-    parlist = list(...)
-    obj = parlist$objective
-    if (is.null(obj)) {
-      obj = "multi:softprob"
-    }
-    num_class = length(td$class.levels)
-
-    if (is.null(.weights)) {
-      xgboost::xgboost(data = data, label = target, objective = obj, ...)
-    } else {
-      xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
-      xgboost::xgboost(data = xgb.dmat, label = NULL, objective = obj, ...)
-    }
-  }
+  #if we use softprob or softmax as objective we have to add the number of classes 'num_class'
+  if (parlist$objective %in% c("multi:softprob", "multi:softmax"))
+    parlist$num_class = nc
+    
+  if (!is.null(.weights))
+    parlist$data = xgboost::xgb.DMatrix(data = parlist$data, label = parlist$label, weight = .weights)
+    
+  do.call(xgboost::xgboost, parlist)
 }
 
 #' @export
@@ -102,18 +79,11 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   cls = td$class.levels
   nc = length(cls)
   obj = .learner$par.vals$objective
+  
+  if (is.null(obj))
+    .learner$par.vals$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
 
-  if (nc == 2L) {
-    if (is.null(obj))
-      .learner$par.vals$objective = "binary:logistic"
-  } else {
-    if (is.null(obj))
-      .learner$par.vals$objective = "multi:softprob"
-  }
-
-  p = xgboost::predict(m, newdata = data.matrix(.newdata), ...)
-  nc = length(td$class.levels)
-
+  p = predict(m, newdata = data.matrix(.newdata), ...)
 
   if (nc == 2L) { #binaryclass
     if (.learner$par.vals$objective == "multi:softprob") {

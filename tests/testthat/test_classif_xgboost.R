@@ -26,7 +26,7 @@ test_that("classif_xgboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
-    pred = xgboost::predict(model, data.matrix(binaryclass.test[,1:60]))
+    pred = predict(model, data.matrix(binaryclass.test[,1:60]))
     old.predicts.list[[i]] = factor(as.numeric(pred > 0.5), labels = binaryclass.class.levs)
   }
 
@@ -42,7 +42,7 @@ test_that("classif_xgboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
-    pred = xgboost::predict(model, data.matrix(binaryclass.test[,1:60]))
+    pred = predict(model, data.matrix(binaryclass.test[,1:60]))
     if (parset$objective == "multi:softprob") {
       y = matrix(pred, nrow = length(pred) / length(binaryclass.class.levs), ncol = length(binaryclass.class.levs), byrow = TRUE)
       old.probs.list[[i]] = y[,1]

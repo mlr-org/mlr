@@ -48,22 +48,18 @@ makeRLearner.regr.xgboost = function() {
 
 #' @export
 trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  data = getTaskData(.task, .subset, target.extra = TRUE)
-  target = data$target
-  data = data.matrix(data$data)
-
   parlist = list(...)
-  obj = parlist$objective
-  if (is.null(obj)) {
-    obj = "reg:linear"
-  }
+  
+  parlist$label = getTaskData(.task, .subset, target.extra = TRUE)$target
+  parlist$data = data.matrix(getTaskData(.task, .subset, target.extra = TRUE)$data)
 
-  if (is.null(.weights)) {
-    xgboost::xgboost(data = data, label = target, objective = obj, ...)
-  } else {
-    xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
-    xgboost::xgboost(data = xgb.dmat, label = NULL, objective = obj, ...)
-  }
+  if (is.null(parlist$objective))
+    parlist$objective = "reg:linear"
+
+  if (!is.null(.weights))
+    parlist$data = xgboost::xgb.DMatrix(data = parlist$data, label = parlist$label, weight = .weights)
+  
+  do.call(xgboost::xgboost, parlist)
 }
 
 #' @export
