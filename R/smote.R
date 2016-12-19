@@ -76,6 +76,8 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
     }
   }
   x.min.matrix = as.matrix(x.min.matrix)
+  # ensure that x.min.matrix is numeric and not integer since c_smote requires a real valued matrix
+  storage.mode(x.min.matrix) = "numeric"
 
   if (alt.logic == TRUE) {
     n.xmin = dim(x.min.matrix)[1]
