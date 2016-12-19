@@ -4,13 +4,16 @@ makeRLearner.tsclassif.shapelet = function() {
     cl = "tsclassif.shapelet",
     package = "shapeletLib",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id = "K", default = 0.02, lower = 0.01),
-      makeNumericLearnerParam(id = "L", default = 0.2, lower = 0.01),
-      makeIntegerLearnerParam(id = "max.iter", lower = 1L)
-      # makeNumericLearnerParam(id = "distance", default = 2, lower = 0),
-      # makeDiscreteLearnerParam(id = "kernel", default = "triangular",
-        # values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian")),
-      # makeLogicalLearnerParam(id = "scale", default = TRUE)
+      #FIXME: how to insert params which is matrix/default = NULL ?
+      makeDiscreteLearnerParam(id = "method", default ="hinge", values = list("hinge", "log")),
+      makeNumericLearnerParam(id = "K", default = 0.02, lower = 0.001),
+      makeNumericLearnerParam(id = "L", default = 0.2, lower = 0.001, upper = 1),
+      makeNumericLearnerParam(id = "C", default = 1, lower = 0),
+      makeUntypedLearnerParam(id = "step", default = "pegasos"),
+      makeIntegerLearnerParam(id = "max.iter", lower = 1L),
+      makeDiscreteLearnerParam(id = "init", default = "kmeans", values = list("kmeans", "random", "user")),
+      makeLogicalLearnerParam(id = "auto.hinge", default = FALSE),
+      makeLogicalLearnerParam(id = "show.info", default = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Shapelet classification",
@@ -19,37 +22,19 @@ makeRLearner.tsclassif.shapelet = function() {
 }
 
 #' @export
-trainLearner.tsclassif.shapelet = function(.learner, .task, .subset, .weights = NULL,
-  method = "hinge", ...) {
+trainLearner.tsclassif.shapelet = function(.learner, .task, .subset, .weights = NULL, ...) {
 
   z = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "-1+1")
-
-  shapeletLib::learnShapelets(data.train = as.matrix(z$data), label.train = z$target,
-    method = method,  ...)
+  shapeletLib::learnShapelets(data.train = as.matrix(z$data), label.train = z$target, ...)
 }
 
 #' @export
 predictLearner.tsclassif.shapelet = function(.learner, .model, .newdata, ...) {
-  # FIXME: we need a better predict funtion in shapeletLib!!!
   m = .model$learner.model
   nd = as.matrix(.newdata)
-  class.pred = shapetlLib::predictDataClass(model = m, data.test = nd)
- # browser()
-  # iter = m$ConvIt
-  # nd = as.matrix(.newdata)
-  # print(str(nd))
-  # ts.trafo = shapeletLib::make_transform(TS.data = nd, model = m, iter = iter)
-  # print(str(ts.trafo))
-  #
-  # if (m$method == "log") {
-  #   y.pred = apply(ts.trafo, 1, function(x)
-  #     pred_class_log(W = m$WOld[[iter]], biasW = m$biasWOld[[iter]], Mi = x))
-  #   class.pred = get_class_log(pred = y.pred)
-  # } else {
-  #   class.pred = apply(ts.trafo, 1, function(x)
-  #     pred_class_hinge(W = m$WOld[[iter]], biasW = m$biasWOld[[iter]], Mi = x))
-  # }
-  class.pred.old = class.pred
+  class.pred = shapeletLib::predictDataClass(model = m, data.test = nd)
+
+  # FIXME: outcome of method is -1+1 -> how to recode to 1,2 ?
   class.pred[class.pred == -1] = 2
 
   class.pred = as.factor(class.pred)
