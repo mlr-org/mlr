@@ -9,7 +9,7 @@
 #' @return Returns an \code{data.frame} object containing the shapelet feature transformation.
 #'
 #' @export
-getTSShapeletFeatures = function(curves, label.train, method = "hinge", ...) {
+getTSShapeletFeatures = function(curves, label.train, ...) {
 
   requirePackages("shapeletLib", default.method = "load")
 
@@ -34,7 +34,7 @@ getTSShapeletFeatures = function(curves, label.train, method = "hinge", ...) {
   if( !(all(c(-1,1) %in% unique(label.train)) ) )
     stop("The labels must only contain -1 and 1 values.")
 
-  shapeletmodel = shapeletLib::learnShapelets(method = method, data.train = curves, label.train =  label.train, ...)
+  shapeletmodel = shapeletLib::learnShapelets(data.train = curves, label.train = label.train, ...)
 
   return(list(model = shapeletmodel))
 

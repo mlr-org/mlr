@@ -31,9 +31,9 @@ makeTSFeaturesClassifTask = function(task, method, pars = NULL) {
   #check valid feature extraction method
   if (!(method %in%  c("wavelets", "fourier", "shapelets")))
     stop("Method for feature extraction must be one of 'wavelets' or 'fourier' or 'shapelets'. Please check method.")
-  #check for valid pars
-  if (!(all(names(pars) %in% c("filter", "boundary", "fft.coeff"))))
-    stop("Pars includes non valid arguments. Must be filter or boundary (wavelets) or fft.coeff (fourier).")
+  # #check for valid pars
+  # if (!(all(names(pars) %in% c("filter", "boundary", "fft.coeff"))))
+  #   stop("Pars includes non valid arguments. Must be filter or boundary (wavelets) or fft.coeff (fourier).")
 
   target = task$task.desc$target
   z = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")
@@ -44,7 +44,8 @@ makeTSFeaturesClassifTask = function(task, method, pars = NULL) {
          )
 
   if (method == "shapelets") {
-    modelSh = getTSShapeletFeatures(curves = z$data, label.train = z$target, max.iter = 10)
+    #FIXME: how to correctly use pars here for additional parameters?
+    modelSh = getTSShapeletFeatures(curves = z$data, label.train = z$target)
     return(modelSh)
   }
 
