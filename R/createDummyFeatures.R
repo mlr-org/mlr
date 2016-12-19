@@ -50,7 +50,7 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
     } else {
       colnames(dummies) = stri_paste(prefix, tail(levels(dfcol), -1), sep = ".")
     }
-  cbind(dropNamed(obj, work.cols),dummies)
+    cbind(dropNamed(obj, work.cols), dummies)
   } else {
     obj
   }
