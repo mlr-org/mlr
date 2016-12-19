@@ -65,8 +65,7 @@ createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-
 
 
 #' @export
-createDummyFeatures.factor = function(obj, method = "1-of-n") {
-
+createDummyFeatures.factor = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
   dcol = as.data.frame(obj)
   colname = colnames(dcol)
   if (method == "1-of-n") {
@@ -82,6 +81,6 @@ createDummyFeatures.factor = function(obj, method = "1-of-n") {
 }
 
 #' @export
-createDummyFeatures.character = function(obj, method = "1-of-n") {
+createDummyFeatures.character = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
   createDummyFeatures(as.factor(obj), method = method)
 }
