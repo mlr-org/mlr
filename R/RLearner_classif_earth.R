@@ -51,14 +51,12 @@ predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {
-    if ( length(levs) == 2 ) p = propVectorToMatrix(p, levs)
-  } else
-  {
-    if ( length(levs) == 2 ) {
-      p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
-      } else
-      {
-      p = as.factor(predict(.model$learner.model, newdata = .newdata, type = "class", ...))
+    if (length(levs) == 2) p = propVectorToMatrix(p, levs)
+  } else {
+    if (length(levs) == 2) {
+        p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
+      } else {
+        p = as.factor(predict(.model$learner.model, newdata = .newdata, type = "class", ...))
       }
     p = unname(p)
   }
