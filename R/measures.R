@@ -1336,7 +1336,8 @@ td.auc.kw = makeMeasure(
   fun = function(task, model, pred, feats, extra.args) {
     measureTDAUCKW = function(truth, response, max.time) {
       if(is.null(max.time))
-        max.time = max(truth[, 1L])
+        max.time = max(truth[, 1L]) - 2 * .Machine$double.eps
+      # biggest time value has to be adapted as it does not provide results otherwise
       tdROC::tdROC(X = response, Y = truth[, 1L], delta = truth[, 2L], tau = max.time)$AUC$value
     }
     requirePackages("_tdROC")
@@ -1355,7 +1356,8 @@ td.auc.km = makeMeasure(
   fun = function(task, model, pred, feats, extra.args) {
     measureTDAUCKM = function(truth, response, max.time) {
       if(is.null(max.time))
-        max.time = max(truth[, 1L])
+        max.time = max(truth[, 1L]) - 2 * .Machine$double.eps
+      # biggest time value has to be adapted as it does not provide results otherwise
       survivalROC::survivalROC(Stime = truth[, 1L], status = truth[, 2L], marker = response,
         predict.time = max.time, method = "KM")$AUC
     }
@@ -1375,7 +1377,8 @@ td.auc.nne = makeMeasure(
   fun = function(task, model, pred, feats, extra.args) {
     measureTDAUCNNE = function(truth, response, max.time) {
       if(is.null(max.time))
-        max.time = max(truth[, 1L])
+        max.time = max(truth[, 1L]) - 2 * .Machine$double.eps
+      # biggest time value has to be adapted as it does not provide results otherwise
       survivalROC::survivalROC.C(Stime = truth[, 1L], status = truth[, 2L], marker = response,
         predict.time = max.time, span = 0.1)$AUC
     }
