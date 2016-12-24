@@ -6,9 +6,8 @@
 \usage{
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE, interpolate = NULL,
-  show.experiments = FALSE, show.interpolated = FALSE, nested.agg = mean,
-  partial.dep.learn = NULL)
+  global.only = TRUE, interpolate = NULL, show.experiments = FALSE,
+  show.interpolated = FALSE, nested.agg = mean, partial.dep.learn = NULL)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -46,9 +45,6 @@ Specify what should be used as the facet axis for a particular geom. When
 using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
 for each outer loop. Must be a column from \code{HyperParsEffectData$data}
 Default is \code{NULL}.}
-
-\item{pretty.names}{[\code{logical{1}}]\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 
 \item{global.only}{[\code{logical(1)}]\cr
 If \code{TRUE}, will only plot the current global optima when setting
@@ -114,6 +110,9 @@ Interpolation by its nature will result in predicted values for the
 performance measure. Use interpolation with caution. If \dQuote{partial.dep}
 is set to \code{TRUE} in \code{\link{generateHyperParsEffectData}}, only
 partial dependence will be plotted.
+
+Since a ggplot2 plot object is returned, the user can change the axis labels
+and other aspects of the plot using the appropriate ggplot2 syntax.
 }
 \examples{
 # see generateHyperParsEffectData
