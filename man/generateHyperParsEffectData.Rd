@@ -58,7 +58,8 @@ rdesc = makeResampleDesc("CV", iters = 3L)
 res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
 par.set = ps, control = ctrl)
 data = generateHyperParsEffectData(res)
-plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
+plt = plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
+plt + ylab("Misclassification Error")
 
 # nested cross validation
 ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
