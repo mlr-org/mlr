@@ -45,9 +45,7 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   dummies = as.data.frame(lapply(obj[work.cols], createDummyFeatures, method = method))
 
   if (length(dummies) != 0) {
-    if (method == "1-of-n") {
-      colnames(dummies) = stri_paste(prefix, levels(dfcol), sep = ".")
-    } else {
+    if (ncol(dummies) == 1L) {
       colnames(dummies) = stri_paste(prefix, tail(levels(dfcol), -1), sep = ".")
     }
     cbind(dropNamed(obj, work.cols), dummies)
@@ -71,11 +69,11 @@ createDummyFeatures.factor = function(obj, target = character(0L), method = "1-o
   if (method == "1-of-n") {
     form = stri_paste("~", colname, "-1")
     res = model.matrix(as.formula(form), data = dcol)
-    colnames(res) = levels(obj)
+    colnames(res) = levels(as.factor(obj))
   } else {
     form = stri_paste("~", colname, "-1")
     res = model.matrix(as.formula(form), data = dcol)[, -1, drop = FALSE]
-    colnames(res) = tail(levels(obj), -1)
+    colnames(res) = tail(levels(as.factor(obj)), -1)
   }
   as.data.frame(res)
 }
