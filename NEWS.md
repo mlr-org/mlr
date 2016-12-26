@@ -39,6 +39,8 @@
 * we output resample performance messages for every iteration now
 * performance improvements for the auc measure
 * createDummyFeatures supports vectors now
+* removed the pretty.names argument from plotHyperParsEffect -- labels can be set
+  though normal ggplot2 functions on the returned object
 
 ## functions - new
 * filter: randomForest.importance
