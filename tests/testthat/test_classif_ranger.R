@@ -22,4 +22,11 @@ test_that("classif_ranger", {
   }
 
   testProbParsets ("classif.ranger", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  
+  #test that weights work as expected
+  lrn1 = makeLearner("classif.ranger", num.trees = 200L)
+  lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = 2)
+  tpr1 = holdout(lrn1, pid.task, measures = tpr)$aggr
+  tpr2 = holdout(lrn2, pid.task, measures = tpr)$aggr
+  expect_true(tpr1 < tpr2)
 })
