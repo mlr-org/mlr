@@ -75,6 +75,7 @@ Suggests:
     elasticnet,
     elmNN,
     emoa,
+    evtree,
     extraTrees,
     flare,
     fields,
