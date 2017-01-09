@@ -69,13 +69,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
   res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
   # add stuff to opt.path
   state = list(x = x, y = res$y)
-  if (control$tune.threshold) {
-    # add class names to threshold, if longer than 1
-    extra = as.list(res$threshold)
-    names(extra) = stri_paste("threshold", ifelse(length(extra) > 1L, ".", ""), names(extra), ignore_null = TRUE)
-  } else {
-    extra = NULL
-  }
+  extra = getTuneThresholdExtra(control, res)
   addOptPathEl(opt.path, x = as.list(x), y = res$y, dob = 1L, eol = 2L, exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
 
   forward = (method %in% c("sfs", "sffs"))

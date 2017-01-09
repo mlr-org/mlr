@@ -4,7 +4,7 @@
 # following the definition by Ferri et al.:
 # https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf
 
-colAUC = function(samples, truth) {
+colAUC = function(samples, truth, maximum = TRUE) {
   y = as.factor(truth)
   X = as.matrix(samples)
   if (nrow(X) == 1)
@@ -40,6 +40,8 @@ colAUC = function(samples, truth) {
       }
     }
   }
-  auc = pmax(auc, 1 - auc)
+  if (maximum == TRUE) {
+    auc = pmax(auc, 1 - auc)
+  }
   return(auc)
 }

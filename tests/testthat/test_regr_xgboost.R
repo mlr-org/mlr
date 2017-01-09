@@ -22,7 +22,7 @@ test_that("regr_xgboost", {
     #model = xgboost::xgboost(data = data.matrix(regr.train[,1:13]), verbose = 0L,
     #label = as.numeric(regr.train[,14]),
     #nrounds = 20, objective = "reg:linear", missing = NULL)
-    old.predicts.list[[i]] = xgboost::predict(model, data.matrix(regr.test[,1:13]))
+    old.predicts.list[[i]] = predict(model, data.matrix(regr.test[,1:13]))
   }
   
   #set.seed(getOption("mlr.debug.seed"))

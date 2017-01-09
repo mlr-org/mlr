@@ -1,13 +1,9 @@
 # mlr 2.10:
 
-## general
+## functions - general
+* fixed bug in resample when using predict = "train" (issue #1284)
 * update to irace 2.0 -- there are algorithmic changes in irace that may affect
   performance
-
-## Bug fixes
-* fixed bug in resample when using predict = "train" (issue #1284)
-
-## functions - general
 * generateFilterValuesData: fixed a bug wrt feature ordering
 * imputeLearner: fixed a bug when data actually contained no NAs
 * print.Learner: if a learner hyperpar was set to value "NA" this was not
@@ -38,6 +34,13 @@
   hyperparameters
 * linear.correlation, rank.correlation, anova.test: use Rfast instead of
   FSelector/custom implementation now, performance should be much better
+* use of our own colAUC function instead of the ROCR package for AUC calculation
+  to improve performance
+* we output resample performance messages for every iteration now
+* performance improvements for the auc measure
+* createDummyFeatures supports vectors now
+* removed the pretty.names argument from plotHyperParsEffect -- labels can be set
+  though normal ggplot2 functions on the returned object
 
 ## functions - new
 * filter: randomForest.importance
@@ -56,12 +59,16 @@
 * addRRMeasure
 * plotResiduals
 * getLearnerShortName
+* mergeBenchmarkResults
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 * Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 * Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
 * Renamed setId (now deprecated) to setLearnerId
+
+## functions - removed
+* mergeBenchmarkResultLearner, mergeBenchmarkResultTask
 
 ## learners - general
 * classif.ada: fixed some param problem with rpart.control params
@@ -70,13 +77,16 @@
   as these are set internally and cannot be changed by the user
 * regr.GPfit: some more params for correlation kernel
 * classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing and other problems), added "colsample_bylevel" parameter
+* adapted {classif,regr,surv}.ranger parameters for new ranger version
 
 ## learners - new
 * multilabel.cforest
 * surv.gbm
 * regr.cvglmnet
+* {classif,regr,surv}.gamboost
+* classif.earth
 
-## learner - removed
+## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
 
 ## measures - new

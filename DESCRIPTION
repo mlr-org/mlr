@@ -116,7 +116,6 @@ Suggests:
     pls,
     PMCMR (>= 4.1),
     pROC (>= 1.8),
-    quickcheck,
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.6.0),
@@ -146,7 +145,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost (>= 0.4-4),
+    xgboost (>= 0.6-2),
     XML
 LazyData: yes
 ByteCompile: yes

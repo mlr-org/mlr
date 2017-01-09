@@ -4,12 +4,12 @@ makeRLearner.classif.glmboost = function() {
     cl = "classif.glmboost",
     package = "mboost",
     par.set = makeParamSet(
-      # FIXME: add family PropOdds, when mlr supports ordered factors as tasks
+      # FIXME: add family PropOdds, when mlr supports ordered factors as targets
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
         values = c("Binomial", "AdaExp", "AUC", "custom.family")),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
-      makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
+      #makeNumericVectorLearnerParam(id = "nuirange", default = c(-0.5,-1), requires = quote(family == "PropOdds")),
+      #makeNumericVectorLearnerParam(id = "offrange", default = c(-5,5), requires = quote(family == "PropOdds")),
       makeDiscreteLearnerParam(id = "Binomial.link", default = "logit", values = c("logit", "probit")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
@@ -22,19 +22,19 @@ makeRLearner.classif.glmboost = function() {
     par.vals = list(family = "Binomial"),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
-    short.name = "glmbst",
+    short.name = "glmboost",
     note = "`family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
   )
 }
 
 #' @export
-trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, family, custom.family.definition, nuirange = c(-0.5,-1), offrange = c(-5,5), Binomial.link = "logit", ...) {
+trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", custom.family.definition, mstop, nu, risk, stopintern, trace, family,  ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
     AdaExp = mboost::AdaExp(),
     AUC = mboost::AUC(),
-    PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
+    #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {

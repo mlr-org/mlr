@@ -11,7 +11,7 @@
 #'
 #' @param learner [\code{character(1)}]\cr
 #'   The name of the learner from \code{caret}
-#'   (cf. \url{http://topepo.github.io/caret/modelList.html}). Note that the
+#'   (cf. \url{https://topepo.github.io/caret/available-models.html}). Note that the
 #'   names in \code{caret} often differ from the ones in \code{mlr}.
 #' @param length [\code{integer(1)}]\cr
 #'   A length / precision parameter which is used by \code{caret} for

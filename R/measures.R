@@ -701,7 +701,7 @@ measureWKAPPA = function(truth, response) {
   expected.mat = rowsum %*% t(colsum) 
 
   # get weights
-  class.values = as.numeric(levels(truth))
+  class.values = seq_along(levels(truth)) - 1L
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
   
   # calculate weighted kappa
@@ -719,7 +719,6 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
   name = "Area under the curve",
   note = "Integral over the graph that results from computing fpr and tpr for many different thresholds.",
   fun = function(task, model, pred, feats, extra.args) {
-    # ROCR does not work with NAs
     if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
     measureAUC(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
@@ -730,8 +729,23 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-  rpreds = asROCRPredictionIntern(probabilities, truth, negative, positive)
-  ROCR::performance(rpreds, "auc")@y.values[[1L]]
+	if (is.factor(truth)) {
+  	i = as.integer(truth) == which(levels(truth) == positive)
+  } else {
+	  i = truth == positive
+  }
+	if (length(unique(i)) < 2L) {
+		stop("truth vector must have at least two classes")
+	}
+  #Use fast ranking function from data.table for larger vectors
+  if (length(i) > 5000L) {
+  	r = frankv(probabilities)
+  } else {
+  	r = rank(probabilities)
+  }
+  n_pos = as.numeric(sum(i))
+  n_neg = length(i) - n_pos
+  (sum(r[i]) - n_pos * (n_pos + 1)/2)/(n_pos * n_neg)
 }
 
 #' @export brier
@@ -1027,10 +1041,10 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE,
 #' @rdname measures
 #' @format none
 measureMCC = function(truth, response, negative, positive) {
-  tn = measureTN(truth, response, negative)
-  tp = measureTP(truth, response, positive)
-  fn = measureFN(truth, response, negative)
-  fp = measureFP(truth, response, positive)
+  tn = as.numeric(measureTN(truth, response, negative))
+  tp = as.numeric(measureTP(truth, response, positive))
+  fn = as.numeric(measureFN(truth, response, negative))
+  fp = as.numeric(measureFP(truth, response, positive))
   (tp * tn - fp * fn) /
     sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 }
