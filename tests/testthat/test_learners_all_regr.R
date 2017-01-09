@@ -50,4 +50,7 @@ test_that("learners work: regr ", {
   lrns = mylist("regr", properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars) 
 
+  # regr with oobpreds
+  lrns = mylist("regr", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
 })

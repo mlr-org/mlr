@@ -50,6 +50,14 @@ test_that("learners work: classif ", {
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
+  
+  # classif with oobpreds
+  lrns = mylist("classif", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  # classif with oobpreds and probability
+  lrns = mylist("classif", properties = c("oobpreds", "prob"), create = TRUE)
+  lrns = lapply(lrns, setPredictType, predict.type = "prob")
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with variable importance
   lrns = mylist("classif", properties = "featimp", create = TRUE)
