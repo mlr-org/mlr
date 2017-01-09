@@ -282,7 +282,7 @@ arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
     n = length(pred$data$truth)
     p = length(model$features)
     if (n == p + 1){
-      warning("Adjusted R-squared is undefined if the number observations is equal to the number of independent variables plus one".)
+      warning("Adjusted R-squared is undefined if the number observations is equal to the number of independent variables plus one.")
       return(NA_real_)
     }
     1 - (1 - measureRSQ(pred$data$truth, pred$data$response)) * (p / (n - p - 1L))
