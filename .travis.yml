@@ -31,7 +31,7 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
-
+  - swager/randomForestCI
 before_install:
   # we need a very fresh version of survival for Hmisc, needs be done early in the script
   - Rscript -e 'install.packages("survival")'
