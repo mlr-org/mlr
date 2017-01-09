@@ -172,6 +172,7 @@ sdStandardError = function(.learner, .model, .newdata, ...) {
   pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
   se = apply(pred$individual, 1, sd)
   return(cbind(pred$aggregate, se))
+}
 
 #' @export
 getFeatureImportanceLearner.regr.randomForest = function(.learner, .model, ...) {
