@@ -124,7 +124,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = R, byrow = TRUE)
   }
   var.boot = apply(pred.boot, 1, var) - bias
-  var.boot[var.boot <= 0] = 0
+  var.boot = pmax(var.boot, 0)
   cbind(pred, sqrt(var.boot))
 }
 
@@ -134,15 +134,14 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   n = nrow(model$inbag)
   ntree = model$ntree
   pred = predict(model, newdata = .newdata, predict.all = TRUE)
-  oob = t(sapply(seq_len(n), function(i) model$inbag[i, ] == 0))
+  oob = model$inbag == 0
   jack_n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
   if (is.vector(jack_n)) {
     jack_n = t(as.matrix(jack_n))
   }
   jack = (n - 1) / n * rowSums((jack_n - pred$aggregate)^2)
   bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
-  jab = jack - bias
-  jab[jab < 0] = 0
+  jab = pmax(jack - bias, 0)
   return(cbind(pred$aggregate, sqrt(jab)))
 }
 
@@ -163,7 +162,7 @@ infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...) 
     .newdata = rbind(.newdata, .model$learner.model$data)
   }
   ret = randomForestCI::randomForestInfJack(.model$learner.model, .newdata, calibrate, ...)
-  ret$var.hat[ret$var.hat < 0] = 0
+  ret$var.hat = pmax(ret$var.hat, 0)
   return(cbind(ret$y.hat[idx], sqrt(ret$var.hat)[idx]))
 }
 
