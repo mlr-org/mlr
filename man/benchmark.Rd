@@ -50,18 +50,20 @@ Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g
 learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 }
 \examples{
-lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
-tasks = list(iris.task, sonar.task)
-rdesc = makeResampleDesc("CV", iters = 2L)
-meas = list(acc, ber)
-bmr = benchmark(lrns, tasks, rdesc, measures = meas)
-rmat = convertBMRToRankMatrix(bmr)
-print(rmat)
-plotBMRSummary(bmr)
-plotBMRBoxplots(bmr, ber, style = "violin")
-plotBMRRanksAsBarChart(bmr, pos = "stack")
-friedmanTestBMR(bmr)
-friedmanPostHocTestBMR(bmr, p.value = 0.05)
+# if (requireNamespace("rpart")) {
+  lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
+  tasks = list(iris.task, sonar.task)
+  rdesc = makeResampleDesc("CV", iters = 2L)
+  meas = list(acc, ber)
+  bmr = benchmark(lrns, tasks, rdesc, measures = meas)
+  rmat = convertBMRToRankMatrix(bmr)
+  print(rmat)
+  plotBMRSummary(bmr)
+  plotBMRBoxplots(bmr, ber, style = "violin")
+  plotBMRRanksAsBarChart(bmr, pos = "stack")
+  friedmanTestBMR(bmr)
+  friedmanPostHocTestBMR(bmr, p.value = 0.05)
+# }
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
