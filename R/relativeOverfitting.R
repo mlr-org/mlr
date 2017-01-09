@@ -5,7 +5,7 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @param rdesc [\code{\link{ResampleDesc}}\cr
+#' @param rdesc [\code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy.
 #' @template arg_measures
 #' @template arg_task
@@ -49,7 +49,7 @@ estimateRelativeOverfitting.ResampleDesc = function(rdesc, measures, task, learn
     perf.permuted = performance(pred.permuted, measures = measures, task = task)
 
     df = (perf.test - perf.train) / (perf.permuted - perf.train)
-    names(df) = paste("relative.overfit", mids, sep = ".")
+    names(df) = stri_paste("relative.overfit", mids, sep = ".")
     cbind(data.frame(iter = i), df)
   }))
 }

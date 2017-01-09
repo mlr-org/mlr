@@ -13,8 +13,7 @@ makeRLearner.classif.hdrda = function() {
     ),
     properties = c("numerics", "twoclass", "prob"),
     name = "High-Dimensional Regularized Discriminant Analysis",
-    short.name = "hdrda",
-    note = ""
+    short.name = "hdrda"
   )
 }
 

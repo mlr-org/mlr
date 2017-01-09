@@ -3,7 +3,7 @@
 \docType{data}
 \name{iris.task}
 \alias{iris.task}
-\title{Iris classification task}
+\title{Iris classification task.}
 \description{
 Contains the task (\code{iris.task}).
 }

@@ -19,7 +19,7 @@ test_that("relativeOverfitting works with multiple measures", {
 
 test_that("relativeOverfitting works for regression", {
   rdesc = makeResampleDesc("CV", iters = 2)
-  ro = estimateRelativeOverfitting(rdesc, mse, regr.small.task, makeLearner("regr.lm"))
+  ro = estimateRelativeOverfitting(rdesc, mse, regr.small.task, makeLearner("regr.rpart"))
   expect_true(is.data.frame(ro))
   expect_true(is.numeric(ro$relative.overfit.mse))
   expect_equal(nrow(ro), 2)

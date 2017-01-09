@@ -1,7 +1,8 @@
 context("classif_JRip")
 
 test_that("classif_JRip", {
-  requirePackages("RWeka", default.method = "load")
+  requirePackagesOrSkip("RWeka", default.method = "load")
+
   parset.list = list(
     list(),
     list(F=5),

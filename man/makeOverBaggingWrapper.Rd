@@ -5,7 +5,7 @@
 \title{Fuse learner with the bagging technique and oversampling for imbalancy correction.}
 \usage{
 makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate = 1,
-  obw.maxcl = "boot")
+  obw.maxcl = "boot", obw.cl = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -17,16 +17,20 @@ Number of fitted models in bagging.
 Default is 10.}
 
 \item{obw.rate}{[\code{numeric(1)}]\cr
-Factor to upsample the smaller class in each bag.
+Factor to upsample a class in each bag.
 Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.
 Default is 1.}
 
 \item{obw.maxcl}{[\code{character(1)}]\cr
-character value that controls how to sample majority class.
-\dQuote{all} means every instance of the majority class gets in each bag,
-\dQuote{boot} means the majority class instances are bootstrapped in each iteration.
+How should other class (usually larger class) be handled?
+\dQuote{all} means every instance of the class gets in each bag,
+\dQuote{boot} means the class instances are bootstrapped in each iteration.
 Default is \dQuote{boot}.}
+
+\item{obw.cl}{[\code{character(1)}]\cr
+Which class should be over- or undersampled. If \code{NULL}, \code{makeOverBaggingWrapper}
+will take the smaller class.}
 }
 \value{
 [\code{\link{Learner}}].
@@ -39,9 +43,9 @@ used like any other learner object.
 Models can easily be accessed via \code{\link{getLearnerModel}}.
 
 OverBagging is implemented as follows:
-For each iteration a random data subset is sampled. Minority class examples
+For each iteration a random data subset is sampled. Class examples
 are oversampled with replacement with a given rate.
-Majority class examples are either simply copied into each bag, or bootstrapped with replacement
+Members of the other class are either simply copied into each bag, or bootstrapped with replacement
 until we have as many majority class examples as in the original training data.
 Features are currently not changed or sampled.
 
@@ -54,6 +58,7 @@ Other imbalancy: \code{\link{makeUndersampleWrapper}},
   \code{\link{oversample}}, \code{\link{smote}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
@@ -62,8 +67,13 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},

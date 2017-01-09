@@ -16,7 +16,7 @@ makeRLearner.regr.LiblineaRL2L1SVR = function() {
     properties = c("numerics"),
     name = "L2-Regularized L1-Loss Support Vector Regression",
     short.name = "liblinl2l1svr",
-    note = ""
+    note = "Parameter `svr_eps` has been set to `0.1` by default."
   )
 }
 

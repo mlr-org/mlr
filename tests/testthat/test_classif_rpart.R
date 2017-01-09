@@ -1,7 +1,8 @@
 context("classif_rpart")
 
 test_that("classif_rpart", {
-  requirePackages("rpart", default.method = "load")
+  requirePackagesOrSkip("rpart", default.method = "load")
+
   parset.list = list(
     list(),
     list(minsplit = 10, cp = 0.005),
@@ -34,4 +35,3 @@ test_that("classif_rpart", {
   testCVParsets("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 
 })
-

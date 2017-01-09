@@ -36,7 +36,7 @@ makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL,
   budget = NULL, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = NULL,
   tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL,
   final.dw.perc = NULL, budget = NULL)
 }
@@ -46,7 +46,7 @@ Should the same resampling instance be used for all evaluations to reduce varian
 Default is \code{TRUE}.}
 
 \item{impute.val}{[\code{numeric}]\cr
-If something goes wrong during optimization (e.g, the learner crashes),
+If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
 logged instead.
@@ -154,7 +154,8 @@ The following tuners are available:
   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
     All kinds of parameter types can be handled. We return the best of the final elite
     candidates found by irace in the last race. Its estimated performance is the mean of all
-    evaluations ever done for that candidate.}
+    evaluations ever done for that candidate. More information on irace can be found in the TR at
+    \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
 }
 
 Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},

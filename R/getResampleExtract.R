@@ -1,7 +1,7 @@
 #In the following we have the functions
-# - getReampleExtract2: Returns a feasable function we can use as extract in resample() for each specific learner class. 
-#   All is handled recursively because we have wrapped learners. 
-#   getResampleExtract2 returns a list of all appliable functions
+# - getReampleExtract2: Returns a feasible function we can use as extract in resample() for each specific learner class.
+#   All is handled recursively because we have wrapped learners.
+#   getResampleExtract2 returns a list of all applicable functions
 #
 # - getResampleExtract converts the list of functions obtained by getResampleExtract2 to a single function which returns a list of each function result.
 
@@ -41,5 +41,5 @@ getResampleExtract = function(learner){
     } else {
       lapply(functions, function(fun) fun(x))
     }
-  }  
+  }
 }

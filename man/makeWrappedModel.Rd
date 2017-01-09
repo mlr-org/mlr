@@ -30,8 +30,10 @@ Levels of factor variables (features and potentially target) in training data.
 Named by variable name, non-factors do not occur in the list.}
 
 \item{time}{[\code{numeric(1)}]\cr
- Computation time for model fit in seconds.
-@template ret_wmodel}
+Computation time for model fit in seconds.}
+}
+\value{
+[\code{\link{WrappedModel}}].
 }
 \description{
 Result from \code{\link{train}}.

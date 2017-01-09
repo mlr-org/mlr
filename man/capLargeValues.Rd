@@ -4,12 +4,17 @@
 \alias{capLargeValues}
 \title{Convert large/infinite numeric values in a data.frame or task.}
 \usage{
-capLargeValues(obj, cols = NULL, threshold = Inf, impute = threshold,
-  what = "abs")
+capLargeValues(obj, target = character(0L), cols = NULL, threshold = Inf,
+  impute = threshold, what = "abs")
 }
 \arguments{
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
+
+\item{target}{[\code{character}]\cr
+Name of the column(s) specifying the response.
+Target columns will not be capped.
+Default is \code{character(0)}.}
 
 \item{cols}{[\code{character}]\cr
 Which columns to convert.
@@ -36,7 +41,8 @@ Default is \dQuote{abs}.}
 [\code{data.frame}]
 }
 \description{
-Convert numeric entries which large/infinite (absolute) values in a data.frame.
+Convert numeric entries which large/infinite (absolute) values
+in a data.frame or task.
 Only numeric/integer columns are affected.
 }
 \examples{

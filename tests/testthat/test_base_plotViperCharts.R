@@ -1,6 +1,8 @@
 context("plotViperCharts")
 
 test_that("plotViperCharts", {
+  skip_on_cran()
+
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
   lrn2 = makeLearner("classif.lda", predict.type = "prob")
   lrns = list(lrn1, lrn2)
@@ -15,5 +17,3 @@ test_that("plotViperCharts", {
   names(rs) = c("a", "b")
   plotViperCharts(rs, browse = FALSE)
 })
-
-

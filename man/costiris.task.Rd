@@ -3,7 +3,7 @@
 \docType{data}
 \name{costiris.task}
 \alias{costiris.task}
-\title{Iris cost-sensitive classification task}
+\title{Iris cost-sensitive classification task.}
 \description{
 Contains the task (\code{costiris.task}).
 }

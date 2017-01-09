@@ -48,7 +48,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   assertClass(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
   assertFlag(show.info)
-  id = paste(learner$id, "tuned", sep = ".")
+  id = stri_paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function(){}, control, show.info, "TuneWrapper", "TuneModel")
   checkTunerParset(learner, par.set, measures, control)
@@ -61,7 +61,7 @@ trainLearner.TuneWrapper = function(.learner, .task, .subset,  ...) {
   or = tuneParams(.learner$next.learner, .task, .learner$resampling, .learner$measures,
                   .learner$opt.pars, .learner$control, .learner$show.info)
   lrn = setHyperPars(.learner$next.learner, par.vals = or$x)
-  if("DownsampleWrapper" %in% class(.learner$next.learner) && !is.null(.learner$control$final.dw.perc) && !is.null(getHyperPars(lrn)$dw.perc) && getHyperPars(lrn)$dw.perc < 1) {
+  if ("DownsampleWrapper" %in% class(.learner$next.learner) && !is.null(.learner$control$final.dw.perc) && !is.null(getHyperPars(lrn)$dw.perc) && getHyperPars(lrn)$dw.perc < 1) {
     messagef("Train model on %f on data.", .learner$control$final.dw.perc)
     lrn = setHyperPars(lrn, par.vals = list(dw.perc = .learner$control$final.dw.perc))
   }

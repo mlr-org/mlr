@@ -17,9 +17,9 @@
 #' @family wrapper
 #' @aliases CostSensClassifWrapper CostSensClassifModel
 makeCostSensClassifWrapper = function(learner) {
-  learner = checkLearnerClassif(learner)
+  learner = checkLearner(learner, "classif")
   learner = setPredictType(learner, "response")
-  id = paste("costsens", learner$id, sep = ".")
+  id = stri_paste("costsens", learner$id, sep = ".")
   makeBaseWrapper(id, "costsens", learner, package = learner$package,
     learner.subclass = "CostSensClassifWrapper", model.subclass = "CostSensClassifModel")
 }

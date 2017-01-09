@@ -4,6 +4,7 @@
 \alias{ClassifTask}
 \alias{ClusterTask}
 \alias{CostSensTask}
+\alias{MultilabelTask}
 \alias{RegrTask}
 \alias{SurvTask}
 \alias{Task}
@@ -40,16 +41,17 @@ makeSurvTask(id = deparse(substitute(data)), data, target,
 \arguments{
 \item{id}{[\code{character(1)}]\cr
 Id string for object.
-Default is the name of R variable passed to \code{data}.}
+Default is the name of the R variable passed to \code{data}.}
 
 \item{data}{[\code{data.frame}]\cr
 A data frame containing the features and target variable(s).}
 
-\item{target}{[\code{character(1)} | \code{character(2)}]\cr
-Name of the target variable.
+\item{target}{[\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
+Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
-so it has length 2, for multilabel classification it must the names of the logical
-columns that encode whether a label is present or not.}
+so it has length 2. For multilabel classification it contains the names of the logical
+columns that encode whether a label is present or not and its length corresponds to the
+number of classes.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
@@ -79,7 +81,7 @@ Default is \dQuote{warn}.}
 \item{check.data}{[\code{logical(1)}]\cr
 Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
-Default is \code{TRUE}}
+Default is \code{TRUE}.}
 
 \item{costs}{[\code{data.frame}]\cr
 A numeric matrix or data frame containing the costs of misclassification.
@@ -114,8 +116,8 @@ Object members:
 \describe{
 \item{env [\code{environment}]}{Environment where data for the task are stored.
   Use \code{\link{getTaskData}} in order to access it.}
-\item{weights [\code{numeric}]}{See argument above. \code{NULL} if not present.}
-\item{blocking [\code{factor}]}{See argument above. \code{NULL} if not present.}
+\item{weights [\code{numeric}]}{See argument. \code{NULL} if not present.}
+\item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
 

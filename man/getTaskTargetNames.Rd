@@ -14,7 +14,8 @@ Task or its description object.}
 [\code{character}].
 }
 \description{
-Get the name(s) of the target column(s).
+NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+actually return the same thing.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

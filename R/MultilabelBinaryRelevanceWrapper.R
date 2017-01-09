@@ -24,32 +24,16 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @examples
-#' \donttest{
-#' d = getTaskData(yeast.task)
-#' # drop some labels so example runs faster
-#' d = d[, c(1:3, 15:117)]
-#' task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-#' lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
-#' lrn = setPredictType(lrn, "prob")
-#' # train, predict and evaluate
-#' mod = train(lrn, yeast.task)
-#' pred = predict(mod, yeast.task)
-#' p = performance(pred)
-#' performance(pred, measure = hamloss)
-#' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
-#' # above works also with predictions from resample!
-#' }
+#' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
-  id = paste("multilabel", learner$id, sep = ".")
+  id = stri_paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
     learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
   x$type = "multilabel"
   return(x)
 }
-
 
 #' @export
 trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL,...) {
@@ -66,11 +50,11 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
 }
 
 #' @export
-predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(predict(m, newdata = .newdata, ...)$data$response)
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset,...)))
   else
-    function(m) predict(m, newdata = .newdata, ...)$data$prob.TRUE
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset,...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }

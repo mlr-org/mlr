@@ -5,13 +5,16 @@
 \alias{G1}
 \alias{G2}
 \alias{acc}
+\alias{arsq}
 \alias{auc}
 \alias{bac}
 \alias{ber}
 \alias{brier}
+\alias{brier.scaled}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
+\alias{expvar}
 \alias{f1}
 \alias{fdr}
 \alias{featperc}
@@ -21,15 +24,24 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
-\alias{hamloss}
+\alias{kappa}
+\alias{logloss}
+\alias{lsr}
 \alias{mae}
+\alias{mape}
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
 \alias{measureACC}
+\alias{measureAU1P}
+\alias{measureAU1U}
 \alias{measureAUC}
+\alias{measureAUNP}
+\alias{measureAUNU}
 \alias{measureBAC}
 \alias{measureBrier}
+\alias{measureBrierScaled}
+\alias{measureEXPVAR}
 \alias{measureFDR}
 \alias{measureFN}
 \alias{measureFNR}
@@ -37,34 +49,68 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
-\alias{measureHAMLOSS}
+\alias{measureKAPPA}
+\alias{measureLSR}
+\alias{measureLogloss}
 \alias{measureMAE}
+\alias{measureMAPE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMSLE}
+\alias{measureMultiLabelF1}
+\alias{measureMulticlassBrier}
+\alias{measureMultilabelACC}
+\alias{measureMultilabelHamloss}
+\alias{measureMultilabelPPV}
+\alias{measureMultilabelSubset01}
+\alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
+\alias{measureQSR}
+\alias{measureRAE}
 \alias{measureRMSE}
+\alias{measureRRSE}
+\alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
+\alias{measureSSR}
 \alias{measureTN}
 \alias{measureTNR}
 \alias{measureTP}
 \alias{measureTPR}
+\alias{measureWKAPPA}
 \alias{measures}
 \alias{medae}
 \alias{medse}
 \alias{mmce}
 \alias{mse}
-\alias{multiclass.auc}
+\alias{msle}
+\alias{multiclass.au1p}
+\alias{multiclass.au1u}
+\alias{multiclass.aunp}
+\alias{multiclass.aunu}
+\alias{multiclass.brier}
+\alias{multilabel.acc}
+\alias{multilabel.f1}
+\alias{multilabel.hamloss}
+\alias{multilabel.ppv}
+\alias{multilabel.subset01}
+\alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
+\alias{qsr}
+\alias{rae}
 \alias{rmse}
+\alias{rmsle}
+\alias{rrse}
+\alias{rsq}
 \alias{sae}
 \alias{silhouette}
 \alias{sse}
+\alias{ssr}
 \alias{timeboth}
 \alias{timepredict}
 \alias{timetrain}
@@ -72,6 +118,7 @@
 \alias{tnr}
 \alias{tp}
 \alias{tpr}
+\alias{wkappa}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -111,6 +158,34 @@ medae
 
 measureMEDAE(truth, response)
 
+rsq
+
+measureRSQ(truth, response)
+
+expvar
+
+measureEXPVAR(truth, response)
+
+arsq
+
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
+
+msle
+
+measureMSLE(truth, response)
+
+rmsle
+
 mmce
 
 measureMMCE(truth, response)
@@ -121,15 +196,61 @@ measureACC(truth, response)
 
 ber
 
-multiclass.auc
+multiclass.aunu
+
+measureAUNU(probabilities, truth)
+
+multiclass.aunp
+
+measureAUNP(probabilities, truth)
+
+multiclass.au1u
+
+measureAU1U(probabilities, truth)
+
+multiclass.au1p
+
+measureAU1P(probabilities, truth)
+
+multiclass.brier
+
+measureMulticlassBrier(probabilities, truth)
+
+logloss
+
+measureLogloss(probabilities, truth)
+
+ssr
+
+measureSSR(probabilities, truth)
+
+qsr
+
+measureQSR(probabilities, truth)
+
+lsr
+
+measureLSR(probabilities, truth)
+
+kappa
+
+measureKAPPA(truth, response)
+
+wkappa
+
+measureWKAPPA(truth, response)
 
 auc
 
-measureAUC(probabilites, truth, negative, positive)
+measureAUC(probabilities, truth, negative, positive)
 
 brier
 
-measureBrier(probabilites, truth, negative, positive)
+measureBrier(probabilities, truth, negative, positive)
+
+brier.scaled
+
+measureBrierScaled(probabilities, truth, negative, positive)
 
 bac
 
@@ -193,9 +314,29 @@ gpr
 
 measureGPR(truth, response, positive)
 
-hamloss
+multilabel.hamloss
 
-measureHAMLOSS(truth, response)
+measureMultilabelHamloss(truth, response)
+
+multilabel.subset01
+
+measureMultilabelSubset01(truth, response)
+
+multilabel.f1
+
+measureMultiLabelF1(truth, response)
+
+multilabel.acc
+
+measureMultilabelACC(truth, response)
+
+multilabel.ppv
+
+measureMultilabelPPV(truth, response)
+
+multilabel.tpr
+
+measureMultilabelTPR(truth, response)
 
 cindex
 
@@ -220,8 +361,10 @@ Vector of the true class.}
 \item{response}{[\code{factor}]\cr
 Vector of the predicted class.}
 
-\item{probabilites}{[\code{numeric}]\cr
-The probabilites for the positive class.}
+\item{probabilities}{[\code{numeric} | \code{matrix}]\cr
+a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
+b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
+columns are named with class labels.}
 
 \item{negative}{[\code{character(1)}]\cr
 The name of the negative class.}
@@ -245,8 +388,16 @@ Most measures can directly be accessed via the function named after the scheme m
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
 }
+\references{
+He, H. & Garcia, E. A. (2009)
+\emph{Learning from Imbalanced Data.}
+IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
+}
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{performance}}

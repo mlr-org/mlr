@@ -11,7 +11,7 @@ test_that("MulticlassWrapper", {
       return(cm)
     }
     cm = cm.onevsrest(task)
-    levs = getTaskFactorLevels(task)[[1]]
+    levs = getTaskClassLevels(task)
     if (!setequal(rownames(cm), levs))
       stop("Rownames of codematrix must be class levels!")
     if (!all(cm == 1 | cm == -1 | cm == 0))
@@ -40,4 +40,13 @@ test_that("MulticlassWrapper", {
   expect_true(r3$aggr[[1L]] < 0.2)
 })
 
-
+test_that("MulticlassWrapper works with multiple factor levels (#620)", {
+  df = iris
+  df$Sepal.Length = factor(df$Sepal.Length)
+  classif.task = makeClassifTask(id="test", data=df, target="Species")
+  base.lrn = makeLearner("classif.rpart")
+  w = makeMulticlassWrapper(base.lrn, mcw.method = "onevsrest")
+  rdesc = makeResampleDesc("CV", iters = 2L)
+  res = benchmark(w, classif.task, rdesc)
+  expect_true(all(res$results[[1]]$classif.rpart.multiclass$measures.test$mmce < 1L))
+})

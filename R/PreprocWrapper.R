@@ -20,6 +20,7 @@
 #'   \code{target} is a string and denotes the target variable in \code{data}.
 #'   \code{args} are the args that were passed to \code{train}.
 #'   \code{control} is the object you returned in \code{train}.
+#'   Must return the processed data.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Parameter set of \code{\link[ParamHelpers]{LearnerParam}} objects to describe the
 #'   parameters in \code{args}.
@@ -39,7 +40,7 @@ makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(),
   if (!isProperlyNamed(par.vals))
     stop("'par.vals' must be a properly named list!")
 
-  id = paste(learner$id, "preproc", sep = ".")
+  id = stri_paste(learner$id, "preproc", sep = ".")
   x = makeBaseWrapper(id, type = learner$type, next.learner = learner, par.set = par.set,
     par.vals = par.vals, learner.subclass = "PreprocWrapper", model.subclass = "PreprocModel")
   x$train = train

@@ -36,7 +36,20 @@ Set of measure properties. Some standard property names include:
 Default is \code{character(0)}.}
 
 \item{fun}{[\code{function(task, model, pred, feats, extra.args)}]\cr
-Calculates performance value.}
+Calculates the performance value. Usually you will only need the prediction
+object \code{pred}.
+\describe{
+  \item{\code{task} [\code{\link{Task}}]}{
+    The task.}
+  \item{\code{model} [\code{\link{WrappedModel}}]}{
+    The fitted model.}
+  \item{\code{pred} [\code{\link{Prediction}}]}{
+    Prediction object.}
+  \item{\code{feats} [\code{data.frame}]}{
+    The features.}
+  \item{\code{extra.args} [\code{list}]}{
+    See below.}
+}}
 
 \item{extra.args}{[\code{list}]\cr
 List of extra arguments which will always be passed to \code{fun}.
@@ -93,7 +106,10 @@ f = function(task, model, pred, extra.args)
 makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{measures}}, \code{\link{performance}}

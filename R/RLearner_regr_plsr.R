@@ -13,8 +13,7 @@ makeRLearner.regr.plsr = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Partial Least Squares Regression",
-    short.name = "plsr",
-    note = ""
+    short.name = "plsr"
   )
 }
 

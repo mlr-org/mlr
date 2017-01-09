@@ -21,7 +21,8 @@
 #'   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
 #'     All kinds of parameter types can be handled. We return the best of the final elite
 #'     candidates found by irace in the last race. Its estimated performance is the mean of all
-#'     evaluations ever done for that candidate.}
+#'     evaluations ever done for that candidate. More information on irace can be found in the TR at
+#'     \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
 #' }
 #'
 #' Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},

@@ -1,5 +1,5 @@
-data(Sonar, package = "mlbench")
-data(BreastCancer, package = "mlbench")
+data(Sonar, package = "mlbench", envir = environment())
+data(BreastCancer, package = "mlbench", envir = environment())
 
 binaryclass.df = Sonar
 binaryclass.formula = Class~.
@@ -41,6 +41,9 @@ multilabel.test.inds  = setdiff(1:150, multilabel.train.inds)
 multilabel.train = multilabel.df[multilabel.train.inds, ]
 multilabel.test  = multilabel.df[multilabel.test.inds, ]
 multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target = multilabel.target)
+multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
+multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
+multilabel.small.inds = c(1, 52, 53, 123)
 
 noclass.df = iris[,-5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
@@ -49,7 +52,7 @@ noclass.train = noclass.df[noclass.train.inds, ]
 noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
-data(BostonHousing, package = "mlbench")
+data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing
 regr.formula = medv ~ .
 regr.target = "medv"
@@ -80,101 +83,41 @@ regr.num.test  = regr.num.df[regr.num.test.inds, ]
 regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
-surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(c(TRUE, FALSE), 150, replace = TRUE), iris)
-surv.formula = survival::Surv(time, event) ~ .
-surv.target = c("time", "event")
-surv.train.inds = c(1:30, 51:80, 101:130)
-surv.test.inds  = setdiff(1:150, surv.train.inds)
+getSurvData = function(n = 100, p = 10) {
+  set.seed(1)
+  beta <- c(rep(1,10),rep(0,p-10))
+  x <- matrix(rnorm(n*p),n,p)
+  colnames(x) = sprintf("x%01i", 1:p)
+  real.time <- -(log(runif(n)))/(10 * exp(drop(x %*% beta)))
+  cens.time <- rexp(n,rate=1/10)
+  status <- ifelse(real.time <= cens.time, TRUE, FALSE)
+  obs.time <- ifelse(real.time <= cens.time,real.time,cens.time) + 1
+  return(cbind(data.frame(time = obs.time, status = status), x))
+}
+surv.df = getSurvData()
+surv.formula = survival::Surv(time, status) ~ .
+surv.target = c("time", "status")
+surv.train.inds = seq(1, floor(2/3 * nrow(surv.df)))
+surv.test.inds  = setdiff(1:nrow(surv.df), surv.train.inds)
 surv.train = surv.df[surv.train.inds, ]
 surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
+rm(getSurvData)
 
 costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
-black.xpath = "//svg:path[contains(@style, 'fill:rgb(0%,0%,0%);')]"
-grey.xpath = "//svg:path[contains(@style, 'fill:rgb(89.803922%,89.803922%,89.803922%);')]"
-red.xpath = "//svg:path[contains(@style, 'fill:rgb(97.254902%,46.27451%,42.745098%);')]"
-blue.xpath = "//svg:path[contains(@style, 'fill:rgb(38.039216%,61.176471%,100%);')]"
-green.xpath = "//svg:path[contains(@style, 'fill:rgb(0%,72.941176%,21.960784%);')]"
-black.line.xpath = "//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);')]"
-blue.line.xpath = "//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,74.901961%,76.862745%);')]"
-red.line.xpath = "//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(97.254902%,46.27451%,42.745098%);')]"
-black.bar.xpath = "//svg:path[contains(@style, 'stroke:none;fill-rule:nonzero;fill:rgb(20%,20%,20%);fill-opacity:1')]"
-
-
-#tiny datasets for testing
-#features
-var1 = c(1, 2, 3, 4)
-var2 = c(3, 4, 1, 2)
-#for regression
-tar.regr = c(5, 10, 0, 5)
-pred.art.regr = c(4, 11, 0, 4)
-data.regr = data.frame(var1, var2, tar.regr)
-task.regr = makeRegrTask(data = data.regr, target = "tar.regr")
-lrn.regr = makeLearner("regr.rpart")
-mod.regr = train(lrn.regr, task.regr)
-pred.regr = predict(mod.regr, task.regr)
-pred.regr$data$response = pred.art.regr  
-#for multiclass
-tar.classif = factor(c(1L, 2L, 0L, 1L))
-pred.art.classif = factor(c(1L, 1L, 0L, 2L))
-data.classif = data.frame(var1, var2, tar.classif)
-task.classif = makeClassifTask(data = data.classif, target = "tar.classif")
-lrn.classif = makeLearner("classif.rpart", predict.type = "prob")
-mod.classif = train(lrn.classif, task.classif)
-pred.classif = predict(mod.classif, task.classif)
-pred.classif$data$response = pred.art.classif
-#for binaryclass
-tar.bin = factor(c(1L, 0L, 0L, 1L))
-pred.art.bin = factor(c(1L, 1L, 0L, 0L))
-data.bin = data.frame(var1, var2, tar.bin)
-task.bin = makeClassifTask(data = data.bin, target = "tar.bin")
-lrn.bin = lrn.classif
-mod.bin = train(lrn.bin, task.bin)
-pred.bin = predict(mod.bin, task.bin)
-pred.bin$data$response = pred.art.bin
-#for multilabel
-tar1.multilabel = c(TRUE, FALSE, FALSE, TRUE)
-tar2.multilabel = c(TRUE, TRUE, FALSE, TRUE)
-pred.art.multilabel = cbind(c(TRUE, FALSE, FALSE, FALSE), c(FALSE, TRUE, FALSE, TRUE))
-data.multilabel = data.frame(var1, var2, tar1.multilabel, tar2.multilabel)
-label.names = c("tar1.multilabel", "tar2.multilabel")
-task.multilabel = makeMultilabelTask(data = data.multilabel, target = label.names)
-lrn.multilabel = makeLearner("multilabel.rFerns")
-mod.multilabel = train(lrn.multilabel, task.multilabel)
-pred.multilabel = predict(mod.multilabel, task.multilabel)
-pred.multilabel$data[,4:5] = pred.art.multilabel
-#for survival
-time.surv = c(5, 10, 5, 10)
-status.surv = c(TRUE, FALSE, TRUE, FALSE)
-pred.art.surv = c(1, -1, 1, 1)
-data.surv = data.frame(var1, var2, time.surv, status.surv)
-tar.names = c("time.surv", "status.surv")
-task.surv = makeSurvTask(data = data.surv, target = tar.names)
-lrn.surv = makeLearner("surv.coxph")
-mod.surv = train(lrn.surv, task.surv)
-pred.surv = predict(mod.surv, task.surv)
-pred.surv$data[,"response"] = pred.art.surv 
-#for costsensitive
-tar.costsens = factor(c("a", "b", "c", "a"))
-pred.art.costsens = factor(c("a", "b", "c", "c"))
-data.costsens = data.frame(var1, var2)
-costs = matrix(c(0, 1, 2, 1, 0, 2, 1, 2, 0, 0, 2,1), nrow = 4L, byrow = TRUE)
-colnames(costs) = levels(tar.costsens)
-rownames(costs) = rownames(data.costsens)
-task.costsens = makeCostSensTask(data = data.costsens, cost = costs)
-lrn.costsens = makeLearner("classif.multinom", trace = FALSE)
-lrn.costsens = makeCostSensWeightedPairsWrapper(lrn.costsens)
-mod.costsens = train(lrn.costsens, task.costsens)
-pred.costsens = predict(mod.costsens, task = task.costsens)
-pred.costsens$data$response = pred.art.costsens
-#for clustering
-pred.art.cluster = c(1L, 1L, 2L, 1L)
-data.cluster = data.frame(var1, var2)
-task.cluster = makeClusterTask(data = data.cluster)
-lrn.cluster = makeLearner("cluster.EM")
-mod.cluster = train(lrn.cluster, task.cluster)
-pred.cluster = predict(mod.cluster, task.cluster)
-pred.cluster$data$response = pred.art.cluster
+ns.svg = c(svg = "http://www.w3.org/2000/svg")
+black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
+grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"
+red.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #F8766D')]"
+blue.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #619CFF')]"
+green.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #00BA38')]"
+black.line.xpath = "/svg:svg//svg:polyline[not(contains(@style, 'stroke:'))]"
+black.line.xpath2 = "/svg:svg//svg:polyline[contains(@style, 'stroke: #000000')]"
+blue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #00BFC4;')]"
+mediumblue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #3366FF;')]"
+red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
+red.rug.line.xpath = "/svg:svg//svg:line[contains(@style, 'stroke: #FF0000;')]"
+black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"

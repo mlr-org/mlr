@@ -14,7 +14,8 @@ Task or its description object.}
 [\code{character}].
 }
 \description{
-Get the class levels for classification and multilabel tasks.
+NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+actually return the same thing.
 }
 \seealso{
 Other task: \code{\link{getTaskCosts}},

@@ -1,12 +1,16 @@
 context("classif_boosting")
 
 test_that("classif_boosting", {
-  requirePackages(c("adabag", "rpart"), default.method = "load")
+  requirePackagesOrSkip(c("adabag", "rpart"), default.method = "load")
+
   parset.list1 = list(
+    list(control = rpart::rpart.control(xval = 0)),
     list(mfinal = 1, control = rpart::rpart.control(xval = 0)),
     list(mfinal = 2, control = rpart::rpart.control(cp = 0.2, xval = 0))
   )
+  
   parset.list2 = list(
+    list(),
     list(mfinal = 1),
     list(mfinal = 2, cp = 0.2)
   )
@@ -30,6 +34,13 @@ test_that("classif_boosting", {
     multiclass.train.inds, old.predicts.list, parset.list2)
   testProbParsets("classif.boosting", multiclass.df, multiclass.target,
     multiclass.train.inds, old.probs.list, parset.list2)
+  
+  
+  # cv testing with an empty parameter list, takes too long (default mfinal = 100L)
+  parset.list2 = list(
+    list(mfinal = 1),
+    list(mfinal = 2, cp = 0.2)
+  )
 
   tt = function (formula, data, subset = 1:nrow(data), ...) {
     args = list(...)
@@ -49,4 +60,3 @@ test_that("classif_boosting", {
   testCVParsets("classif.boosting", multiclass.df, multiclass.target,
     tune.train = tt, tune.predict = tp, parset.list = parset.list2)
 })
-

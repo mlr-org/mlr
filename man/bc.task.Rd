@@ -3,7 +3,7 @@
 \docType{data}
 \name{bc.task}
 \alias{bc.task}
-\title{Wisconsin Breast Cancer classification task}
+\title{Wisconsin Breast Cancer classification task.}
 \description{
 Contains the task (\code{bc.task}).
 }

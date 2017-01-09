@@ -19,6 +19,17 @@
 #' @param fun [\code{function(task, group, pred, extra.args)}]\cr
 #'   Calculates performance value from \code{\link{ResamplePrediction}} object.
 #'   For rare cases you can also use the task, the grouping or the extra arguments \code{extra.args}.
+#'   \describe{
+#'     \item{\code{task} [\code{\link{Task}}]}{
+#'       The task.}
+#'     \item{\code{group} [\code{factor}]}{
+#'       Grouping of resampling iterations. This encodes whether specific iterations
+#'       'belong together' (e.g. repeated CV).}
+#'     \item{\code{pred} [\code{\link{Prediction}}]}{
+#'       Prediction object.}
+#'     \item{\code{extra.args} [\code{list}]}{
+#'       See below.}
+#'   }
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
 #'   Default is empty list.
@@ -26,20 +37,7 @@
 #'   Should the measure be minimized?
 #'   Default is \code{TRUE}.
 #' @param properties [\code{character}]\cr
-#'   Set of measure properties. Some standard property names include:
-#'   \describe{
-#'     \item{classif}{Is the measure applicable for classification?}
-#'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
-#'     \item{regr}{Is the measure applicable for regression?}
-#'     \item{surv}{Is the measure applicable for survival?}
-#'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
-#'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
-#'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
-#'     \item{req.task}{Is task object required in calculation? Usually not the case}
-#'     \item{req.model}{Is model object required in calculation? Usually not the case.}
-#'     \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-#'     \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
-#'   }
+#'   Set of measure properties. For a list of values see \code{\link{Measure}}.
 #'   Default is \code{character(0)}.
 #' @param best [\code{numeric(1)}]\cr
 #'   Best obtainable value for measure.
@@ -53,9 +51,9 @@
 #' @family performance
 #' @export
 makeCustomResampledMeasure = function(measure.id, aggregation.id, minimize = TRUE, properties = character(0L),
-                                      fun, extra.args = list(), best = NULL, worst = NULL,
-                                      measure.name = measure.id, aggregation.name = aggregation.id,
-                                      note = "") {
+  fun, extra.args = list(), best = NULL, worst = NULL, measure.name = measure.id,
+  aggregation.name = aggregation.id, note = "") {
+
   assertString(measure.id)
   assertString(aggregation.id)
   assertFlag(minimize)
@@ -73,6 +71,7 @@ makeCustomResampledMeasure = function(measure.id, aggregation.id, minimize = TRU
    best = best, worst = worst, name = measure.name, note = note)
   fun2 = function(task, perf.test, perf.train, measure, group, pred)
     fun(task, group, pred, extra.args)
-  aggr = makeAggregation(id = aggregation.id, name = aggregation.name, fun = fun2)
+  # we set the properties to "no requirements" here
+  aggr = makeAggregation(id = aggregation.id, name = aggregation.name, properties = character(0L), fun = fun2)
   setAggregation(custom, aggr)
 }

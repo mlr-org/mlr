@@ -15,4 +15,20 @@ test_that("plotLearnerPrediction", {
 
   plotLearnerPrediction("cluster.kmeans", noclass.task, gridsize = gs)
   ggsave(tempfile(fileext = ".png"))
+
+  # pretty.names works
+  lrn = makeLearner("classif.rpart")
+  plotLearnerPrediction(lrn, multiclass.task)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getLearnerShortName(lrn))
+
+  plotLearnerPrediction(lrn, multiclass.task, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getLearnerId(lrn))
 })

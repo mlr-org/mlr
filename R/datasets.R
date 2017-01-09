@@ -1,4 +1,4 @@
-#' Iris classification task
+#' Iris classification task.
 #'
 #' Contains the task (\code{iris.task}).
 #'
@@ -8,7 +8,7 @@
 #' @docType data
 NULL
 
-#' Sonar classification task
+#' Sonar classification task.
 #'
 #' Contains the task (\code{sonar.task}).
 #'
@@ -18,7 +18,7 @@ NULL
 #' @docType data
 NULL
 
-#' Wisconsin Breast Cancer classification task
+#' Wisconsin Breast Cancer classification task.
 #'
 #' Contains the task (\code{bc.task}).
 #'
@@ -29,7 +29,7 @@ NULL
 #' @docType data
 NULL
 
-#' PimaIndiansDiabetes classification task
+#' PimaIndiansDiabetes classification task.
 #'
 #' Contains the task (\code{pid.task}).
 #'
@@ -40,7 +40,7 @@ NULL
 #' @docType data
 NULL
 
-#' Boston Housing regression task
+#' Boston Housing regression task.
 #'
 #' Contains the task (\code{bh.task}).
 #'
@@ -51,7 +51,7 @@ NULL
 #' @docType data
 NULL
 
-#' Wisonsin Prognostic Breast Cancer (WPBC) survival task
+#' Wisonsin Prognostic Breast Cancer (WPBC) survival task.
 #'
 #' Contains the task (\code{wpbc.task}).
 #'
@@ -63,7 +63,7 @@ NULL
 #' @docType data
 NULL
 
-#' NCCTG Lung Cancer survival task
+#' NCCTG Lung Cancer survival task.
 #'
 #' Contains the task (\code{lung.task}).
 #'
@@ -75,7 +75,7 @@ NULL
 #' @docType data
 NULL
 
-#' Motor Trend Car Road Tests clustering task
+#' Motor Trend Car Road Tests clustering task.
 #'
 #' Contains the task (\code{mtcars.task}).
 #'
@@ -86,7 +86,7 @@ NULL
 #' @docType data
 NULL
 
-#' European Union Agricultural Workforces clustering task
+#' European Union Agricultural Workforces clustering task.
 #'
 #' Contains the task (\code{agri.task}).
 #'
@@ -97,7 +97,7 @@ NULL
 #' @docType data
 NULL
 
-#' Iris cost-sensitive classification task
+#' Iris cost-sensitive classification task.
 #'
 #' Contains the task (\code{costiris.task}).
 #'
@@ -112,7 +112,7 @@ NULL
 #' @docType data
 NULL
 
-#' Yeast multilabel classification task
+#' Yeast multilabel classification task.
 #'
 #' Contains the task (\code{yeast.task}).
 #'

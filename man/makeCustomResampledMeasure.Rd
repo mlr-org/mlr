@@ -21,25 +21,23 @@ Should the measure be minimized?
 Default is \code{TRUE}.}
 
 \item{properties}{[\code{character}]\cr
-Set of measure properties. Some standard property names include:
-\describe{
-  \item{classif}{Is the measure applicable for classification?}
-  \item{classif.multi}{Is the measure applicable for multi-class classification?}
-  \item{regr}{Is the measure applicable for regression?}
-  \item{surv}{Is the measure applicable for survival?}
-  \item{costsens}{Is the measure applicable for cost-sensitive learning?}
-  \item{req.pred}{Is prediction object required in calculation? Usually the case.}
-  \item{req.truth}{Is truth column required in calculation? Usually the case.}
-  \item{req.task}{Is task object required in calculation? Usually not the case}
-  \item{req.model}{Is model object required in calculation? Usually not the case.}
-  \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-  \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
-}
+Set of measure properties. For a list of values see \code{\link{Measure}}.
 Default is \code{character(0)}.}
 
 \item{fun}{[\code{function(task, group, pred, extra.args)}]\cr
 Calculates performance value from \code{\link{ResamplePrediction}} object.
-For rare cases you can also use the task, the grouping or the extra arguments \code{extra.args}.}
+For rare cases you can also use the task, the grouping or the extra arguments \code{extra.args}.
+\describe{
+  \item{\code{task} [\code{\link{Task}}]}{
+    The task.}
+  \item{\code{group} [\code{factor}]}{
+    Grouping of resampling iterations. This encodes whether specific iterations
+    'belong together' (e.g. repeated CV).}
+  \item{\code{pred} [\code{\link{Prediction}}]}{
+    Prediction object.}
+  \item{\code{extra.args} [\code{list}]}{
+    See below.}
+}}
 
 \item{extra.args}{[\code{list}]\cr
 List of extra arguments which will always be passed to \code{fun}.
@@ -74,7 +72,10 @@ only calculate an aggregated value. If you can define a function that makes sens
 for every single training / test set, implement your own \code{\link{Measure}}.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
   \code{\link{measures}}, \code{\link{performance}}
 }

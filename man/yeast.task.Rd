@@ -3,7 +3,7 @@
 \docType{data}
 \name{yeast.task}
 \alias{yeast.task}
-\title{Yeast multilabel classification task}
+\title{Yeast multilabel classification task.}
 \source{
 \url{http://sourceforge.net/projects/mulan/files/datasets/yeast.rar}
 }

@@ -1,7 +1,8 @@
 context("regr_rpart")
 
 test_that("regr_rpart", {
-  requirePackages("rpart", default.method = "load")
+  requirePackagesOrSkip("rpart", default.method = "load")
+
   parset.list = list(
     list(),
     list(minsplit=10, cp=0.005),
@@ -30,4 +31,3 @@ test_that("regr_rpart", {
 
   testCVParsets("regr.rpart", regr.df, regr.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)
 })
-

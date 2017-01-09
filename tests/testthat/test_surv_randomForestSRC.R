@@ -1,25 +1,24 @@
 context("surv_randomForestSRC")
 
 test_that("surv_randomForestSRC", {
-  requirePackages("survival", default.method = "load")
-  requirePackages("randomForestSRC", default.method = "load")
+  requirePackagesOrSkip(c("survival", "randomForestSRC"), default.method = "load")
 
   parset.list = list(
     list(),
-    list(ntree = 100),
-    list(ntree = 50, mtry = 4),
-    list(ntree = 50, nodesize = 2, na.action = "na.impute", splitrule = "logrank")
+    list(ntree = 100L),
+    list(ntree = 50L, mtry = 5L),
+    list(ntree = 50L, nodesize = 2L, na.action = "na.impute", splitrule = "logrank", importance = "permute", proximity = FALSE)
   )
   old.predicts.list = list()
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset, list(data = surv.train, formula = surv.formula, importance = "none", proximity = FALSE, forest = TRUE))
+    parset = c(parset, list(data = surv.train, formula = surv.formula, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     # There are some crazy checks in RFSRC, we have to overwrite the formula here
-    parset$formula = Surv(time, event) ~ .
+    parset$formula = Surv(time, status) ~ .
     m = do.call(randomForestSRC::rfsrc, parset)
-    p  = predict(m, newdata = surv.test, importance = "none", na.action = "na.impute")$predicted
+    p = predict(m, newdata = surv.test, membership = FALSE, na.action = "na.impute")$predicted
     old.predicts.list[[i]] = drop(p)
   }
 

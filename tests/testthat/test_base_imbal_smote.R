@@ -62,4 +62,19 @@ test_that("smote wrapper",  {
   lrn4 = makeSMOTEWrapper(lrn1, sw.rate = 2, sw.alt.logic = TRUE)
   r = resample(lrn4, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
+
+  # test that param "nn" is passed down, we had a bug here, see PR #742
+  # it is hard to test the effect of nn in a the stochastic algo so we test that we get
+  # an error in smote() when the value is too large.
+  lrn4 = makeSMOTEWrapper(lrn1, sw.nn = 100)
+  expect_error(resample(lrn4, binaryclass.task, rdesc), "when the minimal class has size")
+})
+
+test_that("smote works with only integer features", {
+  dat = getTaskData(pid.task)
+  i = sapply(dat, is.numeric)
+  dat[,i] = lapply(dat[,i], as.integer)
+  tsk = makeClassifTask(data = dat, target = "diabetes")
+  task2 = smote(tsk, 2)
+  expect_equal(getTaskSize(task2), 1036)
 })

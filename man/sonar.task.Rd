@@ -3,7 +3,7 @@
 \docType{data}
 \name{sonar.task}
 \alias{sonar.task}
-\title{Sonar classification task}
+\title{Sonar classification task.}
 \description{
 Contains the task (\code{sonar.task}).
 }

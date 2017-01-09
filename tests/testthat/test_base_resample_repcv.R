@@ -1,4 +1,4 @@
-context("resample: repcv")
+context("resample_repcv")
 
 test_that("repcv instance works", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3), task = multiclass.task)
@@ -62,4 +62,8 @@ test_that("test.join works somehow", {
   res = resample(learner = lrn, task = task, resampling = rin, measures = measures)
   expect_equal(res$measures.test[, 2L], res$measures.test[, 3L])
   expect_true(diff(res$aggr) > 0)
+
+  lrn = setPredictType(lrn, predict.type = "prob")
+  res.prob = resample(learner = lrn, task = task, resampling = rin, measures = measures)
+  expect_equal(res.prob$measures.test[, 2L], res.prob$measures.test[, 3L])
 })

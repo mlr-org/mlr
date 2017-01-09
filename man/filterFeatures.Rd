@@ -4,8 +4,8 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding filter values.}
 \usage{
-filterFeatures(task, method = "rf.importance", fval = NULL, perc = NULL,
-  abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
+filterFeatures(task, method = "randomForestSRC.rfsrc", fval = NULL,
+  perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -13,7 +13,7 @@ The task.}
 
 \item{method}{[\code{character(1)}]\cr
 See \code{\link{listFilterMethods}}.
-Default is \dQuote{rf.importance}.}
+Default is \dQuote{randomForestSRC.rfsrc}.}
 
 \item{fval}{[\code{\link{FilterValues}}]\cr
 Result of \code{\link{generateFilterValuesData}}.
@@ -47,8 +47,7 @@ First, calls \code{\link{generateFilterValuesData}}.
 Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{generateFilterValuesData}},
+Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},

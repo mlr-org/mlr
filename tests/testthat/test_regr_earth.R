@@ -1,7 +1,8 @@
 context("regr_earth")
 
 test_that("regr_earth", {
-  requirePackages("earth", default.method = "load")
+  requirePackagesOrSkip("earth", default.method = "load")
+
   parset.list = list(
     list(),
     list(degree=2),

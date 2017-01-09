@@ -79,7 +79,7 @@ Default is to extract nothing.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can this argument to \code{FALSE}.
+In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
 \item{...}{[any]\cr
@@ -105,7 +105,7 @@ See \code{\link{ResampleDesc}}.}
 See \code{\link{ResampleDesc}}.}
 }
 \value{
-[\code{\link{ResampleResult}}]. List of:
+[\code{\link{ResampleResult}}].
 }
 \description{
 The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}
@@ -121,6 +121,11 @@ The remaining functions on this page are convenience wrappers for the various
 existing resampling strategies. Note that if you need to work with precomputed training and
 test splits (i.e., resampling instances), you have to stick with \code{resample}.
 }
+\note{
+If you would like to include results from the training data set, make
+sure to appropriately adjust the resampling strategy and the aggregation for
+the measure. See example code below.
+}
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
 rdesc = makeResampleDesc("CV", iters = 2)
@@ -128,11 +133,19 @@ r = resample(makeLearner("classif.qda"), task, rdesc)
 print(r$aggr)
 print(r$measures.test)
 print(r$pred)
+
+# include the training set performance as well
+rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
+r = resample(makeLearner("classif.qda"), task, rdesc,
+  measures = list(mmce, setAggregation(mmce, train.mean)))
+print(r$aggr)
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
-  \code{\link{ResampleResult}},
+  \code{\link{ResampleResult}}, \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}}
 }

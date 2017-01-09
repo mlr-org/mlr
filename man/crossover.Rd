@@ -2,7 +2,7 @@
 % Please edit documentation in R/crossover.R
 \name{crossover}
 \alias{crossover}
-\title{crossover}
+\title{Crossover.}
 \arguments{
 \item{x}{[\code{logical}]\cr
 First parent string.}
