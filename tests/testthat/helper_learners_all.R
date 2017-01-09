@@ -54,14 +54,22 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # can predict probabilities or specification "se" when testing learner can
 # predict standard errors.)
 
-testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
+testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "response") {
+  # handling special par.vals and predict type
   info = lrn$id
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
 
   lrn = setPredictType(lrn, pred.type)
 
+  # check that learner prints
   expect_output(info = info, print(lrn), lrn$id)
+
+  # check that param set prints
+  par.set = getParamSet(lrn)
+  expect_output(info = info, print(par.set))
+
+  # check that learner trains, predicts
   m = train(lrn, task)
   p = predict(m, task)
   expect_true(info = info, !is.na(performance(pred = p, task = task)))
