@@ -116,7 +116,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
 
@@ -134,7 +134,7 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
   d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 
 }
 
@@ -153,7 +153,7 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   d[1,f] = NA
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
 testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
