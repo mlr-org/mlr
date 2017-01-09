@@ -83,6 +83,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   return(m)
 }
 
+
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "se") {
@@ -97,6 +98,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
     predict(.model$learner.model, newdata = .newdata, ...)
   }
 }
+
 
 #' @export
 getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
