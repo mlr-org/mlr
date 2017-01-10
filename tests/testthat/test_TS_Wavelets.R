@@ -7,7 +7,10 @@ test_that("Ts_Wavelets", {
 
   taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
   taskW = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list(filter = "haar"))
+  wData = getTaskData(taskW, target.extra = TRUE)
+
   taskWb = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list( filter = "d4", boundary = "reflection"))
+  wbData = getTaskData(taskWb, target.extra = TRUE)
 
 
   raw = gp[, !names(gp) %in% "X1"]

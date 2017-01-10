@@ -34,7 +34,7 @@ predictLearner.tsclassif.shapelet = function(.learner, .model, .newdata, ...) {
   nd = as.matrix(.newdata)
   class.pred = shapeletLib::predictDataClass(model = m, data.test = nd)
 
-  # FIXME: outcome of method is -1+1 -> how to recode to 1,2 ?
+  # FIXME: outcome of method is -1+1 -> how to recode to 1,2 and generalize it to other labels ?
   class.pred[class.pred == -1] = 2
 
   class.pred = as.factor(class.pred)

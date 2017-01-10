@@ -11,6 +11,10 @@ task.ft = makeTSFeaturesClassifTask(task = task, method = "fourier", pars = list
 
 sh = makeTSFeaturesClassifTask(task = task, method = "shapelets")
 
+#TODO : how to include additional pars in makeTSFeaturesClassificationTask
+makeTSFeaturesClassifTask(task = task, method = "shapelets", pars = list(max.iter = 5))
+getTSShapeletFeatures(curves = gp, label.train = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")$target, max.iter = 5)
+
 lrn = makeLearner("classif.rpart")
 
 

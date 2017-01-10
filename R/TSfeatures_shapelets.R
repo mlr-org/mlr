@@ -13,19 +13,25 @@ getTSShapeletFeatures = function(curves, label.train, ...) {
 
   requirePackages("shapeletLib", default.method = "load")
 
+  assert(
+    checkClass(curves, "matrix"),
+    checkClass(curves, "data.frame")
+  )
+  # assertCharacter(method)
+  # assertInt(max.iter)
+  # assertNumber(K)
+  # assertNumber(L)
+  # assertNumber(C)
+  #
   # assert(
-  #   checkClass(curves, "matrix"),
-  #   checkClass(curves, "data.frame"),
-  #   checkClass(method, "character"),
-  #   checkClass(max.iter, "numeric"),
-  #   checkClass(K, "numeric"),
-  #   checkClass(L, "numeric"),
-  #   checkClass(C, "numeric"),
   #   checkClass(step, "numeric"),
-  #   checkClass(step, "character"),
-  #   checkClass(init.method, "character"),
-  #   checkClass(auto.hinge, "logical")
-  #   )
+  #   checkClass(step, "character")
+  # )
+  #
+  # assertCharacter(init.method)
+  # assertFlag(auto.hinge)
+
+
 
   #if curves is a data.frame, transform to matrix s.t. shapelet learning executes correctly
   if(inherits(curves, "data.frame"))
