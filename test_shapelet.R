@@ -30,9 +30,10 @@ print(r)
 
 
 
-ctrl = makeTuneControlRandom(maxit = 20)
+ctrl = makeTuneControlRandom(maxit = 5)
 ps = makeParamSet(
-  makeNumericParam("K", lower = 0.1, upper = 0.2)
+  makeNumericParam("K", lower = 0.1, upper = 0.2),
+  makeNumericParam("L", lower = 0.1, upper = 0.5)
 )
 
 
@@ -42,3 +43,4 @@ op2 = trafoOptPath(tr$opt.path)
 opd2 = as.data.frame(op2)
 #parallelStop()
 print(tr)
+
