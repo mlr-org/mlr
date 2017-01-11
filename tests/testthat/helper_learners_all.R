@@ -39,8 +39,8 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 }
 
 
-# Test that learner produces output on the console, can be trained, can predict
-# and that a performance measure is calculated.
+# Test that learner produces output on the console, its ParamSet can be printed,
+# can be trained, can predict and that a performance measure is calculated.
 # This function is being used to test learners in general and in the other
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
