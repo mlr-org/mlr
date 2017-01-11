@@ -39,8 +39,8 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 }
 
 
-# Test that learner produces output on the console, can be trained, can predict
-# and that a performance measure is calculated.
+# Test that learner produces output on the console, its ParamSet can be printed,
+# can be trained, can predict and that a performance measure is calculated.
 # This function is being used to test learners in general and in the other
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
@@ -54,14 +54,22 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # can predict probabilities or specification "se" when testing learner can
 # predict standard errors.)
 
-testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
+testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "response") {
+  # handling special par.vals and predict type
   info = lrn$id
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
 
   lrn = setPredictType(lrn, pred.type)
 
+  # check that learner prints
   expect_output(info = info, print(lrn), lrn$id)
+
+  # check that param set prints
+  par.set = getParamSet(lrn)
+  expect_output(info = info, print(par.set))
+
+  # check that learner trains, predicts
   m = train(lrn, task)
   p = predict(m, task)
   expect_true(info = info, !is.na(performance(pred = p, task = task)))
@@ -108,7 +116,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
 
@@ -126,7 +134,7 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
   d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 
 }
 
@@ -145,7 +153,7 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   d[1,f] = NA
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
 testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
