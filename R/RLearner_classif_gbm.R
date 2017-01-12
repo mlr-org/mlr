@@ -44,7 +44,13 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
 predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
   m = .model$learner.model
-  p = gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
+  tridots = list(...)
+  if(is.null(tridots$n.trees))
+    m.n.trees = m$n.trees
+  else{
+    m.n.trees = tridots$n.trees
+  }
+  p = gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m.n.trees, single.tree = FALSE, ...)
   if (length(td$class.levels) == 2L) {
     levs = c(td$negative, td$positive)
     if (.learner$predict.type == "prob") {
