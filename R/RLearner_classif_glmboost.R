@@ -16,7 +16,7 @@ makeRLearner.classif.glmboost = function() {
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
       # 'risk' and 'stopintern' will be kept for completeness sake
-      makeLogicalLearnerParam(id = "center", default = FALSE),
+      makeLogicalLearnerParam(id = "center", default = TRUE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(family = "Binomial"),
