@@ -18,9 +18,15 @@ measureAggrPrettyName = function(measure) {
 
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
-perfsToString = function(y, sep = "=") {
-  stri_paste(stri_paste(names(y), "=", formatC(y, digits = 3L), sep = ""),
-             collapse = ",", sep = " ")
+perfsToString = function(y, sep = "=", with.names = TRUE) {
+  perfs = formatC(y, digits = 3L, format = "f")
+  if (with.names) {
+    perfs.str = stri_paste(stri_paste(names(y), "=", perfs, sep = ""),
+      collapse = ",", sep = " ")    
+  } else {
+    perfs.str = stri_paste(perfs, collapse = " ")
+  }
+  return(perfs.str)
 }
 
 removeFromDots = function(ns, ...) {

@@ -105,6 +105,11 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   }
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")
+
+  messagef("Resampling: %s", rin$desc$id)
+  measure.ids.header = collapse(extractSubList(measures, "id"), sep = "  ")
+  messagef("Measures:          %s", measure.ids.header)
+
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
   time2 = Sys.time()
@@ -118,7 +123,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
-    messagef("[Resample] %s iter %i: ", rin$desc$id, i, .newline = FALSE)
+    messagef("[Resample] iter %i: ", i, .newline = FALSE)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
 
@@ -173,7 +178,8 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     if (pp == "train") x = ms.train[idx.train]
     else if (pp == "test") x = ms.test[idx.test]
     else x = c(ms.train[idx.train], ms.test[idx.test])
-    messagef(perfsToString(x))
+    messagef(perfsToString(x, with.names = FALSE))
+    # messagef(as.character(x))
   }
   list(
     measures.test = ms.test,
