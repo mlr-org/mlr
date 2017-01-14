@@ -90,7 +90,12 @@ makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
     p = p + ggtitle("True value vs. fitted value")
   } else {
     df$residuals = as.numeric(df$truth) - as.numeric(df$response)
-    p = ggplot(df, aes_string("residuals")) + geom_histogram()
+    p = ggplot(df, aes_string("residuals"))
+    if (task.type == "classif") {
+      p = p + geom_bar()
+    } else {
+      p = p + geom_histogram()
+    }
     p = p + ggtitle("Histogram of residuals")
   }
 
