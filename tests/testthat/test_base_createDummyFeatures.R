@@ -11,6 +11,8 @@ test_that("createDummyFeatures", {
   df$b = as.factor(df$b)
   df.bc = createDummyFeatures(df)
   expect_equal(colnames(df.bc), c("a", "b.a", "b.b", "b.c", "b.d", "b.e", "c.A", "c.B"))
+  grid = createDummyFeatures(expand.grid(x1 = letters[1:2], x2 = letters[3:4]), method = "reference")
+  expect_equal(colnames(grid), c("x1.b", "x2.d"))
 
   dummy.task = createDummyFeatures(iris.task)
   expect_equal(dummy.task, iris.task)
