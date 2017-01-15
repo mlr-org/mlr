@@ -44,6 +44,11 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
 
   dummies = as.data.frame(lapply(obj[work.cols], createDummyFeatures, method = method))
 
+  if (method == "reference" && length(work.cols) == length(dummies)) {
+    colnames(dummies) = Map(function(col, pre) {
+      stri_paste(pre, tail(levels(col), -1), sep = ".")}, obj[work.cols], prefix)
+  }
+
   if (length(dummies) != 0) {
     if (ncol(dummies) == 1L) {
       colnames(dummies) = stri_paste(prefix, tail(levels(dfcol), -1), sep = ".")
