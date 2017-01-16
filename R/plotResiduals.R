@@ -7,7 +7,8 @@
 #' @param obj [\code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
 #'   Input data.
 #' @param type Type of plot. Can be \dQuote{scatterplot}, the default. Or
-#'   \dQuote{hist}, for a histogram of the residuals.
+#'   \dQuote{hist}, for a histogram, or in case of classification problems
+#'   a barplot, displaying the residuals.
 #' @param loess.smooth [\code{logical(1)}]\cr
 #'   Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
 #'   Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.
