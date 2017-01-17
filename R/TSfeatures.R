@@ -3,8 +3,10 @@
 #' @description The function creates a feature representation of raw time series
 #'   for a time series classification task. The method used to create this
 #'   feature representation must be specified by the user in \code{method}.
-#'   Since the resulting data does not contain temporal structure anymore, the
-#'   returned task is a \code{ClassifTask}.
+#'   For \code{wavelets} or \code{fourier} features, the resulting data does not
+#'   contain temporal structure anymore, so the returned task is a \code{ClassifTask}.
+#'   For \code{shapelets}, the learned shapelet model is returned. See
+#'   \code{\link{getTSShapeletFeatures}}.
 #'
 #'
 #' @param task [\code{TimeSeriesClassifTask}]\cr
@@ -18,7 +20,8 @@
 #'   methods.
 #'   Wavelet transformation: \code{filter} and \code{boundary}.
 #'   Fourier transformation: \code{fft.coeff}.
-#' @return [\code{ClassifTask}].
+#'
+#' @return Either [\code{ClassifTask}] or the learned shapelet model.
 #' @export
 makeTSFeaturesClassifTask = function(task, method, pars = NULL) {
 
@@ -45,7 +48,7 @@ makeTSFeaturesClassifTask = function(task, method, pars = NULL) {
 
   if (method == "shapelets") {
     #FIXME: how to correctly use pars here for additional parameters?
-    modelSh = getTSShapeletFeatures(curves = z$data, label.train = z$target)
+    modelSh = getTSShapeletFeatures(curves = z$data, label.train = z$target )
     return(modelSh)
   }
 
