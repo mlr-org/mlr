@@ -6,7 +6,7 @@ makeTSPreprocWrapper = function(learner) {
   learner = checkLearner(learner)
   trainfun = function(data, target, args) {
     taskTs = makeTimeSeriesClassifTask(data = data, target = target, positive = args$positive)
-    taskFa = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
+    taskFa = convertTSTaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
     A = getTaskData(taskFa)
     control = list()
     list(data = A, control = control) # Preprocessing train must return a list with elements data[data.frame] and control[list]!
