@@ -4,16 +4,6 @@ cache: packages
 r:
   - release
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.9
-      - g++-4.9
-      - gfortran-4.9
-      - libgmp-dev
-      - libgsl0-dev
 env:
   global:
     - _R_CHECK_TIMINGS_=0
