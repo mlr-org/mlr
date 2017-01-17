@@ -63,7 +63,7 @@ taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
 
 ## Specify the feature extraction method and generate new task.
 ## Here, we use the Haar filter:
-taskW = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list(filter ="haar"))
+taskW = convertTSTaskToNormalTask(task = taskTs, method = "wavelets", pars = list(filter ="haar"))
 print(taskW)
 ```
 
@@ -71,7 +71,7 @@ We also want to evaluate a the Daubechie wavelet with filter length of 4.
 
 ```{r}
 ## Use the Daubechie wavelet with filter length 4.
-taskWD4 = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list(filter ="d4"))
+taskWD4 = convertTSTaskToNormalTask(task = taskTs, method = "wavelets", pars = list(filter ="d4"))
 print(taskWD4)
 ```
 
@@ -107,11 +107,11 @@ taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
 
 ## Specify the feature extraction method and generate  new task.
 ## We use the fourier features and the amplitude:
-taskFa = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
+taskFa = convertTSTaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
 print(taskFa)
 
 ## ... or we prefer the phase:
-taskFp = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "phase"))
+taskFp = convertTSTaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "phase"))
 print(taskFp)
 ```
 

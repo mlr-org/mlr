@@ -23,8 +23,7 @@
 #'
 #' @return Either [\code{ClassifTask}] or the learned shapelet model.
 #' @export
-makeTSFeaturesClassifTask = function(task, method, pars = NULL) {
-
+convertTSTaskToNormalTask = function(task, method, pars = NULL) {
   # check if task
   assertClass(task, classes = "Task")
 

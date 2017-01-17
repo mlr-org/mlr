@@ -11,7 +11,7 @@ gp = load2("demo4TS/gunpoint.RData")
 
 
 task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1", check.data = FALSE)
-task.wv = makeTSFeaturesClassifTask(task = task, method = "wavelets")
+task.wv = convertTSTaskToNormalTask(task = task, method = "wavelets")
 
 lrn = makeLearner("classif.rpart")
 

@@ -6,10 +6,10 @@ test_that("Ts_Wavelets", {
   gp = data.frame( X1= as.factor(c(-1,1,1,-1, 1)) ,v1 = 1:5, v2 = 12:16, v3 = 3:7, v4 = 4:8)
 
   taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
-  taskW = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list(filter = "haar"))
+  taskW = convertTSTaskToNormalTask(task = taskTs, method = "wavelets", pars = list(filter = "haar"))
   wData = getTaskData(taskW, target.extra = TRUE)
 
-  taskWb = makeTSFeaturesClassifTask(task = taskTs, method = "wavelets", pars = list( filter = "d4", boundary = "reflection"))
+  taskWb = convertTSTaskToNormalTask(task = taskTs, method = "wavelets", pars = list( filter = "d4", boundary = "reflection"))
   wbData = getTaskData(taskWb, target.extra = TRUE)
 
 

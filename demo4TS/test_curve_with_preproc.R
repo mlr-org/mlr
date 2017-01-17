@@ -6,13 +6,13 @@ configureMlr(show.info = TRUE, show.learner.output= TRUE)
 gp = load2("demo4TS/gunpoint.RData")
 
 task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
-task.wd = makeTSFeaturesClassifTask(task = task, method = "wavelets", pars = list(filter = "haar"))
-task.ft = makeTSFeaturesClassifTask(task = task, method = "fourier", pars = list(fft.coeff = "amplitude"))
+task.wd = convertTSTaskToNormalTask(task = task, method = "wavelets", pars = list(filter = "haar"))
+task.ft = convertTSTaskToNormalTask(task = task, method = "fourier", pars = list(fft.coeff = "amplitude"))
 
-sh = makeTSFeaturesClassifTask(task = task, method = "shapelets")
+sh = convertTSTaskToNormalTask(task = task, method = "shapelets")
 
 #TODO : how to include additional pars in makeTSFeaturesClassificationTask
-makeTSFeaturesClassifTask(task = task, method = "shapelets", pars = list(max.iter = 5))
+convertTSTaskToNormalTask(task = task, method = "shapelets", pars = list(max.iter = 5))
 getTSShapeletFeatures(curves = gp, label.train = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")$target, max.iter = 5)
 
 lrn = makeLearner("classif.rpart")
