@@ -46,6 +46,8 @@ before_install:
   - echo $LD_LIBRARY_PATH
   - echo $LIBRARY_PATH
 
+script:
+  - echo "DONE"
 
 after_failure:
   - ./travis-tool.sh dump_logs
