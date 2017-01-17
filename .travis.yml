@@ -2,7 +2,7 @@ language: r
 sudo: false
 cache: packages
 r:
-  - oldrel
+  - release
 
 addons:
   apt:
@@ -21,7 +21,7 @@ env:
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
 
 warnings_are_errors: true
-r_check_args: "--as-cran --run-donttest"
+r_check_args: "--as-cran --no-examples --no-tests"
 
 r_packages:
   - roxygen2
