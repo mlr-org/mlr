@@ -15,7 +15,7 @@
 #'   Which method is used to create time series features. Two methods available.
 #'   Wavelet transformation: \dQuote{wavelets}.
 #'   Fourier transformation: \dQuote{fourier}.
-#' @param pars  \cr
+#' @param pars \cr
 #'   Further parameters passed as argument e.g., for feature representation
 #'   methods.
 #'   Wavelet transformation: \code{filter} and \code{boundary}.
@@ -25,17 +25,8 @@
 #' @export
 convertTSTaskToNormalTask = function(task, method, pars = NULL) {
   # check if task
-  assertClass(task, classes = "Task")
-
-  #check for Time Series Classif Task
-  if (!any(class(task) == "TimeSeriesClassifTask"))
-    stop("Task is not a 'TimeSeriesClassifTask'. Please check task.")
-  #check valid feature extraction method
-  if (!(method %in%  c("wavelets", "fourier", "shapelets")))
-    stop("Method for feature extraction must be one of 'wavelets' or 'fourier' or 'shapelets'. Please check method.")
-  # #check for valid pars
-  # if (!(all(names(pars) %in% c("filter", "boundary", "fft.coeff"))))
-  #   stop("Pars includes non valid arguments. Must be filter or boundary (wavelets) or fft.coeff (fourier).")
+  assertClass(task, classes = c("Task", "TimeSeriesClassifTask"))
+  assertChoice(method, choices = c("wavelets", "fourier", "shapelets"))
 
   target = task$task.desc$target
   z = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")
@@ -46,8 +37,8 @@ convertTSTaskToNormalTask = function(task, method, pars = NULL) {
          )
 
   if (method == "shapelets") {
-    #FIXME: how to correctly use pars here for additional parameters?
-    modelSh = getTSShapeletFeatures(curves = z$data, label.train = z$target )
+    new.args = c(list(curves = z$data, label = as.factor(z$target)), as.list(unlist(pars)))
+    modelSh = do.call(getTSShapeletFeatures, new.args)
     return(modelSh)
   }
 

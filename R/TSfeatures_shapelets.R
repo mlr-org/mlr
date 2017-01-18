@@ -1,48 +1,46 @@
 #' @title Shapelet features transformation
 #'
-#' @description The function learns shapelet features for classification. Based
-#'   on those shapelets (k x l), the raw time series curve data is tranformed.
+#' @description The function learns k shapelet features with each length l for
+#'   classification. Based on those shapelets, the raw time series curve data
+#'   can be tranformed into shapelet-based feature transformation. Moreover, a
+#'   classification is learned jointly. It is either a standard SVM or a
+#'   logistic regression. Together with the shapelets, they provide the complete
+#'   shapelet model for classification.
 #'
 #' @param curves [\code{data.frame},\code{matrix}]\cr
 #'   Time series curve data.
-#' @param label.train [\code{factor}]\cr
-#'   Corresponding labels of curves.
+#' @param label [\code{factor}]\cr
+#'   Corresponding labels.
 #' @param ... [\code{any}]\cr
-#'   Addtional parameters passed to shapelet learning function.
+#'   Addtional parameters passed to shapelet learning function. Please see
+#'   \link{\code{shapeletLib}}.
 #'
-#' @return Returns an \code{list} object \code{model} containing the learned shapelet model.
-#'   I.e.
+#' @return Returns an \code{list} object \code{model} containing the learned
+#'   shapelet model. I.e.
 #'   \itemize{
 #'     \item shapelets [\code{matrix}]: \code{k} learned shapelets.
-#'     \item w [\code{numeric}]: learned weights w_1,..., w_k.
-#'     \item w.0 [\code{numeric}]: learned w_0.
+#'     \item w [\code{numeric}]: learned weights w.1,..., w.k.
+#'     \item w.0 [\code{numeric}]: learned w.0.
 #'     \item m [\code{matrix}]: shapelet-based data transformation .
-#'     \item f.val [\code{numeric}]: learning loss for each iteration.
+#'     \item f.val [\code{numeric}]: learning loss in each iteration.
 #'     \item method [\code{character}]: which loss was used.
 #'     \item max.iter [\code{integer}]: maximal number of iterations.
-#'     \item class [\code{character}]: binary or multi classification?
+#'     \item class [\code{character}]: binary or multi-class classification?
 #'   }
 #'
 #' @export
-getTSShapeletFeatures = function(curves, label.train, ...) {
+getTSShapeletFeatures = function(curves, label, ...) {
 
   requirePackages("shapeletLib", default.method = "load")
 
   assert(
-    checkClass(curves, "matrix"),
-    checkClass(curves, "data.frame")
+    checkClass(curves, "data.frame"),
+    checkClass(curves, "matrix")
   )
+  assertFactor(label)
 
 
-  #if curves is a data.frame, transform to matrix s.t. shapelet learning executes correctly
-  if(inherits(curves, "data.frame"))
-    curves = as.matrix(curves)
-
-  if(!is.factor(label.train))
-    label.train = as.factor(label.train)
-
-
-  shapeletmodel = shapeletLib::learnShapelets(data = curves, label = label.train, ...)
+  shapeletmodel = shapeletLib::learnShapelets(data = curves, label = label, ...)
 
   return(list(model = shapeletmodel))
 

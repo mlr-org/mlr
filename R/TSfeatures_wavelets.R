@@ -1,14 +1,19 @@
 #' @title Discrete Wavelet transform features
 #'
 #' @description The function extracts discrete wavelet transform coefficients
-#'   for the raw time series curve data.
+#'   from the raw time series curve data.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Time series curve data.
-#' @param filter, periodic \cr
-#'   Optional, specifies which filter should be used.
-#'   Default: \code{filter} = \dQuote{la8}, \code{boundary} = \dQuote{periodic}.
-#'   See package \code{wavelets} for more information.
+#' @param target [\code{character}]\cr
+#'   Name of the target variable.
+#' @param include.target [\code{logical}]\cr
+#'   Should the target variable (i.e. the label) be added in the returned
+#'   data.frame? Default is \code{FALSE}.
+#' @param filter,boundary [\code{character}]\cr
+#'   Optional, specifies which filter or boundary should be used. Default:
+#'   \code{filter} = \dQuote{la8}, \code{boundary} = \dQuote{periodic}. See
+#'   package \link{\code{wavelets}} for more information.
 #' @return Returns an \code{data.frame} object containing the wavelet
 #'   coefficients.
 #'
@@ -20,6 +25,10 @@ getTSWaveletFeatures = function(data, target, include.target = FALSE, filter = N
     checkClass(data, "data.frame"),
     checkClass(data, "matrix")
   )
+  assertCharacter(target)
+  assertFlag(include.target)
+  assertCharacter(filter, null.ok = TRUE)
+  assertCharacter(boundary, null.ok = TRUE)
 
   if (is.null(filter))
     filter = "la8"

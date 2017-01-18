@@ -27,8 +27,8 @@ print(r)
 
 ctrl = makeTuneControlRandom(maxit = 2)
 ps = makeParamSet(
-  makeNumericParam("K", lower = 0.1, upper = 0.2),
-  makeNumericParam("L", lower = 0.01, upper = 0.2)
+  makeNumericParam("k", lower = 0.1, upper = 0.2),
+  makeNumericParam("l", lower = 0.01, upper = 0.2)
 )
 
 

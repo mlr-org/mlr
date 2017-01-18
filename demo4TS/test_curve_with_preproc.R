@@ -9,10 +9,13 @@ task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
 task.wd = convertTSTaskToNormalTask(task = task, method = "wavelets", pars = list(filter = "haar"))
 task.ft = convertTSTaskToNormalTask(task = task, method = "fourier", pars = list(fft.coeff = "amplitude"))
 
-sh = convertTSTaskToNormalTask(task = task, method = "shapelets")
+sh.basic = convertTSTaskToNormalTask(task = task, method = "shapelets")
+sh = convertTSTaskToNormalTask(task = task, method = "shapelets", pars = list(max.iter = 5))
 
-#TODO : how to include additional pars in makeTSFeaturesClassificationTask
-convertTSTaskToNormalTask(task = task, method = "shapelets", pars = list(max.iter = 5))
+
+###
+
+
 getTSShapeletFeatures(curves = gp, label.train = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")$target, max.iter = 5)
 
 lrn = makeLearner("classif.rpart")

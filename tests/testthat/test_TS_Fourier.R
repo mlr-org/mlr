@@ -1,6 +1,6 @@
-context("Ts_Fourier")
+context("TS_Fourier")
 
-test_that("Ts_Fourier", {
+test_that("TS_Fourier", {
 
   #gp = data.frame(v1  =  t(1:4), X1= as.factor(1))
   gp = data.frame(v1 = 1:5, v2 = 2:6, v3 = 3:7, v4 = 4:8, X1= as.factor(c(-1,1,1,-1, 1)))
