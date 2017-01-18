@@ -1,11 +1,16 @@
 #' @title Fast Fourier transform features
 #'
-#' @description The functino creates time series features based on the fast
+#' @description The function creates time series features based on the fast
 #'   discrete fourier transform.
 #'
-#' @param data \code{data.frame},\code{matrix}]\cr
+#' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Time series curve data.
-#' @param fft.coeff \code{character}\cr
+#' @param target [\code{character}]\cr
+#'   Name of the target variable.
+#' @param include.target [\code{logical}]\cr
+#'   Should the target variable (i.e. the label) be added in the returned
+#'   data.frame? Default is \code{FALSE}.
+#' @param fft.coeff [\code{character}]\cr
 #'   Optional, specifies which 'transformation' of the complex frequency domain
 #'   representation should be calculated as feature representation. Must be one
 #'   of \dQuote{amplitude} or \dQuote{Phase}. Default: \dQuote{amplitude}.
@@ -20,11 +25,11 @@ getTSFourierFeatures = function(data, target, include.target = FALSE, fft.coeff 
     checkClass(data, "data.frame"),
     checkClass(data, "matrix")
   )
+  assertCharacter(target)
+  assertFlag(include.target)
+  assertChoice(fft.coeff, choices = c("amplitude", "phase"))
 
-  if (is.null(fft.coeff))
-    fft.coeff = "amplitude"
-  if (!(fft.coeff %in%  c("amplitude", "phase")))
-    stop("Transformation for complex frequency domain must be one of 'amplitude' or 'phase'. Please check method.")
+
 
   # potentially extract y-col and remove it from data, we dont need it for fourier-trafo
   cns = colnames(data)
