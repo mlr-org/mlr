@@ -8,9 +8,9 @@ test_that("Ts_Fourier", {
   taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
   refData = getTaskData(taskTs, target.extra = TRUE)
 
-  taskFa = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
+  taskFa = convertTSTaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
   faData = getTaskData(taskFa, target.extra = TRUE)
-  taskFp = makeTSFeaturesClassifTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "phase"))
+  taskFp = convertTSTaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "phase"))
   fpData = getTaskData(taskFp, target.extra = TRUE)
 
   expect_true(all(dim(refData$data) == dim(faData$data)))

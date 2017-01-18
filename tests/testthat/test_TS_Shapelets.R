@@ -14,8 +14,8 @@ test_that("Ts_Shapelets", {
 
   taskTs = makeTimeSeriesClassifTask(data = df, target = "X1", positive = "1")
   originalData = getTaskData(task = taskTs, target.extra = TRUE)
-  #taskS = makeTSFeaturesClassifTask(task = taskTs, method = "shapelets"), pars = list(K = K, L = L, show.info = TRUE))
-  taskS = makeTSFeaturesClassifTask(task = taskTs, method = "shapelets")
+  #taskS = convertTSTaskToNormalTask(task = taskTs, method = "shapelets"), pars = list(K = K, L = L, show.info = TRUE))
+  taskS = convertTSTaskToNormalTask(task = taskTs, method = "shapelets")
 
   shapes = taskS$model[[1]]$shapelets
   m = taskS$model[[1]]$M
