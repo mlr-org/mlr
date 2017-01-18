@@ -11,6 +11,7 @@ test_that("learners work: classif ", {
       replace_missing_data_with_x_j_bar = TRUE,
       num_iterations_after_burn_in = 10L),
     classif.bdk = list(ydim = 2L),
+    classif.earth = list(degree = 3L, nprune = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
@@ -24,7 +25,7 @@ test_that("learners work: classif ", {
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
   lrns = mylist("classif", properties = "factors", create = TRUE)
@@ -36,7 +37,7 @@ test_that("learners work: classif ", {
 
   # binary classif with prob
   lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = binaryclass.task,
+  lapply(lrns, testBasicLearnerProperties, task = binaryclass.task,
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
