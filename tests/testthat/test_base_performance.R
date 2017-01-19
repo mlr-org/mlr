@@ -3,11 +3,11 @@ context("performance")
 test_that("performance", {
   res = makeResampleDesc("Holdout")
   lrn = makeLearner("classif.rpart")
-  rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc, timeboth))
+  rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc))
   expect_true(all(rf$aggr > 0))
 
   res = makeResampleDesc("Bootstrap", iters = 3L)
-  rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc, timeboth))
+  rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc))
   expect_true(all(rf$aggr > 0))
   m = setAggregation(acc, test.median)
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = m)
@@ -40,7 +40,7 @@ test_that("performance", {
 
   # custom measure
   mymeasure = makeCustomResampledMeasure(measure.id = "mym", aggregation.id = "train.mean",
-                                         properties = c("classif", "predtype.response"),
+    properties = c("classif", "predtype.response"),
     fun = function(task, group, pred, feats, extra.args) {
       mean(pred$data$truth != pred$data$response)
     })

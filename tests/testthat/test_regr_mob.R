@@ -1,8 +1,10 @@
 context("regr_mob")
 
 test_that("regr_mob", {
-  requirePackages("party", default.method = "load")
+  requirePackagesOrSkip("party", default.method = "load")
+
   parset.list = list(
+    list(),
     list(term.feats=c("lstat", "rm"), part.feats=c("zn", "indus")),
     list(alpha=0.10, minsplit=40, term.feats=c("lstat", "rm", "crim"),
       part.feats=c("zn", "indus", "chas", "dis")),
@@ -16,8 +18,19 @@ test_that("regr_mob", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    formula = as.formula(paste(regr.target, "~", collapse(parset$term.feats, sep=" + "),
-      "|", collapse(parset$part.feats, sep=" + ")))
+    feats = getTaskFeatureNames(regr.task)
+    if (is.null(parset$part.feats)) {
+      part.feats = feats
+    } else {
+      part.feats = parset$part.feats
+    }
+    if (is.null(parset$term.feats)) {
+      term.feats = feats
+    } else {
+      term.feats = parset$term.feats
+    }
+    formula = as.formula(paste(regr.target, "~", collapse(term.feats, sep=" + "),
+      "|", collapse(part.feats, sep=" + ")))
     parset$term.feats = parset$part.feats = NULL
     control = do.call(party::mob_control, parset)
     pars = list(formula=formula, data=regr.train, control=control)

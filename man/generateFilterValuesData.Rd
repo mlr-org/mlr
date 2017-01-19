@@ -5,8 +5,8 @@
 \alias{generateFilterValuesData}
 \title{Calculates feature filter values.}
 \usage{
-generateFilterValuesData(task, method = "rf.importance",
-  nselect = getTaskNFeats(task), ...)
+generateFilterValuesData(task, method = "randomForestSRC.rfsrc",
+  nselect = getTaskNFeats(task), ..., more.args = list())
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -14,13 +14,19 @@ The task.}
 
 \item{method}{[\code{character}]\cr
 Filter method(s), see above.
-Default is \dQuote{rf.importance}.}
+Default is \dQuote{randomForestSRC.rfsrc}.}
 
 \item{nselect}{[\code{integer(1)}]\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
 
 \item{...}{[any]\cr
-Passed down to selected method.}
+Passed down to selected method. Can only be use if \code{method} contains one element.}
+
+\item{more.args}{[named list]\cr
+Extra args passed down to filter methods. List elements are named with the filter
+\code{method} name the args should be passed down to.
+A more general and flexible option than \code{...}.
+Default is empty list.}
 }
 \value{
 [\code{FilterValues}]. A \code{list} containing:
@@ -48,9 +54,12 @@ Other filter: \code{\link{filterFeatures}},
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialPredictionData}},
+  \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 }
 

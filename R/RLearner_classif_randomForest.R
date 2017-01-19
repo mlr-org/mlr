@@ -9,16 +9,20 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericVectorLearnerParam(id = "classwt", lower = 0),
       makeNumericVectorLearnerParam(id = "cutoff", lower = 0, upper = 1),
-      makeIntegerLearnerParam(id = "sampsize", lower = 1L),
+      makeUntypedLearnerParam(id = "strata", tunable = FALSE),
+      makeIntegerVectorLearnerParam(id = "sampsize", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
+      makeLogicalLearnerParam(id = "proximity", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "oob.prox", requires = quote(proximity == TRUE), tunable = FALSE),
       makeLogicalLearnerParam(id = "norm.votes", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "featimp"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
@@ -43,6 +47,23 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 
 #' @export
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "response", "prob")
+  type = ifelse(.learner$predict.type == "response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+#' @export
+getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  ctrl = list(...)
+  if (is.null(ctrl$type)) {
+    ctrl$type = 2L
+  } else {
+    if (ctrl$type == 1L) {
+      has.fiv = .learner$par.vals$importance
+      if (is.null(has.fiv) || has.fiv != TRUE)
+        stop("You need to train the learner with parameter 'importance' set to TRUE")
+    }
+  }
+  
+  randomForest::importance(mod, ctrl$type)[, 1]
 }

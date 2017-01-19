@@ -22,26 +22,40 @@
 #'   of stacked bars.
 #' @template arg_order_lrns
 #' @template arg_order_tsks
+#' @template arg_prettynames
 #' @template ret_gg2
 #' @family plot
 #' @family benchmark
 #' @export
 #' @examples
 #' # see benchmark
-plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", aggregation = "default", pos = "stack", order.lrns = NULL, order.tsks = NULL) {
+plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", aggregation = "default",
+  pos = "stack", order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE) {
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(pos, c("tile", "stack", "dodge"))
+  df = as.data.frame(convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation))
+  df$learner.id = factor(rownames(df))
 
-  df = convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation)
-
-  # melt back into plotable form:
-  df = melt(df)
-  colnames(df) = c("learner.id", "task.id", "rank")
+  setDT(df)
+  df = melt(df, id.vars = "learner.id")
+  setnames(df, c("variable", "value"), c("task.id", "rank"))
   df = orderBMRLrns(bmr, df, order.lrns)
   df = orderBMRTasks(bmr, df, order.tsks)
-
+  if (pretty.names) {
+    learner.ids = getBMRLearnerIds(bmr)
+    learner.short.names = getBMRLearnerShortNames(bmr)
+    names(learner.short.names) = learner.ids
+    if (is.null(order.lrns)) {
+      learner.short.names = learner.short.names[sort(learner.ids)]
+    } else {
+      learner.short.names = learner.short.names[order.lrns]
+    }
+    levels(df$learner.id) = learner.short.names
+  }
   df$rank = as.factor(df$rank)
+  setDF(df)
+
   if (pos == "tile") {
     p = ggplot(df, aes_string("rank", "task.id", fill = "learner.id"))
     p = p + geom_tile()
@@ -51,5 +65,6 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
     p = p + geom_bar(position = pos)
     p = p + ylab(NULL)
   }
+
   return(p)
 }

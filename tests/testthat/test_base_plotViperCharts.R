@@ -17,5 +17,3 @@ test_that("plotViperCharts", {
   names(rs) = c("a", "b")
   plotViperCharts(rs, browse = FALSE)
 })
-
-

@@ -1,0 +1,23 @@
+bibentry(
+  bibtype = "Article",
+  key = "mlr",
+  title = "{mlr}: Machine Learning in R",
+  author = c(
+    person("Bernd", "Bischl"),
+    person("Michel", "Lang"),
+    person("Lars", "Kotthoff"),
+    person("Julia", "Schiffner"),
+    person("Jakob", "Richter"),
+    person("Erich", "Studerus"),
+    person("Giuseppe", "Casalicchio"),
+    person("Zachary M.", "Jones")
+  ),
+  journal = "Journal of Machine Learning Research",
+  year = 2016L,
+  volume = 17L,
+  number = 170L,
+  pages = "1-5",
+  url = "http://jmlr.org/papers/v17/15-066.html"
+)
+
+# vim: ft=r

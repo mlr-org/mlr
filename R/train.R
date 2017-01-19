@@ -5,10 +5,7 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param subset [\code{integer} | \code{logical}]\cr
-#'   An index vector specifying the training cases to be used for fitting.
-#'   By default the complete data set is used.
-#'   Logical vectors will be transformed to integer with \code{\link[base]{which}}.
+#' @template arg_subset
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
@@ -85,11 +82,10 @@ train = function(learner, task, subset, weights = NULL) {
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    st = system.time(fun1(learner.model <- fun2(do.call(trainLearner, pars))), gcFirst = FALSE)
+    time.train = measureTime(fun1(learner.model <- fun2(do.call(trainLearner, pars))))
     # was there an error during training? maybe warn then
     if (is.error(learner.model) && opts$on.learner.error == "warn")
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
-    time.train = as.numeric(st[3L])
   }
   factor.levels = getTaskFactorLevels(task)
   makeWrappedModel(learner, learner.model, getTaskDescription(task), subset, vars, factor.levels, time.train)

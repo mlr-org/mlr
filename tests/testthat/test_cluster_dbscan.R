@@ -1,7 +1,7 @@
 context("cluster_dbscan")
 
 test_that("cluster_dbscan", {
-  requirePackages("fpc", default.method = "load")
+  requirePackagesOrSkip("fpc", default.method = "load")
 
   parset.list = list(
     list()

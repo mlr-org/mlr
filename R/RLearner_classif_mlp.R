@@ -22,8 +22,7 @@ makeRLearner.classif.mlp = function() {
     ),
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Multi-Layer Perceptron",
-    short.name = "mlp",
-    note = ""
+    short.name = "mlp"
   )
 }
 

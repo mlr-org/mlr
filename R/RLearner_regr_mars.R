@@ -14,8 +14,7 @@ makeRLearner.regr.mars = function() {
     ),
     properties = c("numerics"),
     name = "Multivariate Adaptive Regression Splines",
-    short.name = "mars",
-    note = ""
+    short.name = "mars"
   )
 }
 

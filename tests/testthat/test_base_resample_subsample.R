@@ -38,4 +38,3 @@ test_that("subsampling instance is stochastic", {
   rin2 = makeResampleInstance(makeResampleDesc("Subsample", iters = 3), size = 500)
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
-

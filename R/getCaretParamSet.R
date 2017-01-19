@@ -11,7 +11,7 @@
 #'
 #' @param learner [\code{character(1)}]\cr
 #'   The name of the learner from \code{caret}
-#'   (cf. \url{http://topepo.github.io/caret/modelList.html}). Note that the
+#'   (cf. \url{https://topepo.github.io/caret/available-models.html}). Note that the
 #'   names in \code{caret} often differ from the ones in \code{mlr}.
 #' @param length [\code{integer(1)}]\cr
 #'   A length / precision parameter which is used by \code{caret} for
@@ -31,20 +31,20 @@
 #' }
 #' @export
 #' @examples
-#' library(caret)
-#' classifTask = makeClassifTask(data = iris, target = "Species")
-#' 
-#' # (1) classification (random forest) with discretized parameters
-#' getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
-#' 
-#' # (2) regression (gradient boosting machine) without discretized parameters
-#' library(mlbench)
-#' data(BostonHousing)
-#' regrTask = makeRegrTask(data = BostonHousing, target = "medv")
-#' getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
+#' if (requireNamespace("caret") && requireNamespace("mlbench")) {
+#'   library(caret)
+#'   classifTask = makeClassifTask(data = iris, target = "Species")
+#'
+#'   # (1) classification (random forest) with discretized parameters
+#'   getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
+#'
+#'   # (2) regression (gradient boosting machine) without discretized parameters
+#'   library(mlbench)
+#'   data(BostonHousing)
+#'   regrTask = makeRegrTask(data = BostonHousing, target = "medv")
+#'   getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
+#' }
 getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
-  # define caret's var_seq function within this environment
-  var_seq = caret::var_seq
   td = getTaskData(task, target.extra = TRUE)
   caret.grid = caret::getModelInfo(learner)[[learner]]$grid(
     x = td$data, y = td$target, len = length)
@@ -89,7 +89,7 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
       return(x[1L])
     })
     # convert integerish variables into integer
-    par.vals[vlapply(par.vals, testIntegerish)] = 
+    par.vals[vlapply(par.vals, testIntegerish)] =
       lapply(par.vals[vlapply(par.vals, testIntegerish)], as.integer)
   }
 

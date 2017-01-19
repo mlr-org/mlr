@@ -75,17 +75,19 @@
 #' @rdname Task
 #' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
 #' @examples
-#' library(mlbench)
-#' data(BostonHousing)
-#' data(Ionosphere)
+#' if (requireNamespace("mlbench")) {
+#'   library(mlbench)
+#'   data(BostonHousing)
+#'   data(Ionosphere)
 #'
-#' makeClassifTask(data = iris, target = "Species")
-#' makeRegrTask(data = BostonHousing, target = "medv")
-#' # an example of a classification task with more than those standard arguments:
-#' blocking = factor(c(rep(1, 51), rep(2, 300)))
-#' makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
-#'   positive = "good", blocking = blocking)
-#' makeClusterTask(data = iris[, -5L])
+#'   makeClassifTask(data = iris, target = "Species")
+#'   makeRegrTask(data = BostonHousing, target = "medv")
+#'   # an example of a classification task with more than those standard arguments:
+#'   blocking = factor(c(rep(1, 51), rep(2, 300)))
+#'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
+#'     positive = "good", blocking = blocking)
+#'   makeClusterTask(data = iris[, -5L])
+#' }
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
@@ -108,6 +110,10 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
 
   if (check.data) {
     assertDataFrame(data, col.names = "strict")
+    if (class(data)[1] != "data.frame") {
+      warningf("Provided data is not a pure data.frame but from class %s, hence it will be converted.", class(data)[1])
+      data = as.data.frame(data)
+    }
     if (!is.null(weights))
       assertNumeric(weights, len = nrow(data), any.missing = FALSE, lower = 0)
     if (!is.null(blocking)) {

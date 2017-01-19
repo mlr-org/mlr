@@ -1,7 +1,8 @@
 context("cluster_EM")
 
 test_that("cluster_EM", {
-  requirePackages("RWeka", default.method = "load")
+  requirePackagesOrSkip("RWeka", default.method = "load")
+
   parset.list = list(
     list(),
     list(N=10)

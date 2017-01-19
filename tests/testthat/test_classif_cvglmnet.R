@@ -1,8 +1,10 @@
 context("classif_cvglmnet")
 
 test_that("classif_cvglmnet", {
-  requirePackages("glmnet", default.method = "load")
+  requirePackagesOrSkip("glmnet", default.method = "load")
+
   parset.list = list(
+    list(),
     list(nlambda = 20, nfolds = 5)
   )
 

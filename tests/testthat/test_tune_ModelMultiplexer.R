@@ -71,6 +71,14 @@ test_that("FailureModel works", {
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 0)
   expect_warning(mod <- train(lrn, task = iris.task), "foo")
   expect_true(isFailureModel(mod))
+
+  tmp = getMlrOptions()$on.learner.error
+  configureMlr(on.learner.error = "warn")
+  lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
+  lrn = removeHyperPars(lrn, "selected.learner")
+  expect_warning(mod <- train(lrn, task = iris.task))
+  expect_true(isFailureModel(mod))
+  configureMlr(on.learner.error = tmp)
 })
 
 test_that("ModelMultiplexer tuning", {
@@ -127,3 +135,53 @@ test_that("ModelMultiplexer passes on hyper pars in predict", {
   r = holdout(learner, regr.task)
 })
 
+# issue #707
+test_that("ModelMultiplexer handles tasks with no features", {
+  base.learners = list(
+    makeLearner("regr.glmnet"),
+    makeLearner("regr.rpart")
+  )
+  learner = makeModelMultiplexer(base.learners)
+  task = subsetTask(bh.task, features = character(0))
+  m = train(learner, task)
+  expect_is(m$learner.model, "NoFeaturesModel")
+  p = predict(m, task)
+  expect_is(p$data, "data.frame")
+  expect_true(all(p$data$response == mean(p$data$response)))
+})
+
+# issue #760
+test_that("ModelMultiplexer passes on hyper pars in predict with both", {
+  testPS = makeRLearnerClassif("testPS", character(0),
+      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when="train"),
+                   makeIntegerLearnerParam("tpPREDICT", when="predict"),
+                   makeIntegerLearnerParam("tpBOTH", when="both")),
+      properties=c("numerics", "twoclass"))
+  testPS$fix.factors.prediction = TRUE
+
+  opts = NULL
+  trainLearner.testPS = function(.learner, .task, .subset, .weights=NULL, ...) {
+    opts <<- list(...)
+    # the following to make the type checking happy
+    list(dummy=getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
+  }
+  registerS3method("trainLearner", "testPS", trainLearner.testPS)
+
+  predictLearner.testPS = function(.learner, .model, .newdata, ...) {
+    opts <<- list(...)
+    rep(.model$learner.model$dummy, nrow(.newdata))  # just do something
+  }
+  registerS3method("predictLearner", "testPS", predictLearner.testPS)
+
+  testPSMM = makeModelMultiplexer(list(testPS))
+  testPSMMArgs = setHyperPars(testPSMM, testPS.tpTRAIN=1, testPS.tpPREDICT=2, testPS.tpBOTH=3)
+  trained = train(testPSMMArgs, pid.task)
+  expect_false(is.null(opts$tpBOTH))
+  expect_false(is.null(opts$tpTRAIN))
+  expect_true(is.null(opts$tpPREDICT))
+
+  predicted = predict(trained, pid.task)
+  expect_false(is.null(opts$tpBOTH))
+  expect_true(is.null(opts$tpTRAIN))
+  expect_false(is.null(opts$tpPREDICT))
+})

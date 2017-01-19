@@ -1,6 +1,5 @@
 #' @title ResampleResult object.
-#' @name ResampleResult
-#' @rdname ResampleResult
+#'
 #' @description
 #' A resample result is created by \code{\link{resample}} and
 #' contains the following object members:
@@ -46,8 +45,9 @@
 #' }
 #' }
 #' The print method of this object gives a short overview, including
-#' task and learner ids, aggregated measures as well as mean and standard
-#' deviation of the measures.
+#' task and learner ids, aggregated measures and runtime for the resampling.
+#' @name ResampleResult
+#' @rdname ResampleResult
 #' @family resample
 NULL
 
@@ -56,12 +56,7 @@ print.ResampleResult = function(x, ...) {
   cat("Resample Result\n")
   catf("Task: %s", x$task.id)
   catf("Learner: %s", x$learner.id)
-  m = x$measures.test[, -1L, drop = FALSE]
-  Map(function(name, x, aggr) {
-    catf("%s.aggr: %.2f", name, aggr)
-    catf("%s.mean: %.2f", name, mean(x, na.rm = TRUE))
-    catf("%s.sd: %.2f", name, sd(x, na.rm = TRUE))
-  }, name = colnames(m), x = m, aggr = x$aggr)
+  catf("Aggr perf: %s", perfsToString(x$aggr))
   catf("Runtime: %g", x$runtime)
   invisible(NULL)
 }

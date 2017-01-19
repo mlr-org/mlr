@@ -4,20 +4,20 @@
 \alias{reimpute}
 \title{Re-impute a data set}
 \usage{
-reimpute(x, desc)
+reimpute(obj, desc)
 }
 \arguments{
-\item{x}{[\code{data.frame}]\cr
-Object to reimpute. Currently only data frames are supported.}
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+Input data.}
 
 \item{desc}{[\code{ImputationDesc}]\cr
 Imputation description as returned by \code{\link{impute}}.}
 }
 \value{
-Imputated \code{x}.
+Imputated \code{data.frame} or task with imputed data.
 }
 \description{
-This function accepts a data frame and a imputation description
+This function accepts a data frame or a task and an imputation description
 as returned by \code{\link{impute}} to perform the following actions:
 \enumerate{
   \item Restore dropped columns, setting them to \code{NA}

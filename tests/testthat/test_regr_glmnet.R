@@ -1,7 +1,8 @@
 context("regr_glmnet")
 
 test_that("regr_glmnet", {
-  requirePackages("glmnet", default.method = "load")
+  requirePackagesOrSkip("glmnet", default.method = "load")
+
   parset.list = list(
     list(),
     list(alpha = 0.7),
@@ -13,7 +14,7 @@ test_that("regr_glmnet", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
-    if(is.null(s)) s = 0.01
+    if (is.null(s)) s = 0.01
     parset[["s"]] = NULL
     ind = match(regr.target, names(regr.train))
     x = regr.train[, -ind]
@@ -49,4 +50,3 @@ test_that("regr_glmnet works with poisson", {
   r = holdout(lrn, task)
   expect_true(!is.na(r$aggr))
 })
-

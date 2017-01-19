@@ -1,7 +1,7 @@
 context("classif_rda")
 
 test_that("classif_rda", {
-  requirePackages("klaR", default.method = "load")
+  requirePackagesOrSkip("klaR", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
   m = klaR::rda(formula=multiclass.formula, data=multiclass.train)
@@ -13,6 +13,7 @@ test_that("classif_rda", {
 
 
   parset.list = list(
+    list(),
     list(gamma=0.1, lambda=0.1),
     list(gamma=0.5, lambda=1),
     list(gamma=1, lambda=0)

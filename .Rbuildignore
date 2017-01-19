@@ -2,6 +2,7 @@ todo-files
 ^test*.R$
 
 .gitignore
+.ignore
 .travis.yml
 
 ^.*tar.gz$
@@ -24,3 +25,6 @@ testinfo.RData
 
 ^travis_wait_*.log
 ^thirdparty$
+
+^.git$
+^makeR$

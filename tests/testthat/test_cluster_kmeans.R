@@ -1,18 +1,19 @@
 context("cluster_kmeans")
 
 test_that("cluster_kmeans", {
-  requirePackages("stats", default.method = "load")
+  requirePackagesOrSkip("stats", default.method = "load")
 
   centers = matrix(c(1, 2, 3, 4, 2, 3, 4, 5), ncol = 4)
   parset.list = list(
     list(centers = centers),
-    list(centers = 2L)
+    list()
   )
 
   old.predicts.list = list()
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
+    if (is.null(parset$centers)) parset$centers = 2L
     set.seed(getOption("mlr.debug.seed"))
     m = stats::kmeans(noclass.train, centers = centers)
     p = as.integer(clue::cl_predict(m, newdata = noclass.test, type = "class_ids"))

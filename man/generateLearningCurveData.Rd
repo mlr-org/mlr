@@ -44,7 +44,7 @@ Default is set via \code{\link{configureMlr}}.}
   \item{measures}{[(list of) \code{\link{Measure}}]\cr
     Performance measures.}
   \item{data}{[\code{data.frame}] with columns:
-    \itemize{	
+    \itemize{
       \item \code{learner} Names of learners.
       \item \code{percentage} Percentages drawn from the training split.
       \item One column for each
@@ -64,10 +64,13 @@ plotLearningCurve(r)
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generatePartialPredictionData}},
+  \code{\link{generateFunctionalANOVAData}},
+  \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 
 Other learning_curve: \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}}
