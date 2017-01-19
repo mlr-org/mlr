@@ -107,8 +107,12 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   exportMlrOptions(level = "mlr.resample")
 
   messagef("Resampling: %s", rin$desc$id)
-  measure.ids.header = collapse(extractSubList(measures, "id"), sep = "  ")
-  messagef("Measures:          %s", measure.ids.header)
+  measure.ids.header = extractSubList(measures, "id")
+  # tab.width = getMaxStriWidth(measure.ids.header)
+  measure.ids.header = stri_flatten(formatC(measure.ids.header, width = 8,
+    flag = "-"))
+  messagef(stri_paste(formatC("Measures:", width = 22, flag = "-"),"%s", collapse = " "),
+    measure.ids.header)
 
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
@@ -122,8 +126,10 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
-  if (show.info)
-    messagef("[Resample] iter %i: ", i, .newline = FALSE)
+  if (show.info) {
+    iter.message = sprintf("[Resample] iter %i:", i)
+    messagef(formatC(iter.message, width = 22, flag = "-"), .newline = FALSE)
+  }
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
 
@@ -178,7 +184,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     if (pp == "train") x = ms.train[idx.train]
     else if (pp == "test") x = ms.test[idx.test]
     else x = c(ms.train[idx.train], ms.test[idx.test])
-    messagef(perfsToString(x, with.names = FALSE))
+    messagef(perfsToString(x, tab.style = TRUE))
     # messagef(as.character(x))
   }
   list(

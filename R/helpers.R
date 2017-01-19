@@ -18,16 +18,32 @@ measureAggrPrettyName = function(measure) {
 
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
-perfsToString = function(y, sep = "=", with.names = TRUE) {
+perfsToString = function(y, sep = "=", tab.style = FALSE) {
   perfs = formatC(y, digits = 3L, format = "f")
-  if (with.names) {
+  if (tab.style) {
+    # tab.width = getMaxStriWidth(names(y))
+    tab.width = 8
+    perfs = formatC(perfs, width = tab.width, flag = "-")
+    perfs.str = stri_paste(perfs, collapse = "")
+  } else {
     perfs.str = stri_paste(stri_paste(names(y), "=", perfs, sep = ""),
       collapse = ",", sep = " ")    
-  } else {
-    perfs.str = stri_paste(perfs, collapse = " ")
   }
   return(perfs.str)
 }
+
+getMaxStriWidth = function(stri) {
+  # +1L to gain spaces
+  max(stri_width(stri)) + 1L
+}
+
+# getPerfsTabWidth = function(y) {
+#   perfs = formatC(y, digits = 3L, format = "f")
+#   widths = stri_width(perfs, names(y))
+#   # + 2L for the spaces needed
+#   tab.width = max(widths) + 2L
+#   return(tab.width)
+# }
 
 removeFromDots = function(ns, ...) {
   args = list(...)

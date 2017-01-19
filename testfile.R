@@ -34,3 +34,8 @@ sprintf("%s %s", cv10$id, measure.ids)
 names(rin)
 
 class(cv10)
+
+measure.ids.header = extractSubList(meas, "id")
+measure.ids.header = stri_flatten(formatC(measure.ids.header, width = 8, flag = "-"))
+  messagef(stri_paste("Measures:","%s", collapse = " "),
+    measure.ids.header)
