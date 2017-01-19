@@ -298,3 +298,16 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL) {
   }
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = FALSE)
 }
+
+#' @title Extract all task descriptions from benchmark result.
+#'
+#' @description
+#' A list containing all \code{\link{TaskDesc}}s for each task contained in the benchmark experiment.
+#' @template arg_bmr
+#' @return [\code{list}].
+#' @export
+#' @family benchmark
+getBMRTaskDescriptions = function(bmr) {
+ lapply(bmr$results, function(x) lapply(x, getRRTaskDescription))
+ #lapply(unlist(bmr$results, recursive = FALSE), getRRTaskDescription)
+}

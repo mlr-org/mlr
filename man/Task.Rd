@@ -127,17 +127,19 @@ columns in \code{data}. The name of the column specifies the name of the label. 
 is then a char vector that points to these columns.
 }
 \examples{
-library(mlbench)
-data(BostonHousing)
-data(Ionosphere)
+if (requireNamespace("mlbench")) {
+  library(mlbench)
+  data(BostonHousing)
+  data(Ionosphere)
 
-makeClassifTask(data = iris, target = "Species")
-makeRegrTask(data = BostonHousing, target = "medv")
-# an example of a classification task with more than those standard arguments:
-blocking = factor(c(rep(1, 51), rep(2, 300)))
-makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
-  positive = "good", blocking = blocking)
-makeClusterTask(data = iris[, -5L])
+  makeClassifTask(data = iris, target = "Species")
+  makeRegrTask(data = BostonHousing, target = "medv")
+  # an example of a classification task with more than those standard arguments:
+  blocking = factor(c(rep(1, 51), rep(2, 300)))
+  makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
+    positive = "good", blocking = blocking)
+  makeClusterTask(data = iris[, -5L])
+}
 }
 \seealso{
 Other costsens: \code{\link{makeCostSensClassifWrapper}},

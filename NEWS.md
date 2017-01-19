@@ -36,7 +36,11 @@
   FSelector/custom implementation now, performance should be much better
 * use of our own colAUC function instead of the ROCR package for AUC calculation
   to improve performance
-* We output resample performance messages for every iteration now
+* we output resample performance messages for every iteration now
+* performance improvements for the auc measure
+* createDummyFeatures supports vectors now
+* removed the pretty.names argument from plotHyperParsEffect -- labels can be set
+  though normal ggplot2 functions on the returned object
 
 ## functions - new
 * filter: randomForest.importance
@@ -55,12 +59,16 @@
 * addRRMeasure
 * plotResiduals
 * getLearnerShortName
+* mergeBenchmarkResults
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 * Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 * Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
 * Renamed setId (now deprecated) to setLearnerId
+
+## functions - removed
+* mergeBenchmarkResultLearner, mergeBenchmarkResultTask
 
 ## learners - general
 * classif.ada: fixed some param problem with rpart.control params
@@ -76,6 +84,8 @@
 * surv.gbm
 * regr.cvglmnet
 * {classif,regr,surv}.gamboost
+* classif.earth
+* {classif,regr}.evtree
 
 ## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues
