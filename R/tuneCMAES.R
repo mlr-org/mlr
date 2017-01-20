@@ -14,7 +14,6 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   sigma = median(upp - low) / 2
   ctrl.cmaes = list(vectorized = TRUE, sigma = sigma)
   ctrl.cmaes = insert(ctrl.cmaes, control$extra.args)
-  cx = function(x) convertXMatrixCols(x, par.set)
 
   # check whether the budget parameter is used correctly;
   # this check is only performed, if the budget is defined, but neither start, lambda nor maxit were defined
@@ -42,7 +41,7 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    convertx = cx, remove.nas = FALSE)
+    convertx = convertXVectorizedMatrixCols, remove.nas = FALSE)
 
   makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
 }

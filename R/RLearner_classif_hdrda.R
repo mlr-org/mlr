@@ -9,7 +9,7 @@ makeRLearner.classif.hdrda = function() {
       makeDiscreteLearnerParam(id = "shrinkage_type", default = "ridge", values = c("ridge", "convex")),
       makeNumericVectorLearnerParam(id = "prior"),
       makeNumericLearnerParam(id = "tol", default = 1e-06),
-      makeLogicalLearnerParam(id = "projected", default = FALSE)
+      makeLogicalLearnerParam(id = "projected", default = FALSE, when = "predict")
     ),
     properties = c("numerics", "twoclass", "prob"),
     name = "High-Dimensional Regularized Discriminant Analysis",

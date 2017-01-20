@@ -56,7 +56,8 @@ test_that("tuneIrace works with dependent params", {
 # we had a bug here
 test_that("tuneIrace works with logical params", {
   ps = makeParamSet(
-    makeLogicalParam("scaled")
+    makeLogicalParam("scaled"),
+    makeLogicalParam("shrinking")
   )
   lrn = makeLearner("classif.ksvm", kernel = "vanilladot")
   rdesc = makeResampleDesc("Holdout", split = 0.3, stratify = TRUE)

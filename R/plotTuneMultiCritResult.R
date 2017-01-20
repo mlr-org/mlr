@@ -75,6 +75,7 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #' @examples
 #' # see tuneParamsMultiCrit
 plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
+  requirePackages("_ggvis")
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
   plt_data = as.data.frame(res$opt.path)

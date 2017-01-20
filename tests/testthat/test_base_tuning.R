@@ -151,3 +151,16 @@ test_that("Learner defined with expression in param requires, see #369 and PH #5
   ctrl = makeTuneControlRandom()
   tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
 })
+
+
+test_that("tuning does not break with small discrete values, see bug in #1115", {
+  ctrl  = makeTuneControlGrid()
+  ps = makeParamSet(
+    makeDiscreteParam("cp", values = c(1e-8, 1e-9))
+  )
+  # this next line created an exception in the bug
+  tuneParams("classif.rpart",multiclass.task, hout, par.set = ps, control = ctrl)
+})
+
+
+

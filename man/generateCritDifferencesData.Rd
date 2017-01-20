@@ -86,6 +86,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
@@ -94,10 +95,13 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotCritDifferences}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 }
 

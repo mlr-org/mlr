@@ -227,11 +227,12 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   with the input data.frame and an extra vector or data.frame for the targets.
 #'   Default is \code{FALSE}.
 #' @param recode.target [\code{character(1)}]\cr
-#'   Should target classes be recoded? Supported are binary classification and survival.
+#'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
 #'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
 #'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 #'   \dQuote{drop.levels} will remove empty factor levels in the target column.
+#'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 #'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
@@ -253,26 +254,28 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
   checkTask(task, "Task")
 
   if (missing(subset)) {
-    subset = NULL 
+    subset = NULL
   } else {
     assert(checkIntegerish(subset), checkLogical(subset))
-    if (is.logical(subset))
+    if (is.logical(subset)) {
       subset = which(subset)
-    if (is.numeric(subset))
+    } else if (is.double(subset)) {
       subset = asInteger(subset)
+    }
   }
 
   assertLogical(target.extra)
 
   task.features = getTaskFeatureNames(task)
-  
+
   # if supplied check if the input is right and always convert 'features'
   # to character vec
   if (!missing(features)) {
-    assert(checkIntegerish(features, lower = 1L, upper = length(task.features)),
-      checkLogical(features), checkCharacter(features))
-    if (is.numeric(features))
-      features = asInteger(features)
+    assert(
+      checkIntegerish(features, lower = 1L, upper = length(task.features)),
+      checkLogical(features), checkCharacter(features)
+    )
+
     if (!is.character(features))
       features = task.features[features]
   }
@@ -323,6 +326,8 @@ recodeY = function(y, type, td) {
     return(as.numeric(2L * (y == td$positive) - 1L))
   if (type %in% c("lcens", "rcens", "icens"))
     return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "multilabel.factor")
+    return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
 }
 
@@ -400,7 +405,6 @@ getTaskCosts = function(task, subset) {
 subsetTask = function(task, subset, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  td = task$desc
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)

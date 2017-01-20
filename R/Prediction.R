@@ -12,6 +12,7 @@
 #' If probabilities were predicted, as many numeric columns as there were classes named
 #' \code{prob.classname}. If standard errors were predicted, a numeric column named \code{se}.
 #'
+#' The constructor \code{makePrediction} is mainly for internal use.
 #'
 #' Object members:
 #' \describe{
@@ -26,6 +27,11 @@
 #' @rdname Prediction
 NULL
 
+#' @keywords internal
+#' @rdname Prediction
+#' @description
+#' Internal, do not use!
+#' @export
 makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
   UseMethod("makePrediction")
 }
@@ -189,6 +195,6 @@ print.Prediction = function(x, ...) {
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
   catf("time: %.2f", x$time)
   if (!is.na(x$error)) catf("errors: %s", x$error)
-  print(head(as.data.frame(x)))
+  printHead(as.data.frame(x))
 }
 

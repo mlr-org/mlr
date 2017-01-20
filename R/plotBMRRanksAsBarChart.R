@@ -34,16 +34,28 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(pos, c("tile", "stack", "dodge"))
+  df = as.data.frame(convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation))
+  df$learner.id = factor(rownames(df))
 
-  df = convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation)
-
-  # melt back into plotable form:
-  df = reshape2::melt(df)
-  colnames(df) = c("learner.id", "task.id", "rank")
+  setDT(df)
+  df = melt(df, id.vars = "learner.id")
+  setnames(df, c("variable", "value"), c("task.id", "rank"))
   df = orderBMRLrns(bmr, df, order.lrns)
   df = orderBMRTasks(bmr, df, order.tsks)
+  if (pretty.names) {
+    learner.ids = getBMRLearnerIds(bmr)
+    learner.short.names = getBMRLearnerShortNames(bmr)
+    names(learner.short.names) = learner.ids
+    if (is.null(order.lrns)) {
+      learner.short.names = learner.short.names[sort(learner.ids)]
+    } else {
+      learner.short.names = learner.short.names[order.lrns]
+    }
+    levels(df$learner.id) = learner.short.names
+  }
+  df$rank = as.factor(df$rank)
+  setDF(df)
 
-  df = as.data.frame(sapply(df, as.factor))
   if (pos == "tile") {
     p = ggplot(df, aes_string("rank", "task.id", fill = "learner.id"))
     p = p + geom_tile()
@@ -54,10 +66,5 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
     p = p + ylab(NULL)
   }
 
-  if (pretty.names) {
-    lrns.short = getBMRLearnerShortNames(bmr)
-    p = p + scale_fill_discrete(labels = lrns.short)
-  }
-  
   return(p)
 }

@@ -28,6 +28,9 @@
 #' @template arg_showinfo
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
+#' @note If you would like to include results from the training data set, make
+#' sure to appropriately adjust the resampling strategy and the aggregation for
+#' the measure. See example code below.
 #' @export
 #' @examples
 #' # a grid search for an SVM (with a tiny number of points...)
@@ -40,8 +43,12 @@
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(as.data.frame(res$opt.path))
-#' print(as.data.frame(trafoOptPath(res$opt.path)))
+#' # access data for all evaluated points
+#' print(head(as.data.frame(res$opt.path)))
+#' print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+#' # access data for all evaluated points - alternative
+#' print(head(generateHyperParsEffectData(res)))
+#' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
@@ -55,12 +62,20 @@
 #'     requires = quote(kernel == "polydot"))
 #' )
 #' print(ps)
-#' ctrl = makeTuneControlIrace(maxExperiments = 200L)
+#' ctrl = makeTuneControlIrace(maxExperiments = 5, nbIterations = 1, minNbSurvival = 1)
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
+#'
+#' # include the training set performance as well
+#' rdesc = makeResampleDesc("Holdout", predict = "both")
+#' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
+#'   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
+#' print(res)
+#' print(head(as.data.frame(res$opt.path)))
 #' }
+#' @seealso \code{\link{generateHyperParsEffectData}}
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")

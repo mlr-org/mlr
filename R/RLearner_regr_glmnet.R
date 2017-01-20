@@ -6,12 +6,11 @@ makeRLearner.regr.glmnet = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", values = c("gaussian", "poisson"), default = "gaussian"),
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, when = "predict"),
-      # FIXME default for s in predict.glmnet() is NULL (entire sequence)
+      makeNumericLearnerParam(id = "s", lower = 0, when = "predict"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
-      makeNumericVectorLearnerParam(id = "lambda"),
+      makeNumericVectorLearnerParam(id = "lambda", lower = 0),
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeLogicalLearnerParam(id = "intercept", default = TRUE),
       makeNumericLearnerParam(id = "thresh", default = 1e-07, lower = 0),
@@ -39,7 +38,9 @@ makeRLearner.regr.glmnet = function() {
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer.
+      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
+      but needs to be tuned by the user."
   )
 }
 

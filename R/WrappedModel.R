@@ -57,7 +57,7 @@ print.WrappedModel = function(x, ...) {
     "Model for learner.id=", x$learner$id, "; learner.class=", getClass1(x$learner), "\n",
     sprintf("Trained on: task.id = %s; obs = %i; features = %i",
       x$task.desc$id, length(x$subset), length(x$features)), "\n",
-    "Hyperparameters: ", getHyperParsString(x$learner), "\n",
+    "Hyperparameters: ", getHyperParsString(x$learner, show.missing.values = TRUE), "\n",
     sep = ""
   )
   if (isFailureModel(x))

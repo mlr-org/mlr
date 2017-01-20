@@ -57,6 +57,8 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     task = makeClassifTask(data = df, target = target)
   else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.logical(df[, target[2L]]))
     task = makeSurvTask(data = df, target = target)
+  else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]]))
+    task = makeMultilabelTask(data = df, target = target)
   else
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
@@ -65,11 +67,17 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
+    # Multilabel has a special data structure
+    if (class(task)[1] == "MultilabelTask") {
+      rownames(cp$data) = NULL
+      expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
+    } else {
     # to avoid issues with dropped levels in the class factor we only check the elements as chars
     if (is.numeric(cp$data$response) && is.numeric(old.predicts))
       expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
     else
       expect_equal(as.character(cp$data$response), as.character(old.predicts))
+    }
   }
 }
 
@@ -91,8 +99,11 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   train = df[inds,]
   test = df[-inds,]
 
-  task = makeClassifTask(data = df, target = target)
-
+  if(length(target) == 1) {
+    task = makeClassifTask(data = df, target = target)
+  } else {
+    task = makeMultilabelTask(data = df, target = target)
+  }
   lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
   m = try(train(lrn, task, subset = inds))
 
@@ -216,6 +227,29 @@ mylist = function(..., create = FALSE) {
 }
 
 testFacetting = function(obj, nrow = NULL, ncol = NULL) {
-  expect_equal(obj$facet$nrow, nrow)
-  expect_equal(obj$facet$ncol, ncol)
+  expect_equal(obj$facet$params$nrow, nrow)
+  expect_equal(obj$facet$params$ncol, ncol)
+}
+
+quickcheckTest = function(...) {
+  skip_if_not_installed("quickcheck")
+  qc = quickcheck::test(...)
+
+  if (any(!qc$pass)) {
+    print("Quickcheck tests failed with input:")
+    print(qc$cases[[which.first(!qc$pass)]])
+  }
+
+  expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
+}
+
+testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
+  text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
+    x, "')]]", sep = "")
+  nodes = XML::getNodeSet(doc, text.paths, ns.svg)
+  expect_equal(length(nodes), length(x) * grid.size)
+  if (ordered) {
+    node.strings = vcapply(nodes, XML::getChildrenStrings)
+    expect_equal(node.strings[seq_along(x)], x)
+  }
 }

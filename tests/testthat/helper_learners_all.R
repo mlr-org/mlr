@@ -34,18 +34,18 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
   expect_true(!is.na(perf1), info = lrn$id)
   expect_true(!is.na(perf2), info = lrn$id)
   expect_true(!is.na(perf3), info = lrn$id)
-  expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id)
-  expect_true(any(get.pred.fun(p1) != get.pred.fun(p3)), info = lrn$id)
+  expect_equal(get.pred.fun(p1), get.pred.fun(p2), info = lrn$id, tolerance = 0.0001, scale = 1)
+  expect_false(isTRUE(all.equal(get.pred.fun(p1), get.pred.fun(p3))), info = lrn$id)
 }
 
 
-# Test that learner produces output on the console, can be trained, can predict
-# and that a performance measure is calculated.
+# Test that learner produces output on the console, its ParamSet can be printed,
+# can be trained, can predict and that a performance measure is calculated.
 # This function is being used to test learners in general and in the other
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
 # When testing probabilities an additional test if there are missing prediction
-# probabilities and if there as many probability predictions as there are 
+# probabilities and if there as many probability predictions as there are
 # observations in the task.
 # When testing standard errors an additional test if there are as many predictions
 # as there are observations in the task is being performed.
@@ -54,24 +54,50 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # can predict probabilities or specification "se" when testing learner can
 # predict standard errors.)
 
-testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
-  
+testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "response") {
+  # handling special par.vals and predict type
+  info = lrn$id
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
-  
+
   lrn = setPredictType(lrn, pred.type)
-  
-  expect_output(print(lrn), lrn$id)
+
+  # check that learner prints
+  expect_output(info = info, print(lrn), lrn$id)
+
+  # check that param set prints
+  par.set = getParamSet(lrn)
+  expect_output(info = info, print(par.set))
+
+  # check that learner trains, predicts
   m = train(lrn, task)
   p = predict(m, task)
-  expect_true(!is.na(performance(pred = p, task = task)))
-  
-  if (pred.type == "se")
-    expect_equal(length(p$data$se), getTaskSize(task))
-  
+  expect_true(info = info, !is.na(performance(pred = p, task = task)))
+
+  # check that se works and is > 0
+  if (pred.type == "se") {
+    s = p$data$se
+    expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
+  }
+
+  # check that probs works, and are in [0,1] and sum to 1
   if (pred.type == "prob") {
-    expect_false(anyNA(getPredictionProbabilities(p)))
-    expect_equal(NROW(getPredictionProbabilities(p)), getTaskSize(task))
+    if (inherits(lrn, "RLearnerCluster")) {
+      # for unsupervised tasks we don't have any class labels
+      probdf = getPredictionProbabilities(p)
+      cls = colnames(probdf)
+    } else {
+      cls = getTaskClassLevels(task)
+      probdf = getPredictionProbabilities(p, cl = cls)
+    }
+    expect_named(probdf, cls)
+    expect_data_frame(info = info, probdf, nrows = getTaskSize(task), ncols = length(cls),
+      types = "numeric", any.missing = FALSE)
+    expect_true(info = info, all(probdf >= 0 && probdf <= 1))
+
+    # FIXME: the "sum to 1" apparently does not work for all learners?
+    # I can see differences up to 0.1 for some cases, reported in issue #1017
+    # expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE)
   }
 }
 
@@ -84,32 +110,32 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
-  
+
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
 
 # Tests that learner handles ordered factors
-# Data of task is manipulated such that the first mentioned feature is changed 
-# to a ordered factor with a < b < c. 
+# Data of task is manipulated such that the first mentioned feature is changed
+# to a ordered factor with a < b < c.
 # A new task is being generated based on the manipulated data with changeData().
 # Then testThatLearnerCanTrainPredict() is being called to check whether learner
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
-  
+
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
-  
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
-  
+
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
+
 }
 
 
@@ -121,12 +147,47 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
-  
+
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[1,f] = NA
   new.task = changeData(task = task, data = d)
 
-  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
+testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
+
+
+  if (lrn$id %in% names(hyperpars))
+    lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+
+  # some learners need special param settings to compute variable importance
+  # add them here if you implement a measure that requires that.
+  # you may also want to change the params for the learner if training takes
+  # a long time
+  if (lrn$short.name == "ranger")
+    lrn = setHyperPars(lrn, importance = "permutation")
+  if (lrn$short.name == "adabag")
+    lrn = setHyperPars(lrn, mfinal = 5L)
+  if (lrn$short.name == "cforest")
+    lrn = setHyperPars(lrn, ntree = 5L)
+  if (lrn$short.name == "rfsrc")
+    lrn = setHyperPars(lrn, ntree = 5L)
+  if (lrn$short.name == "xgboost")
+    lrn = setHyperPars(lrn, nrounds = 10L)
+
+  mod = train(lrn, task)
+  feat.imp = getFeatureImportance(mod)$res
+  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(task)),
+    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(task))
+  expect_equal(colnames(feat.imp), mod$features)
+
+}
+
+
+testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
+  pars = lrn$par.set$pars
+  pv = lrn$par.vals
+  expect_true(isSubset(names(pv), names(pars)))
+}
