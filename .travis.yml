@@ -17,7 +17,7 @@ addons:
 env:
   global:
     - _R_CHECK_TIMINGS_=0
-    - _R_CHECK_FORCE_SUGGESTS_=0
+    - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
 
 warnings_are_errors: true
@@ -33,6 +33,9 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
 
 before_install:
+  # we want to see libpaths and installed packages from cache
+  - Rscript -e 'message("LIBPATHS:"); .libPaths()'
+  - Rscript -e 'message("INSTALLED PACKS:"); installed.packages()[,1:3]'  # we need a very fresh version of survival for Hmisc, needs be done early in the script
   # we need a very fresh version of survival for Hmisc, needs be done early in the script
   - Rscript -e 'install.packages("survival")'
   - mkdir $HOME/bin
