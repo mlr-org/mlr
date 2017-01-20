@@ -6,7 +6,6 @@ makeRLearner.cluster.cmeans = function() {
     par.set = makeParamSet(
       makeUntypedLearnerParam(id = "centers"),
       makeIntegerLearnerParam(id = "iter.max", default = 100L, lower = 1L),
-      #makeIntegerLearnerParam(id = "nstart", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "m", default = 2L, lower = 1L),
       makeDiscreteLearnerParam(id = "dist", values = c("euclidean", "manhattan"), default = "euclidean"),
       makeUntypedLearnerParam(id = "control"),
