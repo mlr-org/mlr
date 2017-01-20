@@ -5,7 +5,7 @@ makeRLearner.regr.LiblineaRL2L1SVR = function() {
     package = "LiblineaR",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "cost", default = 1, lower = 0),
-      makeNumericLearnerParam(id = "epsilon", default = 0.1, lower = 0),
+      makeNumericLearnerParam(id = "epsilon", default = 0.01, lower = 0),
       makeNumericLearnerParam(id = "svr_eps", lower = 0),
       makeLogicalLearnerParam(id = "bias", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
