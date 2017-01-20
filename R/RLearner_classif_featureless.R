@@ -29,7 +29,6 @@ makeRLearner.classif.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "majority", values = c("majority", "sample-prior"))
     ),
-    par.vals = list(method = "majority"),
     properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "missings", "prob"),
     name = "Featureless classifier",
     short.name = "featureless",
@@ -38,22 +37,14 @@ makeRLearner.classif.featureless = function() {
 }
 
 #' @export
-trainLearner.classif.featureless = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.featureless = function(.learner, .task, .subset, .weights = NULL, method = "majority", ...) {
   y = getTaskTargets(.task)[.subset]
   lvls = getTaskClassLevels(.task)
 
   # FIXME: use weights
   probs = prop.table(table(y))
 
-  # we need to ensure all classes are here (GC: this is maybe not necessary, but it was a FIXME and doing this does not hurt)
-  missing.lvl = setdiff(lvls, names(probs))
-  if (length(missing.lvl) != 0) {
-    ll = c(levels(y), missing.lvl)
-    y = factor(y, levels = ll)
-    probs = prop.table(table(y))
-  }
-
-  list(probs = probs)
+  list(method = method, probs = probs)
 }
 
 #' @export
@@ -61,19 +52,20 @@ predictLearner.classif.featureless = function(.learner, .model, .newdata, ...) {
   # extract some shortcuts
   n = nrow(.newdata)
   ptype = .learner$predict.type
-  labels = names(.model$learner.model$probs)
-  probs = as.numeric(.model$learner.model$probs)
-  method = .learner$par.vals$method
+  mod = getLearnerModel(.model)
+  labels = names(mod$probs)
+  probs = as.numeric(mod$probs)
+  method = mod$method
 
   if (ptype == "response") {
     if (method == "majority") {
       # FIXME: sample in case of ties for EACH obs
       # just take label with max prior value. in case of ties we select randomly
       j = getMaxIndex(probs, ties.method = "random")
-      p = factor(rep(labels[j], n))
+      p = factor(rep(labels[j], n), levels = labels)
     } else if (method == "sample-prior") {
       # sample with prior probability from observed labels
-      p = factor(sample(labels, size = n, prob = probs, replace = TRUE))
+      p = factor(sample(labels, size = n, prob = probs, replace = TRUE), levels = labels)
     }
   } else if (ptype == "prob") {
     p = matrix(probs, nrow = n, ncol = length(probs), byrow = TRUE)

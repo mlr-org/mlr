@@ -30,10 +30,10 @@ makeRLearner.regr.featureless = function() {
 }
 
 #' @export
-trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL, method = "mean", ...) {
   y = getTaskTargets(.task)[.subset]
   # FIXME: use weights
-  list(y = y)
+  list(method = method, y = y)
 }
 
 #' @export
@@ -41,8 +41,9 @@ predictLearner.regr.featureless = function(.learner, .model, .newdata, ...) {
   # extract some shortcuts
   n = nrow(.newdata)
   ptype = .learner$predict.type
-  y = .model$learner.model$y
-  method = .learner$par.vals$method
+  mod = getLearnerModel(.model)
+  y = mod$y
+  method = mod$method
 
   if (method == "mean") {
     resp = mean(y)
