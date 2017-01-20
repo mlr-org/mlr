@@ -13,6 +13,9 @@
 #' The predict.type \dQuote{se} always uses the standard deviation of the
 #' training data as se-estimator for each new point in the test set.
 #'
+#' @name regr.featureless
+NULL
+
 #' @export
 makeRLearner.regr.featureless = function() {
   makeRLearnerRegr(
@@ -24,7 +27,6 @@ makeRLearner.regr.featureless = function() {
     properties = c("numerics", "factors", "ordered", "missings", "se"),
     name = "Featureless regression",
     short.name = "featureless",
-    # FIXME: doc on page
     note = "Simple baseline method. Always predicts a constant value for each new observation in the test set which is the mean or median of the training data, respectively."
   )
 }

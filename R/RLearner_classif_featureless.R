@@ -1,7 +1,3 @@
-#FIXME: we should have the learner produce its own labels.
-# this  is a generat thing for all learners!
-# FIXME: check how doc is done for random forest
-
 #' @title Featureless classification learner.
 #'
 #' @description
@@ -21,6 +17,9 @@
 #' If you opt to predict probabilities, the label is always computed by mlr
 #' based on the prior probabilities obsered in the training data.
 #'
+#' @name classif.featureless
+NULL
+
 #' @export
 makeRLearner.classif.featureless = function() {
   makeRLearnerClassif(
