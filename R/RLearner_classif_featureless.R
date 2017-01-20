@@ -12,7 +12,7 @@
 #'
 #' Method \dQuote{majority} predicts always the majority class for each new
 #' observation. In case of ties, we pick a randomly sampled class and always
-#' predict that clas for each new observation.
+#' predict that class for each new observation.
 #'
 #' Method \dQuote{sample-prior} samples a random label for each new observation,
 #' where each label probability coincied with the proportion of that label
@@ -29,6 +29,7 @@ makeRLearner.classif.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "majority", values = c("majority", "sample-prior"))
     ),
+    par.vals = list(method = "majority"),
     properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "missings", "prob"),
     name = "Featureless classifier",
     short.name = "featureless",
