@@ -6,7 +6,8 @@ test_that("cluster_cmeans", {
   centers = matrix(c(1, 2, 3, 4, 2, 3, 4, 5), ncol = 4)
   parset.list = list(
     list(),
-    list(centers = centers)
+    list(centers = centers),
+    list(reltol = 0.01)
   )
 
   old.predicts.list = list()
