@@ -593,39 +593,31 @@ test_that("check measure calculations", {
   multilabelPPVFormula = function(truth, response) {
     ppv = numeric(nrow(truth))
     for (i in seq_row(truth)) {
-      denominator = sum(response[i, ]) 
-      if (denominator == 0) {
-        ppv[i] = 1
-      } else {
-        ppv[i] = sum(truth[i, ] & response[i, ]) / denominator
-      }
+      denominator = sum(response[i, ])
+      ppv[i] = sum(truth[i, ] & response[i, ]) / denominator
     }
-    mean(ppv)
+    mean(ppv, na.rm = TRUE)
   }
   multilabelTPRFormula = function(truth, response) {
     tpr = numeric(nrow(truth))
     for (i in seq_row(truth)) {
       denominator = sum(truth[i, ])
-      if (denominator == 0) {
-        tpr[i] = 1
-      } else {
-        tpr[i] = sum(truth[i, ] & response[i, ]) / denominator
-      }
+      tpr[i] = sum(truth[i, ] & response[i, ]) / denominator
     }
-    mean(tpr)
+    mean(tpr, na.rm = TRUE)
   }
-  
+
   #hamloss
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1), 
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1),
     mean(apply(multi.y1 != multi.p1, 1, mean)))
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2), 
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2),
     mean(apply(multi.y1 != multi.p2, 1, mean)))
   expect_equal(measureMultilabelHamloss(multi.y1, multi.y1), multilabel.hamloss$best)
   expect_equal(measureMultilabelHamloss(multi.y1, !multi.y1), multilabel.hamloss$worst)
   #subset01
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1), 
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1),
     mean(sapply(seq_row(multi.y1), function(i) !identical(multi.y1[i,], multi.p1[i,]))))
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2), 
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2),
     mean(sapply(seq_row(multi.y1), function(i) !identical(multi.y1[i,], multi.p2[i,]))))
   expect_equal(measureMultilabelSubset01(multi.y1, multi.y1), multilabel.subset01$best)
   expect_equal(measureMultilabelSubset01(multi.y1, !multi.y1), multilabel.subset01$worst)
@@ -649,7 +641,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelTPR(multi.y1, multi.p2), multilabelTPRFormula(multi.y1, multi.p2))
   expect_equal(measureMultilabelTPR(multi.y1, multi.y1), multilabel.tpr$best)
   #expect_equal(measureMultilabelTPR(multi.y1, !multi.y1), multilabel.tpr$worst)
-  
+
   #test survival measures
 
   #cindex
