@@ -481,7 +481,7 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -661,15 +661,15 @@ measureKAPPA = function(truth, response) {
   # get confusion matrix
   conf.mat = table(truth, response)
   conf.mat = conf.mat / sum(conf.mat)
-  
-  # observed agreement frequency 
+
+  # observed agreement frequency
   p0 = sum(diag(conf.mat))
 
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
   pe = sum(rowsum * colsum) / sum(conf.mat)^2
-  
+
   # calculate kappa
   1 - (1 - p0) / (1 - pe)
 }
@@ -698,12 +698,12 @@ measureWKAPPA = function(truth, response) {
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
-  expected.mat = rowsum %*% t(colsum) 
+  expected.mat = rowsum %*% t(colsum)
 
   # get weights
   class.values = seq_along(levels(truth)) - 1L
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
-  
+
   # calculate weighted kappa
   1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
@@ -1218,7 +1218,7 @@ multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, 
 measureMultilabelPPV = function(truth, response) {
   numerator = rowSums(truth & response)
   denominator = rowSums(response)
-  mean(ifelse(denominator == 0, 1, numerator/denominator))
+  mean(numerator/denominator, na.rm = TRUE)
 }
 
 #' @export multilabel.tpr
@@ -1241,7 +1241,7 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
 measureMultilabelTPR = function(truth, response) {
   numerator = rowSums(truth & response)
   denominator = rowSums(truth)
-  mean(ifelse(denominator == 0, 1, numerator/denominator))
+  mean(numerator/denominator, na.rm = TRUE)
 }
 
 ###############################################################################
