@@ -27,8 +27,7 @@ makeRLearner.regr.featureless = function() {
     ),
     properties = c("numerics", "factors", "ordered", "missings"),
     name = "Featureless regression",
-    short.name = "featureless",
-    note = "The default method is `mean` and corresponds to the ZeroR algorithm from WEKA."
+    short.name = "featureless"
   )
 }
 

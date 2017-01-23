@@ -11,16 +11,14 @@ of the training data to make predictions.
 Using observation weights is currently not supported.
 
 Method \dQuote{majority} predicts always the majority class for each new
-observation. In case of ties, the predictions will depend on the selected
-\dQuote{ties.method}, i.e., either always the first factor level, always the
-last factor level or a randomly sampled class for each observation is predicted.
+observation. In case of ties, a randomly sampled class is predicted.
+This method is very similar to the ZeroR classifier from WEKA (see
+\url{https://weka.wikispaces.com/ZeroR}). The difference is that ZeroR
+always predicts the first class of the tied class values instead of sampling
+them randomly.
 
 Method \dQuote{sample-prior} always samples a random class for each new
 observation according to the prior probabilities observed in the training data.
-
-The default method is \dQuote{majority} with \dQuote{ties.method = "first"}
-which corresponds to the ZeroR classifier from WEKA, see
-\url{https://weka.wikispaces.com/ZeroR}.
 
 If you opt to predict probabilities, the class probabilities always
 correspond to the prior probabilities observed in the training data.

@@ -6,10 +6,9 @@ test_that("classif_featureless", {
     response = getTaskTargets(task)
     prop.table(table(response))
   }
+
   ps.list = list(
-    list(method = "majority", ties.method = "first"),
-    list(method = "majority", ties.method = "last"),
-    list(method = "majority", ties.method = "random"),
+    list(method = "majority"),
     list(method = "sample-prior")
   )
 
@@ -33,12 +32,8 @@ test_that("classif_featureless", {
     colnames(p) = lvls
 
     # predict majority class
-    p1.first = factor(getMaxIndexOfRows(p, ties.method = "first"),
-      levels = seq_along(lvls), labels = lvls)
-    p1.last = factor(getMaxIndexOfRows(p, ties.method = "last"),
-      levels = seq_along(lvls), labels = lvls)
     set.seed(getOption("mlr.debug.seed"))
-    p1.random = factor(getMaxIndexOfRows(p, ties.method = "random"),
+    p1 = factor(rep(getMaxIndex(prior), length(test.inds)),
       levels = seq_along(lvls), labels = lvls)
     # sample class according to prior probabilities
     set.seed(getOption("mlr.debug.seed"))
@@ -46,10 +41,10 @@ test_that("classif_featureless", {
 
     testSimpleParsets(t.name = "classif.featureless", df = multiclass.df,
       target = multiclass.target, train.inds = train.inds,
-      old.predicts.list = list(p1.first, p1.last, p1.random, p2), parset = ps.list)
+      old.predicts.list = list(p1, p2), parset = ps.list)
     testProbParsets(t.name = "classif.featureless", df = multiclass.df,
       target = multiclass.target, train.inds = train.inds,
-      old.probs.list = list(p, p, p, p), parset = ps.list)
+      old.probs.list = list(p, p), parset = ps.list)
   }
 
   # BINARYCLASS:
@@ -60,14 +55,8 @@ test_that("classif_featureless", {
   colnames(p) = binaryclass.class.levs
 
   # predict majority class
-  p1.first = factor(getMaxIndexOfRows(p, ties.method = "first"),
-    levels = seq_along(binaryclass.class.levs),
-    labels = binaryclass.class.levs)
-  p1.last = factor(getMaxIndexOfRows(p, ties.method = "last"),
-    levels = seq_along(binaryclass.class.levs),
-    labels = binaryclass.class.levs)
   set.seed(getOption("mlr.debug.seed"))
-  p1.random = factor(getMaxIndexOfRows(p, ties.method = "random"),
+  p1 = factor(rep(getMaxIndex(prior), length(binaryclass.test.inds)),
     levels = seq_along(binaryclass.class.levs),
     labels = binaryclass.class.levs)
 
@@ -79,10 +68,10 @@ test_that("classif_featureless", {
 
   testSimpleParsets(t.name = "classif.featureless", df = binaryclass.df,
     target = binaryclass.target, train.inds = binaryclass.train.inds,
-    old.predicts.list = list(p1.first, p1.last, p1.random, p2), parset = ps.list)
+    old.predicts.list = list(p1, p2), parset = ps.list)
   testProbParsets(t.name = "classif.featureless", df = binaryclass.df,
     target = binaryclass.target, train.inds = binaryclass.train.inds,
-    old.probs.list = list(p[,positive], p[,positive], p[,positive], p[,positive]), parset = ps.list)
+    old.probs.list = list(p[,positive], p[,positive]), parset = ps.list)
 
   # test that printers work correctly
   lrn = makeLearner("classif.featureless")
