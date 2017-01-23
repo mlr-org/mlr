@@ -41,6 +41,10 @@
 * createDummyFeatures supports vectors now
 * removed the pretty.names argument from plotHyperParsEffect -- labels can be set
   though normal ggplot2 functions on the returned object
+* Fixed a bad bug in resample, the slot "runtime" or a ResampleResult,
+  when the runtime was measured not in seconds but e.g. mins. R measures then potentially in mins,
+  but mlr claimed it would be seconds.
+
 
 ## functions - new
 * filter: randomForest.importance
