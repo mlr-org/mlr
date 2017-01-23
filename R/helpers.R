@@ -18,27 +18,25 @@ measureAggrPrettyName = function(measure) {
 
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
-perfsToString = function(y, sep = "=", tab.style = FALSE, mlr.digits = getMlrOption("mlr.digits")) {
-  perfs = formatC(y, digits = mlr.digits, format = "f")
-  perf.names = names(y)
-  if (tab.style) {
-    # perf.names = stri_replace_all(perf.names, regex = "\\..*","")
-    tab.width = getMaxStriWidth(perf.names, mlr.digits)
-    perfs = formatC(perfs, width = tab.width, flag = "-")
-    perfs.str = stri_paste(perfs, collapse = "")
-  } else {
-    perfs.str = stri_paste(stri_paste(perf.names, "=", perfs, sep = ""),
-      collapse = ",", sep = " ")    
-  }
-  return(perfs.str)
+perfsToString = function(y, sep = "=", mlr.digits = getMlrOption("mlr.digits")) {
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = mlr.digits), sep = ""),
+    collapse = ",", sep = " ")
 }
 
-getMaxStriWidth = function(stri, mlr.digits = getMlrOption("mlr.digits")) {
-  max.width = max(stri_width(stri))
-  if (max.width < mlr.digits)
-    max.width = mlr.digits
-  # +2L to gain spaces
-  max.width + 2L
+# Used for the resample output logging lines:
+# Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line  
+printResampleFormatLine = function(prefix, y, mlr.digits = getMlrOption("mlr.digits")) {
+  # get desired width for each col (if measure ids are short --> mlr.digits)
+  # +2L to obtain spaces between cols
+  tab.width = max(stri_width(names(y)), mlr.digits) + 2L
+  # if we get perf vals format decimals and add trailing zeros if needed
+  if (is.numeric(y))
+    y = formatC(y, digits = mlr.digits, flag = "0", format = "f")
+  # Extend witdh of prefix and y 
+  prefix = formatC(prefix, width = 22, flag = "-")
+  str = stri_flatten(formatC(y, width = tab.width, flag = "-"))
+
+  message(stri_paste(prefix, str, collapse = " "))
 }
 
 removeFromDots = function(ns, ...) {
