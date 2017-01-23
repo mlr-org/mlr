@@ -1,17 +1,18 @@
 #' @title Featureless regression learner.
 #'
 #' @description
-#' Very basic baseline method, mainly useful in model comparisons (if you don't
-#' beat this you very likely have a problem).
-#' Does not consider features of the task and only looks at labels on training
-#' data.
+#' A very basic baseline method which is useful for model comparisons (if you
+#' don't beat this, you very likely have a problem).
+#' Does not consider any features of the task and only uses the target feature
+#' of the training data to make predictions.
+#' Using observation weights is currently not supported.
 #'
 #' Methods \dQuote{mean} and \dQuote{median} always predict a constant value
-#' for each new observation in the test set which is the mean or median of the
-#' training data, respectively.
+#' for each new observation which corresponds to the observed mean or median of
+#' the target feature in training data, respectively.
 #'
-#' The predict.type \dQuote{se} always uses the standard deviation of the
-#' training data as se-estimator for each new point in the test set.
+#' The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
+#' from WEKA, see \url{https://weka.wikispaces.com/ZeroR}.
 #'
 #' @name regr.featureless
 NULL
@@ -24,17 +25,16 @@ makeRLearner.regr.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "mean", values = c("mean", "median"))
     ),
-    properties = c("numerics", "factors", "ordered", "missings", "se"),
+    properties = c("numerics", "factors", "ordered", "missings"),
     name = "Featureless regression",
     short.name = "featureless",
-    note = "Simple baseline method. Always predicts a constant value for each new observation in the test set which is the mean or median of the training data, respectively."
+    note = "The default method is `mean` and corresponds to the ZeroR algorithm from WEKA."
   )
 }
 
 #' @export
 trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL, method = "mean", ...) {
   y = getTaskTargets(.task)[.subset]
-  # FIXME: use weights
   list(method = method, y = y)
 }
 
@@ -42,7 +42,6 @@ trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NU
 predictLearner.regr.featureless = function(.learner, .model, .newdata, ...) {
   # extract some shortcuts
   n = nrow(.newdata)
-  ptype = .learner$predict.type
   mod = getLearnerModel(.model)
   y = mod$y
   method = mod$method
@@ -53,10 +52,5 @@ predictLearner.regr.featureless = function(.learner, .model, .newdata, ...) {
     resp = median(y)
   }
 
-  if (ptype == "response") {
-    return(rep(resp, n))
-  } else {
-    se = sd(y)
-    return(matrix(c(resp, se), nrow = n, ncol = 2L, byrow = TRUE))
-  }
+  return(rep(resp, n))
 }

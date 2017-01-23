@@ -4,20 +4,25 @@
 \alias{classif.featureless}
 \title{Featureless classification learner.}
 \description{
-Very basic baseline method, mainly useful in model comparisons (if you don't
-beat this you very likely have a problem).
-Does not consider features of the task and only looks at labels on training
-data.
+A very basic baseline method which is useful for model comparisons (if you
+don't beat this, you very likely have a problem).
+Does not consider any features of the task and only uses the target feature
+of the training data to make predictions.
+Using observation weights is currently not supported.
 
 Method \dQuote{majority} predicts always the majority class for each new
-observation. In case of ties, we pick a randomly sampled class and always
-predict that class for each new observation.
+observation. In case of ties, the predictions will depend on the selected
+\dQuote{ties.method}, i.e., either always the first factor level, always the
+last factor level or a randomly sampled class for each observation is predicted.
 
-Method \dQuote{sample-prior} samples a random label for each new observation,
-where each label probability coincied with the proportion of that label
-obsered in the training data.
+Method \dQuote{sample-prior} always samples a random class for each new
+observation according to the prior probabilities observed in the training data.
 
-If you opt to predict probabilities, the label is always computed by mlr
-based on the prior probabilities obsered in the training data.
+The default method is \dQuote{majority} with \dQuote{ties.method = "first"}
+which corresponds to the ZeroR classifier from WEKA, see
+\url{https://weka.wikispaces.com/ZeroR}.
+
+If you opt to predict probabilities, the class probabilities always
+correspond to the prior probabilities observed in the training data.
 }
 

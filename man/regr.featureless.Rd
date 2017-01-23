@@ -4,16 +4,17 @@
 \alias{regr.featureless}
 \title{Featureless regression learner.}
 \description{
-Very basic baseline method, mainly useful in model comparisons (if you don't
-beat this you very likely have a problem).
-Does not consider features of the task and only looks at labels on training
-data.
+A very basic baseline method which is useful for model comparisons (if you
+don't beat this, you very likely have a problem).
+Does not consider any features of the task and only uses the target feature
+of the training data to make predictions.
+Using observation weights is currently not supported.
 
 Methods \dQuote{mean} and \dQuote{median} always predict a constant value
-for each new observation in the test set which is the mean or median of the
-training data, respectively.
+for each new observation which corresponds to the observed mean or median of
+the target feature in training data, respectively.
 
-The predict.type \dQuote{se} always uses the standard deviation of the
-training data as se-estimator for each new point in the test set.
+The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
+from WEKA, see \url{https://weka.wikispaces.com/ZeroR}.
 }
 
