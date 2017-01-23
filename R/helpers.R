@@ -18,32 +18,28 @@ measureAggrPrettyName = function(measure) {
 
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
-perfsToString = function(y, sep = "=", tab.style = FALSE) {
-  perfs = formatC(y, digits = 3L, format = "f")
+perfsToString = function(y, sep = "=", tab.style = FALSE, mlr.digits = getMlrOption("mlr.digits")) {
+  perfs = formatC(y, digits = mlr.digits, format = "f")
+  perf.names = names(y)
   if (tab.style) {
-    # tab.width = getMaxStriWidth(names(y))
-    tab.width = 8
+    # perf.names = stri_replace_all(perf.names, regex = "\\..*","")
+    tab.width = getMaxStriWidth(perf.names, mlr.digits)
     perfs = formatC(perfs, width = tab.width, flag = "-")
     perfs.str = stri_paste(perfs, collapse = "")
   } else {
-    perfs.str = stri_paste(stri_paste(names(y), "=", perfs, sep = ""),
+    perfs.str = stri_paste(stri_paste(perf.names, "=", perfs, sep = ""),
       collapse = ",", sep = " ")    
   }
   return(perfs.str)
 }
 
-getMaxStriWidth = function(stri) {
-  # +1L to gain spaces
-  max(stri_width(stri)) + 1L
+getMaxStriWidth = function(stri, mlr.digits = getMlrOption("mlr.digits")) {
+  max.width = max(stri_width(stri))
+  if (max.width < mlr.digits)
+    max.width = mlr.digits
+  # +2L to gain spaces
+  max.width + 2L
 }
-
-# getPerfsTabWidth = function(y) {
-#   perfs = formatC(y, digits = 3L, format = "f")
-#   widths = stri_width(perfs, names(y))
-#   # + 2L for the spaces needed
-#   tab.width = max(widths) + 2L
-#   return(tab.width)
-# }
 
 removeFromDots = function(ns, ...) {
   args = list(...)

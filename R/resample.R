@@ -97,7 +97,8 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
-    measures = measures, model = models, extract = extract, show.info = show.info)
+    measures = measures, model = models, extract = extract,
+    show.info = show.info)
   if (!is.null(weights)) {
     more.args$weights = weights
   } else if (!is.null(getTaskWeights(task))) {
@@ -107,10 +108,10 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   exportMlrOptions(level = "mlr.resample")
 
   messagef("Resampling: %s", rin$desc$id)
+
   measure.ids.header = extractSubList(measures, "id")
-  # tab.width = getMaxStriWidth(measure.ids.header)
-  measure.ids.header = stri_flatten(formatC(measure.ids.header, width = 8,
-    flag = "-"))
+  tab.width = getMaxStriWidth(measure.ids.header)
+  measure.ids.header = stri_flatten(formatC(measure.ids.header, width = tab.width, flag = "-"))
   messagef(stri_paste(formatC("Measures:", width = 22, flag = "-"),"%s", collapse = " "),
     measure.ids.header)
 
@@ -170,12 +171,15 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     pred.train = predict(m, train.task, subset = train.i)
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
+    # names(ms.train) = extractSubList(measures, "id")
     names(ms.train) = vcapply(measures, measureAggrName)
 
     pred.test = predict(m, task, subset = test.i)
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
+    # names(ms.test) = extractSubList(measures, "id")
     names(ms.test) = vcapply(measures, measureAggrName)
+
   }
   ex = extract(m)
   if (show.info) {
@@ -184,8 +188,8 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     if (pp == "train") x = ms.train[idx.train]
     else if (pp == "test") x = ms.test[idx.test]
     else x = c(ms.train[idx.train], ms.test[idx.test])
+    names(x) = extractSubList(measures, "id")
     messagef(perfsToString(x, tab.style = TRUE))
-    # messagef(as.character(x))
   }
   list(
     measures.test = ms.test,
@@ -231,8 +235,14 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
   colnames(err.msgs) = c("train", "predict")
   err.msgs = cbind(iter = seq_len(iters), err.msgs)
 
-  if (show.info)
-    messagef("[Resample] Aggr. Result: %s", perfsToString(aggr))
+  if (show.info) {
+    aggr.message = formatC("Aggr. Result:", width = 22, flag = "-")
+    aggr.out = aggr
+    names(aggr.out) = extractSubList(measures, "id")
+    cat("\n")
+    message(aggr.message, appendLF = FALSE)
+    message(perfsToString(y = aggr.out, tab.style = TRUE))
+  }
 
   if (!keep.pred)
     pred = NULL
