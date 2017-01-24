@@ -1,79 +1,97 @@
 context("classif_featureless")
 
 test_that("classif_featureless", {
-  # computes priori probabilities
-  getPriorProbs = function(task) {
-    response = getTaskTargets(task)
-    prop.table(table(response))
+  # multiclass with inequal class sizes
+  df = data.frame(
+    y = as.factor(c(1, 2, 3, 3, 3)),
+    x = rep(1, 5)
+  )
+  lvls = levels(df$y)
+  method = c("majority", "sample-prior")
+  task = makeClassifTask(data = df, target = "y")
+  # create dest data
+  test = data.frame(rep(1, 10))
+
+  # determine probs and majority class manually
+  probs = c(0.2, 0.2, 0.6)
+  majority.class = 3
+
+  for (m in method) {
+    lrn = makeLearner("classif.featureless", method = m)
+    mod = train(lrn, task)
+    # test content of learner model
+    lmod = getLearnerModel(mod)
+    expect_equal(lmod$method, m)
+    expect_equal(as.numeric(lmod$probs), probs)
+
+    # create predictions using predict
+    p = predict(mod, newdata = test)
+
+    # create predictions "manually"
+    if (m == "sample-prior") {
+      # here we have to sample
+      set.seed(getOption("mlr.debug.seed"))
+      pred = factor(sample(lvls, size = n, prob = probs, replace = TRUE))
+    } else {
+      # here we know that 3 is majority class
+      pred = factor(rep(majority.class, n), levels = lvls)
+    }
+    # test if predictions are the same as the manually created ones
+    expect_equal(getPredictionResponse(p), pred)
+
+    # test that printer works correctly
+    expect_output(print(lrn), "featureless")
+    expect_output(print(lrn), m)
+
+    lrn = setPredictType(lrn, predict.type = "prob")
+    mod = train(lrn, task)
+    p = predict(mod, newdata = test)
+    expect_equal(as.numeric(unique(getPredictionProbabilities(p))), probs)
   }
 
-  ps.list = list(
-    list(method = "majority"),
-    list(method = "sample-prior")
+  # binaryclass with qual class sizes
+  df = data.frame(
+    y = as.factor(c(1, 2, 1, 2)),
+    x = rep(1, 4)
   )
+  lvls = levels(df$y)
+  method = c("majority", "sample-prior")
+  task = makeClassifTask(data = df, target = "y")
 
-  # MULTICLASS, check two cases:
-  # 1) sample training instances so that not all classes have equal size
-  # 2) use multiclass.train.inds (3 equally sized classes)
+  # determine probs manually
+  probs = c(0.5, 0.5)
 
-  n = length(multiclass.train.inds)
-  set.seed(getOption("mlr.debug.seed"))
-  inds = list(
-    sample(seq_row(multiclass.df), n),
-    multiclass.train.inds
-  )
+  for (m in method) {
+    lrn = makeLearner("classif.featureless", method = m)
+    mod = train(lrn, task)
+    # test content of learner model
+    lmod = getLearnerModel(mod)
+    expect_equal(lmod$method, m)
+    expect_equal(as.numeric(lmod$probs), probs)
 
-  for(train.inds in inds) {
-    test.inds = setdiff(seq_row(multiclass.df), train.inds)
-    # compute prior probabilities
-    prior = getPriorProbs(subsetTask(multiclass.task, train.inds))
-    lvls = names(prior)
-    p = matrix(prior, nrow = length(test.inds), ncol = length(prior), byrow = TRUE)
-    colnames(p) = lvls
+    # create predictions using predict
+    p = predict(mod, newdata = test)
 
-    # predict majority class
+    # create predictions "manually"
     set.seed(getOption("mlr.debug.seed"))
-    p1 = factor(rep(getMaxIndex(prior), length(test.inds)),
-      levels = seq_along(lvls), labels = lvls)
-    # sample class according to prior probabilities
-    set.seed(getOption("mlr.debug.seed"))
-    p2 = factor(sample(lvls, size = nrow(p), prob = prior, replace = TRUE), levels = lvls)
+    if (m == "sample-prior") {
+      # here we have to sample
+      pred = factor(sample(lvls, size = n, prob = probs, replace = TRUE))
+    } else {
+      # here we don't know the majority class and sample it randomly
+      pred = factor(rep(getMaxIndex(probs, ties.method = "random"), n), levels = lvls)
+    }
+    # test if predictions are the same as the manually created ones
+    expect_equal(getPredictionResponse(p), pred)
 
-    testSimpleParsets(t.name = "classif.featureless", df = multiclass.df,
-      target = multiclass.target, train.inds = train.inds,
-      old.predicts.list = list(p1, p2), parset = ps.list)
-    testProbParsets(t.name = "classif.featureless", df = multiclass.df,
-      target = multiclass.target, train.inds = train.inds,
-      old.probs.list = list(p, p), parset = ps.list)
+    # test that printer works correctly
+    expect_output(print(lrn), "featureless")
+    expect_output(print(lrn), m)
+
+    # test predict.type prob
+    lrn = setPredictType(lrn, predict.type = "prob")
+    mod = train(lrn, task)
+    p = predict(mod, newdata = test)
+    expect_equal(getPredictionProbabilities(p), rep(0.5, n))
   }
-
-  # BINARYCLASS:
-  # compute prior probabilities
-  positive = getTaskDescription(binaryclass.task)$positive
-  prior = getPriorProbs(subsetTask(binaryclass.task, subset = binaryclass.train.inds))
-  p = matrix(prior, nrow = length(binaryclass.test.inds), ncol = length(prior), byrow = TRUE)
-  colnames(p) = binaryclass.class.levs
-
-  # predict majority class
-  set.seed(getOption("mlr.debug.seed"))
-  p1 = factor(rep(getMaxIndex(prior), length(binaryclass.test.inds)),
-    levels = seq_along(binaryclass.class.levs),
-    labels = binaryclass.class.levs)
-
-  # sample class according to prior probabilities
-  set.seed(getOption("mlr.debug.seed"))
-  p2 = sample(binaryclass.class.levs, size = length(binaryclass.test.inds),
-    prob = prior, replace = TRUE)
-  p2 = factor(p2, levels = binaryclass.class.levs)
-
-  testSimpleParsets(t.name = "classif.featureless", df = binaryclass.df,
-    target = binaryclass.target, train.inds = binaryclass.train.inds,
-    old.predicts.list = list(p1, p2), parset = ps.list)
-  testProbParsets(t.name = "classif.featureless", df = binaryclass.df,
-    target = binaryclass.target, train.inds = binaryclass.train.inds,
-    old.probs.list = list(p[,positive], p[,positive]), parset = ps.list)
-
-  # test that printers work correctly
-  lrn = makeLearner("classif.featureless")
-  expect_output(print(lrn), "featureless")
 })
