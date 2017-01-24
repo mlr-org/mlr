@@ -1,9 +1,10 @@
 #' @title Shapelet features transformation
 #'
-#' @description The function learns k shapelet features with each length l for
-#'   classification. Based on those shapelets, the raw time series curve data
-#'   can be tranformed into shapelet-based feature transformation. Moreover, a
-#'   classification is learned jointly. It is either a standard SVM or a
+#' @description The function learns a shapelet model for classification. This
+#'   includes k shapelet features with each length l for classification. Based
+#'   on those shapelets, the raw time series curve data can be tranformed into
+#'   shapelet-based feature transformation. Moreover, a classification is
+#'   learned jointly. It is either a standard SVM or a
 #'   logistic regression. Together with the shapelets, they provide the complete
 #'   shapelet model for classification.
 #'
@@ -40,7 +41,7 @@ getTSShapeletFeatures = function(curves, label, ...) {
   assertFactor(label)
 
 
-  shapeletmodel = shapeletLib::learnShapelets(data = curves, label = label, ...)
+  shapeletmodel = shapeletLib::learnShapeletModel(data = curves, label = label, ...)
 
   return(list(model = shapeletmodel))
 
