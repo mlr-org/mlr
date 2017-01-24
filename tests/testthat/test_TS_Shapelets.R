@@ -1,6 +1,6 @@
-context("TS_Shapelets")
+context("TS_shapelets")
 
-test_that("TS_Shapelets", {
+test_that("TS_shapelets", {
 
   k = 0.02
   l = 0.2
@@ -39,6 +39,5 @@ test_that("TS_Shapelets", {
   label = as.factor(c(1,2,3,2,3))
   lm = getTSShapeletFeatures(curves = df, label = label, method = "hinge", step = "user", step.size = 0.001, max.iter = 5)
   expect_true(length(lm$model) == 2)
-
 
 })
