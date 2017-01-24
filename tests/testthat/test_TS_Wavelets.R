@@ -1,6 +1,6 @@
-context("Ts_Wavelets")
+context("TS_wavelets")
 
-test_that("Ts_Wavelets", {
+test_that("TS_wavelets", {
 
   #gp = data.frame(v1  =  t(1:4), X1= as.factor(1))
   gp = data.frame( X1= as.factor(c(-1,1,1,-1, 1)) ,v1 = 1:5, v2 = 12:16, v3 = 3:7, v4 = 4:8)
