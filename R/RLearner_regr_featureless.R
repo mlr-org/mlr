@@ -34,7 +34,14 @@ makeRLearner.regr.featureless = function() {
 #' @export
 trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL, method = "mean", ...) {
   y = getTaskTargets(.task)[.subset]
-  list(method = method, y = y)
+
+  if (method == "mean") {
+    response = mean(y)
+  } else if (method == "median") {
+    response = median(y)
+  }
+
+  list(response = response)
 }
 
 #' @export
@@ -42,14 +49,6 @@ predictLearner.regr.featureless = function(.learner, .model, .newdata, ...) {
   # extract some shortcuts
   n = nrow(.newdata)
   mod = getLearnerModel(.model)
-  y = mod$y
-  method = mod$method
 
-  if (method == "mean") {
-    resp = mean(y)
-  } else if (method == "median") {
-    resp = median(y)
-  }
-
-  return(rep(resp, n))
+  return(rep(mod$response, n))
 }

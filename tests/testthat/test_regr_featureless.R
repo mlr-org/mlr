@@ -1,24 +1,25 @@
 context("regr_featureless")
 
 test_that("regr_featureless", {
-  predictConstant = function(task, train.inds, fun) {
-    y = getTaskTargets(subsetTask(task, train.inds))
-    ntest = getTaskSize(task) - length(train.inds)
-    rep(fun(y), ntest)
-  }
-  ps.list = list(
-    list(method = "mean"),
-    list(method = "median")
+  df = data.frame(
+    y = c(1, 2, 3, 3, 3),
+    x = rep(1, 5)
   )
-  old.predicts.list = list(
-    predictConstant(regr.task, regr.train.inds, mean),
-    predictConstant(regr.task, regr.train.inds, median)
+  method = c("mean", "median")
+  expected.response = list(
+    median = 3,
+    mean = (1 + 2 + 3 + 3 + 3)/5
   )
 
-  testSimpleParsets("regr.featureless", regr.df, regr.target,
-    regr.train.inds, old.predicts.list, ps.list)
+  task = makeRegrTask(data = df, target = "y")
+
+  # test content of learner model
+  for (m in method) {
+    lrn = makeLearner("regr.featureless", method = m)
+    mod = train(lrn, task)
+    expect_equal(getLearnerModel(mod)$response, expected.response[[m]])
+  }
 
   # test that printers work correctly
-  lrn = makeLearner("classif.featureless")
   expect_output(print(lrn), "featureless")
 })
