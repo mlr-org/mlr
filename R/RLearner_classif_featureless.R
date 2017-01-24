@@ -8,13 +8,14 @@
 #' Using observation weights is currently not supported.
 #'
 #' Method \dQuote{majority} predicts always the majority class for each new
-#' observation. In the case of ties, a randomly sampled class is predicted.
+#' observation. In the case of ties, one randomly sampled, constant class is predicted 
+#' for all observations in the test set.
 #' This method is used as the default. It is very similar to the ZeroR classifier
 #' from WEKA (see \url{https://weka.wikispaces.com/ZeroR}). The only difference is
 #' that ZeroR always predicts the first class of the tied class values instead
 #' of sampling them randomly.
 #'
-#' Method \dQuote{sample-prior} always samples a random class for each new
+#' Method \dQuote{sample-prior} always samples a random class for each individual test
 #' observation according to the prior probabilities observed in the training data.
 #'
 #' If you opt to predict probabilities, the class probabilities always
@@ -42,6 +43,7 @@ trainLearner.classif.featureless = function(.learner, .task, .subset, .weights =
   method = "majority", ...) {
   y = getTaskTargets(.task)[.subset]
   lvls = getTaskClassLevels(.task)
+  # probs is always complete, if a class is empty is has 0 frequency in probs
   probs = prop.table(table(y))
   list(method = method, probs = probs)
 }
