@@ -1,6 +1,14 @@
 context("classif_featureless")
 
 test_that("classif_featureless", {
+  # check content of learner model
+  checkLearnerModel = function(mod, probs) {
+    lmod = getLearnerModel(mod)
+    expect_named(lmod, c("method", "probs"))
+    expect_equal(lmod$method, m)
+    expect_equal(as.numeric(lmod$probs), probs)
+  }
+
   # multiclass with inequal class sizes
   df = data.frame(
     y = as.factor(c(1, 2, 3, 3, 3)),
@@ -10,7 +18,8 @@ test_that("classif_featureless", {
   method = c("majority", "sample-prior")
   task = makeClassifTask(data = df, target = "y")
   # create dest data
-  test = data.frame(rep(1, 10))
+  n = 10
+  test = data.frame(rep(1, n))
 
   # determine probs and majority class manually
   probs = c(0.2, 0.2, 0.6)
@@ -20,9 +29,7 @@ test_that("classif_featureless", {
     lrn = makeLearner("classif.featureless", method = m)
     mod = train(lrn, task)
     # test content of learner model
-    lmod = getLearnerModel(mod)
-    expect_equal(lmod$method, m)
-    expect_equal(as.numeric(lmod$probs), probs)
+    checkLearnerModel(mod, probs)
 
     # create predictions using predict
     p = predict(mod, newdata = test)
@@ -65,9 +72,7 @@ test_that("classif_featureless", {
     lrn = makeLearner("classif.featureless", method = m)
     mod = train(lrn, task)
     # test content of learner model
-    lmod = getLearnerModel(mod)
-    expect_equal(lmod$method, m)
-    expect_equal(as.numeric(lmod$probs), probs)
+    checkLearnerModel(mod, probs)
 
     # create predictions using predict
     p = predict(mod, newdata = test)
