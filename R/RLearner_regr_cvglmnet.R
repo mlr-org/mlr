@@ -32,8 +32,7 @@ makeRLearner.regr.cvglmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250.0),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L),
-      makeLogicalLearnerParam(id = "factory", default = FALSE)
+      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
     properties = c("numerics", "factors", "weights"),
     name = "GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)",
@@ -51,10 +50,11 @@ trainLearner.regr.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
   if (!is.null(.weights))
     args$weights = .weights
 
+  glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
   if (any(is.ctrl.arg)) {
-    on.exit(do.call(glmnet::glmnet.control, saved.ctrl))
+    on.exit(glmnet::glmnet.control(factory = TRUE))
     do.call(glmnet::glmnet.control, args[is.ctrl.arg])
     args = args[!is.ctrl.arg]
   }
