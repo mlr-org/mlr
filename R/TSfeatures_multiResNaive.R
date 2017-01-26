@@ -1,27 +1,33 @@
-
+#' @param x [\code{numeric(n)}]\cr
+#' The input curve
 getSegmentFeatures = function(x) {
   mean(x)
 }
-
+#' @param x[\code{numeric(n)}]\cr
+#' The input curve
+#' @param res.level [\code{integer}]\cr
+#' The number of hierachy of resolutions 
+#' @param shift [\code{numeric}]\cr
+#' The overlapping proportion when slide the window for one step 
 getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   m = length(x)
   start = 1L
   feats = numeric(0L)
-  ssize = m
+  ssize = m  # initialize segment size to be the length of the curve
   for (rl in 1:res.level) {
-    soffset = ceiling(shift * ssize)
+    soffset = ceiling(shift * ssize)  # overlap distance
     messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
     sstart = 1L
-    send = sstart + ssize - 1L
-    while(send <= m) {
+    send = sstart + ssize - 1L  # end position
+    while(send <= m) {  # until the segment reach the end
       # messagef("start, end: %i, %i", sstart, send)
       f = getSegmentFeatures(x[sstart:send])
       # print(f)
-      feats = c(feats, f)
+      feats = c(feats, f)  # append the feats from the last resolution hierachy
       sstart = sstart + soffset
       send = send + soffset
     }
-    ssize = ceiling(ssize / 2)
+    ssize = ceiling(ssize / 2)  # decrease the segment size
     if (ssize < 1L)
       break
   }
@@ -31,7 +37,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
 extractMultiResFeatures = function(data, curve.lens, res.level = 3, shift = 0.5) {
   n.obs = nrow(data)
   n.curves = length(curve.lens)
-  feat.list = vector("list", n.obs)
+  feat.list = vector("list", n.obs)  # class(feat.list) = "list", vector(mode = "logical", length = 0)
   for (i in 1:n.obs) {
     # print(i)
     featvec = numeric(0L)
