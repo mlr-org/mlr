@@ -648,8 +648,7 @@ test_that("check measure calculations", {
   mldr = mldr:::mldr_from_dataframe(as.data.frame(response), labelIndices = c(1, 2), name = "testMLDR")
   predictions = bincombo[rep(1:4, times = 4),]
   storage.mode(predictions) = "numeric"
-  
-  # this is copy-paste from mldr_evaluate
+  # this is copy-paste from mldr_evaluate to create a dataframe for mldr
   trueLabels = mldr$dataset[, mldr$labels$index]
   bipartition = predictions
   active = bipartition >= 0.5
@@ -660,8 +659,7 @@ test_that("check measure calculations", {
     PredictedNegatives = rowSums(!bipartition), TruePositives = rowSums(trueLabels &
         bipartition), TrueNegatives = rowSums(!trueLabels &
             !bipartition))
-  
-  #
+  # comparison
   expect_equal(mldr:::mldr_Recall(counters), measureMultilabelTPR(response, predictions))
   expect_equal(mldr:::mldr_HL(trueLabels, predictions), measureMultilabelHamloss(response, predictions))
   expect_equal(mldr:::mldr_Precision(counters), measureMultilabelPPV(response, predictions))
