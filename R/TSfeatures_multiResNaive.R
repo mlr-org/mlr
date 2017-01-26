@@ -35,7 +35,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
 }
 
 #' @param data[\code{dataframe}]\cr 
-#' the input dataframe
+#' the input matrix
 #' @param cuve.lens[\code{vector}]\cr
 #' the subcurve length vector, suggest to sum up to the lenght of the curve
 #' @param res.level[\code{integer}]\cr
@@ -43,6 +43,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
 #' @param shift [\code{numeric}]\cr
 #' The overlapping proportion when slide the window for one step 
 extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
+  checkmate::assert_matrix(data)
   n.obs = nrow(data)
   n.curves = length(curve.lens)
   feat.list = vector("list", n.obs)  # class(feat.list) = "list", vector(mode = "logical", length = 0)
@@ -56,6 +57,7 @@ extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5
       #messagef("curve start, end: %i, %i", sstart, send)
       f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
       # print(f)
+      browser()
       featvec = c(featvec, f)
     }
     feat.list[[i]] = featvec  # put features from the ith instance into the list ith position
