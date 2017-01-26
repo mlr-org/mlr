@@ -57,7 +57,6 @@ extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5
       #messagef("curve start, end: %i, %i", sstart, send)
       f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
       # print(f)
-      browser()
       featvec = c(featvec, f)
     }
     feat.list[[i]] = featvec  # put features from the ith instance into the list ith position
