@@ -24,5 +24,6 @@ makeTimeSeriesMultiChannelClassifTask = function(id = deparse(substitute(data)),
   task$type = type
   task$task.desc$type = type
   task$task.desc = addClasses(task$task.desc, "TaskDescTimeSeriesMultiChannelClassif")
+  task$channel.list = channel.list
   addClasses(task, "TimeSeriesMultiChannelClassifTask")
 }
