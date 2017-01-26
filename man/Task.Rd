@@ -15,6 +15,7 @@
 \alias{makeRegrTask}
 \alias{makeSurvTask}
 \alias{makeTimeSeriesClassifTask}
+\alias{makeTimeSeriesMultiChannelClassifTask}
 \title{Create a classification, regression, survival, cluster, cost-sensitive classification or
 multilabel task.}
 \usage{
@@ -42,6 +43,10 @@ makeSurvTask(id = deparse(substitute(data)), data, target,
 makeTimeSeriesClassifTask(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, positive = NA_character_,
   fixup.data = "warn", check.data = TRUE)
+
+makeTimeSeriesMultiChannelClassifTask(id = deparse(substitute(data)), data,
+  target, weights = NULL, blocking = NULL, positive = NA_character_,
+  fixup.data = "warn", check.data = TRUE, channel.list)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr

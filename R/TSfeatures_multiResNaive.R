@@ -34,25 +34,33 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   return(feats)
 }
 
-extractMultiResFeatures = function(data, curve.lens, res.level = 3, shift = 0.5) {
+#' @param data[\code{dataframe}]\cr 
+#' the input dataframe
+#' @param cuve.lens[\code{vector}]\cr
+#' the subcurve length vector, suggest to sum up to the lenght of the curve
+#' @param res.level[\code{integer}]\cr
+#' the number of resolution hierachy
+#' @param shift [\code{numeric}]\cr
+#' The overlapping proportion when slide the window for one step 
+extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
   n.obs = nrow(data)
   n.curves = length(curve.lens)
   feat.list = vector("list", n.obs)  # class(feat.list) = "list", vector(mode = "logical", length = 0)
-  for (i in 1:n.obs) {
+  for (i in 1:n.obs) {  # traverse the number of observations
     # print(i)
     featvec = numeric(0L)
     for (j in 1:n.curves) {
-      clen = curve.lens[j]
-      sstart = ifelse(j == 1L, 1L, send + 1L)
+      clen = curve.lens[j]  # the subcurve length
+      sstart = ifelse(j == 1L, 1L, send + 1L)  # the start point of the sub curve, without overlap
       send = sstart + clen - 1L
-      # messagef("curve start, end: %i, %i", sstart, send)
+      #messagef("curve start, end: %i, %i", sstart, send)
       f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
       # print(f)
       featvec = c(featvec, f)
     }
-    feat.list[[i]] = featvec
+    feat.list[[i]] = featvec  # put features from the ith instance into the list ith position
   }
-  do.call(rbind, feat.list)
+  do.call(rbind, feat.list)  # creat a matrix by combining the row
 }
 
 extractMultiResFeatures2 = function(data, curve.lens, res.level = 3, shift = 0.5) {
