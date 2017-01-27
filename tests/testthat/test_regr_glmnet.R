@@ -27,7 +27,7 @@ test_that("regr_glmnet", {
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       on.exit(glmnet::glmnet.control(factory = TRUE))
-      do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
+      do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet::glmnet, pars[!names(pars) %in% ctrl.args])
     } else {
       m = do.call(glmnet::glmnet, pars)

@@ -37,7 +37,11 @@ makeRLearner.regr.cvglmnet = function() {
     properties = c("numerics", "factors", "weights"),
     name = "GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)",
     short.name = "cvglmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer.
+    glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
+    before setting the specified parameters and after training.
+    If you are setting glmnet.control parameters through glmnet.control,
+    you need to save and re-set them after running the glmnet learner."
   )
 }
 
