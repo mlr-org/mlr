@@ -30,7 +30,7 @@ learnerArgsToControl = function(control, ...) {
       # print("value:")
       # print(value)
       if (!is.null(value)) {
-        args[[as.character(arg)]] = value
+        args[[as.character(argname)]] = value
       }
     }
   }
