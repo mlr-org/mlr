@@ -14,6 +14,7 @@
 #'   Optional, specifies which filter or boundary should be used. Default:
 #'   \code{filter} = \dQuote{la8}, \code{boundary} = \dQuote{periodic}. See
 #'   package \link{\code{wavelets}} for more information.
+#'
 #' @return Returns an \code{data.frame} object containing the wavelet
 #'   coefficients.
 #'

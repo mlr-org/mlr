@@ -1,6 +1,6 @@
 load_all()
 
-configureMlr(show.info = TRUE)
+configureMlr(show.info = TRUE, show.learner.output= TRUE)
 
 # load gunpoint data
 gp = load2("demo4TS/gunpoint.RData")
@@ -38,3 +38,9 @@ op2 = trafoOptPath(tr$opt.path)
 opd2 = as.data.frame(op2)
 #parallelStop()
 print(tr)
+
+
+##########################################################
+
+
+
