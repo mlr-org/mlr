@@ -35,7 +35,7 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
-    ParamHelpers (>= 1.8),
+    ParamHelpers (>= 1.8)
 Imports:
     BBmisc (>= 1.10),
     backports,
