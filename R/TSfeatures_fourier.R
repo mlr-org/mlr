@@ -18,7 +18,7 @@
 #'   coefficients.
 #'
 #' @export
-getTSFourierFeatures = function(data, target, include.target = FALSE, fft.coeff = NULL) {
+getTSFourierFeatures = function(data, target, include.target = FALSE, fft.coeff = "phase") {
   requirePackages("stats", default.method = "load")
 
   assert(

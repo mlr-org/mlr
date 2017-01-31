@@ -1,27 +1,28 @@
 #' @title Create task on time series features.
 #'
-#' @description The function creates a feature representation of raw time series
-#'   for a time series classification task. The method used to create this
-#'   feature representation must be specified by the user in \code{method}.
-#'   For \code{wavelets} or \code{fourier} features, the resulting data does not
-#'   contain temporal structure anymore, so the returned task is a \code{ClassifTask}.
-#'   For \code{shapelets}, the learned shapelet model is returned. See
-#'   \code{\link{getTSShapeletFeatures}}.
+#' @description The function transform a task of type
+#'   \code{TimeSeriesClassifTask} into a standard \code{ClassifTask}. For this,
+#'   it creates a feature representation of the raw time series. The method used
+#'   to create this feature representation must be specified by the user in
+#'   \code{method}. For \code{wavelets} or \code{fourier} features, the
+#'   resulting data does not contain temporal structure anymore, so the returned
+#'   task is a \code{ClassifTask}. For \code{shapelets}, the learned shapelet
+#'   model is returned. See \code{{getTSShapeletFeatures}}.
 #'
 #'
 #' @param task [\code{TimeSeriesClassifTask}]\cr
 #'   Time series classification task.
 #' @param method [\code{character(1)}]\cr
-#'   Which method is used to create time series features. Two methods available.
+#'   Which method is used to create time series features. Methods available.
 #'   Wavelet transformation: \dQuote{wavelets}.
 #'   Fourier transformation: \dQuote{fourier}.
+#'   Shapelet model learning: \dQuote{shapelets}.
 #' @param pars \cr
 #'   Further parameters passed as argument e.g., for feature representation
-#'   methods.
-#'   Wavelet transformation: \code{filter} and \code{boundary}.
-#'   Fourier transformation: \code{fft.coeff}.
+#'   methods. See the methods' man pages.
 #'
-#' @return Either [\code{ClassifTask}] or the learned shapelet model.
+#' @return Either [\code{ClassifTask}] based on the transformed data or the
+#'   learned shapelet model [\code{ShapeletModel}].
 #' @export
 convertTSTaskToNormalTask = function(task, method, pars = NULL) {
   # check if task
@@ -32,8 +33,10 @@ convertTSTaskToNormalTask = function(task, method, pars = NULL) {
   z = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")
 
   switch(method,
-         wavelets = {tsf = getTSWaveletFeatures(data = z$data, target = target, include.target = FALSE, filter = pars$filter, boundary = pars$boundary)},
-         fourier = {tsf = getTSFourierFeatures(data = z$data, target = target, include.target = FALSE, fft.coeff = pars$fft.coeff)}
+         wavelets = {tsf = getTSWaveletFeatures(data = z$data, target = target,
+           include.target = FALSE, filter = pars$filter, boundary = pars$boundary)},
+         fourier = {tsf = getTSFourierFeatures(data = z$data, target = target,
+           include.target = FALSE, fft.coeff = pars$fft.coeff)}
          )
 
   if (method == "shapelets") {
