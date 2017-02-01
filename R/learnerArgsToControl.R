@@ -12,7 +12,6 @@
 learnerArgsToControl = function(control, ...) {
   args = list()
   dots = match.call(expand.dots = FALSE)$...
-  print(str(dots))
   for (i in seq_along(dots)) {
     arg = dots[[i]]
     is_missing = if (is.symbol(arg)) {
@@ -26,9 +25,6 @@ learnerArgsToControl = function(control, ...) {
     if (!is_missing) {
       value = tryCatch(eval(arg, envir = parent.frame()),
                        error = function(...) NULL)
-      # messagef("argname = %s", argname)
-      # print("value:")
-      # print(value)
       if (!is.null(value)) {
         args[[as.character(argname)]] = value
       }
