@@ -545,7 +545,7 @@ multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 
 #' @format none
 measureMulticlassBrier = function(probabilities, truth) {
   truth = factor(truth, levels = colnames(probabilities))
-  mat01 = model.matrix( ~ . -1, data = as.data.frame(truth))
+  mat01 = createDummyFeatures(truth)
   mean(rowSums((probabilities - mat01)^2))
 }
 
@@ -617,7 +617,7 @@ measureQSR = function(probabilities, truth){
   #We add this line because binary tasks only output one probability column
   if (is.null(dim(probabilities))) probabilities = cbind(probabilities,1 - probabilities)
   truth = factor(truth, levels = colnames(probabilities))
-  1 - mean(rowSums((probabilities - model.matrix( ~ as.factor(truth) + 0))^2))
+  1 - mean(rowSums((probabilities - createDummyFeatures(truth))^2))
 }
 
 #' @export lsr
