@@ -24,4 +24,3 @@ observation according to the prior probabilities observed in the training data.
 If you opt to predict probabilities, the class probabilities always
 correspond to the prior probabilities observed in the training data.
 }
-

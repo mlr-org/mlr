@@ -22,4 +22,3 @@ Provide information on supported features.}
 \description{
 Returns a subset-able dataframe with filter information.
 }
-

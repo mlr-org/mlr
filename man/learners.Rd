@@ -7,4 +7,3 @@
 All supported learners can be found by \code{\link{listLearners}} or as a table
 in the tutorial appendix: \url{http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/}.
 }
-

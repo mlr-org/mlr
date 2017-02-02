@@ -20,4 +20,3 @@ Control structure for learner.
 Find all elements in \code{...} which are not missing and
 call \code{control} on them.
 }
-

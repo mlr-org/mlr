@@ -57,4 +57,3 @@ if (requireNamespace("caret") && requireNamespace("mlbench")) {
   getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 }
 }
-
