@@ -50,7 +50,8 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       stopf("You need to pass pred for measure %s!", m$id)
   }
   if ("req.truth" %in% props) {
-    type = getTaskDescription(pred)$type
+    td = getPredictionTaskDescription(pred)
+    type = td$type
     if (type == "surv") {
       if (is.null(pred$data$truth.time) || is.null(pred$data$truth.event))
         stopf("You need to have 'truth.time' and 'truth.event' columns in your pred object for measure %s!", m$id)

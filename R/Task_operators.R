@@ -1,24 +1,18 @@
 #' @title Get a summarizing task description.
 #'
-#' @description See title.
+#' @description For ease of usage you can also pass in a task description which will
+#' be returned unchanged.
 #'
 #' @template arg_task_or_desc
-#' @return [\code{\link{TaskDesc}}].
+#' @return ret_taskdesc
 #' @export
 #' @family task
 getTaskDescription = function(x) {
-  checkTaskOrDesc(x)
-  UseMethod("getTaskDescription")
-}
-
-#' @export
-getTaskDescription.default = function(x) {
-  x$task.desc
-}
-
-#' @export
-getTaskDescription.TaskDesc = function(x) {
-  x
+  checkTask(x, allow.desc = TRUE)
+  if (inherits(x, "Task"))
+    return(x$task.desc)
+  else
+    return(x)
 }
 
 #' @title Get the type of the task.
@@ -89,26 +83,10 @@ getTaskTargetNames.TaskDescUnsupervised = function(x) {
 #' @export
 #' @family task
 getTaskClassLevels = function(x) {
-  UseMethod("getTaskClassLevels")
-}
-
-#' @export
-getTaskClassLevels.Task = function(x) {
-  # assert for x done in next call
-  getTaskClassLevels(getTaskDescription(x))
-}
-
-#' @export
-getTaskClassLevels.TaskDescClassif = function(x) {
-  # assert for x done in next call
+  checkTask(x, allow.desc = TRUE, task.type = c("classif", "multilabel"))
   getTaskDescription(x)$class.levels
 }
 
-#' @export
-getTaskClassLevels.TaskDescMultilabel = function(x) {
-  # assert for x done in next call
-  getTaskDescription(x)$class.levels
-}
 
 #' @title Get feature names of task.
 #'
