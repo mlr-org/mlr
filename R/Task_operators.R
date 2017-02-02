@@ -472,6 +472,7 @@ getTaskWeights = function(task) {
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskDictionary(task)
 getTaskDictionary = function(task) {
+  assertClass(task, classes = "Task")
   dict = list(
     task = task,
     p = getTaskNFeats(task),
