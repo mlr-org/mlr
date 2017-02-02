@@ -79,4 +79,3 @@ Other wrapper: \code{\link{makeConstantClassWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-

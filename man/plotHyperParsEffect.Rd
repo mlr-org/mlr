@@ -117,4 +117,3 @@ and other aspects of the plot using the appropriate ggplot2 syntax.
 \examples{
 # see generateHyperParsEffectData
 }
-
