@@ -1,10 +1,13 @@
-#' Get a summarizing task description.
+#' @title Get a summarizing task description.
+#'
+#' @description See title.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{\link{TaskDesc}}].
 #' @export
 #' @family task
 getTaskDescription = function(x) {
+  checkTaskOrDesc(x)
   UseMethod("getTaskDescription")
 }
 
@@ -18,23 +21,29 @@ getTaskDescription.TaskDesc = function(x) {
   x
 }
 
-#' Get the type of the task.
+#' @title Get the type of the task.
+#'
+#' @description See title.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
 getTaskType = function(x) {
+  # assert for x done in next call
   getTaskDescription(x)$type
 }
 
-#' Get the id of the task.
+#' @title Get the id of the task.
+#'
+#' @description See title.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
 getTaskId = function(x) {
+  # assert for x done in next call
   getTaskDescription(x)$id
 }
 
@@ -54,6 +63,7 @@ getTaskTargetNames = function(x) {
 
 #' @export
 getTaskTargetNames.Task = function(x) {
+  # assert for x done in next call
   getTaskTargetNames(getTaskDescription(x))
 }
 
@@ -84,21 +94,25 @@ getTaskClassLevels = function(x) {
 
 #' @export
 getTaskClassLevels.Task = function(x) {
+  # assert for x done in next call
   getTaskClassLevels(getTaskDescription(x))
 }
 
 #' @export
 getTaskClassLevels.TaskDescClassif = function(x) {
+  # assert for x done in next call
   getTaskDescription(x)$class.levels
 }
 
 #' @export
 getTaskClassLevels.TaskDescMultilabel = function(x) {
+  # assert for x done in next call
   getTaskDescription(x)$class.levels
 }
 
-#' Get feature names of task.
+#' @title Get feature names of task.
 #'
+#' @description
 #' Target column name is not included.
 #'
 #' @template arg_task
@@ -106,26 +120,33 @@ getTaskClassLevels.TaskDescMultilabel = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
+  assertClass(task, "Task")
   setdiff(names(task$env$data), getTaskDescription(task)$target)
 }
 
-#' Get number of features in task.
+#' @title Get number of features in task.
+#'
+#' @description See title.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
 getTaskNFeats = function(x) {
+  # assert for x done in next call
   sum(getTaskDescription(x)$n.feat)
 }
 
-#' Get number of observations in task.
+#' @title Get number of observations in task.
+#'
+#' @description See title.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
 getTaskSize = function(x) {
+  # assert for x done in next call
   getTaskDescription(x)$size
 }
 
@@ -136,7 +157,7 @@ getTaskSize = function(x) {
 #' For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 #'
 #' @template arg_task_or_desc
-#' @param target [\code{character(1)}]\cr
+#' @param target [\code{character}]\cr
 #'   Left hand side of the formula.
 #'   Default is defined by task \code{x}.
 #' @param explicit.features [\code{logical(1)}]\cr
@@ -149,7 +170,11 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
+  # assert for x done in next call
   td = getTaskDescription(x)
+  assertCharacter(target, any.missing = FALSE)
+  assertFlag(explicit.features)
+  assertEnvironment(env)
   type = td$type
   if (type == "surv") {
     lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
@@ -180,12 +205,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' Get target data of task.
 #'
 #' @template arg_task
-#' @param recode.target [\code{character(1)}] \cr
-#'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
-#'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as +1 and the negative class either as 0 or -1.
-#'   Default is \dQuote{no}.
+#' @inheritParams getTaskData
 #' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
 #'   of logical columns for multilabel.
 #' @family task
@@ -194,12 +214,14 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
 getTaskTargets = function(task, recode.target = "no") {
+  # assert for task done by s3
   UseMethod("getTaskTargets")
 }
 
 #' @export
 getTaskTargets.SupervisedTask = function(task, recode.target = "no") {
   y = task$env$data[, task$task.desc$target, drop = TRUE]
+  # assert for recode.target in recodeY
   recodeY(y, recode.target, task$task.desc)
 }
 
@@ -214,8 +236,9 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 }
 
 
-#' Extract data in task.
+#' @title Extract data in task.
 #'
+#' @description
 #' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
 #' @template arg_task
@@ -252,6 +275,8 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
   checkTask(task, "Task")
+  assertFlag(target.extra)
+  # assert for recode.target in recodeY
 
   if (missing(subset)) {
     subset = NULL
@@ -316,6 +341,8 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 }
 
 recodeY = function(y, type, td) {
+  assertChoice(type, c("no", "01", "-1+1", "drop.levels", "lcens", "rcens", "icens", "multilabel.factor"),
+    .var.name = "recode.target")
   if (type == "no")
     return(y)
   if (type == "drop.levels")
@@ -367,11 +394,12 @@ recodeSurvivalTimes = function(y, from, to) {
   Surv(time1, time2, type = lookup[to])
 }
 
-#' Extract costs in task.
+#' @title Extract costs in task.
 #'
+#' @description
 #' Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task [\code{\link{CostSensTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task.
 #' @param subset [\code{integer}]\cr
 #'   Selected cases.
@@ -380,6 +408,7 @@ recodeSurvivalTimes = function(y, from, to) {
 #' @family task
 #' @export
 getTaskCosts = function(task, subset) {
+  assertClass(task, "Task")
   if (task$task.desc$type != "costsens")
     return(NULL)
   ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
@@ -391,7 +420,9 @@ getTaskCosts = function(task, subset) {
 }
 
 
-#' Subset data in task.
+#' @title Subset data in task.
+#'
+#' @description See title.
 #'
 #' @template arg_task
 #' @template arg_subset
@@ -403,6 +434,8 @@ getTaskCosts = function(task, subset) {
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
 subsetTask = function(task, subset, features) {
+  assertClass(task, "Task")
+  # not putting assertion for subset and features here for speed for now
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
