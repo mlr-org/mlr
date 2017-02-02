@@ -51,6 +51,13 @@ test_that("measures", {
   expect_is(perf, "numeric")
 })
 
+test_that("classif measures do not produce integer overflow", {
+  tsk = oversample(subsetTask(pid.task), 1000)
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  ms = listMeasures("classif", create = TRUE)
+  r = holdout(lrn, tsk, measures = ms, show.info = FALSE)
+  expect_numeric(r$aggr, any.missing = FALSE)
+})
 
 test_that("measures with same id still work", {
   m1 = mmce
@@ -257,6 +264,8 @@ test_that("check measure calculations", {
   # mape
   expect_equal(NA, suppressWarnings(mape$fun(pred = pred.regr)))
   expect_equal(NA, suppressWarnings(measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4))))
+  expect_warning(mape$fun(pred = pred.regr), regexp = "MAPE is undefined if any truth value is equal to 0.")
+  expect_warning(measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)), regexp = "MAPE is undefined if any truth value is equal to 0.")
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
   mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
@@ -267,6 +276,22 @@ test_that("check measure calculations", {
   expect_warning(measureMAPE(0,0))
   expect_warning(measureMAPE(c(1,1,1,0),c(2,2,2,2)))
   expect_silent(measureMAPE(c(1,1,1,1),c(2,2,2,2)))
+  # msle
+  msle.test = ((log(4 + 1) - log(5 + 1))^2 + (log(11 + 1) - log(10 + 1))^2 +
+  (log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
+  msle.perf = performance(pred.regr, measures = msle, model = mod.regr)
+  expect_equal(msle.test, msle$fun(pred = pred.regr))
+  expect_equal(msle.test, as.numeric(msle.perf))
+  # msle throws error for values smaller than -1
+  pred.art.regr.neg = pred.art.regr
+  pred.art.regr.neg[[1L]] = -3
+  expect_error(measureMSLE(tar.regr, pred.art.regr.neg),
+    "values must be greater or equal -1")
+  # rmsle
+  rmsle.test = sqrt(msle.test)
+  rmsle.perf = performance(pred.regr, measures = rmsle, model = mod.regr)
+  expect_equal(rmsle.test, rmsle$fun(pred = pred.regr))
+  expect_equal(rmsle.test, as.numeric(rmsle.perf))
 
   #test multiclass measures
 
@@ -291,8 +316,13 @@ test_that("check measure calculations", {
   colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
   colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
   colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
-  colauc.width = -diff(colauc.omspec) # = diff(rev(omspec))
+  colauc.width = - diff(colauc.omspec) # = diff(rev(omspec))
   expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
+  # colAUC with "maximum = FALSE"
+  colauc.min = colAUC(c(1, 0, 1, 1), truth = tar.bin, maximum = FALSE)
+  colauc.max = colAUC(c(1, 0, 1, 1), truth = tar.bin, maximum = TRUE)
+  expect_equal(colauc.min[[1]], 0.25)
+  expect_equal(colauc.min, 1 - colauc.max)
   # colAUC multiclass
   colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
   tab = t(utils::combn(0:2, 2)) # all possible 1 vs. 1 combinations
@@ -384,7 +414,26 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
-
+  #kappa
+  p0 = 0.5
+  pe = (0.25 * 0.25 + 0.5 * 0.5 + 0.25 * 0.25) / 1
+  kappa.test = 1 - (1 - p0) / (1 - pe)
+  kappa.perf = performance(pred.classif, measures = kappa, model = mod.classif)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), kappa.test)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), as.numeric(kappa.perf))
+  #wkappa
+  conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
+  expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))
+  weights = matrix(c(0, 1, 4, 1, 0, 1, 4, 1, 0), nrow = 3L)
+  wkappa.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+  wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
+  tar.classif2 = tar.classif
+  pred.art.classif2 = pred.art.classif
+  levels(tar.classif2) = as.numeric(levels(tar.classif))^2
+  levels(pred.art.classif2) = as.numeric(levels(pred.art.classif))^2
+  expect_equal(measureWKAPPA(tar.classif2, pred.art.classif2), wkappa.test)
 
   #test binaryclass measures
 
@@ -652,6 +701,7 @@ test_that("getDefaultMeasure", {
 })
 
 test_that("measures quickcheck", {
+  skip_on_cran()
   options(warn = 2)
   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
   lrn = makeLearner("classif.rpart")

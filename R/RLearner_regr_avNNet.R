@@ -22,7 +22,7 @@ makeRLearner.regr.avNNet = function() {
       makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
       makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
     ),
-    par.vals = list(size = 3L),
+    par.vals = list(size = 3L, linout = TRUE),
     properties = c("numerics", "factors", "weights"),
     name = "Neural Network",
     short.name = "avNNet",
@@ -58,10 +58,10 @@ trainLearner.regr.avNNet = function(.learner, .task, .subset, .weights = NULL, .
     assertInteger(ind, len = nrow(dat))
     if (is.null(.weights)) {
       f = getTaskFormula(.task)
-      nets[[i]] = nnet::nnet(f, data = dat[ind,], linout = TRUE, ...)
+      nets[[i]] = nnet::nnet(f, data = dat[ind,], ...)
     } else {
       f = getTaskFormula(.task)
-      nets[[i]] = nnet::nnet(f, data = dat[ind,], linout = TRUE, weights = .weights, ...)
+      nets[[i]] = nnet::nnet(f, data = dat[ind,], weights = .weights, ...)
     }
   }
   return(nets)

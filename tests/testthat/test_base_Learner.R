@@ -39,4 +39,13 @@ test_that("Learner operators work", {
   # test that packages get combines
   lrn2 = makeFilterWrapper(lrn, fw.method = "randomForest.importance")
   expect_set_equal(getLearnerPackages(lrn2), c("MASS", "randomForest"))
+
+  # test getLearnerShortName
+  expect_equal(getLearnerShortName(lrn), lrn$short.name)
+  wrapped.lrn = makeBaggingWrapper(lrn)
+  wrapped.lrn.short.name = paste(c(lrn$short.name, "bagged"), collapse = ".")
+  expect_equal(getLearnerShortName(wrapped.lrn), wrapped.lrn.short.name)
+  wrapped.lrn = makeImputeWrapper(wrapped.lrn)
+  wrapped.lrn.short.name = paste(c(wrapped.lrn.short.name, "imputed"), collapse = ".")
+  expect_equal(getLearnerShortName(wrapped.lrn), wrapped.lrn.short.name)
 })

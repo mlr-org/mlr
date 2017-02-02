@@ -278,12 +278,16 @@ makeFilter(
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
-  pkg  = "FSelector",
+  pkg  = "Rfast",
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    y = FSelector::linear.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+    d = getTaskData(task, target.extra = TRUE)
+    y = Rfast::correls(d$target, d$data, type = "pearson")
+    for (i in which(is.na(y[, "correlation"]))) {
+      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs")
+    }
+    setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
 )
 
@@ -295,12 +299,16 @@ makeFilter(
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
-  pkg  = "FSelector",
+  pkg  = "Rfast",
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+    d = getTaskData(task, target.extra = TRUE)
+    y = Rfast::correls(d$target, d$data, type = "spearman")
+    for (i in which(is.na(y[, "correlation"]))) {
+      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs", method = "spearman")
+    }
+    setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
 )
 
@@ -486,16 +494,21 @@ univariate = makeFilter(
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
-  pkg = character(0L),
+  pkg = "Rfast",
   supported.tasks = c("classif"),
   supported.features = c("numerics"),
   fun = function(task, nselect, ...) {
-    data = getTaskData(task)
-    sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(stri_paste(feat.name,"~",getTaskTargetNames(task)))
-      aov.t = aov(f, data = data)
-      summary(aov.t)[[1]][1,'F value']
-    })
+    d = getTaskData(task, target.extra = TRUE)
+    y = as.integer(d$target)
+    X = as.matrix(d$data)
+    an = Rfast::anovas(X, y)
+    for (i in which(is.na(an[, "F value"]))) {
+      j = !is.na(X[,i])
+      if (any(j)) {
+        an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j]) 
+      }
+    }
+    setNames(an[, "F value"], getTaskFeatureNames(task))
   }
 )
 

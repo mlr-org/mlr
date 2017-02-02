@@ -27,8 +27,8 @@ Character vector with \code{learner.ids} in new order.}
 Character vector with \code{task.ids} in new order.}
 
 \item{pretty.names}{[\code{logical(1)}]\cr
-Whether to use the \code{\link{Measure}} name instead of the id in the plot.
-Default is \code{TRUE}.}
+Whether to use the \code{\link{Measure}} name and the \code{\link{Learner}}
+short name instead of the id. Default is \code{TRUE}.}
 
 \item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
@@ -61,6 +61,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRRanksAsBarChart}},
@@ -76,7 +77,7 @@ Other plot: \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

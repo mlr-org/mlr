@@ -17,6 +17,7 @@ Authors@R: c(
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
     person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut"),
+    person("Mason", "Gallo", email = "masonagallo@gmail.com", role = "aut"),
     person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb"),
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb"),
     person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
@@ -25,7 +26,8 @@ Authors@R: c(
     person("Florian", "Fendt", email = "flo_fendt@gmx.de", role = "ctb"),
     person("Philipp", "Probst", email = "philipp_probst@gmx.de", role = "ctb"),
     person("Xudong", "Sun", email = "xudong.sun@stat.uni-muenchen.de", role = "ctb"),
-    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"))
+    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"),
+    person("Bruno", "Vieira", email = "bruno.hebling.vieira@usp.br", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -36,15 +38,14 @@ Depends:
     ParamHelpers (>= 1.9)
 Imports:
     BBmisc (>= 1.10),
+    backports,
     ggplot2,
     stats,
     stringi,
     checkmate (>= 1.8.1),
     data.table,
-    ggvis,
     methods,
     parallelMap (>= 1.3),
-    shiny,
     survival,
     utils
 Suggests:
@@ -74,6 +75,7 @@ Suggests:
     elasticnet,
     elmNN,
     emoa,
+    evtree,
     extraTrees,
     flare,
     fields,
@@ -83,12 +85,13 @@ Suggests:
     FSelector,
     gbm,
     GenSA,
+    ggvis,
     glmnet,
     h2o (>= 3.6.0.8),
     GPfit,
     Hmisc,
     ipred,
-    irace (>= 1.0.7),
+    irace (>= 2.0),
     kernlab,
     kknn,
     klaR,
@@ -114,11 +117,11 @@ Suggests:
     pls,
     PMCMR (>= 4.1),
     pROC (>= 1.8),
-    quickcheck,
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.5.0),
+    ranger (>= 0.6.0),
     RCurl,
+    Rfast,
     rFerns,
     rjson,
     rknn,
@@ -133,6 +136,7 @@ Suggests:
     RSNNS,
     RWeka,
     sda,
+    shiny,
     smoof,
     sparsediscrim,
     sparseLDA,
@@ -142,7 +146,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost,
+    xgboost (>= 0.6-2),
     XML
 LazyData: yes
 ByteCompile: yes

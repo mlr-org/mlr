@@ -58,11 +58,9 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   else
     assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
 
-  perc.ids = seq_along(percs)
-
   # create downsampled versions for all learners
   lrnds1 = lapply(learners, function(lrn) {
-    lapply(perc.ids, function(p.id) {
+    lapply(seq_along(percs), function(p.id) {
       perc = percs[p.id]
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
@@ -180,6 +178,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #' @template ret_ggv
 #' @export
 plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = TRUE) {
+  requirePackages("_ggvis")
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
@@ -217,6 +216,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
   }
 
   if (!is.null(interaction)) {
+    requirePackages("_shiny")
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
             shiny::headerPanel("learning curve"),

@@ -1,5 +1,5 @@
 context("regr_ranger")
-
+ 
 test_that("regr_ranger", {
   requirePackagesOrSkip("ranger", default.method = "load")
 

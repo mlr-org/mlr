@@ -20,6 +20,33 @@ test_that("BenchmarkResult", {
   testFacetting(q, ncol = 2L)
   q = plotBMRBoxplots(res, facet.wrap.nrow = 2L, facet.wrap.ncol = 2L)
   testFacetting(q, 2L, 2L)
+
+  # pretty names works
+  plotBMRBoxplots(res)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(res), grid.size = 2L)
+  testDocForStrings(doc, getBMRMeasures(res)[[1L]]$name)
+  
+  plotBMRBoxplots(res, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerIds(res), grid.size = 2L)
+  testDocForStrings(doc, getBMRMeasureIds(res)[[1L]])
+
+  # test pretty.names in conjunction with order.lrns
+  new.order = c("classif.rpart", "classif.nnet")
+  plotBMRBoxplots(res, pretty.names = TRUE, order.lrns = new.order)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
+    grid.size = 2L, ordered = TRUE)
 })
 
 test_that("BenchmarkResult allows spaces", {

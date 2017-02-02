@@ -14,7 +14,7 @@
 #' @family wrapper
 #' @aliases CostSensRegrWrapper CostSensRegrModel
 makeCostSensRegrWrapper = function(learner) {
-  learner = checkLearnerRegr(learner)
+  learner = checkLearner(learner, "regr")
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
   id = stri_paste("costsens", learner$id, sep = ".")

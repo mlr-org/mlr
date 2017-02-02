@@ -213,3 +213,22 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_null(x$pred)
   expect_null(models11)
 })
+
+test_that("benchmark work with learner string", {
+  # we had a bug here, check that learner(s) are created from string
+  b = benchmark("classif.rpart", iris.task, hout)
+  b = benchmark(c("classif.rpart", "classif.lda"), iris.task, hout)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+

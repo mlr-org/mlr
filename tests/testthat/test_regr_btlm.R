@@ -4,6 +4,7 @@ test_that("regr_btlm", {
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(
+    list(),
     list(meanfn = "linear", bprior = "bflat"),
     list(meanfn = "linear", tree = c(0.5, 3)),
     list(meanfn = "constant")

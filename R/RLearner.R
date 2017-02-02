@@ -158,5 +158,3 @@ makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), propert
 
   return(lrn)
 }
-
-

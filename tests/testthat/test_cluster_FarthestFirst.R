@@ -4,6 +4,7 @@ test_that("cluster_FarthestFirst", {
   requirePackagesOrSkip("RWeka", default.method = "load")
 
   parset.list = list(
+    list(),
     list(N=3)
   )
 
