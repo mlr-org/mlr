@@ -54,4 +54,3 @@ test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range
 \seealso{
 \code{\link{aggregations}}, \code{\link{setAggregation}}
 }
-
