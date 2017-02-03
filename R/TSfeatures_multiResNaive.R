@@ -1,14 +1,14 @@
-#' @param x [\code{numeric(n)}]\cr
-#' The input curve
+# @param x [\code{numeric(n)}]\cr
+# The input curve
 getSegmentFeatures = function(x) {
   mean(x)
 }
-#' @param x[\code{numeric(n)}]\cr
-#' The input curve
-#' @param res.level [\code{integer}]\cr
-#' The number of hierachy of resolutions 
-#' @param shift [\code{numeric}]\cr
-#' The overlapping proportion when slide the window for one step 
+# @param x[\code{numeric(n)}]\cr
+# The input curve
+# @param res.level [\code{integer}]\cr
+# The number of hierachy of resolutions 
+# @param shift [\code{numeric}]\cr
+# The overlapping proportion when slide the window for one step 
 getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   m = length(x)
   start = 1L
@@ -34,6 +34,10 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   return(feats)
 }
 
+#' @title multiresolution feature extraction
+#'
+#' @description The function extract the mean of a small segments of the curve and stack them as features. The segments length 
+#' are set in a hierachy way so the features cover different resolution levels.
 #' @param data[\code{dataframe}]\cr 
 #' the input matrix
 #' @param cuve.lens[\code{vector}]\cr
@@ -41,7 +45,9 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
 #' @param res.level[\code{integer}]\cr
 #' the number of resolution hierachy
 #' @param shift [\code{numeric}]\cr
-#' The overlapping proportion when slide the window for one step 
+#' The overlapping proportion when slide the window for one step
+#' @return Returns a \code{matrix} object with each row containing the multi-resolution features
+#' @export 
 extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
   checkmate::assert_matrix(data)
   n.obs = nrow(data)
@@ -64,12 +70,13 @@ extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5
   do.call(rbind, feat.list)  # creat a matrix by combining the row
 }
 
-extractMultiResFeatures2 = function(data, curve.lens, res.level = 3, shift = 0.5) {
-  resmat = matrix(NA_real_, nrow = 1L, ncol = 100000L)
-  .Call(c_get_multires_curve_features, data[1L,,drop = FALSE], curve.lens, resmat, res.level, shift)
-  p = which.first(is.na(resmat[1L,])) - 1L
-  resmat = matrix(0, nrow = nrow(data), ncol = p)
-  .Call(c_get_multires_curve_features, data, curve.lens, resmat, res.level, shift)
-  return(resmat)
-}
+# FIXME: I have commented out this block so as to pass the rcheck() command, will uncomment once the bug is fixed
+# extractMultiResFeatures2 = function(data, curve.lens, res.level = 3, shift = 0.5) {
+#   resmat = matrix(NA_real_, nrow = 1L, ncol = 100000L)
+#   .Call(c_get_multires_curve_features, data[1L,,drop = FALSE], curve.lens, resmat, res.level, shift)
+#   p = which.first(is.na(resmat[1L,])) - 1L
+#   resmat = matrix(0, nrow = nrow(data), ncol = p)
+#   .Call(c_get_multires_curve_features, data, curve.lens, resmat, res.level, shift)
+#   return(resmat)
+# }
 

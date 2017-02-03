@@ -11,26 +11,27 @@ convertTSTaskToNormalTask(task, method, pars = NULL)
 Time series classification task.}
 
 \item{method}{[\code{character(1)}]\cr
-Which method is used to create time series features. Two methods available.
+Which method is used to create time series features. Methods available.
 Wavelet transformation: \dQuote{wavelets}.
-Fourier transformation: \dQuote{fourier}.}
+Fourier transformation: \dQuote{fourier}.
+Shapelet model learning: \dQuote{shapelets}.}
 
 \item{pars}{\cr
 Further parameters passed as argument e.g., for feature representation
-methods.
-Wavelet transformation: \code{filter} and \code{boundary}.
-Fourier transformation: \code{fft.coeff}.}
+methods. See the methods' man pages.}
 }
 \value{
-Either [\code{ClassifTask}] or the learned shapelet model.
+Either [\code{ClassifTask}] based on the transformed data or the
+  learned shapelet model [\code{ShapeletModel}].
 }
 \description{
-The function creates a feature representation of raw time series
-  for a time series classification task. The method used to create this
-  feature representation must be specified by the user in \code{method}.
-  For \code{wavelets} or \code{fourier} features, the resulting data does not
-  contain temporal structure anymore, so the returned task is a \code{ClassifTask}.
-  For \code{shapelets}, the learned shapelet model is returned. See
-  \code{\link{getTSShapeletFeatures}}.
+The function transform a task of type
+  \code{TimeSeriesClassifTask} into a standard \code{ClassifTask}. For this,
+  it creates a feature representation of the raw time series. The method used
+  to create this feature representation must be specified by the user in
+  \code{method}. For \code{wavelets} or \code{fourier} features, the
+  resulting data does not contain temporal structure anymore, so the returned
+  task is a \code{ClassifTask}. For \code{shapelets}, the learned shapelet
+  model is returned. See \code{{getTSShapeletFeatures}}.
 }
 
