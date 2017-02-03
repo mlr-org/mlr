@@ -4,7 +4,8 @@
 \alias{getTSFourierFeatures}
 \title{Fast Fourier transform features}
 \usage{
-getTSFourierFeatures(data, target, include.target = FALSE, fft.coeff = NULL)
+getTSFourierFeatures(data, target, include.target = FALSE,
+  fft.coeff = "phase")
 }
 \arguments{
 \item{data}{[\code{data.frame},\code{matrix}]\cr
