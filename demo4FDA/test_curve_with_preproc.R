@@ -3,14 +3,14 @@ load_all()
 set.seed(2)
 configureMlr(show.info = TRUE, show.learner.output= TRUE)
 
-gp = load2("demo4TS/gunpoint.RData")
+gp = load2("demo4FDA/gunpoint.RData")
 
-task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
-task.wd = convertTSTaskToNormalTask(task = task, method = "wavelets", pars = list(filter = "haar"))
-task.ft = convertTSTaskToNormalTask(task = task, method = "fourier", pars = list(fft.coeff = "amplitude"))
+task = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
+task.wd = convertFDATaskToNormalTask(task = task, method = "wavelets", pars = list(filter = "haar"))
+task.ft = convertFDATaskToNormalTask(task = task, method = "fourier", pars = list(fft.coeff = "amplitude"))
 
-sh.basic = convertTSTaskToNormalTask(task = task, method = "shapelets")
-sh = convertTSTaskToNormalTask(task = task, method = "shapelets", pars = list(max.iter = 5))
+sh.basic = convertFDATaskToNormalTask(task = task, method = "shapelets")
+sh = convertFDATaskToNormalTask(task = task, method = "shapelets", pars = list(max.iter = 5))
 
 
 ###
