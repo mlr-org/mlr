@@ -32,18 +32,13 @@ convertFDATaskToNormalTask = function(task, method, pars = NULL) {
   target = task$task.desc$target
   z = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")
 
-  switch(method,
-         wavelets = {tsf = getFDAWaveletFeatures(data = z$data, target = target,
-           include.target = FALSE, filter = pars$filter, boundary = pars$boundary)},
-         fourier = {tsf = getFDAFourierFeatures(data = z$data, target = target,
-           include.target = FALSE, fft.coeff = pars$fft.coeff)}
-         )
-
   if (method == "shapelets") {
     new.args = c(list(curves = z$data, label = as.factor(z$target)), as.list(unlist(pars)))
     modelSh = do.call(getFDAShapeletFeatures, new.args)
     return(modelSh)
   }
+
+  tsf = extractFDAFeatures(data = z$data, target = target, method = method, args = pars)
 
   newdata = cbind(as.factor(z$target), tsf)
   colnames(newdata)[1] <- target  # rename target column
