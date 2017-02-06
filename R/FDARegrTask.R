@@ -1,6 +1,6 @@
-#' @title Time Series regression task
+#' @title Functional data regression task
 #'
-#' @description Create a temporal data regression task. The data is assumed
+#' @description Create a functional data regression task. The data is assumed
 #'   to have functional data structure and the target variable must be specified
 #'   by the user.
 #'
@@ -16,12 +16,15 @@
 #' @param check.data
 #' @param channel.list A list indicating different channels of the input
 #'
-#' @return Time series regression task. Object of type
-#'   \code{TimeSeriesRegrTask}.
+#' @return Functional data regression task. Object of type
+#'   \code{FDARegrTask}.
 #'
 #' @rdname Task
 #' @export
-makeTimeSeriesRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, channel.list = NULL, formula.list = NULL, index.list = NULL) {
+makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE, channel.list = NULL,
+  formula.list = NULL, index.list = NULL) {
+
   task = makeSupervisedTask("regr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
   task = makeRegrTask(id, data, target, weights, blocking, fixup.data, check.data)
   type = "tsregr"
@@ -29,6 +32,6 @@ makeTimeSeriesRegrTask = function(id = deparse(substitute(data)), data, target, 
   task$task.desc$type = type
   task$channel.list = channel.list
   task$formula.list = formula.list
-  task$task.desc = addClasses(task$task.desc, "TaskDescTimeSeriesRegr")
-  addClasses(task, "TimeSeriesRegrTask")
+  task$task.desc = addClasses(task$task.desc, "TaskDescFDARegr")
+  addClasses(task, "FDARegrTask")
 }

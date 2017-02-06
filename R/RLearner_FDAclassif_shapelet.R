@@ -1,10 +1,11 @@
 #' @title Shapelet Model Learner
 #'
 #' @description Learner for Shapelet learning for classification.
+#'
 #' @export
-makeRLearner.tsclassif.shapelet = function() {
+makeRLearner.fdaclassif.shapelet = function() {
   makeRLearnerClassif(
-    cl = "tsclassif.shapelet",
+    cl = "fdaclassif.shapelet",
     package = "shapeletLib",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "hinge", values = list("hinge", "log")),
@@ -27,14 +28,14 @@ makeRLearner.tsclassif.shapelet = function() {
 }
 
 #' @export
-trainLearner.tsclassif.shapelet = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.fdaclassif.shapelet = function(.learner, .task, .subset, .weights = NULL, ...) {
 
   z = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "-1+1")
   shapeletLib::learnShapeletModel(data = z$data, label = as.factor(z$target), ...)
 }
 
 #' @export
-predictLearner.tsclassif.shapelet = function(.learner, .model, .newdata, ...) {
+predictLearner.fdaclassif.shapelet = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd = as.matrix(.newdata)
   class.pred = predict(object = m, newdata = nd)

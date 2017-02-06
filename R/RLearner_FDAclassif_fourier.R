@@ -1,10 +1,11 @@
 #' @title Fast Fourier Transform Learner
 #'
 #' @description Learner for the fast fourier transformation.
+#'
 #' @export
-makeRLearner.tsclassif.fourier = function() {
+makeRLearner.fdaclassif.fourier = function() {
   makeRLearnerClassif(
-    cl = "tsclassif.fourier",
+    cl = "fdaclassif.fourier",
     package = "stats",
     par.set = makeParamSet(
       makeLogicalLearnerParam(id = "include.target", default = FALSE),
@@ -17,10 +18,10 @@ makeRLearner.tsclassif.fourier = function() {
 }
 
 #' @export
-trainLearner.tsclassif.fourier = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.fdaclassif.fourier = function(.learner, .task, .subset, .weights = NULL, ...) {
 
   z = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "-1+1")
-  getTSFourierFeatures(data = z$data, target = .task$task.desc$target, ...)
+  getFDAFourierFeatures(data = z$data, target = .task$task.desc$target, ...)
 }
 
 #' @export

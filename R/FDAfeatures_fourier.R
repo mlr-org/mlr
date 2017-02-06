@@ -1,10 +1,10 @@
 #' @title Fast Fourier transform features
 #'
-#' @description The function creates time series features based on the fast
+#' @description The function creates functional data features based on the fast
 #'   discrete fourier transform.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
-#'   Time series curve data.
+#'   Functional data.
 #' @param target [\code{character}]\cr
 #'   Name of the target variable.
 #' @param include.target [\code{logical}]\cr
@@ -14,11 +14,12 @@
 #'   Optional, specifies which 'transformation' of the complex frequency domain
 #'   representation should be calculated as feature representation. Must be one
 #'   of \dQuote{amplitude} or \dQuote{Phase}. Default: \dQuote{amplitude}.
+#'
 #' @return Returns an \code{data.frame} object containing the fourier
 #'   coefficients.
 #'
 #' @export
-getTSFourierFeatures = function(data, target, include.target = FALSE, fft.coeff = "phase") {
+getFDAFourierFeatures = function(data, target, include.target = FALSE, fft.coeff = "phase") {
   requirePackages("stats", default.method = "load")
 
   assert(

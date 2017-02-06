@@ -1,15 +1,15 @@
-context("TS_wavelets")
+context("FDA_wavelets")
 
-test_that("TS_wavelets", {
+test_that("FDA_wavelets", {
 
   #gp = data.frame(v1  =  t(1:4), X1= as.factor(1))
   gp = data.frame( X1= as.factor(c(-1,1,1,-1, 1)) ,v1 = 1:5, v2 = 12:16, v3 = 3:7, v4 = 4:8)
 
-  taskTs = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
-  taskW = convertTSTaskToNormalTask(task = taskTs, method = "wavelets", pars = list(filter = "haar"))
+  taskTs = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
+  taskW = convertFDATaskToNormalTask(task = taskTs, method = "wavelets", pars = list(filter = "haar"))
   wData = getTaskData(taskW, target.extra = TRUE)
 
-  taskWb = convertTSTaskToNormalTask(task = taskTs, method = "wavelets", pars = list( filter = "d4", boundary = "reflection"))
+  taskWb = convertFDATaskToNormalTask(task = taskTs, method = "wavelets", pars = list( filter = "d4", boundary = "reflection"))
   wbData = getTaskData(taskWb, target.extra = TRUE)
 
 

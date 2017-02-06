@@ -1,6 +1,6 @@
-context("TS_shapelets")
+context("FDA_shapelets")
 
-test_that("TS_shapelets", {
+test_that("FDA_shapelets", {
 
   k = 0.02
   l = 0.2
@@ -12,10 +12,10 @@ test_that("TS_shapelets", {
   df = as.data.frame(matrix(data = runif(1000), ncol = 100))
   df[,"X1"] = as.factor(sample(x = c(1,-1), replace = TRUE, size = 10))
 
-  taskTs = makeTimeSeriesClassifTask(data = df, target = "X1", positive = "1")
+  taskTs = makeFDAClassifTask(data = df, target = "X1", positive = "1")
   originalData = getTaskData(task = taskTs, target.extra = TRUE)
   #taskS = convertTSTaskToNormalTask(task = taskTs, method = "shapelets"), pars = list(K = K, L = L, show.info = TRUE))
-  taskS = convertTSTaskToNormalTask(task = taskTs, method = "shapelets", pars = list(k = k, l = l, max.iter = max.iter))
+  taskS = convertFDATaskToNormalTask(task = taskTs, method = "shapelets", pars = list(k = k, l = l, max.iter = max.iter))
 
   shapes = taskS$model$shapelets
   m = taskS$model$m
@@ -37,7 +37,7 @@ test_that("TS_shapelets", {
 
   df = matrix(1:500, nrow = 5)
   label = as.factor(c(1,2,3,2,3))
-  lm = getTSShapeletFeatures(curves = df, label = label, method = "hinge", step = "user", step.size = 0.001, max.iter = 5)
+  lm = getFDAShapeletFeatures(curves = df, label = label, method = "hinge", step = "user", step.size = 0.001, max.iter = 5)
   expect_true(length(lm$model) == 2)
 
 })
