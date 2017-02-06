@@ -109,6 +109,8 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   messagef("Resampling: %s", rin$desc$id)
 
   measure.lognames = extractSubList(measures, "id")
+  # when predict on both some measure might be in there twice,
+  # depending on aggregation fun 
   if (rin$desc$predict == "both") {
     id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
     id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
@@ -183,7 +185,6 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     ms.ids = extractSubList(measures, "id")
     if (pp == "both") {
       x = c(ms.train[idx.train], ms.test[idx.test])
-      # names(x) = stri_paste(ms.ids, c("tr", "pr"), sep = ".")
       names(x) = c(ms.ids[idx.train], ms.ids[idx.test])
     } else {
       if (pp == "train") {

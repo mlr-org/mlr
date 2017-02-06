@@ -30,7 +30,7 @@ printResampleFormatLine = function(prefix, y, digits = options()$digits) {
   # +2L to obtain spaces between cols
   if (is.null(names(y)))
     names(y) = y
-  tab.width = max(stri_width(names(y)), digits) + 2L
+  tab.width = max(stri_width(names(y)), digits) + 3L
   # if we get perf vals format decimals and add trailing zeros where needed
   if (is.numeric(y))
     y = formatC(y, digits = digits, flag = "0", format = "f")
