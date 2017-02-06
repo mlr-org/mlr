@@ -10,7 +10,7 @@ task = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
 lrn = makeLearner("fdaclassif.shapelet")
 
 
-model = train(lrn, task, subset = 1:50)
+model = train(lrn, task, subset = 1:50, )
 pred = predict(model, task, subset = 51:200)
 p = performance(pred, measures = list(mmce, tpr))
 print(p)
@@ -41,6 +41,9 @@ print(tr)
 
 
 ##########################################################
+#fda.usc
+##########################################################
+
 data(phoneme)
 names(phoneme)
 #250 curves, 150 points (250 x 150) in $learn$data, class: 5 levels
@@ -59,3 +62,17 @@ model = train(lrn, task)
 pred = predict(object = model, newdata = as.data.frame(mlearn$data))
 pred
 as.data.frame(pred)
+
+
+#########################################################
+h = 9:19
+
+lrn = makeLearner("fdaclassif.np")
+
+task = makeFDAClassifTask(data = ph, target = "label")
+
+model = train(lrn, task)
+pred = predict(object = model, newdata = as.data.frame(mlearn$data))
+pred
+as.data.frame(pred)
+
