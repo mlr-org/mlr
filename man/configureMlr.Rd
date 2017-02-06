@@ -5,7 +5,7 @@
 \title{Configures the behavior of the package.}
 \usage{
 configureMlr(show.info, on.learner.error, on.learner.warning,
-  on.par.without.desc, on.par.out.of.bounds, show.learner.output, mlr.digits)
+  on.par.without.desc, on.par.out.of.bounds, show.learner.output)
 }
 \arguments{
 \item{show.info}{[\code{logical(1)}]\cr
@@ -47,10 +47,6 @@ Default is \dQuote{stop}.}
 Should the output of the learning algorithm during training and prediction be shown or captured and
 suppressed?
 Default is \code{TRUE}.}
-
-\item{mlr.digits}{[\code{integer(1)}]\cr
-Number of decimal places to round the output of numeric values to.
-Defaults to 3.}
 }
 \value{
 [\code{invisible(NULL)}].
