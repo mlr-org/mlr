@@ -32,8 +32,8 @@ makeRLearner.multilabel.cforest = function() {
 
 #' @export
 trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = NULL,
-  ntree, mtry, replace, fraction, trace, pvalue = NULL, teststat, testtype, mincriterion,
-  minprob = NULL, minsplit, minbucket, stump, randomsplits = NULL, nresample, maxsurrogate,
+  ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion,
+  minsplit, minbucket, stump, nresample, maxsurrogate,
   maxdepth, savesplitstats, ...) {
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
@@ -44,8 +44,8 @@ trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = 
   if (missing(replace)) replace = defaults$replace
   if (missing(fraction)) fraction = defaults$fraction
   ctrl = learnerArgsToControl(party::cforest_control, ntree, mtry, replace, fraction,
-    trace, pvalue, teststat, testtype, mincriterion, minprob, minsplit, minbucket, stump,
-    randomsplits, nresample, maxsurrogate, maxdepth, savesplitstats)
+    trace, teststat, testtype, mincriterion, minsplit, minbucket, stump,
+    nresample, maxsurrogate, maxdepth, savesplitstats)
   party::cforest(f, data = d, controls = ctrl, weights = .weights, ...)
 }
 
