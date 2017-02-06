@@ -19,4 +19,3 @@ For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correctio
 \references{
 [Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
 }
-

@@ -41,6 +41,11 @@
 * createDummyFeatures supports vectors now
 * removed the pretty.names argument from plotHyperParsEffect -- labels can be set
   though normal ggplot2 functions on the returned object
+* Fixed a bad bug in resample, the slot "runtime" or a ResampleResult,
+  when the runtime was measured not in seconds but e.g. mins. R measures then potentially in mins,
+  but mlr claimed it would be seconds.
+* New "dummy" learners (that disregard features completely) can be fitted now for baseline comparisons,
+  see "featureless" learners below.
 
 ## functions - new
 * filter: randomForest.importance
@@ -85,6 +90,8 @@
 * regr.cvglmnet
 * {classif,regr,surv}.gamboost
 * classif.earth
+* {classif,regr}.evtree
+* {classif,regr}.evtree
 
 ## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues

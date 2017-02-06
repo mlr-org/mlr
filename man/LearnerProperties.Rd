@@ -4,6 +4,8 @@
 \alias{LearnerProperties}
 \alias{getLearnerProperties}
 \alias{hasLearnerProperties}
+\alias{getLearnerProperties}
+\alias{hasLearnerProperties}
 \title{Query properties of learners.}
 \usage{
 getLearnerProperties(learner)
@@ -56,4 +58,3 @@ Other learner: \code{\link{getClassWeightParam}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-

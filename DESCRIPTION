@@ -35,7 +35,7 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
-    ParamHelpers (>= 1.8),
+    ParamHelpers (>= 1.8)
 Imports:
     BBmisc (>= 1.10),
     backports,
@@ -75,6 +75,7 @@ Suggests:
     elasticnet,
     elmNN,
     emoa,
+    evtree,
     extraTrees,
     flare,
     fields,
@@ -104,6 +105,7 @@ Suggests:
     mco,
     mda,
     mlbench,
+    mldr,
     modeltools,
     mRMRe,
     nnet,
@@ -152,4 +154,4 @@ LazyData: yes
 ByteCompile: yes
 Version: 2.10
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

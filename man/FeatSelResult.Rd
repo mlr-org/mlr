@@ -22,4 +22,3 @@ Object members:
 \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.}
 }
 }
-

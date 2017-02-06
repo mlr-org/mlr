@@ -25,7 +25,7 @@ test_that("learners work: classif ", {
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
   lrns = mylist("classif", properties = "factors", create = TRUE)
@@ -37,7 +37,7 @@ test_that("learners work: classif ", {
 
   # binary classif with prob
   lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = binaryclass.task,
+  lapply(lrns, testBasicLearnerProperties, task = binaryclass.task,
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
