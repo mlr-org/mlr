@@ -396,7 +396,7 @@ rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
 #' @rdname measures
 #' @format none
 mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "classif.multi", "tsclassif", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi", "fdaclassif", "req.pred", "req.truth"),
   name = "Mean misclassification error",
   note = "Defined as: mean(response != truth)",
   fun = function(task, model, pred, feats, extra.args) {
@@ -415,7 +415,7 @@ measureMMCE = function(truth, response) {
 #' @rdname measures
 #' @format none
 acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi",  "fdaclassif", "req.pred", "req.truth"),
   name = "Accuracy",
   note = "Defined as: mean(response == truth)",
   fun = function(task, model, pred, feats, extra.args) {
@@ -481,7 +481,7 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -661,15 +661,15 @@ measureKAPPA = function(truth, response) {
   # get confusion matrix
   conf.mat = table(truth, response)
   conf.mat = conf.mat / sum(conf.mat)
-  
-  # observed agreement frequency 
+
+  # observed agreement frequency
   p0 = sum(diag(conf.mat))
 
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
   pe = sum(rowsum * colsum) / sum(conf.mat)^2
-  
+
   # calculate kappa
   1 - (1 - p0) / (1 - pe)
 }
@@ -698,12 +698,12 @@ measureWKAPPA = function(truth, response) {
   # get expected probs under independence
   rowsum = rowSums(conf.mat)
   colsum = colSums(conf.mat)
-  expected.mat = rowsum %*% t(colsum) 
+  expected.mat = rowsum %*% t(colsum)
 
   # get weights
   class.values = seq_along(levels(truth)) - 1L
   weights = outer(class.values, class.values, FUN = function(x, y) (x - y)^2)
-  
+
   # calculate weighted kappa
   1 - sum(weights * conf.mat) / sum(weights * expected.mat)
 }
@@ -896,7 +896,7 @@ measureFN = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "tsclassif", "req.pred", "req.truth"),
+  properties = c("classif", "fdaclassif", "req.pred", "req.truth"),
   name = "True positive rate",
   note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall.",
   fun = function(task, model, pred, feats, extra.args) {
