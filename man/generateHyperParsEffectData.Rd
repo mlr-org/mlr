@@ -73,4 +73,3 @@ data = generateHyperParsEffectData(res)
 plotHyperParsEffect(data, x = "C", y = "mmce.test.mean", plot.type = "line")
 }
 }
-

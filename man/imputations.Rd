@@ -3,15 +3,15 @@
 \name{imputations}
 \alias{imputations}
 \alias{imputeConstant}
+\alias{imputeMedian}
+\alias{imputeMean}
+\alias{imputeMode}
+\alias{imputeMin}
+\alias{imputeMax}
+\alias{imputeUniform}
+\alias{imputeNormal}
 \alias{imputeHist}
 \alias{imputeLearner}
-\alias{imputeMax}
-\alias{imputeMean}
-\alias{imputeMedian}
-\alias{imputeMin}
-\alias{imputeMode}
-\alias{imputeNormal}
-\alias{imputeUniform}
 \title{Built-in imputation methods.}
 \usage{
 imputeConstant(const)
@@ -97,4 +97,3 @@ Other impute: \code{\link{impute}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }
-

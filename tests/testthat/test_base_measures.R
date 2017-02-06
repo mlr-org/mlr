@@ -554,35 +554,119 @@ test_that("check measure calculations", {
 
   #test multilabel measures
 
-  #hamloss
-  hamloss.test = mean(c(tar1.multilabel != pred.multilabel$data[, 4L],
-      tar2.multilabel != pred.multilabel$data[, 5L]))
-  hamloss.perf = performance(pred.multilabel,
-   measures = multilabel.hamloss, model = mod.multilabel)
+  # create response and predictions using all possible combinations
+  #bincombo = matrix(c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE), ncol = 2, byrow = TRUE)
+  #multi.y = bincombo[rep(1:4, times = 4),]
+  #multi.p = bincombo[rep(1:4, each = 4),]
+
+  multi.y = getPredictionTruth(pred.multilabel)
+  multi.p = getPredictionResponse(pred.multilabel)
+  expect_equal(unname(multi.y), unname(as.matrix(getTaskTargets(task.multilabel))))
+  expect_equal(pred.art.multilabel, unname(multi.p))
+
+  # create true-false and true-true vector used for manual computation of measures
+  tf = c(TRUE, FALSE)
+  tt = c(TRUE, TRUE)
+
+  # this is copy-paste from the mldr::mldr_evaluate function which is needed to compare with the mldr measures
+  counters = data.frame(
+    RealPositives = rowSums(multi.y),
+    RealNegatives = rowSums(!multi.y),
+    PredictedPositives = rowSums(multi.p),
+    PredictedNegatives = rowSums(!multi.p),
+    TruePositives = rowSums(multi.y & multi.p),
+    TrueNegatives = rowSums(!multi.y & !multi.p))
+
+  #hamloss: how many values are not identical
+  hamloss.test = mean(as.vector(multi.y) != as.vector(multi.p))
+  hamloss.perf = performance(pred.multilabel, measures = multilabel.hamloss, model = mod.multilabel)
   expect_equal(hamloss.test, multilabel.hamloss$fun(pred = pred.multilabel))
   expect_equal(hamloss.test, as.numeric(hamloss.perf))
-  #test only the measures
-  multi.y1 = matrix(c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE), 4, 2)
-  multi.p1 = matrix(c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE), 4, 2)
-  multi.p2 = matrix(c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 4, 2)
-  #hamloss
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, mean)))
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2), mean(apply(multi.y1 != multi.p2, 1, mean)))
-  #subset01
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, any)))
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2), mean(apply(multi.y1 == multi.p2, 1, all)))
+  # check best and worst value
+  expect_equal(measureMultilabelHamloss(multi.y, multi.y), multilabel.hamloss$best)
+  expect_equal(measureMultilabelHamloss(multi.y, !multi.y), multilabel.hamloss$worst)
+  # compare with mldr
+  expect_equal(mldr:::mldr_HL(multi.y, multi.p), measureMultilabelHamloss(multi.y, multi.p))
+  # mldr defines the accuracy as 1-hamloss
+  expect_equal(mldr:::mldr_Accuracy(counters), 1 - measureMultilabelHamloss(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelHamloss(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2) # 1 of 2 values are wrong
+  expect_equal(measureMultilabelHamloss(cbind(tf, tf), cbind(tf, tt)), 1/4) # 1 of 4 values are wrong
+
+  #subset01: how many rows are not identical
+  subset01.test = mean(rowSums(multi.y == multi.p) != ncol(multi.y))
+  subset01.perf = performance(pred.multilabel, measures = multilabel.subset01, model = mod.multilabel)
+  expect_equal(subset01.test, multilabel.subset01$fun(pred = pred.multilabel))
+  expect_equal(subset01.test, as.numeric(subset01.perf))
+  # check best and worst
+  expect_equal(measureMultilabelSubset01(multi.y, multi.y), multilabel.subset01$best)
+  expect_equal(measureMultilabelSubset01(multi.y, !multi.y), multilabel.subset01$worst)
+  # compare with mldr: we have implemented the subset loss which is 1 - subset accuracy
+  expect_equal(mldr:::mldr_SubsetAccuracy(multi.y, multi.p), 1 - measureMultilabelSubset01(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelSubset01(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1) # 1 of 1 obs is wrong
+  expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1/2) # 1 of 2 obs is wrong
+
   #f1mult
-  expect_equal(measureMultiLabelF1(multi.y1, multi.p1), mean(2 * apply((multi.y1 & multi.p1), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p1), 1, sum))))
-  expect_equal(measureMultiLabelF1(multi.y1, multi.p2), mean(2 * apply((multi.y1 & multi.p2), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p2), 1, sum))))
+  f1.test = vnapply(seq_row(multi.y), function(i) 2*sum(multi.y[i, ] * multi.p[i, ])/(sum(multi.y[i, ]) + sum(multi.p[i, ])))
+  f1.test[is.na(f1.test)] = 1
+  f1.test = mean(f1.test)
+  f1.perf = performance(pred.multilabel, measures = multilabel.f1, model = mod.multilabel)
+  expect_equal(f1.test, multilabel.f1$fun(pred = pred.multilabel))
+  expect_equal(f1.test, as.numeric(f1.perf))
+  # check best and worst
+  expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
+  expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
+  # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
+  expect_equal(mldr:::mldr_FMeasure(counters[-3,]), measureMultiLabelF1(multi.y[-3,], multi.p[-3,]))
+  # manual checks
+  expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2*1/3) # 1 TRUE-TRUE match of 3 TRUE values
+  expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2*1/2, 2*1/3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
+
   #accmult
-  expect_equal(measureMultilabelACC(multi.y1, multi.p1), mean(apply((multi.y1 & multi.p1), 1, sum) / apply((multi.y1 | multi.p1), 1, sum)))
-  expect_equal(measureMultilabelACC(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.y1 | multi.p2), 1, sum)))
-  #precmult
-  expect_equal(measureMultilabelPPV(multi.y1, multi.p1), mean(c(apply((multi.y1[1:3, ] & multi.p1[1:3, ]), 1, sum) / apply((multi.p1[1:3,]), 1, sum), 1)))
-  expect_equal(measureMultilabelPPV(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.p2), 1, sum)))
-  #recallmult
-  expect_equal(measureMultilabelTPR(multi.y1, multi.p1), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p1[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
-  expect_equal(measureMultilabelTPR(multi.y1, multi.p2), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p2[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
+  acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.y[i, ] | multi.p[i, ])))
+  acc.test[is.na(acc.test)] = 1
+  acc.test = mean(acc.test)
+  acc.perf = performance(pred.multilabel, measures = multilabel.acc, model = mod.multilabel)
+  expect_equal(acc.test, multilabel.acc$fun(pred = pred.multilabel))
+  expect_equal(acc.test, as.numeric(acc.perf))
+  # check best and worst
+  expect_equal(measureMultilabelACC(multi.y, multi.y), multilabel.acc$best)
+  expect_equal(measureMultilabelACC(multi.y, !multi.y), multilabel.acc$worst)
+  # compare with mldr: jaccard index is not implemented in mldr see https://github.com/fcharte/mldr/issues/28
+  # manual checks
+  expect_equal(measureMultilabelACC(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2)
+  expect_equal(measureMultilabelACC(rbind(tf, tf), rbind(tf, tt)), mean(c(1, 1/2)))
+
+  #ppvmult
+  ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.p[i, ])))
+  ppv.test = mean(ppv.test, na.rm = TRUE)
+  ppv.perf = performance(pred.multilabel, measures = multilabel.ppv, model = mod.multilabel)
+  expect_equal(ppv.test, multilabel.ppv$fun(pred = pred.multilabel))
+  expect_equal(ppv.test, as.numeric(ppv.perf))
+  # check best and worst
+  expect_equal(measureMultilabelPPV(multi.y, multi.y), multilabel.ppv$best)
+  expect_equal(measureMultilabelPPV(multi.y, !multi.y), multilabel.ppv$worst)
+  # compare with mldr
+  expect_equal(mldr:::mldr_Precision(counters), measureMultilabelPPV(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelPPV(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2)
+  expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/2)))
+
+  #tprmult
+  tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.y[i, ])))
+  tpr.test = mean(tpr.test, na.rm = TRUE)
+  tpr.perf = performance(pred.multilabel, measures = multilabel.tpr, model = mod.multilabel)
+  expect_equal(tpr.test, multilabel.tpr$fun(pred = pred.multilabel))
+  expect_equal(tpr.test, as.numeric(tpr.perf))
+  # check best and worst
+  expect_equal(measureMultilabelTPR(multi.y, multi.y), multilabel.tpr$best)
+  expect_equal(measureMultilabelTPR(multi.y, !multi.y), multilabel.tpr$worst)
+  # compare with mldr
+  expect_equal(mldr:::mldr_Recall(counters), measureMultilabelTPR(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/1)
+  expect_equal(measureMultilabelTPR(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/1)))
 
   #test survival measures
 

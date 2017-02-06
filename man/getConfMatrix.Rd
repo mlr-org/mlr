@@ -38,4 +38,3 @@ a single test set. This probably mainly makes sense when cross-validation is use
 \seealso{
 \code{\link{predict.WrappedModel}}
 }
-

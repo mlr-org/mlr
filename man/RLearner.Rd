@@ -9,11 +9,11 @@
 \alias{RLearnerSurv}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
-\alias{makeRLearnerCluster}
-\alias{makeRLearnerCostSens}
 \alias{makeRLearnerMultilabel}
 \alias{makeRLearnerRegr}
 \alias{makeRLearnerSurv}
+\alias{makeRLearnerCluster}
+\alias{makeRLearnerCostSens}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
@@ -99,4 +99,3 @@ section in the online tutorial:
 
 To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
 }
-

@@ -14,4 +14,3 @@ hasProperties(learner, props)
 \description{
 Deprecated, use \code{hasLearnerProperties} instead.
 }
-
