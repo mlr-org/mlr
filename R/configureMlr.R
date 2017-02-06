@@ -41,14 +41,11 @@
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
 #'   Default is \code{TRUE}.
-#' @param mlr.digits [\code{integer(1)}]\cr
-#'   Number of decimal places to round the output of numeric values to.
-#'   Defaults to 3.
 #' @template ret_inv_null
 #' @family configure
 #' @export
 configureMlr = function(show.info, on.learner.error, on.learner.warning,
-  on.par.without.desc, on.par.out.of.bounds, show.learner.output, mlr.digits) {
+  on.par.without.desc, on.par.out.of.bounds, show.learner.output) {
 
   defaults = list(
     show.info = TRUE,
@@ -56,8 +53,7 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
     on.learner.warning = "warn",
     on.par.without.desc = "stop",
     on.par.out.of.bounds = "stop",
-    show.learner.output = TRUE,
-    mlr.digits = 3L
+    show.learner.output = TRUE
   )
 
   any.change = FALSE
@@ -89,11 +85,6 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
   if (!missing(show.learner.output)) {
     assertFlag(show.learner.output)
     setMlrOption("show.learner.output", show.learner.output)
-    any.change = TRUE
-  }
-  if (!missing(mlr.digits)) {
-    assertIntegerish(mlr.digits)
-    setMlrOption("mlr.digits", mlr.digits)
     any.change = TRUE
   }
 

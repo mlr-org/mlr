@@ -108,8 +108,13 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   messagef("Resampling: %s", rin$desc$id)
 
-  measure.ids = extractSubList(measures, "id")
-  printResampleFormatLine("Measures:", measure.ids)
+  measure.lognames = extractSubList(measures, "id")
+  if (rin$desc$predict == "both") {
+    id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
+    id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
+    measure.lognames = c(measure.lognames[id.train], measure.lognames[id.test])
+  }
+  printResampleFormatLine("Measures:", measure.lognames)
 
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
@@ -175,10 +180,19 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   if (show.info) {
     idx.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
     idx.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
-    if (pp == "train") x = ms.train[idx.train]
-    else if (pp == "test") x = ms.test[idx.test]
-    else x = c(ms.train[idx.train], ms.test[idx.test])
-    names(x) = extractSubList(measures, "id")
+    ms.ids = extractSubList(measures, "id")
+    if (pp == "both") {
+      x = c(ms.train[idx.train], ms.test[idx.test])
+      # names(x) = stri_paste(ms.ids, c("tr", "pr"), sep = ".")
+      names(x) = c(ms.ids[idx.train], ms.ids[idx.test])
+    } else {
+      if (pp == "train") {
+        x = ms.train[idx.train]
+      } else {
+        x = ms.test[idx.test]
+      }
+      names(x) = ms.ids
+    }
     iter.message = sprintf("[Resample] iter %i:", i)
     printResampleFormatLine(iter.message, x)
   }

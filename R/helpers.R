@@ -25,14 +25,18 @@ perfsToString = function(y, sep = "=", mlr.digits = getMlrOption("mlr.digits")) 
 
 # Used for the resample output logging lines:
 # Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line  
-printResampleFormatLine = function(prefix, y, mlr.digits = getMlrOption("mlr.digits")) {
-  # get desired width for each col (if measure ids are short --> mlr.digits)
+printResampleFormatLine = function(prefix, y, digits = options()$digits) {
+  # get desired width for each col (if measure ids are short --> digits)
   # +2L to obtain spaces between cols
-  tab.width = max(stri_width(names(y)), mlr.digits) + 2L
-  # if we get perf vals format decimals and add trailing zeros if needed
+  if (is.null(names(y)))
+    names(y) = y
+  tab.width = max(stri_width(names(y)), digits) + 2L
+  # if we get perf vals format decimals and add trailing zeros where needed
   if (is.numeric(y))
-    y = formatC(y, digits = mlr.digits, flag = "0", format = "f")
-  # Extend witdh of prefix and y 
+    y = formatC(y, digits = digits, flag = "0", format = "f")
+  # Extend witdh of prefix and y. width = 22 is the ideal size for
+  # the prefix column. Change value here when iter.message was
+  # modified in resample.R 
   prefix = formatC(prefix, width = 22, flag = "-")
   str = stri_flatten(formatC(y, width = tab.width, flag = "-"))
 
