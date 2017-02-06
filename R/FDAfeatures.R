@@ -1,8 +1,8 @@
-#' @title Create task on time series features.
+#' @title Create task on functional data features.
 #'
 #' @description The function transform a task of type
-#'   \code{TimeSeriesClassifTask} into a standard \code{ClassifTask}. For this,
-#'   it creates a feature representation of the raw time series. The method used
+#'   \code{FDAClassifTask} into a standard \code{ClassifTask}. For this,
+#'   it creates a feature representation of the raw functional data. The method used
 #'   to create this feature representation must be specified by the user in
 #'   \code{method}. For \code{wavelets} or \code{fourier} features, the
 #'   resulting data does not contain temporal structure anymore, so the returned
@@ -10,8 +10,8 @@
 #'   model is returned. See \code{{getTSShapeletFeatures}}.
 #'
 #'
-#' @param task [\code{TimeSeriesClassifTask}]\cr
-#'   Time series classification task.
+#' @param task [\code{FDAClassifTask}]\cr
+#'   Functional data classification task.
 #' @param method [\code{character(1)}]\cr
 #'   Which method is used to create time series features. Methods available.
 #'   Wavelet transformation: \dQuote{wavelets}.
@@ -24,24 +24,24 @@
 #' @return Either [\code{ClassifTask}] based on the transformed data or the
 #'   learned shapelet model [\code{ShapeletModel}].
 #' @export
-convertTSTaskToNormalTask = function(task, method, pars = NULL) {
+convertFDATaskToNormalTask = function(task, method, pars = NULL) {
   # check if task
-  assertClass(task, classes = c("Task", "TimeSeriesClassifTask"))
+  assertClass(task, classes = c("Task", "FDAClassifTask"))
   assertChoice(method, choices = c("wavelets", "fourier", "shapelets"))
 
   target = task$task.desc$target
   z = getTaskData(task, target.extra = TRUE, recode.target = "-1+1")
 
   switch(method,
-         wavelets = {tsf = getTSWaveletFeatures(data = z$data, target = target,
+         wavelets = {tsf = getFDAWaveletFeatures(data = z$data, target = target,
            include.target = FALSE, filter = pars$filter, boundary = pars$boundary)},
-         fourier = {tsf = getTSFourierFeatures(data = z$data, target = target,
+         fourier = {tsf = getFDAFourierFeatures(data = z$data, target = target,
            include.target = FALSE, fft.coeff = pars$fft.coeff)}
          )
 
   if (method == "shapelets") {
     new.args = c(list(curves = z$data, label = as.factor(z$target)), as.list(unlist(pars)))
-    modelSh = do.call(getTSShapeletFeatures, new.args)
+    modelSh = do.call(getFDAShapeletFeatures, new.args)
     return(modelSh)
   }
 

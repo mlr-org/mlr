@@ -1,7 +1,7 @@
-context("Ts_multiResNaive")
+context("FDA_multiResNaive")
 
-test_that("Ts_multiResNaive", {
-  
+test_that("FDA_multiResNaive", {
+
   I = 1000  # number of instances
   TL  = 200 # length of each time serie instance
   Ts = replicate(I, rnorm(TL))

@@ -1,13 +1,15 @@
-#' @title Extract time series wrapper
-#' @description
-#' Extract time series features like wavelets, fourier,etc.
+#' @title Functional data preproc wrapper
+#'
+#' @description Extracts  functional data features like wavelets, fourier, etc.
+#'   and creates a learner structure for applicable learners of type \code{classif}.
+#'
 #' @export
-makeTSPreprocWrapper = function(learner) {
+makeFDAPreprocWrapper = function(learner) {
   lrn = checkLearner(learner)
 
   trainfun = function(data, target, args) {
-    taskTs = makeTimeSeriesClassifTask(data = data, target = target, positive = args$positive)
-    taskFa = convertTSTaskToNormalTask(task = taskTs)
+    taskTs = makeFDAClassifTask(data = data, target = target, positive = args$positive)
+    taskFa = convertFDATaskToNormalTask(task = taskTs)
     A = getTaskData(taskFa)
     control = list()
     list(data = A, control = control) # Preprocessing train must return a list with elements data[data.frame] and control[list]!

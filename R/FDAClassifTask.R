@@ -1,6 +1,6 @@
-#' @title Time Series classification task
+#' @title Functional data classification task
 #'
-#' @description Create a temporal data classification task. The data is assumed
+#' @description Create a functional data classification task. The data is assumed
 #'   to have functional data structure and the target variable must be specified
 #'   by the user.
 #'
@@ -16,22 +16,22 @@
 #' @param check.data
 #' @param channel.list
 #'
-#' @return Time series classification task. Object of type
-#'   \code{TimeSeriesClassifTask}.
+#' @return Functional data classification task. Object of type
+#'   \code{FunctionDataClassifTask}.
 #'
 #' @rdname Task
 #' @export
-makeTimeSeriesClassifTask = function(id = deparse(substitute(data)), data, target,
+makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn",
   check.data = TRUE, channel.list = NULL) {
 
   task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
   task = makeClassifTask(id, data, target, weights, blocking, positive, fixup.data, check.data)
-  type = "tsclassif"
+  type = "fdaclassif"
 
   task$type = type
   task$task.desc$type = type
   task$channel.list = channel.list
-  task$task.desc = addClasses(task$task.desc, "TaskDescTimeSeriesClassif")
-  addClasses(task, "TimeSeriesClassifTask")
+  task$task.desc = addClasses(task$task.desc, "TaskDescFDAClassif")
+  addClasses(task, "FDAClassifTask")
 }

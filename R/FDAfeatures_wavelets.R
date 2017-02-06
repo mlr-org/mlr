@@ -1,7 +1,7 @@
 #' @title Discrete Wavelet transform features
 #'
 #' @description The function extracts discrete wavelet transform coefficients
-#'   from the raw time series curve data.
+#'   from the raw functional data.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Time series curve data.
@@ -19,7 +19,7 @@
 #'   coefficients.
 #'
 #' @export
-getTSWaveletFeatures = function(data, target, include.target = FALSE, filter = NULL, boundary = NULL) {
+getFDAWaveletFeatures = function(data, target, include.target = FALSE, filter = NULL, boundary = NULL) {
   requirePackages("wavelets", default.method = "load")
 
   assert(
