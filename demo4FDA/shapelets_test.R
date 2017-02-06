@@ -5,9 +5,9 @@ configureMlr(show.info = TRUE, show.learner.output= TRUE)
 # load gunpoint data
 gp = load2("demo4TS/gunpoint.RData")
 
-task = makeTimeSeriesClassifTask(data = gp, target = "X1", positive = "1")
+task = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
 
-lrn = makeLearner("tsclassif.shapelet")
+lrn = makeLearner("fdaclassif.shapelet")
 
 
 model = train(lrn, task, subset = 1:50)
@@ -41,6 +41,21 @@ print(tr)
 
 
 ##########################################################
+data(phoneme)
+names(phoneme)
+#250 curves, 150 points (250 x 150) in $learn$data, class: 5 levels
+
+mlearn = phoneme[["learn"]]
+glearn = phoneme[["classlearn"]]
+ph = as.data.frame(mlearn$data)
+ph[,"label"] = glearn
 
 
+lrn = makeLearner("fdaclassif.knn")
 
+task = makeFDAClassifTask(data = ph, target = "label")
+
+model = train(lrn, task)
+pred = predict(object = model, newdata = as.data.frame(mlearn$data))
+pred
+as.data.frame(pred)
