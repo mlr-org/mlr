@@ -11,7 +11,7 @@ makeRLearner.classif.binomial = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Binomial Regression",
     short.name = "binomial",
-    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. Against the original default in the stats package, model is set to FALSE, due to memory reasons."
+    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. The default for 'model' in the original learner is FALSE, due to memory reasons."
   )
 }
 
