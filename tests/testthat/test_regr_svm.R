@@ -1,7 +1,8 @@
 context("regr_svm")
 
 test_that("regr_svm", {
-  requirePackages("e1071", default.method = "load")
+  requirePackagesOrSkip("e1071", default.method = "load")
+
   parset.list = list(
     list(),
     list(kernel = "linear", epsilon = 0.2),
@@ -29,4 +30,3 @@ test_that("regr_svm", {
 
   testCVParsets("regr.svm", regr.df, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })
-

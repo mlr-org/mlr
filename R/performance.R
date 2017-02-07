@@ -55,7 +55,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       if (is.null(pred$data$truth.time) || is.null(pred$data$truth.event))
         stopf("You need to have 'truth.time' and 'truth.event' columns in your pred object for measure %s!", m$id)
     } else if (type == "multilabel") {
-      if (!(any(grepl("^truth\\.", colnames(pred$data)))))
+      if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
     } else {
       if (is.null(pred$data$truth))
@@ -101,23 +101,24 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       stopf("Measure %s requires predict type to be: '%s'!",
         m$id, collapse(req.pred.types))
   }
+
   # if it's a ResamplePrediction, aggregate
   if (inherits(pred, "ResamplePrediction")) {
     if (is.null(pred$data$iter)) pred$data$iter = 1L
     if (is.null(pred$data$set)) pred$data$set = "test"
-    perfs = ddply(pred$data, "iter", function(ss) {
-      ss.train = subset(ss, ss$set == "train")
-      ss.test = subset(ss, ss$set == "test")
-      if (nrow(ss.train) > 0L) {
-        pred$data = ss.train
+    fun = function(ss) {
+      is.train = ss$set == "train"
+      if (any(is.train)) {
+        pred$data = as.data.frame(ss[is.train, ])
         perf.train = measure$fun(task, model, pred, feats, m$extra.args)
       } else {
-        perf.train = NA
+        perf.train = NA_real_
       }
-      pred$data = ss.test
+      pred$data = as.data.frame(ss[!is.train, ])
       perf.test = measure$fun(task, model, pred, feats, m$extra.args)
-      data.frame(perf.train = perf.train, perf.test = perf.test, iter = ss$iter[1L])
-    })
+      list(perf.train = perf.train, perf.test = perf.test)
+    }
+    perfs = as.data.table(pred$data)[, fun(.SD), by= "iter"]
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
     measure$fun(task, model, pred, feats, m$extra.args)

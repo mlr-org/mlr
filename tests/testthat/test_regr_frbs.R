@@ -1,8 +1,10 @@
 context("regr_frbs")
 
 test_that("regr_frbs", {
-  requirePackages("frbs", default.method = "load")
+  requirePackagesOrSkip("frbs", default.method = "load")
+
   parset.list = list(
+    list(),
     list(num.labels = 2L, type.mf = "TRAPEZOID")
   )
 

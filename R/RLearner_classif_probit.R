@@ -7,7 +7,7 @@ makeRLearner.classif.probit = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Probit Regression",
     short.name = "probit",
-    note = "Delegates to glm with family binomial/probit."
+    note = 'Delegates to `glm` with `family = binomial(link = "probit")`.'
   )
 }
 
@@ -15,7 +15,7 @@ makeRLearner.classif.probit = function() {
 trainLearner.classif.probit = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   stats::glm(f, data = getTaskData(.task, .subset), model = FALSE,
-    family = binomial(link = "probit"), ...)
+    family = binomial(link = "probit"), weights = .weights, ...)
 }
 
 #' @export

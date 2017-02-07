@@ -3,7 +3,7 @@
 \docType{data}
 \name{bc.task}
 \alias{bc.task}
-\title{Wisconsin Breast Cancer classification task}
+\title{Wisconsin Breast Cancer classification task.}
 \description{
 Contains the task (\code{bc.task}).
 }
@@ -12,4 +12,3 @@ See \code{\link[mlbench]{BreastCancer}}.
   The column \code{"Id"} and all incomplete cases have been removed from the task.
 }
 \keyword{data}
-

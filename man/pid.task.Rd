@@ -3,7 +3,7 @@
 \docType{data}
 \name{pid.task}
 \alias{pid.task}
-\title{PimaIndiansDiabetes classification task}
+\title{PimaIndiansDiabetes classification task.}
 \description{
 Contains the task (\code{pid.task}).
 }
@@ -12,4 +12,3 @@ See \code{\link[mlbench]{PimaIndiansDiabetes}}.
   Note that this is the uncorrected version from mlbench.
 }
 \keyword{data}
-

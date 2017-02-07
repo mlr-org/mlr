@@ -35,7 +35,7 @@ makeRLearner.classif.bartMachine = function() {
     properties = c("numerics", "prob", "twoclass", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
-    note = "'use_missing_data' has been set to TRUE by default to allow missing data support"
+    note = "`use_missing_data` has been set to `TRUE` by default to allow missing data support."
   )
 }
 
@@ -43,21 +43,19 @@ makeRLearner.classif.bartMachine = function() {
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
-  if (.learner$predict.type == "prob") {
-    td = getTaskDescription(.task)
-    levs = c(td$negative, td$positive)
-    y = factor(y, levels = levs)
-  }
+  td = getTaskDescription(.task)
+  levs = c(td$positive, td$negative)
+  y = factor(y, levels = levs)
   bartMachine::bartMachine(X = d$data, y = y, ...)
 }
 
 #' @export
 predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
-  levs = c(td$negative, td$positive)
-  if(.learner$predict.type == "prob"){
+  levs = c(td$positive, td$negative)
+  if (.learner$predict.type == "prob"){
     p = predict(.model$learner.model, new_data = .newdata, type = "prob", ...)
-    y = propVectorToMatrix(p, levs)
+    y = propVectorToMatrix(1-p, levs)
   } else {
     y = predict(.model$learner.model, new_data = .newdata, type = "class", ...)
     y = factor(y, levs)

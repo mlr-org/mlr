@@ -15,7 +15,7 @@ makeRLearner.cluster.XMeans = function() {
       makeIntegerLearnerParam(id = "M", default = 1000L, lower = 1L),
       makeIntegerLearnerParam(id = "S", default = 10L, lower = 1L),
       makeIntegerLearnerParam(id = "U", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "use-kdtree"),
+      makeLogicalLearnerParam(id = "use-kdtree", default = FALSE),
       makeUntypedLearnerParam(id = "N"),
       makeUntypedLearnerParam(id = "O"),
       makeUntypedLearnerParam(id = "Y"),
@@ -24,7 +24,7 @@ makeRLearner.cluster.XMeans = function() {
     properties = c("numerics"),
     name = "XMeans (k-means with automatic determination of k)",
     short.name = "xmeans",
-    note = "You may have to install the XMeans Weka package: WPM('install-package', 'XMeans')."
+    note = "You may have to install the XMeans Weka package: `WPM('install-package', 'XMeans')`."
   )
 }
 

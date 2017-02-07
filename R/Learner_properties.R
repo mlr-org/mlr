@@ -1,16 +1,30 @@
-#' @title Set, add, remove or query properties of learners
+#' @title Query properties of learners.
 #'
 #' @description
 #' Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
 #' character vector.
 #'
+#' The learner properties are defined as follows:
+#' \describe{
+#'   \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
+#'   \item{missings}{Can missing values in features be handled?}
+#'   \item{weights}{Can observations be weighted during fitting?}
+#'   \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
+#'   \item{class.weights}{Only for classif: Can class weights be handled?}
+#'   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
+#'   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
+#'   \item{se}{Only for regr: Can standard errors be predicted?}
+#'   \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
+#' }
+#'
 #' @template arg_learner
 #' @param props [\code{character}]\cr
-#'   Vector of properties to set, add, remove or query.
+#'   Vector of properties to query.
 #' @return \code{getLearnerProperties} returns a character vector with learner properties.
 #'  \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
 #' @name LearnerProperties
 #' @rdname LearnerProperties
+#' @aliases getLearnerProperties hasLearnerProperties
 #' @family learner
 NULL
 
@@ -23,6 +37,11 @@ getLearnerProperties = function(learner) {
 #' @export
 getLearnerProperties.Learner = function(learner) {
   learner$properties
+}
+
+#' @export
+getLearnerProperties.character = function(learner) {
+  getLearnerProperties(checkLearner(learner))
 }
 
 #' @rdname LearnerProperties
@@ -42,3 +61,6 @@ hasProperties = function(learner, props) {
   hasLearnerProperties(learner, props)
 }
 
+getSupportedLearnerProperties = function(type = "any") {
+  mlr$learner.properties[[type]]
+}

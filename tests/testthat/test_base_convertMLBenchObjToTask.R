@@ -1,7 +1,7 @@
 context("convertMLBenchObjToTask")
 
 test_that("convertMLbenchObjToTask", {
-  library(mlbench)
+  requirePackages("!mlbench")
   # get all mlbench.* functions, 1spiral does not work
   fs = ls("package:mlbench", pattern = "mlbench")
   n = 77L
@@ -22,5 +22,3 @@ test_that("convertMLbenchObjToTask", {
     expect_equal(getTaskId(task), d)
   }
 })
-
-

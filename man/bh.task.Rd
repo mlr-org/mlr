@@ -3,7 +3,7 @@
 \docType{data}
 \name{bh.task}
 \alias{bh.task}
-\title{Boston Housing regression task}
+\title{Boston Housing regression task.}
 \description{
 Contains the task (\code{bh.task}).
 }
@@ -11,4 +11,3 @@ Contains the task (\code{bh.task}).
 See \code{\link[mlbench]{BostonHousing}}.
 }
 \keyword{data}
-

@@ -7,6 +7,7 @@ makeRLearner.classif.gaterSVM = function() {
       makeIntegerLearnerParam(id = "m", default = 3, lower = 1),
       makeNumericLearnerParam(id = "c", default = 1, lower = 0),
       makeIntegerLearnerParam(id = "max.iter", default = 1, lower = 1),
+      # FIXME m and max.iter seem to have no default in gaterSVM. If they have, par.vals is redundant.
       makeIntegerLearnerParam(id = "hidden", default = 5, lower = 0),
       makeNumericLearnerParam(id = "learningrate", default = 0.01, lower = 0),
       makeNumericLearnerParam(id = "threshold", default = 0.01, lower = 0),
@@ -21,7 +22,7 @@ makeRLearner.classif.gaterSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Mixture of SVMs with Neural Network Gater Function",
     short.name = "gaterSVM",
-    note = "m set to 3 and max.iter set to 1 by default"
+    note = "`m` set to `3` and `max.iter` set to `1` by default."
   )
 }
 
@@ -34,5 +35,6 @@ trainLearner.classif.gaterSVM = function(.learner, .task, .subset, .weights = NU
 #' @export
 predictLearner.classif.gaterSVM = function(.learner, .model, .newdata, ...) {
   factor(predict(.model$learner.model, newdata = .newdata, ...),
-    labels = .model$factor.levels$Class)
+    levels = c(-1, 1),
+    labels = .model$factor.levels[[1]])
 }

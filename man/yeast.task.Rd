@@ -3,7 +3,7 @@
 \docType{data}
 \name{yeast.task}
 \alias{yeast.task}
-\title{Yeast multilabel classification task}
+\title{Yeast multilabel classification task.}
 \source{
 \url{http://sourceforge.net/projects/mulan/files/datasets/yeast.rar}
 }
@@ -16,4 +16,3 @@ A kernel method for multi-labelled classification.
 In Advances in neural information processing systems (pp. 681-687).
 }
 \keyword{data}
-

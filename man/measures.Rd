@@ -2,76 +2,123 @@
 % Please edit documentation in R/measures.R
 \docType{data}
 \name{measures}
-\alias{G1}
-\alias{G2}
+\alias{measures}
+\alias{featperc}
+\alias{timetrain}
+\alias{timepredict}
+\alias{timeboth}
+\alias{sse}
+\alias{measureSSE}
+\alias{mse}
+\alias{measureMSE}
+\alias{rmse}
+\alias{measureRMSE}
+\alias{medse}
+\alias{measureMEDSE}
+\alias{sae}
+\alias{measureSAE}
+\alias{mae}
+\alias{measureMAE}
+\alias{medae}
+\alias{measureMEDAE}
+\alias{rsq}
+\alias{measureRSQ}
+\alias{expvar}
+\alias{measureEXPVAR}
+\alias{arsq}
+\alias{rrse}
+\alias{measureRRSE}
+\alias{rae}
+\alias{measureRAE}
+\alias{mape}
+\alias{measureMAPE}
+\alias{msle}
+\alias{measureMSLE}
+\alias{rmsle}
+\alias{mmce}
+\alias{measureMMCE}
 \alias{acc}
-\alias{auc}
-\alias{bac}
+\alias{measureACC}
 \alias{ber}
+\alias{multiclass.aunu}
+\alias{measureAUNU}
+\alias{multiclass.aunp}
+\alias{measureAUNP}
+\alias{multiclass.au1u}
+\alias{measureAU1U}
+\alias{multiclass.au1p}
+\alias{measureAU1P}
+\alias{multiclass.brier}
+\alias{measureMulticlassBrier}
+\alias{logloss}
+\alias{measureLogloss}
+\alias{ssr}
+\alias{measureSSR}
+\alias{qsr}
+\alias{measureQSR}
+\alias{lsr}
+\alias{measureLSR}
+\alias{kappa}
+\alias{measureKAPPA}
+\alias{wkappa}
+\alias{measureWKAPPA}
+\alias{auc}
+\alias{measureAUC}
 \alias{brier}
+\alias{measureBrier}
+\alias{brier.scaled}
+\alias{measureBrierScaled}
+\alias{bac}
+\alias{measureBAC}
+\alias{tp}
+\alias{measureTP}
+\alias{tn}
+\alias{measureTN}
+\alias{fp}
+\alias{measureFP}
+\alias{fn}
+\alias{measureFN}
+\alias{tpr}
+\alias{measureTPR}
+\alias{tnr}
+\alias{measureTNR}
+\alias{fpr}
+\alias{measureFPR}
+\alias{fnr}
+\alias{measureFNR}
+\alias{ppv}
+\alias{measurePPV}
+\alias{npv}
+\alias{measureNPV}
+\alias{fdr}
+\alias{measureFDR}
+\alias{mcc}
+\alias{measureMCC}
+\alias{f1}
+\alias{gmean}
+\alias{measureGMEAN}
+\alias{gpr}
+\alias{measureGPR}
+\alias{multilabel.hamloss}
+\alias{measureMultilabelHamloss}
+\alias{multilabel.subset01}
+\alias{measureMultilabelSubset01}
+\alias{multilabel.f1}
+\alias{measureMultiLabelF1}
+\alias{multilabel.acc}
+\alias{measureMultilabelACC}
+\alias{multilabel.ppv}
+\alias{measureMultilabelPPV}
+\alias{multilabel.tpr}
+\alias{measureMultilabelTPR}
 \alias{cindex}
+\alias{meancosts}
+\alias{mcp}
 \alias{db}
 \alias{dunn}
-\alias{f1}
-\alias{fdr}
-\alias{featperc}
-\alias{fn}
-\alias{fnr}
-\alias{fp}
-\alias{fpr}
-\alias{gmean}
-\alias{gpr}
-\alias{hamloss}
-\alias{mae}
-\alias{mcc}
-\alias{mcp}
-\alias{meancosts}
-\alias{measureACC}
-\alias{measureAUC}
-\alias{measureBAC}
-\alias{measureBrier}
-\alias{measureFDR}
-\alias{measureFN}
-\alias{measureFNR}
-\alias{measureFP}
-\alias{measureFPR}
-\alias{measureGMEAN}
-\alias{measureGPR}
-\alias{measureHAMLOSS}
-\alias{measureMAE}
-\alias{measureMCC}
-\alias{measureMEDAE}
-\alias{measureMEDSE}
-\alias{measureMMCE}
-\alias{measureMSE}
-\alias{measureNPV}
-\alias{measurePPV}
-\alias{measureRMSE}
-\alias{measureSAE}
-\alias{measureSSE}
-\alias{measureTN}
-\alias{measureTNR}
-\alias{measureTP}
-\alias{measureTPR}
-\alias{measures}
-\alias{medae}
-\alias{medse}
-\alias{mmce}
-\alias{mse}
-\alias{multiclass.auc}
-\alias{npv}
-\alias{ppv}
-\alias{rmse}
-\alias{sae}
+\alias{G1}
+\alias{G2}
 \alias{silhouette}
-\alias{sse}
-\alias{timeboth}
-\alias{timepredict}
-\alias{timetrain}
-\alias{tn}
-\alias{tnr}
-\alias{tp}
-\alias{tpr}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -111,6 +158,34 @@ medae
 
 measureMEDAE(truth, response)
 
+rsq
+
+measureRSQ(truth, response)
+
+expvar
+
+measureEXPVAR(truth, response)
+
+arsq
+
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
+
+msle
+
+measureMSLE(truth, response)
+
+rmsle
+
 mmce
 
 measureMMCE(truth, response)
@@ -121,15 +196,61 @@ measureACC(truth, response)
 
 ber
 
-multiclass.auc
+multiclass.aunu
+
+measureAUNU(probabilities, truth)
+
+multiclass.aunp
+
+measureAUNP(probabilities, truth)
+
+multiclass.au1u
+
+measureAU1U(probabilities, truth)
+
+multiclass.au1p
+
+measureAU1P(probabilities, truth)
+
+multiclass.brier
+
+measureMulticlassBrier(probabilities, truth)
+
+logloss
+
+measureLogloss(probabilities, truth)
+
+ssr
+
+measureSSR(probabilities, truth)
+
+qsr
+
+measureQSR(probabilities, truth)
+
+lsr
+
+measureLSR(probabilities, truth)
+
+kappa
+
+measureKAPPA(truth, response)
+
+wkappa
+
+measureWKAPPA(truth, response)
 
 auc
 
-measureAUC(probabilites, truth, negative, positive)
+measureAUC(probabilities, truth, negative, positive)
 
 brier
 
-measureBrier(probabilites, truth, negative, positive)
+measureBrier(probabilities, truth, negative, positive)
+
+brier.scaled
+
+measureBrierScaled(probabilities, truth, negative, positive)
 
 bac
 
@@ -193,9 +314,29 @@ gpr
 
 measureGPR(truth, response, positive)
 
-hamloss
+multilabel.hamloss
 
-measureHAMLOSS(truth, response)
+measureMultilabelHamloss(truth, response)
+
+multilabel.subset01
+
+measureMultilabelSubset01(truth, response)
+
+multilabel.f1
+
+measureMultiLabelF1(truth, response)
+
+multilabel.acc
+
+measureMultilabelACC(truth, response)
+
+multilabel.ppv
+
+measureMultilabelPPV(truth, response)
+
+multilabel.tpr
+
+measureMultilabelTPR(truth, response)
 
 cindex
 
@@ -220,8 +361,10 @@ Vector of the true class.}
 \item{response}{[\code{factor}]\cr
 Vector of the predicted class.}
 
-\item{probabilites}{[\code{numeric}]\cr
-The probabilites for the positive class.}
+\item{probabilities}{[\code{numeric} | \code{matrix}]\cr
+a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
+b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
+columns are named with class labels.}
 
 \item{negative}{[\code{character(1)}]\cr
 The name of the negative class.}
@@ -245,11 +388,18 @@ Most measures can directly be accessed via the function named after the scheme m
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
 }
+\references{
+He, H. & Garcia, E. A. (2009)
+\emph{Learning from Imbalanced Data.}
+IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
+}
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{performance}}
 }
 \keyword{datasets}
-

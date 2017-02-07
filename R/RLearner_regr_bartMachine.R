@@ -33,7 +33,7 @@ makeRLearner.regr.bartMachine = function() {
     properties = c("numerics", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
-    note = "'use_missing_data' has been set to TRUE by default to allow missing data support"
+    note = "`use_missing_data` has been set to `TRUE` by default to allow missing data support."
   )
 }
 

@@ -5,6 +5,7 @@ makeRLearner.classif.nnet = function() {
     package = "nnet",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "size", default = 3L, lower = 0L),
+      # FIXME size seems to have no default in nnet(). If it has, par.vals is redundant
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       # nnet seems to set these manually and hard for classification.....
 #     makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy==FALSE && softmax==FALSE && censored==FALSE)),
@@ -25,7 +26,7 @@ makeRLearner.classif.nnet = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Neural Network",
     short.name = "nnet",
-    note = "`size` has been set to 3 by default."
+    note = "`size` has been set to `3` by default."
   )
 }
 

@@ -3,7 +3,7 @@
 \docType{data}
 \name{mtcars.task}
 \alias{mtcars.task}
-\title{Motor Trend Car Road Tests clustering task}
+\title{Motor Trend Car Road Tests clustering task.}
 \description{
 Contains the task (\code{mtcars.task}).
 }
@@ -11,4 +11,3 @@ Contains the task (\code{mtcars.task}).
 See \code{\link[datasets]{mtcars}}.
 }
 \keyword{data}
-

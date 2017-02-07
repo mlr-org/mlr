@@ -24,7 +24,7 @@
 #'   Named by variable name, non-factors do not occur in the list.
 #' @param time [\code{numeric(1)}]\cr
 #'   Computation time for model fit in seconds.
-#'  @template ret_wmodel
+#' @template ret_wmodel
 #' @export
 #' @aliases WrappedModel
 makeWrappedModel = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
@@ -57,7 +57,7 @@ print.WrappedModel = function(x, ...) {
     "Model for learner.id=", x$learner$id, "; learner.class=", getClass1(x$learner), "\n",
     sprintf("Trained on: task.id = %s; obs = %i; features = %i",
       x$task.desc$id, length(x$subset), length(x$features)), "\n",
-    "Hyperparameters: ", getHyperParsString(x$learner), "\n",
+    "Hyperparameters: ", getHyperParsString(x$learner, show.missing.values = TRUE), "\n",
     sep = ""
   )
   if (isFailureModel(x))

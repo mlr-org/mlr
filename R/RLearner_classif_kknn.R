@@ -9,14 +9,14 @@ makeRLearner.classif.kknn = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 7L, lower = 1L),
       makeNumericLearnerParam(id = "distance", default = 2, lower = 0),
-      makeDiscreteLearnerParam(id = "kernel", default = "triangular",
-        values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian")),
+      makeDiscreteLearnerParam(id = "kernel", default = "optimal",
+        values = list("rectangular", "triangular", "epanechnikov", "biweight",
+          "triweight", "cos", "inv", "gaussian", "optimal")),
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "k-Nearest Neighbor",
-    short.name = "kknn",
-    note = ""
+    short.name = "kknn"
   )
 }
 

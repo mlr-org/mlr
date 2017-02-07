@@ -1,4 +1,20 @@
-# FIXME: document BS options
+#' regression using randomForest.
+#'
+#' a mlr learner for regrssion tasks using \code{\link[randomForest]{randomForest}}.
+#'
+#' if \code{predict.type = "se"} the \code{se.method} (by default \dQuote{jackknife})
+#' is estimated, using the methods described in Sexton and Laake (2009).
+#'
+#' If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by bootstrapping the random forest, where the number of bootstrap replicates and the number of trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively, and then taking the standard deviation of the predictions.
+#'
+#' If \code{se.method = "jackknife"}, the default, the standard error of a prediction is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between the prediction made by only using trees which did not contain said observation and the ensemble prediction.
+#'
+#' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and, in the case that this results in a negative variance estimate, the values are truncated at 0.
+#'
+#' @references [Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
+#'
+#' @name regr.randomForest
+NULL
 
 #' @export
 makeRLearner.regr.randomForest = function() {
@@ -16,12 +32,17 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "calibrate", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeIntegerLearnerParam(id = "sampsize", lower = 1L),
+      makeUntypedLearnerParam(id = "strata", tunable = FALSE),
+      makeIntegerVectorLearnerParam(id = "sampsize", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
+      makeIntegerLearnerParam(id = "nPerm", default = 1L),
+      makeLogicalLearnerParam(id = "proximity", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "oob.prox", requires = quote(proximity == TRUE), tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(
@@ -29,9 +50,10 @@ makeRLearner.regr.randomForest = function() {
       se.boot = 50L,
       ntree.for.se = 100L
     ),
-    properties = c("numerics", "factors", "ordered", "se"),
+    properties = c("numerics", "factors", "ordered", "se", "featimp"),
     name = "Random Forest",
-    short.name = "rf"
+    short.name = "rf",
+    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
   )
 }
 
@@ -145,4 +167,9 @@ sdStandardError = function(.learner, .model, .newdata, ...) {
   pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
   se = apply(pred$individual, 1, sd)
   return(cbind(pred$aggregate, se))
+}
+
+#' @export
+getFeatureImportanceLearner.regr.randomForest = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.randomForest(.learner, .model, ...)
 }

@@ -5,11 +5,12 @@
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
 benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
-  show.info = getMlrOption("show.info"))
+  models = TRUE, show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learners}{[(list of) \code{\link{Learner}}]\cr
-Learning algorithms which should be compared.}
+\item{learners}{[(list of) \code{\link{Learner}} | \code{character}]\cr
+Learning algorithms which should be compared, can also be a single learner.
+If you pass strings the learners will be created via \code{\link{makeLearner}}.}
 
 \item{tasks}{[(list of) \code{\link{Task}}]\cr
 Tasks that learners should be run on.}
@@ -27,7 +28,11 @@ If missing, the default measure of the first task is used.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can this argument to \code{FALSE}.
+In this case you can set this argument to \code{FALSE}.
+Default is \code{TRUE}.}
+
+\item{models}{[\code{logical(1)}]\cr
+Should all fitted models be stored in the \code{\link{ResampleResult}}?
 Default is \code{TRUE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
@@ -44,28 +49,41 @@ training / test sets are used for the different learners.
 Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
 learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 }
+\examples{
+lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
+tasks = list(iris.task, sonar.task)
+rdesc = makeResampleDesc("CV", iters = 2L)
+meas = list(acc, ber)
+bmr = benchmark(lrns, tasks, rdesc, measures = meas)
+rmat = convertBMRToRankMatrix(bmr)
+print(rmat)
+plotBMRSummary(bmr)
+plotBMRBoxplots(bmr, ber, style = "violin")
+plotBMRRanksAsBarChart(bmr, pos = "stack")
+friedmanTestBMR(bmr)
+friedmanPostHocTestBMR(bmr, p.value = 0.05)
+}
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
-  \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCritDifferencesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getBMRAggrPerformances}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
-  \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotRankMatrixAsBar}}
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCritDifferences}}
 }
-

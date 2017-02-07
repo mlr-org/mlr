@@ -4,20 +4,20 @@ makeRLearner.classif.PART = function() {
     cl = "classif.PART",
     package = "RWeka",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id = "C", default = 0.25, lower = 0),
+      makeNumericLearnerParam(id = "C", default = 0.25, lower = .Machine$double.eps, upper = 1 - .Machine$double.eps, requires = quote(!R)),
       makeIntegerLearnerParam(id = "M", default = 2L, lower = 1L),
-      makeLogicalLearnerParam(id = "R"),
-      makeIntegerLearnerParam(id = "N", default = 3L, lower = 2L),
-      makeLogicalLearnerParam(id = "B"),
-      makeLogicalLearnerParam(id = "U"),
-      makeLogicalLearnerParam(id = "J"),
+      makeLogicalLearnerParam(id = "R", default = FALSE),
+      makeIntegerLearnerParam(id = "N", default = 3L, lower = 2L, requires = quote(!!R)),
+      makeLogicalLearnerParam(id = "B", default = FALSE),
+      makeLogicalLearnerParam(id = "U", default = FALSE),
+      makeLogicalLearnerParam(id = "J", default = FALSE),
       makeIntegerLearnerParam(id = "Q", tunable = FALSE),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "PART Decision Lists",
     short.name = "part",
-    note = "NAs are directly passed to WEKA with `na.action = na.pass`"
+    note = "NAs are directly passed to WEKA with `na.action = na.pass`."
   )
 }
 

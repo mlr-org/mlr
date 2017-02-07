@@ -4,17 +4,12 @@ makeRLearner.regr.lm = function() {
     cl = "regr.lm",
     package = "stats",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "method", default = "moment",
-        values = c("moment", "mle", "mve", "t")),
-      makeNumericLearnerParam(id = "nu", lower = 2,
-        requires = quote(method == "t")),
-      makeNumericLearnerParam(id = "tol", default = 1.0e-4, lower = 0),
+      makeNumericLearnerParam(id = "tol", default = 1e-7, lower = 0),
       makeLogicalLearnerParam(id = "singular.ok", default = TRUE, tunable = FALSE)
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Simple Linear Regression",
-    short.name = "lm",
-    note = ""
+    short.name = "lm"
   )
 }
 
@@ -32,7 +27,7 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
 
 #' @export
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, se.fit = FALSE, ...)
   } else {
     p = predict(.model$learner.model, newdata = .newdata, se.fit = TRUE, ...)

@@ -38,7 +38,11 @@ getTaskId = function(x) {
   getTaskDescription(x)$id
 }
 
-#' Get the name(s) of the target column(s).
+#' @title Get the name(s) of the target column(s).
+#'
+#' @description
+#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+#' actually return the same thing.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{character}].
@@ -63,7 +67,12 @@ getTaskTargetNames.TaskDescUnsupervised = function(x) {
   character(0L)
 }
 
-#' Get the class levels for classification and multilabel tasks.
+
+#' @title Get the class levels for classification and multilabel tasks.
+#'
+#' @description
+#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+#' actually return the same thing.
 #'
 #' @template arg_task_or_desc
 #' @return [\code{character}].
@@ -120,9 +129,11 @@ getTaskSize = function(x) {
   getTaskDescription(x)$size
 }
 
-#' Get formula of a task.
+#' @title Get formula of a task.
 #'
-#' This is simply \dQuote{<target> ~ .}.
+#' @description
+#' This is usually simply \dQuote{<target> ~ .}.
+#' For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 #'
 #' @template arg_task_or_desc
 #' @param target [\code{character(1)}]\cr
@@ -143,6 +154,8 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   if (type == "surv") {
     lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
     target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
+  } else if (type == "multilabel") {
+    target = collapse(target, "+")
   } else if (type == "costsens") {
     stop("There is no formula available for cost-sensitive learning.")
   } else if (type == "cluster") {
@@ -158,10 +171,13 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   # FIXME in the future we might want to create formulas w/o an environment
   # currently this is impossible for survival because the namespace is not imported
   # properly in many packages -> survival::Surv not found
-  as.formula(paste(target, "~", paste(features, collapse = " + ")), env = env)
+  as.formula(stri_paste(target, "~", stri_paste(features, collapse = " + ", sep = " "), sep = " "), env = env)
 }
 
-#' Get target column of task.
+#' @title Get target data of task.
+#'
+#' @description
+#' Get target data of task.
 #'
 #' @template arg_task
 #' @param recode.target [\code{character(1)}] \cr
@@ -170,7 +186,8 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #'   In the two latter cases the target vector is converted into a numeric vector.
 #'   The positive class is coded as +1 and the negative class either as 0 or -1.
 #'   Default is \dQuote{no}.
-#' @return A \code{factor} for classification or a \code{numeric} for regression.
+#' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
+#'   of logical columns for multilabel.
 #' @family task
 #' @export
 #' @examples
@@ -202,24 +219,24 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
 #' @template arg_task
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
-#' @param features [\code{character}]\cr
-#'   Selected features.
-#'   Default is all.
+#' @template arg_subset
+#' @template arg_features
 #' @param target.extra [\code{logical(1)}]\cr
 #'   Should target vector be returned separately?
-#'   If not, a single data.frame including the target is returned, otherwise a list
-#'   with the input data.frame and an extra vector for the targets.
-#'   Default is FALSE.
+#'   If not, a single data.frame including the target columns is returned, otherwise a list
+#'   with the input data.frame and an extra vector or data.frame for the targets.
+#'   Default is \code{FALSE}.
 #' @param recode.target [\code{character(1)}]\cr
-#'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
+#'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
+#'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as +1 and the negative class either as 0 or -1.
+#'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 #'   \dQuote{drop.levels} will remove empty factor levels in the target column.
-#'   Default is \dQuote{no}.
+#'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
+#'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
+#'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
+#'   See \code{\link[survival]{Surv}} for the format specification.
+#'   Default for both binary classification and survival is \dQuote{no} (do nothing).
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export
@@ -234,7 +251,37 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
-  #FIXME: argument checks currently not done for speed
+  checkTask(task, "Task")
+
+  if (missing(subset)) {
+    subset = NULL
+  } else {
+    assert(checkIntegerish(subset), checkLogical(subset))
+    if (is.logical(subset)) {
+      subset = which(subset)
+    } else if (is.double(subset)) {
+      subset = asInteger(subset)
+    }
+  }
+
+  assertLogical(target.extra)
+
+  task.features = getTaskFeatureNames(task)
+
+  # if supplied check if the input is right and always convert 'features'
+  # to character vec
+  if (!missing(features)) {
+    assert(
+      checkIntegerish(features, lower = 1L, upper = length(task.features)),
+      checkLogical(features), checkCharacter(features)
+    )
+
+    if (!is.character(features))
+      features = task.features[features]
+  }
+
+  tn = task$task.desc$target
+
   indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
@@ -244,8 +291,6 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     )
   }
 
-  tn = task$task.desc$target
-  task.features = getTaskFeatureNames(task)
   if (missing(subset) || identical(subset, seq_len(task$task.desc$size)))
     subset = NULL
 
@@ -281,6 +326,8 @@ recodeY = function(y, type, td) {
     return(as.numeric(2L * (y == td$positive) - 1L))
   if (type %in% c("lcens", "rcens", "icens"))
     return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "multilabel.factor")
+    return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
 }
 
@@ -347,13 +394,8 @@ getTaskCosts = function(task, subset) {
 #' Subset data in task.
 #'
 #' @template arg_task
-#' @param subset [\code{integer} | \code{logical(n)}]\cr
-#'   Selected cases.
-#'   Default is all cases.
-#' @param features [\code{character}]\cr
-#'   Selected inputs. Note that target feature is always included in the
-#'   resulting task, you should not pass it here.
-#'   Default is all features.
+#' @template arg_subset
+#' @template arg_features
 #' @return [\code{\link{Task}}]. Task with subsetted data.
 #' @family task
 #' @export
@@ -363,9 +405,6 @@ getTaskCosts = function(task, subset) {
 subsetTask = function(task, subset, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  td = task$desc
-  if (!missing(subset))
-    assert(checkIntegerish(subset), checkLogical(subset, len = td$size))
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)

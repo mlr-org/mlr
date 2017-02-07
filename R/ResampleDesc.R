@@ -40,12 +40,12 @@
 #'   Further parameters for strategies.\cr
 #'   \describe{
 #'   \item{iters [\code{integer(1)}]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
-#'     and \dQuote{Boostrap}}
+#'     and \dQuote{Boostrap}.}
 #'   \item{split [\code{numeric(1)}]}{Proportion of training cases for \dQuote{Holdout} and
 #'     \dQuote{Subsample} between 0 and 1. Default is 2/3.}
-#'   \item{reps [integer(1)]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
+#'   \item{reps [\code{integer(1)}]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
 #'     Default is 10.}
-#'   \item{folds [integer(1)]}{Folds in the repeated CV for \code{RepCV}.
+#'   \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
 #'     Here \code{iters = folds * reps}. Default is 10.}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
@@ -53,7 +53,7 @@
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
 #'   individually and the resulting index sets are joined to make sure that the proportion of
 #'   observations in each training set is as in the original data set. Useful for imbalanced class sizes.
-#'   For survival tasks stratification is done on the events, resulting training sets with comparable
+#'   For survival tasks stratification is done on the events, resulting in training sets with comparable
 #'   censoring rates.
 #' @param stratify.cols [\code{character}]\cr
 #'   Stratify on specific columns referenced by name. All columns have to be factors.
@@ -76,18 +76,18 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("DPS", "Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
   if (stratify && ! is.null(stratify.cols))
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
-  d = do.call(paste0("makeResampleDesc", method), list(...))
+  d = do.call(stri_paste("makeResampleDesc", method), list(...))
   d$predict = predict
   d$stratify = stratify
   d$stratify.cols = stratify.cols
-  addClasses(d, paste0(method, "Desc"))
+  addClasses(d, stri_paste(method, "Desc"))
 }
 
 
@@ -109,13 +109,6 @@ print.ResampleDesc = function(x, ...) {
 # the methods cannot be directly exported like this!
 # FIXME: the code style is not so good here, see issue 187.
 ##############################################################################################
-makeResampleDescDPS = function(iters = 8L) {
-  iters = asCount(iters, positive = TRUE)
-  k = log2(iters)
-  if (as.integer(k) != k)
-    stopf("'iters' must be a power of 2, but it is %i!", iters)
-  makeResampleDescInternal("density preserving sampling", iters = iters)
-}
 
 makeResampleDescHoldout = function(iters, split = 2/3) {
   assertNumber(split, lower = 0, upper = 1)
@@ -173,4 +166,59 @@ print.RepCVDesc = function(x, ...) {
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }
+
+##############################################################################################
+# Resample Convenience Objects, like cv10
+##############################################################################################
+
+#' @rdname makeResampleDesc
+#' @section Standard ResampleDesc objects:
+#' For common resampling strategies you can save some typing
+#' by using the following description objects:
+#' \describe{
+#' \item{hout}{holdout a.k.a. test sample estimation
+#' (two-thirds training set, one-third testing set)}
+#' \item{cv2}{2-fold cross-validation}
+#' \item{cv3}{3-fold cross-validation}
+#' \item{cv5}{5-fold cross-validation}
+#' \item{cv10}{10-fold cross-validation}
+#' }
+#' @export
+#' @usage NULL
+#' @docType NULL
+#' @format NULL
+#' @keywords NULL
+hout = makeResampleDesc("Holdout")
+
+#' @rdname makeResampleDesc
+#' @export
+#' @usage NULL
+#' @docType NULL
+#' @format NULL
+#' @keywords NULL
+cv2 = makeResampleDesc("CV", iters = 2L)
+
+#' @rdname makeResampleDesc
+#' @export
+#' @usage NULL
+#' @docType NULL
+#' @format NULL
+#' @keywords NULL
+cv3 = makeResampleDesc("CV", iters = 3L)
+
+#' @rdname makeResampleDesc
+#' @export
+#' @usage NULL
+#' @docType NULL
+#' @format NULL
+#' @keywords NULL
+cv5 = makeResampleDesc("CV", iters = 5L)
+
+#' @rdname makeResampleDesc
+#' @export
+#' @usage NULL
+#' @docType NULL
+#' @format NULL
+#' @keywords NULL
+cv10 = makeResampleDesc("CV", iters = 10L)
 

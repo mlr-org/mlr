@@ -19,7 +19,7 @@ makeRLearner.classif.ctree = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights"),
     name = "Conditional Inference Trees",
     short.name = "ctree",
-    note = "see ?ctree_control for possible breakage for nominal features with missingness"
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
   )
 }
 
@@ -31,7 +31,7 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
   ctrl = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion, minsplit,
     minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth)
   f = getTaskFormula(.task)
-  party::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, ...)
+  party::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, weights = .weights, ...)
 }
 
 #' @export

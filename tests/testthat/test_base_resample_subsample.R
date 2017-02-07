@@ -1,4 +1,4 @@
-context("resample: subsampling")
+context("resample_subsample")
 
 test_that("subsampling instance works", {
   rin = makeResampleInstance(makeResampleDesc("Subsample", iters = 2, split = 0.25), size = 20)
@@ -38,4 +38,3 @@ test_that("subsampling instance is stochastic", {
   rin2 = makeResampleInstance(makeResampleDesc("Subsample", iters = 3), size = 500)
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
-

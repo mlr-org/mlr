@@ -16,12 +16,13 @@ makeRLearner.classif.pamr = function() {
       makeDiscreteLearnerParam(id = "sign.contrast", default = "both", values = c("both", "negative", "positive")),
       #we cannot the use the orginal argument name 'threshold', because it's already used
       makeNumericLearnerParam(id = "threshold.predict", default = 1, when = "predict")
+      # FIXME threshold in pamr.predict() seems to have no default. If it has 1 as default, par.vals is redundant
     ),
     par.vals = list(threshold.predict = 1),
     properties = c("numerics", "twoclass", "prob"),
     name = "Nearest shrunken centroid",
     short.name = "pamr",
-    note = "threshold for prediction (`threshold.predict`) has been set to `1` by default"
+    note = "Threshold for prediction (`threshold.predict`) has been set to `1` by default."
   )
 }
 

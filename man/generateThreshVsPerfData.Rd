@@ -2,6 +2,7 @@
 % Please edit documentation in R/generateThreshVsPerf.R
 \name{generateThreshVsPerfData}
 \alias{generateThreshVsPerfData}
+\alias{ThreshVsPerfData}
 \title{Generate threshold vs. performance(s) for 2-class classification.}
 \usage{
 generateThreshVsPerfData(obj, measures, gridsize = 100L, aggregate = TRUE,
@@ -40,18 +41,17 @@ Default is first task.}
 Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCalibrationData}},
+Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialPredictionData}},
-  \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
-  \code{\link{getFilterValues}}
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 
 Other thresh_vs_perf: \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
-

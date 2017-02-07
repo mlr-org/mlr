@@ -3,7 +3,7 @@
 \docType{data}
 \name{costiris.task}
 \alias{costiris.task}
-\title{Iris cost-sensitive classification task}
+\title{Iris cost-sensitive classification task.}
 \description{
 Contains the task (\code{costiris.task}).
 }
@@ -15,4 +15,3 @@ See \code{\link[datasets]{iris}}.
   In ICML, J. Fürnkranz and T. Joachims, Eds., Omnipress, 1095--1102.
 }
 \keyword{data}
-

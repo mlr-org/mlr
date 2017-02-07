@@ -28,28 +28,23 @@ plotFilterValuesGGVIS(fv)
 }
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotLearningCurveGGVIS}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerfGGVIS}},
+  \code{\link{plotThreshVsPerf}}
+
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValues}}
-
-Other plot: \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValues}},
-  \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
-  \code{\link{plotROCCurves}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
-  \code{\link{plotRankMatrixAsBar}},
-  \code{\link{plotThreshVsPerfGGVIS}},
-  \code{\link{plotThreshVsPerf}}
 }
-

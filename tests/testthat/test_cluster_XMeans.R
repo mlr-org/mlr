@@ -1,7 +1,8 @@
 context("cluster_XMeans")
 
 test_that("cluster_XMeans", {
-  requirePackages("RWeka", default.method = "load")
+  requirePackagesOrSkip("RWeka", default.method = "load")
+
   parset.list = list(
     list(),
     list(I = 1)

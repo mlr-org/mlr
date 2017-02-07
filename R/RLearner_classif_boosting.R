@@ -18,13 +18,13 @@ makeRLearner.classif.boosting = function() {
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L),
-      makeIntegerLearnerParam(id = "xval", default = 0L, lower = 0L)
+      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
     par.vals = list(xval = 0L),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "featimp"),
     name = "Adabag Boosting",
     short.name = "adabag",
-    note = "`xval` has been set to 0 by default for speed."
+    note = "`xval` has been set to `0` by default for speed."
   )
 }
 
@@ -37,7 +37,7 @@ trainLearner.classif.boosting= function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
-  levs = levels = .model$task.desc$class.levels
+  levs = .model$task.desc$class.levels
   # stupid adaboost
   .newdata[, .model$task.desc$target] = factor(rep(1, nrow(.newdata)), levels = levs)
   p = predict(.model$learner.model, newdata = .newdata, ...)
@@ -46,4 +46,10 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
   } else {
     return(as.factor(p$class))
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.boosting = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  mod$importance[.model$features]
 }
