@@ -6,12 +6,12 @@ makeRLearner.classif.binomial = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam("link", values = c("logit", "probit", "cloglog", "cauchit", "log"),
         default = "logit"),
-      makeLogicalLearnerParam("model", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam("model", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Binomial Regression",
     short.name = "binomial",
-    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`."
+    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. Against the original default in the stats package, model is set to FALSE, due to memory reasons."
   )
 }
 
