@@ -6,19 +6,19 @@ makeRLearner.classif.binomial = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam("link", values = c("logit", "probit", "cloglog", "cauchit", "log"),
         default = "logit"),
-      makeLogicalLearnerParam("model", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam("model", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Binomial Regression",
     short.name = "binomial",
-    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`."
+    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. The default for 'model' in the original learner is FALSE, due to memory reasons."
   )
 }
 
 #' @export
 trainLearner.classif.binomial = function(.learner, .task, .subset, .weights = NULL, link = "logit", ...) {
   f = getTaskFormula(.task)
-  stats::glm(f, data = getTaskData(.task, .subset), model = FALSE, family = binomial(link = link), weights = .weights, ...)
+  stats::glm(f, data = getTaskData(.task, .subset), family = binomial(link = link), weights = .weights, ...)
 }
 
 #' @export
