@@ -6,7 +6,7 @@ cl = c(10, 6)
 print(x)
 print(cl)
 
-f = extractMultiResFeatures(x, curve.lens = cl , res.level = 7, shift = 0.5)
+f = extractFDAMultiResFeatures(x, curve.lens = cl , res.level = 7, shift = 0.5)
 print(f)
 
 

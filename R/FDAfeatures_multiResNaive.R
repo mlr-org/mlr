@@ -48,7 +48,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
 #' The overlapping proportion when slide the window for one step
 #' @return Returns a \code{matrix} object with each row containing the multi-resolution features
 #' @export 
-extractMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
+extractFDAMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
   checkmate::assert_matrix(data)
   n.obs = nrow(data)
   n.curves = length(curve.lens)
