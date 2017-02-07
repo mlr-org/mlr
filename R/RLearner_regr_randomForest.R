@@ -24,9 +24,10 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
-      makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
-                               values = c("bootstrap", "jackknife",  "sd"),
-                               requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE)),
+      makeLogicalLearnerParam(id = "calibrate", default = TRUE, tunable = FALSE),
+      makeDiscreteLearnerParam(id = "se.method", default = "infjackknife",
+                               values = c("bootstrap", "jackknife", "infjackknife", "sd"),
+                               requires = quote(se.method %in% c("jackknife", "infjackknife") && keep.inbag == TRUE)),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
@@ -48,7 +49,7 @@ makeRLearner.regr.randomForest = function() {
       se.boot = 50L,
       ntree.for.se = 100L
     ),
-    properties = c("numerics", "factors", "ordered", "se", "featimp"),
+    properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
     note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
@@ -66,6 +67,18 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   } else {
     data = getTaskData(.task, .subset, target.extra = TRUE)
     m = randomForest::randomForest(x = data[["data"]], y = data[["target"]], ...)
+    ## ugly hack
+    ## if the formula interface is used the training data is saved, but not with the default interface
+    ## the training data is used when predict.type = "se" and calibration is not FALSE
+    if (.learner$predict.type == "se") {
+      if (is.null(.learner$par.vals$calibrate)) {
+        m$data = data[["data"]]
+      } else {
+        if (.learner$par.vals$calibrate) {
+          m$data = data[["data"]]
+        }
+      }
+    }
   }
   return(m)
 }
@@ -77,12 +90,19 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
     se.fun = switch(.learner$par.vals$se.method,
       bootstrap = bootstrapStandardError,
       jackknife = jackknifeStandardError,
+      infjackknife = infinitesimalJackknifeStandardError,
       sd = sdStandardError
     )
     se.fun(.learner, .model, .newdata, ...)
   } else {
     predict(.model$learner.model, newdata = .newdata, ...)
   }
+}
+
+
+#' @export
+getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
+  .model$learner.model$predicted
 }
 
 # Computes brute force or noisy bootstrap
@@ -104,7 +124,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = R, byrow = TRUE)
   }
   var.boot = apply(pred.boot, 1, var) - bias
-  var.boot[var.boot <= 0] = 0
+  var.boot = pmax(var.boot, 0)
   cbind(pred, sqrt(var.boot))
 }
 
@@ -114,16 +134,36 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   n = nrow(model$inbag)
   ntree = model$ntree
   pred = predict(model, newdata = .newdata, predict.all = TRUE)
-  oob = t(sapply(seq_len(n), function(i) model$inbag[i, ] == 0))
+  oob = model$inbag == 0
   jack_n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
   if (is.vector(jack_n)) {
     jack_n = t(as.matrix(jack_n))
   }
   jack = (n - 1) / n * rowSums((jack_n - pred$aggregate)^2)
   bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
-  jab = jack - bias
-  jab[jab < 0] = 0
+  jab = pmax(jack - bias, 0)
   return(cbind(pred$aggregate, sqrt(jab)))
+}
+
+# computes the mc bias corrected infintesimal jackknife using randomForestCI
+infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...) {
+  ## ugly, must be a better way to do this
+  idx <- seq_len(nrow(.newdata))
+  if (!is.null(.learner$par.vals$calibrate)) {
+    if (.learner$par.vals$calibrate) {
+      calibrate = TRUE
+    } else {
+      calibrate = FALSE
+    }
+  } else {
+    calibrate = TRUE
+  }
+  if (nrow(.newdata) <= 20L & calibrate) {
+    .newdata = rbind(.newdata, .model$learner.model$data)
+  }
+  ret = randomForestCI::randomForestInfJack(.model$learner.model, .newdata, calibrate, ...)
+  ret$var.hat = pmax(ret$var.hat, 0)
+  return(cbind(ret$y.hat[idx], sqrt(ret$var.hat)[idx]))
 }
 
 # computes the standard deviation across trees
