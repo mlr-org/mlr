@@ -1,3 +1,8 @@
+# mlr 2.11:
+
+## functions - new
+* getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
+
 # mlr 2.10:
 
 ## functions - general
