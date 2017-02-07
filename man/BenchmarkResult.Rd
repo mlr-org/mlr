@@ -50,4 +50,3 @@ Other benchmark: \code{\link{benchmark}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}}
 }
-

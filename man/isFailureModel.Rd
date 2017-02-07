@@ -18,4 +18,3 @@ Such a model is created when one sets the corresponding option in \code{\link{co
 
 For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
 }
-

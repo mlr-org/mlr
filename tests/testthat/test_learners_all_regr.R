@@ -21,7 +21,7 @@ test_that("learners work: regr ", {
   # normal regr
   lrns = mylist("regr", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # regr with factors
   lrns = mylist("regr", properties = "factors", create = TRUE)
@@ -33,7 +33,7 @@ test_that("learners work: regr ", {
 
   # regr with se
   lrns = mylist(task, properties = "se", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars,
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars,
     pred.type = "se")
 
   # regr with weights

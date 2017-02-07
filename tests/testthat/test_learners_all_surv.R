@@ -12,7 +12,7 @@ test_that("learners work: surv ", {
     features = getTaskFeatureNames(surv.task)[c(1,2)])
   lrns = mylist("surv", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = sub.task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = sub.task, hyperpars = hyperpars)
   
   # survival analysis with factors
   lrns = mylist("surv", properties = "factors", create = TRUE)
