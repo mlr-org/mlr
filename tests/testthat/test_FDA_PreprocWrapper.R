@@ -1,7 +1,7 @@
 context("FDA_PreprocWrapper")
 
 test_that("FDA_PreprocWrapper", {
-  taskTs = makeTimeSeriesClassifTask(data = global_var4TS_gp, target = "X1", positive = "1")
+  taskTs = makeFDAClassifTask(data = global_var4FDA_gp, target = "X1", positive = "1")
   taskFa = convertFDATaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "amplitude"))
   taskFp = convertFDATaskToNormalTask(task = taskTs, method = "fourier", pars = list(fft.coeff = "phase"))
   A = getTaskData(taskFa)

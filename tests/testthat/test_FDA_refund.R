@@ -2,7 +2,7 @@ context("FDA_FPCA")
 
 test_that("FDA_FPCA", {
   gp = global_var4FDA_gp
-  taskTs = makeFDAsClassifTask(data = gp, target = "X1", positive = "1")
+  taskTs = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
   refData = getTaskData(taskTs, target.extra = TRUE)
 
   expect_true((nrow(refData$data) == nrow(gp)))
