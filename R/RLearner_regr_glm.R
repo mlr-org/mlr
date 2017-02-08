@@ -30,12 +30,13 @@ makeRLearner.regr.glm = function() {
       makeLogicalLearnerParam(id = "y", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(
-      family = "gaussian"
+      family = "gaussian",
+      model = FALSE
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
     short.name = "glm",
-    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default."
+    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory."
   )
 }
 
