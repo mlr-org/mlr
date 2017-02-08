@@ -9,9 +9,11 @@
 #'
 #' If \code{se.method = "jackknife"}, the default, the standard error of a prediction is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between the prediction made by only using trees which did not contain said observation and the ensemble prediction.
 #'
+#' If \code{se.method = "sd"}, the standard deviation of the predictions across trees is returned as the variance estimate.
+#'
 #' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and, in the case that this results in a negative variance estimate, the values are truncated at 0.
 #'
-#' @references [Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
+#' @references [Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811]. Also see: [Stefan Wager], [Trevor Hastie], and [Bradley Efron]; [Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife], Journal of Machine Learning Research Volume 15, 2014, [1625-1651].
 #'
 #' @name regr.randomForest
 NULL
@@ -44,19 +46,20 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(
-      se.method = "bootstrap",
+      se.method = "jackknife",
       se.boot = 50L,
       ntree.for.se = 100L
     ),
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
-    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
+    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE."
   )
 }
 
 #' @export
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL,
+  se.method = "jackknife", keep.inbag = NULL, ...) {
   if (.learner$predict.type == "se" &
         .learner$par.vals$se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
@@ -65,7 +68,8 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
     m = train(bag.rf, .task, .subset, .weights)
   } else {
     data = getTaskData(.task, .subset, target.extra = TRUE)
-    m = randomForest::randomForest(x = data[["data"]], y = data[["target"]], ...)
+    m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
+      keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
   }
   return(m)
 }
@@ -95,20 +99,20 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 bootstrapStandardError = function(.learner, .model, .newdata, ...) {
   pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
-  B = .learner$par.vals$se.boot
-  R = .learner$par.vals$ntree.for.se
-  M = .learner$par.vals$ntree
-  bias = ((1 / R) - (1 / M)) / (B * R * (R - 1)) *
+  b = .learner$par.vals$se.boot
+  r = .learner$par.vals$ntree.for.se
+  m = .learner$par.vals$ntree
+  bias = ((1 / r) - (1 / m)) / (b * r * (r - 1)) *
     rowSums(matrix(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)),
-                   nrow = nrow(.newdata), ncol = R, byrow = TRUE))
+                   nrow = nrow(.newdata), ncol = r, byrow = TRUE))
   pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
   pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
   pred.boot = extractSubList(pred.boot, c("data", "response"))
   if (is.vector(pred.boot)) {
-    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = R, byrow = TRUE)
+    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = r, byrow = TRUE)
   }
   var.boot = apply(pred.boot, 1, var) - bias
-  var.boot[var.boot <= 0] = 0
+  var.boot = pmax(var.boot, 0)
   cbind(pred, sqrt(var.boot))
 }
 
@@ -118,15 +122,14 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   n = nrow(model$inbag)
   ntree = model$ntree
   pred = predict(model, newdata = .newdata, predict.all = TRUE)
-  oob = t(sapply(seq_len(n), function(i) model$inbag[i, ] == 0))
-  jack_n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
-  if (is.vector(jack_n)) {
-    jack_n = t(as.matrix(jack_n))
+  oob = model$inbag == 0
+  jack.n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
+  if (is.vector(jack.n)) {
+    jack.n = t(as.matrix(jack.n))
   }
-  jack = (n - 1) / n * rowSums((jack_n - pred$aggregate)^2)
+  jack = (n - 1) / n * rowSums((jack.n - pred$aggregate)^2)
   bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
-  jab = jack - bias
-  jab[jab < 0] = 0
+  jab = pmax(jack - bias, 0)
   return(cbind(pred$aggregate, sqrt(jab)))
 }
 

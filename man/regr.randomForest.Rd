@@ -14,8 +14,10 @@ If \code{se.method = "bootstrap"} the standard error of a prediction is estimate
 
 If \code{se.method = "jackknife"}, the default, the standard error of a prediction is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between the prediction made by only using trees which did not contain said observation and the ensemble prediction.
 
+If \code{se.method = "sd"}, the standard deviation of the predictions across trees is returned as the variance estimate.
+
 For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and, in the case that this results in a negative variance estimate, the values are truncated at 0.
 }
 \references{
-[Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
+[Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811]. Also see: [Stefan Wager], [Trevor Hastie], and [Bradley Efron]; [Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife], Journal of Machine Learning Research Volume 15, 2014, [1625-1651].
 }
