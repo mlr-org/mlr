@@ -86,3 +86,15 @@ pred = predict(object = model, newdata = as.data.frame(mlearn$data))
 pred
 as.data.frame(pred)
 
+#####################################
+lrn = makeLearner("fdaclassif.glm")
+
+task = makeFDAClassifTask(data = ph, target = "label")
+
+model = train(lrn, task)
+
+
+pred = predict(object = model, newdata = as.data.frame(mlearn$data))
+pred
+as.data.frame(pred)
+
