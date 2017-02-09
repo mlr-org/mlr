@@ -86,6 +86,7 @@ pred = predict(object = model, newdata = as.data.frame(mlearn$data))
 pred
 as.data.frame(pred)
 
+
 #####################################
 lrn = makeLearner("fdaclassif.glm")
 
@@ -97,4 +98,6 @@ model = train(lrn, task)
 pred = predict(object = model, newdata = as.data.frame(mlearn$data))
 pred
 as.data.frame(pred)
+
+
 
