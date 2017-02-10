@@ -81,8 +81,8 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, ntree.for.se = 100L, ...) {
   if (.learner$predict.type == "se" & .learner$par.vals$se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
-    base.lrn = setHyperPars(base.lrn, ntree = .learner$par.vals$ntree.for.se)
-    bag.rf = makeBaggingWrapper(base.lrn, .learner$par.vals$se.boot, bw.replace = TRUE)
+    base.lrn = setHyperPars(base.lrn, ntree = ntree.for.se)
+    bag.rf = makeBaggingWrapper(base.lrn, se.boot, bw.replace = TRUE)
     m = train(bag.rf, .task, .subset, .weights)
   } else {
     data = getTaskData(.task, .subset, target.extra = TRUE)
