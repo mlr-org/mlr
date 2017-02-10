@@ -9,17 +9,18 @@
 #' Currently implemented methods are:
 #'
 #' \itemize{
-#' \item If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by
-#'   bootstrapping the random forest, where the number of bootstrap replicates and the number of
-#'   trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively,
-#'   and then taking the standard deviation of the bootstrap predictions.
 #' \item If \code{se.method = "jackknife"}, the default, the standard error of a prediction
 #'   is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between
 #'   the prediction made by only using trees which did not contain said observation and
 #'   the ensemble prediction.
+#' \item If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by
+#'   bootstrapping the random forest, where the number of bootstrap replicates and the number of
+#'   trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively,
+#'   and then taking the standard deviation of the bootstrap predictions.
+#'   Defaults are \code{se.boot = 50} and \code{ntree.for.se = 100}.
 #' \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
 #'   returned as the variance estimate. 
-#'   This can be computed quickly but is also a very naive estimator
+#'   This can be computed quickly but is also a very naive estimator.
 #' }
 #'
 #' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and,
