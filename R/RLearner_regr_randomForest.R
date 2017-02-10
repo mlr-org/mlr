@@ -23,7 +23,7 @@
 #'   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{ntree.for.se = 100}.
 #'
 #' \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
-#'   returned as the variance estimate. 
+#'   returned as the variance estimate.
 #'   This can be computed quickly but is also a very naive estimator.
 #' }
 #'
@@ -78,9 +78,8 @@ makeRLearner.regr.randomForest = function() {
 
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL,
-  se.method = "jackknife", keep.inbag = NULL, ...) {
-  if (.learner$predict.type == "se" &
-        .learner$par.vals$se.method == "bootstrap") {
+  se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, ntree.for.se = 100L, ...) {
+  if (.learner$predict.type == "se" & .learner$par.vals$se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
     base.lrn = setHyperPars(base.lrn, ntree = .learner$par.vals$ntree.for.se)
     bag.rf = makeBaggingWrapper(base.lrn, .learner$par.vals$se.boot, bw.replace = TRUE)
@@ -115,7 +114,7 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 # Computes brute force or noisy bootstrap
 # Set ntree = ntree.for.se for the brute force bootstrap
 # Set ntree.for.se << ntree for the noisy bootstrap (mc bias corrected)
-bootstrapStandardError = function(.learner, .model, .newdata, se.boot = 50L, ntree.for.se = 100L, ...) {
+bootstrapStandardError = function(.learner, .model, .newdata, ...) {
   pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
   b = .learner$par.vals$se.boot
