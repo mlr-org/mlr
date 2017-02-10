@@ -16,8 +16,12 @@
 #' \item If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by
 #'   bootstrapping the random forest, where the number of bootstrap replicates and the number of
 #'   trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively,
-#'   and then taking the standard deviation of the bootstrap predictions.
-#'   Defaults are \code{se.boot = 50} and \code{ntree.for.se = 100}.
+#'   and then taking the standard deviation of the bootstrap predictions. The "brute force" bootstrap
+#'   is executed when \code{ntree = ntree.for.se}, the latter of which controls the number of trees in the
+#'   individual random forests which are bootstrapped. The "noisy bootstrap" is executed when \code{ntree.for.se < ntree}
+#'   which is less computationally expensive. A Monte-Carlo bias correction may make the latter option
+#'   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{ntree.for.se = 100}.
+#'
 #' \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
 #'   returned as the variance estimate. 
 #'   This can be computed quickly but is also a very naive estimator.
@@ -64,11 +68,7 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(
-      se.method = "jackknife",
-      se.boot = 50L,
-      ntree.for.se = 100L
-    ),
+
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
@@ -115,7 +115,7 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 # Computes brute force or noisy bootstrap
 # Set ntree = ntree.for.se for the brute force bootstrap
 # Set ntree.for.se << ntree for the noisy bootstrap (mc bias corrected)
-bootstrapStandardError = function(.learner, .model, .newdata, ...) {
+bootstrapStandardError = function(.learner, .model, .newdata, se.boot = 50L, ntree.for.se = 100L, ...) {
   pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
   b = .learner$par.vals$se.boot
