@@ -68,7 +68,9 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-
+    par.vals = list(
+      se.method = "jackknife"
+    ),
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
@@ -114,20 +116,20 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 # Computes brute force or noisy bootstrap
 # Set ntree = ntree.for.se for the brute force bootstrap
 # Set ntree.for.se << ntree for the noisy bootstrap (mc bias corrected)
-bootstrapStandardError = function(.learner, .model, .newdata, ...) {
+bootstrapStandardError = function(.learner, .model, .newdata,
+  ntree.for.se = 100L, se.boot = 50L, ...) {
   pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
-  b = .learner$par.vals$se.boot
-  r = .learner$par.vals$ntree.for.se
-  m = .learner$par.vals$ntree
-  bias = ((1 / r) - (1 / m)) / (b * r * (r - 1)) *
+  ntree = .learner$par.vals$ntree
+  bias = ((1 / ntree.for.se) - (1 / ntree)) / (
+    se.boot * ntree.for.se * (ntree.for.se - 1)) *
     rowSums(matrix(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)),
-                   nrow = nrow(.newdata), ncol = r, byrow = TRUE))
+      nrow = nrow(.newdata), ncol = ntree.for.se, byrow = TRUE))
   pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
   pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
   pred.boot = extractSubList(pred.boot, c("data", "response"))
   if (is.vector(pred.boot)) {
-    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = r, byrow = TRUE)
+    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = ntree.for.se, byrow = TRUE)
   }
   var.boot = apply(pred.boot, 1, var) - bias
   var.boot = pmax(var.boot, 0)
