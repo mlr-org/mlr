@@ -3,9 +3,9 @@
 #' @description Learner for Functional linear array modeling boosting
 #'
 #' @export
-makeRLearner.fdaclassif.shapelet = function() {
+makeRLearner.fdaregr.FDboost = function() {
   makeRLearnerRegr(
-    cl = "fdaregr.shapelet",
+    cl = "fdaregr.FDboost",
     package = "FDboost",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "mstop", default = 200L),
