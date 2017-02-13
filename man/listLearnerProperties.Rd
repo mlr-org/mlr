@@ -16,4 +16,3 @@ Only return properties for a specified task type. Default is \dQuote{any}.}
 \description{
 This is useful for determining which learner properties are available.
 }
-
