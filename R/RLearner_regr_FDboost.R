@@ -27,9 +27,11 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   df = d$data
   z = d$target
-  mod2f <- FDboost(z ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE) + 
-                     bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE),
-                   timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
+  UVVIS = subset(mdata, select = fdboost.task$channel.list[[1]])
+  NIR = subset(mdata, select = fdboost.task$channel.list[[2]])
+  formula = z ~ bsignal(UVVIS, index.list[[1]], knots = 40, df = 4, check.ident = FALSE) + 
+    bsignal(NIR, index.list[[2]], knots = 40, df = 4, check.ident = FALSE)
+  mod2f <- FDboost(formula = formula, timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
   return(mod2f)
 }
 
