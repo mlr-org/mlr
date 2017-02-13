@@ -2,6 +2,7 @@
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
+* listTaskTypes, listLearnerProperties
 
 # mlr 2.10:
 
