@@ -49,7 +49,7 @@ getLearnerProperties.character = function(learner) {
 #' @export
 hasLearnerProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertSubset(props, getSupportedLearnerProperties())
+  assertSubset(props, listLearnerProperties())
   props %in% getLearnerProperties(learner)
 }
 
@@ -62,6 +62,19 @@ hasProperties = function(learner, props) {
   hasLearnerProperties(learner, props)
 }
 
-getSupportedLearnerProperties = function(type = "any") {
+#' @title List the supported learner properties
+#'
+#' @description
+#'   This is useful for determining which learner properties are available.
+#'
+#' @param type [\code{character(1)}]\cr
+#'   Only return properties for a specified task type. Default is \dQuote{any}.
+#'
+#' @return [\code{character}].
+#'
+#' @export
+listLearnerProperties = function(type = "any") {
+  allProps = c(listTaskTypes(), "any")
+  assertSubset(type, allProps)
   mlr$learner.properties[[type]]
 }
