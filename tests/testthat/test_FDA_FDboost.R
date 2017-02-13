@@ -1,6 +1,6 @@
-context("FDA_FDboost")
+context("FDA_extractFeat_FDboost")
 
-test_that("FDA_FDboost", {
+test_that("FDA_extractFeat_FDboost", {
   gp = data.frame(v1 = 1:5, v2 = 2:6, v3 = 3:7, v4 = 4:8, X1 = as.factor(c(-1,1,1,-1, 1)))
   taskTs = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
   refData = getTaskData(taskTs, target.extra = TRUE)
