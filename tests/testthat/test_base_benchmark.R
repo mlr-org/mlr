@@ -16,6 +16,9 @@ test_that("benchmark", {
   expect_true(setequal(names(preds1), "classif.lda"))
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
+  preds = getBMRPredictions(res, as.df = FALSE, drop = TRUE)
+  expect_true(is.list(preds))
+  expect_true(setequal(names(preds), "classif.lda"))
 
   preds = getBMRPredictions(res, as.df = TRUE)
   expect_is(preds, "data.frame")

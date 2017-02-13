@@ -84,7 +84,7 @@ getBMRMeasureIds = function(bmr) {
 
 # returns buried object in BMR, either as list of lists or data.frame with task.id, learner.id cols
 # you can restrict to subsets for tasks and learners and pass function to extract object
-getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = FALSE) {
+getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   brtids = getBMRTaskIds(bmr)
   brlids = getBMRLearnerIds(bmr)
@@ -111,10 +111,15 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
       xs = setNames(xs, learner.ids)
     return(xs)
   })
-  if (as.df)
+  if (as.df) {
     res = setDF(rbindlist(res, fill = TRUE))
-  else
-    res = setNames(res, task.ids)
+  }
+  else {
+    if (drop)
+      res = unlist(res, recursive = FALSE)
+    else
+      res = setNames(res, task.ids)
+  }
   return(res)
 }
 
@@ -134,17 +139,18 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
+#' @template arg_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
 
-getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   f = if (as.df)
     function(x) as.data.frame(getRRPredictions(x))
   else
     function(x) getRRPredictions(x)
-  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df)
+  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
 }
 
 
@@ -160,13 +166,14 @@ getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
+#' @template arg_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
-getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   f = function(x) x$measures.test
-  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df)
+  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
 }
 
 #' @title Extract the aggregated performance values from a benchmark result.
@@ -181,21 +188,22 @@ getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = 
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
+#' @template arg_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
-getBMRAggrPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+getBMRAggrPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   f = if (as.df)
     function(x) as.data.frame(as.list(x$aggr))
   else
     function(x) x$aggr
-  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df)
+  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
 }
 
 
 getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
-  wrapper.class, fun) {
+  wrapper.class, fun, drop = FALSE) {
 
   f = if (as.df) {
     function(x) {
@@ -214,7 +222,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
         NULL
     }
   }
-  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df)
+  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df, drop = drop)
 }
 
 #' @title Extract the tuning results from a benchmark result.
@@ -226,14 +234,15 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
+#' @template arg_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
-getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "TuneWrapper", function(x) {
     data.frame(x$x, as.list(x$y))
-  })
+  }, drop = drop)
 }
 
 #' @title Extract the feature selection results from a benchmark result.
@@ -247,14 +256,15 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
+#' @template arg_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
-getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "FeatSelWrapper", function(x) {
     as.data.frame(x$x)
-  })
+  }, drop = drop)
 }
 
 #' @title Extract the feature selection results from a benchmark result.
@@ -268,10 +278,11 @@ getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df 
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
+#' @template arg_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
-getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "FilterWrapper", function(x) {
     as.data.frame(x)
@@ -288,15 +299,16 @@ getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
 #' @template arg_bmr
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
+#' @template arg_drop
 #' @return [\code{list}].
 #' @export
 #' @family benchmark
-getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL) {
+getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) {
   assertClass(bmr, "BenchmarkResult")
   f = function(x) {
     x$models
   }
-  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = FALSE)
+  getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = FALSE, drop = drop)
 }
 
 #' @title Extract all task descriptions from benchmark result.
