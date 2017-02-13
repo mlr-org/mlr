@@ -48,11 +48,12 @@ makeRLearner.regr.randomForest = function() {
     package = "randomForest",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
-      makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
+      makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L, when = "both"),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
                                values = c("bootstrap", "jackknife",  "sd"),
-                               requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE)),
-      makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L),
+                               requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
+                               when = "both"),
+      makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L, when = "both"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeUntypedLearnerParam(id = "strata", tunable = FALSE),
@@ -68,9 +69,6 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(
-      se.method = "jackknife"
-    ),
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
@@ -81,11 +79,11 @@ makeRLearner.regr.randomForest = function() {
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL,
   se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, ntree.for.se = 100L, ...) {
-  if (.learner$predict.type == "se" & se.method == "bootstrap") {
+  if (.learner$predict.type == "se" && se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
     base.lrn = setHyperPars(base.lrn, ntree = ntree.for.se)
     bag.rf = makeBaggingWrapper(base.lrn, se.boot, bw.replace = TRUE)
-    m = train(bag.rf, .task, .subset, .weights)
+    m = train(bag.rf, .task, .subset, .weights, ...)
   } else {
     data = getTaskData(.task, .subset, target.extra = TRUE)
     m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
@@ -95,9 +93,9 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
   if (.learner$predict.type == "se") {
-    se.fun = switch(.learner$par.vals$se.method,
+    se.fun = switch(se.method,
       bootstrap = bootstrapStandardError,
       jackknife = jackknifeStandardError,
       sd = sdStandardError
@@ -120,7 +118,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   ntree.for.se = 100L, se.boot = 50L, ...) {
   pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
-  ntree = .learner$par.vals$ntree
+  ntree = .model$learner.model$ntree
   bias = ((1 / ntree.for.se) - (1 / ntree)) / (
     se.boot * ntree.for.se * (ntree.for.se - 1)) *
     rowSums(matrix(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)),
