@@ -119,7 +119,6 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       options(warn = -1L)
     }
     time.predict = measureTime(fun1(p <- fun2(fun3(do.call(predictLearner2, pars)))))
-    time.predict = as.numeric(st[3L])
 
     # was there an error during prediction?
     if (is.error(p)) {

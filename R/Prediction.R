@@ -54,7 +54,7 @@ makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.
     threshold = NA_real_,
     task.desc = task.desc,
     time = time,
-    error = error
+    error = error,
     dump = dump
   )
 }
@@ -85,7 +85,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     threshold = NA_real_,
     task.desc = task.desc,
     time = time,
-    error = error
+    error = error,
     dump = dump
   )
 
@@ -117,7 +117,7 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
     threshold = NA_real_,
     task.desc = task.desc,
     time = time,
-    error = error
+    error = error,
     dump = dump
   )
   if (predict.type == "prob") {
@@ -146,7 +146,7 @@ makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.
     threshold = NA_real_,
     task.desc = task.desc,
     time = time,
-    error = error
+    error = error,
     dump = dump
   )
 }
@@ -171,7 +171,7 @@ makePrediction.TaskDescCluster = function(task.desc, row.names, id, truth, predi
     threshold = NA_real_,
     task.desc = task.desc,
     time = time,
-    error = error
+    error = error,
     dump = dump
   )
   return(p)
@@ -189,7 +189,7 @@ makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, pred
     threshold = NA_real_,
     task.desc = task.desc,
     time = time,
-    error = error
+    error = error,
     dump = dump
   )
 }
