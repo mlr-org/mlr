@@ -3,10 +3,10 @@
 \name{LearnerProperties}
 \alias{LearnerProperties}
 \alias{getLearnerProperties}
-\alias{hasExpression.Learner}
 \alias{hasLearnerProperties}
 \alias{getLearnerProperties}
 \alias{hasLearnerProperties}
+\alias{hasExpression.Learner}
 \title{Query properties of learners.}
 \usage{
 getLearnerProperties(learner)

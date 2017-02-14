@@ -31,8 +31,8 @@
 #' @family tune
 #' @note If you would like to include results from the training data set, make
 #' sure to appropriately adjust the resampling strategy and the aggregation for
-#' the measure. See example code below.\cr
-#' Note that learners and parameter sets can contain task dependent
+#' the measure. See example code below.
+#' Also note that learners and parameter sets can contain task dependent
 #' expressions, see \code{\link{evaluateParamExpressions}} for more information.
 #' @export
 #' @examples
@@ -92,14 +92,13 @@
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  dict = getTaskDictionary(task = task)
-  if (hasExpression(learner)) {
-    learner = evaluateParamExpressions(obj = learner, dict = dict)
-  }
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
-  if (hasExpression(par.set))
+  if (hasExpression(learner) || hasExpression(par.set)) {
+    dict = getTaskDictionary(task = task)
+    learner = evaluateParamExpressions(obj = learner, dict = dict)
     par.set = evaluateParamExpressions(obj = par.set, dict = dict)
+  }
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
@@ -132,5 +131,3 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)
 }
-
-
