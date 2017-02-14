@@ -34,8 +34,13 @@ trainLearner.fdaclassif.glm = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.fdaclassif.glm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
+  # restructure internal function call (language-object)
+  m$C[[1]] = quote(classif.glm)
+  # create formulate structure in data
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd, ...)
+  nd.fdclass = list(x = nd.fdclass)
+
+  class.pred = fda.usc::predict.classif(object = m, new.fdataobj = nd.fdclass)
 
   return(class.pred)
 }
