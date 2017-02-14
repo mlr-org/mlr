@@ -11,7 +11,7 @@
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
-#' @note Learners can contain task dependent expressions, see \code{\link{evaluateLearner}} for more information.
+#' @note Learners can contain task dependent expressions, see \code{\link{evaluateParamExpressions}} for more information.
 #' @family learner
 #' @importFrom utils adist
 #' @examples

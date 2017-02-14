@@ -1,10 +1,11 @@
-context("evaluate expressions")
+context("evaluate param expressions")
 
 test_that("expressions in learners", {
   ## expressions within 'pre-defined' learners
   ## (1) expressions within default of parameter sets
   lrn1 = makeLearner("classif.__mlrmocklearners__7")
-  lrn2 = evaluateLearner(learner = lrn1, task = binaryclass.task)
+  dict = getTaskDictionary(task = binaryclass.task)
+  lrn2 = evaluateParamExpressions(obj = lrn1, dict = dict)
   x1 = lrn1$par.set$pars$mtry$default
   x2 = lrn2$par.set$pars$mtry$default
   expect_true(is.expression(x1))
@@ -34,7 +35,8 @@ test_that("expressions in learners", {
 
   ## manually constructed expressions within hyperparams
   lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))
-  lrn2 = evaluateLearner(learner = lrn1, task = binaryclass.task)
+  dict = getTaskDictionary(task = binaryclass.task)
+  lrn2 = evaluateParamExpressions(obj = lrn1, dict = dict)
   x1 = lrn1$par.vals$minsplit
   x2 = lrn2$par.vals$minsplit
   expect_true(is.expression(x1))
@@ -47,12 +49,13 @@ test_that("expressions in parameter sets", {
     makeNumericParam("C", lower = expression(k), upper = expression(n), trafo = function(x) 2^x),
     makeDiscreteParam("sigma", values = expression(list(p, k)))
   )
-  ps2 = evaluateParset(par.set = ps1, task = binaryclass.task)
+  dict = getTaskDictionary(task = binaryclass.task)
+  ps2 = evaluateParamExpressions(obj = ps1, dict = dict)
 
   ## expressions within parameter sets
   expect_equal(ps2$pars$C$lower, 2L)
   expect_equal(ps2$pars$C$upper, 208L)
-  expect_equal(ps2$pars$sigma$values, list("60" = 60, "2" = 2))
+  expect_equal(ps2$pars$sigma$values, list(60, 2))
 })
 
 test_that("tuning works with expressions", {
