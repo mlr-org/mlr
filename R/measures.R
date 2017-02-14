@@ -396,7 +396,7 @@ rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
 #' @rdname measures
 #' @format none
 mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi", "req.pred", "req.truth", "fdaclassif"),
   name = "Mean misclassification error",
   note = "Defined as: mean(response != truth)",
   fun = function(task, model, pred, feats, extra.args) {
@@ -415,7 +415,7 @@ measureMMCE = function(truth, response) {
 #' @rdname measures
 #' @format none
 acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi", "req.pred", "req.truth", "fdaclassif"),
   name = "Accuracy",
   note = "Defined as: mean(response == truth)",
   fun = function(task, model, pred, feats, extra.args) {
@@ -896,7 +896,7 @@ measureFN = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("classif", "req.pred", "req.truth", "fdaclassif"),
   name = "True positive rate",
   note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1180,7 +1180,7 @@ measureMultiLabelF1 = function(truth, response) {
 #' @rdname measures
 #' @format none
 multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, worst = 0,
-  properties = c("multilabel", "req.pred", "req.truth"),
+  properties = c("multilabel", "req.pred", "req.truth", "fdaclassif"),
   name = "Accuracy (multilabel)",
   note = "Averaged proportion of correctly predicted labels with respect to the total number of labels for each instance,
   following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.
