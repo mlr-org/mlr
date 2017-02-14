@@ -55,7 +55,7 @@ test_that("different se.methods work", {
     learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10L, keep.inbag = keep.inbag)
     model = train(learner, task = regr.task, subset = regr.train.inds)
 
-    pred.all = predict(model, task = regr.task, subset = 1)
+    pred.all = predict(model, task = regr.task, subset = regr.test.inds)
     expect_true(is.numeric(pred.all$data$se))
     expect_true(all(pred.all$data$se >= 0))
 

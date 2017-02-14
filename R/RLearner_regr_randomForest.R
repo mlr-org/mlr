@@ -15,12 +15,12 @@
 #'   the ensemble prediction.
 #' \item If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by
 #'   bootstrapping the random forest, where the number of bootstrap replicates and the number of
-#'   trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively,
+#'   trees in the ensemble are controlled by \code{se.boot} and \code{se.ntree} respectively,
 #'   and then taking the standard deviation of the bootstrap predictions. The "brute force" bootstrap
-#'   is executed when \code{ntree = ntree.for.se}, the latter of which controls the number of trees in the
-#'   individual random forests which are bootstrapped. The "noisy bootstrap" is executed when \code{ntree.for.se < ntree}
+#'   is executed when \code{ntree = se.ntree}, the latter of which controls the number of trees in the
+#'   individual random forests which are bootstrapped. The "noisy bootstrap" is executed when \code{se.ntree < ntree}
 #'   which is less computationally expensive. A Monte-Carlo bias correction may make the latter option
-#'   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{ntree.for.se = 100}.
+#'   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{se.ntree = 100}.
 #'
 #' \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
 #'   returned as the variance estimate.
@@ -48,7 +48,7 @@ makeRLearner.regr.randomForest = function() {
     package = "randomForest",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
-      makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L, when = "both"),
+      makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both"),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
                                values = c("bootstrap", "jackknife",  "sd"),
                                requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
@@ -78,12 +78,12 @@ makeRLearner.regr.randomForest = function() {
 
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL,
-  se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, ntree.for.se = 100L, ...) {
+  se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
   if (.learner$predict.type == "se" && se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
-    base.lrn = setHyperPars(base.lrn, ntree = ntree.for.se)
+    base.lrn = setHyperPars(base.lrn, ntree = se.ntree)
     bag.rf = makeBaggingWrapper(base.lrn, se.boot, bw.replace = TRUE)
-    m = train(bag.rf, .task, .subset, .weights, ...)
+    m = train(bag.rf, .task, .subset, .weights)
   } else {
     data = getTaskData(.task, .subset, target.extra = TRUE)
     m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
@@ -112,22 +112,22 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 }
 
 # Computes brute force or noisy bootstrap
-# Set ntree = ntree.for.se for the brute force bootstrap
-# Set ntree.for.se << ntree for the noisy bootstrap (mc bias corrected)
+# Set ntree = se.ntree for the brute force bootstrap
+# Set se.ntree << ntree for the noisy bootstrap (mc bias corrected)
 bootstrapStandardError = function(.learner, .model, .newdata,
-  ntree.for.se = 100L, se.boot = 50L, ...) {
+  se.ntree = 100L, se.boot = 50L, ...) {
   pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
-  ntree = .model$learner.model$ntree
-  bias = ((1 / ntree.for.se) - (1 / ntree)) / (
-    se.boot * ntree.for.se * (ntree.for.se - 1)) *
+  ntree = getLearnerModel(.model$learner.model)[[1]]$learner.model$ntree
+  bias = ((1 / se.ntree) - (1 / ntree)) / (
+    se.boot * se.ntree * (se.ntree - 1)) *
     rowSums(matrix(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)),
-      nrow = nrow(.newdata), ncol = ntree.for.se, byrow = TRUE))
+      nrow = nrow(.newdata), ncol = se.ntree, byrow = TRUE))
   pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
   pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
   pred.boot = extractSubList(pred.boot, c("data", "response"))
   if (is.vector(pred.boot)) {
-    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = ntree.for.se, byrow = TRUE)
+    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = se.ntree, byrow = TRUE)
   }
   var.boot = apply(pred.boot, 1, var) - bias
   var.boot = pmax(var.boot, 0)

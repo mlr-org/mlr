@@ -18,12 +18,12 @@ Currently implemented methods are:
   the ensemble prediction.
 \item If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by
   bootstrapping the random forest, where the number of bootstrap replicates and the number of
-  trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively,
+  trees in the ensemble are controlled by \code{se.boot} and \code{se.ntree} respectively,
   and then taking the standard deviation of the bootstrap predictions. The "brute force" bootstrap
-  is executed when \code{ntree = ntree.for.se}, the latter of which controls the number of trees in the
-  individual random forests which are bootstrapped. The "noisy bootstrap" is executed when \code{ntree.for.se < ntree}
+  is executed when \code{ntree = se.ntree}, the latter of which controls the number of trees in the
+  individual random forests which are bootstrapped. The "noisy bootstrap" is executed when \code{se.ntree < ntree}
   which is less computationally expensive. A Monte-Carlo bias correction may make the latter option
-  prefarable in many cases. Defaults are \code{se.boot = 50} and \code{ntree.for.se = 100}.
+  prefarable in many cases. Defaults are \code{se.boot = 50} and \code{se.ntree = 100}.
 
 \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
   returned as the variance estimate.
