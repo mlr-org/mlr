@@ -25,13 +25,24 @@ makeRLearner.fdaregr.FDboost = function() {
 #' @export
 trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
+  tn = getTaskTargetNames(.task)
   df = d$data
   z = d$target
-  UVVIS = subset(mdata, select = fdboost.task$channel.list[[1]])
-  NIR = subset(mdata, select = fdboost.task$channel.list[[2]])
-  formula = z ~ bsignal(UVVIS, index.list[[1]], knots = 40, df = 4, check.ident = FALSE) + 
-    bsignal(NIR, index.list[[2]], knots = 40, df = 4, check.ident = FALSE)
-  mod2f <- FDboost(formula = formula, timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
+  mfuelSubset = list()
+  mfuelSubset[[eval(tn)]] = d$target
+  mfuelSubset$UVVIS = subset(mdata, select = fdboost.task$channel.list[[1]])
+  mfuelSubset$NIR = subset(mdata, select = fdboost.task$channel.list[[2]])
+  mfuelSubset$uvvis.lambda = index.list[[1]]
+  mfuelSubset$nir.lambda = index.list[[2]]
+  #ff1 = bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
+  #ff2 = bsignal(NIR, nir.lambda, knots = 40, df = 4, check.indent = FALSE)
+  #formula = as.formula(paste0(eval(tn),"~", eval(f1), eval(f2)))
+  #mod2f <- FDboost(formula = formula, timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
+  mod2f <- FDboost(heatan ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
+                   + bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE),
+                   timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))  
+  #FIXME: This one does not work: 
+  #mod2f <- FDboost(paste0(eval(tn), "~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)+bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE)"), timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
   return(mod2f)
 }
 
