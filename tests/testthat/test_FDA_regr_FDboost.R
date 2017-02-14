@@ -24,13 +24,13 @@ test_that("FDA_regr_FDboost", {
     length(fuelSubset$h2o)
     LEN2 = length(fuelSubset$nir.lambda)
     mdata = as.data.frame(Reduce(cbind, list(fuelSubset$UVVIS, fuelSubset$NIR, fuelSubset$h2o, fuelSubset$heatan)))
-    colnames(mdata)[length(colnames(mdata))] = "heat"
+    colnames(mdata)[length(colnames(mdata))] = "heatan"
     channel.list = list(UVVIS = 1:LEN1, NIR = (LEN1 + 1):(LEN1 + LEN2 + 1))
     index.list = list(UVVIS = fuelSubset$uvvis.lambda, NIR = fuelSubset$nir.lambda)
-    fdboost.task = makeFDARegrTask(data = mdata, target = "heat", channel.list = channel.list)
-    mod2f <- FDboost(heatan ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
+    fdboost.task = makeFDARegrTask(data = mdata, target = "heatan", channel.list = channel.list)
+    mod2f = FDboost(heatan ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
    + bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE),
     timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
     lrn = makeLearner("fdaregr.FDboost", index.list = index.list)
-    train(learner = lrn, task = fdboost.task)
+    mod1f = train(learner = lrn, task = fdboost.task)
 })
