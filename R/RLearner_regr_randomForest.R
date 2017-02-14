@@ -79,15 +79,15 @@ makeRLearner.regr.randomForest = function() {
 #' @export
 trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL,
   se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
+  data = getTaskData(.task, .subset, target.extra = TRUE)
+  m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
+    keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
   if (.learner$predict.type == "se" && se.method == "bootstrap") {
     base.lrn = setPredictType(.learner, "response")
     base.lrn = setHyperPars(base.lrn, ntree = se.ntree)
     bag.rf = makeBaggingWrapper(base.lrn, se.boot, bw.replace = TRUE)
-    m = train(bag.rf, .task, .subset, .weights)
-  } else {
-    data = getTaskData(.task, .subset, target.extra = TRUE)
-    m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
-      keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
+    m2 = train(bag.rf, .task, .subset, .weights)
+    m = list(single.model = m, bagged.models = m2)
   }
   return(m)
 }
@@ -116,22 +116,33 @@ getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
 # Set se.ntree << ntree for the noisy bootstrap (mc bias corrected)
 bootstrapStandardError = function(.learner, .model, .newdata,
   se.ntree = 100L, se.boot = 50L, ...) {
-  pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
-    predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
-  ntree = getLearnerModel(.model$learner.model)[[1]]$learner.model$ntree
-  bias = ((1 / se.ntree) - (1 / ntree)) / (
-    se.boot * se.ntree * (se.ntree - 1)) *
-    rowSums(matrix(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)),
-      nrow = nrow(.newdata), ncol = se.ntree, byrow = TRUE))
-  pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
-  pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
-  pred.boot = extractSubList(pred.boot, c("data", "response"))
-  if (is.vector(pred.boot)) {
-    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = se.ntree, byrow = TRUE)
-  }
-  var.boot = apply(pred.boot, 1, var) - bias
+  single.model = getLearnerModel(.model)$single.model #get raw RF model
+  bagged.models = getLearnerModel(getLearnerModel(.model)$bagged.models) #get list of unbagged mlr models
+  pred.single = predict(single.model, newdata = .newdata, ...)
+  pred.bagged = lapply(bagged.models, function(x) predict(getLearnerModel(x), newdata = .newdata, predict.all = TRUE))
+  pred.boot.all = extractSubList(pred.bagged, "individual", simplify = FALSE)
+  ntree = single.model$ntree
+  # following the formula in 3.3 in Sexton and Laake 2009 - Standard errors for bagged and random forest estimators
+  # M = ntree    # number of ensembles
+  # R = se.ntree # new (reduced) number of ensembles
+  # B = se.boot  # number of bootstrap samples
+  # Bias is defined as
+  # (1/R - 1/M) / (BR*(R-1)) *
+  # (sum over all B:
+  #   (sum over all R:
+  #     (prediction for x of ensemble r in bootstrap b - average prediction for x over all ensambles in bootsrap b )^2
+  #   )
+  # )
+  bias = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) *
+    rowSums(matrix(
+      sapply(pred.boot.all, function(p)
+        rowSums(p - rowMeans(p))^2),
+      nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
+  pred.boot.aggregated = extractSubList(pred.bagged, c("aggregate"))
+  pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
+  var.boot = apply(pred.boot.aggregated, 1, var) - bias
   var.boot = pmax(var.boot, 0)
-  cbind(pred, sqrt(var.boot))
+  cbind(pred.single, sqrt(var.boot))
 }
 
 # Computes the mc bias-corrected jackknife after bootstrap
@@ -139,7 +150,7 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   model = .model$learner.model
   n = nrow(model$inbag)
   ntree = model$ntree
-  pred = predict(model, newdata = .newdata, predict.all = TRUE)
+  pred = predict(model, newdata = .newdata, predict.all = TRUE, ...)
   oob = model$inbag == 0
   jack.n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
   if (is.vector(jack.n)) {
