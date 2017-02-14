@@ -24,16 +24,18 @@ makeRLearner.fdaregr.FDboost = function() {
 
 #' @export
 trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, ...) {
+  fdboost.task = .task
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   tn = getTaskTargetNames(.task)
   df = d$data
   z = d$target
+  mextra_para = list(...)
   mfuelSubset = list()
   mfuelSubset[[eval(tn)]] = d$target
-  mfuelSubset$UVVIS = subset(mdata, select = fdboost.task$channel.list[[1]])
-  mfuelSubset$NIR = subset(mdata, select = fdboost.task$channel.list[[2]])
-  mfuelSubset$uvvis.lambda = index.list[[1]]
-  mfuelSubset$nir.lambda = index.list[[2]]
+  mfuelSubset$UVVIS = subset(df, select = fdboost.task$channel.list[[1]])
+  mfuelSubset$NIR = subset(df, select = fdboost.task$channel.list[[2]])
+  mfuelSubset$uvvis.lambda = mextra_para$index.list[[1]]
+  mfuelSubset$nir.lambda = mextra_para$index.list[[2]]
   #ff1 = bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
   #ff2 = bsignal(NIR, nir.lambda, knots = 40, df = 4, check.indent = FALSE)
   #formula = as.formula(paste0(eval(tn),"~", eval(f1), eval(f2)))
