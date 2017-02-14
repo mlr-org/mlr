@@ -22,7 +22,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "featimp"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "oobpreds", "featimp"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
@@ -49,6 +49,15 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+#' @export
+getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
+  if (.learner$predict.type == "response") {
+    unname(.model$learner.model$predicted)
+  } else {
+   .model$learner.model$votes
+  }
 }
 
 #' @export

@@ -45,5 +45,21 @@ test_that("filterFeatures", {
     more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
+      
+  # extra tests for filters based on functions of the Rfast package, including
+  # whether they use pairwise complete observations
+  y = 1:10
+  x = data.frame(x1 = c(1:6, 1:3, NA), x2 = c(1, 1:8, 1))
+  tsk = makeRegrTask(data = cbind(y, x), target = "y")
+  expect_equal(as.vector(cor(y, x, use = "pairwise.complete.obs")),
+    generateFilterValuesData(tsk, "linear.correlation")$data$linear.correlation)
+
+  expect_equal(as.vector(cor(y, x, use = "pairwise.complete.obs", method = "spearman")),
+     generateFilterValuesData(tsk, "rank.correlation")$data$rank.correlation)
+
+  y = rep(letters[1:2], 5L)
+  tsk = makeClassifTask(data = cbind(y, x), target = "y")
+  expect_equal(as.vector(sapply(x, function(i) summary(aov(i ~ y))[[1]][1, "F value"])),
+    generateFilterValuesData(tsk, "anova.test")$data$anova.test)
 })
 

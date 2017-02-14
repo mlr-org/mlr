@@ -18,7 +18,7 @@ Default is \code{FALSE}.}
 [\code{matrix}]. A confusion matrix.
 }
 \description{
-getConfMatrix is deprecated please use \code{\link{calculateConfusionMatrix}}.
+\code{getConfMatrix} is deprecated. Please use \code{\link{calculateConfusionMatrix}}.
 
 
 Calculates confusion matrix for (possibly resampled) prediction.
@@ -38,4 +38,3 @@ a single test set. This probably mainly makes sense when cross-validation is use
 \seealso{
 \code{\link{predict.WrappedModel}}
 }
-

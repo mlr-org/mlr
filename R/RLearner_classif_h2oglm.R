@@ -14,9 +14,9 @@ makeRLearner.classif.h2o.glm = function() {
       makeNumericLearnerParam("lambda", lower = 0, default = 1e-5),
       makeLogicalLearnerParam("lambda_search", default = FALSE),
       makeIntegerLearnerParam("nlambdas", lower = 1L,
-        requires = quote(lambda_search == TRUE)), 
+        requires = quote(lambda_search == TRUE)),
       # FIXME: data dep default
-      makeNumericLearnerParam("lambda_min_ratio", lower = 0, upper = 1, 
+      makeNumericLearnerParam("lambda_min_ratio", lower = 0, upper = 1,
         requires = quote(lambda_search == TRUE)),
       makeUntypedLearnerParam("beta_constraints"),
       makeLogicalLearnerParam("intercept", default = TRUE)
@@ -34,7 +34,7 @@ trainLearner.classif.h2o.glm = function(.learner, .task, .subset, .weights = NUL
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }  
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
@@ -53,16 +53,15 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
-  
+
   # check if class names are integers. if yes, colnames of p.df need to be adapted
-  int = grepl("^[[:digit:]]+$", p.df$predict)
+  int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
   if (any(int)) {
-    pcol = grepl("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol)) {
-      colnames(p.df)[pcol] = gsub("p", "", colnames(p.df)[pcol])
-    }
+    pcol = stri_detect_regex("^p[[:digit:]]+$", colnames(p.df))
+    if (any(pcol))
+      colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
   }
-  
+
   if (.learner$predict.type == "response") {
     return(p.df$predict)
   } else {

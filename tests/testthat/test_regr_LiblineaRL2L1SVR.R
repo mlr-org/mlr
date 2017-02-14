@@ -4,6 +4,7 @@ test_that("regr_LiblineaRL2L1SVR", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(cost = 5, epsilon = 0.01),
     list(cost = 5, epsilon = 0.1),
     list(cost = 2, epsilon = 0.01),

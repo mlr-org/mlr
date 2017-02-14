@@ -6,11 +6,11 @@ makeRLearner.regr.RRF = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       # FIXME: Add default value when data dependent defaults are implemented:
-      # mtry = floor(sqrt(#independent vars)) 
-      makeIntegerLearnerParam(id = "mtry", lower = 1L), 
-      makeIntegerLearnerParam(id = "nodesize", lower = 1L), 
+      # mtry = floor(sqrt(#independent vars))
+      makeIntegerLearnerParam(id = "mtry", lower = 1L),
+      makeIntegerLearnerParam(id = "nodesize", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0), 
+      makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0),
       makeNumericLearnerParam(id = "coefReg", default = 0.8,
                               requires = quote(flagReg == 1L)),
       makeIntegerVectorLearnerParam(id = "feaIni", lower = 0, upper = Inf,
@@ -36,8 +36,7 @@ makeRLearner.regr.RRF = function() {
 
 #' @export
 trainLearner.regr.RRF <- function(.learner, .task, .subset, .weights, ...) {
-  args = list(...)
-  RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset), 
+  RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
            keep.forest= TRUE, ...)
 }
 

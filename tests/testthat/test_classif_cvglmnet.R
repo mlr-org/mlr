@@ -4,6 +4,7 @@ test_that("classif_cvglmnet", {
   requirePackagesOrSkip("glmnet", default.method = "load")
 
   parset.list = list(
+    list(),
     list(nlambda = 20, nfolds = 5)
   )
 

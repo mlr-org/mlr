@@ -164,9 +164,9 @@ makeRLearner.classif.h2o.deeplearning = function() {
         default = "Rectifier"),
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
-        len = NA_integer_, lower = 1L), 
+        len = NA_integer_, lower = 1L),
       makeNumericLearnerParam("epochs", default = 10L, lower = 1), # doc says can be fractional
-      makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
+      makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2),
       makeIntegerLearnerParam("seed", tunable = FALSE),
       makeLogicalLearnerParam("adaptive_rate", default = TRUE),
       makeNumericLearnerParam("rho", default = 0.99, lower = 0), # is there a upper limit for this?
@@ -231,7 +231,7 @@ trainLearner.classif.h2o.deeplearning = function(.learner, .task, .subset, .weig
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }   
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
@@ -250,21 +250,19 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
-  
+
   # check if class names are integers. if yes, colnames of p.df need to be adapted
-  int = grepl("^[[:digit:]]+$", p.df$predict)
+  int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
   if (any(int)) {
-    pcol = grepl("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol)) {
-      colnames(p.df)[pcol] = gsub("p", "", colnames(p.df)[pcol])
-    }
+    pcol = stri_detect_regex("^p[[:digit:]]+$", colnames(p.df))
+    if (any(pcol))
+      colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
   }
-  
+
   if (.learner$predict.type == "response") {
-    return(p.df$predict) 
+    return(p.df$predict)
   } else {
     p.df$predict = NULL
     return(as.matrix(p.df))
   }
 }
-
