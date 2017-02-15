@@ -83,8 +83,7 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     z = getMinMaxClass(y)
     obw.cl = z$min.name
   }
-  args = list("y" = y, "obw.rate" = obw.rate, "obw.maxcl" = obw.maxcl, "obw.cl" = obw.cl,
-              "learner" = .learner, "task" = .task, "weights" = .weights)
+  args = list("y" = y, "obw.rate" = obw.rate, "obw.maxcl" = obw.maxcl, "obw.cl" = obw.cl, "learner" = .learner, "task" = .task, "weights" = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(doOverBaggingTrainIteration, i = seq_len(obw.iters), more.args = args)

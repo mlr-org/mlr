@@ -91,12 +91,12 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
   .task = subsetTask(.task, subset = .subset)
   n = getTaskSize(.task)
   # number of observations to sample
-  m = round(n * bw.size) 
+  m = round(n * bw.size)
   # number of features to sample
   k = max(round(bw.feats * getTaskNFeats(.task)), 1)
 
   args = list(n = n, m = m, k = k, bw.replace = bw.replace,
-              task = .task, learner = .learner, weights = .weights)
+    task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(doBaggingTrainIteration, i = seq_len(bw.iters), more.args = args, level = "mlr.ensemble")
