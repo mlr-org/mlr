@@ -1,0 +1,26 @@
+#' @title Supported parallelization methods
+#'
+#' @description
+#' mlr supports different methods to activate parallel computing capabilities with the integration of \code{\link[parallelMap]{parallelMap}} Package which itself supports all major parallelization backends for R.
+#' You can start parallelization with \code{\link[paralleMap]{parallelStart}*}, whereas the \code{*} stands for the chosen backend.
+#' \code{\link[paralleMap]{prallelStop}} is used to stop all parallelization backends.
+#'
+#' Parallelization is divided into different levels and will automatically carried out for the first level that occurs, e.g. if you call \code{resample()} after \code{\link[paralleMap]{parallelStart}} each resampling iteration is a parallel job and possible underlaying calls like parameter tuning won't be parallelized further.
+#'
+#' The supported levels of parallelization are:
+#' \describe{
+#'   \item{\code{"mlr.resample"}}{Each resampling iteration (a train / test step) is a parallel job.}
+#'  \item{\code{"mlr.benchmark"}}{Each experiment "run this learner on this data set" is a parallel job.}
+#'  \item{\code{"mlr.tuneParams"}}{Each evaluation in hyperparameter space "resample with these parameter settings" is a parallel job.
+#'   How many of these can be run independently in parallel, depends on the tuning algorithm.
+#'   For grid search or random search this is no problem, but for other tuners it depends on how many points are produced in each iteration of the optimization.
+#'   If a tuner works in a purely sequential fashion, we cannot work magic and the hyperparameter evaluation will also run sequentially. But note that you can still parallelize the underlying resampling.}
+#'   \item{\code{"mlr.selectFeatures"}}{Each evaluation in feature space "resample with this feature subset" is a parallel job. The same comments as for \code{"mlr.tuneParams"} apply here.}
+#'   \item{\code{"mlr.ensemble"}}{For all ensemble methods the training and prediction of each individual learner is a parallel job.
+#'   Supported ensemble methods are the \code{\link{BaggingWrapper}}}, \code{\link{CostSensRegrWrapper}}}, \code{\link{MulticlassWrapper}}}, \code{\link{MultilabelBinaryRelevanceWrapper}}} and the \code{\link{OverBaggingWrapper}}}
+#' }
+#'
+#'
+#' @name parallelization
+#' @rdname parallelization
+NULL
