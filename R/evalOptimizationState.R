@@ -99,12 +99,12 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   for (i in seq_len(n)) {
     res = res.list[[i]]
     extra = getTuneThresholdExtra(control, res)
-    if (is.null(extra)) {
-      extra = list()
-    }
     # include error dumps only when at least one dump is present. (this only happens
     # when options tell us to save dumps).
     if (!is.null(unlist(res$err.dumps))) {
+      if (is.null(extra)) {
+        extra = list()
+      }
       extra$.dump = res$err.dumps
     }
     addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,

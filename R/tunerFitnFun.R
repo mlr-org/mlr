@@ -14,12 +14,12 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
     opt.path, show.info, dob, x, remove.nas)
   extra = getTuneThresholdExtra(ctrl, res)
-  if (is.null(extra)) {
-    extra = list()
-  }
   # include error dumps only when at least one dump is present. (this only happens
   # when options tell us to save dumps).
   if (!is.null(unlist(res$err.dumps))) {
+    if (is.null(extra)) {
+      extra = list()
+    }
     extra$.dump = res$err.dumps
   }
   addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,

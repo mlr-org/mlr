@@ -127,7 +127,9 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       error = as.character(p)
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_
-      dump = get("last.dump", envir = .GlobalEnv)
+      if (opts$on.error.dump) {
+        dump = get("last.dump", envir = .GlobalEnv)
+      }
     }
   }
   if (missing(task))
