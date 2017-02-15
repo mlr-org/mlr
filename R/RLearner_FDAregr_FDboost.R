@@ -36,15 +36,11 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   mfuelSubset$NIR = subset(df, select = fdboost.task$channel.list[[2]])
   mfuelSubset$uvvis.lambda = mextra_para$index.list[[1]]
   mfuelSubset$nir.lambda = mextra_para$index.list[[2]]
-  #ff1 = bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
-  #ff2 = bsignal(NIR, nir.lambda, knots = 40, df = 4, check.indent = FALSE)
-  #formula = as.formula(paste0(eval(tn),"~", eval(f1), eval(f2)))
-  #mod2f <- FDboost(formula = formula, timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
-  mod2f <- FDboost(heatan ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
-                   + bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE),
-                   timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))  
-  #FIXME: This one does not work: 
-  #mod2f <- FDboost(paste0(eval(tn), "~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)+bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE)"), timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
+  ff1 = "bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)"
+  ff2 = "bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE)"
+  form = as.formula(sprintf("%s ~ %s", tn, collapse(c(ff1, ff2), "+")))
+  print(form)
+  mod2f <- FDboost(formula = form, timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
   return(mod2f)
 }
 
