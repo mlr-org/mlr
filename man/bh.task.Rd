@@ -11,4 +11,3 @@ Contains the task (\code{bh.task}).
 See \code{\link[mlbench]{BostonHousing}}.
 }
 \keyword{data}
-

@@ -4,7 +4,7 @@ test_that("listLearners", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
   expect_data_frame(x1, min.rows = 1L, min.cols = 10)
   expect_set_equal(x1$type, c("classif", "regr", "cluster", "surv", "multilabel"))
-  expect_subset(getSupportedLearnerProperties(), names(x1))
+  expect_subset(listLearnerProperties(), names(x1))
 
   x1a = listLearners("classif", create = FALSE, properties = c("missings"), warn.missing.packages = FALSE)
   expect_data_frame(x1a, min.rows = 10)
@@ -23,4 +23,9 @@ test_that("listLearners", {
   x = listLearners(properties = "factors", create = FALSE)
   expect_data_frame(x, min.rows = 20, min.cols = 3)
   expect_true(length(unique(x$type)) > 3L)
+})
+
+test_that("listLearners printer (#1336)", {
+  x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
+  capture.output(print(x1), file = NULL)
 })

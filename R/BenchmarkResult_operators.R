@@ -51,7 +51,7 @@ getBMRLearnerIds = function(bmr) {
 #' @family benchmark
 getBMRLearnerShortNames = function(bmr) {
   assertClass(bmr, "BenchmarkResult")
-  extractSubList(bmr$learners, "short.name", use.names = FALSE)
+  vcapply(bmr$learners, getLearnerShortName, use.names = FALSE)
 }
 
 #' @title Return measures used in benchmark.
@@ -297,4 +297,17 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL) {
     x$models
   }
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = FALSE)
+}
+
+#' @title Extract all task descriptions from benchmark result.
+#'
+#' @description
+#' A list containing all \code{\link{TaskDesc}}s for each task contained in the benchmark experiment.
+#' @template arg_bmr
+#' @return [\code{list}].
+#' @export
+#' @family benchmark
+getBMRTaskDescriptions = function(bmr) {
+ lapply(bmr$results, function(x) lapply(x, getRRTaskDescription))
+ #lapply(unlist(bmr$results, recursive = FALSE), getRRTaskDescription)
 }

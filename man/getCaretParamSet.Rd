@@ -9,7 +9,7 @@ getCaretParamSet(learner, length = 3L, task, discretize = TRUE)
 \arguments{
 \item{learner}{[\code{character(1)}]\cr
 The name of the learner from \code{caret}
-(cf. \url{http://topepo.github.io/caret/modelList.html}). Note that the
+(cf. \url{https://topepo.github.io/caret/available-models.html}). Note that the
 names in \code{caret} often differ from the ones in \code{mlr}.}
 
 \item{length}{[\code{integer(1)}]\cr
@@ -43,16 +43,17 @@ either be specified by their lower and upper bounds or they will be
 discretized into specific values.
 }
 \examples{
-library(caret)
-classifTask = makeClassifTask(data = iris, target = "Species")
+if (requireNamespace("caret") && requireNamespace("mlbench")) {
+  library(caret)
+  classifTask = makeClassifTask(data = iris, target = "Species")
 
-# (1) classification (random forest) with discretized parameters
-getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
+  # (1) classification (random forest) with discretized parameters
+  getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
 
-# (2) regression (gradient boosting machine) without discretized parameters
-library(mlbench)
-data(BostonHousing)
-regrTask = makeRegrTask(data = BostonHousing, target = "medv")
-getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
+  # (2) regression (gradient boosting machine) without discretized parameters
+  library(mlbench)
+  data(BostonHousing)
+  regrTask = makeRegrTask(data = BostonHousing, target = "medv")
+  getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 }
-
+}

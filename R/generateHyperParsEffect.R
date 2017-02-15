@@ -45,7 +45,8 @@
 #' res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
 #' par.set = ps, control = ctrl)
 #' data = generateHyperParsEffectData(res)
-#' plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
+#' plt = plotHyperParsEffect(data, x = "C", y = "mmce.test.mean")
+#' plt + ylab("Misclassification Error")
 #'
 #' # nested cross validation
 #' ps = makeParamSet(makeDiscreteParam("C", values = 2^(-4:4)))
@@ -173,7 +174,6 @@ print.HyperParsEffectData = function(x, ...) {
 #'  using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
 #'  for each outer loop. Must be a column from \code{HyperParsEffectData$data}
 #'  Default is \code{NULL}.
-#' @template arg_prettynames
 #' @param global.only [\code{logical(1)}]\cr
 #'  If \code{TRUE}, will only plot the current global optima when setting
 #'  x = "iteration" and y as a performance measure from
@@ -225,15 +225,17 @@ print.HyperParsEffectData = function(x, ...) {
 #' is set to \code{TRUE} in \code{\link{generateHyperParsEffectData}}, only
 #' partial dependence will be plotted.
 #'
+#' Since a ggplot2 plot object is returned, the user can change the axis labels
+#' and other aspects of the plot using the appropriate ggplot2 syntax.
+#'
 #' @export
 #'
 #' @examples
 #' # see generateHyperParsEffectData
 plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   z = NULL, plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE, interpolate = NULL,
-  show.experiments = FALSE, show.interpolated = FALSE, nested.agg = mean,
-  partial.dep.learn = NULL) {
+  global.only = TRUE, interpolate = NULL, show.experiments = FALSE,
+  show.interpolated = FALSE, nested.agg = mean, partial.dep.learn = NULL) {
 
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
@@ -242,14 +244,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertChoice(plot.type, choices = c("scatter", "line", "heatmap", "contour"))
   assertFlag(loess.smooth)
   assertSubset(facet, choices = names(hyperpars.effect.data$data))
-  assertFlag(pretty.names)
   assertFlag(global.only)
   assert(checkClass(interpolate, "Learner"), checkString(interpolate),
          checkNull(interpolate))
   # assign learner for interpolation
   if (checkClass(interpolate, "Learner") == TRUE ||
       checkString(interpolate) == TRUE) {
-    lrn = checkLearnerRegr(interpolate)
+    lrn = checkLearner(interpolate, "regr")
   }
   assertFlag(show.experiments)
   assertFunction(nested.agg)
@@ -258,7 +259,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     checkNull(partial.dep.learn))
   if (checkClass(partial.dep.learn, "Learner") == TRUE ||
       checkString(partial.dep.learn) == TRUE) {
-    lrn = checkLearnerRegr(partial.dep.learn)
+    lrn = checkLearner(partial.dep.learn, "regr")
   }
   if (!is.null(partial.dep.learn) && !is.null(interpolate))
     stopf("partial.dep.learn and interpolate can't be simultaneously requested!")
@@ -274,7 +275,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   measures = hyperpars.effect.data$measures
 
   # set flags for building plots
-  na.flag = any(is.na(d[, hyperpars.effect.data$measures]))
+  na.flag = anyMissing(d[, hyperpars.effect.data$measures])
   z.flag = !is.null(z)
   facet.flag = !is.null(facet)
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
@@ -467,21 +468,6 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       if (plot.type == "line")
         plt = plt + geom_line()
     }
-  }
-
-  # pretty name changing
-  if (pretty.names) {
-    if (x %in% hyperpars.effect.data$measures)
-      plt = plt +
-        xlab(eval(as.name(stri_split_fixed(x, ".test.mean")[[1]][1]))$name)
-    if (y %in% hyperpars.effect.data$measures)
-      plt = plt +
-        ylab(eval(as.name(stri_split_fixed(y, ".test.mean")[[1]][1]))$name)
-    if (!is.null(z))
-      if (z %in% hyperpars.effect.data$measures)
-        plt = plt +
-          labs(fill = eval(as.name(stri_split_fixed(z,
-            ".test.mean")[[1]][1]))$name)
   }
   return(plt)
 }

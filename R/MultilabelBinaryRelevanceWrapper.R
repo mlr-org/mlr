@@ -58,11 +58,11 @@ doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights)
 
 
 #' @export
-predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset,...)))
   else
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset,...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }

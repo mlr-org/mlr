@@ -257,10 +257,11 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     subset = NULL
   } else {
     assert(checkIntegerish(subset), checkLogical(subset))
-    if (is.logical(subset))
+    if (is.logical(subset)) {
       subset = which(subset)
-    if (is.numeric(subset))
+    } else if (is.double(subset)) {
       subset = asInteger(subset)
+    }
   }
 
   assertLogical(target.extra)
@@ -270,10 +271,11 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
   # if supplied check if the input is right and always convert 'features'
   # to character vec
   if (!missing(features)) {
-    assert(checkIntegerish(features, lower = 1L, upper = length(task.features)),
-      checkLogical(features), checkCharacter(features))
-    if (is.numeric(features))
-      features = asInteger(features)
+    assert(
+      checkIntegerish(features, lower = 1L, upper = length(task.features)),
+      checkLogical(features), checkCharacter(features)
+    )
+
     if (!is.character(features))
       features = task.features[features]
   }

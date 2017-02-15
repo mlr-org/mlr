@@ -35,9 +35,10 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
-    ParamHelpers (>= 1.8),
+    ParamHelpers (>= 1.10)
 Imports:
     BBmisc (>= 1.10),
+    backports,
     ggplot2,
     stats,
     stringi,
@@ -74,6 +75,7 @@ Suggests:
     elasticnet,
     elmNN,
     emoa,
+    evtree,
     extraTrees,
     flare,
     fields,
@@ -103,6 +105,7 @@ Suggests:
     mco,
     mda,
     mlbench,
+    mldr,
     modeltools,
     mRMRe,
     nnet,
@@ -115,10 +118,9 @@ Suggests:
     pls,
     PMCMR (>= 4.1),
     pROC (>= 1.8),
-    quickcheck,
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.5.0),
+    ranger (>= 0.6.0),
     RCurl,
     Rfast,
     rFerns,
@@ -145,10 +147,10 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost (>= 0.4-4),
+    xgboost (>= 0.6-2),
     XML
 LazyData: yes
 ByteCompile: yes
-Version: 2.10
+Version: 2.11
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

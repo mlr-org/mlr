@@ -95,7 +95,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 listLearners  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
-  assertSubset(properties, getSupportedLearnerProperties())
+  assertSubset(properties, listLearnerProperties())
   assertFlag(quiet)
   assertFlag(warn.missing.packages)
   assertFlag(check.packages)
@@ -116,7 +116,7 @@ listLearners.default  = function(obj = NA_character_, properties = character(0L)
 #' @rdname listLearners
 listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
   if (!isScalarNA(obj))
-    assertSubset(obj, getSupportedTaskTypes())
+    assertSubset(obj, listTaskTypes())
   tab = getLearnerTable()
 
   if (warn.missing.packages && !all(tab$installed))
@@ -128,7 +128,7 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
     return(lapply(tab$id[tab$installed], makeLearner))
 
   tab$package = vcapply(tab$package, collapse)
-  properties = getSupportedLearnerProperties()
+  properties = listLearnerProperties()
   tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
   tab$properties = NULL
   setnames(tab, "id", "class")
@@ -160,5 +160,5 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 print.ListLearners = function(x, ...) {
-  printHead(as.data.frame(dropNamed(x, drop = "note")))
+  printHead(as.data.frame(dropNamed(x, drop = "note")), ...)
 }

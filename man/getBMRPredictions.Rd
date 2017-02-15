@@ -50,6 +50,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasureIds}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
@@ -57,4 +58,3 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}}
 }
-

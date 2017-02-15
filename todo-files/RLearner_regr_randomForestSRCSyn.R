@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.classif.randomForestSRCSyn = function() {
-  makeRLearnerClassif(
-    cl = "classif.randomForestSRCSyn",
+makeRLearner.regr.randomForestSRCSyn = function() {
+  makeRLearnerRegr(
+    cl = "regr.randomForestSRCSyn",
     package = "randomForestSRC",
     par.set = makeParamSet(
       ## arguments of rfsrcSyn
@@ -15,7 +15,7 @@ makeRLearner.classif.randomForestSRCSyn = function() {
       makeIntegerLearnerParam(id = "nsplit", lower = 0L, default = 0L,
         requires = quote(splitrule != "random")),
         # for the synthetic forest nsplit is ignored and internally set to 1L if splitrule = "random"
-        # splitrule cannot be set for the RF machines, so if nsplit != 0 gini splitting with nsplit randomly selected split points is done
+        # splitrule cannot be set for the RF machines, so if nsplit != 0 mse splitting with nsplit randomly selected split points is done
       makeNumericLearnerParam(id = "min.node", default = 3L, lower = 0L),
       makeLogicalLearnerParam(id = "use.org.features", default = TRUE),
       makeDiscreteLearnerParam(id = "na.action", default = "na.omit",
@@ -25,8 +25,8 @@ makeRLearner.classif.randomForestSRCSyn = function() {
       makeDiscreteLearnerParam(id = "bootstrap", default = "by.root",
         values = c("by.root", "by.node", "none")),
       makeIntegerLearnerParam(id = "nodedepth", default = -1L),
-      makeDiscreteLearnerParam(id = "splitrule", default = "gini",
-        values = c("gini", "gini.unwt", "gini.hvwt", "random")),
+      makeDiscreteLearnerParam(id = "splitrule", default = "mse",
+        values = c("mse", "mse.unwt", "mse.hvwt", "random")),
       makeLogicalLearnerParam(id = "split.null", default = FALSE),
       makeDiscreteLearnerParam(id = "importance", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
@@ -51,7 +51,7 @@ makeRLearner.classif.randomForestSRCSyn = function() {
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute", verbose = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "missings", "weights"),
+    properties = c("numerics", "factors", "ordered", "missings"),
     name = "Synthetic Random Forest",
     short.name = "rfsrcSyn",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support and `verbose` has been set to `FALSE`.'
@@ -59,17 +59,14 @@ makeRLearner.classif.randomForestSRCSyn = function() {
 }
 
 #' @export
-trainLearner.classif.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.regr.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), case.wt = .weights, ...)
+  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset), case.wt = .weights, ...)
 }
 
 #' @export
-predictLearner.classif.randomForestSRCSyn = function(.learner, .model, .newdata, ...) {
-  p = randomForestSRC::rfsrcSyn(object = .model$learner.model, newdata = .newdata, membership = FALSE, ...)$rfSynPred
-  if (.learner$predict.type == "prob") {
-    return(p$predicted)
-  } else {
-    return(p$class)
-  }
+predictLearner.regr.randomForestSRCSyn = function(.learner, .model, .newdata, ...) {
+  p = randomForestSRC::rfsrcSyn(object = .model$learner.model, newdata = .newdata, membership = FALSE, ...)$rfSynPred$predicted
+  # version > 2.0 of randomForestSRC returns an array here :(
+  as.numeric(p)
 }

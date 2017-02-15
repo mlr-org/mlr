@@ -52,8 +52,22 @@ propVectorToMatrix = function(p, levs) {
   y
 }
 
-getSupportedTaskTypes = function() {
+#' @title List the supported task types in mlr
+#'
+#' @description
+#' Returns a character vector with each of the supported task types in mlr.
+#'
+#' @return [\code{character}].
+#' @export
+listTaskTypes = function() {
   c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+}
+
+# Maybe move to BBmisc at some point
+measureTime = function(expr, ee = parent.frame()) {
+  before = proc.time()[[3L]]
+  force(expr)
+  proc.time()[[3L]] - before
 }
 
 # find duplicate measure names or ids and paste together those

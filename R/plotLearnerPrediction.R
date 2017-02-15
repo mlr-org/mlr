@@ -234,9 +234,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   # set title
   if (pretty.names) {
-    lrn.str = learner$short.name
+    lrn.str = getLearnerShortName(learner)
   } else {
-    lrn.str = learner$id
+    lrn.str = getLearnerId(learner)
   }
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))

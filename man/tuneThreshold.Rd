@@ -49,4 +49,3 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeModelMultiplexer}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}}
 }
-

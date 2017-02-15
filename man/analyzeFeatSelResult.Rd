@@ -30,4 +30,3 @@ Other featsel: \code{\link{FeatSelControl}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{selectFeatures}}
 }
-

@@ -17,7 +17,8 @@
 #' @family eda_and_preprocess
 createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
   assertChoice(method, choices = c("1-of-n", "reference"))
-  checkTargetPreproc(obj, target, cols)
+  if (!is.factor(obj) && !is.character(obj))
+    checkTargetPreproc(obj, target, cols)
   UseMethod("createDummyFeatures")
 }
 
@@ -38,28 +39,24 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   on.exit(options(na.action = old.na.action))
   options(na.action = "na.pass")
 
-  dummies = lapply(work.cols, function(colname) {
-    if (method == "1-of-n") {
-      form = stri_paste("~", colname, "-1")
-      res = model.matrix(as.formula(form), data = obj)
-      colnames(res) = levels(obj[[colname]])
-    } else {
-      form = stri_paste("~", colname, "-1")
-      res = model.matrix(as.formula(form), data = obj)[, -1, drop = FALSE]
-      colnames(res) = tail(levels(obj[[colname]]), -1)
-    }
-    if (ncol(res) == 1) {
-      colnames(res) = stri_paste(colname, colnames(res), sep = ".")
-    }
-    res
-  })
-  #some effort to preserve order
-  names(dummies) = work.cols
-  col.list = convertColsToList(obj, factors.as.char = FALSE)
-  for (col in work.cols) {
-    col.list[[col]] = dummies[[col]]
+  prefix = colnames(obj[work.cols])
+  dfcol = obj[,work.cols]
+
+  dummies = as.data.frame(lapply(obj[work.cols], createDummyFeatures, method = method))
+
+  if (method == "reference" && length(work.cols) == length(dummies)) {
+    colnames(dummies) = Map(function(col, pre) {
+      stri_paste(pre, tail(levels(col), -1), sep = ".")}, obj[work.cols], prefix)
   }
-  do.call(cbind.data.frame, c(col.list, stringsAsFactors = FALSE))
+
+  if (length(dummies) != 0) {
+    if (ncol(dummies) == 1L) {
+      colnames(dummies) = stri_paste(prefix, tail(levels(dfcol), -1), sep = ".")
+    }
+    cbind(dropNamed(obj, work.cols), dummies)
+  } else {
+    obj
+  }
 }
 
 #' @export
@@ -67,4 +64,26 @@ createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-
   target = getTaskTargetNames(obj)
   d = createDummyFeatures(obj = getTaskData(obj), target = target, method = method, cols = cols)
   changeData(obj, d)
+}
+
+
+#' @export
+createDummyFeatures.factor = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+  dcol = as.data.frame(obj)
+  colname = colnames(dcol)
+  if (method == "1-of-n") {
+    form = stri_paste("~", colname, "-1")
+    res = model.matrix(as.formula(form), data = dcol)
+    colnames(res) = levels(as.factor(obj))
+  } else {
+    form = stri_paste("~", colname, "-1")
+    res = model.matrix(as.formula(form), data = dcol)[, -1, drop = FALSE]
+    colnames(res) = tail(levels(as.factor(obj)), -1)
+  }
+  as.data.frame(res)
+}
+
+#' @export
+createDummyFeatures.character = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+  createDummyFeatures(as.factor(obj), method = method)
 }

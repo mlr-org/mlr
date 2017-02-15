@@ -44,6 +44,7 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},
   \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
   \code{\link{getLearnerType}}, \code{\link{getParamSet}},
   \code{\link{makeLearners}}, \code{\link{makeLearner}},
   \code{\link{removeHyperPars}}, \code{\link{setId}},
@@ -51,4 +52,3 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-

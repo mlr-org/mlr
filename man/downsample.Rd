@@ -31,4 +31,3 @@ to a given percentage of observations.
 
 Other downsample: \code{\link{makeDownsampleWrapper}}
 }
-

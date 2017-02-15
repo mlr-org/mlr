@@ -14,6 +14,7 @@
 #'   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
 #'   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
 #'   \item{se}{Only for regr: Can standard errors be predicted?}
+#'   \item{oobpreds}{Only for classif, regr and surv: Can out of bag predictions be extracted from the trained model?}
 #'   \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 #' }
 #'
@@ -48,7 +49,7 @@ getLearnerProperties.character = function(learner) {
 #' @export
 hasLearnerProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertSubset(props, getSupportedLearnerProperties())
+  assertSubset(props, listLearnerProperties())
   props %in% getLearnerProperties(learner)
 }
 
@@ -61,18 +62,19 @@ hasProperties = function(learner, props) {
   hasLearnerProperties(learner, props)
 }
 
-getSupportedLearnerProperties = function(type = NA_character_) {
-  p = list(
-    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp"),
-    multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
-    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp"),
-    cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp"),
-    costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
-  )
-  if (is.na(type))
-    unique(unlist(p))
-  else
-    p[[type]]
+#' @title List the supported learner properties
+#'
+#' @description
+#'   This is useful for determining which learner properties are available.
+#'
+#' @param type [\code{character(1)}]\cr
+#'   Only return properties for a specified task type. Default is \dQuote{any}.
+#'
+#' @return [\code{character}].
+#'
+#' @export
+listLearnerProperties = function(type = "any") {
+  allProps = c(listTaskTypes(), "any")
+  assertSubset(type, allProps)
+  mlr$learner.properties[[type]]
 }
-
