@@ -111,7 +111,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     fun1 = if (opts$show.learner.output) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
     fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
-        withCallingHandlers(x, error = function(c) dump.frames())
+        withCallingHandlers(x, error = function(c) utils::dump.frames())
       }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")

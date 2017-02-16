@@ -41,7 +41,7 @@
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
 #'   Default is \code{TRUE}.
-#' @param on.learner.dump [\code{logical(1)}]\cr
+#' @param on.error.dump [\code{logical(1)}]\cr
 #'   Specify whether \code{\link{FailureModel}} models and failed predictions should contain an error dump
 #'   that can be used with \code{debugger} to inspect an error. This option is only effective if \code{on.learner.error}
 #'   is \dQuote{warn} or \dQuote{quiet}. If it is \code{TRUE}, the dump can be accessed using 
