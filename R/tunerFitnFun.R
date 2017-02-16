@@ -16,7 +16,7 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   extra = getTuneThresholdExtra(ctrl, res)
   # include error dumps only when at least one dump is present. (this only happens
   # when options tell us to save dumps).
-  if (!is.null(unlist(res$err.dumps))) {
+  if (getMlrOption("on.error.dump")) {
     if (is.null(extra)) {
       extra = list()
     }

@@ -95,13 +95,14 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
     more.args = list(learner = learner, task = task, resampling = resampling,
       measures = measures, par.set = par.set, bits.to.features = bits.to.features,
       control = control, opt.path = opt.path, show.info = show.info, remove.nas = remove.nas))
+
+  on.error.dump = getMlrOption("on.error.dump")
   # add stuff to opt.path
   for (i in seq_len(n)) {
     res = res.list[[i]]
     extra = getTuneThresholdExtra(control, res)
-    # include error dumps only when at least one dump is present. (this only happens
-    # when options tell us to save dumps).
-    if (!is.null(unlist(res$err.dumps))) {
+    # include error dumps if options tell us to. 
+    if (on.error.dump) {
       if (is.null(extra)) {
         extra = list()
       }
