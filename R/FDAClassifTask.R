@@ -3,18 +3,12 @@
 #' @description Create a functional data classification task. The data is assumed
 #'   to have functional data structure and the target variable must be specified
 #'   by the user.
-#'
-#' @param id
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Data with functional structure.
 #' @param target [\code{character}]\cr
 #'   Target variable name.
-#' @param weights
-#' @param blocking
-#' @param positive
-#' @param fixup.data
-#' @param check.data
-#' @param channel.list
+
+#' @param channel.list A list indicating different channels of the input
 #'
 #' @return Functional data classification task. Object of type
 #'   \code{FunctionDataClassifTask}.
