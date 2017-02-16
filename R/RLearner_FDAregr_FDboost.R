@@ -9,8 +9,8 @@ makeRLearner.fdaregr.FDboost = function() {
     package = "FDboost",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "mstop", default = 200L),
-      makeIntegerLearnerParam(id = "df", default = 3L, lower = 1L),
-      makeIntegerLearnerParam(id = "knots", default = 40L, lower = 1L),
+      makeIntegerLearnerParam(id = "degree4freedom", default = 3L, lower = 1L),
+      makeIntegerLearnerParam(id = "num_knots", default = 40L, lower = 1L),
       makeUntypedLearnerParam(id = "timeformular", default = NULL),
       makeUntypedLearnerParam(id = "index.list", default = NULL),
       makeLogicalLearnerParam(id = "normalize", default = FALSE),  # whether to normalize column to fit the need of mboost
@@ -29,18 +29,24 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   tn = getTaskTargetNames(.task)
   df = d$data
   z = d$target
-  mextra_para = list(...)
-  mfuelSubset = list()
-  mfuelSubset[[eval(tn)]] = d$target
-  mfuelSubset$UVVIS = subset(df, select = fdboost.task$channel.list[[1]])
-  mfuelSubset$NIR = subset(df, select = fdboost.task$channel.list[[2]])
-  mfuelSubset$uvvis.lambda = mextra_para$index.list[[1]]
-  mfuelSubset$nir.lambda = mextra_para$index.list[[2]]
-  ff1 = "bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)"
-  ff2 = "bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE)"
-  form = as.formula(sprintf("%s ~ %s", tn, collapse(c(ff1, ff2), "+")))
-  print(form)
-  mod2f <- FDboost(formula = form, timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
+  mextra_para  = list(...)
+  name4channel = names(index.list)
+  num4channel = length(index.list)
+  list4mat = list()
+  list4formula = list()
+  list4mat[[eval(tn)]] = d$target
+  for(i in 1:num4channel){
+    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = fdboost.task$channel.list[[i]]))
+    list4mat[[paste0(name4channel[[i]],".index") ]]=  mextra_para$index.list[[i]]
+    list4formula[[i]] = sprintf("bsignal(%s,%s,knots = %d, df = %d, check.ident = FALSE)", name4channel[[i]], paste0(name4channel[[i]],".index"), mextra_para$num_knots, mextra_para$degree4freedom)
+  }
+  makeformula = function(x1,x2){
+    paste(x1,x2, sep = "+")
+  }
+  rformula = Reduce(f = makeformula, x = list4formula)
+  mformula = as.formula(paste0(tn,"~", rformula))
+  #form = as.formula(sprintf("%s ~ %s", tn, collapse(c(ff1, ff2), "+")))
+  mod2f <- FDboost(formula = mformula, timeformula = ~bols(1), data = list4mat, control = boost_control(mstop = 200))
   return(mod2f)
 }
 
