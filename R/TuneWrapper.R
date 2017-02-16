@@ -48,7 +48,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   assertClass(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
   assertFlag(show.info)
-  id = paste(learner$id, "tuned", sep = ".")
+  id = stri_paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function(){}, control, show.info, "TuneWrapper", "TuneModel")
   checkTunerParset(learner, par.set, measures, control)

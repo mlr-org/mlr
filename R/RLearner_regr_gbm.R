@@ -5,6 +5,7 @@ makeRLearner.regr.gbm = function() {
     package = "gbm",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "distribution", default = "gaussian", values = c("gaussian", "laplace", "poisson", "tdist")),
+      # FIXME default for distribution in gbm() is bernoulli
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
@@ -16,7 +17,7 @@ makeRLearner.regr.gbm = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(distribution = "gaussian", keep.data = FALSE),
-    properties = c("missings", "numerics", "factors", "weights"),
+    properties = c("missings", "numerics", "factors", "weights", "featimp"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = '`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.'
@@ -40,3 +41,8 @@ predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   gbm::predict.gbm(m, newdata = .newdata, n.trees = length(m$trees), ...)
 }
+
+#' @export
+getFeatureImportanceLearner.regr.gbm = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.gbm(.learner, .model, ...)
+  }

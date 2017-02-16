@@ -5,7 +5,7 @@
 \title{Plot filter values using ggplot2.}
 \usage{
 plotFilterValues(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = FALSE)
+  feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{fvalues}{[\code{\link{FilterValues}}]\cr
@@ -24,6 +24,10 @@ Default is 20.}
 Colors for factor and numeric features.
 \code{FALSE} means no colors.
 Default is \code{FALSE}.}
+
+\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -43,18 +47,13 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}}
 
-Other plot: \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
-  \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerfGGVIS}},
-  \code{\link{plotThreshVsPerf}}
+Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
+  \code{\link{generateLearningCurveData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{getFilterValues}}
 }
-

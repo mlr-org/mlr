@@ -10,6 +10,7 @@ test_that("classif_rknn", {
   parset.list = apply(parset.grid, MARGIN = 1L, as.list)
   #rknn needs integer seed for reproducibility
   parset.list = lapply(parset.list, function(x) c(x, seed = 2015L))
+  parset.list = c(parset.list, list(list(seed = 2015L)))
 
   old.predicts.list = list()
 

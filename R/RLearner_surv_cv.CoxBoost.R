@@ -55,8 +55,5 @@ trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NU
 predictLearner.surv.cv.CoxBoost = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if (.learner$predict.type == "response")
-    as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))
-  else
-    stop("Unknown predict type")
+  as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))
 }

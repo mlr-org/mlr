@@ -20,6 +20,7 @@ makeRLearner.classif.neuralnet = function() {
                                values=c("backprop","rprop+","rprop-","sag","slr")),
       makeDiscreteLearnerParam(id = "err.fct", default = "ce",
                                values=c("sse","ce")),
+      # FIXME default in neuralnet() or err.fct is "sse"
       makeDiscreteLearnerParam(id = "act.fct", default = "logistic",
                                values=c("logistic","tanh")),
       makeNumericVectorLearnerParam(id = "exclude"),
@@ -54,10 +55,12 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
   if (!all(taskdat[[formula_head]]== 0 | taskdat[[formula_head]] == 1)){
     taskdat[[formula_head]] = taskdat[[formula_head]]-1
   }
-  if (sum(grepl('\\.',cf))>0){
+  if (sum(stri_detect_regex(cf, '\\.')) > 0){
     varnames = nms[nms!=formula_head]
-    formula_head = paste('as.numeric(',formula_head,')~')
-    formula_expand = paste(formula_head, paste(varnames, collapse = "+"))
+    formula_head = stri_paste('as.numeric(',formula_head,')~', sep = " ")
+    formula_expand = stri_paste(formula_head, 
+                                stri_paste(varnames, collapse = "+", sep = " "), 
+                                sep = " ")
     formula_expand = as.formula(formula_expand)
     f = formula_expand
   }

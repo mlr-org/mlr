@@ -1,7 +1,6 @@
 mlr.Rcheck
 mlr_*.tar.gz
 .Rproj.user
-*.Rproj
 .Rhistory
 src/*.so
 src/*.o
@@ -10,3 +9,9 @@ src/*.dll
 tests/testthat/Rplots.pdf
 testinfo.RData
 inst/doc/
+.directory
+.gdb_history
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db

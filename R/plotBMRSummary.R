@@ -37,30 +37,28 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
   assertNumber(jitter, lower = 0)
 
   df = getBMRAggrPerformances(bmr, as.df = TRUE)
-
-
   xlab.string = meas.name
 
   # trafo to ranks manually here
   if (trafo == "rank") {
-    df = plyr::ddply(df, "task.id", function(d) {
-      d[, meas.name] = rank(d[, meas.name], ties.method = "average")
-      return(d)
-    })
-    xlab.string = paste("rank of", xlab.string)
+    setDT(df)
+    df[, get("meas.name") := rank(.SD[[meas.name]], ties.method = "average"), by = "task.id"]
+    setDF(df)
+    xlab.string = stri_paste("rank of", xlab.string, sep = " ")
   }
 
   df = orderBMRTasks(bmr, df, order.tsks)
+
+  if (pretty.names) {
+    levels(df$learner.id) = getBMRLearnerShortNames(bmr)
+  }
 
   p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id"))
   p = p + geom_point(size = pointsize, position = position_jitter(width = 0, height = jitter))
   # we dont need y label, the task names speak for themselves
   p = p + ylab("")
   p = p + xlab(xlab.string)
-  if (pretty.names) {
-    lrns.short = getBMRLearnerShortNames(bmr)
-    p = p + scale_colour_discrete(labels = lrns.short)
-  }
+
   return(p)
 }
 

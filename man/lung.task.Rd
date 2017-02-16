@@ -12,4 +12,3 @@ See \code{\link[survival]{lung}}.
  Incomplete cases have been removed from the task.
 }
 \keyword{data}
-

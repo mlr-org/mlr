@@ -5,6 +5,7 @@ makeRLearner.cluster.dbscan = function() {
     package = "fpc",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "eps", default = 1, lower = 0),
+      # FIXME eps seems to have no default in dbscan(), if it has 1 par.vals is redundant
       makeIntegerLearnerParam(id = "MinPts", default = 5L, lower = 0L),
       makeLogicalLearnerParam(id = "scale", default = FALSE),
       makeLogicalLearnerParam(id = "showplot", default = FALSE, tunable = FALSE),

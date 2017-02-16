@@ -9,9 +9,9 @@ test_that("getParamSet", {
   ps = getParamSet(lrn)
   expect_true(all(c("method", "fw.method") %in% names(ps$pars)))
 
-  lrn = makeModelMultiplexer(list(setId(lrn, "x")))
+  lrn = makeModelMultiplexer(list(setLearnerId(lrn, "x")))
   ps = getParamSet(lrn)
   expect_true(all(c("x.method", "x.fw.method", "selected.learner") %in% names(ps$pars)))
 
-  expect_output(getParamSet("classif.ksvm"), "Type")
+  expect_true("type" %in% names(getParamSet("classif.ksvm")$pars))
 })

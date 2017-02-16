@@ -123,9 +123,24 @@ test_that("predict.threshold", {
 
   # now with wrapper
   lrn1 = makeLearner("classif.lda")
-  lrn2 = makeFilterWrapper(lrn1, fw.method = "chi.squared", fw.perc = 0.1)
+  lrn2 = makeFilterWrapper(lrn1, fw.method = "anova.test", fw.perc = 0.1)
   lrn2 = setPredictType(lrn2, "prob")
   lrn2 = setPredictThreshold(lrn2, 0)
   r = holdout(lrn2, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))
 })
+
+test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
+  lrn = makeLearner("classif.qda", predict.type = "prob",
+    config = list(on.learner.error = "quiet"))
+  mod = train(lrn, iris.task, subset = c(1L, 51L, 101L))
+  expect_true(inherits(mod, "FailureModel"))
+  expect_warning(predict(mod, multiclass.task), NA)
+})
+
+test_that("predict works with data.table as newdata", {
+  lrn = makeLearner("classif.qda")
+  mod = train(lrn, iris.task)
+  expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
+})
+

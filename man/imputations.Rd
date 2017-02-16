@@ -3,15 +3,15 @@
 \name{imputations}
 \alias{imputations}
 \alias{imputeConstant}
+\alias{imputeMedian}
+\alias{imputeMean}
+\alias{imputeMode}
+\alias{imputeMin}
+\alias{imputeMax}
+\alias{imputeUniform}
+\alias{imputeNormal}
 \alias{imputeHist}
 \alias{imputeLearner}
-\alias{imputeMax}
-\alias{imputeMean}
-\alias{imputeMedian}
-\alias{imputeMin}
-\alias{imputeMode}
-\alias{imputeNormal}
-\alias{imputeUniform}
 \title{Built-in imputation methods.}
 \usage{
 imputeConstant(const)
@@ -63,8 +63,9 @@ defaults to auto-detection via \dQuote{Sturges}.}
 If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 or instead draw uniformly distributed samples within bin range.}
 
-\item{learner}{[\code{Learner}]\cr
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 Supervised learner. Its predictions will be used for imputations.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.
 Note that the target column is not available for this operation.}
 
 \item{features}{[\code{character}]\cr
@@ -87,7 +88,7 @@ The built-ins are:
     from the data if not provided.
   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
     with probabilities calculated using \code{table} or \code{hist}.
-  \item \code{imputeLearner(learner, preimpute)} for imputations using the response
+  \item \code{imputeLearner(learner, features = NULL)} for imputations using the response
     of a classification or regression learner.
 }
 }
@@ -96,4 +97,3 @@ Other impute: \code{\link{impute}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }
-

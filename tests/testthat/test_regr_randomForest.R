@@ -6,7 +6,9 @@ test_that("regr_randomForest", {
   parset.list = list(
     list(),
     list(ntree = 5, mtry = 2),
-    list(ntree = 5, mtry = 4)
+    list(ntree = 5, mtry = 4),
+    list(proximity = TRUE, oob.prox = TRUE),
+    list(nPerm = 3)
   )
 
   old.predicts.list = list()

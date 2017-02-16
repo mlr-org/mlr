@@ -4,8 +4,9 @@
 \alias{makeFilterWrapper}
 \title{Fuse learner with a feature filter method.}
 \usage{
-makeFilterWrapper(learner, fw.method = "rf.importance", fw.perc = NULL,
-  fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...)
+makeFilterWrapper(learner, fw.method = "randomForestSRC.rfsrc",
+  fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL,
+  fw.mandatory.feat = NULL, ...)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -14,7 +15,7 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{fw.method}{[\code{character(1)}]\cr
 Filter method. See \code{\link{listFilterMethods}}.
-Default is \dQuote{rf.importance}.}
+Default is \dQuote{randomForestSRC.rfsrc}.}
 
 \item{fw.perc}{[\code{numeric(1)}]\cr
 If set, select \code{fw.perc}*100 top scoring features.
@@ -71,6 +72,7 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{plotFilterValues}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
@@ -78,12 +80,16 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-

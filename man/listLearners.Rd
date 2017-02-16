@@ -2,25 +2,26 @@
 % Please edit documentation in R/listLearners.R
 \name{listLearners}
 \alias{listLearners}
-\alias{listLearners.Task}
-\alias{listLearners.character}
 \alias{listLearners.default}
+\alias{listLearners.character}
+\alias{listLearners.Task}
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
   create = FALSE)
 
-\method{listLearners}{default}(obj, properties = character(0L),
+\method{listLearners}{default}(obj = NA_character_,
+  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
+  check.packages = TRUE, create = FALSE)
+
+\method{listLearners}{character}(obj = NA_character_,
+  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
+  check.packages = TRUE, create = FALSE)
+
+\method{listLearners}{Task}(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
   create = FALSE)
-
-\method{listLearners}{character}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
-  create = FALSE)
-
-\method{listLearners}{Task}(obj, properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE)
 }
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{Task}}]\cr
@@ -69,7 +70,7 @@ This will be a lot faster.
 Note that for general cost-sensitive learning, mlr currently supports mainly
 \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 which are not listed, as they are not basic R learning algorithms.
-The same applies for multilabel classification, see \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
+The same applies for many multilabel methods, see, e.g., \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
 }
 \examples{
 \dontrun{
@@ -79,4 +80,3 @@ task = makeClassifTask(data = data, target = "Species")
 listLearners(task)
 }
 }
-

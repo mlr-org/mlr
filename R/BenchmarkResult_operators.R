@@ -51,7 +51,7 @@ getBMRLearnerIds = function(bmr) {
 #' @family benchmark
 getBMRLearnerShortNames = function(bmr) {
   assertClass(bmr, "BenchmarkResult")
-  extractSubList(bmr$learners, "short.name", use.names = FALSE)
+  vcapply(bmr$learners, getLearnerShortName, use.names = FALSE)
 }
 
 #' @title Return measures used in benchmark.
@@ -106,13 +106,13 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
       return(p)
     })
     if (as.df)
-      xs = do.call(plyr::rbind.fill, xs)
+      xs = setDF(rbindlist(xs, fill = TRUE))
     else
       xs = setNames(xs, learner.ids)
     return(xs)
   })
   if (as.df)
-    res = do.call(plyr::rbind.fill, res)
+    res = setDF(rbindlist(res, fill = TRUE))
   else
     res = setNames(res, task.ids)
   return(res)
@@ -201,8 +201,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
     function(x) {
       if (inherits(x$learner, wrapper.class)) {
         xs = lapply(x$extract, fun)
-        xs = lapply(1:length(xs), function(i) cbind(iter = i, xs[[i]]))
-        do.call(plyr::rbind.fill, xs)
+        xs = setDF(rbindlist(lapply(seq_along(xs), function(i) cbind(iter = i, xs[[i]])), fill = TRUE))
       } else {
         NULL
       }
@@ -298,4 +297,17 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL) {
     x$models
   }
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = FALSE)
+}
+
+#' @title Extract all task descriptions from benchmark result.
+#'
+#' @description
+#' A list containing all \code{\link{TaskDesc}}s for each task contained in the benchmark experiment.
+#' @template arg_bmr
+#' @return [\code{list}].
+#' @export
+#' @family benchmark
+getBMRTaskDescriptions = function(bmr) {
+ lapply(bmr$results, function(x) lapply(x, getRRTaskDescription))
+ #lapply(unlist(bmr$results, recursive = FALSE), getRRTaskDescription)
 }

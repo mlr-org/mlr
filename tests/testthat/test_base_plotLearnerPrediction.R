@@ -17,6 +17,18 @@ test_that("plotLearnerPrediction", {
   ggsave(tempfile(fileext = ".png"))
 
   # pretty.names works
-  plotLearnerPrediction("classif.rpart", multiclass.task, pretty.names = FALSE)
-  ggsave(tempfile(fileext = ".png"))
+  lrn = makeLearner("classif.rpart")
+  plotLearnerPrediction(lrn, multiclass.task)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getLearnerShortName(lrn))
+
+  plotLearnerPrediction(lrn, multiclass.task, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getLearnerId(lrn))
 })

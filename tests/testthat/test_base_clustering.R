@@ -29,11 +29,11 @@ test_that("clustering performance with missing clusters",  {
   pred = predict(model, task = noclass.task)
   pred$data$response = sample(c(1, 3, 4), length(pred$data$response), replace = TRUE)
 
-  expect_that(performance(pred, task = noclass.task, measures = db), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = dunn), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = G1), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = G2), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = silhouette), not(gives_warning()))
+  expect_warning(performance(pred, task = noclass.task, measures = db), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = dunn), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = G1), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = G2), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = silhouette), NA)
 })
 
 test_that("clustering resample",  {
