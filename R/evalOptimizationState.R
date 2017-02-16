@@ -13,6 +13,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   learner2 = learner
   threshold = NULL
   log.fun = control$log.fun
+  err.dumps = list()
 
   if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
     # set names before trafo
@@ -61,6 +62,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     notna = !is.na(errmsgs)
     if (any(notna))
       errmsg = errmsgs[notna][1L]
+    err.dumps = r$err.dumps
   } else {
     # we still need to define a non-NULL threshold, if tuning it was requested
     if (control$tune.threshold)
@@ -72,7 +74,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y,
       remove.nas, stage = 2L, prev.stage = prev.stage)
   list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold,
-      err.dumps = r$err.dumps)
+      err.dumps = err.dumps)
 }
 
 # evaluates a list of states by calling evalOptimizationState
