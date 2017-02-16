@@ -33,4 +33,6 @@ test_that("FDA_regr_FDboost", {
     timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
     lrn = makeLearner("fdaregr.FDboost", index.list = index.list, num_knots =40L, degree4freedom =4L )
     mod1f = train(learner = lrn, task = fdboost.task)
+    predict(object = mod2f, newdata = fuelSubset) # this one works
+    #predict(object = mod1f,newdata = mdata)
 })

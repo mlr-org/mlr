@@ -52,7 +52,8 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
-  pred = predict(object = .model$learner.model, newdata = .newdata)
+  mextra_para  = list(...)
+  pred = predict(object = .model$learner.model, newdata = list4mat)
   return(pred)
 }
 
