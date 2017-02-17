@@ -38,7 +38,8 @@ trainLearner.fdaclassif.np = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.fdaclassif.np = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd, ...)
+  m$C[[1]] = quote(classif.np)
+  class.pred = predict(m, nd.fdclass, ...)
 
   return(class.pred)
 }

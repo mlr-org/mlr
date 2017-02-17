@@ -40,7 +40,7 @@ predictLearner.fdaclassif.glm = function(.learner, .model, .newdata, ...) {
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
   nd.fdclass = list(x = nd.fdclass)
 
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobj = nd.fdclass)
+  class.pred = fda.usc::predict.classif(object = m, new.fdataobj = nd.fdclass, ...)
 
   return(class.pred)
 }
