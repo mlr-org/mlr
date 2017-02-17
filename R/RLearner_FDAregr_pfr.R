@@ -1,3 +1,4 @@
+#list(...)[names(list(...))%in%names(formals)]
 #' @title Penalized functional regression
 #'
 #' @description Learner for penalized functional regression

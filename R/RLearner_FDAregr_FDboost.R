@@ -53,6 +53,8 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
+  # insert reformatting code for list4mat here
+  # get fd.feats and fd.grids from task.description saved in <model>
   pred = predict(object = .model$learner.model, newdata = list4mat)
   return(pred)
 }
