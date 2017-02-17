@@ -1,27 +1,28 @@
-#' @title Functional data regression task
+#' @title Functional data regression task.
 #'
-#' @description Create a functional data regression task. The data is assumed
-#'   to have functional data structure and the target variable must be specified
-#'   by the user.
-#' @param data [\code{data.frame},\code{matrix}]\cr
-#'   Data with functional structure.
-#' @param target [\code{character}]\cr
-#'   Target variable name.
-#' @param channel.list A list indicating different channels of the input
-#' @return Functional data regression task. Object of type
-#'   \code{FDARegrTask}.
-#'
-#' @rdname FDARegrTask
+#' @inheritParams Task
+#' @param fd.features [\code{list}]\cr
+#'   Optional. Named list of column numbers or column names. Each list entry defines one
+#'   functional variable through either a character vector of column names or an integer
+#'   vector of column indices. The list names specify the names of the functional variables.
+#'   All columns that are not referenced in \code{fd.features} are scalar variables.
+#'   Default is \code{“fd1”} which means we assume that all columns form one
+#'   functional variable.
+#' @param fd.grids [\code{list}]\cr
+#'   Optional. Named list of grids over which the functional variables are observed.
+#'   Each grid of observation points must be provided as a numerical vector.
+#'   Default is \code{NULL} then all functional variables are observed on equidistant
+#'   observation grids 1, 2, …, <number of observations per function>.
+#' @return [\code{\link{FDARegrTask}}]
 #' @export
+#' @aliases FDARegrTask
 makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE, channel.list = NULL,
-  formula.list = NULL, index.list = NULL) {
-  task = makeSupervisedTask("regr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  blocking = NULL, fixup.data = "warn", check.data = TRUE, fd.features = NULL, fd.grids = NULL) {
+
   task = makeRegrTask(id, data, target, weights, blocking, fixup.data, check.data)
-  type = "fdaregr"
-  task$type = type
-  task$task.desc$type = type
-  task$channel.list = channel.list
-  task$task.desc = addClasses(task$task.desc, "TaskDescFDARegr")
-  addClasses(task, "FDARegrTask")
+  # arg checks for fd.features adn fd.grids are done in next call
+  makeFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
+
+
+
