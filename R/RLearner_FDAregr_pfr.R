@@ -20,18 +20,22 @@ makeRLearner.fdaregr.pfr = function() {
 #' @export
 trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
+  df = d$data
   tn = getTaskTargetNames(.task)
-  mextra_para  = list(...)
+  tdesc = getTaskDescription(.task)
+  index.list = tdesc$fd.grids
+  channel.list = tdesc$fd.features
   name4channel = names(index.list)
   num4channel = length(index.list)
+  mextra_para = list(...)
   ###FIXME: there should be a function to complete the list4mat
   ####list(...)[names(list(...))%in%names(formals)]
   list4mat = list()
   list4formula = list()
   list4mat[[eval(tn)]] = d$target
   for(i in 1:num4channel){
-    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = fdboost.task$channel.list[[i]]))
-    list4mat[[paste0(name4channel[[i]],".index") ]]=  mextra_para$index.list[[i]]
+    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
+    list4mat[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
     list4formula[[i]] = sprintf("af(%s, basistype = 's', Qtransform = TRUE, k=%d)", name4channel[[i]], mextra_para$k)
   }
   makeformula = function(x1,x2){

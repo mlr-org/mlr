@@ -13,7 +13,8 @@ trafoListMat2df = function(list4mat, target, covariates){
   channel.list = list(CCA = 1:dim(DTI1$cca)[2] )
   return(list(mdata = mdata, target = target, channel.list = channel.list ))  
 }
-
+lrn = makeLearner("fdaregr.pfr", k = 50L )
 mu = trafoListMat2df(list4mat = DTI1, target = "pasat", covariates = c("cca"))
-makeFDARegrTask(data = mu$mdata, target = mu$target, fd.features =  mu$channel.list)
+task = makeFDARegrTask(data = mu$mdata, target = mu$target, fd.features =  mu$channel.list)
+mod1f = train(learner = lrn, task = task)
 })
