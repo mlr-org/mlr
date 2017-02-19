@@ -48,7 +48,26 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, .
   #fit.af.s <- pfr(tn ~ af(cca, basistype="s", Qtransform=TRUE, k=50), data=list4mat)
 }
 
+reformat2list4mat2 = function(.data, tdesc){
+  df =  .data
+  fd.features = tdesc$fd.features
+  fd.grids = tdesc$fd.grids
+  tn = tdesc$target
+  channel.list = tdesc$fd.features
+  index.list = tdesc$fd.grids
+  name4channel = names(index.list)
+  num4channel = length(index.list)
+  list4mat = list()
+  for(i in 1:num4channel){
+    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
+  }
+  return(list4mat)
+}
+
 #' @export
 predictLearner.fdaregr.pfr = function(.learner, .model, .newdata, ...) {
-  
+  mextra_para  = list(...)
+  tdesc = getTaskDescription(.model)
+  list4mat = reformat2list4mat2(.newdata, tdesc )
+  predict(.model$learner.model, newdata = list4mat, type = 'response')
 }
