@@ -1,7 +1,7 @@
 context("FDA_FPCA")
 
 test_that("FDA_FPCA", {
-  gp = global_var4FDA_gp
+  gp = gunpoint
   taskTs = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
   refData = getTaskData(taskTs, target.extra = TRUE)
 

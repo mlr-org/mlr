@@ -15,5 +15,5 @@ trafoListMat2df = function(list4mat, target, covariates){
 }
 
 mu = trafoListMat2df(list4mat = DTI1, target = "pasat", covariates = c("cca"))
-makeFDARegrTask(data = mu$mdata, target = m$target, channel.list = m$channel.list)
+makeFDARegrTask(data = mu$mdata, target = mu$target, fd.features =  mu$channel.list)
 })
