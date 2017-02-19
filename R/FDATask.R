@@ -14,7 +14,10 @@ makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
     fd.features = list(fd1 = fnames)
   }
   if (is.null(fd.grids)) {
-    fd.grids = namedList(names(fd.features), init = as.numeric(1:getTaskSize(task)))
+    for(name in names(fd.features)){
+      fd.grids[[name]] = as.numeric(1:length(fd.features[[name]]))
+    }
+    #fd.grids = namedList(names(fd.features), init = as.numeric(1:(length(fnames)+1))) # this line is wrong way of initializing
   }
   assertNames(names(fd.grids), permutation.of = names(fd.features))
   cns = colnames(getTaskData(task))

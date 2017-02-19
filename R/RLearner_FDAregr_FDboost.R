@@ -28,6 +28,9 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   tn = getTaskTargetNames(.task)
   df = d$data
+  tdesc = getTaskDescription(.task)
+  channel.list = tdesc$fd.features
+  index.list = tdesc$fd.grids
   z = d$target
   mextra_para  = list(...)
   name4channel = names(index.list)
@@ -36,8 +39,8 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   list4formula = list()
   list4mat[[eval(tn)]] = d$target
   for(i in 1:num4channel){
-    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = fdboost.task$channel.list[[i]]))
-    list4mat[[paste0(name4channel[[i]],".index") ]]=  mextra_para$index.list[[i]]
+    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
+    list4mat[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
     list4formula[[i]] = sprintf("bsignal(%s,%s,knots = %d, df = %d, check.ident = FALSE)", name4channel[[i]], paste0(name4channel[[i]],".index"), mextra_para$num_knots, mextra_para$degree4freedom)
   }
   makeformula = function(x1,x2){
