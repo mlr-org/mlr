@@ -1,4 +1,3 @@
-#list(...)[names(list(...))%in%names(formals)]
 #' @title Penalized functional regression
 #'
 #' @description Learner for penalized functional regression
@@ -25,7 +24,8 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, .
   mextra_para  = list(...)
   name4channel = names(index.list)
   num4channel = length(index.list)
-  ###'FIXME: there should be a function to complete the list4mat
+  ###FIXME: there should be a function to complete the list4mat
+  ####list(...)[names(list(...))%in%names(formals)]
   list4mat = list()
   list4formula = list()
   list4mat[[eval(tn)]] = d$target
