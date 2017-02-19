@@ -53,13 +53,29 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   return(mod2f)
 }
 
+
+reformat2list4mat = function(.data, tdesc){
+  df =  .data
+  fd.features = tdesc$fd.features
+  fd.grids = tdesc$fd.grids
+  tn = tdesc$target
+  channel.list = tdesc$fd.features
+  index.list = tdesc$fd.grids
+  name4channel = names(index.list)
+  num4channel = length(index.list)
+  list4mat = list()
+  for(i in 1:num4channel){
+    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
+    list4mat[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
+  }
+  return(list4mat)
+}
+  
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
-  # insert reformatting code for list4mat here
-  # get fd.feats and fd.grids from task.description saved in <model>
+  tdesc = getTaskDescription(.model)
+  list4mat = reformat2list4mat(.newdata, tdesc )
   pred = predict(object = .model$learner.model, newdata = list4mat)
   return(pred)
 }
-
-
