@@ -4,7 +4,7 @@
 #'   and creates a learner structure for applicable learners of type \code{classif}.
 #'
 #' @export
-makeFDAPreprocWrapper = function(learner) {
+makeFDAClassifPreprocWrapper = function(learner) {
   lrn = checkLearner(learner)
 
   trainfun = function(data, target, args) {

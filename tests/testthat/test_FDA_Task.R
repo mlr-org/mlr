@@ -12,5 +12,6 @@ task1 = makeFDARegrTask(data = fuelsub, target = "heatan",
 #print(task1)
 # d = load2("demo4FDA/gunpoint.RData")
 #task2 = makeFDAClassifTask(data = d, target = "X1", fd.features = list(fd = 2:3))
+gunpoint = getTaskData(gunpoint.task, target.extra = FALSE)
 task2 = makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 2:3))
 })

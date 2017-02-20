@@ -5,5 +5,5 @@ test_that("FDA_PreprocWrapper", {
   taskFp = convertFDATaskToNormalTask(task = gunpoint.task, method = "fourier", pars = list(fft.coeff = "phase"))
   A = getTaskData(taskFa)
   A = A[, !names(A) %in% "X1"]
-  lrn = makeFDAPreprocWrapper(learner = makeLearner('classif.ranger'))
+  lrn = makeFDAClassifPreprocWrapper(learner = makeLearner('classif.ranger'))
 })

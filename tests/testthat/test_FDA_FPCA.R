@@ -1,10 +1,9 @@
 context("FDA_FPCA")
 
 test_that("FDA_FPCA", {
-  gp = gunpoint
+  gp = getTaskData(gunpoint.task, target.extra = FALSE)
   taskTs = makeFDAClassifTask(data = gp, target = "X1", positive = "1")
   refData = getTaskData(taskTs, target.extra = TRUE)
-
   expect_true((nrow(refData$data) == nrow(gp)))
   expect_true((ncol(refData$data) == ncol(gp) - 1))
 
