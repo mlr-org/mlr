@@ -29,4 +29,3 @@ Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{plotTuneMultiCritResult}},
   \code{\link{tuneParamsMultiCrit}}
 }
-

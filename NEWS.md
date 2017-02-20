@@ -1,3 +1,12 @@
+# mlr 2.11:
+
+## functions - new
+* getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
+* listTaskTypes, listLearnerProperties
+
+## learners - removed
+* {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper
+
 # mlr 2.10:
 
 ## functions - general
@@ -36,8 +45,16 @@
   FSelector/custom implementation now, performance should be much better
 * use of our own colAUC function instead of the ROCR package for AUC calculation
   to improve performance
-* We output resample performance messages for every iteration now
+* we output resample performance messages for every iteration now
 * performance improvements for the auc measure
+* createDummyFeatures supports vectors now
+* removed the pretty.names argument from plotHyperParsEffect -- labels can be set
+  though normal ggplot2 functions on the returned object
+* Fixed a bad bug in resample, the slot "runtime" or a ResampleResult,
+  when the runtime was measured not in seconds but e.g. mins. R measures then potentially in mins,
+  but mlr claimed it would be seconds.
+* New "dummy" learners (that disregard features completely) can be fitted now for baseline comparisons,
+  see "featureless" learners below.
 
 ## functions - new
 * filter: randomForest.importance
@@ -81,6 +98,9 @@
 * surv.gbm
 * regr.cvglmnet
 * {classif,regr,surv}.gamboost
+* classif.earth
+* {classif,regr}.evtree
+* {classif,regr}.evtree
 
 ## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues

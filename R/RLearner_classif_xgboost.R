@@ -6,7 +6,7 @@ makeRLearner.classif.xgboost = function() {
     par.set = makeParamSet(
       # we pass all of what goes in 'params' directly to ... of xgboost
       # makeUntypedLearnerParam(id = "params", default = list()),
-      makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear")),
+      makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear", "dart")),
       makeIntegerLearnerParam(id = "silent", default = 0L, tunable = FALSE),
       makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "gamma", default = 0, lower = 0),
@@ -22,7 +22,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "objective", default = "binary:logistic", tunable = FALSE),
       makeUntypedLearnerParam(id = "eval_metric", default = "error", tunable = FALSE),
       makeNumericLearnerParam(id = "base_score", default = 0.5, tunable = FALSE),
-
+      makeNumericLearnerParam(id = "max_delta_step", lower = 0, default = 0),
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
       makeIntegerLearnerParam(id = "nthread", lower = 1L, tunable = FALSE),
@@ -30,10 +30,14 @@ makeRLearner.classif.xgboost = function() {
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
       makeUntypedLearnerParam(id = "feval", default = NULL, tunable = FALSE),
       makeIntegerLearnerParam(id = "verbose", default = 1L, lower = 0L, upper = 2L, tunable = FALSE),
-      makeIntegerLearnerParam(id = "print.every.n", default = 1L, lower = 1L, tunable = FALSE,
+      makeIntegerLearnerParam(id = "print_every_n", default = 1L, lower = 1L, tunable = FALSE,
         requires = quote(verbose == 1L)),
-      makeIntegerLearnerParam(id = "early.stop.round", default = NULL, lower = 1L, special.vals = list(NULL)),
-      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE)
+      makeIntegerLearnerParam(id = "early_stopping_rounds", default = NULL, lower = 1L, special.vals = list(NULL), tunable = FALSE),
+      makeLogicalLearnerParam(id = "maximize", default = NULL, special.vals = list(NULL), tunable = FALSE),
+      makeDiscreteLearnerParam(id = "sample_type", default = "uniform", values = c("uniform", "weighted"), requires = quote(booster == "dart")),
+      makeDiscreteLearnerParam(id = "normalize_type", default = "tree", values = c("tree", "forest"), requires = quote(booster == "dart")),
+      makeNumericLearnerParam(id = "rate_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart")),
+      makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart"))
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
@@ -45,45 +49,28 @@ makeRLearner.classif.xgboost = function() {
 
 #' @export
 trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  
   td = getTaskDescription(.task)
-  data = getTaskData(.task, .subset, target.extra = TRUE)
-  target = data$target
-  target = match(as.character(target), td$class.levels) - 1
-  data = data.matrix(data$data)
-  cls = td$class.levels
-  nc = length(cls)
   parlist = list(...)
-  obj = parlist$objective
+  parlist$data = data.matrix(getTaskData(.task, .subset, target.extra = TRUE)$data)
+  parlist$label = match(as.character(getTaskData(.task, .subset, target.extra = TRUE)$target), td$class.levels) - 1
+  nc = length(td$class.levels)
+  
+  if (is.null(parlist$objective))
+    parlist$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
 
-  if (nc == 2L) {
-    if (is.null(obj))
-      obj = "binary:logistic"
-  } else {
-    if (is.null(obj))
-      obj = "multi:softprob"
-  }
-
-  if (.learner$predict.type == "prob" && obj == "multi:softmax")
+  if (.learner$predict.type == "prob" && parlist$objective == "multi:softmax")
     stop("objective = 'multi:softmax' does not work with predict.type = 'prob'")
 
-
-  if (obj %in% c("multi:softprob", "multi:softmax")) {
-    if (is.null(.weights)) {
-      xgboost::xgboost(data = data, label = target, objective = obj, num_class = nc, ...)
-    } else {
-      xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
-      xgboost::xgboost(data = xgb.dmat, label = NULL, objective = obj, num_class = nc, ...)
-    }
-  } else {
-    if (is.null(.weights)) {
-      xgboost::xgboost(data = data, label = target, objective = obj, ...)
-    } else {
-      xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
-      xgboost::xgboost(data = xgb.dmat, label = NULL, objective = obj, ...)
-    }
-  }
+  #if we use softprob or softmax as objective we have to add the number of classes 'num_class'
+  if (parlist$objective %in% c("multi:softprob", "multi:softmax"))
+    parlist$num_class = nc
+    
+  if (!is.null(.weights))
+    parlist$data = xgboost::xgb.DMatrix(data = parlist$data, label = parlist$label, weight = .weights)
+    
+  do.call(xgboost::xgboost, parlist)
 }
-
 
 #' @export
 predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
@@ -92,17 +79,11 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   cls = td$class.levels
   nc = length(cls)
   obj = .learner$par.vals$objective
+  
+  if (is.null(obj))
+    .learner$par.vals$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
 
-  if (nc == 2L) {
-    if (is.null(obj))
-      .learner$par.vals$objective = "binary:logistic"
-  } else {
-    if (is.null(obj))
-      .learner$par.vals$objective = "multi:softprob"
-  }
-
-  p = xgboost::predict(m, newdata = data.matrix(.newdata), ...)
-
+  p = predict(m, newdata = data.matrix(.newdata), ...)
 
   if (nc == 2L) { #binaryclass
     if (.learner$par.vals$objective == "multi:softprob") {
@@ -148,4 +129,5 @@ getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
   fiv = imp$Gain
   setNames(fiv, imp$Feature)
 }
+
 

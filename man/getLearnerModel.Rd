@@ -25,4 +25,3 @@ Default is \code{FALSE}.}
 \description{
 Get underlying R model of learner integrated into mlr.
 }
-

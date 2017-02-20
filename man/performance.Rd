@@ -54,4 +54,3 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}}
 }
-

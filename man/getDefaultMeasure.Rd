@@ -25,4 +25,3 @@ Currently these are:
    multilabel  \tab multilabel.hamloss\cr
 }
 }
-
