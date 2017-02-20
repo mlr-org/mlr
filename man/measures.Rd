@@ -2,33 +2,6 @@
 % Please edit documentation in R/measures.R
 \docType{data}
 \name{measures}
-\alias{G1}
-\alias{G2}
-\alias{acc}
-\alias{arsq}
-\alias{auc}
-\alias{bac}
-\alias{ber}
-\alias{brier}
-\alias{brier.scaled}
-\alias{cindex}
-\alias{cindex.uno}
-\alias{db}
-\alias{dunn}
-\alias{expvar}
-\alias{f1}
-\alias{fdr}
-\alias{featperc}
-\alias{fn}
-\alias{fnr}
-\alias{fp}
-\alias{fpr}
-\alias{gmean}
-\alias{gpr}
-\alias{iauc.uno}
-\alias{kappa}
-\alias{logloss}
-\alias{lsr}
 \alias{measures}
 \alias{featperc}
 \alias{timetrain}
@@ -95,11 +68,6 @@
 \alias{measureBrier}
 \alias{brier.scaled}
 \alias{measureBrierScaled}
-\alias{measureEXPVAR}
-\alias{measureF1}
-\alias{measureFDR}
-\alias{measureFN}
-\alias{measureFNR}
 \alias{bac}
 \alias{measureBAC}
 \alias{tp}
@@ -127,6 +95,7 @@
 \alias{mcc}
 \alias{measureMCC}
 \alias{f1}
+\alias{measureF1}
 \alias{gmean}
 \alias{measureGMEAN}
 \alias{gpr}
@@ -144,6 +113,12 @@
 \alias{multilabel.tpr}
 \alias{measureMultilabelTPR}
 \alias{cindex}
+\alias{cindex.uno}
+\alias{iauc.uno}
+\alias{td.auc.kw}
+\alias{td.auc.km}
+\alias{td.auc.nne}
+\alias{td.auc.ipcw}
 \alias{meancosts}
 \alias{mcp}
 \alias{db}
@@ -151,20 +126,6 @@
 \alias{G1}
 \alias{G2}
 \alias{silhouette}
-\alias{sse}
-\alias{ssr}
-\alias{td.auc.ipcw}
-\alias{td.auc.km}
-\alias{td.auc.kw}
-\alias{td.auc.nne}
-\alias{timeboth}
-\alias{timepredict}
-\alias{timetrain}
-\alias{tn}
-\alias{tnr}
-\alias{tp}
-\alias{tpr}
-\alias{wkappa}
 \title{Performance measures.}
 \format{none}
 \usage{
@@ -460,6 +421,8 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{performance}}
+  \code{\link{makeMeasure}},
+  \code{\link{makeTimeDependentAUCMeasure}},
+  \code{\link{performance}}
 }
 \keyword{datasets}
