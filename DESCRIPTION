@@ -77,6 +77,8 @@ Suggests:
     emoa,
     evtree,
     extraTrees,
+    fda.usc,
+    FDboost,
     flare,
     fields,
     FNN,
@@ -137,6 +139,7 @@ Suggests:
     RSNNS,
     RWeka,
     sda,
+    shapeletLib,
     shiny,
     smoof,
     sparsediscrim,
@@ -147,6 +150,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    wavelets,
     xgboost (>= 0.6-2),
     XML
 LazyData: yes

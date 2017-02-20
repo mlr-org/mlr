@@ -13,6 +13,9 @@
 #'   Wavelet transformation: \dQuote{wavelets}.
 #'   Fourier transformation: \dQuote{fourier}.
 #'
+#' @param args \cr
+#'   Additional arguments passed to the features functions.
+#'
 #' @return Returns an \code{data.frame} object containing the transformed data.
 #'
 #' @export

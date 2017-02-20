@@ -65,14 +65,14 @@ getFDAFourierFeatures = function(data, target, include.target = FALSE, fft.coeff
   return(fftPA)
 }
 
-#' @export
+#
 getFourierAmplitude = function(fourier.comp) {
   amp = apply(fourier.comp, 2, function(x) Re(x)^2 + Im(x)^2) # compute for each row
   amp = sqrt(amp)
   return(amp)
 }
 
-#' @export
+#
 getFourierPhase = function(fourier.comp) {
   pha = apply(fourier.comp, 2, function(x) atan(Im(x) / Re(x)))
   return(pha)
