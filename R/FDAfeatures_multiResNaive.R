@@ -9,14 +9,15 @@ getSegmentFeatures = function(x) {
 # The number of hierachy of resolutions 
 # @param shift [\code{numeric}]\cr
 # The overlapping proportion when slide the window for one step 
+# subroutine for extractFDAMultiResFeatures
 getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   m = length(x)
   start = 1L
   feats = numeric(0L)
   ssize = m  # initialize segment size to be the length of the curve
-  for (rl in 1:res.level) {
+  for (rl in 1:res.level) {  # ssize is divided by 2 at the end of the loop 
     soffset = ceiling(shift * ssize)  # overlap distance
-    messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
+    # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
     sstart = 1L
     send = sstart + ssize - 1L  # end position
     while(send <= m) {  # until the segment reach the end
@@ -28,7 +29,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
       send = send + soffset
     }
     ssize = ceiling(ssize / 2)  # decrease the segment size
-    if (ssize < 1L)
+    if (ssize < 1L)  # if the the divide by 2 is too much 
       break
   }
   return(feats)
@@ -40,13 +41,13 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
 #' are set in a hierachy way so the features cover different resolution levels.
 #' @param data[\code{dataframe}]\cr 
 #' the input matrix
-#' @param cuve.lens[\code{vector}]\cr
+#' @param curve.lens[\code{vector}]\cr
 #' the subcurve length vector, suggest to sum up to the lenght of the curve
 #' @param res.level[\code{integer}]\cr
-#' the number of resolution hierachy
+#' the number of resolution hierachy, each length is divided by a factor of 2. 
 #' @param shift [\code{numeric}]\cr
 #' The overlapping proportion when slide the window for one step
-#' @return Returns a \code{matrix} object with each row containing the multi-resolution features
+#' @return Returns a [\code{matrix}] object with each row containing the multi-resolution features
 #' @export 
 extractFDAMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
   checkmate::assert_matrix(data)
