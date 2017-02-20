@@ -14,7 +14,7 @@
 #'   Corresponding labels.
 #' @param ... [\code{any}]\cr
 #'   Addtional parameters passed to shapelet learning function. Please see
-#'   \link{\code{shapeletLib}}.
+#'   \code{shapeletLib}.
 #'
 #' @return Returns an \code{list} object \code{model} containing the learned
 #'   shapelet model. I.e.
