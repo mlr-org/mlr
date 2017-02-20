@@ -31,7 +31,7 @@ makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
       return(f)
     }
     if (is.integer(f)) {
-      if (!all(f >= 1L & f < length(cns)))
+      if (!all(f >= 1L & f <= length(cns)))
         stop("Functional features indices must be between 1 and ncols(data)!")
       return(cns[f])
     }
