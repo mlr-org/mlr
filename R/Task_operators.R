@@ -440,7 +440,7 @@ changeData = function(task, data, costs, weights) {
     "surv" = makeTaskDesc(task, td$id, td$target, td$censoring),
     "cluster" = makeTaskDesc(task, td$id),
     "fdaclassif" = makeTaskDesc(task, td$id, td$target, td$positive),
-    "fdaregr" = makeTaskDesc(task, td$id, td$target, td$positive),
+    "fdaregr" = makeTaskDesc(task, td$id, td$target),
     makeTaskDesc(task, td$id, td$target))
   return(task)
 }
