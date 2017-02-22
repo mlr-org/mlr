@@ -24,5 +24,11 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
   makeFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
 
-
-
+#FIXME: to make subsetTask work, otherwise, subsetTask will generate a regression task
+makeTaskDesc.FDARegrTask = function(task, id, target, td) {
+  badtd = makeTaskDesc.RegrTask(task = task , id = id, target = target)
+  badtd$type = "fdaregr"
+  badtd$fd.features = td$fd.features
+  badtd$fd.grids = td$fd.grids
+  addClasses(badtd, "FDARegrTaskDesc")
+}
