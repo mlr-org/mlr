@@ -1,5 +1,6 @@
 #' @title Functional data regression task.
-#'
+#' 
+#' @description  Functional data regression task.
 #' @inheritParams Task
 #' @param fd.features [\code{list}]\cr
 #'   Optional. Named list of column numbers or column names. Each list entry defines one

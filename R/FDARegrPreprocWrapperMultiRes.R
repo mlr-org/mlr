@@ -1,7 +1,8 @@
 #' @title MultiRes preprocess wrapper
 #'
-#' @description Extracts multiResolution features and combine that with a learner 
-#'
+#' @description Extracts multiResolution features and combine that with a learner.
+#' @param learner \cr 
+#' The mlr learner to wrap on top of feature extraction.
 #' @export
 makeFDARegrPreprocWrapperMultiRes = function(learner, ...) {
   lrn = checkLearner(learner)

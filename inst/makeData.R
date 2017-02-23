@@ -85,7 +85,7 @@ save(yeast.task, file = file.path(dn, "yeast.task.RData"), compress = "xz")
 
 # FDA classification
 set.seed(DATASEED)
-gunpoint = load2("demo4FDA/gunpoint.RData")
+gunpoint = load2("../thirdparty/gunpoint.RData")
 gunpoint.task = makeFDAClassifTask(data = gunpoint, target = "X1", positive = "1")
 save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
 

@@ -49,7 +49,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   rformula = Reduce(f = makeformula, x = list4formula)
   mformula = as.formula(paste0(tn,"~", rformula))
   #form = as.formula(sprintf("%s ~ %s", tn, collapse(c(ff1, ff2), "+")))
-  mod2f <- FDboost::FDboost(formula = mformula, timeformula = ~bols(1), data = list4mat, control = boost_control(mstop = 200))
+  mod2f <- FDboost::FDboost(formula = mformula, timeformula = ~bols(1), data = list4mat, control = FDboost::boost_control(mstop = 200))
   return(mod2f)
 }
 
