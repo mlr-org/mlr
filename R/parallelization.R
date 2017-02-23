@@ -2,10 +2,10 @@
 #'
 #' @description
 #' mlr supports different methods to activate parallel computing capabilities with the integration of \code{\link[parallelMap]{parallelMap}} Package which itself supports all major parallelization backends for R.
-#' You can start parallelization with \code{\link[paralleMap]{parallelStart}*}, whereas the \code{*} stands for the chosen backend.
-#' \code{\link[paralleMap]{prallelStop}} is used to stop all parallelization backends.
+#' You can start parallelization with \code{\link[parallelMap]{parallelStart}*}, whereas the \code{*} stands for the chosen backend.
+#' \code{\link[parallelMap]{prallelStop}} is used to stop all parallelization backends.
 #'
-#' Parallelization is divided into different levels and will automatically carried out for the first level that occurs, e.g. if you call \code{resample()} after \code{\link[paralleMap]{parallelStart}} each resampling iteration is a parallel job and possible underlaying calls like parameter tuning won't be parallelized further.
+#' Parallelization is divided into different levels and will automatically carried out for the first level that occurs, e.g. if you call \code{resample()} after \code{\link[parallelMap]{parallelStart}} each resampling iteration is a parallel job and possible underlaying calls like parameter tuning won't be parallelized further.
 #'
 #' The supported levels of parallelization are:
 #' \describe{
