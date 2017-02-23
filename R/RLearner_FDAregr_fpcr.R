@@ -1,6 +1,6 @@
 #' @title Functional principal component regression
 #'
-#' @description Functional learner for principal component regression
+#' @description Functional learner for principal component regression.
 #'
 #' @export
 makeRLearner.fdaregr.fpcr = function() {
@@ -26,11 +26,11 @@ trainLearner.fdaregr.fpcr = function(.learner, .task, .subset, .weights = NULL, 
   #num4channel = length(index.list)
   #fit.af.s <- refund::pfr(pasat ~ af(cca, basistype="s", Qtransform=TRUE, k=50),
   #                data=DTI1)
-  
+
   #fpcr(y = d$target, xfuncs = d$data, ncomp = mextra_para$ncomp)
 }
 
 #' @export
 predictLearner.fdaregr.fpcr = function(.learner, .model, .newdata, ...) {
-  
+
 }

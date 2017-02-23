@@ -1,6 +1,6 @@
 #' @title Functional linear array model bossting
 #'
-#' @description Learner for Functional linear array modeling boosting
+#' @description Learner for Functional linear array modeling boosting.
 #'
 #' @export
 makeRLearner.fdaregr.FDboost = function() {
@@ -14,7 +14,7 @@ makeRLearner.fdaregr.FDboost = function() {
       makeUntypedLearnerParam(id = "timeformular", default = NULL),
       makeUntypedLearnerParam(id = "index.list", default = NULL),
       makeLogicalLearnerParam(id = "normalize", default = FALSE),  # whether to normalize column to fit the need of mboost
-      makeLogicalLearnerParam(id = "check.indent", default = TRUE)  
+      makeLogicalLearnerParam(id = "check.indent", default = TRUE)
       ),
     properties = c("numerics"),
     name = "FLAM regression",
@@ -70,7 +70,7 @@ reformat2list4mat = function(.data, tdesc){
   }
   return(list4mat)
 }
-  
+
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)

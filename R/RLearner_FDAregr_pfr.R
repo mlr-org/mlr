@@ -1,6 +1,6 @@
 #' @title Penalized functional regression
 #'
-#' @description Learner for penalized functional regression
+#' @description Learner for penalized functional regression.
 #'
 #' @export
 makeRLearner.fdaregr.pfr = function() {
@@ -71,3 +71,4 @@ predictLearner.fdaregr.pfr = function(.learner, .model, .newdata, ...) {
   list4mat = reformat2list4mat2(.newdata, tdesc )
   predict(.model$learner.model, newdata = list4mat, type = 'response')
 }
+

@@ -16,7 +16,7 @@
 #'   Addtional parameters passed to shapelet learning function. Please see
 #'   \code{shapeletLib}.
 #'
-#' @return Returns an \code{list} object \code{model} containing the learned
+#' @return Returns an object of type \code{ShapeletModel} containing the learned
 #'   shapelet model. I.e.
 #'   \itemize{
 #'     \item shapelets [\code{matrix}]: \code{k} learned shapelets.
@@ -40,9 +40,7 @@ getFDAShapeletFeatures = function(curves, label, ...) {
   )
   assertFactor(label)
 
-
   shapeletmodel = shapeletLib::learnShapeletModel(data = curves, label = label, ...)
-
   return(list(model = shapeletmodel))
-
 }
+

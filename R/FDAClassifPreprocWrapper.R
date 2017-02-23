@@ -1,12 +1,14 @@
 #' @title Functional data preproc wrapper
 #'
 #' @description Extracts  functional data features like wavelets, fourier, etc.
-#'   and creates a learner structure for applicable learners of type \code{classif}.
-#' @param learner \cr 
-#' The mlr learner to wrap on top of feature extraction.
+#'   and creates a learner structure for applicable learners of type
+#'   \code{classif}.
+#'
+#' @param learner \cr
+#'   The mlr learner to wrap on top of feature extraction.
 #' @export
 makeFDAClassifPreprocWrapper = function(learner) {
-  requirePackagesOrSkip("stringi",default.method = "load")
+  requirePackages("stringi",default.method = "load")
   lrn = checkLearner(learner)
 
   trainfun = function(data, target, args) {

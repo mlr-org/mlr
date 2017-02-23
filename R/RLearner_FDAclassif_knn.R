@@ -1,6 +1,6 @@
 #' @title Learner for knn on functional data
 #'
-#' @description Learner for knn on functional data
+#' @description Learner for knn on functional data.
 #'
 #' @export
 makeRLearner.fdaclassif.knn = function() {

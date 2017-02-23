@@ -12,7 +12,6 @@
 #'   Which method is used to extract functional data features. Methods available.
 #'   Wavelet transformation: \dQuote{wavelets}.
 #'   Fourier transformation: \dQuote{fourier}.
-#'
 #' @param args \cr
 #'   Additional arguments passed to the features functions.
 #'
@@ -27,9 +26,6 @@ extractFDAFeatures = function(data, target, method, args) {
   )
   assertCharacter(target)
   assertChoice(method, choices = c("wavelets", "fourier"))
-
-
-
   # if matrix, transform to data.frame so that following code executes correctly
   if(inherits(data, "matrix"))
     data = as.data.frame(data)
@@ -40,7 +36,5 @@ extractFDAFeatures = function(data, target, method, args) {
     wavelets = {tsf = do.call(getFDAWaveletFeatures, new.args)},
     fourier = {tsf = do.call(getFDAFourierFeatures, new.args)}
   )
-
-
   return(tsf)
 }

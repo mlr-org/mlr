@@ -3,6 +3,7 @@ context("FDA_regr_FDboost")
 # ultra-violet-visible (UV-VIS), measured at 1335 wavelengths(lambda = 1/f$), the ohter a near infrared
 # spectrum(NIR), measured at 2307 wavelengths(lambda = 1/f$). The distance for both data are
 # not equal distance in wavelegnths.
+
 test_that("FDA_regr_FDboost", {
     requirePackages("FDboost")
     data("fuelSubset", package = "FDboost")
@@ -29,7 +30,7 @@ test_that("FDA_regr_FDboost", {
     index.list = list(UVVIS = fuelSubset$uvvis.lambda, NIR = fuelSubset$nir.lambda)
     fdboost.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = channel.list, fd.grids = index.list)
     #fdboost.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = channel.list) test if succeed in NULL input
-    
+
     mod2f = FDboost(heatan ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
    + bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE),
     timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))

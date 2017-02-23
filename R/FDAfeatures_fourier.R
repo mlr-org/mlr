@@ -30,8 +30,6 @@ getFDAFourierFeatures = function(data, target, include.target = FALSE, fft.coeff
   assertFlag(include.target)
   assertChoice(fft.coeff, choices = c("amplitude", "phase"))
 
-
-
   # potentially extract y-col and remove it from data, we dont need it for fourier-trafo
   cns = colnames(data)
   if (target %in% cns) {
@@ -65,14 +63,14 @@ getFDAFourierFeatures = function(data, target, include.target = FALSE, fft.coeff
   return(fftPA)
 }
 
-#
+###
 getFourierAmplitude = function(fourier.comp) {
   amp = apply(fourier.comp, 2, function(x) Re(x)^2 + Im(x)^2) # compute for each row
   amp = sqrt(amp)
   return(amp)
 }
 
-#
+###
 getFourierPhase = function(fourier.comp) {
   pha = apply(fourier.comp, 2, function(x) atan(Im(x) / Re(x)))
   return(pha)

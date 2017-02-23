@@ -124,3 +124,14 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+
+#' Gunpoint functional data classification task.
+#'
+#' Contains the task (\code{gunpoint.task}).
+#'
+#' @name gunpoint.task
+#' @references See \code{\link[datasets]{gunpoint}}.
+#' @keywords data
+#' @docType data
+NULL

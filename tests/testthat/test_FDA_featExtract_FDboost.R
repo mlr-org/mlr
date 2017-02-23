@@ -8,7 +8,8 @@ test_that("FDA_extractFeat_FDboost", {
   expect_true((nrow(refData$data) == nrow(gp)))
   expect_true((ncol(refData$data) == ncol(gp) - 1))
 
-  f_df = getFDAFDboostFeatures(data = refData$data, target = "X1", have.target = TRUE, include.target = FALSE, nknots = 10L, degree = 3L)
+  f_df = getFDAFDboostFeatures(data = refData$data, target = "X1", have.target = TRUE,
+    include.target = FALSE, nknots = 10L, degree = 3L)
   expect_true((nrow(f_df) == nrow(gp) ))
 
 })
