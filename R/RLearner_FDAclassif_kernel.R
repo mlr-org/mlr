@@ -37,7 +37,7 @@ trainLearner.fdaclassif.kernel = function(.learner, .task, .subset, .weights = N
 predictLearner.fdaclassif.kernel = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd, ...)
+  class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd.fdclass, ...)
 
   return(class.pred)
 }
