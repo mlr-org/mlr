@@ -3,7 +3,7 @@ context("FDA_classif_glm")
 test_that("FDA_classif_glm", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
 
-  data(phoneme)
+  data(phoneme, package = "fda.usc")
   mlearn = phoneme[["learn"]]
   glearn = phoneme[["classlearn"]]
 
