@@ -6,7 +6,7 @@
 makeRLearner.fdaregr.FDboost = function() {
   makeRLearnerRegr(
     cl = "fdaregr.FDboost",
-    package = "FDboost",
+    package = c("FDboost", "mboost"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "mstop", default = 200L),
       makeIntegerLearnerParam(id = "degree4freedom", default = 3L, lower = 1L),
@@ -49,7 +49,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   rformula = Reduce(f = makeformula, x = list4formula)
   mformula = as.formula(paste0(tn,"~", rformula))
   #form = as.formula(sprintf("%s ~ %s", tn, collapse(c(ff1, ff2), "+")))
-  mod2f <- FDboost::FDboost(formula = mformula, timeformula = ~bols(1), data = list4mat, control = FDboost::boost_control(mstop = 200))
+  mod2f <- FDboost::FDboost(formula = mformula, timeformula = ~bols(1), data = list4mat, control = mboost::boost_control(mstop = 200))
   return(mod2f)
 }
 

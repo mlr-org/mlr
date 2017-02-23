@@ -22,7 +22,7 @@ makeFDARegrPreprocWrapperMultiRes = function(learner) {
   predictfun = function(data, target, args, control) {
     return(trainfun(data, target, args)$data)
   }
-  lrn2 = makePreprocWrapper(lrn, train = trainfun, predict = predictfun, par.vals = list(...))
+  lrn2 = makePreprocWrapper(lrn, train = trainfun, predict = predictfun, par.vals = list())
   lrn2$id = stringi::stri_replace(lrn2$id, replacement = ".multiRes", regex = "\\.preproc$")
   lrn2 = addClasses(lrn2, "MultiResFeaturesWrapper")
   return(lrn2)

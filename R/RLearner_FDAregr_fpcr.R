@@ -21,7 +21,7 @@ makeRLearner.fdaregr.fpcr = function() {
 trainLearner.fdaregr.fpcr = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   tn = getTaskTargetNames(.task)
-  mextra_para  = list(...)
+  #mextra_para  = list(...)
   #name4channel = names(index.list)
   #num4channel = length(index.list)
   #fit.af.s <- refund::pfr(pasat ~ af(cca, basistype="s", Qtransform=TRUE, k=50),
