@@ -294,6 +294,16 @@ test_that("check measure calculations", {
   rmsle.perf = performance(pred.regr, measures = rmsle, model = mod.regr)
   expect_equal(rmsle.test, rmsle$fun(pred = pred.regr))
   expect_equal(rmsle.test, as.numeric(rmsle.perf))
+  #tau
+  tau.test = 1
+  tau.perf = performance(pred.regr, measures = tau, model = mod.regr)
+  expect_equal(tau.test, tau$fun(pred = pred.regr))
+  expect_equal(tau.test, as.numeric(tau.perf))
+  #rho
+  rho.test = 1
+  rho.perf = performance(pred.regr, measures = rho, model = mod.regr)
+  expect_equal(rho.test, rho$fun(pred = pred.regr))
+  expect_equal(rho.test, as.numeric(rho.perf))
 
   #test multiclass measures
 

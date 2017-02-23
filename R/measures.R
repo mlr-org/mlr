@@ -389,6 +389,46 @@ rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export tau
+#' @rdname measures
+#' @format none
+tau = makeMeasure(id = "tau", minimize = FALSE, best = 1, worst = -1,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Kendall's tau",
+  note = "Defined as: Kendall's tau correlation between truth and response. Only looks at the order.
+  See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureTAU(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureTAU
+#' @rdname measures
+#' @format none
+measureTAU = function(truth, response) {
+  cor(truth, response, use = "na.or.complete", method = "kendall")
+}
+
+#' @export rho
+#' @rdname measures
+#' @format none
+rho = makeMeasure(id = "rho", minimize = FALSE, best = 1, worst = -1,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Spearman's rho",
+  note = "Defined as: Spearman's rho correlation between truth and response. Only looks at the order. 
+  See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRHO(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRHO
+#' @rdname measures
+#' @format none
+measureRHO = function(truth, response) {
+  cor(truth, response, use = "na.or.complete", method = "spearman")
+}
+
 ###############################################################################
 ### classif multi ###
 ###############################################################################
