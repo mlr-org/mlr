@@ -131,7 +131,7 @@ NULL
 #' Contains the task (\code{gunpoint.task}).
 #'
 #' @name gunpoint.task
-#' @references See \code{\link[datasets]{gunpoint}}.
+#' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300. 
 #' @keywords data
 #' @docType data
 NULL
