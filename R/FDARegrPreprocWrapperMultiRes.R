@@ -4,7 +4,8 @@
 #' @param learner \cr 
 #' The mlr learner to wrap on top of feature extraction.
 #' @export
-makeFDARegrPreprocWrapperMultiRes = function(learner, ...) {
+makeFDARegrPreprocWrapperMultiRes = function(learner) {
+  requirePackagesOrSkip("stringi", default.method = "load")
   lrn = checkLearner(learner)
   trainfun = function(data, target, args) {
     curve.lens = args$curve.lens
@@ -18,10 +19,8 @@ makeFDARegrPreprocWrapperMultiRes = function(learner, ...) {
   predictfun = function(data, target, args, control) {
     return(trainfun(data, target, args)$data)
   }
-  
-  require('stringi')
   lrn2 = makePreprocWrapper(lrn, train = trainfun, predict = predictfun, par.vals = list(...))
-  lrn2$id = stri_replace(lrn2$id, replacement = ".multiRes", regex = "\\.preproc$")
+  lrn2$id = stringi::stri_replace(lrn2$id, replacement = ".multiRes", regex = "\\.preproc$")
   lrn2 = addClasses(lrn2, "MultiResFeaturesWrapper")
   return(lrn2)
 }

@@ -24,7 +24,7 @@ makeFDAClassifPreprocWrapper = function(learner) {
     #return(data)
   }
   lrn2 = makePreprocWrapper(lrn, train = trainfun, predict = predictfun, par.vals = list(positive = "1"))
-  lrn2$id = stri_replace(lrn2$id, replacement = ".fourier", regex = "\\.preproc$")
+  lrn2$id = stringi::stri_replace(lrn2$id, replacement = ".fourier", regex = "\\.preproc$")
   lrn2 = addClasses(lrn2, "FourierFeaturesWrapper")
   return(lrn2)
 }

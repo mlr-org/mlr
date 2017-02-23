@@ -44,7 +44,7 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, .
   rformula = Reduce(f = makeformula, x = list4formula)
   mformula = as.formula(paste0(tn,"~", rformula))
   ###
-  fit.af.s = pfr(formula = mformula, data=list4mat)
+  fit.af.s = refund::pfr(formula = mformula, data=list4mat)
   #fit.af.s <- pfr(tn ~ af(cca, basistype="s", Qtransform=TRUE, k=50), data=list4mat)
 }
 

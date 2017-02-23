@@ -146,7 +146,6 @@ Suggests:
     sparsediscrim,
     sparseLDA,
     stepPlr,
-    stringi,
     SwarmSVM,
     svglite,
     testthat,
