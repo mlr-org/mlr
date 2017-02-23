@@ -17,7 +17,7 @@
 #'   If a tuner works in a purely sequential fashion, we cannot work magic and the hyperparameter evaluation will also run sequentially. But note that you can still parallelize the underlying resampling.}
 #'   \item{\code{"mlr.selectFeatures"}}{Each evaluation in feature space "resample with this feature subset" is a parallel job. The same comments as for \code{"mlr.tuneParams"} apply here.}
 #'   \item{\code{"mlr.ensemble"}}{For all ensemble methods the training and prediction of each individual learner is a parallel job.
-#'   Supported ensemble methods are the \code{\link{BaggingWrapper}}}, \code{\link{CostSensRegrWrapper}}}, \code{\link{MulticlassWrapper}}}, \code{\link{MultilabelBinaryRelevanceWrapper}}} and the \code{\link{OverBaggingWrapper}}}
+#'   Supported ensemble methods are the \code{\link{BaggingWrapper}}, \code{\link{CostSensRegrWrapper}}, \code{\link{MulticlassWrapper}}, \code{\link{MultilabelBinaryRelevanceWrapper}} and the \code{\link{OverBaggingWrapper}}}
 #' }
 #'
 #'
