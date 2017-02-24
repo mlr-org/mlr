@@ -7,23 +7,38 @@
 #'   The mlr learner to wrap on top of feature extraction.
 #'
 #' @export
-makeFDARegrPreprocWrapperMultiRes = function(learner) {
-  requirePackages("stringi", default.method = "load")
+makeFDARegrPreprocWrapperMultiRes = function(learner, mrw.res.level = 3L, mrw.shift = 0.5) {
   lrn = checkLearner(learner)
+  mrw.res.level = asInt(mrw.res.level, lower = 1L)
+  assertNumber(mrw.shift, lower = 0, upper = 1)
+
+  par.set = makeParamSet(
+    makeIntegerParam("mrw.res.level", lower = 1),
+    makeNumericParam("mrw.shift", lower = 0, upper = 1)
+  )
+  par.vals = list(mrw.res.level = mrw.res.level, mrw.shift = mrw.shift)
+
+  # FIXME: this only works for numerical attributes in the curves! we need a check here?
+  # FIXME: what happens with the scalar vars in feature extractions? we just copy them right?
+
+  # FIXME: the whole thing DOES NOT WORK. we need "task" in the signature of trainfun. see issue #1520
+
   trainfun = function(data, target, args) {
-    curve.lens = args$curve.lens
-    res.level = args$res.level
-    shift = args$shift
-    A = extractFDAMultiResFeatures(data, curve.lens, res.level , shift)
-    control = list(args)
-    list(data = A, control = control) # Preprocessing train must return a list with elements data[data.frame] and control[list]!
+    # cns.fd =
+    # cns.scalar = setdiff(colnames(data))
+    # d.fd = data
+    # d.scalar
+    # curve.lens =
+    # d = extractFDAMultiResFeatures(d1, args$curve.lens, args$mrw.res.level , args$mrw.shift)
+    # list(data = d, control = NULL)
   }
 
   predictfun = function(data, target, args, control) {
     return(trainfun(data, target, args)$data)
   }
-  lrn2 = makePreprocWrapper(lrn, train = trainfun, predict = predictfun, par.vals = list())
-  lrn2$id = stringi::stri_replace(lrn2$id, replacement = ".multiRes", regex = "\\.preproc$")
+  lrn2 = makePreprocWrapper(lrn, train = trainfun, predict = predictfun,
+    par.set = par.set, par.vals = par.vals)
+  lrn2$id = stri_replace(lrn2$id, replacement = ".multiRes", regex = "\\.preproc$")
   lrn2 = addClasses(lrn2, "MultiResFeaturesWrapper")
   return(lrn2)
 }
