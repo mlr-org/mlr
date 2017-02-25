@@ -5,7 +5,7 @@
 \title{Hyperparameter tuning.}
 \usage{
 tuneParams(learner, task, resampling, measures, par.set, control,
-  show.info = getMlrOption("show.info"))
+  show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -37,6 +37,11 @@ Control object for search method. Also selects the optimization algorithm for tu
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
+
+\item{resample.fun}{[\code{closure}]\cr
+The function to use for resampling. Defaults to \code{\link{resample}} and should take the
+same arguments as, and return the same result type as, \code{\link{resample}}. This
+parameter must be the default when \code{mbo} tuning is performed.}
 }
 \value{
 [\code{\link{TuneResult}}].

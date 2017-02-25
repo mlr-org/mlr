@@ -1,5 +1,6 @@
 tuneMBO = function(learner, task, resampling, measures, par.set, control,
-  opt.path, show.info) {
+  opt.path, show.info, resample.fun) {
+  # resample.fun is ignored, but the argument is presented for consistency.
 
   # requirePackages("mlrMBO", why = "tuneMBO", default.method = "load")
   mbo.control = control$mbo.control
@@ -22,7 +23,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   } else {
     # FIXME: remove this when mbo on cran
     mbofun = get("mbo", envir = getNamespace("mlrMBO"))
-    or = mbofun(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
+    or = mbofun(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE, resample.fun)
   }
 
   x = trafoValue(par.set, or$x)

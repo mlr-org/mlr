@@ -6,13 +6,13 @@
 
 # one x
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
-  opt.path, show.info, convertx, remove.nas) {
+  opt.path, show.info, convertx, remove.nas, resample.fun) {
 
   x = convertx(x, par.set)
   # transform parameters
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
-    opt.path, show.info, dob, x, remove.nas)
+    opt.path, show.info, dob, x, remove.nas, resample.fun)
   extra = getTuneThresholdExtra(ctrl, res)
   addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,
     exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
@@ -42,12 +42,12 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
 
 # multiple xs in parallel
 tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.set, ctrl,
-  opt.path, show.info, convertx, remove.nas) {
+  opt.path, show.info, convertx, remove.nas, resample.fun) {
 
   xs = convertx(xs, par.set)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res.list = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
-    opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
+    opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas, resample.fun = resample.fun)
   ys = extractSubList(res.list, "y")
   # we return a numeric vec of y-values
   vnapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
