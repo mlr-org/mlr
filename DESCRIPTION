@@ -151,9 +151,6 @@ Suggests:
     TH.data,
     xgboost (>= 0.6-2),
     XML
-Remotes:
-    github::mllg/batchtools
-    github::openml/openml-r
 LazyData: yes
 ByteCompile: yes
 Version: 2.11
