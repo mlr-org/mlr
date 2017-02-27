@@ -110,7 +110,7 @@ getAlgoFun = function(lrn, measures, models) {
       data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(data$task))
 
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test, 
-      measures = measures, weights = instance$weights, rdesc = data$rdesc, model = models, extract = extract.this)
+      measures = measures, weights = instance$weights, rdesc = data$rdesc, model = models, extract = extract.this, show.info = FALSE)
   }
 }
 

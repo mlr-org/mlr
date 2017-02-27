@@ -125,12 +125,13 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
   calculateResampleIterationResult(learner = learner, task = task, train.i = train.i, test.i = test.i, measures = measures, 
-    weights = weights, rdesc = rin$desc, model = model, extract = extract)
+    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
 }
 
 
 #Evaluate one train/test split of the resample function and get one or more performance values
-calculateResampleIterationResult = function(learner, task, train.i, test.i, measures, weights, rdesc, model, extract) {
+calculateResampleIterationResult = function(learner, task, train.i, test.i, measures, 
+  weights, rdesc, model, extract, show.info) {
   
   err.msgs = c(NA_character_, NA_character_)
   m = train(learner, task, subset = train.i, weights = weights[train.i])
@@ -142,7 +143,7 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
   ms.test = rep(NA, length(measures))
   pred.train = NULL
   pred.test = NULL
-  pp = rin$desc$predict
+  pp = rdesc$predict
   train.task = task
   if (pp == "train") {
     lm = getLearnerModel(m)
@@ -238,7 +239,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
     pred = NULL
 
   list(
-    learner.id = learner$id,
+    learner.id = learner.id,
     task.id = getTaskId(task),
     task.desc = getTaskDescription(task),
     measures.train = ms.train,
