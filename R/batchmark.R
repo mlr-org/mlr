@@ -72,7 +72,7 @@ batchmark = function(learners, tasks, data.ids, resamplings, measures, models = 
   reg$packages = union(reg$packages, "mlr")
   
   #set name of learner list
-  lrn.ids = vapply(learners, getLearnerId, FUN.VALUE = character(1))
+  lrn.ids = vcapply(learners, getLearnerId)
   names(learners) = lrn.ids
 
   # generate problems

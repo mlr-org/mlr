@@ -135,22 +135,6 @@ benchmarkParallel = function(task, learner, learners, tasks, resamplings, measur
   return(r)
 }
 
-# get extractor function for different wrapped models
-getExtractor = function(lrn) {
-  cl = class(lrn)
-  if ("FeatSelWrapper" %in% cl) {
-    extract.this = getFeatSelResult
-  } else if ("TuneWrapper" %in% cl) {
-    extract.this = getTuneResult
-  } else if ("FilterWrapper" %in% cl) {
-    extract.this = getFilteredFeatures
-  } else {
-    extract.this = function(model) { NULL }
-  }
-  extract.this
-}
-
-
 #' @export
 print.BenchmarkResult = function(x, ...) {
   print(getBMRAggrPerformances(x, as.df = TRUE))
