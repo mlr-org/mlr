@@ -34,3 +34,4 @@ test_that("listLearners printer (#1336)", {
   expect_equal(length(stri_match_all(out, regex = '\n')), 13)
   options(width = 80)
 })
+
