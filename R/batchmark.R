@@ -12,12 +12,12 @@
 #' \url{https://github.com/mllg/batchtools}.
 #' 
 #' The general workflow with \code{batchmark} looks like that:
-#' \itemize{
+#' \enumerate{
 #' \item{1.}{\code{batchtools::createExperimentRegistry()}}
 #' \item{2.}{\code{batchmark(...)}}
 #' \item{3.}{\code{batchtools:submitJobs()}}
-#' \item{3.5}{wait until the jobs are finished...}
-#' \item{4.}{\code{reduceBatchtoolsResult()}}
+#' \item{4.}{wait until the jobs are finished...}
+#' \item{5.}{\code{reduceBatchtoolsResult()}}
 #' }
 #' @inheritParams benchmark
 #' @param data.ids [\code{integer}]\cr
