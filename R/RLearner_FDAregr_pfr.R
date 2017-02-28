@@ -9,8 +9,7 @@ makeRLearner.fdaregr.pfr = function() {
     cl = "fdaregr.pfr",
     package = "refund",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "k", default = 50L), # 50L comes from the refund documentation
-      makeUntypedLearnerParam(id = "index.list", default = NULL)
+      makeIntegerLearnerParam(id = "af.k", default = 50L) # 50L comes from the refund documentation
     ),
     properties = c("numerics"),
     name = "penalized functional regression",
@@ -19,34 +18,28 @@ makeRLearner.fdaregr.pfr = function() {
 }
 
 #' @export
-trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, ...) {
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE)
-  df = d$data
+trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, af.k) {
+  d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
-  index.list = tdesc$fd.grids
-  channel.list = tdesc$fd.features
-  name4channel = names(index.list)
-  num4channel = length(index.list)
-  mextra_para = list(...)
-  ###FIXME: there should be a function to complete the list4mat
-  ####list(...)[names(list(...))%in%names(formals)]
-  list4mat = list()
-  list4formula = list()
-  list4mat[[eval(tn)]] = d$target
-  for(i in 1:num4channel){
-    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
-    list4mat[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
-    list4formula[[i]] = sprintf("af(%s, basistype = 's', Qtransform = TRUE, k=%d)", name4channel[[i]], mextra_para$k)
+  fdf = tdesc$fd.features
+  fdg = tdesc$fd.grids
+  # later on, the grid elements in mat.list should have suffix ".grid"
+  names(fdg) = paste0(names(fdg), ".grid")
+  fdns = names(fdf)
+  # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
+  # also setup charvec of formula terms for func covars
+  mat.list = namedList(fdns)
+  formula.terms = namedList(fdns)
+  for (fdn in fdns) {
+    gn = paste0(fdn, ".grid")
+    mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
+    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = TRUE, k=%d)", fdn, af.k)
   }
-  makeformula = function(x1,x2){
-    paste(x1,x2, sep = "+")
-  }
-  rformula = Reduce(f = makeformula, x = list4formula)
-  mformula = as.formula(paste0(tn,"~", rformula))
-  ###
-  fit.af.s = refund::pfr(formula = mformula, data=list4mat)
-  #fit.af.s <- pfr(tn ~ af(cca, basistype="s", Qtransform=TRUE, k=50), data=list4mat)
+  mat.list = c(mat.list, fdg)
+  mat.list[[tn]] = d[, tn]
+  form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+")))
+  pfr(formula = form, data = mat.list)
 }
 
 reformat2list4mat2 = function(.data, tdesc){
@@ -70,6 +63,7 @@ predictLearner.fdaregr.pfr = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDescription(.model)
   list4mat = reformat2list4mat2(.newdata, tdesc )
-  predict(.model$learner.model, newdata = list4mat, type = 'response')
+  pred = predict(.model$learner.model, newdata = list4mat, type = 'response')
+  return(as.vector(pred))
 }
 
