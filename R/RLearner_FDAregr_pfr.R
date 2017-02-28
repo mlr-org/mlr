@@ -18,7 +18,7 @@ makeRLearner.fdaregr.pfr = function() {
 }
 
 #' @export
-trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, af.k) {
+trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, af.k, ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
