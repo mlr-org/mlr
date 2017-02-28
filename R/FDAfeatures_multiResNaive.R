@@ -1,3 +1,57 @@
+#' @title Multiresolution feature extraction on one functional covariate
+#'
+#' @description
+#' The function extract the mean of a small segments of the curve and stack them
+#' as features. The segments length are set in a hierachy way so the features
+#' cover different resolution levels.
+#'
+#' @param data [\code{dataframe}]\cr
+#'   The input matrix.
+#' @param res.level [\code{integer}]\cr
+#'   The number of resolution hierachy, each length is divided by a factor of 2.
+#' @param shift [\code{numeric}]\cr
+#'   The overlapping proportion when slide the window for one step.
+#' @return Returns a [\code{matrix}] object with each row containing the
+#'   multi-resolution features.
+#' @export
+getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift = 0.5) {
+  feat.list = namedList(names = names(fd.features))
+  for(fdn in names(fd.features)){
+    feat.list[[fdn]] = getUniFDAMultiResFeatures(data[, fd.features[[fdn]]], res.level = res.level, shift = shift)
+  }
+  as.data.frame(Reduce(cbind, x = feat.list))
+}
+
+#' @title Multiresolution feature extraction on one functional covariate
+#'
+#' @description
+#' The function extract the mean of a small segments of the curve and stack them
+#' as features. The segments length are set in a hierachy way so the features
+#' cover different resolution levels.
+#'
+#' @param data [\code{dataframe}]\cr
+#'   The input matrix.
+#' @param res.level [\code{integer}]\cr
+#'   The number of resolution hierachy, each length is divided by a factor of 2.
+#' @param shift [\code{numeric}]\cr
+#'   The overlapping proportion when slide the window for one step.
+#' @return Returns a [\code{matrix}] object with each row containing the
+#'   multi-resolution features.
+#' @export
+getUniFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5) {
+  data = as.matrix(data)
+  checkmate::assert_matrix(data)
+  n.obs = nrow(data)
+  feat.list = vector("list", n.obs)  
+  j = 1L
+  for (i in 1:n.obs) {  # traverse the number of observations
+    f = getCurveFeatures(data[i, ], res.level = res.level, shift = shift)
+    feat.list[[i]] = f  # put features from the ith instance into the list ith position
+  }
+  do.call(rbind, feat.list)  # creat a matrix by combining the row
+}
+
+
 #' @title Multiresolution feature extraction.
 #'
 #' @description
@@ -17,7 +71,8 @@
 #'   multi-resolution features.
 #' @export
 extractFDAMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
-  checkmate::assert_matrix(data)
+  #checkmate::assert_matrix(data)
+  data = as.matrix(data)
   n.obs = nrow(data)
   n.curves = length(curve.lens)
   feat.list = vector("list", n.obs)  # class(feat.list) = "list", vector(mode = "logical", length = 0)
