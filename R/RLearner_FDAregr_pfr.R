@@ -9,7 +9,7 @@ makeRLearner.fdaregr.pfr = function() {
     cl = "fdaregr.pfr",
     package = "refund",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "af.k", default = 50L) # 50L comes from the refund documentation
+      makeIntegerLearnerParam(id = "af.k", default = -1L) # 50L comes from the refund documentation
     ),
     properties = c("numerics"),
     name = "penalized functional regression",
@@ -18,7 +18,7 @@ makeRLearner.fdaregr.pfr = function() {
 }
 
 #' @export
-trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, af.k, ...) {
+trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, af.k = 1L, ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)

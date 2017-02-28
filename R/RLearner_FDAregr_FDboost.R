@@ -11,7 +11,7 @@ makeRLearner.fdaregr.FDboost = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "bsignal.knots", default = 10L, lower = 1L),
-      makeIntegerLearnerParam(id = "bsignal.df", default = 3L, lower = 1L),
+      makeIntegerLearnerParam(id = "bsignal.df", default = 4L, lower = 1L),
       makeUntypedLearnerParam(id = "timeformular", default = NULL),
       makeLogicalLearnerParam(id = "normalize", default = FALSE),  # whether to normalize column to fit the need of mboost
       makeLogicalLearnerParam(id = "check.indent", default = TRUE)
@@ -23,7 +23,7 @@ makeRLearner.fdaregr.FDboost = function() {
 }
 
 #' @export
-trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, bsignal.knots, bsignal.df, ...) {
+trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, bsignal.knots = 10L, bsignal.df = 4L, ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
