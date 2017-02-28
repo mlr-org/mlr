@@ -9,8 +9,8 @@ makeRLearner.fdaregr.FDboost = function() {
     cl = "fdaregr.FDboost",
     package = c("FDboost", "mboost"),
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "mstop", default = 200L),
-      makeIntegerLearnerParam(id = "degree4freedom", default = 3L, lower = 1L),
+      makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
+      makeIntegerLearnerParam(id = "bsignal.knots", default = 10L, lower = 1L),
       makeIntegerLearnerParam(id = "num_knots", default = 40L, lower = 1L),
       makeUntypedLearnerParam(id = "timeformular", default = NULL),
       makeUntypedLearnerParam(id = "index.list", default = NULL),
@@ -24,38 +24,33 @@ makeRLearner.fdaregr.FDboost = function() {
 }
 
 #' @export
-trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, ...) {
-  fdboost.task = .task
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE)
+trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, num_knots, degree4freedom, ...) {
+  d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
-  df = d$data
   tdesc = getTaskDescription(.task)
-  channel.list = tdesc$fd.features
-  index.list = tdesc$fd.grids
-  z = d$target
-  mextra_para  = list(...)
-  name4channel = names(index.list)
-  num4channel = length(index.list)
-  list4mat = list()
-  list4formula = list()
-  list4mat[[eval(tn)]] = d$target
-  for(i in 1:num4channel){
-    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
-    list4mat[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
-    list4formula[[i]] = sprintf("bsignal(%s,%s,knots = %d, df = %d, check.ident = FALSE)", name4channel[[i]], paste0(name4channel[[i]],".index"), mextra_para$num_knots, mextra_para$degree4freedom)
+  fdf = tdesc$fd.features
+  fdg = tdesc$fd.grids
+
+  # later on, the grid elements in mat.list should have suffix ".grid"
+  names(fdg) = paste0(names(fdg), ".grid")
+  fdns = names(fdf)
+  # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
+  # also setup charvec of formula terms for func covars
+  mat.list = namedList(fdns)
+  formula.terms = character(length(fdf))
+  for (fdn in fdns) {
+    gn = paste0(fdn, ".grid")
+    mat.list[[fdn]]=  as.matrix(d$data[, tdesc$fd.features[[i]], drop = FALSE])
+    form[fdn] = sprintf("bsignal(%s, %s, knots = %d, df = %d, check.ident = FALSE)", fdn, gn, bsignal.knots, bsignal.df)
   }
-  makeformula = function(x1,x2){
-    paste(x1,x2, sep = "+")
-  }
-  rformula = Reduce(f = makeformula, x = list4formula)
-  mformula = as.formula(paste0(tn,"~", rformula))
-  #form = as.formula(sprintf("%s ~ %s", tn, collapse(c(ff1, ff2), "+")))
-  mod2f <- FDboost::FDboost(formula = mformula, timeformula = ~bols(1), data = list4mat, control = mboost::boost_control(mstop = 200))
-  return(mod2f)
+  mat.list = c(mat.list, fdg)
+  mat.list[[tn]] = d[, tn]
+  form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+"))
+  FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, control = mboost::boost_control(mstop = mstop))
 }
 
 
-reformat2list4mat = function(.data, tdesc){
+reformat2mat.list = function(.data, tdesc){
   df =  .data
   fd.features = tdesc$fd.features
   fd.grids = tdesc$fd.grids
@@ -64,19 +59,19 @@ reformat2list4mat = function(.data, tdesc){
   index.list = tdesc$fd.grids
   name4channel = names(index.list)
   num4channel = length(index.list)
-  list4mat = list()
+  mat.list = list()
   for(i in 1:num4channel){
-    list4mat[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
-    list4mat[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
+    mat.list[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
+    mat.list[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
   }
-  return(list4mat)
+  return(mat.list)
 }
 
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDescription(.model)
-  list4mat = reformat2list4mat(.newdata, tdesc )
-  pred = predict(object = .model$learner.model, newdata = list4mat)
+  mat.list = reformat2mat.list(.newdata, tdesc )
+  pred = predict(object = .model$learner.model, newdata = mat.list)
   return(pred)
 }
