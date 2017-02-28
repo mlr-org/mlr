@@ -96,7 +96,7 @@ resample.fun = function(job, data, i) {
   if (is.numeric(data$task))
     data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(data$task))
   rin = makeResampleInstance(desc = data$rdesc, task = data$task)
-  list(train = rin$train.inds[[i]], test = rin$test.inds[[i]], weights = rin$weights[[i]])
+  list(train = rin$train.inds[[i]], test = rin$test.inds[[i]], weights = rin$weights[[i]], rin = rin)
 }
 
 getAlgoFun = function(lrn, measures, models) {
@@ -147,16 +147,16 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
   for (p in problems) {
     
     exps = batchtools::findExperiments(prob.name = p, ids = ids)
+    job = batchtools::makeJob(id = exps[1, ])
+    rin = job$instance$rin
     
     if (nrow(exps) > 0) {
-      problem = batchtools::makeJob(id = exps[1, ])$problem
+      problem = job$problem
       pname = p
       if (is.numeric(problem$data$task)) {
         problem$data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(problem$data$task))
         pname = getTaskId(problem$data$task)
       }
-      
-      rin = makeResampleInstance(problem$data$rdesc, problem$data$task)
       
       for (a in algorithms) {
         res = batchtools::reduceResultsList(batchtools::findExperiments(prob.name = p, algo.name = a, ids = ids))
