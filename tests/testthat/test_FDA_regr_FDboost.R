@@ -34,7 +34,7 @@ test_that("FDA_regr_FDboost", {
     mod2f = FDboost(heatan ~ bsignal(UVVIS, uvvis.lambda, knots = 40, df = 4, check.ident = FALSE)
    + bsignal(NIR, nir.lambda, knots = 40, df = 4, check.ident = FALSE),
     timeformula = ~bols(1), data = fuelSubset, control = boost_control(mstop = 200))
-    lrn = makeLearner("fdaregr.FDboost", num_knots =40L, degree4freedom =4L )
+    lrn = makeLearner("fdaregr.FDboost", bsignal.knots =40L, bsignal.df = 4L )
     mod1f = train(learner = lrn, task = fdboost.task)
     predict(object = mod1f,newdata = mdata)
 })

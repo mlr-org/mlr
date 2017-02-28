@@ -11,9 +11,8 @@ makeRLearner.fdaregr.FDboost = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "bsignal.knots", default = 10L, lower = 1L),
-      makeIntegerLearnerParam(id = "num_knots", default = 40L, lower = 1L),
+      makeIntegerLearnerParam(id = "bsignal.df", default = 3L, lower = 1L),
       makeUntypedLearnerParam(id = "timeformular", default = NULL),
-      makeUntypedLearnerParam(id = "index.list", default = NULL),
       makeLogicalLearnerParam(id = "normalize", default = FALSE),  # whether to normalize column to fit the need of mboost
       makeLogicalLearnerParam(id = "check.indent", default = TRUE)
       ),
@@ -24,7 +23,7 @@ makeRLearner.fdaregr.FDboost = function() {
 }
 
 #' @export
-trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, num_knots, degree4freedom, ...) {
+trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, bsignal.knots, bsignal.df) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
@@ -40,12 +39,12 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   formula.terms = character(length(fdf))
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
-    mat.list[[fdn]]=  as.matrix(d$data[, tdesc$fd.features[[i]], drop = FALSE])
-    form[fdn] = sprintf("bsignal(%s, %s, knots = %d, df = %d, check.ident = FALSE)", fdn, gn, bsignal.knots, bsignal.df)
+    mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
+    formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %d, df = %d, check.ident = FALSE)", fdn, gn, bsignal.knots, bsignal.df)
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
-  form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+"))
+  form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+")))
   FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, control = mboost::boost_control(mstop = mstop))
 }
 
