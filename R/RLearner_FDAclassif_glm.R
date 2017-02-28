@@ -1,6 +1,7 @@
-#' @title Classification of functional data by Generalized Linear Models
+#' @title Classification of functional data by Generalized Linear Models.
 #'
-#' @description Learner for classification using Generalized Linear Models.
+#' @description
+#' Learner for classification using Generalized Linear Models.
 #'
 #' @export
 makeRLearner.fdaclassif.glm = function() {

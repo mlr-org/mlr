@@ -1,6 +1,7 @@
-#' @title Penalized functional regression
+#' @title Penalized functional regression.
 #'
-#' @description Learner for penalized functional regression.
+#' @description
+#' Learner for penalized functional regression.
 #'
 #' @export
 makeRLearner.fdaregr.pfr = function() {

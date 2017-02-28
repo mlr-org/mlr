@@ -1,6 +1,7 @@
-#' @title Learner for kernel classification for functional data
+#' @title Learner for kernel classification for functional data.
 #'
-#' @description Learner for kernel Classification.
+#' @description
+#' Learner for kernel Classification.
 #'
 #' @export
 makeRLearner.fdaclassif.kernel = function() {

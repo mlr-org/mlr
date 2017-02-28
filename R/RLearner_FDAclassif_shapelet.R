@@ -1,6 +1,7 @@
-#' @title Shapelet Model Learner
+#' @title Shapelet Model Learner.
 #'
-#' @description Learner for Shapelet learning for classification.
+#' @description
+#' Learner for Shapelet learning for classification.
 #'
 #' @export
 makeRLearner.fdaclassif.shapelet = function() {

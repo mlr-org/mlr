@@ -1,7 +1,8 @@
-#' @title Functional Linear Array Model
+#' @title Functional Linear Array Model.
 #'
-#' @description The function creates function data features based on the spline
-#'   fit design matrix.
+#' @description
+#' The function creates function data features based on the spline fit design
+#' matrix.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Functional data.
@@ -17,10 +18,8 @@
 #'   spline is, the easier for overfitting.
 #' @param degree [\code{integer}]\cr
 #'   degree of piecewise regression function.
-#'
 #' @return Returns an \code{data.frame} object containing the design
 #'   matrix(converted to dataframe) according to the spline fit.
-#'
 #' @export
 getFDAFDboostFeatures = function(data, target, have.target = TRUE, include.target = FALSE, nknots = 10L, degree = 3L) {
   requirePackages("mboost", default.method = "load")

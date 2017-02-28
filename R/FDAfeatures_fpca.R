@@ -1,7 +1,8 @@
-#' @title Functional Linear Array Model
+#' @title Functional Linear Array Model.
 #'
-#' @description The function creates functional data features based on the
-#'   spline fit design matrix.
+#' @description
+#' The function creates functional data features based on the spline fit design
+#' matrix.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Functional data.
@@ -12,8 +13,7 @@
 #' @param include.target [\code{logical}]\cr
 #'   Should the target variable (i.e. the label) be added in the returned
 #'   data.frame? Default is \code{FALSE}.
-#'
-#' @return Returns an \code{data.frame}
+#' @return Returns an \code{data.frame}.
 #' @export
 getFDAFPCAFeatures = function(data, target, have.target = TRUE, include.target = FALSE) {
   requirePackages("mboost", default.method = "load")

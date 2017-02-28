@@ -1,7 +1,8 @@
-#' @title Fast Fourier transform features
+#' @title Fast Fourier transform features.
 #'
-#' @description The function creates functional data features based on the fast
-#'   discrete fourier transform.
+#' @description
+#' The function creates functional data features based on the fast discrete
+#' fourier transform.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Functional data.
@@ -14,10 +15,8 @@
 #'   Optional, specifies which 'transformation' of the complex frequency domain
 #'   representation should be calculated as feature representation. Must be one
 #'   of \dQuote{amplitude} or \dQuote{Phase}. Default: \dQuote{amplitude}.
-#'
 #' @return Returns an \code{data.frame} object containing the fourier
 #'   coefficients.
-#'
 #' @export
 getFDAFourierFeatures = function(data, target, include.target = FALSE, fft.coeff = "phase") {
   requirePackages("stats", default.method = "load")

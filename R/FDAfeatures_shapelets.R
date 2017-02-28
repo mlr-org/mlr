@@ -1,12 +1,12 @@
 #' @title Shapelet features transformation
 #'
-#' @description The function learns a shapelet model for classification. This
-#'   includes k shapelet features with each length l for classification. Based
-#'   on those shapelets, the raw functional data can be tranformed into
-#'   shapelet-based feature transformation. Moreover, a classification is
-#'   learned jointly. It is either a standard SVM or a logistic regression.
-#'   Together with the shapelets, they provide the complete shapelet model for
-#'   classification.
+#' @description
+#' The function learns a shapelet model for classification. This includes k
+#' shapelet features with each length l for classification. Based on those
+#' shapelets, the raw functional data can be tranformed into shapelet-based
+#' feature transformation. Moreover, a classification is learned jointly. It is
+#' either a standard SVM or a logistic regression. Together with the shapelets,
+#' they provide the complete shapelet model for classification.
 #'
 #' @param curves [\code{data.frame},\code{matrix}]\cr
 #'   Functional data.
@@ -15,7 +15,6 @@
 #' @param ... [\code{any}]\cr
 #'   Addtional parameters passed to shapelet learning function. Please see
 #'   \code{shapeletLib}.
-#'
 #' @return Returns an object of type \code{ShapeletModel} containing the learned
 #'   shapelet model. I.e.
 #'   \itemize{
@@ -28,7 +27,6 @@
 #'     \item max.iter [\code{integer}]: maximal number of iterations.
 #'     \item class [\code{character}]: binary or multi-class classification?
 #'   }
-#'
 #' @export
 getFDAShapeletFeatures = function(curves, label, ...) {
 

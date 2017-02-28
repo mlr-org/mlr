@@ -1,20 +1,20 @@
-#' @title multiresolution feature extraction
+#' @title Multiresolution feature extraction.
 #'
-#' @description The function extract the mean of a small segments of the curve
-#'   and stack them as features. The segments length are set in a hierachy way
-#'   so the features cover different resolution levels.
+#' @description
+#' The function extract the mean of a small segments of the curve and stack them
+#' as features. The segments length are set in a hierachy way so the features
+#' cover different resolution levels.
 #'
 #' @param data [\code{dataframe}]\cr
-#'   the input matrix.
+#'   The input matrix.
 #' @param curve.lens [\code{vector}]\cr
-#'   the subcurve length vector, suggest to sum up to the lenght of the curve.
+#'   The subcurve length vector, suggest to sum up to the lenght of the curve.
 #' @param res.level [\code{integer}]\cr
-#'   the number of resolution hierachy, each length is divided by a factor of 2.
+#'   The number of resolution hierachy, each length is divided by a factor of 2.
 #' @param shift [\code{numeric}]\cr
 #'   The overlapping proportion when slide the window for one step.
 #' @return Returns a [\code{matrix}] object with each row containing the
 #'   multi-resolution features.
-#'
 #' @export
 extractFDAMultiResFeatures = function(data, curve.lens, res.level = 3L, shift = 0.5) {
   checkmate::assert_matrix(data)

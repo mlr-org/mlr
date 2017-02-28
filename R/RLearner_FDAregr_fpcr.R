@@ -1,6 +1,7 @@
-#' @title Functional principal component regression
+#' @title Functional principal component regression.
 #'
-#' @description Functional learner for principal component regression.
+#' @description
+#' Functional learner for principal component regression.
 #'
 #' @export
 makeRLearner.fdaregr.fpcr = function() {

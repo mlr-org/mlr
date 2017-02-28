@@ -1,11 +1,15 @@
-#' @title MultiRes preprocess wrapper
+#' @title MultiRes preprocess wrapper.
 #'
-#' @description Extracts multiResolution features and combine that with a
-#'   learner.
+#' @description
+#' Extracts multiResolution features and combine that with a learner.
 #'
 #' @param learner \cr
 #'   The mlr learner to wrap on top of feature extraction.
-#'
+#' @param mrw.res.level [\code{integer(1)}]\cr
+#'   FIX ME. Description.
+#' @param mrw.shift [\code{numeric(1)}]\cr
+#'   FIX ME. Description.
+#' @return Object of type \code{learner}. FIX ME. What is returned?
 #' @export
 makeFDARegrPreprocWrapperMultiRes = function(learner, mrw.res.level = 3L, mrw.shift = 0.5) {
   lrn = checkLearner(learner)

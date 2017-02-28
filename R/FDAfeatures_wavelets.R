@@ -1,7 +1,8 @@
-#' @title Discrete Wavelet transform features
+#' @title Discrete Wavelet transform features.
 #'
-#' @description The function extracts discrete wavelet transform coefficients
-#'   from the raw functional data.
+#' @description
+#' The function extracts discrete wavelet transform coefficients from the raw
+#' functional data.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Time series curve data.
@@ -14,10 +15,8 @@
 #'   Optional, specifies which filter or boundary should be used. Default:
 #'   \code{filter} = \dQuote{la8}, \code{boundary} = \dQuote{periodic}. See
 #'   package \code{wavelets} for more information.
-#'
 #' @return Returns an \code{data.frame} object containing the wavelet
 #'   coefficients.
-#'
 #' @export
 getFDAWaveletFeatures = function(data, target, include.target = FALSE, filter = NULL, boundary = NULL) {
   requirePackages("wavelets", default.method = "load")

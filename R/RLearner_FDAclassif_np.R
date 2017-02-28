@@ -1,6 +1,7 @@
-#' @title Learner for nonparametric classification for functional data
+#' @title Learner for nonparametric classification for functional data.
 #'
-#' @description Learner for Nonparametric Supervised Classification.
+#' @description
+#' Learner for Nonparametric Supervised Classification.
 #'
 #' @export
 makeRLearner.fdaclassif.np = function() {

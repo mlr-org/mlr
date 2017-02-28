@@ -1,6 +1,7 @@
-#' @title Functional linear array model bossting
+#' @title Functional linear array model bossting.
 #'
-#' @description Learner for Functional linear array modeling boosting.
+#' @description
+#' Learner for Functional linear array modeling boosting.
 #'
 #' @export
 makeRLearner.fdaregr.FDboost = function() {

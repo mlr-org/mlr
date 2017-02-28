@@ -19,7 +19,6 @@
 #'   Default is \code{NULL} then all functional variables are observed on equidistant
 #'   observation grids 1, 2, …, <number of observations per function>.
 #' @return [\code{\link{FDAClassifTask}}]
-#'
 #' @export
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,

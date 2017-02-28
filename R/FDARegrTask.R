@@ -1,6 +1,7 @@
-#' @title Functional data regression task
+#' @title Functional data regression task.
 #'
-#' @description  Functional data regression task.
+#' @description
+#' Functional data regression task.
 #'
 #' @inheritParams Task
 #' @param fd.features [\code{list}]\cr
@@ -17,7 +18,6 @@
 #'   on equidistant observation grids 1, 2, …, <number of observations per
 #'   function>.
 #' @return [\code{\link{FDARegrTask}}]
-#'
 #' @export
 #' @aliases FDARegrTask
 makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL,

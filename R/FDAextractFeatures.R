@@ -1,8 +1,8 @@
-#' @title Extract functional data features
+#' @title Extract functional data features.
 #'
-#' @description The function is the general framework to **extract** feature
-#'   transformation from raw functional data. This is a kind of preprocessing
-#'   step.
+#' @description
+#' The function is the general framework to **extract** feature transformation
+#' from raw functional data. This is a kind of preprocessing step.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
 #'   Functional data.
@@ -14,9 +14,7 @@
 #'   Fourier transformation: \dQuote{fourier}.
 #' @param args \cr
 #'   Additional arguments passed to the features functions.
-#'
 #' @return Returns an \code{data.frame} object containing the transformed data.
-#'
 #' @export
 extractFDAFeatures = function(data, target, method, args) {
 

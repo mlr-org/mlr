@@ -1,13 +1,14 @@
 #' @title Create task on functional data features.
 #'
-#' @description The function transform a task of type
-#'   \code{FDAClassifTask} into a standard \code{ClassifTask}. For this,
-#'   it creates a feature representation of the raw functional data. The method used
-#'   to create this feature representation must be specified by the user in
-#'   \code{method}. For \code{wavelets} or \code{fourier} features, the
-#'   resulting data does not contain temporal structure anymore, so the returned
-#'   task is a \code{ClassifTask}. For \code{shapelets}, the learned shapelet
-#'   model is returned. See \code{{getTSShapeletFeatures}}.
+#' @description
+#' The function transform a task of type \code{FDAClassifTask} into a standard
+#' \code{ClassifTask}. For this, it creates a feature representation of the raw
+#' functional data. The method used to create this feature representation must
+#' be specified by the user in \code{method}. For \code{wavelets} or
+#' \code{fourier} features, the resulting data does not contain temporal
+#' structure anymore, so the returned task is a \code{ClassifTask}. For
+#' \code{shapelets}, the learned shapelet model is returned. See
+#' \code{{getTSShapeletFeatures}}.
 #'
 #'
 #' @param task [\code{FDAClassifTask}]\cr
@@ -20,7 +21,6 @@
 #' @param pars \cr
 #'   Further parameters passed as argument e.g., for feature representation
 #'   methods. See the methods' man pages.
-#'
 #' @return Either [\code{ClassifTask}] based on the transformed data or the
 #'   learned shapelet model [\code{ShapeletModel}].
 #' @export
