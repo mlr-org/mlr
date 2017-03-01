@@ -36,3 +36,31 @@ extractFDAFeatures = function(data, target, method, args) {
   )
   return(tsf)
 }
+
+
+
+
+
+
+#' @title MultiFDACovariate feature extraction
+#'
+#' @description
+#' The function extract the features for each functional covariate of an FDA dataframe and bind them to a new dataframe.
+#' Currently, the scalar features are not binded to the output, in other words, they are abandoned.
+#'
+#' @param data [\code{dataframe}]\cr
+#'   The input dataframe.
+#' @param target [\code{character}]\cr
+#'   Name of the target variable.   
+#' @param fd.features [\code{list}] \cr
+#'   The hash table for different functional covariate.   
+#' @return Returns a [\code{matrix}] object with each row containing the
+#'   multi-resolution features.
+#' @export
+extractMultiFDAFeatures = function(data, target, fd.features, method, args) {
+  feat.list = namedList(names = names(fd.features))
+  for(fdn in names(fd.features)){
+    feat.list[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]]], target, method, args) 
+  }
+  as.data.frame(Reduce(cbind, x = feat.list))
+}
