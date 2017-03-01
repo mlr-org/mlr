@@ -1,7 +1,7 @@
 ensureBenchmarkLearners = function(learners) {
   learners = ensureVector(learners, 1L, "Learner")
   learners = lapply(learners, checkLearner)
-  learner.ids = extractSubList(learners, "id")
+  learner.ids = vcapply(learners, getLearnerId)
   if (anyDuplicated(learner.ids))
     stop("Learners need unique ids!")
   learners
@@ -11,7 +11,7 @@ ensureBenchmarkTasks = function(tasks) {
   tasks = ensureVector(tasks, 1L, "Task")
   assertList(tasks, min.len = 1L)
   checkListElementClass(tasks, "Task")
-  task.ids = extractSubList(tasks, c("task.desc", "id"))
+  task.ids = vcapply(tasks, getTaskId)
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
   tasks
