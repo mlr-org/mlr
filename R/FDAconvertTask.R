@@ -11,7 +11,7 @@
 #' \code{{getTSShapeletFeatures}}.
 #'
 #'
-#' @param task [\code{FDAClassifTask}]\cr
+#' @param task [\code{\link{FDATask}}]\cr
 #'   Functional data classification task.
 #' @param method [\code{character(1)}]\cr
 #'   Which method is used to create time series features. Methods available.
@@ -21,8 +21,8 @@
 #' @param pars \cr
 #'   Further parameters passed as argument e.g., for feature representation
 #'   methods. See the methods' man pages.
-#' @return Either [\code{ClassifTask}] based on the transformed data or the
-#'   learned shapelet model [\code{ShapeletModel}].
+#' @return Either [\code{\link{ClassifTask}}] based on the transformed data or the
+#'   learned shapelet model [\code{\link{ShapeletModel}}].
 #' @export
 convertFDATaskToNormalTask = function(task, method, pars = NULL) {
   # check if task
@@ -43,5 +43,45 @@ convertFDATaskToNormalTask = function(task, method, pars = NULL) {
   newdata = cbind(as.factor(z$target), tsf)
   colnames(newdata)[1] <- target  # rename target column
   newtask = makeClassifTask(data = newdata, target = target, positive = task$task.desc$positive)
+  return(newtask)
+}
+
+
+
+
+
+#' @title Transformer from FDATask to normal machine learning regression task
+#'
+#' @description
+#' The function transform a task of type \code{FDATask} into a standard 
+#' \code{RegrTask}. For this, it creates a feature representation of the raw
+#' functional data. The method used to create this feature representation must
+#' be specified by the user in \code{method}. For \code{wavelets} or
+#' \code{fourier} features, the resulting data does not contain temporal
+#' structure anymore, so the returned task is a [\code{\link{RegrTask}}]. 
+#'
+#' @param task [\code{\link{FDATask}}]\cr
+#'   Functional data analysis task.
+#' @param method [\code{character(1)}]\cr
+#'   Which method is used to create curve features. Methods available.
+#'   Wavelet transformation: \dQuote{wavelets}.
+#'   Fourier transformation: \dQuote{fourier}.
+#'   Shapelet model learning: \dQuote{shapelets}.
+#'   FIXME: should add more here
+#' @param pars \cr
+#'   Further parameters passed as argument e.g., for feature representation
+#'   methods. See the methods' man pages.
+#' @return [\code{\link{RegrTask}}]based on the transformed data 
+#' @export
+trafoFDATaskToRegrTask = function(task, method, pars = NULL) {
+  assertClass(task, classes = c("Task", "FDATask"))
+  target = task$task.desc$target
+  fdf = task$task.desc$fd.features
+  z = getTaskData(task, target.extra = TRUE)
+  tsf = extractMultiFDAFeatures(data = z$data, target = target, fd.features = fdf, method = method, args = pars)
+  newdata = cbind((z$target), tsf)
+  #colnames(newdata)[1] = target  # rename target column
+  colnames(newdata) = c(target, paste0('V', 1: (ncol(newdata) - 1) ))  # make sure that the column names are unique
+  newtask = makeRegrTask(data = newdata, target = target)
   return(newtask)
 }

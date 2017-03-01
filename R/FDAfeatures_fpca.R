@@ -39,6 +39,7 @@ getFDAFPCAFeatures = function(data, target, have.target = TRUE, include.target =
   rst <- refund::fpca.sc(Y = data)
   features_fpca <- rst$scores
   d_fpca = as.data.frame(features_fpca)
+  names(d_fpca) = paste0("V",1:ncol(d_fpca))
   if (include.target)
     d_fpca[, target] = y
   return(d_fpca)
