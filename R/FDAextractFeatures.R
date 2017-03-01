@@ -73,5 +73,5 @@ extractMultiFDAFeatures = function(data, target, fd.features, method, args) {
   res = namedList(fdns)
   for (fdn in fdns)
     res[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]], drop = FALSE], target, method, args)
-  do.call(cbind, feat.list)
+  do.call(cbind, res)
 }

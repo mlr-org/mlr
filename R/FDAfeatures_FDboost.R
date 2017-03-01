@@ -21,7 +21,7 @@
 #' @return Returns an \code{data.frame} object containing the design
 #'   matrix(converted to dataframe) according to the spline fit.
 #' @export
-getFDAFDboostFeatures = function(data, target, have.target = TRUE, include.target = FALSE, nknots = 10L, degree = 3L) {
+getFDAFDboostFeatures = function(data, target, have.target = TRUE, include.target = FALSE, bsignal.knots =10L ,bsignal.df = 3L) {
   requirePackages("mboost", default.method = "load")
   requirePackages("FDboost", default.method = "load")
   assert(
@@ -31,8 +31,8 @@ getFDAFDboostFeatures = function(data, target, have.target = TRUE, include.targe
   assertCharacter(target)
   assertFlag(include.target)
   assertFlag(have.target)
-  assertInteger(nknots)
-  assertInteger(degree)
+  assertInteger(bsignal.knots)
+  assertInteger(bsignal.df)
 
   cns = colnames(data)
   if (target %in% cns && have.target == TRUE) {
@@ -44,7 +44,7 @@ getFDAFDboostFeatures = function(data, target, have.target = TRUE, include.targe
   if (inherits(data, "data.frame"))
     data = as.matrix(data)
 
-  blrn = FDboost::bsignal(x = as.matrix(data), s = 1:ncol(data), knots = nknots, degree = degree)
+  blrn = FDboost::bsignal(x = as.matrix(data), s = 1:ncol(data), knots = bsignal.knots , degree = bsignal.df)
   features_bsignal = mboost::extract(object = blrn, what = "design")  # get the design matrix from base learner
   d_fdboost = as.data.frame(features_bsignal)
   if (include.target)
