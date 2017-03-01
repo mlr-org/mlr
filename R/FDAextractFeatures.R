@@ -37,11 +37,6 @@ extractFDAFeatures = function(data, target, method, args) {
   return(tsf)
 }
 
-
-
-
-
-
 #' @title MultiFDACovariate feature extraction
 #'
 #' @description
@@ -54,6 +49,12 @@ extractFDAFeatures = function(data, target, method, args) {
 #'   Name of the target variable.   
 #' @param fd.features [\code{list}] \cr
 #'   The hash table for different functional covariate.   
+#' @param method [\code{character}]\cr
+#'   Which method is used to extract functional data features. Methods available.
+#'   Wavelet transformation: \dQuote{wavelets}.
+#'   Fourier transformation: \dQuote{fourier}.
+#' @param args \cr
+#'   Additional arguments passed to the features functions.
 #' @return Returns a [\code{matrix}] object with each row containing the
 #'   multi-resolution features.
 #' @export
