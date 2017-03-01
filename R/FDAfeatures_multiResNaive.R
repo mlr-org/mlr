@@ -33,6 +33,7 @@ getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.leve
 #'
 #' @param data [\code{dataframe}]\cr
 #'   The input matrix.
+#' @param fd.features see [\code{\link{FDARegrTask}}] \cr
 #' @param res.level [\code{integer}]\cr
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
 #' @param shift [\code{numeric}]\cr
