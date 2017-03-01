@@ -1,5 +1,7 @@
 #' @title Extract functional data features.
 #'
+#FIXME: clarify what function does exactly, that it assumes one func covar per row
+#FIXME: and document ALL possible extract methods here in a nice list
 #' @description
 #' The function is the general framework to **extract** feature transformation
 #' from raw functional data. This is a kind of preprocessing step.
@@ -17,40 +19,46 @@
 #' @return Returns an \code{data.frame} object containing the transformed data.
 #' @export
 extractFDAFeatures = function(data, target, method, args) {
-
   assert(
     checkClass(data, "data.frame"),
     checkClass(data, "matrix")
   )
   assertCharacter(target)
+  #FIXME: dont mix capitalization styles so much. "multires" is better.
   assertChoice(method, choices = c("wavelets", "fourier", "bsignal", "multiRes", "fpca"))
   # if matrix, transform to data.frame so that following code executes correctly
-  if(inherits(data, "matrix"))
+  if (is.matrix(data))
     data = as.data.frame(data) # FIXME: This line is not so nice , but could make Fourier work
 
-  new.args = c(list(data = data, target = target), as.list(unlist(args)))
+  args = c(list(data = data, target = target), args)
 
-  switch(method,
-    wavelets = {do.call(getFDAWaveletFeatures, new.args)},
-    fourier = { do.call(getFDAFourierFeatures, new.args)},
-    bsignal = { do.call(getFDAFDboostFeatures, new.args)},
-    multiRes = {do.call(getFDAMultiResFeatures, new.args)},
-    fpca = {do.call(getFDAFPCAFeatures, new.args)} 
+  fun = switch(method,
+    wavelets = getFDAWaveletFeatures,
+    fourier = getFDAFourierFeatures,
+    bsignal = getFDAFDboostFeatures,
+    multiRes = getFDAMultiResFeatures,
+    fpca = getFDAFPCAFeatures
   )
+  do.call(fun, args)
 }
 
-#' @title MultiFDACovariate feature extraction
+#FIXME: i dont like a) the name of this function b) that we need it
+#FIXME: we should get rid of this, but we need it for the PreprocWrapper but that cannot work
+#FIXME: on tasks now in the API.
+
+#' @title MultiFDACovariate feature extraction.
 #'
 #' @description
-#' The function extract the features for each functional covariate of an FDA dataframe and bind them to a new dataframe.
+#' The function extract the features for each functional covariate of an FDA dataframe and bind them to
+#' a new dataframe.
 #' Currently, the scalar features are not binded to the output, in other words, they are abandoned.
 #'
 #' @param data [\code{dataframe}]\cr
 #'   The input dataframe.
 #' @param target [\code{character}]\cr
-#'   Name of the target variable.   
+#'   Name of the target variable.
 #' @param fd.features [\code{list}] \cr
-#'   The hash table for different functional covariate. See [\code{\link{FDARegrTask}}] 
+#'   The hash table for different functional covariate. See [\code{\link{FDARegrTask}}]
 #' @param method [\code{character}]\cr
 #'   Which method is used to extract functional data features. Methods available.
 #'   Wavelet transformation: \dQuote{wavelets}.
@@ -61,9 +69,9 @@ extractFDAFeatures = function(data, target, method, args) {
 #'   multi-resolution features.
 #' @export
 extractMultiFDAFeatures = function(data, target, fd.features, method, args) {
-  feat.list = namedList(names = names(fd.features))
-  for(fdn in names(fd.features)){
-    feat.list[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]]], target, method, args) 
-  }
-  as.data.frame(Reduce(cbind, x = feat.list))
+  fdns = names(fd.features)
+  res = namedList(fdns)
+  for (fdn in fdns)
+    res[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]], drop = FALSE], target, method, args)
+  do.call(cbind, feat.list)
 }
