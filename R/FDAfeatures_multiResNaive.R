@@ -1,3 +1,29 @@
+#' @title Multiresolution feature extraction
+#'
+#' @description
+#' The function extract the mean of a small segments of the curve and stack them
+#' as features. The segments length are set in a hierachy way so the features
+#' cover different resolution levels.
+#'
+#' @param data [\code{dataframe}]\cr
+#'   The input matrix.
+#' @param target [\code{character}]\cr
+#'   Name of the target variable.
+#' @param include.target [\code{logical}]\cr
+#'   Should the target variable (i.e. the label) be added in the returned
+#'   data.frame? Default is \code{FALSE}.
+#' @param res.level [\code{integer}]\cr
+#'   The number of resolution hierachy, each length is divided by a factor of 2.
+#' @param shift [\code{numeric}]\cr
+#'   The overlapping proportion when slide the window for one step.
+#' @return Returns a [\code{matrix}] object with each row containing the
+#'   multi-resolution features.
+#' @export
+getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.level = 3L, shift = 0.5) {
+  # FIXME: Currently this just wraps up to make the API consistent, but the args target and include.target does not make sense at all
+  getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
+}
+
 #' @title Multiresolution feature extraction on one functional covariate
 #'
 #' @description

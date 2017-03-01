@@ -23,18 +23,20 @@ extractFDAFeatures = function(data, target, method, args) {
     checkClass(data, "matrix")
   )
   assertCharacter(target)
-  assertChoice(method, choices = c("wavelets", "fourier"))
+  assertChoice(method, choices = c("wavelets", "fourier", "bsignal", "multiRes", "fpca"))
   # if matrix, transform to data.frame so that following code executes correctly
   if(inherits(data, "matrix"))
-    data = as.data.frame(data)
+    data = as.data.frame(data) # FIXME: This line is not so nice , but could make Fourier work
 
   new.args = c(list(data = data, target = target), as.list(unlist(args)))
 
   switch(method,
-    wavelets = {tsf = do.call(getFDAWaveletFeatures, new.args)},
-    fourier = {tsf = do.call(getFDAFourierFeatures, new.args)}
+    wavelets = {do.call(getFDAWaveletFeatures, new.args)},
+    fourier = { do.call(getFDAFourierFeatures, new.args)},
+    bsignal = { do.call(getFDAFDboostFeatures, new.args)},
+    multiRes = {do.call(getFDAMultiResFeatures, new.args)},
+    fpca = {do.call(getFDAFPCAFeatures, new.args)} 
   )
-  return(tsf)
 }
 
 #' @title MultiFDACovariate feature extraction
