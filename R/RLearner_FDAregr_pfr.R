@@ -4,6 +4,7 @@
 #' Learner for penalized functional regression from the pfr function of refund. 
 #' FIXME: currently I only have one parameter, but actually this function has 
 #' a million parameters and I need to find a way to specify them.
+#' 
 #' @export
 makeRLearner.fdaregr.pfr = function() {
   makeRLearnerRegr(
@@ -19,7 +20,7 @@ makeRLearner.fdaregr.pfr = function() {
 }
 
 #  @param s.k [\code{integer}] \cr
-#  the dimension of the basis used to represent the smooth term. 
+#  the dimension of the basis used to represent the smooth term.
 #  The default depends on the number of variables that the smooth is a function of.
 #  it should be chosen to be large enough that you are reasonably sure of having 
 #  enough degrees of freedom to represent the underlying ‘truth’ reasonably well, 

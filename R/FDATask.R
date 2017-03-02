@@ -5,12 +5,18 @@
 #' by adding some extra info to the taskdesc and changing s3 classes of task and desc
 #' task.cl and desc.cl are the target classes for converted object
 #' also does arg checking for FDA extra info args.
-#' @param task The normal mlr Task.
-#' @param type The task type.
-#' @param fd.features A list indicating the functional covariate
-#' @param fd.grids A list indicating the sampling grid of the functional covariate
-#' @param task.cl The class name to convert to, eg. fdaregr
-#' @param desc.cl The description name to convert to  
+#' @param task [\code{link{Task}}]\cr
+#' The normal mlr Task.
+#' @param type [\code{character}]\cr
+#' The task type.
+#' @param fd.features [\code{list}]\cr
+#' A list indicating the functional covariate
+#' @param fd.grids [\code{list}]\cr
+#' A list indicating the sampling grid of the functional covariate
+#' @param task.cl [\code{character}]\cr
+#' The class name to convert to, eg. fdaregr
+#' @param desc.cl [\code{character}]\cr
+#' The description name to convert to  
 #' @export
 #' @aliases FDATask
 makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {

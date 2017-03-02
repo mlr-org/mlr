@@ -5,7 +5,7 @@ requirePackagesOrSkip("refund")
 data(DTI)
 DTI1 <- DTI[DTI$visit==1 & complete.cases(DTI),]
 # Fit model with additive functional term for CCA, using tensor product basis
-fit.af <- pfr(pasat ~ af(cca, Qtransform=TRUE, k=c(7,7)), data=DTI1)
+fit.af <- refund::pfr(pasat ~ af(cca, Qtransform=TRUE, k=c(7,7)), data=DTI1)
 predict(fit.af, newdata = DTI1, type = 'response')
 #########################################################################
 #FIXME: the current implementation is not gneric 
