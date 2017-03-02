@@ -54,8 +54,8 @@ Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
 \note{
 If you would like to include results from the training data set, make
 sure to appropriately adjust the resampling strategy and the aggregation for
-the measure. See example code below.\cr
-Note that learners and parameter sets can contain task dependent
+the measure. See example code below.
+Also note that learners and parameter sets can contain task dependent
 expressions, see \code{\link{evaluateParamExpressions}} for more information.
 }
 \examples{
