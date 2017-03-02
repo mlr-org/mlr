@@ -1,7 +1,13 @@
-# converts a "normal" task (like ClassifTask) to an FDA task (like a ClassifTaskDesc)
-# by adding some extra info to the taskdesc and changing s3 classes of task and desc
-# task.cl and desc.cl are the target classes for converted object
-# also does arg checking for FDA extra info args
+#' @title Functional analysis task.
+#'
+#' @description
+#' converts a "normal" task (like ClassifTask) to an FDA task (like a ClassifTaskDesc)
+#' by adding some extra info to the taskdesc and changing s3 classes of task and desc
+#' task.cl and desc.cl are the target classes for converted object
+#' also does arg checking for FDA extra info args.
+
+#' @export
+#' @aliases FDATask
 makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
   fnames = getTaskFeatureNames(task)
   task$type = type

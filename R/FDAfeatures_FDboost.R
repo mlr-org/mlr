@@ -13,10 +13,10 @@
 #' @param include.target [\code{logical}]\cr
 #'   Should the target variable (i.e. the label) be added in the returned
 #'   data.frame? Default is \code{FALSE}.
-#' @param nknots [\code{integer}]\cr
+#' @param bsignal.knots [\code{integer}]\cr
 #'   number of knots for spline fit, the more knots, the more flexible the the
 #'   spline is, the easier for overfitting.
-#' @param degree [\code{integer}]\cr
+#' @param bsignal.df [\code{integer}]\cr
 #'   degree of piecewise regression function.
 #' @return Returns an \code{data.frame} object containing the design
 #'   matrix(converted to dataframe) according to the spline fit.

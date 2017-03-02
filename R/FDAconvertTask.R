@@ -22,7 +22,7 @@
 #'   Further parameters passed as argument e.g., for feature representation
 #'   methods. See the methods' man pages.
 #' @return Either [\code{\link{ClassifTask}}] based on the transformed data or the
-#'   learned shapelet model [\code{\link{ShapeletModel}}].
+#'   learned shapelet model [\code{ShapeletModel}].
 #' @export
 convertFDATaskToNormalTask = function(task, method, pars = NULL) {
   # check if task
