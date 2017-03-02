@@ -117,4 +117,23 @@ registerS3method("predictLearner", "regr.__mlrmocklearners__6", predictLearner.r
 
 
 
+# contains expressions in the parameter set and in the hyper params
+makeRLearner.classif.__mlrmocklearners__7 = function() {
+  makeRLearnerClassif(
+    cl = "classif.__mlrmocklearners__7",
+    package = character(0L),
+    par.set = makeParamSet(
+      makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
+      makeIntegerLearnerParam(id = "mtry", lower = 1L, default = expression(floor(sqrt(p)))),
+      makeLogicalLearnerParam(id = "importance", default = expression(task$task.desc$has.blocking)),
+      makeNumericVectorLearnerParam(id = "classwt", lower = 0, len = expression(k)),
+      keys = c("task.desc", "has.blocking")
+    ),
+    par.vals = list(minsplit = expression(ceiling(0.1 * (n + p)))),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob"),
+    name = "Mock Learner 7",
+    short.name = "mock7"
+  )
+}
 
+registerS3method("makeRLearner", "classif.__mlrmocklearners__7", makeRLearner.classif.__mlrmocklearners__7)
