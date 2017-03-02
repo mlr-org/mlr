@@ -4,15 +4,6 @@
 #' Learner for penalized functional regression from the pfr function of refund. 
 #' FIXME: currently I only have one parameter, but actually this function has 
 #' a million parameters and I need to find a way to specify them.
-#'
-#' @param s.k [code{\integer}] \cr
-#' the dimension of the basis used to represent the smooth term. 
-#' The default depends on the number of variables that the smooth is a function of.
-#' it should be chosen to be large enough that you are reasonably sure of having 
-#' enough degrees of freedom to represent the underlying ‘truth’ reasonably well, 
-#' but small enough to maintain reasonable computational efficiency. 
-#' k must be chosen: the defaults are essentially arbitrary??????????
-#' see mgcv::choose.k using mgcv::gam.check
 #' @export
 makeRLearner.fdaregr.pfr = function() {
   makeRLearnerRegr(
@@ -27,8 +18,16 @@ makeRLearner.fdaregr.pfr = function() {
   )
 }
 
+#  @param s.k [\code{integer}] \cr
+#  the dimension of the basis used to represent the smooth term. 
+#  The default depends on the number of variables that the smooth is a function of.
+#  it should be chosen to be large enough that you are reasonably sure of having 
+#  enough degrees of freedom to represent the underlying ‘truth’ reasonably well, 
+#  but small enough to maintain reasonable computational efficiency. 
+#  k must be chosen: the defaults are essentially arbitrary??????????
+#  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, s.k = 1L, ...) {
+trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, s.k = -1L, ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
