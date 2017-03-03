@@ -54,11 +54,6 @@ Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
 If you would like to include results from the training data set, make
 sure to appropriately adjust the resampling strategy and the aggregation for
 the measure. See example code below.
-<<<<<<< HEAD
-Also note that learners and parameter sets can contain task dependent
-expressions, see \code{\link{evaluateParamExpressions}} for more information.
-=======
->>>>>>> parent of 416305d... Expression handling (#1126)
 }
 \examples{
 # a grid search for an SVM (with a tiny number of points...)
