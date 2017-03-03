@@ -454,32 +454,3 @@ getTaskFactorLevels = function(task) {
 getTaskWeights = function(task) {
   task$weights
 }
-
-
-#' @title Create a dictionary based on the task.
-#'
-#' @description Returns a dictionary, which contains the \link{Task} itself
-#' (\code{task}), the number of features (\code{p}), the number of
-#' observations (\code{n}), the task type (\code{type}) and in case of
-#' classification tasks, the number of class levels (\code{k}).
-#'
-#' @template arg_task
-#' @return [\code{\link[base]{list}}]. Used for evaluating the expressions
-#' within a parameter, parameter set or list of parameters.
-#' @family task
-#' @export
-#' @examples
-#' task = makeClassifTask(data = iris, target = "Species")
-#' getTaskDictionary(task)
-getTaskDictionary = function(task) {
-  assertClass(task, classes = "Task")
-  dict = list(
-    task = task,
-    p = getTaskNFeats(task),
-    n = getTaskSize(task),
-    type = getTaskType(task)
-  )
-  if (dict$type == "classif")
-    dict$k = length(getTaskClassLevels(task))
-  return(dict)
-}

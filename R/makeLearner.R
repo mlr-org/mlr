@@ -43,12 +43,10 @@
 #' @return [\code{\link{Learner}}].
 #' @family learner
 #' @export
-#' @note Learners can contain task dependent expressions, see \code{\link{evaluateParamExpressions}} for more information.
 #' @aliases Learner
 #' @examples
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")
-#' makeLearner("classif.rpart", minsplit = expression(k))
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
 makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold = NULL,

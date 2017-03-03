@@ -21,7 +21,6 @@ actually return the same thing.
 Other task: \code{\link{getTaskCosts}},
   \code{\link{getTaskData}},
   \code{\link{getTaskDescription}},
-  \code{\link{getTaskDictionary}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},

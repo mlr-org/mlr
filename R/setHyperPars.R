@@ -11,16 +11,14 @@
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
-#' @note Learners can contain task dependent expressions, see \code{\link{evaluateParamExpressions}} for more information.
 #' @family learner
 #' @importFrom utils adist
 #' @examples
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)
 #' cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
-#' cl3 = setHyperPars(cl2, C = expression(round(n / p)))
 #' print(cl1)
+#' # note the now set and altered hyperparameters:
 #' print(cl2)
-#' print(cl3)
 setHyperPars = function(learner, ..., par.vals = list()) {
   args = list(...)
   assertClass(learner, classes = "Learner")
@@ -75,7 +73,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
       learner$par.set$pars[[n]] = makeUntypedLearnerParam(id = n)
       learner$par.vals[[n]] = p
     } else {
-      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, p) && !is.expression(p)) {
+      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, p)) {
         msg = sprintf("%s is not feasible for parameter '%s'!", convertToShortString(p), pd$id)
         if (on.par.out.of.bounds == "stop") {
           stop(msg)

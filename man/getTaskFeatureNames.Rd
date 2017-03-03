@@ -20,7 +20,6 @@ Target column name is not included.
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
   \code{\link{getTaskDescription}},
-  \code{\link{getTaskDictionary}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},

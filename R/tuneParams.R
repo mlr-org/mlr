@@ -22,8 +22,7 @@
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Collection of parameters and their constraints for optimization.
 #'   Dependent parameters with a \code{requires} field must use \code{quote} and not
-#'   \code{expression} to define it. On the other hand, task dependent parameters
-#'   need to be defined with expressions.
+#'   \code{expression} to define it.
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
@@ -32,8 +31,6 @@
 #' @note If you would like to include results from the training data set, make
 #' sure to appropriately adjust the resampling strategy and the aggregation for
 #' the measure. See example code below.
-#' Also note that learners and parameter sets can contain task dependent
-#' expressions, see \code{\link{evaluateParamExpressions}} for more information.
 #' @export
 #' @examples
 #' # a grid search for an SVM (with a tiny number of points...)
@@ -52,16 +49,6 @@
 #' # access data for all evaluated points - alternative
 #' print(head(generateHyperParsEffectData(res)))
 #' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
-#'
-#' # tuning the parameters 'C' and 'sigma' of an SVM, where the boundaries
-#' # of 'sigma' depend on the number of features
-#' ps = makeParamSet(
-#'   makeNumericLearnerParam("sigma", lower = expression(0.2 * p), upper = expression(2.5 * p)),
-#'   makeDiscreteLearnerParam("C", values = 2^c(-1, 1))
-#' )
-#' rdesc = makeResampleDesc("Subsample")
-#' ctrl = makeTuneControlRandom(maxit = 2L)
-#' res = tuneParams("classif.ksvm", iris.task, par.set = ps, control = ctrl, resampling = rdesc)
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
@@ -94,11 +81,6 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
-  if (hasExpression(learner) || hasExpression(par.set)) {
-    dict = getTaskDictionary(task = task)
-    learner = evaluateParamExpressions(obj = learner, dict = dict)
-    par.set = evaluateParamExpressions(obj = par.set, dict = dict)
-  }
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
@@ -131,3 +113,5 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)
 }
+
+

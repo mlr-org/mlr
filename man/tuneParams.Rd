@@ -29,8 +29,7 @@ Default is the default measure for the task, see here \code{\link{getDefaultMeas
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
-\code{expression} to define it. On the other hand, task dependent parameters
-need to be defined with expressions.}
+\code{expression} to define it.}
 
 \item{control}{[\code{\link{TuneControl}}]\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
@@ -55,8 +54,11 @@ Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
 If you would like to include results from the training data set, make
 sure to appropriately adjust the resampling strategy and the aggregation for
 the measure. See example code below.
+<<<<<<< HEAD
 Also note that learners and parameter sets can contain task dependent
 expressions, see \code{\link{evaluateParamExpressions}} for more information.
+=======
+>>>>>>> parent of 416305d... Expression handling (#1126)
 }
 \examples{
 # a grid search for an SVM (with a tiny number of points...)
@@ -75,16 +77,6 @@ print(head(as.data.frame(res$opt.path, trafo = TRUE)))
 # access data for all evaluated points - alternative
 print(head(generateHyperParsEffectData(res)))
 print(head(generateHyperParsEffectData(res, trafo = TRUE)))
-
-# tuning the parameters 'C' and 'sigma' of an SVM, where the boundaries
-# of 'sigma' depend on the number of features
-ps = makeParamSet(
-  makeNumericLearnerParam("sigma", lower = expression(0.2 * p), upper = expression(2.5 * p)),
-  makeDiscreteLearnerParam("C", values = 2^c(-1, 1))
-)
-rdesc = makeResampleDesc("Subsample")
-ctrl = makeTuneControlRandom(maxit = 2L)
-res = tuneParams("classif.ksvm", iris.task, par.set = ps, control = ctrl, resampling = rdesc)
 
 \dontrun{
 # we optimize the SVM over 3 kernels simultanously
