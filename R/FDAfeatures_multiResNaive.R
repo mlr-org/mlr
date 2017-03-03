@@ -1,4 +1,4 @@
-#' @title Multiresolution feature extraction
+#' @title Multiresolution feature extraction.
 #'
 #' @description
 #' The function extract the mean of a small segments of the curve and stack them
@@ -24,7 +24,7 @@ getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.leve
   getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
 }
 
-#' @title Multiresolution feature extraction on one functional covariate
+#' @title Multiresolution feature extraction on one functional covariate.
 #'
 #' @description
 #' The function extract the mean of a small segments of the curve and stack them
@@ -49,7 +49,7 @@ getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift 
   as.data.frame(Reduce(cbind, x = feat.list))
 }
 
-#' @title Multiresolution feature extraction on one functional covariate
+#' @title Multiresolution feature extraction on one functional covariate.
 #'
 #' @description
 #' The function extract the mean of a small segments of the curve and stack them

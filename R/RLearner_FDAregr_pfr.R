@@ -52,12 +52,12 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, s
   refund::pfr(formula = form, data = mat.list)
 }
 
-# FIXME: this function should return all possible smooth functions/surfaces supported by mgcv but 
-# for simplicity we only implement the af(FGAM) with s function
+# FIXME: this function should return all possible smooth functions/surfaces supported by 
+# mgcv but 
+# for simplicity we only implement the af(FGAM) with s function, but there are a lot left
+# sprintf("fpc(%s)", fdn)
+# sprintf("peer(%s, argvals = seq(0, 1, length = %d), integration = %s, pentype =%s)",fdn, peer.length, peer.integration, peer.pentype)
 genFDAFormula = function(fdn, s.k ){
-  # s{mgcv}, k is the dimension of the basis used to represent the smoooth term. The default depends 
-  # on the number of variables. k should not be less than the dimension of the null space of the 
-  # penalty for the term 
   sprintf("af(%s, basistype = 's', Qtransform = TRUE, k=%d)", fdn, s.k)
 }
 

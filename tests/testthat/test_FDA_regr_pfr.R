@@ -1,6 +1,6 @@
 # Be carefull that one need to change the columns name again after cbine several matrix
 context("FDA_regr_pfr")
-test_that("FDA_regr_prf", {
+test_that("FDA_regr_pfr", {
 requirePackagesOrSkip("refund")  
 data(DTI)
 DTI1 <- DTI[DTI$visit==1 & complete.cases(DTI),]
