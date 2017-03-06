@@ -101,4 +101,3 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}}
 }
-

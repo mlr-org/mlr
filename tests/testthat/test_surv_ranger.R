@@ -15,13 +15,13 @@ test_that("surv_ranger", {
 
   parset.list = list(
     list(),
-    list(num.trees = 10)
+    list(num.trees = 10L)
   )
 
   old.predicts.list = list()
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(formula = surv.formula, data = surv.train, write.forest = TRUE, respect.unordered.factors = TRUE)
+    pars = list(formula = surv.formula, data = surv.train, respect.unordered.factors = TRUE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(ranger::ranger, pars)

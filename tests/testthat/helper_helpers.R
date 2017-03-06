@@ -232,6 +232,7 @@ testFacetting = function(obj, nrow = NULL, ncol = NULL) {
 }
 
 quickcheckTest = function(...) {
+  skip_if_not_installed("quickcheck")
   qc = quickcheck::test(...)
 
   if (any(!qc$pass)) {
@@ -242,9 +243,13 @@ quickcheckTest = function(...) {
   expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
 }
 
-testDocForStrings = function(doc, x, grid.size = 1L) {
+testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
   text.paths = paste("/svg:svg//svg:text[text()[contains(., '",
     x, "')]]", sep = "")
   nodes = XML::getNodeSet(doc, text.paths, ns.svg)
   expect_equal(length(nodes), length(x) * grid.size)
+  if (ordered) {
+    node.strings = vcapply(nodes, XML::getChildrenStrings)
+    expect_equal(node.strings[seq_along(x)], x)
+  }
 }

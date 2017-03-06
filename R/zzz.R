@@ -21,11 +21,11 @@ mlr = new.env(parent = emptyenv())
 
 ### Learner properties
 mlr$learner.properties = list(
-  classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp"),
+  classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp", "oobpreds"),
   multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
-  regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp"),
+  regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds"),
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp"),
+  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds"),
   costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))

@@ -19,4 +19,3 @@ If no failure occurred, \code{NA} is returned.
 
 For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 }
-

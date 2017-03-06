@@ -37,6 +37,16 @@ test_that("BenchmarkResult", {
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerIds(res), grid.size = 2L)
   testDocForStrings(doc, getBMRMeasureIds(res)[[1L]])
+
+  # test pretty.names in conjunction with order.lrns
+  new.order = c("classif.rpart", "classif.nnet")
+  plotBMRBoxplots(res, pretty.names = TRUE, order.lrns = new.order)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
+    grid.size = 2L, ordered = TRUE)
 })
 
 test_that("BenchmarkResult allows spaces", {

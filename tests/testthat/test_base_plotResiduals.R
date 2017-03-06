@@ -54,7 +54,8 @@ test_that("plotResiduals with BenchmarkResult", {
   path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
-  expect_equal(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), grid.size * 30L)
+  # barplot now. We can't test for exact number of bars anymore
+  expect_true(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)) > 0L)
   
   # check pretty names
   testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
