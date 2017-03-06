@@ -1,3 +1,16 @@
+# mlr 2.11:
+
+## functions - new
+* getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
+* listTaskTypes, listLearnerProperties
+
+## learners - general
+* classif.plsdaCaret: added parameter "method".
+
+
+## learners - removed
+* {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper
+
 # mlr 2.10:
 
 ## functions - general
