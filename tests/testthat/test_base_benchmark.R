@@ -221,28 +221,45 @@ test_that("benchmark work with learner string", {
 })
 
 test_that("drop option works for BenchmarkResults_operators", {
+
+  # setup bmrs for checking
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)
-  res = benchmark(learners = learners, task = tasks, resampling = hout)
+  two.two = benchmark(learners = learners, task = tasks, resampling = hout)
+  two.one = benchmark(learners = learners[[1L]], task = tasks, resampling = hout)
+  one.two = benchmark(learners = learners, task = tasks[[1L]], resampling = hout)
+  one.one = benchmark(learners = learners[[1L]], task = tasks[[1L]], resampling = hout)
 
-  testDropOption = function(bmr, fun, ...) {
+  # check behaviour extensively
+  res = getBMRPredictions(two.two, drop = TRUE)
+  expect_true(all(names(res) == task.names))
+
+  res = getBMRPredictions(two.one, drop = TRUE)
+  expect_true(all(names(res) == task.names))
+
+  res = getBMRPredictions(one.two, drop = TRUE)
+  expect_true(all(names(res) == learner.names))
+
+  res = getBMRPredictions(one.one, drop = TRUE)
+  expect_class(res, "Prediction")
+
+  # check all other functions that use 'drop' briefly
+  testDropOption = function(bmr, fun, new.names, ...) {
     extra.args = list(...)
-    res = do.call(fun, c(list(bmr), extra.args))
-    expect_true(all(names(res) == task.names))
     res = do.call(fun, c(list(bmr, drop = TRUE), extra.args))
-    name.grid = expand.grid(task.names, learner.names)
-    new.names = apply(name.grid, 1L, stri_paste, collapse = ".")
     expect_true(all(names(res) == new.names))
   }
 
-  funs.to.test = c(getBMRPredictions, getBMRPerformances, getBMRTuneResults,
+  funs.to.test = c(getBMRPerformances, getBMRTuneResults,
     getBMRFeatSelResults, getBMRFilteredFeatures, getBMRModels)
-  sapply(funs.to.test, FUN = testDropOption, bmr = res)
+  lapply(funs.to.test, FUN = testDropOption, bmr = one.two,
+    new.names = learner.names)
 
   # getBMROptResults needs seperate checking since it needs extra argument
-  testDropOption(res, getBMROptResults, wrapper.class = "cl")
+  testDropOption(one.two, getBMROptResults, new.names = learner.names,
+    wrapper.class = "cl")
 })
 
 

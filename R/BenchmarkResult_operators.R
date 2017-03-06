@@ -114,15 +114,23 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
   if (as.df) {
     res = setDF(rbindlist(res, fill = TRUE))
   } else {
+    res = setNames(res, task.ids)
     if (drop) {
-      # if we want to drop outer list structure we paste together all task and
-      # learner names for the new names of the list that'll be returned
-      res = unlist(res, recursive = FALSE)
-      name.grid = expand.grid(task.ids, learner.ids)
-      new.names = apply(name.grid, 1L, stri_paste, collapse = ".")
-      res = setNames(res, new.names)
-    } else {
-      res = setNames(res, task.ids)
+      # when drop is on we check if learner.ids and/or task.ids are of length 1
+      # if so the list is unnested 
+      if (length(task.ids) == 1L) {
+        res = unlist(res, recursive = FALSE)
+        if (length(learner.ids) == 1L) {
+          res = res[[1L]]
+        } else {
+          res = setNames(res, learner.ids)
+        }
+      } else {
+        if (length(learner.ids) == 1L) {
+          res = unlist(res, recursive = FALSE)
+          res = setNames(res, task.ids)
+        }
+      }
     }
   }
   return(res)
