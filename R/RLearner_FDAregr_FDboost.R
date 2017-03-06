@@ -1,7 +1,7 @@
-#' @title Functional linear array model bossting.
+#' @title Functional linear array model boosting.
 #'
 #' @description
-#' Learner for Functional linear array modeling boosting.
+#' Learner for Functional linear array modele boosting.
 #'
 #' @export
 makeRLearner.fdaregr.FDboost = function() {
@@ -12,9 +12,8 @@ makeRLearner.fdaregr.FDboost = function() {
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "bsignal.knots", default = 10L, lower = 1L),
       makeIntegerLearnerParam(id = "bsignal.df", default = 4L, lower = 1L),
-      makeUntypedLearnerParam(id = "timeformular", default = NULL),
       makeLogicalLearnerParam(id = "normalize", default = FALSE),  # whether to normalize column to fit the need of mboost
-      makeLogicalLearnerParam(id = "check.indent", default = TRUE)
+      makeLogicalLearnerParam(id = "check.indent", default = TRUE)  # FIXME: this is currently hard coded to be TRUE
       ),
     properties = c("numerics"),
     name = "FLAM regression",
@@ -23,7 +22,8 @@ makeRLearner.fdaregr.FDboost = function() {
 }
 
 #' @export
-trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, bsignal.knots = 10L, bsignal.df = 4L, ...) {
+trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, 
+  bsignal.knots = 10L, bsignal.df = 4L, ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
@@ -49,19 +49,15 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
 }
 
 
-reformat2mat.list = function(.data, tdesc){
-  df =  .data
-  fd.features = tdesc$fd.features
-  fd.grids = tdesc$fd.grids
+reformat2mat.list = function(data, tdesc){
   tn = tdesc$target
-  channel.list = tdesc$fd.features
-  index.list = tdesc$fd.grids
-  name4channel = names(index.list)
-  num4channel = length(index.list)
-  mat.list = list()
-  for(i in 1:num4channel){
-    mat.list[[name4channel[[i]]]]=  as.matrix(subset(df, select = channel.list[[i]]))
-    mat.list[[paste0(name4channel[[i]],".index") ]]=  index.list[[i]]
+  fdns = names(tdesc$fd.features)
+  mat.list = namedList(fdns)
+  i = 1L
+  for(fdn in fdns){
+    mat.list[[fdn]]=  as.matrix(subset(data, select = tdesc$fd.features[[fdn]]))
+    mat.list[[paste0(fdn,".index") ]] =  tdesc$fd.grids[[i]]
+    i = i + 1
   }
   return(mat.list)
 }
