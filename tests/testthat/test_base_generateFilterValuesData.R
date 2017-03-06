@@ -100,7 +100,7 @@ test_that("args are passed down to filter methods", { # we had an issue here, se
   f1 = generateFilterValuesData(task, method = "variance", na.rm = FALSE)
   f2 = generateFilterValuesData(task, method = "variance", na.rm = TRUE)
   f3 = generateFilterValuesData(task, method = "variance", more.args = list(variance = list(na.rm = TRUE)))
-  f4 = generateFilterValuesData(task, method = c("variance", "variance"), more.args = list(variance = list(na.rm = TRUE)))
+  f4 = generateFilterValuesData(task, method = c("univariate.model.score", "variance"), more.args = list(variance = list(na.rm = TRUE)))
 
   expect_true(is.na(f1$data$variance[1L]))
   expect_false(is.na(f2$data$variance[1L]))
