@@ -41,6 +41,8 @@ makeTuneMultiCritControl = function(measures, same.resampling.instance,
     assertNumeric(impute.val, any.missing = FALSE)
   if (is.null(log.fun))
     log.fun = logFunTune
+  else if (identical(log.fun, "memory"))
+    log.fun = logFunTuneMemory
   if (!is.null(budget))
     budget = asCount(budget)
   x = makeOptControl(same.resampling.instance, impute.val, log.fun = log.fun,

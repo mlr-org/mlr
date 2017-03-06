@@ -60,6 +60,8 @@
 #'   Default is none.
 #' @param log.fun [\code{function} | \code{NULL}]\cr
 #'   Function used for logging. If set to \code{NULL}, the internal default will be used.
+#'   If set to "memory", a slightly extended version of the default will be used that also displays
+#'   memory usage.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 #'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
 #'   and \code{stage} is expected.
@@ -115,6 +117,8 @@ makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
   if (is.null(log.fun))
     log.fun = logFunFeatSel
+  else if (identical(log.fun, "memory"))
+    log.fun = logFunTuneMemory
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$maxit = maxit
   x$max.features = max.features

@@ -47,8 +47,10 @@
 #' @param tune.threshold.args [\code{list}]\cr
 #'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
 #'   Default is none.
-#' @param log.fun [\code{function} | \code{NULL}]\cr
+#' @param log.fun [\code{function} | \code{character(1)} | \code{NULL}]\cr
 #'   Function used for logging. If set to \code{NULL}, the internal default will be used.
+#'   If set to "memory", a slightly extended version of the default will be used that also displays
+#'   memory usage.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 #'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
 #'   and \code{stage} is expected.
@@ -94,6 +96,8 @@ makeTuneControl = function(same.resampling.instance, impute.val = NULL,
     assertList(start, min.len = 1L, names = "unique")
   if (is.null(log.fun))
     log.fun = logFunTune
+  else if (identical(log.fun, "memory"))
+    log.fun = logFunTuneMemory
   if (!is.null(budget))
     budget = asCount(budget)
   if (!is.null(final.dw.perc))
