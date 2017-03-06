@@ -85,3 +85,15 @@ replaceDupeMeasureNames = function(measures, x = "id") {
   meas.names[dupes] = new.names
   unlist(meas.names)
 }
+
+# checks for duplicated entries in learner.names and stops
+# with error message containing the learner name that appeared more
+# than once
+checkDuplicatedLearnerNames = function(learner.names) {
+  dupl = duplicated(learner.names)
+  if (any(dupl)) {
+    dupl.learner = learner.names[which.first(dupl)]
+    stop(sprintf("Learner short names are not unique for: %s ",
+      dupl.learner))
+  }
+}
