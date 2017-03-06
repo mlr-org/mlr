@@ -6,13 +6,10 @@
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".
-
+* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "Jackknife".
 
 ## learners - removed
 * {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper
-
-## learners - general
-* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "Jackknife".
 
 # mlr 2.10:
 
