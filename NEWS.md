@@ -1,12 +1,15 @@
 # mlr 2.11:
 
+## functions - general
+* tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
+
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
 * listTaskTypes, listLearnerProperties
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".
-
+* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "Jackknife".
 
 ## learners - removed
 * {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper
