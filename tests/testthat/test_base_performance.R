@@ -49,6 +49,24 @@ test_that("performance", {
   expect_equal(as.numeric(r$aggr["mmce.test.mean"]), as.numeric(r$aggr["mym.train.mean"]))
 })
 
+test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
+  default = getMlrOption("on.measure.not.applicable")
+  vals = c("quiet", "warn", "stop")
+  for(i in vals) {
+    configureMlr(on.measure.not.applicable = i)
+    lrn = makeLearner("classif.qda", predict.type = "response")
+    mod = train(lrn, sonar.task)
+    pred = predict(mod, sonar.task)
+    if (i == "quiet") {
+      expect_equal(unname(performance(pred, auc)), NA_real_)
+    } else if (i == "warn") {
+      expect_warning(expect_equal(unname(performance(pred, auc)), NA_real_))
+    } else {
+      expect_error(performance(pred, auc))
+    }
+  }
+  configureMlr(on.measure.not.applicable = default)
+})
 
 test_that("performance checks for missing truth col", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
