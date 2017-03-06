@@ -124,3 +124,24 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+
+#' Gunpoint functional data classification task.
+#'
+#' Contains the task (\code{gunpoint.task}).
+#'
+#' @name gunpoint.task
+#' @keywords data
+#' @docType data
+NULL
+
+
+#' FuelSubset functional data regression task with 2 functional covariate and 1 scalar covariate
+#'
+#' Contains the task (\code{fuelSubset.task}).
+#'
+#' @name fuelSubset.task
+#' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300. 
+#' @keywords data
+#' @docType data
+NULL
