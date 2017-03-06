@@ -46,7 +46,7 @@ test_that("expressions in learners", {
 
 test_that("expressions in parameter sets", {
   ps1 = makeParamSet(
-    makeNumericParam("C", lower = expression(k), upper = expression(n), trafo = function(x) 2^x),
+    makeNumericParam("C", lower = expression(k), upper = expression(n.task), trafo = function(x) 2^x),
     makeDiscreteParam("sigma", values = expression(list(p, k)))
   )
   dict = getTaskDictionary(task = binaryclass.task)
@@ -63,10 +63,27 @@ test_that("tuning works with expressions", {
   lrn = makeLearner("classif.rpart")
   lrn = makeFilterWrapper(lrn, fw.method = "kruskal.test")
   ps = makeParamSet(
-    makeIntegerParam("fw.abs", lower = 1, upper = expression(ceiling(n/2)))
+    makeIntegerParam("fw.abs", lower = 1, upper = expression(ceiling(n.task/2)))
   )
   ctrl = makeTuneControlRandom(maxit = 5)
   res = tuneParams(lrn, task = task, resampling = hout, par.set = ps, control = ctrl)
   res = as.data.frame(res$opt.path)
   expect_integer(res$fw.abs, lower = 1, upper = ceiling(getTaskSize(task)/2), any.missing = FALSE)
+})
+
+test_that("expressions work with subsetting", {
+  task = multiclass.task
+  lrn = makeLearner("classif.rpart", maxdepth = expression(ceiling(p/2)), minbucket = expression(ceiling(n.task/100)), maxcompete = expression(k))
+
+  m = train(learner = lrn, task = task, subset = 1:100) #leave out viginica
+  expect_equal(m$learner$par.vals$maxdepth, ceiling(getTaskNFeats(task)/2))
+  expect_equal(m$learner$par.vals$minbucket,  ceiling(getTaskSize(task)/100))
+  expect_equal(m$learner$par.vals$maxcompete,  3L)
+
+  # subsetting inside a wrapper
+  lrn2 = makeFilterWrapper(lrn, fw.method = "information.gain", fw.abs = 2)
+  m2 = train(learner = lrn2, task = task)
+  expect_equal(m2$learner.model$next.model$learner$par.vals$maxdepth, 2/2)
+  expect_equal(m2$learner.model$next.model$learner$par.vals$minbucket,  ceiling(getTaskSize(task)/100))
+  expect_equal(m2$learner.model$next.model$learner$par.vals$maxcompete,  3L)
 })

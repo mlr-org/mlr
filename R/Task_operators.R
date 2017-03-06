@@ -459,9 +459,9 @@ getTaskWeights = function(task) {
 #' @title Create a dictionary based on the task.
 #'
 #' @description Returns a dictionary, which contains the \link{Task} itself
-#' (\code{task}), the number of features (\code{p}), the number of
-#' observations (\code{n}), the task type (\code{type}) and in case of
-#' classification tasks, the number of class levels (\code{k}).
+#' (\code{task}), the number of features (\code{p}) the model is trained on, the number of
+#' observations (\code{n.task}) of the task in general, the task type (\code{type}) and in case of
+#' classification tasks, the number of class levels (\code{k}) in the general task.
 #'
 #' @template arg_task
 #' @return [\code{\link[base]{list}}]. Used for evaluating the expressions
@@ -476,7 +476,7 @@ getTaskDictionary = function(task) {
   dict = list(
     task = task,
     p = getTaskNFeats(task),
-    n = getTaskSize(task),
+    n.task = getTaskSize(task),
     type = getTaskType(task)
   )
   if (dict$type == "classif")

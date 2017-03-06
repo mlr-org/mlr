@@ -9,10 +9,10 @@
 #' information:
 #' \itemize{
 #'   \item{\code{task}:} the task itself, allowing to access any of its elements.
-#'   \item{\code{p}:} the number of features in the task
-#'   \item{\code{n}:} the number of observations in the task
+#'   \item{\code{p}:} the number of features in the task. Subsetting will affect this size.
+#'   \item{\code{n.task}:} the number of observations in the task. Subsetting and resampling will not affect this number.
 #'   \item{\code{type}:} the task type, i.e. "classif", "regr", "surv", "cluster", "costcens" or "multilabel"
-#'   \item{\code{k}:} the number of classes of the target variable (only available for classification tasks)
+#'   \item{\code{k}:} the number of classes of the target variable in the original task (only available for classification tasks).
 #' }
 #' Usually the evaluation of the expression is performed automatically, e.g. in
 #' \code{\link{train}} or \code{\link{tuneParams}}. Therefore calling

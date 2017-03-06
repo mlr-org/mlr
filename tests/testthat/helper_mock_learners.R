@@ -129,7 +129,7 @@ makeRLearner.classif.__mlrmocklearners__7 = function() {
       makeNumericVectorLearnerParam(id = "classwt", lower = 0, len = expression(k)),
       keys = c("task.desc", "has.blocking")
     ),
-    par.vals = list(minsplit = expression(ceiling(0.1 * (n + p)))),
+    par.vals = list(minsplit = expression(ceiling(0.1 * (n.task + p)))),
     properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob"),
     name = "Mock Learner 7",
     short.name = "mock7"
