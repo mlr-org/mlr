@@ -14,7 +14,7 @@
 #' @param fft.coeff [\code{character}]\cr
 #'   Optional, specifies which 'transformation' of the complex frequency domain
 #'   representation should be calculated as feature representation. Must be one
-#'   of \dQuote{amplitude} or \dQuote{Phase}. Default: \dQuote{amplitude}.
+#'   of \dQuote{amplitude} or \dQuote{phase}. Default: \dQuote{amplitude}.
 #' @return Returns an \code{data.frame} object containing the fourier
 #'   coefficients.
 #' @export

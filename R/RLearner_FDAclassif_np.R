@@ -25,13 +25,10 @@ makeRLearner.fdaclassif.np = function() {
 
 #' @export
 trainLearner.fdaclassif.np = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   data.fdclass = fda.usc::fdata(mdata = z$data)
   glearn = z$target
-
   learned.model = fda.usc::classif.np(group = glearn, fdataobj = data.fdclass,...)
-
   return(learned.model)
 }
 
@@ -41,8 +38,5 @@ predictLearner.fdaclassif.np = function(.learner, .model, .newdata, ...) {
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
   m$C[[1]] = quote(classif.np)
   class.pred = predict(m, nd.fdclass, ...)
-
   return(class.pred)
 }
-
-

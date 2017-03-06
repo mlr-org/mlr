@@ -23,13 +23,10 @@ makeRLearner.fdaclassif.knn = function() {
 
 #' @export
 trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   data.fdclass = fda.usc::fdata(mdata = z$data)
   glearn = z$target
-
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass, ...)
-
   return(learned.model)
 }
 
@@ -38,8 +35,5 @@ predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
   class.pred = predict(m, nd.fdclass, ...)
-
   return(class.pred)
 }
-
-

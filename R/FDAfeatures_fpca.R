@@ -13,7 +13,7 @@
 #' @param include.target [\code{logical}]\cr
 #'   Should the target variable (i.e. the label) be added in the returned
 #'   data.frame? Default is \code{FALSE}.
-#' @return Returns an \code{data.frame}.
+#' @return Returns a \code{data.frame}.
 #' @export
 getFDAFPCAFeatures = function(data, target, have.target = TRUE, include.target = FALSE) {
   requirePackages("mboost", default.method = "load")
@@ -36,8 +36,8 @@ getFDAFPCAFeatures = function(data, target, have.target = TRUE, include.target =
   if (inherits(data, "data.frame"))
     data = as.matrix(data)
 
-  rst <- refund::fpca.sc(Y = data)
-  features_fpca <- rst$scores
+  rst = refund::fpca.sc(Y = data)
+  features_fpca = rst$scores
   d_fpca = as.data.frame(features_fpca)
   names(d_fpca) = paste0("V",1:ncol(d_fpca))
   if (include.target)

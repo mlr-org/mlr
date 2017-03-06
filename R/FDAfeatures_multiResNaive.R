@@ -67,7 +67,6 @@ getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift 
 #' @export
 getUniFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5) {
   data = as.matrix(data)
-  checkmate::assert_matrix(data)
   n.obs = nrow(data)
   feat.list = vector("list", n.obs)  
   j = 1L
@@ -155,7 +154,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
     # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
     sstart = 1L
     send = sstart + ssize - 1L  # end position
-    while(send <= m) {  # until the segment reach the end
+    while (send <= m) {  # until the segment reach the end
       # messagef("start, end: %i, %i", sstart, send)
       f = getSegmentFeatures(x[sstart:send])
       # print(f)

@@ -1,15 +1,12 @@
 #' @title Create task on functional data features.
 #'
 #' @description
-#' The function transform a task of type [\code{\link{FDAClassifTask}}] into a standard
-#' [\code{\link{ClassifTask}}]. For this, it creates a feature representation of the raw
+#' The function transforms a task of type \code{\link{FDAClassifTask}} into a standard
+#' \code{\link{ClassifTask}}. For this, it creates a feature representation of the raw
 #' functional data. The method used to create this feature representation must
 #' be specified by the user in method. For wavelets or
 #' fourier features, the resulting data does not contain temporal
-#' structure anymore, so the returned task is a \code{\link{ClassifTask}}. For
-#' \code{shapelets}, the learned shapelet model is returned. See
-#' \code{{getTSShapeletFeatures}}.
-#'
+#' structure anymore, so the returned task is a \code{\link{ClassifTask}}.
 #'
 #' @param task [\code{\link{FDATask}}]\cr
 #'   Functional data classification task.
@@ -20,7 +17,7 @@
 #'   Shapelet model learning: \dQuote{shapelets}.
 #' @param pars \cr
 #'   Further parameters passed as argument e.g., for feature representation
-#'   methods. See the methods' man pages.
+#'   methods. See the methods man pages.
 #' @return Either [\code{\link{ClassifTask}}] based on the transformed data or the
 #'   learned shapelet model.
 #' @export
@@ -41,7 +38,7 @@ convertFDATaskToNormalTask = function(task, method, pars = NULL) {
   tsf = extractFDAFeatures(data = z$data, target = target, method = method, args = pars)
 
   newdata = cbind(as.factor(z$target), tsf)
-  colnames(newdata)[1] <- target  # rename target column
+  colnames(newdata)[1] = target  # rename target column
   newtask = makeClassifTask(data = newdata, target = target, positive = task$task.desc$positive)
   return(newtask)
 }
@@ -53,12 +50,12 @@ convertFDATaskToNormalTask = function(task, method, pars = NULL) {
 #' @title Transformer from FDATask to normal machine learning regression task.
 #'
 #' @description
-#' The function transform a task of type [\code{\link{FDATask}}] into a standard
-#' [\code{\link{RegrTask}}]. For this, it creates a feature representation of the raw
+#' The function transform a task of type \code{\link{FDATask}} into a standard
+#' \code{\link{RegrTask}}. For this, it creates a feature representation of the raw
 #' functional data. The method used to create this feature representation must
 #' be specified by the user in method. For wavelets or
 #' fourier features, the resulting data does not contain temporal
-#' structure anymore, so the returned task is a [\code{\link{RegrTask}}].
+#' structure anymore, so the returned task is a \code{\link{RegrTask}}.
 #'
 #' @param task [\code{\link{FDATask}}]\cr
 #'   Functional data analysis task.
@@ -68,11 +65,11 @@ convertFDATaskToNormalTask = function(task, method, pars = NULL) {
 #'   Wavelet transformation: \dQuote{wavelets}.
 #'   Fourier transformation: \dQuote{fourier}.
 #'   Shapelet model learning: \dQuote{shapelets}.
-#'   FIXME: should add more here
+#'   FIXME: should add more here.
 #' @param pars \cr
 #'   Further parameters passed as argument e.g., for feature representation
 #'   methods. See the methods man pages.
-#' @return [\code{\link{RegrTask}}]based on the transformed data
+#' @return \code{\link{RegrTask}} based on the transformed data.
 #' @export
 #FIXME: what happens with scalar corvars? we REALL DONT want to throw them away!
 trafoFDATaskToRegrTask = function(task, method, pars = NULL) {

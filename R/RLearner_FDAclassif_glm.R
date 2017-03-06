@@ -22,13 +22,10 @@ makeRLearner.fdaclassif.glm = function() {
 
 #' @export
 trainLearner.fdaclassif.glm = function(.learner, .task, .subset, .weights = NULL, ...) {
-
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   data.fdclass = fda.usc::fdata(mdata = z$data)
   dat = list("df" = data.frame(z$target), "x" = data.fdclass)
-
   learned.model = fda.usc::classif.glm(z.target ~ x, data = dat)
-
   return(learned.model)
 }
 
@@ -40,10 +37,6 @@ predictLearner.fdaclassif.glm = function(.learner, .model, .newdata, ...) {
   # create formulate structure in data
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
   nd.fdclass = list(x = nd.fdclass)
-
   class.pred = fda.usc::predict.classif(object = m, new.fdataobj = nd.fdclass, ...)
-
   return(class.pred)
 }
-
-

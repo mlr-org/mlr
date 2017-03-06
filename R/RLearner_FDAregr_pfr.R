@@ -81,7 +81,7 @@ reformat2list4mat2 = function(.data, tdesc){
 predictLearner.fdaregr.pfr = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDescription(.model)
-  list4mat = reformat2list4mat2(.newdata, tdesc )
+  list4mat = reformat2list4mat2(.newdata, tdesc)
   pred = predict(.model$learner.model, newdata = list4mat, type = 'response')
   return(as.vector(pred))
 }

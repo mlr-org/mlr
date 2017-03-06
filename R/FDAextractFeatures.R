@@ -58,7 +58,7 @@ extractFDAFeatures = function(data, target, method, args) {
 #' @param target [\code{character}]\cr
 #'   Name of the target variable.
 #' @param fd.features [\code{list}] \cr
-#'   The hash table for different functional covariate. See [\code{\link{FDARegrTask}}]
+#'   The hash table for different functional covariate. See [\code{\link{FDARegrTask}}].
 #' @param method [\code{character}]\cr
 #'   Which method is used to extract functional data features. Methods available.
 #'   Wavelet transformation: \dQuote{wavelets}.

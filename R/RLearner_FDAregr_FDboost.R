@@ -70,7 +70,7 @@ reformat2mat.list = function(.data, tdesc){
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDescription(.model)
-  mat.list = reformat2mat.list(.newdata, tdesc )
+  mat.list = reformat2mat.list(.newdata, tdesc)
   pred = predict(object = .model$learner.model, newdata = mat.list)
   return(pred)
 }

@@ -5,7 +5,7 @@
 #' functional data.
 #'
 #' @param data [\code{data.frame},\code{matrix}]\cr
-#'   Time series curve data.
+#'   Functional data.
 #' @param target [\code{character}]\cr
 #'   Name of the target variable.
 #' @param include.target [\code{logical}]\cr

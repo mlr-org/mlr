@@ -1,4 +1,4 @@
-#' @title Shapelet features transformation
+#' @title Shapelet features transformation.
 #'
 #' @description
 #' The function learns a shapelet model for classification. This includes k
@@ -25,13 +25,11 @@
 #'     \item f.val [\code{numeric}]: learning loss in each iteration.
 #'     \item method [\code{character}]: which loss was used.
 #'     \item max.iter [\code{integer}]: maximal number of iterations.
-#'     \item class [\code{character}]: binary or multi-class classification?
+#'     \item class [\code{character}]: binary or multi-class classification.
 #'   }
 #' @export
 getFDAShapeletFeatures = function(curves, label, ...) {
-
   requirePackages("shapeletLib", default.method = "load")
-
   assert(
     checkClass(curves, "data.frame"),
     checkClass(curves, "matrix")
@@ -41,4 +39,3 @@ getFDAShapeletFeatures = function(curves, label, ...) {
   shapeletmodel = shapeletLib::learnShapeletModel(data = curves, label = label, ...)
   return(list(model = shapeletmodel))
 }
-
