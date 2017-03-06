@@ -1,23 +1,13 @@
 #' @title Functional data regression task.
 #'
 #' @description
-#' Functional data regression task.
+#' Create a functional data regression task. This means that some features
+#' in the task will be so-called functional covariates / functional featutes,
+#' measured on a grid or time scale.
 #'
 #' @inheritParams Task
-#' @param fd.features [\code{list}]\cr
-#'   Optional. Named list of column numbers or column names. Each list entry
-#'   defines one functional variable through either a character vector of column
-#'   names or an integer vector of column indices. The list names specify the
-#'   names of the functional variables. All columns that are not referenced in
-#'   \code{fd.features} are scalar variables. Default is \code{fd1} which
-#'   means we assume that all columns form one functional variable.
-#' @param fd.grids [\code{list}]\cr
-#'   Optional. Named list of grids over which the functional variables are
-#'   observed. Each grid of observation points must be provided as a numerical
-#'   vector. Default is \code{NULL} then all functional variables are observed
-#'   on equidistant observation grids 1, 2, …, <number of observations per
-#'   function>.
-#' @return See [\code{\link{FDARegrTask}}]. 
+#' @template arg_fdatask_pars
+#' @return See [\code{\link{FDARegrTask}}].
 #' @export
 #' @aliases FDARegrTask
 makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL,

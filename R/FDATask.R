@@ -1,24 +1,21 @@
 #' @title Functional analysis task.
 #'
 #' @description
-#' Converts a normal task to a FDA task by adding some extra information to the task description and 
-#' changing the S3 classes to FDATask.
-#' Task.cl and desc.cl are the names for the new classes.
-#' It also does arg checking to ensure consistency.
-#' 
+#' Converts a normal task to a FDA task by adding some extra information to the
+#' task description and changing the S3 classes to FDATask. Task.cl and desc.cl
+#' are the names for the new classes. It also does arg checking to ensure
+#' consistency.
+#'
 #' @param task [\code{link{Task}}]\cr
 #'   The normal mlr Task.
 #' @param type [\code{character}]\cr
 #'   The task type, will be set as a field to both task and task description.
-#' @param fd.features [\code{list}]\cr
-#'   A list indicating the functional covariates.
-#' @param fd.grids [\code{list}]\cr
-#'   A list indicating the sampling grid of the functional covariate.
+#' @template arg_fdatask_pars
 #' @param task.cl [\code{character}]\cr
-#'   The sub class name to convert to, eg. fdaregr or fdaclassif.
+#'   The sub class name to convert to, eg. \dQuote{fdaregr} or \dQuote{fdaclassif}.
 #' @param desc.cl [\code{character}]\cr
 #'   The sub class description name to convert to.
-#' @return An object of class \code{FDATask}. 
+#' @return An object of class \code{FDATask}.
 #' @export
 #' @aliases FDATask
 makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
