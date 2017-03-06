@@ -16,9 +16,6 @@ test_that("benchmark", {
   expect_true(setequal(names(preds1), "classif.lda"))
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
-  preds = getBMRPredictions(res, as.df = FALSE, drop = TRUE)
-  expect_true(is.list(preds))
-  expect_true(setequal(names(preds), "classif.lda"))
 
   preds = getBMRPredictions(res, as.df = TRUE)
   expect_is(preds, "data.frame")
@@ -221,6 +218,31 @@ test_that("benchmark work with learner string", {
   # we had a bug here, check that learner(s) are created from string
   b = benchmark("classif.rpart", iris.task, hout)
   b = benchmark(c("classif.rpart", "classif.lda"), iris.task, hout)
+})
+
+test_that("drop option works for BenchmarkResults_operators", {
+  task.names = c("binary", "multiclass")
+  tasks = list(binaryclass.task, multiclass.task)
+  learner.names = c("classif.lda", "classif.rpart")
+  learners = lapply(learner.names, makeLearner)
+  res = benchmark(learners = learners, task = tasks, resampling = hout)
+
+  testDropOption = function(bmr, fun, ...) {
+    extra.args = list(...)
+    res = do.call(fun, c(list(bmr), extra.args))
+    expect_true(all(names(res) == task.names))
+    res = do.call(fun, c(list(bmr, drop = TRUE), extra.args))
+    name.grid = expand.grid(task.names, learner.names)
+    new.names = apply(name.grid, 1L, stri_paste, collapse = ".")
+    expect_true(all(names(res) == new.names))
+  }
+
+  funs.to.test = c(getBMRPredictions, getBMRPerformances, getBMRTuneResults,
+    getBMRFeatSelResults, getBMRFilteredFeatures, getBMRModels)
+  sapply(funs.to.test, FUN = testDropOption, bmr = res)
+
+  # getBMROptResults needs seperate checking since it needs extra argument
+  testDropOption(res, getBMROptResults, wrapper.class = "cl")
 })
 
 

@@ -4,7 +4,7 @@
 \alias{getBMRModels}
 \title{Extract all models from benchmark result.}
 \usage{
-getBMRModels(bmr, task.ids = NULL, learner.ids = NULL)
+getBMRModels(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -17,6 +17,10 @@ Default is all.}
 \item{learner.ids}{[\code{character(1)}]\cr
 Restrict result to certain learners.
 Default is all.}
+
+\item{drop}{[\code{logical(1)}]\cr
+  Whether to drop outer list layer to avoid nested list structure.
+Defaults to \code{FALSE}.}
 }
 \value{
 [\code{list}].

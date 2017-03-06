@@ -4,7 +4,8 @@
 \alias{getBMRPredictions}
 \title{Extract the predictions from a benchmark result.}
 \usage{
-getBMRPredictions(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE)
+getBMRPredictions(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
+  drop = FALSE)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -21,6 +22,10 @@ Default is all.}
 \item{as.df}{[\code{character(1)}]\cr
 Return one data.frame as result - or a list of lists of objects?.
 Default is \code{FALSE}.}
+
+\item{drop}{[\code{logical(1)}]\cr
+  Whether to drop outer list layer to avoid nested list structure.
+Defaults to \code{FALSE}.}
 }
 \value{
 [\code{list} | \code{data.frame}]. See above.

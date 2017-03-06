@@ -113,12 +113,17 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
   })
   if (as.df) {
     res = setDF(rbindlist(res, fill = TRUE))
-  }
-  else {
-    if (drop)
+  } else {
+    if (drop) {
+      # if we want to drop outer list structure we paste together all task and
+      # learner names for the new names of the list that'll be returned
       res = unlist(res, recursive = FALSE)
-    else
+      name.grid = expand.grid(task.ids, learner.ids)
+      new.names = apply(name.grid, 1L, stri_paste, collapse = ".")
+      res = setNames(res, new.names)
+    } else {
       res = setNames(res, task.ids)
+    }
   }
   return(res)
 }
@@ -139,7 +144,7 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
@@ -166,7 +171,7 @@ getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
@@ -188,7 +193,7 @@ getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = 
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
@@ -234,7 +239,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
@@ -256,7 +261,7 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
@@ -278,7 +283,7 @@ getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df 
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_asdf
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @template ret_bmr_list_or_df
 #' @export
 #' @family benchmark
@@ -286,7 +291,7 @@ getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
   assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "FilterWrapper", function(x) {
     as.data.frame(x)
-  })
+  }, drop = drop)
 }
 
 #' @title Extract all models from benchmark result.
@@ -299,7 +304,7 @@ getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
 #' @template arg_bmr
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
-#' @template arg_drop
+#' @template arg_bmr_drop
 #' @return [\code{list}].
 #' @export
 #' @family benchmark
