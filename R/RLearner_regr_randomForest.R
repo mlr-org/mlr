@@ -48,7 +48,7 @@ makeRLearner.regr.randomForest = function() {
     package = "randomForest",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
-      makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both"),
+      makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
                                values = c("bootstrap", "jackknife",  "sd"),
                                requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
@@ -77,8 +77,7 @@ makeRLearner.regr.randomForest = function() {
 }
 
 #' @export
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL,
-  se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
   data = getTaskData(.task, .subset, target.extra = TRUE)
   m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
     keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
@@ -94,15 +93,17 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
+  pred = predict(.model$learner.model, newdata = .newdata, ...)
   if (.learner$predict.type == "se") {
     se.fun = switch(se.method,
       bootstrap = bootstrapStandardError,
       jackknife = jackknifeStandardError,
       sd = sdStandardError
     )
-    se.fun(.learner, .model, .newdata, ...)
+    se = se.fun(.learner, .model, .newdata, ...)
+    return(cbind(pred,se))
   } else {
-    predict(.model$learner.model, newdata = .newdata, ...)
+    return(pred)
   }
 }
 
@@ -118,7 +119,6 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   se.ntree = 100L, se.boot = 50L, ...) {
   single.model = getLearnerModel(.model)$single.model #get raw RF model
   bagged.models = getLearnerModel(getLearnerModel(.model)$bagged.models) #get list of unbagged mlr models
-  pred.single = predict(single.model, newdata = .newdata, ...)
   pred.bagged = lapply(bagged.models, function(x) predict(getLearnerModel(x), newdata = .newdata, predict.all = TRUE))
   pred.boot.all = extractSubList(pred.bagged, "individual", simplify = FALSE)
   ntree = single.model$ntree
@@ -133,16 +133,12 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   #     (prediction for x of ensemble r in bootstrap b - average prediction for x over all ensambles in bootsrap b )^2
   #   )
   # )
-  bias = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) *
-    rowSums(matrix(
-      sapply(pred.boot.all, function(p)
-        rowSums(p - rowMeans(p))^2),
-      nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
+  bias = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) * rowSums(matrix(vnapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
   pred.boot.aggregated = extractSubList(pred.bagged, c("aggregate"))
   pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
   var.boot = apply(pred.boot.aggregated, 1, var) - bias
   var.boot = pmax(var.boot, 0)
-  cbind(pred.single, sqrt(var.boot))
+  sqrt(var.boot)
 }
 
 # Computes the mc bias-corrected jackknife after bootstrap
@@ -159,14 +155,13 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   jack = (n - 1) / n * rowSums((jack.n - pred$aggregate)^2)
   bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
   jab = pmax(jack - bias, 0)
-  return(cbind(pred$aggregate, sqrt(jab)))
+  sqrt(jab)
 }
 
 # computes the standard deviation across trees
 sdStandardError = function(.learner, .model, .newdata, ...) {
   pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
-  se = apply(pred$individual, 1, sd)
-  return(cbind(pred$aggregate, se))
+  apply(pred$individual, 1, sd)
 }
 
 #' @export
