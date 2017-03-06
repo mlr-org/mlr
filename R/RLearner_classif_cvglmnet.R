@@ -55,7 +55,7 @@ trainLearner.classif.cvglmnet = function(.learner, .task, .subset, .weights = NU
 
   td = getTaskDescription(.task)
   args$family = ifelse(length(td$class.levels) == 2L, "binomial", "multinomial")
-  
+
   glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)

@@ -52,7 +52,7 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
-  
+
   glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
