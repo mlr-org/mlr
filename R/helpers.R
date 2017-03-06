@@ -18,16 +18,18 @@ measureAggrPrettyName = function(measure) {
 
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
-perfsToString = function(y, sep = "=", mlr.digits = getMlrOption("mlr.digits")) {
-  stri_paste(stri_paste(names(y), "=", formatC(y, digits = mlr.digits), sep = ""),
+perfsToString = function(y, sep = "=", digits = options()$digits) {
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = digits), sep = ""),
     collapse = ",", sep = " ")
 }
 
 # Used for the resample output logging lines:
-# Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line  
+# Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line
+# If y is numeric we trim to desired digit with
+# if not it's a character and we only need to take care that the col has desired with  
 printResampleFormatLine = function(prefix, y, digits = options()$digits) {
   # get desired width for each col (if measure ids are short --> digits)
-  # +2L to obtain spaces between cols
+  # +3L to obtain spaces between cols
   if (is.null(names(y)))
     names(y) = y
   tab.width = max(stri_width(names(y)), digits) + 3L

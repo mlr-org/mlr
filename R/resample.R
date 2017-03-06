@@ -110,7 +110,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   measure.lognames = extractSubList(measures, "id")
   # when predict on both some measure might be in there twice,
-  # depending on aggregation fun 
+  # depending on aggregation fun, then we need to print each measure twice
   if (rin$desc$predict == "both") {
     id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
     id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
@@ -176,7 +176,6 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
-
   }
   ex = extract(m)
   if (show.info) {
@@ -245,7 +244,7 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
     # use measure ids for printing
     aggr.out = aggr
     names(aggr.out) = extractSubList(measures, "id")
-    cat("\n")
+    message("\n")
     printResampleFormatLine("Aggregated Result:", aggr.out)
   }
 
