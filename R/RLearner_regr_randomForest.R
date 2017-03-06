@@ -30,6 +30,10 @@
 #' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and,
 #' in the case that this results in a negative variance estimate, the values are truncated at 0.
 #'
+#' Please note that all of the mentioned \code{se.method} variants do not affect the computation
+#' of the posterior mean \dQuote{response} value. This is always the same as from the underlying
+#' randomForest.
+#'
 #' @references [Joseph Sexton] and [Petter Laake];
 #' [Standard errors for bagged and random forest estimators],
 #' Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
@@ -50,9 +54,9 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
-                               values = c("bootstrap", "jackknife",  "sd"),
-                               requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
-                               when = "both"),
+        values = c("bootstrap", "jackknife",  "sd"),
+        requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
+        when = "both"),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L, when = "both"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
@@ -101,7 +105,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
       sd = sdStandardError
     )
     se = se.fun(.learner, .model, .newdata, ...)
-    return(cbind(pred,se))
+    return(cbind(pred, se))
   } else {
     return(pred)
   }

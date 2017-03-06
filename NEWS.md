@@ -3,6 +3,9 @@
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
 
+## learners - general
+* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "Jackknife".
+
 # mlr 2.10:
 
 ## functions - general
