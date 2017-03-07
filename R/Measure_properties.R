@@ -4,7 +4,7 @@
 #' Properties can be accessed with \code{getMeasureProperties(measure)}, which returns a
 #' character vector.
 #'
-#' The measure properties are defined in \code{\link{Measure}}
+#' The measure properties are defined in \code{\link{Measure}}.
 #' @template arg_measure
 #' @param props [\code{character}]\cr
 #'   Vector of properties to query.
