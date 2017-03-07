@@ -8,11 +8,11 @@ test_that("FDA_regr_FDboost", {
     options(mlr.debug.seed = 123L)
     requirePackages("FDboost")
     data("fuelSubset", package = "FDboost")
-    ## center the functional covariates per observed wavelength
+    # center the functional covariates per observed wavelength
     fuelSubset$UVVIS = scale(fuelSubset$UVVIS, scale = FALSE)
     fuelSubset$NIR = scale(fuelSubset$NIR, scale = FALSE)
-    ## to make mboost:::df2lambda() happy (all design matrix entries < 10)
-    ## reduce range of argvals to [0,1] to get smaller integration weights
+    # to make mboost:::df2lambda() happy (all design matrix entries < 10)
+    # reduce range of argvals to [0,1] to get smaller integration weights
     fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) /
        (max(uvvis.lambda) - min(uvvis.lambda) ))
     fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) /

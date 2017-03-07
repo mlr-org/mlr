@@ -13,26 +13,25 @@
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn",
   check.data = TRUE, fd.features = NULL, fd.grids = NULL) {
-  
+
   task = makeClassifTask(id, data, target, weights, blocking, positive, fixup.data, check.data)
-  # arg checks for fd.features adn fd.grids are done in next call
+  # arg checks for fd.features and fd.grids are done in next call
   makeFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
 }
 
-#FIXME: to make subsetTask work, otherwise, subsetTask will generate a regression task
-# td is the old task description, the function return a new task description
+# td is the old task description, the function returns a new FDAClassifTask description
 makeTaskDesc.FDAClassifTask = function(task, id, target, td) {
   badtd = makeTaskDesc.ClassifTask(task = task , id = id, target = target, positive = td$positive)
   badtd$type = "fdaclassif"
-  
+
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  fd.list = list()
-  for(fdn in names(td$fd.features)){
-    fd.list[[fdn]] = td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-  }
-  # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  badtd$fd.features = fd.list
-  badtd$fd.grids = td$fd.grids
+  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
+    td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+    }), names(td$fd.grids))
+  # since feat.remain is a character vector with variable names, we use td$fd.features[[fdn]] for indexing
+  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
+    td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+  }), names(td$fd.grids))
   addClasses(badtd, "FDAClassifTaskDesc")
 }
