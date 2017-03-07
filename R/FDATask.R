@@ -34,9 +34,7 @@ makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
     fd.features = list(fd1 = fnames)
   }
   if (is.null(fd.grids)) {
-    for(name in names(fd.features)){
-      fd.grids[[name]] = as.numeric(1:length(fd.features[[name]]))
-    }
+    fd.grids = setNames(lapply(X = names(fd.features), FUN = function(name){as.numeric(1:length(fd.features[[name]]))}), names(fd.features))
   }
   assertNames(names(fd.grids), permutation.of = names(fd.features))
   cns = colnames(getTaskData(task))
