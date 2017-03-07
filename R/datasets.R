@@ -131,6 +131,9 @@ NULL
 #' Contains the task (\code{gunpoint.task}).
 #'
 #' @name gunpoint.task
+#' @references See Ratanamahatana, C. A. & Keogh. E. (2004). Everything you know
+#'   about Dynamic Time Warping is Wrong. Proceedings of SIAM International
+#'   Conference on Data Mining (SDM05), 506-510.
 #' @keywords data
 #' @docType data
 NULL
@@ -141,7 +144,7 @@ NULL
 #' Contains the task (\code{fuelSubset.task}).
 #'
 #' @name fuelSubset.task
-#' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300. 
+#' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
 #' @keywords data
 #' @docType data
 NULL
