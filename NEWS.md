@@ -1,5 +1,10 @@
 # mlr 2.11:
 
+## general
+* added mlr option on.measure.not.applicable with options "stop" (default,
+  previous behaviour), "warn", and "quiet" to allow to set a performance value
+  to NA if it is not applicable to the learner without failing
+
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
 * getBMR-operators: now support "drop" argument that simplifies the resulting list
