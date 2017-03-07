@@ -11,7 +11,9 @@ makeRLearner.fdaregr.pfr = function() {
     cl = "fdaregr.pfr",
     package = "refund",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "s.k", default = -1L)  # see mgcv::s() documentation
+      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = -1L),  # see mgcv::s() documentation
+      makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L),  # see mgcv::te() documentation
+      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     ),
     properties = c("numerics"),
     name = "penalized functional regression",
@@ -28,7 +30,7 @@ makeRLearner.fdaregr.pfr = function() {
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, s.k = -1L, ...) {
+trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
@@ -44,7 +46,7 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, s
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
     mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
-    formula.terms[fdn] = genFDAFormula(fdn, s.k)
+    formula.terms[fdn] = genFDAFormula(fdn, Qtransform, mgcv.s.k)
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
@@ -55,10 +57,13 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, s
 # FIXME: this function should return all possible smooth functions/surfaces supported by 
 # mgcv but 
 # for simplicity we only implement the af(FGAM) with s function, but there are a lot left
-# sprintf("fpc(%s)", fdn)
-# sprintf("peer(%s, argvals = seq(0, 1, length = %d), integration = %s, pentype =%s)",fdn, peer.length, peer.integration, peer.pentype)
-genFDAFormula = function(fdn, s.k ){
-  sprintf("af(%s, basistype = 's', Qtransform = TRUE, k=%d)", fdn, s.k)
+genFDAFormula = function(fdn, Qtransform, mgcv.s.k ){
+  sprintf("af(%s, basistype = 's', Qtransform = %d, k=%d)", fdn, Qtransform, mgcv.s.k)
+  # arg.vals indices of evaluation of x 
+  #sprintf("af(%s, basistype = 'te', Qtransform = TRUE, k=%d, bs =%s, m =%d)", fdn, mgcv.te.k, mgcv.te.bs, mgcv.te.m)
+  #sprintf("af(%s, basistype = 'ti', Qtransform = TRUE, k=%d, bs =%s, m =%d)", fdn, mgcv.ti.k, mgcv.te.bs, mgcv.ti.m)
+  #sprintf("fpc(%s)", fdn), re, lf, lf.vd()
+  #sprintf("peer(%s, argvals = seq(0, 1, length = %d), integration = %s, pentype =%s)",fdn, peer.length, peer.integration, peer.pentype)
 }
 
 reformat2list4mat2 = function(.data, tdesc){

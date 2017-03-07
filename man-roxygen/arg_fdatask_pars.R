@@ -1,5 +1,5 @@
 #' @param fd.features [\code{list}]\cr Optional. Named list of column indices or
-#'   column names. Each list entry defines one functional covariate through
+#'   column names of the passed data. Each list entry defines one functional covariate through
 #'   either a character vector of column names or an integer vector of column
 #'   indices. The list names specify the names of the functional covariates. All
 #'   columns that are not referenced in \code{fd.features} are scalar variables.
