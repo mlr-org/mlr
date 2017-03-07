@@ -73,9 +73,10 @@ Further arguments for threshold tuning that are passed down to \code{\link{tuneT
 Default is none.}
 
 \item{log.fun}{[\code{function} | \code{character(1)}]\cr
-Function used for logging. If set to \dQuote{default}, the internal default will be used.
-If set to \dQuote{memory}, a slightly extended version of the default will be used that also displays
-memory usage.
+Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
+performances, and the runtime will be reported.
+If set to \dQuote{memory}, the memory usage for each evaluation will also be displayed, with a small increase
+in run time.
 Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
 and \code{stage} is expected.
