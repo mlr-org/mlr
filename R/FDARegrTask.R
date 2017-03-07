@@ -17,18 +17,16 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
   makeFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
 
-#FIXME: to make subsetTask work, otherwise, subsetTask will generate a regression task
 # td is the old task description, the function return a new task description
 makeTaskDesc.FDARegrTask = function(task, id, target, td) {
   badtd = makeTaskDesc.RegrTask(task = task , id = id, target = target)
   badtd$type = "fdaregr"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  fd.list = list()
-  for(fdn in names(td$fd.features)){
-    fd.list[[fdn]] = td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-  }
-  badtd$fd.features = fd.list
-  badtd$fd.grids = td$fd.grids
+  badtd$fd.features = lapply(names(td$fd.features), function(fdn) td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain])
+  names(badtd$fd.features) = names(td$fd.features)
+  # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]] 
+  badtd$fd.grids = lapply(names(td$fd.features), function(fdn) td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain])
+  names(badtd$fd.grids) = names(td$fd.grids)
   addClasses(badtd, "FDARegrTaskDesc")
 }
