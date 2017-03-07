@@ -53,10 +53,11 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
     levels(df$learner.id) = getBMRLearnerShortNames(bmr)
   }
 
+  # shape parameter is set, because it can't be changed later
   p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id", shape = "learner.id"))
   p = p + geom_point(size = pointsize, position = position_jitter(width = 0, height = jitter))
   # set shape to standard shape 19
-  p = p + scale_shape_manual(values = rep(19, length(getBMRLearnerShortNames(bmr))))
+  p = p + scale_shape_manual(values = rep(19, length(getBMRLearnerIds(bmr))))
   # we dont need y label, the task names speak for themselves
   p = p + ylab("")
   p = p + xlab(xlab.string)
