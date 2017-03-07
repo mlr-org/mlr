@@ -52,7 +52,7 @@ test_that("performance", {
 test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
   default = getMlrOption("on.measure.not.applicable")
   vals = c("quiet", "warn", "stop")
-  for(i in vals) {
+  for (i in vals) {
     configureMlr(on.measure.not.applicable = i)
     lrn = makeLearner("classif.qda", predict.type = "response")
     mod = train(lrn, sonar.task)
