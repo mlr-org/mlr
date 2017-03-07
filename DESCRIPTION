@@ -141,6 +141,7 @@ Suggests:
     smoof,
     sparsediscrim,
     sparseLDA,
+    StableEstim,
     stepPlr,
     SwarmSVM,
     svglite,
