@@ -25,6 +25,7 @@ Set of measure properties. Some standard property names include:
   \item{multilabel}{Is the measure applicable for multilabel classification?}
   \item{regr}{Is the measure applicable for regression?}
   \item{surv}{Is the measure applicable for survival?}
+  \item{cluster}{Is the measure applicable for cluster?}
   \item{costsens}{Is the measure applicable for cost-sensitive learning?}
   \item{req.pred}{Is prediction object required in calculation? Usually the case.}
   \item{req.truth}{Is truth column required in calculation? Usually the case.}
