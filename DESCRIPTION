@@ -123,7 +123,6 @@ Suggests:
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.6.0),
-    refund,
     RCurl,
     Rfast,
     rFerns,
@@ -140,7 +139,6 @@ Suggests:
     RSNNS,
     RWeka,
     sda,
-    shapeletLib,
     shiny,
     smoof,
     sparsediscrim,
@@ -151,7 +149,6 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    wavelets,
     xgboost (>= 0.6-2),
     XML
 LazyData: yes
