@@ -117,19 +117,17 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
     res = setNames(res, task.ids)
     if (drop) {
       # when drop is on we check if learner.ids and/or task.ids are of length 1
-      # if so the list is unnested 
-      if (length(task.ids) == 1L) {
+      # if so the list is unnested
+      drop.tasks = length(task.ids) == 1L
+      drop.learners = length(learner.ids) == 1L
+      if (drop.tasks | drop.learners) {
         res = unlist(res, recursive = FALSE)
-        if (length(learner.ids) == 1L) {
+        if (drop.tasks & drop.learners)
           res = res[[1L]]
-        } else {
+        if (drop.tasks & !drop.learners)
           res = setNames(res, learner.ids)
-        }
-      } else {
-        if (length(learner.ids) == 1L) {
-          res = unlist(res, recursive = FALSE)
+        if (!drop.tasks & drop.learners)
           res = setNames(res, task.ids)
-        }
       }
     }
   }
