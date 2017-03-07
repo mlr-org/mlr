@@ -9,6 +9,15 @@
 #' @template arg_fdatask_pars
 #' @return [\code{\link{FDAClassifTask}}].
 #' @export
+#' @example
+#'   dat = data.frame(matrix(rnorm(20), nrow = 2))
+#'   dat$target = as.factor(c(0,1))
+#'   # X1 to X5 is channel 1 and X6 to X10 channel 2
+#'   # grd specifies the time points the curves were sampled at.
+#'   grd = list(ch_1 = 1:5, ch_2 = 1:5)
+#'   # One row per Observation
+#'   tsk = makeFDAClassifTask(data = dat, fd.features = list(ch_1 = 1:5, ch_2 = 6:10),
+#'     target = "target", fd.grid = grd, positive = "1")
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn",
@@ -27,11 +36,11 @@ makeTaskDesc.FDAClassifTask = function(task, id, target, td) {
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
   badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
-    td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+      td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
     }), names(td$fd.grids))
   # since feat.remain is a character vector with variable names, we use td$fd.features[[fdn]] for indexing
   badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
-    td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-  }), names(td$fd.grids))
+      td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+    }), names(td$fd.grids))
   addClasses(badtd, "FDAClassifTaskDesc")
 }

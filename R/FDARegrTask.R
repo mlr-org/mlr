@@ -9,6 +9,15 @@
 #' @template arg_fdatask_pars
 #' @return See [\code{\link{FDARegrTask}}].
 #' @export
+#' @example
+#'   dat = data.frame(matrix(rnorm(20), nrow = 2))
+#'   dat$target = c(1,2)
+#'   # X1 to X5 is channel 1 and X6 to X10 channel 2
+#'   # grd specifies the time points the curves were sampled at.
+#'   grd = list(ch_1 = 1:5, ch_2 = 1:5)
+#'   # One row per Observation
+#'   tsk = makeFDARegrTask(data = dat, fd.features = list(ch_1 = 1:5, ch_2 = 6:10),
+#'     target = "target", fd.grid = grd)
 #' @aliases FDARegrTask
 makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE, fd.features = NULL, fd.grids = NULL) {
@@ -23,8 +32,12 @@ makeTaskDesc.FDARegrTask = function(task, id, target, td) {
   badtd$type = "fdaregr"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]), names(td$fd.features))
-  # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]] 
-  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]), names(td$fd.grids))
+  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
+      td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+    }), names(td$fd.features))
+  # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]]
+  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
+      td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+    }), names(td$fd.grids))
   addClasses(badtd, "FDARegrTaskDesc")
 }

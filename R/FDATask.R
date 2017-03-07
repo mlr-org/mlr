@@ -1,7 +1,7 @@
 #' @title Functional analysis task.
 #'
 #' @description
-#' Converts a normal task to a FDA task by adding some extra information to the 
+#' Converts a normal task to a FDA task by adding some extra information to the
 #' task description and changing the S3 classes to FDATask. \dQuote{task.cl} and
 #' \dQuote{desc.cl} are the names for the new class and task description
 #' respectively. It also does arg checking to ensure consistency.
@@ -34,25 +34,21 @@ makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
     fd.features = list(fd1 = fnames)
   }
   if (is.null(fd.grids)) {
-    fd.grids = setNames(lapply(X = names(fd.features), FUN = function(name){as.numeric(1:length(fd.features[[name]]))}), names(fd.features))
+    fd.grids = setNames(lapply(X = names(fd.features), FUN = function(name) {
+        as.numeric(1:length(fd.features[[name]]))
+      }), names(fd.features))
   }
   assertNames(names(fd.grids), permutation.of = names(fd.features))
   cns = colnames(getTaskData(task))
   # lets check integrity of every entry of fd.features, then convert indices to character vector
-  # FIXME: Shall we convert all the integer indices here into character?
   fd.features = lapply(fd.features, function(f) {
     if (is.character(f)) {
-      rest = setdiff(f, fnames)
-      if (length(rest) > 0L)
-        stopf("Functional features must use only data column names, not: '%s'",
-          clipString(collapse(rest), 30L))
-      return(f)
+      assert_subset(f, fnames)
+    } else if (is.integer(f)) {
+      assert_integer(f, lower = 1L, upper = length(cns))
+      f = cns[f]
     }
-    if (is.integer(f)) {
-      if (!all(f >= 1L & f <= length(cns)))
-        stop("Functional features indices must be between 1 and ncols(data)!")
-      return(cns[f])
-    }
+    return(f)
   })
   task$task.desc$fd.features = fd.features
   task$task.desc$fd.grids = fd.grids
@@ -69,4 +65,3 @@ print.FDATask = function(x, ...) {
   catf("Functional features: %i\n%s", length(fdf), clipString(collapse(s, sep = ", "), 30L))
   catf("Scalar features: %i", getTaskNFeats(x) - sum(viapply(fdf, length)))
 }
-
