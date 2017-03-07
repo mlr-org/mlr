@@ -28,10 +28,9 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
   fdf = tdesc$fd.features
-  fdg = tdesc$fd.grids
 
   # later on, the grid elements in mat.list should have suffix ".grid"
-  names(fdg) = paste0(names(fdg), ".grid")
+  fdg = setNames(tdesc$fd.grids, paste0(names(tdesc$fd.grids), ".grid"))
   fdns = names(fdf)
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
@@ -39,7 +38,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   formula.terms = character(length(fdf))
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
-    mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
+    mat.list[[fdn]] = as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %d, df = %d, check.ident = FALSE)", fdn, gn, bsignal.knots, bsignal.df)
   }
   mat.list = c(mat.list, fdg)
@@ -53,11 +52,9 @@ reformat2mat.list = function(data, tdesc){
   tn = tdesc$target
   fdns = names(tdesc$fd.features)
   mat.list = namedList(fdns)
-  i = 1L
   for(fdn in fdns){
     mat.list[[fdn]]=  as.matrix(subset(data, select = tdesc$fd.features[[fdn]]))
-    mat.list[[paste0(fdn,".index") ]] =  tdesc$fd.grids[[i]]
-    i = i + 1
+    mat.list[[paste0(fdn,".index") ]] =  tdesc$fd.grids[[fdn]]
   }
   return(mat.list)
 }

@@ -26,14 +26,12 @@ makeTaskDesc.FDAClassifTask = function(task, id, target, td) {
 
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  badtd$fd.features = lapply(names(td$fd.features), function(fdn) {
+  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
     td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-    })
+    }), names(td$fd.grids))
   # since feat.remain is a character vector with variable names, we use td$fd.features[[fdn]] for indexing
-  badtd$fd.grids = lapply(names(td$fd.features), function(fdn) {
+  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
     td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-  })
-  names(badtd$fd.features) = names(td$fd.features)
-  names(badtd$fd.grids) = names(td$fd.grids)
+  }), names(td$fd.grids))
   addClasses(badtd, "FDAClassifTaskDesc")
 }
