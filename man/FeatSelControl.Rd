@@ -15,21 +15,22 @@
 \usage{
 makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
   maxit = NA_integer_, max.features = NA_integer_, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL)
+  tune.threshold.args = list(), log.fun = "default")
 
 makeFeatSelControlGA(same.resampling.instance = TRUE, impute.val = NULL,
   maxit = NA_integer_, max.features = NA_integer_, comma = FALSE,
   mu = 10L, lambda, crossover.rate = 0.5, mutation.rate = 0.05,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL)
+  tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = "default")
 
 makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
   max.features = NA_integer_, prob = 0.5, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL)
+  tune.threshold.args = list(), log.fun = "default")
 
 makeFeatSelControlSequential(same.resampling.instance = TRUE,
   impute.val = NULL, method, alpha = 0.01, beta = -0.001,
   maxit = NA_integer_, max.features = NA_integer_, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL)
+  tune.threshold.args = list(), log.fun = "default")
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -53,8 +54,10 @@ Default is \code{FALSE}.}
 Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
 Default is none.}
 
-\item{log.fun}{[\code{function} | \code{NULL}]\cr
-Function used for logging. If set to \code{NULL}, the internal default will be used.
+\item{log.fun}{[\code{function} | \code{character(1)}]\cr
+Function used for logging. If set to \dQuote{default}, the internal default will be used.
+If set to \dQuote{memory}, a slightly extended version of the default will be used that also displays
+memory usage.
 Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
 and \code{stage} is expected.

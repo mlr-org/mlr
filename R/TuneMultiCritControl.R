@@ -34,12 +34,12 @@
 NULL
 
 makeTuneMultiCritControl = function(measures, same.resampling.instance,
-  impute.val = NULL, log.fun = NULL, final.dw.perc = NULL, budget = NULL, ..., cl) {
+  impute.val = NULL, log.fun = "default", final.dw.perc = NULL, budget = NULL, ..., cl) {
 
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val))
     assertNumeric(impute.val, any.missing = FALSE)
-  if (is.null(log.fun))
+  if (identical(log.fun, "default"))
     log.fun = logFunTune
   else if (identical(log.fun, "memory"))
     log.fun = logFunTuneMemory

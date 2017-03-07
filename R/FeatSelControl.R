@@ -58,8 +58,8 @@
 #' @param tune.threshold.args [\code{list}]\cr
 #'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
 #'   Default is none.
-#' @param log.fun [\code{function} | \code{character(1)} | \code{NULL}]\cr
-#'   Function used for logging. If set to \code{NULL}, the internal default will be used.
+#' @param log.fun [\code{function} | \code{character(1)}]\cr
+#'   Function used for logging. If set to \dQuote{default}, the internal default will be used.
 #'   If set to \dQuote{memory}, a slightly extended version of the default will be used that also displays
 #'   memory usage.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
@@ -111,11 +111,11 @@
 NULL
 
 makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, ..., cl) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default", ..., cl) {
 
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  if (is.null(log.fun))
+  if (identical(log.fun, "default"))
     log.fun = logFunFeatSel
   else if (identical(log.fun, "memory"))
     log.fun = logFunTuneMemory
