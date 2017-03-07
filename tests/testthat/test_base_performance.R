@@ -55,14 +55,24 @@ test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
   for (i in vals) {
     configureMlr(on.measure.not.applicable = i)
     lrn = makeLearner("classif.qda", predict.type = "response")
-    mod = train(lrn, sonar.task)
-    pred = predict(mod, sonar.task)
+    mod = train(lrn, binaryclass.task)
+    pred = predict(mod, binaryclass.task)
     if (i == "quiet") {
       expect_equal(unname(performance(pred, auc)), NA_real_)
+      # does this also work with benchmark?
+      b = benchmark(lrn, binaryclass.task, measures = list(acc, auc))
+      expect_true(any(is.na(as.data.frame(b)$auc)))
+      expect_false(any(is.na(as.data.frame(b)$acc)))
     } else if (i == "warn") {
       expect_warning(expect_equal(unname(performance(pred, auc)), NA_real_))
+      # does this also work with benchmark?
+      expect_warning(b <- benchmark(lrn, binaryclass.task, measures = list(acc, auc)))
+      expect_true(any(is.na(as.data.frame(b)$auc)))
+      expect_false(any(is.na(as.data.frame(b)$acc)))
     } else {
       expect_error(performance(pred, auc))
+      # does this also work with benchmark?
+      expect_error(benchmark(lrn.list, binaryclass.task, measures = list(acc, auc)))
     }
   }
   configureMlr(on.measure.not.applicable = default)
