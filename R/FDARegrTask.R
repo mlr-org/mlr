@@ -23,8 +23,12 @@ makeTaskDesc.FDARegrTask = function(task, id, target, td) {
   badtd$type = "fdaregr"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]), names(td$fd.features))
-  # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]] 
-  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]), names(td$fd.grids))
+  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
+      td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+    }), names(td$fd.features))
+  # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]]
+  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
+      td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
+    }), names(td$fd.grids))
   addClasses(badtd, "FDARegrTaskDesc")
 }
