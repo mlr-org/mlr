@@ -49,7 +49,7 @@
 #'   Default is none.
 #' @param log.fun [\code{function} | \code{character(1)} | \code{NULL}]\cr
 #'   Function used for logging. If set to \code{NULL}, the internal default will be used.
-#'   If set to "memory", a slightly extended version of the default will be used that also displays
+#'   If set to \dQuote{memory}, a slightly extended version of the default will be used that also displays
 #'   memory usage.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 #'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
