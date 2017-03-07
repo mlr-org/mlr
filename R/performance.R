@@ -44,7 +44,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
 
 doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
-  props = m$properties
+  props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
     if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
