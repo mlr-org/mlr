@@ -75,7 +75,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
     package = vcapply(extractSubList(filters, "pkg"), collapse)
   )
   if (desc)
-    df$desc = extractSubList(filters, "desc")
+    df$desc = clipString(extractSubList(filters, "desc"), len = 40)
   if (tasks)
     df = cbind(df, tag2df(extractSubList(filters, "supported.tasks"), prefix = "task."))
   if (features)
