@@ -92,8 +92,8 @@ replaceDupeMeasureNames = function(measures, x = "id") {
 checkDuplicatedLearnerNames = function(learner.names) {
   dupl = duplicated(learner.names)
   if (any(dupl)) {
-    dupl.learner = learner.names[which.first(dupl)]
-    stopf("Learner short names are not unique for: %s. Set 'pretty.names = FALSE' to resolve this.",
-      dupl.learner)
+    dupl.learners = unique(learner.names[dupl])
+    stopf("Learner short names are not unique for: %s. \n  Set 'pretty.names = FALSE' to resolve this.",
+      collapse(dupl.learners))
   }
 }
