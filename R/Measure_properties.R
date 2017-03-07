@@ -33,7 +33,7 @@ hasMeasureProperties = function(measure, props) {
 #' @title List the supported measure properties.
 #'
 #' @description
-#'   This is useful for determining which measure properties are available.
+#' This is useful for determining which measure properties are available.
 #'
 #' @return [\code{character}].
 #'

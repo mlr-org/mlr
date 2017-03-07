@@ -786,6 +786,16 @@ test_that("getDefaultMeasure", {
   expect_equal(mmce, getDefaultMeasure("classif"))
 })
 
+test_that("measure properties", {
+  #hasMeasureProps yields correct properties
+  expect_true(all(vlapply(listMeasures(create = TRUE),
+    function(m) all(hasMeasureProperties(m, m$properties)))))
+  props = listMeasureProperties()
+  #all props exist in mlr$measure.properties
+  expect_true(all(vlapply(listMeasures(create = TRUE),
+    function(m) all(getMeasureProperties(m) %in% props))))
+})
+
 test_that("measures quickcheck", {
   skip_on_cran()
   options(warn = 2)
