@@ -2,6 +2,7 @@
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
+* getBMR-operators: now support "drop" argument that simplifies the resulting list
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
