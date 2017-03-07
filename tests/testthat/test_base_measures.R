@@ -789,11 +789,17 @@ test_that("getDefaultMeasure", {
 test_that("measure properties", {
   #hasMeasureProps yields correct properties
   expect_true(all(vlapply(listMeasures(create = TRUE),
-    function(m) all(hasMeasureProperties(m, m$properties)))))
+    function(m) {
+      res = hasMeasureProperties(m, m$properties)
+      all(res) & length(res) > 0
+      })))
   props = listMeasureProperties()
   #all props exist in mlr$measure.properties
   expect_true(all(vlapply(listMeasures(create = TRUE),
-    function(m) all(getMeasureProperties(m) %in% props))))
+    function(m) {
+      res = all(getMeasureProperties(m) %in% props)
+      all(res) & length(res) > 0
+    })))
 })
 
 test_that("measures quickcheck", {
