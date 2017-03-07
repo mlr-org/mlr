@@ -52,11 +52,9 @@ reformat2mat.list = function(data, tdesc){
   tn = tdesc$target
   fdns = names(tdesc$fd.features)
   mat.list = namedList(fdns)
-  i = 1L
   for(fdn in fdns){
     mat.list[[fdn]]=  as.matrix(subset(data, select = tdesc$fd.features[[fdn]]))
-    mat.list[[paste0(fdn,".index") ]] =  tdesc$fd.grids[[i]]
-    i = i + 1
+    mat.list[[paste0(fdn,".index") ]] =  tdesc$fd.grids[[fdn]]
   }
   return(mat.list)
 }
