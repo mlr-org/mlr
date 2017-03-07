@@ -97,7 +97,10 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
-  pred = predict(.model$learner.model, newdata = .newdata, ...)
+  if (se.method == "bootstrap")
+    pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
+  else
+    pred = predict(.model$learner.model, newdata = .newdata, ...)
   if (.learner$predict.type == "se") {
     se.fun = switch(se.method,
       bootstrap = bootstrapStandardError,
@@ -137,7 +140,8 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   #     (prediction for x of ensemble r in bootstrap b - average prediction for x over all ensambles in bootsrap b )^2
   #   )
   # )
-  bias = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) * rowSums(matrix(vnapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
+  bias = rowSums(matrix(vapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2, numeric(nrow(pred.boot.all[[1]]))), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
+  bist = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) * bias
   pred.boot.aggregated = extractSubList(pred.bagged, c("aggregate"))
   pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
   var.boot = apply(pred.boot.aggregated, 1, var) - bias
