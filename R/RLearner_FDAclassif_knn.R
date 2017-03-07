@@ -9,11 +9,13 @@ makeRLearner.fdaclassif.knn = function() {
     cl = "fdaclassif.knn",
     package = "fda.usc",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "knn", lower = 1L, default = 1L),  #FIXEME: default in fda.usc is NULL
-      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = list("metric.lp", "metric.kl", "metric.hausdorff", "metric.dist")),
+      makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
+      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = list("metric.lp", "metric.kl",
+        "metric.hausdorff", "metric.dist")),
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = list("GCV.S", "CV.S", "GCCV.S")),
-      makeUntypedLearnerParam(id = "par.CV"),  # FIXME: we don't understand this parameter
-      makeUntypedLearnerParam(id = "par.S")  # weights, FIXME: we don't understand this parameter
+      # trim and draw (= plot!) are the par.CV parameters
+      makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
+      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Knn on FDA",
@@ -22,11 +24,15 @@ makeRLearner.fdaclassif.knn = function() {
 }
 
 #' @export
-trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
-  data.fdclass = fda.usc::fdata(mdata = z$data)  # transform the data into fda.usc:fdata class type.
+  # transform the data into fda.usc:fdata class type.
+  data.fdclass = fda.usc::fdata(mdata = z$data)
+  par.CV = learnerArgsToControl(list, trim, draw)
+  par.S = list(w = .weights)
   glearn = z$target
-  learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass, ...)
+  learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
+                                       par.CV = par.CV, par.S = par.S, ...)
   return(learned.model)
 }
 
