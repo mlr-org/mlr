@@ -95,7 +95,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
       types = "numeric", any.missing = FALSE)
     expect_true(info = info, all(probdf >= 0 && probdf <= 1))
 
-    expect_numeric(unname(probdf), lower = 0.99, upper = 1.0, any.missing = FALSE, len = NROW(probdf))
+    expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE, tolerance = 0.01)
   }
 }
 
