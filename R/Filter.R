@@ -50,14 +50,16 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #' Returns a subset-able dataframe with filter information.
 #'
 #' @param desc [\code{logical(1)}]\cr
-#'  Provide more detailed information about filters.
+#'  Provide more detailed information about filters. Default is \code{TRUE}.
 #' @param tasks [\code{logical(1)}]\cr
-#'  Provide information on supported tasks.
+#'  Provide information on supported tasks. Default is \code{FALSE}.
 #' @param features [\code{logical(1)}]\cr
-#'  Provide information on supported features.
+#'  Provide information on supported features. Default is \code{FALSE}.
+#' @param include.deprecated [\code{logical(1)}]\cr
+#'  Should deprecated filter methods be included in the list. Default is \code{FALSE}.
 #' @return [\code{data.frame}].
 #' @export
-listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
+listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
@@ -74,13 +76,29 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
     id = names(filters),
     package = vcapply(extractSubList(filters, "pkg"), collapse)
   )
+  
+  description = extractSubList(filters, "desc")
+  
   if (desc)
-    df$desc = extractSubList(filters, "desc")
+    df$desc = description
   if (tasks)
     df = cbind(df, tag2df(extractSubList(filters, "supported.tasks"), prefix = "task."))
   if (features)
     df = cbind(df, tag2df(extractSubList(filters, "supported.features"), prefix = "feature."))
-  setRowNames(sortByCol(df, "id"), NULL)
+  deprecated = stri_endswith(description, fixed = "(DEPRECATED)")
+  if (include.deprecated)
+    df$deprecated = deprecated
+  else
+    df = df[!deprecated,]
+  res = setRowNames(sortByCol(df, "id"), NULL)
+  addClasses(res, "FilterMethodsList")
+}
+
+#' @export
+print.FilterMethodsList = function(x, len = 40, ...) {
+  if (!is.null(x$desc))
+    x$desc = clipString(x$desc, len = len)
+  NextMethod()
 }
 
 #' @export
@@ -479,7 +497,7 @@ univariate = makeFilter(
   }
 )
 .FilterRegister[["univariate"]] = univariate
-.FilterRegister[["univariate"]]$desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner (DEPRECATED)."
+.FilterRegister[["univariate"]]$desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner. (DEPRECATED)"
 .FilterRegister[["univariate"]]$fun = function(...) {
   .Deprecated(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
   .FilterRegister[["univariate.model.score"]]$fun(...)

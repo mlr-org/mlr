@@ -19,8 +19,9 @@
     ```
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
-* [We are on Slack](https://mlr-org.slack.com/)
+* [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
 * [We have a blog on mlr](https://mlr-org.github.io/)
+* A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/List-of-Possible-Enhancements-to-mlr) - contributors welcome!
 * We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
 * **If you like the package, please "star" it on Github.**
 

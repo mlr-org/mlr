@@ -8,11 +8,11 @@ test_that("regr_km", {
     #list(covtype="gauss"),
     list(covtype="matern5_2")
   )
-  dd = regr.df[1:50, c(1:3, 14)]
+  dd = regr.num.df[1:50, ]
   old.predicts.list = list()
-  des1 = dd[1:25, setdiff(colnames(dd), regr.target)]
-  des2 = dd[26:50, setdiff(colnames(dd), regr.target)]
-  y = dd[1:25, regr.target]
+  des1 = dd[1:25, setdiff(colnames(dd), regr.num.target)]
+  des2 = dd[26:50, setdiff(colnames(dd), regr.num.target)]
+  y = dd[1:25, regr.num.target]
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(~1, design=des1, response=y)
@@ -23,7 +23,7 @@ test_that("regr_km", {
     )
     old.predicts.list[[i]] = DiceKriging::predict(m, newdata=des2, type="SK")$mean
   }
-  testSimpleParsets("regr.km", dd, regr.target, 1:25, old.predicts.list, parset.list)
+  testSimpleParsets("regr.km", dd, regr.num.target, 1:25, old.predicts.list, parset.list)
 
   ## Test that nugget.stability has an effect.
   ps = makeNumericParamSet(len = 1, lower = 0, upper = 1)

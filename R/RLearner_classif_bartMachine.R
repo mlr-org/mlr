@@ -20,7 +20,7 @@ makeRLearner.classif.bartMachine = function() {
       makeLogicalLearnerParam(id = "debug_log", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "run_in_sample", default = TRUE),
       makeNumericVectorLearnerParam(id = "cov_prior_vec"),
-      makeLogicalLearnerParam(id = "use_missing_data", default = TRUE),
+      makeLogicalLearnerParam(id = "use_missing_data", default = FALSE),
       makeIntegerLearnerParam(id = "num_rand_samps_in_library", default = 10000, lower = 1),
       makeLogicalLearnerParam(id = "use_missing_data_dummies_as_covars", default = FALSE),
       makeLogicalLearnerParam(id = "replace_missing_data_with_x_j_bar", default = FALSE),
