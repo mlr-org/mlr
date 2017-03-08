@@ -5,6 +5,9 @@
 * getBMR-operators: now support "drop" argument that simplifies the resulting list
 * configureMlr: added option "on.measure.not.applicable" to handle situations where performance
   cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks
+* tuneParams, selectFeatures: removed memory stats from default output for
+  performance reasons (can be restored by using a control object with "log.fun"
+  = "memory")
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
