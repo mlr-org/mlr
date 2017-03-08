@@ -10,6 +10,7 @@
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
 * listTaskTypes, listLearnerProperties
 * getMeasureProperties, hasMeasureProperties, listMeasureProperties
+* makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".
