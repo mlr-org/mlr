@@ -402,7 +402,7 @@ tau = makeMeasure(id = "tau", minimize = FALSE, best = 1, worst = -1,
   }
 )
 
-#' @export measureTAU
+#' @export measureTau
 #' @rdname measures
 #' @format none
 measureTau = function(truth, response) {
@@ -422,7 +422,7 @@ rho = makeMeasure(id = "rho", minimize = FALSE, best = 1, worst = -1,
   }
 )
 
-#' @export measureRHO
+#' @export measureRho
 #' @rdname measures
 #' @format none
 measureRho = function(truth, response) {
