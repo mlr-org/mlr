@@ -421,7 +421,7 @@ changeData = function(task, data, costs, weights) {
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
   )
 

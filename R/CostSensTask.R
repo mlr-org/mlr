@@ -31,13 +31,13 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
       stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
   }
 
-  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking)
+  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking, costs)
   addClasses(task, "CostSensTask")
 }
 
-makeCostSensTaskDesc = function(id, data, target, blocking) {
+makeCostSensTaskDesc = function(id, data, target, blocking, costs) {
   td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking)
-  td$class.levels = colnames(task$env$costs)
+  td$class.levels = colnames(costs)
   return(addClasses(td, c("TaskDescCostSens", "TaskDescSupervised")))
 }
 
