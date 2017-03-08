@@ -18,4 +18,3 @@ Returns the error dump that can be used with \code{debugger()} to evaluate error
 If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE} or if the
 prediction did not fail, this returns \code{NULL}.
 }
-

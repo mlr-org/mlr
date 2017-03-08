@@ -5,7 +5,8 @@ test_that("classif_plsdaCaret", {
   parset.list = list(
     list(),
     list(ncomp = 4),
-    list(probMethod = "Bayes")
+    list(probMethod = "Bayes"),
+    list(method = "oscorespls")
   )
 
   old.predicts.list = list()

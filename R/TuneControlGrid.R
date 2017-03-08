@@ -8,7 +8,7 @@
 #' @rdname TuneControl
 makeTuneControlGrid = function(same.resampling.instance = TRUE, impute.val = NULL,
   resolution = 10L, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
   resolution = asCount(resolution)
   makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,

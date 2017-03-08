@@ -23,7 +23,7 @@ Plot filter values using ggvis.
 }
 \examples{
 \dontrun{
-fv = generateFilterValuesData(iris.task, method = "chi.squared")
+fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValuesGGVIS(fv)
 }
 }
