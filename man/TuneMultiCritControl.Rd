@@ -43,7 +43,7 @@ If set to \dQuote{memory}, the memory usage for each evaluation will also be dis
 in run time.
 Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-and \code{stage} is expected.
+\code{stage}, and \code{prev.stage} is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
 (the latter two both taken from \code{\link{gc}}).
