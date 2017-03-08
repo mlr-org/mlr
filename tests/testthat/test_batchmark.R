@@ -20,10 +20,10 @@ test_that("batchmark", {
   expect_equal(tab$problem, as.factor("binary"))
   expect_equal(tab$algorithm, as.factor("classif.lda"))
   expect_set_equal(findExperiments(reg = reg)$job.id, 1:2)
-  
+
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
-  
+
   res = reduceBatchmarkResults(reg = reg)
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
@@ -92,13 +92,13 @@ test_that("batchmark", {
   ))
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 2L))
   measures = list(mmce, acc)
-  
+
   reg = makeExperimentRegistry(file.dir = NA)
   res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   res = reduceBatchmarkResults(reg = reg)
-  
+
   expect_true("BenchmarkResult" %in% class(res))
   
   df = as.data.frame(res)

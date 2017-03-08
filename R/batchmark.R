@@ -20,8 +20,6 @@
 #' \item{5.}{\code{reduceBatchtoolsResult()}}
 #' }
 #' @inheritParams benchmark
-#' @param data.ids [\code{integer}]\cr
-#'   Dataset IDs to download from Open-ML. Default is none.
 #' @param resamplings [(list of) \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy for each tasks.
 #'   If only one is provided, it will be replicated to match the number of tasks.
@@ -32,39 +30,24 @@
 #' @return [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
 #' @export
 #' @family benchmark
-batchmark = function(learners, tasks, data.ids, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
+batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
 
   requirePackages("batchtools", why = "batchmark", default.method = "load")
+
+  assertFlag(models)
 
   learners = ensureBenchmarkLearners(learners)
   learner.ids = vcapply(learners, getLearnerId)
   names(learners) = learner.ids
 
-  if (!missing(tasks)) {
-    tasks = ensureBenchmarkTasks(tasks)
-    task.ids = vcapply(tasks, getTaskId)
-    names(tasks) = task.ids
-  }
-  if (!missing(data.ids)) {
-    requirePackages("OpenML", why = "OpenML data ids given", default.method = "load")
-    OpenML::populateOMLCache(data.ids = data.ids)
-    did.tasks = as.list(data.ids)
-    names(did.tasks) = data.ids
-    tasks = if (missing(tasks))
-      did.tasks
-    else
-      c(tasks, did.tasks)
-    task.ids = names(tasks)
-  }
-  if (missing(tasks))
-    stop("At least one task or OpenML data ID has to be given")
+  tasks = ensureBenchmarkTasks(tasks)
+  task.ids = vcapply(tasks, getTaskId)
+  names(tasks) = task.ids
 
   resamplings = ensureBenchmarkResamplings(resamplings, tasks)
   names(resamplings) = task.ids
 
   measures = ensureBenchmarkMeasures(measures, tasks)
-
-  assertFlag(models)
 
   reg$packages = union(reg$packages, "mlr")
 
@@ -86,8 +69,6 @@ batchmark = function(learners, tasks, data.ids, resamplings, measures, models = 
 }
 
 resample.fun = function(job, data, i) {
-  if (is.numeric(data$task))
-    data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(data$task))
   rin = makeResampleInstance(desc = data$rdesc, task = data$task)
   list(train = rin$train.inds[[i]], test = rin$test.inds[[i]], weights = rin$weights[[i]], rin = rin)
 }
@@ -99,8 +80,6 @@ getAlgoFun = function(lrn, measures, models) {
   function(job, data, instance) {
 
     extract.this = getExtractor(lrn)
-    if (is.numeric(data$task))
-      data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(data$task))
 
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
       measures = measures, weights = instance$weights, rdesc = data$rdesc, model = models, extract = extract.this, show.info = FALSE)
@@ -137,29 +116,25 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
   problems = batchtools::getProblemIds(reg)
   algorithms = batchtools::getAlgorithmIds(reg)
 
-  for (p in problems) {
+  for (prob in problems) {
 
-    exps = batchtools::findExperiments(prob.name = p, ids = ids)
+    exps = batchtools::findExperiments(prob.name = prob, ids = ids)
     job = batchtools::makeJob(id = exps[1, ])
     rin = job$instance$rin
 
     if (nrow(exps) > 0) {
       problem = job$problem
-      pname = p
-      if (is.numeric(problem$data$task)) {
-        problem$data$task = OpenML::convertOMLDataSetToMlr(getOMLDataSet(problem$data$task))
-        pname = getTaskId(problem$data$task)
-      }
 
       for (a in algorithms) {
-        res = batchtools::reduceResultsList(batchtools::findExperiments(prob.name = p, algo.name = a, ids = ids))
+        res = batchtools::reduceResultsList(batchtools::findExperiments(prob.pattern = stri_paste("^", prob, "$"), 
+          algo.pattern = stri_paste("^", a, "$"), ids = ids))
         models = !is.null(res[[1]]$model)
         lrn = problem$data$learner[[a]]
         extract.this = getExtractor(lrn)
         rs = mergeResampleResult(learner.id = a, task = problem$data$task, iter.results = res, measures = problem$data$measures,
           rin = rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
         rs$learner = lrn
-        result[[pname]][[a]] = addClasses(rs, "ResampleResult")
+        result[[prob]][[a]] = addClasses(rs, "ResampleResult")
         }
     }
   }
@@ -169,7 +144,3 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
     measures = problem$data$measures,
     learners = problem$data$learner)
 }
-
-
-
-

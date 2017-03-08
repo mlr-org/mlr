@@ -113,7 +113,6 @@ Suggests:
     nodeHarvest (>= 0.7-3),
     neuralnet,
     numDeriv,
-    OpenML,
     pamr,
     party,
     penalized (>= 0.9-47),
