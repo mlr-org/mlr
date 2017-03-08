@@ -51,7 +51,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   fdf = tdesc$fd.features
 
   # later on, the grid elements in mat.list should have suffix ".grid"
-  fdg = setNames(tdesc$fd.grids, paste0(names(tdesc$fd.grids), ".grid"))
+  fdg = setNames(tdesc$fd.grids, stri_paste(names(tdesc$fd.grids), ".grid"))
   fdns = names(fdf)
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
