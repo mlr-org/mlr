@@ -10,7 +10,7 @@
 #' @template arg_fdatask_pars
 #' @return [\code{\link{FDAClassifTask}}].
 #' @export
-#' @example
+#' @examples
 #' dat = data.frame(matrix(rnorm(20), nrow = 2))
 #' dat$target = as.factor(c(0,1))
 #' # X1 to X5 is functional covariate 1 and X6 to X10 functional covariate 2
