@@ -23,5 +23,5 @@ makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = 
 }
 
 makeRegrTaskDesc = function(id, data, target, weights, blocking) {
-  addClasses(makeTaskDescInternal("regr", id, data, target, weights, blocking), c("TaskDescRegr", "TaskDescSupervised"))
+  addClasses(makeTaskDescInternal("regr", id, data, target, weights, blocking), c("RegrTaskDesc", "SupervisedTaskDesc"))
 }

@@ -31,5 +31,5 @@ makeMultilabelTaskDesc = function(id, data, target, weights, blocking) {
   levs = target
   td = makeTaskDescInternal("multilabel", id, data, target, weights, blocking)
   td$class.levels = levs
-  return(addClasses(td, c("TaskDescMultilabel", "TaskDescSupervised")))
+  return(addClasses(td, c("MultilabelTaskDesc", "SupervisedTaskDesc")))
 }

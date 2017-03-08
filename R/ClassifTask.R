@@ -50,7 +50,7 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive) {
     td$negative = stri_paste("not_", positive)
   else if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, positive)
-  return(addClasses(td, c("TaskDescClassif", "TaskDescSupervised")))
+  return(addClasses(td, c("ClassifTaskDesc", "SupervisedTaskDesc")))
 }
 
 #' @export

@@ -58,12 +58,12 @@ getTaskTargetNames.Task = function(x) {
 }
 
 #' @export
-getTaskTargetNames.TaskDescSupervised = function(x) {
+getTaskTargetNames.SupervisedTaskDesc = function(x) {
   x$target
 }
 
 #' @export
-getTaskTargetNames.TaskDescUnsupervised = function(x) {
+getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
   character(0L)
 }
 
@@ -88,12 +88,12 @@ getTaskClassLevels.Task = function(x) {
 }
 
 #' @export
-getTaskClassLevels.TaskDescClassif = function(x) {
+getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
 #' @export
-getTaskClassLevels.TaskDescMultilabel = function(x) {
+getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
