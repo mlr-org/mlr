@@ -29,8 +29,8 @@ test_that("lint check", {
   linters = list(
     commas = commas_linter,
 #    infix.spaces = infix_spaces_linter,
-    open.curly = open_curly_linter(),
-    closed.curly = closed_curly_linter(),
+#    open.curly = open_curly_linter(),
+#    closed.curly = closed_curly_linter(),
     spaces.left.parentheses = spaces_left_parentheses_linter,
 #      snake.case = snake_case_linter,
 #      absolute.paths = absolute_paths_linter,
