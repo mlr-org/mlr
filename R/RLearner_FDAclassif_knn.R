@@ -13,7 +13,7 @@ makeRLearner.fdaclassif.knn = function() {
       makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "weights"),
     name = "Knn on FDA",
     short.name = "knnFDA",
     note = "Draw parameter is set to FALSE as default."
@@ -25,11 +25,11 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = z$data)
-  par.CV = learnerArgsToControl(list, trim, draw)
-  par.S = list(w = .weights)
+  par.cv = learnerArgsToControl(list, trim, draw)
+  par.s = list(w = .weights)
   glearn = z$target
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
-    par.CV = par.CV, par.S = par.S, ...)
+    par.CV = par.cv, par.S = par.s, ...)
   return(learned.model)
 }
 
