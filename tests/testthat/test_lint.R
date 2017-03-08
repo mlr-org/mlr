@@ -1,5 +1,5 @@
 if (requireNamespace("lintr", quietly = TRUE)) {
-  context("lints")
+  context("lintr")
 
   # prohibit <-
   left_assign_linter = function(source_file) {
