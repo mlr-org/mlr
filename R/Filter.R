@@ -50,13 +50,13 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #' Returns a subset-able dataframe with filter information.
 #'
 #' @param desc [\code{logical(1)}]\cr
-#'  Provide more detailed information about filters.
+#'  Provide more detailed information about filters. Default is \code{TRUE}.
 #' @param tasks [\code{logical(1)}]\cr
-#'  Provide information on supported tasks.
+#'  Provide information on supported tasks. Default is \code{FALSE}.
 #' @param features [\code{logical(1)}]\cr
-#'  Provide information on supported features.
-#'  @param include.deprecated [\code{logical(1)}]\cr
-#'  Should deprecated filter methods be included in the list.
+#'  Provide information on supported features. Default is \code{FALSE}.
+#' @param include.deprecated [\code{logical(1)}]\cr
+#'  Should deprecated filter methods be included in the list. Default is \code{FALSE}.
 #' @return [\code{data.frame}].
 #' @export
 listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
