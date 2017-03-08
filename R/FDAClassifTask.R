@@ -14,9 +14,9 @@
 #' dat$target = as.factor(c(0,1))
 #' # X1 to X5 is functional covariate 1 and X6 to X10 functional covariate 2
 #' # grd specifies the time points the curves were sampled at.
-#' grd = list(ch_1 = 1:5, ch_2 = 1:5)
+#' grd = list(fd_1 = 1:5, fd_2 = 1:5)
 #' # One row per Observation
-#' tsk = makeFDAClassifTask(data = dat, fd.features = list(ch_1 = 1:5, ch_2 = 6:10),
+#' tsk = makeFDAClassifTask(data = dat, fd.features = list(fd_1 = 1:5, fd_2 = 6:10),
 #'   target = "target", fd.grid = grd, positive = "1")
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,

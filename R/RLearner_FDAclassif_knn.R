@@ -1,8 +1,3 @@
-#' @title Learner for knn on functional data.
-#'
-#' @description
-#' Learner for knn on functional data.
-#'
 #' @export
 makeRLearner.fdaclassif.knn = function() {
   makeRLearnerClassif(
@@ -10,12 +5,12 @@ makeRLearner.fdaclassif.knn = function() {
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
-      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = list("metric.lp", "metric.kl",
+      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = c("metric.lp", "metric.kl",
         "metric.hausdorff", "metric.dist")),
-      makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = list("GCV.S", "CV.S", "GCCV.S")),
+      makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
-      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Knn on FDA",
@@ -32,7 +27,7 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
   par.S = list(w = .weights)
   glearn = z$target
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
-                                       par.CV = par.CV, par.S = par.S, ...)
+    par.CV = par.CV, par.S = par.S, ...)
   return(learned.model)
 }
 
