@@ -63,11 +63,11 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring 
     }
   }
 
-  task$task.desc = makeSurvTaskTaskDesc(id, data, target, weights, blocking, censoring)
+  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking, censoring)
   addClasses(task, "SurvTask")
 }
 
-makeSurvTaskTaskDesc = function(id, data, target, weights, blocking, censoring) {
+makeSurvTaskDesc = function(id, data, target, weights, blocking, censoring) {
   td = makeTaskDescInternal("surv", id, data, target, weights, blocking)
   td$censoring = censoring
   addClasses(td, c("TaskDescSurv", "TaskDescSupervised"))
