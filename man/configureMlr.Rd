@@ -5,7 +5,8 @@
 \title{Configures the behavior of the package.}
 \usage{
 configureMlr(show.info, on.learner.error, on.learner.warning,
-  on.par.without.desc, on.par.out.of.bounds, show.learner.output)
+  on.par.without.desc, on.par.out.of.bounds, on.measure.not.applicable,
+  show.learner.output)
 }
 \arguments{
 \item{show.info}{[\code{logical(1)}]\cr
@@ -43,6 +44,13 @@ What should happen if a parameter of a learner is set to an out of bounds value.
 \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 Default is \dQuote{stop}.}
 
+\item{on.measure.not.applicable}{[\code{logical(1)}]\cr
+What should happen if a measure is not applicable to a learner.\cr
+\dQuote{stop}: R exception is generated.\cr
+\dQuote{warn}: Warning, but value of the measure will be \code{NA}.\cr
+\dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
+Default is \dQuote{stop}.}
+
 \item{show.learner.output}{[\code{logical(1)}]\cr
 Should the output of the learning algorithm during training and prediction be shown or captured and
 suppressed?
@@ -61,4 +69,3 @@ If you call this function with an empty argument list, everything is set to its 
 \seealso{
 Other configure: \code{\link{getMlrOptions}}
 }
-

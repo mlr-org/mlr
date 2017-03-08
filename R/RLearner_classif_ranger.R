@@ -25,7 +25,7 @@ makeRLearner.classif.ranger = function() {
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered", "featimp", "weights"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered", "featimp", "weights", "oobpreds"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable."
@@ -43,6 +43,11 @@ trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL
 predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, data = .newdata, ...)
   return(p$predictions)
+}
+
+#' @export
+getOOBPredsLearner.classif.ranger = function(.learner, .model) {
+  .model$learner.model$predictions
 }
 
 #' @export

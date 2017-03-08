@@ -76,6 +76,7 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
@@ -93,4 +94,3 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-

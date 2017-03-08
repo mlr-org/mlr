@@ -4,7 +4,7 @@ test_that("listLearners", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
   expect_data_frame(x1, min.rows = 1L, min.cols = 10)
   expect_set_equal(x1$type, c("classif", "regr", "cluster", "surv", "multilabel"))
-  expect_subset(getSupportedLearnerProperties(), names(x1))
+  expect_subset(listLearnerProperties(), names(x1))
 
   x1a = listLearners("classif", create = FALSE, properties = c("missings"), warn.missing.packages = FALSE)
   expect_data_frame(x1a, min.rows = 10)

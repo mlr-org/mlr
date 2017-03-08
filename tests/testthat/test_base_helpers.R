@@ -21,3 +21,13 @@ test_that("propVectorToMatrix", {
   expect_equal(m[,2], x)
   expect_equal(colnames(m), levs)
 })
+
+test_that("listTaskTypes", {
+  expected = c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  expect_equal(expected, listTaskTypes())
+})
+
+test_that("listLearnerProperties", {
+  expected = c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  expect_equal(expected, listTaskTypes())
+})

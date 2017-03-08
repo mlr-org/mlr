@@ -55,6 +55,19 @@ the x-axis. Areas are always colored according to the \code{learner.id}.
 # see benchmark
 }
 \seealso{
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotCritDifferences}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotLearningCurveGGVIS}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerfGGVIS}},
+  \code{\link{plotThreshVsPerf}}
+
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
@@ -77,18 +90,4 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}}
-
-Other plot: \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerfGGVIS}},
-  \code{\link{plotThreshVsPerf}}
 }
-

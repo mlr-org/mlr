@@ -35,6 +35,10 @@ test_that("learners work: surv ", {
   lrns = mylist("surv", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = sub.task, hyperpars = hyperpars)
 
+  # surv with oobpreds
+  lrns = mylist("surv", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = sub.task)
+
   # survival variable importance
   lrns = mylist("surv", properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = surv.task, hyperpars = hyperpars) 
