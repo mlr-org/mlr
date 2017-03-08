@@ -28,16 +28,16 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
 
 # td is the old task description, the function return a new task description
 makeTaskDesc.FDARegrTask = function(task, id, target, fd.features, fd.grids) {
-  newtd = makeTaskDesc.RegrTask(task = task , id = id, target = target)
-  newtd$type = "fdaregr"
+  new.td = makeTaskDesc.RegrTask(task = task , id = id, target = target)
+  new.td$type = "fdaregr"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  newtd$fd.features = setNames(lapply(names(fd.features), function(fdn) {
+  new.td$fd.features = setNames(lapply(names(fd.features), function(fdn) {
       fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
     }), names(fd.features))
   # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]]
-  newtd$fd.grids = setNames(lapply(names(fd.features), function(fdn) {
+  new.td$fd.grids = setNames(lapply(names(fd.features), function(fdn) {
       fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
     }), names(fd.grids))
-  addClasses(newtd, "FDARegrTaskDesc")
+  addClasses(new.td, "FDARegrTaskDesc")
 }
