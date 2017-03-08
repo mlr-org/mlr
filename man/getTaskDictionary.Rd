@@ -4,7 +4,7 @@
 \alias{getTaskDictionary}
 \title{Create a dictionary based on the task.}
 \usage{
-getTaskDictionary(task)
+getTaskDictionary(task, subset = NULL)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -17,12 +17,13 @@ within a parameter, parameter set or list of parameters.
 \description{
 Returns a dictionary, which contains the \link{Task} itself
 (\code{task}), the number of features (\code{p}) the model is trained on, the number of
-observations (\code{n.task}) of the task in general, the task type (\code{type}) and in case of
+observations (\code{n.task}) of the task in general, the number of observations (\code{n})
+in the current subset, the task type (\code{type}) and in case of
 classification tasks, the number of class levels (\code{k}) in the general task.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
-getTaskDictionary(task)
+getTaskDictionary(task, subset = NULL)
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

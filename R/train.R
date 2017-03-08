@@ -31,10 +31,6 @@
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (hasExpression(learner)) {
-    dict = getTaskDictionary(task = task)
-    learner = evaluateParamExpressions(obj = learner, dict = dict)
-  }
   if (missing(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
@@ -42,6 +38,10 @@ train = function(learner, task, subset, weights = NULL) {
       subset = which(subset)
     else
       subset = asInteger(subset)
+  }
+  if (hasExpression(learner)) {
+    dict = getTaskDictionary(task = task, subset = subset)
+    learner = evaluateParamExpressions(obj = learner, dict = dict)
   }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
