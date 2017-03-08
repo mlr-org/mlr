@@ -398,14 +398,14 @@ tau = makeMeasure(id = "tau", minimize = FALSE, best = 1, worst = -1,
   note = "Defined as: Kendall's tau correlation between truth and response. Only looks at the order.
   See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureTAU(pred$data$truth, pred$data$response)
+    measureTau(pred$data$truth, pred$data$response)
   }
 )
 
 #' @export measureTAU
 #' @rdname measures
 #' @format none
-measureTAU = function(truth, response) {
+measureTau = function(truth, response) {
   cor(truth, response, use = "na.or.complete", method = "kendall")
 }
 
@@ -418,14 +418,14 @@ rho = makeMeasure(id = "rho", minimize = FALSE, best = 1, worst = -1,
   note = "Defined as: Spearman's rho correlation between truth and response. Only looks at the order. 
   See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureRHO(pred$data$truth, pred$data$response)
+    measureRho(pred$data$truth, pred$data$response)
   }
 )
 
 #' @export measureRHO
 #' @rdname measures
 #' @format none
-measureRHO = function(truth, response) {
+measureRho = function(truth, response) {
   cor(truth, response, use = "na.or.complete", method = "spearman")
 }
 
