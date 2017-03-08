@@ -10,11 +10,13 @@ makeRLearner.fdaclassif.knn = function() {
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
-      makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE)
     ),
+    par.vals = list(draw = FALSE),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Knn on FDA",
-    short.name = "knnFDA"
+    short.name = "knnFDA",
+    note = "Draw parameter is set to FALSE as default."
   )
 }
 
