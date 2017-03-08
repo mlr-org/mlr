@@ -28,12 +28,12 @@ if (requireNamespace("lintr", quietly = TRUE)) {
     # note that this must be a *named* list (bug in lintr)
     linters = list(
       commas = lintr::commas_linter,
-      infix.spaces = lintr::infix_spaces_linter,
+#      infix.spaces = lintr::infix_spaces_linter,
       open.curly = lintr::open_curly_linter(),
       closed.curly = lintr::closed_curly_linter(),
       spaces.left.parentheses = lintr::spaces_left_parentheses_linter,
-      snake.case = lintr::snake_case_linter,
-      absolute.paths = lintr::absolute_paths_linter,
+#      snake.case = lintr::snake_case_linter,
+#      absolute.paths = lintr::absolute_paths_linter,
       single.quotes = lintr::single_quotes_linter,
       left.assign = left_assign_linter,
       right.assign = right_assign_linter)
