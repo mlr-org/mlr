@@ -1,8 +1,3 @@
-#' @title Functional linear array model boosting.
-#'
-#' @description
-#' Learner for Functional linear array modele boosting.
-#'
 #' @export
 makeRLearner.fdaregr.FDboost = function() {
   makeRLearnerRegr(
@@ -58,7 +53,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   mat.list = namedList(fdns)
   formula.terms = c()
   for (fdn in fdns) {
-    gn = paste0(fdn, ".grid")
+    gn = stri_paste(fdn, ".grid")
     mat.list[[fdn]] = as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
       fdn, gn, bsignal.knots, df, bsignal.degree, bsignal.differences, bsignal.check.ident)

@@ -12,7 +12,7 @@
 #' @example
 #'   dat = data.frame(matrix(rnorm(20), nrow = 2))
 #'   dat$target = c(1,2)
-#'   # X1 to X5 is channel 1 and X6 to X10 channel 2
+#'   # X1 to X5 is covariate 1 and X6 to X10 covariate 2
 #'   # grd specifies the time points the curves were sampled at.
 #'   grd = list(ch_1 = 1:5, ch_2 = 1:5)
 #'   # One row per Observation

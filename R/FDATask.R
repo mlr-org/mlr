@@ -1,10 +1,11 @@
 #' @title Functional analysis task.
 #'
 #' @description
-#' Converts a normal task to a FDA task by adding some extra information to the
-#' task description and changing the S3 classes to FDATask. \dQuote{task.cl} and
-#' \dQuote{desc.cl} are the names for the new class and task description
-#' respectively. It also does arg checking to ensure consistency.
+#' Converts a normal task to a FDA task by adding some extra information
+#' (fd.features, fd.grids) to #' the task description and changing the S3
+#' classes to FDATask. \dQuote{task.cl} and \dQuote{desc.cl} are the names for
+#' the new class and task description respectively. It also does arg checking to
+#' ensure consistency.
 #'
 #' @param task [\code{link{Task}}]\cr
 #'   The normal mlr Task.
