@@ -7,7 +7,7 @@
 #' \describe{
 #' \item{id [\code{character(1)}]}{Id string of task.}
 #' \item{type [\code{character(1)}]}{Type of task, \dQuote{classif} for classification,
-#'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for 
+#'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for
 #'   cluster analysis, \dQuote{costsens} for cost-sensitive classification, and
 #'   \dQuote{multilabel} for multilabel classification.}
 #' \item{target [\code{character(0)} | \code{character(1)} | \code{character(2)} | \code{character(n.classes)}]}{
@@ -42,8 +42,7 @@ makeTaskDesc = function(task, id, ...) {
   UseMethod("makeTaskDesc")
 }
 
-makeTaskDescInternal = function(task, type, id, target, ...) {
-  data = task$env$data
+makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   # get classes of feature cols
   cl = vapply(data, function(x) head(class(x), 1L), character(1L))
   cl = dropNamed(cl, target)
@@ -59,8 +58,8 @@ makeTaskDescInternal = function(task, type, id, target, ...) {
     size = nrow(data),
     n.feat = n.feat,
     has.missings = anyMissing(data),
-    has.weights = !is.null(getTaskWeights(task)),
-    has.blocking = !is.null(task$blocking)
+    has.weights = !is.null(weights),
+    has.blocking = !is.null(blocking)
   )
 }
 
