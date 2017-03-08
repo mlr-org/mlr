@@ -251,22 +251,9 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
+getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no") {
   checkTask(task, "Task")
-  assertFlag(target.extra)
-  # assert for recode.target in recodeY
-
-  if (missing(subset)) {
-    subset = NULL
-  } else {
-    assert(checkIntegerish(subset), checkLogical(subset))
-    if (is.logical(subset)) {
-      subset = which(subset)
-    } else if (is.double(subset)) {
-      subset = asInteger(subset)
-    }
-  }
-
+  checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
 
   task.features = getTaskFeatureNames(task)
@@ -293,9 +280,6 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
       df
     )
   }
-
-  if (missing(subset) || identical(subset, seq_len(task$task.desc$size)))
-    subset = NULL
 
   if (target.extra) {
     if (missing(features))
@@ -379,9 +363,7 @@ recodeSurvivalTimes = function(y, from, to) {
 #'
 #' @param task [\code{\link{Task}}]\cr
 #'   The task.
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
+#' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
@@ -389,11 +371,8 @@ getTaskCosts = function(task, subset) {
   assertClass(task, "Task")
   if (task$task.desc$type != "costsens")
     return(NULL)
-  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
-  d = if (ms)
-    task$env$costs
-  else
-    task$env$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = task$task.desc$size)
+  d = task$env$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -417,7 +396,7 @@ subsetTask = function(task, subset, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
-  if (!missing(subset)) {
+  if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
     if (task$task.desc$has.weights)

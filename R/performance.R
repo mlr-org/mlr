@@ -44,7 +44,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
 
 doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
-  props = m$properties
+  props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
     if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
@@ -98,9 +98,16 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
 
     # if we have multiple req.pred.types, check if we have one of them (currently we only need prob)
     req.pred.types = if ("req.prob" %in% props) "prob" else character(0L)
-    if (!is.null(pred) && length(req.pred.types) > 0L && pred$predict.type %nin% req.pred.types)
-      stopf("Measure %s requires predict type to be: '%s'!",
-        m$id, collapse(req.pred.types))
+    if (!is.null(pred) && length(req.pred.types) > 0L && pred$predict.type %nin% req.pred.types) {
+      on.measure.not.applicable = getMlrOption(name = "on.measure.not.applicable")
+      msg = sprintf("Measure %s requires predict type to be: '%s'!", m$id, collapse(req.pred.types))
+      if (on.measure.not.applicable == "stop") {
+        stop(msg)
+      } else if (on.measure.not.applicable == "warn") {
+        warning(msg)
+      }
+      return(NA_real_)
+    }
   }
 
   # if it's a ResamplePrediction, aggregate
