@@ -11,7 +11,7 @@ getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE,
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
 Task or its description object.}
 
-\item{target}{[\code{character(1)}]\cr
+\item{target}{[\code{character}]\cr
 Left hand side of the formula.
 Default is defined by task \code{x}.}
 

@@ -14,7 +14,7 @@ Task or its description object.}
 [\code{character(1)}].
 }
 \description{
-Get the id of the task.
+See title.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

@@ -29,6 +29,7 @@ For complex wrappers only the top-level \code{predict.type} is currently set.
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionTaskDescription}},
   \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictType}}

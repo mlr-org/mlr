@@ -8,12 +8,19 @@
 #' @export
 #' @family task
 getTaskDescription = function(x) {
-  checkTask(x, allow.desc = TRUE)
-  if (inherits(x, "Task"))
-    return(x$task.desc)
-  else
-    return(x)
+  UseMethod("getTaskDescription")
 }
+
+#' @export
+getTaskDescription.Task = function(x) {
+  x$task.desc
+}
+
+#' @export
+getTaskDescription.TaskDesc = function(x) {
+  x
+}
+
 
 #' @title Get the type of the task.
 #'
@@ -83,10 +90,28 @@ getTaskTargetNames.TaskDescUnsupervised = function(x) {
 #' @export
 #' @family task
 getTaskClassLevels = function(x) {
-  checkTask(x, allow.desc = TRUE, task.type = c("classif", "multilabel"))
+  UseMethod("getTaskClassLevels")
+}
+
+#' @export
+getTaskClassLevels.ClassifTask = function(x) {
   getTaskDescription(x)$class.levels
 }
 
+#' @export
+getTaskClassLevels.TaskDescClassif = function(x) {
+  getTaskDescription(x)$class.levels
+}
+
+#' @export
+getTaskClassLevels.MultilabelTask = function(x) {
+  getTaskDescription(x)$class.levels
+}
+
+#' @export
+getTaskClassLevels.TaskDescMultilabel = function(x) {
+  getTaskDescription(x)$class.levels
+}
 
 #' @title Get feature names of task.
 #'
@@ -98,7 +123,11 @@ getTaskClassLevels = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  assertClass(task, "Task")
+  UseMethod("getTaskFeatureNames")
+}
+
+#' @export
+getTaskFeatureNames.Task = function(task) {
   setdiff(names(task$env$data), getTaskDescription(task)$target)
 }
 
@@ -367,13 +396,19 @@ recodeSurvivalTimes = function(y, from, to) {
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
-getTaskCosts = function(task, subset) {
-  assertClass(task, "Task")
-  if (task$task.desc$type != "costsens")
-    return(NULL)
+getTaskCosts = function(task, subset = NULL) {
+  UseMethod("getTaskCosts")
+}
+
+#' @export
+getTaskCosts.default = function(task, subset = NULL) {
+  NULL
+}
+
+#' @export
+getTaskCosts.CostSensTask = function(task, subset = NULL) {
   subset = checkTaskSubset(subset, size = task$task.desc$size)
-  d = task$env$costs[subset, , drop = FALSE]
-  return(d)
+  task$env$costs[subset, , drop = FALSE]
 }
 
 
@@ -390,7 +425,7 @@ getTaskCosts = function(task, subset) {
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
-subsetTask = function(task, subset, features) {
+subsetTask = function(task, subset = NULL, features) {
   assertClass(task, "Task")
   # not putting assertion for subset and features here for speed for now
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
