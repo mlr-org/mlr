@@ -95,7 +95,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
       types = "numeric", any.missing = FALSE)
     expect_true(info = info, all(probdf >= 0 && probdf <= 1))
 
-    checkmate::expect_numeric(unname(probdf), lower = 0.99, upper = 1.0, any.missing = FALSE, len = NROW(probdf))
+    expect_numeric(unname(probdf), lower = 0.99, upper = 1.0, any.missing = FALSE, len = NROW(probdf))
   }
 }
 
