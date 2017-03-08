@@ -20,12 +20,12 @@ measureAggrPrettyName = function(measure) {
 #'
 #' @description
 #'   Clips aggregation names from character vector.\cr
-#'   E.g: mmce.test.mean' becomes 'mmce'.\cr
+#'   E.g: 'mmce.test.mean' becomes 'mmce'.\cr
 #'   Elements that don't contain a measure name are ignored
 #'   and returned unchanged.
 #' 
 #' @param xs [\code{character}] Character vector that (possibly)
-#'   contains measure names.
+#'   contains aggregated measure names.
 #'
 #' @return [\code{character}].
 #' @export
