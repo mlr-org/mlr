@@ -19,6 +19,10 @@
 #' \item{4.}{wait until the jobs are finished...}
 #' \item{5.}{\code{reduceBatchtoolsResult()}}
 #' }
+#' 
+#' If you want to use this with \pkg{OpenML} datasets you can generate tasks from a vector 
+#' of dataset ids easily with 
+#' \code{tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))}.
 #' @inheritParams benchmark
 #' @param resamplings [(list of) \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy for each tasks.
@@ -111,10 +115,11 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   assertFlag(keep.pred)
 
-  result = list()
-
   problems = batchtools::getProblemIds(reg)
   algorithms = batchtools::getAlgorithmIds(reg)
+  
+  result = replicate(length(problems), namedList(algorithms), simplify = FALSE)
+  names(result) = problems
 
   for (prob in problems) {
 
