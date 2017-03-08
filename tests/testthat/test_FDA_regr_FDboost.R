@@ -9,5 +9,6 @@ test_that("FDA_regr_FDboost", {
     requirePackages("FDboost")
     lrn = makeLearner("fdaregr.FDboost", bsignal.knots = 40L, df = 4L, mstop = 100L)
     mod1f = train(learner = lrn, task = fuelSubset.task)
-    mod1f = predict(object = mod1f, newdata = mdata)
+    mdata = getTaskData(fuelSubset.task, target.extra = TRUE)
+    mod1f = predict(object = mod1f, newdata = mdata$data)
 })
