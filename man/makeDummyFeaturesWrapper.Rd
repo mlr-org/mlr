@@ -30,6 +30,7 @@ Returns a learner which can be used like any other learner.
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
@@ -38,6 +39,10 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
@@ -47,4 +52,3 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-
