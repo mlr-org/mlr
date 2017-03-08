@@ -27,5 +27,8 @@ test_that("listLearners", {
 
 test_that("listLearners printer (#1336)", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
-  capture.output(print(x1), file = NULL)
+  out = capture.output(print(x1), file = NULL)
+  expect_equal(length(stri_match_all(out, regex = '\n')), 30)
+  out = capture.output(print(x1, n = 10), file = NULL)
+  expect_equal(length(stri_match_all(out, regex = '\n')), 46)
 })
