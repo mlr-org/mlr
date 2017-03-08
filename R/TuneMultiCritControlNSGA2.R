@@ -1,7 +1,7 @@
 #' @export
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlNSGA2 = function(same.resampling.instance = TRUE,
-  impute.val = NULL, log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...) {
+  impute.val = NULL, log.fun = "default", final.dw.perc = NULL, budget = NULL, ...) {
 
   args = list(...)
   if (is.null(args$popsize)) {
