@@ -26,7 +26,7 @@ makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
 
   task = makeClassifTask(id, data, target, weights, blocking, positive, fixup.data, check.data)
   # arg checks for fd.features and fd.grids are done in next call
-  makeFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
+  convertTaskToFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
 }
 
 # td is the old task description, the function returns a new FDAClassifTask description

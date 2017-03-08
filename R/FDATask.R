@@ -21,7 +21,7 @@
 #' @return An object of class \code{FDATask}.
 #' @export
 #' @aliases FDATask
-makeFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
+convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
   fnames = getTaskFeatureNames(task)
   # type could be fdaregr or fdaclassif
   task$type = type

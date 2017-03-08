@@ -23,7 +23,7 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
   blocking = NULL, fixup.data = "warn", check.data = TRUE, fd.features = NULL, fd.grids = NULL) {
   task = makeRegrTask(id, data, target, weights, blocking, fixup.data, check.data)
   # arg checks for fd.features adn fd.grids are done in next call
-  makeFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
+  convertTaskToFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
 
 # td is the old task description, the function return a new task description
