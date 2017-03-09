@@ -77,7 +77,7 @@
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 #' print(imputed$data)
-#' reimpute(data.frame(x = NA), imputed$desc)
+#' reimpute(data.frame(x = NA_real_), imputed$desc)
 impute = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
