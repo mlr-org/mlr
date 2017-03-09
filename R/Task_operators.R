@@ -367,7 +367,7 @@ getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
   subset = checkTaskSubset(subset, size = task$task.desc$size)
-  d = task$env$costs[subset, , drop = FALSE]
+  d = task$task.desc$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -402,7 +402,7 @@ changeData = function(task, data, costs, weights) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))
-    costs = getTaskCosts(task)
+  costs = getTaskCosts(task)
   if (missing(weights))
     weights = task$weights
   task$env = new.env(parent = emptyenv())
