@@ -51,34 +51,29 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
-  formula.terms = c()
+  formula.terms = character(length(fdns))
+  # for each functional covariate ... 
   for (fdn in fdns) {
+    # ... create a corresponding grid name
     gn = stri_paste(fdn, ".grid")
+    # ... extract the corresponding original data into a list of matrices
     mat.list[[fdn]] = as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
+    # ... create a formula item
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
       fdn, gn, bsignal.knots, df, bsignal.degree, bsignal.differences, bsignal.check.ident)
   }
+  # add grid names
   mat.list = c(mat.list, fdg)
+  # add target names
   mat.list[[tn]] = d[, tn]
   form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+")))
   FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, 
     control = ctrl, family = family)
 }
 
-reformat2mat.list = function(data, tdesc) {
-  tn = tdesc$target
-  fdns = names(tdesc$fd.features)
-  mat.list = namedList(fdns)
-  for (fdn in fdns) {
-    mat.list[[fdn]] = as.matrix(subset(data, select = tdesc$fd.features[[fdn]]))
-    mat.list[[stri_paste(fdn, ".index")]] = tdesc$fd.grids[[fdn]]
-  }
-  return(mat.list)
-}
 
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
-  mextra_para = list(...)
   tdesc = getTaskDescription(.model)
   mat.list = reformat2mat.list(.newdata, tdesc)
   pred = predict(object = .model$learner.model, newdata = mat.list)
