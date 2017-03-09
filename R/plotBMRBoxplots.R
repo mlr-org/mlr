@@ -33,7 +33,15 @@ plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL
   df = orderBMRTasks(bmr, df, order.tsks)
 
   if (pretty.names) {
-    levels(df$learner.id) = getBMRLearnerShortNames(bmr)
+    learner.short.names = getBMRLearnerShortNames(bmr)
+    checkDuplicatedLearnerNames(learner.short.names)
+
+    if (!is.null(order.lrns)) {
+      learner.ids = getBMRLearnerIds(bmr)
+      names(learner.short.names) = learner.ids
+      learner.short.names = learner.short.names[order.lrns]
+    }
+    levels(df$learner.id) = learner.short.names
   }
 
   p = ggplot(df, aes_string("learner.id", measure$id))

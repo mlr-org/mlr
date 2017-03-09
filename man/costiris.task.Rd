@@ -15,4 +15,3 @@ See \code{\link[datasets]{iris}}.
   In ICML, J. Fürnkranz and T. Joachims, Eds., Omnipress, 1095--1102.
 }
 \keyword{data}
-

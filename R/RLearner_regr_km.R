@@ -41,11 +41,13 @@ makeRLearner.regr.km = function() {
 trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = list(...)
+  if (!is.null(args$optim.method) && args$optim.method == "gen")
+    requirePackages(packs = "rgenoud", why = "fitting 'regr.km' with 'rgenoud' optimization")
   if (!is.null(args$nugget.stability)) {
     if (args$nugget.stability == 0) {
       args$nugget = 0
     } else {
-      args$nugget = args$nugget.stability * var(d$target)  
+      args$nugget = args$nugget.stability * var(d$target)
     }
     args$nugget.stability = NULL
   }

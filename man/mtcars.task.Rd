@@ -11,4 +11,3 @@ Contains the task (\code{mtcars.task}).
 See \code{\link[datasets]{mtcars}}.
 }
 \keyword{data}
-

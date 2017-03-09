@@ -8,7 +8,8 @@ makeRLearner.regr.cforest = function() {
       makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L),
       makeLogicalLearnerParam(id = "replace", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
-      makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632),
+      makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632,
+        requires = quote(replace == FALSE)),
       makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = 'quad'),
       makeDiscreteLearnerParam(id = "testtype",
         values = c("Bonferroni", "MonteCarlo", "Univariate", "Teststatistic"),
@@ -32,11 +33,8 @@ makeRLearner.regr.cforest = function() {
 
 #' @export
 trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
-                                     ntree, mtry, replace, fraction, trace,
-                                     teststat, testtype, mincriterion,
-                                     minsplit, minbucket, stump,
-                                     nresample, maxsurrogate, maxdepth,
-                                     savesplitstats,...) {
+  ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion, minsplit,
+  minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats,...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
@@ -46,9 +44,9 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
   if (missing(replace)) replace = defaults$replace
   if (missing(fraction)) fraction = defaults$fraction
   ctrl = learnerArgsToControl(party::cforest_control, ntree, mtry, replace, fraction,
-                              trace, teststat, testtype, mincriterion,
-                              minsplit, minbucket, stump,
-                              nresample, maxsurrogate, maxdepth, savesplitstats)
+    trace, teststat, testtype, mincriterion,
+    minsplit, minbucket, stump,
+    nresample, maxsurrogate, maxdepth, savesplitstats)
   party::cforest(f, data = d, controls = ctrl, weights = .weights, ...)
 }
 

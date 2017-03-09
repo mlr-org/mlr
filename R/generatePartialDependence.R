@@ -494,7 +494,7 @@ print.FunctionalANOVAData = function(x, ...) {
   catf("Target: %s", stri_paste(x$target, collapse = ", "))
   catf("Interaction Depth: %s", x$depth)
   catf("Effects Computed: %s", stri_paste(levels(x$data$effect), collapse = ", "))
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 
 doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
@@ -625,7 +625,7 @@ print.PartialDependenceData = function(x, ...) {
   catf("Individual: %s", x$individual)
   if (x$individual)
     catf("Predictions centered: %s", x$center)
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Plot a partial dependence with ggplot2.
 #' @description

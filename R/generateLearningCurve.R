@@ -58,11 +58,9 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   else
     assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
 
-  perc.ids = seq_along(percs)
-
   # create downsampled versions for all learners
   lrnds1 = lapply(learners, function(lrn) {
-    lapply(perc.ids, function(p.id) {
+    lapply(seq_along(percs), function(p.id) {
       perc = percs[p.id]
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
@@ -98,7 +96,7 @@ print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")
   catf("Task: %s", x$task$task.desc$id)
   catf("Measures: %s", collapse(extractSubList(x$measures, "name")))
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Plot learning curve data using ggplot2.
 #'

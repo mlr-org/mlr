@@ -21,3 +21,4 @@ checkLearner = function(learner, type = NULL, props = NULL) {
 
   return(learner)
 }
+
