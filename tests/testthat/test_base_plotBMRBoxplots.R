@@ -47,6 +47,15 @@ test_that("BenchmarkResult", {
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
     grid.size = 2L, ordered = TRUE)
+
+   # check error when learner short names are not unique
+  lrns = list(
+    rf = makeLearner("classif.randomForest", id = "rf1"),
+    rf2 = makeLearner("classif.randomForest", id = "rf2")
+  )
+  res = benchmark(lrns, tasks, rdesc, meas)
+  expect_error(plotBMRSummary(res),
+    "names are not unique")
 })
 
 test_that("BenchmarkResult allows spaces", {
