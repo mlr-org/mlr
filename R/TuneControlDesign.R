@@ -5,7 +5,7 @@
 #' @export
 #' @rdname TuneControl
 makeTuneControlDesign = function(same.resampling.instance = TRUE, impute.val = NULL, design = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, budget = NULL) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default", budget = NULL) {
   assertDataFrame(design, min.rows = 1)
   if (is.null(budget))
     budget = nrow(design)

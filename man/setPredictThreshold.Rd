@@ -26,6 +26,13 @@ See \code{predict.threshold} in \code{\link{makeLearner}} and \code{\link{setThr
 For complex wrappers only the top-level \code{predict.type} is currently set.
 }
 \seealso{
+Other predict: \code{\link{asROCRPrediction}},
+  \code{\link{getPredictionProbabilities}},
+  \code{\link{getPredictionResponse}},
+  \code{\link{plotViperCharts}},
+  \code{\link{predict.WrappedModel}},
+  \code{\link{setPredictType}}
+
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
   \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
@@ -39,12 +46,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}}, \code{\link{setPredictType}}
-
-Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{getPredictionProbabilities}},
-  \code{\link{getPredictionResponse}},
-  \code{\link{plotViperCharts}},
-  \code{\link{predict.WrappedModel}},
-  \code{\link{setPredictType}}
 }
-

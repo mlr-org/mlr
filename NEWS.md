@@ -1,3 +1,31 @@
+# mlr 2.11:
+
+## functions - general
+* tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
+* getBMR-operators: now support "drop" argument that simplifies the resulting list
+* configureMlr: added option "on.measure.not.applicable" to handle situations where performance
+  cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks
+* tuneParams, selectFeatures: removed memory stats from default output for
+  performance reasons (can be restored by using a control object with "log.fun"
+  = "memory")
+
+## functions - new
+* getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
+* listTaskTypes, listLearnerProperties
+* getMeasureProperties, hasMeasureProperties, listMeasureProperties
+* makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
+* simplifyMeasureNames: shorten measure names to the actual measure, e.g.
+  mmce.test.mean -> mmce
+
+## learners - general
+* classif.plsdaCaret: added parameter "method".
+* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "jackknife".
+* regr.xgboost, classif.xgboost: removed "factors" property as these learners do not handle categorical features
+-- factors are silently converted to integers internally, which may misinterpret the structure of the data
+
+## learners - removed
+* {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper
+
 # mlr 2.10:
 
 ## functions - general
@@ -36,7 +64,16 @@
   FSelector/custom implementation now, performance should be much better
 * use of our own colAUC function instead of the ROCR package for AUC calculation
   to improve performance
-* We output resample performance messages for every iteration now
+* we output resample performance messages for every iteration now
+* performance improvements for the auc measure
+* createDummyFeatures supports vectors now
+* removed the pretty.names argument from plotHyperParsEffect -- labels can be set
+  though normal ggplot2 functions on the returned object
+* Fixed a bad bug in resample, the slot "runtime" or a ResampleResult,
+  when the runtime was measured not in seconds but e.g. mins. R measures then potentially in mins,
+  but mlr claimed it would be seconds.
+* New "dummy" learners (that disregard features completely) can be fitted now for baseline comparisons,
+  see "featureless" learners below.
 
 ## functions - new
 * filter: randomForest.importance
@@ -55,12 +92,16 @@
 * addRRMeasure
 * plotResiduals
 * getLearnerShortName
+* mergeBenchmarkResults
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
 * Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 * Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix
 * Renamed setId (now deprecated) to setLearnerId
+
+## functions - removed
+* mergeBenchmarkResultLearner, mergeBenchmarkResultTask
 
 ## learners - general
 * classif.ada: fixed some param problem with rpart.control params
@@ -75,6 +116,10 @@
 * multilabel.cforest
 * surv.gbm
 * regr.cvglmnet
+* {classif,regr,surv}.gamboost
+* classif.earth
+* {classif,regr}.evtree
+* {classif,regr}.evtree
 
 ## learners - removed
 * classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues

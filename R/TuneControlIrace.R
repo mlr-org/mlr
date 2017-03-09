@@ -8,7 +8,7 @@
 #' @rdname TuneControl
 makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...) {
+  log.fun = "default", final.dw.perc = NULL, budget = NULL, ...) {
 
   n.instances = asCount(n.instances)
 

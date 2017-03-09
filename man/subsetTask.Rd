@@ -4,7 +4,7 @@
 \alias{subsetTask}
 \title{Subset data in task.}
 \usage{
-subsetTask(task, subset, features)
+subsetTask(task, subset = NULL, features)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -43,4 +43,3 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}}
 }
-

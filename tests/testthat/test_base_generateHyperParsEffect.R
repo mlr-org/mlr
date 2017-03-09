@@ -51,7 +51,7 @@ test_that("1 numeric hyperparam", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomLine"))
   expect_equal(plt$labels$x, "iteration")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # FIXME: make sure plot looks as expected
 })
@@ -80,7 +80,7 @@ test_that("1 discrete hyperparam", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     "GeomPoint")
   expect_equal(plt$labels$x, "kernel")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # FIXME: make sure plot looks as expected
 })
@@ -109,7 +109,7 @@ test_that("1 numeric hyperparam with optimizer failure", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     "GeomPoint")
   expect_equal(plt$labels$x, "C")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # FIXME: make sure plot looks as expected
 })
@@ -140,7 +140,7 @@ test_that("1 numeric hyperparam with nested cv", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     "GeomPoint")
   expect_equal(plt$labels$x, "C")
-  expect_equal(plt$labels$y, "Mean misclassification error")
+  expect_equal(plt$labels$y, "mmce.test.mean")
 
   # FIXME: make sure plot looks as expected
 })
@@ -168,7 +168,7 @@ test_that("2 hyperparams", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
   expect_equal(plt$labels$x, "iteration")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # test heatcontour creation with interpolation
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
@@ -182,7 +182,7 @@ test_that("2 hyperparams", {
     c("GeomPoint", "GeomRaster"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
-  expect_equal(plt$labels$fill, "Accuracy")
+  expect_equal(plt$labels$fill, "acc.test.mean")
   expect_equal(plt$labels$shape, "learner_status")
 
   # learner crash
@@ -205,7 +205,7 @@ test_that("2 hyperparams", {
     c("GeomPoint", "GeomRaster"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
-  expect_equal(plt$labels$fill, "Accuracy")
+  expect_equal(plt$labels$fill, "acc.test.mean")
   expect_equal(plt$labels$shape, "learner_status")
 
   # FIXME: make sure plots looks as expected
@@ -238,7 +238,7 @@ test_that("2 hyperparams nested", {
     c("GeomPoint", "GeomRaster", "GeomContour"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
-  expect_equal(plt$labels$fill, "Accuracy")
+  expect_equal(plt$labels$fill, "acc.test.mean")
   expect_equal(plt$labels$shape, "learner_status")
 
   # learner crashes
@@ -262,7 +262,7 @@ test_that("2 hyperparams nested", {
     c("GeomPoint", "GeomRaster"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
-  expect_equal(plt$labels$fill, "Accuracy")
+  expect_equal(plt$labels$fill, "acc.test.mean")
   expect_equal(plt$labels$shape, "learner_status")
 })
 
@@ -291,7 +291,7 @@ test_that("2+ hyperparams", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
   expect_equal(plt$labels$x, "C")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # test bivariate
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
@@ -303,7 +303,7 @@ test_that("2+ hyperparams", {
   expect_equal(class(plt$layers[[1]]$geom)[1], c("GeomTile"))
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
-  expect_equal(plt$labels$fill, "Accuracy")
+  expect_equal(plt$labels$fill, "acc.test.mean")
 
 
   # simple example with nested cv
@@ -328,7 +328,7 @@ test_that("2+ hyperparams", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
   expect_equal(plt$labels$x, "C")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # learner crash with imputation works
   ps = makeParamSet(
@@ -349,7 +349,7 @@ test_that("2+ hyperparams", {
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
   expect_equal(plt$labels$x, "C")
-  expect_equal(plt$labels$y, "Accuracy")
+  expect_equal(plt$labels$y, "acc.test.mean")
 
   # FIXME: make sure plots looks as expected
 })

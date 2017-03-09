@@ -20,7 +20,7 @@
 #' makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
 makeLearners = function(cls, ids = NULL, type = NULL, ...) {
   if (!is.null(type)) {
-    assertChoice(type, getSupportedTaskTypes())
+    assertChoice(type, listTaskTypes())
     cls = stri_paste(type, cls, sep = ".")
   }
   assertCharacter(cls, any.missing = FALSE)
