@@ -2,8 +2,6 @@
 #'
 #' @description
 #' Learner for penalized functional regression from the pfr function of refund. 
-#' FIXME: currently I only have one parameter, but actually this function has 
-#' a million parameters and I need to find a way to specify them.
 #' 
 #' @export
 makeRLearner.fdaregr.pfr = function() {
@@ -11,13 +9,19 @@ makeRLearner.fdaregr.pfr = function() {
     cl = "fdaregr.pfr",
     package = "refund",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = -1L),  # see mgcv::s() documentation
+      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
       makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L),  # see mgcv::te() documentation
-      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
+      makeIntegerVectorLearnerParam(id = "mgcv.teti.k", lower = 1L),  # see mgcv::te() documentation
+      # skipped argvals
+      makeDiscreteLearnerParam(id = "basistype", values = c("te", "t2", "s"), default = "te"),
+      makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
+      makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
+      # skipped presmooth.opts, Xrange
+      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform      
     ),
     properties = c("numerics"),
-    name = "penalized functional regression",
-    short.name = "pfr"
+    name = "functional general additive model",
+    short.name = "FGAM"
   )
 }
 
@@ -46,7 +50,7 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, Q
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
     mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
-    formula.terms[fdn] = genFDAFormula(fdn, Qtransform, mgcv.s.k)
+    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k=%s)", fdn, Qtransform, deparse(mgcv.s.k))
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
@@ -54,11 +58,11 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, Q
   refund::pfr(formula = form, data = mat.list)
 }
 
-# FIXME: this function should return all possible smooth functions/surfaces supported by 
-# mgcv but 
-# for simplicity we only implement the af(FGAM) with s function, but there are a lot left
+
 genFDAFormula = function(fdn, Qtransform, mgcv.s.k ){
-  sprintf("af(%s, basistype = 's', Qtransform = %d, k=%d)", fdn, Qtransform, mgcv.s.k)
+  # FIXME: this function should return all possible smooth functions/surfaces supported by 
+  # mgcv but 
+  # for simplicity we only implement the af(FGAM) with s function, but there are a lot left
   # arg.vals indices of evaluation of x 
   #sprintf("af(%s, basistype = 'te', Qtransform = TRUE, k=%d, bs =%s, m =%d)", fdn, mgcv.te.k, mgcv.te.bs, mgcv.te.m)
   #sprintf("af(%s, basistype = 'ti', Qtransform = TRUE, k=%d, bs =%s, m =%d)", fdn, mgcv.ti.k, mgcv.te.bs, mgcv.ti.m)

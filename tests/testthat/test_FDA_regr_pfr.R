@@ -7,14 +7,14 @@ test_that("FDA_regr_pfr", {
   # Fit model with additive functional term for CCA, using tensor product basis
   fit.af <- refund::pfr(pasat ~ af(cca, Qtransform=TRUE, k=c(7,7)), data=DTI1)
   predict(fit.af, newdata = DTI1, type = 'response')
-#########################################################################
-#FIXME: the current implementation is not gneric 
-trafoListMat2df = function(list4mat, target, covariates){
-  mdata = as.data.frame(Reduce(cbind, list(DTI1$cca, DTI1$pasat)))
-  colnames(mdata)[length(colnames(mdata))] = target
-  channel.list = list(cca = 1:dim(DTI1$cca)[2] )
-  return(list(mdata = mdata, target = target, channel.list = channel.list ))  
-}
+  #########################################################################
+  #FIXME: the current implementation is not gneric 
+  trafoListMat2df = function(list4mat, target, covariates){
+    mdata = as.data.frame(Reduce(cbind, list(DTI1$cca, DTI1$pasat)))
+    colnames(mdata)[length(colnames(mdata))] = target
+    channel.list = list(cca = 1:dim(DTI1$cca)[2] )
+    return(list(mdata = mdata, target = target, channel.list = channel.list ))  
+  }
   lrn = makeLearner("fdaregr.pfr", mgcv.s.k = -1L )
   mu = trafoListMat2df(list4mat = DTI1, target = "pasat", covariates = c("cca"))
   task = makeFDARegrTask(data = mu$mdata, target = mu$target, fd.features =  mu$channel.list)
