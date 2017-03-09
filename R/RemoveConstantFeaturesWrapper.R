@@ -24,5 +24,5 @@ makeRemoveConstantFeaturesWrapper = function(learner, perc = 0, dont.rm = charac
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
-  addClasses(lrn, "removeConstantFeaturesWrapper")
+  addClasses(lrn, "RemoveConstantFeaturesWrapper")
 }

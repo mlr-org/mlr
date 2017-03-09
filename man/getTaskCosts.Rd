@@ -4,15 +4,15 @@
 \alias{getTaskCosts}
 \title{Extract costs in task.}
 \usage{
-getTaskCosts(task, subset)
+getTaskCosts(task, subset = NULL)
 }
 \arguments{
 \item{task}{[\code{\link{CostSensTask}}]\cr
 The task.}
 
-\item{subset}{[\code{integer}]\cr
-Selected cases.
-Default is all cases.}
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
 }
 \value{
 [\code{matrix} | \code{NULL}].

@@ -31,13 +31,16 @@ makeRLearner.classif.cvglmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250.0),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L),
-      makeLogicalLearnerParam(id = "factory", default = FALSE)
+      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
     properties = c("numerics", "factors", "prob", "twoclass", "multiclass", "weights"),
     name = "GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)",
     short.name = "cvglmnet",
-    note = "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise. Factors automatically get converted to dummy columns, ordered factors to integer."
+    note = "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise. Factors automatically get converted to dummy columns, ordered factors to integer.
+      glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
+      before setting the specified parameters and after training.
+      If you are setting glmnet.control parameters through glmnet.control,
+      you need to save and re-set them after running the glmnet learner."
   )
 }
 
@@ -53,10 +56,11 @@ trainLearner.classif.cvglmnet = function(.learner, .task, .subset, .weights = NU
   td = getTaskDescription(.task)
   args$family = ifelse(length(td$class.levels) == 2L, "binomial", "multinomial")
 
+  glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
   if (any(is.ctrl.arg)) {
-    on.exit(do.call(glmnet::glmnet.control, saved.ctrl))
+    on.exit(glmnet::glmnet.control(factory = TRUE))
     do.call(glmnet::glmnet.control, args[is.ctrl.arg])
     args = args[!is.ctrl.arg]
   }
