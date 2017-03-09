@@ -98,7 +98,7 @@ The description object contains these slots
 df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 print(imputed$data)
-reimpute(data.frame(x = NA), imputed$desc)
+reimpute(data.frame(x = NA_real_), imputed$desc)
 }
 \seealso{
 Other impute: \code{\link{imputations}},
