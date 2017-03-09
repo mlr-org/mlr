@@ -9,6 +9,10 @@ getTaskDictionary(task, subset = NULL)
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
+
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
 }
 \value{
 [\code{\link[base]{list}}]. Used for evaluating the expressions
@@ -23,7 +27,7 @@ classification tasks, the number of class levels (\code{k}) in the general task.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
-getTaskDictionary(task, subset = NULL)
+getTaskDictionary(task)
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

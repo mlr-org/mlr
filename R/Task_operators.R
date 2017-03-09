@@ -465,13 +465,14 @@ getTaskWeights = function(task) {
 #' classification tasks, the number of class levels (\code{k}) in the general task.
 #'
 #' @template arg_task
+#' @template arg_subset
 #' @return [\code{\link[base]{list}}]. Used for evaluating the expressions
 #' within a parameter, parameter set or list of parameters.
 #' @family task
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
-#' getTaskDictionary(task, subset = NULL)
+#' getTaskDictionary(task)
 getTaskDictionary = function(task, subset = NULL) {
   getSubsetSize = function(subset) if (is.logical(subset)) sum(subset) else length(subset)
 
