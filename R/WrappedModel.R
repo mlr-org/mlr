@@ -38,7 +38,7 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
     time = NA_real_
     cl = c("FailureModel", "WrappedModel")
     if (getLearnerOptions(learner, "on.error.dump")$on.error.dump) {
-      dump = get("last.dump", envir = .GlobalEnv)
+      dump = addClasses(get("last.dump", envir = .GlobalEnv), "mlr.dump")
     }
   } else {
     cl = "WrappedModel"

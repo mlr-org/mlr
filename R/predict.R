@@ -122,7 +122,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_
       if (opts$on.error.dump) {
-        dump = get("last.dump", envir = .GlobalEnv)
+        dump = addClasses(get("last.dump", envir = .GlobalEnv), "mlr.dump")
       }
     }
   }
