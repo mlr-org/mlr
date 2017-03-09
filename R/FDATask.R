@@ -1,26 +1,25 @@
-#' @title Functional analysis task.
-#'
-#' @description
-#' Converts a normal task to a FDA task by adding some extra information
-#' (fd.features, fd.grids) to #' the task description and changing the S3
-#' classes to FDATask. \dQuote{task.cl} and \dQuote{desc.cl} are the names for
-#' the new class and task description respectively. It also does arg checking to
-#' ensure consistency.
-#'
-#' @param task [\code{link{Task}}]\cr
-#'   The normal mlr Task.
-#' @param type [\code{character}]\cr
-#'   The task type, will be set as a field to both task and task description. Either
-#'   \code{fdaregr} or \code{fdaclassif}.
-#' @template arg_fdatask_pars
-#' @param task.cl [\code{character}]\cr
-#'   The sub class name to convert to, eg. \code{FDAClassifTask} or \code{FDARegrTask}.
-#' @param desc.cl [\code{character}]\cr
-#'   The sub class description name to convert to, eg. \code{FDAClassifTaskDesc}
-#'   or \code{FDARegrTaskDesc}.
-#' @return An object of class \code{FDATask}.
-#' @export
-#' @aliases FDATask
+# @title Functional analysis task.
+#
+# @description
+# Converts a normal task to a FDA task by adding some extra information
+# (fd.features, fd.grids) to the task description and changing the S3
+# classes to FDATask. \dQuote{task.cl} and \dQuote{desc.cl} are the names for
+# the new class and task description respectively. It also does arg checking to
+# ensure consistency.
+#
+# @param task [\code{link{Task}}]\cr
+#   The normal mlr Task.
+# @param type [\code{character}]\cr
+#   The task type, will be set as a field to both task and task description. Either
+#   \code{fdaregr} or \code{fdaclassif}.
+# @template arg_fdatask_pars
+# @param task.cl [\code{character}]\cr
+#   The sub class name to convert to, eg. \code{FDAClassifTask} or \code{FDARegrTask}.
+# @param desc.cl [\code{character}]\cr
+#   The sub class description name to convert to, eg. \code{FDAClassifTaskDesc}
+#   or \code{FDARegrTaskDesc}.
+# @return An object of class \code{FDATask}.
+# @aliases FDATask
 convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
   fnames = getTaskFeatureNames(task)
   # type could be fdaregr or fdaclassif
@@ -44,9 +43,9 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
   # lets check integrity of every entry of fd.features, then convert indices to character vector
   fd.features = lapply(fd.features, function(f) {
     if (is.character(f)) {
-      assert_subset(f, fnames)
+      assertSubset(f, fnames)
     } else if (is.integer(f)) {
-      assert_integer(f, lower = 1L, upper = length(cns))
+      assertInteger(f, lower = 1L, upper = length(cns))
       f = cns[f]
     }
     return(f)
