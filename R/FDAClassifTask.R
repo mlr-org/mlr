@@ -1,23 +1,24 @@
 #' @title Functional data classification task.
 #'
 #' @description
-#' Create a functional data classification task. This means that some features
-#' in the task will be so-called functional covariates / functional features,
-#' measured on a grid or time scale.
+#' Create a functional data classification task. This means that some features 
+#' in the task will be so-called functional covariates / functional features, 
+#' measured on a grid or time scale. Different covariates might come from
+#' different sensors for example.
 #'
 #' @inheritParams Task
 #' @template arg_fdatask_pars
 #' @return [\code{\link{FDAClassifTask}}].
 #' @export
-#' @example
-#'   dat = data.frame(matrix(rnorm(20), nrow = 2))
-#'   dat$target = as.factor(c(0,1))
-#'   # X1 to X5 is channel 1 and X6 to X10 channel 2
-#'   # grd specifies the time points the curves were sampled at.
-#'   grd = list(ch_1 = 1:5, ch_2 = 1:5)
-#'   # One row per Observation
-#'   tsk = makeFDAClassifTask(data = dat, fd.features = list(ch_1 = 1:5, ch_2 = 6:10),
-#'     target = "target", fd.grid = grd, positive = "1")
+#' @examples
+#' dat = data.frame(matrix(rnorm(20), nrow = 2))
+#' dat$target = as.factor(c(0,1))
+#' # X1 to X5 is functional covariate 1 and X6 to X10 functional covariate 2
+#' # grd specifies the time points the curves were sampled at.
+#' grd = list(fd_1 = 1:5, fd_2 = 1:5)
+#' # One row per Observation
+#' tsk = makeFDAClassifTask(data = dat, fd.features = list(fd_1 = 1:5, fd_2 = 6:10),
+#'   target = "target", fd.grid = grd, positive = "1")
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn",
@@ -25,22 +26,22 @@ makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
 
   task = makeClassifTask(id, data, target, weights, blocking, positive, fixup.data, check.data)
   # arg checks for fd.features and fd.grids are done in next call
-  makeFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
+  convertTaskToFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
 }
 
 # td is the old task description, the function returns a new FDAClassifTask description
-makeTaskDesc.FDAClassifTask = function(task, id, target, td) {
-  badtd = makeTaskDesc.ClassifTask(task = task , id = id, target = target, positive = td$positive)
-  badtd$type = "fdaclassif"
-
+makeTaskDesc.FDAClassifTask = function(task, id, target, positive, fd.features, fd.grids) {
+  new.td = makeTaskDesc.ClassifTask(task = task , id = id, target = target, positive = positive)
+  new.td$type = "fdaclassif"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
-      td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-    }), names(td$fd.grids))
-  # since feat.remain is a character vector with variable names, we use td$fd.features[[fdn]] for indexing
-  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
-      td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-    }), names(td$fd.grids))
-  addClasses(badtd, "FDAClassifTaskDesc")
+  # to make subset(FDATask, features = 1:10) work for example, we need to adapt the fd.features and fd.grids according to the subseted global feature index.
+  new.td$fd.features = setNames(lapply(names(fd.features), function(fdn) {
+      fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
+    }), names(fd.features))
+  # since feat.remain is a character vector with variable names, we use fd.features[[fdn]] for indexing
+  new.td$fd.grids = setNames(lapply(names(fd.features), function(fdn) {
+      fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
+    }), names(fd.grids))
+  addClasses(new.td, "FDAClassifTaskDesc")
 }

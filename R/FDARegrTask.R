@@ -9,35 +9,36 @@
 #' @template arg_fdatask_pars
 #' @return See [\code{\link{FDARegrTask}}].
 #' @export
-#' @example
-#'   dat = data.frame(matrix(rnorm(20), nrow = 2))
-#'   dat$target = c(1,2)
-#'   # X1 to X5 is channel 1 and X6 to X10 channel 2
-#'   # grd specifies the time points the curves were sampled at.
-#'   grd = list(ch_1 = 1:5, ch_2 = 1:5)
-#'   # One row per Observation
-#'   tsk = makeFDARegrTask(data = dat, fd.features = list(ch_1 = 1:5, ch_2 = 6:10),
-#'     target = "target", fd.grid = grd)
+#' @examples
+#' dat = data.frame(matrix(rnorm(20), nrow = 2))
+#' dat$target = c(1,2)
+#' # X1 to X5 is covariate 1 and X6 to X10 covariate 2
+#' # grd specifies the time points the curves were sampled at.
+#' grd = list(ch_1 = 1:5, ch_2 = 1:5)
+#' # One row per Observation
+#' tsk = makeFDARegrTask(data = dat, fd.features = list(ch_1 = 1:5, ch_2 = 6:10),
+#'   target = "target", fd.grid = grd)
 #' @aliases FDARegrTask
 makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE, fd.features = NULL, fd.grids = NULL) {
   task = makeRegrTask(id, data, target, weights, blocking, fixup.data, check.data)
   # arg checks for fd.features adn fd.grids are done in next call
-  makeFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
+  convertTaskToFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
 
 # td is the old task description, the function return a new task description
-makeTaskDesc.FDARegrTask = function(task, id, target, td) {
-  badtd = makeTaskDesc.RegrTask(task = task , id = id, target = target)
-  badtd$type = "fdaregr"
+makeTaskDesc.FDARegrTask = function(task, id, target, fd.features, fd.grids) {
+  new.td = makeTaskDesc.RegrTask(task = task , id = id, target = target)
+  new.td$type = "fdaregr"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  badtd$fd.features = setNames(lapply(names(td$fd.features), function(fdn) {
-      td$fd.features[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-    }), names(td$fd.features))
+  # to make subset(FDATask, features = 1:10) work for example, we need to adapt the fd.features and fd.grids according to the subseted global feature index.
+  new.td$fd.features = setNames(lapply(names(fd.features), function(fdn) {
+      fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
+    }), names(fd.features))
   # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]]
-  badtd$fd.grids = setNames(lapply(names(td$fd.features), function(fdn) {
-      td$fd.grids[[fdn]][td$fd.features[[fdn]] %in% feat.remain]
-    }), names(td$fd.grids))
-  addClasses(badtd, "FDARegrTaskDesc")
+  new.td$fd.grids = setNames(lapply(names(fd.features), function(fdn) {
+      fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
+    }), names(fd.grids))
+  addClasses(new.td, "FDARegrTaskDesc")
 }
