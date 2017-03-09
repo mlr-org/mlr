@@ -1,15 +1,12 @@
-#' @title Penalized functional regression.
-#'
-#' @description
-#' Learner for penalized functional regression from the pfr function of refund. 
-#' 
 #' @export
-makeRLearner.fdaregr.pfr = function() {
+makeRLearner.fdaregr.fgam = function() {
   makeRLearnerRegr(
-    cl = "fdaregr.pfr",
+    cl = "fdaregr.fgam",
     package = "refund",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
+      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
+      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)), 
       makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L),  # see mgcv::te() documentation
       makeIntegerVectorLearnerParam(id = "mgcv.teti.k", lower = 1L),  # see mgcv::te() documentation
       # skipped argvals
@@ -17,7 +14,7 @@ makeRLearner.fdaregr.pfr = function() {
       makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
       makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
       # skipped presmooth.opts, Xrange
-      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform      
+      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     ),
     properties = c("numerics"),
     name = "functional general additive model",
@@ -34,7 +31,7 @@ makeRLearner.fdaregr.pfr = function() {
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, ...) {
+trainLearner.fdaregr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDescription(.task)
@@ -50,7 +47,7 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, Q
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
     mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
-    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k=%s)", fdn, Qtransform, deparse(mgcv.s.k))
+    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k=%s, bs=%s)", fdn, Qtransform, deparse(mgcv.s.k), bs)
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
@@ -59,16 +56,6 @@ trainLearner.fdaregr.pfr = function(.learner, .task, .subset, .weights = NULL, Q
 }
 
 
-genFDAFormula = function(fdn, Qtransform, mgcv.s.k ){
-  # FIXME: this function should return all possible smooth functions/surfaces supported by 
-  # mgcv but 
-  # for simplicity we only implement the af(FGAM) with s function, but there are a lot left
-  # arg.vals indices of evaluation of x 
-  #sprintf("af(%s, basistype = 'te', Qtransform = TRUE, k=%d, bs =%s, m =%d)", fdn, mgcv.te.k, mgcv.te.bs, mgcv.te.m)
-  #sprintf("af(%s, basistype = 'ti', Qtransform = TRUE, k=%d, bs =%s, m =%d)", fdn, mgcv.ti.k, mgcv.te.bs, mgcv.ti.m)
-  #sprintf("fpc(%s)", fdn), re, lf, lf.vd()
-  #sprintf("peer(%s, argvals = seq(0, 1, length = %d), integration = %s, pentype =%s)",fdn, peer.length, peer.integration, peer.pentype)
-}
 
 reformat2list4mat2 = function(.data, tdesc){
   df =  .data
@@ -87,7 +74,7 @@ reformat2list4mat2 = function(.data, tdesc){
 }
 
 #' @export
-predictLearner.fdaregr.pfr = function(.learner, .model, .newdata, ...) {
+predictLearner.fdaregr.fgam = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDescription(.model)
   list4mat = reformat2list4mat2(.newdata, tdesc)

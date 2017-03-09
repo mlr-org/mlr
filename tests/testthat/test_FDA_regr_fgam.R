@@ -1,6 +1,6 @@
 # Be carefull that one need to change the columns name again after cbine several matrix
-context("FDA_regr_pfr")
-test_that("FDA_regr_pfr", {
+context("FDA_regr_fgam")
+test_that("FDA_regr_fgam", {
   requirePackagesOrSkip("refund")  
   data(DTI)
   DTI1 <- DTI[DTI$visit==1 & complete.cases(DTI),]
@@ -15,7 +15,7 @@ test_that("FDA_regr_pfr", {
     channel.list = list(cca = 1:dim(DTI1$cca)[2] )
     return(list(mdata = mdata, target = target, channel.list = channel.list ))  
   }
-  lrn = makeLearner("fdaregr.pfr", mgcv.s.k = -1L )
+  lrn = makeLearner("fdaregr.fgam", mgcv.s.k = -1L )
   mu = trafoListMat2df(list4mat = DTI1, target = "pasat", covariates = c("cca"))
   task = makeFDARegrTask(data = mu$mdata, target = mu$target, fd.features =  mu$channel.list)
   mod1f = train(learner = lrn, task = task)
