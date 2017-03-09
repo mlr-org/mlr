@@ -119,7 +119,6 @@
 \alias{cindex}
 \alias{cindex.uno}
 \alias{iauc.uno}
-\alias{td.auc.kw}
 \alias{td.auc.km}
 \alias{td.auc.nne}
 \alias{td.auc.ipcw}
@@ -365,8 +364,6 @@ cindex.uno
 
 iauc.uno
 
-td.auc.kw
-
 td.auc.km
 
 td.auc.nne
@@ -420,6 +417,9 @@ Most measures can directly be accessed via the function named after the scheme m
 
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
+
+Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
+overwritten using \code{\link{setMeasurePars}}.
 }
 \references{
 He, H. & Garcia, E. A. (2009)
@@ -433,9 +433,8 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}},
-  \code{\link{makeTimeDependentAUCMeasure}},
-  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{makeMeasure}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
 \keyword{datasets}

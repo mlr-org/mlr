@@ -43,7 +43,7 @@
 #'     \item{req.task}{Is task object required in calculation? Usually not the case}
 #'     \item{req.model}{Is model object required in calculation? Usually not the case.}
 #'     \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-#'     \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
+#'     \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
 #'   }
 #'   Default is \code{character(0)}.
 #' @param fun [\code{function(task, model, pred, feats, extra.args)}]\cr
@@ -165,5 +165,6 @@ print.Measure = function(x, ...) {
   catf("Minimize: %s", x$minimize)
   catf("Best: %g; Worst: %g", x$best, x$worst)
   catf("Aggregated by: %s", x$aggr$id)
+  catf("Arguments: %s", listToShortString(x$extra.args))
   catf("Note: %s", x$note)
 }

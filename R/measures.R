@@ -17,6 +17,9 @@
 #' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 #' starting with 1. If this is not the case, some of the measures will generate warnings.
 #'
+#' Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
+#' overwritten using \code{\link{setMeasurePars}}.
+#'
 #' @param truth [\code{factor}]\cr
 #'   Vector of the true class.
 #' @param response [\code{factor}]\cr
@@ -414,7 +417,7 @@ measureTau = function(truth, response) {
 rho = makeMeasure(id = "rho", minimize = FALSE, best = 1, worst = -1,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Spearman's rho",
-  note = "Defined as: Spearman's rho correlation between truth and response. Only looks at the order. 
+  note = "Defined as: Spearman's rho correlation between truth and response. Only looks at the order.
   See Rosset et al.: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.1398&rep=rep1&type=pdf.",
   fun = function(task, model, pred, feats, extra.args) {
     measureRho(pred$data$truth, pred$data$response)
@@ -1333,7 +1336,7 @@ cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 
 iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
   name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
-  note = "To set an upper time limit, set argument max.time.",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("_survAUC")
     y = getPredictionResponse(pred)
@@ -1342,28 +1345,31 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
     max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
     times = seq(from = 0, to = max.time, length.out = 1000)
     survAUC::AUC.uno(getTrainingInfo(model)$surv.train, getPredictionTruth(pred), times = times, lpnew = y)$iauc
-  }
+  },
+  extra.args = list(max.time = NULL)
 )
 
-#' @export td.auc.kw
-#' @rdname measures
-#' @format none
-td.auc.kw = makeMeasure(
-  id = "td.auc.kw",
-  name = "Time-dependent AUC estimated using kernel weighting method",
-  properties = c("surv", "req.pred", "req.truth"),
-  minimize = FALSE, best = 1, worst = 0,
-  fun = function(task, model, pred, feats, extra.args) {
-    measureTDAUCKW = function(truth, response, max.time) {
-      if(is.null(max.time))
-        max.time = max(truth[, 1L]) - 2 * .Machine$double.eps
-      # biggest time value has to be adapted as it does not provide results otherwise
-      tdROC::tdROC(X = response, Y = truth[, 1L], delta = truth[, 2L], tau = max.time)$AUC$value
-    }
-    requirePackages("_tdROC")
-    measureTDAUCKW(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
-  }
-)
+# TODO: This is numerical instable.
+# #' @export td.auc.kw
+# #' @rdname measures
+# #' @format none
+# td.auc.kw = makeMeasure(
+#   id = "td.auc.kw",
+#   name = "Time-dependent AUC estimated using kernel weighting method",
+#   note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
+#   properties = c("surv", "req.pred", "req.truth"),
+#   minimize = FALSE, best = 1, worst = 0,
+#   fun = function(task, model, pred, feats, extra.args) {
+#     measureTDAUCKW = function(truth, response, max.time) {
+#       max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
+#       # biggest time value has to be adapted as it does not provide results otherwise
+#       tdROC::tdROC(X = response, Y = truth[, 1L], delta = truth[, 2L], tau = max.time)$AUC$value
+#     }
+#     requirePackages("_tdROC")
+#     measureTDAUCKW(getPredictionTruth(pred), getPredictionResponse(pred), extra.args$max.time)
+#   },
+#   extra.args = list(max.time = NULL)
+# )
 
 #' @export td.auc.km
 #' @rdname measures
@@ -1371,19 +1377,20 @@ td.auc.kw = makeMeasure(
 td.auc.km = makeMeasure(
   id = "td.auc.km",
   name = "Time-dependent AUC estimated using Kaplan Meier method",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
   properties = c("surv", "req.pred", "req.truth"),
   minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
     measureTDAUCKM = function(truth, response, max.time) {
-      if(is.null(max.time))
-        max.time = max(truth[, 1L]) - 2 * .Machine$double.eps
+      max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
       # biggest time value has to be adapted as it does not provide results otherwise
       survivalROC::survivalROC(Stime = truth[, 1L], status = truth[, 2L], marker = response,
         predict.time = max.time, method = "KM")$AUC
     }
     requirePackages("_survivalROC")
-    measureTDAUCKM(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
-  }
+    measureTDAUCKM(getPredictionTruth(pred), getPredictionResponse(pred), max.time = extra.args$max.time)
+  },
+  extra.args = list(max.time = NULL)
 )
 
 #' @export td.auc.nne
@@ -1392,19 +1399,20 @@ td.auc.km = makeMeasure(
 td.auc.nne = makeMeasure(
   id = "td.auc.nne",
   name = "Time-dependent AUC estimated using nearest neighbor method",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
   properties = c("surv", "req.pred", "req.truth"),
   minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
     measureTDAUCNNE = function(truth, response, max.time) {
-      if(is.null(max.time))
-        max.time = max(truth[, 1L]) - 2 * .Machine$double.eps
+      max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
       # biggest time value has to be adapted as it does not provide results otherwise
       survivalROC::survivalROC.C(Stime = truth[, 1L], status = truth[, 2L], marker = response,
         predict.time = max.time, span = 0.1)$AUC
     }
     requirePackages("_survivalROC")
-    measureTDAUCNNE(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
-  }
+    measureTDAUCNNE(getPredictionTruth(pred), getPredictionResponse(pred), max.time = extra.args$max.time)
+  },
+  extra.args = list(max.time = NULL)
 )
 
 #' @export td.auc.ipcw
@@ -1413,19 +1421,20 @@ td.auc.nne = makeMeasure(
 td.auc.ipcw = makeMeasure(
   id = "td.auc.ipcw",
   name = "Time-dependent AUC estimated using inverse probability of censoring weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
   properties = c("surv", "req.pred", "req.truth"),
   minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
     measureTDAUCIPCW = function(truth, response, max.time) {
-      if(is.null(max.time))
-        max.time =max(truth[,1L])-10^(-13)
+      max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
       # biggest time value has to be adapted as it does not provide results otherwise
       timeROC::timeROC(T = truth[,1L], delta = truth[,2L], marker = response, times = max.time,
         cause = 1L)$AUC[[2L]]
     }
     requirePackages(c("_timeROC", "!survival"))
-    measureTDAUCIPCW(getPredictionTruth(pred), getPredictionResponse(pred), max.time = NULL)
-  }
+    measureTDAUCIPCW(getPredictionTruth(pred), getPredictionResponse(pred), max.time = extra.args$max.time)
+  },
+  extra.args = list(max.time = NULL)
 )
 
 ###############################################################################

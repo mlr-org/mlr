@@ -2,7 +2,6 @@
 #'
 #' @description
 #' Sets hyperparameters of measures.
-#' To unset a hyperparameter, set it to \code{NULL}.
 #'
 #' @param measure [\code{\link{Measure}}]\cr
 #'   Performance measure.
@@ -20,7 +19,7 @@ setMeasurePars = function(measure, ..., par.vals = list()) {
   assertClass(measure, classes = "Measure")
   assertList(args, names = "unique", .var.name = "parameter settings")
   assertList(par.vals, names = "unique", .var.name = "parameter settings")
-  measure$extra.args = filterNull(insert(measure$extra.args, insert(par.vals, args)))
+  measure$extra.args = insert(measure$extra.args, insert(par.vals, args))
   measure
 }
 

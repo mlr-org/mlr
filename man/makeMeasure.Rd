@@ -32,7 +32,7 @@ Set of measure properties. Some standard property names include:
   \item{req.task}{Is task object required in calculation? Usually not the case}
   \item{req.model}{Is model object required in calculation? Usually not the case.}
   \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-  \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
+  \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
 }
 Default is \code{character(0)}.}
 
@@ -114,7 +114,6 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeTimeDependentAUCMeasure}},
   \code{\link{measures}}, \code{\link{performance}},
   \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}

@@ -45,29 +45,30 @@ test_that("measures", {
 
   # test survival measure
   lrns = listLearners("surv")$class
-  for (i in 1:length(lrns)) {
+  task = surv.task
+  for (i in seq_along(lrns)) {
     lrn = makeLearner(lrns[i])
-    mod = train(lrn, task = surv.task, subset = surv.train.inds)
-    pred = predict(mod, task = surv.task, subset = surv.test.inds)
-    for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw, iauc.uno)) {
-      perf = performance(pred, measures = ms, model = mod, task = surv.task)
+    mod = train(lrn, task = task, subset = surv.train.inds)
+    pred = predict(mod, task = task, subset = surv.test.inds)
+    for (ms in list(cindex, cindex.uno, td.auc.km, td.auc.nne, iauc.uno, td.auc.ipcw)) {
+      perf = performance(pred, measures = ms, model = mod, task = task)
       r = range(c(ms$worst, ms$best))
       expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
     }
   }
 
-  lrn = makeLearner("surv.coxph")
-  data = data.frame(time = rexp(100), status = 1)
-  data$x = data$time + runif(100, min = -0.1, max = 0.1)
-  task = makeSurvTask(data = data, target = c("time", "status"))
-  train.inds = 1:50
-  test.inds = 51:100
-  mod = train(lrn, task = task, subset = train.inds)
-  pred = predict(mod, task = task, subset = test.inds)
-  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw, iauc.uno)) {
-    perf = performance(pred, measures = ms, model = mod, task = task)
-    r = range(c(ms$worst, ms$best))
-    expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+  lrns = listLearners("surv")$class
+  task = lung.task
+  rin = makeResampleInstance("Holdout", task = task)
+  for (i in seq_along(lrns)) {
+    lrn = makeLearner(lrns[i])
+    mod = train(lrn, task = task, subset = rin$train.inds[[1]])
+    pred = predict(mod, task = task, subset = rin$test.inds[[1]])
+    for (ms in list(cindex, cindex.uno, td.auc.km, td.auc.nne, iauc.uno, td.auc.ipcw)) {
+      perf = performance(pred, measures = ms, model = mod, task = task)
+      r = range(c(ms$worst, ms$best))
+      expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+    }
   }
 })
 
@@ -871,11 +872,11 @@ test_that("setMeasurePars", {
   mm = setMeasurePars(mmce, foo = 1, bar = 2, par.vals = list(foobar = 99))
   expect_equal(mm$extra.args, list(foobar = 99, foo = 1, bar = 2))
 
-  # removing parameters works
+  # re-setting parameters to NULL
   mm = setMeasurePars(mmce, foo = 1, bar = 2)
   expect_list(mm$extra.args, len = 2L, names = "named")
   mm = setMeasurePars(mm, foo = NULL, bar = 2)
-  expect_equal(mm$extra.args, list(bar = 2))
+  expect_equal(mm$extra.args, list(foo = NULL, bar = 2))
 
   # precedence of ... over par.vals
   mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
