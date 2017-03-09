@@ -7,7 +7,7 @@ fi
 # this has a few false positives, especially within string constants.
 
 sed -i '/^ *[^ #]/s/,\([^ ]\)/, \1/g' "$@"
-sed -i '/^ *[^ #]/s/,\([^ ]\)/, \1/g' "$@" # do this multiple times to catch [,,] etc
+sed -i '/^ *[^ #]/s/,\([^ ]\)/, \1/g' "$@" # do this multiple times to catch [,,1] etc
 sed -i '/^ *[^ #]/s/,\([^ ]\)/, \1/g' "$@"
 sed -i '/^ *[^ #]/s/\([^,[#]\) \+,/\1,/g' "$@"
 sed -i '/^ *[^ #]/s/ \+(/(/g' "$@"

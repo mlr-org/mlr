@@ -99,6 +99,7 @@ Suggests:
     kohonen,
     laGP,
     LiblineaR,
+    lintr,
     lqa,
     MASS,
     mboost,
