@@ -50,7 +50,7 @@ test_that("measures", {
     lrn = makeLearner(lrns[i])
     mod = train(lrn, task = task, subset = surv.train.inds)
     pred = predict(mod, task = task, subset = surv.test.inds)
-    for (ms in list(cindex, cindex.uno, td.auc.km, td.auc.nne, iauc.uno, td.auc.ipcw)) {
+    for (ms in list(cindex, cindex.uno, iauc.uno, td.auc.ipcw)) {
       perf = performance(pred, measures = ms, model = mod, task = task)
       r = range(c(ms$worst, ms$best))
       expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
@@ -64,7 +64,7 @@ test_that("measures", {
     lrn = makeLearner(lrns[i])
     mod = train(lrn, task = task, subset = rin$train.inds[[1]])
     pred = predict(mod, task = task, subset = rin$test.inds[[1]])
-    for (ms in list(cindex, cindex.uno, td.auc.km, td.auc.nne, iauc.uno, td.auc.ipcw)) {
+    for (ms in list(cindex, cindex.uno, iauc.uno, td.auc.ipcw)) {
       perf = performance(pred, measures = ms, model = mod, task = task)
       r = range(c(ms$worst, ms$best))
       expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
