@@ -1035,8 +1035,8 @@ measurePPV = function(truth, response, positive, probabilities = NULL) {
 } 
 measureEdgeCase = function(truth, positive, prob) {
   if (!is.null(prob)) {
-    rs = sort(prob, index.return =TRUE)
-    erst = ifelse(truth[getLast(rs$ix)]==positive, 1, 0)   
+    rs = sort(prob, index.return = TRUE)
+    erst = ifelse(truth[getLast(rs$ix)] == positive, 1, 0)
   } else {
     erst = NA
   }
