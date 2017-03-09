@@ -84,8 +84,8 @@ under \code{\link{imputations}} or create one yourself using \code{\link{makeImp
 The description object contains these slots
 \describe{
   \item{target [\code{character}]}{See argument.}
-  \item{features [\code{character}]}{Feature names, these are the column names of \code{data},
-    excluding \code{target}.}
+  \item{features [\code{character}]}{Feature names (column names of \code{data}).},
+  \item{classes [\code{character}]}{Feature classes (storage type of \code{data}).}
   \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
     including newly created ones during imputation.}
   \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
