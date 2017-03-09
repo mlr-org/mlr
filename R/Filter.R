@@ -50,14 +50,16 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #' Returns a subset-able dataframe with filter information.
 #'
 #' @param desc [\code{logical(1)}]\cr
-#'  Provide more detailed information about filters.
+#'  Provide more detailed information about filters. Default is \code{TRUE}.
 #' @param tasks [\code{logical(1)}]\cr
-#'  Provide information on supported tasks.
+#'  Provide information on supported tasks. Default is \code{FALSE}.
 #' @param features [\code{logical(1)}]\cr
-#'  Provide information on supported features.
+#'  Provide information on supported features. Default is \code{FALSE}.
+#' @param include.deprecated [\code{logical(1)}]\cr
+#'  Should deprecated filter methods be included in the list. Default is \code{FALSE}.
 #' @return [\code{data.frame}].
 #' @export
-listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
+listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
@@ -74,13 +76,29 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
     id = names(filters),
     package = vcapply(extractSubList(filters, "pkg"), collapse)
   )
+  
+  description = extractSubList(filters, "desc")
+  
   if (desc)
-    df$desc = extractSubList(filters, "desc")
+    df$desc = description
   if (tasks)
     df = cbind(df, tag2df(extractSubList(filters, "supported.tasks"), prefix = "task."))
   if (features)
     df = cbind(df, tag2df(extractSubList(filters, "supported.features"), prefix = "feature."))
-  setRowNames(sortByCol(df, "id"), NULL)
+  deprecated = stri_endswith(description, fixed = "(DEPRECATED)")
+  if (include.deprecated)
+    df$deprecated = deprecated
+  else
+    df = df[!deprecated,]
+  res = setRowNames(sortByCol(df, "id"), NULL)
+  addClasses(res, "FilterMethodsList")
+}
+
+#' @export
+print.FilterMethodsList = function(x, len = 40, ...) {
+  if (!is.null(x$desc))
+    x$desc = clipString(x$desc, len = len)
+  NextMethod()
 }
 
 #' @export
@@ -278,12 +296,16 @@ makeFilter(
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
-  pkg  = "FSelector",
+  pkg  = "Rfast",
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    y = FSelector::linear.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+    d = getTaskData(task, target.extra = TRUE)
+    y = Rfast::correls(d$target, d$data, type = "pearson")
+    for (i in which(is.na(y[, "correlation"]))) {
+      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs")
+    }
+    setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
 )
 
@@ -295,12 +317,16 @@ makeFilter(
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
-  pkg  = "FSelector",
+  pkg  = "Rfast",
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+    d = getTaskData(task, target.extra = TRUE)
+    y = Rfast::correls(d$target, d$data, type = "spearman")
+    for (i in which(is.na(y[, "correlation"]))) {
+      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs", method = "spearman")
+    }
+    setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
 )
 
@@ -471,7 +497,7 @@ univariate = makeFilter(
   }
 )
 .FilterRegister[["univariate"]] = univariate
-.FilterRegister[["univariate"]]$desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner (DEPRECATED)."
+.FilterRegister[["univariate"]]$desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner. (DEPRECATED)"
 .FilterRegister[["univariate"]]$fun = function(...) {
   .Deprecated(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
   .FilterRegister[["univariate.model.score"]]$fun(...)
@@ -486,16 +512,21 @@ univariate = makeFilter(
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
-  pkg = character(0L),
+  pkg = "Rfast",
   supported.tasks = c("classif"),
   supported.features = c("numerics"),
   fun = function(task, nselect, ...) {
-    data = getTaskData(task)
-    sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(stri_paste(feat.name,"~",getTaskTargetNames(task)))
-      aov.t = aov(f, data = data)
-      summary(aov.t)[[1]][1,'F value']
-    })
+    d = getTaskData(task, target.extra = TRUE)
+    y = as.integer(d$target)
+    X = as.matrix(d$data)
+    an = Rfast::anovas(X, y)
+    for (i in which(is.na(an[, "F value"]))) {
+      j = !is.na(X[,i])
+      if (any(j)) {
+        an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j]) 
+      }
+    }
+    setNames(an[, "F value"], getTaskFeatureNames(task))
   }
 )
 

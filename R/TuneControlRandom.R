@@ -4,7 +4,7 @@
 #' @export
 #' @rdname TuneControl
 makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  tune.threshold.args = list(), log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
   # if we dont get neither budget nor maxit, set it to default, otherwise take one of the 2
   if (is.null(budget) && is.null(maxit))

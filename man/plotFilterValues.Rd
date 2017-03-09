@@ -36,7 +36,7 @@ ggplot2 plot object.
 Plot filter values using ggplot2.
 }
 \examples{
-fv = generateFilterValuesData(iris.task, method = "chi.squared")
+fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValues(fv)
 }
 \seealso{
@@ -57,4 +57,3 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 }
-

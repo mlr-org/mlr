@@ -60,8 +60,9 @@ getFeatureImportance = function(object, ...) {
   assertClass(object, classes = "WrappedModel")
   lrn = checkLearner(object$learner, props = "featimp")
   imp = getFeatureImportanceLearner(lrn, object, ...)
-  assertNumeric(imp, names = "named")
   
+  if (!check_numeric(imp, names = "unique") && !check_subset(names(imp), object$features)) 
+    stop("getFeatureImportanceLearner did not return a named vector with names of the task features.")
   
   #We need to add missing pars with zero and order them
   imp[setdiff(object$features, names(imp))] = 0
@@ -89,6 +90,10 @@ getFeatureImportance = function(object, ...) {
 #' @description 
 #' 
 #' This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.
+#' 
+#' The return value is a named numeric vector. There does not need to be one value for each feature in the dataset.
+#' In \code{\link{getFeatureImportance}} missing features will get an importance of zero and if the vector contains \code{NA}
+#' they will also be replaced with zero.
 #'
 #' @param .learner [\code{\link{Learner}} | \code{character(1)}]\cr
 #'   The learner.

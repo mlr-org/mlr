@@ -51,6 +51,13 @@ test_that("measures", {
   expect_is(perf, "numeric")
 })
 
+test_that("classif measures do not produce integer overflow", {
+  tsk = oversample(subsetTask(pid.task), 1000)
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  ms = listMeasures("classif", create = TRUE)
+  r = holdout(lrn, tsk, measures = ms, show.info = FALSE)
+  expect_numeric(r$aggr, any.missing = FALSE)
+})
 
 test_that("measures with same id still work", {
   m1 = mmce
@@ -236,6 +243,67 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
+  # rrse
+  rrse.test = sqrt(sum((pred.art.regr - tar.regr)^2L) / sum((tar.regr - mean(tar.regr))^2L))
+  rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
+  expect_equal(rrse.test, rrse$fun(pred = pred.regr))
+  expect_equal(rrse.test, as.numeric(rrse.perf))
+  expect_equal(sqrt((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/sqrt((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRRSE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  expect_warning(measureRRSE(0,0))
+  expect_warning(measureRRSE(c(1,1,1,1),c(1,2,3,4)))
+  expect_silent(measureRRSE(c(1,1,1,0),c(2,2,2,2)))
+  # rae
+  rae.test = sum(abs(pred.art.regr - tar.regr)) / sum(abs(tar.regr - mean(tar.regr)))
+  rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
+  expect_equal(rae.test, rae$fun(pred = pred.regr))
+  expect_equal(rae.test, as.numeric(rae.perf))
+  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/(abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  expect_warning(measureRAE(0,0))
+  expect_warning(measureRAE(c(1,1,1,1),c(1,2,3,4)))
+  expect_silent(measureRAE(c(1,1,1,0),c(2,2,2,2)))
+  # mape
+  suppressWarnings({
+    expect_equal(NA, mape$fun(pred = pred.regr))
+    expect_equal(NA, measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+  })
+  expect_warning(mape$fun(pred = pred.regr), regexp = "MAPE is undefined if any truth value is equal to 0.")
+  expect_warning(measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)), regexp = "MAPE is undefined if any truth value is equal to 0.")
+  pred.regr.mape = pred.regr
+  pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
+  mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
+  mape.test = mean(c(abs((5-4)/5),abs((10-11)/10),abs((1-0)/1),abs((5-4)/5)))
+  expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
+  expect_equal(mape.test, as.numeric(mape.perf))
+  expect_equal(1/4*(abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5),c(4, 11, 0, 4)))
+  expect_warning(measureMAPE(0,0))
+  expect_warning(measureMAPE(c(1,1,1,0),c(2,2,2,2)))
+  expect_silent(measureMAPE(c(1,1,1,1),c(2,2,2,2)))
+  # msle
+  msle.test = ((log(4 + 1) - log(5 + 1))^2 + (log(11 + 1) - log(10 + 1))^2 +
+  (log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
+  msle.perf = performance(pred.regr, measures = msle, model = mod.regr)
+  expect_equal(msle.test, msle$fun(pred = pred.regr))
+  expect_equal(msle.test, as.numeric(msle.perf))
+  # msle throws error for values smaller than -1
+  pred.art.regr.neg = pred.art.regr
+  pred.art.regr.neg[[1L]] = -3
+  expect_error(measureMSLE(tar.regr, pred.art.regr.neg),
+    "values must be greater or equal -1")
+  # rmsle
+  rmsle.test = sqrt(msle.test)
+  rmsle.perf = performance(pred.regr, measures = rmsle, model = mod.regr)
+  expect_equal(rmsle.test, rmsle$fun(pred = pred.regr))
+  expect_equal(rmsle.test, as.numeric(rmsle.perf))
+  #tau
+  tau.test = 1
+  tau.perf = performance(pred.regr, measures = tau, model = mod.regr)
+  expect_equal(tau.test, tau$fun(pred = pred.regr))
+  expect_equal(tau.test, as.numeric(tau.perf))
+  #rho
+  rho.test = 1
+  rho.perf = performance(pred.regr, measures = rho, model = mod.regr)
+  expect_equal(rho.test, rho$fun(pred = pred.regr))
+  expect_equal(rho.test, as.numeric(rho.perf))
 
   #test multiclass measures
 
@@ -260,8 +328,13 @@ test_that("check measure calculations", {
   colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
   colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
   colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
-  colauc.width = -diff(colauc.omspec) # = diff(rev(omspec))
+  colauc.width = - diff(colauc.omspec) # = diff(rev(omspec))
   expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
+  # colAUC with "maximum = FALSE"
+  colauc.min = colAUC(c(1, 0, 1, 1), truth = tar.bin, maximum = FALSE)
+  colauc.max = colAUC(c(1, 0, 1, 1), truth = tar.bin, maximum = TRUE)
+  expect_equal(colauc.min[[1]], 0.25)
+  expect_equal(colauc.min, 1 - colauc.max)
   # colAUC multiclass
   colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
   tab = t(utils::combn(0:2, 2)) # all possible 1 vs. 1 combinations
@@ -353,8 +426,27 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
   expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
+  #kappa
+  p0 = 0.5
+  pe = (0.25 * 0.25 + 0.5 * 0.5 + 0.25 * 0.25) / 1
+  kappa.test = 1 - (1 - p0) / (1 - pe)
+  kappa.perf = performance(pred.classif, measures = kappa, model = mod.classif)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), kappa.test)
+  expect_equal(measureKAPPA(tar.classif, pred.art.classif), as.numeric(kappa.perf))
+  #wkappa
+  conf.mat = matrix(c(1L, 0L, 0L, 0L, 1L, 1L, 0L, 1L, 0L), nrow = 3L) / 4L
+  expected.mat = c(0.25, 0.5, 0.25) %*% t(c(0.25, 0.5, 0.25))
+  weights = matrix(c(0, 1, 4, 1, 0, 1, 4, 1, 0), nrow = 3L)
+  wkappa.test = 1 - sum(weights * conf.mat) / sum(weights * expected.mat)
+  wkappa.perf = performance(pred.classif, measures = wkappa, model = mod.classif)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), wkappa.test)
+  expect_equal(measureWKAPPA(tar.classif, pred.art.classif), as.numeric(wkappa.perf))
+  tar.classif2 = tar.classif
+  pred.art.classif2 = pred.art.classif
+  levels(tar.classif2) = as.numeric(levels(tar.classif))^2
+  levels(pred.art.classif2) = as.numeric(levels(pred.art.classif))^2
+  expect_equal(measureWKAPPA(tar.classif2, pred.art.classif2), wkappa.test)
 
- 
   #test binaryclass measures
 
   #brier
@@ -472,35 +564,119 @@ test_that("check measure calculations", {
 
   #test multilabel measures
 
-  #hamloss
-  hamloss.test = mean(c(tar1.multilabel != pred.multilabel$data[, 4L],
-      tar2.multilabel != pred.multilabel$data[, 5L]))
-  hamloss.perf = performance(pred.multilabel,
-   measures = multilabel.hamloss, model = mod.multilabel)
+  # create response and predictions using all possible combinations
+  #bincombo = matrix(c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE), ncol = 2, byrow = TRUE)
+  #multi.y = bincombo[rep(1:4, times = 4),]
+  #multi.p = bincombo[rep(1:4, each = 4),]
+
+  multi.y = getPredictionTruth(pred.multilabel)
+  multi.p = getPredictionResponse(pred.multilabel)
+  expect_equal(unname(multi.y), unname(as.matrix(getTaskTargets(task.multilabel))))
+  expect_equal(pred.art.multilabel, unname(multi.p))
+
+  # create true-false and true-true vector used for manual computation of measures
+  tf = c(TRUE, FALSE)
+  tt = c(TRUE, TRUE)
+
+  # this is copy-paste from the mldr::mldr_evaluate function which is needed to compare with the mldr measures
+  counters = data.frame(
+    RealPositives = rowSums(multi.y),
+    RealNegatives = rowSums(!multi.y),
+    PredictedPositives = rowSums(multi.p),
+    PredictedNegatives = rowSums(!multi.p),
+    TruePositives = rowSums(multi.y & multi.p),
+    TrueNegatives = rowSums(!multi.y & !multi.p))
+
+  #hamloss: how many values are not identical
+  hamloss.test = mean(as.vector(multi.y) != as.vector(multi.p))
+  hamloss.perf = performance(pred.multilabel, measures = multilabel.hamloss, model = mod.multilabel)
   expect_equal(hamloss.test, multilabel.hamloss$fun(pred = pred.multilabel))
   expect_equal(hamloss.test, as.numeric(hamloss.perf))
-  #test only the measures
-  multi.y1 = matrix(c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE), 4, 2)
-  multi.p1 = matrix(c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE), 4, 2)
-  multi.p2 = matrix(c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 4, 2)
-  #hamloss
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, mean)))
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2), mean(apply(multi.y1 != multi.p2, 1, mean)))
-  #subset01
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, any)))
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2), mean(apply(multi.y1 == multi.p2, 1, all)))
+  # check best and worst value
+  expect_equal(measureMultilabelHamloss(multi.y, multi.y), multilabel.hamloss$best)
+  expect_equal(measureMultilabelHamloss(multi.y, !multi.y), multilabel.hamloss$worst)
+  # compare with mldr
+  expect_equal(mldr:::mldr_HL(multi.y, multi.p), measureMultilabelHamloss(multi.y, multi.p))
+  # mldr defines the accuracy as 1-hamloss
+  expect_equal(mldr:::mldr_Accuracy(counters), 1 - measureMultilabelHamloss(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelHamloss(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2) # 1 of 2 values are wrong
+  expect_equal(measureMultilabelHamloss(cbind(tf, tf), cbind(tf, tt)), 1/4) # 1 of 4 values are wrong
+
+  #subset01: how many rows are not identical
+  subset01.test = mean(rowSums(multi.y == multi.p) != ncol(multi.y))
+  subset01.perf = performance(pred.multilabel, measures = multilabel.subset01, model = mod.multilabel)
+  expect_equal(subset01.test, multilabel.subset01$fun(pred = pred.multilabel))
+  expect_equal(subset01.test, as.numeric(subset01.perf))
+  # check best and worst
+  expect_equal(measureMultilabelSubset01(multi.y, multi.y), multilabel.subset01$best)
+  expect_equal(measureMultilabelSubset01(multi.y, !multi.y), multilabel.subset01$worst)
+  # compare with mldr: we have implemented the subset loss which is 1 - subset accuracy
+  expect_equal(mldr:::mldr_SubsetAccuracy(multi.y, multi.p), 1 - measureMultilabelSubset01(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelSubset01(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1) # 1 of 1 obs is wrong
+  expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1/2) # 1 of 2 obs is wrong
+
   #f1mult
-  expect_equal(measureMultiLabelF1(multi.y1, multi.p1), mean(2 * apply((multi.y1 & multi.p1), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p1), 1, sum))))
-  expect_equal(measureMultiLabelF1(multi.y1, multi.p2), mean(2 * apply((multi.y1 & multi.p2), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p2), 1, sum))))
+  f1.test = vnapply(seq_row(multi.y), function(i) 2*sum(multi.y[i, ] * multi.p[i, ])/(sum(multi.y[i, ]) + sum(multi.p[i, ])))
+  f1.test[is.na(f1.test)] = 1
+  f1.test = mean(f1.test)
+  f1.perf = performance(pred.multilabel, measures = multilabel.f1, model = mod.multilabel)
+  expect_equal(f1.test, multilabel.f1$fun(pred = pred.multilabel))
+  expect_equal(f1.test, as.numeric(f1.perf))
+  # check best and worst
+  expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
+  expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
+  # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
+  expect_equal(mldr:::mldr_FMeasure(counters[-3,]), measureMultiLabelF1(multi.y[-3,], multi.p[-3,]))
+  # manual checks
+  expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2*1/3) # 1 TRUE-TRUE match of 3 TRUE values
+  expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2*1/2, 2*1/3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
+
   #accmult
-  expect_equal(measureMultilabelACC(multi.y1, multi.p1), mean(apply((multi.y1 & multi.p1), 1, sum) / apply((multi.y1 | multi.p1), 1, sum)))
-  expect_equal(measureMultilabelACC(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.y1 | multi.p2), 1, sum)))
-  #precmult
-  expect_equal(measureMultilabelPPV(multi.y1, multi.p1), mean(c(apply((multi.y1[1:3, ] & multi.p1[1:3, ]), 1, sum) / apply((multi.p1[1:3,]), 1, sum), 1)))
-  expect_equal(measureMultilabelPPV(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.p2), 1, sum)))
-  #recallmult
-  expect_equal(measureMultilabelTPR(multi.y1, multi.p1), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p1[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
-  expect_equal(measureMultilabelTPR(multi.y1, multi.p2), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p2[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
+  acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.y[i, ] | multi.p[i, ])))
+  acc.test[is.na(acc.test)] = 1
+  acc.test = mean(acc.test)
+  acc.perf = performance(pred.multilabel, measures = multilabel.acc, model = mod.multilabel)
+  expect_equal(acc.test, multilabel.acc$fun(pred = pred.multilabel))
+  expect_equal(acc.test, as.numeric(acc.perf))
+  # check best and worst
+  expect_equal(measureMultilabelACC(multi.y, multi.y), multilabel.acc$best)
+  expect_equal(measureMultilabelACC(multi.y, !multi.y), multilabel.acc$worst)
+  # compare with mldr: jaccard index is not implemented in mldr see https://github.com/fcharte/mldr/issues/28
+  # manual checks
+  expect_equal(measureMultilabelACC(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2)
+  expect_equal(measureMultilabelACC(rbind(tf, tf), rbind(tf, tt)), mean(c(1, 1/2)))
+
+  #ppvmult
+  ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.p[i, ])))
+  ppv.test = mean(ppv.test, na.rm = TRUE)
+  ppv.perf = performance(pred.multilabel, measures = multilabel.ppv, model = mod.multilabel)
+  expect_equal(ppv.test, multilabel.ppv$fun(pred = pred.multilabel))
+  expect_equal(ppv.test, as.numeric(ppv.perf))
+  # check best and worst
+  expect_equal(measureMultilabelPPV(multi.y, multi.y), multilabel.ppv$best)
+  expect_equal(measureMultilabelPPV(multi.y, !multi.y), multilabel.ppv$worst)
+  # compare with mldr
+  expect_equal(mldr:::mldr_Precision(counters), measureMultilabelPPV(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelPPV(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2)
+  expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/2)))
+
+  #tprmult
+  tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.y[i, ])))
+  tpr.test = mean(tpr.test, na.rm = TRUE)
+  tpr.perf = performance(pred.multilabel, measures = multilabel.tpr, model = mod.multilabel)
+  expect_equal(tpr.test, multilabel.tpr$fun(pred = pred.multilabel))
+  expect_equal(tpr.test, as.numeric(tpr.perf))
+  # check best and worst
+  expect_equal(measureMultilabelTPR(multi.y, multi.y), multilabel.tpr$best)
+  expect_equal(measureMultilabelTPR(multi.y, !multi.y), multilabel.tpr$worst)
+  # compare with mldr
+  expect_equal(mldr:::mldr_Recall(counters), measureMultilabelTPR(multi.y, multi.p))
+  # manual checks
+  expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/1)
+  expect_equal(measureMultilabelTPR(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/1)))
 
   #test survival measures
 
@@ -598,18 +774,18 @@ test_that("check measure calculations", {
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
 
   #test that some measures are only transformations of each other
-  
+
   #qsr is identical to the 1 - multiclass brier
   expect_equal(1 - measureMulticlassBrier(p1, y1), measureQSR(p1, y1), check.names = FALSE)
   qsr.bin.perf = performance(pred.bin, measures = qsr, model = mod.bin)
   expect_equal(1 - 2 * brier.perf, qsr.bin.perf, check.names = FALSE)
-  
+
   expect_equal(lsr.perf, -1 * logloss.perf, check.names = FALSE)
-  
+
   #multiclass brier for a two class problem should be two times the binary brier score.
   multiclass.brier.twoclass.perf = performance(pred.bin, measures = multiclass.brier, model = mod.bin)
   expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, check.names = FALSE)
-  
+
 })
 
 test_that("getDefaultMeasure", {
@@ -620,25 +796,42 @@ test_that("getDefaultMeasure", {
   expect_equal(mmce, getDefaultMeasure("classif"))
 })
 
+test_that("measure properties", {
+  #hasMeasureProps yields correct properties
+  expect_true(all(vlapply(listMeasures(create = TRUE),
+    function(m) {
+      res = hasMeasureProperties(m, m$properties)
+      all(res) & length(res) > 0
+      })))
+  props = listMeasureProperties()
+  #all props exist in mlr$measure.properties
+  expect_true(all(vlapply(listMeasures(create = TRUE),
+    function(m) {
+      res = all(getMeasureProperties(m) %in% props)
+      all(res) & length(res) > 0
+    })))
+})
+
 test_that("measures quickcheck", {
+  skip_on_cran()
   options(warn = 2)
   ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
   lrn = makeLearner("classif.rpart")
-      
+
   quickcheckTest(
     quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
       {
         classes = factor(c("foo", "bar"))
         data$target = rep_len(classes, length.out = nrow(data))
-  
+
         trainIds = 1:(2*nrow(data)/3)
         testIds = setdiff(1:nrow(data), trainIds)
         task = makeClassifTask(data = data, target = "target")
-  
+
         mod = train(lrn, task = task, subset = trainIds)
         pred = predict(mod, task = task, subset = testIds)
         perf = performance(pred, measures = ms)
-  
+
         is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
       }
     ),

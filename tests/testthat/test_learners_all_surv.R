@@ -11,7 +11,8 @@ test_that("learners work: surv ", {
   sub.task = subsetTask(surv.task, subset = c(1:70),
     features = getTaskFeatureNames(surv.task)[c(1,2)])
   lrns = mylist("surv", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = sub.task, hyperpars = hyperpars)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
+  lapply(lrns, testBasicLearnerProperties, task = sub.task, hyperpars = hyperpars)
   
   # survival analysis with factors
   lrns = mylist("surv", properties = "factors", create = TRUE)
@@ -33,6 +34,10 @@ test_that("learners work: surv ", {
   # survival with missings
   lrns = mylist("surv", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = sub.task, hyperpars = hyperpars)
+
+  # surv with oobpreds
+  lrns = mylist("surv", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = sub.task)
 
   # survival variable importance
   lrns = mylist("surv", properties = "featimp", create = TRUE)

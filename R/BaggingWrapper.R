@@ -42,7 +42,7 @@
 #' @family wrapper
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
-  learner = checkLearner(learner, type=c("classif", "regr"))
+  learner = checkLearner(learner, type = c("classif", "regr"))
   pv = list()
   if (!missing(bw.iters)) {
     bw.iters = asInt(bw.iters, lower = 1L)

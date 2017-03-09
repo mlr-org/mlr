@@ -12,4 +12,3 @@ See \code{\link[mlbench]{BreastCancer}}.
   The column \code{"Id"} and all incomplete cases have been removed from the task.
 }
 \keyword{data}
-

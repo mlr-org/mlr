@@ -12,5 +12,27 @@ test_that("BenchmarkSummary", {
   plotBMRSummary(res)
 
   # pretty.names works
+  plotBMRSummary(res)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerShortNames(res))
+  
   plotBMRSummary(res, pretty.names = FALSE)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  testDocForStrings(doc, getBMRLearnerIds(res))
+
+  # check error when learner short names are not unique
+  lrns = list(
+    rf = makeLearner("classif.randomForest", id = "rf1"),
+    rf2 = makeLearner("classif.randomForest", id = "rf2")
+  )
+  res = benchmark(lrns, tasks, rdesc, meas)
+  expect_error(plotBMRSummary(res),
+    "names are not unique")
+  
 })

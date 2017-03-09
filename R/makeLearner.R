@@ -44,7 +44,6 @@
 #' @family learner
 #' @export
 #' @aliases Learner
-#' @seealso [\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]
 #' @examples
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")
@@ -56,7 +55,8 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   assertString(cl)
   assertFlag(fix.factors.prediction)
   assertList(config, names = "named")
-  # FIXME: maybe forbid show.info here issue #1098:
+  if ("show.info" %in% names(config))
+    stop("'show.info' cannot be set in 'makeLearner', please use 'configureMlr' instead.")
   assertSubset(names(config), choices = names(getMlrOptions()))
   constructor = try(getS3method("makeRLearner", class = cl), silent = TRUE)
   if (inherits(constructor, "try-error")) {
@@ -71,8 +71,9 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
     assertString(id)
     wl$id = id
   }
+
   # predict.threshold is checked in setter below
-  assertList(par.vals)
+  assertList(par.vals, names = "unique")
   if (stri_isempty(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))

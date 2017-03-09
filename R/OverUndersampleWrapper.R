@@ -75,6 +75,7 @@ trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights = 
   .task = subsetTask(.task, .subset)
   .task = undersample(.task, rate = usw.rate, cl = usw.cl)
   m = train(.learner$next.learner, .task, weights = .weights)
+  m$train.task = .task
   makeChainModel(next.model = m, cl = "UndersampleModel")
 }
 
@@ -83,6 +84,7 @@ trainLearner.OversampleWrapper = function(.learner, .task, .subset, .weights = N
   .task = subsetTask(.task, .subset)
   .task = oversample(.task, rate = osw.rate, cl = osw.cl)
   m = train(.learner$next.learner, .task, weights = .weights)
+  m$train.task = .task
   makeChainModel(next.model = m, cl = "OversampleModel")
 }
 

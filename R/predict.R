@@ -38,7 +38,7 @@
 #' p = predict(model, task = iris.task, subset = test.set)
 #' print(p)
 #' getPredictionProbabilities(p)
-predict.WrappedModel = function(object, task, newdata, subset, ...) {
+predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
   assertClass(object, classes = "WrappedModel")
@@ -52,16 +52,14 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     size = getTaskSize(task)
   } else {
     assertDataFrame(newdata, min.rows = 1L)
+    if (class(newdata)[1] != "data.frame") {
+      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
+      newdata = as.data.frame(newdata)
+    }
     size = nrow(newdata)
   }
-  if (missing(subset)) {
-    subset = seq_len(size)
-  } else {
-    if (is.logical(subset))
-      subset = which(subset)
-    else
-      subset = asInteger(subset, min.len = 1L, any.missing = FALSE, lower = 1L, upper = size)
-  }
+  subset = checkTaskSubset(subset, size)
+
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)
   } else {
@@ -108,8 +106,8 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
-    time.predict = as.numeric(st[3L])
+    time.predict = measureTime(fun1(p <- fun2(do.call(predictLearner2, pars))))
+
     # was there an error during prediction?
     if (is.error(p)) {
       if (opts$on.learner.error == "warn")

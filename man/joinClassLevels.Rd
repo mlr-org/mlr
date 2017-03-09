@@ -23,4 +23,3 @@ Join some class existing levels to new, larger class levels for classification p
 \examples{
 joinClassLevels(iris.task, new.levels = list(foo = c("setosa", "virginica")))
 }
-

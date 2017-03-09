@@ -8,17 +8,20 @@ makeRLearner.classif.binomial = function() {
         default = "logit"),
       makeLogicalLearnerParam("model", default = TRUE, tunable = FALSE)
     ),
+    par.vals = list(
+      model = FALSE
+    ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Binomial Regression",
     short.name = "binomial",
-    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`."
+    note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. We set 'model' to FALSE by default to save memory."
   )
 }
 
 #' @export
 trainLearner.classif.binomial = function(.learner, .task, .subset, .weights = NULL, link = "logit", ...) {
   f = getTaskFormula(.task)
-  stats::glm(f, data = getTaskData(.task, .subset), model = FALSE, family = binomial(link = link), weights = .weights, ...)
+  stats::glm(f, data = getTaskData(.task, .subset), family = binomial(link = link), weights = .weights, ...)
 }
 
 #' @export

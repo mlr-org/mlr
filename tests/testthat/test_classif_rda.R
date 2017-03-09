@@ -13,6 +13,7 @@ test_that("classif_rda", {
 
 
   parset.list = list(
+    list(),
     list(gamma=0.1, lambda=0.1),
     list(gamma=0.5, lambda=1),
     list(gamma=1, lambda=0)

@@ -23,7 +23,7 @@ getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "b
 
 # set hyper pars down in ensemble base learners, identify correct base learner + remove prefix
 #' @export
-setHyperPars2.BaseEnsemble = function(learner, par.vals, show.info = getMlrOption("show.info")) {
+setHyperPars2.BaseEnsemble = function(learner, par.vals) {
   ns = names(par.vals)
   parnames.bls = names(learner$par.set.bls$pars)
   for (i in seq_along(par.vals)) {
@@ -32,10 +32,10 @@ setHyperPars2.BaseEnsemble = function(learner, par.vals, show.info = getMlrOptio
       # param of ensapsulated learner, remove prefix, set it in the bl list
       z = matchBaseEnsembleLearner(learner, pn)
       learner$base.learners[[z$ind]] = setHyperPars2(learner$base.learners[[z$ind]],
-        par.vals = setNames(par.vals[i], z$par.id), show.info = show.info)
+        par.vals = setNames(par.vals[i], z$par.id))
     } else {
       # extra param of ensemble learner, just set it normally
-      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i], show.info = show.info)
+      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i])
     }
   }
   return(learner)

@@ -12,4 +12,3 @@ See \code{\link[mlbench]{PimaIndiansDiabetes}}.
   Note that this is the uncorrected version from mlbench.
 }
 \keyword{data}
-

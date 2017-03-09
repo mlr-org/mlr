@@ -4,7 +4,7 @@ context("getHyperPars")
 test_that("getHyperPars", {
   lrn = makeLearner("classif.rpart")
   expect_equal(getHyperPars(lrn), list(xval = 0))
-  
+
   lrn = makeLearner("classif.lda")
   named_list = list()
   names(named_list) = character(0)
@@ -19,13 +19,12 @@ test_that("getHyperPars", {
   lrn = makeLearner("multilabel.rFerns")
   expect_true(setequal(getHyperPars(lrn), list()))
 
-  lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")  
+  lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
   expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
-  
-  #Missing values should not be ommited and printed
-  lrn = makeLearner("classif.xgboost")
-  expect_true(setequal(getHyperPars(lrn), list(nrounds = 1, missing = NA)))
-  
+
+  #Missing values should not be omitted and printed
+  lrn = makeLearner("classif.xgboost", missing = NA)
   expect_output(print(lrn), "missing=NA")
-  
+  lrn = makeLearner("regr.xgboost", missing = NA)
+  expect_output(print(lrn), "missing=NA")
 })

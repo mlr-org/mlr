@@ -84,8 +84,8 @@ under \code{\link{imputations}} or create one yourself using \code{\link{makeImp
 The description object contains these slots
 \describe{
   \item{target [\code{character}]}{See argument.}
-  \item{features [\code{character}]}{Feature names, these are the column names of \code{data},
-    excluding \code{target}.}
+  \item{features [\code{character}]}{Feature names (column names of \code{data}).},
+  \item{classes [\code{character}]}{Feature classes (storage type of \code{data}).}
   \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
     including newly created ones during imputation.}
   \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
@@ -98,11 +98,10 @@ The description object contains these slots
 df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 print(imputed$data)
-reimpute(data.frame(x = NA), imputed$desc)
+reimpute(data.frame(x = NA_real_), imputed$desc)
 }
 \seealso{
 Other impute: \code{\link{imputations}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }
-
