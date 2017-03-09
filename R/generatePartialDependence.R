@@ -262,8 +262,8 @@ generatePartialDependenceData = function(obj, input, features,
         args$rng = rng
         out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
-          centerpred = doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
-            x, fun, td, 1, bounds = bounds, ...)
+          centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
+            x, fun, td, 1, bounds = bounds, ...))
         else
           centerpred = NULL
       }
@@ -591,8 +591,9 @@ doAggregatePartialDependence = function(out, td, target, features, rng) {
 doIndividualPartialDependence = function(out, td, n, rng, target, features, centerpred = NULL) {
   if (td$type == "classif" & length(td$class.levels) > 2L) {
     if (!is.null(centerpred))
-      out = lapply(out, function(x) x - centerpred)
-    out = as.data.frame(do.call("rbind", out))
+      out = lapply(out, function(x) x - centerpred) else
+        out = lapply(out, as.data.frame)
+    out = as.data.frame(rbindlist(out))
     colnames(out) = target
     idx = rep(seq_len(n), nrow(rng))
     rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
@@ -601,9 +602,9 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
       variable.name = "Class", value.name = "Probability", variable.factor = TRUE)
     out$idx = interaction(out$idx, out$Class)
   } else {
-    out = as.data.frame(do.call("rbind", out))
+    out = as.data.frame(setDT(transpose(out))) # see https://github.com/Rdatatable/data.table/issues/600
     if (!is.null(centerpred))
-      out = t(apply(out, 1, function(x) x - centerpred))
+      out = out - setDF(transpose(rep(centerpred, nrow(out)))) #t(as.data.frame(lapply(out, function(x) unname(x - centerpred))))
     colnames(out) = 1:n
     out = cbind(out, rng)
     out = melt(out, id.vars = features, variable.name = "idx", value.name = target)
