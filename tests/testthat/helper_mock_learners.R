@@ -127,6 +127,7 @@ makeRLearner.classif.__mlrmocklearners__7 = function() {
       makeIntegerLearnerParam(id = "mtry", lower = 1L, default = expression(floor(sqrt(p)))),
       makeLogicalLearnerParam(id = "importance", default = expression(task$task.desc$has.blocking)),
       makeNumericVectorLearnerParam(id = "classwt", lower = 0, len = expression(k)),
+      makeIntegerLearnerParam(id = "ntree", default = expression(n)),
       keys = c("task.desc", "has.blocking")
     ),
     par.vals = list(minsplit = expression(ceiling(0.1 * (n.task + p)))),
