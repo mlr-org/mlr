@@ -39,6 +39,7 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
       }), names(fd.features))
   }
   assertNames(names(fd.grids), permutation.of = names(fd.features))
+  assertSetEqual(length(unlist(fd.features)), length(unique(unlist(fd.features))))
   cns = colnames(getTaskData(task))
   # lets check integrity of every entry of fd.features, then convert indices to character vector
   fd.features = lapply(fd.features, function(f) {

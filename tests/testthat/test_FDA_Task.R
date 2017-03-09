@@ -10,6 +10,7 @@ test_that("FDA_Regr_Task", {
                           fd.grids = fdg)
   expect_class(task1, "FDARegrTask")
   expect_equal(task1$type, "fdaregr")
+  expect_error(subsetTask(fuelSubset.task, features = 1:1000), regexp = "All elements must be")
 
 })
 
@@ -25,4 +26,20 @@ test_that("FDA_Classif_Task", {
   expect_equal(task3$type, "fdaclassif")
   expect_length(unlist(task3$task.desc$fd.features), 6L)
   expect_equal(task3$task.desc$fd.features$fd1, c("X2", "X3"))
+})
+
+
+test_that("FDA_Task_error", {
+  requirePackagesOrSkip('FDboost')
+  data(fuelSubset)
+  fuelsub = data.frame(heatan = fuelSubset$heatan, h2o = fuelSubset$h2o,
+    NIR = fuelSubset$NIR, UVVIS = fuelSubset$UVVIS)
+  fdf1 = list(NIR = 1:231, UVVIS = 1:134)  # two functional covariate can't occupy the same variable
+  fdf2 = list(NIR = 1:231, UVVIS = c("hello", "world"))
+  fdg = list(NIR = fuelSubset$nir.lambda, UVVIS = fuelSubset$uvvis.lambda)
+  expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf1,
+    fd.grids = fdg))
+  expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf2,
+    fd.grids = fdg))
+  
 })
