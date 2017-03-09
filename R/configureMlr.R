@@ -37,6 +37,12 @@
 #'   \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
+#' @param on.measure.not.applicable [\code{logical(1)}]\cr
+#'   What should happen if a measure is not applicable to a learner.\cr
+#'   \dQuote{stop}: R exception is generated.\cr
+#'   \dQuote{warn}: Warning, but value of the measure will be \code{NA}.\cr
+#'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
+#'   Default is \dQuote{stop}.
 #' @param show.learner.output [\code{logical(1)}]\cr
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
@@ -45,7 +51,8 @@
 #' @family configure
 #' @export
 configureMlr = function(show.info, on.learner.error, on.learner.warning,
-  on.par.without.desc, on.par.out.of.bounds, show.learner.output) {
+  on.par.without.desc, on.par.out.of.bounds, on.measure.not.applicable,
+  show.learner.output) {
 
   defaults = list(
     show.info = TRUE,
@@ -53,6 +60,7 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
     on.learner.warning = "warn",
     on.par.without.desc = "stop",
     on.par.out.of.bounds = "stop",
+    on.measure.not.applicable = "stop",
     show.learner.output = TRUE
   )
 
@@ -80,6 +88,11 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
   if (!missing(on.par.out.of.bounds)) {
     assertChoice(on.par.out.of.bounds, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.par.out.of.bounds", on.par.out.of.bounds)
+    any.change = TRUE
+  }
+  if (!missing(on.measure.not.applicable)) {
+    assertChoice(on.measure.not.applicable, choices = c("quiet", "warn", "stop"))
+    setMlrOption("on.measure.not.applicable", on.measure.not.applicable)
     any.change = TRUE
   }
   if (!missing(show.learner.output)) {
