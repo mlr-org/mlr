@@ -37,6 +37,7 @@ test_that("error dump is created in resample", {
 
 
 test_that("error dump is created during tune", {
+  mlr.options = getMlrOptions()
   ps = makeParamSet(
     makeDiscreteParam("alpha", values = c(1, 0))
   )
@@ -70,5 +71,6 @@ test_that("error dump is created during tune", {
   expect_equal(length(getOptPathEl(z$opt.path, 1)$extra$.dump), 2)
   expect_class(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]]$predict.test, "dump.frames")
   expect_class(getOptPathEl(z$opt.path, 1)$extra$.dump[[1]]$predict.train, "dump.frames")
+  do.call(configureMlr, mlr.options)
 })
 
