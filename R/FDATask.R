@@ -22,6 +22,7 @@
 # @aliases FDATask
 convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc.cl) {
   fnames = getTaskFeatureNames(task)
+  target = getTaskTargetNames(task)
   # type could be fdaregr or fdaclassif
   task$type = type
   task$task.desc$type = type
@@ -38,8 +39,17 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
         as.numeric(1:length(fd.features[[name]]))
       }), names(fd.features))
   }
+  # check if target column is not used as fct.covariate
+  assert(target %nin% colnames(getTaskData(task)[, unlist(fd.features)]))
+  # check if length of each fct.covariate is equivalent to the length of its grid
+  lapply(names(fd.features), function(g) {
+    assert(length(fd.grids[[g]]) == length(fd.features[[g]]))
+  })
+  # we don't support mixed integer and character specification for fd.features
+  assertLogical(unique(vlapply(fd.features, is.integer)), len = 1)
   assertNames(names(fd.grids), permutation.of = names(fd.features))
-  assertSetEqual(length(unlist(fd.features)), length(unique(unlist(fd.features))))
+  # two functional covariate can not occupy the same variable
+  assert(length(unlist(fd.features)) == length(unique(unlist(fd.features))))
   cns = colnames(getTaskData(task))
   # lets check integrity of every entry of fd.features, then convert indices to character vector
   fd.features = lapply(fd.features, function(f) {
