@@ -79,7 +79,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because 
 #'   of missing packages may be returned.
 #'   Default is \code{FALSE}.
-#'  @param create [\code{logical(1)}]\cr
+#' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return info table)?
 #'   Packages are loaded if and only if this option is \code{TRUE}.
 #'   Default is \code{FALSE}.
