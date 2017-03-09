@@ -402,7 +402,7 @@ changeData = function(task, data, costs, weights) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))
-  costs = getTaskCosts(task)
+    costs = getTaskCosts(task)
   if (missing(weights))
     weights = task$weights
   task$env = new.env(parent = emptyenv())
