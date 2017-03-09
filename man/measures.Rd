@@ -35,6 +35,10 @@
 \alias{msle}
 \alias{measureMSLE}
 \alias{rmsle}
+\alias{tau}
+\alias{measureTau}
+\alias{rho}
+\alias{measureRho}
 \alias{mmce}
 \alias{measureMMCE}
 \alias{acc}
@@ -185,6 +189,14 @@ msle
 measureMSLE(truth, response)
 
 rmsle
+
+tau
+
+measureTau(truth, response)
+
+rho
+
+measureRho(truth, response)
 
 mmce
 
