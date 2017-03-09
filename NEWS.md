@@ -17,6 +17,9 @@
 * simplifyMeasureNames: shorten measure names to the actual measure, e.g.
   mmce.test.mean -> mmce
 
+## measures - new
+* tau, rho
+
 ## learners - general
 * classif.plsdaCaret: added parameter "method".
 * regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "jackknife".
