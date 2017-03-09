@@ -58,12 +58,12 @@ getTaskTargetNames.Task = function(x) {
 }
 
 #' @export
-getTaskTargetNames.TaskDescSupervised = function(x) {
+getTaskTargetNames.SupervisedTaskDesc = function(x) {
   x$target
 }
 
 #' @export
-getTaskTargetNames.TaskDescUnsupervised = function(x) {
+getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
   character(0L)
 }
 
@@ -88,12 +88,12 @@ getTaskClassLevels.Task = function(x) {
 }
 
 #' @export
-getTaskClassLevels.TaskDescClassif = function(x) {
+getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
 #' @export
-getTaskClassLevels.TaskDescMultilabel = function(x) {
+getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
@@ -417,10 +417,14 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
-    "surv" = makeTaskDesc(task, td$id, td$target, td$censoring),
-    "cluster" = makeTaskDesc(task, td$id),
-    makeTaskDesc(task, td$id, td$target))
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
+  )
+
   return(task)
 }
 
