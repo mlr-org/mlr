@@ -830,3 +830,25 @@ test_that("measures quickcheck", {
     sample.size = 100
   )
 })
+
+test_that("setMeasurePars", {
+  mm = mmce
+  expect_list(mm$extra.args, len = 0L, names = "named")
+  mm = setMeasurePars(mm, foo = 1, bar = 2)
+  expect_list(mm$extra.args, len = 2L, names = "named")
+  expect_equal(mm$extra.args, list(foo = 1, bar = 2))
+  expect_list(mmce$extra.args, len = 0L, names = "named") # mmce is untouched?
+
+  mm = setMeasurePars(mmce, foo = 1, bar = 2, par.vals = list(foobar = 99))
+  expect_equal(mm$extra.args, list(foobar = 99, foo = 1, bar = 2))
+
+  # removing parameters works
+  mm = setMeasurePars(mmce, foo = 1, bar = 2)
+  expect_list(mm$extra.args, len = 2L, names = "named")
+  mm = setMeasurePars(mm, foo = NULL, bar = 2)
+  expect_equal(mm$extra.args, list(bar = 2))
+
+  # precedence of ... over par.vals
+  mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
+  expect_equal(mm$extra.args, list(foo = 1))
+})

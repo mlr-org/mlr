@@ -53,6 +53,7 @@ object \code{pred}.
 
 \item{extra.args}{[\code{list}]\cr
 List of extra arguments which will always be passed to \code{fun}.
+Can be changed after construction via \code{\link{setMeasurePars}}.
 Default is empty list.}
 
 \item{aggr}{[\code{\link{Aggregation}}]\cr
@@ -113,5 +114,7 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeTimeDependentAUCMeasure}},
-  \code{\link{measures}}, \code{\link{performance}}
+  \code{\link{measures}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }

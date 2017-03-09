@@ -62,6 +62,7 @@
 #'   }
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
+#'   Can be changed after construction via \code{\link{setMeasurePars}}.
 #'   Default is empty list.
 #' @param aggr [\code{\link{Aggregation}}]\cr
 #'   Aggregation funtion, which is used to aggregate the values measured
@@ -153,24 +154,6 @@ getDefaultMeasure = function(x) {
     costsens = mcp,
     multilabel = multilabel.hamloss
   )
-}
-
-
-#' Set aggregation function of measure.
-#'
-#' Set how this measure will be aggregated after resampling.
-#' To see possible aggregation functions: \code{\link{aggregations}}.
-#'
-#' @param measure [\code{\link{Measure}}]\cr
-#'   Performance measure.
-#' @template arg_aggr
-#' @return [\code{\link{Measure}}] with changed aggregation behaviour.
-#' @export
-setAggregation = function(measure, aggr) {
-  assertClass(measure, classes = "Measure")
-  assertClass(aggr, classes = "Aggregation")
-  measure$aggr = aggr
-  return(measure)
 }
 
 #' @export
