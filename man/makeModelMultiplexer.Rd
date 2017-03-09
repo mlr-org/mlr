@@ -27,6 +27,9 @@ with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
 
 The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.
+
+The getter \code{\link{getLearnerProperties}} returns the properties of the
+selected base learner.
 }
 \note{
 Note that logging output during tuning is somewhat shortened to make it more readable.

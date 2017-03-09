@@ -1,5 +1,4 @@
-context("ModelMultiplexer")
-
+context("Tuning ModelMultiplexer")
 
 test_that("makeModelMultiplexerParamSet works", {
   bls = list(
@@ -54,7 +53,7 @@ test_that("ModelMultiplexer basic stuff works", {
   lrn2 = setPredictType(lrn, "prob")
   mod = train(lrn2, task = binaryclass.task)
   p = predict(mod, task = binaryclass.task)
-  getPredictionProbabilities(p)
+  expect_numeric(getPredictionProbabilities(p), any.missing = FALSE, lower = 0, upper = 1)
 })
 
 test_that("FailureModel works", {

@@ -14,6 +14,11 @@
 * listTaskTypes, listLearnerProperties
 * getMeasureProperties, hasMeasureProperties, listMeasureProperties
 * makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
+* simplifyMeasureNames: shorten measure names to the actual measure, e.g.
+  mmce.test.mean -> mmce
+
+## measures - new
+* tau, rho
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".

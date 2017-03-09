@@ -16,6 +16,31 @@ measureAggrPrettyName = function(measure) {
   stri_paste(measure$name, measure$aggr$name, sep = ": ")
 }
 
+#' @title Simplify measure names
+#'
+#' @description
+#'   Clips aggregation names from character vector.\cr
+#'   E.g: 'mmce.test.mean' becomes 'mmce'.\cr
+#'   Elements that don't contain a measure name are ignored
+#'   and returned unchanged.
+#' 
+#' @param xs [\code{character}] Character vector that (possibly)
+#'   contains aggregated measure names.
+#'
+#' @return [\code{character}].
+#' @export
+simplifyMeasureNames = function(xs) {
+  assertCharacter(xs, min.len = 1L)
+  # get all measure names
+  all.measure.names = listMeasures()
+  # cut everything after and including the first '.'
+  xs.shortened = gsub("\\..*", "", xs)
+  # check if this is a measure
+  string.is.measure = (xs.shortened %in% all.measure.names) 
+  # if yes: insert shortened name, else insert original input
+  ifelse(string.is.measure, xs.shortened, xs)
+} 
+
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
 perfsToString = function(y, sep = "=") {

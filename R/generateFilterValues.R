@@ -90,7 +90,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Calculates feature filter values.
 #'
