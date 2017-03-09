@@ -194,5 +194,6 @@ test_that("Impute works on non missing data", { # we had issues here: 848,893
 test_that("Logicals are casted to factors instead of character (#1522)", {
   x = data.frame(a = c(TRUE, FALSE, NA))
   y = impute(x, cols = list(a = imputeConstant("__miss__")))
-  expect_factor(y$data$a, levels = c("TRUE", "FALSE", "__miss__"), len = 3, any.missing = FALSE)
+  res = factor(c("TRUE", "FALSE", "__miss__"), levels = c("FALSE", "TRUE", "__miss__"))
+  expect_equal(y$data$a, res)
 })
