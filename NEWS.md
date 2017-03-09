@@ -1,4 +1,5 @@
 # mlr 2.11:
+* The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
