@@ -5,7 +5,7 @@ test_that("surv_glmnet", {
 
   parset.list = list(
     list(),
-    list(alpha = 0.3),
+    list(alpha = 0.3, mxit = 80),
     list(alpha = 1, nlambda = 10),
     list(prec = 1e-3)
   )
@@ -18,13 +18,14 @@ test_that("surv_glmnet", {
     colnames(y) = c("time", "status")
     pars = c(list(y = Surv(time=surv.train[, surv.target[1]], event=surv.train[, surv.target[2]]),
       x = as.matrix(surv.train[, -c(1,2,7)]), family = "cox"), parset)
+    glmnet::glmnet.control(factory = TRUE)
     set.seed(getOption("mlr.debug.seed"))
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
+      on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet::glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
     } else {
       m = do.call(glmnet::glmnet, pars)
     }

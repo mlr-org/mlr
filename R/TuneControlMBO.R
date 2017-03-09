@@ -23,7 +23,7 @@
 # @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
   learner, mbo.control, tune.threshold = FALSE, tune.threshold.args = list(),
-  continue = FALSE, log.fun = NULL, final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
+  continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
 
   assertClass(learner, classes = "Learner")
   assertClass(mbo.control, "MBOControl")

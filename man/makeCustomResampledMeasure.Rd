@@ -79,4 +79,3 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
   \code{\link{measures}}, \code{\link{performance}}
 }
-

@@ -52,5 +52,5 @@ print.ResamplePrediction = function(x, ...) {
   catf("predict.type: %s", x$predict.type)
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
   catf("time (mean): %.2f", mean(x$time))
-  printHead(as.data.frame(x))
+  printHead(as.data.frame(x), ...)
 }

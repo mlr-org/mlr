@@ -20,4 +20,3 @@ Aggregation function.}
 Set how this measure will be aggregated after resampling.
 To see possible aggregation functions: \code{\link{aggregations}}.
 }
-

@@ -25,7 +25,7 @@ test_that("learners work: classif ", {
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
   lrns = mylist("classif", properties = "factors", create = TRUE)
@@ -37,7 +37,7 @@ test_that("learners work: classif ", {
 
   # binary classif with prob
   lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = binaryclass.task,
+  lapply(lrns, testBasicLearnerProperties, task = binaryclass.task,
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
@@ -50,6 +50,14 @@ test_that("learners work: classif ", {
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
+  
+  # classif with oobpreds
+  lrns = mylist("classif", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  # classif with oobpreds and probability
+  lrns = mylist("classif", properties = c("oobpreds", "prob"), create = TRUE)
+  lrns = lapply(lrns, setPredictType, predict.type = "prob")
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with variable importance
   lrns = mylist("classif", properties = "featimp", create = TRUE)

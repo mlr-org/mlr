@@ -30,9 +30,6 @@ a ggvis plot object.
 Visualizes data size (percentage used for model) vs. performance measure(s).
 }
 \seealso{
-Other learning_curve: \code{\link{generateLearningCurveData}},
-  \code{\link{plotLearningCurve}}
-
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
@@ -45,5 +42,7 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
-}
 
+Other learning_curve: \code{\link{generateLearningCurveData}},
+  \code{\link{plotLearningCurve}}
+}

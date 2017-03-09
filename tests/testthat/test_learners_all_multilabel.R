@@ -8,11 +8,11 @@ test_that("learners work: multilabel", {
   # multiabel
   lrns = mylist("multilabel", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = multilabel.task, hyperpars = hyperpars)
+  lapply(lrns, testBasicLearnerProperties, task = multilabel.task, hyperpars = hyperpars)
   
   # multilabel, probs
   lrns = mylist("multilabel", properties = "prob", create = TRUE)
-  lapply(lrns, testThatLearnerCanTrainPredict, task = multilabel.task,
+  lapply(lrns, testBasicLearnerProperties, task = multilabel.task,
     hyperpars = hyperpars, pred.type = "prob")
   
   # multilabel, factors

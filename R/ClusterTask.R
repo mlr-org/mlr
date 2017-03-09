@@ -7,14 +7,14 @@ makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL,
   assertFlag(check.data)
 
   task = makeUnsupervisedTask("cluster", data, weights, blocking)
-  task$task.desc = makeTaskDesc.ClusterTask(task, id)
+  task$task.desc = makeClusterTaskDesc(id, data, weights, blocking)
   addClasses(task, "ClusterTask")
 }
 
-makeTaskDesc.ClusterTask = function(task, id) {
+makeClusterTaskDesc = function(id, data, weights, blocking) {
   target = character(0L)
-  td = makeTaskDescInternal(task, "cluster", id, target)
-  return(addClasses(td, c("TaskDescCluster", "TaskDescUnsupervised")))
+  td = makeTaskDescInternal("cluster", id, data, target, weights, blocking)
+  return(addClasses(td, c("ClusterTaskDesc", "UnsupervisedTaskDesc")))
 }
 
 #' @export

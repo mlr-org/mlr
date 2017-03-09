@@ -52,7 +52,14 @@ propVectorToMatrix = function(p, levs) {
   y
 }
 
-getSupportedTaskTypes = function() {
+#' @title List the supported task types in mlr
+#'
+#' @description
+#' Returns a character vector with each of the supported task types in mlr.
+#'
+#' @return [\code{character}].
+#' @export
+listTaskTypes = function() {
   c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
 }
 
@@ -78,3 +85,4 @@ replaceDupeMeasureNames = function(measures, x = "id") {
   meas.names[dupes] = new.names
   unlist(meas.names)
 }
+

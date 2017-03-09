@@ -90,7 +90,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Calculates feature filter values.
 #'
@@ -146,7 +146,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #' @template ret_gg2
 #' @export
 #' @examples
-#' fv = generateFilterValuesData(iris.task, method = "chi.squared")
+#' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(fvalues, classes = "FilterValues")
@@ -203,7 +203,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #' @template ret_ggv
 #' @export
 #' @examples \dontrun{
-#' fv = generateFilterValuesData(iris.task, method = "chi.squared")
+#' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValuesGGVIS(fv)
 #' }
 plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {

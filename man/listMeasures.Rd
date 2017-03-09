@@ -2,9 +2,9 @@
 % Please edit documentation in R/listMeasures.R
 \name{listMeasures}
 \alias{listMeasures}
-\alias{listMeasures.Task}
-\alias{listMeasures.character}
 \alias{listMeasures.default}
+\alias{listMeasures.character}
+\alias{listMeasures.Task}
 \title{Find matching measures.}
 \usage{
 listMeasures(obj, properties = character(0L), create = FALSE)
@@ -40,4 +40,3 @@ Default is \code{FALSE}.}
 Returns the matching measures which have specific characteristics, e.g.
 whether they supports classification or regression.
 }
-

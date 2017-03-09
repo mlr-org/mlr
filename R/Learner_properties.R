@@ -14,6 +14,7 @@
 #'   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
 #'   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
 #'   \item{se}{Only for regr: Can standard errors be predicted?}
+#'   \item{oobpreds}{Only for classif, regr and surv: Can out of bag predictions be extracted from the trained model?}
 #'   \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 #' }
 #'
@@ -44,11 +45,18 @@ getLearnerProperties.character = function(learner) {
   getLearnerProperties(checkLearner(learner))
 }
 
+#' @export
+getLearnerProperties.ModelMultiplexer = function(learner) {
+  selected = learner$par.vals$selected.learner
+  # NB: this is not set during construction
+  if (is.null(selected)) learner$properties else getLearnerProperties(learner$base.learners[[selected]])
+}
+
 #' @rdname LearnerProperties
 #' @export
 hasLearnerProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertSubset(props, getSupportedLearnerProperties())
+  assertSubset(props, listLearnerProperties())
   props %in% getLearnerProperties(learner)
 }
 
@@ -61,6 +69,19 @@ hasProperties = function(learner, props) {
   hasLearnerProperties(learner, props)
 }
 
-getSupportedLearnerProperties = function(type = "any") {
+#' @title List the supported learner properties
+#'
+#' @description
+#'   This is useful for determining which learner properties are available.
+#'
+#' @param type [\code{character(1)}]\cr
+#'   Only return properties for a specified task type. Default is \dQuote{any}.
+#'
+#' @return [\code{character}].
+#'
+#' @export
+listLearnerProperties = function(type = "any") {
+  allProps = c(listTaskTypes(), "any")
+  assertSubset(type, allProps)
   mlr$learner.properties[[type]]
 }
