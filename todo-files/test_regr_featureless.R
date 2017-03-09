@@ -1,44 +1,31 @@
 context("regr_featureless")
-test_that("regr_featureless", {
 
-  test.measure.learner = function(measure) {
-    .task = bh.task
-    m.trains.ind = 1:300 # the bh.task has a dataframe of length 506, use 1:300 for traning.
-    m.test.ind = 301:506
-    y = getTaskTargets(.task)
-    n = length(y)
-    
-    f = function(a) {
-      arep = rep(a, n)
-      data = data.frame(truth = y, response = arep)
-      desc = makeS3Obj("TaskDesc")
-      p = makeS3Obj("Prediction", data = data, task.desc = desc)
-      measure$fun(pred = p, extra.args = measure$extra.args)
-    }
-    
-    xmin = optimize(f, c(min(y), max(y)), tol = 0.0001, maximum = !measure$minimize)
-    p1 = rep(xmin[[1]], length(m.test.ind))
-    t_df = getTaskData(.task)
-    testSimple(t.name = "regr.featureless", df = t_df[c("crim", "tax", "medv")], target = "medv", 
-      train.inds = m.trains.ind, old.predicts = p1, parset = list(measure = measure))
+test_that("regr_featureless", {
+  df = data.frame(
+    y = c(1, 2, 3, 3, 3),
+    x = rep(1, 5)
+  )
+  method = c("mean", "median")
+  task = makeRegrTask(data = df, target = "y")
+
+  # compute predictions manually
+  expected.response = list(
+    median = 3,
+    mean = (1 + 2 + 3 + 3 + 3)/5
+  )
+
+  for (m in method) {
+    lrn = makeLearner("regr.featureless", method = m)
+    mod = train(lrn, task)
+    # test content of learner model
+    expect_equal(getLearnerModel(mod)$response, expected.response[[m]])
+    # test prediction works properly
+    n = 10
+    test = data.frame(rep(1, n))
+    p = predict(mod, newdata = test)
+    expect_equal(getPredictionResponse(p), rep(expected.response[[m]], n))
+    # test that printer works correctly
+    expect_output(print(lrn), "featureless")
+    expect_output(print(lrn), m)
   }
-  
-  regr.measures = listMeasures2(properties = ("regr"), create = TRUE)
-  regr.measures = regr.measures[names(regr.measures) %nin% listMeasures2(properties = c("regr", "req.model"))]
-  #it seems that we cannot filter these easily
-  regr.measures[["timepredict"]] = NULL
-  regr.measures[["arsq"]] = NULL
-  lapply(regr.measures, test.measure.learner)
-  
-  # test that bad measures cannot be used
-  expect_error(train(makeLearner("regr.featureless", measure = auc), regr.num.task), 
-    "Measure auc does not support task type regr!")
-  expect_error(train(makeLearner("regr.featureless", measure = timetrain), regr.num.task), 
-    "requires a fitted model")
-  
-  # test that printers work correctly and print the measure id and not <measure>
-  lrn = makeLearner("regr.featureless", measure = mae)
-  expect_output(print(lrn), "mae")
-  expect_output(print(getHyperPars(lrn)), "mae")
-  
 })

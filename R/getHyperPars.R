@@ -34,10 +34,3 @@ getHyperParsString = function(learner, show.missing.values = TRUE) {
   s = mapply(paramValueToString, pars, hps, MoreArgs = list(show.missing.values = show.missing.values))
   stri_paste(ns, s, sep = "=", collapse = ",")
 }
-
-# This is required for featureless learnerns. A measure is used as a parameter and we have to print
-# the id instead of the name of the object
-paramValueToString.MeasureParam = function(par, x, ...) {
-  as.character(x$id)
-}
-
