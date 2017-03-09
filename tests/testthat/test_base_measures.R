@@ -44,13 +44,16 @@ test_that("measures", {
   expect_is(perf, "numeric")
 
   # test survival measure
-  lrn = makeLearner("surv.coxph")
-  mod = train(lrn, task = surv.task, subset = surv.train.inds)
-  pred = predict(mod, task = surv.task, subset = surv.test.inds)
-  for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw, iauc.uno)) {
-    perf = performance(pred, measures = ms, model = mod, task = surv.task)
-    r = range(c(ms$worst, ms$best))
-    expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+  lrns = listLearners("surv")$class
+  for (i in 1:length(lrns)) {
+    lrn = makeLearner(lrns[i])
+    mod = train(lrn, task = surv.task, subset = surv.train.inds)
+    pred = predict(mod, task = surv.task, subset = surv.test.inds)
+    for (ms in list(cindex, cindex.uno, td.auc.kw, td.auc.km, td.auc.nne, td.auc.ipcw, iauc.uno)) {
+      perf = performance(pred, measures = ms, model = mod, task = surv.task)
+      r = range(c(ms$worst, ms$best))
+      expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+    }
   }
 
   lrn = makeLearner("surv.coxph")
