@@ -53,6 +53,8 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
   })
   task$task.desc$fd.features = fd.features
   task$task.desc$fd.grids = fd.grids
+  # if a variable does not belong to functional covariate, it is regarded as scalar
+  task$task.desc$fd.scalars = getTaskFeatureNames(task)[getTaskFeatureNames(task) %nin% unlist(fd.features)]
   task$task.desc = addClasses(task$task.desc, desc.cl)
   addClasses(task, c(task.cl, "FDATask"))
 }
