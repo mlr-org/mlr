@@ -157,6 +157,7 @@ addRRMeasure = function(res, measures) {
 #' @param res [\code{ResampleResult}]\cr
 #'   The result of \code{\link{resample}}.
 #' @return [list].
+#' @family debug
 #' @export
 getRRDump = function(res) {
   return(res$err.dumps)

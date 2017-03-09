@@ -58,6 +58,7 @@
 #' @name ResampleResult
 #' @rdname ResampleResult
 #' @family resample
+#' @family debug
 NULL
 
 #' @export

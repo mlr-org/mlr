@@ -38,8 +38,8 @@ contains the following object members:
   List with length equal to number of resampling iterations. Contains lists
   of \code{dump.frames} objects that can be fed to \code{debugger()} to inspect
   error dumps generated on learner errors. One iteration can generate more than
-  one error dump depending on which of the training, prediction on training set,
-  or prediction on test set operations fail. Therefore the lists have named
+  one error dump depending on which of training, prediction on training set,
+  or prediction on test set, operations fail. Therefore the lists have named
   slots \code{$train}, \code{$predict.train}, or \code{$predict.test} if relevant.
   The error dumps are only saved when option \code{on.error.dump} is \code{TRUE}.
 }
@@ -68,4 +68,7 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
+
+Other debug: \code{\link{FailureModel}},
+  \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
 }

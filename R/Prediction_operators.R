@@ -165,6 +165,7 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 #'
 #' @template arg_pred
 #' @return [\code{last.dump}].
+#' @family debug
 #' @export
 getPredictionDump = function(pred) {
   pred$dump

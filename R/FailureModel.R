@@ -7,11 +7,17 @@
 #' when a model internally crashed during training.
 #' The model always predicts NAs.
 #'
+#' The if mlr option \code{on.error.dump} is \code{TRUE}, the
+#' \code{FailureModel} contains the debug trace of the error.
+#' It can be accessed with \code{getFailureModelDump} and
+#' inspected with \code{debugger}.
+#'
 #' Its encapsulated \code{learner.model} is simply a string:
 #' The error message that was generated when the model crashed.
 #' The following code shows how to access the message.
 #'
 #' @name FailureModel
+#' @family debug
 #' @rdname FailureModel
 #' @examples
 #' configureMlr(on.learner.error = "warn")
