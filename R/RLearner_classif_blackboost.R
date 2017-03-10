@@ -33,7 +33,8 @@ makeRLearner.classif.blackboost = function() {
     properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting With Regression Trees",
     short.name = "blackboost",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited.",
+    callees = c("blackboost", "boost_control", "ctree_control", "Binomial", "AdaExp", "AUC", "predict.mboost")
   )
 }
 

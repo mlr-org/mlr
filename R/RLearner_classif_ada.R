@@ -29,7 +29,8 @@ makeRLearner.classif.ada = function() {
     properties = c("twoclass", "numerics", "factors", "prob"),
     name = "ada Boosting",
     short.name = "ada",
-    note = "`xval` has been set to `0` by default for speed."
+    note = "`xval` has been set to `0` by default for speed.",
+    callees = "ada"
   )
 }
 
