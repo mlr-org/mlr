@@ -366,8 +366,8 @@ recodeSurvivalTimes = function(y, from, to) {
 getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  subset = checkTaskSubset(subset, size = task$task.desc$size)
-  d = task$task.desc$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = getTaskDescription(task)$size)
+  d = getTaskDescription(task)$costs[subset, , drop = FALSE]
   return(d)
 }
 
