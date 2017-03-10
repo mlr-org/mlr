@@ -62,6 +62,11 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
       fdn, gn, bsignal.knots, df, bsignal.degree, bsignal.differences, bsignal.check.ident)
   }
+  for (fsn in names(tdesc$fd.scalars)) {
+    mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
+    formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
+      fsn, bsignal.knots, df, bsignal.degree, bsignal.differences)
+  }
   # add grid names
   mat.list = c(mat.list, fdg)
   # add target names
@@ -70,7 +75,6 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, 
     control = ctrl, family = family)
 }
-
 
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
