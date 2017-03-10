@@ -51,7 +51,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
-  formula.terms = character(length(fdns))
+  formula.terms = c()
   # for each functional covariate ... 
   for (fdn in fdns) {
     # ... create a corresponding grid name
