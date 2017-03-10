@@ -15,17 +15,17 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
     x = data[[target]]
     if (is.character(x) || is.logical(x) || is.integer(x)) {
       data[[target]] = as.factor(x)
-    } else if (is.factor(x) && fixup.data == "warn" && any(table(x) == 0L)) {
+    } else if (is.factor(x) && fixup.data == "warn" && hasEmptyLevels(x)) {
       warningf("Target column '%s' contains empty factor levels", target)
       data[[target]] = droplevels(x)
     }
   }
-
-  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
-
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
   }
+
+  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+
 
   task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
   addClasses(task, "ClassifTask")

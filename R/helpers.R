@@ -94,3 +94,7 @@ suppressWarning = function(expr, str) {
       invokeRestart("muffleWarning")
   })
 }
+
+hasEmptyLevels = function(x) {
+  !all(levels(x) %chin% as.character(unique(x)))
+}

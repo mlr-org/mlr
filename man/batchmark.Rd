@@ -46,7 +46,7 @@ with \pkg{ParallelMap}. For details on the usage and support backends have
 a look at the batchtools tutorial page:
 \url{https://github.com/mllg/batchtools}.
 
-The general workflow with \code{batchmark} looks like that:
+The general workflow with \code{batchmark} looks like this:
 \enumerate{
 \item{Create an ExperimentRegistry using \code{\link[batchtools]{makeExperimentRegistry}}.}
 \item{Call \code{batchmark(...)} which defines jobs for all learners and tasks in an \code{\link[base]{expand.grid}} fashion.}
@@ -56,7 +56,7 @@ The general workflow with \code{batchmark} looks like that:
 }
 
 If you want to use this with \pkg{OpenML} datasets you can generate tasks from a vector
-of dataset ids easily with
+of dataset IDs easily with
 \code{tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))}.
 }
 \seealso{
