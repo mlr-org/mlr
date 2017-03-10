@@ -15,14 +15,15 @@ makeRLearner.fdaregr.FDboost = function() {
       # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
       makeNumericLearnerParam(id = "df", default = 4, lower = 0.5),  # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
       # makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols")),  # we don't use "btree" in FDboost
-      makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
+      makeIntegerLearnerParam(id = "bsignal.knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
       makeIntegerLearnerParam(id = "bsignal.degree", default = 3L, lower = 1L),  # degree of the b-spline
       makeIntegerLearnerParam(id = "bsignal.differences", default = 1L, lower = 1L),  # degree of the penalty
       makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
       ),
     properties = c("numerics"),
     name = "Functional linear array regression boosting",
-    short.name = "FDboost"
+    short.name = "FDboost",
+    note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same"
   )
 }
 
@@ -52,6 +53,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
+  #formula.terms = setNames(character(length = fdns))
   formula.terms = c()
   # for each functional covariate ... 
   for (fdn in fdns) {
