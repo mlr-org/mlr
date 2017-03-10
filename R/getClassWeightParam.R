@@ -25,7 +25,7 @@ getClassWeightParam.character = function(learner, ...) {
 
 #' @export
 getClassWeightParam.Learner = function(learner, ...) {
-  learner = assertClass(learner, "Learner")
+  learner = checkLearner(learner, "classif", props = "class.weights")
   weight.param.name = learner$class.weights.param
   learner$par.set$pars[[weight.param.name]]  
 }
