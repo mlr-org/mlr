@@ -66,7 +66,7 @@ test_that("learners work: classif ", {
 
 
 test_that("weightedClassWrapper on all binary learners",  {
-  pos = getTaskDescription(binaryclass.task)$positive
+  pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)

@@ -828,7 +828,7 @@ test_that("check measure calculations", {
 
 test_that("getDefaultMeasure", {
   expect_equal(mmce, getDefaultMeasure(iris.task))
-  expect_equal(mmce, getDefaultMeasure(getTaskDescription(iris.task)))
+  expect_equal(mmce, getDefaultMeasure(getTaskDesc(iris.task)))
   expect_equal(mmce, getDefaultMeasure(makeLearner("classif.rpart")))
   expect_equal(mmce, getDefaultMeasure("classif.rpart"))
   expect_equal(mmce, getDefaultMeasure("classif"))
