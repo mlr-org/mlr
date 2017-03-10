@@ -75,7 +75,7 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
 getLearnerProperties.ClassificationViaRegressionWrapper = function(learner) {
   props = getLearnerProperties(learner$next.learner)
   props = union(props, c("twoclass", "multiclass", "prob"))
-  intersect(props, getSupportedLearnerProperties("classif"))
+  intersect(props, mlr$learner.properties$classif)
 }
 
 #' @export
