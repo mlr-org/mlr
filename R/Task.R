@@ -6,26 +6,6 @@
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' Useful operators are: \code{\link{getTaskFormula}},
-#' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskData}},
-#' \code{\link{getTaskTargets}}, and
-#' \code{\link{subsetTask}}.
-#'
-#' Object members:
-#' \describe{
-#' \item{env [\code{environment}]}{Environment where data for the task are stored.
-#'   Use \code{\link{getTaskData}} in order to access it.}
-#' \item{weights [\code{numeric}]}{See argument. \code{NULL} if not present.}
-#' \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
-#' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
-#' }
-#'
-#' Notes:
-#' For multilabel classification we assume that the presence of labels is encoded via logical
-#' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
-#' is then a char vector that points to these columns.
-#'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
 #'   Default is the name of the R variable passed to \code{data}.
@@ -70,10 +50,27 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
+#' @param censoring [\code{character(1)}]\cr
+#'  Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
+#'  \dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
+#'  the \dQuote{interval2} format.
+#'  See \code{\link[survival]{Surv}} for details.
 #' @return [\code{\link{Task}}].
+#' @section Object members:
+#' \describe{
+#' \item{env [\code{environment}]}{Environment where data for the task are stored.
+#'   Use \code{\link{getTaskData}} in order to access it.}
+#' \item{weights [\code{numeric}]}{See argument. \code{NULL} if not present.}
+#' \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
+#' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
+#' }
+#' @section Useful operators:
+#' \code{\link{getTaskFormula}},
+#' \code{\link{getTaskFeatureNames}},
+#' \code{\link{getTaskData}},
+#' \code{\link{getTaskTargets}}, and
+#' \code{\link{subsetTask}}.
 #' @name Task
-#' @rdname Task
-#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)

@@ -1,5 +1,11 @@
+#' @title Create a multilabel task.
+#' @inherit Task description params return
+#' @section Note:
+#' For multilabel classification we assume that the presence of labels is encoded via logical
+#' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
+#' is then a char vector that points to these columns.
+#' @seealso \code{\link{Task}}
 #' @export
-#' @rdname Task
 makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
   assertString(id)

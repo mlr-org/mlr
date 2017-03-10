@@ -1,4 +1,6 @@
-#' @rdname Task
+#' @title Create a cluster task.
+#' @inherit Task description params return
+#' @seealso \code{\link{Task}}
 #' @export
 makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)

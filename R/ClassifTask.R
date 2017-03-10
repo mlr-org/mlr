@@ -1,5 +1,7 @@
+#' @title Create a classification task.
+#' @inherit Task description params return
+#' @seealso \code{\link{Task}}
 #' @export
-#' @rdname Task
 makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

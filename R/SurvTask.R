@@ -1,9 +1,6 @@
-#' @rdname Task
-#' @param censoring [\code{character(1)}]\cr
-#'  Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
-#'  \dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
-#'  the \dQuote{interval2} format.
-#'  See \code{\link[survival]{Surv}} for details.
+#' @title Create a survival task.
+#' @inherit Task description params return
+#' @seealso \code{\link{Task}}
 #' @export
 makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring = "rcens", weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)

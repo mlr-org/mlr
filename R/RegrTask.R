@@ -1,5 +1,7 @@
+#' @title Create a regression task.
+#' @inherit Task description params return
+#' @seealso \code{\link{Task}}
 #' @export
-#' @rdname Task
 makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
