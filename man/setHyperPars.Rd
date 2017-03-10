@@ -40,4 +40,3 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setId}}, \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-

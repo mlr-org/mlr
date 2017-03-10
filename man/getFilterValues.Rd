@@ -39,18 +39,17 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 
-Other filter: \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
-
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}}
-}
 
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotFilterValues}}
+}

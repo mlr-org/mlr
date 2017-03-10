@@ -19,4 +19,3 @@ Other resample: \code{\link{ResampleResult}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
-

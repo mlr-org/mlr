@@ -51,4 +51,3 @@ Other performance: \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}}
 }
-

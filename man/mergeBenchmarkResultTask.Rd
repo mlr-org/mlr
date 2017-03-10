@@ -15,4 +15,3 @@ Combines the \code{\link{BenchmarkResult}} objects that were performed
   on different tasks with the same set of learner(s). 
   This can be helpful if you, e.g. forgot to run the set of learners on a new task
 }
-

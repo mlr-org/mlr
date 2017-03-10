@@ -55,4 +55,3 @@ data(BostonHousing)
 regrTask = makeRegrTask(data = BostonHousing, target = "medv")
 getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 }
-

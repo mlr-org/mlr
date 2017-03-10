@@ -2,6 +2,7 @@
 % Please edit documentation in R/Filter.R
 \name{makeFilter}
 \alias{makeFilter}
+\alias{makeFilter}
 \title{Create a feature filter.}
 \usage{
 makeFilter(name, desc, pkg, supported.tasks, supported.features, fun)
@@ -48,4 +49,3 @@ takes a \code{numeric} and returns a \code{numeric(1)} (default is the mean), \c
 an \code{integer(1)}, and \code{replace}, a \code{logical(1)} which determines whether the feature being
 permuted is sampled with or without replacement.
 }
-

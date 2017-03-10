@@ -70,4 +70,3 @@ replaced with the max.
 \examples{
 # see generateHyperParsEffectData
 }
-

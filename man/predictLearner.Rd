@@ -49,4 +49,3 @@ Predictions for the observations in \code{.newdata} must be made based on the fi
 model (\code{.model$learner.model}).
 All parameters in \code{...} must be passed to the underlying predict function.
 }
-

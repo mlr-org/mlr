@@ -89,4 +89,3 @@ Other performance: \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
   \code{\link{measures}}, \code{\link{performance}}
 }
-
