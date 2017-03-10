@@ -47,6 +47,7 @@ extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()
 
 
 #' @export
+#' # feat.methods are the function signature that one want to use for the corresponding covariate
 extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list(), ...) {
 
@@ -65,17 +66,20 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   desc$extractFDAFeat[names(feat.methods)] = feat.methods
 
-  # cleanup
+  # cleanup the empty list
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
 
-  # learn and transform
+  # Apply function from x to all functional features and return as list of 
+  # lists for each functional feature.
   desc$extractFDAFeat = Map(function(xn, x, fd.cols) {
     list(
-      extractFDAFeat = x$FDAExtract,
+      extractFDAFeat = x$FDAExtract,  # desc$extractFDAFeat$FDAExtract is defined in method, used for test
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols)))
     )
+    #FIXME: desc$fd.features still has original length
   }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
-
+    # 
+  # Extract feats for every functional feature and cbind to data.frame
   vals = extractSubList(desc$extractFDAFeat, "feats", simplify = FALSE)
   df = data.frame(do.call(cbind, vals))
   list(data = df, desc = desc)
@@ -126,6 +130,8 @@ reExtractFDAFeatures = function(obj, desc) {
 reExtractFDAFeatures.data.frame = function(obj, desc) {
   assertClass(desc, classes = "extractFDAFeatDesc")
 
+  
+  # FIXME: Start from here code is just copy paste
   # check for new columns
   new.cols = names(which(names(x) %nin% desc$cols))
   if (length(new.cols))
@@ -188,6 +194,7 @@ reExtractFDAFeatures.Task = function(obj, desc) {
   df = getTaskData(obj)
   extracted = reExtractFDAFeatures.data.frame(df, desc)
   # FIXME: convert Task to Normal Task instead
+  # We need to ensure this becomes a normal task
   x = changeData(obj, data = extracted$data)
   x
 }
