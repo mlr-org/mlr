@@ -40,6 +40,7 @@ test_that("FDA_Task_error", {
   fdf4 = list(NIR = 1:367)  # functional covariate can't be greater or equal to ncol of the dataframe
   fdf5 = list(NIR = "heatan")  # functional covariate can't be the target !
   fdf6 = list(NIR = 1L, NIR = 3:4) # functional covariate contain same name
+  fdf7 = list(NIR = 1:10)  # can't have target name as features
   fdg = list(NIR = fuelSubset$nir.lambda, UVVIS = fuelSubset$uvvis.lambda)
 
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf0, fd.grids = fdg))
@@ -51,4 +52,5 @@ test_that("FDA_Task_error", {
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf4))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf5))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf6 , fd.grids = fdg))
+  expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf7 , fd.grids = fdg))
   })
