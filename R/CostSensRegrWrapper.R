@@ -27,7 +27,7 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   classes = td$class.levels
   models = vector("list", length = length(classes))
   for (i in seq_along(classes)) {

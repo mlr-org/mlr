@@ -4,17 +4,17 @@
 #' @return [\code{\link{TaskDesc}}].
 #' @export
 #' @family task
-getTaskDescription = function(x) {
-  UseMethod("getTaskDescription")
+getTaskDesc = function(x) {
+  UseMethod("getTaskDesc")
 }
 
 #' @export
-getTaskDescription.default = function(x) {
+getTaskDesc.default = function(x) {
   x$task.desc
 }
 
 #' @export
-getTaskDescription.TaskDesc = function(x) {
+getTaskDesc.TaskDesc = function(x) {
   x
 }
 
@@ -25,7 +25,7 @@ getTaskDescription.TaskDesc = function(x) {
 #' @export
 #' @family task
 getTaskType = function(x) {
-  getTaskDescription(x)$type
+  getTaskDesc(x)$type
 }
 
 #' Get the id of the task.
@@ -35,7 +35,7 @@ getTaskType = function(x) {
 #' @export
 #' @family task
 getTaskId = function(x) {
-  getTaskDescription(x)$id
+  getTaskDesc(x)$id
 }
 
 #' @title Get the name(s) of the target column(s).
@@ -54,7 +54,7 @@ getTaskTargetNames = function(x) {
 
 #' @export
 getTaskTargetNames.Task = function(x) {
-  getTaskTargetNames(getTaskDescription(x))
+  getTaskTargetNames(getTaskDesc(x))
 }
 
 #' @export
@@ -84,17 +84,17 @@ getTaskClassLevels = function(x) {
 
 #' @export
 getTaskClassLevels.Task = function(x) {
-  getTaskClassLevels(getTaskDescription(x))
+  getTaskClassLevels(getTaskDesc(x))
 }
 
 #' @export
 getTaskClassLevels.ClassifTaskDesc = function(x) {
-  getTaskDescription(x)$class.levels
+  getTaskDesc(x)$class.levels
 }
 
 #' @export
 getTaskClassLevels.MultilabelTaskDesc = function(x) {
-  getTaskDescription(x)$class.levels
+  getTaskDesc(x)$class.levels
 }
 
 #' Get feature names of task.
@@ -106,7 +106,7 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  setdiff(names(task$env$data), getTaskDescription(task)$target)
+  setdiff(names(task$env$data), getTaskDesc(task)$target)
 }
 
 #' Get number of features in task.
@@ -116,7 +116,7 @@ getTaskFeatureNames = function(task) {
 #' @export
 #' @family task
 getTaskNFeats = function(x) {
-  sum(getTaskDescription(x)$n.feat)
+  sum(getTaskDesc(x)$n.feat)
 }
 
 #' Get number of observations in task.
@@ -126,7 +126,7 @@ getTaskNFeats = function(x) {
 #' @export
 #' @family task
 getTaskSize = function(x) {
-  getTaskDescription(x)$size
+  getTaskDesc(x)$size
 }
 
 #' @title Get formula of a task.
@@ -149,7 +149,7 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
-  td = getTaskDescription(x)
+  td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
     lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
