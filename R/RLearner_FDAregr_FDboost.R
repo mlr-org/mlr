@@ -1,4 +1,3 @@
-#FIXME: currently the spline parameter are shared across bsignal and bbs and I leave the name to be bsignal.knots etc to indicate that maybe we should change that in the future. 
 #' @export
 makeRLearner.fdaregr.FDboost = function() {
   makeRLearnerRegr(
@@ -15,21 +14,21 @@ makeRLearner.fdaregr.FDboost = function() {
       # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
       makeNumericLearnerParam(id = "df", default = 4, lower = 0.5),  # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
       # makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols")),  # we don't use "btree" in FDboost
-      makeIntegerLearnerParam(id = "bsignal.knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
-      makeIntegerLearnerParam(id = "bsignal.degree", default = 3L, lower = 1L),  # degree of the b-spline
-      makeIntegerLearnerParam(id = "bsignal.differences", default = 1L, lower = 1L),  # degree of the penalty
+      makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
+      makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L),  # degree of the b-spline
+      makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
       makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
       ),
     properties = c("numerics"),
     name = "Functional linear array regression boosting",
     short.name = "FDboost",
-    note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same"
+    note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates"
   )
 }
 
 #' @export
 trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, 
-  bsignal.knots = 10L, df = 4L, bsignal.check.ident = FALSE, bsignal.degree = 3L, bsignal.differences = 1L, 
+ knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, 
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0,100), d = NULL, ...) {
   family = switch(family,
     Gaussian = mboost::Gaussian(),
@@ -63,13 +62,13 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
     mat.list[[fdn]] = as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
     # ... create a formula item
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
-      fdn, gn, bsignal.knots, df, bsignal.degree, bsignal.differences, bsignal.check.ident)
+      fdn, gn, knots, df, degree, differences, bsignal.check.ident)
   }
   # add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty  
   for (fsn in names(tdesc$fd.scalars)) {
     mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
-      fsn, bsignal.knots, df, bsignal.degree, bsignal.differences)
+      fsn, knots, df, degree, differences)
   }
   # add grid names
   mat.list = c(mat.list, fdg)
