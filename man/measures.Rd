@@ -35,6 +35,10 @@
 \alias{msle}
 \alias{measureMSLE}
 \alias{rmsle}
+\alias{tau}
+\alias{measureTau}
+\alias{rho}
+\alias{measureRho}
 \alias{mmce}
 \alias{measureMMCE}
 \alias{acc}
@@ -186,6 +190,14 @@ measureMSLE(truth, response)
 
 rmsle
 
+tau
+
+measureTau(truth, response)
+
+rho
+
+measureRho(truth, response)
+
 mmce
 
 measureMMCE(truth, response)
@@ -290,7 +302,7 @@ measureFNR(truth, response, negative, positive)
 
 ppv
 
-measurePPV(truth, response, positive)
+measurePPV(truth, response, positive, probabilities = NULL)
 
 npv
 

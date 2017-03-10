@@ -1,12 +1,34 @@
 # mlr 2.11:
+* The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
+
+## functions - general
+* tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
+* getBMR-operators: now support "drop" argument that simplifies the resulting list
+* configureMlr: added option "on.measure.not.applicable" to handle situations where performance
+  cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks
+* tuneParams, selectFeatures: removed memory stats from default output for
+  performance reasons (can be restored by using a control object with "log.fun"
+  = "memory")
+* listLearners: change check.packages default to FALSE
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
 * listTaskTypes, listLearnerProperties
+* getMeasureProperties, hasMeasureProperties, listMeasureProperties
+* makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
+* simplifyMeasureNames: shorten measure names to the actual measure, e.g.
+  mmce.test.mean -> mmce
+
+## measures - new
+* tau, rho
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".
-
+* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "jackknife".
+* regr.xgboost, classif.xgboost: removed "factors" property as these learners do not handle categorical features
+-- factors are silently converted to integers internally, which may misinterpret the structure of the data
+* glmnet: control parameters are reset to factory settings before applying
+  custom settings and training and set back to factory afterwards
 
 ## learners - removed
 * {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper
