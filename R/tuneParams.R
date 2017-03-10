@@ -101,7 +101,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     TuneControlIrace = tuneIrace,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
-  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = (control$tune.threshold))
+  need.extra = control$tune.threshold || getMlrOption("on.error.dump")
+  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
     message(printToChar(par.set))  # using message() since this can go over the char limit of messagef(), see issue #1528
