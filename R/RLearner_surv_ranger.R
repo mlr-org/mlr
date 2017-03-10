@@ -44,7 +44,10 @@ trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  p = predict(object = .model$learner.model, data = .newdata)
+  # Workaround for bug #172
+  .newdata[getTaskTargetNames(getTaskDescription(.model))] = 1
+
+  p = predict(object = .model$learner.model, data = .newdata, ...)
   rowMeans(p$chf)
 }
 
