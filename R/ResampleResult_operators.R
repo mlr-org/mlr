@@ -15,7 +15,7 @@ getRRPredictions = function(res) {
     res$pred
 }
 
-#' @title Get task description from resample results.
+#' @title Get task description from resample results (DEPRECATED).
 #'
 #' @description
 #' Get a summarizing task description.
@@ -26,6 +26,21 @@ getRRPredictions = function(res) {
 #' @export
 #' @family resample
 getRRTaskDescription = function(res) {
+  .Deprecated("getRRTaskDescs")
+  getRRTaskDescs(res)
+}
+
+#' @title Get task description from resample results (DEPRECATED).
+#'
+#' @description
+#' Get a summarizing task description.
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [\code{TaskDesc}].
+#' @export
+#' @family resample
+getRRTaskDesc = function(res) {
   res$task.desc
 }
 

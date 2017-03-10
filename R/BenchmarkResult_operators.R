@@ -322,6 +322,19 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) 
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = FALSE, drop = drop)
 }
 
+#' @title Extract all task descriptions from benchmark result (DEPRECATED).
+#'
+#' @description
+#' A list containing all \code{\link{TaskDesc}}s for each task contained in the benchmark experiment.
+#' @template arg_bmr
+#' @return [\code{list}].
+#' @export
+getBMRTaskDescriptions = function(bmr) {
+ .Deprecated("getBMRTaskDesc")
+ getBMRTaskDescs(bmr)
+}
+
+
 #' @title Extract all task descriptions from benchmark result.
 #'
 #' @description
@@ -330,7 +343,7 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) 
 #' @return [\code{list}].
 #' @export
 #' @family benchmark
-getBMRTaskDescriptions = function(bmr) {
- lapply(bmr$results, function(x) lapply(x, getRRTaskDescription))
- #lapply(unlist(bmr$results, recursive = FALSE), getRRTaskDescription)
+getBMRTaskDescs = function(bmr) {
+  lapply(bmr$results, function(x) lapply(x, getRRTaskDescs))
 }
+
