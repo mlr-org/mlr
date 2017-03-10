@@ -11,5 +11,13 @@
 getClassWeightParam = function(learner) {
   learner = checkLearner(learner, "classif")
   assertChoice("class.weights", getLearnerProperties(learner))
-  learner$par.set$pars[[learner$class.weights.param]]
+  UseMethod("getClassWeightParam")
+}
+
+
+#' @export
+getClassWeightParam.Learner = function(learner) {
+  learner = assertClass(learner, "Learner")
+  weight.param.name = learner$class.weights.param
+  learner$par.set$pars[[weight.param.name]]  
 }

@@ -74,3 +74,11 @@ makeWrappedModel.BaseEnsemble = function(learner, learner.model, task.desc, subs
   x = NextMethod(x)
   addClasses(x, "BaseEnsembleModel")
 }
+
+#' @export
+getClassWeightParam.BaseEnsemble = function(learner) {
+  assertClass(learner, "BaseEnsemble")
+  lapply(learner$base.learner, getClassWeightParam)
+}
+  
+
