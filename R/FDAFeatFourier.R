@@ -15,11 +15,11 @@
 #'   of \dQuote{amplitude} or \dQuote{phase}. Default: \dQuote{amplitude}.
 #' @return [\code{data.frame}] containing the fourier coefficients.
 #' @export
-extractFDAFeatFourier = function(data, target = NULL, trafo.coeff = "phase") {
+extractFDAFeatFourier = function(data, target = NULL, cols, trafo.coeff = "phase") {
   assertClass(data, "data.frame")
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
   # Transform data to matrix for stats::fft
-  data = as.matrix(data)
+  data = as.matrix(data[, cols])
 
   # Calculate fourier coefficients (row wise) which are complex numbers
   fft.trafo = t(apply(data, 1, fft))

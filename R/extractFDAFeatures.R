@@ -76,8 +76,9 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
     )
   }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
 
-  vals = extractSubList(desc$extractFDAFeat, "feats", simplify = "cols")
-  list(data = vals, desc = desc)
+  vals = extractSubList(desc$extractFDAFeat, "feats", simplify = FALSE)
+  df = data.frame(do.call(cbind, vals))
+  list(data = df, desc = desc)
 }
 
 #' @export

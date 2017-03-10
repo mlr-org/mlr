@@ -50,10 +50,9 @@ NULL
 #' @export
 #' @rdname extractFDAFeatures
 extractFDAMedian = function() {
-  rowMed = function(data, target, cols) {apply(data[, cols], 1, median, na.rm = TRUE)}
   makeExtractFDAFeatMethod(
-    learn =  rowMed(data, target, cols),
-    FDAExtract = rowMed(data, target, cols)
+    learn =   function(data, target, cols, vals = NULL) {apply(data[, cols], 1, median, na.rm = TRUE)},
+    FDAExtract =  function(data, target, cols, vals = NULL) {apply(data[, cols], 1, median, na.rm = TRUE)}
   )
 }
 
@@ -62,6 +61,29 @@ extractFDAMedian = function() {
 extractFDAMean = function() {
   makeExtractFDAFeatMethod(
     learn = function(data, target, cols) {apply(data[, cols], 1, mean, na.rm = TRUE)},
-    FDAExtract = function(data, target, cols) {apply(data[, cols], 1, mean, na.rm = TRUE)}
+    FDAExtract = function(data, target, cols, vals = NULL) {apply(data[, cols], 1, mean, na.rm = TRUE)}
+  )
+}
+
+#' @export
+#' @rdname extractFDAFeatures
+extractFDAMinMax = function() {
+  # Used for quick testing
+  makeExtractFDAFeatMethod(
+    learn = function(data, target, cols) {
+      cbind(apply(data[, cols], 1, min, na.rm = TRUE),
+        apply(data[, cols], 1, max, na.rm = TRUE))
+      },
+    FDAExtract = function(data, target, cols, vals = NULL) {apply(data[, cols], 1, mean, na.rm = TRUE)}
+  )
+}
+
+#' @export
+#' @rdname extractFDAFeatures
+extractFDAFourier = function(trafo.coeff = "phase") {
+  # Used for quick testing
+  makeExtractFDAFeatMethod(
+    learn = extractFDAFeatFourier(data, target = NULL, cols, trafo.coeff = "phase"),
+    FDAExtract = extractFDAFeatFourier(data, target = NULL, cols, trafo.coeff = "phase", vals = NULL)
   )
 }
