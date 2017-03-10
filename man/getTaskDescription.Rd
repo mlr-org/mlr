@@ -6,6 +6,13 @@
 \usage{
 getTaskDescription(x)
 }
+\arguments{
+\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+Task or its description object.}
+}
+\value{
+[\code{\link{TaskDesc}}].
+}
 \description{
 Deprecated, use \code{\link{getTaskDesc}} instead.
 }
