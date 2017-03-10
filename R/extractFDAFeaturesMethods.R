@@ -50,9 +50,10 @@ NULL
 #' @export
 #' @rdname extractFDAFeatures
 extractFDAMedian = function() {
+  rowMed = function(data, target, cols) {apply(data[, cols], 1, median, na.rm = TRUE)}
   makeExtractFDAFeatMethod(
-    learn = function(data, target, cols) {apply(data[, cols], 1, median, na.rm = TRUE)},
-    FDAExtract = function(data, target, cols) {apply(data[, cols], 1, median, na.rm = TRUE)}
+    learn =  rowMed(data, target, cols),
+    FDAExtract = rowMed(data, target, cols)
   )
 }
 
