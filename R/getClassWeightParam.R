@@ -4,19 +4,27 @@
 #' Gets the class weight parameter of a learner.
 #'
 #' @template arg_learner
+#' @param lrn.id [\code{character(1)}]\cr 
+#'   Only used for \code{BaseEnsembles}. It is possible that multiple learners in a base 
+#'   ensemble have a class weight param. Specify the learner from which the class weight should
+#'   be extracted.
 #' @return [\code{numeric \link{LearnerParam}}]:
 #'   A numeric parameter object, containing the class weight parameter of the given learner.
 #' @family learner
 #' @export
-getClassWeightParam = function(learner) {
-  learner = checkLearner(learner, "classif")
-  assertChoice("class.weights", getLearnerProperties(learner))
-  UseMethod("getClassWeightParam", learner)
+getClassWeightParam = function(learner, lrn.id = NULL) {
+  UseMethod("getClassWeightParam")
+}
+
+#' @export
+getClassWeightParam.character = function(learner, ...) {
+  learner = checkLearner(learner, "classif", props = "class.weights")
+  getClassWeightParam(learner, ...)
 }
 
 
 #' @export
-getClassWeightParam.Learner = function(learner) {
+getClassWeightParam.Learner = function(learner, ...) {
   learner = assertClass(learner, "Learner")
   weight.param.name = learner$class.weights.param
   learner$par.set$pars[[weight.param.name]]  

@@ -76,9 +76,17 @@ makeWrappedModel.BaseEnsemble = function(learner, learner.model, task.desc, subs
 }
 
 #' @export
-getClassWeightParam.BaseEnsemble = function(learner) {
+getClassWeightParam.BaseEnsemble = function(learner, lrn.id = NULL) {
+
   assertClass(learner, "BaseEnsemble")
-  lapply(learner$base.learner, getClassWeightParam)
+
+  bl.ids = vcapply(learner$base.learners, getLearnerId)
+  if (is.null(lrn.id))
+    stopf("'lrn.id' is not set, please specify one of the base learners: %s", stri_flatten(bl.ids, ", "))
+  if (lrn.id %nin% bl.ids)
+    stopf("%s is not a base learner. Available base learners are: %s", lrn.id, stri_flatten(bl.ids, ", "))
+
+  getClassWeightParam(learner$base.learners[[lrn.id]])
 }
   
 
