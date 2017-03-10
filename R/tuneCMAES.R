@@ -1,4 +1,4 @@
-tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
+tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
   requirePackages("cmaes", why = "tune_cmaes", default.method = "load")
 
   low = getLower(par.set)
@@ -41,7 +41,7 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    convertx = convertXVectorizedMatrixCols, remove.nas = FALSE)
+    convertx = convertXVectorizedMatrixCols, remove.nas = FALSE, resample.fun = resample.fun)
 
   makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
 }

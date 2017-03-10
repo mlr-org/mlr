@@ -141,3 +141,24 @@ addRRMeasure = function(res, measures) {
   }
   return(res)
 }
+
+#' @title Return the error dump of ResampleResult.
+#'
+#' @description
+#' Returns the error dumps generated during resampling, which can be used with \code{debugger()}
+#' to debug errors. These dumps are saved if \code{\link{configureMlr}} configuration \code{on.error.dump},
+#' or the corresponding learner \code{config}, is \code{TRUE}.
+#'
+#' The returned object is a list with as many entries as the resampling being used has folds. Each of these
+#' entries can have a subset of the following slots, depending on which step in the resampling iteration failed:
+#' \dQuote{train} (error during training step), \dQuote{predict.train} (prediction on training subset),
+#' \dQuote{predict.test} (prediction on test subset).
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [list].
+#' @family debug
+#' @export
+getRRDump = function(res) {
+  return(res$err.dumps)
+}

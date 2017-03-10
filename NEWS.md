@@ -1,5 +1,9 @@
 # mlr 2.11:
+
+## general
 * The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
+* new option on.error.dump to include dumps that can be inspected with the
+  debugger with errors
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
@@ -10,6 +14,7 @@
   performance reasons (can be restored by using a control object with "log.fun"
   = "memory")
 * listLearners: change check.packages default to FALSE
+* tuneParams and tuneParamsMultiCrit: new parameter `resample.fun` to specify a custom resampling function to use.
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
@@ -18,6 +23,7 @@
 * makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
 * simplifyMeasureNames: shorten measure names to the actual measure, e.g.
   mmce.test.mean -> mmce
+* getFailureModelDump, getPredictionDump, getRRDump: get error dumps
 
 ## measures - new
 * tau, rho

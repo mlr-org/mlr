@@ -68,7 +68,7 @@ train = function(learner, task, subset, weights = NULL) {
     learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDesc(task))
     time.train = 0
   } else {
-    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning"))
+    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
     # set the seed
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
@@ -77,12 +77,15 @@ train = function(learner, task, subset, weights = NULL) {
     # FIXME: is case really ok for optwrapper? can we supppress then too?
     fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
+    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
+        withCallingHandlers(x, error = function(c) utils::dump.frames())
+      }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    time.train = measureTime(fun1(learner.model <- fun2(do.call(trainLearner, pars))))
+    time.train = measureTime(fun1({learner.model = fun2(fun3(do.call(trainLearner, pars)))}))
     # was there an error during training? maybe warn then
     if (is.error(learner.model) && opts$on.learner.error == "warn")
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))

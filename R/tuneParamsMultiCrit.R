@@ -23,6 +23,9 @@
 #' @param control [\code{\link{TuneMultiCritControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
+#' @param resample.fun [\code{closure}]\cr
+#'   The function to use for resampling. Defaults to \code{\link{resample}} and should take the
+#'   same arguments as, and return the same result type as, \code{\link{resample}}.
 #' @return [\code{\link{TuneMultiCritResult}}].
 #' @family tune_multicrit
 #' @export
@@ -40,7 +43,7 @@
 #'   measures = list(tpr, fpr), control = ctrl)
 #' plotTuneMultiCritResult(res, path = TRUE)
 #' }
-tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
+tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   assertList(measures, types = "Measure", min.len = 2L)
@@ -62,14 +65,14 @@ tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, con
     TuneMultiCritControlNSGA2 = tuneMultiCritNSGA2,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
-  opt.path = makeOptPathDFFromMeasures(par.set, measures)
+  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = getMlrOption("on.error.dump"))
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
     messagef(printToChar(par.set))
     messagef("With control class: %s", cl)
     messagef("Imputation value: %g", control$impute.val)
   }
-  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info)
+  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: Points on front : %i", length(or$x))
   return(or)
