@@ -1,19 +1,21 @@
 context("batchmark")
 
+prev = getOption("batchtools.verbose")
+options(batchtools.verbose = FALSE)
+
 test_that("batchmark", {
-  
   skip_if_not_installed("batchtools")
   library(batchtools)
   reg = makeExperimentRegistry(file.dir = NA)
-  
+
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
-  
+
   ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin)
-  
+
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
   tab = summarizeExperiments(reg = reg)
@@ -33,22 +35,22 @@ test_that("batchmark", {
   expect_true(setequal(names(preds1), "classif.lda"))
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
-  
+
   preds = getBMRPredictions(res, as.df = TRUE)
   expect_is(preds, "data.frame")
   expect_equal(nrow(preds), getTaskSize(binaryclass.task))
   expect_equal(ncol(preds), 9)
   expect_equal(unique(preds$iter), 1:2)
-  
+
   reg = makeExperimentRegistry(file.dir = NA)
   res = batchmark(learners = learners, task = tasks, resampling = rin)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
-  
+
   res = reduceBatchmarkResults(reg = reg)
-  
+
   expect_true("BenchmarkResult" %in% class(res))
-  
+
   df = as.data.frame(res)
   expect_true(is.data.frame(df))
   expect_equal(dim(df), c(rin$iters * length(task.names) * length(learner.names), 4L))
@@ -59,7 +61,7 @@ test_that("batchmark", {
   expect_equal(getBMRLearnerIds(res), learner.names)
   expect_equal(getBMRMeasures(res), list(mmce))
   expect_equal(getBMRMeasureIds(res), "mmce")
-  
+
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
   expect_true(setequal(names(preds), task.names))
@@ -68,19 +70,19 @@ test_that("batchmark", {
   expect_true(setequal(names(preds1), learner.names))
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
-  
+
   preds = getBMRPredictions(res, as.df = TRUE)
   expect_is(preds, "data.frame")
   expect_equal(nrow(preds), 2 * (getTaskSize(multiclass.task) + getTaskSize(binaryclass.task)))
-  
+
   p = getBMRPerformances(res, as.df = TRUE)
   expect_is(p, "data.frame")
   expect_equal(nrow(p), length(task.names) * length(learner.names) * rin$iters)
-  
+
   a = getBMRAggrPerformances(res, as.df = TRUE)
   expect_is(a, "data.frame")
   expect_equal(nrow(a), length(task.names) * length(learner.names))
-  
+
   # make it more complex
   ps = makeParamSet(makeDiscreteLearnerParam("cp", values = c(0.01, 0.1)))
   learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel", "classif.rpart.tuned", "classif.lda.filtered")
@@ -97,10 +99,11 @@ test_that("batchmark", {
   res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
+  expect_data_table(findErrors(reg = reg), nrow = 0L)
   res = reduceBatchmarkResults(reg = reg)
 
   expect_true("BenchmarkResult" %in% class(res))
-  
+
   df = as.data.frame(res)
   expect_true(is.data.frame(df))
   expect_equal(dim(df), c(rin$iters * length(task.names) * length(learner.names), 5L))
@@ -110,7 +113,7 @@ test_that("batchmark", {
   expect_true(is.numeric(df$acc))
   expect_equal(getBMRTaskIds(res), task.names)
   expect_equal(getBMRLearnerIds(res), learner.names)
-  
+
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
   expect_true(setequal(names(preds), task.names))
@@ -119,18 +122,18 @@ test_that("batchmark", {
   expect_true(setequal(names(preds1), learner.names))
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
-  
+
   preds = getBMRPredictions(res, as.df = TRUE)
   expect_is(preds, "data.frame")
-  
+
   p = getBMRPerformances(res, as.df = TRUE)
   expect_is(p, "data.frame")
   expect_equal(nrow(p), length(task.names) * length(learner.names) * rin$iters)
-  
+
   a = getBMRAggrPerformances(res, as.df = TRUE)
   expect_is(a, "data.frame")
   expect_equal(nrow(a), length(task.names) * length(learner.names))
-  
+
   tr = getBMRTuneResults(res, as.df = FALSE)
   expect_is(tr, "list")
   expect_equal(length(tr), 2)
@@ -142,7 +145,7 @@ test_that("batchmark", {
   expect_equal(length(tr11), 2)
   tr111 = tr11[[1L]]
   expect_is(tr111, "TuneResult")
-  
+
   trd = getBMRTuneResults(res, as.df = TRUE)
   expect_is(trd, "data.frame")
   expect_equal(ncol(trd), 5)
@@ -150,7 +153,7 @@ test_that("batchmark", {
   expect_equal(unique(trd$task.id), factor(task.names))
   expect_equal(unique(trd$learner.id), factor(c("classif.rpart.tuned")))
   expect_equal(unique(trd$iter), 1:2)
-  
+
   tf = getBMRFeatSelResults(res, as.df = FALSE)
   expect_is(tf, "list")
   expect_equal(length(tf), 2)
@@ -162,7 +165,7 @@ test_that("batchmark", {
   expect_equal(length(tf11), 2)
   tf111 = tf11[[1L]]
   expect_is(tf111, "FeatSelResult")
-  
+
   tfd = getBMRFeatSelResults(res, as.df = TRUE)
   expect_is(tfd, "data.frame")
   expect_equal(ncol(tfd), 4)
@@ -170,7 +173,7 @@ test_that("batchmark", {
   expect_equal(unique(tfd$task.id), factor(task.names))
   expect_equal(unique(tfd$learner.id), factor(c("classif.lda.featsel")))
   expect_equal(unique(tfd$iter), 1:2)
-  
+
   tff = getBMRFilteredFeatures(res, as.df = FALSE)
   expect_is(tff, "list")
   expect_equal(length(tff), 2)
@@ -182,7 +185,7 @@ test_that("batchmark", {
   expect_equal(length(tff11), 2)
   tff111 = tff11[[1L]]
   expect_is(tff111, "character")
-  
+
   tffd = getBMRFilteredFeatures(res, as.df = TRUE)
   expect_is(tffd, "data.frame")
   expect_equal(ncol(tffd), 4)
@@ -190,7 +193,7 @@ test_that("batchmark", {
   expect_equal(unique(tffd$task.id), factor(task.names))
   expect_equal(unique(tffd$learner.id), factor(c("classif.lda.filtered")))
   expect_equal(unique(tffd$iter), 1:2)
-  
+
   f = function(tmp, cl) {
     context(sprintf("batchmark: extracting %s", cl))
     expect_true(is.list(tmp))
@@ -202,7 +205,7 @@ test_that("batchmark", {
     tmp = tmp[[1L]]
     expect_true(inherits(tmp[[1L]], cl))
   }
-  
+
   f(getBMRFeatSelResults(res), "FeatSelResult")
   f(getBMRTuneResults(res), "TuneResult")
   f(getBMRFilteredFeatures(res), "character")
@@ -214,7 +217,7 @@ test_that("keep.preds and models are passed down to resample()", {
   learner.names = c("classif.lda")
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
-  
+
   reg = makeExperimentRegistry(file.dir = NA)
   res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = TRUE)
   submitJobs(reg = reg)
@@ -224,7 +227,7 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_is(x, "ResampleResult")
   expect_list(x$models, types = "WrappedModel")
   expect_is(x$pred, "ResamplePrediction")
-  
+
   ##test getter function for models
   models = getBMRModels(res)
   expect_true(is.list(models))
@@ -237,8 +240,7 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_equal(length(models11), 2L)
   models111 = models11[[1L]]
   expect_is(models111, "WrappedModel")
-  
-  
+
   reg = makeExperimentRegistry(file.dir = NA)
   res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = FALSE)
   submitJobs(reg = reg)
@@ -250,3 +252,5 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_null(x$pred)
   expect_null(models11)
 })
+
+options(batchtools.verbose = prev)

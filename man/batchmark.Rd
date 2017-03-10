@@ -36,7 +36,7 @@ uses the last created registry.}
 [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
 }
 \description{
-This function is a very parallel version of \code{\link{benchmark}}.
+This function is a very parallel version of \code{\link{benchmark}} using \pkg{batchtools}.
 Experiments are created in the provided registry for each combination of
 learners, tasks and resamplings. The experiments are then stored in a registry and the
 runs can be started via \code{\link[batchtools]{submitJobs}]}. A job is one train/test split
