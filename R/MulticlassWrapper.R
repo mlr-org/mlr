@@ -50,25 +50,30 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
 #' @export
 trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = NULL, mcw.method, ...) {
   .task = subsetTask(.task, .subset)
-  tn = getTaskTargetNames(.task)
-  d = getTaskData(.task)
   y = getTaskTargets(.task)
   cm = buildCMatrix(mcw.method, .task)
   x = multi.to.binary(y, cm)
-  # now fit models
-  models = lapply(seq_along(x$row.inds), function(i) {
-    data2 = d[x$row.inds[[i]], , drop = FALSE]
-    data2[, tn] = x$targets[[i]]
-    ct = changeData(.task, data2)
-    ct$task.desc$positive = "1"
-    ct$task.desc$negative = "-1"
-    train(.learner$next.learner, ct, weights = .weights)
-  })
+  args = list(x = x, learner = .learner, task = .task, weights = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(i = seq_along(x$row.inds), doMulticlassTrainIteration,
+                       more.args = args, level = "mlr.ensemble")
   m = makeHomChainModel(.learner, models)
   m$cm = cm
   return(m)
 }
 
+doMulticlassTrainIteration = function(x, i, learner, task, weights) {
+  setSlaveOptions()
+  d = getTaskData(task)
+  tn = getTaskTargetNames(task)
+  data2 = d[x$row.inds[[i]],, drop = FALSE]
+  data2[, tn] = x$targets[[i]]
+  ct = changeData(task, data2)
+  ct$task.desc$positive = "1"
+  ct$task.desc$negative = "-1"
+  train(learner$next.learner, ct, weights = weights)
+}
 
 #' @export
 predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {

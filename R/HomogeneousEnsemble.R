@@ -66,7 +66,6 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
   do.call(cbind, preds)
 }
 
-
 # call this at end of trainLearner.CostSensRegrWrapper
 # FIXME: potentially remove this when ChainModel is removed
 makeHomChainModel = function(learner, models) {
