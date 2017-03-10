@@ -50,32 +50,42 @@ extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()
 extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list(), ...) {
 
-  # FIXME: Some more checks
+  assertSubset(names(feat.methods), names(fd.features))
   assertList(fd.features)
   assertList(fd.grids)
   assert(all(names(fd.features) == names(fd.grids)))
   assertSubset(unlist(fd.features), choices = colnames(obj))
 
-  # Extract features for every functional covariate
-  data = BBmisc::dapply(fd.features, function(x) {
-    extractSingleFDAFeatures(obj[[fd.features]], feat.methods[[]])
-  })
-
   desc = makeS3Obj("extractFDAFeatDesc",
     target = target,
     fd.features = fd.features,
     fd.grids = fd.grids,
-    feat.methods = feat.methods
+    extractFDAFeat = namedList(names(feat.methods))
   )
 
-  list(data = data, desc = desc)
+  desc$extractFDAFeat[names(feat.methods)] = feat.methods
+
+  # cleanup
+  desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
+
+  # learn and transform
+  desc$extractFDAFeat = Map(function(xn, x, fd.cols) {
+    list(
+      extractFDAFeat = x$FDAExtract,
+      feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols)))
+    )
+  }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
+
+  vals = extractSubList(desc$extractFDAFeat, "feats", simplify = "cols")
+  list(data = vals, desc = desc)
 }
 
 #' @export
 extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
 
-  asserList(feat.methods)
+  assertList(feat.methods)
+  # Get data from task / taskdesc
   fd.features = getTaskDescription(obj)$fd.features
   fd.grids = getTaskDescription(obj)$fd.grids
   data = getTaskData(obj)
@@ -86,6 +96,8 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 }
 
 #' @export
-extractSingleFDAFeatures = function() {
-
+print.extractFDAFeatDesc = function(x, ...) {
+  catf("Extraction of features from functional data:")
+  catf("Target: %s", collapse(x$target))
+  catf("Functional Features: %i; Extracted features: %i", length(x$fd.features), length(x$extractFDAFea))
 }
