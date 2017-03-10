@@ -26,7 +26,8 @@ Default is the default measure for the task, see here \code{\link{getDefaultMeas
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Collection of parameters and their constraints for optimization.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
-\code{expression} to define it.}
+\code{expression} to define it. On the other hand, task dependent parameters
+need to be defined with expressions.}
 
 \item{control}{[\code{\link{TuneControl}}]\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}

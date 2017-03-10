@@ -39,6 +39,10 @@ train = function(learner, task, subset, weights = NULL) {
     else
       subset = asInteger(subset)
   }
+  if (hasExpression(learner)) {
+    dict = getTaskDictionary(task = task, subset = subset)
+    learner = evaluateParamExpressions(obj = learner, dict = dict)
+  }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
   requireLearnerPackages(learner)

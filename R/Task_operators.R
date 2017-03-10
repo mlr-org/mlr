@@ -439,3 +439,37 @@ getTaskFactorLevels = function(task) {
 getTaskWeights = function(task) {
   task$weights
 }
+
+
+#' @title Create a dictionary based on the task.
+#'
+#' @description Returns a dictionary, which contains the \link{Task} itself
+#' (\code{task}), the number of features (\code{p}) the model is trained on, the number of
+#' observations (\code{n.task}) of the task in general, the number of observations (\code{n})
+#' in the current subset, the task type (\code{type}) and in case of
+#' classification tasks, the number of class levels (\code{k}) in the general task.
+#'
+#' @template arg_task
+#' @template arg_subset
+#' @return [\code{\link[base]{list}}]. Used for evaluating the expressions
+#' within a parameter, parameter set or list of parameters.
+#' @family task
+#' @export
+#' @examples
+#' task = makeClassifTask(data = iris, target = "Species")
+#' getTaskDictionary(task)
+getTaskDictionary = function(task, subset = NULL) {
+  getSubsetSize = function(subset) if (is.logical(subset)) sum(subset) else length(subset)
+
+  assertClass(task, classes = "Task")
+  dict = list(
+    task = task,
+    p = getTaskNFeats(task),
+    n.task = getTaskSize(task),
+    type = getTaskType(task),
+    n = if (is.null(subset)) getTaskSize(task) else getSubsetSize(subset)
+  )
+  if (dict$type == "classif")
+    dict$k = length(getTaskClassLevels(task))
+  return(dict)
+}

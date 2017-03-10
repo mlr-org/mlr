@@ -72,9 +72,13 @@ value selects the label. The threshold used to assign the label can later be cha
 
 To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
 }
+\note{
+Learners can contain task dependent expressions, see \code{\link{evaluateParamExpressions}} for more information.
+}
 \examples{
 makeLearner("classif.rpart")
 makeLearner("classif.lda", predict.type = "prob")
+makeLearner("classif.rpart", minsplit = expression(k))
 lrn = makeLearner("classif.lda", method = "t", nu = 10)
 print(lrn$par.vals)
 }

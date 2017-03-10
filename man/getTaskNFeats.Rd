@@ -20,6 +20,7 @@ Get number of features in task.
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
   \code{\link{getTaskDescription}},
+  \code{\link{getTaskDictionary}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskSize}},
