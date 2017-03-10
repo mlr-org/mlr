@@ -23,7 +23,8 @@ makeRLearner.classif.penalized.fusedlasso = function() {
     properties = c("twoclass", "numerics", "factors", "prob"),
     name = "Logistic Fused Lasso Regression",
     short.name = "fusedlasso",
-    note = "trace=FALSE was set by default to disable logging output. lambda1 and lambda2 have been set to 1 by default, as fusedlasso needs both penalizations > 0."
+    note = "trace=FALSE was set by default to disable logging output. lambda1 and lambda2 have been set to 1 by default, as fusedlasso needs both penalizations > 0.",
+    callees = "penalized"
   )
 }
 

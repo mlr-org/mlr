@@ -20,7 +20,8 @@ makeRLearner.classif.penalized.lasso = function() {
     properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
     name = "Logistic Lasso Regression",
     short.name = "lasso",
-    note = "trace=FALSE was set by default to disable logging output."
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

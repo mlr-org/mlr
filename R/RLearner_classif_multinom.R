@@ -18,7 +18,8 @@ makeRLearner.classif.multinom = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Multinomial Regression",
-    short.name = "multinom"
+    short.name = "multinom",
+    callees = "multinom"
   )
 }
 

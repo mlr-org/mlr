@@ -26,7 +26,8 @@ makeRLearner.classif.nnet = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Neural Network",
     short.name = "nnet",
-    note = "`size` has been set to `3` by default."
+    note = "`size` has been set to `3` by default.",
+    callees = "nnet"
   )
 }
 

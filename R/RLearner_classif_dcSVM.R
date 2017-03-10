@@ -2,7 +2,7 @@
 makeRLearner.classif.dcSVM = function() {
   makeRLearnerClassif(
     cl = "classif.dcSVM",
-    package = "SwarmSVM",
+    package = c("SwarmSVM", "e1071"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 4, lower = 1),
       makeIntegerLearnerParam(id = "m", lower = 1),
@@ -22,7 +22,8 @@ makeRLearner.classif.dcSVM = function() {
     ),
     properties = c("twoclass", "numerics"),
     name = "Divided-Conquer Support Vector Machines",
-    short.name = "dcSVM"
+    short.name = "dcSVM",
+    callees = c("svm", "dcSVM")
   )
 }
 

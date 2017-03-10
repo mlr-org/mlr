@@ -10,7 +10,8 @@ makeRLearner.classif.plsdaCaret = function() {
     ),
     properties = c("numerics", "prob", "twoclass"),
     name = "Partial Least Squares (PLS) Discriminant Analysis",
-    short.name = "plsdacaret"
+    short.name = "plsdacaret",
+    callees = "plsda"
   )
 }
 

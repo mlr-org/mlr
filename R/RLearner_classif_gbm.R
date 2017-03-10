@@ -20,7 +20,8 @@ makeRLearner.classif.gbm = function() {
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = "`keep.data` is set to FALSE to reduce memory requirements. Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for
-      multiclass problems. The latter is the only setting that works for > 2 classes."
+      multiclass problems. The latter is the only setting that works for > 2 classes.",
+    callees = "gbm"
   )
 }
 

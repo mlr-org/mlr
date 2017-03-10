@@ -9,7 +9,8 @@ makeRLearner.classif.rotationForest = function() {
     ),
     properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
     name = "Rotation Forest",
-    short.name = "rotationForest"
+    short.name = "rotationForest",
+    callees = "rotationForest"
     )
 }
 

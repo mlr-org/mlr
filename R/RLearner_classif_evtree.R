@@ -21,7 +21,8 @@ makeRLearner.classif.evtree = function() {
     name = "Evolutionary learning of globally optimal trees",
     short.name = "evtree",
     note = "`pmutatemajor`, `pmutateminor`, `pcrossover`, `psplit`, and `pprune`,
-      are scaled internally to sum to 100."
+      are scaled internally to sum to 100.",
+    callees = c("evtree", "evtree.control")
   )
 }
 

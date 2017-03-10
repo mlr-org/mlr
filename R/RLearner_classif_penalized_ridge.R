@@ -20,7 +20,8 @@ makeRLearner.classif.penalized.ridge = function() {
     properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
     name = "Logistic Ridge Regression",
     short.name = "ridge",
-    note = "trace=FALSE was set by default to disable logging output."
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

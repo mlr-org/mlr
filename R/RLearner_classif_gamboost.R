@@ -26,7 +26,8 @@ makeRLearner.classif.gamboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Gradient boosting with smooth components",
     short.name = "gamboost",
-    note = "`family` has been set to `Binomial()` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predicted."
+    note = "`family` has been set to `Binomial()` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predicted.",
+    callees = c("gamboost", "mboost", "boost_control", "Family")
   )
 }
 
