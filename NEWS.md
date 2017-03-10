@@ -24,6 +24,7 @@
 * simplifyMeasureNames: shorten measure names to the actual measure, e.g.
   mmce.test.mean -> mmce
 * getFailureModelDump, getPredictionDump, getRRDump: get error dumps
+* batchmark: Function to run benchmarks with the batchtools package on high performance computing clusters
 
 ## measures - new
 * tau, rho
