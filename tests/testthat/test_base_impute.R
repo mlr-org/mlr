@@ -84,14 +84,15 @@ test_that("Impute data frame", {
   x = impute(data, target = target, cols = list(f = "xxx", x = imputeMode(), y = imputeMax(2)), impute.new.levels = TRUE)
   imputed = reimpute(data, x$desc)
   expect_equal(x$data, imputed)
-  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA), x$desc)
+  expect_error(reimpute(data.frame(f = factor("newlvl"), x = NA), x$desc), "column types have changed")
+  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA_real_), x$desc)
   expect_equal(as.character(imputed$f), "xxx")
   expect_equal(imputed$x, 1)
   #FIXME: y was never in input data? therefore next test fails?
   # expect_equal(imputed$y, 8)
 
   x = impute(data, target = target, cols = list(f = "xxx"), impute.new.levels = FALSE)
-  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA), x$desc)
+  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA_real_), x$desc)
   expect_true(is.na(imputed$f))
   expect_true("xxx" %in% levels(imputed$f))
 
@@ -188,4 +189,11 @@ test_that("Impute works on non missing data", { # we had issues here: 848,893
   implrn = imputeLearner(makeLearner("regr.rpart"))
   lrn = makeImputeWrapper(makeLearner("regr.lm"), cols = list(a = implrn))
   holdout(lrn, task)
+})
+
+test_that("Logicals are casted to factors instead of character (#1522)", {
+  x = data.frame(a = c(TRUE, FALSE, NA))
+  y = impute(x, cols = list(a = imputeConstant("__miss__")))
+  res = factor(c("TRUE", "FALSE", "__miss__"), levels = c("FALSE", "TRUE", "__miss__"))
+  expect_equal(y$data$a, res)
 })

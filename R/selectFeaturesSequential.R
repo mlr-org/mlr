@@ -66,7 +66,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     sfbs = gen.new.states.sbs,
     stop(stri_paste("Unknown method:", method, sep = " "))
   )
-  res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
+  res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE, resample)
   # add stuff to opt.path
   state = list(x = x, y = res$y)
   extra = getTuneThresholdExtra(control, res)
