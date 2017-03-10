@@ -52,6 +52,7 @@ Suggests:
     ada,
     adabag,
     bartMachine,
+    batchtools,
     brnn,
     bst,
     C50,
