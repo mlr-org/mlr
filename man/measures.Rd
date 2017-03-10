@@ -119,8 +119,6 @@
 \alias{cindex}
 \alias{cindex.uno}
 \alias{iauc.uno}
-\alias{td.auc.km}
-\alias{td.auc.nne}
 \alias{td.auc.ipcw}
 \alias{meancosts}
 \alias{mcp}
@@ -363,10 +361,6 @@ cindex
 cindex.uno
 
 iauc.uno
-
-td.auc.km
-
-td.auc.nne
 
 td.auc.ipcw
 
