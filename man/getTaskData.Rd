@@ -4,7 +4,7 @@
 \alias{getTaskData}
 \title{Extract data in task.}
 \usage{
-getTaskData(task, subset, features, target.extra = FALSE,
+getTaskData(task, subset = NULL, features, target.extra = FALSE,
   recode.target = "no")
 }
 \arguments{

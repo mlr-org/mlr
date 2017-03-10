@@ -113,7 +113,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = (control$tune.threshold))
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
-    messagef(printToChar(par.set))
+    message(printToChar(par.set))  # using message() since this can go over the char limit of messagef(), see issue #1528
     messagef("With control class: %s", cl)
     messagef("Imputation value: %g", control$impute.val)
   }

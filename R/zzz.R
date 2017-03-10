@@ -29,3 +29,6 @@ mlr$learner.properties = list(
   costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
+
+### Measure properties
+mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster" ,"costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")

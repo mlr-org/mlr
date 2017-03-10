@@ -34,6 +34,11 @@ simpleImpute = function(data, target, col, const) {
   if (is.na(const))
     stopf("Error imputing column '%s'. Maybe all input data was missing?", col)
   x = data[[col]]
+
+  # cast logicals to factor if required (#1522)
+  if (is.logical(x) && !is.logical(const)) {
+    x = as.factor(x)
+  }
   if (is.factor(x) && const %nin% levels(x)) {
     levels(x) = c(levels(x), as.character(const))
   }
@@ -305,7 +310,6 @@ imputeLearner = function(learner, features = NULL) {
       ind = is.na(x)
       # if no NAs are present in data, we always return it unchanged
       if (all(!ind)) return(x)
-      # FIXME: we do get a list instead of a data.frame?
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
       p = predict(model, newdata = newdata)$data$response
       replace(x, ind, p)

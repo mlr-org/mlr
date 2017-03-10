@@ -294,6 +294,16 @@ test_that("check measure calculations", {
   rmsle.perf = performance(pred.regr, measures = rmsle, model = mod.regr)
   expect_equal(rmsle.test, rmsle$fun(pred = pred.regr))
   expect_equal(rmsle.test, as.numeric(rmsle.perf))
+  #tau
+  tau.test = 1
+  tau.perf = performance(pred.regr, measures = tau, model = mod.regr)
+  expect_equal(tau.test, tau$fun(pred = pred.regr))
+  expect_equal(tau.test, as.numeric(tau.perf))
+  #rho
+  rho.test = 1
+  rho.perf = performance(pred.regr, measures = rho, model = mod.regr)
+  expect_equal(rho.test, rho$fun(pred = pred.regr))
+  expect_equal(rho.test, as.numeric(rho.perf))
 
   #test multiclass measures
 
@@ -784,6 +794,22 @@ test_that("getDefaultMeasure", {
   expect_equal(mmce, getDefaultMeasure(makeLearner("classif.rpart")))
   expect_equal(mmce, getDefaultMeasure("classif.rpart"))
   expect_equal(mmce, getDefaultMeasure("classif"))
+})
+
+test_that("measure properties", {
+  #hasMeasureProps yields correct properties
+  expect_true(all(vlapply(listMeasures(create = TRUE),
+    function(m) {
+      res = hasMeasureProperties(m, m$properties)
+      all(res) & length(res) > 0
+      })))
+  props = listMeasureProperties()
+  #all props exist in mlr$measure.properties
+  expect_true(all(vlapply(listMeasures(create = TRUE),
+    function(m) {
+      res = all(getMeasureProperties(m) %in% props)
+      all(res) & length(res) > 0
+    })))
 })
 
 test_that("measures quickcheck", {

@@ -18,7 +18,7 @@
 listMeasures = function(obj, properties = character(0L), create = FALSE) {
   if (!missing(obj))
     assert(checkCharacter(obj), checkClass(obj, "Task"))
-  assertCharacter(properties, any.missing = FALSE)
+  assertSubset(properties, listMeasureProperties())
   assertFlag(create)
   UseMethod("listMeasures")
 }
@@ -49,7 +49,7 @@ listMeasures.Task = function(obj, properties = character(0L), create = FALSE) {
 
 listMeasures2 = function(properties = character(0L), create = FALSE) {
   ee = as.environment("package:mlr")
-  res = Filter(function(x) inherits(x, "Measure") && all(properties %in% x$properties), as.list(ee))
+  res = Filter(function(x) inherits(x, "Measure") && all(properties %in% getMeasureProperties(x)), as.list(ee))
   if (create)
     res
   else

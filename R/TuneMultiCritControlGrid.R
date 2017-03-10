@@ -1,7 +1,7 @@
 #' @export
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlGrid = function(same.resampling.instance = TRUE,
-  resolution = 10L, log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  resolution = 10L, log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
   resolution = asCount(resolution, positive = TRUE)
   makeTuneMultiCritControl(same.resampling.instance = same.resampling.instance,

@@ -58,14 +58,8 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     }
     size = nrow(newdata)
   }
-  if (is.null(subset)) {
-    subset = seq_len(size)
-  } else {
-    if (is.logical(subset))
-      subset = which(subset)
-    else
-      subset = asInteger(subset, min.len = 1L, any.missing = FALSE, lower = 1L, upper = size)
-  }
+  subset = checkTaskSubset(subset, size)
+
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)
   } else {
