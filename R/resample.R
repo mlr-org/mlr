@@ -116,8 +116,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 }
 
 
-# this wrappes around calculateREsampleIterationResult and contains the subsetting of the 
-# for a specific fold i
+# this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
