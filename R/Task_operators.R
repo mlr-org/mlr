@@ -366,8 +366,8 @@ recodeSurvivalTimes = function(y, from, to) {
 getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  subset = checkTaskSubset(subset, size = task$task.desc$size)
-  d = task$env$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = getTaskDescription(task)$size)
+  d = getTaskDescription(task)$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -407,9 +407,6 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  # FIXME: I hate R, this is all bad
-  if (!is.null(costs))
-    task$env$costs = costs
   if (is.null(weights))
     task["weights"] = list(NULL)
   else

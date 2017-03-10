@@ -19,7 +19,6 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
       colnames(costs) = stri_paste("y", seq_col(costs))
   }
   task = makeSupervisedTask("costsens", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
-  task$env$costs = costs
 
   if (check.data) {
     assertMatrix(costs, any.missing = FALSE, col.names = "strict")
@@ -38,6 +37,7 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
 makeCostSensTaskDesc = function(id, data, target, blocking, costs) {
   td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking)
   td$class.levels = colnames(costs)
+  td$costs = costs
   return(addClasses(td, c("CostSensTaskDesc", "SupervisedTaskDesc")))
 }
 
