@@ -407,9 +407,6 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  # FIXME: I hate R, this is all bad
-  if (!is.null(costs))
-    task$env$costs = costs
   if (is.null(weights))
     task["weights"] = list(NULL)
   else
