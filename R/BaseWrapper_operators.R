@@ -52,7 +52,7 @@ setPredictType.BaseWrapper = function(learner, predict.type) {
 
 
 #' @export
-getClassWeightParam.BaseWrapper = function(learner) {
+getClassWeightParam.BaseWrapper = function(learner, ...) {
   assertClass(learner, "BaseWrapper")
   weight.param.name = learner$next.learner$class.weights.param
   learner$next.learner$par.set$pars[[weight.param.name]]
