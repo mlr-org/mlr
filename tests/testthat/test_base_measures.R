@@ -253,52 +253,82 @@ test_that("check measure calculations", {
   rsq.perf = performance(pred.regr, measures = rsq, model = mod.regr)
   expect_equal(rsq.test, rsq$fun(pred = pred.regr))
   expect_equal(rsq.test, as.numeric(rsq.perf))
+  expect_equal(1-((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  suppressWarnings({
+    expect_equal(NA_real_, measureRSQ(0,0))
+    expect_warning(measureRSQ(0,0))
+    expect_warning(measureRSQ(1,1))
+    expect_warning(measureRSQ(c(1,1,1,1), c(1,2,3,4)))
+  })
+  expect_silent(measureRSQ(c(1,1,1,0), c(2,2,2,2)))
   # arsq
   arsq.test = 1 - (1 - rsq.test) * (2L / (4L - 2L - 1L))
   arsq.perf = performance(pred.regr, measures = arsq,
     model = mod.regr)
   expect_equal(arsq.test, arsq$fun(pred = pred.regr, model = mod.regr))
   expect_equal(arsq.test, as.numeric(arsq.perf))
+  task.regr.arsq = subsetTask(task = task.regr, subset = 1:3)
+  mod.regr.arsq = train(lrn.regr, task.regr.arsq)
+  pred.regr.arsq = predict(mod.regr.arsq, task.regr.arsq)
+  suppressWarnings({
+    expect_equal(NA_real_, as.numeric(performance(pred.regr.arsq, measures = arsq,
+      model = mod.regr.arsq)))
+    expect_warning(performance(pred.regr.arsq, measures = arsq,
+      model = mod.regr.arsq))
+  })
   # expvar
   expvar.test = sum((pred.art.regr - mean(tar.regr))^2L) / sum((tar.regr - mean(tar.regr))^2L)
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
+  expect_equal(sum((1-3)^2+(2-3)^2+(3-3)^2+(4-3)^2+(5-3)^2)/sum((5-3)^2+(4-3)^2+(3-3)^2+(2-3)^2+(1-3)^2), measureEXPVAR(5:1,1:5))
+  suppressWarnings({
+    expect_equal(NA_real_, measureEXPVAR(0,0))
+    expect_warning(measureEXPVAR(0,0))
+    expect_warning(measureEXPVAR(c(1,1,1,1), c(1,2,3,4)))
+  })
+  expect_silent(measureEXPVAR(c(1,1,1,0), c(2,2,2,2)))
   # rrse
   rrse.test = sqrt(sum((pred.art.regr - tar.regr)^2L) / sum((tar.regr - mean(tar.regr))^2L))
   rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
   expect_equal(rrse.test, rrse$fun(pred = pred.regr))
   expect_equal(rrse.test, as.numeric(rrse.perf))
-  expect_equal(sqrt((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/sqrt((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRRSE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
-  expect_warning(measureRRSE(0,0))
-  expect_warning(measureRRSE(c(1,1,1,1),c(1,2,3,4)))
-  expect_silent(measureRRSE(c(1,1,1,0),c(2,2,2,2)))
+  expect_equal(sqrt((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/sqrt((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  suppressWarnings({
+    expect_equal(NA_real_, measureRRSE(0,0))
+    expect_warning(measureRRSE(0,0))
+    expect_warning(measureRRSE(c(1,1,1,1), c(1,2,3,4)))
+  })
+  expect_silent(measureRRSE(c(1,1,1,0), c(2,2,2,2)))
   # rae
   rae.test = sum(abs(pred.art.regr - tar.regr)) / sum(abs(tar.regr - mean(tar.regr)))
   rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
   expect_equal(rae.test, rae$fun(pred = pred.regr))
   expect_equal(rae.test, as.numeric(rae.perf))
-  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/(abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
-  expect_warning(measureRAE(0,0))
-  expect_warning(measureRAE(c(1,1,1,1),c(1,2,3,4)))
-  expect_silent(measureRAE(c(1,1,1,0),c(2,2,2,2)))
+  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/(abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  suppressWarnings({
+    expect_equal(NA_real_, measureRAE(0,0))
+    expect_warning(measureRAE(0,0))
+    expect_warning(measureRAE(c(1,1,1,1), c(1,2,3,4)))
+  })
+  expect_silent(measureRAE(c(1,1,1,0), c(2,2,2,2)))
   # mape
   suppressWarnings({
-    expect_equal(NA, mape$fun(pred = pred.regr))
-    expect_equal(NA, measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)))
+    expect_equal(NA_real_, mape$fun(pred = pred.regr))
+    expect_equal(NA_real_, measureMAPE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   })
-  expect_warning(mape$fun(pred = pred.regr), regexp = "MAPE is undefined if any truth value is equal to 0.")
-  expect_warning(measureMAPE(c(5, 10, 0, 5),c(4, 11, 0, 4)), regexp = "MAPE is undefined if any truth value is equal to 0.")
+  expect_warning(mape$fun(pred = pred.regr), regexp = "Measure is undefined if any truth value is equal to 0.")
+  expect_warning(measureMAPE(c(5, 10, 0, 5), c(4, 11, 0, 4)), regexp = "Measure is undefined if any truth value is equal to 0.")
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
   mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
   mape.test = mean(c(abs((5-4)/5),abs((10-11)/10),abs((1-0)/1),abs((5-4)/5)))
   expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
-  expect_equal(1/4*(abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5),c(4, 11, 0, 4)))
+  expect_equal(1/4*(abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
   expect_warning(measureMAPE(0,0))
-  expect_warning(measureMAPE(c(1,1,1,0),c(2,2,2,2)))
-  expect_silent(measureMAPE(c(1,1,1,1),c(2,2,2,2)))
+  expect_warning(measureMAPE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
+  expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
   # msle
   msle.test = ((log(4 + 1) - log(5 + 1))^2 + (log(11 + 1) - log(10 + 1))^2 +
   (log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
@@ -393,6 +423,14 @@ test_that("check measure calculations", {
   expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
     multiclass.aunp, multiclass.au1u, multiclass.au1p))),
     as.numeric(rep(performance(pred.bin, measures = auc), 4)))
+  auc.lrn = makeLearner("classif.rpart", predict.type = "prob")
+  auc.fit = train(auc.lrn, iris.task)
+  auc.pred.constant = predict(auc.fit, subsetTask(iris.task, 1:50))
+  suppressWarnings({
+    expect_equal(c(multiclass.aunu = NA_real_, multiclass.aunp = NA_real_), performance(auc.pred.constant, list(multiclass.aunu, multiclass.aunp)))
+    expect_warning(measureAUNU(getPredictionProbabilities(auc.pred.constant, auc.pred.constant$task.desc$class.levels), auc.pred.constant$data$truth))
+    expect_warning(measureAUNP(getPredictionProbabilities(auc.pred.constant, auc.pred.constant$task.desc$class.levels), auc.pred.constant$data$truth))
+  })
 
   p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
   colnames(p1) = c("a", "b")
@@ -881,4 +919,20 @@ test_that("setMeasurePars", {
   # precedence of ... over par.vals
   mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
   expect_equal(mm$extra.args, list(foo = 1))
+})
+
+test_that("measures ppv denominator 0", {
+  set.seed(1)
+  task = sonar.task
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  r = holdout(lrn, task)
+  d = generateThreshVsPerfData(r, measures = list(tpr, ppv), gridsize = 5)
+  expect_equal(length(which(is.na(d$data))), 0)
+  lrns = list(makeLearner("classif.randomForest", predict.type = "prob"), makeLearner("classif.rpart", predict.type = "prob"))
+  tasks = list(bc.task, sonar.task)
+  rdesc = makeResampleDesc("CV", iters = 2L)
+  meas = list(acc, ber)
+  bmrk = benchmark(lrns, tasks, rdesc, measures = meas)
+  pr = generateThreshVsPerfData(bmrk, measures = list(tpr, ppv))
+  expect_equal(length(which(is.na(pr$data))), 0)
 })

@@ -9,6 +9,7 @@
 * tuneParams, selectFeatures: removed memory stats from default output for
   performance reasons (can be restored by using a control object with "log.fun"
   = "memory")
+* listLearners: change check.packages default to FALSE
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
