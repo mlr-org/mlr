@@ -60,8 +60,7 @@ Default is \code{TRUE}.}
 Specify whether \code{\link{FailureModel}} models and failed predictions should contain an error dump
 that can be used with \code{debugger} to inspect an error. This option is only effective if \code{on.learner.error}
 is \dQuote{warn} or \dQuote{quiet}. If it is \code{TRUE}, the dump can be accessed using 
-\code{\link{getFailureModelDump}} on the \code{\link{FailureModel}}, or \code{\link{getPredictionDump}}
-on the failed prediction.
+\code{\link{getFailureModelDump}} on the \code{\link{FailureModel}}, \code{\link{getPredictionDump}} on the failed prediction, and \code{\link{getRRDump}} on resample predictions.
 Default is \code{FALSE}.}
 }
 \value{
