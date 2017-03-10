@@ -85,7 +85,7 @@ train = function(learner, task, subset, weights = NULL) {
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    time.train = measureTime(fun1(learner.model <- fun2(fun3(do.call(trainLearner, pars)))))
+    time.train = measureTime(fun1({learner.model = fun2(fun3(do.call(trainLearner, pars)))}))
     # was there an error during training? maybe warn then
     if (is.error(learner.model) && opts$on.learner.error == "warn")
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
