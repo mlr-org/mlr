@@ -14,8 +14,6 @@
   performance reasons (can be restored by using a control object with "log.fun"
   = "memory")
 * listLearners: change check.packages default to FALSE
-
-## functions - general
 * tuneParams and tuneParamsMultiCrit: new parameter `resample.fun` to specify a custom resampling function to use.
 
 ## functions - new
