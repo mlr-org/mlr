@@ -1,5 +1,9 @@
 # mlr 2.11:
+
+## general
 * The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
+* new option on.error.dump to include dumps that can be inspected with the
+  debugger with errors
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
@@ -21,6 +25,7 @@
 * makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
 * simplifyMeasureNames: shorten measure names to the actual measure, e.g.
   mmce.test.mean -> mmce
+* getFailureModelDump, getPredictionDump, getRRDump: get error dumps
 
 ## measures - new
 * tau, rho
