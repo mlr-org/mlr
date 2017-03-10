@@ -19,8 +19,8 @@ measureAggrPrettyName = function(measure) {
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
 perfsToString = function(y, sep = "=", digits = options()$digits) {
-  stri_paste(stri_paste(names(y), "=", formatC(y, digits = digits), sep = ""),
-    collapse = ",", sep = " ")
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = digits,
+    flag = "0", format = "f"), sep = ""), collapse = ",", sep = " ")
 }
 
 # Used for the resample output logging lines:

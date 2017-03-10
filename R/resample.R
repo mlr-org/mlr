@@ -114,7 +114,8 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   if (rin$desc$predict == "both") {
     id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
     id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
-    measure.lognames = c(measure.lognames[id.train], measure.lognames[id.test])
+    measure.lognames = c(stri_paste(measure.lognames[id.train], "train", sep = "."),
+      stri_paste(measure.lognames[id.test], "test", sep = "."))
   }
   printResampleFormatLine("Measures:", measure.lognames)
 
@@ -197,7 +198,8 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     ms.ids = extractSubList(measures, "id")
     if (pp == "both") {
       x = c(ms.train[idx.train], ms.test[idx.test])
-      names(x) = c(ms.ids[idx.train], ms.ids[idx.test])
+      names(x) = c(stri_paste(ms.ids[idx.train], "train", sep = "."),
+        stri_paste(ms.ids[idx.test], "test", sep = "."))
     } else {
       if (pp == "train") {
         x = ms.train[idx.train]
@@ -258,10 +260,13 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
 
   if (show.info) {
     # use measure ids for printing
-    aggr.out = aggr
-    names(aggr.out) = extractSubList(measures, "id")
+    # aggr.out = aggr
+    # names(aggr.out) = extractSubList(measures, "id")
     message("\n")
-    printResampleFormatLine("Aggregated Result:", aggr.out)
+    messagef("Aggregated Result: %s", perfsToString(aggr))
+    # last line break is there to seperate aggregated
+    # results from objects returned by other functions (e.g. benchmark)
+    message("\n")
   }
 
   if (!keep.pred)
