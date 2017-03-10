@@ -1014,19 +1014,36 @@ measureFNR = function(truth, response, negative, positive) {
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
-  note = "Defined as: tp / (tp + number of fp). Also called precision.",
+  note = "Defined as: tp / (tp + number of fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
   fun = function(task, model, pred, feats, extra.args) {
-    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive)
+    if(pred$predict.type == "prob") {
+      prob = getPredictionProbabilities(pred)
+    } else {
+      prob = NULL
+      }
+    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive, prob)
   }
 )
 
 #' @export measurePPV
 #' @rdname measures
 #' @format none
-measurePPV = function(truth, response, positive) {
-  measureTP(truth, response, positive) / sum(response == positive)
+
+measurePPV = function(truth, response, positive, probabilities = NULL) {
+  denominator = sum(response == positive)
+  ifelse(denominator == 0, measureEdgeCase(truth, positive, probabilities), measureTP(truth, response, positive) / denominator)
+} 
+measureEdgeCase = function(truth, positive, prob) {
+  if (!is.null(prob)) {
+    rs = sort(prob, index.return = TRUE)
+    erst = ifelse(truth[getLast(rs$ix)] == positive, 1, 0)
+  } else {
+    erst = NA
+  }
+  erst
 }
 
+  
 #' @export npv
 #' @rdname measures
 #' @format none
