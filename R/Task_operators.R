@@ -8,6 +8,13 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
+#' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' @export
+getTaskDescription = function(x) {
+  .Deprecated("getTaskDesc")
+  UseMethod("getTaskDesc")
+}
+
 #' @export
 getTaskDesc.default = function(x) {
   x$task.desc
