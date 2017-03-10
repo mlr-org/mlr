@@ -39,9 +39,14 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 
 \item{resample.fun}{[\code{closure}]\cr
-The function to use for resampling. Defaults to \code{\link{resample}} and should take the
-same arguments as, and return the same result type as, \code{\link{resample}}. This
-parameter must be the default when \code{mbo} tuning is performed.}
+The function to use for resampling. Defaults to \code{\link{resample}}. If a user-given function
+is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
+\dQuote{measures}, and \dQuote{show.info}; see \code{\link{resample}}. Within this function,
+it is easiest to call \code{\link{resample}} and possibly modify the result.
+However, it is possible to return a list with only the following essential slots:
+the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
+(see \code{\link{TuneControl}}), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+This parameter must be the default when \code{mbo} tuning is performed.}
 }
 \value{
 [\code{\link{TuneResult}}].
