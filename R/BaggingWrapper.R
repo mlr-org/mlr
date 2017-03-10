@@ -42,7 +42,7 @@
 #' @family wrapper
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
-  learner = checkLearner(learner, type=c("classif", "regr"))
+  learner = checkLearner(learner, type = c("classif", "regr"))
   pv = list()
   if (!missing(bw.iters)) {
     bw.iters = asInt(bw.iters, lower = 1L)
@@ -90,24 +90,24 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
     bw.size = if (bw.replace) 1 else 0.632
   .task = subsetTask(.task, subset = .subset)
   n = getTaskSize(.task)
+  # number of observations to sample
   m = round(n * bw.size)
-  allinds = seq_len(n)
-  if (bw.feats < 1) {
-    feats = getTaskFeatureNames(.task)
-    k = max(round(bw.feats * length(feats)), 1)
-  }
-  models = lapply(seq_len(bw.iters), function(i) {
-    bag = sample(allinds, m, replace = bw.replace)
-    w = .weights[bag]
-    if (bw.feats < 1) {
-      feats2 = sample(feats, k, replace = FALSE)
-      .task2 = subsetTask(.task, features = feats2)
-      train(.learner$next.learner, .task2, subset = bag, weights = w)
-    } else {
-      train(.learner$next.learner, .task, subset = bag, weights = w)
-    }
-  })
-  m = makeHomChainModel(.learner, models)
+  # number of features to sample
+  k = max(round(bw.feats * getTaskNFeats(.task)), 1)
+
+  args = list(n = n, m = m, k = k, bw.replace = bw.replace,
+    task = .task, learner = .learner, weights = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(doBaggingTrainIteration, i = seq_len(bw.iters), more.args = args, level = "mlr.ensemble")
+  makeHomChainModel(.learner, models)
+}
+
+doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weights) {
+  setSlaveOptions()
+  bag = sample(seq_len(n), m, replace = bw.replace)
+  task = subsetTask(task, features = sample(getTaskFeatureNames(task), k, replace = FALSE))
+  train(learner$next.learner, task, subset = bag, weights = weights[bag])
 }
 
 #' @export

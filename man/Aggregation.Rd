@@ -16,6 +16,7 @@ Object members:
 \describe{
 \item{id [\code{character(1)}]}{Name of the aggregation method.}
 \item{name [\code{character(1)}]}{Long name of the aggregation method.}
+\item{properties [\code{character}]}{Properties of the aggregation.}
 \item{fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]}{Aggregation function.}
 }
 }

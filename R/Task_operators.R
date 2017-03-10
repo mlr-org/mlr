@@ -58,12 +58,12 @@ getTaskTargetNames.Task = function(x) {
 }
 
 #' @export
-getTaskTargetNames.TaskDescSupervised = function(x) {
+getTaskTargetNames.SupervisedTaskDesc = function(x) {
   x$target
 }
 
 #' @export
-getTaskTargetNames.TaskDescUnsupervised = function(x) {
+getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
   character(0L)
 }
 
@@ -88,12 +88,12 @@ getTaskClassLevels.Task = function(x) {
 }
 
 #' @export
-getTaskClassLevels.TaskDescClassif = function(x) {
+getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
 #' @export
-getTaskClassLevels.TaskDescMultilabel = function(x) {
+getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
@@ -227,11 +227,12 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   with the input data.frame and an extra vector or data.frame for the targets.
 #'   Default is \code{FALSE}.
 #' @param recode.target [\code{character(1)}]\cr
-#'   Should target classes be recoded? Supported are binary classification and survival.
+#'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
 #'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
 #'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 #'   \dQuote{drop.levels} will remove empty factor levels in the target column.
+#'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 #'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
@@ -249,30 +250,21 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
+getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no") {
   checkTask(task, "Task")
-
-  if (missing(subset)) {
-    subset = NULL 
-  } else {
-    assert(checkIntegerish(subset), checkLogical(subset))
-    if (is.logical(subset))
-      subset = which(subset)
-    if (is.numeric(subset))
-      subset = asInteger(subset)
-  }
-
+  checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
 
   task.features = getTaskFeatureNames(task)
-  
+
   # if supplied check if the input is right and always convert 'features'
   # to character vec
   if (!missing(features)) {
-    assert(checkIntegerish(features, lower = 1L, upper = length(task.features)),
-      checkLogical(features), checkCharacter(features))
-    if (is.numeric(features))
-      features = asInteger(features)
+    assert(
+      checkIntegerish(features, lower = 1L, upper = length(task.features)),
+      checkLogical(features), checkCharacter(features)
+    )
+
     if (!is.character(features))
       features = task.features[features]
   }
@@ -287,9 +279,6 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
       df
     )
   }
-
-  if (missing(subset) || identical(subset, seq_len(task$task.desc$size)))
-    subset = NULL
 
   if (target.extra) {
     if (missing(features))
@@ -323,6 +312,8 @@ recodeY = function(y, type, td) {
     return(as.numeric(2L * (y == td$positive) - 1L))
   if (type %in% c("lcens", "rcens", "icens"))
     return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "multilabel.factor")
+    return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
 }
 
@@ -368,20 +359,15 @@ recodeSurvivalTimes = function(y, from, to) {
 #'
 #' @param task [\code{\link{CostSensTask}}]\cr
 #'   The task.
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
+#' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
-getTaskCosts = function(task, subset) {
+getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
-  d = if (ms)
-    task$env$costs
-  else
-    task$env$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = task$task.desc$size)
+  d = task$env$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -397,12 +383,11 @@ getTaskCosts = function(task, subset) {
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
-subsetTask = function(task, subset, features) {
+subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  td = task$desc
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
-  if (!missing(subset)) {
+  if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
     if (task$task.desc$has.weights)
@@ -432,10 +417,14 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
-    "surv" = makeTaskDesc(task, td$id, td$target, td$censoring),
-    "cluster" = makeTaskDesc(task, td$id),
-    makeTaskDesc(task, td$id, td$target))
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
+  )
+
   return(task)
 }
 

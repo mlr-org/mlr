@@ -1,4 +1,7 @@
-#' Set the id of a learner object.
+#' @title Set the id of a learner object.
+#'
+#' @description
+#' Deprecated, use \code{\link{setLearnerId}} instead.
 #'
 #' @template arg_learner
 #' @param id [\code{character(1)}]\cr
@@ -7,6 +10,7 @@
 #' @export
 #' @family learner
 setId = function(learner, id) {
+  .Deprecated("setLearnerId")
   learner = checkLearner(learner)
   assertString(id)
   learner$id = id

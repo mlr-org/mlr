@@ -8,19 +8,20 @@
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE,
   create = FALSE)
 
-\method{listLearners}{default}(obj, properties = character(0L),
+\method{listLearners}{default}(obj = NA_character_,
+  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
+  check.packages = TRUE, create = FALSE)
+
+\method{listLearners}{character}(obj = NA_character_,
+  properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
+  check.packages = TRUE, create = FALSE)
+
+\method{listLearners}{Task}(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
   create = FALSE)
-
-\method{listLearners}{character}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
-  create = FALSE)
-
-\method{listLearners}{Task}(obj, properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE)
 }
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{Task}}]\cr
@@ -42,11 +43,13 @@ should a warning be shown?
 Default is \code{TRUE}.}
 
 \item{check.packages}{[\code{logical(1)}]\cr
-Check if required packages are installed. Calls
-\code{find.package()}. If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
-If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only contains learners whose dependencies are installed.
-Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
-actually be constructed because of missing packages may be returned.}
+Check if required packages are installed. Calls \code{find.package()}. 
+If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only 
+contains learners whose dependencies are installed.
+If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because 
+of missing packages may be returned.
+Default is \code{FALSE}.}
 
 \item{create}{[\code{logical(1)}]\cr
 Instantiate objects (or return info table)?
@@ -69,7 +72,7 @@ This will be a lot faster.
 Note that for general cost-sensitive learning, mlr currently supports mainly
 \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 which are not listed, as they are not basic R learning algorithms.
-The same applies for multilabel classification, see \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
+The same applies for many multilabel methods, see, e.g., \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
 }
 \examples{
 \dontrun{

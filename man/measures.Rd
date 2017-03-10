@@ -26,16 +26,46 @@
 \alias{expvar}
 \alias{measureEXPVAR}
 \alias{arsq}
+\alias{rrse}
+\alias{measureRRSE}
+\alias{rae}
+\alias{measureRAE}
+\alias{mape}
+\alias{measureMAPE}
+\alias{msle}
+\alias{measureMSLE}
+\alias{rmsle}
+\alias{tau}
+\alias{measureTau}
+\alias{rho}
+\alias{measureRho}
 \alias{mmce}
 \alias{measureMMCE}
 \alias{acc}
 \alias{measureACC}
 \alias{ber}
-\alias{multiclass.auc}
+\alias{multiclass.aunu}
+\alias{measureAUNU}
+\alias{multiclass.aunp}
+\alias{measureAUNP}
+\alias{multiclass.au1u}
+\alias{measureAU1U}
+\alias{multiclass.au1p}
+\alias{measureAU1P}
 \alias{multiclass.brier}
 \alias{measureMulticlassBrier}
 \alias{logloss}
 \alias{measureLogloss}
+\alias{ssr}
+\alias{measureSSR}
+\alias{qsr}
+\alias{measureQSR}
+\alias{lsr}
+\alias{measureLSR}
+\alias{kappa}
+\alias{measureKAPPA}
+\alias{wkappa}
+\alias{measureWKAPPA}
 \alias{auc}
 \alias{measureAUC}
 \alias{brier}
@@ -142,6 +172,32 @@ measureEXPVAR(truth, response)
 
 arsq
 
+rrse
+
+measureRRSE(truth, response)
+
+rae
+
+measureRAE(truth, response)
+
+mape
+
+measureMAPE(truth, response)
+
+msle
+
+measureMSLE(truth, response)
+
+rmsle
+
+tau
+
+measureTau(truth, response)
+
+rho
+
+measureRho(truth, response)
+
 mmce
 
 measureMMCE(truth, response)
@@ -152,7 +208,21 @@ measureACC(truth, response)
 
 ber
 
-multiclass.auc
+multiclass.aunu
+
+measureAUNU(probabilities, truth)
+
+multiclass.aunp
+
+measureAUNP(probabilities, truth)
+
+multiclass.au1u
+
+measureAU1U(probabilities, truth)
+
+multiclass.au1p
+
+measureAU1P(probabilities, truth)
 
 multiclass.brier
 
@@ -161,6 +231,26 @@ measureMulticlassBrier(probabilities, truth)
 logloss
 
 measureLogloss(probabilities, truth)
+
+ssr
+
+measureSSR(probabilities, truth)
+
+qsr
+
+measureQSR(probabilities, truth)
+
+lsr
+
+measureLSR(probabilities, truth)
+
+kappa
+
+measureKAPPA(truth, response)
+
+wkappa
+
+measureWKAPPA(truth, response)
 
 auc
 
@@ -212,7 +302,7 @@ measureFNR(truth, response, negative, positive)
 
 ppv
 
-measurePPV(truth, response, positive)
+measurePPV(truth, response, positive, probabilities = NULL)
 
 npv
 
@@ -316,7 +406,10 @@ He, H. & Garcia, E. A. (2009)
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{performance}}

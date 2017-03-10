@@ -5,7 +5,7 @@
 \alias{FilterValues}
 \title{Calculates feature filter values.}
 \usage{
-generateFilterValuesData(task, method = "rf.importance",
+generateFilterValuesData(task, method = "randomForestSRC.rfsrc",
   nselect = getTaskNFeats(task), ..., more.args = list())
 }
 \arguments{
@@ -14,7 +14,7 @@ The task.}
 
 \item{method}{[\code{character}]\cr
 Filter method(s), see above.
-Default is \dQuote{rf.importance}.}
+Default is \dQuote{randomForestSRC.rfsrc}.}
 
 \item{nselect}{[\code{integer(1)}]\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
@@ -31,13 +31,15 @@ Default is empty list.}
 \value{
 [\code{FilterValues}]. A \code{list} containing:
   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
-   Task description.}
+    Task description.}
   \item{data}{[\code{data.frame}] with columns:
     \itemize{
-      \item \code{name} Name of feature.
-      \item \code{type} Feature column type.
-      \item A column for each \code{method} with
-                  the feature importance values.
+      \item \code{name}[\code{character}]\cr
+        Name of feature.
+      \item \code{type}[\code{character}]\cr
+        Feature column type.
+      \item \code{method}[\code{numeric}]\cr 
+        One column for each method with the feature importance values.
     }}
 }
 \description{
@@ -47,10 +49,13 @@ For a list of features, use \code{\link{listFilterMethods}}.
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 
 Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},

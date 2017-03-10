@@ -34,6 +34,15 @@ contains the following object members:
   Stores error messages generated during train or predict, if these were caught
   via \code{\link{configureMlr}}.
 }
+\item{err.dumps [\code{list of list of dump.frames}]:}{
+  List with length equal to number of resampling iterations. Contains lists
+  of \code{dump.frames} objects that can be fed to \code{debugger()} to inspect
+  error dumps generated on learner errors. One iteration can generate more than
+  one error dump depending on which of training, prediction on training set,
+  or prediction on test set, operations fail. Therefore the lists have named
+  slots \code{$train}, \code{$predict.train}, or \code{$predict.test} if relevant.
+  The error dumps are only saved when option \code{on.error.dump} is \code{TRUE}.
+}
 \item{pred [\code{\link{ResamplePrediction}}]:}{
   Container for all predictions during resampling.
 }
@@ -48,13 +57,18 @@ contains the following object members:
 }
 }
 The print method of this object gives a short overview, including
-task and learner ids, aggregated measures as well as mean and standard
-deviation of the measures.
+task and learner ids, aggregated measures and runtime for the resampling.
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},
+  \code{\link{addRRMeasure}},
+  \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
+  \code{\link{getRRTaskDescription}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
+
+Other debug: \code{\link{FailureModel}},
+  \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
 }

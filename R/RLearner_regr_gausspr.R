@@ -49,7 +49,7 @@ predictLearner.regr.gausspr = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type != "se") {
     as.vector(kernlab::predict(.model$learner.model, newdata = .newdata, ...))
   } else {
-    pred = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, ...)) 
+    pred = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, ...))
     pred.se = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, type = "sdeviation", ...))
     cbind(pred,pred.se)
   }

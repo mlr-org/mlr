@@ -36,28 +36,24 @@ ggplot2 plot object.
 Plot filter values using ggplot2.
 }
 \examples{
-fv = generateFilterValuesData(iris.task, method = "chi.squared")
+fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValues(fv)
 }
 \seealso{
-Other plot: \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
-  \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerfGGVIS}},
-  \code{\link{plotThreshVsPerf}}
-
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}}
+
+Other generate_plot_data: \code{\link{generateCalibrationData}},
+  \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
+  \code{\link{generateLearningCurveData}},
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{getFilterValues}}
 }

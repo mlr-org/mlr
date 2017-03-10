@@ -75,8 +75,13 @@ getFailureModelMsg.BaseWrapperModel = function(model) {
 }
 
 #' @export
+getFailureModelDump.BaseWrapperModel = function(model) {
+  return(getFailureModelDump(model$learner.model$next.model))
+}
+
+#' @export
 getLearnerProperties.BaseWrapper = function(learner) {
   # set properties by default to what the resulting type is allowed and what the base learner can do
-  intersect(getSupportedLearnerProperties(learner$type), getLearnerProperties(learner$next.learner))
+  intersect(listLearnerProperties(learner$type), getLearnerProperties(learner$next.learner))
 }
 

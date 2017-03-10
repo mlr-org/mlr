@@ -14,6 +14,9 @@
 #' The predict.type of the Multiplexer is inherited from the predict.type of the
 #' base learners.
 #'
+#' The getter \code{\link{getLearnerProperties}} returns the properties of the
+#' selected base learner.
+#'
 #' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
 #'  List of Learners with unique IDs.
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
@@ -25,6 +28,7 @@
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
 #' \donttest{
+#' library(BBmisc)
 #' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")

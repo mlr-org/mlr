@@ -18,6 +18,9 @@ Default is \code{FALSE}.}
 [\code{matrix}]. A confusion matrix.
 }
 \description{
+\code{getConfMatrix} is deprecated. Please use \code{\link{calculateConfusionMatrix}}.
+
+
 Calculates confusion matrix for (possibly resampled) prediction.
 Rows indicate true classes, columns predicted classes.
 
@@ -31,20 +34,6 @@ Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
 joined to a vector y. Then yhat is simply tabulated vs y, as if both were computed on
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.
-}
-\examples{
-# get confusion matrix after simple manual prediction
-allinds = 1:150
-train = sample(allinds, 75)
-test = setdiff(allinds, train)
-mod = train("classif.lda", iris.task, subset = train)
-pred = predict(mod, iris.task, subset = test)
-print(getConfMatrix(pred))
-print(getConfMatrix(pred, relative = TRUE))
-
-# now after cross-validation
-r = crossval("classif.lda", iris.task, iters = 2L)
-print(getConfMatrix(r$pred))
 }
 \seealso{
 \code{\link{predict.WrappedModel}}

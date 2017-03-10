@@ -38,3 +38,8 @@ test_that("listLearners for task", {
   expect_true(length(intersect(x2$id, x3$id)) == 0)
   expect_true(all(x2$id %in% x1$id))
 })
+
+test_that("fuzzy matching works for mistyped learners", {
+  expect_error(makeLearner("classi.randomFore", config = list(on.par.without.desc = "quiet"),
+    expected = "classif.randomForest"))
+})

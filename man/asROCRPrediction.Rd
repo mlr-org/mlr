@@ -14,7 +14,8 @@ Prediction object.}
 Converts predictions to a format package ROCR can handle.
 }
 \seealso{
-Other roc: \code{\link{plotViperCharts}}
+Other roc: \code{\link{calculateROCMeasures}},
+  \code{\link{plotViperCharts}}
 
 Other predict: \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},

@@ -50,12 +50,11 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
   \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerf}}
 
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},

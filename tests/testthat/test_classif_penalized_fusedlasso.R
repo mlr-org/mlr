@@ -3,6 +3,7 @@ context("classif_penalized_fusedlasso")
 test_that("classif_penalized_fusedlasso", {
   requirePackages("!penalized", default.method = "load")
   parset.list = list(
+    list(),
     list(maxiter = 10L),
     list(lambda1 = 2, maxiter = 10L),
     list(lambda1 = 2, lambda2 = 1, maxiter = 5L),
@@ -31,13 +32,20 @@ test_that("classif_penalized_fusedlasso", {
     binaryclass.train.inds, old.probs.list, parset.list)
 
   parset.list = list(
+    list(),
     list(lambda1 = 2, lambda2 = 1, maxiter = 2L),
     list(lambda1 = 1, lambda2 = 2, maxiter = 4L)
   )
 
   tt = function(formula, data, subset = 1:nrow(data), ...) {
+    args = list(...)
+    if (is.null(args$lambda1) & is.null(args$lambda2)) {
+      penalized::penalized(formula, data = data[subset, ],
+        fusedl = TRUE, trace = FALSE, lambda1 = 1, lambda2 = 1, ...)
+    } else {
     penalized::penalized(formula, data = data[subset, ],
       fusedl = TRUE, trace = FALSE, ...)
+    }
   }
 
   tp = function(model, newdata, ...) {

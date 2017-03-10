@@ -1,0 +1,21 @@
+context("makeLearners")
+
+test_that("makeLearners", {
+  cls1 = c("classif.rpart", "classif.lda")
+  cls2 = c("rpart", "lda")
+  lrns1 = setNames(lapply(cls1, makeLearner), cls1)
+  ids = c("a", "b")
+  lrns1 = setNames(lapply(cls1, makeLearner), cls1)
+  lrns2 = setNames(mapply(setLearnerId, lrns1, ids, SIMPLIFY = FALSE), ids)
+  lrns3 = lapply(lrns1, setPredictType, predict.type = "prob")
+
+  res = makeLearners(cls1)
+  expect_equal(res, lrns1)
+  res = makeLearners(cls1, ids = ids)
+  expect_equal(res, lrns2)
+  res = makeLearners(cls2, type = "classif")
+  expect_equal(res, lrns1)
+  res = makeLearners(cls2, type = "classif", predict.type = "prob")
+  expect_equal(res, lrns3)
+})
+

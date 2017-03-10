@@ -25,6 +25,7 @@ Set of measure properties. Some standard property names include:
   \item{multilabel}{Is the measure applicable for multilabel classification?}
   \item{regr}{Is the measure applicable for regression?}
   \item{surv}{Is the measure applicable for survival?}
+  \item{cluster}{Is the measure applicable for cluster?}
   \item{costsens}{Is the measure applicable for cost-sensitive learning?}
   \item{req.pred}{Is prediction object required in calculation? Usually the case.}
   \item{req.truth}{Is truth column required in calculation? Usually the case.}
@@ -106,7 +107,10 @@ f = function(task, model, pred, extra.args)
 makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{measures}}, \code{\link{performance}}

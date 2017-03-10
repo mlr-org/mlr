@@ -58,7 +58,8 @@ Sluban and Lavrač - ViperCharts: Visual Performance Evaluation Platform,
 ECML PKDD 2013, pp. 650-653, LNCS 8190, Springer, 2013.
 }
 \seealso{
-Other roc: \code{\link{asROCRPrediction}}
+Other roc: \code{\link{asROCRPrediction}},
+  \code{\link{calculateROCMeasures}}
 
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},

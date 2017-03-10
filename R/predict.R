@@ -38,7 +38,7 @@
 #' p = predict(model, task = iris.task, subset = test.set)
 #' print(p)
 #' getPredictionProbabilities(p)
-predict.WrappedModel = function(object, task, newdata, subset, ...) {
+predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
   assertClass(object, classes = "WrappedModel")
@@ -52,16 +52,14 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     size = getTaskSize(task)
   } else {
     assertDataFrame(newdata, min.rows = 1L)
+    if (class(newdata)[1] != "data.frame") {
+      warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",  class(newdata)[1])
+      newdata = as.data.frame(newdata)
+    }
     size = nrow(newdata)
   }
-  if (missing(subset)) {
-    subset = seq_len(size)
-  } else {
-    if (is.logical(subset))
-      subset = which(subset)
-    else
-      subset = asInteger(subset, min.len = 1L, any.missing = FALSE, lower = 1L, upper = size)
-  }
+  subset = checkTaskSubset(subset, size)
+
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)
   } else {
@@ -85,10 +83,13 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   }
 
   error = NA_character_
+  # default to NULL error dump
+  dump = NULL
   # was there an error in building the model? --> return NAs
   if (isFailureModel(model)) {
     p = predictFailureModel(model, newdata)
     time.predict = NA_real_
+    dump = getFailureModelDump(model)
   } else {
     #FIXME: this copies newdata
     pars = list(
@@ -100,16 +101,19 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
       set.seed(debug.seed)
-    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning"))
+    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
     fun1 = if (opts$show.learner.output) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
+    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
+        withCallingHandlers(x, error = function(c) utils::dump.frames())
+      }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
-    time.predict = as.numeric(st[3L])
+    time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
+
     # was there an error during prediction?
     if (is.error(p)) {
       if (opts$on.learner.error == "warn")
@@ -117,6 +121,9 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       error = as.character(p)
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_
+      if (opts$on.error.dump) {
+        dump = addClasses(get("last.dump", envir = .GlobalEnv), "mlr.dump")
+      }
     }
   }
   if (missing(task))
@@ -124,5 +131,5 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   else
     ids = subset
   makePrediction(task.desc = td, row.names = rownames(newdata), id = ids, truth = truth,
-    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error)
+    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error, dump = dump)
 }

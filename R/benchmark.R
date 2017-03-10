@@ -7,8 +7,9 @@
 #' Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
 #' learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 #'
-#' @param learners [(list of) \code{\link{Learner}}]\cr
-#'   Learning algorithms which should be compared.
+#' @param learners [(list of) \code{\link{Learner}} | \code{character}]\cr
+#'   Learning algorithms which should be compared, can also be a single learner.
+#'   If you pass strings the learners will be created via \code{\link{makeLearner}}.
 #' @param tasks [(list of) \code{\link{Task}}]\cr
 #'   Tasks that learners should be run on.
 #' @param resamplings [(list of) \code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
@@ -41,8 +42,7 @@
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
   learners = ensureVector(learners, 1L, "Learner")
-  assertList(learners, min.len = 1L)
-  checkListElementClass(learners, "Learner")
+  learners = lapply(learners, checkLearner)
   learner.ids = extractSubList(learners, "id")
   if (anyDuplicated(learner.ids))
     stop("Learners need unique ids!")

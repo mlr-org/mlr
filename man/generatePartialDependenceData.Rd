@@ -64,7 +64,10 @@ in this order. For classification with \code{predict.type = "prob"} the function
 a numeric matrix with the number of columns equal to the number of class levels of the target.
 For classification with \code{predict.type = "response"} (the default) the function must accept
 a character vector and output a numeric vector with length equal to the number of classes in the
-target feature.
+target feature. Two variables, \code{data} and \code{newdata} are made available to \code{fun} internally via a
+wrapper. `data` is the training data from `input` and `newdata` contains a single point from the
+prediction grid for \code{features} along with the training data for features not in \code{features}.
+This allows the computation of weights based on comparisons of the prediction grid to the training data.
 The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 in which case the default is the proportion of observations predicted to be in each class.}
 
@@ -148,6 +151,36 @@ lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
 plotPartialDependence(pd, data = getTaskData(iris.task))
+
+# simulated example with weights computed via the joint distribution
+# in practice empirical weights could be constructed by estimating the joint
+# density from the training data (the data arg to fun) and computing the probability
+# of the prediction grid under this estimated density (the newdata arg) or
+# by using something like data depth or outlier classification to weight the
+# unusualness of points in arg newdata.
+sigma = matrix(c(1, .5, .5, 1), 2, 2)
+C = chol(sigma)
+X = replicate(2, rnorm(100)) \%*\% C
+alpha = runif(2, -1, 1)
+y = X \%*\% alpha
+df = data.frame(y, X)
+tsk = makeRegrTask(data = df, target = "y")
+fit = train("regr.svm", tsk)
+
+w.fun = function(x, newdata) {
+ # compute multivariate normal density given sigma
+ sigma = matrix(c(1, .5, .5, 1), 2, 2)
+ dec = chol(sigma)
+ tmp = backsolve(dec, t(newdata), transpose = TRUE)
+ rss = colSums(tmp^2)
+ logretval = -sum(log(diag(dec))) - 0.5 * ncol(newdata) * log(2 * pi) - 0.5 * rss
+ w = exp(logretval)
+ # weight prediction grid given probability of grid points under the joint
+ # density
+ sum(w * x) / sum(w)
+}
+
+generatePartialDependenceData(fit, tsk, "X1", fun = w.fun)
 }
 \references{
 Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.
@@ -160,8 +193,11 @@ Other partial_dependence: \code{\link{plotPartialDependenceGGVIS}},
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 }

@@ -48,7 +48,10 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 Creates a cost measure for non-standard classification error costs.
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfusionMatrix}},
+  \code{\link{calculateConfusionMatrix}},
+  \code{\link{calculateROCMeasures}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
   \code{\link{performance}}
