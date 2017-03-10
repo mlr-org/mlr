@@ -58,12 +58,12 @@ getTaskTargetNames.Task = function(x) {
 }
 
 #' @export
-getTaskTargetNames.TaskDescSupervised = function(x) {
+getTaskTargetNames.SupervisedTaskDesc = function(x) {
   x$target
 }
 
 #' @export
-getTaskTargetNames.TaskDescUnsupervised = function(x) {
+getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
   character(0L)
 }
 
@@ -88,12 +88,12 @@ getTaskClassLevels.Task = function(x) {
 }
 
 #' @export
-getTaskClassLevels.TaskDescClassif = function(x) {
+getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
 #' @export
-getTaskClassLevels.TaskDescMultilabel = function(x) {
+getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDescription(x)$class.levels
 }
 
@@ -250,20 +250,9 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
+getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no") {
   checkTask(task, "Task")
-
-  if (missing(subset)) {
-    subset = NULL
-  } else {
-    assert(checkIntegerish(subset), checkLogical(subset))
-    if (is.logical(subset)) {
-      subset = which(subset)
-    } else if (is.double(subset)) {
-      subset = asInteger(subset)
-    }
-  }
-
+  checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
 
   task.features = getTaskFeatureNames(task)
@@ -290,9 +279,6 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
       df
     )
   }
-
-  if (missing(subset) || identical(subset, seq_len(task$task.desc$size)))
-    subset = NULL
 
   if (target.extra) {
     if (missing(features))
@@ -373,20 +359,15 @@ recodeSurvivalTimes = function(y, from, to) {
 #'
 #' @param task [\code{\link{CostSensTask}}]\cr
 #'   The task.
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
+#' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
-getTaskCosts = function(task, subset) {
+getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
-  d = if (ms)
-    task$env$costs
-  else
-    task$env$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = task$task.desc$size)
+  d = task$env$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -402,11 +383,11 @@ getTaskCosts = function(task, subset) {
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
-subsetTask = function(task, subset, features) {
+subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
-  if (!missing(subset)) {
+  if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
     if (task$task.desc$has.weights)
@@ -436,10 +417,14 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
-    "surv" = makeTaskDesc(task, td$id, td$target, td$censoring),
-    "cluster" = makeTaskDesc(task, td$id),
-    makeTaskDesc(task, td$id, td$target))
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
+  )
+
   return(task)
 }
 

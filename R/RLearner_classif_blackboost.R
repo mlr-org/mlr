@@ -77,7 +77,7 @@ predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
       # (caution: check whether the right class is assigned)
       # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) 
       p = p[, 1L]
-      levs = c(td$negative, td$positive)
+      levs = td$class.levels
       return(propVectorToMatrix(p, levs))
     }  
   } else {

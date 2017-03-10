@@ -45,6 +45,7 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   if (pretty.names) {
     learner.ids = getBMRLearnerIds(bmr)
     learner.short.names = getBMRLearnerShortNames(bmr)
+    checkDuplicatedLearnerNames(learner.short.names)
     names(learner.short.names) = learner.ids
     if (is.null(order.lrns)) {
       learner.short.names = learner.short.names[sort(learner.ids)]

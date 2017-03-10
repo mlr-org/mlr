@@ -72,11 +72,13 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   should a warning be shown?
 #'   Default is \code{TRUE}.
 #' @param check.packages [\code{logical(1)}]\cr
-#'   Check if required packages are installed. Calls
-#'   \code{find.package()}. If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
-#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only contains learners whose dependencies are installed.
-#'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
-#'   actually be constructed because of missing packages may be returned.
+#'   Check if required packages are installed. Calls \code{find.package()}. 
+#'   If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only 
+#'   contains learners whose dependencies are installed.
+#'   If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because 
+#'   of missing packages may be returned.
+#'   Default is \code{FALSE}.
 #' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return info table)?
 #'   Packages are loaded if and only if this option is \code{TRUE}.
@@ -93,9 +95,9 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
-  assertSubset(properties, getSupportedLearnerProperties())
+  assertSubset(properties, listLearnerProperties())
   assertFlag(quiet)
   assertFlag(warn.missing.packages)
   assertFlag(check.packages)
@@ -116,7 +118,7 @@ listLearners.default  = function(obj = NA_character_, properties = character(0L)
 #' @rdname listLearners
 listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
   if (!isScalarNA(obj))
-    assertSubset(obj, getSupportedTaskTypes())
+    assertSubset(obj, listTaskTypes())
   tab = getLearnerTable()
 
   if (warn.missing.packages && !all(tab$installed))
@@ -128,7 +130,7 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
     return(lapply(tab$id[tab$installed], makeLearner))
 
   tab$package = vcapply(tab$package, collapse)
-  properties = getSupportedLearnerProperties()
+  properties = listLearnerProperties()
   tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
   tab$properties = NULL
   setnames(tab, "id", "class")
