@@ -357,7 +357,7 @@ recodeSurvivalTimes = function(y, from, to) {
 #'
 #' Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task [\code{\link{CostSensTask}}]\cr
+#' @param task [\code{\link{makeCostSensTask}}]\cr
 #'   The task.
 #' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].

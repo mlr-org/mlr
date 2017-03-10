@@ -6,7 +6,7 @@
 #'
 #' @param x [\code{\link{Learner}} or \code{\link{WrappedModel}}]\cr
 #'   Learner or wrapped model.
-#' @param task [\code{\link{RegrTask}}]\cr
+#' @param task [\code{\link{makeRegrTask}}]\cr
 #'   Regression task.
 #'   If missing, \code{data} and \code{target} must be supplied.
 #' @param data [\code{data.frame}]\cr
