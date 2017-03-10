@@ -4,10 +4,6 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use \code{\link{listFilterMethods}}.
 #'
-#' @family generate_plot_data
-#' @family filter
-#' @aliases FilterValues
-#'
 #' @template arg_task
 #' @param method [\code{character}]\cr
 #'   Filter method(s), see above.
@@ -23,14 +19,19 @@
 #'   Default is empty list.
 #' @return [\code{FilterValues}]. A \code{list} containing:
 #'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
-#'	   Task description.}
+#'     Task description.}
 #'   \item{data}{[\code{data.frame}] with columns:
 #'     \itemize{
-#'       \item \code{name} Name of feature.
-#'       \item \code{type} Feature column type.
-#'       \item A column for each \code{method} with
-#'                   the feature importance values.
+#'       \item \code{name}[\code{character}]\cr
+#'         Name of feature.
+#'       \item \code{type}[\code{character}]\cr
+#'         Feature column type.
+#'       \item \code{method}[\code{numeric}]\cr 
+#'         One column for each method with the feature importance values.
 #'     }}
+#' @family generate_plot_data
+#' @family filter
+#' @aliases FilterValues
 #' @export
 generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
