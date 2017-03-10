@@ -27,7 +27,7 @@ makeClassificationViaRegressionWrapper = function(learner, predict.type = "respo
     id = paste(learner$id, "as.classify", sep = "."),
     type = "classif",
     predict.type = predict.type,
-    properties = c(learner$properties, "twoclass", "multiclass"),
+    properties = "",
     package = learner$package,
     par.set = list(),
     par.vals = list()
@@ -72,4 +72,11 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
   } else {
     t(apply(p, 1, function(x) exp(x)/sum(exp(x))))
   }
+}
+
+#' @export
+getLearnerProperties.ClassificationViaRegressionModel = function(learner){
+  props = getLearnerProperties(learner$next.learner)
+  props = union(props, "twoclass", "multiclass")
+  intersect(props, getSupportedLearnerProperties("classif"))
 }
