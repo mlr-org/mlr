@@ -1,7 +1,7 @@
 #' @title Fast Fourier transform features.
 #'
 #' @description
-#' The function extracts functional data features based on the fast fourier
+#' The function extracts features from functional data based on the fast fourier
 #' transform.
 #'
 #' @param data [\code{data.frame}]\cr
