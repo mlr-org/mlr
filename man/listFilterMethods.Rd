@@ -9,16 +9,20 @@ listFilterMethods(desc = TRUE, tasks = FALSE, features = FALSE,
 }
 \arguments{
 \item{desc}{[\code{logical(1)}]\cr
-Provide more detailed information about filters. Default is \code{TRUE}.}
+Provide more detailed information about filters.
+Default is \code{TRUE}.}
 
 \item{tasks}{[\code{logical(1)}]\cr
-Provide information on supported tasks. Default is \code{FALSE}.}
+Provide information on supported tasks.
+Default is \code{FALSE}.}
 
 \item{features}{[\code{logical(1)}]\cr
-Provide information on supported features. Default is \code{FALSE}.}
+Provide information on supported features.
+Default is \code{FALSE}.}
 
 \item{include.deprecated}{[\code{logical(1)}]\cr
-Should deprecated filter methods be included in the list. Default is \code{FALSE}.}
+Should deprecated filter methods be included in the list.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame}].

@@ -27,7 +27,7 @@
 * batchmark: Function to run benchmarks with the batchtools package on high performance computing clusters
 
 ## measures - new
-* tau, rho
+* kendalltau, spearmanrho
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".

@@ -289,7 +289,7 @@ test_that("check measure calculations", {
     expect_equal(NA_real_, measureRAE(0,0))
     expect_warning(measureRAE(0,0))
     expect_warning(measureRAE(c(1,1,1,1), c(1,2,3,4)))
-  })  
+  })
   expect_silent(measureRAE(c(1,1,1,0), c(2,2,2,2)))
   # mape
   suppressWarnings({
@@ -326,13 +326,13 @@ test_that("check measure calculations", {
   expect_equal(rmsle.test, as.numeric(rmsle.perf))
   #tau
   tau.test = 1
-  tau.perf = performance(pred.regr, measures = tau, model = mod.regr)
-  expect_equal(tau.test, tau$fun(pred = pred.regr))
+  tau.perf = performance(pred.regr, measures = kendalltau, model = mod.regr)
+  expect_equal(tau.test, kendalltau$fun(pred = pred.regr))
   expect_equal(tau.test, as.numeric(tau.perf))
   #rho
   rho.test = 1
-  rho.perf = performance(pred.regr, measures = rho, model = mod.regr)
-  expect_equal(rho.test, rho$fun(pred = pred.regr))
+  rho.perf = performance(pred.regr, measures = spearmanrho, model = mod.regr)
+  expect_equal(rho.test, spearmanrho$fun(pred = pred.regr))
   expect_equal(rho.test, as.numeric(rho.perf))
 
   #test multiclass measures
