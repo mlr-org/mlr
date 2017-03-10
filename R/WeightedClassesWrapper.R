@@ -33,7 +33,7 @@
 #'   Weight for each class.
 #'   Must be a vector of the same number of elements as classes are in task,
 #'   and must also be in the same order as the class levels are in
-#'   \code{getTaskDescription(task)$class.levels}.
+#'   \code{getTaskDesc(task)$class.levels}.
 #'   For convenience, one must pass a single number in case of binary classification, which
 #'   is then taken as the weight of the positive class, while the negative class receives a weight
 #'   of 1.
@@ -98,7 +98,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
 #' @export
 trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weights, wcw.weight = 1, ...) {
   .task = subsetTask(.task, .subset)
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   levs = td$class.levels
   p = .learner$wcw.param
   if (length(levs) == 2L) {

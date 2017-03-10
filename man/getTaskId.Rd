@@ -19,7 +19,7 @@ Get the id of the task.
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskDescription}},
+  \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
