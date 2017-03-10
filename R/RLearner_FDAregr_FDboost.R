@@ -65,6 +65,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
       fdn, gn, bsignal.knots, df, bsignal.degree, bsignal.differences, bsignal.check.ident)
   }
+  # add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty  
   for (fsn in names(tdesc$fd.scalars)) {
     mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
