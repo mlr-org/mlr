@@ -172,7 +172,8 @@ print.HyperParsEffectData = function(x, ...) {
 #' @param facet [\code{character(1)}]\cr
 #'  Specify what should be used as the facet axis for a particular geom. When
 #'  using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
-#'  for each outer loop. Must be a column from \code{HyperParsEffectData$data}
+#'  for each outer loop. Must be a column from \code{HyperParsEffectData$data}.
+#'  Please note that facetting is not supported with partial dependence plots!
 #'  Default is \code{NULL}.
 #' @param global.only [\code{logical(1)}]\cr
 #'  If \code{TRUE}, will only plot the current global optima when setting
@@ -280,6 +281,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   facet.flag = !is.null(facet)
   heatcontour.flag = plot.type %in% c("heatmap", "contour")
   partial.flag = hyperpars.effect.data$partial
+  facet.nested = !is.null(facet) && facet == "nested_cv_run" && !partial.flag
 
   if (partial.flag && is.null(partial.dep.learn))
     stopf("Partial dependence requested but partial.dep.learn not specified!")
@@ -367,7 +369,14 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           grid$learner_status = "Interpolated Point"
           grid$iteration = NA
           # combine the experiment data with interpolated data
-          combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], grid)
+          if (facet.nested) {
+            grid$nested_cv_run = run
+            combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration",
+              "nested_cv_run")], grid)
+          } else {
+            combined = rbind(d_run[,c(x,y,z,"learner_status",
+              "iteration")], grid)
+          }
           # combine each loop
           new_d = rbind(new_d, combined)
         }
@@ -389,7 +398,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       d = grid
     }
 
-    if (hyperpars.effect.data$nested && z.flag){
+    if (hyperpars.effect.data$nested && z.flag && !facet.nested){
       averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run",
         hyperpars.effect.data$hyperparams, "eol",
         "error.message", "learner_status")),
@@ -469,5 +478,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         plt = plt + geom_line()
     }
   }
+  if (facet.nested)
+    plt = plt + facet_wrap(as.formula(paste("~", "nested_cv_run")))
   return(plt)
 }
