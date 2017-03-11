@@ -24,7 +24,7 @@ learnerHelp = function(learner) {
         catf("Invalid input. Enter a number between 1 and %d", length(learner$callees))
       }
     }
-    for (pkg_ref in learner$package) {
+    for (pkg_ref in stri_replace_all(learner$package, "", regex = "[+!_]")) {
       h = utils::help(learner$callees[n], package = (pkg_ref))
       if (length(h) > 0) {
         return(h)
