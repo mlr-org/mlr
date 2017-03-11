@@ -7,7 +7,7 @@ test_that("classif_earth can do binary classification", {
   parset.list = list(
     list(),
     list(degree = 3L, nprune = 2L),
-    list(penalty = 2, nk = 2L, thres = 0.1),
+    list(penalty = 2, nk = 2L, thresh = 0.1),
     list(fast.k = 2L, fast.beta = 0.5)
   )
 
@@ -38,7 +38,7 @@ test_that("classif_earth can do multiclass classification", {
   parset.list = list(
     list(),
     list(degree = 3L, nprune = 2L),
-    list(penalty = 2, nk = 2L, thres = 0.1),
+    list(penalty = 2, nk = 2L, thresh = 0.1),
     list(fast.k = 2L, fast.beta = 0.5)
   )
 
