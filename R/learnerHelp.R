@@ -89,6 +89,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
   help.list = list()
   par.ids = getParamIds(par.set)
   pkgs = stri_replace_all(pkgs, "", regex = "[+!_]")
+  h = NULL
   for (f in rev(funs)) {
     for (pkg_ref in pkgs) {
       h = utils::help(f, package = (pkg_ref))
