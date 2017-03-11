@@ -20,7 +20,7 @@ makeRLearner.classif.ctree = function() {
     name = "Conditional Inference Trees",
     short.name = "ctree",
     note = "See `?ctree_control` for possible breakage for nominal features with missingness.",
-    callees = c("ctree", "ctree_control", "treeresponse")
+    callees = c("ctree", "ctree_control")
   )
 }
 

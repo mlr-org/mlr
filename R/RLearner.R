@@ -89,6 +89,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   learner$short.name = short.name
   learner$note = note
   learner$callees = callees
+  learner$help.list = makeParamHelpList(callees, package, par.set)
   return(learner)
 
 }
