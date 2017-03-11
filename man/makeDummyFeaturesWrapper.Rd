@@ -16,7 +16,8 @@ Available are:
 \describe{
   \item{"1-of-n":}{For n factor levels there will be n dummy variables.}
   \item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
-}}
+}
+Default is \dQuote{1-of-n}.}
 
 \item{cols}{[\code{character}]\cr
 Columns to create dummy features for. Default is to use all columns.}

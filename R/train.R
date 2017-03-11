@@ -65,7 +65,7 @@ train = function(learner, task, subset, weights = NULL) {
   # no vars? then use no vars model
 
   if (length(vars) == 0L) {
-    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDescription(task))
+    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDesc(task))
     time.train = 0
   } else {
     opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
@@ -91,5 +91,5 @@ train = function(learner, task, subset, weights = NULL) {
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
   }
   factor.levels = getTaskFactorLevels(task)
-  makeWrappedModel(learner, learner.model, getTaskDescription(task), subset, vars, factor.levels, time.train)
+  makeWrappedModel(learner, learner.model, getTaskDesc(task), subset, vars, factor.levels, time.train)
 }

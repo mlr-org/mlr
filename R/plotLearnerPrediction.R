@@ -74,7 +74,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     checkClass(task, "RegrTask"),
     checkClass(task, "ClusterTask")
   )
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   # features and dimensionality
   fns = getTaskFeatureNames(task)

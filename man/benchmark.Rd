@@ -65,6 +65,7 @@ friedmanPostHocTestBMR(bmr, p.value = 0.05)
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
+  \code{\link{batchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
@@ -85,5 +86,6 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
