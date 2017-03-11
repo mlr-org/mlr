@@ -13,10 +13,13 @@ learnerHelp = function(learner) {
       repeat {
         cat("Choose help page:\n")
         cat(paste0(seq_along(learner$callees), " : ", learner$callees, "\n", collapse=""))
-        n <- readline("(Ctrl-C to cancel)\n...: ")
+        n <- readline("0 : cancel\n...: ")
         n <- ifelse(grepl("\\D",n),-1,as.integer(n))
         if (is.finite(n) && n >= 1 && n <= length(learner$callees)) {
           break
+        }
+	if (identical(n, 0L)) {
+          return(invisible(NULL))
         }
         catf("Invalid input. Enter a number between 1 and %d", length(learner$callees))
       }
