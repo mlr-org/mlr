@@ -7,7 +7,7 @@ test_that("getTaskData", {
   expect_equal(df, multiclass.df[1:10, c(1:2, 5)])
 
   # recode.target
-  td = getTaskDescription(binaryclass.task)
+  td = getTaskDesc(binaryclass.task)
   df = getTaskData(binaryclass.task, recode.target="01")
   expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))

@@ -36,7 +36,7 @@
 generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))

@@ -44,7 +44,7 @@ makeRLearner.classif.bartMachine = function() {
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   levs = c(td$positive, td$negative)
   y = factor(y, levels = levs)
   bartMachine::bartMachine(X = d$data, y = y, ...)

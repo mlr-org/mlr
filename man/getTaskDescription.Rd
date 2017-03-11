@@ -2,7 +2,7 @@
 % Please edit documentation in R/Task_operators.R
 \name{getTaskDescription}
 \alias{getTaskDescription}
-\title{Get a summarizing task description.}
+\title{Deprecated, use \code{\link{getTaskDesc}} instead.}
 \usage{
 getTaskDescription(x)
 }
@@ -14,15 +14,5 @@ Task or its description object.}
 [\code{\link{TaskDesc}}].
 }
 \description{
-Get a summarizing task description.
-}
-\seealso{
-Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskFeatureNames}},
-  \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
-  \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
-  \code{\link{getTaskTargetNames}},
-  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
-  \code{\link{subsetTask}}
+Deprecated, use \code{\link{getTaskDesc}} instead.
 }
