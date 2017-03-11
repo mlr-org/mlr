@@ -35,10 +35,10 @@
 \alias{msle}
 \alias{measureMSLE}
 \alias{rmsle}
-\alias{tau}
-\alias{measureTau}
-\alias{rho}
-\alias{measureRho}
+\alias{kendalltau}
+\alias{measureKendallTau}
+\alias{spearmanrho}
+\alias{measureSpearmanRho}
 \alias{mmce}
 \alias{measureMMCE}
 \alias{acc}
@@ -190,13 +190,13 @@ measureMSLE(truth, response)
 
 rmsle
 
-tau
+kendalltau
 
-measureTau(truth, response)
+measureKendallTau(truth, response)
 
-rho
+spearmanrho
 
-measureRho(truth, response)
+measureSpearmanRho(truth, response)
 
 mmce
 

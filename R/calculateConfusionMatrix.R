@@ -70,7 +70,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
     rownames(result)[k + 2] = "-n-"
   }
 
-  result = list(result = result, task.desc = getTaskDescription(pred), relative = relative, sums = sums)
+  result = list(result = result, task.desc = getTaskDesc(pred), relative = relative, sums = sums)
 
   js = 1:k # indexes for nonmargin cols
 
@@ -119,9 +119,9 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
   nsmall = digits
   digits = nsmall - 1
 
-  cls = getTaskDescription(x$task.desc)$class.levels
+  cls = getTaskDesc(x$task.desc)$class.levels
   k = length(cls)
-  n = getTaskDescription(x$task.desc)$size
+  n = getTaskDesc(x$task.desc)$size
 
 
   if (x$relative) {

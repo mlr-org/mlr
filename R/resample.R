@@ -257,7 +257,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
   list(
     learner.id = learner.id,
     task.id = getTaskId(task),
-    task.desc = getTaskDescription(task),
+    task.desc = getTaskDesc(task),
     measures.train = ms.train,
     measures.test = ms.test,
     aggr = aggr,
