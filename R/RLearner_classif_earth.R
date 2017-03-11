@@ -2,7 +2,7 @@
 makeRLearner.classif.earth = function() {
   makeRLearnerClassif(
     cl = "classif.earth",
-    package = "!earth",
+    package = c("!earth", "stats"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "trace", default = 0, upper = 5, tunable = FALSE),
       makeLogicalLearnerParam(id = "keepxy",default = FALSE, tunable = FALSE),

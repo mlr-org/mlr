@@ -2,7 +2,7 @@
 makeRLearner.classif.xyf = function() {
   makeRLearnerClassif(
     cl = "classif.xyf",
-    package = "kohonen",
+    package = c("kohonen", "class"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "xdim", default = 8L, lower = 1L),
       makeIntegerLearnerParam(id = "ydim", default = 6L, lower = 1L),
@@ -18,7 +18,7 @@ makeRLearner.classif.xyf = function() {
     properties = c("numerics", "twoclass", "multiclass", "prob"),
     name = "X-Y fused self-organising maps",
     short.name = "xyf",
-    callees = "xyf"
+    callees = c("xyf", "somgrid")
   )
 }
 

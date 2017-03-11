@@ -2,7 +2,7 @@
 makeRLearner.classif.ada = function() {
   makeRLearnerClassif(
     cl = "classif.ada",
-    package = "ada",
+    package = c("ada", "rpart"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "loss", default = "exponential", values = c("exponential", "logistic")),
       makeDiscreteLearnerParam(id = "type", default = "discrete", values = c("discrete", "real", "gentle")),
@@ -30,7 +30,7 @@ makeRLearner.classif.ada = function() {
     name = "ada Boosting",
     short.name = "ada",
     note = "`xval` has been set to `0` by default for speed.",
-    callees = "ada"
+    callees = c("ada", "rpart.control")
   )
 }
 

@@ -33,7 +33,7 @@ makeRLearner.classif.RRF = function() {
     name = "Regularized Random Forests",
     short.name = "RRF",
     note = "",
-    callees = c("RRF", "importance")
+    callees = c("RRF")
   )
 }
 

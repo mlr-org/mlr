@@ -24,7 +24,7 @@ makeRLearner.classif.glmboost = function() {
     name = "Boosting for GLMs",
     short.name = "glmboost",
     note = "`family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited.",
-    callees = c("glmboost", "mboost", "boost_control")
+    callees = c("glmboost", "boost_control", "Binomial", "AdaExp", "AUC")
   )
 }
 
