@@ -127,8 +127,8 @@ getLearnerShortName = function(learner) {
 #' @template arg_learner
 #' @export
 #' @family learner
-learnerHelp = function(learner, ...) {
-  learner = checkLearner(learner, ...)
+learnerHelp = function(learner) {
+  learner = checkLearner(learner)
   if (!is.null(learner$callees) && learner$callees[1] != "") {
     n = 1
     if (length(learner$callees) > 1) {
@@ -144,7 +144,7 @@ learnerHelp = function(learner, ...) {
       }
     }
     for (pkg_ref in learner$package) {
-      h = help(learner$callees[n], package = (pkg_ref))
+      h = utils::help(learner$callees[n], package = (pkg_ref))
       if (length(h) > 0) {
         return(h)
       }
