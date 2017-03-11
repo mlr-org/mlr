@@ -100,7 +100,8 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       # catf("nothing found: %s", f)
       next
     }
-    html = capture.output(tools:::Rd2HTML(utils:::.getHelpFile(h)))
+    ghf = get(".getHelpFile", mode="function", envir=getNamespace("utils"))
+    html = capture.output(tools::Rd2HTML(ghf(h)))
     html = XML::htmlParse(html)
     tab = XML::getNodeSet(html, "//table[@summary='R argblock']")
     if (length(tab) < 1) {
