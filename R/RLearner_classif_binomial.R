@@ -15,14 +15,14 @@ makeRLearner.classif.binomial = function() {
     name = "Binomial Regression",
     short.name = "binomial",
     note = "Delegates to `glm` with freely choosable binomial link function via learner parameter `link`. We set 'model' to FALSE by default to save memory.",
-    callees = "glm"
+    callees = c("glm", "binomial")
   )
 }
 
 #' @export
 trainLearner.classif.binomial = function(.learner, .task, .subset, .weights = NULL, link = "logit", ...) {
   f = getTaskFormula(.task)
-  stats::glm(f, data = getTaskData(.task, .subset), family = binomial(link = link), weights = .weights, ...)
+  stats::glm(f, data = getTaskData(.task, .subset), family = stats::binomial(link = link), weights = .weights, ...)
 }
 
 #' @export
