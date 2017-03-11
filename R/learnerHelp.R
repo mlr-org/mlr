@@ -80,7 +80,7 @@ learnerParamHelp = function(learner, param) {
     if (p %in% names(learner$help.list)) {
       cat(learner$help.list[[p]], "\n\n")
     } else {
-      catf("No documentation found. Try to consult learnerHelp(%s).\n")
+      catf("No documentation found. Try to consult learnerHelp(\"%s\").\n", getLearnerId(learner))
     }
   }
 }
