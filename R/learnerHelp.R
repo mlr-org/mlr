@@ -115,11 +115,14 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       next
     }
     for (row in seq_len(nrow(tbl))) {
-      par.name = tbl[row, 1]
-      if (par.name %in% par.ids) {
-        help.list[[par.name]] = tbl[row, 2]
-      } else {
-        # catf("not interesting: %s par %s", f, par.name)
+      # the following loop handles occasions where multiple parameters are mentioned in
+      # one row, separated by commas.
+      for (par.name in stri_split(tbl[row, 1], regex=", *")[[1]]) {
+        if (par.name %in% par.ids) {
+          help.list[[par.name]] = tbl[row, 2]
+        } else {
+          # catf("not interesting: %s par %s", f, par.name)
+        }
       }
     }
   }
