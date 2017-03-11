@@ -37,7 +37,7 @@ makeRLearner.classif.lqa = function() {
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
     note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.',
-    callees = c("lqa", "lqa.control")
+    callees = c("lqa", "lqa.control", "adaptive.lasso", "ao", "bridge", "genet", "lasso","oscar", "penalreg", "ridge", "scad")
   )
 }
 

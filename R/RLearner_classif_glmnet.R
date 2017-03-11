@@ -45,7 +45,7 @@ makeRLearner.classif.glmnet = function() {
       before setting the specified parameters and after training.
       If you are setting glmnet.control parameters through glmnet.control,
       you need to save and re-set them after running the glmnet learner.",
-    callees = c("glmnet", "glmnet.control")
+    callees = c("glmnet", "glmnet.control", "predict.glmnet")
   )
 }
 

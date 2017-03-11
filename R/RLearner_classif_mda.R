@@ -24,7 +24,7 @@ makeRLearner.classif.mda = function() {
     name = "Mixture Discriminant Analysis",
     short.name = "mda",
     note = '`keep.fitted` has been set to `FALSE` by default for speed and we use `start.method = "lvq"` for more robust behavior / less technical crashes.',
-    callees = "mda"
+    callees = c("mda", "mda.start")
   )
 }
 

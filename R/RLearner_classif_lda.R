@@ -15,7 +15,7 @@ makeRLearner.classif.lda = function() {
     name = "Linear Discriminant Analysis",
     short.name = "lda",
     note = "Learner parameter `predict.method` maps to `method` in `predict.lda`.",
-    callees = "lda"
+    callees = c("lda", "predict.lda")
   )
 }
 

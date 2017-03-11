@@ -9,7 +9,7 @@ makeRLearner.classif.earth = function() {
       makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "penalty"),
       makeIntegerLearnerParam(id = "nk", lower = 1L),
-      makeNumericLearnerParam(id = "thres", default = 0.001),
+      makeNumericLearnerParam(id = "thresh", default = 0.001),
       makeIntegerLearnerParam(id = "minspan", default = 0L),
       makeIntegerLearnerParam(id = "endspan", default = 0L),
       makeNumericLearnerParam(id = "newvar.penalty", default = 0),
@@ -37,7 +37,7 @@ makeRLearner.classif.earth = function() {
     name = "Flexible Discriminant Analysis",
     short.name = "fda",
     note = "This learner performs flexible discriminant analysis using the earth algorithm. na.action is set to na.fail and only this is supported.",
-    callees = c("earth", "glm")
+    callees = c("earth", "glm", "binomial")
   )
 }
 

@@ -13,7 +13,7 @@ makeRLearner.classif.qda = function() {
     name = "Quadratic Discriminant Analysis",
     short.name = "qda",
     note = "Learner parameter `predict.method` maps to `method` in `predict.qda`.",
-    callees = "qda"
+    callees = c("qda", "predict.qda")
   )
 }
 

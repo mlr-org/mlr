@@ -2,7 +2,7 @@
 makeRLearner.classif.bst = function() {
   makeRLearnerClassif(
     cl = "classif.bst",
-    package = "bst",
+    package = c("bst", "rpart"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "cost", default = 0.5, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "family", values = c("gaussian", "hinge")),
@@ -33,7 +33,7 @@ makeRLearner.classif.bst = function() {
     name = "Gradient Boosting",
     short.name = "bst",
     note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.',
-    callees = c("bst", "bst_control")
+    callees = c("bst", "bst_control", "rpart.control")
   )
 }
 
