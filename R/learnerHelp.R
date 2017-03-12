@@ -81,6 +81,7 @@ learnerParamHelp = function(learner, param) {
     }
     return(invisible(NULL))
   }
+  assertCharacter(param, any.missing = FALSE)
   all.param = getParamIds(learner$par.set)
   not.found.param = param[!param %in% all.param]
   if (length(not.found.param) > 0) {
