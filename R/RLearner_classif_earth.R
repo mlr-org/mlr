@@ -37,7 +37,7 @@ makeRLearner.classif.earth = function() {
     name = "Flexible Discriminant Analysis",
     short.name = "fda",
     note = "This learner performs flexible discriminant analysis using the earth algorithm. na.action is set to na.fail and only this is supported.",
-    callees = c("earth", "glm", "binomial")
+    callees = c("earth", "glm", "glm.control", "binomial")
   )
 }
 
