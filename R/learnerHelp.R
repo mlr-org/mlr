@@ -10,14 +10,14 @@ learnerHelp = function(learner) {
   learner = checkLearner(learner)
   callees = learner$callees
   if (identical(callees, "")) {
-    callees = NULL
+    callees = character(0L)
   }
   mlr.help = utils::help(learner$id, package = "mlr")
   if (length(mlr.help) > 0) {
     # we can give some more help
     callees = c("mlr specifics", callees)
   }
-  if (!is.null(callees)) {
+  if (length(callees) > 0) {
     n = 1
     if (length(callees) > 1) {
       repeat {
