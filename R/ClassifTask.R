@@ -20,12 +20,11 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
       data[[target]] = droplevels(x)
     }
   }
+  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
   }
-
-  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
-
 
   task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
   addClasses(task, "ClassifTask")
