@@ -47,7 +47,8 @@ learnerHelp = function(learner) {
       }
     }
   }
-  catf("No information about learner %s found.", coalesce(learner$name, learner$shortname, learner$id))
+  catf("No information about learner %s found.",
+    coalesce(learner$name, learner$shortname, learner$id))
   invisible(NULL)
 }
 
@@ -58,15 +59,27 @@ learnerHelp = function(learner) {
 #'
 #' @template arg_learner
 #' @param param [\code{character}]\cr
-#'   Parameter(s) to describe. If no argument is given, all parameters with a description
-#'   are printed.
+#'   Parameter(s) to describe. If no argument is given, information on the documentation status
+#'   of all parameters is printed.
 #' @export
 #' @family learner
 #' @family help
 learnerParamHelp = function(learner, param) {
   learner = checkLearner(learner)
   if (missing(param)) {
-    param = names(learner$help.list)
+    if (length(learner$help.list) > 0) {
+      cat("Documentation for the following parameters is present:\n")
+      for (p in names(learner$help.list)) {
+        catf("- %s (%s)", p,
+          stri_match_first_regex(learner$help.list[[p]], "(?<= )[^ ]*::[^\\n]*"))
+      }
+    }
+    missingdoc = setdiff(getParamIds(learner$par.set), names(learner$help.list))
+    if (length(missingdoc) > 0) {
+      catf("The following parameters are missing documentation:\n%s",
+        collapse(strwrap(collapse(missingdoc, sep = ", "), indent = 2), "\n"))
+    }
+    return(invisible(NULL))
   }
   all.param = getParamIds(learner$par.set)
   not.found.param = param[!param %in% all.param]
@@ -176,7 +189,8 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       # one row, separated by commas.
       for (par.name in stri_split(tbl[row, 1], regex=", *")[[1]]) {
         if (par.name %in% par.ids) {
-          help.list[[par.name]] = paste0("Argument of: ", pkg_ref, "::", f, "\n\n", prepareString(tbl[row, 2]))
+          help.list[[par.name]] = paste0("Argument of: ",
+            pkg_ref, "::", f, "\n\n", prepareString(tbl[row, 2]))
         } else {
           # catf("not interesting: %s par %s", f, par.name)
         }
