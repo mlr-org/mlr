@@ -78,6 +78,11 @@ learnerParamHelp = function(learner, param) {
   for (p in param) {
     catf("  *%s*:", p)
     print(learner$par.set$pars[[p]])
+    req = learner$par.set$pars[[p]]$requires
+    if (!is.null(req)) {
+      cat("Requires: ")
+      print(req)
+    }
     cat('\n')
     if (p %in% names(learner$help.list)) {
       output = learner$help.list[[p]]
