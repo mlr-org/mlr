@@ -127,7 +127,7 @@ prepareString = function(string) {
   # turn 'a  \n   \n  \n b' into 'a\n\nb'
   string = stri_replace_all(string, "\n\n", regex = " *\n *(\n *)+")
   # turn 'a \n b' into 'a b'
-  string = stri_replace_all(string, " ", regex = " *\n *(?=[^\n])")
+  string = stri_replace_all(string, " ", regex = "(?<!\n) *\n *(?!\n)")
   # turn ' \n\n ' into '\n'
   # strwrap does this for us, apparently.
   #string = stri_replace_all(string, "\n", regex = " *\n\n *")
