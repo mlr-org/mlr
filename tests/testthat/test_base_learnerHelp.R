@@ -22,7 +22,7 @@ test_that("learnerHelp of learner with multiple help pages", {
   hlp2 = testfn("classif.qda")
 
   # for regr.randomForest, there is mlr-specific help which should be the first option.
-  expect_equivalent(help("regr.randomForest"), testfn("regr.randomForest"))
+  expect_equivalent(utils::help("regr.randomForest", package = "mlr"), testfn("regr.randomForest"))
 
   environment(testfn)$readline = function(x) { cat(x, "\n") ; 2 }
 
@@ -32,6 +32,11 @@ test_that("learnerHelp of learner with multiple help pages", {
 
   expect_false(identical(hlp1, hlp3))
 
+})
+
+test_that("learnerHelp of wrapped learner", {
+  # check that it doesn't give an error
+  learnerHelp(makeBaggingWrapper(makeLearner("classif.qda"), 2))
 })
 
 test_that("learnerParamHelp", {
@@ -69,6 +74,19 @@ test_that("learnerParamHelp", {
   expect_output(learnerParamHelp(
     makeLearner("classif.randomForest", cutoff = c(.1, .2, .3)), "cutoff"),
     "Value:.+0\\.1.+0\\.2.+0\\.3")
-
 })
 
+test_that("learnerParamHelp of wrapped learner", {
+  w1 = makeBaggingWrapper(makeLearner("classif.qda", nu = 4), 2)
+  w2 = makeOversampleWrapper(w1)
+
+  # correct info is given
+  expect_output(learnerParamHelp(w1, "nu"), "Value: +4")
+  expect_output(learnerParamHelp(w2, "nu"), "Value: +4")
+
+  expect_message(learnerParamHelp(w1),
+    "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
+  expect_message(learnerParamHelp(w2),
+    "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
+
+})

@@ -22,23 +22,23 @@ learnerHelp = function(learner) {
     if (length(callees) > 1) {
       repeat {
         cat("Choose help page:\n")
-        cat(paste0(seq_along(callees), " : ", callees, "\n", collapse=""))
-        n <- readline("0 : cancel\n...: ")
-        n <- ifelse(grepl("\\D",n),-1,as.integer(n))
+        cat(stri_join(seq_along(callees), " : ", callees, "\n", collapse=""))
+        n = readline("0 : cancel\n...: ")
+        n = suppressWarnings(as.integer(n))
         if (is.finite(n) && n >= 1 && n <= length(callees)) {
           break
         }
 	if (identical(n, 0L)) {
           return(invisible(NULL))
         }
-        catf("Invalid input. Enter a number between 1 and %d", length(callees))
+        catf("Invalid input. Enter a number between 0 and %d", length(callees))
       }
     }
     if (length(mlr.help) > 0) {
       if (n == 1) {
         return(mlr.help)
       }
-      n = n - 1
+      n = max(0, n - 1)
     }
     for (pkg_ref in stri_replace_all(learner$package, "", regex = "[+!_]")) {
       h = utils::help(callees[n], package = (pkg_ref))
@@ -58,15 +58,31 @@ learnerHelp = function(learner) {
 #'   is automatically extracted from the help pages of the learner, so it may be incomplete.
 #'
 #' @template arg_learner
-#' @param param [\code{character}]\cr
-#'   Parameter(s) to describe. If no argument is given, information on the documentation status
-#'   of all parameters is printed.
+#' @param param [\code{character} | NULL]\cr
+#'   Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
+#'   status of all parameters.
 #' @export
 #' @family learner
 #' @family help
-learnerParamHelp = function(learner, param) {
+learnerParamHelp = function(learner, param = NULL) {
   learner = checkLearner(learner)
-  if (missing(param)) {
+  if (!inherits(learner, "RLearner")) {
+    current.learner = learner
+    repeat {
+      next.learner = current.learner$next.learner
+      if (is.null(next.learner)) {
+        break
+      } 
+      if (inherits(next.learner, "RLearner")) {
+        messagef("The learner '%s' is a wrapped learner. Showing documentation of '%s' instead.",
+          learner$id, next.learner$id)
+        return(Recall(next.learner, param))
+      }
+      current.learner = next.learner
+    }
+    stop("The learner does not provide documentation.")
+  }
+  if (is.null(param)) {
     if (length(learner$help.list) > 0) {
       cat("Documentation for the following parameters is present:\n")
       for (p in names(learner$help.list)) {
@@ -114,7 +130,7 @@ learnerParamHelp = function(learner, param) {
 # remove nesting levels of XML tags
 simplifyNode = function(node) {
   children = XML::xmlChildren(node)
-  lens = nchar(stri_trim(sapply(children, XML::xmlValue)))
+  lens = nchar(stri_trim(vcapply(children, XML::xmlValue)))
   if (length(lens) < 1) {
     return(NULL)
   }
@@ -195,7 +211,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       # one row, separated by commas.
       for (par.name in stri_split(tbl[row, 1], regex=", *")[[1]]) {
         if (par.name %in% par.ids) {
-          help.list[[par.name]] = paste0("Argument of: ",
+          help.list[[par.name]] = stri_join("Argument of: ",
             pkg_ref, "::", f, "\n\n", prepareString(tbl[row, 2]))
         } else {
           # catf("not interesting: %s par %s", f, par.name)
