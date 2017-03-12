@@ -14,8 +14,11 @@
 #'   representation should be calculated as a feature representation. Must be one
 #'   of \dQuote{amplitude} or \dQuote{phase}. Default: \dQuote{amplitude}.
 #' @return [\code{data.frame}] containing the fourier coefficients.
+#' @rdname extractFDAFeatures
 #' @export
-extractFDAFeatFourier = function(data, target = NULL, cols, trafo.coeff = "phase") {
+extractFDAFeatFourier = function(data, target = NULL, cols, vals = NULL, trafo.coeff = "phase") {
+
+
   assertClass(data, "data.frame")
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
   # Transform data to matrix for stats::fft

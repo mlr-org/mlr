@@ -5,32 +5,35 @@
 #'
 #' The function \code{extractFDAFeatures} performs the extraction for a
 #' single functional covariate. Additionally, a \dQuote{extractFDAFeatDesc} object
-#' which can contain \dQuote{learned} coefficients and helpful data.
-#' It can then be used together with a new data set in order to reimpute
-#'
-#' The imputation techniques can be specified for each functional feature.
+#' which can contain \dQuote{learned} coefficients and other helpful data for
+#' extraction during the predict-phase is returned. This can be used with
+#' \code{\link{reExtractFDAFeatures}} to extract features during the prediction phase.
 #'
 #' You can either provide an arbitrary object, use a built-in method listed
-#' under \code{\link{FDAFeatExtracts}} or create one yourself using
-#' \code{\link{makeFDAFeatExtractMethod}}.
+#' under \code{\link{extractFDAFeatures}} or create one yourself using
+#' \code{\link{makeExtractFDAFeatMethod}}.
 #'
 #' @details
 #' The description object contains these slots
 #' \describe{
 #'   \item{target [\code{character}]}{See argument.}
-#'   \item{fd.eatures [\code{character}]}{Feature names (column names of \code{data}).}
+#'   \item{cols} [\code{character}]}{colum names of data}
+#'   \item{fd.features [\code{character}]}{Feature names (column names of
+#'   \code{data}) for each functional feature.}
+#'   \item{fd.grids [\code{character}]}{Measure points (e.g time point for each
+#'   column of each functional feature of \code{data})}
 #' }
 #'
 #' @template arg_taskdf
 #' @param target [\code{character}]\cr
 #'   Name of the column(s) specifying the response.
 #'   Default is \code{character(0)}.
-#' @param classes [\code{named list}]\cr
-#'   Named list containing imputation techniques for classes of columns.
-#'   E.g. \code{list(numeric = imputeMedian())}.
+#' @param feat.methods [\code{named list}]\cr
+#'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
+#'   for each functional covariate.
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
-#'   \item{desc [\code{ImputationDesc}]}{Description object.}
+#'   \item{desc [\code{extracFDAFeatDesc}]}{Description object.}
 #' @export
 #' @family
 #' @examples
@@ -57,28 +60,37 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   assert(all(names(fd.features) == names(fd.grids)))
   assertSubset(unlist(fd.features), choices = colnames(obj))
 
-  desc = makeS3Obj("extractFDAFeatDesc",
+  desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
+    coln = colnames(data),
+    colclasses = vcapply(obj, function(x) class(x)[1L]),
     fd.features = fd.features,
     fd.grids = fd.grids,
     extractFDAFeat = namedList(names(feat.methods))
   )
 
+  # Add methods to description
   desc$extractFDAFeat[names(feat.methods)] = feat.methods
 
   # cleanup the empty list
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
 
-  # Apply function from x to all functional features and return as list of 
+  # Subset fd.features accordingly
+  desc$fd.features = desc$fd.features[names(desc$extractFDAFeat)]
+
+  # Assert that all functional features to be transformed are numeric
+  assert(unique(vcapply(obj[, unlist(desc$fd.features)], function(x) class(x)[1L])) == "numeric")
+
+  # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
   desc$extractFDAFeat = Map(function(xn, x, fd.cols) {
     list(
-      extractFDAFeat = x$FDAExtract,  # desc$extractFDAFeat$FDAExtract is defined in method, used for test
-      feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols)))
+      reextract = x$reextract,  # pass on for extraction in predict phase
+      feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols))),
+      args = x$args
     )
-    #FIXME: desc$fd.features still has original length
   }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
-    # 
+    #
   # Extract feats for every functional feature and cbind to data.frame
   vals = extractSubList(desc$extractFDAFeat, "feats", simplify = FALSE)
   df = data.frame(do.call(cbind, vals))
@@ -95,9 +107,12 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
   fd.grids = getTaskDescription(obj)$fd.grids
   data = getTaskData(obj)
   target = getTaskTargetNames(obj)
-
+  # FIXME: Convert to normal task, as it is no longer a FDA Task afterwards
   extractFDAFeatures.data.frame(obj = data, target = target, feat.methods = feat.methods,
     fd.features = fd.features, fd.grids = fd.grids)
+  # Reappend target
+  # df[-which(colnames(df) %in% unlist(desc$fd.features))]
+  # FIXME: convert Task to Normal Task instead
 }
 
 
@@ -130,71 +145,38 @@ reExtractFDAFeatures = function(obj, desc) {
 reExtractFDAFeatures.data.frame = function(obj, desc) {
   assertClass(desc, classes = "extractFDAFeatDesc")
 
-  
-  # FIXME: Start from here code is just copy paste
   # check for new columns
-  new.cols = names(which(names(x) %nin% desc$cols))
+  new.cols = names(which(names(obj) %nin% desc$coln))
   if (length(new.cols))
-    stop("New columns (%s) found in data. Unable to impute.", collapse(new.cols))
+    stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
 
   # check for same storage type
-  classes = vcapply(x, function(x) class(x)[1L])
+  classes = vcapply(obj, function(x) class(x)[1L])
   i = intersect(names(classes), names(desc$classes))
   i = which.first(classes[i] != desc$classes[i])
   if (length(i) > 0L) {
-    stopf("Some column types have changed, e.g. for column '%s' (expected '%s', got '%s')", names(classes[i]), desc$classes[i], classes[i])
+    stopf("Some column types have changed, e.g. for column '%s' (expected '%s', got '%s')",
+      names(classes[i]), desc$classes[i], classes[i])
   }
 
-  # restore dropped columns
-  x[setdiff(desc$features, names(x))] = NA
-
-  # calculate dummies as nums or factors (see option)
-  dummy.cols = lapply(x[desc$dummies], is.na)
-  names(dummy.cols) = sprintf("%s.dummy", desc$dummies)
-  not.ok = which.first(names(dummy.cols) %in% names(x))
-  if (length(not.ok))
-    stopf("Dummy column '%s' already present in data", names(dummy.cols)[not.ok])
-  dummy.cols = if (desc$dummy.type == "numeric")
-    lapply(dummy.cols, as.numeric)
-  else
-    lapply(dummy.cols, factor, levels = c("FALSE", "TRUE"))
-
-  # check for new levels and replace with NAs
-  if (desc$impute.new.levels) {
-    cols = names(desc$lvls)
-    newlvls = Map(function(x, expected) setdiff(levels(x), expected),
-      x = x[cols], expected = desc$lvls)
-    newlvls = Filter(length, newlvls)
-    if (length(newlvls))
-      x[names(newlvls)] = Map(function(x, nl) droplevels(replace(x, x %in% nl, NA)),
-        x = x[names(newlvls)], nl = newlvls)
-  }
-
-  # actually do the imputation
-  cols = intersect(names(x), names(desc$impute))
-  x[cols] = Map(
-    function(xn, obj) do.call(obj$impute, c(list(data = x, target = desc$target, col = xn), obj$args)),
-    xn = cols, obj = desc$impute[cols])
-
-  # recode factor levels
-  if (desc$recode.factor.levels) {
-    cols = names(desc$lvls)
-    x[cols] = Map(function(x, expected) {
-      factor(as.character(x), levels = expected)
-    }, x = x[cols], expected = desc$lvls)
-  }
-
-  x[names(dummy.cols)] = dummy.cols
-  data.frame(x, stringsAsFactors = FALSE)
+  # reExtract features using reExtractDescription and return
+  df = Map(
+    function(xn, x, fd.cols) {
+      do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
+      }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
+  data.frame(do.call(cbind, df))
 }
 
 
 #' @export
 reExtractFDAFeatures.Task = function(obj, desc) {
+  # get data and pass to extractor
   df = getTaskData(obj)
   extracted = reExtractFDAFeatures.data.frame(df, desc)
+  extracted
+  # Reappend target
+  # df[-which(colnames(df) %in% unlist(desc$fd.features))]
   # FIXME: convert Task to Normal Task instead
   # We need to ensure this becomes a normal task
-  x = changeData(obj, data = extracted$data)
-  x
+  # changeData(obj, data = extracted)
 }
