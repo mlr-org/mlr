@@ -88,6 +88,7 @@ learnerParamHelp = function(learner, param) {
   }
   # put param in the same order as par.set
   param = all.param[all.param %in% param]
+  values = getHyperPars(learner)
   for (p in param) {
     catf("  *%s*:", p)
     print(learner$par.set$pars[[p]])
@@ -95,6 +96,10 @@ learnerParamHelp = function(learner, param) {
     if (!is.null(req)) {
       cat("Requires: ")
       print(req)
+    }
+    if (!is.null(values[[p]])) {
+      catf("Value: %s",
+        ifelse(testScalar(values[[p]]), values[[p]], capture.output(print(values[[p]]))))
     }
     if (p %in% names(learner$help.list)) {
       output = learner$help.list[[p]]

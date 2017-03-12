@@ -60,5 +60,15 @@ test_that("learnerParamHelp", {
   # check this doesn't give an error
   learnerParamHelp("classif.__mlrmocklearners__2")
 
+  # check that values are printed
+  expect_output(learnerParamHelp(
+    makeLearner("classif.qda", nu = 3), "nu"),
+    "Value: +3")
+
+  # values for vectorial params work
+  expect_output(learnerParamHelp(
+    makeLearner("classif.randomForest", cutoff = c(.1, .2, .3)), "cutoff"),
+    "Value:.+0\\.1.+0\\.2.+0\\.3")
+
 })
 
