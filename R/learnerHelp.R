@@ -83,7 +83,6 @@ learnerParamHelp = function(learner, param) {
       cat("Requires: ")
       print(req)
     }
-    cat('\n')
     if (p %in% names(learner$help.list)) {
       output = learner$help.list[[p]]
       cat(collapse(strwrap(output), sep="\n"), "\n\n")
@@ -130,7 +129,8 @@ prepareString = function(string) {
   # turn 'a \n b' into 'a b'
   string = stri_replace_all(string, " ", regex = " *\n *(?=[^\n])")
   # turn ' \n\n ' into '\n'
-  string = stri_replace_all(string, "\n", regex = " *\n\n *")
+  # strwrap does this for us, apparently.
+  #string = stri_replace_all(string, "\n", regex = " *\n\n *")
   return(string)
 }
 
@@ -176,7 +176,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       # one row, separated by commas.
       for (par.name in stri_split(tbl[row, 1], regex=", *")[[1]]) {
         if (par.name %in% par.ids) {
-          help.list[[par.name]] = prepareString(tbl[row, 2])
+          help.list[[par.name]] = paste0("Argument of: ", pkg_ref, "::", f, "\n\n", prepareString(tbl[row, 2]))
         } else {
           # catf("not interesting: %s par %s", f, par.name)
         }
