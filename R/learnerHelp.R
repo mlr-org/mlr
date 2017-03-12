@@ -77,12 +77,56 @@ learnerParamHelp = function(learner, param) {
   param = all.param[all.param %in% param]
   for (p in param) {
     catf("  *%s*:", p)
+    print(learner$par.set$pars[[p]])
+    cat('\n')
     if (p %in% names(learner$help.list)) {
-      cat(learner$help.list[[p]], "\n\n")
+      output = learner$help.list[[p]]
+      cat(collapse(strwrap(output), sep="\n"), "\n\n")
     } else {
       catf("No documentation found. Try to consult learnerHelp(\"%s\").\n", getLearnerId(learner))
     }
   }
+}
+
+# remove nesting levels of XML tags
+simplifyNode = function(node) {
+  children = XML::xmlChildren(node)
+  lens = nchar(stri_trim(sapply(children, XML::xmlValue)))
+  if (length(lens) < 1) {
+    return(NULL)
+  }
+  if (sum(lens) == max(lens)) {
+    return(simplifyNode(children[[which.max(lens)]]))
+  } else {
+    return(children[lens != 0])
+  }
+}
+
+# collect all <li><code>xxx</code>yyy</li> in the document
+# and form a data.frame with two columns corresponding to xxx and yyy.
+codeListToTable = function(html) {
+  lis = XML::getNodeSet(html, "//li")
+  lislis = lapply(lis, function(li) {
+      lichi = simplifyNode(li)
+      if (length(lichi) < 2 || names(lichi)[1] != "code") {
+        return(NULL)
+      }
+      parname = XML::xmlValue(lichi[[1]])
+      pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
+      stri_trim(c(parname, pardesc))
+    })
+  as.data.frame(do.call(rbind, lislis), stringsAsFactors = FALSE)
+}
+
+# Remove superfluous newlines.
+prepareString = function(string) {
+  # turn 'a  \n   \n  \n b' into 'a\n\nb'
+  string = stri_replace_all(string, "\n\n", regex = " *\n *(\n *)+")
+  # turn 'a \n b' into 'a b'
+  string = stri_replace_all(string, " ", regex = " *\n *(?=[^\n])")
+  # turn ' \n\n ' into '\n'
+  string = stri_replace_all(string, "\n", regex = " *\n\n *")
+  return(string)
 }
 
 makeParamHelpList = function(funs, pkgs, par.set) {
@@ -104,14 +148,22 @@ makeParamHelpList = function(funs, pkgs, par.set) {
     ghf = get(".getHelpFile", mode="function", envir=getNamespace("utils"))
     html = capture.output(tools::Rd2HTML(ghf(h)))
     html = XML::htmlParse(html)
+    # try to extract the 'R argblock' table
     tab = XML::getNodeSet(html, "//table[@summary='R argblock']")
     if (length(tab) < 1) {
       next
     }
-    tbl = XML::readHTMLTable(tab[[1]], header = FALSE, stringsAsFactors = FALSE)
-    if (!identical(ncol(tbl), 2L)) {
-      # bad formatting
-      # catf("bad formatting: %s", f)
+    tbl = do.call(rbind, lapply(tab, function(t) {
+        tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
+        if (identical(ncol(tbl), 2L)) {
+          tbl
+        }
+      }))
+    # we also try to extract generally all lists that begin with a code string.
+    # this gets appended to the front, so that the (more trustworthy) html table
+    # extract will overwrite the <li>-extract if a param occurs in both.
+    tbl = rbind(codeListToTable(html), tbl)
+    if (is.null(tbl)) {
       next
     }
     for (row in seq_len(nrow(tbl))) {
@@ -119,7 +171,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       # one row, separated by commas.
       for (par.name in stri_split(tbl[row, 1], regex=", *")[[1]]) {
         if (par.name %in% par.ids) {
-          help.list[[par.name]] = tbl[row, 2]
+          help.list[[par.name]] = prepareString(tbl[row, 2])
         } else {
           # catf("not interesting: %s par %s", f, par.name)
         }
