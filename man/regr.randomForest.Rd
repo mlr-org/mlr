@@ -33,6 +33,10 @@ Currently implemented methods are:
 For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and,
 in the case that this results in a negative variance estimate, the values are truncated at 0.
 
+Note that when using the \dQuote{jackknife} procedure for se estimation, using a small number of
+trees can lead to training data observations that are never out-of-bag. The current implementation
+ignores these observations, but in the original definition, the resulting se estimation would be undefined.
+
 Please note that all of the mentioned \code{se.method} variants do not affect the computation
 of the posterior mean \dQuote{response} value. This is always the same as from the underlying
 randomForest.
