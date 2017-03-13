@@ -33,4 +33,34 @@ test_that("FDA_classif_knn behaves like original api", {
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
 
+
+
+
+  # # test that different metrics work as well
+  # skip_on_cran()
+  # set.seed(getOption("mlr.debug.seed"))
+  # a2 = fda.usc::classif.knn(glearn, mlearn,
+  #                           metric = metric.hausdorff,
+  #                           par.CV = list(trim = 0.5))
+  # p12 = predict(a1, mtest)
+  # p22 = predict(a1, mlearn)
+  #
+  # lrn2 = makeLearner("fdaclassif.knn",
+  #                    par.vals = list(knn = 1L, trim = 0.5,
+  #                                    metric = "metric.hausdorff"))
+  #
+  # set.seed(getOption("mlr.debug.seed"))
+  # m2 = train(lrn2, task)
+  # cp2 = predict(m2, newdata = as.data.frame(mtest$data))
+  # cp2 = unlist(cp2$data, use.names = FALSE)
+  #
+  # cp22 = predict(m2, newdata = as.data.frame(mlearn$data))
+  # cp22 = unlist(cp22$data, use.names = FALSE)
+  #
+  # # check if the output from the original API matches the mlr learner's output
+  # expect_equal(as.character(cp22), as.character(p22))
+  # expect_equal(as.character(cp2), as.character(p12))
+
 })
+
+
