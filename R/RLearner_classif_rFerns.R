@@ -11,10 +11,9 @@ makeRLearner.classif.rFerns = function() {
       makeLogicalLearnerParam(id = "saveErrorPropagation", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "saveForest", default = TRUE, tunable = FALSE)
     ),
-    properties = c("numerics", "twoclass", "multiclass", "factors", "ordered"),
+    properties = c("numerics", "twoclass", "multiclass", "factors", "ordered", "oobpreds"),
     name = "Random ferns",
-    short.name = "rFerns",
-    note = ""
+    short.name = "rFerns"
   )
 }
 
@@ -27,4 +26,9 @@ trainLearner.classif.rFerns = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.classif.rFerns = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, .newdata, ...)
+}
+
+#' @export
+getOOBPredsLearner.classif.rFerns = function(.learner, .model) {
+  .model$learner.model$oobPreds
 }

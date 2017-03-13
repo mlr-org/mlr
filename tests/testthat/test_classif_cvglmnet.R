@@ -1,8 +1,11 @@
 context("classif_cvglmnet")
 
 test_that("classif_cvglmnet", {
-  requirePackages("glmnet", default.method = "load")
+  requirePackagesOrSkip("glmnet", default.method = "load")
+
   parset.list = list(
+    list(),
+    list(mnlam = 4),
     list(nlambda = 20, nfolds = 5)
   )
 
@@ -16,12 +19,13 @@ test_that("classif_cvglmnet", {
     x[, binaryclass.class.col] = NULL
     pars = list(x = as.matrix(x), y = y, family = "binomial")
     pars = c(pars, parset)
+    glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
+      on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet::cv.glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
     } else {
       m = do.call(glmnet::cv.glmnet, pars)
     }

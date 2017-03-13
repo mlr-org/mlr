@@ -23,6 +23,14 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
 
+#' @export
+getFailureModelDump.HomogeneousEnsembleModel = function(model) {
+  mods = getLearnerModel(model, more.unwrap = FALSE)
+  msgs = lapply(mods, getFailureModelDump)
+  j = which.first(!is.null(msgs))
+  ifelse(j == 0L, NULL, msgs[[j]])
+} 
+
 #' Deprecated, use \code{getLearnerModel} instead.
 #' @param model Deprecated.
 #' @param learner.models Deprecated.
@@ -47,7 +55,6 @@ getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) 
 # rows = newdata points, cols = ensembles members
 # does only work for responses, not probs, se, etc
 predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
-  classes = .model$task.desc$class.levels
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # for classif we convert factor to char, nicer to handle later on
   preds = lapply(models, function(mod) {
@@ -58,7 +65,6 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
   })
   do.call(cbind, preds)
 }
-
 
 # call this at end of trainLearner.CostSensRegrWrapper
 # FIXME: potentially remove this when ChainModel is removed

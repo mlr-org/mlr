@@ -21,4 +21,3 @@ Default is \code{0.5}.}
 Takes two bit strings and creates a new one of the same size by selecting the items from the first string or
 the second, based on a given rate (the probability of choosing an element from the first string).
 }
-

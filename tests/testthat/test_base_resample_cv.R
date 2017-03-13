@@ -23,7 +23,7 @@ test_that("cv resampling works", {
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)
 
-  requirePackages("rpart", default.method = "load")
+  requirePackagesOrSkip("rpart", default.method = "load")
   tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
@@ -48,4 +48,16 @@ test_that("cv instance works is stochastic", {
   rin1 = makeResampleInstance(makeResampleDesc("CV", iters = 2L), size = 500)
   rin2 = makeResampleInstance(makeResampleDesc("CV", iters = 2L), size = 500)
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
+})
+
+
+test_that("test.join works somehow", {
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+
+  # check if test.join computes acc correctly
+  mm = setAggregation(acc, test.join)
+  r = resample(lrn, sonar.task, cv2, measures = mm)
+  rpred = getRRPredictions(r)
+  expect_equal(as.numeric(r$aggr),
+    mean(getPredictionTruth(rpred) == getPredictionResponse(rpred)))
 })

@@ -16,8 +16,8 @@ Select a [\code{learner.id} as baseline for the critical difference
 diagram, the critical difference will be positioned arround this learner.
 Defaults to best performing algorithm.}
 
-\item{pretty.names}{[\code{logical(1)}]: \cr
-Should learner short names be used instead of learner.id?}
+\item{pretty.names}{[\code{logical{1}}]\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.
@@ -38,8 +38,21 @@ Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
 JMLR, 2006
 }
 \seealso{
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCalibration}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotLearningCurveGGVIS}},
+  \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerfGGVIS}},
+  \code{\link{plotThreshVsPerf}}
+
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
@@ -54,24 +67,11 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}}
-
-Other plot: \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCalibration}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}},
-  \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
-  \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerfGGVIS}},
-  \code{\link{plotThreshVsPerf}}
+  \code{\link{reduceBatchmarkResults}}
 }
-

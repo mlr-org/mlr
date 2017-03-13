@@ -21,7 +21,8 @@
 #'   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
 #'     All kinds of parameter types can be handled. We return the best of the final elite
 #'     candidates found by irace in the last race. Its estimated performance is the mean of all
-#'     evaluations ever done for that candidate.}
+#'     evaluations ever done for that candidate. More information on irace can be found in the TR at
+#'     \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
 #' }
 #'
 #' Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
@@ -46,15 +47,7 @@
 #' @param tune.threshold.args [\code{list}]\cr
 #'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
 #'   Default is none.
-#' @param log.fun [\code{function} | \code{NULL}]\cr
-#'   Function used for logging. If set to \code{NULL}, the internal default will be used.
-#'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
-#'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-#'   and \code{stage} is expected.
-#'   The default displays the performance measures, the time needed for evaluating,
-#'   the currently used memory and the max memory ever used before
-#'   (the latter two both taken from \code{\link{gc}}).
-#'   See the implementation for details.
+#' @template arg_log_fun
 #' @param final.dw.perc [\code{boolean}]\cr
 #'   If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 #'   Default is \code{NULL} which will not change anything.
@@ -87,12 +80,14 @@ NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ..., cl) {
+  log.fun = "default", final.dw.perc = NULL, budget = NULL, ..., cl) {
 
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
-  if (is.null(log.fun))
+  if (identical(log.fun, "default"))
     log.fun = logFunTune
+  else if (identical(log.fun, "memory"))
+    log.fun = logFunTuneMemory
   if (!is.null(budget))
     budget = asCount(budget)
   if (!is.null(final.dw.perc))

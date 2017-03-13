@@ -1,10 +1,11 @@
 context("regr_glmnet")
 
 test_that("regr_glmnet", {
-  requirePackages("glmnet", default.method = "load")
+  requirePackagesOrSkip("glmnet", default.method = "load")
+
   parset.list = list(
     list(),
-    list(alpha = 0.7),
+    list(alpha = 0.7, fdev = 0.0001),
     list(s = 0.3)
   )
 
@@ -13,7 +14,7 @@ test_that("regr_glmnet", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
-    if(is.null(s)) s = 0.01
+    if (is.null(s)) s = 0.01
     parset[["s"]] = NULL
     ind = match(regr.target, names(regr.train))
     x = regr.train[, -ind]
@@ -21,12 +22,13 @@ test_that("regr_glmnet", {
     y = regr.train[, ind]
     pars = list(x = as.matrix(x), y = y, family = "gaussian")
     pars = c(pars, parset)
+    glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
-      do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
+      on.exit(glmnet::glmnet.control(factory = TRUE))
+      do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
+      m = do.call(glmnet::glmnet, pars[!names(pars) %in% ctrl.args])
     } else {
       m = do.call(glmnet::glmnet, pars)
     }
@@ -49,4 +51,3 @@ test_that("regr_glmnet works with poisson", {
   r = holdout(lrn, task)
   expect_true(!is.na(r$aggr))
 })
-

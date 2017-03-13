@@ -1,11 +1,12 @@
 context("classif_plsdaCaret")
 
 test_that("classif_plsdaCaret", {
-  requirePackages("caret", default.method = "load")
+  requirePackagesOrSkip("caret", default.method = "load")
   parset.list = list(
     list(),
     list(ncomp = 4),
-    list(probMethod = "Bayes")
+    list(probMethod = "Bayes"),
+    list(method = "oscorespls")
   )
 
   old.predicts.list = list()

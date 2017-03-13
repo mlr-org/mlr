@@ -1,5 +1,5 @@
-data(Sonar, package = "mlbench")
-data(BreastCancer, package = "mlbench")
+data(Sonar, package = "mlbench", envir = environment())
+data(BreastCancer, package = "mlbench", envir = environment())
 
 binaryclass.df = Sonar
 binaryclass.formula = Class~.
@@ -41,6 +41,9 @@ multilabel.test.inds  = setdiff(1:150, multilabel.train.inds)
 multilabel.train = multilabel.df[multilabel.train.inds, ]
 multilabel.test  = multilabel.df[multilabel.test.inds, ]
 multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target = multilabel.target)
+multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
+multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
+multilabel.small.inds = c(1, 52, 53, 123)
 
 noclass.df = iris[,-5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
@@ -49,7 +52,7 @@ noclass.train = noclass.df[noclass.train.inds, ]
 noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
-data(BostonHousing, package = "mlbench")
+data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing
 regr.formula = medv ~ .
 regr.target = "medv"
@@ -80,28 +83,41 @@ regr.num.test  = regr.num.df[regr.num.test.inds, ]
 regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
-surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(c(TRUE, FALSE), 150, replace = TRUE), iris)
-surv.formula = survival::Surv(time, event) ~ .
-surv.target = c("time", "event")
-surv.train.inds = c(1:30, 51:80, 101:130)
-surv.test.inds  = setdiff(1:150, surv.train.inds)
+getSurvData = function(n = 100, p = 10) {
+  set.seed(1)
+  beta <- c(rep(1,10),rep(0,p-10))
+  x <- matrix(rnorm(n*p),n,p)
+  colnames(x) = sprintf("x%01i", 1:p)
+  real.time <- -(log(runif(n)))/(10 * exp(drop(x %*% beta)))
+  cens.time <- rexp(n,rate=1/10)
+  status <- ifelse(real.time <= cens.time, TRUE, FALSE)
+  obs.time <- ifelse(real.time <= cens.time,real.time,cens.time) + 1
+  return(cbind(data.frame(time = obs.time, status = status), x))
+}
+surv.df = getSurvData()
+surv.formula = survival::Surv(time, status) ~ .
+surv.target = c("time", "status")
+surv.train.inds = seq(1, floor(2/3 * nrow(surv.df)))
+surv.test.inds  = setdiff(1:nrow(surv.df), surv.train.inds)
 surv.train = surv.df[surv.train.inds, ]
 surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
+rm(getSurvData)
 
 costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
-
-black.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(0%,0%,0%);')]"
-grey.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(85.098039%,85.098039%,85.098039%);')]"
-lightgrey.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(92.156863%,92.156863%,92.156863%);')]"
-red.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(97.254902%,46.27451%,42.745098%);')]"
-blue.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(38.039216%,61.176471%,100%);')]"
-green.xpath = "/svg:svg//svg:path[contains(@style, 'fill:rgb(0%,72.941176%,21.960784%);')]"
-black.line.xpath = "/svg:svg//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);')]"
-blue.line.xpath = "/svg:svg//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,74.901961%,76.862745%);')]"
-red.line.xpath = "/svg:svg//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(97.254902%,46.27451%,42.745098%);')]"
-black.bar.xpath = "/svg:svg//svg:path[contains(@style, 'stroke:none;fill-rule:nonzero;fill:rgb(34.901961%,34.901961%,34.901961%);fill-opacity:1')]"
+black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
+grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"
+red.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #F8766D')]"
+blue.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #619CFF')]"
+green.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #00BA38')]"
+black.line.xpath = "/svg:svg//svg:polyline[not(contains(@style, 'stroke:'))]"
+black.line.xpath2 = "/svg:svg//svg:polyline[contains(@style, 'stroke: #000000')]"
+blue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #00BFC4;')]"
+mediumblue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #3366FF;')]"
+red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
+red.rug.line.xpath = "/svg:svg//svg:line[contains(@style, 'stroke: #FF0000;')]"
+black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"

@@ -27,7 +27,8 @@ retrieve required information via the \code{getBMR*} getter functions.
 You can also convert the object using \code{\link[base]{as.data.frame}}.
 }
 \seealso{
-Other benchmark: \code{\link{benchmark}},
+Other benchmark: \code{\link{batchmark}},
+  \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
@@ -42,11 +43,12 @@ Other benchmark: \code{\link{benchmark}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
-

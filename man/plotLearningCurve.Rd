@@ -4,7 +4,8 @@
 \alias{plotLearningCurve}
 \title{Plot learning curve data using ggplot2.}
 \usage{
-plotLearningCurve(obj, facet = "measure", pretty.names = TRUE)
+plotLearningCurve(obj, facet = "measure", pretty.names = TRUE,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
@@ -19,6 +20,10 @@ The default is \dQuote{measure}.}
 \item{pretty.names}{[\code{logical(1)}]\cr
 Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 Default is \code{TRUE}.}
+
+\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -36,12 +41,10 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
   \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}},
   \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
-  \code{\link{plotROCCurves}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
-

@@ -1,7 +1,8 @@
 context("classif_rotationForest")
 
 test_that("classif_rotationForest", {
-  requirePackages("rotationForest", default.method = "load")
+  requirePackagesOrSkip("rotationForest", default.method = "load")
+
   parset.list = list(
     list(),
     list(L = 5L,  K = 2L),

@@ -6,11 +6,11 @@ makeRLearner.regr.glmnet = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", values = c("gaussian", "poisson"), default = "gaussian"),
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
+      makeNumericLearnerParam(id = "s", lower = 0, when = "predict"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
-      makeNumericVectorLearnerParam(id = "lambda"),
+      makeNumericVectorLearnerParam(id = "lambda", lower = 0),
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeLogicalLearnerParam(id = "intercept", default = TRUE),
       makeNumericLearnerParam(id = "thresh", default = 1e-07, lower = 0),
@@ -31,14 +31,19 @@ makeRLearner.regr.glmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L),
-      makeLogicalLearnerParam(id = "factory", default = FALSE)
+      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
     properties = c("numerics", "factors", "ordered", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer.
+      Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
+      but needs to be tuned by the user.
+      glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
+      before setting the specified parameters and after training.
+      If you are setting glmnet.control parameters through glmnet.control,
+      you need to save and re-set them after running the glmnet learner."
   )
 }
 
@@ -51,10 +56,11 @@ trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, .
   if (!is.null(.weights))
     args$weights = .weights
 
+  glmnet::glmnet.control(factory = TRUE)
   saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
   if (any(is.ctrl.arg)) {
-    on.exit(do.call(glmnet::glmnet.control, saved.ctrl))
+    on.exit(glmnet::glmnet.control(factory = TRUE))
     do.call(glmnet::glmnet.control, args[is.ctrl.arg])
     args = args[!is.ctrl.arg]
   }

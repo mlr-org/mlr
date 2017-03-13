@@ -36,6 +36,7 @@
 #'     \item{multilabel}{Is the measure applicable for multilabel classification?}
 #'     \item{regr}{Is the measure applicable for regression?}
 #'     \item{surv}{Is the measure applicable for survival?}
+#'     \item{cluster}{Is the measure applicable for cluster?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
 #'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
 #'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
@@ -127,11 +128,11 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    cluster     \tab db\cr
 #'    surv        \tab cindex\cr
 #'    costsens    \tab mcp\cr
-#'    multilabel  \tab hamloss\cr
+#'    multilabel  \tab multilabel.hamloss\cr
 #' }
 #'
 #' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
-#'  Task type, task, task description or a learner.
+#'  Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
 #' @return [\code{\link{Measure}}].
 #' @export
 getDefaultMeasure = function(x) {
@@ -141,13 +142,17 @@ getDefaultMeasure = function(x) {
     x$task.desc$type
   else if (inherits(x, "Learner"))
     x$type
+  else if (x %in% listLearners()$class)
+    stri_split_fixed(x, ".", simplify = TRUE)[1]
+  else
+    x
   switch(type,
     classif = mmce,
     cluster = db,
     regr = mse,
     surv = cindex,
     costsens = mcp,
-    multilabel = hamloss
+    multilabel = multilabel.hamloss
   )
 }
 

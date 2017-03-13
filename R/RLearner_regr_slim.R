@@ -16,6 +16,7 @@ makeRLearner.regr.slim = function() {
       makeIntegerLearnerParam(id = "max.ite", default = 1e5L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "lambda.idx", default = 3L, when = "predict")
+      # FIXME the default for lambda.id in predict.slim is c(1:3)
     ),
     par.vals = list(lambda.idx = 3L),
     properties = c("numerics"),

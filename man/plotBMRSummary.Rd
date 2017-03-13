@@ -5,7 +5,7 @@
 \title{Plot a benchmark summary.}
 \usage{
 plotBMRSummary(bmr, measure = NULL, trafo = "none", order.tsks = NULL,
-  pointsize = 4L, jitter = 0.05)
+  pointsize = 4L, jitter = 0.05, pretty.names = TRUE)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -31,6 +31,9 @@ Default is 4.}
 \item{jitter}{[\code{numeric(1)}]\cr
 Small vertical jitter to deal with overplotting in case of equal scores.
 Default is 0.05.}
+
+\item{pretty.names}{[\code{logical{1}}]\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.
@@ -46,7 +49,7 @@ like \code{\link[ggplot2]{scale_x_log10}}.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
@@ -61,24 +64,24 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescriptions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
   \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
-  \code{\link{plotROCCurves}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
-

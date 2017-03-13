@@ -31,6 +31,7 @@ hpars = list(
   classif.bdk = list(ydim = 2L),
   classif.boosting = list(mfinal = 10L),
   classif.cforest = list(mtry = 2L),
+  classif.dbnDNN = list(numepochs = 10),
   classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
   classif.lssvm = list(kernel = "rbfdot", sigma = 0.4, reduced = FALSE),
   classif.LiblineaRLogReg = list(type = 7),
@@ -51,19 +52,22 @@ test_that("no labels are switched", {
     names(lrns) = lids
     toremove = grepl("classif.mock", lids)
     toremove = toremove | grepl("classif.LiblineaRMultiClass", lids)
+    toremove = toremove | grepl("classif.h2o", lids)
+    toremove = toremove | grepl("classif.featureless", lids)
     lrns = lrns[!toremove]
 
-    errs = vnapply(lrns, function(lrn) {
+    vnapply(lrns, function(lrn) {
       lrn = setPredictType(lrn, predtype)
       id = lrn$id
       hps = hpars[[id]]
       if (!is.null(hps))
         lrn = setHyperPars(lrn, par.vals = hps)
-      holdout(lrn, task, split = 0.5, stratify = TRUE)$aggr[[1L]]
+      tmp = holdout(lrn, task, split = 0.5, stratify = TRUE)
+      #print(as.data.frame(getRRPredictions(tmp)))
+      err = tmp$aggr[[1L]]
+      expect_true(!is.na(err) & err <= 1/3, info = paste(getTaskDesc(task)$id, id, err, sep = ", "))
+      err
     })
-    expect_true(all(!is.na(errs) & errs <= 0.4))
-    # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
-    # print(sort(errs, na.last = TRUE))
   }
   # FIXME: only check prob for now for timimg reasons
   for (predtype in c("prob")) {
@@ -75,4 +79,3 @@ test_that("no labels are switched", {
     checkErrsForTask(mytask4, predtype)
   }
 })
-

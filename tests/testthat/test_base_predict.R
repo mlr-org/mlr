@@ -10,7 +10,7 @@ test_that("predict", {
   cm2 = train(makeLearner("classif.lda"), multiclass.task, subset = inds)
   cp2 = predict(cm2, newdata = data[inds,])
   cp2b = predict(cm2, newdata = data[inds,-5])
-  requirePackages("MASS", default.method = "load")
+  requirePackagesOrSkip("MASS", default.method = "load")
   ext2 = MASS::lda(formula, data = data[inds,])
   pred2 = predict(ext2,newdata = data[inds,])$class
 
@@ -44,11 +44,11 @@ test_that("predict", {
   cp5d = setThreshold(cp5b, 1)
   cp5e = predict(cm5, task = binaryclass.task, subset = 1)
   expect_equal(cp5a$data$response, cp5b$data$response)
-  f1 = factor(rep(getTaskDescription(binaryclass.task)$positive, length(binaryclass.test.inds)),
+  f1 = factor(rep(getTaskDesc(binaryclass.task)$positive, length(binaryclass.test.inds)),
     levels = getTaskClassLevels(binaryclass.task))
   expect_equal(cp5c$data$response, f1)
-  f2 = factor(rep(getTaskDescription(binaryclass.task)$negative, length(binaryclass.test.inds)),
-    levels = getTaskDescription(binaryclass.task)$class.levels)
+  f2 = factor(rep(getTaskDesc(binaryclass.task)$negative, length(binaryclass.test.inds)),
+    levels = getTaskDesc(binaryclass.task)$class.levels)
   expect_equal(cp5d$data$response, f2)
   expect_true(setequal(levels(cp5e$data$response), c("M", "R")))
 })
@@ -109,7 +109,7 @@ test_that("setThreshold does not produce NAs for extreme thresholds", {
 })
 
 test_that("predict.threshold", {
-  td = getTaskDescription(binaryclass.task)
+  td = getTaskDesc(binaryclass.task)
   lrn = makeLearner("classif.lda", predict.type = "prob", predict.threshold = 0)
   r = holdout(lrn, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))
@@ -123,10 +123,24 @@ test_that("predict.threshold", {
 
   # now with wrapper
   lrn1 = makeLearner("classif.lda")
-  lrn2 = makeFilterWrapper(lrn1, fw.method = "chi.squared", fw.perc = 0.1)
+  lrn2 = makeFilterWrapper(lrn1, fw.method = "anova.test", fw.perc = 0.1)
   lrn2 = setPredictType(lrn2, "prob")
   lrn2 = setPredictThreshold(lrn2, 0)
   r = holdout(lrn2, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))
+})
+
+test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
+  lrn = makeLearner("classif.qda", predict.type = "prob",
+    config = list(on.learner.error = "quiet"))
+  mod = train(lrn, iris.task, subset = c(1L, 51L, 101L))
+  expect_true(inherits(mod, "FailureModel"))
+  expect_warning(predict(mod, multiclass.task), NA)
+})
+
+test_that("predict works with data.table as newdata", {
+  lrn = makeLearner("classif.qda")
+  mod = train(lrn, iris.task)
+  expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
 })
 

@@ -1,18 +1,18 @@
 tuneMBO = function(learner, task, resampling, measures, par.set, control,
-  opt.path, show.info) {
+  opt.path, show.info, resample.fun) {
+  # resample.fun is ignored, but the argument is presented for consistency.
 
   # requirePackages("mlrMBO", why = "tuneMBO", default.method = "load")
   mbo.control = control$mbo.control
 
   # set final evals to 0 to save time. we dont really need final evals in this context.
   mbo.control$final.evals = 0L
-  cx = identity
 
   # put all required info into the function env
   force(learner); force(task); force(resampling); force(measures); force(par.set); force(control); force(opt.path); force(show.info)
   tff = tunerSmoofFun(learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    convertx = cx, remove.nas = TRUE)
+    convertx = convertXIdentity, remove.nas = TRUE)
 
   state = mbo.control$save.file.path
   if (control$continue && file.exists(state)) {
@@ -23,7 +23,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   } else {
     # FIXME: remove this when mbo on cran
     mbofun = get("mbo", envir = getNamespace("mlrMBO"))
-    or = mbofun(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
+    or = mbofun(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE, resample.fun)
   }
 
   x = trafoValue(par.set, or$x)

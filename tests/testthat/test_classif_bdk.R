@@ -1,7 +1,8 @@
 context("classif_bdk")
 
 test_that("classif_bdk", {
-  requirePackages("kohonen", default.method = "load")
+  requirePackagesOrSkip("kohonen", default.method = "load")
+
   parset.list1 = list(
     list(),
     list(grid = class::somgrid(xdim = 2L, ydim = 4L)),
@@ -31,4 +32,9 @@ test_that("classif_bdk", {
     old.predicts.list, parset.list2)
   testProbParsets ("classif.bdk", binaryclass.df, binaryclass.target, binaryclass.train.inds,
                    old.probs.list, parset.list2)
+})
+
+test_that("classif_bdk keep.data is passed correctly", {
+  train(makeLearner("classif.bdk", keep.data = FALSE), binaryclass.task)
+  train(makeLearner("classif.bdk", keep.data = TRUE), binaryclass.task)
 })

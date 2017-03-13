@@ -30,7 +30,7 @@ trainLearner.classif.sparseLDA = function(.learner, .task, .subset, .weights = N
 predictLearner.classif.sparseLDA = function(.learner, .model, .newdata, ...) {
   p = sparseLDA::predict.sda(.model$learner.model,
     newdata = subset(.newdata, select = .model$features), ...)
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     return(p$class)
   else
     return(p$posterior)

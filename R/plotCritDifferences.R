@@ -71,19 +71,20 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   # Orientation of descriptive lines yend(=y-value of horizontal line)
   right = df$rank > median(df$rank)
   # Better learners are ranked ascending
-  df$yend = rank(df$rank[!right], ties.method = "first") - 0.5
+  df$yend[!right] = rank(df$rank[!right], ties.method = "first") - 0.5
   # Worse learners ranked descending
-  df$yend[right] = rank(desc(df$rank[right]), ties.method = "first") - 0.5
+  df$yend[right] = rank(-df$rank[right], ties.method = "first") - 0.5
   # Better half of learner have lines to left / others right.
-  df$xend = ifelse(!right, 0, max(df$rank) + 1L)
+  df$xend = ifelse(!right, 0L, max(df$rank) + 1L)
   # Save orientation, can be used for vjust of text later on
   df$right = as.numeric(right)
   df$short.name = getBMRLearnerShortNames(bmr)
 
   # Get a baseline
   if (is.null(baseline)) {
-    baseline = df$learner.id[which.min(df$rank)]
+    baseline = as.character(df$learner.id[which.min(df$rank)])
   } else {
+    assertString(baseline)
     assertChoice(baseline, getBMRLearnerIds(bmr))
   }
 
@@ -104,15 +105,15 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
     # Get start and end point of all possible bars
     xstart = round(apply(mat + sub, 1, min), 3)
     xend   = round(apply(mat + sub, 1, max), 3)
-    nem.df = data.frame(xstart, xend, "diff" = xend - xstart)
-    # For each unique endpoint of a bar take the longest bar
-    nem.df = ddply(nem.df, .(xend), function(x) x[which.max(x$diff), ])
+    nem.df = data.table(xstart, xend, "diff" = xend - xstart)
+    # For each unique endpoint of a bar keep only the longest bar
+    nem.df = nem.df[, .SD[which.max(.SD$diff)], by = "xend"]
     # Take only bars with length > 0
     nem.df = nem.df[nem.df$xend - nem.df$xstart > 0, ]
     # Y-value for bars is between 0.1 and 0..35 hardcoded
     # Descriptive lines for learners start at 0.5, 1.5, ...
     nem.df$y = seq(from = 0.1, to = 0.35, length.out = dim(nem.df)[1])
-    cd.info$nemenyi.data = nem.df
+    cd.info$nemenyi.data = as.data.frame(nem.df)
   }
 
   makeS3Obj("CritDifferencesData",
@@ -138,8 +139,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #'   Select a [\code{learner.id} as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.
 #'   Defaults to best performing algorithm.
-#' @param pretty.names [\code{logical(1)}]: \cr
-#'    Should learner short names be used instead of learner.id?
+#' @template arg_prettynames
 #' @template ret_gg2
 #'
 #' @references Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
@@ -192,7 +192,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
   # Plot the critical difference bars
   if (obj$cd.info$test == "bd") {
     if (!is.null(baseline)) {
-      assertChoice(baseline, obj$data$learner.id)
+      assertChoice(baseline, as.character(obj$data$learner.id))
       cd.x = obj$data$mean.rank[obj$data$learner.id == baseline]
     }
     # Add horizontal bar arround baseline
@@ -206,7 +206,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
     # Add point at learner
     p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5)
     # Add critical difference text
-    p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
+    p = p + annotate("text", label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
                      x = cd.x, y = cd.y + 0.05)
   } else {
     nemenyi.data = obj$cd.info$nemenyi.data
@@ -216,7 +216,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
                            data = nemenyi.data, size = 2, color = "dimgrey", alpha = 0.9)
       # Add text (descriptive)
       p = p + annotate("text",
-                       label = paste("Critical Difference =", round(cd, 2)),
+                       label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
                        y = max(obj$data$yend) + .1, x = mean(obj$data$mean.rank))
       # Add bar (descriptive)
       p = p + annotate("segment",

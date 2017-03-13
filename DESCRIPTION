@@ -9,18 +9,30 @@ Description: Interface to a large number of classification and regression
     problems. Filter and wrapper methods for feature selection. Extension of
     basic learners with additional operations common in machine learning, also
     allowing for easy nested resampling. Most operations can be parallelized.
-Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
-    c("aut", "cre")), person("Michel", "Lang", email =
-    "michellang@gmail.com", role = "aut"), person("Jakob", "Richter", email =
-    "code@jakob-r.de", role = "aut"), person("Jakob", "Bossek",
-    email = "jakob.bossek@tu-dortmund.de", role = "aut"), person("Leonard",
-    "Judt", email = "leonard.judt@tu-dortmund.de", role = "aut"),
-    person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "aut"),
-    person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role =
-    "aut"), person("Lars", "Kotthoff", email =
-    "larsko@cs.ubc.ca", role = "aut"), person("Zachary", "Jones", email =
-    "zmj@zmjones.com", role = "ctb"), person("Schiffner", "Julia", email =
-    "schiffner@math.uni-duesseldorf.de", role = "aut"))
+Authors@R: c(
+    person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre")),
+    person("Michel", "Lang", email = "michellang@gmail.com", role = "aut"),
+    person("Lars", "Kotthoff", email = "larsko@cs.ubc.ca", role = "aut"),
+    person("Julia", "Schiffner", email = "schiffner@math.uni-duesseldorf.de", role = "aut"),
+    person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
+    person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
+    person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut"),
+    person("Mason", "Gallo", email = "masonagallo@gmail.com", role = "aut"),
+    person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb"),
+    person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb"),
+    person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
+    person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "ctb"),
+    person("Pascal", "Kerschke", email = "kerschke@uni-muenster.de", role = "ctb"),
+    person("Florian", "Fendt", email = "flo_fendt@gmx.de", role = "ctb"),
+    person("Philipp", "Probst", email = "philipp_probst@gmx.de", role = "ctb"),
+    person("Xudong", "Sun", email = "xudong.sun@stat.uni-muenchen.de", role = "ctb"),
+    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"),
+    person("Bruno", "Vieira", email = "bruno.hebling.vieira@usp.br", role = "ctb"),
+    person("Laura", "Beggel", email = "laura.beggel@web.de", role = "ctb"),
+    person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb"),
+    person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
+    person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
+    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -28,31 +40,33 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
-    BBmisc (>= 1.9),
-    ggplot2,
-    ParamHelpers (>= 1.7),
-    stats
+    ParamHelpers (>= 1.10)
 Imports:
-    checkmate (>= 1.7.1),
-    ggvis,
+    BBmisc (>= 1.11),
+    backports,
+    ggplot2,
+    stats,
+    stringi,
+    checkmate (>= 1.8.2),
+    data.table,
     methods,
     parallelMap (>= 1.3),
-    plyr,
-    reshape2,
-    shiny,
-    survival
+    survival,
+    utils
 Suggests:
     ada,
     adabag,
     bartMachine,
+    batchtools,
     brnn,
     bst,
+    C50,
     care,
     caret (>= 6.0-57),
     class,
     clue,
     cluster,
-    clusterSim,
+    clusterSim (>= 0.44-5),
     clValid,
     cmaes,
     CoxBoost,
@@ -67,6 +81,7 @@ Suggests:
     elasticnet,
     elmNN,
     emoa,
+    evtree,
     extraTrees,
     flare,
     fields,
@@ -76,9 +91,13 @@ Suggests:
     FSelector,
     gbm,
     GenSA,
+    ggvis,
     glmnet,
+    h2o (>= 3.6.0.8),
+    GPfit,
     Hmisc,
-    irace (>= 1.0.7),
+    ipred,
+    irace (>= 2.0),
     kernlab,
     kknn,
     klaR,
@@ -92,6 +111,7 @@ Suggests:
     mco,
     mda,
     mlbench,
+    mldr,
     modeltools,
     mRMRe,
     nnet,
@@ -100,14 +120,15 @@ Suggests:
     numDeriv,
     pamr,
     party,
-    penalized,
+    penalized (>= 0.9-47),
     pls,
-    PMCMR,
+    PMCMR (>= 4.1),
     pROC (>= 1.8),
     randomForest,
-    randomForestSRC (>= 2.0.5),
-    ranger (>= 0.3.0),
+    randomForestSRC (>= 2.2.0),
+    ranger (>= 0.6.0),
     RCurl,
+    Rfast,
     rFerns,
     rjson,
     rknn,
@@ -116,22 +137,26 @@ Suggests:
     ROCR,
     rotationForest,
     rpart,
+    RRF,
     rrlda,
     rsm,
     RSNNS,
     RWeka,
     sda,
+    shiny,
+    smoof,
     sparsediscrim,
     sparseLDA,
     stepPlr,
     SwarmSVM,
+    svglite,
     testthat,
     tgp,
     TH.data,
-    xgboost,
+    xgboost (>= 0.6-2),
     XML
 LazyData: yes
 ByteCompile: yes
-Version: 2.9
+Version: 2.11
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

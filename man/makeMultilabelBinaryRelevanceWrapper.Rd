@@ -30,21 +30,21 @@ Or to tune these thresholds with \code{\link{tuneThreshold}}; especially when yo
 unabalanced class distributions for each binary label.
 }
 \examples{
-\donttest{
 d = getTaskData(yeast.task)
 # drop some labels so example runs faster
-d = d[, c(1:3, 15:117)]
-task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
+d = d[seq(1, nrow(d), by = 20), c(1:2, 15:17)]
+task = makeMultilabelTask(data = d, target = c("label1", "label2"))
+lrn = makeLearner("classif.rpart")
+lrn = makeMultilabelBinaryRelevanceWrapper(lrn)
 lrn = setPredictType(lrn, "prob")
 # train, predict and evaluate
-mod = train(lrn, yeast.task)
-pred = predict(mod, yeast.task)
-p = performance(pred)
-performance(pred, measure = hamloss)
+mod = train(lrn, task)
+pred = predict(mod, task)
+performance(pred, measure = list(multilabel.hamloss, multilabel.subset01, multilabel.f1))
+# the next call basically has the same structure for any multilabel meta wrapper
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
-}
+
 }
 \references{
 Tsoumakas, G., & Katakis, I. (2006)
@@ -52,22 +52,32 @@ Tsoumakas, G., & Katakis, I. (2006)
 Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 }
 \seealso{
-Other multilabel: \code{\link{getMultilabelBinaryPerformances}}
-
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
-}
 
+Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}}
+}

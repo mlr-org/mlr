@@ -1,7 +1,7 @@
 context("classif_gbm")
 
 test_that("classif_gbm", {
-  requirePackages("gbm", default.method = "load")
+  requirePackagesOrSkip("gbm", default.method = "load")
 
   parset.list = list(
     list(),
@@ -13,7 +13,7 @@ test_that("classif_gbm", {
   old.probs.list = list()
 
   mydata = binaryclass.train
-  mydata[, binaryclass.target] = as.numeric(mydata[, binaryclass.target] ==  getTaskDescription(binaryclass.task)$positive)
+  mydata[, binaryclass.target] = as.numeric(mydata[, binaryclass.target] ==  getTaskDesc(binaryclass.task)$positive)
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = mydata, distribution = "bernoulli")
@@ -38,4 +38,9 @@ test_that("classif_gbm", {
   y = factor(apply(p[,,1],1, function(r) colnames(p)[which.max(r)]))
   testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,
     parset = list(n.trees = 300, interaction.depth = 2, distribution = "multinomial"))
+})
+
+test_that("classif_gbm keep.data is passed correctly", {
+  train(makeLearner("classif.gbm", keep.data = FALSE), binaryclass.task)
+  train(makeLearner("classif.gbm", keep.data = TRUE), binaryclass.task)
 })

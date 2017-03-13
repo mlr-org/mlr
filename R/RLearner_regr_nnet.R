@@ -5,6 +5,7 @@ makeRLearner.regr.nnet = function() {
     package = "nnet",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "size", default = 3L, lower = 0L),
+      # FIXME nnet() seems to have no default for size, but if it is 3, par.vals is redundant
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy==FALSE && softmax==FALSE && censored==FALSE)),
       makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout==FALSE && softmax==FALSE && censored==FALSE)),
@@ -16,9 +17,8 @@ makeRLearner.regr.nnet = function() {
       makeLogicalLearnerParam(id = "Hess", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "MaxNWts", default = 1000L, lower = 1L),
-      # FIXME_PK: Why are abstoll and reltoll written with 2 "l"?
-      makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
-      makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
+      makeNumericLearnerParam(id = "abstol", default = 1.0e-4),
+      makeNumericLearnerParam(id = "reltol", default = 1.0e-8)
     ),
     par.vals = list(size = 3L),
     properties = c("numerics", "factors", "weights"),

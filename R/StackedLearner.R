@@ -93,7 +93,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
-    super.learner = makeLearner(paste0(base.learners[[1]]$type,'.nnet'))
+    super.learner = makeLearner(stri_paste(base.learners[[1]]$type, '.nnet'))
   }
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
@@ -189,13 +189,8 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
 
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
-  bls = .learner$base.learners
-  ids = names(bls)
   # reduce to subset we want to train ensemble on
   .task = subsetTask(.task, subset = .subset)
-  # init prob result matrix, where base learners store predictions
-  probs = makeDataFrame(getTaskSize(.task), ncol = length(bls), col.types = "numeric",
-    col.names = ids)
   switch(.learner$method,
     average = averageBaseLearners(.learner, .task),
     stack.nocv = stackNoCV(.learner, .task),
@@ -221,7 +216,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   # get task information (classif)
   td = .model$task.desc
-  levs = td$class.levels
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
@@ -332,7 +326,7 @@ averageBaseLearners = function(learner, task) {
 
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
@@ -374,7 +368,7 @@ stackNoCV = function(learner, task) {
 
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task) {
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
@@ -429,7 +423,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertNumber(bagprob, lower = 0, upper = 1)
   assertInt(bagtime, lower = 1)
 
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   if (is.null(metric)) {
@@ -452,7 +446,6 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
         stop("Hill climbing algorithm only takes probability predict type for classification.")
     }
   }
-  use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
   base.models = probs = vector("list", length(bls))
   rin = makeResampleInstance(learner$resampling, task = task)
@@ -547,7 +540,6 @@ compressBaseLearners = function(learner, task, parset = list()) {
   ensemble.model = train(lrn, task)
 
   data = getTaskData(task, target.extra = TRUE)
-  target = data[[2]]
   data = data[[1]]
 
   pseudo.data = do.call(getPseudoData, c(list(data), parset))
@@ -555,7 +547,6 @@ compressBaseLearners = function(learner, task, parset = list()) {
   pseudo.data = data.frame(pseudo.data, target = pseudo.target$data$response)
 
   td = ensemble.model$task.desc
-  levs = td$class.levels
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
@@ -590,7 +581,7 @@ getResponse = function(pred, full.matrix = TRUE) {
     if (full.matrix) {
       # return matrix of probabilities
       td = pred$task.desc
-      predReturn = pred$data[, paste("prob", td$class.levels, sep = ".")]
+      predReturn = pred$data[, stri_paste("prob", td$class.levels, sep = ".")]
       colnames(predReturn) = td$class.levels
       return(predReturn)
     } else {

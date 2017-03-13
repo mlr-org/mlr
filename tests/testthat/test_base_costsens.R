@@ -35,4 +35,3 @@ test_that("costsens", {
   r = resample(lrn, costsens.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
-

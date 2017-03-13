@@ -4,17 +4,26 @@
 #' @return [\code{\link{TaskDesc}}].
 #' @export
 #' @family task
+getTaskDesc = function(x) {
+  UseMethod("getTaskDesc")
+}
+
+#' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' @return [\code{\link{TaskDesc}}].
+#' @template arg_task_or_desc
+#' @export
 getTaskDescription = function(x) {
-  UseMethod("getTaskDescription")
+  .Deprecated("getTaskDesc")
+  UseMethod("getTaskDesc")
 }
 
 #' @export
-getTaskDescription.default = function(x) {
+getTaskDesc.default = function(x) {
   x$task.desc
 }
 
 #' @export
-getTaskDescription.TaskDesc = function(x) {
+getTaskDesc.TaskDesc = function(x) {
   x
 }
 
@@ -25,7 +34,7 @@ getTaskDescription.TaskDesc = function(x) {
 #' @export
 #' @family task
 getTaskType = function(x) {
-  getTaskDescription(x)$type
+  getTaskDesc(x)$type
 }
 
 #' Get the id of the task.
@@ -35,7 +44,7 @@ getTaskType = function(x) {
 #' @export
 #' @family task
 getTaskId = function(x) {
-  getTaskDescription(x)$id
+  getTaskDesc(x)$id
 }
 
 #' @title Get the name(s) of the target column(s).
@@ -54,16 +63,16 @@ getTaskTargetNames = function(x) {
 
 #' @export
 getTaskTargetNames.Task = function(x) {
-  getTaskTargetNames(getTaskDescription(x))
+  getTaskTargetNames(getTaskDesc(x))
 }
 
 #' @export
-getTaskTargetNames.TaskDescSupervised = function(x) {
+getTaskTargetNames.SupervisedTaskDesc = function(x) {
   x$target
 }
 
 #' @export
-getTaskTargetNames.TaskDescUnsupervised = function(x) {
+getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
   character(0L)
 }
 
@@ -84,17 +93,17 @@ getTaskClassLevels = function(x) {
 
 #' @export
 getTaskClassLevels.Task = function(x) {
-  getTaskClassLevels(getTaskDescription(x))
+  getTaskClassLevels(getTaskDesc(x))
 }
 
 #' @export
-getTaskClassLevels.TaskDescClassif = function(x) {
-  getTaskDescription(x)$class.levels
+getTaskClassLevels.ClassifTaskDesc = function(x) {
+  getTaskDesc(x)$class.levels
 }
 
 #' @export
-getTaskClassLevels.TaskDescMultilabel = function(x) {
-  getTaskDescription(x)$class.levels
+getTaskClassLevels.MultilabelTaskDesc = function(x) {
+  getTaskDesc(x)$class.levels
 }
 
 #' Get feature names of task.
@@ -106,7 +115,7 @@ getTaskClassLevels.TaskDescMultilabel = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  setdiff(names(task$env$data), getTaskDescription(task)$target)
+  setdiff(names(task$env$data), getTaskDesc(task)$target)
 }
 
 #' Get number of features in task.
@@ -116,7 +125,7 @@ getTaskFeatureNames = function(task) {
 #' @export
 #' @family task
 getTaskNFeats = function(x) {
-  sum(getTaskDescription(x)$n.feat)
+  sum(getTaskDesc(x)$n.feat)
 }
 
 #' Get number of observations in task.
@@ -126,7 +135,7 @@ getTaskNFeats = function(x) {
 #' @export
 #' @family task
 getTaskSize = function(x) {
-  getTaskDescription(x)$size
+  getTaskDesc(x)$size
 }
 
 #' @title Get formula of a task.
@@ -149,7 +158,7 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
-  td = getTaskDescription(x)
+  td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
     lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
@@ -171,7 +180,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   # FIXME in the future we might want to create formulas w/o an environment
   # currently this is impossible for survival because the namespace is not imported
   # properly in many packages -> survival::Surv not found
-  as.formula(paste(target, "~", paste(features, collapse = " + ")), env = env)
+  as.formula(stri_paste(target, "~", stri_paste(features, collapse = " + ", sep = " "), sep = " "), env = env)
 }
 
 #' @title Get target data of task.
@@ -219,23 +228,20 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
 #' @template arg_task
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
-#' @param features [\code{character}]\cr
-#'   Selected features.
-#'   Default is all.
+#' @template arg_subset
+#' @template arg_features
 #' @param target.extra [\code{logical(1)}]\cr
 #'   Should target vector be returned separately?
 #'   If not, a single data.frame including the target columns is returned, otherwise a list
 #'   with the input data.frame and an extra vector or data.frame for the targets.
 #'   Default is \code{FALSE}.
 #' @param recode.target [\code{character(1)}]\cr
-#'   Should target classes be recoded? Supported are binary classification and survival.
+#'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
 #'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
 #'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 #'   \dQuote{drop.levels} will remove empty factor levels in the target column.
+#'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 #'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
@@ -253,8 +259,27 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
-  #FIXME: argument checks currently not done for speed
+getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no") {
+  checkTask(task, "Task")
+  checkTaskSubset(subset, size = task$task.desc$size)
+  assertLogical(target.extra)
+
+  task.features = getTaskFeatureNames(task)
+
+  # if supplied check if the input is right and always convert 'features'
+  # to character vec
+  if (!missing(features)) {
+    assert(
+      checkIntegerish(features, lower = 1L, upper = length(task.features)),
+      checkLogical(features), checkCharacter(features)
+    )
+
+    if (!is.character(features))
+      features = task.features[features]
+  }
+
+  tn = task$task.desc$target
+
   indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
@@ -263,11 +288,6 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
       df
     )
   }
-
-  tn = task$task.desc$target
-  task.features = getTaskFeatureNames(task)
-  if (missing(subset) || identical(subset, seq_len(task$task.desc$size)))
-    subset = NULL
 
   if (target.extra) {
     if (missing(features))
@@ -301,6 +321,8 @@ recodeY = function(y, type, td) {
     return(as.numeric(2L * (y == td$positive) - 1L))
   if (type %in% c("lcens", "rcens", "icens"))
     return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "multilabel.factor")
+    return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
 }
 
@@ -346,20 +368,15 @@ recodeSurvivalTimes = function(y, from, to) {
 #'
 #' @param task [\code{\link{CostSensTask}}]\cr
 #'   The task.
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
+#' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
-getTaskCosts = function(task, subset) {
+getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
-  d = if (ms)
-    task$env$costs
-  else
-    task$env$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = getTaskDescription(task)$size)
+  d = getTaskDescription(task)$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -367,27 +384,19 @@ getTaskCosts = function(task, subset) {
 #' Subset data in task.
 #'
 #' @template arg_task
-#' @param subset [\code{integer} | \code{logical(n)}]\cr
-#'   Selected cases.
-#'   Default is all cases.
-#' @param features [\code{character}]\cr
-#'   Selected inputs. Note that target feature is always included in the
-#'   resulting task, you should not pass it here.
-#'   Default is all features.
+#' @template arg_subset
+#' @template arg_features
 #' @return [\code{\link{Task}}]. Task with subsetted data.
 #' @family task
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
-subsetTask = function(task, subset, features) {
+subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  td = task$desc
-  if (!missing(subset))
-    assert(checkIntegerish(subset), checkLogical(subset, len = td$size))
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
-  if (!missing(subset)) {
+  if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
     if (task$task.desc$has.weights)
@@ -407,9 +416,6 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  # FIXME: I hate R, this is all bad
-  if (!is.null(costs))
-    task$env$costs = costs
   if (is.null(weights))
     task["weights"] = list(NULL)
   else
@@ -417,10 +423,14 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
-    "surv" = makeTaskDesc(task, td$id, td$target, td$censoring),
-    "cluster" = makeTaskDesc(task, td$id),
-    makeTaskDesc(task, td$id, td$target))
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
+  )
+
   return(task)
 }
 

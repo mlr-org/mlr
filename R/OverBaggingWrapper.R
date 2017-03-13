@@ -61,13 +61,13 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
 
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be response.")
-  id = paste(learner$id, "overbagged", sep = ".")
+  id = stri_paste(learner$id, "overbagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
     makeIntegerLearnerParam(id = "obw.iters", lower = 1L, default = 10L),
     makeNumericLearnerParam(id = "obw.rate", lower = 1),
     makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all")),
-    makeUntypedLearnerParam(id = "obw.cl", default = NULL)
+    makeUntypedLearnerParam(id = "obw.cl", default = NULL, tunable = FALSE)
   )
   makeHomogeneousEnsemble(id, "classif", learner, packs, par.set = ps, par.vals = pv,
      learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
@@ -83,12 +83,19 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     z = getMinMaxClass(y)
     obw.cl = z$min.name
   }
-  models = lapply(seq_len(obw.iters), function(i) {
-    bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
-    train(.learner$next.learner, .task, subset = bag, weights = .weights)
-  })
-  m = makeHomChainModel(.learner, models)
+  args = list("y" = y, "obw.rate" = obw.rate, "obw.maxcl" = obw.maxcl, "obw.cl" = obw.cl, "learner" = .learner, "task" = .task, "weights" = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(doOverBaggingTrainIteration, i = seq_len(obw.iters), more.args = args)
+  makeHomChainModel(.learner, models)
 }
+
+doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learner, task, weights) {
+  setSlaveOptions()
+  bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
+  train(learner$next.learner, task, subset = bag, weights = weights)
+}
+
 
 #' @export
 getLearnerProperties.OverBaggingWrapper = function(learner) {

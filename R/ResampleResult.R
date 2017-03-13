@@ -1,6 +1,5 @@
 #' @title ResampleResult object.
-#' @name ResampleResult
-#' @rdname ResampleResult
+#'
 #' @description
 #' A resample result is created by \code{\link{resample}} and
 #' contains the following object members:
@@ -32,6 +31,15 @@
 #'   Stores error messages generated during train or predict, if these were caught
 #'   via \code{\link{configureMlr}}.
 #' }
+#' \item{err.dumps [\code{list of list of dump.frames}]:}{
+#'   List with length equal to number of resampling iterations. Contains lists
+#'   of \code{dump.frames} objects that can be fed to \code{debugger()} to inspect
+#'   error dumps generated on learner errors. One iteration can generate more than
+#'   one error dump depending on which of training, prediction on training set,
+#'   or prediction on test set, operations fail. Therefore the lists have named
+#'   slots \code{$train}, \code{$predict.train}, or \code{$predict.test} if relevant.
+#'   The error dumps are only saved when option \code{on.error.dump} is \code{TRUE}.
+#' }
 #' \item{pred [\code{\link{ResamplePrediction}}]:}{
 #'   Container for all predictions during resampling.
 #' }
@@ -46,9 +54,11 @@
 #' }
 #' }
 #' The print method of this object gives a short overview, including
-#' task and learner ids, aggregated measures as well as mean and standard
-#' deviation of the measures.
+#' task and learner ids, aggregated measures and runtime for the resampling.
+#' @name ResampleResult
+#' @rdname ResampleResult
 #' @family resample
+#' @family debug
 NULL
 
 #' @export
@@ -56,12 +66,7 @@ print.ResampleResult = function(x, ...) {
   cat("Resample Result\n")
   catf("Task: %s", x$task.id)
   catf("Learner: %s", x$learner.id)
-  m = x$measures.test[, -1L, drop = FALSE]
-  Map(function(name, x, aggr) {
-    catf("%s.aggr: %.2f", name, aggr)
-    catf("%s.mean: %.2f", name, mean(x, na.rm = TRUE))
-    catf("%s.sd: %.2f", name, sd(x, na.rm = TRUE))
-  }, name = colnames(m), x = m, aggr = x$aggr)
+  catf("Aggr perf: %s", perfsToString(x$aggr))
   catf("Runtime: %g", x$runtime)
   invisible(NULL)
 }

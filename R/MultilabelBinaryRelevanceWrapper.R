@@ -24,25 +24,10 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @examples
-#' \donttest{
-#' d = getTaskData(yeast.task)
-#' # drop some labels so example runs faster
-#' d = d[, c(1:3, 15:117)]
-#' task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-#' lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
-#' lrn = setPredictType(lrn, "prob")
-#' # train, predict and evaluate
-#' mod = train(lrn, yeast.task)
-#' pred = predict(mod, yeast.task)
-#' p = performance(pred)
-#' performance(pred, measure = hamloss)
-#' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
-#' # above works also with predictions from resample!
-#' }
+#' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
-  id = paste("multilabel", learner$id, sep = ".")
+  id = stri_paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
     learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
@@ -50,27 +35,34 @@ makeMultilabelBinaryRelevanceWrapper = function(learner) {
   return(x)
 }
 
-
 #' @export
 trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL,...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
-  data = getTaskData(.task)
-  models = namedList(targets)
-  for (tn in targets) {
-    data2 = dropNamed(data, setdiff(targets, tn))
-    ctask = makeClassifTask(id = tn, data = data2, target = tn)
-    models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
-  }
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(
+    doMultilabelBinaryRelevanceTrainIteration, tn = targets,
+    more.args = list(weights = .weights, learner = .learner$next.learner, task = .task), 
+    level = "mlr.ensemble")
+  names(models) = targets
   makeHomChainModel(.learner, models)
 }
 
+doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights) {
+  setSlaveOptions()
+  data = getTaskData(task)
+  task = makeClassifTask(id = tn, data = dropNamed(data, setdiff(getTaskTargetNames(task), tn)), target = tn)
+  train(learner, task, weights = weights)
+}
+
+
 #' @export
-predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(predict(m, newdata = .newdata, ...)$data$response)
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset,...)))
   else
-    function(m) predict(m, newdata = .newdata, ...)$data$prob.TRUE
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset,...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }

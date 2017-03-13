@@ -8,17 +8,21 @@ test_that("UnsupervisedTask", {
   # wrong vars
   expect_error(subsetTask(noclass.task, vars = c("Sepal.Length", "x", "y")))
 
+  # subsetTask works with index vector
+  sub.task = subsetTask(noclass.task, features = 1:2)
+  expect_equal(sum(getTaskNFeats(sub.task)), 2L)
+
   # check missing accessors
   df = noclass.df
   df[1,1:3] = NA
   df[2,1:3] = NA
   ct = makeClusterTask(data = df)
-  td = getTaskDescription(ct)
+  td = getTaskDesc(ct)
   expect_true(td$has.missings)
 
   # check that blocking is still there after subsetting
   ct1 = makeClusterTask(data = noclass.df, blocking = as.factor(1:nrow(noclass.df)))
-  expect_true(getTaskDescription(ct1)$has.blocking)
+  expect_true(getTaskDesc(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
-  expect_true(getTaskDescription(ct2)$has.blocking)
+  expect_true(getTaskDesc(ct2)$has.blocking)
 })

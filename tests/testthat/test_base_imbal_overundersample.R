@@ -74,3 +74,25 @@ test_that("control which class gets over or under sampled", {
   r = resample(lrn2, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
+
+test_that("training performance works as expected (#1357)", {
+  num = makeMeasure(id = "num", minimize = FALSE,
+    properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+    name = "Number",
+    fun = function(task, model, pred, feats, extra.args) {
+      length(pred$data$response)
+    }
+  )
+
+  y = binaryclass.df[, binaryclass.target]
+  z = getMinMaxClass(y)
+  rdesc = makeResampleDesc("Holdout", split = .5, predict = "both")
+
+  lrn = makeUndersampleWrapper("classif.rpart", usw.rate = 0.1, usw.cl = z$max.name)
+  r = resample(lrn, binaryclass.task, rdesc, measures = list(setAggregation(num, train.mean)))
+  expect_lt(r$measures.train$num, getTaskSize(binaryclass.task) * 0.5 - 1)
+
+  lrn = makeOversampleWrapper("classif.rpart", osw.rate = 2, osw.cl = z$max.name)
+  r = resample(lrn, binaryclass.task, rdesc, measures = list(setAggregation(num, train.mean)))
+  expect_gt(r$measures.train$num, getTaskSize(binaryclass.task) * 0.5 + 1)
+})

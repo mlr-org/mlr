@@ -1,9 +1,10 @@
 context("classif_LiblineaRMultiClassSVC")
 
 test_that("classif_LiblineaRMultiClassSVC", {
-  requirePackages("LiblineaR", default.method = "load")
+  requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(cost = 5L, epsilon = 0.1),
     list(cost = 5L, epsilon = 0.5),
     list(cost = 2L, epsilon = 0.1),

@@ -4,15 +4,15 @@
 \alias{getTaskCosts}
 \title{Extract costs in task.}
 \usage{
-getTaskCosts(task, subset)
+getTaskCosts(task, subset = NULL)
 }
 \arguments{
 \item{task}{[\code{\link{CostSensTask}}]\cr
 The task.}
 
-\item{subset}{[\code{integer}]\cr
-Selected cases.
-Default is all cases.}
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
 }
 \value{
 [\code{matrix} | \code{NULL}].
@@ -22,8 +22,7 @@ Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskData}},
-  \code{\link{getTaskDescription}},
+  \code{\link{getTaskData}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
@@ -31,4 +30,3 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-
