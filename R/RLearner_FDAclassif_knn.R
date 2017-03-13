@@ -1,3 +1,5 @@
+# TODO parameter for other metrics
+
 #' @export
 makeRLearner.fdaclassif.knn = function() {
   makeRLearnerClassif(
@@ -5,12 +7,15 @@ makeRLearner.fdaclassif.knn = function() {
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
-      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = c("metric.lp", "metric.kl",
-        "metric.hausdorff", "metric.dist")),
+      makeDiscreteLearnerParam(id = "metric", default = "metric.lp",
+                               values = c("metric.lp", "metric.kl",
+                                          "metric.hausdorff", "metric.dist")),
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
-      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "lp", default = 2L, lower = 1L, upper = Inf,
+                              requires = quote("metric" == "metric.lp"))
     ),
     par.vals = list(draw = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "weights"),
@@ -20,6 +25,8 @@ makeRLearner.fdaclassif.knn = function() {
   )
 }
 
+# TODO write tests
+
 #' @export
 trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
@@ -28,8 +35,14 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
   par.cv = learnerArgsToControl(list, trim, draw)
   par.s = list(w = .weights)
   glearn = z$target
+  metric = switch(metric,
+                  metric.lp = fda.usc::metric.lp,
+                  metric.kl = fda.usc::metric.kl,
+                  metric.hausdorff = fda.usc::metric.hausdorff,
+                  metric.dist = fda.usc::metric.dist
+  )
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
-    par.CV = par.cv, par.S = par.s, ...)
+                                       par.CV = par.cv, par.S = par.s, metric = metric, ...)
   return(learned.model)
 }
 
