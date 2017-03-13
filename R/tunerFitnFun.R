@@ -27,7 +27,7 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   convertYForTuner(res$y, measures, ctrl)
 }
 
-tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas) {
+tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun) {
   force(learner)
   force(task)
   force(resampling)
@@ -38,13 +38,14 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   force(show.info)
   force(convertx)
   force(remove.nas)
+  force(resample.fun)
   # remove trafos for mbo, we do this in tunerFitnFun
   ps2 = par.set
   for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
   smoof::makeSingleObjectiveFunction(
     fn = function(x) {
-      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun)
   }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
 }
 

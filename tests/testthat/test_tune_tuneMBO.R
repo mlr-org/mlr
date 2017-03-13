@@ -1,22 +1,21 @@
 context("tuneMBO")
 
 test_that("tuneMBO", {
-  skip_on_cran() # FIXME remove if mbo is on cran
-  skip_if_not_installed("mlrMBO")
-  attachNamespace("mlrMBO")
-  # FIXME change when mlrMBO is on cran
-  #requirePackagesOrSkip("!mlrMBO")
+  skip_on_cran()
+  suppressWarnings(skip_if_not_installed("mlrMBO")) # will always throw warning: replacing previous import ‘BBmisc::printHead’ by ‘mlr::printHead’ when loading 'mlrMBO'
+  attachNamespace("mlrMBO") # seems to be the only solution, as mlr is already loded by devtools but not recognized when mlrMBO wants to load it.
   res = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 20)
   )
 
-  n1 = 10; n2 = 2;
+  n1 = 10
+  n2 = 2
   mbo.ctrl = makeMBOControl(save.on.disk.at = integer(0L))
   mbo.ctrl = setMBOControlTermination(mbo.ctrl, iters = n2)
   des = generateDesign(n1, ps, fun = lhs::maximinLHS)
-  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl, mbo.design = des)
+  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm", predict.type = "se"), mbo.control = mbo.ctrl, mbo.design = des)
   tr = tuneParams(makeLearner("classif.rpart"), multiclass.task, res, par.set = ps, control = ctrl)
   expect_equal(getOptPathLength(tr$opt.path), n1+n2)
   expect_equal(dim(as.data.frame(tr$opt.path)), c(n1 + n2, 2 + 1 + 4))
@@ -25,7 +24,7 @@ test_that("tuneMBO", {
     makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x)
   )
   des = generateDesign(n1, ps, fun = lhs::maximinLHS)
-  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl, mbo.design = des)
+  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm", predict.type = "se"), mbo.control = mbo.ctrl, mbo.design = des)
   tr = tuneParams("classif.ksvm", multiclass.task, res, par.set = ps, control = ctrl)
   expect_equal(getOptPathLength(tr$opt.path), n1 + n2)
   expect_true(is.list(tr$x) && all(names(tr$x) == "sigma"))
