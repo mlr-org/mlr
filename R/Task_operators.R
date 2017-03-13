@@ -8,6 +8,7 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
+
 #' @export
 getTaskDesc.default = function(x) {
   x$task.desc
