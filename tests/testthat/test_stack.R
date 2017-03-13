@@ -108,3 +108,23 @@ test_that("Parameters for compress model", {
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 })
+
+
+test_that("the Brier Score optimal weighted sum (method = 'classif.bs.optimal') works for stacking", {
+  tsk = iris.task
+  base = c("classif.rpart", "classif.lda", "classif.svm")
+  lrns = lapply(base, makeLearner)
+  lrns = lapply(lrns, setPredictType, "prob")
+  m = makeStackedLearner(base.learners = lrns,
+                         predict.type = "prob",
+                         method = "classif.bs.optimal",
+                         resampling = makeResampleDesc("CV", iters = 5L))
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+
+  expect_equal(sum(tmp$learner.model$weights), 1, tolerance = 0.001,
+               info = "The ensemble weights should add up to 1.")
+  expect_true(all(tmp$learner.model$weights >= 0),
+              info = "The ensemble weights should greater than or equal to 0.")
+})
+

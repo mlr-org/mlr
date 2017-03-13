@@ -11,6 +11,8 @@
 #'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
 #'   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
 #'   \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
+#'   \item{\code{classif.bs.optimal}}{Weighted averaging of base learner predictions with weights
+#'   chosen Brier Score optimal.}
 #'  }
 #'
 #' @param base.learners [(list of) \code{\link{Learner}}]\cr
@@ -47,13 +49,11 @@
 #'   Default is \dQuote{stack.nocv},
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
-#'   Not used for \code{method %in% c('average', 'hill.climb', 'classif.bs.optimal'}.
+#'   Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}.
 #'   Default is \code{FALSE}.
 #' @param resampling [\code{\link{ResampleDesc}}]\cr
-#'   the resampling strategy for \code{method = 'stack.cv'}.
-#'   Currently only CV is allowed.
-#'   The default \code{NULL} uses 5-fold CV for \code{method = 'stack.cv'}
-#'
+#'   the resampling strategy for \code{method = 'stack.cv'}. Currently only CV is allowed.
+#'   The default \code{NULL} uses 5-fold CV,
 #'   the resampling strategy for \code{method = 'classif.bs.optimal'}
 #'   Currently only LOO and CV are allowd.
 #'   The default \code{NULL} uses LOO.
@@ -63,8 +63,8 @@
 #'   \item{\code{init}}{Number of best models being included before the selection algorithm.}
 #'   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
 #'   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
-#'   the smaller the score the better.}
+#'   \item{\code{metric}}{The result evaluation metric function taking two parameters
+#'   \code{pred} and \code{true}, the smaller the score the better.}
 #' }
 #' the parameters for \code{compress} method, including
 #' \describe{
@@ -381,7 +381,7 @@ classif.bs.optimal = function(learner, task) {
   base.models = probs = vector("list", length(bls))
 
   ## This can go further up later
-  # learner$resampling <- makeResampleDesc("LOO")
+  # learner$resampling = makeResampleDesc("LOO")
 
   # adjusted code from stackCV
   rin = makeResampleInstance(learner$resampling, task = task)
@@ -396,45 +396,44 @@ classif.bs.optimal = function(learner, task) {
 
   # Transform the bootstrapped predicted values into the required format of the
   # matrix P
-  P <- sapply(probs, function(dat) {
+  P = sapply(probs, function(dat) {
     as.vector(t(dat))
   })
 
   # code the response
-  z <- as.vector(model.matrix( ~.-1, data = data.frame(getTaskTargets(task))))
+  z = as.vector(model.matrix( ~.-1, data = data.frame(getTaskTargets(task))))
 
   # From Fuchs Online Appendix
-  A <- P * (-1)
-  B <- z * (-1)
+  A = P * (-1)
+  B = z * (-1)
 
-  H <- rep(0, length = ncol(A))
-  G <- diag(1, nrow = ncol(A))
+  H = rep(0, length = ncol(A))
+  G = diag(1, nrow = ncol(A))
 
   E = rep(1, ncol(A))
   F = 1
 
   ####################################
-  # Taken from the limSolve::lsei function
-  # The lsei function seemed to not work
-  # The solve.QP seems to be more stable
-  dvec <- crossprod(A, B)
-  Dmat <- crossprod(A, A)
-  diag(Dmat) <- diag(Dmat) + 1e-08
-  Amat <- t(rbind(E, G))
-  bvec <- c(F, H)
+  # taken from the limSolve::lsei function
+  # the lsei function seemed to not be stable
+  # the solve.QP seems to be more stable
+  dvec = crossprod(A, B)
+  Dmat = crossprod(A, A)
+  diag(Dmat) = diag(Dmat) + 1e-08
+  Amat = t(rbind(E, G))
+  bvec = c(F, H)
 
-  # Because E and F are onedimensional
+  # E and F are onedimensional
   Neq = 1
 
-  # FIXME is this the correct way to load a package here?
-  requirePackages("quadprog")
-  sol <- solve.QP(Dmat, dvec, Amat, bvec, meq = Neq)
-  # sol$IsError <- FALSE
-  # sol$X <- sol$solution
-  Cs <- round(sol$solution, digits = 4)
+  # FIXME is this the correct way to access a package here?
+  sol = quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq = Neq)
+  # sol$IsError = FALSE
+  # sol$X = sol$solution
+  Cs = round(sol$solution, digits = 4)
   ################################
 
-  # Return the weight vector Cs from the algorithm
+  # return the weight vector Cs from the algorithm
   list(method = "classif.bs.optimal", base.models = base.models, super.model = NULL,
        pred.train = probs, weights = Cs)
 }
