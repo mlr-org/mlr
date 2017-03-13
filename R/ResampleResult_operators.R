@@ -26,8 +26,8 @@ getRRPredictions = function(res) {
 #' @export
 #' @family resample
 getRRTaskDescription = function(res) {
-  .Deprecated("getRRTaskDescs")
-  getRRTaskDescs(res)
+  .Deprecated("getRRTaskDesc")
+  getRRTaskDesc(res)
 }
 
 #' @title Get task description from resample results (DEPRECATED).

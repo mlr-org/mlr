@@ -8,13 +8,6 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
-#' Deprecated, use \code{\link{getTaskDesc}} instead.
-#' @export
-getTaskDescription = function(x) {
-  .Deprecated("getTaskDesc")
-  UseMethod("getTaskDesc")
-}
-
 #' @export
 getTaskDesc.default = function(x) {
   x$task.desc
@@ -23,6 +16,13 @@ getTaskDesc.default = function(x) {
 #' @export
 getTaskDesc.TaskDesc = function(x) {
   x
+}
+
+#' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' @export
+getTaskDescription = function(x) {
+  .Deprecated("getTaskDesc")
+  getTaskDesc(x)
 }
 
 #' Get the type of the task.
