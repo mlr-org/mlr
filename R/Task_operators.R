@@ -20,6 +20,7 @@ getTaskDesc.TaskDesc = function(x) {
 }
 
 #' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' @inheritParams getTaskDesc
 #' @export
 getTaskDescription = function(x) {
   .Deprecated("getTaskDesc")

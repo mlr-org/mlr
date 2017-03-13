@@ -344,6 +344,6 @@ getBMRTaskDescriptions = function(bmr) {
 #' @export
 #' @family benchmark
 getBMRTaskDescs = function(bmr) {
-  lapply(bmr$results, function(x) lapply(x, getRRTaskDescs))
+  lapply(bmr$results, function(x) lapply(x, getRRTaskDesc))
 }
 
