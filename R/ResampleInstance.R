@@ -46,7 +46,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     desc = makeResampleDesc(desc, ...)
   if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
-  } 
+  }
   if (!missing(task)) {
     assertClass(task, classes = "Task")
     size = getTaskSize(task)
@@ -80,6 +80,7 @@ makeResampleInstance = function(desc, task, size, ...) {
       td = getTaskDescription(task)
       stratify.cols = switch(td$type,
         "classif" = getTaskTargetNames(task),
+        "fdaclassif" = getTaskTargetNames(task),
         "surv" = getTaskTargetNames(task)[2L],
         stopf("Stratification for tasks of type '%s' not supported", td$type))
     } else {
