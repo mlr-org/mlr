@@ -43,7 +43,7 @@
 #' print(extracted$data)
 #' reExtractFDAFeatures(data.frame(x = NA_real_), imputed$desc)
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list(),
-  fd.features = list(), fd.grids = list(), ...) {
+  fd.features = list(), fd.grids = list()) {
   assertList(feat.methods)
   UseMethod("extractFDAFeatures")
 }
@@ -52,7 +52,7 @@ extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()
 #' @export
 #' # feat.methods are the function signature that one want to use for the corresponding covariate
 extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list(),
-  fd.features = list(), fd.grids = list(), ...) {
+  fd.features = list(), fd.grids = list()) {
 
   assertSubset(names(feat.methods), names(fd.features))
   assertList(fd.features)
@@ -62,7 +62,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
-    coln = colnames(data),
+    coln = colnames(obj),
     colclasses = vcapply(obj, function(x) class(x)[1L]),
     fd.features = fd.features,
     fd.grids = fd.grids,
@@ -83,18 +83,25 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
-  desc$extractFDAFeat = Map(function(xn, x, fd.cols) {
+  extractFDAFeat = Map(function(xn, x, fd.cols) {
     list(
-      reextract = x$reextract,  # pass on for extraction in predict phase
+      # feats are the extracted features
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols))),
-      args = x$args
+      args = x$args, # Args passed to x$reextract
+      reextract = x$reextract  # pass on reextraction learner for extraction in predict phase
     )
   }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
-    #
+
+  # Append Info relevant for reextraction to desc
+  desc$extractFDAFeat = lapply(extractFDAFeat, function(x) {c(x["args"], x["reextract"])})
+
   # Extract feats for every functional feature and cbind to data.frame
-  vals = extractSubList(desc$extractFDAFeat, "feats", simplify = FALSE)
+  vals = extractSubList(extractFDAFeat, "feats", simplify = FALSE)
   df = data.frame(do.call(cbind, vals))
-  list(data = df, desc = desc)
+
+  # Reappend non-functional features
+  data = cbind(df, obj[, setdiff(desc$coln, unlist(desc$fd.features))])
+  list(data = data, desc = desc)
 }
 
 #' @export
@@ -107,12 +114,16 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
   fd.grids = getTaskDescription(obj)$fd.grids
   data = getTaskData(obj)
   target = getTaskTargetNames(obj)
-  # FIXME: Convert to normal task, as it is no longer a FDA Task afterwards
-  extractFDAFeatures.data.frame(obj = data, target = target, feat.methods = feat.methods,
-    fd.features = fd.features, fd.grids = fd.grids)
-  # Reappend target
-  # df[-which(colnames(df) %in% unlist(desc$fd.features))]
-  # FIXME: convert Task to Normal Task instead
+
+  # Extract features from data
+  extracted = extractFDAFeatures.data.frame(obj = data, target = target,
+    feat.methods = feat.methods, fd.features = fd.features, fd.grids = fd.grids)
+
+  # Change Task type and other interals to reflect a normal task
+  obj = changeFDATaskToNormalTask(obj)
+  # And change data so it only contains non-functional features
+  task = changeData(obj, extracted$data)
+  list(task = task, desc = extracted$desc)
 }
 
 
@@ -135,7 +146,7 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @param desc [\code{extractFDAFeatDesc}]\cr
 #'   FDAFeature extraction description as returned by \code{\link{extractFDAFeatures}}
 #' @return \code{data.frame} or \code{task} containing the extracted Features
-#' @family impute
+#' @family extractFDAFeatures
 #' @export
 reExtractFDAFeatures = function(obj, desc) {
   UseMethod("reExtractFDAFeatures")

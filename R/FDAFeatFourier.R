@@ -18,7 +18,6 @@
 #' @export
 extractFDAFeatFourier = function(data, target = NULL, cols, vals = NULL, trafo.coeff = "phase") {
 
-
   assertClass(data, "data.frame")
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
   # Transform data to matrix for stats::fft

@@ -46,5 +46,5 @@ test_that("reExtractFDAFeatures", {
   fm = list("fd1"= extractFDAFourier(trafo.coeff = "amplitude"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
 
-  reExtractFDAFeatures(gp.subset, t3$desc)
+  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
 })
