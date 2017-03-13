@@ -68,7 +68,7 @@ getRRPredictionList = function(res, ...) {
   pred = getRRPredictions(res)
   predict.type = pred$predict.type
   time = pred$time
-  task.desc = getRRTaskDescription(res)
+  task.desc = getRRTaskDesc(res)
 
   # split by train and test set
   set = levels(pred$data$set)
