@@ -532,7 +532,7 @@ measureAU1P = function(probabilities, truth) {
 #' @rdname measures
 #' @format none
 multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 0, worst = 2,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+  properties = c("classif", "classif.multi", "fdaclassif", "req.pred", "req.truth", "req.prob"),
   name = "Multiclass Brier score",
   note = "Defined as: (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probability of observation i for class j. From http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -752,7 +752,7 @@ measureAUC = function(probabilities, truth, negative, positive) {
 #' @rdname measures
 #' @format none
 brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "req.pred", "req.truth", "req.prob"),
+  properties = c("classif", "fdaclassif", "req.pred", "req.truth", "req.prob"),
   name = "Brier score",
   note = "The Brier score is defined as the quadratic difference between the probability and the value (1,0) for the class.
   That means we use the numeric representation 1 and 0 for our target classes. It is similiar to the mean squared error in regression.
