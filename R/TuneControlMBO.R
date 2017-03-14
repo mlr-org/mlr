@@ -1,3 +1,13 @@
+#' @title Create control object for hyperparameter tuning with MBO.
+#'
+#' @description
+#'   Model-based / Bayesian optimization with the function
+#'   \code{\link[mlrMBO]{mbo}} from the mlrMBO package.
+#'   Please refer to the webpage \url{https://github.com/mlr-org/mlrMBO} for further info.
+#'
+#' @inherit TuneControl
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning. This value restricts the number of function evaluations.
 #' @param learner [\code{\link{Learner}} | \code{NULL}]\cr
 #'   The surrogate learner: A regression learner to model performance landscape.
 #'  For the default, \code{NULL}, \code{mlrMBO} will automatically create a suitable learner based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.
@@ -18,8 +28,10 @@
 #'   If the parameters have corresponding trafo functions,
 #'   the design must not be transformed before it is passed!
 #'   For the default, \code{NULL}, a default design is created like described in \code{\link[mlrMBO]{mbo}}.
+#' @return [\code{\link{TuneControlMBO}}]
+#' @aliases TuneControlMBO
+#' @family tune
 #' @export
-#' @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
   learner = NULL, mbo.control = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
   continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
