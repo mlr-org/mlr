@@ -65,6 +65,7 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{getRRPredictionList}},
   \code{\link{getRRPredictions}},
   \code{\link{getRRTaskDescription}},
+  \code{\link{getRRTaskDesc}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}

@@ -15,7 +15,7 @@ getRRPredictions = function(res) {
     res$pred
 }
 
-#' @title Get task description from resample results.
+#' @title Get task description from resample results (DEPRECATED).
 #'
 #' @description
 #' Get a summarizing task description.
@@ -26,6 +26,21 @@ getRRPredictions = function(res) {
 #' @export
 #' @family resample
 getRRTaskDescription = function(res) {
+  .Deprecated("getRRTaskDesc")
+  getRRTaskDesc(res)
+}
+
+#' @title Get task description from resample results (DEPRECATED).
+#'
+#' @description
+#' Get a summarizing task description.
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [\code{TaskDesc}].
+#' @export
+#' @family resample
+getRRTaskDesc = function(res) {
   res$task.desc
 }
 
@@ -53,7 +68,7 @@ getRRPredictionList = function(res, ...) {
   pred = getRRPredictions(res)
   predict.type = pred$predict.type
   time = pred$time
-  task.desc = getRRTaskDescription(res)
+  task.desc = getRRTaskDesc(res)
 
   # split by train and test set
   set = levels(pred$data$set)
