@@ -38,24 +38,10 @@ test_that("tuneParams with resample.fun", {
   ctrl = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
-})
 
-test_that("tuneParamsMBO does not accept resample.fun", {
-  # tuneMBO does currently not implement resample.fun; FIXME change here as soon as it does.
-  skip_on_cran() # FIXME remove if mbo is on cran
-  skip_if_not_installed("mlrMBO")
-  attachNamespace("mlrMBO")
-  lrn = makeLearner("classif.rpart")
-  rdesc = makeResampleDesc("Holdout")
-  ps = makeParamSet(
-    makeNumericParam("cp", lower = 0.001, upper = 1),
-    makeIntegerParam("minsplit", lower = 1, upper = 10)
-  )
- 
-  mbo.ctrl = makeMBOControl(save.on.disk.at = integer(0L))
-  mbo.ctrl = setMBOControlTermination(mbo.ctrl, iters = 2)
-  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl)
-  expect_error(tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample))
+  expect_warning({ctrl = makeTuneControlMBO(budget = 10, learner = "regr.lm")}, "when loading ‘mlrMBO’")
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 })
 
 test_that("tuneParams output works as documented", {

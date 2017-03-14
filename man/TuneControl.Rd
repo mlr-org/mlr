@@ -41,7 +41,7 @@ makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   budget = NULL, ...)
 
 makeTuneControlMBO(same.resampling.instance = TRUE, impute.val = NULL,
-  learner, mbo.control, tune.threshold = FALSE,
+  learner = NULL, mbo.control = NULL, tune.threshold = FALSE,
   tune.threshold.args = list(), continue = FALSE, log.fun = "default",
   final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE,
   mbo.design = NULL)
@@ -162,12 +162,74 @@ For the default, \code{NULL}, a design is constructed from the settings in \code
 \item{maxit}{[\code{integer(1)} | NULL]\cr
 Number of iterations for random search.
 Default is 100.}
+
+\item{learner}{[\code{\link{Learner}} | \code{NULL}]\cr
+ The surrogate learner: A regression learner to model performance landscape.
+For the default, \code{NULL}, \code{mlrMBO} will automatically create a suitable learner based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.}
+
+\item{continue}{[\code{logical(1)}]\cr
+Resume calculation from previous run using \code{\link[mlrMBO]{mboContinue}}?
+Requires \dQuote{save.file.path} to be set.
+Note that the \code{\link[ParamHelpers]{OptPath}} in the \code{\link[mlrMBO]{OptResult}}
+will only include the evaluations after the continuation.
+The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.}
+
+\item{mbo.control}{[\code{\link[mlrMBO]{MBOControl}} | \code{NULL}]\cr
+Control object for model-based optimization tuning.
+For the default, \code{NULL}, the control object will be created with all the defaults as described in \code{\link[mlrMBO]{makeMBOControl}}.}
+
+\item{mbo.keep.result}{[\code{logical(1)}] \cr
+Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
+Default is \code{FALSE}.}
+
+\item{mbo.design}{[\code{data.frame} | \code{NULL}]\cr
+Initial design as data frame.
+If the parameters have corresponding trafo functions,
+the design must not be transformed before it is passed!
+For the default, \code{NULL}, a default design is created like described in \code{\link[mlrMBO]{mbo}}.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of
   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
   \code{\link{TuneControlIrace}}.
+}
+\description{
+The following tuners are available:
+
+\describe{
+  \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
+    You can either use their correct param type and \code{resolution},
+    or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
+    in the \code{par.set} passed to \code{\link{tuneParams}}.}
+  \item{makeTuneControlRandom}{Random search. All kinds of parameter types can be handled.}
+  \item{makeTuneControlDesign}{Completely pre-specifiy a data.frame of design points to be evaluated
+    during tuning. All kinds of parameter types can be handled.}
+  \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
+    Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+    For integers the internally proposed numeric values are automatically rounded.
+    The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
+    parameter dimension.}
+  \item{makeTuneControlGenSA}{Generalized simulated annealing with method \code{\link[GenSA]{GenSA}}.
+    Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+    For integers the internally proposed numeric values are automatically rounded.}
+  \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
+    All kinds of parameter types can be handled. We return the best of the final elite
+    candidates found by irace in the last race. Its estimated performance is the mean of all
+    evaluations ever done for that candidate. More information on irace can be found in the TR at
+    \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
+  \item{makeTuneControlMBO}{Model-based / Bayesian optimization with the function
+    \code{\link[mlrMBO]{mbo}} from the mlrMBO package.
+    Please refer to the webpage \url{https://github.com/mlr-org/mlrMBO} for further info.}
+}
+
+Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
+not a \code{\link{ResampleInstance}}.
+The resampling strategy is randomly instantiated \code{n.instances} times and
+these are the instances in the sense of irace (\code{instances} element of \code{tunerConfig}
+in \code{\link[irace]{irace}}). Also note that irace will always
+store its tuning results in a file on disk, see the package documentation for details on this
+and how to change the file path.
 }
 \seealso{
 Other tune: \code{\link{getNestedTuneResultsOptPathDf}},
