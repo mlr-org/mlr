@@ -53,6 +53,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   k = length(cls)
   n = getTaskSize(pred$task.desc)
   resp = getPredictionResponse(pred)
+  n.pred = length(resp)
   truth = getPredictionTruth(pred)
   tab = table(truth, resp)
   # create table for margins, where only the off-diag errs are in
@@ -93,7 +94,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
 
     result$relative.row = result.rel.row
     result$relative.col = result.rel.col
-    result$relative.error = sum(result$result[k+1, 1:(k+1)])/n
+    result$relative.error = result$result[k+1, k+1]/n.pred
   }
 
   addClasses(result, "ConfusionMatrix")
