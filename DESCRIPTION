@@ -112,6 +112,7 @@ Suggests:
     mda,
     mlbench,
     mldr,
+    mlrMBO,
     modeltools,
     mRMRe,
     nnet,

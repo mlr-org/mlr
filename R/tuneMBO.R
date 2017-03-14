@@ -14,9 +14,9 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   state = mbo.control$save.file.path
   if (control$continue && file.exists(state)) {
     messagef("Resuming previous MBO run using state in '%s'...", state)
-    or = mboContinue(state)
+    or = mlrMBO::mboContinue(state)
   } else {
-    or = mbo(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
+    or = mlrMBO::mbo(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
   }
 
   x = trafoValue(par.set, or$x)
