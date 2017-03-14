@@ -1,7 +1,8 @@
 #' @title Create control object for hyperparameter tuning with random search.
 #'
 #' @description
-#'   Random search. All kinds of parameter types can be handled.
+#' Random search. All kinds of parameter types can be handled.
+#'
 #' @inherit TuneControl
 #' @param budget [\code{integer(1)}]\cr
 #'   Maximum budget for tuning. This value restricts the number of function

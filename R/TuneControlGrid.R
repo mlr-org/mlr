@@ -1,10 +1,11 @@
 #' @title Create control object for hyperparameter tuning with grid search.
 #'
 #' @description
-#'   A basic grid search can handle all kinds of parameter types.
-#'   You can either use their correct param type and \code{resolution},
-#'   or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
-#'   in the \code{par.set} passed to \code{\link{tuneParams}}.
+#' A basic grid search can handle all kinds of parameter types.
+#' You can either use their correct param type and \code{resolution},
+#' or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
+#' in the \code{par.set} passed to \code{\link{tuneParams}}.
+#'
 #' @inherit TuneControl
 #' @param resolution [\code{integer}]\cr
 #'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.

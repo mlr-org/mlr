@@ -1,8 +1,8 @@
 #' @title Create control object for hyperparameter tuning with predefined design.
 #'
 #' @description
-#'   Completely pre-specifiy a \code{data.frame} of design points to be evaluated
-#'   during tuning. All kinds of parameter types can be handled.
+#' Completely pre-specifiy a \code{data.frame} of design points to be evaluated
+#' during tuning. All kinds of parameter types can be handled.
 #'
 #' @inherit TuneControl
 #' @param design [\code{data.frame}]\cr
