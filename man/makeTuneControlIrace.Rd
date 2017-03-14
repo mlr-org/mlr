@@ -72,18 +72,18 @@ towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 }
 \description{
 Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
-  All kinds of parameter types can be handled. We return the best of the final elite
-  candidates found by irace in the last race. Its estimated performance is the mean of all
-  evaluations ever done for that candidate. More information on irace can be found in the TR at
-  \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.
+All kinds of parameter types can be handled. We return the best of the final elite
+candidates found by irace in the last race. Its estimated performance is the mean of all
+evaluations ever done for that candidate. More information on irace can be found in the TR at
+\url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.
 
-  For resampling you have to pass a \code{\link{ResampleDesc}},
-  not a \code{\link{ResampleInstance}}.
-  The resampling strategy is randomly instantiated \code{n.instances} times and
-  these are the instances in the sense of irace (\code{instances} element of \code{tunerConfig}
-  in \code{\link[irace]{irace}}). Also note that irace will always
-  store its tuning results in a file on disk, see the package documentation for details on this
-  and how to change the file path.
+For resampling you have to pass a \code{\link{ResampleDesc}},
+not a \code{\link{ResampleInstance}}.
+The resampling strategy is randomly instantiated \code{n.instances} times and
+these are the instances in the sense of irace (\code{instances} element of \code{tunerConfig}
+in \code{\link[irace]{irace}}). Also note that irace will always
+store its tuning results in a file on disk, see the package documentation for details on this
+and how to change the file path.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},

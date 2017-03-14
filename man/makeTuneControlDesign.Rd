@@ -59,7 +59,7 @@ See the implementation for details.}
 }
 \description{
 Completely pre-specifiy a \code{data.frame} of design points to be evaluated
-  during tuning. All kinds of parameter types can be handled.
+during tuning. All kinds of parameter types can be handled.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},

@@ -72,10 +72,10 @@ towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 }
 \description{
 CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
-  Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
-  For integers the internally proposed numeric values are automatically rounded.
-  The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
-  parameter dimension.
+Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+For integers the internally proposed numeric values are automatically rounded.
+The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
+parameter dimension.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},

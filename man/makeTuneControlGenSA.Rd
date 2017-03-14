@@ -60,7 +60,7 @@ Default is \code{NULL} which will not change anything.}
 Maximum budget for tuning. This value restricts the number of function
 evaluations. \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 the argument \code{max.call}. However, one should note that this algorithm
-does not stop its local search before its end. This behaviour might lead
+does not stop its local search before its end. This behavior might lead
 to an extension of the defined budget and will result in a warning.}
 
 \item{...}{[any]\cr
@@ -73,8 +73,8 @@ towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 }
 \description{
 Generalized simulated annealing with method \code{\link[GenSA]{GenSA}}.
-  Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
-  For integers the internally proposed numeric values are automatically rounded.
+Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+For integers the internally proposed numeric values are automatically rounded.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},
