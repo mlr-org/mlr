@@ -15,3 +15,4 @@ inst/doc/
 ehthumbs.db
 Icon?
 Thumbs.db
+*xgboost.model
