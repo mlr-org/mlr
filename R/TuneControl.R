@@ -2,6 +2,7 @@
 #'
 #' @description
 #' The following tuners are available:
+#'
 #' \describe{
 #'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
 #'     You can either use their correct param type and \code{resolution},
@@ -67,6 +68,24 @@
 #'   does not stop its local search before its end. This behaviour might lead
 #'   to an extension of the defined budget and will result in a warning. In
 #'   \code{irace}, \code{budget} is passed to \code{maxExperiments}.
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The surrogate learner: A regression learner to model performance landscape.
+#' @param continue [\code{logical(1)}]\cr
+#'   Resume calculation from previous run using \code{\link[mlrMBO]{mboContinue}}?
+#'   Requires \dQuote{save.file.path} to be set.
+#'   Note that the \code{\link[ParamHelpers]{OptPath}} in the \code{\link[mlrMBO]{OptResult}}
+#'   will only include the evaluations after the continuation.
+#'   The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.
+#' @param mbo.control [\code{\link[mlrMBO]{MBOControl}}]\cr
+#'   Control object for model-based optimization tuning.
+#' @param mbo.keep.result [\code{logical(1)}] \cr
+#'    Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
+#'    Default is \code{FALSE}.
+#' @param mbo.design [\code{data.frame} | \code{NULL}]\cr
+#'   Initial design as data frame.
+#'   If the parameters have corresponding trafo functions,
+#'   the design must not be transformed before it is passed!
+#'   For the default, \code{NULL}, a design is constructed from the settings in \code{mbo.control}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} arguments of
 #'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
@@ -78,7 +97,7 @@
 #' @family tune
 #' @name TuneControl
 #' @rdname TuneControl
-#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
+#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace TuneControlMBO
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL,

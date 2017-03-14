@@ -9,6 +9,7 @@
 \alias{TuneControlCMAES}
 \alias{TuneControlGenSA}
 \alias{TuneControlIrace}
+\alias{TuneControlMBO}
 \alias{makeTuneControlCMAES}
 \alias{makeTuneControlDesign}
 \alias{makeTuneControlGenSA}
