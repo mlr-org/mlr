@@ -25,7 +25,7 @@
 #'     \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
 #'   \item{makeTuneControlMBO}{Model-based / Bayesian optimization with the function
 #'     \code{\link[mlrMBO]{mbo}} from the mlrMBO package.
-#'     Please refer to the webpage \url{https://github.com/mlr-org/mlrMBO} for further info.
+#'     Please refer to the webpage \url{https://github.com/mlr-org/mlrMBO} for further info.}
 #' }
 #'
 #' Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
