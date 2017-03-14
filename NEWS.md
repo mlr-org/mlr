@@ -15,6 +15,8 @@
   = "memory")
 * listLearners: change check.packages default to FALSE
 * tuneParams and tuneParamsMultiCrit: new parameter `resample.fun` to specify a custom resampling function to use.
+* Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription.
+  New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
