@@ -1,10 +1,31 @@
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The surrogate learner: A regression learner to model performance landscape.
+#'   If no learner is given \code{mlrMBO} will automatically create a suitable one based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.
+#' @param continue [\code{logical(1)}]\cr
+#'   Resume calculation from previous run using \code{\link[mlrMBO]{mboContinue}}?
+#'   Requires \dQuote{save.file.path} to be set.
+#'   Note that the \code{\link[ParamHelpers]{OptPath}} in the \code{\link[mlrMBO]{OptResult}}
+#'   will only include the evaluations after the continuation.
+#'   The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.
+#' @param mbo.control [\code{\link[mlrMBO]{MBOControl}}]\cr
+#'   Control object for model-based optimization tuning.
+#' @param mbo.keep.result [\code{logical(1)}] \cr
+#'    Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
+#'    Default is \code{FALSE}.
+#' @param mbo.design [\code{data.frame} | \code{NULL}]\cr
+#'   Initial design as data frame.
+#'   If the parameters have corresponding trafo functions,
+#'   the design must not be transformed before it is passed!
+#'   For the default, \code{NULL}, a default design is created like described in \code{\link[mlrMBO]{mbo}}.
 #' @export
 #' @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
-  learner, mbo.control, tune.threshold = FALSE, tune.threshold.args = list(),
+  learner = NULL, mbo.control, tune.threshold = FALSE, tune.threshold.args = list(),
   continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
 
-  assertClass(learner, classes = "Learner")
+  if (!is.null(learner)) {
+    checkLearner(learner, type = "regr")
+  }
   assertClass(mbo.control, "MBOControl")
   assertFlag(continue)
   assertFlag(mbo.keep.result)
@@ -15,8 +36,7 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   else if (!is.null(budget)) {
     if (!is.null(mbo.control$stop.conds))
       warning("The mbo.control object already has a stopping condition. However we add another one respecting the budget.", mbo.control$init.design.points, budget)
-    setMBOControlTermination = get("setMBOControlTermination", envir = getNamespace("mlrMBO")) # FIXME: Remove if mlrMBO hits CRAN
-    mbo.control = setMBOControlTermination(mbo.control, max.evals = budget)
+    mbo.control = mlrMBO::setMBOControlTermination(mbo.control, max.evals = budget)
   }
 
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
