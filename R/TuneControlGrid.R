@@ -12,6 +12,9 @@
 #'   Either pass one resolution for all parameters, or a named vector.
 #'   See \code{\link[ParamHelpers]{generateGridDesign}}.
 #'   Default is 10.
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. If set, must equal the size of the grid.
 #' @return [\code{\link{TuneControlGrid}}]
 #' @aliases TuneControlGrid
 #' @family tune
