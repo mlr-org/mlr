@@ -39,7 +39,10 @@ test_that("tuneParams with resample.fun", {
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 
-  expect_warning({ctrl = makeTuneControlMBO(budget = 10, learner = "regr.lm")}, "when loading ‘mlrMBO’")
+  ctrl = suppressWarnings({
+    # this currently is a warning because printHead is in mlr and BBmisc
+     makeTuneControlMBO(budget = 10, learner = "regr.lm")
+  })
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 })

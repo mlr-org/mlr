@@ -30,7 +30,7 @@ in the same order as your measures.}
 
 \item{learner}{[\code{\link{Learner}} | \code{NULL}]\cr
  The surrogate learner: A regression learner to model performance landscape.
-For the default, \code{NULL}, \code{mlrMBO} will automatically create a suitable learner based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.}
+For the default, \code{NULL}, \pkg{mlrMBO} will automatically create a suitable learner based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.}
 
 \item{mbo.control}{[\code{\link[mlrMBO]{MBOControl}} | \code{NULL}]\cr
 Control object for model-based optimization tuning.
@@ -51,7 +51,7 @@ Resume calculation from previous run using \code{\link[mlrMBO]{mboContinue}}?
 Requires \dQuote{save.file.path} to be set.
 Note that the \code{\link[ParamHelpers]{OptPath}} in the \code{\link[mlrMBO]{OptResult}}
 will only include the evaluations after the continuation.
-The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.}
+The complete \code{\link{OptPath}} will be found in the slot \code{$mbo.result$opt.path}.}
 
 \item{log.fun}{[\code{function} | \code{character(1)}]\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
@@ -88,8 +88,8 @@ For the default, \code{NULL}, a default design is created like described in \cod
 }
 \description{
 Model-based / Bayesian optimization with the function
-  \code{\link[mlrMBO]{mbo}} from the mlrMBO package.
-  Please refer to the webpage \url{https://github.com/mlr-org/mlrMBO} for further info.
+\code{\link[mlrMBO]{mbo}} from the \pkg{mlrMBO} package.
+Please refer to \url{https://github.com/mlr-org/mlrMBO} for further info.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},
