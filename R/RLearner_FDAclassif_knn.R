@@ -4,9 +4,10 @@ makeRLearner.fdaclassif.knn = function() {
     cl = "fdaclassif.knn",
     package = "fda.usc",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
+      makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL,
+                              special.vals = list(NULL)),
       # metric.kl throws (cryptic) warning messages
-      # metric.dist does not work in original fda.usc package
+      # metric.dist does (intentionally) not work in the original fda.usc::classif.knn()
       makeDiscreteLearnerParam(id = "metric", default = "metric.lp",
                                values = c("metric.lp",
                                           # "metric.kl", "metric.dist",
@@ -17,10 +18,10 @@ makeRLearner.fdaclassif.knn = function() {
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
       makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "lp", default = 2L, lower = 1L, upper = Inf,
-                              requires = quote("metric" == "metric.lp"))
+                              requires = quote(metric == "metric.lp"))
     ),
-    par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "weights"),
+    par.vals = list(draw = FALSE, metric = "metric.lp"),
+    properties = c("twoclass", "multiclass", "numerics", "weights", "prob"),
     name = "Knn on FDA",
     short.name = "knnFDA",
     note = "Draw parameter is set to FALSE as default."
@@ -29,7 +30,7 @@ makeRLearner.fdaclassif.knn = function() {
 
 
 #' @export
-trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, metric, trim, draw, ...) {
+trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = z$data)
@@ -52,6 +53,11 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
 predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd.fdclass = fda.usc::fdata(mdata = .newdata)# transform the data into fda.usc:fdata class type.
-  class.pred = predict(m, nd.fdclass, ...)
-  return(class.pred)
+
+  if (.learner$predict.type == "response") {
+    return(predict(m, nd.fdclass, type = "class", ...))
+  } else if(.learner$predict.type == "prob") {
+    pred = predict(m, nd.fdclass, type = "probs", ...)
+    return(pred$prob.group)
+  }
 }

@@ -28,8 +28,8 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
-  if (ttype %nin% c("classif", "cluster", "multilabel"))
-    stop("Prediction was not generated from a ClassifTask, MultilabelTask or ClusterTask!")
+  if (ttype %nin% c("classif", "cluster", "multilabel", "fdaclassif"))
+    stop("Prediction was not generated from a ClassifTask, MultilabelTask, ClusterTask or FDAClassifTask!")
   if (missing(cl)) {
     if (ttype == "classif") {
       if (length(pred$task.desc$class.levels) == 2L)
@@ -48,7 +48,7 @@ getPredictionProbabilities = function(pred, cl) {
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
-  if (ttype %in% c("classif", "multilabel")) {
+  if (ttype %in% c("classif", "multilabel", "fdaclassif")) {
     cl2 = stri_paste("prob", cl, sep = ".")
     if (!all(cl2 %in% cns))
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))

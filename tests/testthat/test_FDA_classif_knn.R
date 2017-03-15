@@ -12,15 +12,25 @@ test_that("FDA_classif_knn behaves like original api", {
 
   mtest = phoneme[["test"]]
   gtest = phoneme[["classtest"]]
+
+  # fda.usc implementation
   set.seed(getOption("mlr.debug.seed"))
-  a1 = fda.usc::classif.knn(glearn, mlearn, par.CV = list(trim = 0.5))
+  a1 = fda.usc::classif.knn(glearn, mlearn, knn = 1L, par.CV = list(trim = 0.5))
+
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
+
+  p1.prob = predict(a1, mtest, type = "probs")$prob.group
+  p2.prob = predict(a1, mlearn, type = "probs")$prob.group
+  colnames(p1.prob) = paste0("prob.", colnames(p1.prob))
+  colnames(p2.prob) = paste0("prob.", colnames(p2.prob))
 
   ph = as.data.frame(mlearn$data)
   ph[,"label"] = glearn
 
-  lrn = makeLearner("fdaclassif.knn", par.vals = list(knn = 1L, trim = 0.5))
+  # mlr interface
+  lrn = makeLearner("fdaclassif.knn",
+                    par.vals = list(knn = 1L, trim = 0.5))
   task = makeFDAClassifTask(data = ph, target = "label")
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
@@ -34,32 +44,45 @@ test_that("FDA_classif_knn behaves like original api", {
   expect_equal(as.character(cp), as.character(p1))
 
 
+  # test that predict.type = "prob" works
+  set.seed(getOption("mlr.debug.seed"))
+  lrn.prob = makeLearner("fdaclassif.knn",
+                    par.vals = list(knn = 1L, trim = 0.5),
+                    predict.type = "prob")
+  m.prob = train(lrn.prob, task)
+
+  cp.prob = predict(m.prob, newdata = as.data.frame(mtest$data))
+  cp2.prob = predict(m.prob, newdata = as.data.frame(mlearn$data))
+
+
+  expect_equal(as.matrix(cp2.prob$data), p2.prob)
+  expect_equal(as.matrix(cp.prob$data), p1.prob)
+
 
 
   # # test that different metrics work as well
-  # skip_on_cran()
   # set.seed(getOption("mlr.debug.seed"))
-  # a2 = fda.usc::classif.knn(glearn, mlearn,
+  # a.metric = fda.usc::classif.knn(glearn, mlearn,
   #                           metric = metric.hausdorff,
   #                           par.CV = list(trim = 0.5))
-  # p12 = predict(a1, mtest)
-  # p22 = predict(a1, mlearn)
+  # p1.metric = predict(a.metric, mtest)
+  # p2.metric = predict(a.metric, mlearn)
   #
-  # lrn2 = makeLearner("fdaclassif.knn",
+  # lrn.metric = makeLearner("fdaclassif.knn",
   #                    par.vals = list(knn = 1L, trim = 0.5,
   #                                    metric = "metric.hausdorff"))
   #
   # set.seed(getOption("mlr.debug.seed"))
-  # m2 = train(lrn2, task)
-  # cp2 = predict(m2, newdata = as.data.frame(mtest$data))
-  # cp2 = unlist(cp2$data, use.names = FALSE)
+  # m.metric = train(lrn2, task)
+  # cp.metric = predict(m2, newdata = as.data.frame(mtest$data))
+  # cp.metric = unlist(cp.metric$data, use.names = FALSE)
   #
-  # cp22 = predict(m2, newdata = as.data.frame(mlearn$data))
-  # cp22 = unlist(cp22$data, use.names = FALSE)
+  # cp2.metric = predict(m.metric, newdata = as.data.frame(mlearn$data))
+  # cp2.metric = unlist(cp2.metric$data, use.names = FALSE)
   #
   # # check if the output from the original API matches the mlr learner's output
-  # expect_equal(as.character(cp22), as.character(p22))
-  # expect_equal(as.character(cp2), as.character(p12))
+  # expect_equal(as.character(cp2.metric), as.character(p2.metric))
+  # expect_equal(as.character(cp.metric), as.character(p1.metric))
 
 })
 
