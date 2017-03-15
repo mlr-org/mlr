@@ -5,8 +5,8 @@ test_that("classif_glmnet", {
   parset.list = list(
     list(),
     list(alpha = 0.5),
-    list(s = 0.1),
-    list(devmax = 0.8)
+    list(devmax = 0.8),
+    list(s = 0.1)
   )
 
   old.predicts.list = list()
@@ -22,13 +22,14 @@ test_that("classif_glmnet", {
     y = x[, binaryclass.class.col]
     x[, binaryclass.class.col] = NULL
     pars = list(x = as.matrix(x), y = y, family = "binomial")
-    pars = c(pars, parset)
+    pars = c(pars, parset)    
+    glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
+      on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet::glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
     } else {
       m = do.call(glmnet::glmnet, pars)
     }

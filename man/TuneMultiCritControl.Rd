@@ -13,14 +13,16 @@
 \title{Create control structures for multi-criteria tuning.}
 \usage{
 makeTuneMultiCritControlGrid(same.resampling.instance = TRUE,
-  resolution = 10L, log.fun = NULL, final.dw.perc = NULL, budget = NULL)
+  resolution = 10L, log.fun = "default", final.dw.perc = NULL,
+  budget = NULL)
 
 makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
-  impute.val = NULL, log.fun = NULL, final.dw.perc = NULL,
+  impute.val = NULL, log.fun = "default", final.dw.perc = NULL,
   budget = NULL, ...)
 
 makeTuneMultiCritControlRandom(same.resampling.instance = TRUE,
-  maxit = 100L, log.fun = NULL, final.dw.perc = NULL, budget = NULL)
+  maxit = 100L, log.fun = "default", final.dw.perc = NULL,
+  budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -34,8 +36,11 @@ Either pass one resolution for all parameters, or a named vector.
 See \code{\link[ParamHelpers]{generateGridDesign}}.
 Default is 10.}
 
-\item{log.fun}{[\code{function} | \code{NULL}]\cr
-Function used for logging. If set to \code{NULL}, the internal default will be used.
+\item{log.fun}{[\code{function} | \code{character(1)}]\cr
+Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
+performances, and the runtime will be reported.
+If set to \dQuote{memory}, the memory usage for each evaluation will also be displayed, with a small increase
+in run time.
 Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
 \code{stage}, and \code{prev.stage} is expected.

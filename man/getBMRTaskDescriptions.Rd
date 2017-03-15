@@ -2,7 +2,7 @@
 % Please edit documentation in R/BenchmarkResult_operators.R
 \name{getBMRTaskDescriptions}
 \alias{getBMRTaskDescriptions}
-\title{Extract all task descriptions from benchmark result.}
+\title{Extract all task descriptions from benchmark result (DEPRECATED).}
 \usage{
 getBMRTaskDescriptions(bmr)
 }
@@ -15,28 +15,4 @@ Benchmark result.}
 }
 \description{
 A list containing all \code{\link{TaskDesc}}s for each task contained in the benchmark experiment.
-}
-\seealso{
-Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
-  \code{\link{convertBMRToRankMatrix}},
-  \code{\link{friedmanPostHocTestBMR}},
-  \code{\link{friedmanTestBMR}},
-  \code{\link{generateCritDifferencesData}},
-  \code{\link{getBMRAggrPerformances}},
-  \code{\link{getBMRFeatSelResults}},
-  \code{\link{getBMRFilteredFeatures}},
-  \code{\link{getBMRLearnerIds}},
-  \code{\link{getBMRLearnerShortNames}},
-  \code{\link{getBMRLearners}},
-  \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
-  \code{\link{getBMRPerformances}},
-  \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskIds}},
-  \code{\link{getBMRTuneResults}},
-  \code{\link{plotBMRBoxplots}},
-  \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
 }

@@ -85,3 +85,16 @@ replaceDupeMeasureNames = function(measures, x = "id") {
   meas.names[dupes] = new.names
   unlist(meas.names)
 }
+
+# suppresses a warning iff the warning message contains the
+# substring `str`.
+suppressWarning = function(expr, str) {
+  withCallingHandlers(expr, warning = function(w) {
+    if (stri_detect_fixed(stri_flatten(w$message), str))
+      invokeRestart("muffleWarning")
+  })
+}
+
+hasEmptyLevels = function(x) {
+  !all(levels(x) %chin% as.character(unique(x)))
+}

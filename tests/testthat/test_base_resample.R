@@ -42,7 +42,7 @@ test_that("resample", {
   rf4 = setThreshold(rf4, 1)
 
   expect_equal(rf1$data$response, rf2$data$response)
-  td = getTaskDescription(binaryclass.task)
+  td = getTaskDesc(binaryclass.task)
   f1 = factor(rep(td$positive, cv.i$size), levels = td$class.levels)
   expect_equal(rf3$data$response, f1)
   f2 = factor(rep(td$negative, cv.i$size), levels = td$class.levels)
@@ -68,7 +68,7 @@ test_that("resampling, predicting train set works", {
   expect_false(anyNA(r$pred$time))
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
-  expect_equal(getTaskDescription(multiclass.task), r$pred$task.desc)
+  expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
   
   rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
   lrn = makeLearner("classif.rpart")
@@ -80,7 +80,7 @@ test_that("resampling, predicting train set works", {
   expect_false(anyNA(r$pred$time))
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
-  expect_equal(getTaskDescription(multiclass.task), r$pred$task.desc)
+  expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
   
   
 

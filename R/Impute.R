@@ -22,8 +22,8 @@
 #' The description object contains these slots
 #' \describe{
 #'   \item{target [\code{character}]}{See argument.}
-#'   \item{features [\code{character}]}{Feature names, these are the column names of \code{data},
-#'     excluding \code{target}.}
+#'   \item{features [\code{character}]}{Feature names (column names of \code{data}).},
+#'   \item{classes [\code{character}]}{Feature classes (storage type of \code{data}).}
 #'   \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
 #'     including newly created ones during imputation.}
 #'   \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
@@ -77,7 +77,7 @@
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 #' print(imputed$data)
-#' reimpute(data.frame(x = NA), imputed$desc)
+#' reimpute(data.frame(x = NA_real_), imputed$desc)
 impute = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
@@ -167,6 +167,7 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
   # store factor levels (this might include new levels created during imputation)
   ind = names(which(feature.classes == "factor"))
   desc$lvls = lapply(data[ind], levels)
+  desc$classes = feature.classes
 
   # set variables for consecutive imputes
   desc$recode.factor.levels = recode.factor.levels
@@ -232,6 +233,14 @@ reimpute.data.frame = function(obj, desc) {
   new.cols = names(which(names(x) %nin% desc$cols))
   if (length(new.cols))
     stop("New columns (%s) found in data. Unable to impute.", collapse(new.cols))
+
+  # check for same storage type
+  classes = vcapply(x, function(x) class(x)[1L])
+  i = intersect(names(classes), names(desc$classes))
+  i = which.first(classes[i] != desc$classes[i])
+  if (length(i) > 0L) {
+    stopf("Some column types have changed, e.g. for column '%s' (expected '%s', got '%s')", names(classes[i]), desc$classes[i], classes[i])
+  }
 
   # restore dropped columns
   x[setdiff(desc$features, names(x))] = NA
