@@ -1,3 +1,9 @@
+# mlr 2.12:
+
+## learners - removed
+* {classif,regr}.bdk: broke our API, stability issues
+* {classif,regr}.xyf: broke our API, stability issues
+
 # mlr 2.11:
 
 ## general
