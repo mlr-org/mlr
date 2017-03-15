@@ -109,7 +109,6 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   baseType = unique(extractSubList(base.learners, "type"))
 
   # Check that resampling is needed
-  # FIXME add hill.climb to this list
   if (!is.null(resampling) & !(method %in% c("stack.cv", "classif.bs.optimal", "hill.climb"))) {
     stop("No resampling needed for this method!")
   }
@@ -173,7 +172,6 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop(paste("Currently only CV is allowed for resampling for method =", method, "!"))
 
   # lrn$predict.type is "response" by default change it using setPredictType
-  # TM Insert mlr:::
   lrn =  makeBaseEnsemble(
     id = "stack",
     base.learners = base.learners,
@@ -263,8 +261,9 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   # get task information (classif)
   td = .model$task.desc
-  type = ifelse(td$type == "regr", "regr",
-                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  type = getTaskType(td)
+  # type = ifelse(td$type == "regr", "regr",
+  #               ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   # predict prob vectors with each base model
   if (.learner$method != "compress") {
@@ -294,7 +293,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     } else {
       probs = as.data.frame(probs)
       # if base learner predictions are responses
-      if (type == "classif" || type == "multiclassif") {
+      if (type %in% c("classif", "multiclassif", "fdaclassif")) {
         # if base learner predictions are responses for classification
         if (sm.pt == "prob") {
           # if super learner predictions should be probabilities, iter over rows to get proportions
@@ -371,11 +370,7 @@ averageBaseLearners = function(learner, task) {
        pred.train = probs)
 }
 
-# TM New method
-# classif.bs.optimal see Fuchs etal 2015
-# So far this is still the average method
-# learner = lrn
-# task = sonar.task
+
 classif.bs.optimal = function(learner, task) {
   bls = learner$base.learners
   base.models = probs = vector("list", length(bls))
