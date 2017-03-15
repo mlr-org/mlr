@@ -8,14 +8,6 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
-#' Deprecated, use \code{\link{getTaskDesc}} instead.
-#' @return [\code{\link{TaskDesc}}].
-#' @template arg_task_or_desc
-#' @export
-getTaskDescription = function(x) {
-  .Deprecated("getTaskDesc")
-  UseMethod("getTaskDesc")
-}
 
 #' @export
 getTaskDesc.default = function(x) {
@@ -25,6 +17,14 @@ getTaskDesc.default = function(x) {
 #' @export
 getTaskDesc.TaskDesc = function(x) {
   x
+}
+
+#' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' @inheritParams getTaskDesc
+#' @export
+getTaskDescription = function(x) {
+  .Deprecated("getTaskDesc")
+  getTaskDesc(x)
 }
 
 #' Get the type of the task.
@@ -375,8 +375,8 @@ recodeSurvivalTimes = function(y, from, to) {
 getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  subset = checkTaskSubset(subset, size = getTaskDescription(task)$size)
-  d = getTaskDescription(task)$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
+  d = getTaskDesc(task)$costs[subset, , drop = FALSE]
   return(d)
 }
 

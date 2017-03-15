@@ -2,8 +2,9 @@
 
 ## general
 * The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
-* new option on.error.dump to include dumps that can be inspected with the
+* New option on.error.dump to include dumps that can be inspected with the
   debugger with errors
+* mlr now supports tuning with Bayesian optimization with mlrMBO
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
@@ -15,6 +16,8 @@
   = "memory")
 * listLearners: change check.packages default to FALSE
 * tuneParams and tuneParamsMultiCrit: new parameter `resample.fun` to specify a custom resampling function to use.
+* Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription.
+  New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
@@ -25,6 +28,7 @@
   mmce.test.mean -> mmce
 * getFailureModelDump, getPredictionDump, getRRDump: get error dumps
 * batchmark: Function to run benchmarks with the batchtools package on high performance computing clusters
+* makeTuneControlMBO: allows Bayesian optimization
 
 ## measures - new
 * kendalltau, spearmanrho

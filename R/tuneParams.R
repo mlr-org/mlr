@@ -112,9 +112,6 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
 
-  if (cl == "TuneControlMBO" && !identical(resample.fun, resample)) {
-    stop("resample.fun must be the default value when mbo tuning is performed.")
-  } 
   need.extra = control$tune.threshold || getMlrOption("on.error.dump")
   opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   if (show.info) {
