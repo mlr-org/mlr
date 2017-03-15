@@ -11,14 +11,52 @@ makeRLearner.fdaclassif.knn = function() {
       makeDiscreteLearnerParam(id = "metric", default = "metric.lp",
                                values = c("metric.lp",
                                           # "metric.kl", "metric.dist",
-                                          "metric.hausdorff")),
+                                          "metric.hausdorff",
+                                          "inprod.fdata",
+                                          "semimetric.basis",
+                                          "semimetric.deriv",
+                                          "semimetric.fourier",
+                                          "semimetric.hshift",
+                                          "semimetric.mplsr",
+                                          "semimetric.pca")),
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S",
                                values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
       makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE),
+      # parameters for (semi)metrics
+      # TODO
+      # parameters type.basis1/2, nbasis1/2 für semimetric.basis implementieren
       makeIntegerLearnerParam(id = "lp", default = 2L, lower = 1L, upper = Inf,
-                              requires = quote(metric == "metric.lp"))
+                              requires = quote(metric == "metric.lp")),
+      makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L, upper = Inf,
+                              requires = quote(metric %in% c("semimetric.basis", "semimetric.deriv", "semimetric.fourier"))),
+      makeIntegerLearnerParam(id = "nknot",
+                              # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
+                              #                  floor((ncol(DATA1)-nderiv-4)/2),floor(ncol(DATA1)/3)),
+                              lower = 1L, upper = Inf,
+                              requires = quote(metric == "semimetric.deriv")),
+      makeIntegerLearnerParam(id = "nbasis",
+                              # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
+                              #                 floor((ncol(DATA1) - nderiv - 4)/2), floor(ncol(DATA1)/3)),
+                              lower = 1L,
+                              requires = quote(metric == "semimetric.fourier")),
+      makeIntegerLearnerParam(id = "q", lower = 1L,
+                              default = quote(ifelse(metric == "metric.pca", 1L, 2L)),
+                              special.vals = list(quote(ifelse(metric == "metric.pca", 1L, 2L))),
+                              requires = quote(metric %in% c("semimetric.pca", "semimetric.mplsr"))),
+      makeNumericLearnerParam(id = "period",
+                              # default = NULL,
+                              lower = 1L, upper = Inf,
+                              requires = quote(metric == "semimetric.fourier")),
+      # I do not know what this parameter does
+      makeUntypedLearnerParam(id = "class1",
+                              requires = quote(metric == "metric.mplsr"),
+                              tunable = FALSE),
+      makeIntegerVectorLearnerParam(id = "t",
+                                    # default = 1:ncol(DATA1),
+                                    lower = 1L, upper = Inf,
+                                    requires = quote(metric == "metric.hshift"))
     ),
     par.vals = list(draw = FALSE, metric = "metric.lp"),
     properties = c("twoclass", "multiclass", "numerics", "weights", "prob"),
@@ -37,15 +75,20 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
   par.cv = learnerArgsToControl(list, trim, draw)
   par.s = list(w = .weights)
   glearn = z$target
-  metric = switch(metric,
-                  metric.lp = fda.usc::metric.lp,
-                  # metric.kl = fda.usc::metric.kl,
-                  # metric.dist = fda.usc::metric.dist,
-                  metric.hausdorff = fda.usc::metric.hausdorff
+  metric.fun = switch(metric,
+                      metric.lp = fda.usc::metric.lp,
+                      metric.hausdorff = fda.usc::metric.hausdorff,
+                      inprod.fdata = fda.usc::inprod.fdata,
+                      semimetric.basis = fda.usc::semimetric.basis,
+                      semimetric.deriv = fda.usc::semimetric.deriv,
+                      semimetric.fourier = fda.usc::semimetric.fourier,
+                      semimetric.hshift = fda.usc::semimetric.hshift,
+                      semimetric.mplsr = fda.usc::semimetric.mplsr,
+                      semimetric.pca = fda.usc::semimetric.pca
   )
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
                                        par.CV = par.cv, par.S = par.s,
-                                       metric = metric, ...)
+                                       metric = metric.fun, ...)
   return(learned.model)
 }
 

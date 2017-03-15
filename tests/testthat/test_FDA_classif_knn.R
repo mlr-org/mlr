@@ -45,8 +45,8 @@ test_that("FDA_classif_knn behaves like original api", {
   # test that predict.type = "prob" works
   set.seed(getOption("mlr.debug.seed"))
   lrn.prob = makeLearner("fdaclassif.knn",
-                    par.vals = list(knn = 1L, trim = 0.5),
-                    predict.type = "prob")
+                         par.vals = list(knn = 1L, trim = 0.5),
+                         predict.type = "prob")
   m.prob = train(lrn.prob, task)
 
   cp.prob = predict(m.prob, newdata = as.data.frame(mtest$data))
@@ -56,30 +56,62 @@ test_that("FDA_classif_knn behaves like original api", {
   expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
 
 
+  # test that parameters work for different metrics
+  set.seed(getOption("mlr.debug.seed"))
+  a.metric = fda.usc::classif.knn(glearn, mlearn,
+                                  metric = semimetric.deriv,
+                                  nderiv = 10,
+                                  par.CV = list(trim = 0.5))
+  p1.metric = predict(a.metric, mtest)
+  p2.metric = predict(a.metric, mlearn)
 
-  # # test that different metrics work as well
-  # set.seed(getOption("mlr.debug.seed"))
-  # a.metric = fda.usc::classif.knn(glearn, mlearn,
-  #                           metric = metric.hausdorff,
-  #                           par.CV = list(trim = 0.5))
-  # p1.metric = predict(a.metric, mtest)
-  # p2.metric = predict(a.metric, mlearn)
-  #
-  # lrn.metric = makeLearner("fdaclassif.knn",
-  #                    par.vals = list(knn = 1L, trim = 0.5,
-  #                                    metric = "metric.hausdorff"))
-  #
-  # set.seed(getOption("mlr.debug.seed"))
-  # m.metric = train(lrn2, task)
-  # cp.metric = predict(m2, newdata = as.data.frame(mtest$data))
-  # cp.metric = unlist(cp.metric$data, use.names = FALSE)
-  #
-  # cp2.metric = predict(m.metric, newdata = as.data.frame(mlearn$data))
-  # cp2.metric = unlist(cp2.metric$data, use.names = FALSE)
-  #
-  # # check if the output from the original API matches the mlr learner's output
-  # expect_equal(as.character(cp2.metric), as.character(p2.metric))
-  # expect_equal(as.character(cp.metric), as.character(p1.metric))
+
+  lrn.metric = makeLearner(cl = "fdaclassif.knn",
+                           par.vals = list(trim = 0.5, knn = 1L,
+                                           metric = "semimetric.deriv"))
+
+  set.seed(getOption("mlr.debug.seed"))
+  m.metric = train(lrn.metric, task)
+  cp.metric = predict(m.metric, newdata = as.data.frame(mtest$data))
+  cp.metric = unlist(cp.metric$data, use.names = FALSE)
+
+  cp2.metric = predict(m.metric, newdata = as.data.frame(mlearn$data))
+  cp2.metric = unlist(cp2.metric$data, use.names = FALSE)
+
+  # check if the output from the original API matches the mlr learner's output
+  expect_equal(as.character(cp2.metric), as.character(p2.metric))
+  expect_equal(as.character(cp.metric), as.character(p1.metric))
+
+
+
+  # test that all metrics work basically
+  metrics = c("metric.lp",
+              "metric.hausdorff",
+              "inprod.fdata",
+              "semimetric.basis",
+              "semimetric.deriv",
+              "semimetric.fourier",
+              "semimetric.hshift",
+              "semimetric.mplsr",
+              "semimetric.pca")
+  lrn.metrics = list()
+  for(i in 1:length(metrics)) {
+    lrn.metrics[[i]] = makeLearner(cl = "fdaclassif.knn",
+                                   par.vals = list(knn = 1L, trim = 0.5,
+                                                   metric = metrics[i]))
+  }
+
+  m.metrics = list()
+  for(i in 1:length(metrics)) {
+    m.metrics[[i]] = train(lrn.metrics[[i]], task)
+  }
+
+  lrn.metric = makeLearner(cl = "fdaclassif.knn",
+                           par.vals = list(trim = 0.5, knn = 1L,
+                                           q = 3,
+                                           metric = "semimetric.pca"))
+
+
 
 })
 
