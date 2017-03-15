@@ -22,8 +22,6 @@ test_that("FDA_classif_knn behaves like original api", {
 
   p1.prob = predict(a1, mtest, type = "probs")$prob.group
   p2.prob = predict(a1, mlearn, type = "probs")$prob.group
-  colnames(p1.prob) = paste0("prob.", colnames(p1.prob))
-  colnames(p2.prob) = paste0("prob.", colnames(p2.prob))
 
   ph = as.data.frame(mlearn$data)
   ph[,"label"] = glearn
@@ -54,9 +52,8 @@ test_that("FDA_classif_knn behaves like original api", {
   cp.prob = predict(m.prob, newdata = as.data.frame(mtest$data))
   cp2.prob = predict(m.prob, newdata = as.data.frame(mlearn$data))
 
-
-  expect_equal(as.matrix(cp2.prob$data), p2.prob)
-  expect_equal(as.matrix(cp.prob$data), p1.prob)
+  expect_equal(as.matrix(getPredictionProbabilities(cp2.prob)), p2.prob)
+  expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
 
 
 
