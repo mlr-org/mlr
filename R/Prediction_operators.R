@@ -31,7 +31,7 @@ getPredictionProbabilities = function(pred, cl) {
   if (ttype %nin% c("classif", "cluster", "multilabel", "fdaclassif"))
     stop("Prediction was not generated from a ClassifTask, MultilabelTask, ClusterTask or FDAClassifTask!")
   if (missing(cl)) {
-    if (ttype == "classif") {
+    if (ttype %in% c("classif", "fdaclassif")) {
       if (length(pred$task.desc$class.levels) == 2L)
         cl = pred$task.desc$positive
       else
