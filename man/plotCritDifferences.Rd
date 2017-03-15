@@ -52,7 +52,7 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotThreshVsPerf}}
 
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
@@ -67,10 +67,11 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescriptions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
-  \code{\link{plotBMRSummary}}
+  \code{\link{plotBMRSummary}},
+  \code{\link{reduceBatchmarkResults}}
 }

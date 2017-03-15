@@ -1,4 +1,4 @@
-tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
+tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
   requirePackages("irace", why = "tuneIrace", default.method = "load")
   targetRunnerParallel = function(experiment, exec.target.runner, scenario) {
     # get our param settings that irace should try
@@ -13,7 +13,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
 
     ys = tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-      convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE)
+      convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE, resample.fun)
     # FIXME: irace can also use time now, we should add it
     res = lapply(ys, function(y) list(cost = y, time = NA_real_))
     return(res)

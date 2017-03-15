@@ -44,11 +44,11 @@ test_that("predict", {
   cp5d = setThreshold(cp5b, 1)
   cp5e = predict(cm5, task = binaryclass.task, subset = 1)
   expect_equal(cp5a$data$response, cp5b$data$response)
-  f1 = factor(rep(getTaskDescription(binaryclass.task)$positive, length(binaryclass.test.inds)),
+  f1 = factor(rep(getTaskDesc(binaryclass.task)$positive, length(binaryclass.test.inds)),
     levels = getTaskClassLevels(binaryclass.task))
   expect_equal(cp5c$data$response, f1)
-  f2 = factor(rep(getTaskDescription(binaryclass.task)$negative, length(binaryclass.test.inds)),
-    levels = getTaskDescription(binaryclass.task)$class.levels)
+  f2 = factor(rep(getTaskDesc(binaryclass.task)$negative, length(binaryclass.test.inds)),
+    levels = getTaskDesc(binaryclass.task)$class.levels)
   expect_equal(cp5d$data$response, f2)
   expect_true(setequal(levels(cp5e$data$response), c("M", "R")))
 })
@@ -109,7 +109,7 @@ test_that("setThreshold does not produce NAs for extreme thresholds", {
 })
 
 test_that("predict.threshold", {
-  td = getTaskDescription(binaryclass.task)
+  td = getTaskDesc(binaryclass.task)
   lrn = makeLearner("classif.lda", predict.type = "prob", predict.threshold = 0)
   r = holdout(lrn, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))

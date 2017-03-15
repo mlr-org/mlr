@@ -1,4 +1,4 @@
-#' @export
+ #' @export
 makeRLearner.classif.earth = function() {
   makeRLearnerClassif(
     cl = "classif.earth",
@@ -15,15 +15,15 @@ makeRLearner.classif.earth = function() {
       makeNumericLearnerParam(id = "newvar.penalty", default = 0),
       makeIntegerLearnerParam(id = "fast.k", default = 20L, lower = 0L),
       makeNumericLearnerParam(id = "fast.beta", default = 1),
-      makeDiscreteLearnerParam(id = "pmethod", default = "cv",
-                               values = c("backward", "none", "exhaustive", "forward", "seqrep", "cv")),
+      makeDiscreteLearnerParam(id = "pmethod", default = "backward",
+        values = c("backward", "none", "exhaustive", "forward", "seqrep", "cv")),
       makeIntegerLearnerParam(id = "nprune"),
       makeIntegerLearnerParam(id = "ncross", default = 1L),
-      makeIntegerLearnerParam(id = "nfold", default = 0L),
-      makeLogicalLearnerParam(id = "stratify",default = TRUE),
-      makeUntypedLearnerParam(id = "linpreds",default = FALSE),
+      makeIntegerLearnerParam(id = "nfold", default = 0L, requires = quote(pmethod == "cv")),
+      makeLogicalLearnerParam(id = "stratify", default = TRUE, requires = quote(nfold > 1L)),
+      makeUntypedLearnerParam(id = "linpreds", default = FALSE),
       makeDiscreteLearnerParam("link", values = c("logit", "probit"),
-                               default = "logit"),
+        default = "logit"),
       makeNumericLearnerParam(id = "maxit", default = 25L, tunable = TRUE),
       makeFunctionLearnerParam(id = "allowed"),
       makeNumericLearnerParam(id = "Adjust.endspan", default = 2, tunable = TRUE),
@@ -54,10 +54,10 @@ predictLearner.classif.earth = function(.learner, .model, .newdata, ...) {
     if (length(levs) == 2) p = propVectorToMatrix(p, levs)
   } else {
     if (length(levs) == 2) {
-        p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
-      } else {
-        p = as.factor(predict(.model$learner.model, newdata = .newdata, type = "class", ...))
-      }
+      p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
+    } else {
+      p = as.factor(predict(.model$learner.model, newdata = .newdata, type = "class", ...))
+    }
     p = unname(p)
   }
   return(p)
