@@ -31,3 +31,6 @@ mlr$learner.properties = list(
   fdaregr    = c("numerics")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
+
+### Measure properties
+mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster" ,"costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")

@@ -15,8 +15,7 @@
 #' @param learner.model [any]\cr
 #'   Underlying model.
 #' @template arg_taskdesc
-#' @param subset [\code{integer}]\cr
-#'   Subset used for training.
+#' @template arg_subset
 #' @param features [\code{character}]\cr
 #'   Features used for training.
 #' @param factor.levels [named \code{list} of \code{character}]\cr
