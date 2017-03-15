@@ -262,8 +262,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   # get task information (classif)
   td = .model$task.desc
   type = getTaskType(td)
-  # type = ifelse(td$type == "regr", "regr",
-  #               ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   # predict prob vectors with each base model
   if (.learner$method != "compress") {
