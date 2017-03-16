@@ -30,7 +30,7 @@ makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
 }
 
 # td is the old task description, the function returns a new FDAClassifTask description
-makeTaskDesc.FDAClassifTask = function(task, id, data, target, positive, fd.features, fd.grids) {
+makeFDAClassifTaskDesc = function(task, id, data, target, positive, fd.features, fd.grids) {
   new.td = makeClassifTaskDesc(id, data, target, task$weights, task$blocking, positive)
   new.td$type = "fdaclassif"
   feat.remain = getTaskFeatureNames(task)

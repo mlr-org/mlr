@@ -431,8 +431,8 @@ changeData = function(task, data, costs, weights) {
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking),
-	"fdaclassif" = makeTaskDesc(task, td$id, data, td$target, td$positive, td$fd.features, td$fd.grids),
-    "fdaregr" = makeTaskDesc(task, td$id, data, td$target, td$fd.features, td$fd.grids)  
+	"fdaclassif" = makeFDAClassifTaskDesc(task, td$id, data, td$target, td$positive, td$fd.features, td$fd.grids),
+    "fdaregr" = makeFDARegrTaskDesc(task, td$id, data, td$target, td$fd.features, td$fd.grids)  
 )
 
   return(task)
