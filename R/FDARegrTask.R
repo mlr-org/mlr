@@ -27,8 +27,8 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
 }
 
 # td is the old task description, the function return a new task description
-makeTaskDesc.FDARegrTask = function(task, id, target, fd.features, fd.grids) {
-  new.td = makeTaskDesc.RegrTask(task = task , id = id, target = target)
+makeTaskDesc.FDARegrTask = function(task, id, data, target, fd.features, fd.grids) {
+  new.td = makeRegrTaskDesc(id, data, target, task$weights, task$blocking)
   new.td$type = "fdaregr"
   feat.remain = getTaskFeatureNames(task)
   # Create new fields called fd.features and fd.grids for functional data
