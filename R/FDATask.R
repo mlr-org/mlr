@@ -75,7 +75,7 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
 #' @export
 print.FDATask = function(x, ...) {
   print.SupervisedTask(x, print.target = FALSE, print.weights = FALSE)
-  fdf = getTaskDescription(x)$fd.features
+  fdf = getTaskDesc(x)$fd.features
   # for every func covar get name and length
   s = vcapply(names(fdf), function(f) sprintf("%s (%i)", f, length(fdf[[f]])))
   catf("Functional features: %i\n%s", length(fdf), clipString(collapse(s, sep = ", "), 30L))
