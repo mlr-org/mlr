@@ -4,8 +4,7 @@ test_that("extractFDAFeatures", {
   t = extractFDAFeatures(fuelSubset.task, feat.methods = methods)
   # check output data
   expect_is(t$data, "data.frame")
-  expect_integer(nrow(t$data)[1], lower = c(129), upper = c(129))
-  expect_integer(ncol(t$data)[1], lower = c(3), upper = c(3))
+
   expect_subset(colnames(t$data), c("UVVIS", "NIR.min", "NIR.max"))
 
   # check desc
@@ -44,7 +43,7 @@ test_that("reExtractFDAFeatures", {
   # check for data.frame produces output equal to task
   gp.subset = subsetTask(gunpoint.task, features = c(1:10))
   fm = list("fd1"= extractFDAFourier(trafo.coeff = "amplitude"))
-  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t3 = extractFDAFeatures(, feat.methods = fm)
 
   t4 = reExtractFDAFeatures(gp.subset, t3$desc)
 })
