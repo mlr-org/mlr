@@ -29,6 +29,7 @@
 #'   the design must not be transformed before it is passed!
 #'   For the default, \code{NULL}, a default design is created like described in \code{\link[mlrMBO]{mbo}}.
 #' @return [\code{\link{TuneControlMBO}}]
+#' @references Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel Lang; mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions, Preprint: \url{https://arxiv.org/abs/1703.03373} (2017).
 #' @aliases TuneControlMBO
 #' @family tune
 #' @export
