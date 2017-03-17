@@ -57,7 +57,8 @@ makeRLearner.regr.frbs = function() {
     ),
     properties = c("numerics"),
     name = "Fuzzy Rule-based Systems",
-    short.name = "frbs"
+    short.name = "frbs",
+    callees = "frbs.learn"
   )
 }
 

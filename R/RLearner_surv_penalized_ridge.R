@@ -20,7 +20,8 @@ makeRLearner.surv.penalized.ridge = function() {
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "Ridge Regression",
     short.name = "ridge",
-    note = "trace=FALSE was set by default to disable logging output."
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

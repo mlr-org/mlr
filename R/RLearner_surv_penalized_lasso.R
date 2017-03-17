@@ -20,7 +20,8 @@ makeRLearner.surv.penalized.lasso = function() {
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "LassoRegression",
     short.name = "lasso",
-    note = "trace=FALSE was set by default to disable logging output."
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

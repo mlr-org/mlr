@@ -23,7 +23,8 @@ makeRLearner.surv.glmboost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
-    note = "`family` has been set to `CoxPH()` by default."
+    note = "`family` has been set to `CoxPH()` by default.",
+    callees = c("glmboost", "mboost", "boost_control", "Family", "CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan")
   )
 }
 

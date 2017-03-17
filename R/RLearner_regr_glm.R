@@ -36,7 +36,8 @@ makeRLearner.regr.glm = function() {
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
     short.name = "glm",
-    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory."
+    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory.",
+    callees = c("glm", "glm.control", "gaussian", "Gamma", "inverse.gaussian")
   )
 }
 

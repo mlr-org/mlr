@@ -15,7 +15,8 @@ makeRLearner.regr.h2o.gbm = function() {
     properties = c("numerics", "factors"),
     name = "h2o.gbm",
     short.name = "h2o.gbm",
-    note = "'distribution' is set automatically to 'gaussian'."
+    note = "'distribution' is set automatically to 'gaussian'.",
+    callees = "h2o.gbm"
   )
 }
 

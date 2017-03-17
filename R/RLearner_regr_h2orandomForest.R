@@ -16,7 +16,8 @@ makeRLearner.regr.h2o.randomForest = function() {
     ),
     properties = c("numerics", "factors"),
     name = "h2o.randomForest",
-    short.name = "h2o.rf"
+    short.name = "h2o.rf",
+    callees = "h2o.randomForest"
   )
 }
 

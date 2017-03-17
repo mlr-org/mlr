@@ -52,7 +52,8 @@ makeRLearner.multilabel.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "prob", "weights"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = "`na.action` has been set to `na.impute` by default to allow missing data support."
+    note = "`na.action` has been set to `na.impute` by default to allow missing data support.",
+    callees = "rfsrc"
   )
 }
 

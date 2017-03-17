@@ -22,7 +22,8 @@ makeRLearner.regr.slim = function() {
     properties = c("numerics"),
     name = "Sparse Linear Regression using Nonsmooth Loss Functions and L1 Regularization",
     short.name = "slim",
-    note = "`lambda.idx` has been set to `3` by default."
+    note = "`lambda.idx` has been set to `3` by default.",
+    callees = c("slim", "predict.slim")
   )
 }
 

@@ -24,7 +24,8 @@ makeRLearner.regr.btlm = function() {
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Linear Model",
-    short.name = "btlm"
+    short.name = "btlm",
+    callees = "btlm"
   )
 }
 

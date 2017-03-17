@@ -31,7 +31,9 @@ makeRLearner.regr.blackboost = function() {
     properties = c("numerics", "factors", "weights", "missings"),
     name = "Gradient Boosting with Regression Trees",
     short.name = "blackboost",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness.",
+    callees = c("blackboost", "mboost_fit", "boost_control", "ctree_control",
+      "Family", "Gaussian", "Laplace", "Huber", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 
