@@ -43,7 +43,7 @@ getTaskType = function(x) {
 #' @export
 #' @family task
 getTaskId = function(x) {
-  getTaskDescription(x)$id
+  getTaskDesc(x)$id
 }
 
 #' @title Get the name(s) of the target column(s).
@@ -157,7 +157,7 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
-  td = getTaskDescription(x)
+  td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
     lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
@@ -374,8 +374,8 @@ recodeSurvivalTimes = function(y, from, to) {
 getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  subset = checkTaskSubset(subset, size = task$task.desc$size)
-  d = task$env$costs[subset, , drop = FALSE]
+  subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
+  d = getTaskDesc(task)$costs[subset, , drop = FALSE]
   return(d)
 }
 
@@ -415,9 +415,6 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  # FIXME: I hate R, this is all bad
-  if (!is.null(costs))
-    task$env$costs = costs
   if (is.null(weights))
     task["weights"] = list(NULL)
   else
