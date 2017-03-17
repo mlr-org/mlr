@@ -91,6 +91,9 @@ Model-based / Bayesian optimization with the function
 \code{\link[mlrMBO]{mbo}} from the \pkg{mlrMBO} package.
 Please refer to \url{https://github.com/mlr-org/mlrMBO} for further info.
 }
+\references{
+Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel Lang; mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions, Preprint: \url{https://arxiv.org/abs/1703.03373} (2017).
+}
 \seealso{
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
