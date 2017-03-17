@@ -22,7 +22,7 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
+  id = paste("multilabel.sta", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs, learner.subclass = "MultilabelStackingWrapper", model.subclass = "MultilabelStackingModel")
   x$type = "multilabel"

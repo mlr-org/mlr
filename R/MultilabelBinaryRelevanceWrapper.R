@@ -27,7 +27,7 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
-  id = stri_paste("multilabel", learner$id, sep = ".")
+  id = stri_paste("multilabel.br", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
     learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
@@ -43,7 +43,7 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(
     doMultilabelBinaryRelevanceTrainIteration, tn = targets,
-    more.args = list(weights = .weights, learner = .learner$next.learner, task = .task), 
+    more.args = list(weights = .weights, learner = .learner$next.learner, task = .task),
     level = "mlr.ensemble")
   names(models) = targets
   makeHomChainModel(.learner, models)
