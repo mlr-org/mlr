@@ -420,6 +420,7 @@ classif.bs.optimal = function(learner, task) {
   Neq = 1
 
   # FIXME is this the correct way to access a package here?
+  requirePackages("quadprog")
   sol = quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq = Neq)
   # sol$IsError = FALSE
   # sol$X = sol$solution

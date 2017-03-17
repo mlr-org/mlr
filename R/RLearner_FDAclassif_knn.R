@@ -18,7 +18,8 @@ makeRLearner.fdaclassif.knn = function() {
                                           "semimetric.fourier",
                                           "semimetric.hshift",
                                           "semimetric.mplsr",
-                                          "semimetric.pca")),
+                                          "semimetric.pca",
+                                          "semimetric.mlr.basis")),
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S",
                                values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
@@ -45,9 +46,7 @@ makeRLearner.fdaclassif.knn = function() {
                               default = quote(ifelse(metric == "metric.pca", 1L, 2L)),
                               special.vals = list(quote(ifelse(metric == "metric.pca", 1L, 2L))),
                               requires = quote(metric %in% c("semimetric.pca", "semimetric.mplsr"))),
-      makeNumericLearnerParam(id = "period",
-                              # default = NULL,
-                              lower = 1L, upper = Inf,
+      makeNumericLearnerParam(id = "period", lower = 0,
                               requires = quote(metric == "semimetric.fourier")),
       # I do not know what this parameter does
       makeUntypedLearnerParam(id = "class1",
@@ -84,7 +83,8 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
                       semimetric.fourier = fda.usc::semimetric.fourier,
                       semimetric.hshift = fda.usc::semimetric.hshift,
                       semimetric.mplsr = fda.usc::semimetric.mplsr,
-                      semimetric.pca = fda.usc::semimetric.pca
+                      semimetric.pca = fda.usc::semimetric.pca,
+                      semimetric.mlr.basis = semimetric.mlr.basis
   )
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
                                        par.CV = par.cv, par.S = par.s,
