@@ -61,6 +61,17 @@ test_that("MultilabelBinaryRelevanceWrapper with glmnet", {
   expect_error(pred, NA)
 })
 
+test_that("check unique id", {
+  lrn = makeLearner("classif.rpart")
+  id1 = getLearnerId(makeMultilabelBinaryRelevanceWrapper(lrn))
+  id2 = getLearnerId(makeMultilabelClassifierChainsWrapper(lrn))
+  id3 = getLearnerId(makeMultilabelNestedStackingWrapper(lrn))
+  id4 = getLearnerId(makeMultilabelDBRWrapper(lrn))
+  id5 = getLearnerId(makeMultilabelStackingWrapper(lrn))
+
+  expect_character(all.equal(id1, id2, id3, id4, id5))
+})
+
 testMultilabelWrapper = function(fun, ...) {
   desc = fun("classif.rpart")$model.subclass[1]
   test_that(desc, {
