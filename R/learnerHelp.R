@@ -134,7 +134,12 @@ simplifyNode = function(node) {
   if (sum(lens) == max(lens)) {
     return(simplifyNode(children[[which.max(lens)]]))
   } else {
-    return(children[lens != 0])
+    children = children[lens != 0]
+    firstchild = simplifyNode(children[[1]])
+    if (length(firstchild) > 0) {
+      children = c(firstchild, children[-1])
+    }
+    return(children)
   }
 }
 
@@ -149,7 +154,7 @@ codeListToTable = function(html) {
       }
       parname = XML::xmlValue(lichi[[1]])
       pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
-      stri_trim(c(parname, pardesc))
+      stri_trim(c(parname, pardesc), pattern = c("[a-zA-Z0-9_.]", "\\P{Wspace}"))
     })
   as.data.frame(do.call(rbind, lislis), stringsAsFactors = FALSE)
 }
