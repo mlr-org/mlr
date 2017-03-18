@@ -32,6 +32,9 @@ test_that("learnerHelp of learner with multiple help pages", {
 
   expect_false(identical(hlp1, hlp3))
 
+  # regr.randomForest with option '2' should give the randomForest help page.
+  expect_true(length(testfn("regr.randomForest")) == 1)
+
 })
 
 test_that("learnerHelp of wrapped learner", {
