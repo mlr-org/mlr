@@ -156,9 +156,7 @@ codeListToTable = function(html) {
       pardesc = stri_join_list(lapply(lichi[-1], XML::xmlValue), collapse = " ")
       stri_trim(c(parname, pardesc), pattern = c("[a-zA-Z0-9_.]", "\\P{Wspace}"))
     })
-  if (length(lislis) > 0) {
-    return(as.data.frame(transpose(lislis), col.names=c("V1", "V2"), stringsAsFactors = FALSE))
-  }
+  as.data.frame(do.call(rbind, lislis), stringsAsFactors = FALSE)
 }
 
 # Remove superfluous newlines.
@@ -197,7 +195,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
     if (length(tab) < 1) {
       next
     }
-    tbl = rbindlist(lapply(tab, function(t) {
+    tbl = do.call(rbind, lapply(tab, function(t) {
         tbl = XML::readHTMLTable(t, header = FALSE, stringsAsFactors = FALSE)
         if (identical(ncol(tbl), 2L)) {
           tbl
