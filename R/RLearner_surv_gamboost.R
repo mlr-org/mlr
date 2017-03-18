@@ -24,7 +24,7 @@ makeRLearner.surv.gamboost = function() {
     name = "Gradient boosting with smooth components",
     short.name = "gamboost",
     note = "`family` has been set to `CoxPH()` by default.",
-    callees = c("gamboost", "mboost", "boost_control", "Family", "CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan")
+    callees = c("gamboost", "mboost_fit", "boost_control", "CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan")
   )
 }
 

@@ -10,7 +10,7 @@ makeRLearner.regr.lm = function() {
     properties = c("numerics", "factors", "se", "weights"),
     name = "Simple Linear Regression",
     short.name = "lm",
-    callees = "lm"
+    callees = c("lm", "lm.fit", "lm.wfit")
   )
 }
 

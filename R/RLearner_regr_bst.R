@@ -2,7 +2,7 @@
 makeRLearner.regr.bst = function() {
   makeRLearnerRegr(
     cl = "regr.bst",
-    package = "bst",
+    package = c("bst", "rpart"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "cost", default = 0.5, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "mstop", default = 50L, lower = 1L, when = "both"),
