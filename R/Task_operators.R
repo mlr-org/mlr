@@ -11,7 +11,8 @@ getTaskDesc = function(x) {
 
 
 #' @export
-getTaskDesc.Task = function(x) {
+getTaskDesc.default = function(x) {
+  # FIXME: would be much cleaner to specialize here
   x$task.desc
 }
 
