@@ -3,6 +3,21 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
   x$data
 }
 
+
+#' @title Get summarizing task description from prediction.
+#'
+#' @description See title.
+#'
+#' @template arg_pred
+#' @return ret_taskdesc
+#' @export
+#' @family predict
+getPredictionTaskDescription = function(pred) {
+  assertClass(pred, "Prediction")
+  pred$task.desc
+}
+
+
 #' Get probabilities for some classes.
 #'
 #' @template arg_pred

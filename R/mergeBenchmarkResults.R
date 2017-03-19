@@ -17,7 +17,8 @@ mergeBenchmarkResults = function(bmrs) {
   assertList(bmrs, types = "BenchmarkResult")
 
   # check if all task types are equal
-  unique.tt = unique(unlist(lapply(bmrs, function(x) getBMRObjects(x, fun = getTaskType))))
+  f = function(b) getTaskType(b$task.desc)
+  unique.tt = unique(unlist(lapply(bmrs, function(x) getBMRObjects(x, fun = f))))
   if (length(unique.tt) != 1)
     stopf("Different task types found: %s", collapse(unique.tt))
 

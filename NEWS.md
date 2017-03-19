@@ -117,6 +117,7 @@
 * plotResiduals
 * getLearnerShortName
 * mergeBenchmarkResults
+* getPredictionTaskDescription
 
 ## functions - renamed
 * Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc

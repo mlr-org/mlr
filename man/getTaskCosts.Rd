@@ -7,7 +7,7 @@
 getTaskCosts(task, subset = NULL)
 }
 \arguments{
-\item{task}{[\code{\link{CostSensTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{subset}{[\code{integer} | \code{logical}]\cr

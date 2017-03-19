@@ -71,7 +71,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
     rownames(result)[k + 2] = "-n-"
   }
 
-  result = list(result = result, task.desc = getTaskDesc(pred), relative = relative, sums = sums)
+  result = list(result = result, task.desc = getPredictionTaskDescription(pred), relative = relative, sums = sums)
 
   js = 1:k # indexes for nonmargin cols
 

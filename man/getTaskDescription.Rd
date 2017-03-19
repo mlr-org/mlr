@@ -2,7 +2,7 @@
 % Please edit documentation in R/Task_operators.R
 \name{getTaskDescription}
 \alias{getTaskDescription}
-\title{Deprecated, use \code{\link{getTaskDesc}} instead.}
+\title{Get the type of the task.}
 \usage{
 getTaskDescription(x)
 }
@@ -11,5 +11,6 @@ getTaskDescription(x)
 Task or its description object.}
 }
 \description{
+See title.
 Deprecated, use \code{\link{getTaskDesc}} instead.
 }
