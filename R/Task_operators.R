@@ -399,7 +399,7 @@ getTaskCosts.default = function(task, subset = NULL) {
 
 getTaskCosts.CostSensTask = function(task, subset = NULL) {
   subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
-  task$env$costs[subset, , drop = FALSE]
+  getTaskDesc(task)$costs[subset, , drop = FALSE]
 }
 
 
