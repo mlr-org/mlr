@@ -62,6 +62,19 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
+#' @title Get summarizing task description from prediction.
+#'
+#' @description See title.
+#'
+#' @template arg_pred
+#' @return ret_taskdesc
+#' @export
+#' @family predict
+getPredictionTaskDesc = function(pred) {
+  assertClass(pred, "Prediction")
+  pred$task.desc
+}
+
 #' Deprecated, use \code{getPredictionProbabilities} instead.
 #' @param pred Deprecated.
 #' @param cl Deprecated.

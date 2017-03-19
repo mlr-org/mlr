@@ -11,10 +11,10 @@ getTaskDesc(x)
 Task or its description object.}
 }
 \value{
-[\code{\link{TaskDesc}}].
+ret_taskdesc
 }
 \description{
-Get a summarizing task description.
+See title.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

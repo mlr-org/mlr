@@ -27,7 +27,7 @@ Default is to use all features.}
 [\code{\link{Task}}]. Task with subsetted data.
 }
 \description{
-Subset data in task.
+See title.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
