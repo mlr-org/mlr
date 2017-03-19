@@ -106,13 +106,4 @@ test_that("FDA_classif_knn behaves like original api", {
     m.metrics[[i]] = train(lrn.metrics[[i]], task)
   }
 
-  lrn.metric = makeLearner(cl = "fdaclassif.knn",
-                           par.vals = list(trim = 0.5, knn = 1L,
-                                           q = 3,
-                                           metric = "semimetric.pca"))
-
-
-
 })
-
-

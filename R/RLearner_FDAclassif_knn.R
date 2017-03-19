@@ -19,7 +19,7 @@ makeRLearner.fdaclassif.knn = function() {
                                           "semimetric.hshift",
                                           "semimetric.mplsr",
                                           "semimetric.pca",
-                                          "semimetric.mlr.basis")),
+                                          "semimetric.mlr")),
       makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S",
                                values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
@@ -28,10 +28,15 @@ makeRLearner.fdaclassif.knn = function() {
       # parameters for (semi)metrics
       # TODO
       # parameters type.basis1/2, nbasis1/2 für semimetric.basis implementieren
-      makeIntegerLearnerParam(id = "lp", default = 2L, lower = 1L, upper = Inf,
+      makeIntegerLearnerParam(id = "lp", default = 2L,
                               requires = quote(metric == "metric.lp")),
-      makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L, upper = Inf,
-                              requires = quote(metric %in% c("semimetric.basis", "semimetric.deriv", "semimetric.fourier"))),
+      makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L,
+                              requires = quote(metric %in% c("semimetric.basis", "semimetric.deriv",
+                                                             "semimetric.fourier", "semimetric.mlr"))),
+      makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE,
+                              requires = quote(metric == "semimetric.mlr")),
+      makeLogicalLearnerParam(id = "evenly.spaced", default = FALSE, tunable = FALSE,
+                              requires = quote(metric == "semimetric.mlr")),
       makeIntegerLearnerParam(id = "nknot",
                               # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
                               #                  floor((ncol(DATA1)-nderiv-4)/2),floor(ncol(DATA1)/3)),
@@ -55,7 +60,32 @@ makeRLearner.fdaclassif.knn = function() {
       makeIntegerVectorLearnerParam(id = "t",
                                     # default = 1:ncol(DATA1),
                                     lower = 1L, upper = Inf,
-                                    requires = quote(metric == "metric.hshift"))
+                                    requires = quote(metric == "metric.hshift")),
+      makeDiscreteLearnerParam(id = "semimetric.mlr.method",
+                               values = c("basis",
+                                          "maximum", "minimum",
+                                          "Minkowski", "Lp", "Euclidean",
+                                          "Manhattan",
+                                          "Kullback"
+                                          ),
+                               default = "basis",
+                         requires = quote(metric == "semimetric.mlr")),
+      makeIntegerLearnerParam(id = "nbasis1", lower = 1L,
+                              # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
+                              #                 floor((ncol(DATA1) - nderiv - 4)/2), floor(ncol(DATA1)/3)),
+                              default = NULL, special.vals = list(NULL),
+                              requires = quote((metric == "semimetric.mlr" & semimetric.mlr.method == "basis") |
+                                metric == "semimetric.basis")),
+      makeIntegerLearnerParam(id = "nbasis2", lower = 1L,
+                              # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
+                              #                 floor((ncol(DATA1) - nderiv - 4)/2), floor(ncol(DATA1)/3)),
+                              default = NULL, special.vals = list(NULL),
+                              requires = quote((metric == "semimetric.mlr" & semimetric.mlr.method == "basis") |
+                                metric == "semimetric.basis")),
+      makeIntegerLearnerParam(id = "p", default = 2L,
+                              requires = quote(metric == "semimetric.mlr" &
+                                                 semimetric.mlr.method %in% c("Minkowski", "Lp")))
+
     ),
     par.vals = list(draw = FALSE, metric = "metric.lp"),
     properties = c("twoclass", "multiclass", "numerics", "weights", "prob"),
@@ -84,7 +114,7 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
                       semimetric.hshift = fda.usc::semimetric.hshift,
                       semimetric.mplsr = fda.usc::semimetric.mplsr,
                       semimetric.pca = fda.usc::semimetric.pca,
-                      semimetric.mlr.basis = semimetric.mlr.basis
+                      semimetric.mlr = semimetric.mlr
   )
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
                                        par.CV = par.cv, par.S = par.s,
