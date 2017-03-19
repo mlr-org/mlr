@@ -29,7 +29,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
 test_that("Stacking works", {
   tasks = list(binaryclass.task, multiclass.task, regr.task)
   for (task in tasks) {
-    td = getTaskDescription(task)
+    td = getTaskDesc(task)
     if (inherits(task, "ClassifTask")) {
       pts = c("response", "prob")
       base = c("classif.rpart", "classif.lda", "classif.svm")

@@ -12,7 +12,7 @@ makeRLearner.regr.crs = function() {
         requires = quote(lambda.discrete == TRUE)),
       makeDiscreteLearnerParam(id = "cv", default = "nomad",
         values = c("nomad", "exhaustive", "none")),
-      makeIntegerLearnerParam(id = "cv.treshold", default = 10000, lower = 0),
+      makeIntegerLearnerParam(id = "cv.threshold", default = 10000, lower = 0),
       makeDiscreteLearnerParam(id = "cv.func", default = "cv.ls",
         values = c("cv.ls", "cv.gcv", "cv.aic")),
       makeLogicalLearnerParam(id = "kernel", default = TRUE),

@@ -18,9 +18,8 @@ makeRLearner.classif.nnet = function() {
       makeLogicalLearnerParam(id = "Hess", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "MaxNWts", default = 1000L, lower = 1L),
-      ## FIXME_PK: Why are abstol and reltol written with 2 "l"?
-      makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
-      makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
+      makeNumericLearnerParam(id = "abstol", default = 1.0e-4),
+      makeNumericLearnerParam(id = "reltol", default = 1.0e-8)
     ),
     par.vals = list(size = 3L),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),

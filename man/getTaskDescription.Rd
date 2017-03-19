@@ -2,7 +2,7 @@
 % Please edit documentation in R/Task_operators.R
 \name{getTaskDescription}
 \alias{getTaskDescription}
-\title{Get a summarizing task description.}
+\title{Get the type of the task.}
 \usage{
 getTaskDescription(x)
 }
@@ -10,20 +10,7 @@ getTaskDescription(x)
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
 Task or its description object.}
 }
-\value{
-ret_taskdesc
-}
 \description{
-For ease of usage you can also pass in a task description which will
-be returned unchanged.
-}
-\seealso{
-Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskFeatureNames}},
-  \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
-  \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
-  \code{\link{getTaskTargetNames}},
-  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
-  \code{\link{subsetTask}}
+See title.
+Deprecated, use \code{\link{getTaskDesc}} instead.
 }

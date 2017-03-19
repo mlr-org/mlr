@@ -83,12 +83,19 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     z = getMinMaxClass(y)
     obw.cl = z$min.name
   }
-  models = lapply(seq_len(obw.iters), function(i) {
-    bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
-    train(.learner$next.learner, .task, subset = bag, weights = .weights)
-  })
+  args = list("y" = y, "obw.rate" = obw.rate, "obw.maxcl" = obw.maxcl, "obw.cl" = obw.cl, "learner" = .learner, "task" = .task, "weights" = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(doOverBaggingTrainIteration, i = seq_len(obw.iters), more.args = args)
   makeHomChainModel(.learner, models)
 }
+
+doOverBaggingTrainIteration = function(i, y, obw.rate, obw.cl, obw.maxcl, learner, task, weights) {
+  setSlaveOptions()
+  bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
+  train(learner$next.learner, task, subset = bag, weights = weights)
+}
+
 
 #' @export
 getLearnerProperties.OverBaggingWrapper = function(learner) {

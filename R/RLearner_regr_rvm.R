@@ -7,7 +7,6 @@ makeRLearner.regr.rvm = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "kernel", default = "rbfdot",
         values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot", "stringdot")),
-      makeNumericLearnerParam(id = "tau", lower = 0, default = 0.01),
       makeNumericLearnerParam(id = "sigma",
         lower = 0, requires = quote(kernel %in% c("rbfdot", "anovadot", "besseldot", "laplacedot"))),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L,

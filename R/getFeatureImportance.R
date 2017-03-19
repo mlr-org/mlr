@@ -75,7 +75,7 @@ getFeatureImportance = function(object, ...) {
 
   makeS3Obj("FeatureImportance",
     res = imp,
-    task.desc = object$task.desc,
+    task.desc = getTaskDesc(object),
     learner = lrn,
     measure = NA,
     contrast = NA,
