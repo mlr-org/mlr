@@ -12,9 +12,8 @@ makeRLearner.classif.multinom = function() {
       makeNumericLearnerParam(id = "rang", default = 0.7),
       makeNumericLearnerParam(id = "decay", default = 0),
       makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE),
-      ## FIXME_PK: Why are abstol and reltol written with 2 "l"?
-      makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
-      makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
+      makeNumericLearnerParam(id = "abstol", default = 1.0e-4),
+      makeNumericLearnerParam(id = "reltol", default = 1.0e-8)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Multinomial Regression",

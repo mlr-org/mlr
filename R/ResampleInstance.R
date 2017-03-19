@@ -77,7 +77,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     if (is.null(task))
       stop("Stratification always needs the task!")
     if (desc$stratify) {
-      td = getTaskDescription(task)
+      td = getTaskDesc(task)
       stratify.cols = switch(td$type,
         "classif" = getTaskTargetNames(task),
         "fdaclassif" = getTaskTargetNames(task),

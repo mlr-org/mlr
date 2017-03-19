@@ -15,7 +15,7 @@ getRRPredictions = function(res) {
     res$pred
 }
 
-#' @title Get task description from resample results.
+#' @title Get task description from resample results (DEPRECATED).
 #'
 #' @description
 #' Get a summarizing task description.
@@ -26,6 +26,21 @@ getRRPredictions = function(res) {
 #' @export
 #' @family resample
 getRRTaskDescription = function(res) {
+  .Deprecated("getRRTaskDesc")
+  getRRTaskDesc(res)
+}
+
+#' @title Get task description from resample results (DEPRECATED).
+#'
+#' @description
+#' Get a summarizing task description.
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [\code{TaskDesc}].
+#' @export
+#' @family resample
+getRRTaskDesc = function(res) {
   res$task.desc
 }
 
@@ -53,7 +68,7 @@ getRRPredictionList = function(res, ...) {
   pred = getRRPredictions(res)
   predict.type = pred$predict.type
   time = pred$time
-  task.desc = getRRTaskDescription(res)
+  task.desc = getRRTaskDesc(res)
 
   # split by train and test set
   set = levels(pred$data$set)
@@ -140,4 +155,25 @@ addRRMeasure = function(res, measures) {
     res$aggr = c(res$aggr, aggr)
   }
   return(res)
+}
+
+#' @title Return the error dump of ResampleResult.
+#'
+#' @description
+#' Returns the error dumps generated during resampling, which can be used with \code{debugger()}
+#' to debug errors. These dumps are saved if \code{\link{configureMlr}} configuration \code{on.error.dump},
+#' or the corresponding learner \code{config}, is \code{TRUE}.
+#'
+#' The returned object is a list with as many entries as the resampling being used has folds. Each of these
+#' entries can have a subset of the following slots, depending on which step in the resampling iteration failed:
+#' \dQuote{train} (error during training step), \dQuote{predict.train} (prediction on training subset),
+#' \dQuote{predict.test} (prediction on test subset).
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [list].
+#' @family debug
+#' @export
+getRRDump = function(res) {
+  return(res$err.dumps)
 }

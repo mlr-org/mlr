@@ -58,6 +58,13 @@ generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
   }, simplify = FALSE)
 }
 
+# shorter way of printing debug dumps
+#' @export
+print.mlr.dump = function(x, ...) {
+  cat("<debug dump>\n")
+  invisible(NULL)
+}
+
 # Create a list of only relevant functional covariates and grids. It is used in predict() in several FDAlearners.
 reformat2mat.list = function(data, tdesc) {
   fdns = names(tdesc$fd.features)
@@ -71,3 +78,4 @@ reformat2mat.list = function(data, tdesc) {
   }
   return(mat.list)
 }
+

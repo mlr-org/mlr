@@ -434,7 +434,7 @@ classif.bs.optimal = function(learner, task) {
 
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
@@ -476,7 +476,7 @@ stackNoCV = function(learner, task) {
 
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task) {
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
@@ -531,7 +531,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertNumber(bagprob, lower = 0, upper = 1)
   assertInt(bagtime, lower = 1)
 
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   if (is.null(metric)) {

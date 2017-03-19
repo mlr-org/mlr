@@ -9,8 +9,8 @@ test_that("resample getter work", {
   expect_equal(getRRPredictions(r1), r1$pred)
   expect_error(getRRPredictions(r2), "keep.pred = FALSE")
 
-  # getRRTaskDescription
-  expect_equal(getRRTaskDescription(r1), getTaskDescription(binaryclass.task))
+  # getRRTaskDesc
+  expect_equal(getRRTaskDesc(r1), getTaskDesc(binaryclass.task))
 
   # getRRPredictionList
   r1 = resample(lrn, binaryclass.task, makeResampleDesc("CV", iters = 2, predict = "test"))

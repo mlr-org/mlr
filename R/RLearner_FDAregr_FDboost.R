@@ -43,7 +43,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
-  tdesc = getTaskDescription(.task)
+  tdesc = getTaskDesc(.task)
   fdf = tdesc$fd.features
 
   # later on, the grid elements in mat.list should have suffix ".grid"
@@ -81,7 +81,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
-  tdesc = getTaskDescription(.model)
+  tdesc = getTaskDesc(.model)
   mat.list = reformat2mat.list(.newdata, tdesc)
   pred = predict(object = .model$learner.model, newdata = mat.list)
   return(pred)
