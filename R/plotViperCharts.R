@@ -45,7 +45,7 @@ plotViperCharts = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, 
 
 #' @export
 plotViperCharts.Prediction = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL) {
-  td = getPredictionTaskDescription(obj)
+  td = getPredictionTaskDesc(obj)
   l = namedList(names = getTaskId(td), init = obj)
   plotViperCharts.list(l, chart, browse, auth.key)
 }
