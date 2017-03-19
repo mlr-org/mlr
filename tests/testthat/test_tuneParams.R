@@ -12,6 +12,41 @@ test_that("names for minimize are set correctly", {
   expect_equal(names(tr$opt.path$minimize), "acc.test.mean")
 })
 
+test_that("tuneParams with resample.fun", {
+  lrn = makeLearner("classif.rpart")
+  rdesc = makeResampleDesc("Holdout")
+  ps = makeParamSet(
+    makeNumericParam("cp", lower = 0.001, upper = 1),
+    makeIntegerParam("minsplit", lower = 1, upper = 10)
+  )
+  ctrl = makeTuneControlRandom(maxit = 2)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
+
+  ctrl = makeTuneControlGrid(resolution = 3L)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
+
+  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival = 1)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
+
+  ctrl = makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
+
+  ctrl = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
+
+  ctrl = suppressWarnings({
+    # this currently is a warning because printHead is in mlr and BBmisc
+     makeTuneControlMBO(budget = 10, learner = "regr.lm")
+  })
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
+})
+
 test_that("tuneParams output works as documented", {
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
@@ -31,4 +66,5 @@ test_that("tuneParams output works as documented", {
   expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl_user, show.info = TRUE),
     "^Hi")
 })
+
 

@@ -57,7 +57,7 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
   if (!is.null(.weights))
     args$weights = .weights
 
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   args$family = ifelse(length(td$class.levels) == 2L, "binomial", "multinomial")
 
   glmnet::glmnet.control(factory = TRUE)

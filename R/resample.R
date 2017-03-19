@@ -110,18 +110,28 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   time2 = Sys.time()
   runtime = as.numeric(difftime(time2, time1, units = "secs"))
   addClasses(
-    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
+    mergeResampleResult(learner$id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
     "ResampleResult"
   )
 }
 
+
+# this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   if (show.info)
     messagef("[Resample] %s iter %i: ", rin$desc$id, i, .newline = FALSE)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
+  calculateResampleIterationResult(learner = learner, task = task, train.i = train.i, test.i = test.i, measures = measures, 
+    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
+}
 
+
+#Evaluate one train/test split of the resample function and get one or more performance values
+calculateResampleIterationResult = function(learner, task, train.i, test.i, measures, 
+  weights, rdesc, model, extract, show.info) {
+  
   err.msgs = c(NA_character_, NA_character_)
   err.dumps = list()
   m = train(learner, task, subset = train.i, weights = weights[train.i])
@@ -130,11 +140,12 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     err.dumps$train = getFailureModelDump(m)
   }
 
+  # does a measure require to calculate pred.train?
   ms.train = rep(NA, length(measures))
   ms.test = rep(NA, length(measures))
   pred.train = NULL
   pred.test = NULL
-  pp = rin$desc$predict
+  pp = rdesc$predict
   train.task = task
   if (pp == "train") {
     lm = getLearnerModel(m)
@@ -200,7 +211,9 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   )
 }
 
-mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
+
+#Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
+mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -242,9 +255,9 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
     pred = NULL
 
   list(
-    learner.id = learner$id,
+    learner.id = learner.id,
     task.id = getTaskId(task),
-    task.desc = getTaskDescription(task),
+    task.desc = getTaskDesc(task),
     measures.train = ms.train,
     measures.test = ms.test,
     aggr = aggr,

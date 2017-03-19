@@ -347,13 +347,13 @@ test_that("check measure calculations", {
   expect_equal(rmsle.test, as.numeric(rmsle.perf))
   #tau
   tau.test = 1
-  tau.perf = performance(pred.regr, measures = tau, model = mod.regr)
-  expect_equal(tau.test, tau$fun(pred = pred.regr))
+  tau.perf = performance(pred.regr, measures = kendalltau, model = mod.regr)
+  expect_equal(tau.test, kendalltau$fun(pred = pred.regr))
   expect_equal(tau.test, as.numeric(tau.perf))
   #rho
   rho.test = 1
-  rho.perf = performance(pred.regr, measures = rho, model = mod.regr)
-  expect_equal(rho.test, rho$fun(pred = pred.regr))
+  rho.perf = performance(pred.regr, measures = spearmanrho, model = mod.regr)
+  expect_equal(rho.test, spearmanrho$fun(pred = pred.regr))
   expect_equal(rho.test, as.numeric(rho.perf))
 
   #test multiclass measures
@@ -849,7 +849,7 @@ test_that("check measure calculations", {
 
 test_that("getDefaultMeasure", {
   expect_equal(mmce, getDefaultMeasure(iris.task))
-  expect_equal(mmce, getDefaultMeasure(getTaskDescription(iris.task)))
+  expect_equal(mmce, getDefaultMeasure(getTaskDesc(iris.task)))
   expect_equal(mmce, getDefaultMeasure(makeLearner("classif.rpart")))
   expect_equal(mmce, getDefaultMeasure("classif.rpart"))
   expect_equal(mmce, getDefaultMeasure("classif"))

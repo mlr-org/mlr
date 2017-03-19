@@ -7,7 +7,6 @@ makeRLearner.classif.cvglmnet = function() {
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "nfolds", default = 10L, lower = 3L),
       makeDiscreteLearnerParam(id = "type.measure", values = c("deviance", "class", "auc", "mse", "mae"), default = "deviance"),
-      makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeDiscreteLearnerParam(id = "s", values = c("lambda.1se", "lambda.min"), default = "lambda.1se", when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
@@ -53,7 +52,7 @@ trainLearner.classif.cvglmnet = function(.learner, .task, .subset, .weights = NU
   if (!is.null(.weights))
     args$weights = .weights
 
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   args$family = ifelse(length(td$class.levels) == 2L, "binomial", "multinomial")
 
   glmnet::glmnet.control(factory = TRUE)

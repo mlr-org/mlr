@@ -253,3 +253,9 @@ testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
     expect_equal(node.strings[seq_along(x)], x)
   }
 }
+
+constant05Resample = function(...) {
+  res = resample(...)
+  res$aggr = rep(0.5, length(res$aggr))
+  res
+}
