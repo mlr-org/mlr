@@ -5,7 +5,7 @@ test_that("regr_xyf", {
 
   parset.list1 = list(
     list(),
-    list(grid = class::somgrid(xdim = 2L, ydim = 4L)),
+    list(grid = kohonen::somgrid(xdim = 2L, ydim = 4L)),
     list(rlen = 50L)
   )
   parset.list2 = list(
@@ -18,12 +18,12 @@ test_that("regr_xyf", {
 
   for (i in 1:length(parset.list1)) {
     pars = parset.list1[[i]]
-    pars$data = as.matrix(regr.num.train[, -regr.num.class.col])
-    pars$Y = regr.num.train[, regr.num.class.col]
+    pars$X = as.matrix(regr.num.train[, -regr.num.class.col])
+    pars$Y = as.matrix(regr.num.train[, regr.num.class.col, drop = FALSE])
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kohonen::xyf, pars)
-    p = predict(m, as.matrix(regr.num.test[, -regr.num.class.col]))
-    old.predicts.list[[i]] = as.vector(p$prediction)
+    p = predict(m, as.matrix(regr.num.test[, -regr.num.class.col]), whatmap = 1)
+    old.predicts.list[[i]] = as.vector(p$predictions[[2]])
   }
 
   testSimpleParsets("regr.xyf", regr.num.df, regr.num.target, regr.num.train.inds,

@@ -10,10 +10,9 @@ makeRLearner.classif.xyf = function() {
       makeIntegerLearnerParam(id = "rlen", default = 100L, lower = 1L),
       makeNumericVectorLearnerParam(id = "alpha", default = c(0.05, 0.01), len = 2L),
       makeNumericVectorLearnerParam(id = "radius"),
-      makeNumericLearnerParam(id = "xweight", default = 0.5, lower = 0),
-      makeLogicalLearnerParam(id = "contin"),
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
-      makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square"))
+      makeDiscreteLearnerParam(id = "neighbourhood.fct", values = c("bubble", "gaussian"), default = "bubble"),
+      makeDiscreteLearnerParam(id = "dist.fcts", values = c("sumofsquares", "euclidean", "manhattan", "tanimoto"), default = "sumofsquares")
     ),
     properties = c("numerics", "twoclass", "multiclass", "prob"),
     name = "X-Y fused self-organising maps",
@@ -22,18 +21,18 @@ makeRLearner.classif.xyf = function() {
 }
 
 #' @export
-trainLearner.classif.xyf = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, ...) {
+trainLearner.classif.xyf = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, neighbourhood.fct, toroidal, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  grid = learnerArgsToControl(class::somgrid, xdim, ydim, topo)
-  kohonen::xyf(as.matrix(d$data), Y = d$target, grid = grid, keep.data = FALSE, ...)
+  grid = learnerArgsToControl(kohonen::somgrid, xdim, ydim, topo, neighbourhood.fct, toroidal)
+  kohonen::xyf(X = as.matrix(d$data), Y = d$target, grid = grid, keep.data = TRUE, ...)
 }
 
 #' @export
 predictLearner.classif.xyf = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, as.matrix(.newdata), ...)
+  p = predict(.model$learner.model, as.matrix(.newdata), whatmap = 1, ...)
   if (.learner$predict.type == "response"){
-    return(p$prediction)
+    return(p$predictions[[2]])
   } else {
-    return(p$unit.predictions[p$unit.classif,])
+    return(p$unit.predictions[[2]][p$unit.classif,])
   }
 }
