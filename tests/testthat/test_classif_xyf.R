@@ -18,11 +18,12 @@ test_that("classif_xyf", {
 
   for (i in 1:length(parset.list1)) {
     pars = parset.list1[[i]]
-    pars$X = as.matrix(binaryclass.train[, -binaryclass.class.col])
-    pars$Y = binaryclass.train[, binaryclass.class.col]
+    pars$data = list()
+    pars$data$X = as.matrix(binaryclass.train[, -binaryclass.class.col])
+    pars$data$Y = binaryclass.train[, binaryclass.class.col]
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(kohonen::xyf, pars)
-    p = predict(m, as.matrix(binaryclass.test[, -binaryclass.class.col]), whatmap = 1)
+    m = do.call(kohonen::supersom, pars)
+    p = predict(m, list(X = as.matrix(binaryclass.test[, -binaryclass.class.col])))
     old.predicts.list[[i]] = p$predictions[[2]]
     old.probs.list[[i]] = p$unit.predictions[[2]][p$unit.classif, 1L]
   }

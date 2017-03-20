@@ -18,11 +18,12 @@ test_that("regr_xyf", {
 
   for (i in 1:length(parset.list1)) {
     pars = parset.list1[[i]]
-    pars$X = as.matrix(regr.num.train[, -regr.num.class.col])
-    pars$Y = as.matrix(regr.num.train[, regr.num.class.col, drop = FALSE])
+    pars$data = list()
+    pars$data$X = as.matrix(regr.num.train[, -regr.num.class.col])
+    pars$data$Y = as.matrix(regr.num.train[, regr.num.class.col, drop = FALSE])
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(kohonen::xyf, pars)
-    p = predict(m, as.matrix(regr.num.test[, -regr.num.class.col]), whatmap = 1)
+    m = do.call(kohonen::supersom, pars)
+    p = predict(m, list(X = as.matrix(regr.num.test[, -regr.num.class.col])))
     old.predicts.list[[i]] = as.vector(p$predictions[[2]])
   }
 

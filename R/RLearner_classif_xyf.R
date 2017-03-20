@@ -24,12 +24,12 @@ makeRLearner.classif.xyf = function() {
 trainLearner.classif.xyf = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, neighbourhood.fct, toroidal, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   grid = learnerArgsToControl(kohonen::somgrid, xdim, ydim, topo, neighbourhood.fct, toroidal)
-  kohonen::xyf(X = as.matrix(d$data), Y = d$target, grid = grid, keep.data = TRUE, ...)
+  kohonen::supersom(list(X = as.matrix(d$data), Y = d$target), grid = grid, keep.data = TRUE, ...)
 }
 
 #' @export
 predictLearner.classif.xyf = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, as.matrix(.newdata), whatmap = 1, ...)
+  p = predict(.model$learner.model, list(X = as.matrix(.newdata)), ...)
   if (.learner$predict.type == "response"){
     return(p$predictions[[2]])
   } else {

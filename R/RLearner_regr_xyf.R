@@ -24,10 +24,10 @@ makeRLearner.regr.xyf = function() {
 trainLearner.regr.xyf = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, neighbourhood.fct, toroidal, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   grid = learnerArgsToControl(kohonen::somgrid, xdim, ydim, topo, neighbourhood.fct, toroidal)
-  kohonen::xyf(X = as.matrix(d$data), Y = matrix(d$target, ncol=1), grid = grid, keep.data = TRUE, ...)
+  kohonen::supersom(list(X = as.matrix(d$data), Y = matrix(d$target, ncol=1)), grid = grid, keep.data = TRUE, ...)
 }
 
 #' @export
 predictLearner.regr.xyf = function(.learner, .model, .newdata, ...) {
-  as.vector(predict(.model$learner.model, as.matrix(.newdata), whatmap = 1, ...)$predictions[[2]])
+  as.vector(predict(.model$learner.model, list(X = as.matrix(.newdata)), ...)$predictions[[2]])
 }
