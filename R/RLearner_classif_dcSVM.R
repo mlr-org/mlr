@@ -23,7 +23,7 @@ makeRLearner.classif.dcSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Divided-Conquer Support Vector Machines",
     short.name = "dcSVM",
-    callees = c("svm", "dcSVM")
+    callees = c("dcSVM", "svm")
   )
 }
 
