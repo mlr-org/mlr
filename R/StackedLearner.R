@@ -49,7 +49,7 @@
 #'   Default is \dQuote{stack.nocv},
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
-#'   Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}.
+#'   Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}. # meas.bs.optimal
 #'   Default is \code{FALSE}.
 #' @param resampling [\code{\link{ResampleDesc}}]\cr
 #'   the resampling strategy for \code{method = 'stack.cv'}. Currently only CV is allowed.
@@ -431,6 +431,7 @@ classif.bs.optimal = function(learner, task) {
   list(method = "classif.bs.optimal", base.models = base.models, super.model = NULL,
        pred.train = probs, weights = Cs)
 }
+
 
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
