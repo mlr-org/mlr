@@ -41,7 +41,7 @@
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
 #' @param callees [\code{character}]\cr
-#'   Character vector naming all functios of the learner's package being called which
+#'   Character vector naming all functions of the learner's package being called which
 #'   have a relevant R help page.
 #'   Default is \code{character(0)}.
 #' @return [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
