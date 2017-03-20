@@ -393,7 +393,7 @@ getTaskCosts = function(task, subset = NULL) {
 }
 
 #' @export
-getTaskCosts.default = function(task, subset = NULL) {
+getTaskCosts.Task = function(task, subset = NULL) {
   NULL
 }
 
