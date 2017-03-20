@@ -102,6 +102,7 @@ Suggests:
     kknn,
     klaR,
     knitr,
+    kohonen,
     laGP,
     LiblineaR,
     lqa,
