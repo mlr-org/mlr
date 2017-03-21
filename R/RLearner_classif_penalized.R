@@ -12,7 +12,7 @@ makeRLearner.classif.penalized = function() {
       makeNumericVectorLearnerParam(id = "startbeta"),
       makeNumericVectorLearnerParam(id = "startgamma"),
       # untyped here because one can also pass "Park" to steps
-      makeUntypedLearnerParam(id = "steps", default = 1L),
+      makeUntypedLearnerParam(id = "steps", default = 1L, tunable = FALSE),
       makeNumericLearnerParam(id = "epsilon", lower = 0, default = 1e-10),
       makeIntegerLearnerParam(id = "maxiter", lower = 1L),
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
