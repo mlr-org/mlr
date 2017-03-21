@@ -16,7 +16,7 @@ makeRLearner.classif.lqa = function() {
       makeNumericLearnerParam(id = "gamma", lower = 1 + .Machine$double.eps,
         requires = quote(penalty %in% c("ao", "bridge", "genet", "weighted.fusion"))),
       makeNumericLearnerParam(id = "alpha", lower = 0, requires = quote(penalty == "genet")),
-      makeNumericLearnerParam(id = "c", lower = 0, requires = quote(penalty == "oscar")),
+      makeNumericLearnerParam(id = "oscar.c", lower = 0, requires = quote(penalty == "oscar")),
       makeNumericLearnerParam(id = "a", lower = 2 + .Machine$double.eps,
         requires = quote(penalty == "scad")),
       makeNumericLearnerParam(id = "lambda1", lower = 0,
@@ -52,7 +52,7 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
                            "oscar", "penalreg", "ridge", "scad")) {
     args$lambda = NULL
   }
-  is.tune.param = names(args) %in% c("lambda", "gamma", "alpha", "c", "a", "lambda1", "lambda2")
+  is.tune.param = names(args) %in% c("lambda", "gamma", "alpha", "oscar.c", "a", "lambda1", "lambda2")
   penfun = getFromNamespace(args$penalty, "lqa")
   args$penalty = do.call(penfun, list(lambda = unlist(args[is.tune.param])))
   args = args[!is.tune.param]
