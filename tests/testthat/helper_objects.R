@@ -52,6 +52,14 @@ noclass.train = noclass.df[noclass.train.inds, ]
 noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
+oneclass.df = iris[,-5]
+oneclass.truth = iris[,5]
+oneclass.train.inds = c(1:30, 51:80, 101:130)
+oneclass.test.inds  = setdiff(1:150, oneclass.train.inds)
+oneclass.train = oneclass.df[oneclass.train.inds, ]
+oneclass.test  = oneclass.df[oneclass.test.inds, ]
+oneclass.task = makeOneClassTask("oneclass", data = oneclass.df)
+
 data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing
 regr.formula = medv ~ .
