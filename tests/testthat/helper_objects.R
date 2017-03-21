@@ -52,8 +52,9 @@ noclass.train = noclass.df[noclass.train.inds, ]
 noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
+# temporary working objects for one class: find a more appropriate dataset
 oneclass.df = iris[,-5]
-oneclass.truth = iris[,5]
+oneclass.truth = ifelse(iris[,5] == "versicolor", TRUE, FALSE)
 oneclass.train.inds = c(1:30, 51:80, 101:130)
 oneclass.test.inds  = setdiff(1:150, oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
