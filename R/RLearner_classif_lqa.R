@@ -52,10 +52,10 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
                            "oscar", "penalreg", "ridge", "scad")) {
     args$lambda = NULL
   }
-  is.tune.param = names(args) %in% c("lambda", "gamma", "alpha", "oscar.c", "a", "lambda1", "lambda2")
+  tune.param.order = c("lambda", "alpha", "gamma", "oscar.c", "a", "lambda1", "lambda2")
   penfun = getFromNamespace(args$penalty, "lqa")
-  args$penalty = do.call(penfun, list(lambda = unlist(args[is.tune.param])))
-  args = args[!is.tune.param]
+  args$penalty = do.call(penfun, list(lambda = unlist(args[tune.param.order])))
+  args = args[!names(args) %in% tune.param.order]
   # if (!is.null(.weights))
     # args$weights = .weights
 
