@@ -68,8 +68,9 @@ test_that("check unique id", {
   id3 = getLearnerId(makeMultilabelNestedStackingWrapper(lrn))
   id4 = getLearnerId(makeMultilabelDBRWrapper(lrn))
   id5 = getLearnerId(makeMultilabelStackingWrapper(lrn))
+  all.ids = c(id1, id2, id3, id4, id5)
 
-  expect_character(all.equal(id1, id2, id3, id4, id5))
+  expect_equal(length(unique(all.ids)), 5)
 })
 
 testMultilabelWrapper = function(fun, ...) {
