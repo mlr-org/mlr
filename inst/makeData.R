@@ -32,6 +32,15 @@ data(PimaIndiansDiabetes, package = "mlbench")
 pid.task = makeClassifTask("PimaIndiansDiabetes-example", data = PimaIndiansDiabetes, target = "diabetes", positive = "pos")
 save(pid.task, file = file.path(dn, "pid.task.RData"), compress = "xz")
 
+# one class classification
+# temporary dataset until finding a better dataset
+# (problem: most of the open source dataset for anomaly detection don't have a
+# truth column for testing)
+set.seed(DATASEED)
+data(iris, package = "datasets")
+iris.task = makeOneClassTask("iris-one-class-example", data = iris[,-5])
+save(iris.task, file = file.path(dn, "iris.task.RData"))
+
 # regression
 set.seed(DATASEED)
 data(BostonHousing, package = "mlbench")
