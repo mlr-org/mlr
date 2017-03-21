@@ -38,8 +38,8 @@ save(pid.task, file = file.path(dn, "pid.task.RData"), compress = "xz")
 # truth column for testing)
 set.seed(DATASEED)
 data(iris, package = "datasets")
-iris.task = makeOneClassTask("iris-one-class-example", data = iris[,-5])
-save(iris.task, file = file.path(dn, "iris.task.RData"))
+iris.oneclass.task = makeOneClassTask("iris-one-class-example", data = iris[,-5])
+save(iris.oneclass.task, file = file.path(dn, "iris.oneclass.task.RData"))
 
 # regression
 set.seed(DATASEED)
