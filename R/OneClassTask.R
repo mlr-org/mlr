@@ -9,19 +9,19 @@ makeOneClassTask = function(id = deparse(substitute(data)), data,
   # for one class positive is always set to the one class
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
-  
-  task = makeUnsupervisedTask("oneclass", data, weights, blocking, 
+
+  task = makeUnsupervisedTask("oneclass", data, weights, blocking,
     fixup.data = fixup.data, check.data = check.data)
-  
-  task$task.desc = makeTaskDesc.OneClassTask(task, id)
-  addClasses(task, "OneClassTask") 
-  
+
+  task$task.desc = makeOneClassTaskDesc(id, data, weights, blocking)
+  addClasses(task, "OneClassTask")
+
 }
 
-makeTaskDesc.OneClassTask = function(task, id) {
+makeOneClassTaskDesc = function(id, data, weights, blocking) {
   target = character(0L)
-  td = makeTaskDescInternal(task, "oneclass", id, target)
-  return(addClasses(td, c("TaskDescOneClass", "TaskDescUnsupervised")))
+  td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking)
+  return(addClasses(td, c("OneClassTaskDesc", "UnsupervisedTaskDesc")))
 }
 
 #' @export
