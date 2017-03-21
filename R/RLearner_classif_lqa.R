@@ -15,7 +15,7 @@ makeRLearner.classif.lqa = function() {
           "oscar", "penalreg", "ridge", "scad"))),
       makeNumericLearnerParam(id = "gamma", lower = 1 + .Machine$double.eps,
         requires = quote(penalty %in% c("ao", "bridge", "genet", "weighted.fusion"))),
-      makeNumericLearnerParam(id = "alpha", lower = 0, requires = quote(penalty == "genet")),
+      makeNumericLearnerParam(id = "alpha", lower = 0, upper = 1, requires = quote(penalty == "genet")),
       makeNumericLearnerParam(id = "oscar.c", lower = 0, requires = quote(penalty == "oscar")),
       makeNumericLearnerParam(id = "a", lower = 2 + .Machine$double.eps,
         requires = quote(penalty == "scad")),
