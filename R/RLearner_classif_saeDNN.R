@@ -5,7 +5,7 @@ makeRLearner.classif.saeDNN = function() {
     package = "deepnet",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "hidden", default = c(10), lower = 1),
-      makeDiscreteLearnerParam(id = "activationfun", default = "sigm", values = c("sigm","linear","tanh")),
+      makeDiscreteLearnerParam(id = "activationfun", default = "sigm", values = c("sigm", "linear", "tanh")),
       makeNumericLearnerParam(id = "learningrate", default = 0.8, lower = 0),
       makeNumericLearnerParam(id = "momentum", default = 0.5, lower = 0),
       makeNumericLearnerParam(id = "learningrate_scale", default = 1, lower = 0),
@@ -17,7 +17,7 @@ makeRLearner.classif.saeDNN = function() {
       makeNumericLearnerParam(id = "visible_dropout", default = 0, lower = 0, upper = 1)
     ),
     par.vals = list(output = "softmax"),
-    properties = c("twoclass", "multiclass","numerics", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Deep neural network with weights initialized by Stacked AutoEncoder",
     short.name = "sae.dnn",
     note = '`output` set to `"softmax"` by default.',
@@ -33,7 +33,7 @@ trainLearner.classif.saeDNN = function(.learner, .task, .subset, .weights = NULL
   onehot = matrix(0, length(y), length(dict))
   for (i in 1:length(dict)) {
     ind = which(y == dict[i])
-    onehot[ind,i] = 1
+    onehot[ind, i] = 1
   }
   deepnet::sae.dnn.train(x = data.matrix(d$data), y = onehot, ...)
 }
@@ -45,7 +45,7 @@ predictLearner.classif.saeDNN = function(.learner, .model, .newdata, ...) {
   colnames(pred) = .model$factor.levels[[1]]
   
   if (type == "class") {
-    classes <- colnames(pred)[max.col(pred)]
+    classes = colnames(pred)[max.col(pred)]
     return(as.factor(classes))
   }
   return(pred)

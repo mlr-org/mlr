@@ -20,7 +20,7 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   mods = getLearnerModel(model, more.unwrap = FALSE)
   msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
-  ifelse(j == 0L, NA_character_ , msgs[j])
+  ifelse(j == 0L, NA_character_, msgs[j])
 }
 
 #' @export

@@ -13,7 +13,7 @@ makeRLearner.regr.cforest = function() {
       makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = 'quad'),
       makeDiscreteLearnerParam(id = "testtype",
         values = c("Bonferroni", "MonteCarlo", "Univariate", "Teststatistic"),
-        default = 'Univariate'),
+        default = "Univariate"),
       makeNumericLearnerParam(id = "mincriterion", lower = 0, default = 0),
       makeIntegerLearnerParam(id = "minsplit", lower = 1L, default = 20L),
       makeIntegerLearnerParam(id = "minbucket", lower = 1L, default = 7L),
@@ -35,7 +35,7 @@ makeRLearner.regr.cforest = function() {
 #' @export
 trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
   ntree, mtry, replace, fraction, trace, teststat, testtype, mincriterion, minsplit,
-  minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats,...) {
+  minbucket, stump, nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))

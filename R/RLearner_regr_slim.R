@@ -35,5 +35,5 @@ trainLearner.regr.slim = function(.learner, .task, .subset, .weights = NULL, ...
 
 #' @export
 predictLearner.regr.slim = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = as.matrix(.newdata), ...)[[1]][,1L]
+  predict(.model$learner.model, newdata = as.matrix(.newdata), ...)[[1]][, 1L]
 }

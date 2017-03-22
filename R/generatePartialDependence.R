@@ -469,7 +469,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
         out = merge(x, hoe[, to_match, drop = FALSE], by = to_match)
         out[, colnames(out) %in% target]
       })
-      hoe[, target] = hoe[, target] - Reduce('+', loe)
+      hoe[, target] = hoe[, target] - Reduce("+", loe)
     }
     hoe
   })
@@ -532,11 +532,11 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
   } else {
     if (obj$learner$predict.type == "response")
       sapply(1:nrow(data), function(idx)
-        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
+        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx, , drop = FALSE],
           features = features, fun = fun.wrapper, td = td, ...))
     else
       t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
-        data = data[idx,, drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
+        data = data[idx, , drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
   }
 }
 

@@ -44,8 +44,8 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
   } else {
     i.data = i.front
   }
-  data = op2[i.data,, drop = FALSE]
-  front = op2[i.front,, drop = FALSE]
+  data = op2[i.data, , drop = FALSE]
+  front = op2[i.front, , drop = FALSE]
 
   p = ggplot(data, mapping = map)
   p = p + geom_point(size = pointsize)

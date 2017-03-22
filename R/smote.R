@@ -88,11 +88,11 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
     # loop for each member of x.min
     for (i in 1:n.xmin) {
       # calculate nn next neighbors of element x.min.matrix[i,]
-      x.scaled = scale(x.min.matrix, x.min.matrix[i,], ranges)
+      x.scaled = scale(x.min.matrix, x.min.matrix[i, ], ranges)
       if (any(!is.num)) {
         for (j in seq_col(x.scaled)) {
           if (!is.num[j])
-            x.scaled[, j] = (x.scaled[,j] != 0)
+            x.scaled[, j] = (x.scaled[, j] != 0)
         }
       }
       dist = drop(x.scaled^2 %*% rep(1, ncol(x.scaled)))
@@ -106,13 +106,13 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
         # randomly select one of the kNNs
         neigh = sample(1:nn, 1)
 
-        diffs = x.min.matrix[kNNs[neigh],] - x.min.matrix[i,]
-        res[(i-1)*n.new.obs+n,] = x.min.matrix[i,] + runif(1)*diffs
+        diffs = x.min.matrix[kNNs[neigh], ] - x.min.matrix[i, ]
+        res[(i-1)*n.new.obs+n, ] = x.min.matrix[i, ] + runif(1)*diffs
         if (any(!is.num)) {
           for (j in seq_col(x.min.matrix)) {
             if (!is.num[j])
-              res[(i-1)*n.new.obs+n,j] = c(x.min.matrix[kNNs[neigh],j],
-                x.min.matrix[i,j])[1+round(runif(1),0)]
+              res[(i-1)*n.new.obs+n, j] = c(x.min.matrix[kNNs[neigh], j],
+                x.min.matrix[i, j])[1+round(runif(1), 0)]
           }
         }
       }

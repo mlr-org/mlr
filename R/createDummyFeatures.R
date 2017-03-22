@@ -43,7 +43,7 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   options(na.action = "na.pass")
 
   prefix = colnames(obj[work.cols])
-  dfcol = obj[,work.cols]
+  dfcol = obj[, work.cols]
 
   dummies = as.data.frame(lapply(obj[work.cols], createDummyFeatures, method = method))
 

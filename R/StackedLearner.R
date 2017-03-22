@@ -93,7 +93,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
-    super.learner = makeLearner(stri_paste(base.learners[[1]]$type, '.nnet'))
+    super.learner = makeLearner(stri_paste(base.learners[[1]]$type, ".nnet"))
   }
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
@@ -112,18 +112,18 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
-  if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") |
+  if ("se" %in% pts || (!is.null(predict.type) && predict.type == "se") ||
         (!is.null(super.learner) && super.learner$predict.type == "se"))
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
-  if ((method == "average" | method == "hill.climb") & (!is.null(super.learner) | is.null(predict.type)) )
+  if ((method == "average" || method == "hill.climb") & (!is.null(super.learner) || is.null(predict.type)) )
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
   if (method != "average" & method != "hill.climb" & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
   #if (method != "average" & !is.null(predict.type))
   #  stop("Predict type has to be specified within the super learner.")
-  if ((method == "average" | method == "hill.climb") & use.feat)
+  if ((method == "average" || method == "hill.climb") & use.feat)
     stop("The original features can not be used for this method")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
@@ -179,7 +179,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average","hill.climb"), TRUE, FALSE))
+      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average", "hill.climb"), TRUE, FALSE))
     }
 
     names(probs) = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
@@ -343,10 +343,10 @@ stackNoCV = function(learner, task) {
 
   pred.train = probs
 
-  if (type == "regr" | type == "classif") {
+  if (type == "regr" || type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) #X[, -ncol(X)]))
   }
 
   # now fit the super learner for predicted_probs --> target
@@ -385,10 +385,10 @@ stackCV = function(learner, task) {
   }
   names(probs) = names(bls)
 
-  if (type == "regr" | type == "classif") {
+  if (type == "regr" || type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) #X[, -ncol(X)]))
   }
 
   # add true target column IN CORRECT ORDER
@@ -498,7 +498,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     current.prob = matrix(0, nrow(probs[[1]]), ncol(probs[[1]]))
     old.score = Inf
     if (selection.size>0) {
-      current.prob = Reduce('+', probs[selection.ind])
+      current.prob = Reduce("+", probs[selection.ind])
       old.score = metric(current.prob/selection.size, probs[[tn]])
     }
     flag = TRUE
@@ -506,7 +506,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric( (probs[[i]]+current.prob)/(selection.size+1), probs[[tn]] )
+        score[i] = metric((probs[[i]]+current.prob)/ (selection.size+1), probs[[tn]] )
       }
       inds = order(score)
       if (!replace) {
@@ -610,12 +610,12 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   if (is.null(model.weight)) {
     model.weight = rep(1/p, p)
   }
-  mat = matrix(0,nrow(probs),m)
+  mat = matrix(0, nrow(probs), m)
   for (i in 1:m) {
     ids = matrix(probs==levels[i], nrow(probs), p)
     for (j in 1:p)
-      ids[,j] = ids[,j]*model.weight[j]
-    mat[,i] = rowSums(ids)
+      ids[, j] = ids[, j]*model.weight[j]
+    mat[, i] = rowSums(ids)
   }
   colnames(mat) = levels
   return(mat)
@@ -636,14 +636,14 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   mn = rep(0, ncol(.data))
   mx = rep(0, ncol(.data))
   for (i in ind1) {
-    mn[i] = min(.data[,i])
-    mx[i] = max(.data[,i])
-    .data[, i] = (.data[, i]-mn[i])/(mx[i]-mn[i])
+    mn[i] = min(.data[, i])
+    mx[i] = max(.data[, i])
+    .data[, i] = (.data[, i]-mn[i])/ (mx[i]-mn[i])
   }
   if (is.null(s)) {
     s = rep(0, ncol(.data))
     for (i in ind1) {
-      s[i] = sd(.data[,i])
+      s[i] = sd(.data[, i])
     }
   }
   testNumeric(s, len = ncol(.data), lower = 0)
@@ -652,12 +652,12 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   hamming = function(mat) {
     n = nrow(mat)
     m = ncol(mat)
-    res = matrix(0,n,n)
+    res = matrix(0, n, n)
     for (j in 1:m) {
-      unq = unique(mat[,j])
+      unq = unique(mat[, j])
       p = length(unq)
       for (i in 1:p) {
-        ind = which(mat[,j] == unq[i])
+        ind = which(mat[, j] == unq[i])
         res[ind, -ind] = res[ind, -ind]+1
       }
     }
@@ -666,13 +666,13 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
 
   one.nn = function(mat, ind1, ind2) {
     n = nrow(mat)
-    dist.mat.1 = matrix(0,n,n)
-    dist.mat.2 = matrix(0,n,n)
+    dist.mat.1 = matrix(0, n, n)
+    dist.mat.2 = matrix(0, n, n)
     if (length(ind1)>0) {
-      dist.mat.1 = as.matrix(stats::dist(mat[,ind1, drop = FALSE]))
+      dist.mat.1 = as.matrix(stats::dist(mat[, ind1, drop = FALSE]))
     }
     if (length(ind2)>0) {
-      dist.mat.2 = hamming(mat[,ind2, drop = FALSE])
+      dist.mat.2 = hamming(mat[, ind2, drop = FALSE])
     }
     dist.mat = dist.mat.1+dist.mat.2
     neighbour = max.col( -dist.mat - diag(Inf, n))
@@ -686,7 +686,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   p = ncol(.data)
   for (loop in 1:k) {
     data = .data
-    prob.mat = matrix(sample(c(0,1), n*p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
+    prob.mat = matrix(sample(c(0, 1), n*p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
     prob.mat = prob.mat == 0
     for (i in 1:n) {
       e = as.numeric(data[i, ])
@@ -694,29 +694,29 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
 
       # continuous
       for (j in ind1) {
-        if (prob.mat[i,j]) {
+        if (prob.mat[i, j]) {
           current.sd = abs(e[j]-ee[j])/s[j]
-          tmp1 = rnorm(1,ee[j], current.sd)
-          tmp2 = rnorm(1,e[j], current.sd)
+          tmp1 = rnorm(1, ee[j], current.sd)
+          tmp2 = rnorm(1, e[j], current.sd)
           e[j] = tmp1
           ee[j] = tmp2
         }
       }
       for (j in ind2) {
-        if (prob.mat[i,j]) {
+        if (prob.mat[i, j]) {
           tmp = e[j]
           e[j] = ee[j]
           ee[j] = tmp
         }
       }
 
-      data[i,] = ee
-      data[neighbour[i],] = e
+      data[i, ] = ee
+      data[neighbour[i], ] = e
     }
     res = rbind(res, data)
   }
   for (i in ind1)
-    res[,i] = res[,i]*(mx[i]-mn[i])+mn[i]
+    res[, i] = res[, i]* (mx[i]-mn[i])+mn[i]
   res = data.frame(res)
   names(res) = ori.names
   for (i in ind2)

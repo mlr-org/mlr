@@ -29,5 +29,5 @@ trainLearner.classif.rknn = function(.learner, .task, .subset, .weights = NULL, 
 predictLearner.classif.rknn = function(.learner, .model, .newdata, ...){
   args = .model$learner.model
   args$newdata = .newdata
-  do.call(rknn::rknn,args)$pred
+  do.call(rknn::rknn, args)$pred
 }

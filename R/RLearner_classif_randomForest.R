@@ -35,7 +35,7 @@ makeRLearner.classif.randomForest = function() {
 trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights = NULL, classwt = NULL, cutoff, ...) {
   f = getTaskFormula(.task)
   data = getTaskData(.task, .subset, recode.target = "drop.levels")
-  levs = levels(data[,getTaskTargetNames(.task)])
+  levs = levels(data[, getTaskTargetNames(.task)])
   n = length(levs)
   if (missing(cutoff))
     cutoff = rep(1/n, n)

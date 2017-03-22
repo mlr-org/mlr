@@ -6,7 +6,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
   yname = opt.path$y.names[1]
   minimize = opt.path$minimize[1]
   for (i in seq_len(mu)) {
-    while(TRUE) {
+    while (TRUE) {
       states[[i]] = rbinom(length(bit.names), 1, 0.5)
       if (is.na(control$max.features) || sum(states[[i]] <= control$max.features))
         break
@@ -49,7 +49,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
 # (repeat in a loop if max.features not satisfied)
 generateKid = function(featmat, control) {
   parents = sample(seq_row(featmat), 2L, replace = TRUE)
-  while(TRUE) {
+  while (TRUE) {
     kid = crossover(featmat[parents[1L], ], featmat[parents[2L], ], control$extra.args$crossover.rate)
     kid = mutateBits(kid, control$extra.args$mutation.rate)
     if (is.na(control$max.features) || sum(kid) <= control$max.features)

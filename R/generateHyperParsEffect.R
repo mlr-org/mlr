@@ -290,12 +290,12 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     for (col in hyperpars.effect.data$measures) {
       col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
       if (heatcontour.flag){
-        d[,col][is.na(d[,col])] = get(col_name)$worst
+        d[, col][is.na(d[, col])] = get(col_name)$worst
       } else {
         if (get(col_name)$minimize){
-          d[,col][is.na(d[,col])] = max(d[,col], na.rm = TRUE)
+          d[, col][is.na(d[, col])] = max(d[, col], na.rm = TRUE)
         } else {
-          d[,col][is.na(d[,col])] = min(d[,col], na.rm = TRUE)
+          d[, col][is.na(d[, col])] = min(d[, col], na.rm = TRUE)
         }
       }
     }
@@ -307,7 +307,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
 
   # we need to work differently depending on if we have partial dependence
-  if (partial.flag && !("iteration" %in% c(x,y,z))) {
+  if (partial.flag && !("iteration" %in% c(x, y, z))) {
     # collapse nested for partial dep input
     if (hyperpars.effect.data$nested) {
       averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run",
@@ -339,17 +339,17 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       for (col in hyperpars.effect.data$measures) {
         col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
         if (get(col_name)$minimize){
-          d[,col] = cummin(d[,col])
+          d[, col] = cummin(d[, col])
         } else {
-          d[,col] = cummax(d[,col])
+          d[, col] = cummax(d[, col])
         }
       }
     }
 
     if ((!is.null(interpolate)) && z.flag && (heatcontour.flag)){
       # create grid
-      xo = seq(min(d[,x]), max(d[,x]), length.out = 100)
-      yo = seq(min(d[,y]), max(d[,y]), length.out = 100)
+      xo = seq(min(d[, x]), max(d[, x]), length.out = 100)
+      yo = seq(min(d[, y]), max(d[, y]), length.out = 100)
       grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = F)
       names(grid) = c(x, y)
 
@@ -359,7 +359,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         # for loop for each nested cv run
         for (run in unique(d$nested_cv_run)){
           d_run = d_new[d_new$nested_cv_run == run, ]
-          regr.task = makeRegrTask(id = "interp", data = d_run[,c(x,y,z)],
+          regr.task = makeRegrTask(id = "interp", data = d_run[, c(x, y, z)],
             target = z)
           mod = train(lrn, regr.task)
           prediction = predict(mod, newdata = grid)
@@ -367,25 +367,25 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           grid$learner_status = "Interpolated Point"
           grid$iteration = NA
           # combine the experiment data with interpolated data
-          combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], grid)
+          combined = rbind(d_run[, c(x, y, z, "learner_status", "iteration")], grid)
           # combine each loop
           new_d = rbind(new_d, combined)
         }
         grid = new_d
       } else {
-        regr.task = makeRegrTask(id = "interp", data = d[,c(x,y,z)], target = z)
+        regr.task = makeRegrTask(id = "interp", data = d[, c(x, y, z)], target = z)
         mod = train(lrn, regr.task)
         prediction = predict(mod, newdata = grid)
         grid[, z] = prediction$data[, prediction$predict.type]
         grid$learner_status = "Interpolated Point"
         grid$iteration = NA
         # combine the experiment data with interpolated data
-        combined = rbind(d[,c(x,y,z,"learner_status", "iteration")], grid)
+        combined = rbind(d[, c(x, y, z, "learner_status", "iteration")], grid)
         grid = combined
       }
       # remove any values that would extrapolate the z
-      grid[grid[,z] < min(d[,z]), z] = min(d[,z])
-      grid[grid[,z] > max(d[,z]), z] = max(d[,z])
+      grid[grid[, z] < min(d[, z]), z] = min(d[, z])
+      grid[grid[, z] > max(d[, z]), z] = max(d[, z])
       d = grid
     }
 

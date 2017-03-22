@@ -36,7 +36,7 @@ makeMultilabelBinaryRelevanceWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL,...) {
+trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
@@ -61,8 +61,8 @@ doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights)
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset,...)))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
   else
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset,...), cl = "TRUE")
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }

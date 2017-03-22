@@ -1,5 +1,5 @@
 #' @export
-as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
+as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
   x$data
 }
 

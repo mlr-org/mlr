@@ -153,7 +153,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
         sp = permutations(n - 1L)
         p = nrow(sp)
         A = matrix(nrow = n, ncol = n * p)
-        for(i in 1:n){
+        for (i in 1:n){
           A[, (i - 1) * p + 1:p] = rbind(i, sp + (sp >= i))
         }
         return(A)

@@ -514,7 +514,7 @@ multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNU = function(probabilities, truth) {
-  if(length(unique(truth)) != nlevels(truth)){
+  if (length(unique(truth)) != nlevels(truth)){
     warning("Measure is undefined if there isn't at least one sample per class.")
 	return(NA_real_)
   }
@@ -537,11 +537,11 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 #' @rdname measures
 #' @format none
 measureAUNP = function(probabilities, truth) {
-  if(length(unique(truth)) != nlevels(truth)){
+  if (length(unique(truth)) != nlevels(truth)){
     warning("Measure is undefined if there isn't at least one sample per class.")
 	return(NA_real_)
   }
-  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[, i], truth == levels(truth)[i])))
 }
 
 #' @export multiclass.au1u
@@ -675,7 +675,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
 #' @format none
 measureQSR = function(probabilities, truth){
   #We add this line because binary tasks only output one probability column
-  if (is.null(dim(probabilities))) probabilities = cbind(probabilities,1 - probabilities)
+  if (is.null(dim(probabilities))) probabilities = cbind(probabilities, 1 - probabilities)
   truth = factor(truth, levels = colnames(probabilities))
   1 - mean(rowSums((probabilities - createDummyFeatures(truth))^2))
 }
@@ -994,7 +994,7 @@ measureTNR = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif" , "req.pred", "req.truth"),
+  properties = c("classif", "req.pred", "req.truth"),
   name = "False positive rate",
   note = "Percentage of misclassified observations in the positive class. Also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1036,7 +1036,7 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   name = "Positive predictive value",
   note = "Defined as: tp / (tp + number of fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
   fun = function(task, model, pred, feats, extra.args) {
-    if(pred$predict.type == "prob") {
+    if (pred$predict.type == "prob") {
       prob = getPredictionProbabilities(pred)
     } else {
       prob = NULL

@@ -119,7 +119,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
   assertChoice(method, choices = ls(.FilterRegister))
   out = generateFilterValuesData(task, method, nselect, ...)
   colnames(out$data)[3] = "val"
-  out$data = out$data[, c(1,3,2)]
+  out$data = out$data[, c(1, 3, 2)]
   makeS3Obj("FilterValues",
             task.desc = out$task.desc,
             method = method,

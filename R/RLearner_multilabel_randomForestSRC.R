@@ -60,9 +60,9 @@ makeRLearner.multilabel.randomForestSRC = function() {
 #' @export
 trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
-  f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
+  f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ", ", sep = " "), ")  ~ .", sep = ""))
   d = getTaskData(.task, .subset, recode.target = "multilabel.factor")
-  randomForestSRC::rfsrc(f , data = d, case.wt = .weights, ...)
+  randomForestSRC::rfsrc(f, data = d, case.wt = .weights, ...)
 }
 
 #' @export

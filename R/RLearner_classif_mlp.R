@@ -20,7 +20,7 @@ makeRLearner.classif.mlp = function() {
       makeUntypedLearnerParam(id = "pruneFunc"),
       makeUntypedLearnerParam(id = "pruneFuncParams")
     ),
-    properties = c("twoclass", "multiclass","numerics", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Multi-Layer Perceptron",
     short.name = "mlp",
     callees = "mlp"
@@ -41,7 +41,7 @@ predictLearner.classif.mlp = function(.learner, .model, .newdata, ...) {
   colnames(pred) = .model$factor.levels[[1]]
   
   if (type == "class") {
-    classes <- colnames(pred)[max.col(pred)]
+    classes = colnames(pred)[max.col(pred)]
     return(as.factor(classes))
   }
   return(pred)

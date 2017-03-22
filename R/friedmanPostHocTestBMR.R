@@ -31,7 +31,7 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
   requirePackages("PMCMR")
   assertClass(bmr, "BenchmarkResult")
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
-  assertChoice(aggregation, c('default', 'mean'))
+  assertChoice(aggregation, c("default", "mean"))
   measure = checkBMRMeasure(measure, bmr)
   n.learners = length(bmr$learners)
   if (n.learners < 2)

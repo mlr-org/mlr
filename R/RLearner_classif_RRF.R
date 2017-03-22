@@ -62,5 +62,5 @@ getFeatureImportanceLearner.classif.RRF = function(.learner, .model, ...) {
       stop("You need to train the learner with parameter 'importance' set to TRUE")
   }
 
-  RRF::importance(mod, ctrl$type)[,1]
+  RRF::importance(mod, ctrl$type)[, 1]
 }

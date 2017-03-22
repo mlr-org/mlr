@@ -15,7 +15,7 @@ makeRLearner.regr.GPfit = function(){
       makeNumericLearnerParam(id = "power", default = 1.95, lower = 1.0, upper = 2.0, requires = quote(type == "exponential"))
     ),
     par.vals = list(scale = TRUE, type = "exponential",  matern_nu_k = 0L, power = 1.95),
-    properties = c("numerics","se"),
+    properties = c("numerics", "se"),
     name = "Gaussian Process",
     short.name = "GPfit",
     note = "(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, 

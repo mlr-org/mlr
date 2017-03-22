@@ -93,7 +93,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, inclu
   if (include.deprecated)
     df$deprecated = deprecated
   else
-    df = df[!deprecated,]
+    df = df[!deprecated, ]
   res = setRowNames(sortByCol(df, "id"), NULL)
   addClasses(res, "FilterMethodsList")
 }
@@ -307,7 +307,7 @@ makeFilter(
     d = getTaskData(task, target.extra = TRUE)
     y = Rfast::correls(d$target, d$data, type = "pearson")
     for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs")
+      y[i, "correlation"] = cor(d$target, d$data[, i], use = "complete.obs")
     }
     setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
@@ -328,7 +328,7 @@ makeFilter(
     d = getTaskData(task, target.extra = TRUE)
     y = Rfast::correls(d$target, d$data, type = "spearman")
     for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs", method = "spearman")
+      y[i, "correlation"] = cor(d$target, d$data[, i], use = "complete.obs", method = "spearman")
     }
     setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
@@ -525,7 +525,7 @@ makeFilter(
     X = as.matrix(d$data)
     an = Rfast::anovas(X, y)
     for (i in which(is.na(an[, "F value"]))) {
-      j = !is.na(X[,i])
+      j = !is.na(X[, i])
       if (any(j)) {
         an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j])
       }
@@ -552,7 +552,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
+      f = as.formula(stri_paste(feat.name, "~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
     })

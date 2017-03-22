@@ -26,5 +26,5 @@ trainLearner.regr.elmNN = function(.learner, .task, .subset, .weights = NULL, ..
 
 #' @export
 predictLearner.regr.elmNN = function(.learner, .model, .newdata, ...) {
-  elmNN::predict.elmNN(.model$learner.model, newdata = as.matrix(.newdata), ...)[,1L]
+  elmNN::predict.elmNN(.model$learner.model, newdata = as.matrix(.newdata), ...)[, 1L]
 }
