@@ -83,7 +83,7 @@ predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
     if (length(td$class.levels) == 2L) {
       p = setColNames(cbind(1 - p, p), td$class.levels)
     } else {
-      p = p[, , 1]
+      p = p[,, 1]
     }
   } else {
     p = drop(predict(.model$learner.model, newx = .newdata, type = "class", ...))

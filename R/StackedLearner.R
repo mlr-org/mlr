@@ -395,12 +395,12 @@ stackCV = function(learner, task) {
   tn = getTaskTargetNames(task)
   test.inds = unlist(rin$test.inds)
 
-  pred.train = as.list(probs[order(test.inds), , drop = FALSE])
+  pred.train = as.list(probs[order(test.inds),, drop = FALSE])
 
   probs[[tn]] = getTaskTargets(task)[test.inds]
 
   # now fit the super learner for predicted_probs --> target
-  probs = probs[order(test.inds), , drop = FALSE]
+  probs = probs[order(test.inds),, drop = FALSE]
   if (use.feat) {
     # add data with normal features IN CORRECT ORDER
     feat = getTaskData(task)#[test.inds, ]
@@ -468,10 +468,10 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   test.inds = unlist(rin$test.inds)
 
   # now start the hill climbing
-  probs = lapply(probs, function(x) x[order(test.inds), , drop = FALSE])
+  probs = lapply(probs, function(x) x[order(test.inds),, drop = FALSE])
   probs[[tn]] = getTaskTargets(task)[test.inds]
   probs[[tn]] = probs[[tn]][order(test.inds)]
-  # probs = probs[order(test.inds), , drop = FALSE]
+  # probs = probs[order(test.inds),, drop = FALSE]
   m = length(bls)
   weights = rep(0, m)
   flag = TRUE

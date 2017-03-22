@@ -44,8 +44,8 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
   } else {
     i.data = i.front
   }
-  data = op2[i.data, , drop = FALSE]
-  front = op2[i.front, , drop = FALSE]
+  data = op2[i.data,, drop = FALSE]
+  front = op2[i.front,, drop = FALSE]
 
   p = ggplot(data, mapping = map)
   p = p + geom_point(size = pointsize)
@@ -87,7 +87,7 @@ plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
                        ggvis::prop("y", as.name(colnames(res$y)[2L])))
     plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
   } else {
-    plt_data = plt_data[plt_data$location == "frontier", , drop = FALSE]
+    plt_data = plt_data[plt_data$location == "frontier",, drop = FALSE]
     plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
                        ggvis::prop("y", as.name(colnames(res$y)[2L])))
     plt = ggvis::layer_points(plt)

@@ -532,11 +532,11 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
   } else {
     if (obj$learner$predict.type == "response")
       sapply(1:nrow(data), function(idx)
-        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx, , drop = FALSE],
+        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
           features = features, fun = fun.wrapper, td = td, ...))
     else
       t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
-        data = data[idx, , drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
+        data = data[idx,, drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
   }
 }
 
@@ -596,7 +596,7 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
     out = as.data.frame(rbindlist(out))
     colnames(out) = target
     idx = rep(seq_len(n), nrow(rng))
-    rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
+    rng = rng[rep(seq_len(nrow(rng)), each = n),, drop = FALSE]
     out = cbind(out, rng, idx, row.names = NULL)
     out = melt(out, id.vars = c(features, "idx"),
       variable.name = "Class", value.name = "Probability", variable.factor = TRUE)

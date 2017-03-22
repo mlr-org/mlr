@@ -157,7 +157,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 # Computes the mc bias-corrected jackknife after bootstrap
 jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   model = .model$learner.model
-  model$inbag = model$inbag[rowSums(model$inbag == 0) > 0, , drop = FALSE]
+  model$inbag = model$inbag[rowSums(model$inbag == 0) > 0,, drop = FALSE]
   n = nrow(model$inbag)
   ntree = model$ntree
   pred = predict(model, newdata = .newdata, predict.all = TRUE, ...)
