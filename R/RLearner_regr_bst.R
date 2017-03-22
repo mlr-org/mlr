@@ -2,7 +2,7 @@
 makeRLearner.regr.bst = function() {
   makeRLearnerRegr(
     cl = "regr.bst",
-    package = "bst",
+    package = c("bst", "rpart"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "cost", default = 0.5, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "mstop", default = 50L, lower = 1L, when = "both"),
@@ -31,7 +31,8 @@ makeRLearner.regr.bst = function() {
     properties = c("numerics"),
     name = "Gradient Boosting",
     short.name = "bst",
-    note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.'
+    note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.',
+    callees = c("bst", "bst_control", "rpart.control")
   )
 }
 

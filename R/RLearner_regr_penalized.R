@@ -26,7 +26,8 @@ makeRLearner.regr.penalized = function() {
     properties = c("numerics", "factors"),
     name = "Penalized Regression",
     short.name = "penalized",
-    note = ""
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

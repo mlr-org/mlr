@@ -22,7 +22,8 @@ makeRLearner.classif.nnTrain = function() {
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Training Neural Network by Backpropagation",
     short.name = "nn.train",
-    note = "`output` set to `softmax` by default. `max.number.of.layers` can be set to control and tune the maximal number of layers specified via `hidden`."
+    note = "`output` set to `softmax` by default. `max.number.of.layers` can be set to control and tune the maximal number of layers specified via `hidden`.",
+    callees = "nn.train"
   )
 }
 

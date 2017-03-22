@@ -1,7 +1,7 @@
 #' @export
 makeRLearner.classif.plsdaCaret = function() {
   makeRLearnerClassif(cl = "classif.plsdaCaret",
-    package = "caret",
+    package = c("caret", "pls"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ncomp", default = 2, lower = 1),
       makeDiscreteLearnerParam(id = "probMethod", values = c("softmax", "Bayes"), default = "softmax"),
@@ -10,7 +10,8 @@ makeRLearner.classif.plsdaCaret = function() {
     ),
     properties = c("numerics", "prob", "twoclass"),
     name = "Partial Least Squares (PLS) Discriminant Analysis",
-    short.name = "plsdacaret"
+    short.name = "plsdacaret",
+    callees = c("plsda", "plsr")
   )
 }
 

@@ -29,7 +29,8 @@ makeRLearner.regr.btgp = function() {
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Gaussian Process",
-    short.name = "btgp"
+    short.name = "btgp",
+    callees = "btgp"
   )
 }
 

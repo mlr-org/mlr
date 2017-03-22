@@ -22,7 +22,8 @@ makeRLearner.regr.bcart = function() {
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian CART",
-    short.name = "bcart"
+    short.name = "bcart",
+    callees = "bcart"
   )
 }
 

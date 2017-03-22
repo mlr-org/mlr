@@ -19,7 +19,8 @@ makeRLearner.regr.laGP = function() {
     ),
     properties = c("numerics", "se"),
     name = "Local Approximate Gaussian Process",
-    short.name = "laGP"
+    short.name = "laGP",
+    callees = "aGP"
   )
 }
 

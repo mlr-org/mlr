@@ -18,11 +18,12 @@ makeRLearner.classif.penalized = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE)
     ),
-    par.vals = list(),
-    properties = c("twoclass", "numerics", "factors", "prob"),
+    par.vals = list(trace = FALSE),
+    properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
     name = "Penalized Logistic Regression",
     short.name = "penalized",
-    note = ""
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

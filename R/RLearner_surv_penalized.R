@@ -22,7 +22,8 @@ makeRLearner.surv.penalized = function() {
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "Penalized Cox Regression",
     short.name = "penalized",
-    note = ""
+    note = "trace=FALSE was set by default to disable logging output.",
+    callees = "penalized"
   )
 }
 

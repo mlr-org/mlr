@@ -24,7 +24,9 @@ makeRLearner.regr.gamboost = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Gradient Boosting with Smooth Components",
-    short.name = "gamboost"
+    short.name = "gamboost",
+    callees = c("gamboost", "mboost_fit", "boost_control", "Gaussian", "Laplace",
+      "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 

@@ -10,7 +10,8 @@ makeRLearner.cluster.Cobweb = function() {
     ),
     properties = c("numerics"),
     name = "Cobweb Clustering Algorithm",
-    short.name = "cobweb"
+    short.name = "cobweb",
+    callees = c("Cobweb", "Weka_control")
   )
 }
 

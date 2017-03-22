@@ -23,7 +23,8 @@ makeRLearner.regr.GPfit = function(){
             to be set. (2) We replace the GPfit parameter 'corr = list(type='exponential',power=1.95)' to be seperate 
             parameters 'type' and 'power', in the case of  corr = list(type='matern', nu = 0.5), the seperate parameters
             are 'type' and 'matern_nu_k=0', and nu is computed by 'nu=(2*matern_nu_k+1)/2=0.5' 
-            "
+            ",
+    callees = "GP_fit"
   )
 }
 #' @export
