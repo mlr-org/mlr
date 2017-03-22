@@ -160,14 +160,14 @@ test_that("ModelMultiplexer passes on hyper pars in predict with both", {
 
   opts = NULL
   trainLearner.testPS = function(.learner, .task, .subset, .weights=NULL, ...) {
-    opts <<- list(...)
+    opts <<- list(...)  # nolint
     # the following to make the type checking happy
     list(dummy=getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
   }
   registerS3method("trainLearner", "testPS", trainLearner.testPS)
 
   predictLearner.testPS = function(.learner, .model, .newdata, ...) {
-    opts <<- list(...)
+    opts <<- list(...)  # nolint
     rep(.model$learner.model$dummy, nrow(.newdata))  # just do something
   }
   registerS3method("predictLearner", "testPS", predictLearner.testPS)
