@@ -31,7 +31,8 @@ makeRLearner.regr.btgpllm = function() {
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model",
-    short.name = "btgpllm"
+    short.name = "btgpllm",
+    callees = "btgpllm"
   )
 }
 

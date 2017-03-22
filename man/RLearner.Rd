@@ -20,22 +20,27 @@ makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
-  class.weights.param = NULL)
+  class.weights.param = NULL, callees = "")
 
 makeRLearnerMultilabel(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = "")
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = "")
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = "")
 
 makeRLearnerCluster(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = "")
 
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = "")
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
@@ -80,6 +85,10 @@ Default is \dQuote{}.}
 
 \item{class.weights.param}{[\code{character(1)}]\cr
 Name of the parameter, which can be used for providing class weights.}
+
+\item{callees}{[\code{character}]\cr
+Character vector naming all functios of the learner's package being called which
+have a relevant R help page.}
 }
 \value{
 [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},

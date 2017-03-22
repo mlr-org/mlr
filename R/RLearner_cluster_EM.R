@@ -19,7 +19,8 @@ makeRLearner.cluster.EM = function() {
     ),
     properties = c("numerics"),
     name = "Expectation-Maximization Clustering",
-    short.name = "em"
+    short.name = "em",
+    callees = c("make_Weka_clusterer", "Weka_control")
   )
 }
 

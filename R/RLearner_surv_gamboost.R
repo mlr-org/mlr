@@ -5,7 +5,7 @@ makeRLearner.surv.gamboost = function() {
     package = c("!survival", "mboost"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
-      makeIntegerLearnerParam(id = "dfbase", default = 4),
+      makeIntegerLearnerParam(id = "dfbase", default = 4L),
       makeNumericLearnerParam(id = "offset"),
       makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan", "custom.family")),
       makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
@@ -23,7 +23,8 @@ makeRLearner.surv.gamboost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient boosting with smooth components",
     short.name = "gamboost",
-    note = "`family` has been set to `CoxPH()` by default."
+    note = "`family` has been set to `CoxPH()` by default.",
+    callees = c("gamboost", "mboost_fit", "boost_control", "CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan")
   )
 }
 

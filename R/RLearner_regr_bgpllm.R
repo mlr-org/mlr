@@ -28,7 +28,8 @@ makeRLearner.regr.bgpllm = function() {
     ),
     properties = c("numerics", "se"),
     name = "Bayesian Gaussian Process with jumps to the Limiting Linear Model",
-    short.name = "bgpllm"
+    short.name = "bgpllm",
+    callees = "bgpllm"
   )
 }
 

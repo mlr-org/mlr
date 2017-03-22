@@ -5,7 +5,7 @@ makeRLearner.regr.gamboost = function() {
     package = "mboost",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
-      makeIntegerLearnerParam(id = "dfbase", default = 4),
+      makeIntegerLearnerParam(id = "dfbase", default = 4L),
       makeNumericLearnerParam(id = "offset"),
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
@@ -24,7 +24,9 @@ makeRLearner.regr.gamboost = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Gradient Boosting with Smooth Components",
-    short.name = "gamboost"
+    short.name = "gamboost",
+    callees = c("gamboost", "mboost_fit", "boost_control", "Gaussian", "Laplace",
+      "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 

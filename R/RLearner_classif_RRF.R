@@ -32,7 +32,8 @@ makeRLearner.classif.RRF = function() {
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
-    note = ""
+    note = "",
+    callees = c("RRF")
   )
 }
 

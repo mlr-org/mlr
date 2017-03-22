@@ -14,7 +14,8 @@ makeRLearner.classif.LiblineaRL1LogReg = function() {
     properties = c("twoclass", "multiclass", "numerics", "class.weights", "prob"),
     class.weights.param = "wi",
     name = "L1-Regularized Logistic Regression",
-    short.name = "liblinl1logreg"
+    short.name = "liblinl1logreg",
+    callees = "LiblineaR"
   )
 }
 

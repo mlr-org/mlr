@@ -15,7 +15,8 @@ makeRLearner.cluster.dbscan = function() {
     properties = c("numerics"),
     name = "DBScan Clustering",
     note = 'A cluster index of NA indicates noise points. Specify `method = "dist"` if the data should be interpreted as dissimilarity matrix or object. Otherwise Euclidean distances will be used.',
-    short.name = "dbscan"
+    short.name = "dbscan",
+    callees = c("dbscan")
   )
 }
 

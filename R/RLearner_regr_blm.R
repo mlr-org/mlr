@@ -22,7 +22,8 @@ makeRLearner.regr.blm = function() {
     ),
     properties = c("numerics", "se"),
     name = "Bayesian Linear Model",
-    short.name = "blm"
+    short.name = "blm",
+    callees = "blm"
   )
 }
 

@@ -95,9 +95,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
       types = "numeric", any.missing = FALSE)
     expect_true(info = info, all(probdf >= 0 && probdf <= 1))
 
-    # FIXME: the "sum to 1" apparently does not work for all learners?
-    # I can see differences up to 0.1 for some cases, reported in issue #1017
-    # expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE)
+    expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE, tolerance = 0.01)
   }
 }
 

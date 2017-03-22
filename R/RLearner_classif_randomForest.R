@@ -26,7 +26,8 @@ makeRLearner.classif.randomForest = function() {
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
-    note = "Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
+    note = "Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures.",
+    callees = c("randomForest")
   )
 }
 

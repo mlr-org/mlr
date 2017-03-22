@@ -2,24 +2,24 @@ context("TaskDesc")
 
 test_that("TaskDesc", {
   ct = makeClassifTask(target = "Class", binaryclass.df, id = "mytask", positive = "M")
-  td = getTaskDescription(ct)
+  td = getTaskDesc(ct)
   expect_equal(td$id, "mytask")
   expect_equal(td$positive, "M")
   expect_equal(td$negative, "R")
 
   ct = makeClassifTask(target = "Species", multiclass.df, id = "mytask2")
-  td = getTaskDescription(ct)
+  td = getTaskDesc(ct)
   expect_equal(td$id, "mytask2")
   expect_true(is.na(td$positive))
   expect_true(is.na(td$negative))
 
   rt = makeRegrTask(target = "medv", regr.df, id = "mytask3")
-  td = getTaskDescription(rt)
+  td = getTaskDesc(rt)
   expect_equal(td$id, "mytask3")
   expect_true(is.null(td$positive))
   expect_true(is.null(td$negative))
 
-  td = getTaskDescription(multiclass.task)
+  td = getTaskDesc(multiclass.task)
   expect_equal(td$size, 150)
   expect_equal(sum(td$n.feat), 4)
   expect_equal(td$n.feat[["numerics"]], 4)
@@ -32,10 +32,10 @@ test_that("TaskDesc", {
   df = multiclass.df
   df[1,1] = as.numeric(NA)
   ct = makeClassifTask(target = "Species", data = df)
-  expect_equal(getTaskDescription(ct)$has.missings, T)
+  expect_equal(getTaskDesc(ct)$has.missings, T)
 
   ct = makeClassifTask(target=binaryclass.target, data = binaryclass.df)
-  td = getTaskDescription(ct)
+  td = getTaskDesc(ct)
   expect_equal(td$size, 208)
   expect_equal(sum(td$n.feat), 60)
   expect_equal(td$n.feat[["numerics"]], 60)
@@ -44,7 +44,7 @@ test_that("TaskDesc", {
   expect_equal(td$type, "classif")
   expect_equal(td$class.levels, c("M", "R"))
 
-  td = getTaskDescription(regr.task)
+  td = getTaskDesc(regr.task)
   expect_equal(td$size, 506)
   expect_equal(sum(td$n.feat), 13)
   expect_equal(td$n.feat[["numerics"]], 12)
