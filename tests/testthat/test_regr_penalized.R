@@ -27,9 +27,9 @@ test_that("regr_penalized", {
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
+    capture.output({
       m = do.call(penalized::penalized, pars)
-    )
+    })
     # FIXME: should be removed, reported in issue 840
     m@formula$unpenalized[[2L]] = as.symbol(regr.target)
     p = penalized::predict(m, data = regr.test)

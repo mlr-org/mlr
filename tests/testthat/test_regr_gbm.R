@@ -17,9 +17,9 @@ test_that("regr_gbm", {
     pars = list(regr.formula, data=regr.train, distribution="gaussian")
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
+    capture.output({
       m = do.call(gbm::gbm, pars)
-    )
+    })
     set.seed(getOption("mlr.debug.seed"))
     p = gbm::predict.gbm(m, newdata=regr.test, n.trees=length(m$trees))
     old.predicts.list[[i]] = p

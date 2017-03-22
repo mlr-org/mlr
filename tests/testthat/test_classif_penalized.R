@@ -18,9 +18,9 @@ test_that("classif_penalized", {
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
+    capture.output({
       m = do.call(penalized::penalized, pars)
-    )
+    })
     # FIXME: should be removed, reported in issue 840
     m@formula$unpenalized[[2L]] = as.symbol(binaryclass.target)
     old.probs.list[[i]] = 1 - penalized::predict(m, data = binaryclass.test)

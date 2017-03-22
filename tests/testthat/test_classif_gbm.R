@@ -19,9 +19,9 @@ test_that("classif_gbm", {
     pars = list(binaryclass.formula, data = mydata, distribution = "bernoulli")
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
+    capture.output({
       m = do.call(gbm::gbm, pars)
-    )
+    })
     set.seed(getOption("mlr.debug.seed"))
     p = gbm::predict.gbm(m, newdata = binaryclass.test, n.trees = length(m$trees), type = "response")
     old.probs.list[[i]] = p

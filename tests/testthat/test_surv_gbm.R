@@ -17,9 +17,9 @@ test_that("surv_gbm", {
     pars = list(surv.formula, data = surv.train, distribution = "coxph")
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
+    capture.output({
       m = do.call(gbm::gbm, pars)
-    )
+    })
     set.seed(getOption("mlr.debug.seed"))
     p = gbm::predict.gbm(m, newdata = surv.test, n.trees = m$n.trees)
     old.predicts.list[[i]] = p

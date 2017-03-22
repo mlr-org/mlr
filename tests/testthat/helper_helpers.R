@@ -150,9 +150,9 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     pars = list(formula = formula, data = data[subset, ])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
+    capture.output({
       m = do.call(tune.train, pars)
-      )
+    })
     return(m)
   }
 
