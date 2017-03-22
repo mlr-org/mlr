@@ -85,3 +85,4 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
 #   testProb("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
 #   
 # })
+

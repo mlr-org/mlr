@@ -66,3 +66,4 @@ predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .ne
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }
+

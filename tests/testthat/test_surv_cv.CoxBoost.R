@@ -40,3 +40,4 @@ test_that("surv_cv.CoxBoost", {
     p = predict(m, task = surv.task)
   }
 })
+

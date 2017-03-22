@@ -28,3 +28,4 @@ test_that("regr_bartMachine", {
     expect_true(length(old.predicts.list[[i]]) == nrow(regr.test))
   }
 })
+

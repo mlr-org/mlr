@@ -43,4 +43,4 @@ test_that("learnerArgsToControl works with a control object", {
   test2 = checkLearnerArgsToControlWithControl(fdev, devmax, mnlam = 3)
   expect_equal(test2, glmnet::glmnet.control(fdev = fdev, devmax = devmax, mnlam = 3))
 })
-  
+

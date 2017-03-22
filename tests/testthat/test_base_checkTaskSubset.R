@@ -11,3 +11,4 @@ test_that("checkTaskSubset", {
   subs50 = sample.int(20, 50, replace = TRUE)
   expect_equal(subs50, checkTaskSubset(subs50, size = 20))
 })
+
