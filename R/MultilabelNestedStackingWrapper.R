@@ -25,9 +25,9 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel.nst", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = paste("multilabel.nst", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  x = makeHomogeneousEnsemble(id, getLearnerType(learner), learner, packs,
     learner.subclass = "MultilabelNestedStackingWrapper",
     model.subclass = "MultilabelNestedStackingModel")
   x$type = "multilabel"

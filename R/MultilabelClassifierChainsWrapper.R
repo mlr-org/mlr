@@ -23,9 +23,9 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel.cc", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.cc", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  x = makeHomogeneousEnsemble(id, getLearnerType(learner), learner, packs,
     learner.subclass = "MultilabelClassifierChainsWrapper",
     model.subclass = "MultilabelClassifierChainsModel")
   x$type = "multilabel"
