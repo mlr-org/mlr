@@ -1,37 +1,39 @@
 #' @export
-makeRLearner.classif.penalized.ridge = function() {
+makeRLearner.classif.penalized = function() {
   makeRLearnerClassif(
-    cl = "classif.penalized.ridge",
+    cl = "classif.penalized",
     package = "!penalized",
     par.set = makeParamSet(
+      makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0),
       makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0),
-      makeUntypedLearnerParam(id = "unpenalized"),
+      makeLogicalLearnerParam(id = "fusedl", default = FALSE),
+      makeUntypedLearnerParam(id = "unpenalized", tunable = FALSE),
       makeLogicalVectorLearnerParam(id = "positive", default = FALSE),
       makeNumericVectorLearnerParam(id = "startbeta"),
       makeNumericVectorLearnerParam(id = "startgamma"),
+      # untyped here because one can also pass "Park" to steps
+      makeUntypedLearnerParam(id = "steps", default = 1L, tunable = FALSE),
       makeNumericLearnerParam(id = "epsilon", lower = 0, default = 1e-10),
-      # FIXME: Parameter dependent default for maxiter:
-      # default is 25 if lambda1 = 0, lambda2 > 0, infinite otherwise
       makeIntegerLearnerParam(id = "maxiter", lower = 1L),
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE)
     ),
-    par.vals = list(trace = FALSE),
-    properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
-    name = "Logistic Ridge Regression",
-    short.name = "ridge",
-    note = "trace=FALSE was set by default to disable logging output."
+    par.vals = list(),
+    properties = c("twoclass", "numerics", "factors", "prob"),
+    name = "Penalized Logistic Regression",
+    short.name = "penalized",
+    note = ""
   )
 }
 
 #' @export
-trainLearner.classif.penalized.ridge = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  penalized::penalized(f, data = getTaskData(.task, .subset), fusedl = FALSE, model = "logistic", ...)
+  penalized::penalized(f, data = getTaskData(.task, .subset), model = "logistic", ...)
 }
 
 #' @export
-predictLearner.classif.penalized.ridge = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.penalized = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   levs = .model$task.desc$class.levels
   # FIXME: should be removed, reported in issue 840
