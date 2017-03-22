@@ -19,7 +19,7 @@ test_that("classif_penalized", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
-      m <- do.call(penalized::penalized, pars)
+      m = do.call(penalized::penalized, pars)
     )
     # FIXME: should be removed, reported in issue 840
     m@formula$unpenalized[[2L]] = as.symbol(binaryclass.target)
@@ -40,7 +40,7 @@ test_that("classif_penalized", {
   }
 
   tp = function(model, newdata, ...) {
-    pred = penalized::predict(model, data = newdata,...)
+    pred = penalized::predict(model, data = newdata, ...)
     ifelse(pred > 0.5, binaryclass.class.levs[2L], binaryclass.class.levs[1L])
   }
 

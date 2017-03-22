@@ -6,7 +6,7 @@ test_that("regr_gamboost", {
     list(),
     list(family = mboost::Gaussian(), baselearner = "bols", dfbase = 4,
       control = mboost::boost_control(nu = 0.03, mstop = 200)),
-    list(family = mboost::GammaReg(nuirange = c(0,50)), baselearner = "btree",
+    list(family = mboost::GammaReg(nuirange = c(0, 50)), baselearner = "btree",
        control = mboost::boost_control(mstop = 100)),
     list(family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
@@ -15,7 +15,7 @@ test_that("regr_gamboost", {
   parset.list2 = list(
     list(),
     list(family = "Gaussian", baselearner = "bols", dfbase = 4, nu = 0.03, mstop = 200),
-    list(family= "GammaReg", baselearner = "btree", nuirange = c(0,50), mstop = 100),
+    list(family= "GammaReg", baselearner = "btree", nuirange = c(0, 50), mstop = 100),
     list(family = "custom.family", custom.family.definition =  mboost::Family(ngradient = function(y, f, w = 1) y - f,
       loss = function(y, f) (y - f)^2,
       name = "My Gauss Variant"))
@@ -37,10 +37,10 @@ test_that("regr_gamboost", {
 test_that("regr_gamboost works with families for count data", {
   # set some dummy counts
   new.regr.df = regr.df
-  new.regr.df[, regr.target] = as.integer(floor(new.regr.df[,regr.target]))
+  new.regr.df[, regr.target] = as.integer(floor(new.regr.df[, regr.target]))
   new.regr.df[, "chas"] = NULL
-  new.regr.train = new.regr.df[regr.train.inds,]
-  new.regr.test = new.regr.df[regr.test.inds,]
+  new.regr.train = new.regr.df[regr.train.inds, ]
+  new.regr.test = new.regr.df[regr.test.inds, ]
   parset.list1 = list(
     list(family = mboost::Poisson(), control = mboost::boost_control(nu = 0.02)),
     list(family = mboost::NBinomial()),

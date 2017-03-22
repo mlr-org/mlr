@@ -19,8 +19,8 @@ test_that("classif_gausspr", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kernlab::gausspr, pars)
-    p  = kernlab::predict(m, newdata = multiclass.test[,-5], type = "response")
-    p2 = kernlab::predict(m, newdata = multiclass.test[,-5], type = "probabilities")
+    p  = kernlab::predict(m, newdata = multiclass.test[, -5], type = "response")
+    p2 = kernlab::predict(m, newdata = multiclass.test[, -5], type = "probabilities")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }

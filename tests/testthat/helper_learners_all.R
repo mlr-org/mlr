@@ -111,7 +111,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
+  d[, f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -129,7 +129,7 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
+  d[, f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -148,7 +148,7 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[1,f] = NA
+  d[1, f] = NA
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -163,7 +163,7 @@ testThatGetOOBPredsWorks = function(lrn, task) {
   oob = getOOBPreds(mod, task)
   
   if (type == "classif") {
-    if(lrn$predict.type == "response") {
+    if (lrn$predict.type == "response") {
       expect_is(oob$data, "data.frame")
       expect_equal(levels(oob$data$response), task$task.desc$class.levels)
     } else {

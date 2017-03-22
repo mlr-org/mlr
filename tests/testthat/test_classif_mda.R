@@ -34,7 +34,7 @@ test_that("classif_mda", {
 
   testSimpleParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets  ("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
+  testProbParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list2)
 
   tt = mda::mda

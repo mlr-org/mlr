@@ -19,7 +19,7 @@ test_that("regr_km", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
-      m <- do.call(DiceKriging::km, pars)
+      m = do.call(DiceKriging::km, pars)
     )
     old.predicts.list[[i]] = DiceKriging::predict(m, newdata=des2, type="SK")$mean
   }

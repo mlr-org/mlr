@@ -68,7 +68,7 @@ test_that("measures with same id still work", {
 })
 
 test_that("ber with faulty model produces NA", {
-  data = iris; data[,1] = 1
+  data = iris; data[, 1] = 1
   lrn = makeLearner("classif.lda", config = list(on.learner.error = "quiet"))
   task = makeClassifTask(data = data, target = "Species")
   r = holdout(lrn, task, measures = ber)
@@ -151,7 +151,7 @@ test_that("check measure calculations", {
   lrn.multilabel = makeLearner("multilabel.rFerns")
   mod.multilabel = train(lrn.multilabel, task.multilabel)
   pred.multilabel = predict(mod.multilabel, task.multilabel)
-  pred.multilabel$data[,4:5] = pred.art.multilabel
+  pred.multilabel$data[, 4:5] = pred.art.multilabel
   #for survival
   time.surv = c(5, 10, 5, 10)
   status.surv = c(TRUE, FALSE, TRUE, FALSE)
@@ -165,12 +165,12 @@ test_that("check measure calculations", {
     mod.surv = train(lrn.surv, task.surv)
   })
   pred.surv = predict(mod.surv, task.surv)
-  pred.surv$data[,"response"] = pred.art.surv
+  pred.surv$data[, "response"] = pred.art.surv
   #for costsensitive
   tar.costsens = factor(c("a", "b", "c", "a"))
   pred.art.costsens = factor(c("a", "b", "c", "c"))
   data.costsens = data.frame(var1, var2)
-  costs = matrix(c(0, 1, 2, 1, 0, 2, 1, 2, 0, 0, 2,1), nrow = 4L, byrow = TRUE)
+  costs = matrix(c(0, 1, 2, 1, 0, 2, 1, 2, 0, 0, 2, 1), nrow = 4L, byrow = TRUE)
   colnames(costs) = levels(tar.costsens)
   rownames(costs) = rownames(data.costsens)
   task.costsens = makeCostSensTask(data = data.costsens, cost = costs)
@@ -232,14 +232,14 @@ test_that("check measure calculations", {
   rsq.perf = performance(pred.regr, measures = rsq, model = mod.regr)
   expect_equal(rsq.test, rsq$fun(pred = pred.regr))
   expect_equal(rsq.test, as.numeric(rsq.perf))
-  expect_equal(1-((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(1- ((4-5)^2+ (11-10)^2+ (0-0)^2+ (4-5)^2)/ ((5-5)^2+ (10-5)^2+ (0-5)^2+ (5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
-    expect_equal(NA_real_, measureRSQ(0,0))
-    expect_warning(measureRSQ(0,0))
-    expect_warning(measureRSQ(1,1))
-    expect_warning(measureRSQ(c(1,1,1,1), c(1,2,3,4)))
+    expect_equal(NA_real_, measureRSQ(0, 0))
+    expect_warning(measureRSQ(0, 0))
+    expect_warning(measureRSQ(1, 1))
+    expect_warning(measureRSQ(c(1, 1, 1, 1), c(1, 2, 3, 4)))
   })
-  expect_silent(measureRSQ(c(1,1,1,0), c(2,2,2,2)))
+  expect_silent(measureRSQ(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   # arsq
   arsq.test = 1 - (1 - rsq.test) * (2L / (4L - 2L - 1L))
   arsq.perf = performance(pred.regr, measures = arsq,
@@ -260,37 +260,37 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
-  expect_equal(sum((1-3)^2+(2-3)^2+(3-3)^2+(4-3)^2+(5-3)^2)/sum((5-3)^2+(4-3)^2+(3-3)^2+(2-3)^2+(1-3)^2), measureEXPVAR(5:1,1:5))
+  expect_equal(sum((1-3)^2+ (2-3)^2+ (3-3)^2+ (4-3)^2+ (5-3)^2)/sum((5-3)^2+ (4-3)^2+ (3-3)^2+ (2-3)^2+ (1-3)^2), measureEXPVAR(5:1, 1:5))
   suppressWarnings({
-    expect_equal(NA_real_, measureEXPVAR(0,0))
-    expect_warning(measureEXPVAR(0,0))
-    expect_warning(measureEXPVAR(c(1,1,1,1), c(1,2,3,4)))
+    expect_equal(NA_real_, measureEXPVAR(0, 0))
+    expect_warning(measureEXPVAR(0, 0))
+    expect_warning(measureEXPVAR(c(1, 1, 1, 1), c(1, 2, 3, 4)))
   })
-  expect_silent(measureEXPVAR(c(1,1,1,0), c(2,2,2,2)))
+  expect_silent(measureEXPVAR(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   # rrse
   rrse.test = sqrt(sum((pred.art.regr - tar.regr)^2L) / sum((tar.regr - mean(tar.regr))^2L))
   rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
   expect_equal(rrse.test, rrse$fun(pred = pred.regr))
   expect_equal(rrse.test, as.numeric(rrse.perf))
-  expect_equal(sqrt((4-5)^2+(11-10)^2+(0-0)^2+(4-5)^2)/sqrt((5-5)^2+(10-5)^2+(0-5)^2+(5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(sqrt((4-5)^2+ (11-10)^2+ (0-0)^2+ (4-5)^2)/sqrt((5-5)^2+ (10-5)^2+ (0-5)^2+ (5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
-    expect_equal(NA_real_, measureRRSE(0,0))
-    expect_warning(measureRRSE(0,0))
-    expect_warning(measureRRSE(c(1,1,1,1), c(1,2,3,4)))
+    expect_equal(NA_real_, measureRRSE(0, 0))
+    expect_warning(measureRRSE(0, 0))
+    expect_warning(measureRRSE(c(1, 1, 1, 1), c(1, 2, 3, 4)))
   })
-  expect_silent(measureRRSE(c(1,1,1,0), c(2,2,2,2)))
+  expect_silent(measureRRSE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   # rae
   rae.test = sum(abs(pred.art.regr - tar.regr)) / sum(abs(tar.regr - mean(tar.regr)))
   rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
   expect_equal(rae.test, rae$fun(pred = pred.regr))
   expect_equal(rae.test, as.numeric(rae.perf))
-  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/(abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/ (abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
-    expect_equal(NA_real_, measureRAE(0,0))
-    expect_warning(measureRAE(0,0))
-    expect_warning(measureRAE(c(1,1,1,1), c(1,2,3,4)))
+    expect_equal(NA_real_, measureRAE(0, 0))
+    expect_warning(measureRAE(0, 0))
+    expect_warning(measureRAE(c(1, 1, 1, 1), c(1, 2, 3, 4)))
   })
-  expect_silent(measureRAE(c(1,1,1,0), c(2,2,2,2)))
+  expect_silent(measureRAE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   # mape
   suppressWarnings({
     expect_equal(NA_real_, mape$fun(pred = pred.regr))
@@ -301,16 +301,16 @@ test_that("check measure calculations", {
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
   mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
-  mape.test = mean(c(abs((5-4)/5),abs((10-11)/10),abs((1-0)/1),abs((5-4)/5)))
+  mape.test = mean(c(abs((5-4)/5), abs((10-11)/10), abs((1-0)/1), abs((5-4)/5)))
   expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
-  expect_equal(1/4*(abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
-  expect_warning(measureMAPE(0,0))
+  expect_equal(1/4* (abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
+  expect_warning(measureMAPE(0, 0))
   expect_warning(measureMAPE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
   # msle
   msle.test = ((log(4 + 1) - log(5 + 1))^2 + (log(11 + 1) - log(10 + 1))^2 +
-  (log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
+(log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
   msle.perf = performance(pred.regr, measures = msle, model = mod.regr)
   expect_equal(msle.test, msle$fun(pred = pred.regr))
   expect_equal(msle.test, as.numeric(msle.perf))
@@ -351,10 +351,10 @@ test_that("check measure calculations", {
   colauc.tab = as.matrix(table(tar.bin, pred.art.bin)) # confusion matrix
   colauc.truepos = unname(rev(cumsum(rev(colauc.tab[2, ])))) # Number of true positives
   colauc.falsepos = unname(rev(cumsum(rev(colauc.tab[1, ])))) # Number of false positives
-  colauc.totpos = sum(colauc.tab[2, ]) # The total number of positives (one number)
-  colauc.totneg = sum(colauc.tab[1, ]) # The total number of negatives (one number)
-  colauc.sens = colauc.truepos / colauc.totpos # Sensitivity (fraction true positives)
-  colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity (false positives)
+  colauc.totpos = sum(colauc.tab[2, ]) # The total number of positives(one number)
+  colauc.totneg = sum(colauc.tab[1, ]) # The total number of negatives(one number)
+  colauc.sens = colauc.truepos / colauc.totpos # Sensitivity(fraction true positives)
+  colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity(false positives)
   colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
   colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
   colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
@@ -370,20 +370,20 @@ test_that("check measure calculations", {
   tab = t(utils::combn(0:2, 2)) # all possible 1 vs. 1 combinations
   colauc2 = matrix(NA, 3, 1)
   for (i in 1:3) {
-    cind = c(which(colnames(colauc.tab) == tab[i,1]), which(colnames(colauc.tab) == tab[i,2])) # column indices of i-th combination
-    rind = c(which(rownames(colauc.tab) == tab[i,1]), which(rownames(colauc.tab) == tab[i,2])) # row indices of i-th combination
+    cind = c(which(colnames(colauc.tab) == tab[i, 1]), which(colnames(colauc.tab) == tab[i, 2])) # column indices of i-th combination
+    rind = c(which(rownames(colauc.tab) == tab[i, 1]), which(rownames(colauc.tab) == tab[i, 2])) # row indices of i-th combination
     colauc.tab.part = colauc.tab[rind, cind] # resulting patrial matrix
     colauc.truepos = unname(rev(cumsum(rev(colauc.tab.part[2, ])))) # Number of true positives
     colauc.falsepos = unname(rev(cumsum(rev(colauc.tab.part[1, ])))) # Number of false positives
-    colauc.totpos = sum(colauc.tab.part[2, ]) # The total number of positives (one number)
-    colauc.totneg = sum(colauc.tab.part[1, ]) # The total number of negatives (one number)
+    colauc.totpos = sum(colauc.tab.part[2, ]) # The total number of positives(one number)
+    colauc.totneg = sum(colauc.tab.part[1, ]) # The total number of negatives(one number)
     if (colauc.totpos > 0) {
-      colauc.sens = colauc.truepos / colauc.totpos # Sensitivity (fraction true positives)
+      colauc.sens = colauc.truepos / colauc.totpos # Sensitivity(fraction true positives)
     } else {
       colauc.sens = c(1, 1)
     }
     if (colauc.totneg > 0) {
-      colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity (false positives)
+      colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity(false positives)
     } else {
       colauc.omspec = c(1, 1)
     }
@@ -392,12 +392,12 @@ test_that("check measure calculations", {
     colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
     colauc.width = -diff(colauc.omspec) # = diff(rev(colauc.omspec))
   if (sum(colauc.height * colauc.width) < 0.5) {
-    colauc2[i,1] = 1 - sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+    colauc2[i, 1] = 1 - sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
   } else {
-    colauc2[i,1] = sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+    colauc2[i, 1] = sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
   }
 }
-  expect_equal(colauc2[,1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[,1]))
+  expect_equal(colauc2[, 1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[, 1]))
   # multiclass.auc
   expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
     multiclass.aunp, multiclass.au1u, multiclass.au1p))),
@@ -442,8 +442,8 @@ test_that("check measure calculations", {
   expect_equal(measureSSR(p1, y1), 0.5 * (0.1/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
   expect_equal(measureSSR(p1, y2), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
   expect_equal(measureSSR(p2, y1), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.2/sqrt(0.2^2 + 0.8^2)))
-  expect_equal(measureSSR(p2[1,,drop=FALSE], y2[1]), 0.1/sqrt(0.1^2 + 0.9^2))
-  expect_equal(measureSSR(p2[1,,drop=FALSE], y1[1]), 0.9/sqrt(0.1^2 + 0.9^2))
+  expect_equal(measureSSR(p2[1, , drop=FALSE], y2[1]), 0.1/sqrt(0.1^2 + 0.9^2))
+  expect_equal(measureSSR(p2[1, , drop=FALSE], y1[1]), 0.9/sqrt(0.1^2 + 0.9^2))
   #qsr
   qsr.test = 1 - mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
   qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
@@ -452,8 +452,8 @@ test_that("check measure calculations", {
   expect_equal(measureQSR(p1, y1), 1 - 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
   expect_equal(measureQSR(p1, y2), 1 - 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
   expect_equal(measureQSR(p2, y1), 1 - 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
-  expect_equal(measureQSR(p2[1,,drop=FALSE], y2[1]), 1-(1-0.1)^2-(0-0.9)^2)
-  expect_equal(measureQSR(p2[1,,drop=FALSE], y1[1]), 1-(1-0.9)^2-(0-0.1)^2)
+  expect_equal(measureQSR(p2[1, , drop=FALSE], y2[1]), 1- (1-0.1)^2- (0-0.9)^2)
+  expect_equal(measureQSR(p2[1, , drop=FALSE], y1[1]), 1- (1-0.9)^2- (0-0.1)^2)
   #lsr
   lsr.test = mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
   lsr.perf = performance(pred.classif, measures = lsr, model = mod.classif)
@@ -462,8 +462,8 @@ test_that("check measure calculations", {
   expect_equal(measureLSR(p1, y1), mean(log(c(0.1, 0.8))))
   expect_equal(measureLSR(p1, y2), mean(log(c(0.9, 0.8))))
   expect_equal(measureLSR(p2, y1), mean(log(c(0.9, 0.2))))
-  expect_equal(measureLSR(p2[1,,drop=FALSE], y2[1]), log(0.1))
-  expect_equal(measureLSR(p2[1,,drop=FALSE], y1[1]), log(0.9))
+  expect_equal(measureLSR(p2[1, , drop=FALSE], y2[1]), log(0.1))
+  expect_equal(measureLSR(p2[1, , drop=FALSE], y1[1]), log(0.9))
   #kappa
   p0 = 0.5
   pe = (0.25 * 0.25 + 0.5 * 0.5 + 0.25 * 0.25) / 1
@@ -563,7 +563,7 @@ test_that("check measure calculations", {
   expect_equal(fdr.test, as.numeric(fdr.perf))
   #bac
   bac.test = 0.5 * (tpr.test / (tpr.test + fnr.test) + tnr.test /
-    (tnr.test + fpr.test))
+(tnr.test + fpr.test))
   bac.perf = performance(pred.bin, measures = bac, model = mod.bin)
   expect_equal(bac.test, bac$fun(pred = pred.bin))
   expect_equal(bac.test, as.numeric(bac.perf))
@@ -578,9 +578,9 @@ test_that("check measure calculations", {
   expect_equal(auc.test, auc$fun(pred = pred.bin))
   expect_equal(auc.test, as.numeric(auc.perf))
   #mcc
-  mcc.test =  (tp.test * tn.test - fp.test * fn.test) /
+  mcc.test = (tp.test * tn.test - fp.test * fn.test) /
     sqrt((tp.test + fp.test) * (tp.test + fn.test) *
-      (tn.test + fp.test) * (tn.test + fn.test))
+(tn.test + fp.test) * (tn.test + fn.test))
    mcc.perf = performance(pred.bin, measures = mcc, model = mod.bin)
   expect_equal(mcc.test, mcc$fun(pred = pred.bin))
   expect_equal(mcc.test, as.numeric(mcc.perf))
@@ -590,7 +590,7 @@ test_that("check measure calculations", {
   expect_equal(f1.test, f1$fun(pred = pred.bin))
   expect_equal(f1.test, as.numeric(f1.perf))
   #gmean
-  gmean.test = sqrt((tp.test/(tp.test + fn.test)) * tn.test/(tn.test + fp.test))
+  gmean.test = sqrt((tp.test/ (tp.test + fn.test)) * tn.test/ (tn.test + fp.test))
   gmean.perf = performance(pred.bin, measures = gmean, model = mod.bin)
   expect_equal(gmean.test, gmean$fun(pred = pred.bin))
   expect_equal(gmean.test, as.numeric(gmean.perf))
@@ -656,7 +656,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1/2) # 1 of 2 obs is wrong
 
   #f1mult
-  f1.test = vnapply(seq_row(multi.y), function(i) 2*sum(multi.y[i, ] * multi.p[i, ])/(sum(multi.y[i, ]) + sum(multi.p[i, ])))
+  f1.test = vnapply(seq_row(multi.y), function(i) 2*sum(multi.y[i, ] * multi.p[i, ])/ (sum(multi.y[i, ]) + sum(multi.p[i, ])))
   f1.test[is.na(f1.test)] = 1
   f1.test = mean(f1.test)
   f1.perf = performance(pred.multilabel, measures = multilabel.f1, model = mod.multilabel)
@@ -666,13 +666,13 @@ test_that("check measure calculations", {
   expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
   expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
   # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
-  expect_equal(mldr:::mldr_FMeasure(counters[-3,]), measureMultiLabelF1(multi.y[-3,], multi.p[-3,]))
+  expect_equal(mldr:::mldr_FMeasure(counters[-3, ]), measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
   # manual checks
   expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2*1/3) # 1 TRUE-TRUE match of 3 TRUE values
   expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2*1/2, 2*1/3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
 
   #accmult
-  acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.y[i, ] | multi.p[i, ])))
+  acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.y[i, ] | multi.p[i, ])))
   acc.test[is.na(acc.test)] = 1
   acc.test = mean(acc.test)
   acc.perf = performance(pred.multilabel, measures = multilabel.acc, model = mod.multilabel)
@@ -687,7 +687,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelACC(rbind(tf, tf), rbind(tf, tt)), mean(c(1, 1/2)))
 
   #ppvmult
-  ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.p[i, ])))
+  ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.p[i, ])))
   ppv.test = mean(ppv.test, na.rm = TRUE)
   ppv.perf = performance(pred.multilabel, measures = multilabel.ppv, model = mod.multilabel)
   expect_equal(ppv.test, multilabel.ppv$fun(pred = pred.multilabel))
@@ -702,7 +702,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/2)))
 
   #tprmult
-  tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/(sum(multi.y[i, ])))
+  tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.y[i, ])))
   tpr.test = mean(tpr.test, na.rm = TRUE)
   tpr.perf = performance(pred.multilabel, measures = multilabel.tpr, model = mod.multilabel)
   expect_equal(tpr.test, multilabel.tpr$fun(pred = pred.multilabel))
@@ -756,7 +756,7 @@ test_that("check measure calculations", {
   db.test = s1 / M
   db.perf = performance(pred.cluster, measures = db,
     model = mod.cluster, feats = data.cluster)
-  expect_equal(db.test,db$fun(task = task.cluster,
+  expect_equal(db.test, db$fun(task = task.cluster,
    pred = pred.cluster, feats = data.cluster))
   expect_equal(db.test, as.numeric(db.perf))
 

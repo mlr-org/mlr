@@ -13,7 +13,7 @@ test_that("classif_multinom", {
 
   set.seed(getOption("mlr.debug.seed"))
   p = predict(m, newdata=multiclass.test, type="probs")
-  testProb  ("classif.multinom", multiclass.df, multiclass.target, multiclass.train.inds, p)
+  testProb("classif.multinom", multiclass.df, multiclass.target, multiclass.train.inds, p)
 
   tt = nnet::multinom
   tp = function(model, newdata) predict(model, newdata)

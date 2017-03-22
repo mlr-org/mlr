@@ -29,12 +29,12 @@ test_that("classif_PART", {
 
   testSimpleParsets("classif.PART", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets  ("classif.PART", multiclass.df, multiclass.target, multiclass.train.inds,
+  testProbParsets("classif.PART", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list)
 
-  tt = function (formula, data, subset, ...) {
+  tt = function(formula, data, subset, ...) {
     set.seed(getOption("mlr.debug.seed"))
-    RWeka::PART(formula, data = data[subset,], control = RWeka::Weka_control(..., Q =
+    RWeka::PART(formula, data = data[subset, ], control = RWeka::Weka_control(..., Q =
         as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
   }
 

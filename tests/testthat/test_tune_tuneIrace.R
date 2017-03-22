@@ -33,7 +33,7 @@ test_that("tuneIrace works with dependent params", {
   )
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlIrace(maxExperiments = 40 ,nbIterations = 2L, minNbSurvival = 1)
+  ctrl = makeTuneControlIrace(maxExperiments = 40, nbIterations = 2L, minNbSurvival = 1)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) >= 20 && getOptPathLength(tr$opt.path) <= 100)
   expect_true(!is.na(tr$y))

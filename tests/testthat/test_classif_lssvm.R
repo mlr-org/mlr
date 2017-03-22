@@ -36,11 +36,11 @@ test_that("classif_lssvm", {
   # p = kernlab::predict(m, newdata=multiclass.test)
   # testSimple("classif.lssvm", multiclass.df, multiclass.target, multiclass.train.inds, p,  parset=list(kernel="polydot", degree=3, offset=2, scale=1.5))
 
-  tt = function (formula, data, subset=1:150, ...) {
-    kernlab::lssvm(x=formula, data=data[subset,], kernel="rbfdot", kpar=list(sigma=20))
+  tt = function(formula, data, subset=1:150, ...) {
+    kernlab::lssvm(x=formula, data=data[subset, ], kernel="rbfdot", kpar=list(sigma=20))
   }
 
-  tp = function (model, newdata, ...) {
+  tp = function(model, newdata, ...) {
     kernlab::predict(model, newdata=newdata)
   }
 

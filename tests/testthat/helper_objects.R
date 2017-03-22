@@ -22,7 +22,7 @@ multiclass.test  = multiclass.df[multiclass.test.inds, ]
 multiclass.class.col = 5
 multiclass.task = makeClassifTask("multiclass", data = multiclass.df, target = multiclass.target)
 
-multiclass.small.df = iris[c(1:3, 51:53, 101:103),]
+multiclass.small.df = iris[c(1:3, 51:53, 101:103), ]
 multiclass.small.formula = Species~.
 multiclass.small.target = "Species"
 multiclass.small.train.inds = c(1:2, 4:5, 7:8)
@@ -45,7 +45,7 @@ multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, c
 multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
 multilabel.small.inds = c(1, 52, 53, 123)
 
-noclass.df = iris[,-5]
+noclass.df = iris[, -5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
 noclass.test.inds  = setdiff(1:150, noclass.train.inds)
 noclass.train = noclass.df[noclass.train.inds, ]
@@ -63,7 +63,7 @@ regr.test  = regr.df[regr.test.inds, ]
 regr.class.col = 14
 regr.task = makeRegrTask("regrtask", data = regr.df, target = regr.target)
 
-regr.small.df = BostonHousing[150:160,]
+regr.small.df = BostonHousing[150:160, ]
 regr.small.formula = medv ~ .
 regr.small.target = "medv"
 regr.small.train.inds = 1:7
@@ -73,7 +73,7 @@ regr.small.test  = regr.small.df[regr.small.test.inds, ]
 regr.small.class.col = 14
 regr.small.task = makeRegrTask("regrtask", data = regr.small.df, target = regr.small.target)
 
-regr.num.df = regr.df[,sapply(regr.df, is.numeric)]
+regr.num.df = regr.df[, sapply(regr.df, is.numeric)]
 regr.num.formula = regr.formula
 regr.num.target = regr.target
 regr.num.train.inds = regr.train.inds
@@ -85,13 +85,13 @@ regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.nu
 
 getSurvData = function(n = 100, p = 10) {
   set.seed(1)
-  beta <- c(rep(1,10),rep(0,p-10))
-  x <- matrix(rnorm(n*p),n,p)
+  beta = c(rep(1, 10), rep(0, p-10))
+  x = matrix(rnorm(n*p), n, p)
   colnames(x) = sprintf("x%01i", 1:p)
-  real.time <- -(log(runif(n)))/(10 * exp(drop(x %*% beta)))
-  cens.time <- rexp(n,rate=1/10)
-  status <- ifelse(real.time <= cens.time, TRUE, FALSE)
-  obs.time <- ifelse(real.time <= cens.time,real.time,cens.time) + 1
+  real.time = - (log(runif(n)))/ (10 * exp(drop(x %*% beta)))
+  cens.time = rexp(n, rate=1/10)
+  status = ifelse(real.time <= cens.time, TRUE, FALSE)
+  obs.time = ifelse(real.time <= cens.time, real.time, cens.time) + 1
   return(cbind(data.frame(time = obs.time, status = status), x))
 }
 surv.df = getSurvData()

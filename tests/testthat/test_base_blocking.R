@@ -10,9 +10,9 @@ test_that("blocking", {
     train.j = res$train.inds[[j]]
     test.j = res$test.inds[[j]]
     tab = table(b[train.j])
-    expect_true(setequal(c(0,5), unique(as.numeric(tab))))
+    expect_true(setequal(c(0, 5), unique(as.numeric(tab))))
     tab = table(b[test.j])
-    expect_true(setequal(c(0,5), unique(as.numeric(tab))))
+    expect_true(setequal(c(0, 5), unique(as.numeric(tab))))
   }
   # test blocking in resample
   lrn = makeLearner("classif.lda")
@@ -20,7 +20,7 @@ test_that("blocking", {
     for (j in 1:rdesc$iters) {
       test.j = p$data[p$data$iter == j, "id"]
       tab = table(b[test.j])
-      expect_true(setequal(c(0,5), unique(as.numeric(tab))))
+      expect_true(setequal(c(0, 5), unique(as.numeric(tab))))
     }
   }
 

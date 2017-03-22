@@ -27,7 +27,7 @@ test_that("classif_gamboost", {
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
-    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[,1]
+    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
   }
   
   testSimpleParsets("classif.gamboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)

@@ -14,7 +14,7 @@ test_that("chains", {
   inner = makeResampleDesc("CV", iters = 2)
 
   ps = makeParamSet(
-    makeDiscreteParam(id = "minsplit", values = c(5,10)),
+    makeDiscreteParam(id = "minsplit", values = c(5, 10)),
     makeDiscreteParam(id = "fw.perc", values = c(0.8, 1))
   )
 

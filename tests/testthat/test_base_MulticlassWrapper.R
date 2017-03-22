@@ -2,7 +2,7 @@ context("MulticlassWrapper")
 
 test_that("MulticlassWrapper", {
   #cmatrix function
-  ownCmatrix = function (task) {
+  ownCmatrix = function(task) {
     cm.onevsrest = function(task) {
       n = length(getTaskClassLevels(task))
       cm = matrix(-1, n, n)
@@ -15,7 +15,7 @@ test_that("MulticlassWrapper", {
     if (!setequal(rownames(cm), levs))
       stop("Rownames of codematrix must be class levels!")
     if (!all(cm == 1 | cm == -1 | cm == 0))
-      stop("Codematrix must only contain: -1,0,+1!")
+      stop("Codematrix must only contain: -1, 0, +1!")
     cm
   }
 

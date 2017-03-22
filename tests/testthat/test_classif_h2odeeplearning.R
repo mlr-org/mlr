@@ -18,7 +18,7 @@ test_that("classif_h2odeeplearning", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset,list(x = colnames(binaryclass.train[, -binaryclass.class.col]),
+    parset = c(parset, list(x = colnames(binaryclass.train[, -binaryclass.class.col]),
       y = binaryclass.target,
       training_frame = h2o::as.h2o(binaryclass.train)))
     m = do.call(h2o::h2o.deeplearning, parset)

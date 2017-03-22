@@ -34,7 +34,7 @@ test_that("surv_cv.CoxBoost", {
   
   testSimpleParsets("surv.cv.CoxBoost", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list)
   
-  if(FALSE) {
+  if (FALSE) {
     lrn = makeLearner("surv.cv.CoxBoost")
     m = train(lrn, task = surv.task, subset = surv.train.inds)
     p = predict(m, task = surv.task)

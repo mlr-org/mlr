@@ -24,8 +24,8 @@ test_that("classif_cforest", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::cforest, pars)
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test)
-    p = predict(m, newdata = binaryclass.test, type = 'prob')
-    old.probs.list[[i]] = sapply(p, '[', 1)
+    p = predict(m, newdata = binaryclass.test, type = "prob")
+    old.probs.list[[i]] = sapply(p, "[", 1)
   }
 
   testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,

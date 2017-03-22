@@ -19,7 +19,7 @@ test_that("classif_nodeHarvest", {
     parset = c(parset, list(X = binaryclass.df[binaryclass.train.inds, -binaryclass.class.col], Y = Y, silent = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(nodeHarvest::nodeHarvest, parset)
-    p = predict(m, binaryclass.df[-binaryclass.train.inds,])
+    p = predict(m, binaryclass.df[-binaryclass.train.inds, ])
     old.predicts.list[[i]] = ifelse(p > 0.5, binaryclass.class.levs[1], binaryclass.class.levs[2])
     old.probs.list[[i]] = p
   }

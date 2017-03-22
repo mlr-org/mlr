@@ -27,7 +27,7 @@ test_that("classif_rpart", {
   }
 
   testSimpleParsets("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets  ("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata, type = "class")

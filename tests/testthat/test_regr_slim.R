@@ -25,7 +25,7 @@ test_that("regr_slim", {
     }
     capture.output({
       m = do.call(flare::slim, pars)
-      p = predict(m, newdata = as.matrix(regr.num.test[, ind]), lambda.idx = idx)[[1L]][,1L]
+      p = predict(m, newdata = as.matrix(regr.num.test[, ind]), lambda.idx = idx)[[1L]][, 1L]
     })
     old.predicts.list[[i]] = p
   }

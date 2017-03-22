@@ -18,7 +18,7 @@ test_that("surv_gbm", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
-      m <- do.call(gbm::gbm, pars)
+      m = do.call(gbm::gbm, pars)
     )
     set.seed(getOption("mlr.debug.seed"))
     p = gbm::predict.gbm(m, newdata = surv.test, n.trees = m$n.trees)

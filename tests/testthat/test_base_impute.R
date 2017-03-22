@@ -1,7 +1,7 @@
 context("impute")
 
 test_that("Impute data frame", {
-  data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4), z = NA)
+  data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4), z = NA)
   target = "z"
   data[6, ] = NA
 
@@ -36,7 +36,7 @@ test_that("Impute data frame", {
   expect_true(imputed$y[6] >= 0 && imputed$y[6] <= 5)
 
   # learner
-  data2 = data.frame(V1 = 1:10, V2 = 1:10, V3 = 1:10, col = factor(rep(1:2, c(3,7))), z = 1:10)
+  data2 = data.frame(V1 = 1:10, V2 = 1:10, V3 = 1:10, col = factor(rep(1:2, c(3, 7))), z = 1:10)
   data2$V2[9:10] = NA
   data2$V3[1:2] = NA
   data2$col[8:10] = NA
@@ -121,7 +121,7 @@ test_that("Impute data frame", {
 })
 
 test_that("Impute and reimpute task", {
-  data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
+  data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
   data[6L, ] = NA
   classif.tar = factor(c(rep(c("a", "b"), 3L)))
   regr.tar = rep(c(.1, .2), 3L)
@@ -150,7 +150,7 @@ test_that("Impute and reimpute task", {
 
 test_that("ImputeWrapper", {
   d = iris[seq(1, 150, 3), ]
-  d[1,1] = NA_real_
+  d[1, 1] = NA_real_
   task = makeClassifTask(data = d, target = "Species")
   lrn = makeImputeWrapper("classif.rpart", classes = list(numeric = imputeMedian()))
   m = train(lrn, task)
@@ -166,7 +166,7 @@ test_that("ImputeWrapper", {
 })
 
 test_that("Impute works on non missing data", { # we had issues here: 848,893
-  data = data.frame(a = c(1,1,2), b = 1:3)
+  data = data.frame(a = c(1, 1, 2), b = 1:3)
   impute.methods = list(
     imputeConstant(0),
     imputeMedian(),

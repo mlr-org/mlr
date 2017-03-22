@@ -28,7 +28,7 @@ test_that("tuneGenSA", {
 
   ps3 = makeParamSet(
     makeNumericParam("cp", lower = 0.001, upper = 1),
-    makeDiscreteParam("minsplit", values = c(1,2))
+    makeDiscreteParam("minsplit", values = c(1, 2))
   )
   expect_error(tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps3, control = ctrl1))

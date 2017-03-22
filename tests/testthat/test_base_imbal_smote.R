@@ -41,7 +41,7 @@ test_that("smote works with only factor features",  {
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
     x2 = sample(c("a", "b"), n, replace = TRUE),
-    y = c(rep("a",2),rep("b",8))
+    y = c(rep("a", 2), rep("b", 8))
   )
   task = makeClassifTask(data = d, target = "y")
   task2 = smote(task, rate = 1.4, nn = 2L)
@@ -73,7 +73,7 @@ test_that("smote wrapper",  {
 test_that("smote works with only integer features", {
   dat = getTaskData(pid.task)
   i = sapply(dat, is.numeric)
-  dat[,i] = lapply(dat[,i], as.integer)
+  dat[, i] = lapply(dat[, i], as.integer)
   tsk = makeClassifTask(data = dat, target = "diabetes")
   task2 = smote(tsk, 2)
   expect_equal(getTaskSize(task2), 1036)

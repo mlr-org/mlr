@@ -48,7 +48,7 @@ test_that("resample", {
   f2 = factor(rep(td$negative, cv.i$size), levels = td$class.levels)
   expect_equal(rf4$data$response, f2)
 
-  ct = makeClassifTask(data = iris[,c("Species", "Petal.Width")], target = "Species")
+  ct = makeClassifTask(data = iris[, c("Species", "Petal.Width")], target = "Species")
   fit = resample(lrn1, ct, makeResampleDesc("CV", iters = 2))
 
   expect_error(resample("classif.rpart", multiclass.task, makeResampleDesc("Holdout"),

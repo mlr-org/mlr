@@ -15,7 +15,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   pr = predict(tr, task)
 
   if (sm.pt == "prob") {
-    expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
+    expect_equal(ncol(pr$data[, grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
   }
 
   if (method %nin% c("stack.cv", "hill.climb")) {

@@ -17,13 +17,13 @@ test_that("classif_fnn", {
     parset = parset.list[[i]]
 
     j = which(colnames(multiclass.train) == multiclass.target)
-    pars = list(train=multiclass.train[,-j], test=multiclass.test[,-j], cl=multiclass.train[,j])
+    pars = list(train=multiclass.train[, -j], test=multiclass.test[, -j], cl=multiclass.train[, j])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list1[[i]] = do.call(FNN::knn, pars)
 
     j = which(colnames(binaryclass.train) == binaryclass.target)
-    pars = list(train=binaryclass.train[,-j], test=binaryclass.test[,-j], cl=binaryclass.train[,j])
+    pars = list(train=binaryclass.train[, -j], test=binaryclass.test[, -j], cl=binaryclass.train[, j])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list2[[i]] = do.call(FNN::knn, pars)
@@ -32,9 +32,9 @@ test_that("classif_fnn", {
   testSimpleParsets("classif.fnn", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list1, parset.list)
   testSimpleParsets("classif.fnn", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list2, parset.list)
 
-  tt = function (formula, data, k=1) {
+  tt = function(formula, data, k=1) {
     j = which(colnames(data) == as.character(formula)[2])
-    list(train=data[,-j], cl=data[,j], k=k, target=j)
+    list(train=data[, -j], cl=data[, j], k=k, target=j)
   }
   tp = function(model, newdata) {
     newdata = newdata[, -model$target]

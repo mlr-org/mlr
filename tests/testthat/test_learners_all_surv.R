@@ -9,7 +9,7 @@ test_that("learners work: surv ", {
   
   # normal survival analysis
   sub.task = subsetTask(surv.task, subset = c(1:70),
-    features = getTaskFeatureNames(surv.task)[c(1,2)])
+    features = getTaskFeatureNames(surv.task)[c(1, 2)])
   lrns = mylist("surv", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testBasicLearnerProperties, task = sub.task, hyperpars = hyperpars)

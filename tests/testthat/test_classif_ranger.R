@@ -21,5 +21,5 @@ test_that("classif_ranger", {
     old.probs.list[[i]] = p$predictions[, 1]
   }
 
-  testProbParsets ("classif.ranger", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.ranger", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
 })

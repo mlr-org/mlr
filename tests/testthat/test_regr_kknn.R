@@ -25,7 +25,7 @@ test_that("regr_kknn", {
 
   testSimpleParsets("regr.kknn", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
 
-  tt = function (formula, data, k = 7) {
+  tt = function(formula, data, k = 7) {
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {

@@ -26,10 +26,10 @@ test_that("classif_j48", {
   }
 
   testSimpleParsets("classif.J48", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets  ("classif.J48", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.J48", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
-  tt = function (formula, data, subset, ...) {
-    RWeka::J48(formula, data=data[subset,], control=RWeka::Weka_control(..., Q = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max))))
+  tt = function(formula, data, subset, ...) {
+    RWeka::J48(formula, data=data[subset, ], control=RWeka::Weka_control(..., Q = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max))))
   }
 
   tp = function(model, newdata) predict(model, newdata, type="class")

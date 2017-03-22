@@ -29,7 +29,7 @@ test_that("generate data", {
 
 test_that("1 numeric hyperparam", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)))
+  ps = makeParamSet(makeDiscreteParam("C", values = 2^ (-2:2)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
@@ -276,7 +276,7 @@ test_that("2+ hyperparams", {
   rdesc = makeResampleDesc("Holdout", predict = "both")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
   res = tuneParams(learn, task = pid.task, control = ctrl,
-    measures = list(acc,setAggregation(acc, train.mean)), resampling = rdesc,
+    measures = list(acc, setAggregation(acc, train.mean)), resampling = rdesc,
     par.set = ps, show.info = F)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
 

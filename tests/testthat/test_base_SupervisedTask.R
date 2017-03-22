@@ -32,8 +32,8 @@ test_that("SupervisedTask", {
 
   # check missing accessors
   df = multiclass.df
-  df[1,1:3] = NA
-  df[2,1:3] = NA
+  df[1, 1:3] = NA
+  df[2, 1:3] = NA
   ct = makeClassifTask(data = df, target = multiclass.target)
   expect_true(getTaskDesc(ct)$has.missings)
 

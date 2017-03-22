@@ -14,8 +14,8 @@ test_that("UnsupervisedTask", {
 
   # check missing accessors
   df = noclass.df
-  df[1,1:3] = NA
-  df[2,1:3] = NA
+  df[1, 1:3] = NA
+  df[2, 1:3] = NA
   ct = makeClusterTask(data = df)
   td = getTaskDesc(ct)
   expect_true(td$has.missings)

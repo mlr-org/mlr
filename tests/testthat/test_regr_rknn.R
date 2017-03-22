@@ -31,7 +31,7 @@ test_that("regr_rknn", {
   
   parset.list[[9]] = NULL
 
-  tt = function (formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L, cluster = NULL) {
+  tt = function(formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L, cluster = NULL) {
     return(list(formula = formula, data = data, k = k, r = r, mtry = mtry,
                 seed = seed, cluster = cluster))
   }

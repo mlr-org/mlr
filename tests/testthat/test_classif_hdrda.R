@@ -18,7 +18,7 @@ test_that("classif_hdrda", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(sparsediscrim::hdrda, parset)
     old.predicts.list[[i]] = predict(m, binaryclass.test[, -binaryclass.class.col])$class
-    old.probs.list[[i]] = predict(m, binaryclass.test[, -binaryclass.class.col])$posterior[,1L]
+    old.probs.list[[i]] = predict(m, binaryclass.test[, -binaryclass.class.col])$posterior[, 1L]
   }
 
   testSimpleParsets("classif.hdrda", binaryclass.df, binaryclass.target, binaryclass.train.inds,

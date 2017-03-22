@@ -22,15 +22,15 @@ test_that("classif_binomial", {
     parset = parset.list1[[i]]
     set.seed(getOption("mlr.debug.seed"))
     m = glm(formula = binaryclass.formula, data = binaryclass.train[, -nof], family = parset$family)
-    p  = predict(m, newdata = binaryclass.test[,-nof], type = "response")
+    p  = predict(m, newdata = binaryclass.test[, -nof], type = "response")
     p = 1 - p
     p.class = as.factor(binaryclass.class.levs[ifelse(p > 0.5, 1, 2)])
     old.predicts.list[[i]] = p.class
     old.probs.list[[i]] = p
   }
 
-  testSimpleParsets("classif.binomial", binaryclass.df[,-nof], binaryclass.target, binaryclass.train.inds,
+  testSimpleParsets("classif.binomial", binaryclass.df[, -nof], binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets  ("classif.binomial", binaryclass.df[,-nof], binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.binomial", binaryclass.df[, -nof], binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list2)
 })

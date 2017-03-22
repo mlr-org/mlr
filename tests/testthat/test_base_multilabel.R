@@ -7,7 +7,7 @@ test_that("multilabel task", {
   expect_equal(getTaskFormula(mt), y1 + y2 ~ .)
   y = getTaskTargets(mt)
   expect_true(is.data.frame(y) && ncol(y) == 2L)
-  expect_true(is.logical(y[,1]) && is.logical(y[,2L]))
+  expect_true(is.logical(y[, 1]) && is.logical(y[, 2L]))
   expect_equal(colnames(y), c("y1", "y2"))
 })
 
@@ -150,7 +150,7 @@ testMultilabelWrapper = function(fun, ...) {
     expect_true(!any(is.na(pmulti)))
     # check order
     args = list(...)
-    if(!is.null(args$order)) {
+    if (!is.null(args$order)) {
       lrn2 = fun(lrn1, ...)
       expect_error(train(lrn2, multilabel3t.task), "Must be equal to set")
     }

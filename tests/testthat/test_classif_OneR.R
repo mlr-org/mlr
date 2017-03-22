@@ -23,10 +23,10 @@ test_that("classif_OneR", {
   }
 
   testSimpleParsets("classif.OneR", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets  ("classif.OneR", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.OneR", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
-  tt = function (formula, data, subset, ...) {
-    RWeka::OneR(formula, data=data[subset,], control=RWeka::Weka_control(...))
+  tt = function(formula, data, subset, ...) {
+    RWeka::OneR(formula, data=data[subset, ], control=RWeka::Weka_control(...))
   }
 
   tp = function(model, newdata) predict(model, newdata, type="class")

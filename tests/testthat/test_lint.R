@@ -4,9 +4,9 @@ context("lint")
 # prohibit <-
 left_assign_linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
-      parsed <- lintr:::with_id(source_file, id)
+      parsed = lintr:::with_id(source_file, id)
       Lint(filename = source_file$filename, line_number = parsed$line1,
-        column_number = parsed$col1, type = "style", message = "Use <-, not =, for assignment.",
+        column_number = parsed$col1, type = "style", message = "Use =, not =, for assignment.",
         line = source_file$lines[as.character(parsed$line1)],
         linter = "assignment_linter")
   })
@@ -15,9 +15,9 @@ left_assign_linter = function(source_file) {
 # prohibit ->
 right_assign_linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "RIGHT_ASSIGN"), function(id) {
-      parsed <- lintr:::with_id(source_file, id)
+      parsed = lintr:::with_id(source_file, id)
       Lint(filename = source_file$filename, line_number = parsed$line1,
-        column_number = parsed$col1, type = "style", message = "Use <-, not =, for assignment.",
+        column_number = parsed$col1, type = "style", message = "Use =, not =, for assignment.",
         line = source_file$lines[as.character(parsed$line1)],
         linter = "assignment_linter")
   })
@@ -27,22 +27,22 @@ right_assign_linter = function(source_file) {
 
 
 spaces_left_parentheses_linter = function(source_file) {
-      lapply(lintr:::ids_with_token(source_file, "'('"), function(id) {
-        parsed <- source_file$parsed_content[id, ]
-        terminal_tokens_before <- source_file$parsed_content$token[source_file$parsed_content$line1 == 
+      lapply(lintr:::ids_with_token(source_file, "' ('"), function(id) {
+        parsed = source_file$parsed_content[id, ]
+        terminal_tokens_before = source_file$parsed_content$token[source_file$parsed_content$line1 == 
             parsed$line1 & source_file$parsed_content$col1 < 
             parsed$col1 & source_file$parsed_content$terminal]
-        last_type <- tail(terminal_tokens_before, n = 1)
-        is_function <- length(last_type) %!=% 0L && (last_type %in% 
+        last_type = tail(terminal_tokens_before, n = 1)
+        is_function = length(last_type) %!=% 0L && (last_type %in% 
             c("SYMBOL_FUNCTION_CALL", "FUNCTION", "'}'", "')'", 
                 "']'"))
         if (!is_function) {
-            line <- source_file$lines[as.character(parsed$line1)]
-            before_operator <- substr(line, parsed$col1 - 1L, 
+            line = source_file$lines[as.character(parsed$line1)]
+            before_operator = substr(line, parsed$col1 - 1L, 
                 parsed$col1 - 1L)
-            non_space_before <- rex::re_matches(before_operator, rex::rex(non_space))
-            not_exception <- !(before_operator %in% c("!", ":", 
-                "[", "("))
+            non_space_before = rex::re_matches(before_operator, rex::rex(non_space))
+            not_exception = !(before_operator %in% c("!", ":", 
+                "[", " ("))
             if (non_space_before && not_exception) {
                 Lint(filename = source_file$filename, line_number = parsed$line1, 
                   column_number = parsed$col1, type = "style", 

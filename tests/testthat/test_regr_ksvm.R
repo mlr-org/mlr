@@ -25,7 +25,7 @@ test_that("regr_ksvm", {
       m = do.call(kernlab::ksvm, pars)
     })
     p = kernlab::predict(m, newdata=regr.test)
-    old.predicts.list[[i]] = p[,1]
+    old.predicts.list[[i]] = p[, 1]
   }
   testSimpleParsets("regr.ksvm", regr.df, regr.target, regr.train.inds,
     old.predicts.list, parset.list2)

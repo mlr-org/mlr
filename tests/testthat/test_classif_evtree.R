@@ -19,8 +19,8 @@ test_that("classif_evtree", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(evtree::evtree, pars)
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test)
-    p = predict(m, newdata = binaryclass.test, type = 'prob')
-    old.probs.list[[i]] = p[,1]
+    p = predict(m, newdata = binaryclass.test, type = "prob")
+    old.probs.list[[i]] = p[, 1]
   }
 
   testSimpleParsets("classif.evtree", binaryclass.df, binaryclass.target, binaryclass.train.inds,

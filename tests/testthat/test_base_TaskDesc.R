@@ -30,7 +30,7 @@ test_that("TaskDesc", {
 
   # check missing values
   df = multiclass.df
-  df[1,1] = as.numeric(NA)
+  df[1, 1] = as.numeric(NA)
   ct = makeClassifTask(target = "Species", data = df)
   expect_equal(getTaskDesc(ct)$has.missings, T)
 

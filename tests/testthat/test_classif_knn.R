@@ -28,7 +28,7 @@ test_that("classif_knn", {
   testSimpleParsets("classif.knn", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list)
 
-  tt = function (formula, data, k = 1) {
+  tt = function(formula, data, k = 1) {
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {

@@ -1,7 +1,7 @@
 context("regr_blackboost")
 
 test_that("regr_blackboost", {
-  requirePackagesOrSkip(c("mboost","party"), default.method = "load")
+  requirePackagesOrSkip(c("mboost", "party"), default.method = "load")
 
   parset.list1 = list(
     list(),
@@ -27,7 +27,7 @@ test_that("regr_blackboost", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::blackboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata=regr.test)[,1]
+    old.predicts.list[[i]] = predict(m, newdata=regr.test)[, 1]
   }
 
   testSimpleParsets("regr.blackboost", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
@@ -37,9 +37,9 @@ test_that("regr_blackboost", {
 test_that("regr_blackboost works with families for count data", {
   # change target to count data
   new.regr.df = regr.df
-  new.regr.df[, regr.target] = as.integer(floor(new.regr.df[,regr.target]))
-  new.regr.train = new.regr.df[regr.train.inds,]
-  new.regr.test = new.regr.df[regr.test.inds,]
+  new.regr.df[, regr.target] = as.integer(floor(new.regr.df[, regr.target]))
+  new.regr.train = new.regr.df[regr.train.inds, ]
+  new.regr.test = new.regr.df[regr.test.inds, ]
   parset.list1 = list(
     list(family = mboost::Poisson(), control = mboost::boost_control(nu = 0.02)),
     list(family = mboost::NBinomial()),
@@ -58,7 +58,7 @@ test_that("regr_blackboost works with families for count data", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::blackboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata = new.regr.test)[,1]
+    old.predicts.list[[i]] = predict(m, newdata = new.regr.test)[, 1]
   }
   testSimpleParsets("regr.blackboost", new.regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })

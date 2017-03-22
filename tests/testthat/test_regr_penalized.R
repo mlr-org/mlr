@@ -14,7 +14,7 @@ test_that("regr_penalized", {
   )
 
   # to make test of empty list feasable (in terms of time), number of obs need to be reduced
-  regr.train.inds = sample(seq(1,506), size = 150)
+  regr.train.inds = sample(seq(1, 506), size = 150)
   regr.test.inds  = setdiff(1:nrow(regr.df), regr.train.inds)
   regr.train = regr.df[regr.train.inds, ]
   regr.test  = regr.df[regr.test.inds, ]
@@ -28,12 +28,12 @@ test_that("regr_penalized", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
-      m <- do.call(penalized::penalized, pars)
+      m = do.call(penalized::penalized, pars)
     )
     # FIXME: should be removed, reported in issue 840
     m@formula$unpenalized[[2L]] = as.symbol(regr.target)
     p = penalized::predict(m, data = regr.test)
-    old.predicts.list[[i]] = p[,"mu"]
+    old.predicts.list[[i]] = p[, "mu"]
   }
   testSimpleParsets("regr.penalized", regr.df, regr.target,
     regr.train.inds, old.predicts.list, parset.list)
@@ -51,7 +51,7 @@ test_that("regr_penalized", {
   }
 
   tp = function(model, newdata, ...) {
-    penalized::predict(model, data = newdata,...)[, "mu"]
+    penalized::predict(model, data = newdata, ...)[, "mu"]
   }
 
   testCVParsets("regr.penalized", regr.df, regr.target,

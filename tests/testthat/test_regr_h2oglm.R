@@ -14,7 +14,7 @@ test_that("regr_h2oglm", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset,list(x = colnames(regr.train[, -regr.class.col]),
+    parset = c(parset, list(x = colnames(regr.train[, -regr.class.col]),
       y = regr.target,
       training_frame = h2o::as.h2o(regr.train)))
     set.seed(getOption("mlr.debug.seed"))

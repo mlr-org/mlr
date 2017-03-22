@@ -42,7 +42,7 @@ test_that("checkData", {
 
   # check unsupported columns
   df = multiclass.df
-  df[, 1] = as.logical(df[,1])
+  df[, 1] = as.logical(df[, 1])
   colnames(df)[1] = "aaa"
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 })

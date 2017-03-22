@@ -16,7 +16,7 @@ test_that("getTaskData", {
   expect_equal(sum(df[, binaryclass.target] == 0),
     sum(binaryclass.df[, binaryclass.target] == td$negative))
   df = getTaskData(binaryclass.task, recode.target="-1+1")
-  expect_equal(df[,1:20], binaryclass.df[, 1:20])
+  expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
     sum(binaryclass.df[, binaryclass.target] == td$positive))
@@ -36,7 +36,7 @@ test_that("getTaskData", {
   expect_equal(ncol(df), 3)
 
   x = getTaskData(multiclass.task, target.extra=TRUE)
-  expect_equal(x$data[,1:4], multiclass.df[,1:4])
+  expect_equal(x$data[, 1:4], multiclass.df[, 1:4])
   expect_equal(x$target, multiclass.df[, multiclass.target])
 
   # getTaskData works with index vector

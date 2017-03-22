@@ -35,15 +35,15 @@ test_that("classif_glmnet", {
     }
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
-    p = factor(predict(m, as.matrix(newx), type = "class", s = s)[,1])
-    p2 = predict(m, as.matrix(newx), type = "response", s = s)[,1]
+    p = factor(predict(m, as.matrix(newx), type = "class", s = s)[, 1])
+    p2 = predict(m, as.matrix(newx), type = "response", s = s)[, 1]
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = 1 - p2
   }
 
   testSimpleParsets("classif.glmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.glmnet", binaryclass.df, binaryclass.target,
+  testProbParsets("classif.glmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
 
 })

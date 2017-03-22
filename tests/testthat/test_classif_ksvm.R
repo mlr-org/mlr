@@ -37,11 +37,11 @@ test_that("classif_ksvm", {
   testProbParsets("classif.ksvm", multiclass.df, multiclass.target,
     multiclass.train.inds, old.probs.list, parset.list2)
 
-  tt = function (formula, data, subset=1:150, ...) {
-    kernlab::ksvm(x = formula, data = data[subset,], kernel = "polydot",
+  tt = function(formula, data, subset=1:150, ...) {
+    kernlab::ksvm(x = formula, data = data[subset, ], kernel = "polydot",
       kpar = list(degree = 3, offset = 2, scale = 1.5))
   }
-  tp = function (model, newdata, ...) {
+  tp = function(model, newdata, ...) {
     kernlab::predict(model, newdata=newdata)
   }
 
