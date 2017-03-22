@@ -43,14 +43,15 @@ makeRLearner.classif.xgboost = function() {
     properties = c("twoclass", "multiclass", "numerics", "prob", "weights", "missings", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default. `num_class` is set internally, so do not set this manually."
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default. `num_class` is set internally, so do not set this manually.",
+    callees = c("xgboost")
   )
 }
 
 #' @export
 trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
 
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   parlist = list(...)
   parlist$data = data.matrix(getTaskData(.task, .subset, target.extra = TRUE)$data)
   parlist$label = match(as.character(getTaskData(.task, .subset, target.extra = TRUE)$target), td$class.levels) - 1

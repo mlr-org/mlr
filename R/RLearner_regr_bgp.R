@@ -26,7 +26,8 @@ makeRLearner.regr.bgp = function() {
     ),
     properties = c("numerics", "se"),
     name = "Bayesian Gaussian Process",
-    short.name = "bgp"
+    short.name = "bgp",
+    callees = "bgp"
   )
 }
 

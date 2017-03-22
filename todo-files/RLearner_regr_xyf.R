@@ -1,8 +1,8 @@
 #' @export
-makeRLearner.classif.xyf = function() {
-  makeRLearnerClassif(
-    cl = "classif.xyf",
-    package = "kohonen",
+makeRLearner.regr.xyf = function() {
+  makeRLearnerRegr(
+    cl = "regr.xyf",
+    package = c("kohonen", "class"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "xdim", default = 8L, lower = 1L),
       makeIntegerLearnerParam(id = "ydim", default = 6L, lower = 1L),
@@ -15,25 +15,21 @@ makeRLearner.classif.xyf = function() {
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square"))
     ),
-    properties = c("numerics", "twoclass", "multiclass", "prob"),
+    properties = c("numerics"),
     name = "X-Y fused self-organising maps",
-    short.name = "xyf"
+    short.name = "xyf",
+    callees = c("xyf", "somgrid")
   )
 }
 
 #' @export
-trainLearner.classif.xyf = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, ...) {
+trainLearner.regr.xyf = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   grid = learnerArgsToControl(class::somgrid, xdim, ydim, topo)
   kohonen::xyf(as.matrix(d$data), Y = d$target, grid = grid, keep.data = FALSE, ...)
 }
 
 #' @export
-predictLearner.classif.xyf = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, as.matrix(.newdata), ...)
-  if (.learner$predict.type == "response"){
-    return(p$prediction)
-  } else {
-    return(p$unit.predictions[p$unit.classif,])
-  }
+predictLearner.regr.xyf = function(.learner, .model, .newdata, ...) {
+  predict(.model$learner.model, as.matrix(.newdata), ...)$prediction[, 1L]
 }

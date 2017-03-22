@@ -21,7 +21,9 @@ makeRLearner.regr.glmboost = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
-    short.name = "glmboost"
+    short.name = "glmboost",
+    callees = c("glmboost", "mboost_fit", "boost_control", "Gaussian", "Laplace",
+      "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 

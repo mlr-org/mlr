@@ -30,6 +30,10 @@
 #' For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and,
 #' in the case that this results in a negative variance estimate, the values are truncated at 0.
 #'
+#' Note that when using the \dQuote{jackknife} procedure for se estimation, using a small number of
+#' trees can lead to training data observations that are never out-of-bag. The current implementation
+#' ignores these observations, but in the original definition, the resulting se estimation would be undefined.
+#'
 #' Please note that all of the mentioned \code{se.method} variants do not affect the computation
 #' of the posterior mean \dQuote{response} value. This is always the same as from the underlying
 #' randomForest.
@@ -76,7 +80,8 @@ makeRLearner.regr.randomForest = function() {
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
-    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE."
+    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE.",
+    callees = "randomForest"
   )
 }
 
@@ -152,6 +157,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 # Computes the mc bias-corrected jackknife after bootstrap
 jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   model = .model$learner.model
+  model$inbag = model$inbag[rowSums(model$inbag == 0) > 0, , drop = FALSE]
   n = nrow(model$inbag)
   ntree = model$ntree
   pred = predict(model, newdata = .newdata, predict.all = TRUE, ...)

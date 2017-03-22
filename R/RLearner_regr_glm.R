@@ -36,7 +36,8 @@ makeRLearner.regr.glm = function() {
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
     short.name = "glm",
-    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory."
+    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory.",
+    callees = c("glm", "glm.control", "gaussian", "poisson", "Gamma", "inverse.gaussian")
   )
 }
 
@@ -52,7 +53,7 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
     gaussian = stats::gaussian(link = make.link(gaussian.link)),
     poisson = stats::poisson(link = make.link(poisson.link)),
     Gamma = stats::Gamma(link = make.link(Gamma.link)),
-    inverse.gaussian = inverse.gaussian(link = make.link(inverse.gaussian.link))
+    inverse.gaussian = stats::inverse.gaussian(link = make.link(inverse.gaussian.link))
   )
   if (is.null(.weights))
     m = stats::glm(f, data = d, control = ctrl, family = family, ... )

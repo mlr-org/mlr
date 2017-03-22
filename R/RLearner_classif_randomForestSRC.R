@@ -44,7 +44,8 @@ makeRLearner.classif.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "ordered", "prob", "twoclass", "multiclass", "weights", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',
+    callees = "rfsrc"
   )
 }
 

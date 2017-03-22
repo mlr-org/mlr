@@ -6,13 +6,13 @@
 
 # one x
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
-  opt.path, show.info, convertx, remove.nas) {
+  opt.path, show.info, convertx, remove.nas, resample.fun) {
 
   x = convertx(x, par.set)
   # transform parameters
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
-    opt.path, show.info, dob, x, remove.nas)
+    opt.path, show.info, dob, x, remove.nas, resample.fun)
   extra = getTuneThresholdExtra(ctrl, res)
   # include error dumps only when at least one dump is present. (this only happens
   # when options tell us to save dumps).
@@ -27,7 +27,7 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   convertYForTuner(res$y, measures, ctrl)
 }
 
-tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas) {
+tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun) {
   force(learner)
   force(task)
   force(resampling)
@@ -38,24 +38,25 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   force(show.info)
   force(convertx)
   force(remove.nas)
+  force(resample.fun)
   # remove trafos for mbo, we do this in tunerFitnFun
   ps2 = par.set
   for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
   smoof::makeSingleObjectiveFunction(
     fn = function(x) {
-      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun)
   }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
 }
 
 # multiple xs in parallel
 tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.set, ctrl,
-  opt.path, show.info, convertx, remove.nas) {
+  opt.path, show.info, convertx, remove.nas, resample.fun) {
 
   xs = convertx(xs, par.set)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res.list = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
-    opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
+    opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas, resample.fun = resample.fun)
   ys = extractSubList(res.list, "y")
   # we return a numeric vec of y-values
   vnapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)

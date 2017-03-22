@@ -35,7 +35,8 @@ makeRLearner.classif.bartMachine = function() {
     properties = c("numerics", "prob", "twoclass", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
-    note = "`use_missing_data` has been set to `TRUE` by default to allow missing data support."
+    note = "`use_missing_data` has been set to `TRUE` by default to allow missing data support.",
+    callees = c("bartMachine", "predict.bartMachine")
   )
 }
 
@@ -43,7 +44,7 @@ makeRLearner.classif.bartMachine = function() {
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   levs = c(td$positive, td$negative)
   y = factor(y, levels = levs)
   bartMachine::bartMachine(X = d$data, y = y, ...)

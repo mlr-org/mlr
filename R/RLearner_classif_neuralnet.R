@@ -31,7 +31,8 @@ makeRLearner.classif.neuralnet = function() {
     properties = c("twoclass", "numerics", "prob"),
     name = "Neural Network from neuralnet",
     short.name = "neuralnet",
-    note = "`err.fct` has been set to `ce` and `linear.output` to FALSE to do classification."
+    note = "`err.fct` has been set to `ce` and `linear.output` to FALSE to do classification.",
+    callees = "neuralnet"
   )
 }
 

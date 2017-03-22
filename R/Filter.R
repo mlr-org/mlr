@@ -50,13 +50,17 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #' Returns a subset-able dataframe with filter information.
 #'
 #' @param desc [\code{logical(1)}]\cr
-#'  Provide more detailed information about filters. Default is \code{TRUE}.
+#'  Provide more detailed information about filters.
+#'  Default is \code{TRUE}.
 #' @param tasks [\code{logical(1)}]\cr
-#'  Provide information on supported tasks. Default is \code{FALSE}.
+#'  Provide information on supported tasks.
+#'  Default is \code{FALSE}.
 #' @param features [\code{logical(1)}]\cr
-#'  Provide information on supported features. Default is \code{FALSE}.
+#'  Provide information on supported features.
+#'  Default is \code{FALSE}.
 #' @param include.deprecated [\code{logical(1)}]\cr
-#'  Should deprecated filter methods be included in the list. Default is \code{FALSE}.
+#'  Should deprecated filter methods be included in the list.
+#'  Default is \code{FALSE}.
 #' @return [\code{data.frame}].
 #' @export
 listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
@@ -76,9 +80,9 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, inclu
     id = names(filters),
     package = vcapply(extractSubList(filters, "pkg"), collapse)
   )
-  
+
   description = extractSubList(filters, "desc")
-  
+
   if (desc)
     df$desc = description
   if (tasks)
@@ -523,7 +527,7 @@ makeFilter(
     for (i in which(is.na(an[, "F value"]))) {
       j = !is.na(X[,i])
       if (any(j)) {
-        an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j]) 
+        an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j])
       }
     }
     setNames(an[, "F value"], getTaskFeatureNames(task))

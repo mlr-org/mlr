@@ -110,7 +110,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
   makeS3Obj(
     "FeatureImportance",
     res = out,
-    task.desc = getTaskDescription(task),
+    task.desc = getTaskDesc(task),
     interaction = interaction,
     learner = learner,
     measure = measure,

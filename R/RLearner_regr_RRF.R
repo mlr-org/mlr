@@ -30,7 +30,8 @@ makeRLearner.regr.RRF = function() {
     properties = c("numerics", "factors", "ordered", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
-    note = ""
+    note = "",
+    callees = "RRF"
   )
 }
 

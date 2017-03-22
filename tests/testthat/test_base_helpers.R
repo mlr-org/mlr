@@ -32,3 +32,16 @@ test_that("listLearnerProperties", {
   expect_equal(expected, listTaskTypes())
 })
 
+
+test_that("suppressWarning works", {
+  foo = function(x) {
+    if (x > 3)
+      warning("x is pretty large.")
+    x
+  }
+
+  expect_equal(suppressWarning(foo(3), "pretty"), 3)
+  expect_equal(suppressWarning(foo(3), "<nomatch>"), 3)
+  expect_equal(suppressWarning(foo(4), "pretty"), 4)
+  expect_warning(suppressWarning(foo(4), "<nomatch>"), "pretty")
+})
