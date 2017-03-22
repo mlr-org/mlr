@@ -9,7 +9,7 @@ makeRLearner.classif.plsdaCaret = function() {
                                values = c("kernelpls", "widekernelpls", "simpls", "oscorespls"))
     ),
     properties = c("numerics", "prob", "twoclass"),
-    name = "Partial Least Squares(PLS) Discriminant Analysis",
+    name = "Partial Least Squares (PLS) Discriminant Analysis",
     short.name = "plsdacaret",
     callees = c("plsda", "plsr")
   )

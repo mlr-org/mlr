@@ -43,5 +43,5 @@ test_that("removeConstantFeatures", {
   task = makeRegrTask(data = data, target = "target")
   model = train(lrn, task)
   mod = getLearnerModel(model)$learner.model
-  expect_true(setequal(names(coef(mod)), c(" (Intercept)", "noise", "safe")))
+  expect_true(setequal(names(coef(mod)), c("(Intercept)", "noise", "safe")))
 })
