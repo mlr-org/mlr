@@ -1,5 +1,8 @@
 # mlr 2.12:
 
+## learners - general
+* unified {classif,regr,surv}.penalized_* into {classif,regr,surv}.penalized
+
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
 * {classif,regr}.xyf: broke our API, stability issues
