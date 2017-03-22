@@ -60,7 +60,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(p)
     }
   } else {
-    p = p[,, 1L]
+    p = p[, , 1L]
     if (.learner$predict.type == "prob") {
       return(p)
     } else {

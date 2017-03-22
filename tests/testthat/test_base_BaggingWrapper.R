@@ -59,7 +59,7 @@ test_that("BaggingWrapper works with 1 obs in newdata", {
   # fnn reported the problem when we had a bug here
   lrn = makeBaggingWrapper("regr.lm", bw.iters = 2L)
   mod = train(lrn, regr.task)
-  nd = regr.df[1,, drop = FALSE]
+  nd = regr.df[1, , drop = FALSE]
   p = predict(mod, newdata = nd)
   expect_true(!is.na(performance(p)))
 })

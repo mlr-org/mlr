@@ -67,7 +67,7 @@ doMulticlassTrainIteration = function(x, i, learner, task, weights) {
   setSlaveOptions()
   d = getTaskData(task)
   tn = getTaskTargetNames(task)
-  data2 = d[x$row.inds[[i]],, drop = FALSE]
+  data2 = d[x$row.inds[[i]], , drop = FALSE]
   data2[, tn] = x$targets[[i]]
   ct = changeData(task, data2)
   ct$task.desc$positive = "1"
@@ -132,7 +132,7 @@ multi.to.binary = function(target, codematrix) {
   if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")
 
-  binary.targets = as.data.frame(codematrix[target,, drop = FALSE])
+  binary.targets = as.data.frame(codematrix[target, , drop = FALSE])
   row.inds = lapply(binary.targets, function(v) which(v != 0))
   names(row.inds) = NULL
   targets = Map(function(y, i) factor(y[i]), binary.targets, row.inds)

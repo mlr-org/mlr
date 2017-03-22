@@ -76,7 +76,7 @@ getRRPredictionList = function(res, ...) {
   # get prediction objects for train and test set
   prediction = lapply(set, function(s) {
     # split by resample iterations
-    p.split = pred$data[pred$data$set == s,, drop = FALSE]
+    p.split = pred$data[pred$data$set == s, , drop = FALSE]
     p.split = split(p.split, as.factor(p.split$iter))
     # create prediction object for each resample iteration
     p.split = lapply(p.split, function(p) {

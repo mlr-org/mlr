@@ -283,7 +283,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
   indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
-      df[i,, drop = drop],
+      df[i, , drop = drop],
       df[, j, drop = drop],
       df
     )
@@ -376,7 +376,7 @@ getTaskCosts = function(task, subset = NULL) {
   if (task$task.desc$type != "costsens")
     return(NULL)
   subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
-  d = getTaskDesc(task)$costs[subset,, drop = FALSE]
+  d = getTaskDesc(task)$costs[subset, , drop = FALSE]
   return(d)
 }
 
