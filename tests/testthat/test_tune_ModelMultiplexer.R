@@ -68,14 +68,14 @@ test_that("FailureModel works", {
   expect_false(isFailureModel(mod))
 
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 0)
-  expect_warning(mod <- train(lrn, task = iris.task), "foo")
+  expect_warning({mod = train(lrn, task = iris.task)}, "foo")
   expect_true(isFailureModel(mod))
 
   tmp = getMlrOptions()$on.learner.error
   configureMlr(on.learner.error = "warn")
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
   lrn = removeHyperPars(lrn, "selected.learner")
-  expect_warning(mod <- train(lrn, task = iris.task))
+  expect_warning({mod = train(lrn, task = iris.task)})
   expect_true(isFailureModel(mod))
   configureMlr(on.learner.error = tmp)
 })

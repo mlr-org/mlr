@@ -35,7 +35,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   tuner.config = c(list(targetRunnerParallel = targetRunnerParallel,
     instances = instances, logFile = log.file), control$extra.args)
   g = if (show.irace.output) identity else capture.output
-  g(or <- irace::irace(scenario = tuner.config, parameters = parameters))
+  g({or = irace::irace(scenario = tuner.config, parameters = parameters)})
   unlink(log.file)
   if (nrow(or) == 0L)
     stop("irace produced no result, possibly the budget was set too low?")

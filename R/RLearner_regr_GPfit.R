@@ -34,7 +34,7 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
   high = apply(d$data, 2, max)
   not.const = colnames(d$data)[high != low]
   if (scale) {
-    d$data[,not.const] = apply(d$data[,not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
+    d$data[, not.const] = apply(d$data[, not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     mlist = list(scaled = TRUE, not.const = not.const, high = high, low = low)
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
@@ -48,7 +48,7 @@ predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
   tr.info = getTrainingInfo(.model)
   if (tr.info$scaled) {
       for (col.name in tr.info$not.const) {
-        .newdata[,col.name] =  (.newdata[,col.name] - tr.info$low[col.name]) / (tr.info$high[col.name] - tr.info$low[col.name])
+        .newdata[, col.name] =  (.newdata[, col.name] - tr.info$low[col.name]) / (tr.info$high[col.name] - tr.info$low[col.name])
     }
   } 
   rst=predict(.model$learner.model, xnew = .newdata[, tr.info$not.const])

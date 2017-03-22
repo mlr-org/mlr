@@ -10,7 +10,7 @@ makeRLearner.regr.cforest = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632,
         requires = quote(replace == FALSE)),
-      makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = 'quad'),
+      makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = "quad"),
       makeDiscreteLearnerParam(id = "testtype",
         values = c("Bonferroni", "MonteCarlo", "Univariate", "Teststatistic"),
         default = "Univariate"),

@@ -19,7 +19,7 @@ test_that("classif_ada", {
     m = do.call(ada::ada, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = binaryclass.test, type = "probs")
-    old.probs.list[[i]] = p[,1]
+    old.probs.list[[i]] = p[, 1]
     old.predicts.list[[i]] = as.factor(binaryclass.class.levs[ifelse(p[, 2] > 0.5, 2, 1)])
   }
 

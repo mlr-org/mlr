@@ -284,7 +284,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
       df[i, , drop = drop],
-      df[ , j, drop = drop],
+      df[, j, drop = drop],
       df
     )
   }
