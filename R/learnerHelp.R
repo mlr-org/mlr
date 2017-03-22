@@ -187,7 +187,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
       # catf("nothing found: %s", f)
       next
     }
-    ghf = get(".getHelpFile", mode="function", envir=getNamespace("utils"))
+    ghf = get(".getHelpFile", mode = "function", envir = getNamespace("utils"))
     html = capture.output(tools::Rd2HTML(ghf(h)))
     html = XML::htmlParse(html)
     # try to extract the 'R argblock' table
