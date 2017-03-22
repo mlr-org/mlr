@@ -7,7 +7,7 @@ makeRLearner.classif.penalized = function() {
       makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0),
       makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0),
       makeLogicalLearnerParam(id = "fusedl", default = FALSE),
-      makeUntypedLearnerParam(id = "unpenalized"),
+      makeUntypedLearnerParam(id = "unpenalized", tunable = FALSE),
       makeLogicalVectorLearnerParam(id = "positive", default = FALSE),
       makeNumericVectorLearnerParam(id = "startbeta"),
       makeNumericVectorLearnerParam(id = "startgamma"),
