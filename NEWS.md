@@ -1,7 +1,7 @@
 # mlr 2.12:
 
 ## learners - general
-* unified {classif,regr,surv}.penalized_* into {classif,regr,surv}.penalized
+* unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
