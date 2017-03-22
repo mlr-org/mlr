@@ -21,6 +21,7 @@ mlr = new.env(parent = emptyenv())
 
 ### Learner properties
 mlr$learner.properties = list(
+  oneclass = c("oneclass", "numerics", "factors", "ordered", "missings", "weights", "prob"),
   classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "featimp", "oobpreds"),
   multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
   regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds"),
@@ -31,4 +32,4 @@ mlr$learner.properties = list(
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 
 ### Measure properties
-mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster" ,"costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
+mlr$measure.properties = c("oneclass", "classif", "classif.multi", "multilabel", "regr", "surv", "cluster" ,"costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
