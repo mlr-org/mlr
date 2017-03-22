@@ -1,5 +1,9 @@
 # mlr 2.12:
 
+## functions - new
+* learnerHelp, learnerParamHelp: open the help for a learner or get a
+  description of its parameters
+
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 
