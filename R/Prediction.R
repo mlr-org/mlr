@@ -178,6 +178,55 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 }
 
 #' @export
+makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+  data = namedList(c("id", "truth", "response", "prob"))
+  data$id = id
+  if (!missing(truth))
+    data$truth = truth
+  if (predict.type == "response") {
+    data$response = y
+    data = as.data.frame(filterNull(data))
+    # HACK: For some reason the prediction will return table with the colnames c(truth, FALSE.)
+    # need response as name instead of FALSE.
+    # ex = grep("\\.",names(data))
+    # names(data)[ex] = "response"
+  } else {
+    data$prob = y
+    data = as.data.frame(filterNull(data))
+    # fix columnnames for prob if strange chars are in factor levels
+    indices = stri_detect_fixed(names(data), "prob.")
+
+    # HACK need to create colnames with prob.<positive class> for one class
+    # otherwise getPredictionProbabilities() will throw an error
+    # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
+    indices = stri_detect_fixed(names(data), colnames(y))
+
+    if (sum(indices) > 0) #?
+      names(data)[indices] = stri_paste("prob.", colnames(y))
+  }
+
+  p = makeS3Obj(c("PredictionOneClass", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(data, row.names),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time,
+    error = error
+  )
+  if (predict.type == "prob") {
+    # set default threshold to the 50% quantile of the mse reconstruction error
+    if (is.null(predict.threshold)) {
+      indices.threshold = order(y)[round(length(y)/2)]  #mse reconstruction error in [0,inf[
+      predict.threshold = y[indices.threshold]
+      names(predict.threshold) = task.desc$positive
+    }
+    p = setThreshold(p, predict.threshold)
+  }
+  return(p)
+}
+
+
+#' @export
 makePrediction.CostSensTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
   data = namedList(c("id", "response"))
   data$id = id
