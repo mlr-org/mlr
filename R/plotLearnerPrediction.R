@@ -70,6 +70,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   learner = checkLearner(learner)
   assert(
+    checkClass(task, "OneClassTask"),
     checkClass(task, "ClassifTask"),
     checkClass(task, "RegrTask"),
     checkClass(task, "ClusterTask")
@@ -117,7 +118,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   # some shortcut names
   target = td$target
   data = getTaskData(task)
-  if (td$type != "cluster")
+  if (!(td$type %in% c("cluster", "oneclass")))
     y = getTaskTargets(task)
   x1n = features[1L]
   x1 = data[, x1n]
@@ -196,7 +197,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
       p  = p + guides(alpha = FALSE)
     }
-  } else if (td$type == "cluster") {
+  } else if (td$type %in% c("cluster", "oneclass")) {
     if (taskdim == 2L) {
       data$response = factor(yhat)
       p = ggplot(data, aes_string(x = x1n, y = x2n, col = "response"))
