@@ -123,6 +123,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #' Get the default measure for a task type, task, task description or a learner.
 #' Currently these are:
 #'  \tabular{ll}{
+#'    oneclass    \tab db \cr
 #'    classif     \tab mmce\cr
 #'    regr        \tab mse\cr
 #'    cluster     \tab db\cr
@@ -147,6 +148,7 @@ getDefaultMeasure = function(x) {
   else
     x
   switch(type,
+    oneclass = db,
     classif = mmce,
     cluster = db,
     regr = mse,
