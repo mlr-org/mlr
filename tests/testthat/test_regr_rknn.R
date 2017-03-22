@@ -28,7 +28,7 @@ test_that("regr_rknn", {
 
   testSimpleParsets("regr.rknn", regr.num.df, regr.num.target, regr.num.train.inds,
                     old.predicts.list, parset.list)
-  
+
   parset.list[[9]] = NULL
 
   tt = function(formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L, cluster = NULL) {

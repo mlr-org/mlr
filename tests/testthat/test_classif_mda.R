@@ -8,7 +8,7 @@ test_that("classif_mda", {
     list(start.method = "lvq", subclasses = 2),
     list(start.method = "lvq", subclasses = 3)
   )
-  
+
   parset.list2 = list(
     list(),
     list(start.method = "lvq", subclasses = 2),

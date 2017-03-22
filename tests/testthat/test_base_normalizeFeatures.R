@@ -10,7 +10,7 @@ test_that("normalizeFeatures", {
   expect_equal(normalized, df)
 
   normalized = normalizeFeatures(task, method = "range", range = c(-1, 4))
-  expect_equal(normalized, task)  
+  expect_equal(normalized, task)
 
   normed.x = getTaskData(normalizeFeatures(task, method = "center"))$x1
   expect_equal(mean(normed.x), 0)

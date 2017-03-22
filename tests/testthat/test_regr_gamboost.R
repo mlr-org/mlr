@@ -1,7 +1,7 @@
 context("regr_gamboost")
 test_that("regr_gamboost", {
   requirePackagesOrSkip("mboost", default.method = "attach")
-  
+
   parset.list1 = list(
     list(),
     list(family = mboost::Gaussian(), baselearner = "bols", dfbase = 4,

@@ -10,7 +10,7 @@ context("classif_svm")
 
 test_that("classif_svm", {
   requirePackagesOrSkip("e1071", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(gamma = 20),
@@ -20,7 +20,7 @@ test_that("classif_svm", {
 
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = multiclass.formula, data = multiclass.train)
@@ -32,10 +32,10 @@ test_that("classif_svm", {
     old.predicts.list[[i]] = predict(m1, newdata = multiclass.test)
     old.probs.list[[i]] = predict(m2, newdata=multiclass.test, probability = TRUE)
   }
-  
+
   testSimpleParsets("classif.svm", multiclass.df, multiclass.target,
     multiclass.train.inds, old.predicts.list,  parset.list)
-  #testProbParsets("classif.svm", multiclass.df, multiclass.target, 
+  #testProbParsets("classif.svm", multiclass.df, multiclass.target,
   #  multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function(formula, data, subset=1:150, ...) {

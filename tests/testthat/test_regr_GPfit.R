@@ -8,7 +8,7 @@ test_that("regr_GPfit", {
   d = 2
   set.seed(getOption("mlr.debug.seed"))
   train.inds = 1:20
-  x = lhs::maximinLHS(n, d) 
+  x = lhs::maximinLHS(n, d)
   y = test_fun(x)
   GPfit.test.df = cbind.data.frame(x, y)
   colnames(GPfit.test.df) = c("x1", "x2", "y")

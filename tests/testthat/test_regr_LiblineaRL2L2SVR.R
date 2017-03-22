@@ -10,7 +10,7 @@ test_that("regr_LiblineaRL2L2SVR", {
     list(type = 11, cost = 5L),
     list(type = 12, cost = 5L)
   )
-  
+
   parset.list2 = list(
     list(),
     list(svr_eps = 0.01),
@@ -33,7 +33,7 @@ test_that("regr_LiblineaRL2L2SVR", {
     p = predict(m, newx = regr.num.test[, -regr.num.class.col])
     old.predicts.list[[i]] = p$predictions
   }
-  
+
   testSimpleParsets("regr.LiblineaRL2L2SVR", regr.num.df, regr.num.target,
     regr.num.train.inds, old.predicts.list, parset.list2)
 })

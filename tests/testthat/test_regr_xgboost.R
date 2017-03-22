@@ -2,14 +2,14 @@ context("regr_xgboost")
 
 test_that("regr_xgboost", {
   requirePackagesOrSkip("xgboost", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(nrounds = 20)
   )
 
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     if (is.null(parset$verbose)) parset$verbose = 0L
@@ -24,7 +24,7 @@ test_that("regr_xgboost", {
     #nrounds = 20, objective = "reg:linear", missing = NULL)
     old.predicts.list[[i]] = predict(model, data.matrix(regr.num.test[, -regr.num.class.col]))
   }
-  
+
   #set.seed(getOption("mlr.debug.seed"))
   testSimpleParsets("regr.xgboost", regr.num.df, regr.num.target, regr.num.train.inds,
     old.predicts.list, parset.list)

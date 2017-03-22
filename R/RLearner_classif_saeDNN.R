@@ -43,7 +43,7 @@ predictLearner.classif.saeDNN = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   pred = deepnet::nn.predict(.model$learner.model, data.matrix(.newdata))
   colnames(pred) = .model$factor.levels[[1]]
-  
+
   if (type == "class") {
     classes = colnames(pred)[max.col(pred)]
     return(as.factor(classes))

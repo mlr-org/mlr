@@ -2,7 +2,7 @@ context("regr_penalized")
 
 test_that("regr_penalized", {
   requirePackages("!penalized", default.method = "load")
-  
+
   parset.list = list(
     list(maxiter = 100),
     list(lambda1 = 2),
@@ -18,7 +18,7 @@ test_that("regr_penalized", {
   regr.test.inds  = setdiff(1:nrow(regr.df), regr.train.inds)
   regr.train = regr.df[regr.train.inds, ]
   regr.test  = regr.df[regr.test.inds, ]
-  
+
   old.predicts.list = list()
   old.probs.list = list()
 

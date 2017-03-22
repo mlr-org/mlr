@@ -69,7 +69,7 @@ test_that("resampling, predicting train set works", {
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
-  
+
   rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
   lrn = makeLearner("classif.rpart")
   m1 = setAggregation(mmce, train.mean)
@@ -81,8 +81,8 @@ test_that("resampling, predicting train set works", {
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
-  
-  
+
+
 
 })
 

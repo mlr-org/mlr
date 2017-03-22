@@ -40,7 +40,7 @@ trainLearner.surv.gamboost = function(.learner, .task, .subset, .weights = NULL,
     Gehan = mboost::Gehan(),
     custom.family = custom.family.definition
   )
-  
+
     f = getTaskFormula(.task)
     data = getTaskData(.task, subset = .subset, recode.target = "rcens")
     if (is.null(.weights)) {

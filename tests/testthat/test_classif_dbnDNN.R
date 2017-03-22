@@ -2,22 +2,22 @@ context("classif_dbnDNN")
 
 test_that("classif_dbnDNN", {
   requirePackagesOrSkip("deepnet", default.method = "load")
-  
+
   parset.list1 = list(
     list(output = "softmax"),
     list(output = "softmax", hidden = 7)
   )
-  
+
   parset.list2 = list(
     list(),
     list(hidden = 7)
   )
-  
+
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list1)) {
     parset = parset.list1[[i]]
-    
+
 
     set.seed(getOption("mlr.debug.seed"))
    capture.output({
@@ -39,7 +39,7 @@ test_that("classif_dbnDNN", {
     old.predicts.list[[i]] = as.factor(colnames(p)[max.col(p)])
   })
 }
-  
+
   testSimpleParsets("classif.dbnDNN", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list2)
 })

@@ -22,7 +22,7 @@ test_that("classif_glmnet", {
     y = x[, binaryclass.class.col]
     x[, binaryclass.class.col] = NULL
     pars = list(x = as.matrix(x), y = y, family = "binomial")
-    pars = c(pars, parset)    
+    pars = c(pars, parset)
     glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))

@@ -33,7 +33,7 @@ trainLearner.classif.evtree = function(.learner, .task, .subset,
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
-  
+
   if (missing(pmutatemajor)) pmutatemajor = defaults$pmutatemajor
   if (missing(pmutateminor)) pmutateminor = defaults$pmutateminor
   if (missing(pcrossover)) pcrossover = defaults$pcrossover

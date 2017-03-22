@@ -2,16 +2,16 @@ context("classif_RRF")
 
 test_that("classif_RRF", {
   requirePackages("RRF", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(ntree=50,  mtry=2),
     list(ntree=50, mtry=4)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula=multiclass.formula, data=multiclass.train)
@@ -25,12 +25,12 @@ test_that("classif_RRF", {
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
-  
+
   testSimpleParsets("classif.RRF", multiclass.df, multiclass.target,
                     multiclass.train.inds, old.predicts.list, parset.list)
   testProbParsets("classif.RRF", multiclass.df, multiclass.target,
                   multiclass.train.inds, old.probs.list, parset.list)
-  
+
   tt = RRF::RRF
   testCVParsets("classif.RRF", multiclass.df, multiclass.target, tune.train=tt,
                 parset.list=parset.list)

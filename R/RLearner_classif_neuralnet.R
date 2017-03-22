@@ -10,7 +10,7 @@ makeRLearner.classif.neuralnet = function() {
       makeIntegerLearnerParam(id = "rep", default = 1L, lower = 1L),
       makeNumericVectorLearnerParam(id = "startweights"),
       makeNumericVectorLearnerParam(id = "learningrate.limit"),
-      makeUntypedLearnerParam(id = "learningrate.factor", 
+      makeUntypedLearnerParam(id = "learningrate.factor",
                               default = list(minus = 0.5, plus = 1.2)),
       makeNumericLearnerParam(id = "learningrate"),
       makeDiscreteLearnerParam(id = "lifesign", default = "none",
@@ -59,26 +59,26 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
   if (sum(stri_detect_regex(cf, "\\.")) > 0){
     varnames = nms[nms!=formula_head]
     formula_head = stri_paste("as.numeric(", formula_head, ")~", sep = " ")
-    formula_expand = stri_paste(formula_head, 
-                                stri_paste(varnames, collapse = "+", sep = " "), 
+    formula_expand = stri_paste(formula_head,
+                                stri_paste(varnames, collapse = "+", sep = " "),
                                 sep = " ")
     formula_expand = as.formula(formula_expand)
     f = formula_expand
   }
-  
+
   neuralnet::neuralnet(f, data = taskdat, linear.output = FALSE, ...)
 }
 
 #' @export
 predictLearner.classif.neuralnet = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response = "class", prob = "raw")
-  
+
   p = neuralnet::compute(x = .model$learner.model, covariate = .newdata, ...)
   p = p[[2]]
-  
+
   p = cbind(1-p, p)
   colnames(p) = .model$factor.levels[[1]]
-  
+
   if (type == "class") {
     classes = colnames(p)[max.col(p)]
     return(as.factor(classes))

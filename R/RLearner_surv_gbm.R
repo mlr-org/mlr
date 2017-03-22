@@ -20,7 +20,7 @@ makeRLearner.surv.gbm = function() {
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = "`keep.data` is set to FALSE to reduce memory requirements.",
-    callees = c("gbm") 
+    callees = c("gbm")
   )
 }
 

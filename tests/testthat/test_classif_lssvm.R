@@ -2,19 +2,19 @@ context("classif_lssvm")
 
 test_that("classif_lssvm", {
   requirePackagesOrSkip("kernlab", default.method = "load")
-  
+
   parset.list1 = list(
     list(fit = FALSE),
     list(fit = FALSE, kpar = list(sigma = 20)),
     list(fit = FALSE, kernel = "laplacedot", kpar = list(sigma = 10))
   )
-  
+
   parset.list2 = list(
     list(),
     list(sigma = 20),
     list(kernel = "laplacedot", sigma = 10)
   )
-  
+
   old.predicts.list = list()
 
   for (i in 1:length(parset.list1)) {
@@ -25,7 +25,7 @@ test_that("classif_lssvm", {
     m = do.call(kernlab::lssvm, pars)
     old.predicts.list[[i]] = kernlab::predict(m, newdata=multiclass.test)
   }
-  
+
   testSimpleParsets("classif.lssvm", multiclass.df, multiclass.target,
     multiclass.train.inds, old.predicts.list,  parset.list2)
 

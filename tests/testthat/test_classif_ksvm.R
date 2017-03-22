@@ -9,23 +9,23 @@ test_that("classif_ksvm", {
     list(kernel = "laplacedot", kpar = list(sigma = 10), fit = FALSE),
     list(kernel = "polydot", kpar = list(degree = 3, offset = 2, scale = 1.5))
   )
-  
+
   parset.list2 = list(
     list(),
     list(sigma = 20),
     list(kernel = "laplacedot", sigma = 10),
     list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(x = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     pars$prob.model = TRUE
-  
+
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kernlab::ksvm, pars)
     old.predicts.list[[i]] =  kernlab::predict(m, newdata=multiclass.test)

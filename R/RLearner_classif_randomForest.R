@@ -74,6 +74,6 @@ getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ..
         stop("You need to train the learner with parameter 'importance' set to TRUE")
     }
   }
-  
+
   randomForest::importance(mod, ctrl$type)[, 1]
 }

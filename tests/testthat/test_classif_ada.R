@@ -2,12 +2,12 @@ context("classif_ada")
 
 test_that("classif_ada", {
   requirePackagesOrSkip("ada", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(iter = 5L)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
 

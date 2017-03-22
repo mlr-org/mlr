@@ -39,7 +39,7 @@ predictLearner.classif.mlp = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   pred = predict(.model$learner.model, .newdata)
   colnames(pred) = .model$factor.levels[[1]]
-  
+
   if (type == "class") {
     classes = colnames(pred)[max.col(pred)]
     return(as.factor(classes))

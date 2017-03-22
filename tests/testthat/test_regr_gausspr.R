@@ -1,9 +1,9 @@
 context("regr_gausspr")
 
 test_that("regr_gausspr", {
-  
+
   requirePackages("kernlab", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(kernel = "splinedot"),
@@ -11,7 +11,7 @@ test_that("regr_gausspr", {
   )
 
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(regr.formula, data = regr.train)

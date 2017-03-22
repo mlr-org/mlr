@@ -69,7 +69,7 @@ learnerParamHelp = function(learner, param = NULL) {
       next.learner = current.learner$next.learner
       if (is.null(next.learner)) {
         break
-      } 
+      }
       if (inherits(next.learner, "RLearner")) {
         messagef("The learner '%s' is a wrapped learner. Showing documentation of '%s' instead.",
           learner$id, next.learner$id)

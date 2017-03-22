@@ -41,10 +41,10 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
     mod = train(lrn, binaryclass.task)
     expect_error(predict(mod, binaryclass.task), "support probabilities")
   })
-}) 
+})
 
 
-# mlr does not support ordered factors as target yet. 
+# mlr does not support ordered factors as target yet.
 # FIXME: the following two tests can be used, when they are supported
 # test_that("classif_glmboost with family `PropOdds` works with one observation", {
 #   data = getTaskData(binaryclass.task)
@@ -61,7 +61,7 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
 #   orig.pred.class = predict(orig.mod, newdata = mini.data, type = "class")
 #   expect_equal(getPredictionProbabilities(pred), orig.pred[,2])
 # })
-# 
+#
 # test_that("classif_glmboost works with family PropOdds", {
 #   new.binary.df = binaryclass.df
 #   new.binary.df[,binaryclass.target] = as.ordered(new.binary.df[,binaryclass.target])
@@ -80,9 +80,9 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
 #   old.predicts.list = predict(m, newdata = new.classif.test, type = "class")
 #   set.seed(getOption("mlr.debug.seed"))
 #   old.probs.list = 1 - predict(m, newdata = new.classif.test, type = "response")[,1]
-#   
+#
 #   testSimple("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
 #   testProb("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
-#   
+#
 # })
 

@@ -1,18 +1,18 @@
 context("classif_gausspr")
 
 test_that("classif_gausspr", {
-  
+
   requirePackages("kernlab", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(kernel = "splinedot"),
     list(tol = 0.2)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(multiclass.formula, data = multiclass.train)
@@ -24,7 +24,7 @@ test_that("classif_gausspr", {
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
-  
+
   testSimpleParsets("classif.gausspr", multiclass.df, multiclass.target,
     multiclass.train.inds, old.predicts.list, parset.list)
   testProbParsets("classif.gausspr", multiclass.df, multiclass.target,

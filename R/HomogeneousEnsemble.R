@@ -29,7 +29,7 @@ getFailureModelDump.HomogeneousEnsembleModel = function(model) {
   msgs = lapply(mods, getFailureModelDump)
   j = which.first(!is.null(msgs))
   ifelse(j == 0L, NULL, msgs[[j]])
-} 
+}
 
 #' Deprecated, use \code{getLearnerModel} instead.
 #' @param model Deprecated.

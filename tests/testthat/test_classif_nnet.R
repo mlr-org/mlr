@@ -2,7 +2,7 @@ context("classif_nnet")
 
 test_that("classif_nnet", {
   requirePackagesOrSkip("nnet", default.method = "load")
-  
+
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
     m = nnet::nnet(multiclass.formula, size = 3, data = multiclass.train)
@@ -22,15 +22,15 @@ test_that("classif_nnet", {
     multiclass.train.inds, p2, parset = list())
   testProb("classif.nnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, p3, parset = list())
-  
+
   tt = function(formula, data, subset = 1:150, ...) {
     nnet::nnet(formula, data = data[subset, ], size = 7, maxit = 50)
   }
   tp = function(model, newdata) as.factor(predict(model, newdata, type = "class"))
-  
+
   testCV("classif.nnet", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
     parset = list(size = 7, maxit = 50))
-  
+
   # ## make sure that nnet yields the same results independent of predict.type
   task = makeClassifTask(data = binaryclass.df, target = binaryclass.target)
   lrn = makeLearner("classif.nnet", trace = FALSE, size = 1, predict.type = "prob")

@@ -127,7 +127,7 @@ test_that("plotTuneMultiCritResult works with pretty.names", {
   ps = makeParamSet(
     makeDiscreteParam("minsplit", values = c(5, 10))
     )
-  ctrl.grid = makeTuneMultiCritControlGrid() 
+  ctrl.grid = makeTuneMultiCritControlGrid()
   opt.multi.crit = tuneParamsMultiCrit(lrn, multiclass.task, hout,
     list(mmce, acc), par.set = ps, control = ctrl.grid)
   plotTuneMultiCritResult(opt.multi.crit)

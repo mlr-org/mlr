@@ -46,7 +46,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     desc = makeResampleDesc(desc, ...)
   if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
-  } 
+  }
   if (!missing(task)) {
     assertClass(task, classes = "Task")
     size = getTaskSize(task)

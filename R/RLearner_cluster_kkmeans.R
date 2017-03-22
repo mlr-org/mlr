@@ -44,7 +44,7 @@ trainLearner.cluster.kkmeans = function(.learner, .task, .subset, .weights = NUL
 predictLearner.cluster.kkmeans = function(.learner, .model, .newdata, .weights = NULL, ...) {
   c = kernlab::centers(.model$learner.model)
   K = kernlab::kernelf(.model$learner.model)
-  
+
   # kernel product between each new datapoint and the centers
   Dxc = matrix(kernlab::kernelMatrix(K, as.matrix(.newdata), c), ncol = nrow(c))
   # kernel product between each new datapoint and itself: rows are identical

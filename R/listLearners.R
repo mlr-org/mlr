@@ -72,11 +72,11 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   should a warning be shown?
 #'   Default is \code{TRUE}.
 #' @param check.packages [\code{logical(1)}]\cr
-#'   Check if required packages are installed. Calls \code{find.package()}. 
+#'   Check if required packages are installed. Calls \code{find.package()}.
 #'   If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
-#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only 
+#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only
 #'   contains learners whose dependencies are installed.
-#'   If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because 
+#'   If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because
 #'   of missing packages may be returned.
 #'   Default is \code{FALSE}.
 #' @param create [\code{logical(1)}]\cr
