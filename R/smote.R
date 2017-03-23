@@ -60,7 +60,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
     stopf("You cannot set nn = %i, when the minimal class has size %i!", nn, z$min.size)
   x.min = x[z$min.inds, , drop = FALSE]
   n.min = nrow(x.min) # number of NEW cases
-  n.new = ifelse(alt.logic, as.integer(rate-1) * n.min, round((rate-1) * n.min))
+  n.new = ifelse(alt.logic, as.integer(rate - 1) * n.min, round((rate - 1) * n.min))
   if (n.new <= 0L)
     return(task)
   res = matrix(0, n.new, ncol(x))

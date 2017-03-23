@@ -626,8 +626,8 @@ logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
 #' @format none
 measureLogloss = function(probabilities, truth){
   eps = 1e-15
-  #let's confine the predicted probabilities to [eps,1-eps], so logLoss doesn't reach infinity under any circumstance
-  probabilities[probabilities > 1-eps] = 1-eps
+  #let's confine the predicted probabilities to [eps,1 - eps], so logLoss doesn't reach infinity under any circumstance
+  probabilities[probabilities > 1 - eps] = 1 - eps
   probabilities[probabilities < eps] = eps
   truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)

@@ -22,7 +22,7 @@ learnerHelp = function(learner) {
     if (length(callees) > 1) {
       repeat {
         cat("Choose help page:\n")
-        cat(stri_join(seq_along(callees), " : ", callees, "\n", collapse=""))
+        cat(stri_join(seq_along(callees), " : ", callees, "\n", collapse = ""))
         n = readline("0 : cancel\n...: ")
         n = suppressWarnings(as.integer(n))
         if (is.finite(n) && n >= 1 && n <= length(callees)) {

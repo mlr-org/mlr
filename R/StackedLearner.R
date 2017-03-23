@@ -506,7 +506,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric((probs[[i]] + current.prob)/ (selection.size + 1), probs[[tn]])
+        score[i] = metric((probs[[i]] + current.prob) / (selection.size + 1), probs[[tn]])
       }
       inds = order(score)
       if (!replace) {
@@ -638,7 +638,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   for (i in ind1) {
     mn[i] = min(.data[, i])
     mx[i] = max(.data[, i])
-    .data[, i] = (.data[, i]-mn[i])/ (mx[i]-mn[i])
+    .data[, i] = (.data[, i]-mn[i]) / (mx[i]-mn[i])
   }
   if (is.null(s)) {
     s = rep(0, ncol(.data))
@@ -716,7 +716,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     res = rbind(res, data)
   }
   for (i in ind1)
-    res[, i] = res[, i]* (mx[i]-mn[i]) + mn[i]
+    res[, i] = res[, i] * (mx[i]-mn[i]) + mn[i]
   res = data.frame(res)
   names(res) = ori.names
   for (i in ind2)

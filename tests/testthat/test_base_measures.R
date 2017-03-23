@@ -232,7 +232,7 @@ test_that("check measure calculations", {
   rsq.perf = performance(pred.regr, measures = rsq, model = mod.regr)
   expect_equal(rsq.test, rsq$fun(pred = pred.regr))
   expect_equal(rsq.test, as.numeric(rsq.perf))
-  expect_equal(1- ((4-5)^2+ (11-10)^2+ (0-0)^2+ (4-5)^2)/ ((5-5)^2+ (10-5)^2+ (0-5)^2+ (5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(1- ((4-5)^2 + (11-10)^2 + (0-0)^2 + (4-5)^2) / ((5-5)^2 + (10-5)^2 + (0-5)^2 + (5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRSQ(0, 0))
     expect_warning(measureRSQ(0, 0))
@@ -260,7 +260,7 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
-  expect_equal(sum((1-3)^2+ (2-3)^2+ (3-3)^2+ (4-3)^2+ (5-3)^2) / sum((5-3)^2+ (4-3)^2+ (3-3)^2+ (2-3)^2+ (1-3)^2), measureEXPVAR(5:1, 1:5))
+  expect_equal(sum((1-3)^2 + (2-3)^2 + (3-3)^2 + (4-3)^2 + (5-3)^2) / sum((5-3)^2 + (4-3)^2 + (3-3)^2 + (2-3)^2 + (1-3)^2), measureEXPVAR(5:1, 1:5))
   suppressWarnings({
     expect_equal(NA_real_, measureEXPVAR(0, 0))
     expect_warning(measureEXPVAR(0, 0))
@@ -272,7 +272,7 @@ test_that("check measure calculations", {
   rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
   expect_equal(rrse.test, rrse$fun(pred = pred.regr))
   expect_equal(rrse.test, as.numeric(rrse.perf))
-  expect_equal(sqrt((4-5)^2+ (11-10)^2+ (0-0)^2+ (4-5)^2) / sqrt((5-5)^2+ (10-5)^2+ (0-5)^2+ (5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(sqrt((4-5)^2 + (11-10)^2 + (0-0)^2 + (4-5)^2) / sqrt((5-5)^2 + (10-5)^2 + (0-5)^2 + (5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRRSE(0, 0))
     expect_warning(measureRRSE(0, 0))
@@ -284,7 +284,7 @@ test_that("check measure calculations", {
   rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
   expect_equal(rae.test, rae$fun(pred = pred.regr))
   expect_equal(rae.test, as.numeric(rae.perf))
-  expect_equal((abs(4-5) + abs(11-10) + abs(0-0) + abs(4-5))/ (abs(5-5) + abs(10-5) + abs(0-5) + abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal((abs(4-5) + abs(11-10) + abs(0-0) + abs(4-5)) / (abs(5-5) + abs(10-5) + abs(0-5) + abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRAE(0, 0))
     expect_warning(measureRAE(0, 0))
@@ -304,7 +304,7 @@ test_that("check measure calculations", {
   mape.test = mean(c(abs((5-4) / 5), abs((10-11) / 10), abs((1-0) / 1), abs((5-4) / 5)))
   expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
-  expect_equal(1 / 4* (abs((4-5) / 5) + abs((11-10) / 10) + abs((0-2) / 2) + abs((4-5) / 5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
+  expect_equal(1 / 4 * (abs((4-5) / 5) + abs((11-10) / 10) + abs((0-2) / 2) + abs((4-5) / 5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
   expect_warning(measureMAPE(0, 0))
   expect_warning(measureMAPE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
@@ -590,7 +590,7 @@ test_that("check measure calculations", {
   expect_equal(f1.test, f1$fun(pred = pred.bin))
   expect_equal(f1.test, as.numeric(f1.perf))
   #gmean
-  gmean.test = sqrt((tp.test/ (tp.test + fn.test)) * tn.test/ (tn.test + fp.test))
+  gmean.test = sqrt((tp.test / (tp.test + fn.test)) * tn.test / (tn.test + fp.test))
   gmean.perf = performance(pred.bin, measures = gmean, model = mod.bin)
   expect_equal(gmean.test, gmean$fun(pred = pred.bin))
   expect_equal(gmean.test, as.numeric(gmean.perf))
@@ -656,7 +656,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1/2) # 1 of 2 obs is wrong
 
   #f1mult
-  f1.test = vnapply(seq_row(multi.y), function(i) 2 * sum(multi.y[i, ] * multi.p[i, ])/ (sum(multi.y[i, ]) + sum(multi.p[i, ])))
+  f1.test = vnapply(seq_row(multi.y), function(i) 2 * sum(multi.y[i, ] * multi.p[i, ]) / (sum(multi.y[i, ]) + sum(multi.p[i, ])))
   f1.test[is.na(f1.test)] = 1
   f1.test = mean(f1.test)
   f1.perf = performance(pred.multilabel, measures = multilabel.f1, model = mod.multilabel)
@@ -672,7 +672,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2*1/2, 2*1/3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
 
   #accmult
-  acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.y[i, ] | multi.p[i, ])))
+  acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ]) / (sum(multi.y[i, ] | multi.p[i, ])))
   acc.test[is.na(acc.test)] = 1
   acc.test = mean(acc.test)
   acc.perf = performance(pred.multilabel, measures = multilabel.acc, model = mod.multilabel)
@@ -687,7 +687,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelACC(rbind(tf, tf), rbind(tf, tt)), mean(c(1, 1 / 2)))
 
   #ppvmult
-  ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.p[i, ])))
+  ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ]) / (sum(multi.p[i, ])))
   ppv.test = mean(ppv.test, na.rm = TRUE)
   ppv.perf = performance(pred.multilabel, measures = multilabel.ppv, model = mod.multilabel)
   expect_equal(ppv.test, multilabel.ppv$fun(pred = pred.multilabel))
@@ -702,7 +702,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1 / 1, 1 / 2)))
 
   #tprmult
-  tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.y[i, ])))
+  tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ]) / (sum(multi.y[i, ])))
   tpr.test = mean(tpr.test, na.rm = TRUE)
   tpr.perf = performance(pred.multilabel, measures = multilabel.tpr, model = mod.multilabel)
   expect_equal(tpr.test, multilabel.tpr$fun(pred = pred.multilabel))

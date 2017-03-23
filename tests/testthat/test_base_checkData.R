@@ -31,7 +31,7 @@ test_that("checkData", {
   expect_true(is.factor(getTaskTargets(task)))
 
   df = binaryclass.df
-  df[, binaryclass.target] = as.logical(as.integer(binaryclass.df[, binaryclass.target])-1)
+  df[, binaryclass.target] = as.logical(as.integer(binaryclass.df[, binaryclass.target]) - 1)
   task = makeClassifTask(data = df, target = binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 

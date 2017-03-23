@@ -9,7 +9,7 @@ test_that("classif_neuralnet", {
     # neuralnet is not dealing with formula with `.` well
     nms = names(binaryclass.train)
     formula_head = as.character(binaryclass.formula)[2]
-    varnames = nms[nms! = formula_head]
+    varnames = nms[nms!= formula_head]
     formula_head = paste("as.numeric(", formula_head, ")~")
     formula_expand = paste(formula_head, paste(varnames, collapse = "+"))
     formula_expand = as.formula(formula_expand)
@@ -33,7 +33,7 @@ test_that("classif_neuralnet", {
     # neuralnet is not dealing with formula with `.` well
     nms = names(binaryclass.train)
     formula_head = as.character(binaryclass.formula)[2]
-    varnames = nms[nms! = formula_head]
+    varnames = nms[nms!= formula_head]
     formula_head = paste("as.numeric(", formula_head, ")~")
     formula_expand = paste(formula_head, paste(varnames, collapse = "+"))
     formula_expand = as.formula(formula_expand)
