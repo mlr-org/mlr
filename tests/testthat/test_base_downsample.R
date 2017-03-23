@@ -1,7 +1,7 @@
 context("downsample")
 
 test_that("downsample",  {
-  down.tsk = downsample(multiclass.task, perc = 1/3)
+  down.tsk = downsample(multiclass.task, perc = 1 / 3)
   expect_equal(getTaskSize(down.tsk), 50L)
   rsm.methods = c("Bootstrap", "Subsample", "Holdout")
   for (rsm.method in rsm.methods) {
@@ -53,7 +53,7 @@ test_that("downsample wrapper works with weights, we had issue #838",  {
   lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
   m = train(lrn, task)
   u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == n/2 && all(u %in% w))
+  expect_true(length(u) == n / 2 && all(u %in% w))
 
   # weights from train
   lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)

@@ -304,7 +304,7 @@ test_that("check measure calculations", {
   mape.test = mean(c(abs((5-4)/5), abs((10-11)/10), abs((1-0)/1), abs((5-4)/5)))
   expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
-  expect_equal(1/4* (abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
+  expect_equal(1 / 4* (abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
   expect_warning(measureMAPE(0, 0))
   expect_warning(measureMAPE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
@@ -428,7 +428,7 @@ test_that("check measure calculations", {
   pred.probs = getPredictionProbabilities(pred.classif)
   pred.probs[pred.probs > 1-1e-15] = 1-1e-15
   pred.probs[pred.probs < 1e-15] = 1e-15
-  logloss.test = -1*mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
+  logloss.test = -1 * mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
   logloss.perf = performance(pred.classif, measures = logloss, model = mod.classif)
   expect_equal(logloss.test, logloss$fun(pred = pred.classif))
   expect_equal(logloss.test, as.numeric(logloss.perf))
@@ -439,11 +439,11 @@ test_that("check measure calculations", {
   ssr.perf = performance(pred.classif, measures = ssr, model = mod.classif)
   expect_equal(ssr.test, ssr$fun(pred = pred.classif))
   expect_equal(ssr.test, as.numeric(ssr.perf))
-  expect_equal(measureSSR(p1, y1), 0.5 * (0.1/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
-  expect_equal(measureSSR(p1, y2), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.8/sqrt(0.2^2 + 0.8^2)))
-  expect_equal(measureSSR(p2, y1), 0.5 * (0.9/sqrt(0.1^2 + 0.9^2) + 0.2/sqrt(0.2^2 + 0.8^2)))
-  expect_equal(measureSSR(p2[1, , drop=FALSE], y2[1]), 0.1/sqrt(0.1^2 + 0.9^2))
-  expect_equal(measureSSR(p2[1, , drop=FALSE], y1[1]), 0.9/sqrt(0.1^2 + 0.9^2))
+  expect_equal(measureSSR(p1, y1), 0.5 * (0.1 / sqrt(0.1^2 + 0.9^2) + 0.8 / sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p1, y2), 0.5 * (0.9 / sqrt(0.1^2 + 0.9^2) + 0.8 / sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p2, y1), 0.5 * (0.9 / sqrt(0.1^2 + 0.9^2) + 0.2 / sqrt(0.2^2 + 0.8^2)))
+  expect_equal(measureSSR(p2[1, , drop=FALSE], y2[1]), 0.1 / sqrt(0.1^2 + 0.9^2))
+  expect_equal(measureSSR(p2[1, , drop=FALSE], y1[1]), 0.9 / sqrt(0.1^2 + 0.9^2))
   #qsr
   qsr.test = 1 - mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
   qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
@@ -656,7 +656,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1/2) # 1 of 2 obs is wrong
 
   #f1mult
-  f1.test = vnapply(seq_row(multi.y), function(i) 2*sum(multi.y[i, ] * multi.p[i, ])/ (sum(multi.y[i, ]) + sum(multi.p[i, ])))
+  f1.test = vnapply(seq_row(multi.y), function(i) 2 * sum(multi.y[i, ] * multi.p[i, ])/ (sum(multi.y[i, ]) + sum(multi.p[i, ])))
   f1.test[is.na(f1.test)] = 1
   f1.test = mean(f1.test)
   f1.perf = performance(pred.multilabel, measures = multilabel.f1, model = mod.multilabel)
@@ -683,8 +683,8 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelACC(multi.y, !multi.y), multilabel.acc$worst)
   # compare with mldr: jaccard index is not implemented in mldr see https://github.com/fcharte/mldr/issues/28
   # manual checks
-  expect_equal(measureMultilabelACC(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2)
-  expect_equal(measureMultilabelACC(rbind(tf, tf), rbind(tf, tt)), mean(c(1, 1/2)))
+  expect_equal(measureMultilabelACC(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 2)
+  expect_equal(measureMultilabelACC(rbind(tf, tf), rbind(tf, tt)), mean(c(1, 1 / 2)))
 
   #ppvmult
   ppv.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.p[i, ])))
@@ -698,8 +698,8 @@ test_that("check measure calculations", {
   # compare with mldr
   expect_equal(mldr:::mldr_Precision(counters), measureMultilabelPPV(multi.y, multi.p))
   # manual checks
-  expect_equal(measureMultilabelPPV(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2)
-  expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/2)))
+  expect_equal(measureMultilabelPPV(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 2)
+  expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1 / 1, 1 / 2)))
 
   #tprmult
   tpr.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ])/ (sum(multi.y[i, ])))
@@ -713,8 +713,8 @@ test_that("check measure calculations", {
   # compare with mldr
   expect_equal(mldr:::mldr_Recall(counters), measureMultilabelTPR(multi.y, multi.p))
   # manual checks
-  expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/1)
-  expect_equal(measureMultilabelTPR(rbind(tf, tf), rbind(tf, tt)), mean(c(1/1, 1/1)))
+  expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 1)
+  expect_equal(measureMultilabelTPR(rbind(tf, tf), rbind(tf, tt)), mean(c(1 / 1, 1 / 1)))
 
   #test survival measures
 
@@ -862,7 +862,7 @@ test_that("measures quickcheck", {
         classes = factor(c("foo", "bar"))
         data$target = rep_len(classes, length.out = nrow(data))
 
-        trainIds = 1:(2*nrow(data)/3)
+        trainIds = 1:(2 * nrow(data)/3)
         testIds = setdiff(seq_len(nrow(data)), trainIds)
         task = makeClassifTask(data = data, target = "target")
 

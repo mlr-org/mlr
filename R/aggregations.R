@@ -182,7 +182,7 @@ b632 = makeAggregation(
   name = ".632 Bootstrap",
   properties = c("req.train", "req.test"),
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-    mean(0.632*perf.test + 0.368*perf.train)
+    mean(0.632 * perf.test + 0.368 * perf.train)
   }
 )
 
@@ -207,8 +207,8 @@ b632plus = makeAggregation(
         time = NA_real_)
       gamma = performance(pred2, measures = measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
-      w = 0.632 / (1 - 0.368*R)
-      a[i] = (1-w) * perf.train[i] + w*perf.test[i]
+      w = 0.632 / (1 - 0.368 * R)
+      a[i] = (1-w) * perf.train[i] + w * perf.test[i]
     }
     return(mean(a))
   }

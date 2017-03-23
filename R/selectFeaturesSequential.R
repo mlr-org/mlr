@@ -18,7 +18,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     better = compare(state, best, control, measures[[1]], thresh)
     # if backward step and we have too many vars we do always go to the next best state with one less var.
     if ((forward && better) || (!forward && (better || (!is.na(control$max.features) && sum(unlist(state$x)) > control$max.features)))) {
-      setOptPathElEOL(opt.path, best.i, dob+1)
+      setOptPathElEOL(opt.path, best.i, dob + 1)
       return(best)
     } else {
       return(NULL)

@@ -17,12 +17,12 @@ makeRLearner.classif.neuralnet = function() {
                                values = c("none", "minimal", "full")),
       makeIntegerLearnerParam(id = "lifesign.step", default = 1000L),
       makeDiscreteLearnerParam(id = "algorithm", default = "rprop+",
-                               values=c("backprop", "rprop+", "rprop-", "sag", "slr")),
+                               values = c("backprop", "rprop+", "rprop-", "sag", "slr")),
       makeDiscreteLearnerParam(id = "err.fct", default = "ce",
-                               values=c("sse", "ce")),
+                               values = c("sse", "ce")),
       # FIXME default in neuralnet() or err.fct is "sse"
       makeDiscreteLearnerParam(id = "act.fct", default = "logistic",
-                               values=c("logistic", "tanh")),
+                               values = c("logistic", "tanh")),
       makeNumericVectorLearnerParam(id = "exclude"),
       makeNumericVectorLearnerParam(id = "constant.weights"),
       makeLogicalLearnerParam(id = "likelihood", default = FALSE)
@@ -51,13 +51,13 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
     taskdat[[formula_head]] = as.numeric(taskdat[[formula_head]])
   }
   lvls = length(unique(taskdat[[formula_head]]))
-  if (length(lvls)>2)
+  if (length(lvls) > 2)
     stop("Use neuralnet to do binary classification")
-  if (!all(taskdat[[formula_head]]== 0 | taskdat[[formula_head]] == 1)){
-    taskdat[[formula_head]] = taskdat[[formula_head]]-1
+  if (!all(taskdat[[formula_head]] == 0 | taskdat[[formula_head]] == 1)){
+    taskdat[[formula_head]] = taskdat[[formula_head]] - 1
   }
   if (sum(stri_detect_regex(cf, "\\.")) > 0){
-    varnames = nms[nms!=formula_head]
+    varnames = nms[nms != formula_head]
     formula_head = stri_paste("as.numeric(", formula_head, ")~", sep = " ")
     formula_expand = stri_paste(formula_head,
                                 stri_paste(varnames, collapse = "+", sep = " "),
@@ -76,7 +76,7 @@ predictLearner.classif.neuralnet = function(.learner, .model, .newdata, ...) {
   p = neuralnet::compute(x = .model$learner.model, covariate = .newdata, ...)
   p = p[[2]]
 
-  p = cbind(1-p, p)
+  p = cbind(1 - p, p)
   colnames(p) = .model$factor.levels[[1]]
 
   if (type == "class") {

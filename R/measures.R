@@ -393,7 +393,7 @@ rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Root mean squared logarithmic error",
   note = "Defined as: sqrt(msle). Definition taken from:
-  Definition taken from: https://www.kaggle.com/wiki/RootMeanSquaredLogarithmicError.
+  Definition taken from: https://www.kaggle.com / wiki / RootMeanSquaredLogarithmicError.
   This measure is mostly used for count data, note that all predicted and actual target values
   must be greater or equal '-1' to compute the measure.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -631,7 +631,7 @@ measureLogloss = function(probabilities, truth){
   probabilities[probabilities < eps] = eps
   truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)
-  -1*mean(log(p))
+  -1 * mean(log(p))
 }
 
 #' @export ssr
@@ -653,7 +653,7 @@ ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
 measureSSR = function(probabilities, truth){
   truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)
-  mean(p/sqrt(rowSums(probabilities^2)))
+  mean(p / sqrt(rowSums(probabilities^2)))
 }
 
 #' @export qsr
@@ -698,7 +698,7 @@ lsr = makeMeasure(id = "lsr", minimize = FALSE, best = 0, worst = -Inf,
 #' @rdname measures
 #' @format none
 measureLSR = function(probabilities, truth){
-  -1*measureLogloss(probabilities, truth)
+  -1 * measureLogloss(probabilities, truth)
 }
 
 #' @export kappa
@@ -1236,7 +1236,7 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "F1 measure (multilabel)",
   note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1), following the
-  definition by Montanes et al.: http://www.sciencedirect.com/science/article/pii/S0031320313004019.
+  definition by Montanes et al.: http://www.sciencedirect.com / science / article / pii / S0031320313004019.
   Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultiLabelF1(getPredictionTruth.PredictionMultilabel(pred),
@@ -1248,9 +1248,9 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
 #' @rdname measures
 #' @format none
 measureMultiLabelF1 = function(truth, response) {
-  numerator = 2*rowSums(truth & response)
+  numerator = 2 * rowSums(truth & response)
   denominator = rowSums(truth + response)
-  mean(ifelse(denominator == 0, 1, numerator/denominator))
+  mean(ifelse(denominator == 0, 1, numerator / denominator))
 }
 
 #' @export multilabel.acc
@@ -1260,7 +1260,7 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Accuracy (multilabel)",
   note = "Averaged proportion of correctly predicted labels with respect to the total number of labels for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.
+  following the definition by Charte and Charte: https://journal.r-project.org / archive / 2015-2 / charte-charte.pdf.
   Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelACC(getPredictionTruth.PredictionMultilabel(pred),
@@ -1274,7 +1274,7 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
 measureMultilabelACC = function(truth, response) {
   numerator = rowSums(truth & response)
   denominator = rowSums(truth | response)
-  mean(ifelse(denominator == 0, 1, numerator/denominator))
+  mean(ifelse(denominator == 0, 1, numerator / denominator))
 }
 
 #' @export multilabel.ppv
@@ -1284,7 +1284,7 @@ multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Positive predictive value (multilabel)",
   note = "Also called precision. Averaged ratio of correctly predicted labels for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.
+  following the definition by Charte and Charte: https://journal.r-project.org / archive / 2015-2 / charte-charte.pdf.
   Fractions where the denominator becomes 0 are ignored in the average calculation.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelPPV(getPredictionTruth.PredictionMultilabel(pred),
@@ -1298,7 +1298,7 @@ multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, 
 measureMultilabelPPV = function(truth, response) {
   numerator = rowSums(truth & response)
   denominator = rowSums(response)
-  mean(numerator/denominator, na.rm = TRUE)
+  mean(numerator / denominator, na.rm = TRUE)
 }
 
 #' @export multilabel.tpr
@@ -1308,7 +1308,7 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "TPR (multilabel)",
   note = "Also called recall. Averaged proportion of predicted labels which are relevant for each instance,
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf.
+  following the definition by Charte and Charte: https://journal.r-project.org / archive / 2015-2 / charte-charte.pdf.
   Fractions where the denominator becomes 0 are ignored in the average calculation.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelTPR(getPredictionTruth.PredictionMultilabel(pred),
@@ -1322,7 +1322,7 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
 measureMultilabelTPR = function(truth, response) {
   numerator = rowSums(truth & response)
   denominator = rowSums(truth)
-  mean(numerator/denominator, na.rm = TRUE)
+  mean(numerator / denominator, na.rm = TRUE)
 }
 
 ###############################################################################

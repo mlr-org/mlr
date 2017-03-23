@@ -68,7 +68,7 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeIntegerLearnerParam(id = "bw.iters", lower = 1L, default = 10L),
     makeLogicalLearnerParam(id = "bw.replace", default = TRUE),
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
-    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
+    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2 / 3)
   )
   makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "BaggingWrapper", model.subclass = "BaggingModel")

@@ -86,10 +86,10 @@ regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.nu
 getSurvData = function(n = 100, p = 10) {
   set.seed(1)
   beta = c(rep(1, 10), rep(0, p-10))
-  x = matrix(rnorm(n*p), n, p)
+  x = matrix(rnorm(n * p), n, p)
   colnames(x) = sprintf("x%01i", 1:p)
   real.time = - (log(runif(n)))/ (10 * exp(drop(x %*% beta)))
-  cens.time = rexp(n, rate=1/10)
+  cens.time = rexp(n, rate=1 / 10)
   status = ifelse(real.time <= cens.time, TRUE, FALSE)
   obs.time = ifelse(real.time <= cens.time, real.time, cens.time) + 1
   return(cbind(data.frame(time = obs.time, status = status), x))
@@ -97,7 +97,7 @@ getSurvData = function(n = 100, p = 10) {
 surv.df = getSurvData()
 surv.formula = survival::Surv(time, status) ~ .
 surv.target = c("time", "status")
-surv.train.inds = seq(1, floor(2/3 * nrow(surv.df)))
+surv.train.inds = seq(1, floor(2 / 3 * nrow(surv.df)))
 surv.test.inds  = setdiff(seq_len(nrow(surv.df)), surv.train.inds)
 surv.train = surv.df[surv.train.inds, ]
 surv.test  = surv.df[surv.test.inds, ]

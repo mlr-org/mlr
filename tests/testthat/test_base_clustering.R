@@ -57,7 +57,7 @@ test_that("clustering benchmark", {
 })
 
 test_that("clustering downsample", {
-  down.tsk = downsample(noclass.task, perc = 1/3)
+  down.tsk = downsample(noclass.task, perc = 1 / 3)
   expect_equal(getTaskSize(down.tsk), 50L)
 })
 

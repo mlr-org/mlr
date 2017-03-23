@@ -2,18 +2,18 @@ context("learners_classiflabelswitch")
 
 n = 50L
 p = 2L
-mydata1 = matrix(runif(2*n*p), nrow = 2*n, ncol = p)
+mydata1 = matrix(runif(2 * n * p), nrow = 2 * n, ncol = p)
 mydata1 = as.data.frame(mydata1)
 mydata1[1:n, ]  = mydata1[1:n, ] + 10L
-mydata1[(n+1):(2*n), ]  = mydata1[(n+1):(2*n), ] - 10L
+mydata1[(n + 1):(2 * n), ]  = mydata1[(n + 1):(2 * n), ] - 10L
 mydata1$y = factor(rep(c("a", "b"), each = c(n)))
 mydata2 = mydata1
 mydata2$y = factor(rep(c("a", "b"), each = c(n)), levels = c("b", "a"))
 
-mydata3 = matrix(runif(3*n*p), nrow = 3*n, ncol = p)
+mydata3 = matrix(runif(3 * n * p), nrow = 3 * n, ncol = p)
 mydata3 = as.data.frame(mydata3)
 mydata3[1:n, ]  = mydata3[1:n, ] + 10L
-mydata3[(n+1):(2*n), ]  = mydata3[(n+1):(2*n), ] - 10L
+mydata3[(n + 1):(2 * n), ]  = mydata3[(n + 1):(2 * n), ] - 10L
 mydata3$y = factor(rep(c("a", "b", "c"), each = c(n)))
 mydata4 = mydata3
 mydata4$y = factor(rep(c("a", "b", "c"), each = c(n)), levels = c("c", "b", "a"))

@@ -52,7 +52,7 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   }
   m = min(nrow(d$data), m)
   min.cluster = ceiling(5 * m / (k^max.levels))
-  if (min.cluster>m) {
+  if (min.cluster > m) {
     f = getTaskFormula(.task)
     # map kernel to corresponding e1071 kernel
     if (!is.null(pars$kernel)) {

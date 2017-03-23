@@ -25,7 +25,7 @@ makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = NU
     if (!is.null(args$max.call))
       budget = args$max.call
     else
-      budget = args$max.call = 1e+07
+      budget = args$max.call = 1e + 07
   } else {
     if (is.null(args$max.call)) {
       args$max.call = budget

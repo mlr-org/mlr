@@ -51,7 +51,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
     if (.learner$predict.type == "prob") {
       y = matrix(0, ncol = 2, nrow = nrow(.newdata))
       colnames(y) = levs
-      y[, 1L] = 1-p
+      y[, 1L] = 1 - p
       y[, 2L] = p
       return(y)
     } else {

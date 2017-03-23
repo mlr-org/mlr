@@ -47,7 +47,7 @@ test_that("stratification with empty classes works", {
 test_that("stratification does not put all remaining elements in the first split", {
   k = 50
   sizes = rep(7, k)
-  n = 7*k
+  n = 7 * k
 
   data = data.frame(x = runif(n), y = factor(rep(1:k, sizes)))
   task = makeClassifTask(data=data, target="y")

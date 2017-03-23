@@ -63,7 +63,7 @@ test_that("calculateConfusionMatrix", {
   truth = factor(rep("R", 5), levels = c("M", "R"))
   predicted = factor(c("R", "R", "M", "M", "M")) # two correct three wrong
   err.abs = 3
-  err.rel = 3/5
+  err.rel = 3 / 5
   pred$data$truth = truth
   pred$data$response = predicted
   cm = calculateConfusionMatrix(pred, relative = TRUE)

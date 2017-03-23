@@ -230,7 +230,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     if (.learner$method == "hill.climb") {
       model.weight = .model$learner.model$weights
     } else {
-      model.weight = rep(1/length(probs), length(probs))
+      model.weight = rep(1 / length(probs), length(probs))
     }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
@@ -477,13 +477,13 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   flag = TRUE
   for (bagind in 1:bagtime) {
     # bagging of models
-    bagsize = ceiling(m*bagprob)
+    bagsize = ceiling(m * bagprob)
     bagmodel = sample(1:m, bagsize)
     weight = rep(0, bagsize)
 
     # Initial selection of strongest learners
     inds = NULL
-    if (init>0) {
+    if (init > 0) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
         score[i] = metric(probs[[i]], probs[[tn]])
@@ -497,16 +497,16 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     # current.prob = rep(0, nrow(probs))
     current.prob = matrix(0, nrow(probs[[1]]), ncol(probs[[1]]))
     old.score = Inf
-    if (selection.size>0) {
+    if (selection.size > 0) {
       current.prob = Reduce("+", probs[selection.ind])
-      old.score = metric(current.prob/selection.size, probs[[tn]])
+      old.score = metric(current.prob / selection.size, probs[[tn]])
     }
     flag = TRUE
 
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric((probs[[i]]+current.prob)/ (selection.size+1), probs[[tn]] )
+        score[i] = metric((probs[[i]]+current.prob)/ (selection.size + 1), probs[[tn]] )
       }
       inds = order(score)
       if (!replace) {
@@ -516,19 +516,19 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       }
 
       new.score = score[ind]
-      if (old.score-new.score<1e-8) {
+      if (old.score-new.score < 1e-8) {
         flag = FALSE
       } else {
-        current.prob = current.prob+probs[[ind]]
+        current.prob = current.prob + probs[[ind]]
         weights[ind] = weights[ind]+1
         selection.ind = c(selection.ind, ind)
-        selection.size = selection.size+1
+        selection.size = selection.size + 1
         old.score = new.score
       }
     }
     weights[bagmodel] = weights[bagmodel] + weight
   }
-  weights = weights/sum(weights)
+  weights = weights / sum(weights)
 
   list(method = "hill.climb", base.models = base.models, super.model = NULL,
        pred.train = probs, weights = weights)
@@ -608,7 +608,7 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   m = length(levels)
   p = ncol(probs)
   if (is.null(model.weight)) {
-    model.weight = rep(1/p, p)
+    model.weight = rep(1 / p, p)
   }
   mat = matrix(0, nrow(probs), m)
   for (i in 1:m) {
@@ -674,7 +674,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     if (length(ind2)>0) {
       dist.mat.2 = hamming(mat[, ind2, drop = FALSE])
     }
-    dist.mat = dist.mat.1+dist.mat.2
+    dist.mat = dist.mat.1 + dist.mat.2
     neighbour = max.col( -dist.mat - diag(Inf, n))
     return(neighbour)
   }
@@ -686,7 +686,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   p = ncol(.data)
   for (loop in 1:k) {
     data = .data
-    prob.mat = matrix(sample(c(0, 1), n*p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
+    prob.mat = matrix(sample(c(0, 1), n * p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
     prob.mat = prob.mat == 0
     for (i in 1:n) {
       e = as.numeric(data[i, ])

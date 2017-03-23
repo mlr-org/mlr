@@ -4,7 +4,7 @@ test_that("repcv instance works", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3), task = multiclass.task)
 
   iters = rin$desc$iters
-  expect_equal(iters, 10*3)
+  expect_equal(iters, 10 * 3)
   reps = rin$desc$reps
   expect_equal(reps, 3)
 
@@ -32,7 +32,7 @@ test_that("repcv instance is stochastic", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3), task = multiclass.task)
 
   iters = rin$desc$iters
-  expect_equal(iters, 10*3)
+  expect_equal(iters, 10 * 3)
   reps = rin$desc$reps
   expect_equal(reps, 3)
 

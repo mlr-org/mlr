@@ -22,7 +22,7 @@ makeRLearner.regr.GPfit = function(){
             the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has
             to be set. (2) We replace the GPfit parameter 'corr = list(type='exponential',power=1.95)' to be seperate
             parameters 'type' and 'power', in the case of  corr = list(type='matern', nu = 0.5), the seperate parameters
-            are 'type' and 'matern_nu_k=0', and nu is computed by 'nu=(2*matern_nu_k+1)/2=0.5'
+            are 'type' and 'matern_nu_k=0', and nu is computed by 'nu=(2 * matern_nu_k + 1)/2=0.5'
             ",
     callees = "GP_fit"
   )
@@ -39,7 +39,7 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
   }
-  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k+0.5 ), ...)
+  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k + 0.5 ), ...)
   res = attachTrainingInfo(res, mlist)
   return(res)
 }

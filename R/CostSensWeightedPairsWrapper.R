@@ -46,9 +46,9 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
   models = vector("list", length = k * (k - 1) / 2)
 
   counter = 1
-  for (i in 1:(k-1)) {
+  for (i in 1:(k - 1)) {
     a1 = classes[i]
-    for (j in (i+1):k) {
+    for (j in (i + 1):k) {
       a2 = classes[j]
       y = ifelse(costs[, a1] < costs[, a2], a1, a2)
       # if on the sample one alg is always better, always predict it

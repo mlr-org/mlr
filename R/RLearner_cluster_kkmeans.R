@@ -52,7 +52,7 @@ predictLearner.cluster.kkmeans = function(.learner, .model, .newdata, .weights =
   # kernel product between each center and itself: columns are identical
   Dcc = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(c))), each = nrow(Dxc)), nrow = nrow(Dxc))
   # this is the squared kernel distance to the centers
-  D2 = Dxx + Dcc - 2*Dxc
+  D2 = Dxx + Dcc - 2 * Dxc
   # the nearest center determines cluster assignment
   res = apply(D2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
   return(res)

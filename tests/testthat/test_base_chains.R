@@ -24,7 +24,7 @@ test_that("chains", {
   p = predict(m, task = multiclass.task)
   or = m$learner.model$opt.result
   expect_equal(length(or$x), 2)
-  expect_equal(getOptPathLength(or$opt.path), 2*2)
+  expect_equal(getOptPathLength(or$opt.path), 2 * 2)
   perf = performance(p, mmce)
   expect_true(perf < 0.1)
 })

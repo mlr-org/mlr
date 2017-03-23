@@ -38,7 +38,7 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
   levs = levels(data[, getTaskTargetNames(.task)])
   n = length(levs)
   if (missing(cutoff))
-    cutoff = rep(1/n, n)
+    cutoff = rep(1 / n, n)
   if (!missing(classwt) && is.numeric(classwt) && length(classwt) == n && is.null(names(classwt)))
     names(classwt) = levs
   if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff)))
