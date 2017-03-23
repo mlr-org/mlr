@@ -516,7 +516,7 @@ multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1
 measureAUNU = function(probabilities, truth) {
   if (length(unique(truth)) != nlevels(truth)){
     warning("Measure is undefined if there isn't at least one sample per class.")
-	return(NA_real_)
+    return(NA_real_)
   }
   mean(vnapply(1:nlevels(truth), function(i) colAUC(probabilities[, i], truth == levels(truth)[i])))
 }
@@ -539,7 +539,7 @@ multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1
 measureAUNP = function(probabilities, truth) {
   if (length(unique(truth)) != nlevels(truth)){
     warning("Measure is undefined if there isn't at least one sample per class.")
-	return(NA_real_)
+    return(NA_real_)
   }
   sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[, i], truth == levels(truth)[i])))
 }
@@ -641,7 +641,7 @@ ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Spherical Scoring Rule",
   note = "Defined as: mean(p_i(sum_j(p_ij))), where p_i is the predicted probability of the true class of observation i and p_ij is the predicted probablity of observation i for class j.
-	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureSSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
   }
@@ -664,7 +664,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
   name = "Quadratic Scoring Rule",
   note = "Defined as: 1 - (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j.
   This scoring rule is the same as 1 - multiclass.brier.
-	See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
+  See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureQSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
   }
@@ -687,7 +687,7 @@ lsr = makeMeasure(id = "lsr", minimize = FALSE, best = 0, worst = -Inf,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Logarithmic Scoring Rule",
   note = "Defined as: mean(log(p_i)), where p_i is the predicted probability of the true class of observation i.
-	This scoring rule is the same as the negative logloss, self-information or surprisal.
+  This scoring rule is the same as the negative logloss, self-information or surprisal.
   See: Bickel, J. E. (2007). Some comparisons among quadratic, spherical, and logarithmic scoring rules. Decision Analysis, 4(2), 49-65.",
   fun = function(task, model, pred, feats, extra.args) {
     measureLSR(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
@@ -789,19 +789,19 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureAUC = function(probabilities, truth, negative, positive) {
-	if (is.factor(truth)) {
-  	i = as.integer(truth) == which(levels(truth) == positive)
+  if (is.factor(truth)) {
+    i = as.integer(truth) == which(levels(truth) == positive)
   } else {
-	  i = truth == positive
+    i = truth == positive
   }
-	if (length(unique(i)) < 2L) {
-		stop("truth vector must have at least two classes")
-	}
+  if (length(unique(i)) < 2L) {
+    stop("truth vector must have at least two classes")
+  }
   #Use fast ranking function from data.table for larger vectors
   if (length(i) > 5000L) {
-  	r = frankv(probabilities)
+    r = frankv(probabilities)
   } else {
-  	r = rank(probabilities)
+    r = rank(probabilities)
   }
   n_pos = as.numeric(sum(i))
   n_neg = length(i) - n_pos

@@ -28,7 +28,7 @@ learnerHelp = function(learner) {
         if (is.finite(n) && n >= 1 && n <= length(callees)) {
           break
         }
-	if (identical(n, 0L)) {
+        if (identical(n, 0L)) {
           return(invisible(NULL))
         }
         catf("Invalid input. Enter a number between 0 and %d", length(callees))
