@@ -117,15 +117,15 @@ linters = list(
   function.left.parentheses = function_left_parentheses_linter,
 #   snake.case = snake_case_linter,
 #   absolute.paths = absolute_paths_linter,
-  single.quotes = single_quotes_linter,
+  single.quotes = lintr:::single_quotes_linter,
   left.assign = left_assign_linter,
   right.assign = right_assign_linter,
-  no.tab = no_tab_linter,
-  T.and.F.symbol = T_and_F_symbol_linter,
-  semicolon.terminator = semicolon_terminator_linter,
-  seq = seq_linter,
-  unneeded.concatenation = unneeded_concatenation_linter,
-  trailing.whitespace = trailing_whitespace_linter,
-  todo.comment = todo_comment_linter(todo = "todo")) # is case-insensitive
+  no.tab = lintr:::no_tab_linter,
+  T.and.F.symbol = lintr:::T_and_F_symbol_linter,
+  semicolon.terminator = lintr:::semicolon_terminator_linter,
+  seq = lintr:::seq_linter,
+  unneeded.concatenation = lintr:::unneeded_concatenation_linter,
+  trailing.whitespace = lintr:::trailing_whitespace_linter,
+  todo.comment = lintr:::todo_comment_linter(todo = "todo")) # is case-insensitive
 
 
