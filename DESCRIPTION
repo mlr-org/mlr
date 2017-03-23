@@ -131,6 +131,7 @@ Suggests:
     ranger (>= 0.6.0),
     RCurl,
     Rfast,
+    rex,
     rFerns,
     rjson,
     rknn,
