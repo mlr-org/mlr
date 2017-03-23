@@ -62,11 +62,18 @@ test_that("lint check", {
 #    open.curly = open_curly_linter(),
 #    closed.curly = closed_curly_linter(),
     spaces.left.parentheses = spaces_left_parentheses_linter,
+    function.left.parentheses = function_left_parentheses_linter,
 #      snake.case = snake_case_linter,
 #      absolute.paths = absolute_paths_linter,
     single.quotes = single_quotes_linter,
     left.assign = left_assign_linter,
-    right.assign = right_assign_linter)
+    right.assign = right_assign_linter,
+    no.tab = no_tab_linter,
+    T.and.F.symbol = T_and_F_symbol_linter,
+    semicolon.terminator = semicolon_terminator_linter,
+    seq = seq_linter,
+    unneeded.concatenation = unneeded_concatenation_linter,
+    trailing.whitespace = trailing_whitespace_linter)
   expect_lint_free(linters = linters)
 })
 
