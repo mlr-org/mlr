@@ -105,7 +105,7 @@ Suggests:
     knitr,
     laGP,
     LiblineaR,
-    lintr,
+    lintr (>= 1.0.0.9001),
     lqa,
     MASS,
     mboost,
