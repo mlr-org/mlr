@@ -104,6 +104,6 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
   last = max(opt.path$env$dob)
 
   if (all(opt.path$env$eol[opt.path$env$dob == last] == last))
-    last = last-1
+    last = last - 1
   makeFeatSelResultFromOptPath(learner, measures, control, opt.path, dob = last, ties = "first")
 }

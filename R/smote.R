@@ -107,11 +107,11 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
         neigh = sample(1:nn, 1)
 
         diffs = x.min.matrix[kNNs[neigh], ] - x.min.matrix[i, ]
-        res[(i-1) * n.new.obs + n, ] = x.min.matrix[i, ] + runif(1) * diffs
+        res[(i - 1) * n.new.obs + n, ] = x.min.matrix[i, ] + runif(1) * diffs
         if (any(!is.num)) {
           for (j in seq_col(x.min.matrix)) {
             if (!is.num[j])
-              res[(i-1) * n.new.obs + n, j] = c(x.min.matrix[kNNs[neigh], j],
+              res[(i - 1) * n.new.obs + n, j] = c(x.min.matrix[kNNs[neigh], j],
                 x.min.matrix[i, j])[1 + round(runif(1), 0)]
           }
         }

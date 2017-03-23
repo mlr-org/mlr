@@ -85,7 +85,7 @@ regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.nu
 
 getSurvData = function(n = 100, p = 10) {
   set.seed(1)
-  beta = c(rep(1, 10), rep(0, p-10))
+  beta = c(rep(1, 10), rep(0, p - 10))
   x = matrix(rnorm(n * p), n, p)
   colnames(x) = sprintf("x%01i", 1:p)
   real.time = - (log(runif(n))) / (10 * exp(drop(x %*% beta)))

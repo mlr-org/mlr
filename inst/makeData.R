@@ -72,7 +72,7 @@ save(agri.task, file = file.path(dn, "agri.task.RData"), compress = "xz")
 # cost-sensitive classification
 set.seed(DATASEED)
 data(iris, package = "datasets")
-cost = matrix(runif(150*3, 0, 2000), 150) * (1 - diag(3))[iris$Species, ]
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[iris$Species, ]
 iris$Species = NULL
 costiris.task = makeCostSensTask("cost-sensitive iris-example", data = iris, cost = cost)
 save(costiris.task, file = file.path(dn, "costiris.task.RData"), compress = "xz")

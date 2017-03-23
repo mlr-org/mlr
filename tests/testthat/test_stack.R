@@ -76,7 +76,7 @@ test_that("Parameters for hill climb works", {
   metric = function(pred, true) {
     pred = colnames(pred)[max.col(pred)]
     tb = table(pred, true)
-    return( 1- sum(diag(tb)) / sum(tb) )
+    return(1 - sum(diag(tb)) / sum(tb))
   }
 
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",

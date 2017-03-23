@@ -29,7 +29,7 @@ test_that("regr_km", {
   ps = makeNumericParamSet(len = 1, lower = 0, upper = 1)
   set.seed(123)
   rs = generateRandomDesign(n = 100, ps)
-  rs$y = apply(rs, 1, function(x) (x-0.5)^2)
+  rs$y = apply(rs, 1, function(x) (x - 0.5)^2)
   tsk = makeRegrTask(data = rs, target = "y")
   lrn = makeLearner("regr.km")
   expect_error(train(lrn, tsk), "leading minor of order")

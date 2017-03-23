@@ -404,7 +404,7 @@ stackCV = function(learner, task) {
   if (use.feat) {
     # add data with normal features IN CORRECT ORDER
     feat = getTaskData(task)#[test.inds, ]
-    feat = feat[, !colnames(feat)%in%tn, drop = FALSE]
+    feat = feat[, !colnames(feat) %in% tn, drop = FALSE]
     predData = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = predData, target = tn)
   } else {
@@ -638,7 +638,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   for (i in ind1) {
     mn[i] = min(.data[, i])
     mx[i] = max(.data[, i])
-    .data[, i] = (.data[, i]-mn[i]) / (mx[i]-mn[i])
+    .data[, i] = (.data[, i] - mn[i]) / (mx[i] - mn[i])
   }
   if (is.null(s)) {
     s = rep(0, ncol(.data))
@@ -686,7 +686,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   p = ncol(.data)
   for (loop in 1:k) {
     data = .data
-    prob.mat = matrix(sample(c(0, 1), n * p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
+    prob.mat = matrix(sample(c(0, 1), n * p, replace = TRUE, prob = c(prob, 1 - prob)), n, p)
     prob.mat = prob.mat == 0
     for (i in 1:n) {
       e = as.numeric(data[i, ])
@@ -695,7 +695,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
       # continuous
       for (j in ind1) {
         if (prob.mat[i, j]) {
-          current.sd = abs(e[j]-ee[j]) / s[j]
+          current.sd = abs(e[j] - ee[j]) / s[j]
           tmp1 = rnorm(1, ee[j], current.sd)
           tmp2 = rnorm(1, e[j], current.sd)
           e[j] = tmp1
@@ -716,7 +716,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     res = rbind(res, data)
   }
   for (i in ind1)
-    res[, i] = res[, i] * (mx[i]-mn[i]) + mn[i]
+    res[, i] = res[, i] * (mx[i] - mn[i]) + mn[i]
   res = data.frame(res)
   names(res) = ori.names
   for (i in ind2)

@@ -305,7 +305,7 @@ rrse = makeMeasure(id = "rrse", minimize = TRUE, best = 0, worst = Inf,
 #' @rdname measures
 #' @format none
 measureRRSE = function(truth, response){
-  tss = sum((truth-mean(truth))^2L)
+  tss = sum((truth - mean(truth))^2L)
   if (tss == 0){
     warning("Measure is undefined if all truth values are equal.")
     return(NA_real_)
@@ -329,7 +329,7 @@ rae = makeMeasure(id = "rae", minimize = TRUE, best = 0, worst = Inf,
 #' @rdname measures
 #' @format none
 measureRAE = function(truth, response){
-  meanad = sum(abs(truth-mean(truth)))
+  meanad = sum(abs(truth - mean(truth)))
   if (meanad == 0){
     warning("Measure is undefined if all truth values are equal.")
     return(NA_real_)
@@ -357,7 +357,7 @@ measureMAPE = function(truth, response){
     warning("Measure is undefined if any truth value is equal to 0.")
     return(NA_real_)
   }
-  return(mean(abs((truth-response) / truth)))
+  return(mean(abs((truth - response) / truth)))
 }
 
 #' @export msle

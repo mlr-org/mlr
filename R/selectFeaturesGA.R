@@ -30,7 +30,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
     kids.inds = seq(oplen - lambda + 1, oplen)
     if (control$extra.args$comma) {
       # if comma, kill current pop and keep only mu best of offspring
-      setOptPathElEOL(opt.path, pop.inds, i-1)
+      setOptPathElEOL(opt.path, pop.inds, i - 1)
       pool.inds = kids.inds
       pool.y = kids.y
     } else {

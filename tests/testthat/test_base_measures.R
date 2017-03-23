@@ -232,7 +232,7 @@ test_that("check measure calculations", {
   rsq.perf = performance(pred.regr, measures = rsq, model = mod.regr)
   expect_equal(rsq.test, rsq$fun(pred = pred.regr))
   expect_equal(rsq.test, as.numeric(rsq.perf))
-  expect_equal(1- ((4-5)^2 + (11-10)^2 + (0-0)^2 + (4-5)^2) / ((5-5)^2 + (10-5)^2 + (0-5)^2 + (5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(1 - ((4-5)^2 + (11 - 10)^2 + (0-0)^2 + (4-5)^2) / ((5-5)^2 + (10-5)^2 + (0-5)^2 + (5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRSQ(0, 0))
     expect_warning(measureRSQ(0, 0))
@@ -260,7 +260,7 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
-  expect_equal(sum((1-3)^2 + (2-3)^2 + (3-3)^2 + (4-3)^2 + (5-3)^2) / sum((5-3)^2 + (4-3)^2 + (3-3)^2 + (2-3)^2 + (1-3)^2), measureEXPVAR(5:1, 1:5))
+  expect_equal(sum((1 - 3)^2 + (2-3)^2 + (3-3)^2 + (4-3)^2 + (5-3)^2) / sum((5-3)^2 + (4-3)^2 + (3-3)^2 + (2-3)^2 + (1 - 3)^2), measureEXPVAR(5:1, 1:5))
   suppressWarnings({
     expect_equal(NA_real_, measureEXPVAR(0, 0))
     expect_warning(measureEXPVAR(0, 0))

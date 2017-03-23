@@ -1,3 +1,3 @@
 library(testthat)
-test_check("mlr", filter="lint")
+test_check("mlr", filter = "lint")
 

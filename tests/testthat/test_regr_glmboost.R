@@ -13,7 +13,7 @@ test_that("regr_glmboost", {
   parset.list2 = list(
     list(),
     list(family = "Gaussian", nu = 0.03),
-    list(family= "GammaReg", nuirange = c(0, 50), mstop = 600, center = TRUE),
+    list(family = "GammaReg", nuirange = c(0, 50), mstop = 600, center = TRUE),
     list(family = "custom.family", custom.family.definition =  mboost::Family(ngradient = function(y, f, w = 1) y - f,
     loss = function(y, f) (y - f)^2,
     name = "My Gauss Variant"))
@@ -45,7 +45,7 @@ test_that("regr_glmboost works with families for count data", {
   )
   parset.list2 = list(
     list(family = "Poisson", nu = 0.02),
-    list(family= "NBinomial"),
+    list(family = "NBinomial"),
     list(family = "Hurdle")
   )
   old.predicts.list = list()

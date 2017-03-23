@@ -14,7 +14,7 @@ test_that("regr_blackboost", {
 
   parset.list2 = list(
     list(),
-    list(family= "GammaReg", maxdepth = 4),
+    list(family = "GammaReg", maxdepth = 4),
     list(family = "Laplace", nu = 0.03)
   )
 
@@ -47,7 +47,7 @@ test_that("regr_blackboost works with families for count data", {
   )
   parset.list2 = list(
     list(family = "Poisson", nu = 0.02),
-    list(family= "NBinomial"),
+    list(family = "NBinomial"),
     list(family = "Hurdle")
   )
   old.predicts.list = list()
