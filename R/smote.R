@@ -132,7 +132,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   res = as.data.frame(res)
   # convert ints back to factors
   if (any(!is.num)) {
-    for (i in 1:ncol(res)) {
+    for (i in seq_len(ncol(res))) {
       if (!is.num[i])
         res[, i] = as.factor(as.integer(res[, i]))
       levels(res[, i]) = levels(x[, i])

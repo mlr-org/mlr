@@ -627,7 +627,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   ori.names = names(.data)
   feat.class = sapply(.data, class)
   ind2 = which(feat.class == "factor")
-  ind1 = setdiff(1:ncol(.data), ind2)
+  ind1 = setdiff(seq_len(ncol(.data)), ind2)
   if (length(ind2)>0)
     ori.labels = lapply(.data[[ind2]], levels)
   .data = lapply(.data, as.numeric)

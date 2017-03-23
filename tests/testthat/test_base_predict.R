@@ -86,7 +86,7 @@ test_that("predict works with newdata / subset", {
 
 test_that("predict preserves rownames", {
   data = multiclass.df
-  rownames(data) = nrow(data):1
+  rownames(data) = rev(seq_len(nrow(data)))
   task = makeClassifTask(data = data, target = multiclass.target)
   # kknn (or its mlr intergration) seems to NOT preserve rownames, issue 142 was reported
   mod = train("classif.kknn", task = task)
