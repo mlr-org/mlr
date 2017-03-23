@@ -59,8 +59,7 @@ test_that("FDA_classif_knn behaves like original api", {
   # test that parameters work for different metrics
   set.seed(getOption("mlr.debug.seed"))
   a.metric = fda.usc::classif.knn(glearn, mlearn,
-                                  metric = semimetric.deriv,
-                                  nderiv = 10,
+                                  metric = fda.usc::semimetric.deriv,
                                   par.CV = list(trim = 0.5))
   p1.metric = predict(a.metric, mtest)
   p2.metric = predict(a.metric, mlearn)
@@ -84,6 +83,7 @@ test_that("FDA_classif_knn behaves like original api", {
 
 
 
+  short.task = subsetTask(task, subset = c(TRUE, FALSE, FALSE))
   # test that all metrics work basically
   metrics = c("metric.lp",
               "metric.hausdorff",
@@ -103,7 +103,7 @@ test_that("FDA_classif_knn behaves like original api", {
 
   m.metrics = list()
   for(i in 1:length(metrics)) {
-    m.metrics[[i]] = train(lrn.metrics[[i]], task)
+    m.metrics[[i]] = train(lrn.metrics[[i]], short.task)
   }
 
 })
