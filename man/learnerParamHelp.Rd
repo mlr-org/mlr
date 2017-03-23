@@ -4,16 +4,16 @@
 \alias{learnerParamHelp}
 \title{Get specific help for a learner's parameters.}
 \usage{
-learnerParamHelp(learner, param)
+learnerParamHelp(learner, param = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{param}{[\code{character}]\cr
-Parameter(s) to describe. If no argument is given, all parameters with a description
-are printed.}
+\item{param}{[\code{character} | NULL]\cr
+Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
+status of all parameters.}
 }
 \description{
 Print the description of parameters of a given learner. The description
