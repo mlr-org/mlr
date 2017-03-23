@@ -31,7 +31,7 @@ library("rex")
 # All modifications are licensed as the rest of mlr.
  
 # prohibit <-
-left_assign_linter = function(source_file) {
+left.assign.linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
       parsed = lintr:::with_id(source_file, id)
       Lint(filename = source_file$filename, line_number = parsed$line1,
@@ -42,7 +42,7 @@ left_assign_linter = function(source_file) {
 }
 
 # prohibit ->
-right_assign_linter = function(source_file) {
+right.assign.linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "RIGHT_ASSIGN"), function(id) {
       parsed = lintr:::with_id(source_file, id)
       Lint(filename = source_file$filename, line_number = parsed$line1,
@@ -55,7 +55,7 @@ right_assign_linter = function(source_file) {
 `%!=%` = lintr:::`%!=%`
 `%==%` = lintr:::`%==%`
 
-spaces_left_parentheses_linter = function(source_file) {
+spaces.left.parentheses.linter = function(source_file) {
       lapply(lintr:::ids_with_token(source_file, "'('"), function(id) {
         parsed = source_file$parsed_content[id, ]
         terminal_tokens_before = source_file$parsed_content$token[source_file$parsed_content$line1 ==
@@ -76,13 +76,13 @@ spaces_left_parentheses_linter = function(source_file) {
                 Lint(filename = source_file$filename, line_number = parsed$line1,
                   column_number = parsed$col1, type = "style",
                   message = "Place a space before left parenthesis, except in a function call.",
-                  line = line, linter = "spaces_left_parentheses_linter")
+                  line = line, linter = "spaces.left.parentheses.linter")
             }
         }
     })
 }
 
-function_left_parentheses_linter = function(source_file) {
+function.left.parentheses.linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "'('"),
     function(id) {
 
@@ -137,7 +137,7 @@ function_left_parentheses_linter = function(source_file) {
     })
 }
 
-infix_spaces_linter = function(source_file) {
+infix.spaces.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, lintr:::infix_tokens, fun = `%in%`),
         function(id) {
             parsed = lintr:::with_id(source_file, id)
@@ -167,17 +167,17 @@ infix_spaces_linter = function(source_file) {
                     column_number = parsed$col1, type = "style",
                     message = "Put spaces around all infix operators.",
                     line = line, ranges = list(c(start, end)),
-                    linter = "infix_spaces_linter")
+                    linter = "infix.spaces.linter")
                 }
             }
         })
 }
 
 
-loweralnum <- rex(one_of(lower, digit))
-upperalnum <- rex(one_of(upper, digit))
+loweralnum = rex(one_of(lower, digit))
+upperalnum = rex(one_of(upper, digit))
 
-style_regexes <- list(
+style.regexes = list(
   "UpperCamelCase" = rex(start, upper, zero_or_more(alnum), end),
   "lowerCamelCase" = rex(start, lower, zero_or_more(alnum), end),
   "snake_case"     = rex(start, one_or_more(loweralnum), zero_or_more("_", one_or_more(loweralnum)), end),
@@ -188,15 +188,15 @@ style_regexes <- list(
 )
 
 # incorporate our own camelCase.withDots style.
-matches_styles = function(name, styles=names(style_regexes)) {
-  invalids = paste(styles[!styles %in% names(style_regexes)], collapse=", ")
+matches_styles = function(name, styles=names(style.regexes)) {
+  invalids = paste(styles[!styles %in% names(style.regexes)], collapse=", ")
   if (nzchar(invalids)) {
-    valids = paste(names(style_regexes), collapse=", ")
+    valids = paste(names(style.regexes), collapse=", ")
     stop(sprintf("Invalid style(s) requested: %s\nValid styles are: %s\n", invalids, valids))
   }
   name = re_substitutes(name, rex(start, one_or_more(dot)), "")  # remove leading dots
   vapply(
-    style_regexes[styles],
+    style.regexes[styles],
     re_matches,
     logical(1L),
     data=name
@@ -205,8 +205,14 @@ matches_styles = function(name, styles=names(style_regexes)) {
 
 object_naming_linter = lintr:::make_object_linter(function(source_file, token) {
   sp = source_file$parsed_content
+  if (tail(c("", sp$token[sp$terminal & sp$id < token$id]), n = 1) == "'$'") {
+    # ignore list member names
+    return(NULL)
+  }
   sp = head(sp[sp$terminal & sp$id > token$id, ], n = 2)
   if (!sp$token[1] %in% c("LEFT_ASSIGN", "EQ_ASSIGN")) {
+    # ignore if not an assignment.
+    # we check for LEFT_ASSIGN and EQ_ASSIGN since here we are LEFT_ASSIGN tolerant
     return(NULL)
   }
   style = ifelse(sp$token[2] == "FUNCTION", "functionCamel.case", "dotted.case")
@@ -225,16 +231,16 @@ object_naming_linter = lintr:::make_object_linter(function(source_file, token) {
 # note that this must be a *named* list (bug in lintr)
 linters = list(
   commas = lintr:::commas_linter,
-#  infix.spaces = infix_spaces_linter,
+#  infix.spaces = infix.spaces.linter,
 #  open.curly = open_curly_linter(),
 #  closed.curly = closed_curly_linter(),
-  spaces.left.parentheses = spaces_left_parentheses_linter,
-  function.left.parentheses = function_left_parentheses_linter,
+  spaces.left.parentheses = spaces.left.parentheses.linter,
+  function.left.parentheses = function.left.parentheses.linter,
 #   snake.case = snake_case_linter,
 #   absolute.paths = absolute_paths_linter,
   single.quotes = lintr:::single_quotes_linter,
-  left.assign = left_assign_linter,
-  right.assign = right_assign_linter,
+  left.assign = left.assign.linter,
+  right.assign = right.assign.linter,
   no.tab = lintr:::no_tab_linter,
   T.and.F.symbol = lintr:::T_and_F_symbol_linter,
   semicolon.terminator = lintr:::semicolon_terminator_linter,
@@ -243,6 +249,6 @@ linters = list(
   trailing.whitespace = lintr:::trailing_whitespace_linter,
   todo.comment = lintr:::todo_comment_linter(todo = "todo"), # is case-insensitive
   spaces.inside = lintr:::spaces_inside_linter,
-  infix.spaces = infix_spaces_linter,
+  infix.spaces = infix.spaces.linter,
   object.naming = object_naming_linter)
 
