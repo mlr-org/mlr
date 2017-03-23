@@ -73,7 +73,8 @@ test_that("lint check", {
     semicolon.terminator = semicolon_terminator_linter,
     seq = seq_linter,
     unneeded.concatenation = unneeded_concatenation_linter,
-    trailing.whitespace = trailing_whitespace_linter)
+    trailing.whitespace = trailing_whitespace_linter,
+    todo.comment = todo_comment_linter(todo = "todo")) # is case-insensitive
   expect_lint_free(linters = linters)
 })
 
