@@ -9,8 +9,8 @@ test_that("regr_mob", {
     list(alpha=0.10, minsplit=40, term.feats=c("lstat", "rm", "crim"),
       part.feats=c("zn", "indus", "chas", "dis")),
     list(alpha=0.10, minsplit=10, trim=0.2, breakties=TRUE,
-      term.feats=c("lstat", "rm", "crim", "rm", "dis"), part.feats=c("zn")),
-    list(trim=0.01, bonferroni=FALSE, term.feats=c("crim"),
+      term.feats=c("lstat", "rm", "crim", "rm", "dis"), part.feats= "zn"),
+    list(trim=0.01, bonferroni=FALSE, term.feats= "crim",
       part.feats=c("zn", "indus", "chas", "dis", "lstat", "rm"))
   )
 
