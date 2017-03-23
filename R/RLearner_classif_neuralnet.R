@@ -42,24 +42,24 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
   cf = as.character(f)
   taskdat = getTaskData(.task, .subset)
   nms = names(taskdat)
-  formula_head = as.character(f)[2]
-  if (is.character(taskdat[[formula_head]])){
-    taskdat[[formula_head]] = as.factor(taskdat[[formula_head]])
-    taskdat[[formula_head]] = as.numeric(taskdat[[formula_head]])
+  formula.head = as.character(f)[2]
+  if (is.character(taskdat[[formula.head]])){
+    taskdat[[formula.head]] = as.factor(taskdat[[formula.head]])
+    taskdat[[formula.head]] = as.numeric(taskdat[[formula.head]])
   }
-  if (is.factor(taskdat[[formula_head]])){
-    taskdat[[formula_head]] = as.numeric(taskdat[[formula_head]])
+  if (is.factor(taskdat[[formula.head]])){
+    taskdat[[formula.head]] = as.numeric(taskdat[[formula.head]])
   }
-  lvls = length(unique(taskdat[[formula_head]]))
+  lvls = length(unique(taskdat[[formula.head]]))
   if (length(lvls) > 2)
     stop("Use neuralnet to do binary classification")
-  if (!all(taskdat[[formula_head]] == 0 | taskdat[[formula_head]] == 1)){
-    taskdat[[formula_head]] = taskdat[[formula_head]] - 1
+  if (!all(taskdat[[formula.head]] == 0 | taskdat[[formula.head]] == 1)){
+    taskdat[[formula.head]] = taskdat[[formula.head]] - 1
   }
   if (sum(stri_detect_regex(cf, "\\.")) > 0){
-    varnames = nms[nms != formula_head]
-    formula_head = stri_paste("as.numeric(", formula_head, ")~", sep = " ")
-    formula.expand = stri_paste(formula_head,
+    varnames = nms[nms != formula.head]
+    formula.head = stri_paste("as.numeric(", formula.head, ")~", sep = " ")
+    formula.expand = stri_paste(formula.head,
                                 stri_paste(varnames, collapse = "+", sep = " "),
                                 sep = " ")
     formula.expand = as.formula(formula.expand)

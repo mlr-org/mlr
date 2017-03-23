@@ -441,15 +441,15 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   depths = sapply(U, length)
 
   effects = sapply(U, function(u) stri_paste(u, collapse = ":"))
-  fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
-  names(fixed_grid) = effects
+  fixed.grid = lapply(U, function(u) expand.grid(fixed[u]))
+  names(fixed.grid) = effects
 
   target = td$target
 
   ## generate each effect
   pd = lapply(U, function(u, args) {
     args$features = u
-    args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
+    args$rng = fixed.grid[[stri_paste(u, collapse = ":")]]
     out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(args$rng)), more.args = args)
     doAggregatePartialDependence(out, td, target, u, args$rng)
   }, args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, ...))
@@ -465,8 +465,8 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
     if (length(u) > 1) {
       sub = combn(u, length(u) - 1, simplify = FALSE)
       loe = lapply(pd[unlist(sub)], function(x) {
-        to_match = colnames(x)[!(colnames(x) %in% target)]
-        out = merge(x, hoe[, to_match, drop = FALSE], by = to_match)
+        to.match = colnames(x)[!(colnames(x) %in% target)]
+        out = merge(x, hoe[, to.match, drop = FALSE], by = to.match)
         out[, colnames(out) %in% target]
       })
       hoe[, target] = hoe[, target] - Reduce("+", loe)
@@ -909,7 +909,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
   else
     target = "Risk"
 
-  create_plot = function(td, target, interaction, individual, data, x, bounds) {
+  create.plot = function(td, target, interaction, individual, data, x, bounds) {
     classif = td$type == "classif" & all(target %in% td$class.levels)
     if (classif) {
       if (interaction)
@@ -982,12 +982,12 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
         )
       ))
     server = shiny::shinyServer(function(input, output) {
-      plt = shiny::reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
+      plt = shiny::reactive(create.plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
           obj$data[obj$data[[interact]] == input$interaction_select, ],
           x, bounds))
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
       })
     shiny::shinyApp(ui, server)
   } else
-    create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
+    create.plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
 }

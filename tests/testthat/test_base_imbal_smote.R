@@ -29,11 +29,11 @@ test_that("smote works with rate 1 (no new examples)",  {
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"])
 
-  taskAlt = smote(binaryclass.task, rate = 1, alt.logic = TRUE)
-  dfAlt = getTaskData(taskAlt)
-  tab2Alt = table(dfAlt[, binaryclass.target])
-  expect_equal(tab2Alt["M"], tab1["M"])
-  expect_equal(tab2Alt["R"], tab1["R"])
+  task.alt = smote(binaryclass.task, rate = 1, alt.logic = TRUE)
+  df.alt = getTaskData(task.alt)
+  tab2alt = table(df.alt[, binaryclass.target])
+  expect_equal(tab2alt["M"], tab1["M"])
+  expect_equal(tab2alt["R"], tab1["R"])
 })
 
 test_that("smote works with only factor features",  {

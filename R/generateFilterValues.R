@@ -40,17 +40,17 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
-  check_task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
-  if (any(check_task))
+  check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
+  if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
-          stri_paste("'", method[check_task], "'", collapse = ", "), td$type)
+          stri_paste("'", method[check.task], "'", collapse = ", "), td$type)
 
-  check_feat = lapply(filter, function(x) setdiff(names(td$n.feat[td$n.feat > 0L]), x$supported.features))
-  check_length = sapply(check_feat, length) > 0L
-  if (any(check_length)) {
+  check.feat = lapply(filter, function(x) setdiff(names(td$n.feat[td$n.feat > 0L]), x$supported.features))
+  check.length = sapply(check.feat, length) > 0L
+  if (any(check.length)) {
     stopf("Filter(s) %s not compatible with features of type %s respectively",
-          stri_paste("'", method[check_length], "'", collapse = ", "),
-          stri_paste(sapply(check_feat[check_length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
+          stri_paste("'", method[check.length], "'", collapse = ", "),
+          stri_paste(sapply(check.feat[check.length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
   }
   assertCount(nselect)
   assertList(more.args, names = "unique", max.len = length(method))
@@ -216,7 +216,7 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
   data = fvalues$data
   data = setDF(melt(as.data.table(data), id.vars = c("name", "type"), variable = "method"))
 
-  create_plot = function(data, feat.type.cols) {
+  createPlot = function(data, feat.type.cols) {
     if (feat.type.cols)
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
                          ggvis::prop("y", as.name("value")),
@@ -231,7 +231,7 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
     return(plt)
   }
 
-  gen_plot_data = function(data, sort_type, value_column, factor_column, n_show) {
+  genPlotData = function(data, sort_type, value_column, factor_column, n_show) {
     if (sort_type != "none") {
       data = head(sortByCol(data, "value", FALSE), n = n_show)
       data[[factor_column]] = factor(data[[factor_column]],
@@ -243,10 +243,10 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
 
   requirePackages("_shiny")
   header = shiny::headerPanel(sprintf("%s (%i features)", fvalues$task.desc$id, sum(fvalues$task.desc$n.feat)))
-  method_input = shiny::selectInput("level_variable", "choose a filter method",
+  method.input = shiny::selectInput("level_variable", "choose a filter method",
                                     unique(levels(data[["method"]])))
-  sort_input = shiny::radioButtons("sort_type", "sort features", c("increasing", "decreasing", "none"))
-  n_show_input = shiny::numericInput("n_show", "number of features to show",
+  sort.input = shiny::radioButtons("sort_type", "sort features", c("increasing", "decreasing", "none"))
+  n.show.input = shiny::numericInput("n_show", "number of features to show",
                                      value = sum(fvalues$task.desc$n.feat),
                                      min = 1,
                                      max = sum(fvalues$task.desc$n.feat),
@@ -254,14 +254,14 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
   ui = shiny::shinyUI(
     shiny::pageWithSidebar(
       header,
-      shiny::sidebarPanel(method_input, sort_input, n_show_input),
+      shiny::sidebarPanel(method.input, sort.input, n.show.input),
       shiny::mainPanel(shiny::uiOutput("ggvis_ui"), ggvis::ggvisOutput("ggvis"))
     )
   )
   server = shiny::shinyServer(function(input, output) {
     plt = shiny::reactive(
-      create_plot(
-        data = gen_plot_data(
+      createPlot(
+        data = genPlotData(
           data[which(data[["method"]] == input$level_variable), ],
           input$sort_type,
           "value",

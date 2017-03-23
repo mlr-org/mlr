@@ -803,9 +803,9 @@ measureAUC = function(probabilities, truth, negative, positive) {
   } else {
     r = rank(probabilities)
   }
-  n_pos = as.numeric(sum(i))
-  n_neg = length(i) - n_pos
-  (sum(r[i]) - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg)
+  n.pos = as.numeric(sum(i))
+  n.neg = length(i) - n.pos
+  (sum(r[i]) - n.pos * (n.pos + 1) / 2) / (n.pos * n.neg)
 }
 
 #' @export brier
@@ -1418,7 +1418,7 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
 #' @export G1
 #' @rdname measures
 #' @format none
-G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
+G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,  # nolint
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Calinski-Harabasz pseudo F statistic",
   note = "Defined as ratio of between-cluster variance to within cluster variance. See `?clusterSim::index.G1`.",
@@ -1432,7 +1432,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
 #' @export G2
 #' @rdname measures
 #' @format none
-G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
+G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,  # nolint
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
   note = "Defined as: (number of concordant comparisons - number of discordant comparisons) / (number of concordant comparisons + number of discordant comparisons). See `?clusterSim::index.G2`.",

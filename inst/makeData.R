@@ -5,7 +5,7 @@ load_all("..")
 
 dn = "../data"
 stopifnot(isDirectory(dn))
-DATASEED = 7761
+DATASEED = 7761  # nolint
 
 # classification
 set.seed(DATASEED)
