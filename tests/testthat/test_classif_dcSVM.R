@@ -27,7 +27,7 @@ test_that("classif_dcSVM", {
   data = data.frame(a = c(1, 2, 1, 2), b = c(1, 1, 2, 2), c = c("a", "b", "a", "b"))
   traintask = makeClassifTask("train", data, "c")
   testtask = makeClusterTask("test", data.frame(a = c(1, 1), b = c(1, 1)))
-  x = train(makeLearner("classif.dcSVM", seed=0), traintask)
+  x = train(makeLearner("classif.dcSVM", seed = 0), traintask)
   result = predict(x, testtask)$data$response
   expect_equal(as.character(result), c("a", "a"))
 })

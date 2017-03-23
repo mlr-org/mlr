@@ -13,7 +13,7 @@ test_that("regr_fnn", {
   rdf = regr.df[, -4]
   rtrain = regr.train[, -4]
   rtest = regr.test[, -4]
-  rtask = makeRegrTask("regrtask", data=rdf, target="medv")
+  rtask = makeRegrTask("regrtask", data = rdf, target = "medv")
 
   old.predicts.list1 = list()
 
@@ -37,5 +37,5 @@ test_that("regr_fnn", {
     FNN::knn.reg(train = model$train, test = newdata, y = model$y, k = model$k)$pred
   }
 
-  testCVParsets("regr.fnn", rdf, regr.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)
+  testCVParsets("regr.fnn", rdf, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })

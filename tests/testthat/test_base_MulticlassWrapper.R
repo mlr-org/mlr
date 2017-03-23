@@ -43,7 +43,7 @@ test_that("MulticlassWrapper", {
 test_that("MulticlassWrapper works with multiple factor levels (#620)", {
   df = iris
   df$Sepal.Length = factor(df$Sepal.Length)
-  classif.task = makeClassifTask(id="test", data=df, target="Species")
+  classif.task = makeClassifTask(id = "test", data = df, target = "Species")
   base.lrn = makeLearner("classif.rpart")
   w = makeMulticlassWrapper(base.lrn, mcw.method = "onevsrest")
   rdesc = makeResampleDesc("CV", iters = 2L)

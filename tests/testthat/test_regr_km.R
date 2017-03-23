@@ -6,7 +6,7 @@ test_that("regr_km", {
   parset.list = list(
     list(),
     #list(covtype="gauss"),
-    list(covtype="matern5_2")
+    list(covtype = "matern5_2")
   )
   dd = regr.num.df[1:50, ]
   old.predicts.list = list()
@@ -21,7 +21,7 @@ test_that("regr_km", {
     capture.output({
       m = do.call(DiceKriging::km, pars)
     })
-    old.predicts.list[[i]] = DiceKriging::predict(m, newdata=des2, type="SK")$mean
+    old.predicts.list[[i]] = DiceKriging::predict(m, newdata = des2, type = "SK")$mean
   }
   testSimpleParsets("regr.km", dd, regr.num.target, 1:25, old.predicts.list, parset.list)
 

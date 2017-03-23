@@ -14,29 +14,29 @@ test_that("stratification instances work", {
     }
   }
 
-  expect_error(makeResampleDesc("LOO", stratify=TRUE), "Stratification cannot")
+  expect_error(makeResampleDesc("LOO", stratify = TRUE), "Stratification cannot")
 
-  rin = makeResampleInstance(makeResampleDesc("Holdout", stratify=TRUE), task=multiclass.task)
+  rin = makeResampleInstance(makeResampleDesc("Holdout", stratify = TRUE), task = multiclass.task)
   mytest(rin, 33, 17)
 
-  rin = makeResampleInstance(makeResampleDesc("Subsample", iters=3, split=0.5, stratify=TRUE),
+  rin = makeResampleInstance(makeResampleDesc("Subsample", iters = 3, split = 0.5, stratify = TRUE),
     task = multiclass.task)
   mytest(rin, 25, 25)
 
-  rin = makeResampleInstance(makeResampleDesc("CV", iters=10, stratify=TRUE), task=multiclass.task)
+  rin = makeResampleInstance(makeResampleDesc("CV", iters = 10, stratify = TRUE), task = multiclass.task)
   mytest(rin, 45, 5)
 
-  rin = makeResampleInstance(makeResampleDesc("RepCV", reps=2, folds=5, stratify=TRUE), task=multiclass.task)
+  rin = makeResampleInstance(makeResampleDesc("RepCV", reps = 2, folds = 5, stratify = TRUE), task = multiclass.task)
   mytest(rin, 40, 10)
 
-  rin = makeResampleInstance(makeResampleDesc("Bootstrap", iters=1, stratify=TRUE), task=multiclass.task)
+  rin = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 1, stratify = TRUE), task = multiclass.task)
   mytest(rin, 50)
 })
 
 
 test_that("stratification with empty classes works", {
   task = subsetTask(multiclass.task, subset = 1:100)
-  rdesc = makeResampleDesc("Holdout", split=0.3, stratify=TRUE)
+  rdesc = makeResampleDesc("Holdout", split = 0.3, stratify = TRUE)
   rin = makeResampleInstance(rdesc, task = task)
   expect_equal(length(rin$train.inds[[1]]), 30)
   expect_equal(length(rin$test.inds[[1]]), 70)
@@ -50,8 +50,8 @@ test_that("stratification does not put all remaining elements in the first split
   n = 7 * k
 
   data = data.frame(x = runif(n), y = factor(rep(1:k, sizes)))
-  task = makeClassifTask(data=data, target="y")
-  rdesc = makeResampleDesc("CV", iters=3, stratify=TRUE)
+  task = makeClassifTask(data = data, target = "y")
+  rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
   rin = makeResampleInstance(rdesc, task = task)
 
   tabs = lapply(rin$test.inds, function(j) table(getTaskTargets(task)[j]))

@@ -9,7 +9,7 @@ test_that("hyperpars", {
   expect_equal(getHyperPars(m$learner), list(xval = 0, minsplit = 10))
 
   # test equality after removing using removeHyperPars
-  lrn = makeLearner("classif.J48", C=0.5)
+  lrn = makeLearner("classif.J48", C = 0.5)
   expect_identical(getHyperPars(makeLearner("classif.J48")),
     getHyperPars(removeHyperPars(lrn, "C")))
 

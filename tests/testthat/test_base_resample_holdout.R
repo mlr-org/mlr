@@ -1,7 +1,7 @@
 context("resample_holdout")
 
 test_that("holdout instance works", {
-  rin = makeResampleInstance(makeResampleDesc("Holdout", split=0.25), size=20)
+  rin = makeResampleInstance(makeResampleDesc("Holdout", split = 0.25), size = 20)
   expect_equal(rin$size, 20)
   expect_equal(rin$desc$iters, 1)
   expect_equal(length(rin$train.inds), 1)

@@ -11,7 +11,7 @@ test_that("classif_glmboost", {
 
   parset.list2 = list(
     list(),
-    list(family = "Binomial", nu=0.03),
+    list(family = "Binomial", nu = 0.03),
     list(family = "Binomial", Binomial.link = "probit", mstop = 600, center = TRUE)
   )
 
@@ -25,9 +25,9 @@ test_that("classif_glmboost", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata=binaryclass.test, type="class")
+    old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
-    old.probs.list[[i]] = 1 - predict(m, newdata=binaryclass.test, type="response")[, 1]
+    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
   }
 
   testSimpleParsets("classif.glmboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)

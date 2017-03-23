@@ -17,7 +17,7 @@ test_that("surv_CoxBoost", {
 
     penalty = 9 * sum(y[, "status"])
     info = getFixDataInfo(surv.train, factors.to.dummies = TRUE, ordered.to.int = TRUE)
-    pars = c(list(time = unname(y[, "time"]), status=unname(y[, "status"]), return.score = FALSE, penalty = penalty,
+    pars = c(list(time = unname(y[, "time"]), status = unname(y[, "status"]), return.score = FALSE, penalty = penalty,
         x = as.matrix(fixDataForLearner(x, info))), parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(CoxBoost::CoxBoost, pars)

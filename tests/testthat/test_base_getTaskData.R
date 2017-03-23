@@ -8,14 +8,14 @@ test_that("getTaskData", {
 
   # recode.target
   td = getTaskDesc(binaryclass.task)
-  df = getTaskData(binaryclass.task, recode.target="01")
+  df = getTaskData(binaryclass.task, recode.target = "01")
   expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
     sum(binaryclass.df[, binaryclass.target] == td$positive))
   expect_equal(sum(df[, binaryclass.target] == 0),
     sum(binaryclass.df[, binaryclass.target] == td$negative))
-  df = getTaskData(binaryclass.task, recode.target="-1+1")
+  df = getTaskData(binaryclass.task, recode.target = "-1+1")
   expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
@@ -61,7 +61,7 @@ test_that("getTaskData survival", {
   expect_equal(names(x$target), surv.target)
   expect_true(setequal(names(x$data), setdiff(names(surv.df), surv.target)))
 
-  x = getTaskData(surv.task, target.extra = TRUE, recode.target="rcens")
+  x = getTaskData(surv.task, target.extra = TRUE, recode.target = "rcens")
   expect_true(survival::is.Surv(x$target))
   expect_equal(dim(x$target), c(nrow(surv.df), 2L))
 })

@@ -3,7 +3,7 @@ context("tuneThreshold")
 test_that("tuneThreshold", {
 
   # binary classes, 1 th
-  lrn = makeLearner("classif.lda", predict.type="prob")
+  lrn = makeLearner("classif.lda", predict.type = "prob")
   m = train(lrn, binaryclass.task)
   p = predict(m, binaryclass.task)
   tr = tuneThreshold(p)
@@ -19,7 +19,7 @@ test_that("tuneThreshold", {
 })
 
 test_that("tuheThreshold works with all tuning methods", {
-  lrn = makeLearner("classif.lda", predict.type="prob")
+  lrn = makeLearner("classif.lda", predict.type = "prob")
   ps = makeParamSet(makeNumericParam("nu", lower = 2, upper = 3))
   ctrls = list(
     gensa = makeTuneControlGenSA(start = list(nu = 2.5), maxit = 1, tune.threshold = TRUE),

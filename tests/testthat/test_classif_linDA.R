@@ -18,5 +18,5 @@ test_that("classif_linDA", {
     DiscriMiner::classify(model$model, newdata = newdata[, -model$target])$pred_class
   }
 
-  testCV("classif.linDA", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp)
+  testCV("classif.linDA", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp)
 })

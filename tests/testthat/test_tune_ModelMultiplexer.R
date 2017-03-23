@@ -20,7 +20,7 @@ test_that("makeModelMultiplexerParamSet works", {
 
   ps3 = makeParamSet(
     makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
-    makeNumericParam("classif.ksvm.sigma", lower=-10, upper = 10, trafo = function(x) 2^x,
+    makeNumericParam("classif.ksvm.sigma", lower = -10, upper = 10, trafo = function(x) 2^x,
       requires = quote(selected.learner == "classif.ksvm")),
     makeIntegerParam("classif.randomForest.ntree", lower = 1L, upper = 500L,
       requires = quote(selected.learner == "classif.randomForest"))
@@ -152,10 +152,10 @@ test_that("ModelMultiplexer handles tasks with no features", {
 # issue #760
 test_that("ModelMultiplexer passes on hyper pars in predict with both", {
   testPS = makeRLearnerClassif("testPS", character(0),
-      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when="train"),
-                   makeIntegerLearnerParam("tpPREDICT", when="predict"),
-                   makeIntegerLearnerParam("tpBOTH", when="both")),
-      properties=c("numerics", "twoclass"))
+      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when = "train"),
+                   makeIntegerLearnerParam("tpPREDICT", when = "predict"),
+                   makeIntegerLearnerParam("tpBOTH", when = "both")),
+      properties = c("numerics", "twoclass"))
   testPS$fix.factors.prediction = TRUE
 
   opts = NULL

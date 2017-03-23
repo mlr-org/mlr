@@ -31,7 +31,7 @@ test_that("tuneRandom works with dependent params", {
 
 test_that("tuneRandom works with trafo", {
   lrn = makeLearner("classif.ksvm")
-  ps = makeParamSet(makeNumericParam("sigma", lower=-10, upper = -1, trafo = function(x) 2^x))
+  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x))
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom(maxit = 3)
   tr = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)

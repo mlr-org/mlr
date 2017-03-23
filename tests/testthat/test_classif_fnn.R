@@ -41,6 +41,6 @@ test_that("classif_fnn", {
     FNN::knn(train = model$train, test = newdata, cl = model$cl, k = model$k)
   }
 
-  testCVParsets("classif.fnn", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)
-  testCVParsets("classif.fnn", binaryclass.df, binaryclass.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)
+  testCVParsets("classif.fnn", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
+  testCVParsets("classif.fnn", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })

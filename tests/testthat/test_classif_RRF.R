@@ -19,9 +19,9 @@ test_that("classif_RRF", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(RRF::RRF, pars)
     set.seed(getOption("mlr.debug.seed"))
-    p = predict(m, newdata=multiclass.test, type="response")
+    p = predict(m, newdata = multiclass.test, type = "response")
     set.seed(getOption("mlr.debug.seed"))
-    p2 = predict(m, newdata=multiclass.test, type="prob")
+    p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
@@ -32,6 +32,6 @@ test_that("classif_RRF", {
                   multiclass.train.inds, old.probs.list, parset.list)
 
   tt = RRF::RRF
-  testCVParsets("classif.RRF", multiclass.df, multiclass.target, tune.train=tt,
+  testCVParsets("classif.RRF", multiclass.df, multiclass.target, tune.train = tt,
                 parset.list = parset.list)
 })

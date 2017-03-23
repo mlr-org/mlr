@@ -4,7 +4,7 @@ test_that("tuneParamsMultiCrit", {
   lrn =  makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
-    makeIntegerParam("minsplit", lower=1, upper = 50)
+    makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
   ctrl = makeTuneMultiCritControlRandom(maxit = 2)
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps, measures = mmce, control = ctrl))
@@ -138,7 +138,7 @@ test_that("tuneParamsMultiCrit with resample.fun", {
   lrn =  makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
-    makeIntegerParam("minsplit", lower=1, upper = 50)
+    makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
 
   # random search

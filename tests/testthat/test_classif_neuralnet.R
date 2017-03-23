@@ -16,7 +16,7 @@ test_that("classif_neuralnet", {
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]])-1
 
-    m = neuralnet::neuralnet(formula_expand, data = traindat, err.fct="ce",
+    m = neuralnet::neuralnet(formula_expand, data = traindat, err.fct = "ce",
       linear.output = FALSE)
     p = neuralnet::compute(m, covariate = binaryclass.test[, -ncol(binaryclass.test)])
     p = as.numeric(as.vector(p[[2]])>0.5)
@@ -40,7 +40,7 @@ test_that("classif_neuralnet", {
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]])-1
 
-    m = neuralnet::neuralnet(formula_expand, hidden=7, data=traindat, err.fct="ce",
+    m = neuralnet::neuralnet(formula_expand, hidden = 7, data = traindat, err.fct = "ce",
       linear.output = FALSE)
     p = neuralnet::compute(m, covariate = binaryclass.test[, -ncol(binaryclass.test)])
     p = as.numeric(as.vector(p[[2]])>0.5)

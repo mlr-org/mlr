@@ -10,15 +10,15 @@ test_that("PreprocWrapper", {
     return(data)
   }
   ps = makeParamSet(
-    makeNumericLearnerParam(id="x"),
-    makeNumericLearnerParam(id="y")
+    makeNumericLearnerParam(id = "x"),
+    makeNumericLearnerParam(id = "y")
   )
-  lrn1 = makeLearner("classif.rpart", minsplit=10)
+  lrn1 = makeLearner("classif.rpart", minsplit = 10)
   lrn2 = makePreprocWrapper(lrn1, train = f1, predict = f2, par.set = ps, par.vals = list(x = 1, y = 2))
   capture.output(print(lrn2))
 
   expect_true(setequal(getHyperPars(lrn2), list(xval = 0, minsplit = 10, x = 1, y = 2)))
-  expect_true(setequal(getHyperPars(lrn2, "train"), list(xval=0, minsplit=10, x=1, y=2)))
+  expect_true(setequal(getHyperPars(lrn2, "train"), list(xval = 0, minsplit = 10, x = 1, y = 2)))
   expect_true(setequal(lrn2$par.vals, list(x = 1, y = 2)))
 
   lrn3 = setHyperPars(lrn2, minsplit = 77, x = 88)

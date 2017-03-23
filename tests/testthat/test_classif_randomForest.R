@@ -20,9 +20,9 @@ test_that("classif_randomForest", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForest::randomForest, pars)
     set.seed(getOption("mlr.debug.seed"))
-    p = predict(m, newdata=multiclass.test, type="response")
+    p = predict(m, newdata = multiclass.test, type = "response")
     set.seed(getOption("mlr.debug.seed"))
-    p2 = predict(m, newdata=multiclass.test, type="prob")
+    p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
@@ -34,7 +34,7 @@ test_that("classif_randomForest", {
 
   tt = randomForest::randomForest
 
-  testCVParsets("classif.randomForest", multiclass.df, multiclass.target, tune.train=tt, parset.list=parset.list)
+  testCVParsets("classif.randomForest", multiclass.df, multiclass.target, tune.train = tt, parset.list = parset.list)
 
   # FIXME test RF with one constant feature
   #data = multiclass.df
@@ -53,10 +53,10 @@ test_that("fix factors work", {
   test = setdiff(1:n, train)
 
   data$x = factor(sample(letters[1:3], n, replace = TRUE))
-  task = makeClassifTask(data=data[train, ], target="Species")
-  learner = makeLearner("classif.randomForest", fix.factors.prediction=TRUE)
+  task = makeClassifTask(data = data[train, ], target = "Species")
+  learner = makeLearner("classif.randomForest", fix.factors.prediction = TRUE)
   model = train(learner, task)
   newdata = data[head(test, 1L), ]
   newdata$Species = droplevels(newdata$Species)
-  expect_is(predict(model, newdata=newdata), "Prediction")
+  expect_is(predict(model, newdata = newdata), "Prediction")
 })
