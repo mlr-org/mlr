@@ -1,3 +1,4 @@
+{
 # linters that differ from the default linters
 # this is necessary because mlr's style is weird.
 library("lintr")
@@ -251,4 +252,6 @@ linters = list(
   spaces.inside = lintr:::spaces_inside_linter,
   infix.spaces = infix.spaces.linter,
   object.naming = object.naming.linter)
+
+}
 
