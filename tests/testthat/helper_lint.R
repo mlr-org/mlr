@@ -1,6 +1,35 @@
 # linters that differ from the default linters
 # this is necessary because mlr's style is weird.
 library("lintr")
+library("rex")
+
+# The following functions are adaptions of the corresponding functions in the `lintr` packages
+# The lintr package, and the original versions of these functions, can be found at https://github.com/jimhester/lintr
+# Copyright notice of original functions:
+# Copyright (c) 2014-2016, James Hester
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+# End copyright notice.
+# All modifications are licensed as the rest of mlr.
+ 
 # prohibit <-
 left_assign_linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
@@ -40,7 +69,7 @@ spaces_left_parentheses_linter = function(source_file) {
             line = source_file$lines[as.character(parsed$line1)]
             before_operator = substr(line, parsed$col1 - 1L,
                 parsed$col1 - 1L)
-            non_space_before = rex::re_matches(before_operator, rex::rex(non_space))
+            non_space_before = re_matches(before_operator, rex(non_space))
             not_exception = !(before_operator %in% c("!", ":",
                 "[", "("))
             if (non_space_before && not_exception) {
@@ -90,7 +119,7 @@ function_left_parentheses_linter = function(source_file) {
 
         before_operator = substr(line, parsed$col1 - 1L, parsed$col1 - 1L)
 
-        space_before = rex::re_matches(before_operator, rex::rex(space))
+        space_before = re_matches(before_operator, rex(space))
 
         if (space_before) {
           Lint(
@@ -118,10 +147,10 @@ infix_spaces_linter = function(source_file) {
             }
             around_operator = substr(line, parsed$col1 - 1L,
                 parsed$col2 + 1L)
-            non_space_before = rex::re_matches(around_operator, rex::rex(start,
+            non_space_before = re_matches(around_operator, rex(start,
                 non_space))
             newline_after = unname(nchar(line)) %==% parsed$col2
-            non_space_after = rex::re_matches(around_operator, rex::rex(non_space,
+            non_space_after = re_matches(around_operator, rex(non_space,
                 end))
             if (non_space_before || (!newline_after && non_space_after)) {
                 is_infix = length(lintr:::siblings(source_file$parsed_content,
@@ -144,6 +173,55 @@ infix_spaces_linter = function(source_file) {
         })
 }
 
+
+loweralnum <- rex(one_of(lower, digit))
+upperalnum <- rex(one_of(upper, digit))
+
+style_regexes <- list(
+  "UpperCamelCase" = rex(start, upper, zero_or_more(alnum), end),
+  "lowerCamelCase" = rex(start, lower, zero_or_more(alnum), end),
+  "snake_case"     = rex(start, one_or_more(loweralnum), zero_or_more("_", one_or_more(loweralnum)), end),
+  "dotted.case"    = rex(start, one_or_more(loweralnum), zero_or_more(dot, one_or_more(loweralnum)), end),
+  "alllowercase"   = rex(start, one_or_more(loweralnum), end),
+  "ALLUPPERCASE"   = rex(start, one_or_more(upperalnum), end),
+  "functionCamel.case" = rex(start, lower, zero_or_more(alnum), zero_or_more(dot, one_or_more(alnum)), end)
+)
+
+# incorporate our own camelCase.withDots style.
+matches_styles = function(name, styles=names(style_regexes)) {
+  invalids = paste(styles[!styles %in% names(style_regexes)], collapse=", ")
+  if (nzchar(invalids)) {
+    valids = paste(names(style_regexes), collapse=", ")
+    stop(sprintf("Invalid style(s) requested: %s\nValid styles are: %s\n", invalids, valids))
+  }
+  name = re_substitutes(name, rex(start, one_or_more(dot)), "")  # remove leading dots
+  vapply(
+    style_regexes[styles],
+    re_matches,
+    logical(1L),
+    data=name
+  )
+}
+
+object_naming_linter = lintr:::make_object_linter(function(source_file, token) {
+  sp = source_file$parsed_content
+  sp = head(sp[sp$terminal & sp$id > token$id, ], n = 2)
+  if (!sp$token[1] %in% c("LEFT_ASSIGN", "EQ_ASSIGN")) {
+    return(NULL)
+  }
+  style = ifelse(sp$token[2] == "FUNCTION", "functionCamel.case", "dotted.case")
+  name = lintr:::unquote(token[["text"]])
+  if (nchar(name) <= 1) {
+    # allow single uppercase letter
+    return(NULL)
+  }
+  if (!matches_styles(name, style)) {
+    lintr:::object_lint(source_file, token, sprintf("Variable or function name should be %s.", 
+      style), "object_name_linter")
+  }
+})
+
+
 # note that this must be a *named* list (bug in lintr)
 linters = list(
   commas = lintr:::commas_linter,
@@ -165,5 +243,6 @@ linters = list(
   trailing.whitespace = lintr:::trailing_whitespace_linter,
   todo.comment = lintr:::todo_comment_linter(todo = "todo"), # is case-insensitive
   spaces.inside = lintr:::spaces_inside_linter,
-  infix.spaces = infix_spaces_linter)
+  infix.spaces = infix_spaces_linter,
+  object.naming = object_naming_linter)
 
