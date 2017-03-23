@@ -58,21 +58,21 @@ right.assign.linter = function(source_file) {
 spaces.left.parentheses.linter = function(source_file) {
       lapply(lintr:::ids_with_token(source_file, "'('"), function(id) {
         parsed = source_file$parsed_content[id, ]
-        terminal_tokens_before = source_file$parsed_content$token[source_file$parsed_content$line1 ==
+        terminal.tokens.before = source_file$parsed_content$token[source_file$parsed_content$line1 ==
             parsed$line1 & source_file$parsed_content$col1 <
             parsed$col1 & source_file$parsed_content$terminal]
-        last_type = tail(terminal_tokens_before, n = 1)
-        is_function = length(last_type) %!=% 0L && (last_type %in%
+        last.type = tail(terminal.tokens.before, n = 1)
+        is.function = length(last.type) %!=% 0L && (last.type %in%
             c("SYMBOL_FUNCTION_CALL", "FUNCTION", "'}'", "')'",
                 "']'"))
-        if (!is_function) {
+        if (!is.function) {
             line = source_file$lines[as.character(parsed$line1)]
-            before_operator = substr(line, parsed$col1 - 1L,
+            before.operator = substr(line, parsed$col1 - 1L,
                 parsed$col1 - 1L)
-            non_space_before = re_matches(before_operator, rex(non_space))
-            not_exception = !(before_operator %in% c("!", ":",
+            non.space.before = re_matches(before.operator, rex(non_space))
+            not.exception = !(before.operator %in% c("!", ":",
                 "[", "("))
-            if (non_space_before && not_exception) {
+            if (non.space.before && not.exception) {
                 Lint(filename = source_file$filename, line_number = parsed$line1,
                   column_number = parsed$col1, type = "style",
                   message = "Place a space before left parenthesis, except in a function call.",
@@ -91,12 +91,12 @@ function.left.parentheses.linter = function(source_file) {
                   source_file$parsed_content$col1 < parsed$col1 &
                   source_file$parsed_content$terminal)
       ttb = tail(ttb, n = 1)
-      last_type = source_file$parsed_content$token[ttb]
+      last.type = source_file$parsed_content$token[ttb]
 
-      is_function = length(last_type) %!=% 0L &&
-        (last_type %in% c("SYMBOL_FUNCTION_CALL", "FUNCTION", "'}'", "')'", "']'"))
+      is.function = length(last.type) %!=% 0L &&
+        (last.type %in% c("SYMBOL_FUNCTION_CALL", "FUNCTION", "'}'", "')'", "']'"))
       # check whether this is a lambda expression; we want to allow e.g. function(x) (x - 1)^2
-      if (is_function && last_type == "')'") {
+      if (is.function && last.type == "')'") {
         # parenvec: 1 for every '(', -1 for every ')', 0 otherwise
         parenvec = c(1, -1, 0)[match(source_file$parsed_content$token, c("'('", "')'"), 3)]
         parenlevel = cumsum(parenvec)
@@ -108,20 +108,20 @@ function.left.parentheses.linter = function(source_file) {
                       source_file$parsed_content$col1 < opparsed$col1 &
                       source_file$parsed_content$terminal)
         opttb = tail(opttb, n = 1)
-        before_op_type = source_file$parsed_content$token[opttb]
-        if (length(before_op_type) %!=% 0L && before_op_type == "FUNCTION") {
-          is_function = FALSE
+        before.op.type = source_file$parsed_content$token[opttb]
+        if (length(before.op.type) %!=% 0L && before.op.type == "FUNCTION") {
+          is.function = FALSE
         }
       }
-      if (is_function) {
+      if (is.function) {
 
         line = source_file$lines[as.character(parsed$line1)]
 
-        before_operator = substr(line, parsed$col1 - 1L, parsed$col1 - 1L)
+        before.operator = substr(line, parsed$col1 - 1L, parsed$col1 - 1L)
 
-        space_before = re_matches(before_operator, rex(space))
+        space.before = re_matches(before.operator, rex(space))
 
-        if (space_before) {
+        if (space.before) {
           Lint(
             filename = source_file$filename,
             line_number = parsed$line1,
@@ -145,22 +145,22 @@ infix.spaces.linter = function(source_file) {
             if (substr(line, parsed$col1, parsed$col2) == "^") {
               return(NULL)
             }
-            around_operator = substr(line, parsed$col1 - 1L,
+            around.operator = substr(line, parsed$col1 - 1L,
                 parsed$col2 + 1L)
-            non_space_before = re_matches(around_operator, rex(start,
+            non.space.before = re_matches(around.operator, rex(start,
                 non_space))
-            newline_after = unname(nchar(line)) %==% parsed$col2
-            non_space_after = re_matches(around_operator, rex(non_space,
+            newline.after = unname(nchar(line)) %==% parsed$col2
+            non.space.after = re_matches(around.operator, rex(non_space,
                 end))
-            if (non_space_before || (!newline_after && non_space_after)) {
-                is_infix = length(lintr:::siblings(source_file$parsed_content,
+            if (non.space.before || (!newline.after && non.space.after)) {
+                is.infix = length(lintr:::siblings(source_file$parsed_content,
                   parsed$id, 1)) > 1L
                 start = end = parsed$col1
-                if (is_infix) {
-                  if (non_space_before) {
+                if (is.infix) {
+                  if (non.space.before) {
                     start = parsed$col1 - 1L
                   }
-                  if (non_space_after) {
+                  if (non.space.after) {
                     end = parsed$col2 + 1L
                   }
                   Lint(filename = source_file$filename, line_number = parsed$line1,
@@ -188,10 +188,10 @@ style.regexes = list(
 )
 
 # incorporate our own camelCase.withDots style.
-matches_styles = function(name, styles=names(style.regexes)) {
-  invalids = paste(styles[!styles %in% names(style.regexes)], collapse=", ")
+matchesStyles = function(name, styles=names(style.regexes)) {
+  invalids = paste(styles[!styles %in% names(style.regexes)], collapse = ", ")
   if (nzchar(invalids)) {
-    valids = paste(names(style.regexes), collapse=", ")
+    valids = paste(names(style.regexes), collapse = ", ")
     stop(sprintf("Invalid style(s) requested: %s\nValid styles are: %s\n", invalids, valids))
   }
   name = re_substitutes(name, rex(start, one_or_more(dot)), "")  # remove leading dots
@@ -199,11 +199,11 @@ matches_styles = function(name, styles=names(style.regexes)) {
     style.regexes[styles],
     re_matches,
     logical(1L),
-    data=name
+    data = name
   )
 }
 
-object_naming_linter = lintr:::make_object_linter(function(source_file, token) {
+object.naming.linter = lintr:::make_object_linter(function(source_file, token) {
   sp = source_file$parsed_content
   if (tail(c("", sp$token[sp$terminal & sp$id < token$id]), n = 1) == "'$'") {
     # ignore list member names
@@ -221,8 +221,8 @@ object_naming_linter = lintr:::make_object_linter(function(source_file, token) {
     # allow single uppercase letter
     return(NULL)
   }
-  if (!matches_styles(name, style)) {
-    lintr:::object_lint(source_file, token, sprintf("Variable or function name should be %s.", 
+  if (!matchesStyles(name, style)) {
+    lintr:::object_lint(source_file, token, sprintf("Variable or function name should be %s.",
       style), "object_name_linter")
   }
 })
@@ -250,5 +250,5 @@ linters = list(
   todo.comment = lintr:::todo_comment_linter(todo = "todo"), # is case-insensitive
   spaces.inside = lintr:::spaces_inside_linter,
   infix.spaces = infix.spaces.linter,
-  object.naming = object_naming_linter)
+  object.naming = object.naming.linter)
 

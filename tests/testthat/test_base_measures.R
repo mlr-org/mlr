@@ -862,11 +862,11 @@ test_that("measures quickcheck", {
         classes = factor(c("foo", "bar"))
         data$target = rep_len(classes, length.out = nrow(data))
 
-        trainIds = 1:(2 * nrow(data) / 3)
-        testIds = setdiff(seq_len(nrow(data)), trainIds)
+        train.ids = 1:(2 * nrow(data) / 3)
+        testIds = setdiff(seq_len(nrow(data)), train.ids)
         task = makeClassifTask(data = data, target = "target")
 
-        mod = train(lrn, task = task, subset = trainIds)
+        mod = train(lrn, task = task, subset = train.ids)
         pred = predict(mod, task = task, subset = testIds)
         perf = performance(pred, measures = ms)
 

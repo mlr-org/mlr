@@ -166,11 +166,11 @@ test_that("tuning works with large param.sets", {
   lrn = makeLearner("classif.__mlrmocklearners__5")
   ctrl = makeTuneControlRandom(maxit = 3)
   # create long list of learner params
-  psLength = 200
-  longLearnerParams = do.call(base::c, lapply(seq_len(psLength), function(x) {
+  ps.length = 200
+  long.learner.params = do.call(base::c, lapply(seq_len(ps.length), function(x) {
     makeParamSet(makeIntegerLearnerParam(paste0("some.parameter", x), 1, 10))
   }))
-  lrn$par.set = c(lrn$par.set, longLearnerParams)
-  tuneParams(lrn, pid.task, cv5, par.set = longLearnerParams, control = ctrl, show.info = TRUE)
+  lrn$par.set = c(lrn$par.set, long.learner.params)
+  tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
 })
 

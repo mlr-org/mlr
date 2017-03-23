@@ -8,10 +8,10 @@ test_that("classif_neuralnet", {
   capture.output({
     # neuralnet is not dealing with formula with `.` well
     nms = names(binaryclass.train)
-    formula_head = as.character(binaryclass.formula)[2]
-    varnames = nms[nms != formula_head]
-    formula_head = paste("as.numeric(", formula_head, ")~")
-    formula_expand = paste(formula_head, paste(varnames, collapse = "+"))
+    formula.head = as.character(binaryclass.formula)[2]
+    varnames = nms[nms != formula.head]
+    formula.head = paste("as.numeric(", formula.head, ")~")
+    formula_expand = paste(formula.head, paste(varnames, collapse = "+"))
     formula_expand = as.formula(formula_expand)
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]]) - 1
@@ -32,10 +32,10 @@ test_that("classif_neuralnet", {
   capture.output({
     # neuralnet is not dealing with formula with `.` well
     nms = names(binaryclass.train)
-    formula_head = as.character(binaryclass.formula)[2]
-    varnames = nms[nms != formula_head]
-    formula_head = paste("as.numeric(", formula_head, ")~")
-    formula_expand = paste(formula_head, paste(varnames, collapse = "+"))
+    formula.head = as.character(binaryclass.formula)[2]
+    varnames = nms[nms != formula.head]
+    formula.head = paste("as.numeric(", formula.head, ")~")
+    formula_expand = paste(formula.head, paste(varnames, collapse = "+"))
     formula_expand = as.formula(formula_expand)
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]]) - 1

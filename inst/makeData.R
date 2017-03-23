@@ -23,7 +23,7 @@ save(sonar.task, file = file.path(dn, "sonar.task.RData"), compress = "xz")
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
 BreastCancer$Id = NULL
-BreastCancer = BreastCancer[complete.cases(BreastCancer), ]
+BreastCancer = BreastCancer[complete.cases(BreastCancer), ]  # nolint
 bc.task = makeClassifTask("BreastCancer-example", data = BreastCancer, target = "Class")
 save(bc.task, file = file.path(dn, "bc.task.RData"), compress = "xz")
 
