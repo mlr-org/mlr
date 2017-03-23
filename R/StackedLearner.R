@@ -612,7 +612,7 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   }
   mat = matrix(0, nrow(probs), m)
   for (i in 1:m) {
-    ids = matrix(probs==levels[i], nrow(probs), p)
+    ids = matrix(probs == levels[i], nrow(probs), p)
     for (j in 1:p)
       ids[, j] = ids[, j]*model.weight[j]
     mat[, i] = rowSums(ids)
