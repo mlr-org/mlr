@@ -4,7 +4,7 @@ makeRLearner.classif.saeDNN = function() {
     cl = "classif.saeDNN",
     package = "deepnet",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "hidden", default = c(10), lower = 1),
+      makeIntegerVectorLearnerParam(id = "hidden", default = 10, lower = 1),
       makeDiscreteLearnerParam(id = "activationfun", default = "sigm", values = c("sigm", "linear", "tanh")),
       makeNumericLearnerParam(id = "learningrate", default = 0.8, lower = 0),
       makeNumericLearnerParam(id = "momentum", default = 0.5, lower = 0),

@@ -4,7 +4,7 @@ makeRLearner.classif.mlp = function() {
     cl = "classif.mlp",
     package = "RSNNS",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "size", default = c(5), lower = 1),
+      makeIntegerVectorLearnerParam(id = "size", default = 5, lower = 1),
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 100),
       makeUntypedLearnerParam(id = "initFunc", default = "Randomize_Weights"),
       makeNumericVectorLearnerParam(id = "initFuncParams"),
