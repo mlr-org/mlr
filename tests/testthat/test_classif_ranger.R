@@ -1,6 +1,6 @@
 context("classif_ranger")
 
-## TODO: Add "response" test if R seed is respected in ranger::predict()
+## FIXME: Add "response" test if R seed is respected in ranger::predict()
 test_that("classif_ranger", {
   requirePackagesOrSkip("ranger", default.method = "load")
 

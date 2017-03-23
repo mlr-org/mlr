@@ -1,6 +1,6 @@
 context("surv_ranger")
 
-## TODO: Proper test required when predictions working
+## FIXME: Proper test required when predictions working
 test_that("surv_ranger", {
   requirePackagesOrSkip(c("survival", "ranger"), default.method = "load")
 

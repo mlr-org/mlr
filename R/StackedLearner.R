@@ -724,7 +724,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   return(res)
 }
 
-# TODOs:
+# FIXMEs:
 # - document + test + export
 # - benchmark stuff on openml
 # - allow base.learners to be character of learners (not only list of learners)
