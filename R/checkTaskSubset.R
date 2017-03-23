@@ -6,7 +6,7 @@ checkTaskSubset = function(subset = NULL, size) {
   assert(checkIntegerish(subset, null.ok = TRUE), checkLogical(subset))
   assertInt(size)
 
-  subset = if (is.null(subset)) 
+  subset = if (is.null(subset))
     seq_len(size)
   else if (is.logical(subset))
     which(subset)

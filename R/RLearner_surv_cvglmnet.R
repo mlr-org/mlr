@@ -6,7 +6,7 @@ makeRLearner.surv.cvglmnet = function() {
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "nfolds", default = 10L, lower = 3L),
-      makeDiscreteLearnerParam(id = "type.measure", values = c("deviance"), default = "deviance"),
+      makeDiscreteLearnerParam(id = "type.measure", values = "deviance", default = "deviance"),
       makeLogicalLearnerParam(id = "grouped", default = TRUE),
       makeDiscreteLearnerParam(id = "s", values = c("lambda.1se", "lambda.min"), default = "lambda.1se", when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),

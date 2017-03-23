@@ -13,7 +13,7 @@ makeFixedHoldoutInstance = function(train.inds, test.inds, size) {
   train.inds = asInteger(train.inds, any.missing = FALSE)
   test.inds = asInteger(test.inds, any.missing = FALSE)
   size = asInt(size, lower = 1L)
-  rdesc = makeResampleDesc("Holdout", split = length(train.inds)/size)
+  rdesc = makeResampleDesc("Holdout", split = length(train.inds) / size)
   rin = makeResampleInstance(rdesc, size = size)
   rin$train.inds[[1L]] = train.inds
   rin$test.inds[[1L]] = test.inds

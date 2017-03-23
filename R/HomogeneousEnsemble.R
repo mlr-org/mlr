@@ -20,7 +20,7 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   mods = getLearnerModel(model, more.unwrap = FALSE)
   msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
-  ifelse(j == 0L, NA_character_ , msgs[j])
+  ifelse(j == 0L, NA_character_, msgs[j])
 }
 
 #' @export
@@ -29,7 +29,7 @@ getFailureModelDump.HomogeneousEnsembleModel = function(model) {
   msgs = lapply(mods, getFailureModelDump)
   j = which.first(!is.null(msgs))
   ifelse(j == 0L, NULL, msgs[[j]])
-} 
+}
 
 #' Deprecated, use \code{getLearnerModel} instead.
 #' @param model Deprecated.

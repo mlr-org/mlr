@@ -52,6 +52,6 @@ predictLearner.regr.gausspr = function(.learner, .model, .newdata, ...) {
   } else {
     pred = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, ...))
     pred.se = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, type = "sdeviation", ...))
-    cbind(pred,pred.se)
+    cbind(pred, pred.se)
   }
 }

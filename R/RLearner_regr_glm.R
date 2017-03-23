@@ -13,7 +13,7 @@ makeRLearner.regr.glm = function() {
       makeDiscreteLearnerParam(id = "poisson.link", default = "log",
         values = c("log", "identity", "sqrt"), requires = quote(family == "poisson")),
       makeDiscreteLearnerParam(id = "inverse.gaussian.link", default = "1/mu^2",
-        values = c("1/mu^2", "inverse", "identity", "log"), requires = quote (family == "inverse.gaussian")),
+        values = c("1/mu^2", "inverse", "identity", "log"), requires = quote(family == "inverse.gaussian")),
       # FIXME: default for start, mustart and etastart is family and link dependet (see family$initialize)
       # FIXME: length is data dependent (length = number of predictors + 1)
       makeNumericVectorLearnerParam(id = "start"),

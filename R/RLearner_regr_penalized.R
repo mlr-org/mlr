@@ -42,6 +42,6 @@ predictLearner.regr.penalized = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   # FIXME: should be removed, reported in issue 840
   m@formula$unpenalized[[2L]] = as.symbol(.model$task.desc$target)
-  .newdata[,.model$task.desc$target] = 0
+  .newdata[, .model$task.desc$target] = 0
   penalized::predict(m, data = .newdata,  ...)[, "mu"]
 }

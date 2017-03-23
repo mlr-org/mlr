@@ -8,7 +8,7 @@ makeRLearner.cluster.Cobweb = function() {
       makeNumericLearnerParam(id = "C", default = 0.002, lower = 0),
       makeIntegerLearnerParam(id = "S", default = 42L, lower = 1L)
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Cobweb Clustering Algorithm",
     short.name = "cobweb",
     callees = c("Cobweb", "Weka_control")

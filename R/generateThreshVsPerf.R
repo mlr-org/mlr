@@ -273,7 +273,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
     group = NULL
   }
 
-  create_plot = function(data, color = NULL, group = NULL, measures) {
+  createPlot = function(data, color = NULL, group = NULL, measures) {
     if (!is.null(color))
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")), ggvis::prop("y", as.name("performance")),
                   ggvis::prop("stroke", as.name(color)))
@@ -286,11 +286,11 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
     plt = ggvis::layer_paths(plt)
 
     if (!is.na(mark.th) & is.null(interaction)) { ## cannot do vline with reactive data
-      vline_data = data.frame(x2 = rep(mark.th, 2), y2 = c(min(data$perf), max(data$perf)),
+      vline.data = data.frame(x2 = rep(mark.th, 2), y2 = c(min(data$perf), max(data$perf)),
                               measure = obj$measures[1])
       plt = ggvis::layer_lines(plt, ggvis::prop("x", as.name("x2")),
                         ggvis::prop("y", as.name("y2")),
-                        ggvis::prop("stroke", "grey", scale = FALSE), data = vline_data)
+                        ggvis::prop("stroke", "grey", scale = FALSE), data = vline.data)
     }
     plt = ggvis::add_axis(plt, "x", title = "threshold")
 
@@ -318,13 +318,13 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
         )
       ))
     server = shiny::shinyServer(function(input, output) {
-      data_sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
-      plt = create_plot(data_sub, color, group, obj$measures)
+      data.sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
+      plt = createPlot(data.sub, color, group, obj$measures)
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
   } else {
-    create_plot(data, color, group, obj$measures)
+    createPlot(data, color, group, obj$measures)
   }
 }
 

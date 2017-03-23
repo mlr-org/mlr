@@ -5,7 +5,7 @@ makeRLearner.classif.earth = function() {
     package = c("!earth", "stats"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "trace", default = 0, upper = 5, tunable = FALSE),
-      makeLogicalLearnerParam(id = "keepxy",default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keepxy", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "penalty"),
       makeIntegerLearnerParam(id = "nk", lower = 1L),
@@ -44,7 +44,7 @@ makeRLearner.classif.earth = function() {
 #' @export
 trainLearner.classif.earth = function(.learner, .task, .subset, .weights = NULL, link = "logit", maxit = 25L, ...) {
   f = getTaskFormula(.task)
-  earth::earth(f, data = getTaskData(.task, .subset), weights = .weights, glm = list(family = binomial(link = link) , maxit = maxit), ...)
+  earth::earth(f, data = getTaskData(.task, .subset), weights = .weights, glm = list(family = binomial(link = link), maxit = maxit), ...)
 }
 
 #' @export

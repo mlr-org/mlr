@@ -13,7 +13,7 @@ test_that("surv_penalized", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     pars = c(list(response = surv.formula, data = surv.train,
       model = "cox"), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))

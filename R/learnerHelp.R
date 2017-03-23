@@ -22,13 +22,13 @@ learnerHelp = function(learner) {
     if (length(callees) > 1) {
       repeat {
         cat("Choose help page:\n")
-        cat(stri_join(seq_along(callees), " : ", callees, "\n", collapse=""))
+        cat(stri_join(seq_along(callees), " : ", callees, "\n", collapse = ""))
         n = readline("0 : cancel\n...: ")
         n = suppressWarnings(as.integer(n))
         if (is.finite(n) && n >= 1 && n <= length(callees)) {
           break
         }
-	if (identical(n, 0L)) {
+        if (identical(n, 0L)) {
           return(invisible(NULL))
         }
         catf("Invalid input. Enter a number between 0 and %d", length(callees))
@@ -69,7 +69,7 @@ learnerParamHelp = function(learner, param = NULL) {
       next.learner = current.learner$next.learner
       if (is.null(next.learner)) {
         break
-      } 
+      }
       if (inherits(next.learner, "RLearner")) {
         messagef("The learner '%s' is a wrapped learner. Showing documentation of '%s' instead.",
           learner$id, next.learner$id)
@@ -117,7 +117,7 @@ learnerParamHelp = function(learner, param = NULL) {
     }
     if (p %in% names(learner$help.list)) {
       output = learner$help.list[[p]]
-      cat(collapse(strwrap(output), sep="\n"), "\n\n")
+      cat(collapse(strwrap(output), sep = "\n"), "\n\n")
     } else {
       catf("No documentation found. Try to consult learnerHelp(\"%s\").\n", getLearnerId(learner))
     }
@@ -211,7 +211,7 @@ makeParamHelpList = function(funs, pkgs, par.set) {
     for (row in seq_len(nrow(tbl))) {
       # the following loop handles occasions where multiple parameters are mentioned in
       # one row, separated by commas.
-      for (par.name in stri_split(tbl[row, 1], regex=", *")[[1]]) {
+      for (par.name in stri_split(tbl[row, 1], regex = ", *")[[1]]) {
         if (par.name %in% par.ids) {
           help.list[[par.name]] = stri_join("Argument of: ",
             pkg_ref, "::", f, "\n\n", prepareString(tbl[row, 2]))

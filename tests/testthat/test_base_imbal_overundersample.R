@@ -33,7 +33,7 @@ test_that("over and undersample arg check works", {
 })
 
 test_that("over and undersample works with weights", {
-  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target, weights = 1:nrow(binaryclass.df))
+  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target, weights = seq_len(nrow(binaryclass.df)))
   task2 = undersample(task, rate = 0.5)
   expect_true(length(task2$weights) < length(task$weights))
   expect_true(all(task2$weights %in% task$weights))
