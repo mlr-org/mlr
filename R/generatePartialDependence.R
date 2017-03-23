@@ -909,7 +909,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
   else
     target = "Risk"
 
-  create.plot = function(td, target, interaction, individual, data, x, bounds) {
+  createPlot = function(td, target, interaction, individual, data, x, bounds) {
     classif = td$type == "classif" & all(target %in% td$class.levels)
     if (classif) {
       if (interaction)
@@ -982,12 +982,12 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
         )
       ))
     server = shiny::shinyServer(function(input, output) {
-      plt = shiny::reactive(create.plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
+      plt = shiny::reactive(createPlot(obj$task.desc, obj$target, obj$interaction, obj$individual,
           obj$data[obj$data[[interact]] == input$interaction_select, ],
           x, bounds))
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
       })
     shiny::shinyApp(ui, server)
   } else
-    create.plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
+    createPlot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
 }
