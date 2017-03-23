@@ -232,7 +232,7 @@ test_that("check measure calculations", {
   rsq.perf = performance(pred.regr, measures = rsq, model = mod.regr)
   expect_equal(rsq.test, rsq$fun(pred = pred.regr))
   expect_equal(rsq.test, as.numeric(rsq.perf))
-  expect_equal(1 - ((4-5)^2 + (11 - 10)^2 + (0-0)^2 + (4-5)^2) / ((5-5)^2 + (10-5)^2 + (0-5)^2 + (5-5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(1 - ((4 - 5)^2 + (11 - 10)^2 + (0 - 0)^2 + (4 - 5)^2) / ((5 - 5)^2 + (10 - 5)^2 + (0 - 5)^2 + (5 - 5)^2), measureRSQ(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRSQ(0, 0))
     expect_warning(measureRSQ(0, 0))
@@ -260,7 +260,7 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
-  expect_equal(sum((1 - 3)^2 + (2-3)^2 + (3-3)^2 + (4-3)^2 + (5-3)^2) / sum((5-3)^2 + (4-3)^2 + (3-3)^2 + (2-3)^2 + (1 - 3)^2), measureEXPVAR(5:1, 1:5))
+  expect_equal(sum((1 - 3)^2 + (2 - 3)^2 + (3 - 3)^2 + (4 - 3)^2 + (5 - 3)^2) / sum((5 - 3)^2 + (4 - 3)^2 + (3 - 3)^2 + (2 - 3)^2 + (1 - 3)^2), measureEXPVAR(5:1, 1:5))
   suppressWarnings({
     expect_equal(NA_real_, measureEXPVAR(0, 0))
     expect_warning(measureEXPVAR(0, 0))
@@ -272,7 +272,7 @@ test_that("check measure calculations", {
   rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
   expect_equal(rrse.test, rrse$fun(pred = pred.regr))
   expect_equal(rrse.test, as.numeric(rrse.perf))
-  expect_equal(sqrt((4-5)^2 + (11-10)^2 + (0-0)^2 + (4-5)^2) / sqrt((5-5)^2 + (10-5)^2 + (0-5)^2 + (5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(sqrt((4 - 5)^2 + (11 - 10)^2 + (0 - 0)^2 + (4 - 5)^2) / sqrt((5 - 5)^2 + (10 - 5)^2 + (0 - 5)^2 + (5 - 5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRRSE(0, 0))
     expect_warning(measureRRSE(0, 0))
@@ -284,7 +284,7 @@ test_that("check measure calculations", {
   rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
   expect_equal(rae.test, rae$fun(pred = pred.regr))
   expect_equal(rae.test, as.numeric(rae.perf))
-  expect_equal((abs(4-5) + abs(11-10) + abs(0-0) + abs(4-5)) / (abs(5-5) + abs(10-5) + abs(0-5) + abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal((abs(4 - 5) + abs(11 - 10) + abs(0 - 0) + abs(4 - 5)) / (abs(5 - 5) + abs(10 - 5) + abs(0 - 5) + abs(5 - 5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRAE(0, 0))
     expect_warning(measureRAE(0, 0))
@@ -301,10 +301,10 @@ test_that("check measure calculations", {
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
   mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
-  mape.test = mean(c(abs((5-4) / 5), abs((10-11) / 10), abs((1-0) / 1), abs((5-4) / 5)))
+  mape.test = mean(c(abs((5 - 4) / 5), abs((10 - 11) / 10), abs((1 - 0) / 1), abs((5 - 4) / 5)))
   expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
-  expect_equal(1 / 4 * (abs((4-5) / 5) + abs((11-10) / 10) + abs((0-2) / 2) + abs((4-5) / 5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
+  expect_equal(1 / 4 * (abs((4 - 5) / 5) + abs((11 - 10) / 10) + abs((0 - 2) / 2) + abs((4 - 5) / 5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
   expect_warning(measureMAPE(0, 0))
   expect_warning(measureMAPE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
@@ -417,16 +417,16 @@ test_that("check measure calculations", {
   y1 = factor(c("a", "b"))
   y2 = factor(c("b", "b"))
   # multiclass.brier
-  expect_equal(measureMulticlassBrier(p1, y1), 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
-  expect_equal(measureMulticlassBrier(p1, y2), 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
-  expect_equal(measureMulticlassBrier(p2, y1), 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
+  expect_equal(measureMulticlassBrier(p1, y1), 0.5 * ((1 - 0.1)^2 + (0 - 0.9)^2 + (0 - 0.2)^2 + (1 - 0.8)^2))
+  expect_equal(measureMulticlassBrier(p1, y2), 0.5 * ((0 - 0.1)^2 + (1 - 0.9)^2 + (0 - 0.2)^2 + (1 - 0.8)^2))
+  expect_equal(measureMulticlassBrier(p2, y1), 0.5 * ((1 - 0.9)^2 + (0 - 0.1)^2 + (1 - 0.2)^2 + (0 - 0.8)^2))
   # logloss
   expect_equal(measureLogloss(p1, y1), -mean(log(c(0.1, 0.8))))
   expect_equal(measureLogloss(p1, y2), -mean(log(c(0.9, 0.8))))
   expect_equal(measureLogloss(p2, y1), -mean(log(c(0.9, 0.2))))
 
   pred.probs = getPredictionProbabilities(pred.classif)
-  pred.probs[pred.probs > 1-1e-15] = 1-1e-15
+  pred.probs[pred.probs > 1 - 1e-15] = 1 - 1e-15
   pred.probs[pred.probs < 1e-15] = 1e-15
   logloss.test = -1 * mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
   logloss.perf = performance(pred.classif, measures = logloss, model = mod.classif)
@@ -449,11 +449,11 @@ test_that("check measure calculations", {
   qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
   expect_equal(qsr.test, qsr$fun(pred = pred.classif))
   expect_equal(qsr.test, as.numeric(qsr.perf))
-  expect_equal(measureQSR(p1, y1), 1 - 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
-  expect_equal(measureQSR(p1, y2), 1 - 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
-  expect_equal(measureQSR(p2, y1), 1 - 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
-  expect_equal(measureQSR(p2[1, , drop = FALSE], y2[1]), 1- (1-0.1)^2- (0-0.9)^2)
-  expect_equal(measureQSR(p2[1, , drop = FALSE], y1[1]), 1- (1-0.9)^2- (0-0.1)^2)
+  expect_equal(measureQSR(p1, y1), 1 - 0.5 * ((1 - 0.1)^2 + (0 - 0.9)^2 + (0 - 0.2)^2 + (1 - 0.8)^2))
+  expect_equal(measureQSR(p1, y2), 1 - 0.5 * ((0 - 0.1)^2 + (1 - 0.9)^2 + (0 - 0.2)^2 + (1 - 0.8)^2))
+  expect_equal(measureQSR(p2, y1), 1 - 0.5 * ((1 - 0.9)^2 + (0 - 0.1)^2 + (1 - 0.2)^2 + (0 - 0.8)^2))
+  expect_equal(measureQSR(p2[1, , drop = FALSE], y2[1]), 1 - (1 - 0.1)^2 - (0 - 0.9)^2)
+  expect_equal(measureQSR(p2[1, , drop = FALSE], y1[1]), 1 - (1 - 0.9)^2 - (0 - 0.1)^2)
   #lsr
   lsr.test = mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
   lsr.perf = performance(pred.classif, measures = lsr, model = mod.classif)

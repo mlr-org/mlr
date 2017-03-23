@@ -1260,7 +1260,7 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Accuracy (multilabel)",
   note = "Averaged proportion of correctly predicted labels with respect to the total number of labels for each instance,
-  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015-2 / charte-charte.pdf.
+  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015 - 2 / charte-charte.pdf.
   Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelACC(getPredictionTruth.PredictionMultilabel(pred),
@@ -1284,7 +1284,7 @@ multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Positive predictive value (multilabel)",
   note = "Also called precision. Averaged ratio of correctly predicted labels for each instance,
-  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015-2 / charte-charte.pdf.
+  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015 - 2 / charte-charte.pdf.
   Fractions where the denominator becomes 0 are ignored in the average calculation.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelPPV(getPredictionTruth.PredictionMultilabel(pred),
@@ -1308,7 +1308,7 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "TPR (multilabel)",
   note = "Also called recall. Averaged proportion of predicted labels which are relevant for each instance,
-  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015-2 / charte-charte.pdf.
+  following the definition by Charte and Charte: https: / /journal.r-project.org / archive / 2015 - 2 / charte-charte.pdf.
   Fractions where the denominator becomes 0 are ignored in the average calculation.",
   fun = function(task, model, pred, feats, extra.args) {
     measureMultilabelTPR(getPredictionTruth.PredictionMultilabel(pred),
