@@ -8,8 +8,8 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   if (!missing(target)) {
     assertString(target)
   } else {
-    data$target = as.factor("normal")
-    target = "target"
+    data$anomaly = FALSE
+    target = "anomaly"
   }
   # some code on cran passed stuff like positive=1, we can live with the convert here
   if (isScalarNumeric(positive))
