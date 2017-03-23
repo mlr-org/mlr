@@ -31,6 +31,7 @@ Returns a learner which can be used like any other learner.
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
