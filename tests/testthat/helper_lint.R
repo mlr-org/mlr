@@ -24,6 +24,7 @@ right_assign_linter = function(source_file) {
 }
 
 `%!=%` = lintr:::`%!=%`
+`%==%` = lintr:::`%==%`
 
 spaces_left_parentheses_linter = function(source_file) {
       lapply(lintr:::ids_with_token(source_file, "'('"), function(id) {
@@ -107,6 +108,42 @@ function_left_parentheses_linter = function(source_file) {
     })
 }
 
+infix_spaces_linter = function (source_file) {
+    lapply(lintr:::ids_with_token(source_file, lintr:::infix_tokens, fun = `%in%`), 
+        function(id) {
+            parsed <- lintr:::with_id(source_file, id)
+            line <- source_file$lines[as.character(parsed$line1)]
+            if (substr(line, parsed$col1, parsed$col2) == "^") {
+              return(NULL)
+            }
+            around_operator <- substr(line, parsed$col1 - 1L, 
+                parsed$col2 + 1L)
+            non_space_before <- rex::re_matches(around_operator, rex::rex(start, 
+                non_space))
+            newline_after <- unname(nchar(line)) %==% parsed$col2
+            non_space_after <- rex::re_matches(around_operator, rex::rex(non_space, 
+                end))
+            if (non_space_before || (!newline_after && non_space_after)) {
+                is_infix <- length(lintr:::siblings(source_file$parsed_content, 
+                  parsed$id, 1)) > 1L
+                start <- end <- parsed$col1
+                if (is_infix) {
+                  if (non_space_before) {
+                    start <- parsed$col1 - 1L
+                  }
+                  if (non_space_after) {
+                    end <- parsed$col2 + 1L
+                  }
+                  Lint(filename = source_file$filename, line_number = parsed$line1, 
+                    column_number = parsed$col1, type = "style", 
+                    message = "Put spaces around all infix operators.", 
+                    line = line, ranges = list(c(start, end)), 
+                    linter = "infix_spaces_linter")
+                }
+            }
+        })
+}
+
 # note that this must be a *named* list (bug in lintr)
 linters = list(
   commas = lintr:::commas_linter,
@@ -127,5 +164,6 @@ linters = list(
   unneeded.concatenation = lintr:::unneeded_concatenation_linter,
   trailing.whitespace = lintr:::trailing_whitespace_linter,
   todo.comment = lintr:::todo_comment_linter(todo = "todo"), # is case-insensitive
-  spaces.inside = lintr:::spaces_inside_linter)
+  spaces.inside = lintr:::spaces_inside_linter,
+  infix.spaces = infix_spaces_linter)
 
