@@ -117,7 +117,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
-  if ((method == "average" || method == "hill.climb") & (!is.null(super.learner) || is.null(predict.type)) )
+  if ((method == "average" || method == "hill.climb") & (!is.null(super.learner) || is.null(predict.type)))
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
   if (method != "average" & method != "hill.climb" & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
@@ -253,7 +253,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
           # if super learner predictions should be probabilities, iter over rows to get proportions
           # FIXME: this is very slow + CUMBERSOME. we also do it in more places
           # we need a bbmisc fun for counting proportions in rows or cols
-          #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
+          #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels))/length(x)))
           #return(setColNames(t(probs), td$class.levels))
           probs = rowiseRatio(probs, td$class.levels, model.weight)
           return(probs)
@@ -433,7 +433,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       metric = function(pred, true) {
         pred = colnames(pred)[max.col(pred)]
         tb = table(pred, true)
-        return( 1- sum(diag(tb)) / sum(tb) )
+        return(1 - sum(diag(tb)) / sum(tb))
       }
     }
   }
@@ -506,7 +506,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric((probs[[i]]+current.prob)/ (selection.size + 1), probs[[tn]] )
+        score[i] = metric((probs[[i]] + current.prob)/ (selection.size + 1), probs[[tn]])
       }
       inds = order(score)
       if (!replace) {
@@ -520,7 +520,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
         flag = FALSE
       } else {
         current.prob = current.prob + probs[[ind]]
-        weights[ind] = weights[ind]+1
+        weights[ind] = weights[ind] + 1
         selection.ind = c(selection.ind, ind)
         selection.size = selection.size + 1
         old.score = new.score
@@ -614,7 +614,7 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   for (i in 1:m) {
     ids = matrix(probs == levels[i], nrow(probs), p)
     for (j in 1:p)
-      ids[, j] = ids[, j]*model.weight[j]
+      ids[, j] = ids[, j] * model.weight[j]
     mat[, i] = rowSums(ids)
   }
   colnames(mat) = levels
@@ -628,7 +628,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   feat.class = sapply(.data, class)
   ind2 = which(feat.class == "factor")
   ind1 = setdiff(seq_len(ncol(.data)), ind2)
-  if (length(ind2)>0)
+  if (length(ind2) > 0)
     ori.labels = lapply(.data[[ind2]], levels)
   .data = lapply(.data, as.numeric)
   .data = as.data.frame(.data)
@@ -658,7 +658,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
       p = length(unq)
       for (i in 1:p) {
         ind = which(mat[, j] == unq[i])
-        res[ind, -ind] = res[ind, -ind]+1
+        res[ind, -ind] = res[ind, -ind] + 1
       }
     }
     return(res)
@@ -668,10 +668,10 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     n = nrow(mat)
     dist.mat.1 = matrix(0, n, n)
     dist.mat.2 = matrix(0, n, n)
-    if (length(ind1)>0) {
+    if (length(ind1) > 0) {
       dist.mat.1 = as.matrix(stats::dist(mat[, ind1, drop = FALSE]))
     }
-    if (length(ind2)>0) {
+    if (length(ind2) > 0) {
       dist.mat.2 = hamming(mat[, ind2, drop = FALSE])
     }
     dist.mat = dist.mat.1 + dist.mat.2
@@ -695,7 +695,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
       # continuous
       for (j in ind1) {
         if (prob.mat[i, j]) {
-          current.sd = abs(e[j]-ee[j])/s[j]
+          current.sd = abs(e[j]-ee[j]) / s[j]
           tmp1 = rnorm(1, ee[j], current.sd)
           tmp2 = rnorm(1, e[j], current.sd)
           e[j] = tmp1
@@ -716,7 +716,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
     res = rbind(res, data)
   }
   for (i in ind1)
-    res[, i] = res[, i]* (mx[i]-mn[i])+mn[i]
+    res[, i] = res[, i]* (mx[i]-mn[i]) + mn[i]
   res = data.frame(res)
   names(res) = ori.names
   for (i in ind2)

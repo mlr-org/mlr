@@ -91,7 +91,7 @@ test_that("mcc is implemented correctly", { # see issue 363
   r.sum = r.sum / total
   c.sum = c.sum / total
   v = prod(r.sum, c.sum)
-  phi = (cm[1, 1] / total - c.sum[1] * r.sum[1])/sqrt(v)
+  phi = (cm[1, 1] / total - c.sum[1] * r.sum[1]) / sqrt(v)
   expect_equal(r$aggr[[1]], phi[[1L]])
 })
 
@@ -260,7 +260,7 @@ test_that("check measure calculations", {
   expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
   expect_equal(expvar.test, expvar$fun(pred = pred.regr))
   expect_equal(expvar.test, as.numeric(expvar.perf))
-  expect_equal(sum((1-3)^2+ (2-3)^2+ (3-3)^2+ (4-3)^2+ (5-3)^2)/sum((5-3)^2+ (4-3)^2+ (3-3)^2+ (2-3)^2+ (1-3)^2), measureEXPVAR(5:1, 1:5))
+  expect_equal(sum((1-3)^2+ (2-3)^2+ (3-3)^2+ (4-3)^2+ (5-3)^2) / sum((5-3)^2+ (4-3)^2+ (3-3)^2+ (2-3)^2+ (1-3)^2), measureEXPVAR(5:1, 1:5))
   suppressWarnings({
     expect_equal(NA_real_, measureEXPVAR(0, 0))
     expect_warning(measureEXPVAR(0, 0))
@@ -272,7 +272,7 @@ test_that("check measure calculations", {
   rrse.perf = performance(pred.regr, measures = rrse, model = mod.regr)
   expect_equal(rrse.test, rrse$fun(pred = pred.regr))
   expect_equal(rrse.test, as.numeric(rrse.perf))
-  expect_equal(sqrt((4-5)^2+ (11-10)^2+ (0-0)^2+ (4-5)^2)/sqrt((5-5)^2+ (10-5)^2+ (0-5)^2+ (5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal(sqrt((4-5)^2+ (11-10)^2+ (0-0)^2+ (4-5)^2) / sqrt((5-5)^2+ (10-5)^2+ (0-5)^2+ (5-5)^2), measureRRSE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRRSE(0, 0))
     expect_warning(measureRRSE(0, 0))
@@ -284,7 +284,7 @@ test_that("check measure calculations", {
   rae.perf = performance(pred.regr, measures = rae, model = mod.regr)
   expect_equal(rae.test, rae$fun(pred = pred.regr))
   expect_equal(rae.test, as.numeric(rae.perf))
-  expect_equal((abs(4-5)+abs(11-10)+abs(0-0)+abs(4-5))/ (abs(5-5)+abs(10-5)+abs(0-5)+abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
+  expect_equal((abs(4-5) + abs(11-10) + abs(0-0) + abs(4-5))/ (abs(5-5) + abs(10-5) + abs(0-5) + abs(5-5)), measureRAE(c(5, 10, 0, 5), c(4, 11, 0, 4)))
   suppressWarnings({
     expect_equal(NA_real_, measureRAE(0, 0))
     expect_warning(measureRAE(0, 0))
@@ -301,10 +301,10 @@ test_that("check measure calculations", {
   pred.regr.mape = pred.regr
   pred.regr.mape$data$truth = c(5, 10, 1, 5) #we change the 0 target because mape is undefined
   mape.perf = performance(pred.regr.mape, measures = mape, model = mod.regr)
-  mape.test = mean(c(abs((5-4)/5), abs((10-11)/10), abs((1-0)/1), abs((5-4)/5)))
+  mape.test = mean(c(abs((5-4) / 5), abs((10-11) / 10), abs((1-0) / 1), abs((5-4) / 5)))
   expect_equal(mape.test, mape$fun(pred = pred.regr.mape))
   expect_equal(mape.test, as.numeric(mape.perf))
-  expect_equal(1 / 4* (abs((4-5)/5)+abs((11-10)/10)+abs((0-2)/2)+abs((4-5)/5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
+  expect_equal(1 / 4* (abs((4-5) / 5) + abs((11-10) / 10) + abs((0-2) / 2) + abs((4-5) / 5)), measureMAPE(c(5, 10, 2, 5), c(4, 11, 0, 4)))
   expect_warning(measureMAPE(0, 0))
   expect_warning(measureMAPE(c(1, 1, 1, 0), c(2, 2, 2, 2)))
   expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
@@ -435,7 +435,7 @@ test_that("check measure calculations", {
 
   #ssr
   pred.probs = getPredictionProbabilities(pred.classif)
-  ssr.test = mean(vnapply(seq_row(pred.probs), function(i) {pred.probs[i, tar.classif[i]]})/sqrt(rowSums(pred.probs^2)))
+  ssr.test = mean(vnapply(seq_row(pred.probs), function(i) {pred.probs[i, tar.classif[i]]}) / sqrt(rowSums(pred.probs^2)))
   ssr.perf = performance(pred.classif, measures = ssr, model = mod.classif)
   expect_equal(ssr.test, ssr$fun(pred = pred.classif))
   expect_equal(ssr.test, as.numeric(ssr.perf))
@@ -805,7 +805,7 @@ test_that("check measure calculations", {
   bis = dists[-3L, 3L]
   sil.data = data.frame(t(rbind(ais, bis)))
   sils = (sil.data$bis - sil.data$ais) / pmax(sil.data$bis, sil.data$ais)
-  silhouette.test = sum(sils)/nrow(data.cluster)
+  silhouette.test = sum(sils) / nrow(data.cluster)
   silhouette.perf = performance(pred.cluster, measures = silhouette,
     model = mod.cluster, feats = data.cluster)
   expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
@@ -862,7 +862,7 @@ test_that("measures quickcheck", {
         classes = factor(c("foo", "bar"))
         data$target = rep_len(classes, length.out = nrow(data))
 
-        trainIds = 1:(2 * nrow(data)/3)
+        trainIds = 1:(2 * nrow(data) / 3)
         testIds = setdiff(seq_len(nrow(data)), trainIds)
         task = makeClassifTask(data = data, target = "target")
 

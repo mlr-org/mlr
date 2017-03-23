@@ -31,7 +31,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       if (x[i] == 0) {
         y = x
         y[i] = 1
-        xs[[length(xs)+1L]] = y
+        xs[[length(xs) + 1L]] = y
       }
     xs
   }
@@ -42,7 +42,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       if (x[i] == 1) {
         y = x
         y[i] = 0
-        xs[[length(xs)+1L]] = y
+        xs[[length(xs) + 1L]] = y
       }
     xs
   }

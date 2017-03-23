@@ -11,7 +11,7 @@ test_that("repcv instance works", {
   for (j in 1:3) {
     bag = NULL
     for (i in 1:10) {
-      k = as.integer((j-1)*10L + i)
+      k = as.integer((j-1) * 10L + i)
       i1 = rin$train.inds[[i]]
       i2 = rin$test.inds[[i]]
       expect_equal(length(unique(i1)), 135)
@@ -39,7 +39,7 @@ test_that("repcv instance is stochastic", {
   for (j in 1:3) {
     bag = NULL
     for (i in 1:10) {
-      k = as.integer((j-1)*10L + i)
+      k = as.integer((j-1) * 10L + i)
       i1 = rin$train.inds[[i]]
       i2 = rin$test.inds[[i]]
       expect_equal(length(unique(i1)), 135)
