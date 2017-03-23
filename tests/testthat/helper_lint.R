@@ -1,4 +1,3 @@
-{
 # linters that differ from the default linters
 # this is necessary because mlr's style is weird.
 library("lintr")
@@ -175,17 +174,17 @@ infix.spaces.linter = function(source_file) {
 }
 
 
-loweralnum = rex(one_of(lower, digit))
-upperalnum = rex(one_of(upper, digit))
+loweralnum = rex::rex(one_of(lower, digit))
+upperalnum = rex::rex(one_of(upper, digit))
 
 style.regexes = list(
-  "UpperCamelCase" = rex(start, upper, zero_or_more(alnum), end),
-  "lowerCamelCase" = rex(start, lower, zero_or_more(alnum), end),
-  "snake_case"     = rex(start, one_or_more(loweralnum), zero_or_more("_", one_or_more(loweralnum)), end),
-  "dotted.case"    = rex(start, one_or_more(loweralnum), zero_or_more(dot, one_or_more(loweralnum)), end),
-  "alllowercase"   = rex(start, one_or_more(loweralnum), end),
-  "ALLUPPERCASE"   = rex(start, one_or_more(upperalnum), end),
-  "functionCamel.case" = rex(start, lower, zero_or_more(alnum), zero_or_more(dot, one_or_more(alnum)), end)
+  "UpperCamelCase" = rex::rex(start, upper, zero_or_more(alnum), end),
+  "lowerCamelCase" = rex::rex(start, lower, zero_or_more(alnum), end),
+  "snake_case"     = rex::rex(start, one_or_more(loweralnum), zero_or_more("_", one_or_more(loweralnum)), end),
+  "dotted.case"    = rex::rex(start, one_or_more(loweralnum), zero_or_more(dot, one_or_more(loweralnum)), end),
+  "alllowercase"   = rex::rex(start, one_or_more(loweralnum), end),
+  "ALLUPPERCASE"   = rex::rex(start, one_or_more(upperalnum), end),
+  "functionCamel.case" = rex::rex(start, lower, zero_or_more(alnum), zero_or_more(dot, one_or_more(alnum)), end)
 )
 
 # incorporate our own camelCase.withDots style.
@@ -252,6 +251,4 @@ linters = list(
   spaces.inside = lintr:::spaces_inside_linter,
   infix.spaces = infix.spaces.linter,
   object.naming = object.naming.linter)
-
-}
 
