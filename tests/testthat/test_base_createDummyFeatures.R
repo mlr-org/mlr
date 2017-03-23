@@ -19,5 +19,5 @@ test_that("createDummyFeatures", {
 
   df$a = as.factor(df$a)
   expect_equal(c("a", "b", "c.A", "c.B"),
-    colnames(createDummyFeatures(df, cols = c("c"))))
+    colnames(createDummyFeatures(df, cols = "c")))
 })

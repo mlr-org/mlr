@@ -44,7 +44,7 @@ makeRLearner.classif.xgboost = function() {
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
     note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default. `num_class` is set internally, so do not set this manually.",
-    callees = c("xgboost")
+    callees = "xgboost"
   )
 }
 

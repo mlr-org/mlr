@@ -136,7 +136,7 @@ test_that("resample has error messages when prediction fails", {
   configureMlr(on.learner.warning = "quiet")
 
   lrn = makeLearner("classif.knn")
-  lrn$properties = c(lrn$properties, c("missings"))
+  lrn$properties = c(lrn$properties, "missings")
 
   task = makeClassifTask("test", data = Sonar, target = "Class")
   task$env$data$V1[1:2] = NA

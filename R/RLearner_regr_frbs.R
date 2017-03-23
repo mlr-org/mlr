@@ -55,7 +55,7 @@ makeRLearner.regr.frbs = function() {
       makeLogicalLearnerParam(id = "rule.selection", default = FALSE,
         requires = quote(method == "GFS.LT.RS"))
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Fuzzy Rule-based Systems",
     short.name = "frbs",
     callees = "frbs.learn"

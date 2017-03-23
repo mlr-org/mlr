@@ -517,8 +517,8 @@ makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
   pkg = "Rfast",
-  supported.tasks = c("classif"),
-  supported.features = c("numerics"),
+  supported.tasks = "classif",
+  supported.features = "numerics",
   fun = function(task, nselect, ...) {
     d = getTaskData(task, target.extra = TRUE)
     y = as.integer(d$target)
@@ -547,7 +547,7 @@ makeFilter(
   name = "kruskal.test",
   desc = "Kruskal Test for binary and multiclass classification tasks",
   pkg = character(0L),
-  supported.tasks = c("classif"),
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
@@ -570,7 +570,7 @@ makeFilter(
   desc = "A simple variance filter",
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics"),
+  supported.features = "numerics",
   fun = function(task, nselect, na.rm = FALSE, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {

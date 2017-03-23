@@ -12,11 +12,11 @@ makeRLearner.cluster.dbscan = function() {
       makeDiscreteLearnerParam(id = "method", values = c("hybrid", "raw", "dist"), default = "hybrid")
     ),
     par.vals = list(eps = 1),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "DBScan Clustering",
     note = "A cluster index of NA indicates noise points. Specify `method = 'dist'` if the data should be interpreted as dissimilarity matrix or object. Otherwise Euclidean distances will be used.",
     short.name = "dbscan",
-    callees = c("dbscan")
+    callees = "dbscan"
   )
 }
 

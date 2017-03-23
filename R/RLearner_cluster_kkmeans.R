@@ -27,7 +27,7 @@ makeRLearner.cluster.kkmeans = function() {
     name = "Kernel K-Means",
     note = "`centers` has been set to `2L` by default. The nearest center in kernel distance determines cluster assignment of new data points. Kernel parameters have to be passed directly and not by using the `kpar` list in `kkmeans`",
     short.name = "kkmeans",
-    callees = c("kkmeans")
+    callees = "kkmeans"
   )
 }
 

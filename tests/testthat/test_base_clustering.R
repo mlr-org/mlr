@@ -46,9 +46,9 @@ test_that("clustering resample",  {
 })
 
 test_that("clustering benchmark", {
-  task.names = c("noclass")
+  task.names = "noclass"
   tasks = list(noclass.task)
-  learner.names = c("cluster.SimpleKMeans")
+  learner.names = "cluster.SimpleKMeans"
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 

@@ -70,7 +70,7 @@ test_that("no labels are switched", {
     })
   }
   # FIXME: only check prob for now for timimg reasons
-  for (predtype in c("prob")) {
+  for (predtype in "prob") {
     checkErrsForTask(mytask1a, predtype)
     checkErrsForTask(mytask1b, predtype)
     checkErrsForTask(mytask2a, predtype)

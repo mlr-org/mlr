@@ -104,9 +104,9 @@ test_that("Impute data frame", {
   expect_equal(x$data[["x.dummy"]], as.numeric(c(rep(FALSE, 5), TRUE)))
   expect_equal(reimpute(data, x$desc), x$data)
 
-  x = impute(data, target = target, dummy.classes = c("numeric"))$data
+  x = impute(data, target = target, dummy.classes = "numeric")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy")))
-  x = impute(data, target = target, dummy.classes = c("numeric"), dummy.cols = "z")$data
+  x = impute(data, target = target, dummy.classes = "numeric", dummy.cols = "z")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy", "z.dummy")))
 
   x = impute(data, target = target, classes = list(factor = imputeMode(), numeric = imputeMedian(),

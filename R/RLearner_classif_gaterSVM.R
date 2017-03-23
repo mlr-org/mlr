@@ -2,7 +2,7 @@
 makeRLearner.classif.gaterSVM = function() {
   makeRLearnerClassif(
     cl = "classif.gaterSVM",
-    package = c("SwarmSVM"),
+    package = "SwarmSVM",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "m", default = 3, lower = 1),
       makeNumericLearnerParam(id = "c", default = 1, lower = 0),

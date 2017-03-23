@@ -29,7 +29,7 @@ makeRLearner.classif.clusterSVM = function() {
     name = "Clustered Support Vector Machines",
     short.name = "clusterSVM",
     note = "`centers` set to `2` by default.",
-    callees = c("clusterSVM")
+    callees = "clusterSVM"
   )
 }
 

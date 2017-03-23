@@ -54,7 +54,7 @@ test_that("Stacking works", {
 })
 
 test_that("Stacking works with wrapped learners (#687)", {
-  base = c("classif.rpart")
+  base = "classif.rpart"
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
   lrns[[1]] = makeFilterWrapper(lrns[[1]], fw.abs = 2)

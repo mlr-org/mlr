@@ -59,7 +59,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
         values = c("bootstrap", "jackknife",  "sd"),
-        requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
+        requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE),
         when = "both"),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L, when = "both"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
@@ -147,7 +147,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   # )
   bias = rowSums(matrix(vapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2, numeric(nrow(pred.boot.all[[1]]))), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
   bist = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) * bias
-  pred.boot.aggregated = extractSubList(pred.bagged, c("aggregate"))
+  pred.boot.aggregated = extractSubList(pred.bagged, "aggregate")
   pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
   var.boot = apply(pred.boot.aggregated, 1, var) - bias
   var.boot = pmax(var.boot, 0)

@@ -181,9 +181,9 @@ test_that("benchmark", {
 })
 
 test_that("keep.preds and models are passed down to resample()", {
-  task.names = c("binary")
+  task.names = "binary"
   tasks = list(binaryclass.task)
-  learner.names = c("classif.lda")
+  learner.names = "classif.lda"
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 

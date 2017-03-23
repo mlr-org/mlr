@@ -117,10 +117,10 @@ if(FALSE){
     impute$measures.test$timepredict = 3600L
     impute$aggr = c(1L, 1L, 3600L, 3600L)
     names(impute$aggr) = c("mmce.test.mean","ber.test.mean","timetrain.test.mean","timepredict.test.mean")
-    impute$pred = c("imputed")
+    impute$pred = "imputed"
     impute$measures.train = data.frame(c("imputed"))
-    impute$err.msgs = c("imputed")
-    impute$models  = c("imputed")
+    impute$err.msgs = "imputed"
+    impute$models  = "imputed"
     impute$runtime = 3600*10
     imp = impute
     save(imp, file = "impute.RData")
