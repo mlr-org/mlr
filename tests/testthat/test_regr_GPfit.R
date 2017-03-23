@@ -1,7 +1,7 @@
 context("regr_GPfit")
 
 test_that("regr_GPfit", {
-  test_fun = function(x) {
+  testFun = function(x) {
     return(4 * x[, 1]^2 - 2 * x[, 2])
   }
   n = 30
@@ -9,7 +9,7 @@ test_that("regr_GPfit", {
   set.seed(getOption("mlr.debug.seed"))
   train.inds = 1:20
   x = lhs::maximinLHS(n, d)
-  y = test_fun(x)
+  y = testFun(x)
   gpfit.test.df = cbind.data.frame(x, y)
   colnames(gpfit.test.df) = c("x1", "x2", "y")
   m = GPfit::GP_fit(x[train.inds, ], y[train.inds])

@@ -253,11 +253,11 @@ makeFilter(
       args$mtry = p
     cforest.args = as.list(base::args(party::cforest))
     cforest.args = args[names(args) %in% names(cforest.args)]
-    control_args = as.list(base::args(party::cforest_control))
-    control_args = args[names(args) %in% names(control_args)]
+    control.args = as.list(base::args(party::cforest_control))
+    control.args = args[names(args) %in% names(control.args)]
     varimp.args = as.list(base::args(party::varimp))
     varimp.args = args[names(args) %in% names(varimp.args)]
-    ctrl = do.call(party::cforest_unbiased, control_args)
+    ctrl = do.call(party::cforest_unbiased, control.args)
     fit = do.call(party::cforest, c(list(formula = getTaskFormula(task), data = getTaskData(task), controls = ctrl),
                                     cforest.args))
     im = do.call(party::varimp, c(list(obj = fit), varimp.args))

@@ -11,12 +11,12 @@ test_that("classif_neuralnet", {
     formula.head = as.character(binaryclass.formula)[2]
     varnames = nms[nms != formula.head]
     formula.head = paste("as.numeric(", formula.head, ")~")
-    formula_expand = paste(formula.head, paste(varnames, collapse = "+"))
-    formula_expand = as.formula(formula_expand)
+    formula.expand = paste(formula.head, paste(varnames, collapse = "+"))
+    formula.expand = as.formula(formula.expand)
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]]) - 1
 
-    m = neuralnet::neuralnet(formula_expand, data = traindat, err.fct = "ce",
+    m = neuralnet::neuralnet(formula.expand, data = traindat, err.fct = "ce",
       linear.output = FALSE)
     p = neuralnet::compute(m, covariate = binaryclass.test[, -ncol(binaryclass.test)])
     p = as.numeric(as.vector(p[[2]]) > 0.5)
@@ -35,12 +35,12 @@ test_that("classif_neuralnet", {
     formula.head = as.character(binaryclass.formula)[2]
     varnames = nms[nms != formula.head]
     formula.head = paste("as.numeric(", formula.head, ")~")
-    formula_expand = paste(formula.head, paste(varnames, collapse = "+"))
-    formula_expand = as.formula(formula_expand)
+    formula.expand = paste(formula.head, paste(varnames, collapse = "+"))
+    formula.expand = as.formula(formula.expand)
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]]) - 1
 
-    m = neuralnet::neuralnet(formula_expand, hidden = 7, data = traindat, err.fct = "ce",
+    m = neuralnet::neuralnet(formula.expand, hidden = 7, data = traindat, err.fct = "ce",
       linear.output = FALSE)
     p = neuralnet::compute(m, covariate = binaryclass.test[, -ncol(binaryclass.test)])
     p = as.numeric(as.vector(p[[2]]) > 0.5)
