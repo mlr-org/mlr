@@ -805,7 +805,7 @@ measureAUC = function(probabilities, truth, negative, positive) {
   }
   n_pos = as.numeric(sum(i))
   n_neg = length(i) - n_pos
-  (sum(r[i]) - n_pos * (n_pos + 1)/2)/(n_pos * n_neg)
+  (sum(r[i]) - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg)
 }
 
 #' @export brier
