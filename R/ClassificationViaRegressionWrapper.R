@@ -61,7 +61,7 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
   } else {
     td = getTaskDesc(.model)
     levs = c(td$positive, td$negative)
-    propVectorToMatrix(vnapply(p, function(x) exp(x)/sum(exp(x))), levs)
+    propVectorToMatrix(vnapply(p, function(x) exp(x) / sum(exp(x))), levs)
   }
 }
 
