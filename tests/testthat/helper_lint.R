@@ -109,7 +109,7 @@ function_left_parentheses_linter = function(source_file) {
 
 # note that this must be a *named* list (bug in lintr)
 linters = list(
-  commas = commas_linter,
+  commas = lintr:::commas_linter,
 #  infix.spaces = infix_spaces_linter,
 #  open.curly = open_curly_linter(),
 #  closed.curly = closed_curly_linter(),
