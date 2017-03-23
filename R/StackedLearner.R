@@ -100,13 +100,13 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
   }
 
-  baseType = unique(extractSubList(base.learners, "type"))
+  base.type = unique(extractSubList(base.learners, "type"))
   if (!is.null(resampling) & method != "stack.cv") {
     stop("No resampling needed for this method")
   }
   if (is.null(resampling)) {
     resampling = makeResampleDesc("CV", iters = 5L,
-      stratify = ifelse(baseType == "classif", TRUE, FALSE))
+      stratify = ifelse(base.type == "classif", TRUE, FALSE))
   }
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
   assertClass(resampling, "ResampleDesc")
@@ -282,12 +282,12 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     feat = .newdata[, colnames(.newdata) %nin% td$target, drop = FALSE]
 
     if (use.feat) {
-      predData = cbind(probs, feat)
+      pred.data = cbind(probs, feat)
     } else {
-      predData = probs
+      pred.data = probs
     }
 
-    pred = predict(sm, newdata = predData)
+    pred = predict(sm, newdata = pred.data)
     if (sm.pt == "prob") {
       return(as.matrix(getPredictionProbabilities(pred, cl = td$class.levels)))
     } else {
@@ -405,8 +405,8 @@ stackCV = function(learner, task) {
     # add data with normal features IN CORRECT ORDER
     feat = getTaskData(task)#[test.inds, ]
     feat = feat[, !colnames(feat) %in% tn, drop = FALSE]
-    predData = cbind(probs, feat)
-    super.task = makeSuperLearnerTask(learner, data = predData, target = tn)
+    pred.data = cbind(probs, feat)
+    super.task = makeSuperLearnerTask(learner, data = pred.data, target = tn)
   } else {
     super.task = makeSuperLearnerTask(learner, data = probs, target = tn)
   }
@@ -581,9 +581,9 @@ getResponse = function(pred, full.matrix = TRUE) {
     if (full.matrix) {
       # return matrix of probabilities
       td = pred$task.desc
-      predReturn = pred$data[, stri_paste("prob", td$class.levels, sep = ".")]
-      colnames(predReturn) = td$class.levels
-      return(predReturn)
+      pred.return = pred$data[, stri_paste("prob", td$class.levels, sep = ".")]
+      colnames(pred.return) = td$class.levels
+      return(pred.return)
     } else {
       # return only vector of probabilities for binary classification
       return(getPredictionProbabilities(pred))

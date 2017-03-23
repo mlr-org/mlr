@@ -46,14 +46,14 @@ predictLearner.cluster.kkmeans = function(.learner, .model, .newdata, .weights =
   K = kernlab::kernelf(.model$learner.model)
 
   # kernel product between each new datapoint and the centers
-  Dxc = matrix(kernlab::kernelMatrix(K, as.matrix(.newdata), c), ncol = nrow(c))
+  d.xc = matrix(kernlab::kernelMatrix(K, as.matrix(.newdata), c), ncol = nrow(c))
   # kernel product between each new datapoint and itself: rows are identical
-  Dxx = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(.newdata))), each = ncol(Dxc)), ncol = ncol(Dxc), byrow = TRUE)
+  d.xx = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(.newdata))), each = ncol(d.xc)), ncol = ncol(d.xc), byrow = TRUE)
   # kernel product between each center and itself: columns are identical
-  Dcc = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(c))), each = nrow(Dxc)), nrow = nrow(Dxc))
+  d.cc = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(c))), each = nrow(d.xc)), nrow = nrow(d.xc))
   # this is the squared kernel distance to the centers
-  D2 = Dxx + Dcc - 2 * Dxc
+  d2 = d.xx + d.cc - 2 * d.xc
   # the nearest center determines cluster assignment
-  res = apply(D2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
+  res = apply(d2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
   return(res)
 }

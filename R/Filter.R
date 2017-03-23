@@ -1,4 +1,4 @@
-.FilterRegister = new.env()
+.FilterRegister = new.env()  # nolint
 
 #' Create a feature filter.
 #'
@@ -255,12 +255,12 @@ makeFilter(
     cforest_args = args[names(args) %in% names(cforest_args)]
     control_args = as.list(base::args(party::cforest_control))
     control_args = args[names(args) %in% names(control_args)]
-    varimp_args = as.list(base::args(party::varimp))
-    varimp_args = args[names(args) %in% names(varimp_args)]
+    varimp.args = as.list(base::args(party::varimp))
+    varimp.args = args[names(args) %in% names(varimp.args)]
     ctrl = do.call(party::cforest_unbiased, control_args)
     fit = do.call(party::cforest, c(list(formula = getTaskFormula(task), data = getTaskData(task), controls = ctrl),
                                     cforest_args))
-    im = do.call(party::varimp, c(list(obj = fit), varimp_args))
+    im = do.call(party::varimp, c(list(obj = fit), varimp.args))
     im
   }
 )

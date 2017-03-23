@@ -59,11 +59,11 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
   if (sum(stri_detect_regex(cf, "\\.")) > 0){
     varnames = nms[nms != formula_head]
     formula_head = stri_paste("as.numeric(", formula_head, ")~", sep = " ")
-    formula_expand = stri_paste(formula_head,
+    formula.expand = stri_paste(formula_head,
                                 stri_paste(varnames, collapse = "+", sep = " "),
                                 sep = " ")
-    formula_expand = as.formula(formula_expand)
-    f = formula_expand
+    formula.expand = as.formula(formula.expand)
+    f = formula.expand
   }
 
   neuralnet::neuralnet(f, data = taskdat, linear.output = FALSE, ...)
