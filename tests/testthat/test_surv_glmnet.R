@@ -16,7 +16,7 @@ test_that("surv_glmnet", {
     parset = parset.list[[i]]
     y = as.matrix(surv.train[, surv.target])
     colnames(y) = c("time", "status")
-    pars = c(list(y = Surv(time=surv.train[, surv.target[1]], event=surv.train[, surv.target[2]]),
+    pars = c(list(y = Surv(time = surv.train[, surv.target[1]], event = surv.train[, surv.target[2]]),
       x = as.matrix(surv.train[, -c(1, 2, 7)]), family = "cox"), parset)
     glmnet::glmnet.control(factory = TRUE)
     set.seed(getOption("mlr.debug.seed"))

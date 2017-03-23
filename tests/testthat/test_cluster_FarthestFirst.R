@@ -5,7 +5,7 @@ test_that("cluster_FarthestFirst", {
 
   parset.list = list(
     list(),
-    list(N=3)
+    list(N = 3)
   )
 
   old.predicts.list = list()

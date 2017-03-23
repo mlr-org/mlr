@@ -34,7 +34,7 @@ test_that("TaskDesc", {
   ct = makeClassifTask(target = "Species", data = df)
   expect_equal(getTaskDesc(ct)$has.missings, TRUE)
 
-  ct = makeClassifTask(target=binaryclass.target, data = binaryclass.df)
+  ct = makeClassifTask(target = binaryclass.target, data = binaryclass.df)
   td = getTaskDesc(ct)
   expect_equal(td$size, 208)
   expect_equal(sum(td$n.feat), 60)

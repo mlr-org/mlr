@@ -4,8 +4,8 @@ test_that("classif_rda", {
   requirePackagesOrSkip("klaR", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
-  m = klaR::rda(formula=multiclass.formula, data=multiclass.train)
-  p = predict(m, newdata=multiclass.test)$class
+  m = klaR::rda(formula = multiclass.formula, data = multiclass.train)
+  p = predict(m, newdata = multiclass.test)$class
 
 
   testSimple("classif.rda", multiclass.df, multiclass.target,
@@ -14,9 +14,9 @@ test_that("classif_rda", {
 
   parset.list = list(
     list(),
-    list(gamma=0.1, lambda=0.1),
-    list(gamma=0.5, lambda=1),
-    list(gamma=1, lambda=0)
+    list(gamma = 0.1, lambda = 0.1),
+    list(gamma = 0.5, lambda = 1),
+    list(gamma = 1, lambda = 0)
     )
 
   old.predicts.list = list()
@@ -24,11 +24,11 @@ test_that("classif_rda", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(formula=multiclass.formula, data=multiclass.train)
+    pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(klaR::rda, pars)
-    p = predict(m, newdata=multiclass.test)
+    p = predict(m, newdata = multiclass.test)
     old.predicts.list[[i]] = p$class
     old.probs.list[[i]] = p$posterior
   }

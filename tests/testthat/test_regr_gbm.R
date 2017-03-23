@@ -5,7 +5,7 @@ test_that("regr_gbm", {
 
   parset.list = list(
     list(),
-    list(n.trees=600),
+    list(n.trees = 600),
     list(interaction.depth = 2)
     )
 
@@ -21,7 +21,7 @@ test_that("regr_gbm", {
       m = do.call(gbm::gbm, pars)
     })
     set.seed(getOption("mlr.debug.seed"))
-    p = gbm::predict.gbm(m, newdata=regr.test, n.trees=length(m$trees))
+    p = gbm::predict.gbm(m, newdata = regr.test, n.trees = length(m$trees))
     old.predicts.list[[i]] = p
   }
 

@@ -30,7 +30,7 @@ test_that("classif_svm", {
     pars$probability = TRUE
     m2 = do.call(e1071::svm, pars)
     old.predicts.list[[i]] = predict(m1, newdata = multiclass.test)
-    old.probs.list[[i]] = predict(m2, newdata=multiclass.test, probability = TRUE)
+    old.probs.list[[i]] = predict(m2, newdata = multiclass.test, probability = TRUE)
   }
 
   testSimpleParsets("classif.svm", multiclass.df, multiclass.target,
@@ -38,7 +38,7 @@ test_that("classif_svm", {
   #testProbParsets("classif.svm", multiclass.df, multiclass.target,
   #  multiclass.train.inds, old.probs.list, parset.list)
 
-  tt = function(formula, data, subset=1:150, ...) {
+  tt = function(formula, data, subset = 1:150, ...) {
     e1071::svm(formula, data=data[subset, ], kernel="polynomial", degree=3, coef0=2, gamma=1.5)
   }
 

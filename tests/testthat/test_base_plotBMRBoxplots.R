@@ -65,6 +65,6 @@ test_that("BenchmarkResult allows spaces", {
     makeLearner("classif.rpart", predict.type = "prob")
   )
   res = benchmark(learners, sonar.task, cv, measures)
-  plotBMRBoxplots(res, measure=auc)
+  plotBMRBoxplots(res, measure = auc)
   ggsave(tempfile(fileext = ".png"))
 })

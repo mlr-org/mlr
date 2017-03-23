@@ -20,9 +20,9 @@ makeRLearner.regr.GPfit = function(){
     short.name = "GPfit",
     note = "(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d,
             the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has
-            to be set. (2) We replace the GPfit parameter 'corr = list(type='exponential',power=1.95)' to be seperate
-            parameters 'type' and 'power', in the case of  corr = list(type='matern', nu = 0.5), the seperate parameters
-            are 'type' and 'matern_nu_k=0', and nu is computed by 'nu=(2 * matern_nu_k + 1)/2=0.5'
+            to be set. (2) We replace the GPfit parameter 'corr = list(type = 'exponential',power = 1.95)' to be seperate
+            parameters 'type' and 'power', in the case of  corr = list(type = 'matern', nu = 0.5), the seperate parameters
+            are 'type' and 'matern_nu_k = 0', and nu is computed by 'nu = (2 * matern_nu_k + 1)/2 = 0.5'
             ",
     callees = "GP_fit"
   )
@@ -51,7 +51,7 @@ predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
         .newdata[, col.name] =  (.newdata[, col.name] - tr.info$low[col.name]) / (tr.info$high[col.name] - tr.info$low[col.name])
     }
   }
-  rst=predict(.model$learner.model, xnew = .newdata[, tr.info$not.const])
+  rst = predict(.model$learner.model, xnew = .newdata[, tr.info$not.const])
   se = (.learner$predict.type != "response")
   if (!se)
     return(rst$Y_hat)

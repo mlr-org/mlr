@@ -180,7 +180,7 @@ test_that("Impute works on non missing data", { # we had issues here: 848,893
     imputeLearner(learner = makeLearner("regr.fnn"))
   )
   for (impute.method in impute.methods) {
-    imputed = impute(data, cols = list(a=impute.method))$data
+    imputed = impute(data, cols = list(a = impute.method))$data
     expect_equal(data, imputed)
   }
   # test it in resampling

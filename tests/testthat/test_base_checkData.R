@@ -27,12 +27,12 @@ test_that("checkData", {
   # check conversion of target
   df = binaryclass.df
   df[, binaryclass.target] = as.character(df[, binaryclass.target])
-  task = makeClassifTask(data = df, target=binaryclass.target)
+  task = makeClassifTask(data = df, target = binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 
   df = binaryclass.df
   df[, binaryclass.target] = as.logical(as.integer(binaryclass.df[, binaryclass.target])-1)
-  task = makeClassifTask(data = df, target=binaryclass.target)
+  task = makeClassifTask(data = df, target = binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 
   df = regr.df

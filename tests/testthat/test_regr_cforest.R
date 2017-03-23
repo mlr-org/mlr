@@ -18,7 +18,7 @@ test_that("regr_cforest", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(regr.formula, data=regr.train)
+    pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::cforest, pars)

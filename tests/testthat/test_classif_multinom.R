@@ -7,7 +7,7 @@ test_that("classif_multinom", {
   capture.output({m = nnet::multinom(formula = multiclass.formula, data = multiclass.train)})
 
   set.seed(getOption("mlr.debug.seed"))
-  p = predict(m, newdata=multiclass.test)
+  p = predict(m, newdata = multiclass.test)
 
   testSimple("classif.multinom", multiclass.df, multiclass.target, multiclass.train.inds, p)
 
@@ -23,7 +23,7 @@ test_that("classif_multinom", {
   # test multinom for 2 classes
   wl = makeLearner("classif.multinom", predict.type="prob")
   m = train(wl, binaryclass.task)
-  p = predict(m, newdata=binaryclass.df)
+  p = predict(m, newdata = binaryclass.df)
   rr = p$data$response
   pp = getPredictionProbabilities(p)
   i = as.integer(pp < 0.5) + 1

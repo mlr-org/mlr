@@ -156,7 +156,7 @@ test_that("irace works with unnamed discrete values", {
 # there was a bug when the column of an opt-path was NA all the way
 test_that("irace handles parameters with unsatisfiable requirement gracefully", {
   lrn = makeLearner("classif.J48")
-  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival=1L)
+  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival = 1L)
 
   ps = makeParamSet(makeNumericParam("C", 0.1, 0.3, requires=quote(R != R)), makeLogicalParam("R"))  # C never feasible
   res = tuneParams(lrn, pid.task, hout, par.set = ps, control = ctrl)

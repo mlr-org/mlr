@@ -4,10 +4,10 @@ test_that("classif_randomForest", {
   requirePackagesOrSkip("randomForest", default.method = "load")
   parset.list = list(
     list(),
-    list(ntree=50,  mtry=2),
-    list(ntree=50, mtry=4),
-    list(ntree=200, mtry=2),
-    list(ntree=2000, mtry=4, proximity = TRUE, oob.prox = TRUE)
+    list(ntree = 50,  mtry = 2),
+    list(ntree = 50, mtry = 4),
+    list(ntree = 200, mtry = 2),
+    list(ntree = 2000, mtry = 4, proximity = TRUE, oob.prox = TRUE)
   )
 
   old.predicts.list = list()
@@ -15,7 +15,7 @@ test_that("classif_randomForest", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(formula=multiclass.formula, data=multiclass.train)
+    pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForest::randomForest, pars)
@@ -52,7 +52,7 @@ test_that("fix factors work", {
   train = sample(1:n, floor(n * 0.9))
   test = setdiff(1:n, train)
 
-  data$x = factor(sample(letters[1:3], n, replace=TRUE))
+  data$x = factor(sample(letters[1:3], n, replace = TRUE))
   task = makeClassifTask(data=data[train, ], target="Species")
   learner = makeLearner("classif.randomForest", fix.factors.prediction=TRUE)
   model = train(learner, task)

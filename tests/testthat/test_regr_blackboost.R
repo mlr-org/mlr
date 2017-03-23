@@ -22,12 +22,12 @@ test_that("regr_blackboost", {
 
   for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
-    pars = list(regr.formula, data=regr.train)
+    pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::blackboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata=regr.test)[, 1]
+    old.predicts.list[[i]] = predict(m, newdata = regr.test)[, 1]
   }
 
   testSimpleParsets("regr.blackboost", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)

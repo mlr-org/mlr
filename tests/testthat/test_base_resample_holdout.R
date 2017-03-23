@@ -11,7 +11,7 @@ test_that("holdout instance works", {
 })
 
 test_that("holdout fixed instance works", {
-  rin = makeFixedHoldoutInstance(1:5, 1:15, size=20)
+  rin = makeFixedHoldoutInstance(1:5, 1:15, size = 20)
   expect_equal(rin$size, 20)
   expect_equal(rin$desc$iters, 1)
   expect_equal(length(rin$train.inds), 1)

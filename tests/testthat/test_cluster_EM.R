@@ -5,7 +5,7 @@ test_that("cluster_EM", {
 
   parset.list = list(
     list(),
-    list(N=10)
+    list(N = 10)
   )
 
   old.predicts.list = list()

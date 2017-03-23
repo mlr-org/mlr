@@ -3,7 +3,7 @@ context("getTaskData")
 test_that("getTaskData", {
   df = getTaskData(multiclass.task)
   expect_equal(df, multiclass.df)
-  df = getTaskData(multiclass.task, subset=1:10, features = colnames(multiclass.df)[1:2])
+  df = getTaskData(multiclass.task, subset = 1:10, features = colnames(multiclass.df)[1:2])
   expect_equal(df, multiclass.df[1:10, c(1:2, 5)])
 
   # recode.target
@@ -35,7 +35,7 @@ test_that("getTaskData", {
   expect_equal(nrow(df), 150)
   expect_equal(ncol(df), 3)
 
-  x = getTaskData(multiclass.task, target.extra=TRUE)
+  x = getTaskData(multiclass.task, target.extra = TRUE)
   expect_equal(x$data[, 1:4], multiclass.df[, 1:4])
   expect_equal(x$target, multiclass.df[, multiclass.target])
 
@@ -70,10 +70,10 @@ test_that("getTaskData multilabel", {
   df = getTaskData(multilabel.task)
   expect_equal(df, multilabel.df)
   cn = colnames(multilabel.df)[3:4]
-  df = getTaskData(multilabel.task, subset = 1:10, features=cn)
+  df = getTaskData(multilabel.task, subset = 1:10, features = cn)
   expect_equal(df, multilabel.df[1:10, union(cn, multilabel.target)])
 
-  x = getTaskData(multilabel.task, target.extra=TRUE)
+  x = getTaskData(multilabel.task, target.extra = TRUE)
   expect_true(setequal(names(x), c("data", "target")))
   expect_true(is.data.frame(x$data))
   expect_true(is.data.frame(x$target))

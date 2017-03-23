@@ -17,7 +17,7 @@ test_that("surv_cv.CoxBoost", {
     x = dropNamed(surv.train, surv.target)
 
     info = getFixDataInfo(surv.train, factors.to.dummies = TRUE, ordered.to.int = TRUE)
-    pars = c(list(time = unname(y[, surv.target[1]]), status=unname(y[, surv.target[2]]), x = as.matrix(fixDataForLearner(x, info))), parset)
+    pars = c(list(time = unname(y[, surv.target[1]]), status = unname(y[, surv.target[2]]), x = as.matrix(fixDataForLearner(x, info))), parset)
     if (is.null(pars$penalty)) {
       pars$penalty = penalty = 9 * sum(unname(y[, surv.target[2]]))
     }

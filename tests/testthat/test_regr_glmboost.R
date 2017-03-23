@@ -26,7 +26,7 @@ test_that("regr_glmboost", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = as.vector(predict(m, newdata=regr.test))
+    old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
   }
   testSimpleParsets("regr.glmboost", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })
@@ -56,7 +56,7 @@ test_that("regr_glmboost works with families for count data", {
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = as.vector(predict(m, newdata=new.regr.test))
+    old.predicts.list[[i]] = as.vector(predict(m, newdata = new.regr.test))
   }
   testSimpleParsets("regr.glmboost", new.regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })

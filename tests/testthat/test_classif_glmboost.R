@@ -20,7 +20,7 @@ test_that("classif_glmboost", {
 
   for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
-    pars = list(binaryclass.formula, data=binaryclass.train)
+    pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)

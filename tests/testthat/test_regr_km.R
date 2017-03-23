@@ -15,7 +15,7 @@ test_that("regr_km", {
   y = dd[1:25, regr.num.target]
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(~1, design=des1, response=y)
+    pars = list(~1, design = des1, response = y)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output({

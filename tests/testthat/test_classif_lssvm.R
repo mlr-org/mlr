@@ -23,7 +23,7 @@ test_that("classif_lssvm", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kernlab::lssvm, pars)
-    old.predicts.list[[i]] = kernlab::predict(m, newdata=multiclass.test)
+    old.predicts.list[[i]] = kernlab::predict(m, newdata = multiclass.test)
   }
 
   testSimpleParsets("classif.lssvm", multiclass.df, multiclass.target,
@@ -36,12 +36,12 @@ test_that("classif_lssvm", {
   # p = kernlab::predict(m, newdata=multiclass.test)
   # testSimple("classif.lssvm", multiclass.df, multiclass.target, multiclass.train.inds, p,  parset=list(kernel="polydot", degree=3, offset=2, scale=1.5))
 
-  tt = function(formula, data, subset=1:150, ...) {
+  tt = function(formula, data, subset = 1:150, ...) {
     kernlab::lssvm(x=formula, data=data[subset, ], kernel="rbfdot", kpar=list(sigma=20))
   }
 
   tp = function(model, newdata, ...) {
-    kernlab::predict(model, newdata=newdata)
+    kernlab::predict(model, newdata = newdata)
   }
 
   testCV("classif.lssvm", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp,
