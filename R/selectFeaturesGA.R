@@ -18,7 +18,8 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
   for (i in seq_len(control$maxit)) {
     # get all mu elements which are alive, ie the current pop and their bit vecs as matrix
     pop.df = as.data.frame(opt.path)[pop.inds, , drop = FALSE]
-    pop.featmat = as.matrix(pop.df[, bit.names, drop = FALSE]); mode(pop.featmat) = "integer"
+    pop.featmat = as.matrix(pop.df[, bit.names, drop = FALSE])
+    mode(pop.featmat) = "integer"
     pop.y = pop.df[, yname]
     # create lambda offspring and eval
     kids.list = replicate(lambda, generateKid(pop.featmat, control), simplify = FALSE)

@@ -57,7 +57,8 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   truth = getPredictionTruth(pred)
   tab = table(truth, resp)
   # create table for margins, where only the off-diag errs are in
-  mt = tab; diag(mt) = 0
+  mt = tab
+  diag(mt) = 0
   row.err = rowSums(mt)
   col.err = colSums(mt)
   result = rbind(cbind(tab, row.err), c(col.err, sum(col.err)))
