@@ -46,7 +46,7 @@ Default is \dQuote{stack.nocv},}
 
 \item{use.feat}{[\code{logical(1)}]\cr
 Whether the original features should also be passed to the super learner.
-Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}.
+Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}. # meas.bs.optimal
 Default is \code{FALSE}.}
 
 \item{resampling}{[\code{\link{ResampleDesc}}]\cr

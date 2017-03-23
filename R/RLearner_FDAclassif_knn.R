@@ -25,26 +25,15 @@ makeRLearner.fdaclassif.knn = function() {
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
       makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE),
       # parameters for (semi)metrics
-      # TODO
-      # parameters type.basis1/2, nbasis1/2 für semimetric.basis implementieren
+      # TODO parameters type.basis1/2, nbasis1/2 für semimetric.basis implementieren
       makeIntegerLearnerParam(id = "lp", default = 2L,
                               requires = quote(metric == "metric.lp")),
       makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L,
                               requires = quote(metric %in% c("semimetric.basis", "semimetric.deriv",
-                                                             "semimetric.fourier", "semimetric.mlr"))),
-      makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE,
-                              requires = quote(metric == "semimetric.mlr")),
-      makeLogicalLearnerParam(id = "evenly.spaced", default = FALSE, tunable = FALSE,
-                              requires = quote(metric == "semimetric.mlr")),
-      makeIntegerLearnerParam(id = "nknot",
-                              # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
-                              #                  floor((ncol(DATA1)-nderiv-4)/2),floor(ncol(DATA1)/3)),
-                              lower = 1L, upper = Inf,
+                                                             "semimetric.fourier"))),
+      makeIntegerLearnerParam(id = "nknot", lower = 1L,
                               requires = quote(metric == "semimetric.deriv")),
-      makeIntegerLearnerParam(id = "nbasis",
-                              # default = ifelse(floor(ncol(DATA1)/3)>floor((ncol(DATA1)-nderiv-4)/2),
-                              #                 floor((ncol(DATA1) - nderiv - 4)/2), floor(ncol(DATA1)/3)),
-                              lower = 1L,
+      makeIntegerLearnerParam(id = "nbasis", lower = 1L,
                               requires = quote(metric == "semimetric.fourier")),
       makeIntegerLearnerParam(id = "q", lower = 1L,
                               default = quote(ifelse(metric == "metric.pca", 1L, 2L)),
@@ -52,12 +41,11 @@ makeRLearner.fdaclassif.knn = function() {
                               requires = quote(metric %in% c("semimetric.pca", "semimetric.mplsr"))),
       makeNumericLearnerParam(id = "period", lower = 0,
                               requires = quote(metric == "semimetric.fourier")),
-      # I do not know what this parameter does
+      # TM: I do not know what this parameter does
       makeUntypedLearnerParam(id = "class1",
                               requires = quote(metric == "metric.mplsr"),
                               tunable = FALSE),
       makeIntegerVectorLearnerParam(id = "t",
-                                    # default = 1:ncol(DATA1),
                                     lower = 1L, upper = Inf,
                                     requires = quote(metric == "metric.hshift"))
 
