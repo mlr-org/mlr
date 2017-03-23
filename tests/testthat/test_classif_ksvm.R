@@ -46,6 +46,6 @@ test_that("classif_ksvm", {
   }
 
   testCV("classif.ksvm", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
-    parset = list(kernel = "polydot", degree= 3, offset = 2, scale = 1.5))
+    parset = list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5))
 
 })

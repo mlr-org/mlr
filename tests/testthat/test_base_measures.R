@@ -493,7 +493,7 @@ test_that("check measure calculations", {
   brier.perf = performance(pred.bin, measures = brier, model = mod.bin)
   expect_equal(brier.test, brier$fun(pred = pred.bin))
   expect_equal(brier.test, as.numeric(brier.perf))
-  expect_equal(measureBrier(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1/3)
+  expect_equal(measureBrier(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1 / 3)
   expect_equal(measureBrier(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 0)
   expect_equal(measureBrier(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1)
   #brier.scaled
@@ -503,7 +503,7 @@ test_that("check measure calculations", {
   brier.scaled.perf = performance(pred.bin, measures = brier.scaled, model = mod.bin)
   expect_equal(brier.scaled.test, brier.scaled$fun(pred = pred.bin))
   expect_equal(brier.scaled.test, as.numeric(brier.scaled.perf))
-  expect_equal(measureBrierScaled(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1 - ((1/3) / (2/3 * 1/3)))
+  expect_equal(measureBrierScaled(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1 - ((1 / 3) / (2 / 3 * 1 / 3)))
   expect_equal(measureBrierScaled(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 1 - ((0) / (1 * 0)))
   expect_equal(measureBrierScaled(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1 - ((1) / (0 * 1)))
   #tp
@@ -638,8 +638,8 @@ test_that("check measure calculations", {
   # mldr defines the accuracy as 1-hamloss
   expect_equal(mldr:::mldr_Accuracy(counters), 1 - measureMultilabelHamloss(multi.y, multi.p))
   # manual checks
-  expect_equal(measureMultilabelHamloss(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1/2) # 1 of 2 values are wrong
-  expect_equal(measureMultilabelHamloss(cbind(tf, tf), cbind(tf, tt)), 1/4) # 1 of 4 values are wrong
+  expect_equal(measureMultilabelHamloss(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 2) # 1 of 2 values are wrong
+  expect_equal(measureMultilabelHamloss(cbind(tf, tf), cbind(tf, tt)), 1 / 4) # 1 of 4 values are wrong
 
   #subset01: how many rows are not identical
   subset01.test = mean(rowSums(multi.y == multi.p) != ncol(multi.y))
@@ -653,7 +653,7 @@ test_that("check measure calculations", {
   expect_equal(mldr:::mldr_SubsetAccuracy(multi.y, multi.p), 1 - measureMultilabelSubset01(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelSubset01(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1) # 1 of 1 obs is wrong
-  expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1/2) # 1 of 2 obs is wrong
+  expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1 / 2) # 1 of 2 obs is wrong
 
   #f1mult
   f1.test = vnapply(seq_row(multi.y), function(i) 2 * sum(multi.y[i, ] * multi.p[i, ]) / (sum(multi.y[i, ]) + sum(multi.p[i, ])))
@@ -668,8 +668,8 @@ test_that("check measure calculations", {
   # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
   expect_equal(mldr:::mldr_FMeasure(counters[-3, ]), measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
   # manual checks
-  expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2*1/3) # 1 TRUE-TRUE match of 3 TRUE values
-  expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2*1/2, 2*1/3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
+  expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
+  expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
 
   #accmult
   acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ]) / (sum(multi.y[i, ] | multi.p[i, ])))

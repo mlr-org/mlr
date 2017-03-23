@@ -14,7 +14,7 @@ test_that("classif_nnet", {
     m = nnet::nnet(binaryclass.formula, size = 3, data = binaryclass.train)
     set.seed(getOption("mlr.debug.seed"))
     # for the binaryclass task the mlr positive class is not the same as the ref class of nnet
-    p3 = 1-predict(m, newdata = binaryclass.test, type = "raw")[, 1]
+    p3 = 1 - predict(m, newdata = binaryclass.test, type = "raw")[, 1]
   })
   testSimple("classif.nnet", multiclass.df, multiclass.target,
     multiclass.train.inds, p, parset = list())

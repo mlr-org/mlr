@@ -5,13 +5,13 @@ test_that("regr_mob", {
 
   parset.list = list(
     list(),
-    list(term.feats=c("lstat", "rm"), part.feats=c("zn", "indus")),
-    list(alpha=0.10, minsplit=40, term.feats=c("lstat", "rm", "crim"),
-      part.feats=c("zn", "indus", "chas", "dis")),
+    list(term.feats = c("lstat", "rm"), part.feats = c("zn", "indus")),
+    list(alpha = 0.10, minsplit = 40, term.feats = c("lstat", "rm", "crim"),
+      part.feats = c("zn", "indus", "chas", "dis")),
     list(alpha = 0.10, minsplit = 10, trim = 0.2, breakties = TRUE,
-      term.feats=c("lstat", "rm", "crim", "rm", "dis"), part.feats= "zn"),
-    list(trim = 0.01, bonferroni = FALSE, term.feats= "crim",
-      part.feats=c("zn", "indus", "chas", "dis", "lstat", "rm"))
+      term.feats = c("lstat", "rm", "crim", "rm", "dis"), part.feats = "zn"),
+    list(trim = 0.01, bonferroni = FALSE, term.feats = "crim",
+      part.feats = c("zn", "indus", "chas", "dis", "lstat", "rm"))
   )
 
   old.predicts.list = list()
@@ -36,7 +36,7 @@ test_that("regr_mob", {
     pars = list(formula = formula, data = regr.train, control = control)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::mob, pars)
-    p  = predict(m, newdata = regr.test)
+    p = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }
 
@@ -46,5 +46,5 @@ test_that("regr_mob", {
   #tt = "mob"
   #tp = function(model, newdata) predict(model, newdata)
   #
-  # testCVParsets("regr.rpart", regr.df, regr.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)
+  # testCVParsets("regr.rpart", regr.df, regr.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })
