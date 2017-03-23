@@ -95,7 +95,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
 
     result$relative.row = result.rel.row
     result$relative.col = result.rel.col
-    result$relative.error = result$result[k + 1, k + 1]/n.pred
+    result$relative.error = result$result[k + 1, k + 1] / n.pred
   }
 
   addClasses(result, "ConfusionMatrix")

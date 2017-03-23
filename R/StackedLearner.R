@@ -105,7 +105,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("No resampling needed for this method")
   }
   if (is.null(resampling)) {
-    resampling = makeResampleDesc("CV", iters= 5L,
+    resampling = makeResampleDesc("CV", iters = 5L,
       stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
@@ -235,7 +235,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
       for (i in seq_along(probs))
-        probs[[i]] = probs[[i]]*model.weight[i]
+        probs[[i]] = probs[[i]] * model.weight[i]
       prob = Reduce("+", probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
@@ -301,7 +301,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 setPredictType.StackedLearner = function(learner, predict.type) {
   lrn = setPredictType.Learner(learner, predict.type)
   lrn$predict.type = predict.type
-  if ("super.learner"%in%names(lrn)) lrn$super.learner$predict.type = predict.type
+  if ("super.learner" %in% names(lrn)) lrn$super.learner$predict.type = predict.type
   return(lrn)
 }
 
@@ -428,12 +428,12 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   if (is.null(metric)) {
     if (type == "regr") {
-      metric = function(pred, true) mean((pred-true)^2)
+      metric = function(pred, true) mean((pred - true)^2)
     } else {
       metric = function(pred, true) {
         pred = colnames(pred)[max.col(pred)]
         tb = table(pred, true)
-        return( 1- sum(diag(tb))/sum(tb) )
+        return( 1- sum(diag(tb)) / sum(tb) )
       }
     }
   }
@@ -516,7 +516,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       }
 
       new.score = score[ind]
-      if (old.score-new.score < 1e-8) {
+      if (old.score - new.score < 1e-8) {
         flag = FALSE
       } else {
         current.prob = current.prob + probs[[ind]]

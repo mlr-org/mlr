@@ -208,7 +208,7 @@ b632plus = makeAggregation(
       gamma = performance(pred2, measures = measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368 * R)
-      a[i] = (1-w) * perf.train[i] + w * perf.test[i]
+      a[i] = (1 - w) * perf.train[i] + w * perf.test[i]
     }
     return(mean(a))
   }

@@ -38,7 +38,7 @@ makeRLearner.regr.RRF = function() {
 #' @export
 trainLearner.regr.RRF = function(.learner, .task, .subset, .weights, ...) {
   RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
-           keep.forest= TRUE, ...)
+           keep.forest = TRUE, ...)
 }
 
 #' @export
