@@ -19,7 +19,7 @@ test_that("tune", {
   m2 = setAggregation(mmce, test.sd)
   tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl, measures = list(m1, m2))
   pp = as.data.frame(tr2$opt.path)
-  for (i in 1:nrow(tr$performances)) {
+  for (i in seq_len(nrow(tr$performances))) {
     cp = tr$performances[i, "cp"]
     ms = tr$performances[i, "minsplit"]
     j = which(pp$cp == cp & pp$minsplit == ms )

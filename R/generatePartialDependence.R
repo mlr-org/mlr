@@ -531,11 +531,11 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
       t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun.wrapper, td = td, ...))
   } else {
     if (obj$learner$predict.type == "response")
-      sapply(1:nrow(data), function(idx)
+      sapply(seq_len(nrow(data)), function(idx)
         numDeriv::grad(func = f, x = x, obj = obj, data = data[idx, , drop = FALSE],
           features = features, fun = fun.wrapper, td = td, ...))
     else
-      t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
+      t(sapply(seq_len(nrow(data)), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
         data = data[idx, , drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
   }
 }

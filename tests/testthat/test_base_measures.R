@@ -863,7 +863,7 @@ test_that("measures quickcheck", {
         data$target = rep_len(classes, length.out = nrow(data))
 
         trainIds = 1:(2*nrow(data)/3)
-        testIds = setdiff(1:nrow(data), trainIds)
+        testIds = setdiff(seq_len(nrow(data)), trainIds)
         task = makeClassifTask(data = data, target = "target")
 
         mod = train(lrn, task = task, subset = trainIds)

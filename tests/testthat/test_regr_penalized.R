@@ -15,7 +15,7 @@ test_that("regr_penalized", {
 
   # to make test of empty list feasable (in terms of time), number of obs need to be reduced
   regr.train.inds = sample(seq(1, 506), size = 150)
-  regr.test.inds  = setdiff(1:nrow(regr.df), regr.train.inds)
+  regr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
   regr.train = regr.df[regr.train.inds, ]
   regr.test  = regr.df[regr.test.inds, ]
 
@@ -46,7 +46,7 @@ test_that("regr_penalized", {
     list(fusedl = TRUE, lambda1 = 1, lambda2 = 2, maxiter = 4L)
   )
 
-  tt = function(formula, data, subset = 1:nrow(data), ...) {
+  tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
     penalized::penalized(formula, data = data[subset, ], ...)
   }
 

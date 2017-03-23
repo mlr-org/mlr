@@ -38,7 +38,7 @@ test_that("SupervisedTask", {
   expect_true(getTaskDesc(ct)$has.missings)
 
   # check that blocking is still there after subsetting
-  ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target, blocking = as.factor(1:nrow(multiclass.df)))
+  ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target, blocking = as.factor(seq_len(nrow(multiclass.df))))
   expect_true(getTaskDesc(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
   expect_true(getTaskDesc(ct2)$has.blocking)

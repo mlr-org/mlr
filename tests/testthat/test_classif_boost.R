@@ -42,7 +42,7 @@ test_that("classif_boosting", {
     list(mfinal = 2, cp = 0.2)
   )
 
-  tt = function(formula, data, subset = 1:nrow(data), ...) {
+  tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
     args = list(...)
     if (!is.null(args$cp))
       ctrl = rpart::rpart.control(cp = args$cp, xval = 0)

@@ -15,7 +15,7 @@
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
-#' training.set = sample(1:nrow(iris), nrow(iris) / 2)
+#' training.set = sample(seq_len(nrow(iris)), nrow(iris) / 2)
 #'
 #' ## use linear discriminant analysis to classify iris data
 #' task = makeClassifTask(data = iris, target = "Species")

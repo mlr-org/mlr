@@ -2,7 +2,7 @@ context("weights")
 
 test_that("weights", {
   lrn = makeLearner("regr.lm")
-  ws = 1:nrow(regr.df)
+  ws = seq_len(nrow(regr.df))
   rt = makeRegrTask(target = regr.target, data = regr.df)
   m = train(lrn, task = rt, weights = ws)
   p = predict(m, task = rt, subset = 30:100)

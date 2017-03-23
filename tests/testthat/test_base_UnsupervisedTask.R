@@ -21,7 +21,7 @@ test_that("UnsupervisedTask", {
   expect_true(td$has.missings)
 
   # check that blocking is still there after subsetting
-  ct1 = makeClusterTask(data = noclass.df, blocking = as.factor(1:nrow(noclass.df)))
+  ct1 = makeClusterTask(data = noclass.df, blocking = as.factor(seq_len(nrow(noclass.df))))
   expect_true(getTaskDesc(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
   expect_true(getTaskDesc(ct2)$has.blocking)

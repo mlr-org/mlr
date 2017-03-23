@@ -562,7 +562,7 @@ multiclass.au1u = makeMeasure(id = "multiclass.au1u", minimize = FALSE, best = 1
 measureAU1U = function(probabilities, truth) {
   m = colAUC(probabilities, truth)
   c = c(combn(1:nlevels(truth), 2))
-  mean(m[cbind(rep(1:nrow(m), each = 2), c)])
+  mean(m[cbind(rep(seq_len(nrow(m)), each = 2), c)])
 }
 
 #' @export multiclass.au1p
@@ -585,7 +585,7 @@ measureAU1P = function(probabilities, truth) {
   weights = table(truth) / length(truth)
   m = m * matrix(rep(weights, each = nrow(m)), ncol = length(weights))
   c = c(combn(1:nlevels(truth), 2))
-  sum(m[cbind(rep(1:nrow(m), each = 2), c)]) / (nlevels(truth) - 1)
+  sum(m[cbind(rep(seq_len(nrow(m)), each = 2), c)]) / (nlevels(truth) - 1)
 }
 
 #' @export multiclass.brier

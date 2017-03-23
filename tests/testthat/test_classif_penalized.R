@@ -35,7 +35,7 @@ test_that("classif_penalized", {
     list(lambda1 = 1, lambda2 = 2, maxiter = 4L, fusedl = TRUE)
   )
 
-  tt = function(formula, data, subset = 1:nrow(data), ...) {
+  tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
     penalized::penalized(formula, data = data[subset, ], ...)
   }
 

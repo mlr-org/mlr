@@ -146,7 +146,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
   data = df
   formula = formula(paste(target, "~."))
 
-  tt = function(formula, data, subset = 1:nrow(data), ...) {
+  tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
     pars = list(formula = formula, data = data[subset, ])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))

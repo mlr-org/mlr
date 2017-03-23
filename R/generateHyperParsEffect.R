@@ -402,7 +402,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
       }
       d = aggregate(averaging, hyperpars, nested.agg)
-      d$iteration = 1:nrow(d)
+      d$iteration = seq_len(nrow(d))
     }
   }
 
