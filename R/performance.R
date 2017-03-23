@@ -75,9 +75,13 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
-    else if (is.null(feats))
-      feats = task$env$data[pred$data$id,, drop = FALSE]
-    else
+    else if (is.null(feats)) {
+      if(pred$task.desc$type == "oneclass") {
+        feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
+      } else {
+        feats = task$env$data[pred$data$id,, drop = FALSE]
+      }
+    } else
       assertClass(feats, "data.frame")
   }
   # we need to find desc somewhere
