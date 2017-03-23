@@ -12,7 +12,7 @@ test_that("classif_evtree", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)

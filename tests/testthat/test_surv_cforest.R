@@ -16,7 +16,7 @@ test_that("surv_cforest", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(surv.formula, data = surv.train)
     pars = c(pars, parset)

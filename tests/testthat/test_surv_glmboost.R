@@ -19,7 +19,7 @@ test_that("surv_glmboost", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     f = getTaskFormula(surv.task)
     pars = list(f, data = surv.train)

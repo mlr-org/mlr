@@ -11,7 +11,7 @@ test_that("classif_pamr", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     d = list(x = t(binaryclass.train[, -binaryclass.class.col]), y = binaryclass.train[, binaryclass.class.col])
     parset = c(parset, list(data = d))

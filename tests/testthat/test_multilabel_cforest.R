@@ -16,7 +16,7 @@ test_that("multilabel_cforest", {
 
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(multilabel.formula, data = multilabel.train)
     pars = c(pars, parset)

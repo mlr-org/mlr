@@ -14,7 +14,7 @@ test_that("classif_ctree", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     ctrl = do.call(party::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))

@@ -16,7 +16,7 @@ test_that("regr_mob", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     feats = getTaskFeatureNames(regr.task)
     if (is.null(parset$part.feats)) {

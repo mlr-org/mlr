@@ -14,7 +14,7 @@ test_that("regr_slim", {
   X = regr.num.train[, ind]
   y = regr.num.train[, regr.num.target]
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     pars = list(X = as.matrix(X), Y = y)
     pars = c(pars, parset.list[[i]])
     if ("lambda.idx" %in%  names(pars)) {

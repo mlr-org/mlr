@@ -17,7 +17,7 @@ test_that("regr_fnn", {
 
   old.predicts.list1 = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     j = which(colnames(rtrain) == regr.target)
     pars = list(train=rtrain[, -j], test=rtest[, -j], y=rtrain[, j])

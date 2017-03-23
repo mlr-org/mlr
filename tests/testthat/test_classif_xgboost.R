@@ -16,7 +16,7 @@ test_that("classif_xgboost", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(data = data.matrix(binaryclass.train[, 1:60]),
       label = as.numeric(binaryclass.train[, 61]) - 1)
@@ -30,7 +30,7 @@ test_that("classif_xgboost", {
     old.predicts.list[[i]] = factor(as.numeric(pred > 0.5), labels = binaryclass.class.levs)
   }
 
-  for (i in 1:length(parset.probs.list)) {
+  for (i in seq_along(parset.probs.list)) {
     parset = parset.probs.list[[i]]
     pars = list(data = data.matrix(binaryclass.train[, 1:60]),
       label = as.numeric(binaryclass.train[, 61]) - 1)

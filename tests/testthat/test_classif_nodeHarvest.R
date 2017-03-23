@@ -13,7 +13,7 @@ test_that("classif_nodeHarvest", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     Y = ifelse(binaryclass.df[binaryclass.train.inds, binaryclass.class.col] == binaryclass.class.levs[1], 1, 0)
     parset = c(parset, list(X = binaryclass.df[binaryclass.train.inds, -binaryclass.class.col], Y = Y, silent = TRUE))

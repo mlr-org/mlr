@@ -18,7 +18,7 @@ test_that("classif_glmboost", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(binaryclass.formula, data=binaryclass.train)
     pars = c(pars, parset)

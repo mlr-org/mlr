@@ -12,7 +12,7 @@ test_that("surv_glmnet", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     y = as.matrix(surv.train[, surv.target])
     colnames(y) = c("time", "status")

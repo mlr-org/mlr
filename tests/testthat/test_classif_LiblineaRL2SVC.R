@@ -20,7 +20,7 @@ test_that("classif_LiblineaRL2SVC", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1L:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(data = binaryclass.train[, -binaryclass.class.col],
       target = binaryclass.train[, binaryclass.target])

@@ -13,7 +13,7 @@ test_that("regr_rknn", {
   parset.list = c(parset.list, list(list(seed = 2015L))) # to test empty paramset
   old.predicts.list = list()
 
-  for (i in 1L:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     train = regr.num.train
     target = train[, regr.num.target]

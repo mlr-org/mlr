@@ -10,7 +10,7 @@ test_that("regr_frbs", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     pars = parset.list[[i]]
     method.arg = names(pars) == "method"
     if (any(method.arg)) {

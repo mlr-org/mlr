@@ -86,7 +86,7 @@ testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, 
   train = df[inds, ]
   test = df[-inds, ]
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.predicts = old.predicts.list[[i]]
     testSimple(t.name, df, target, train.inds, old.predicts, parset)
@@ -133,7 +133,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
   train = df[inds, ]
   test = df[-inds, ]
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
     testProb(t.name, df, target, train.inds, old.probs, parset)
@@ -182,7 +182,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
 
 testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     testCV(t.name, df, target, folds, parset, tune.train, tune.predict)
   }

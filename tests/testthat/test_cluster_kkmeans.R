@@ -10,7 +10,7 @@ test_that("cluster_kkmeans", {
   )
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     m = kernlab::kkmeans(as.matrix(noclass.train), centers = centers)

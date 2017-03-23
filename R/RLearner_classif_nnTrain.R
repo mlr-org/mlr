@@ -33,7 +33,7 @@ trainLearner.classif.nnTrain = function(.learner, .task, .subset, .weights = NUL
   y = as.numeric(d$target)
   dict = sort(unique(y))
   onehot = matrix(0, length(y), length(dict))
-  for (i in 1:length(dict)) {
+  for (i in seq_along(dict)) {
     ind = which(y == dict[i])
     onehot[ind, i] = 1
   }

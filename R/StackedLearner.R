@@ -234,7 +234,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
-      for (i in 1:length(probs))
+      for (i in seq_along(probs))
         probs[[i]] = probs[[i]]*model.weight[i]
       prob = Reduce("+", probs)
       if (sm.pt == "prob") {
@@ -441,7 +441,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
 
   bls = learner$base.learners
   if (type != "regr") {
-    for (i in 1:length(bls)) {
+    for (i in seq_along(bls)) {
       if (bls[[i]]$predict.type == "response")
         stop("Hill climbing algorithm only takes probability predict type for classification.")
     }

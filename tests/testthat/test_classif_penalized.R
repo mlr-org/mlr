@@ -13,7 +13,7 @@ test_that("classif_penalized", {
   )
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)

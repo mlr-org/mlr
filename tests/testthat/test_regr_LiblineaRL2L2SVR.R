@@ -22,7 +22,7 @@ test_that("regr_LiblineaRL2L2SVR", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1L:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(data = regr.num.train[, -regr.num.class.col],
       target = regr.num.train[, regr.num.target])

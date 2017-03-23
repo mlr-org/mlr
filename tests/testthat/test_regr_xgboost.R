@@ -10,7 +10,7 @@ test_that("regr_xgboost", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     if (is.null(parset$verbose)) parset$verbose = 0L
     if (is.null(parset$nrounds)) parset$nrounds = 1L

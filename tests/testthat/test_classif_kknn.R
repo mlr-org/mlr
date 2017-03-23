@@ -13,7 +13,7 @@ test_that("classif_kknn", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = multiclass.formula, train = multiclass.train, test = multiclass.test)
     pars = c(pars, parset)

@@ -12,7 +12,7 @@ test_that("classif_saeDNN", {
 
     dict = sort(unique(y))
     onehot = matrix(0, length(y), length(dict))
-    for (i in 1:length(dict)) {
+    for (i in seq_along(dict)) {
       ind = which(y == dict[i])
       onehot[ind, i] = 1
     }
@@ -36,7 +36,7 @@ test_that("classif_saeDNN", {
 
     dict = sort(unique(y))
     onehot = matrix(0, length(y), length(dict))
-    for (i in 1:length(dict)) {
+    for (i in seq_along(dict)) {
       ind = which(y == dict[i])
       onehot[ind, i] = 1
     }

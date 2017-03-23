@@ -17,7 +17,7 @@ test_that("classif_lssvm", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(x = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)

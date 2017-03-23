@@ -12,7 +12,7 @@ test_that("classif_LiblineaRL1LogReg", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1L:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(data = binaryclass.train[, -binaryclass.class.col],
       target = binaryclass.train[, binaryclass.target], type = 6L)

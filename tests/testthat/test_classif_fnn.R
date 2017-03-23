@@ -13,7 +13,7 @@ test_that("classif_fnn", {
   old.predicts.list1 = list()
   old.predicts.list2 = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
 
     j = which(colnames(multiclass.train) == multiclass.target)

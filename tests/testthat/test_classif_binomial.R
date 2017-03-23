@@ -18,7 +18,7 @@ test_that("classif_binomial", {
   old.probs.list = list()
   nof = 1:55 # remove feats
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     set.seed(getOption("mlr.debug.seed"))
     m = glm(formula = binaryclass.formula, data = binaryclass.train[, -nof], family = parset$family)

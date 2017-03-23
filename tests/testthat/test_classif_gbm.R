@@ -14,7 +14,7 @@ test_that("classif_gbm", {
 
   mydata = binaryclass.train
   mydata[, binaryclass.target] = as.numeric(mydata[, binaryclass.target] ==  getTaskDesc(binaryclass.task)$positive)
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = mydata, distribution = "bernoulli")
     pars = c(pars, parset)

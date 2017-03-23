@@ -13,7 +13,7 @@ test_that("regr_km", {
   des1 = dd[1:25, setdiff(colnames(dd), regr.num.target)]
   des2 = dd[26:50, setdiff(colnames(dd), regr.num.target)]
   y = dd[1:25, regr.num.target]
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(~1, design=des1, response=y)
     pars = c(pars, parset)

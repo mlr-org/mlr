@@ -12,7 +12,7 @@ test_that("regr_h2oglm", {
   )
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset, list(x = colnames(regr.train[, -regr.class.col]),
       y = regr.target,

@@ -21,7 +21,7 @@ test_that("regr_gamboost", {
       name = "My Gauss Variant"))
   )
   old.predicts.list = list()
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
@@ -52,7 +52,7 @@ test_that("regr_gamboost works with families for count data", {
     list(family = "Hurdle")
   )
   old.predicts.list = list()
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(regr.formula, data = new.regr.train)
     pars = c(pars, parset)

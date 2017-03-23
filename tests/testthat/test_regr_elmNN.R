@@ -14,7 +14,7 @@ test_that("regr_elmNN", {
   num = sapply(regr.train, is.numeric)
   xind = num & names(regr.train) != regr.target
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(y = regr.train[, regr.target], x = regr.train[, xind])
     pars = c(pars, parset)
@@ -28,7 +28,7 @@ test_that("regr_elmNN", {
   # FIXME:
   # Does not yet work because we can not yet set the seed for elmNN
   # testSimpleParsets("regr.elmNN", regr.df[, num], regr.target, regr.train.inds, old.predicts.list, parset.list)
-  for (i in 1:length(parset.list)){
+  for (i in seq_along(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(regr.test))
   }
 })

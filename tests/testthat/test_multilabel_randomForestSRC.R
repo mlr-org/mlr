@@ -12,7 +12,7 @@ test_that("multilabel_randomForestSRC", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     for (j in multilabel.target) {
       multilabel.train[j] = factor(multilabel.train[[j]], levels = c("TRUE", "FALSE"))

@@ -11,7 +11,7 @@ test_that("regr_bartMachine", {
   old.predicts.list = list()
   xind = names(regr.train) != regr.target
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(y = regr.train[, regr.target], X = regr.train[, xind], verbose = FALSE)
     pars = c(pars, parset)
@@ -24,7 +24,7 @@ test_that("regr_bartMachine", {
   testSimpleParsets("regr.bartMachine", regr.df, regr.target, regr.train.inds,
                     old.predicts.list, parset.list)
 
-  for (i in 1:length(parset.list)){
+  for (i in seq_along(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(regr.test))
   }
 })

@@ -15,7 +15,7 @@ test_that("classif_earth can do binary classification", {
   old.probs.list = list()
 
   levs = binaryclass.class.levs
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset$glm = list(family = binomial(link = "logit"), maxit = 25)
     pars = list(formula = binaryclass.formula, data = binaryclass.train)
@@ -45,7 +45,7 @@ test_that("classif_earth can do multiclass classification", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset$glm = list(family = binomial(link = "logit"), maxit = 25)
     pars = list(formula = multiclass.formula, data = multiclass.train)
