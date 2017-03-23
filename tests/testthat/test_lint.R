@@ -1,4 +1,3 @@
-library("lintr")
 context("lint")
 
 test_that("lint check", {

@@ -1,6 +1,6 @@
 # linters that differ from the default linters
 # this is necessary because mlr's style is weird.
-
+library("lintr")
 # prohibit <-
 left_assign_linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
