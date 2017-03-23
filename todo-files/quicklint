@@ -29,6 +29,7 @@ Rscript --vanilla -e "\
   open(infile) ;\
   bad = FALSE ;\
   while(length({line = readLines(infile, 1)}) == 1) { \
+    if (!file.exists(line)) next ;\
     catf('Linting file %s...', line, newline = FALSE) ;\
     lintres = lint(line, linters = linters) ;\
     if (length(lintres) > 0) {\
