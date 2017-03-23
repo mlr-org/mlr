@@ -36,6 +36,6 @@ trainLearner.classif.mda = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.mda = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "class", "posterior")
+  type = ifelse(.learner$predict.type == "response", "class", "posterior")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

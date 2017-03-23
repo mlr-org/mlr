@@ -22,6 +22,6 @@ trainLearner.classif.naiveBayes = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.classif.naiveBayes = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "class", "raw")
+  type = ifelse(.learner$predict.type == "response", "class", "raw")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
