@@ -118,7 +118,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   # some shortcut names
   target = td$target
   data = getTaskData(task)
-  if (!(td$type %in% c("cluster", "oneclass")))
+  if (!(td$type %in% c("cluster")))
     y = getTaskTargets(task)
   x1n = features[1L]
   x1 = data[, x1n]
@@ -132,7 +132,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   mod = train(learner, task)
   pred.train = predict(mod, task)
   yhat = pred.train$data$response
-  perf.train = performance(pred.train, task = task, measures = measures)
+  perf.train = performance(pred.train, task = task, measures = measures, ...)
   if (cv > 0L) {
     cv = crossval(learner, task, iters = 10L, measures = measures, show.info = FALSE)
     perf.cv = cv$aggr
@@ -161,7 +161,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   pred.grid = predict(mod, newdata = grid)
   grid[, target] = pred.grid$data$response
 
-  if (td$type == "classif") {
+  if (td$type %in% c("classif", "oneclass")) {
     data$.err = if (err.mark == "train")
       (y != yhat)
     else if (err.mark == "cv")
@@ -197,7 +197,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
       p  = p + guides(alpha = FALSE)
     }
-  } else if (td$type %in% c("cluster", "oneclass")) {
+  } else if (td$type == "cluster") {
     if (taskdim == 2L) {
       data$response = factor(yhat)
       p = ggplot(data, aes_string(x = x1n, y = x2n, col = "response"))
