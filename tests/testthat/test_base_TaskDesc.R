@@ -24,7 +24,7 @@ test_that("TaskDesc", {
   expect_equal(sum(td$n.feat), 4)
   expect_equal(td$n.feat[["numerics"]], 4)
   expect_equal(td$n.feat[["factors"]], 0)
-  expect_equal(td$has.missings, F)
+  expect_equal(td$has.missings, FALSE)
   expect_equal(td$type, "classif")
   expect_equal(td$class.levels, c("setosa", "versicolor", "virginica"))
 
@@ -32,7 +32,7 @@ test_that("TaskDesc", {
   df = multiclass.df
   df[1, 1] = as.numeric(NA)
   ct = makeClassifTask(target = "Species", data = df)
-  expect_equal(getTaskDesc(ct)$has.missings, T)
+  expect_equal(getTaskDesc(ct)$has.missings, TRUE)
 
   ct = makeClassifTask(target=binaryclass.target, data = binaryclass.df)
   td = getTaskDesc(ct)
@@ -40,7 +40,7 @@ test_that("TaskDesc", {
   expect_equal(sum(td$n.feat), 60)
   expect_equal(td$n.feat[["numerics"]], 60)
   expect_equal(td$n.feat[["factors"]], 0)
-  expect_equal(td$has.missings, F)
+  expect_equal(td$has.missings, FALSE)
   expect_equal(td$type, "classif")
   expect_equal(td$class.levels, c("M", "R"))
 
@@ -49,7 +49,7 @@ test_that("TaskDesc", {
   expect_equal(sum(td$n.feat), 13)
   expect_equal(td$n.feat[["numerics"]], 12)
   expect_equal(td$n.feat[["factors"]], 1)
-  expect_equal(td$has.missings, F)
+  expect_equal(td$has.missings, FALSE)
   expect_equal(td$type, "regr")
   expect_true(is.null(td$class.levels))
 })

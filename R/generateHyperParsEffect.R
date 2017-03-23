@@ -350,7 +350,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       # create grid
       xo = seq(min(d[, x]), max(d[, x]), length.out = 100)
       yo = seq(min(d[, y]), max(d[, y]), length.out = 100)
-      grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = F)
+      grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = FALSE)
       names(grid) = c(x, y)
 
       if (hyperpars.effect.data$nested){
