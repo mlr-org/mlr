@@ -10,6 +10,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   } else {
     data$anomaly = FALSE
     target = "anomaly"
+    warningf("No target column specified, add target column 'anomaly' with one class 'FALSE'")
   }
   # some code on cran passed stuff like positive=1, we can live with the convert here
   if (isScalarNumeric(positive))
@@ -33,6 +34,8 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
 
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
+    if (levels(data[[target]]) > 2)
+      stopf("Target column '%s' contains more than two factor levels")
   }
 
   task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive)
