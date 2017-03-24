@@ -45,4 +45,7 @@ test_that("checkData", {
   df[, 1] = as.logical(df[,1])
   colnames(df)[1] = "aaa"
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
+
+  # check missing target column
+  expect_warning(makeOneClassTask(data=oneclass.df), "add target column 'anomaly'")
 })
