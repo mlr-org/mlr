@@ -23,12 +23,14 @@ test_that("propVectorToMatrix", {
 })
 
 test_that("listTaskTypes", {
-  expected = c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  expected = c("classif", "multilabel", "regr", "cluster", "surv",  "costsens",
+               "fdaclassif", "fdaregr")
   expect_equal(expected, listTaskTypes())
 })
 
 test_that("listLearnerProperties", {
-  expected = c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  expected = c("classif", "multilabel", "regr", "cluster", "surv",  "costsens",
+               "fdaclassif", "fdaregr")
   expect_equal(expected, listTaskTypes())
 })
 
@@ -45,3 +47,4 @@ test_that("suppressWarning works", {
   expect_equal(suppressWarning(foo(4), "pretty"), 4)
   expect_warning(suppressWarning(foo(4), "<nomatch>"), "pretty")
 })
+
