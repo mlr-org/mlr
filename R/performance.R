@@ -28,11 +28,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, truth = NULL) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, truth = truth)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -42,7 +42,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, truth = NULL) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -58,8 +58,16 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
     } else {
-      if (is.null(pred$data$truth))
-        stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
+      if (type == "oneclass") {
+        if (is.null(truth) && is.null(pred$data$truth)) {
+          stopf("You need to have a 'truth' column in your pred object or pass a 'truth' variable for measure %s!", m$id)
+        } else if (is.null(pred$data$truth)) {
+          pred$data$truth = truth
+        }
+      } else {
+        if (is.null(pred$data$truth))
+          stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
+      }
     }
   }
   if ("req.model" %in% props) {
@@ -76,8 +84,8 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
     else if (is.null(feats)) {
-      if(pred$task.desc$type == "oneclass") {
-        feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
+      if (pred$task.desc$type == "oneclass") {
+          feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
       } else {
         feats = task$env$data[pred$data$id,, drop = FALSE]
       }
