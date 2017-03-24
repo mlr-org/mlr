@@ -36,7 +36,7 @@ makeRLearner.classif.lqa = function() {
     par.vals = list(penalty = "lasso", lambda = 0.1),
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
-    note = "`penalty` has been set to `\"lasso\"` and `lambda` to `0.1` by default. The parameters `lambda`, `gamma`, `alpha`, `oscar.c`, `a`, `lambda1` and `lambda2` are the tuning parameters of the `penalty` function being used, and correspond to the parameters as named in the respective help files. Parameter `c` for penalty method `oscar` has been named `oscar.c`. Parameters `lambda1` and `lambda2` correspond to the two dimensions of the 2-D 'lambda' parameter of the penalty functions `enet`, `fused.lasso`, `icb`, `licb`, and `weighted.fusion`.",
+    note = "`penalty` has been set to `\"lasso\"` and `lambda` to `0.1` by default. The parameters `lambda`, `gamma`, `alpha`, `oscar.c`, `a`, `lambda1` and `lambda2` are the tuning parameters of the `penalty` function being used, and correspond to the parameters as named in the respective help files. Parameter `c` for penalty method `oscar` has been named `oscar.c`. Parameters `lambda1` and `lambda2` correspond to the parameters named 'lambda_1' and 'lambda_2' of the penalty functions `enet`, `fused.lasso`, `icb`, `licb`, as well as `weighted.fusion`.",
     callees = c("lqa", "lqa.control", "adaptive.lasso", "ao", "bridge", "enet", "fused.lasso", "genet", "icb", "lasso", "licb", "oscar", "penalreg", "ridge", "scad", "weighted.fusion")
   )
 }
