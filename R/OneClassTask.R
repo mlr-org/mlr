@@ -34,7 +34,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
 
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
-    if (levels(data[[target]]) > 2)
+    if (length(levels(data[[target]])) > 2)
       stopf("Target column '%s' contains more than two factor levels")
   }
 
