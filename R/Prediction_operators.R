@@ -1,5 +1,5 @@
 #' @export
-as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
+as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
   x$data
 }
 
@@ -72,13 +72,13 @@ getProbabilities = function(pred, cl) {
 }
 
 #c.Prediction = function(...) {
-#	preds = list(...)
-#	id = Reduce(c, lapply(preds, function(x) x@id))
-#	response = Reduce(c, lapply(preds, function(x) x@response))
-#	target = Reduce(c, lapply(preds, function(x) x@target))
-#	weights = Reduce(c, lapply(preds, function(x) x@weights))
-#	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
-#	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
+#  preds = list(...)
+#  id = Reduce(c, lapply(preds, function(x) x@id))
+#  response = Reduce(c, lapply(preds, function(x) x@response))
+#  target = Reduce(c, lapply(preds, function(x) x@target))
+#  weights = Reduce(c, lapply(preds, function(x) x@weights))
+#  prob = Reduce(rbind, lapply(preds, function(x) x@prob))
+#  return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}
 
 

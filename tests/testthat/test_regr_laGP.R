@@ -12,7 +12,7 @@ test_that("regr_laGP", {
   des1 = dd[1:51, setdiff(colnames(dd), regr.num.target)]
   des2 = dd[52:100, setdiff(colnames(dd), regr.num.target)]
   y = dd[1:51, regr.num.target]
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(X = des1[, -regr.num.class.col], Z = y, XX = des2[, -regr.num.class.col], verb = 0,
                 Xi.ret = FALSE)

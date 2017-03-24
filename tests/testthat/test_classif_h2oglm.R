@@ -12,9 +12,9 @@ test_that("classif_h2oglm", {
   )
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset,list(x = colnames(binaryclass.train[, -binaryclass.class.col]),
+    parset = c(parset, list(x = colnames(binaryclass.train[, -binaryclass.class.col]),
       y = binaryclass.target, family = "binomial",
       training_frame = h2o::as.h2o(binaryclass.train)))
     set.seed(getOption("mlr.debug.seed"))

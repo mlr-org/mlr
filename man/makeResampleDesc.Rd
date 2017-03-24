@@ -29,7 +29,7 @@ Further parameters for strategies.\cr
 \item{iters [\code{integer(1)}]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
   and \dQuote{Boostrap}.}
 \item{split [\code{numeric(1)}]}{Proportion of training cases for \dQuote{Holdout} and
-  \dQuote{Subsample} between 0 and 1. Default is 2/3.}
+  \dQuote{Subsample} between 0 and 1. Default is 2 / 3.}
 \item{reps [\code{integer(1)}]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
   Default is 10.}
 \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.

@@ -44,7 +44,8 @@ makeRLearner.regr.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "ordered", "weights", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',
+    callees = "rfsrc"
   )
 }
 
