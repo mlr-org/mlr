@@ -8,7 +8,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   if (!missing(target)) {
     assertString(target)
   } else {
-    data$anomaly = "FALSE"
+    data$anomaly = FALSE
     target = "anomaly"
     warningf("No target column specified, add target column 'anomaly' with one class 'FALSE'")
   }
@@ -58,7 +58,7 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
-    td$negative = setdiff(c("TRUE", "FALSE"), positive)
+    td$negative = setdiff(c(TRUE, FALSE), positive)
   else if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, positive)
   return(addClasses(td, c("OneClassTaskDesc", "SupervisedTaskDesc")))
