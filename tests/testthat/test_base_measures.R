@@ -189,8 +189,8 @@ test_that("check measure calculations", {
   pred.cluster = predict(mod.cluster, task.cluster)
   pred.cluster$data$response = pred.art.cluster
   #for oneclass
-  tar.oneclass = c("FALSE", "FALSE", "FALSE", "FALSE")
-  pred.art.oneclass = c("FALSE", "FALSE", "FALSE", "TRUE")
+  tar.oneclass = c(FALSE, FALSE, FALSE, FALSE)
+  pred.art.oneclass =  c(FALSE, FALSE, FALSE, TRUE)
   data.oneclass = data.frame(var1, var2, tar.oneclass)
   task.oneclass = makeOneClassTask(data = data.oneclass, target = "tar.oneclass")
   lrn.oneclass = makeLearner("oneclass.svm")
@@ -348,7 +348,7 @@ test_that("check measure calculations", {
   #test multiclass measures
 
   #mmce
-  mmce.test = mean(c(1L != 1L, 2L != 0L, 0L != 0L, 1L != 2L))
+  mmce.test = mean(c(1L != 1L, 2L != 1L, 0L != 0L, 1L != 2L))
   mmce.perf = performance(pred.classif, measures = mmce, model = mod.classif)
   expect_equal(mmce.test, mmce$fun(pred = pred.classif))
   expect_equal(mmce.test, as.numeric(mmce.perf))
@@ -830,7 +830,7 @@ test_that("check measure calculations", {
 
   expect_equal(lsr.perf, -1 * logloss.perf, check.names = FALSE)
 
-  # test one class (measurements same for cluster)
+  # test one class (same measurement for cluster)
 
   #db
   c2 = c(3, 1)
@@ -896,7 +896,7 @@ test_that("check measure calculations", {
   expect_equal(silhouette.test, silhouette$fun(pred = pred.oneclass, feats = data.oneclass[, -3]))
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
 
-  # test one class (measurements same for binary classif)
+  # test one class (same measurement for binary classif)
   #tp
   tp.test = sum(tar.oneclass == pred.art.oneclass & pred.art.oneclass == "FALSE")
   tp.perf = performance(pred.oneclass, measures = tp, model = mod.oneclass)
@@ -996,6 +996,13 @@ test_that("check measure calculations", {
   #multiclass.brier.twoclass.perf = performance(pred.oneclass, measures = multiclass.brier, model = mod.oneclass)
   #expect_equal(2 * brier.perf, multiclass.brier.twoclass.perf, check.names = FALSE)
 
+  #test one class (same measurement for multiclass classif)
+
+  #mmce
+  mmce.test = mean(c(FALSE != FALSE, FALSE != FALSE, FALSE != FALSE, FALSE != TRUE))
+  mmce.perf = performance(pred.oneclass, measures = mmce, model = mod.oneclass)
+  expect_equal(mmce.test, mmce$fun(pred = pred.oneclass))
+  expect_equal(mmce.test, as.numeric(mmce.perf))
 })
 
 test_that("getDefaultMeasure", {
