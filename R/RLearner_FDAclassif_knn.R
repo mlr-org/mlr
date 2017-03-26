@@ -26,6 +26,11 @@ makeRLearner.fdaclassif.knn = function() {
       makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE),
       # parameters for (semi)metrics
       # TODO parameters type.basis1/2, nbasis1/2 für semimetric.basis implementieren
+      # makeDiscreteLearnerParam(id = "type.basis1", default = NULL,
+      #                          values = c("bspline", "constant", "exponential",
+      #                                     "fourier", "monomial", "pc", "pls",
+      #                                     "polygonial", "power"),
+      #                          special.vals = list(NULL)),
       makeIntegerLearnerParam(id = "lp", default = 2L,
                               requires = quote(metric == "metric.lp")),
       makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L,
