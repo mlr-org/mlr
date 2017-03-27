@@ -20,14 +20,16 @@ makeRLearner.fdaclassif.classiKnn = function() {
                                tunable = FALSE),
       # additional arguments to computeDistMat
       makeIntegerLearnerParam(id = "dmin", default = 1L,
-                              lower = 1L),
+                              lower = 1L, upper = expression(ncol(getTaskData(.task)))),
+      makeIntegerLearnerParam(id = "dmax", default = expression(ncol(getTaskData(.task))),
+                              lower = 1L, upper = expression(ncol(getTaskData(.task)))),
       # TODO add upper = expression(getTaskData(.task))
       # TODO add analogously dmay, dmin1, dmin2, dmax1, dmax2, t1, t2
       # TODO add .poi
       # additional arguments to metrics in computeDistMat
-      makeNumericLearnerParam(id = "p", default = 2)
-      # additional arguments to Data2fd
-
+      makeNumericLearnerParam(id = "p", default = 2),
+      # TODO additional arguments to Data2fd
+      keys = c(".task")
     ),
     # par.vals = list(metric = "Euclidean", knn = 1L),
     properties = c("twoclass", "multiclass", "numerics", "prob"),

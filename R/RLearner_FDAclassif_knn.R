@@ -66,6 +66,7 @@ makeRLearner.fdaclassif.knn = function() {
       makeIntegerLearnerParam(id = "nbasis2", default = expression(nbasis1), lower = 1L,
                               special.vals = list(NULL, expression(nbasis1)),
                               requires = quote(metric == "semimetric.basis")),
+      # FIXME is this correct use of the key argument?
       keys = c("type.basis1", "nbasis1")
     ),
     par.vals = list(draw = FALSE, metric = "metric.lp"),

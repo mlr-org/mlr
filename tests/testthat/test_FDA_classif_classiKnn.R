@@ -3,7 +3,6 @@ context("FDA_classif_classiKnn")
 test_that("FDA_classif_classiKnn behaves like original api", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
 
-  # TODO switch to data from classiFunc package
   data(ArrowHead, package = "classiFunc")
   classes = ArrowHead[,"target"]
   ArrowHead = ArrowHead[,colnames(ArrowHead) != "target"]
@@ -25,8 +24,10 @@ test_that("FDA_classif_classiKnn behaves like original api", {
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
 
+
   p1.prob = predict(a1, mtest, predict.type = "prob")
   p2.prob = predict(a1, mlearn, predict.type = "prob")
+  p3.prob = predict(a1, predict.type = "prob")
 
   ph = as.data.frame(mlearn)
   ph[,"label"] = glearn
@@ -41,6 +42,7 @@ test_that("FDA_classif_classiKnn behaves like original api", {
 
   cp2 = predict(m, newdata = as.data.frame(mlearn))
   cp2 = unlist(cp2$data, use.names = FALSE)
+
   # check if the output from the original API matches the mlr learner's output
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
@@ -55,11 +57,32 @@ test_that("FDA_classif_classiKnn behaves like original api", {
   cp.prob = predict(m.prob, newdata = as.data.frame(mtest))
   cp2.prob = predict(m.prob, newdata = as.data.frame(mlearn))
 
+  # FIXME
+  # I think this should work
+  cp3.prob = predict(m.prob)
+
+  expect_equal(as.matrix(getPredictionProbabilities(cp3.prob)), p3.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp2.prob)), p2.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
+})
 
+test_that("FDA_classif_classiKnn behaves like original api for different metrics", {
+  requirePackagesOrSkip("classiFunc", default.method = "load")
 
-  # test that parameters work for different metrics
+  data(ArrowHead, package = "classiFunc")
+  classes = ArrowHead[,"target"]
+  ArrowHead = ArrowHead[,colnames(ArrowHead) != "target"]
+
+  set.seed(getOption("mlr.debug.seed"))
+  train_inds = sample(1:nrow(ArrowHead), size = 0.8 * nrow(ArrowHead), replace = FALSE)
+  test_inds = (1:nrow(ArrowHead))[!(1:nrow(ArrowHead)) %in% train_inds]
+
+  mlearn = ArrowHead[train_inds,]
+  glearn = classes[train_inds]
+
+  mtest = ArrowHead[test_inds,]
+  gtest = classes[test_inds]
+
   set.seed(getOption("mlr.debug.seed"))
   a.metric = classiFunc::classiKnn(glearn, mlearn,
                                    metric = "Minkowski", p = 1)
@@ -98,6 +121,29 @@ test_that("FDA_classif_classiKnn behaves like original api", {
     m.metrics[[i]] = train(lrn.metrics[[i]], short.task)
   }
 
-  # TODO test that passing on stuff to fda::Data2fd() works
+  # # test that breaching the boundaries for additional parameters to metrics
+  # # will result in an error
+  # lrn.shortEuclidean = makeLearner(cl = "fdaclassif.classiKnn",
+  #             par.vals = list(metric = "shortEuclidean"))
+  # getParamSet(lrn.shortEuclidean)
+  #
+  # # parameter tuning
+  # # check if upper bound of dmin and dmax are detected correctly
+  # num_ps = makeParamSet(
+  #   makeNumericParam("dmin", lower = -20, upper = 1000),
+  #   makeNumericParam("dmax", lower = -20, upper = 1000)
+  # )
+  #
+  # ctrl = makeTuneControlGrid(resolution = 20L)
+  #
+  # rdesc = makeResampleDesc("CV", iters = 3L)
+  # res = tuneParams(lrn.shortEuclidean, task = task,
+  #                  resampling = rdesc,
+  #                  par.set = num_ps, control = ctrl)
+})
 
+# TODO test that passing on stuff to fda::Data2fd() works
+test_that("FDA_classif_classiKnn behaves like original api for additional arguments to to fda::Data2fd()", {
+  requirePackagesOrSkip("classiFunc", default.method = "load")
+  stop("TODO")
 })
