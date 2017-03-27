@@ -4,15 +4,15 @@ makeRLearner.regr.btlm = function() {
     cl = "regr.btlm",
     package = "tgp",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "meanfn", default = "linear", 
-        values = c("constant", "linear")), 
-      makeDiscreteLearnerParam(id = "bprior", default = "bflat", 
+      makeDiscreteLearnerParam(id = "meanfn", default = "linear",
+        values = c("constant", "linear")),
+      makeDiscreteLearnerParam(id = "bprior", default = "bflat",
         values = c("b0", "b0not", "bflat", "bmle", "bmznot", "bmzt")),
-      makeNumericVectorLearnerParam(id = "tree", len = 2, default = c(0.5, 2), 
+      makeNumericVectorLearnerParam(id = "tree", len = 2, default = c(0.5, 2),
         lower = c(0, 0), upper = c(1, Inf)),
-      makeIntegerVectorLearnerParam(id = "BTE", len = 3, 
-        default = c(2000, 7000, 2), lower = 0), 
-      makeIntegerLearnerParam(id = "R", default = 1, lower = 1), 
+      makeIntegerVectorLearnerParam(id = "BTE", len = 3,
+        default = c(2000, 7000, 2), lower = 0),
+      makeIntegerLearnerParam(id = "R", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "m0r1", default = TRUE),
       makeUntypedLearnerParam(id = "itemps", default = NULL),
       makeLogicalLearnerParam(id = "krige", default = TRUE),
@@ -66,4 +66,4 @@ predictLearner.regr.btlm = function(.learner, .model, .newdata, ...) {
   } else {
     return(cbind(p$ZZ.km, sqrt(p$ZZ.ks2)))
   }
-}  
+}

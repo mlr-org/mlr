@@ -6,7 +6,7 @@ makeRLearner.classif.dcSVM = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 4, lower = 1),
       makeIntegerLearnerParam(id = "m", lower = 1),
-      makeDiscreteLearnerParam(id = "kernel", default = 3, values = c(1,2,3)),
+      makeDiscreteLearnerParam(id = "kernel", default = 3, values = c(1, 2, 3)),
       makeIntegerLearnerParam(id = "max.levels", lower = 1),
       makeIntegerLearnerParam(id = "early", default = 0, lower = 0),
       makeLogicalLearnerParam(id = "final.training", default = FALSE),
@@ -33,32 +33,32 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   pars = list(...)
   m.flag = FALSE
   max.levels.flag = FALSE
-  if (!any(stri_detect_regex(names(pars), 'm'))) {
+  if (!any(stri_detect_regex(names(pars), "m"))) {
     m = 800
     m.flag = TRUE
   } else {
     m = pars$m
   }
-  if (!any(stri_detect_regex(names(pars), 'max.levels'))) {
+  if (!any(stri_detect_regex(names(pars), "max.levels"))) {
     max.levels = 1
     max.levels.flag = TRUE
   } else {
     max.levels = pars$max.levels
   }
-  if (!any(stri_detect_regex(names(pars), 'k'))) {
+  if (!any(stri_detect_regex(names(pars), "k"))) {
     k = 4
   } else {
     k = pars$k
   }
   m = min(nrow(d$data), m)
-  min.cluster = ceiling(5*m/(k^max.levels))
-  if (min.cluster>m) {
+  min.cluster = ceiling(5 * m / (k^max.levels))
+  if (min.cluster > m) {
     f = getTaskFormula(.task)
     # map kernel to corresponding e1071 kernel
     if (!is.null(pars$kernel)) {
       kernel = c("linear", "polynomial", "radial")[pars$kernel]
     } else {
-      kernel = c("radial")
+      kernel = "radial"
     }
     pars$kernel = kernel
     result = do.call(e1071::svm, c(f, list(data = getTaskData(.task, .subset), probability = FALSE), pars))

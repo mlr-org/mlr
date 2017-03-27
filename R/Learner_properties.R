@@ -81,7 +81,7 @@ hasProperties = function(learner, props) {
 #'
 #' @export
 listLearnerProperties = function(type = "any") {
-  allProps = c(listTaskTypes(), "any")
-  assertSubset(type, allProps)
+  all.props = c(listTaskTypes(), "any")
+  assertSubset(type, all.props)
   mlr$learner.properties[[type]]
 }

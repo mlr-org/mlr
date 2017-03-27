@@ -41,7 +41,7 @@ setThreshold = function(pred, threshold) {
   ttype = td$type
   levs = td$class.levels
   if (length(levs) == 2L && is.numeric(threshold) && length(threshold) == 1L) {
-    threshold = c(threshold, 1-threshold)
+    threshold = c(threshold, 1 - threshold)
     names(threshold) = c(td$positive, td$negative)
   }
   if (length(threshold > 1L) && !setequal(levs, names(threshold)))

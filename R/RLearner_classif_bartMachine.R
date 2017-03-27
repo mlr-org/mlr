@@ -16,7 +16,7 @@ makeRLearner.classif.bartMachine = function() {
       makeNumericLearnerParam(id = "k", default = 2, lower = 0),
       makeNumericLearnerParam(id = "q", default = 0.9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "prob_rule_class", default = 0.5, lower = 0, upper = 1),
-      makeNumericVectorLearnerParam(id = "mh_prob_steps", default = c(2.5, 2.5, 4)/9, len = 3L),
+      makeNumericVectorLearnerParam(id = "mh_prob_steps", default = c(2.5, 2.5, 4) / 9, len = 3L),
       makeLogicalLearnerParam(id = "debug_log", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "run_in_sample", default = TRUE),
       makeNumericVectorLearnerParam(id = "cov_prior_vec"),
@@ -56,7 +56,7 @@ predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
   levs = c(td$positive, td$negative)
   if (.learner$predict.type == "prob"){
     p = predict(.model$learner.model, new_data = .newdata, type = "prob", ...)
-    y = propVectorToMatrix(1-p, levs)
+    y = propVectorToMatrix(1 - p, levs)
   } else {
     y = predict(.model$learner.model, new_data = .newdata, type = "class", ...)
     y = factor(y, levs)

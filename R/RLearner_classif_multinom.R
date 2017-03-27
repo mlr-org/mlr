@@ -35,11 +35,11 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.classif.multinom = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "class", "probs")
+  type = ifelse(.learner$predict.type == "response", "class", "probs")
   levs = .model$task.desc$class.levels
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  if (type == "probs" && length(levs)==2L) {
-    p = matrix(c(1-p, p), ncol = 2L, byrow = FALSE)
+  if (type == "probs" && length(levs) == 2L) {
+    p = matrix(c(1 - p, p), ncol = 2L, byrow = FALSE)
     colnames(p) = levs
   }
   return(p)

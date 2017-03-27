@@ -72,7 +72,7 @@ convertYForTuner = function(y, measures, ctrl) {
     if (is.na(z) || is.nan(z) || is.infinite(z))
       z = ctrl$impute.val[[j]]
     # we now negate values for maximization
-    y[[j]] = z * ifelse(measures[[j]]$minimize, 1 , -1)
+    y[[j]] = z * ifelse(measures[[j]]$minimize, 1, -1)
   }
   # for multicrit, return vector (without names), otherwise just scalar y
   if (inherits(ctrl, "TuneMultiCritControl"))

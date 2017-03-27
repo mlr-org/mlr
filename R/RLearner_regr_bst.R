@@ -28,7 +28,7 @@ makeRLearner.regr.bst = function() {
     ),
     par.vals = list(Learner = "ls", maxdepth = 1L, xval = 0L),
     # FIXME par.vals default for maxdepth is the same as the default of LearnerParam and the function
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Gradient Boosting",
     short.name = "bst",
     note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.',

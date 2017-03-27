@@ -15,7 +15,7 @@ makeRLearner.regr.xyf = function() {
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square"))
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "X-Y fused self-organising maps",
     short.name = "xyf",
     callees = c("xyf", "somgrid")

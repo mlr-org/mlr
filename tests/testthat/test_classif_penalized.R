@@ -13,14 +13,14 @@ test_that("classif_penalized", {
   )
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
-      m <- do.call(penalized::penalized, pars)
-    )
+    capture.output({
+      m = do.call(penalized::penalized, pars)
+    })
     # FIXME: should be removed, reported in issue 840
     m@formula$unpenalized[[2L]] = as.symbol(binaryclass.target)
     old.probs.list[[i]] = 1 - penalized::predict(m, data = binaryclass.test)
@@ -35,12 +35,12 @@ test_that("classif_penalized", {
     list(lambda1 = 1, lambda2 = 2, maxiter = 4L, fusedl = TRUE)
   )
 
-  tt = function(formula, data, subset = 1:nrow(data), ...) {
+  tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
     penalized::penalized(formula, data = data[subset, ], ...)
   }
 
   tp = function(model, newdata, ...) {
-    pred = penalized::predict(model, data = newdata,...)
+    pred = penalized::predict(model, data = newdata, ...)
     ifelse(pred > 0.5, binaryclass.class.levs[2L], binaryclass.class.levs[1L])
   }
 

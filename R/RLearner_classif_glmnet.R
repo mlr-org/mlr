@@ -36,7 +36,7 @@ makeRLearner.classif.glmnet = function() {
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = 
+    note =
       "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise.
       Factors automatically get converted to dummy columns, ordered factors to integer.
       Parameter `s` (value of the regularization parameter used for predictions) is set to `0.1` by default,
@@ -83,7 +83,7 @@ predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
     if (length(td$class.levels) == 2L) {
       p = setColNames(cbind(1 - p, p), td$class.levels)
     } else {
-      p = p[,,1]
+      p = p[, , 1]
     }
   } else {
     p = drop(predict(.model$learner.model, newx = .newdata, type = "class", ...))

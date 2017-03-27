@@ -16,7 +16,7 @@
 #' @examples
 #' # see benchmark
 friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
-  
+
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(aggregation, c("default", "mean"))

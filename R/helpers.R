@@ -48,7 +48,7 @@ propVectorToMatrix = function(p, levs) {
   y = matrix(0, ncol = 2L, nrow = length(p))
   colnames(y) = levs
   y[, 2L] = p
-  y[, 1L] = 1-p
+  y[, 1L] = 1 - p
   y
 }
 

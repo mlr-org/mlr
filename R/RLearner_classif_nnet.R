@@ -8,10 +8,10 @@ makeRLearner.classif.nnet = function() {
       # FIXME size seems to have no default in nnet(). If it has, par.vals is redundant
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       # nnet seems to set these manually and hard for classification.....
-#     makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy==FALSE && softmax==FALSE && censored==FALSE)),
-#     makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout==FALSE && softmax==FALSE && censored==FALSE)),
-#     makeLogicalLearnerParam(id = "softmax", default = FALSE, requires = quote(entropy==FALSE && linout==FALSE && censored==FALSE)),
-#     makeLogicalLearnerParam(id = "censored", default = FALSE, requires = quote(linout==FALSE && softmax==FALSE && entropy==FALSE)),
+#     makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy == FALSE && softmax == FALSE && censored == FALSE)),
+#     makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout == FALSE && softmax == FALSE && censored == FALSE)),
+#     makeLogicalLearnerParam(id = "softmax", default = FALSE, requires = quote(entropy == FALSE && linout == FALSE && censored == FALSE)),
+#     makeLogicalLearnerParam(id = "censored", default = FALSE, requires = quote(linout == FALSE && softmax == FALSE && entropy == FALSE)),
       makeLogicalLearnerParam(id = "skip", default = FALSE),
       makeNumericLearnerParam(id = "rang", default = 0.7),
       makeNumericLearnerParam(id = "decay", default = 0),
@@ -49,7 +49,7 @@ predictLearner.classif.nnet = function(.learner, .model, .newdata, ...) {
     return(as.factor(p))
   else {
     if (length(.model$task.desc$class.levels) == 2L) {
-      y = cbind(1-p, p)
+      y = cbind(1 - p, p)
       colnames(y) = .model$learner.model$lev
       return(y)
     } else

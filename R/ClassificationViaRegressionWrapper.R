@@ -38,13 +38,13 @@ makeClassificationViaRegressionWrapper = function(learner, predict.type = "respo
 trainLearner.ClassificationViaRegressionWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
   pos = getTaskDesc(.task)$positive
   td = getTaskData(.task, target.extra = TRUE, subset = .subset)
-  targetName = stri_paste(pos, "prob", sep = ".")
+  target.name = stri_paste(pos, "prob", sep = ".")
   data = td$data
-  data[[targetName]] = ifelse(td$target == pos, 1, -1)
+  data[[target.name]] = ifelse(td$target == pos, 1, -1)
   regr.task = makeRegrTask(
     id = stri_paste(getTaskId(.task), pos, sep = "."),
     data = data,
-    target = targetName,
+    target = target.name,
     weights = getTaskWeights(.task),
     blocking = .task$blocking)
   model = train(.learner$next.learner, regr.task, weights = .weights)
@@ -61,7 +61,7 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
   } else {
     td = getTaskDesc(.model)
     levs = c(td$positive, td$negative)
-    propVectorToMatrix(vnapply(p, function(x) exp(x)/sum(exp(x))), levs)
+    propVectorToMatrix(vnapply(p, function(x) exp(x) / sum(exp(x))), levs)
   }
 }
 

@@ -16,7 +16,7 @@ makeRLearner.regr.bdk = function() {
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square")),
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     par.vals = list(keep.data = FALSE),
     name = "Bi-Directional Kohonen map",
     short.name = "bdk",

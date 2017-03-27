@@ -11,23 +11,23 @@ test_that("classif_glmboost", {
 
   parset.list2 = list(
     list(),
-    list(family = "Binomial", nu=0.03),
+    list(family = "Binomial", nu = 0.03),
     list(family = "Binomial", Binomial.link = "probit", mstop = 600, center = TRUE)
   )
 
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
-    pars = list(binaryclass.formula, data=binaryclass.train)
+    pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)
     set.seed(getOption("mlr.debug.seed"))
-    old.predicts.list[[i]] = predict(m, newdata=binaryclass.test, type="class")
+    old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
-    old.probs.list[[i]] = 1 - predict(m, newdata=binaryclass.test, type="response")[,1]
+    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
   }
 
   testSimpleParsets("classif.glmboost", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
@@ -41,10 +41,10 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
     mod = train(lrn, binaryclass.task)
     expect_error(predict(mod, binaryclass.task), "support probabilities")
   })
-}) 
+})
 
 
-# mlr does not support ordered factors as target yet. 
+# mlr does not support ordered factors as target yet.
 # FIXME: the following two tests can be used, when they are supported
 # test_that("classif_glmboost with family `PropOdds` works with one observation", {
 #   data = getTaskData(binaryclass.task)
@@ -61,7 +61,7 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
 #   orig.pred.class = predict(orig.mod, newdata = mini.data, type = "class")
 #   expect_equal(getPredictionProbabilities(pred), orig.pred[,2])
 # })
-# 
+#
 # test_that("classif_glmboost works with family PropOdds", {
 #   new.binary.df = binaryclass.df
 #   new.binary.df[,binaryclass.target] = as.ordered(new.binary.df[,binaryclass.target])
@@ -80,8 +80,9 @@ test_that("classif_glmboost probability predictions with family 'AUC' and 'AdaEx
 #   old.predicts.list = predict(m, newdata = new.classif.test, type = "class")
 #   set.seed(getOption("mlr.debug.seed"))
 #   old.probs.list = 1 - predict(m, newdata = new.classif.test, type = "response")[,1]
-#   
+#
 #   testSimple("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
 #   testProb("classif.glmboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
-#   
+#
 # })
+

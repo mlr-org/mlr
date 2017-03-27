@@ -10,17 +10,17 @@ test_that("cluster_kkmeans", {
   )
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     m = kernlab::kkmeans(as.matrix(noclass.train), centers = centers)
     K = kernlab::kernelf(m)
     c = kernlab::centers(m)
-    Dxc = kernlab::kernelMatrix(K, as.matrix(noclass.test), c)
-    Dxx = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(noclass.test))), each = ncol(Dxc)), ncol = ncol(Dxc), byrow = TRUE)
-    Dcc = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(c))), each = nrow(Dxc)), nrow = nrow(Dxc))
-    D2 = Dxx + Dcc - 2*Dxc #this is the squared kernel distance to the centers
-    p = apply(D2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
+    d.xc = kernlab::kernelMatrix(K, as.matrix(noclass.test), c)
+    d.xx = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(noclass.test))), each = ncol(d.xc)), ncol = ncol(d.xc), byrow = TRUE)
+    d.cc = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(c))), each = nrow(d.xc)), nrow = nrow(d.xc))
+    d2 = d.xx + d.cc - 2 * d.xc #this is the squared kernel distance to the centers
+    p = apply(d2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
     old.predicts.list[[i]] = p
   }
 
