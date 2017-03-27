@@ -39,7 +39,9 @@
 #' print(p)
 #' getPredictionProbabilities(p)
 predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
-  if (!xor(missing(task), missing(newdata)))
+  if(missing(task) & missing(newdata))
+    stop("You must pass a task object or a newdata data.frame to predict.")
+  else if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
   assertClass(object, classes = "WrappedModel")
   model = object
