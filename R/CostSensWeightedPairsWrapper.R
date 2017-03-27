@@ -39,7 +39,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   classes = td$class.levels
   k = length(classes)
   feats = getTaskData(.task)

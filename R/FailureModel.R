@@ -7,11 +7,17 @@
 #' when a model internally crashed during training.
 #' The model always predicts NAs.
 #'
+#' The if mlr option \code{on.error.dump} is \code{TRUE}, the
+#' \code{FailureModel} contains the debug trace of the error.
+#' It can be accessed with \code{getFailureModelDump} and
+#' inspected with \code{debugger}.
+#'
 #' Its encapsulated \code{learner.model} is simply a string:
 #' The error message that was generated when the model crashed.
 #' The following code shows how to access the message.
 #'
 #' @name FailureModel
+#' @family debug
 #' @rdname FailureModel
 #' @examples
 #' configureMlr(on.learner.error = "warn")
@@ -32,13 +38,13 @@ predictFailureModel = function(model, newdata) {
   type = lrn$type
   ptype = lrn$predict.type
   n = nrow(newdata)
-  if (type == "classif") {
+  if (type == "classif" | type == "fdaclassif") {
     levs = model$task.desc$class.levels
     res = if (ptype == "response")
       factor(rep(NA_character_, n), levels = levs)
     else
       matrix(NA_real_, nrow = n, ncol = length(levs), dimnames = list(NULL, levs))
-  } else if (type == "regr") {
+  } else if (type == "regr" | type == "fdaregr") {
     res = if (ptype == "response")
       rep(NA_real_, n)
     else
@@ -73,3 +79,7 @@ getFailureModelMsg.FailureModel = function(model) {
   return(as.character(model$learner.model))
 }
 
+#' @export
+getFailureModelDump.FailureModel = function(model) {
+  return(model$dump)
+}

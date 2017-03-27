@@ -61,7 +61,7 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
       return(0)
     if (is.double(x))
       x = round(x, digits = digits)
-    m = computeMode(x, na.rm = na.ignore)
+    m = computeMode(x, na.rm = na.ignore, ties.method = "first")
     if (na.ignore) {
       mean(m != x, na.rm = TRUE)
     } else {

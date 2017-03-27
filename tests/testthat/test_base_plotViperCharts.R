@@ -2,6 +2,7 @@ context("plotViperCharts")
 
 test_that("plotViperCharts", {
   skip_on_cran()
+  skip_if_not(RCurl::url.exists("http://viper.ijs.si/api/"), message = "viper API not reachable")
 
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
   lrn2 = makeLearner("classif.lda", predict.type = "prob")

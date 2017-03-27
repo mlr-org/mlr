@@ -178,6 +178,13 @@ test_that("generatePartialDependenceData", {
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
   bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
     individual = TRUE, gridsize = gridsize)
+  # test for issue 1536
+  bc.center1 = generatePartialDependenceData(fcpb, input = binaryclass.task, features = "V11",
+    individual = TRUE, gridsize = gridsize,
+    center = list("V11" = min(binaryclass.df$V11)))
+  bc.center2 = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
+    individual = TRUE, gridsize = gridsize,
+    center = list("V11" = min(binaryclass.df$V11), "V12" = min(binaryclass.df$V12)))
   nfeat = length(bc$features)
   n = getTaskSize(binaryclass.task)
   plotPartialDependence(bc, data = binaryclass.df)
@@ -240,7 +247,7 @@ test_that("generatePartialDependenceData", {
       weighted.mean(x, w)
     }
   }
-  
+
   pd = generatePartialDependenceData(fit, test.task, fun = fun,
     fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
   expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())

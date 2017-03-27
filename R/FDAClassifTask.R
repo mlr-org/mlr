@@ -30,17 +30,15 @@ makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
 }
 
 # td is the old task description, the function returns a new FDAClassifTask description
-makeTaskDesc.FDAClassifTask = function(task, id, target, positive, fd.features, fd.grids) {
-  new.td = makeTaskDesc.ClassifTask(task = task , id = id, target = target, positive = positive)
+makeFDAClassifTaskDesc = function(id, data, target, positive, fd.features, fd.grids, weights, blocking) {
+  new.td = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
   new.td$type = "fdaclassif"
-  feat.remain = getTaskFeatureNames(task)
-  # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  new.td$fd.features = setNames(lapply(names(fd.features), function(fdn) {
-      fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
-    }), names(fd.grids))
-  # since feat.remain is a character vector with variable names, we use fd.features[[fdn]] for indexing
-  new.td$fd.grids = setNames(lapply(names(fd.features), function(fdn) {
-      fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
-    }), names(fd.grids))
+  # feat.remain = getTaskFeatureNames(task)
+  feat.remain = setdiff(names(data), target)
+  # Create new fields called fd.features and fd.grids for functional data
+  updated.desc = updateFDATaskDesc(fd.features, fd.grids, feat.remain)
+  new.td$fd.features = updated.desc$fd.features
+  new.td$fd.grids = updated.desc$fd.grids
   addClasses(new.td, "FDAClassifTaskDesc")
 }
+

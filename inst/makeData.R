@@ -94,10 +94,10 @@ set.seed(DATASEED)
 data(fuelSubset, package = "FDboost")
 fuelSubset$UVVIS = scale(fuelSubset$UVVIS, scale = FALSE)
 fuelSubset$NIR = scale(fuelSubset$NIR, scale = FALSE)
-fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) /
-                                  (max(uvvis.lambda) - min(uvvis.lambda) ))
-fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) /
-                                (max(nir.lambda) - min(nir.lambda) ))
+fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) / 
+    (max(uvvis.lambda) - min(uvvis.lambda) ))
+fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) / 
+    (max(nir.lambda) - min(nir.lambda) ))
 len1 = length(fuelSubset$uvvis.lambda)
 len2 = length(fuelSubset$nir.lambda)
 

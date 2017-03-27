@@ -1,15 +1,51 @@
+# mlr 2.12:
+
+## learners - removed
+* {classif,regr}.bdk: broke our API, stability issues
+* {classif,regr}.xyf: broke our API, stability issues
+
 # mlr 2.11:
+
+## general
+* The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
+* New option on.error.dump to include dumps that can be inspected with the
+  debugger with errors
+* mlr now supports tuning with Bayesian optimization with mlrMBO
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
+* getBMR-operators: now support "drop" argument that simplifies the resulting list
+* configureMlr: added option "on.measure.not.applicable" to handle situations where performance
+  cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks
+* tuneParams, selectFeatures: removed memory stats from default output for
+  performance reasons (can be restored by using a control object with "log.fun"
+  = "memory")
+* listLearners: change check.packages default to FALSE
+* tuneParams and tuneParamsMultiCrit: new parameter `resample.fun` to specify a custom resampling function to use.
+* Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription.
+  New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
 * listTaskTypes, listLearnerProperties
+* getMeasureProperties, hasMeasureProperties, listMeasureProperties
+* makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
+* simplifyMeasureNames: shorten measure names to the actual measure, e.g.
+  mmce.test.mean -> mmce
+* getFailureModelDump, getPredictionDump, getRRDump: get error dumps
+* batchmark: Function to run benchmarks with the batchtools package on high performance computing clusters
+* makeTuneControlMBO: allows Bayesian optimization
+
+## measures - new
+* kendalltau, spearmanrho
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".
-* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "Jackknife".
+* regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = "jackknife".
+* regr.xgboost, classif.xgboost: removed "factors" property as these learners do not handle categorical features
+-- factors are silently converted to integers internally, which may misinterpret the structure of the data
+* glmnet: control parameters are reset to factory settings before applying
+  custom settings and training and set back to factory afterwards
 
 ## learners - removed
 * {classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper

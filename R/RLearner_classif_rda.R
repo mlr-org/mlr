@@ -16,10 +16,8 @@ makeRLearner.classif.rda = function() {
       makeNumericLearnerParam(id = "zero.temp", default = 0.01, lower = 0, requires = quote(simAnn==TRUE || schedule==1)),
       makeNumericLearnerParam(id = "alpha", default = 2, lower = 1, requires = quote(simAnn==TRUE || schedule==2)),
       makeIntegerLearnerParam(id = "K", default = 100L, lower = 1L, requires = quote(simAnn==TRUE || schedule==2)),
-      makeDiscreteLearnerParam(id = "kernel", default = "triangular",
-        values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian")),
       makeLogicalLearnerParam(id = "trafo", default = TRUE),
-      makeLogicalLearnerParam(id = "SimAnn", default = FALSE),
+      makeLogicalLearnerParam(id = "simAnn", default = FALSE),
       makeLogicalLearnerParam(id = "estimate.error", default = TRUE)
     ),
     par.vals = list(estimate.error = FALSE),

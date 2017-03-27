@@ -4,7 +4,7 @@
 #' @export
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlRandom = function(same.resampling.instance = TRUE,
-  maxit = 100L, log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  maxit = 100L, log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
   if (is.null(budget))
     budget = maxit
