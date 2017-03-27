@@ -1,12 +1,12 @@
 
-context("learnerHelp")
+context("helpLearner")
 
-test_that("learnerHelp of learner with single help page", {
-  expect_true(length(learnerHelp("classif.logreg")) == 1)
+test_that("helpLearner of learner with single help page", {
+  expect_true(length(helpLearner("classif.logreg")) == 1)
 })
 
-test_that("learnerHelp of learner with multiple help pages", {
-  testfn = learnerHelp
+test_that("helpLearner of learner with multiple help pages", {
+  testfn = helpLearner
   environment(testfn) = new.env(parent = environment(testfn))
 
   environment(testfn)$readline = function(x) { cat(x, "\n") ; 0 }
@@ -37,59 +37,59 @@ test_that("learnerHelp of learner with multiple help pages", {
 
 })
 
-test_that("learnerHelp of wrapped learner", {
+test_that("helpLearner of wrapped learner", {
   # check that it doesn't give an error
-  learnerHelp(makeBaggingWrapper(makeLearner("classif.qda"), 2))
+  helpLearner(makeBaggingWrapper(makeLearner("classif.qda"), 2))
 })
 
-test_that("learnerParamHelp", {
+test_that("helpLearnerParam", {
   # mention parameters
-  expect_output(learnerParamHelp("classif.qda"), "method")
-  expect_output(learnerParamHelp("classif.qda"), "nu")
+  expect_output(helpLearnerParam("classif.qda"), "method")
+  expect_output(helpLearnerParam("classif.qda"), "nu")
 
-  expect_output(learnerParamHelp("classif.qda", "nu"), "nu")
+  expect_output(helpLearnerParam("classif.qda", "nu"), "nu")
 
   # mention package
-  expect_output(learnerParamHelp("classif.qda"), "MASS::qda")
+  expect_output(helpLearnerParam("classif.qda"), "MASS::qda")
 
-  expect_output(learnerParamHelp("classif.qda", "nu"), "MASS::qda")
+  expect_output(helpLearnerParam("classif.qda", "nu"), "MASS::qda")
 
   # mention requirement
 
   nureq = capture.output(print(getParamSet("classif.qda")$pars$nu$requires))
-  expect_output(learnerParamHelp("classif.qda", "nu"), paste("Requires:", nureq), fixed = TRUE)
+  expect_output(helpLearnerParam("classif.qda", "nu"), paste("Requires:", nureq), fixed = TRUE)
 
   # error when giving unknown parameter
-  expect_error(learnerParamHelp("classif.qda", "this_parameter_does_not_exist"))
+  expect_error(helpLearnerParam("classif.qda", "this_parameter_does_not_exist"))
 
   # message when querying parameter without documentation
-  expect_output(learnerParamHelp("classif.__mlrmocklearners__2", "alpha"), "No documentation found")
+  expect_output(helpLearnerParam("classif.__mlrmocklearners__2", "alpha"), "No documentation found")
 
   # check this doesn't give an error
-  learnerParamHelp("classif.__mlrmocklearners__2")
+  helpLearnerParam("classif.__mlrmocklearners__2")
 
   # check that values are printed
-  expect_output(learnerParamHelp(
+  expect_output(helpLearnerParam(
     makeLearner("classif.qda", nu = 3), "nu"),
     "Value: +3")
 
   # values for vectorial params work
-  expect_output(learnerParamHelp(
+  expect_output(helpLearnerParam(
     makeLearner("classif.randomForest", cutoff = c(.1, .2, .3)), "cutoff"),
     "Value:.+0\\.1.+0\\.2.+0\\.3")
 })
 
-test_that("learnerParamHelp of wrapped learner", {
+test_that("helpLearnerParam of wrapped learner", {
   w1 = makeBaggingWrapper(makeLearner("classif.qda", nu = 4), 2)
   w2 = makeOversampleWrapper(w1)
 
   # correct info is given
-  expect_output(learnerParamHelp(w1, "nu"), "Value: +4")
-  expect_output(learnerParamHelp(w2, "nu"), "Value: +4")
+  expect_output(helpLearnerParam(w1, "nu"), "Value: +4")
+  expect_output(helpLearnerParam(w2, "nu"), "Value: +4")
 
-  expect_message(learnerParamHelp(w1),
+  expect_message(helpLearnerParam(w1),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
-  expect_message(learnerParamHelp(w2),
+  expect_message(helpLearnerParam(w2),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
 
 })

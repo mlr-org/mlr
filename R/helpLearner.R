@@ -6,7 +6,7 @@
 #' @export
 #' @family learner
 #' @family help
-learnerHelp = function(learner) {
+helpLearner = function(learner) {
   learner = checkLearner(learner)
   callees = learner$callees
   if (identical(callees, "")) {
@@ -61,7 +61,7 @@ learnerHelp = function(learner) {
 #' @export
 #' @family learner
 #' @family help
-learnerParamHelp = function(learner, param = NULL) {
+helpLearnerParam = function(learner, param = NULL) {
   learner = checkLearner(learner)
   if (!inherits(learner, "RLearner")) {
     current.learner = learner
@@ -119,7 +119,7 @@ learnerParamHelp = function(learner, param = NULL) {
       output = learner$help.list[[p]]
       cat(collapse(strwrap(output), sep = "\n"), "\n\n")
     } else {
-      catf("No documentation found. Try to consult learnerHelp(\"%s\").\n", getLearnerId(learner))
+      catf("No documentation found. Try to consult helpLearner(\"%s\").\n", getLearnerId(learner))
     }
   }
 }

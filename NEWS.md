@@ -4,7 +4,7 @@
 * makeClassificationViaRegressionWrapper
 
 ## functions - new
-* learnerHelp, learnerParamHelp: open the help for a learner or get a
+* helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 
 ## learners - general
