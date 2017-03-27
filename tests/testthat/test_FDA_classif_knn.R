@@ -107,3 +107,34 @@ test_that("FDA_classif_knn behaves like original api", {
   }
 
 })
+
+test_that("FDA_classif_knn can hand down arguments to create...basis if
+type = 'semimetric.basis'", {
+  requirePackagesOrSkip("fda.usc", default.method = "load")
+
+  data(phoneme, package = "fda.usc")
+  mlearn = phoneme[["learn"]]
+  # Use only 10 obs. for 2 classes, as knn training is really slow
+  index = c(1:10, 50:60)
+  mlearn$data = mlearn$data[index,]
+  glearn = phoneme[["classlearn"]][index]
+  glearn = droplevels(glearn)
+
+  # fda.usc implementation
+  set.seed(getOption("mlr.debug.seed"))
+  a1 = fda.usc::classif.knn(glearn, mlearn, knn = 1L, par.CV = list(trim = 0.5),
+                            type.basis1 = "constant", nbasis1 = 10)
+
+  ph = as.data.frame(mlearn$data)
+  ph[,"label"] = glearn
+
+  # mlr interface
+  lrn = makeLearner("fdaclassif.knn",
+                    par.vals = list(knn = 1L, trim = 0.5, nbasis1 = 10,
+                                    type.basis1 = "constant"))
+  task = makeFDAClassifTask(data = ph, target = "label")
+  set.seed(getOption("mlr.debug.seed"))
+  m = train(lrn, task)
+
+  expect_equal(a1$mdist, m$learner.model$mdist)
+  })
