@@ -896,5 +896,5 @@ test_that("measures ppv denominator 0", {
 
 test_that("measures MCC denominator 0 (#1736)", {
   res = measureMCC(c(TRUE, TRUE, TRUE), c(TRUE, TRUE, TRUE), TRUE, FALSE)
-  expect_equal(res, 1)
+  expect_equal(res, 0)
 })
