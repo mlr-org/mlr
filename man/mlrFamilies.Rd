@@ -13,7 +13,7 @@
 \item{featsel}{analyzeFeatSelResult, makeFeatSelControl, getFeatSelResult, selectFeatures}
 \item{filter}{filterFeatures, getFilteredFeatures, generateFilterValuesData, getFilterValues, plotFilterValuesGGVIS}
 \item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData, generateFunctionalANOVAData}
-\item{help}{learnerHelp, learnerParamHelp}
+\item{help}{helpLearner, helpLearnerParam}
 \item{imbalancy}{oversample, smote}
 \item{impute}{makeImputeMethod, imputeConstant, impute, reimpute}
 \item{learner}{getClassWeightParam, getHyperPars, getParamSet.Learner, getLearnerType, getLearnerId, getLearnerPredictType, getLearnerPackages, getLearnerParamSet, getLearnerParVals, setLearnerId, getLearnerShortName, getLearnerProperties, makeLearner, makeLearners, removeHyperPars, setHyperPars, setId, setPredictThreshold, setPredictType}
