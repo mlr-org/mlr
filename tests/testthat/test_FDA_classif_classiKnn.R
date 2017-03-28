@@ -27,7 +27,6 @@ test_that("FDA_classif_classiKnn behaves like original api", {
 
   p1.prob = predict(a1, mtest, predict.type = "prob")
   p2.prob = predict(a1, mlearn, predict.type = "prob")
-  p3.prob = predict(a1, predict.type = "prob")
 
   ph = as.data.frame(mlearn)
   ph[,"label"] = glearn
@@ -57,11 +56,6 @@ test_that("FDA_classif_classiKnn behaves like original api", {
   cp.prob = predict(m.prob, newdata = as.data.frame(mtest))
   cp2.prob = predict(m.prob, newdata = as.data.frame(mlearn))
 
-  # FIXME
-  # I think this should work
-  cp3.prob = predict(m.prob)
-
-  expect_equal(as.matrix(getPredictionProbabilities(cp3.prob)), p3.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp2.prob)), p2.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
 })
@@ -90,10 +84,14 @@ test_that("FDA_classif_classiKnn behaves like original api for different metrics
   p2.metric = predict(a.metric, mlearn)
 
 
+  ph = as.data.frame(mlearn)
+  ph[,"label"] = glearn
+
   lrn.metric = makeLearner(cl = "fdaclassif.classiKnn",
                            par.vals = list(metric = "Minkowski",
                                            p = 1))
 
+  task = makeFDAClassifTask(data = ph, target = "label")
   set.seed(getOption("mlr.debug.seed"))
   m.metric = train(lrn.metric, task)
   cp.metric = predict(m.metric, newdata = as.data.frame(mtest))
@@ -108,7 +106,7 @@ test_that("FDA_classif_classiKnn behaves like original api for different metrics
 
 
   # test that some other metrics work basically
-  metrics = c("shortEuclidean", "globMax", "jump", "max")
+  metrics = c("globMax", "jump", "max")
   short.task = subsetTask(task, subset = c(TRUE, FALSE, FALSE))
   lrn.metrics = list()
   for(i in 1:length(metrics)) {
@@ -121,29 +119,60 @@ test_that("FDA_classif_classiKnn behaves like original api for different metrics
     m.metrics[[i]] = train(lrn.metrics[[i]], short.task)
   }
 
-  # # test that breaching the boundaries for additional parameters to metrics
-  # # will result in an error
-  # lrn.shortEuclidean = makeLearner(cl = "fdaclassif.classiKnn",
-  #             par.vals = list(metric = "shortEuclidean"))
-  # getParamSet(lrn.shortEuclidean)
-  #
-  # # parameter tuning
-  # # check if upper bound of dmin and dmax are detected correctly
-  # num_ps = makeParamSet(
-  #   makeNumericParam("dmin", lower = -20, upper = 1000),
-  #   makeNumericParam("dmax", lower = -20, upper = 1000)
-  # )
-  #
-  # ctrl = makeTuneControlGrid(resolution = 20L)
-  #
-  # rdesc = makeResampleDesc("CV", iters = 3L)
-  # res = tuneParams(lrn.shortEuclidean, task = task,
-  #                  resampling = rdesc,
-  #                  par.set = num_ps, control = ctrl)
 })
 
 # TODO test that passing on stuff to fda::Data2fd() works
 test_that("FDA_classif_classiKnn behaves like original api for additional arguments to to fda::Data2fd()", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
   stop("TODO")
+})
+
+
+test_that("FDA_classif_classiKnn handles upper and lower bounds correctly", {
+  requirePackagesOrSkip("classiFunc", default.method = "load")
+
+  data(ArrowHead, package = "classiFunc")
+  classes = ArrowHead[,"target"]
+  ArrowHead = ArrowHead[,colnames(ArrowHead) != "target"]
+
+  set.seed(getOption("mlr.debug.seed"))
+  train_inds = sample(1:nrow(ArrowHead), size = 0.8 * nrow(ArrowHead), replace = FALSE)
+  test_inds = (1:nrow(ArrowHead))[!(1:nrow(ArrowHead)) %in% train_inds]
+
+  mlearn = ArrowHead[train_inds,]
+  glearn = classes[train_inds]
+
+  mtest = ArrowHead[test_inds,]
+  gtest = classes[test_inds]
+
+  ph = as.data.frame(mlearn)
+  ph[,"label"] = glearn
+
+  lrn.shortEucl = makeLearner(cl = "fdaclassif.classiKnn",
+                           par.vals = list(dmax = 10,
+                                           metric = "shortEuclidean"
+                                           ))
+
+  task = makeFDAClassifTask(data = ph, target = "label")
+  set.seed(getOption("mlr.debug.seed"))
+  m.shortEucl = train(lrn.shortEucl, task)
+  p.shortEucl = predict(m.shortEucl, newdata = as.data.frame(mtest))
+
+  # check that all expressions are evaluated
+  par.set = getParamSet(m.shortEucl$learner)
+  expect_equal(par.set, evaluateParamExpressions(par.set))
+
+  # check that tuning works
+  tune.par.set = par.set
+  tune.par.set$pars = par.set$pars[c("dmin", "dmax")]
+  # Take out constraint on knn, because we do not tune it
+  tune.par.set$forbidden = par.set$forbidden[1]
+
+  tuned.params = tuneParams(learner = m.shortEucl$learner,
+             resampling = makeResampleDesc("CV", iters = 2L),
+             task = task,
+             par.set = tune.par.set,
+             control = makeTuneControlRandom(maxit = 10L))
+  expect_class(tuned.params, "TuneResult")
+
 })

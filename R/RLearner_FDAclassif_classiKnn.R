@@ -4,7 +4,9 @@ makeRLearner.fdaclassif.classiKnn = function() {
     cl = "fdaclassif.classiKnn",
     package = "classiFunc",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "knn", lower = 1L, default = 1L),
+      makeIntegerLearnerParam(id = "knn",
+                              lower = 1L, upper = expression(0.5 * nrow(getTaskData(task))),
+                              default = 1L),
       # FIXME: is it ok to hand over the values with this function
       # from the original package?
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
@@ -20,16 +22,30 @@ makeRLearner.fdaclassif.classiKnn = function() {
                                tunable = FALSE),
       # additional arguments to computeDistMat
       makeIntegerLearnerParam(id = "dmin", default = 1L,
-                              lower = 1L, upper = expression(ncol(getTaskData(.task)))),
-      makeIntegerLearnerParam(id = "dmax", default = expression(ncol(getTaskData(.task))),
-                              lower = 1L, upper = expression(ncol(getTaskData(.task)))),
-      # TODO add upper = expression(getTaskData(.task))
-      # TODO add analogously dmay, dmin1, dmin2, dmax1, dmax2, t1, t2
-      # TODO add .poi
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "dmax", default = expression(ncol(getTaskData(task)) - 1),
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "dmin1", default = 1L,
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "dmax1", default = expression(ncol(getTaskData(task)) - 1),
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "dmin2", default = 1L,
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "dmax2", default = expression(ncol(getTaskData(task)) - 1),
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "t1", default = 1L,
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerLearnerParam(id = "t2", default = expression(ncol(getTaskData(task)) - 1),
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
+      makeIntegerVectorLearnerParam(id = ".poi", default = expression(1:(ncol(getTaskData(task)) - 1)),
+                              lower = 1L, upper = expression(ncol(getTaskData(task)) - 1)),
       # additional arguments to metrics in computeDistMat
       makeNumericLearnerParam(id = "p", default = 2),
       # TODO additional arguments to Data2fd
-      keys = c(".task")
+      # TODO additional arguments to custom metric
+      keys = c("task"),
+      forbidden = expression(dmin > dmax,
+                             knn %% 2 == 0)
     ),
     # par.vals = list(metric = "Euclidean", knn = 1L),
     properties = c("twoclass", "multiclass", "numerics", "prob"),
@@ -43,9 +59,11 @@ makeRLearner.fdaclassif.classiKnn = function() {
 #' @export
 trainLearner.fdaclassif.classiKnn = function(.learner, .task, .subset, ...) {
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
+  # # already done in my version of train
+  # .learner$par.set = evaluateParamExpressions(.learner$par.set, dict = list(task = .task))
   learned.model = do.call(classiFunc::classiKnn, c(list(classes = z$target,
-                                                          fdata = z$data),
-                                                     getLearnerParVals(.learner)))
+                                                        fdata = z$data),
+                                                   getLearnerParVals(.learner)))
   return(learned.model)
 }
 
