@@ -15,7 +15,7 @@ test_that("test_friedmanTestBMR", {
 
   # For friedmanPostHocTest
   # Case: Do not reject null
-  expect_warning(r3 <- friedmanPostHocTestBMR(res, acc, p.value = 10^(-10)))
+  expect_warning({r3 = friedmanPostHocTestBMR(res, acc, p.value = 10^ (-10))})
   expect_is(r3, "htest")
   expect_false(r3$f.rejnull)
 

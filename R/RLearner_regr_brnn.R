@@ -22,7 +22,8 @@ makeRLearner.regr.brnn = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Bayesian regularization for feed-forward neural networks",
-    short.name = "brnn"
+    short.name = "brnn",
+    callees = "brnn"
   )
 }
 

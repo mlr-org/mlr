@@ -76,10 +76,10 @@ getRRPredictionList = function(res, ...) {
   # get prediction objects for train and test set
   prediction = lapply(set, function(s) {
     # split by resample iterations
-    p.split = pred$data[pred$data$set == s,, drop = FALSE]
+    p.split = pred$data[pred$data$set == s, , drop = FALSE]
     p.split = split(p.split, as.factor(p.split$iter))
     # create prediction object for each resample iteration
-    p.split = lapply(p.split, function (p) {
+    p.split = lapply(p.split, function(p) {
       # get predictions based on predict.type
       if (predict.type == "prob") {
         y = p[, stri_startswith_fixed(colnames(p), "prob."), drop = FALSE]
@@ -94,7 +94,7 @@ getRRPredictionList = function(res, ...) {
         predict.type = predict.type, time = NA_real_, ...)
     })
     # add time info afterwards
-    for(i in seq_along(p.split))
+    for (i in seq_along(p.split))
       p.split[[i]]$time = time[i]
     return(p.split)
   })

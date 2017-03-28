@@ -30,7 +30,8 @@ makeRLearner.surv.ranger = function() {
     properties = c("numerics", "factors", "ordered", "rcens", "featimp"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable."
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable.",
+    callees = "ranger"
   )
 }
 

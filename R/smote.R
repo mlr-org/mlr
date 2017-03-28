@@ -60,7 +60,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
     stopf("You cannot set nn = %i, when the minimal class has size %i!", nn, z$min.size)
   x.min = x[z$min.inds, , drop = FALSE]
   n.min = nrow(x.min) # number of NEW cases
-  n.new = ifelse(alt.logic, as.integer(rate-1)*n.min, round((rate-1)*n.min))
+  n.new = ifelse(alt.logic, as.integer(rate - 1) * n.min, round((rate - 1) * n.min))
   if (n.new <= 0L)
     return(task)
   res = matrix(0, n.new, ncol(x))
@@ -88,31 +88,31 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
     # loop for each member of x.min
     for (i in 1:n.xmin) {
       # calculate nn next neighbors of element x.min.matrix[i,]
-      x.scaled = scale(x.min.matrix, x.min.matrix[i,], ranges)
+      x.scaled = scale(x.min.matrix, x.min.matrix[i, ], ranges)
       if (any(!is.num)) {
         for (j in seq_col(x.scaled)) {
           if (!is.num[j])
-            x.scaled[, j] = (x.scaled[,j] != 0)
+            x.scaled[, j] = (x.scaled[, j] != 0)
         }
       }
       dist = drop(x.scaled^2 %*% rep(1, ncol(x.scaled)))
-      kNNs = order(dist)[2:(nn+1)]
+      knns = order(dist)[2:(nn + 1)]
 
       # new cases per min obs
       n.new.obs = n.new / n.xmin
 
       # loop for each new member
       for (n in 1:n.new.obs) {
-        # randomly select one of the kNNs
+        # randomly select one of the knns
         neigh = sample(1:nn, 1)
 
-        diffs = x.min.matrix[kNNs[neigh],] - x.min.matrix[i,]
-        res[(i-1)*n.new.obs+n,] = x.min.matrix[i,] + runif(1)*diffs
+        diffs = x.min.matrix[knns[neigh], ] - x.min.matrix[i, ]
+        res[(i - 1) * n.new.obs + n, ] = x.min.matrix[i, ] + runif(1) * diffs
         if (any(!is.num)) {
           for (j in seq_col(x.min.matrix)) {
             if (!is.num[j])
-              res[(i-1)*n.new.obs+n,j] = c(x.min.matrix[kNNs[neigh],j],
-                x.min.matrix[i,j])[1+round(runif(1),0)]
+              res[(i - 1) * n.new.obs + n, j] = c(x.min.matrix[knns[neigh], j],
+                x.min.matrix[i, j])[1 + round(runif(1), 0)]
           }
         }
       }
@@ -132,7 +132,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   res = as.data.frame(res)
   # convert ints back to factors
   if (any(!is.num)) {
-    for (i in 1:ncol(res)) {
+    for (i in seq_len(ncol(res))) {
       if (!is.num[i])
         res[, i] = as.factor(as.integer(res[, i]))
       levels(res[, i]) = levels(x[, i])

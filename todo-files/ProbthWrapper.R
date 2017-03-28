@@ -1,6 +1,6 @@
 setClass(
   "ProbthWrapper",
-  contains = c("BaseWrapper")
+  contains = "BaseWrapper"
 )
 
 

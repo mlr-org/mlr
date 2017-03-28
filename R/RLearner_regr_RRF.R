@@ -30,18 +30,19 @@ makeRLearner.regr.RRF = function() {
     properties = c("numerics", "factors", "ordered", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
-    note = ""
+    note = "",
+    callees = "RRF"
   )
 }
 
 #' @export
-trainLearner.regr.RRF <- function(.learner, .task, .subset, .weights, ...) {
+trainLearner.regr.RRF = function(.learner, .task, .subset, .weights, ...) {
   RRF::RRF(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
-           keep.forest= TRUE, ...)
+           keep.forest = TRUE, ...)
 }
 
 #' @export
-predictLearner.regr.RRF <- function(.learner, .model, .newdata, ...) {
+predictLearner.regr.RRF = function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, newdata = .newdata, ...)
   return(p)
 }

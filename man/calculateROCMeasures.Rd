@@ -26,8 +26,8 @@ Number of digits the measures are rounded to.}
 Currently not used.}
 }
 \value{
-[\code{ROCMeasures}]. 
-   A list containing two elements \code{confusion.matrix} which is 
+[\code{ROCMeasures}].
+   A list containing two elements \code{confusion.matrix} which is
    the 2 times 2 confusion matrix of relative frequencies and \code{measures}, a list of the above mentioned measures.
 }
 \description{

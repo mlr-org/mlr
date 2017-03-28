@@ -14,7 +14,8 @@ makeRLearner.classif.rknn = function(){
     properties = c("twoclass", "multiclass", "numerics", "ordered"),
     name = "Random k-Nearest-Neighbors",
     short.name = "rknn",
-    note = "k restricted to < 99 as the code allocates arrays of static size"
+    note = "k restricted to < 99 as the code allocates arrays of static size",
+    callees = "rknn"
   )
 }
 
@@ -28,5 +29,5 @@ trainLearner.classif.rknn = function(.learner, .task, .subset, .weights = NULL, 
 predictLearner.classif.rknn = function(.learner, .model, .newdata, ...){
   args = .model$learner.model
   args$newdata = .newdata
-  do.call(rknn::rknn,args)$pred
+  do.call(rknn::rknn, args)$pred
 }

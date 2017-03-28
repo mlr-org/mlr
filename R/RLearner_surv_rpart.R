@@ -21,7 +21,8 @@ makeRLearner.surv.rpart = function() {
       "weights", "featimp"),
     name = "Survival Tree",
     short.name = "rpart",
-    note = "`xval` has been set to `0` by default for speed."
+    note = "`xval` has been set to `0` by default for speed.",
+    callees = c("rpart", "rpart.control")
   )
 }
 

@@ -269,8 +269,8 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
   indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
-      df[i,  , drop = drop],
-      df[ , j, drop = drop],
+      df[i, , drop = drop],
+      df[, j, drop = drop],
       df
     )
   }

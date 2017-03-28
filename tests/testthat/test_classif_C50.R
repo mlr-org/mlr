@@ -21,7 +21,7 @@ test_that("classif_C50", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(x = multiclass.train[, names(multiclass.train) %nin% multiclass.target],
       y = multiclass.train[, multiclass.target])

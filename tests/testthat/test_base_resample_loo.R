@@ -1,11 +1,11 @@
 context("resample_loo")
 
 test_that("loo instance works", {
-  rin = makeResampleInstance(makeResampleDesc("LOO"), size=10)
-  
+  rin = makeResampleInstance(makeResampleDesc("LOO"), size = 10)
+
   iters = rin$desc$iters
   expect_equal(iters, 10)
-  
+
   for (i in 1:iters) {
     i1 = rin$train.inds[[i]]
     i2 = rin$test.inds[[i]]
@@ -17,4 +17,4 @@ test_that("loo instance works", {
     expect_equal(length(i2), 1)
     expect_equal(sort(c(unique(i1), i2)), 1:10)
   }
-})  
+})

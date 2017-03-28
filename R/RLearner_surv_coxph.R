@@ -17,7 +17,8 @@ makeRLearner.surv.coxph = function() {
     ),
     properties = c("numerics", "factors", "weights", "rcens"),
     name = "Cox Proportional Hazard Model",
-    short.name = "coxph"
+    short.name = "coxph",
+    callees = c("coxph", "coxph.control")
   )
 }
 

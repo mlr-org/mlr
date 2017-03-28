@@ -15,7 +15,7 @@ test_that("basic PreprocWrapperCaret works", {
   perf2 = performance(p, mmce)
   expect_true(perf2 > perf)
 
-  mod = caret::preProcess(x = multiclass.df[multiclass.train.inds,1:4], method = c("BoxCox", "pca", "scale", "center"), pcaComp = 2)
+  mod = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("BoxCox", "pca", "scale", "center"), pcaComp = 2)
   mod$method = mod$method[order(names(mod$method))]
   ctrl$method = ctrl$method[order(names(ctrl$method))]
   mod$call = NULL

@@ -7,7 +7,7 @@ makeRLearner.regr.laGP = function() {
       makeIntegerLearnerParam(id = "start", default = 6, lower = 6),
       makeIntegerLearnerParam(id = "end", default = 50), # > start?
       makeUntypedLearnerParam(id = "d", default = NULL),
-      makeUntypedLearnerParam(id = "g", default = 1/10000), # list?
+      makeUntypedLearnerParam(id = "g", default = 1 / 10000), # list?
       makeDiscreteLearnerParam(id = "method", default = "alc",
         values = c("alc", "alcray", "efi", "mspe", "nn")),
       # FIXME: default values of "close" and "numrays" depend on the size of
@@ -19,7 +19,8 @@ makeRLearner.regr.laGP = function() {
     ),
     properties = c("numerics", "se"),
     name = "Local Approximate Gaussian Process",
-    short.name = "laGP"
+    short.name = "laGP",
+    callees = "aGP"
   )
 }
 
