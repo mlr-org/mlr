@@ -8,10 +8,11 @@ makeRLearner.regr.rsm = function() {
       # FIXME rsm() seems to have no default as one expression is needed for the formula, if there is a default, par.vals is redundant
     ),
     par.vals = list(modelfun = "FO"),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Response Surface Regression",
     short.name = "rsm",
-    note = 'You select the order of the regression by using `modelfun = "FO"` (first order), `"TWI"` (two-way interactions, this is with 1st oder terms!) and `"SO"` (full second order).'
+    note = 'You select the order of the regression by using `modelfun = "FO"` (first order), `"TWI"` (two-way interactions, this is with 1st oder terms!) and `"SO"` (full second order).',
+    callees = "rsm"
   )
 }
 

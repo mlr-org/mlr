@@ -2,7 +2,7 @@
 makeRLearner.regr.bdk = function() {
   makeRLearnerRegr(
     cl = "regr.bdk",
-    package = "kohonen",
+    package = c("kohonen", "class"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "xdim", default = 8L, lower = 1L),
       makeIntegerLearnerParam(id = "ydim", default = 6L, lower = 1L),
@@ -16,11 +16,12 @@ makeRLearner.regr.bdk = function() {
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square")),
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     par.vals = list(keep.data = FALSE),
     name = "Bi-Directional Kohonen map",
     short.name = "bdk",
-    note = "`keep.data` is set to FALSE to reduce memory requirements."
+    note = "`keep.data` is set to FALSE to reduce memory requirements.",
+    callees = c("bdk", "somgrid")
   )
 }
 

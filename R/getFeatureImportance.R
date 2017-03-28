@@ -106,5 +106,5 @@ getFeatureImportance = function(object, ...) {
 #' @export
 #' @keywords internal
 getFeatureImportanceLearner = function(.learner, .model, ...) {
-	UseMethod("getFeatureImportanceLearner")
+  UseMethod("getFeatureImportanceLearner")
 }

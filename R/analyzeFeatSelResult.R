@@ -47,7 +47,7 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   # number of features in set are sum of bits which are 1
   df$n.feats = rowSums(df[, features, drop = FALSE])
   if (reduce)
-    df = df[df$sel,, drop =FALSE]
+    df = df[df$sel, , drop = FALSE]
 
   ### Initialize some variables
   old.feats = features[df[1L, features, drop = TRUE] == 1]

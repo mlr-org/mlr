@@ -19,7 +19,7 @@ test_that("classif_plr", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     x = binaryclass.train
     y = as.numeric(x[, binaryclass.class.col] == binaryclass.class.levs[1L])
@@ -41,6 +41,6 @@ test_that("classif_plr", {
 
   testSimpleParsets("classif.plr", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets  ("classif.plr", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.plr", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list2)
 })

@@ -9,7 +9,8 @@ makeRLearner.classif.naiveBayes = function() {
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "Naive Bayes",
-    short.name = "nbayes"
+    short.name = "nbayes",
+    callees = "naiveBayes"
   )
 }
 
@@ -21,6 +22,6 @@ trainLearner.classif.naiveBayes = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.classif.naiveBayes = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "class", "raw")
+  type = ifelse(.learner$predict.type == "response", "class", "raw")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

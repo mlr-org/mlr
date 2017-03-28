@@ -24,7 +24,8 @@ makeRLearner.classif.C50 = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "missings", "weights"),
     name = "C50",
-    short.name = "C50"
+    short.name = "C50",
+    callees = c("C5.0", "C5.0Control")
   )
 }
 

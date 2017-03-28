@@ -16,9 +16,9 @@ test_that("classif_xgboost", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(data = data.matrix(binaryclass.train[,1:60]),
+    pars = list(data = data.matrix(binaryclass.train[, 1:60]),
       label = as.numeric(binaryclass.train[, 61]) - 1)
     if (is.null(parset$objective)) parset$objective = "binary:logistic"
     if (is.null(parset$verbose)) parset$verbose = 0L
@@ -26,13 +26,13 @@ test_that("classif_xgboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
-    pred = predict(model, data.matrix(binaryclass.test[,1:60]))
+    pred = predict(model, data.matrix(binaryclass.test[, 1:60]))
     old.predicts.list[[i]] = factor(as.numeric(pred > 0.5), labels = binaryclass.class.levs)
   }
 
-  for (i in 1:length(parset.probs.list)) {
+  for (i in seq_along(parset.probs.list)) {
     parset = parset.probs.list[[i]]
-    pars = list(data = data.matrix(binaryclass.train[,1:60]),
+    pars = list(data = data.matrix(binaryclass.train[, 1:60]),
       label = as.numeric(binaryclass.train[, 61]) - 1)
     if (is.null(parset$objective)) parset$objective = "binary:logistic"
     if (is.null(parset$verbose)) parset$verbose = 0L
@@ -42,10 +42,10 @@ test_that("classif_xgboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     model = do.call(xgboost::xgboost, pars)
-    pred = predict(model, data.matrix(binaryclass.test[,1:60]))
+    pred = predict(model, data.matrix(binaryclass.test[, 1:60]))
     if (parset$objective == "multi:softprob") {
       y = matrix(pred, nrow = length(pred) / length(binaryclass.class.levs), ncol = length(binaryclass.class.levs), byrow = TRUE)
-      old.probs.list[[i]] = y[,1]
+      old.probs.list[[i]] = y[, 1]
     } else {
       old.probs.list[[i]] = 1 - pred
     }

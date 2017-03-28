@@ -20,7 +20,7 @@ test_that("classif_bst", {
   old.predicts.list = list()
   xind = names(regr.num.train) != regr.num.target
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     parset$y = regr.num.train[, regr.num.target]
     parset$x = regr.num.train[, xind]
