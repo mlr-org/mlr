@@ -16,6 +16,7 @@ test_that("measures", {
   mod = train(lrn, task = ct, subset = binaryclass.train.inds)
   pred = predict(mod, task = ct, subset = binaryclass.test.inds)
   perf = performance(pred, measures = ms)
+  expect_numeric(perf, any.missing = FALSE)
 
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
@@ -43,12 +44,32 @@ test_that("measures", {
   expect_is(perf, "numeric")
 
   # test survival measure
-  ms = list(cindex)
-  lrn = makeLearner("surv.coxph")
-  mod = train(lrn, task = surv.task, subset = surv.train.inds)
-  pred = predict(mod, task = surv.task, subset = surv.test.inds)
-  perf = performance(pred, measures = ms)
-  expect_is(perf, "numeric")
+  lrns = listLearners("surv")$class
+  task = surv.task
+  for (i in seq_along(lrns)) {
+    lrn = makeLearner(lrns[i])
+    mod = train(lrn, task = task, subset = surv.train.inds)
+    pred = predict(mod, task = task, subset = surv.test.inds)
+    for (ms in list(cindex, cindex.uno, iauc.uno, td.auc.ipcw)) {
+      perf = performance(pred, measures = ms, model = mod, task = task)
+      r = range(c(ms$worst, ms$best))
+      expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+    }
+  }
+
+  lrns = listLearners("surv")$class
+  task = lung.task
+  rin = makeResampleInstance("Holdout", task = task)
+  for (i in seq_along(lrns)) {
+    lrn = makeLearner(lrns[i])
+    mod = train(lrn, task = task, subset = rin$train.inds[[1]])
+    pred = predict(mod, task = task, subset = rin$test.inds[[1]])
+    for (ms in list(cindex, cindex.uno, iauc.uno, td.auc.ipcw)) {
+      perf = performance(pred, measures = ms, model = mod, task = task)
+      r = range(c(ms$worst, ms$best))
+      expect_number(perf, lower = r[1], upper = r[2], label = ms$id)
+    }
+  }
 })
 
 test_that("classif measures do not produce integer overflow", {
@@ -878,6 +899,27 @@ test_that("measures quickcheck", {
   )
 })
 
+test_that("setMeasurePars", {
+  mm = mmce
+  expect_list(mm$extra.args, len = 0L, names = "named")
+  mm = setMeasurePars(mm, foo = 1, bar = 2)
+  expect_list(mm$extra.args, len = 2L, names = "named")
+  expect_equal(mm$extra.args, list(foo = 1, bar = 2))
+  expect_list(mmce$extra.args, len = 0L, names = "named") # mmce is untouched?
+
+  mm = setMeasurePars(mmce, foo = 1, bar = 2, par.vals = list(foobar = 99))
+  expect_equal(mm$extra.args, list(foobar = 99, foo = 1, bar = 2))
+
+  # re-setting parameters to NULL
+  mm = setMeasurePars(mmce, foo = 1, bar = 2)
+  expect_list(mm$extra.args, len = 2L, names = "named")
+  mm = setMeasurePars(mm, foo = NULL, bar = 2)
+  expect_equal(mm$extra.args, list(foo = NULL, bar = 2))
+
+  # precedence of ... over par.vals
+  mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
+  expect_equal(mm$extra.args, list(foo = 1))
+})
 test_that("measures ppv denominator 0", {
   set.seed(1)
   task = sonar.task

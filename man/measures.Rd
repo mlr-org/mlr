@@ -99,6 +99,7 @@
 \alias{mcc}
 \alias{measureMCC}
 \alias{f1}
+\alias{measureF1}
 \alias{gmean}
 \alias{measureGMEAN}
 \alias{gpr}
@@ -116,6 +117,9 @@
 \alias{multilabel.tpr}
 \alias{measureMultilabelTPR}
 \alias{cindex}
+\alias{cindex.uno}
+\alias{iauc.uno}
+\alias{td.auc.ipcw}
 \alias{meancosts}
 \alias{mcp}
 \alias{db}
@@ -318,6 +322,8 @@ measureMCC(truth, response, negative, positive)
 
 f1
 
+measureF1(truth, response, positive)
+
 gmean
 
 measureGMEAN(truth, response, negative, positive)
@@ -351,6 +357,12 @@ multilabel.tpr
 measureMultilabelTPR(truth, response)
 
 cindex
+
+cindex.uno
+
+iauc.uno
+
+td.auc.ipcw
 
 meancosts
 
@@ -399,6 +411,9 @@ Most measures can directly be accessed via the function named after the scheme m
 
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
+
+Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
+overwritten using \code{\link{setMeasurePars}}.
 }
 \references{
 He, H. & Garcia, E. A. (2009)
@@ -412,6 +427,8 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{performance}}
+  \code{\link{makeMeasure}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \keyword{datasets}

@@ -48,8 +48,9 @@ makeRLearner.surv.glmnet = function() {
 #' @export
 trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
-  info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
-  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "cox"), list(...))
+  info = list(fix.data.info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE),
+    surv.train = getTaskTargets(.task, .subset, recode.target = "rcens"))
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info$fix.data.info)), y = d$target, family = "cox"), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -68,7 +69,7 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
-  info = getTrainingInfo(.model)
+  info = getTrainingInfo(.model)$fix.data.info
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...))
 }

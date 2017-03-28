@@ -1,15 +1,15 @@
 context("learners_all_surv")
 
 test_that("learners work: surv ", {
-
   # settings to make learners faster and deal with small sample size
   hyperpars = list(
-    surv.cforest = list(mtry = 1L)
+    surv.cforest = list(mtry = 1L),
+    surv.ranger = list(num.trees = 50),
+    surv.randomForestSRC = list(ntree = 50)
   )
 
   # normal survival analysis
-  sub.task = subsetTask(surv.task, subset = c(1:70),
-    features = getTaskFeatureNames(surv.task)[c(1, 2)])
+  sub.task = subsetTask(surv.task, subset = c(1:70), features = getTaskFeatureNames(surv.task)[c(1,2)])
   lrns = mylist("surv", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
   lapply(lrns, testBasicLearnerProperties, task = sub.task, hyperpars = hyperpars)

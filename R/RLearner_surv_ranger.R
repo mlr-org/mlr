@@ -38,13 +38,17 @@ makeRLearner.surv.ranger = function() {
 #' @export
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
   tn = getTaskTargetNames(.task)
-  ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
+  mod = ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
     status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  p = predict(object = .model$learner.model, data = .newdata)
+  # Workaround for bug #172
+  .newdata[getTaskTargetNames(getTaskDescription(.model))] = 1
+
+  p = predict(object = .model$learner.model, data = .newdata, ...)
   rowMeans(p$chf)
 }
 

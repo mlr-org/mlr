@@ -39,6 +39,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
     Gehan = mboost::Gehan(),
     custom.family = custom.family.definition
     )
+  info = list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens"))
   if (use.formula) {
     f = getTaskFormula(.task)
     model = if (is.null(.weights)) {
@@ -48,22 +49,21 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
     }
   } else {
     data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
-    info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
-    data$data = as.matrix(fixDataForLearner(data$data, info))
+    info$fix.data.info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+    data$data = as.matrix(fixDataForLearner(data$data, info$fix.data.info))
     model = if (is.null(.weights)) {
       mboost::glmboost(x = data$data, y = data$target, control = ctrl, family = family, ...)
     } else {
       mboost::glmboost(x = data$data, y = data$target, control = ctrl, weights = .weights, family = family, ...)
     }
-    model = attachTrainingInfo(model, info)
   }
-  model
+  attachTrainingInfo(model, info)
 }
 
 #' @export
 predictLearner.surv.glmboost = function(.learner, .model, .newdata, use.formula, ...) {
   if (!use.formula) {
-    info = getTrainingInfo(.model)
+    info = getTrainingInfo(.model)$fix.data.info
     .newdata = as.matrix(fixDataForLearner(.newdata, info))
   }
   if (.learner$predict.type == "response")

@@ -4,14 +4,18 @@
 \alias{getTaskTargets}
 \title{Get target data of task.}
 \usage{
-getTaskTargets(task, recode.target = "no")
+getTaskTargets(task, subset, recode.target = "no")
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{recode.target}{[\code{character(1)}] \cr
-Should target classes be recoded? Only for binary classification.
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
+
+\item{recode.target}{[\code{character(1)}] \cr        +#' @template arg_subset
+Should target classes be recoded? Only for binary classification.        +#' @template arg_recode_target
 Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
 In the two latter cases the target vector is converted into a numeric vector.
 The positive class is coded as +1 and the negative class either as 0 or -1.

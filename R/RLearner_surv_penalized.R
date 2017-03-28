@@ -30,7 +30,8 @@ makeRLearner.surv.penalized = function() {
 #' @export
 trainLearner.surv.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  penalized::penalized(f, data = getTaskData(.task, subset = .subset), model = "cox", ...)
+  mod = penalized::penalized(f, data = getTaskData(.task, subset = .subset), model = "cox", fusedl = FALSE, ...)
+  attachTrainingInfo(mod, list(surv.train = getTaskTargets(.task, .subset, recode.target = "rcens")))
 }
 
 #' @export
