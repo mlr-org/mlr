@@ -119,15 +119,15 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     if (is.null(pred$data$iter)) pred$data$iter = 1L
     if (is.null(pred$data$set)) pred$data$set = "test"
     fun = function(ss) {
-      train = which(ss$set == "train")
-      if (length(train)) {
-        pred$data = as.data.frame(ss[train,, drop = TRUE])
-        perf.train = measure$fun(task, model, pred, feats, train = train, m$extra.args)
+      train.ind = which(ss$set == "train")
+      if (length(train.ind) > 0L) {
+        pred$data = as.data.frame(ss[train.ind,, drop = FALSE])
+        perf.train = measure$fun(task, model, pred, feats, train.ind, m$extra.args)
       } else {
         perf.train = NA_real_
       }
-      pred$data = as.data.frame(ss[-train,, drop = TRUE])
-      perf.test = measure$fun(task, model, pred, feats, train = train, m$extra.args)
+      pred$data = as.data.frame(ss[setdiff(seq_along(ss), train.ind),, drop = FALSE])
+      perf.test = measure$fun(task, model, pred, feats, train.ind, m$extra.args)
       list(perf.train = perf.train, perf.test = perf.test)
     }
     perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
