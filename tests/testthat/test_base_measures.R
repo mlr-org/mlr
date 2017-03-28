@@ -5,7 +5,7 @@ test_that("measures", {
   options(warn = 2)
   mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
     "regr", "predtype.response", "predtype.prob"),
-    fun = function(task, model, pred, feats, extra.args) {
+    fun = function(task, model, pred, feats, train, extra.args) {
       tt = pred
       1
     }
@@ -897,4 +897,17 @@ test_that("measures ppv denominator 0", {
 test_that("measures MCC denominator 0 (#1736)", {
   res = measureMCC(c(TRUE, TRUE, TRUE), c(TRUE, TRUE, TRUE), TRUE, FALSE)
   expect_equal(res, 0)
+})
+
+test_that("train is passed correctly", {
+  myee = new.env()
+  fun = function(task, model, pred, feats, train, extra.args) {
+    myee$train = train
+    1
+  }
+  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "regr", "surv", "req.task", "req.train"), fun = fun)
+  task = bh.task
+  rin = makeResampleInstance(makeResampleDesc("Holdout"), task = bh.task)
+  resample(learner = "regr.rpart", task = task, measures = mymeasure, resampling = rin)
+  expect_identical(rin$train.inds[[1L]], myee$train)
 })

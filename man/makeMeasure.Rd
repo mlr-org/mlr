@@ -32,7 +32,8 @@ Set of measure properties. Some standard property names include:
   \item{req.task}{Is task object required in calculation? Usually not the case}
   \item{req.model}{Is model object required in calculation? Usually not the case.}
   \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-  \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
+  \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
+  \item{req.train}{Are training indices required in calculation? Usually not the case, some survival measures need them.}
 }
 Default is \code{character(0)}.}
 
