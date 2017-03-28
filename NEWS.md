@@ -2,6 +2,7 @@
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
+* getPredictionTaskDesc
 
 ## functions - new
 * helpLearner, helpLearnerParam: open the help for a learner or get a
