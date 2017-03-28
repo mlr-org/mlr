@@ -28,8 +28,8 @@ makeRLearner.regr.svm = function() {
 
 #' @export
 trainLearner.regr.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  f = getTaskFormula(.task)
-  e1071::svm(f, data = getTaskData(.task, .subset), ...)
+  d = getTaskData(.task, .subset, target.extra = TRUE)
+  e1071::svm(d$data, d$target, ...)
 }
 
 #' @export
