@@ -12,6 +12,3 @@ if (isLintrVersionOk(identical(Sys.getenv("TRAVIS"), "true"))) {
     "> devtools::install_github(\"jimhester/lintr\")", sep = "\n"))
 }
 
-
-x <- "see if lintr still works."
-
