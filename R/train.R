@@ -45,6 +45,13 @@ train = function(learner, task, subset, weights = NULL) {
 
   tn = getTaskTargetNames(task)
 
+  # evaluate all unevaluated expressions in parameters and check their feasability
+  # the parameter set of the returned learner will also be evaluated
+  learner$par.set = evaluateParamExpressions(learner$par.set, dict = as.list(environment()))
+  is.feasible = isFeasible(learner$par.set, learner$par.vals, use.defaults = TRUE, filter = TRUE)
+  if(!is.feasible)
+    stop(attributes(is.feasible))
+
   # make pars list for train call
   pars = list(.learner = learner, .task = task, .subset = subset)
 
