@@ -1,7 +1,8 @@
-#' Get a summarizing task description.
+#' @title Get a summarizing task description.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
-#' @return [\code{\link{TaskDesc}}].
+#' @return ret_taskdesc
 #' @export
 #' @family task
 getTaskDesc = function(x) {
@@ -11,6 +12,7 @@ getTaskDesc = function(x) {
 
 #' @export
 getTaskDesc.default = function(x) {
+  # FIXME: would be much cleaner to specialize here
   x$task.desc
 }
 
@@ -27,8 +29,9 @@ getTaskDescription = function(x) {
   getTaskDesc(x)
 }
 
-#' Get the type of the task.
+#' @title Get the type of the task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
@@ -37,8 +40,9 @@ getTaskType = function(x) {
   getTaskDesc(x)$type
 }
 
-#' Get the id of the task.
+#' @title Get the id of the task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
@@ -92,7 +96,12 @@ getTaskClassLevels = function(x) {
 }
 
 #' @export
-getTaskClassLevels.Task = function(x) {
+getTaskClassLevels.ClassifTask = function(x) {
+  getTaskClassLevels(getTaskDesc(x))
+}
+
+#' @export
+getTaskClassLevels.MultilabelTask = function(x) {
   getTaskClassLevels(getTaskDesc(x))
 }
 
@@ -115,11 +124,17 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
+  UseMethod("getTaskFeatureNames")
+}
+
+#' @export
+getTaskFeatureNames.Task = function(task) {
   setdiff(names(task$env$data), getTaskDesc(task)$target)
 }
 
-#' Get number of features in task.
+#' @title Get number of features in task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
@@ -128,8 +143,9 @@ getTaskNFeats = function(x) {
   sum(getTaskDesc(x)$n.feat)
 }
 
-#' Get number of observations in task.
+#' @title Get number of observations in task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
@@ -158,6 +174,9 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
+  assertCharacter(target, any.missing = FALSE)
+  assertFlag(explicit.features)
+  assertEnvironment(env)
   td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
@@ -189,12 +208,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' Get target data of task.
 #'
 #' @template arg_task
-#' @param recode.target [\code{character(1)}] \cr
-#'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
-#'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as +1 and the negative class either as 0 or -1.
-#'   Default is \dQuote{no}.
+#' @inheritParams getTaskData
 #' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
 #'   of logical columns for multilabel.
 #' @family task
@@ -223,8 +237,9 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 }
 
 
-#' Extract data in task.
+#' @title Extract data in task.
 #'
+#' @description
 #' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
 #' @template arg_task
@@ -362,27 +377,35 @@ recodeSurvivalTimes = function(y, from, to) {
   Surv(time1, time2, type = lookup[to])
 }
 
-#' Extract costs in task.
+#' @title Extract costs in task.
 #'
-#' Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
+#' @description
+#' Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task [\code{\link{CostSensTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task.
 #' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
 getTaskCosts = function(task, subset = NULL) {
-  if (task$task.desc$type != "costsens")
-    return(NULL)
+  UseMethod("getTaskCosts")
+}
+
+#' @export
+getTaskCosts.Task = function(task, subset = NULL) {
+  NULL
+}
+
+getTaskCosts.CostSensTask = function(task, subset = NULL) {
   subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
-  d = getTaskDesc(task)$costs[subset, , drop = FALSE]
-  return(d)
+  getTaskDesc(task)$costs[subset, , drop = FALSE]
 }
 
 
-#' Subset data in task.
+#' @title Subset data in task.
 #'
+#' @description See title.
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features

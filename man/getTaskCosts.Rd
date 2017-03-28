@@ -7,7 +7,7 @@
 getTaskCosts(task, subset = NULL)
 }
 \arguments{
-\item{task}{[\code{\link{CostSensTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{subset}{[\code{integer} | \code{logical}]\cr
@@ -18,7 +18,7 @@ By default all observations are used.}
 [\code{matrix} | \code{NULL}].
 }
 \description{
-Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
+Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
