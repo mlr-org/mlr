@@ -1,7 +1,26 @@
-# linters that differ from the default linters
-# this is necessary because mlr's style is weird.
-library("lintr")
-library("rex")
+
+# check if lintr version is sufficient
+# if `error.if.not` is TRUE an error is thrown with a meaningful message.
+isLintrVersionOk = function(error.if.not = FALSE) {
+  lintr.ver = try(packageVersion("lintr"), silent = TRUE)
+  lintr.required = "1.0.0.9001"
+  if (inherits(lintr.ver, "try-error")) {
+    msg = "lintr is not installed."
+  } else {
+    if (package_version(lintr.ver) >= package_version(lintr.required)) {
+      return(TRUE)
+    }
+    msg = sprintf("lintr is version %s, but version %s is required.", lintr.ver, lintr.required)
+  }
+  if (error.if.not) {
+    stopf(paste("%s\nInstalling the github version of lintr will probably solve this issue. For that, please run",
+        "> devtools::install_github(\"jimhester/lintr\")", sep = "\n"), msg)
+  }
+  return(FALSE)
+}
+
+if (require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
+
 
 # The following functions are adaptions of the corresponding functions in the `lintr` packages
 # The lintr package, and the original versions of these functions, can be found at https://github.com/jimhester/lintr
@@ -29,7 +48,10 @@ library("rex")
 #
 # End copyright notice.
 # All modifications are licensed as the rest of mlr.
- 
+
+# linters that differ from the default linters
+# this is necessary because mlr's style is weird.
+
 # prohibit <-
 left.assign.linter = function(source_file) {
   lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
@@ -230,25 +252,26 @@ object.naming.linter = lintr:::make_object_linter(function(source_file, token) {
 
 # note that this must be a *named* list (bug in lintr)
 linters = list(
-  commas = lintr:::commas_linter,
-#  infix.spaces = infix.spaces.linter,
+  commas = lintr::commas_linter,
 #  open.curly = open_curly_linter(),
 #  closed.curly = closed_curly_linter(),
   spaces.left.parentheses = spaces.left.parentheses.linter,
   function.left.parentheses = function.left.parentheses.linter,
-#   snake.case = snake_case_linter,
-#   absolute.paths = absolute_paths_linter,
-  single.quotes = lintr:::single_quotes_linter,
+  single.quotes = lintr::single_quotes_linter,
   left.assign = left.assign.linter,
   right.assign = right.assign.linter,
-  no.tab = lintr:::no_tab_linter,
-  T.and.F.symbol = lintr:::T_and_F_symbol_linter,
-  semicolon.terminator = lintr:::semicolon_terminator_linter,
-  seq = lintr:::seq_linter,
-  unneeded.concatenation = lintr:::unneeded_concatenation_linter,
-  trailing.whitespace = lintr:::trailing_whitespace_linter,
-  todo.comment = lintr:::todo_comment_linter(todo = "todo"), # is case-insensitive
-  spaces.inside = lintr:::spaces_inside_linter,
+  no.tab = lintr::no_tab_linter,
+  T.and.F.symbol = lintr::T_and_F_symbol_linter,
+  semicolon.terminator = lintr::semicolon_terminator_linter,
+  seq = lintr::seq_linter,
+  unneeded.concatenation = lintr::unneeded_concatenation_linter,
+  trailing.whitespace = lintr::trailing_whitespace_linter,
+  todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive
+  spaces.inside = lintr::spaces_inside_linter,
   infix.spaces = infix.spaces.linter,
   object.naming = object.naming.linter)
-
+} else {
+  # everything that uses `linters` should check `isLintrVersionOk` first, so the
+  # following should never be used. Make sure that it is an error if it IS used.
+  linters = list(error = "lintr package could not be loaded")
+}

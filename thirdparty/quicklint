@@ -25,6 +25,8 @@ Rscript --vanilla -e "\
   library('BBmisc') ;\
   library('checkmate') ;\
   source('${linthelper}') ;\
+  ok = isLintrVersionOk(TRUE) ;\
+  library('lintr') ;\
   infile = file('stdin') ;\
   open(infile) ;\
   bad = FALSE ;\
