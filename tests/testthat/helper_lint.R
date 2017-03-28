@@ -57,7 +57,7 @@ if (require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
     lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
         parsed = lintr:::with_id(source_file, id)
         Lint(filename = source_file$filename, line_number = parsed$line1,
-          column_number = parsed$col1, type = "style", message = "Use =, not =, for assignment.",
+          column_number = parsed$col1, type = "style", message = "Use =, not <-, for assignment.",
           line = source_file$lines[as.character(parsed$line1)],
           linter = "assignment_linter")
     })
@@ -68,7 +68,7 @@ if (require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
     lapply(lintr:::ids_with_token(source_file, "RIGHT_ASSIGN"), function(id) {
         parsed = lintr:::with_id(source_file, id)
         Lint(filename = source_file$filename, line_number = parsed$line1,
-          column_number = parsed$col1, type = "style", message = "Use =, not =, for assignment.",
+          column_number = parsed$col1, type = "style", message = "Use =, not ->, for assignment.",
           line = source_file$lines[as.character(parsed$line1)],
           linter = "assignment_linter")
     })
@@ -187,7 +187,7 @@ if (require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
                     }
                     Lint(filename = source_file$filename, line_number = parsed$line1,
                       column_number = parsed$col1, type = "style",
-                      message = "Put spaces around all infix operators.",
+                      message = "Put spaces around all infix operators (except exponentiation).",
                       line = line, ranges = list(c(start, end)),
                       linter = "infix.spaces.linter")
                   }
