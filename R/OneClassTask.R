@@ -52,7 +52,7 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   }
   td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking)
   td$class.levels = levs
-  td$positive = positive
+  td$positive = as.logical(positive)
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
     td$negative = stri_paste("not_", positive)
