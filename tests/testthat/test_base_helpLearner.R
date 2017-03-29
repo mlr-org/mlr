@@ -27,7 +27,11 @@ test_that("helpLearner of learner with multiple help pages", {
   hlp2 = quiet(testfn("classif.qda"))
 
   # for regr.randomForest, there is mlr-specific help which should be the first option.
-  expect_equivalent(utils::help("regr.randomForest", package = "mlr"), quiet(testfn("regr.randomForest")))
+  rfhelp = utils::help("regr.randomForest", package = "mlr")
+  # unfortunately, rtest breaks help("regr.randomForest"), so we skip this test if help() is broken.
+  if (length(rfhelp) > 0) {
+    expect_equivalent(rfhelp, quiet(testfn("regr.randomForest")))
+  }
 
   environment(testfn)$readline = function(x) { cat(x, "\n") ; 2 }
 
