@@ -98,9 +98,9 @@ test_that("helpLearnerParam of wrapped learner", {
   expect_output(helpLearnerParam(w1, "nu"), "Value: +4")
   expect_output(helpLearnerParam(w2, "nu"), "Value: +4")
 
-  expect_message(helpLearnerParam(w1),
+  expect_message(quiet(helpLearnerParam(w1)),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
-  expect_message(helpLearnerParam(w2),
+  expect_message(quiet(helpLearnerParam(w2)),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
 
 })
