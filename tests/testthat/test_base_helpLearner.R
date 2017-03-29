@@ -2,7 +2,12 @@
 context("helpLearner")
 
 test_that("helpLearner of learner with single help page", {
-  expect_true(length(helpLearner("classif.logreg")) == 1)
+  testfn = helpLearner
+  environment(testfn) = new.env(parent = environment(testfn))
+
+  environment(testfn)$readline = function(x) stop("Was not expecting readline.")
+
+  expect_true(length(quiet(testfn("classif.logreg"))) == 1)
 })
 
 test_that("helpLearner of learner with multiple help pages", {
@@ -13,33 +18,43 @@ test_that("helpLearner of learner with multiple help pages", {
 
   expect_output(testfn("classif.qda"), "Choose help page:(\\n[0-9]+ : [0-9a-zA-Z._]+)+\\n\\.\\.\\.: *$")
 
-  expect_null(testfn("classif.qda"))
+  expect_null(quiet(testfn("classif.qda")))
 
   environment(testfn)$readline = function(x) { cat(x, "\n") ; 1 }
 
-  hlp1 = testfn("classif.qda")
+  hlp1 = quiet(testfn("classif.qda"))
 
-  hlp2 = testfn("classif.qda")
+  hlp2 = quiet(testfn("classif.qda"))
 
   # for regr.randomForest, there is mlr-specific help which should be the first option.
-  expect_equivalent(utils::help("regr.randomForest", package = "mlr"), testfn("regr.randomForest"))
+  rfhelp = utils::help("regr.randomForest", package = "mlr")
+  # unfortunately, rtest breaks help("regr.randomForest"), so we skip this test if help() is broken.
+  if (length(rfhelp) > 0) {
+    expect_equivalent(rfhelp, quiet(testfn("regr.randomForest")))
+  }
 
   environment(testfn)$readline = function(x) { cat(x, "\n") ; 2 }
 
-  hlp3 = testfn("classif.qda")
+  hlp3 = quiet(testfn("classif.qda"))
 
   expect_identical(hlp1, hlp2)
 
   expect_false(identical(hlp1, hlp3))
 
   # regr.randomForest with option '2' should give the randomForest help page.
-  expect_true(length(testfn("regr.randomForest")) == 1)
+  expect_true(length(quiet(testfn("regr.randomForest"))) == 1)
 
 })
 
 test_that("helpLearner of wrapped learner", {
+  testfn = helpLearner
+  environment(testfn) = new.env(parent = environment(testfn))
+
+  environment(testfn)$readline = function(x) stop("Was not expecting readline.")
+
+
   # check that it doesn't give an error
-  helpLearner(makeBaggingWrapper(makeLearner("classif.qda"), 2))
+  quiet(testfn(makeBaggingWrapper(makeLearner("classif.qda"), 2)))
 })
 
 test_that("helpLearnerParam", {
@@ -66,7 +81,7 @@ test_that("helpLearnerParam", {
   expect_output(helpLearnerParam("classif.__mlrmocklearners__2", "alpha"), "No documentation found")
 
   # check this doesn't give an error
-  helpLearnerParam("classif.__mlrmocklearners__2")
+  quiet(helpLearnerParam("classif.__mlrmocklearners__2"))
 
   # check that values are printed
   expect_output(helpLearnerParam(
@@ -87,9 +102,9 @@ test_that("helpLearnerParam of wrapped learner", {
   expect_output(helpLearnerParam(w1, "nu"), "Value: +4")
   expect_output(helpLearnerParam(w2, "nu"), "Value: +4")
 
-  expect_message(helpLearnerParam(w1),
+  expect_message(quiet(helpLearnerParam(w1)),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
-  expect_message(helpLearnerParam(w2),
+  expect_message(quiet(helpLearnerParam(w2)),
     "is a wrapped learner. Showing documentation of 'classif.qda' instead", fixed = TRUE, all = TRUE)
 
 })
