@@ -1124,6 +1124,7 @@ measureMCC = function(truth, response, negative, positive) {
   fp = as.numeric(measureFP(truth, response, positive))
 
   denom = sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+  # According to Wikipedia, the denominator can be set arbitrarily if it's 0. 1 seems to make as much sense as anything else.
   if (denom == 0) denom = 1
 
   (tp * tn - fp * fn) / denom
