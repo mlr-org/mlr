@@ -19,7 +19,7 @@ isLintrVersionOk = function(error.if.not = FALSE) {
   return(FALSE)
 }
 
-if (require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
+if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
 
 
   # The following functions are adaptions of the corresponding functions in the `lintr` packages
