@@ -32,7 +32,7 @@ NULL
 #' @description
 #' Internal, do not use!
 #' @export
-makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL, ...) {
   UseMethod("makePrediction")
 }
 
@@ -178,7 +178,7 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 }
 
 #' @export
-makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL, ...) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   if (!missing(truth))
