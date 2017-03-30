@@ -121,12 +121,6 @@ test_that("FDA_classif_classiKnn behaves like original api for different metrics
 
 })
 
-# TODO test that passing on stuff to fda::Data2fd() works
-test_that("FDA_classif_classiKnn behaves like original api for additional arguments to to fda::Data2fd()", {
-  requirePackagesOrSkip("classiFunc", default.method = "load")
-  stop("TODO")
-})
-
 
 test_that("FDA_classif_classiKnn handles upper and lower bounds correctly", {
   requirePackagesOrSkip("classiFunc", default.method = "load")
@@ -176,3 +170,10 @@ test_that("FDA_classif_classiKnn handles upper and lower bounds correctly", {
   expect_class(tuned.params, "TuneResult")
 
 })
+
+# # TODO test that passing on stuff to fda::Data2fd() works
+# test_that("FDA_classif_classiKnn behaves like original api for additional arguments to to fda::Data2fd()", {
+#   requirePackagesOrSkip("classiFunc", default.method = "load")
+#   stop("TODO")
+# })
+
