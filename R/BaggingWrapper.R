@@ -68,7 +68,7 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeIntegerLearnerParam(id = "bw.iters", lower = 1L, default = 10L),
     makeLogicalLearnerParam(id = "bw.replace", default = TRUE),
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
-    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
+    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2 / 3)
   )
   makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "BaggingWrapper", model.subclass = "BaggingModel")
@@ -124,7 +124,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
     else
       rowMeans(p)
   } else {
-    if (.learner$type == 'classif') {
+    if (.learner$type == "classif") {
       levs = .model$task.desc$class.levels
       p = apply(p, 1L, function(x) {
         x = factor(x, levels = levs) # we need all level for the table and we need them in consistent order!

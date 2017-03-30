@@ -14,7 +14,7 @@ Task or its description object.}
 [\code{integer(1)}].
 }
 \description{
-Get number of features in task.
+See title.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

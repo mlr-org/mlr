@@ -37,6 +37,7 @@ head(getPredictionProbabilities(pred, c("setosa", "virginica")))
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionTaskDesc}},
   \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},

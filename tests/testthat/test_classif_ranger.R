@@ -1,6 +1,6 @@
 context("classif_ranger")
 
-## TODO: Add "response" test if R seed is respected in ranger::predict()
+## FIXME: Add "response" test if R seed is respected in ranger::predict()
 test_that("classif_ranger", {
   requirePackagesOrSkip("ranger", default.method = "load")
 
@@ -12,7 +12,7 @@ test_that("classif_ranger", {
   )
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset, list(data = binaryclass.train, formula = binaryclass.formula, write.forest = TRUE, probability = TRUE, respect.unordered.factors = TRUE))
     set.seed(getOption("mlr.debug.seed"))
@@ -21,5 +21,5 @@ test_that("classif_ranger", {
     old.probs.list[[i]] = p$predictions[, 1]
   }
 
-  testProbParsets ("classif.ranger", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.ranger", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
 })

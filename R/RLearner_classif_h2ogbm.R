@@ -17,7 +17,8 @@ makeRLearner.classif.h2o.gbm = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "missings"),
     name = "h2o.gbm",
     short.name = "h2o.gbm",
-    note = "'distribution' is set automatically to 'gaussian'."
+    note = "'distribution' is set automatically to 'gaussian'.",
+    callees = "h2o.gbm"
   )
 }
 

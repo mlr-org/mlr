@@ -38,10 +38,10 @@ estimateRelativeOverfitting.ResampleDesc = function(rdesc, measures, task, learn
 
   iterations = nrow(r$measures.test)
   do.call(rbind, lapply(1:iterations, function(i) {
-    perf.test = r$measures.test[i,mids,drop = FALSE]
-    perf.train = r$measures.train[i,mids,drop = FALSE]
+    perf.test = r$measures.test[i, mids, drop = FALSE]
+    perf.train = r$measures.train[i, mids, drop = FALSE]
 
-    data = r$pred$data[r$pred$data$iter == i & r$pred$data$set == "test",]
+    data = r$pred$data[r$pred$data$iter == i & r$pred$data$set == "test", ]
     nrows = nrow(data)
     pred.permuted = r$pred
     pred.permuted$data = data.frame(truth = rep(data$truth, each = nrows),

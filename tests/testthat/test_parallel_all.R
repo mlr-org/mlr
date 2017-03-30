@@ -147,7 +147,7 @@ test_that("parallel ensembles", {
     fit = train(lrn, multilabel.task)
     p = predict(fit, multilabel.task)
   }
-    
+
     ## CostSensWeightedPairsWrapper
   if (Sys.info()["sysname"] != "Windows") {
     doit("multicore", "mlr.ensemble")

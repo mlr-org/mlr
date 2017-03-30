@@ -12,7 +12,7 @@ test_that("BenchmarkResult", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), length(getBMRTaskIds(res)))
-  
+
   # facetting works:
   q = plotBMRBoxplots(res, facet.wrap.nrow = 2L)
   testFacetting(q, 2L)
@@ -29,7 +29,7 @@ test_that("BenchmarkResult", {
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res), grid.size = 2L)
   testDocForStrings(doc, getBMRMeasures(res)[[1L]]$name)
-  
+
   plotBMRBoxplots(res, pretty.names = FALSE)
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -65,6 +65,6 @@ test_that("BenchmarkResult allows spaces", {
     makeLearner("classif.rpart", predict.type = "prob")
   )
   res = benchmark(learners, sonar.task, cv, measures)
-  plotBMRBoxplots(res, measure=auc)
+  plotBMRBoxplots(res, measure = auc)
   ggsave(tempfile(fileext = ".png"))
 })

@@ -1,15 +1,15 @@
 #' @title Extracts out-of-bag predictions from trained models.
 #'
 #' @description
-#' Learners like \code{randomForest} produce out-of-bag predictions. 
-#' \code{getOOBPreds} extracts this information from trained models and builds a 
-#' prediction object as provided by predict (with prediction time set to NA). 
-#' In the classification case: 
+#' Learners like \code{randomForest} produce out-of-bag predictions.
+#' \code{getOOBPreds} extracts this information from trained models and builds a
+#' prediction object as provided by predict (with prediction time set to NA).
+#' In the classification case:
 #' What is stored exactly in the [\code{\link{Prediction}}] object depends
 #' on the \code{predict.type} setting of the \code{\link{Learner}}.
-#' 
-#' You can call \code{listLearners(properties = "oobpreds")} to get a list of learners 
-#' which provide this. 
+#'
+#' You can call \code{listLearners(properties = "oobpreds")} to get a list of learners
+#' which provide this.
 #'
 #' @template arg_wrappedmod
 #' @template arg_task
@@ -32,7 +32,7 @@ getOOBPreds = function(model, task) {
   subset = model$subset
   data = getTaskData(task, subset)
   truth = data[, td$target]
-  
+
   p = getOOBPredsLearner(model$learner, model)
   # time is set to NA, as "no" time is required for getting the out of bag predictions
   checkPredictLearnerOutput(model$learner, model, p)
@@ -41,10 +41,10 @@ getOOBPreds = function(model, task) {
 }
 
 #' @title Provides out-of-bag predictions for a given model and the corresponding learner.
-#' 
-#' @description 
+#'
+#' @description
 #' This function is mostly for internal usage. To get out-of-bag predictions use \code{\link{getOOBPreds}}.
-#' 
+#'
 #' @param .learner [\code{\link{Learner}}]\cr
 #'   The learner.
 #' @param .model [\code{\link{WrappedModel}}]\cr
@@ -56,9 +56,9 @@ getOOBPredsLearner = function(.learner, .model) {
   UseMethod("getOOBPredsLearner")
 }
 
-# checks if the model was trained on the corresponding task by comparing 
+# checks if the model was trained on the corresponding task by comparing
 # the descriptions
 checkModelCorrespondsTask = function(model, task) {
-  if(!identical(task$task.desc, model$task.desc))
+  if (!identical(task$task.desc, model$task.desc))
     stopf("Description of the model does not correspond to the task")
 }

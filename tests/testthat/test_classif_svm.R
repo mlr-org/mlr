@@ -10,7 +10,7 @@ context("classif_svm")
 
 test_that("classif_svm", {
   requirePackagesOrSkip("e1071", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(gamma = 20),
@@ -20,8 +20,8 @@ test_that("classif_svm", {
 
   old.predicts.list = list()
   old.probs.list = list()
-  
-  for (i in 1:length(parset.list)) {
+
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
@@ -30,26 +30,26 @@ test_that("classif_svm", {
     pars$probability = TRUE
     m2 = do.call(e1071::svm, pars)
     old.predicts.list[[i]] = predict(m1, newdata = multiclass.test)
-    old.probs.list[[i]] = predict(m2, newdata=multiclass.test, probability = TRUE)
+    old.probs.list[[i]] = predict(m2, newdata = multiclass.test, probability = TRUE)
   }
-  
+
   testSimpleParsets("classif.svm", multiclass.df, multiclass.target,
     multiclass.train.inds, old.predicts.list,  parset.list)
-  #testProbParsets("classif.svm", multiclass.df, multiclass.target, 
+  #testProbParsets("classif.svm", multiclass.df, multiclass.target,
   #  multiclass.train.inds, old.probs.list, parset.list)
 
-  tt = function (formula, data, subset=1:150, ...) {
-    e1071::svm(formula, data=data[subset,], kernel="polynomial", degree=3, coef0=2, gamma=1.5)
+  tt = function(formula, data, subset = 1:150, ...) {
+    e1071::svm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5)
   }
 
-  testCV("classif.svm", multiclass.df, multiclass.target, tune.train=tt, parset=list(kernel="polynomial", degree=3, coef0=2, gamma=1.5))
+  testCV("classif.svm", multiclass.df, multiclass.target, tune.train = tt, parset = list(kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5))
 
   lrn = makeLearner("classif.svm", scale = FALSE)
   model = train(lrn, multiclass.task)
   preds = predict(model, multiclass.task)
   expect_lt(performance(preds), 0.3)
 
-  lrn = makeLearner("classif.svm", scale = c(TRUE))
+  lrn = makeLearner("classif.svm", scale = TRUE)
   model = train(lrn, multiclass.task)
   preds = predict(model, multiclass.task)
   expect_lt(performance(preds), 0.3)

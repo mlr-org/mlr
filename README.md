@@ -36,6 +36,7 @@ If you use these parts, please cite the relevant work appropriately:
 * Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://dx.doi.org/10.1080/00949655.2014.929131).
 * Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://dx.doi.org/10.1007/978-3-319-28697-6_6).
 * Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
+* Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/pdf/1703.08991.pdf)
 
 A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).
 

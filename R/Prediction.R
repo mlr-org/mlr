@@ -92,7 +92,7 @@ makePrediction.ClassifTaskDesc = function(task.desc, row.names, id, truth, predi
   if (predict.type == "prob") {
     # set default threshold to 1/k
     if (is.null(predict.threshold)) {
-      predict.threshold = rep(1/length(task.desc$class.levels), length(task.desc$class.levels))
+      predict.threshold = rep(1 / length(task.desc$class.levels), length(task.desc$class.levels))
       names(predict.threshold) = task.desc$class.levels
     }
     p = setThreshold(p, predict.threshold)

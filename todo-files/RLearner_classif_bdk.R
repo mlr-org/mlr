@@ -2,7 +2,7 @@
 makeRLearner.classif.bdk = function() {
   makeRLearnerClassif(
     cl = "classif.bdk",
-    package = "kohonen",
+    package = c("kohonen", "class"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "xdim", default = 8L, lower = 1L),
       makeIntegerLearnerParam(id = "ydim", default = 6L, lower = 1L),
@@ -20,7 +20,8 @@ makeRLearner.classif.bdk = function() {
     properties = c("numerics", "twoclass", "multiclass", "prob"),
     name = "Bi-Directional Kohonen map",
     short.name = "bdk",
-    note = "`keep.data` is set to FALSE to reduce memory requirements."
+    note = "`keep.data` is set to FALSE to reduce memory requirements.",
+    callees = c("bdk", "somgrid")
   )
 }
 

@@ -18,7 +18,7 @@ test_that("regr_cubist", {
   X = regr.train[, setdiff(names(regr.train), regr.target)]
   y = regr.train[, regr.target]
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     parset = c(list(x = X, y = y), parset)
     set.seed(getOption("mlr.debug.seed"))

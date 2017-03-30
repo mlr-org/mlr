@@ -26,7 +26,8 @@ makeRLearner.multilabel.cforest = function() {
     properties = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
-    short.name = "cforest"
+    short.name = "cforest",
+    callees = c("cforest", "cforest_control", "ctree_control")
   )
 }
 

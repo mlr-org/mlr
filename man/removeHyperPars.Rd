@@ -32,9 +32,10 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerPredictType}},
   \code{\link{getLearnerShortName}},
   \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{makeLearners}}, \code{\link{makeLearner}},
-  \code{\link{setHyperPars}}, \code{\link{setId}},
-  \code{\link{setLearnerId}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{setHyperPars}},
+  \code{\link{setId}}, \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }

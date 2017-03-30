@@ -26,7 +26,7 @@ test_that("bs resampling works", {
 
   requirePackagesOrSkip("rpart", default.method = "load")
   tt = function(formula, data, subset) {
-    rpart::rpart(formula, data = data[subset,], minsplit = 12, cp = 0.09)
+    rpart::rpart(formula, data = data[subset, ], minsplit = 12, cp = 0.09)
   }
   tp = function(model, newdata) {
     predict(model, newdata, type = "class")

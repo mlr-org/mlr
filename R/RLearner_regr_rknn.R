@@ -14,7 +14,8 @@ makeRLearner.regr.rknn = function(){
     properties = c("numerics", "ordered"),
     name = "Random k-Nearest-Neighbors",
     short.name = "rknn",
-    note =""
+    note = "",
+    callees = "rknnReg"
   )
 }
 

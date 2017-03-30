@@ -113,11 +113,11 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     proportion = proportion[, !td$negative, with = FALSE]
     data = data[data$Class != td$negative, ]
   }
-  max_bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
+  max.bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"),
                    function(x) as.numeric(x[length(x)]))
-  proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max_bin)])
+  proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max.bin)])
   proportion = melt(proportion, id.vars = c("Learner", "bin"), value.name = "Proportion", variable.name = "Class")
-  data$bin = ordered(data$bin, levels = levels(data$bin)[order(max_bin)])
+  data$bin = ordered(data$bin, levels = levels(data$bin)[order(max.bin)])
   setDF(data)
   setDF(proportion)
 
@@ -189,12 +189,12 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, fa
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")
 
   if (rag) {
-    top_data = obj$data[obj$data$truth == obj$data$Class, ]
-    top_data$x = jitter(as.numeric(top_data$bin))
-    p = p + geom_rug(data = top_data, aes_string("x", y = 1), sides = "t", alpha = .25)
-    bottom_data = obj$data[obj$data$truth != obj$data$Class, ]
-    bottom_data$x = jitter(as.numeric(bottom_data$bin))
-    p = p + geom_rug(data = bottom_data, aes_string("x", y = 1), sides = "b", alpha = .25)
+    top.data = obj$data[obj$data$truth == obj$data$Class, ]
+    top.data$x = jitter(as.numeric(top.data$bin))
+    p = p + geom_rug(data = top.data, aes_string("x", y = 1), sides = "t", alpha = .25)
+    bottom.data = obj$data[obj$data$truth != obj$data$Class, ]
+    bottom.data$x = jitter(as.numeric(bottom.data$bin))
+    p = p + geom_rug(data = bottom.data, aes_string("x", y = 1), sides = "b", alpha = .25)
   }
   p = p + labs(x = "Probability Bin", y = "Class Proportion")
   p + theme(axis.text.x = element_text(angle = 90, hjust = 1))

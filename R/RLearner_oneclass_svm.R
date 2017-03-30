@@ -33,7 +33,7 @@ trainLearner.oneclass.svm = function(.learner, .task, .subset, .weights = NULL, 
 }
 
 #' @export
-predictLearner.oneclass.svm = function(.learner, .model, .newdata, .truth = NULL, ...) {
+predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
   # svm currently can't predict probabilities only response
    p = predict(.model$learner.model, newdata = .newdata, ...)
   return(p)

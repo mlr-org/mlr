@@ -4,7 +4,7 @@
 #' Clips aggregation names from character vector.
 #' E.g: 'mmce.test.mean' becomes 'mmce'.
 #' Elements that don't contain a measure name are ignored and returned unchanged.
-#' 
+#'
 #' @param xs [\code{character}]\cr
 #'   Character vector that (possibly) contains aggregated measure names.
 #' @return [\code{character}].
@@ -16,7 +16,7 @@ simplifyMeasureNames = function(xs) {
   # cut everything after and including the first '.'
   xs.shortened = stri_replace_all_regex(xs, "\\..*", "")
   # check if this is a measure
-  string.is.measure = (xs.shortened %in% all.measure.names) 
+  string.is.measure = (xs.shortened %in% all.measure.names)
   # if yes: insert shortened name, else insert original input
   res = ifelse(string.is.measure, xs.shortened, xs)
   as.character(res)

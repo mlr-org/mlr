@@ -4,7 +4,7 @@ test_that("tuneParamsMultiCrit", {
   lrn =  makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
-    makeIntegerParam("minsplit", lower=1, upper = 50)
+    makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
   ctrl = makeTuneMultiCritControlRandom(maxit = 2)
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps, measures = mmce, control = ctrl))
@@ -127,7 +127,7 @@ test_that("plotTuneMultiCritResult works with pretty.names", {
   ps = makeParamSet(
     makeDiscreteParam("minsplit", values = c(5, 10))
     )
-  ctrl.grid = makeTuneMultiCritControlGrid() 
+  ctrl.grid = makeTuneMultiCritControlGrid()
   opt.multi.crit = tuneParamsMultiCrit(lrn, multiclass.task, hout,
     list(mmce, acc), par.set = ps, control = ctrl.grid)
   plotTuneMultiCritResult(opt.multi.crit)
@@ -138,7 +138,7 @@ test_that("tuneParamsMultiCrit with resample.fun", {
   lrn =  makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
-    makeIntegerParam("minsplit", lower=1, upper = 50)
+    makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
 
   # random search

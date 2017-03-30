@@ -32,7 +32,7 @@ multiple binary ones and aggregates by voting.
 }
 \references{
 Lin, HT.:
-Reduction from Cost-sensitive Multiclass Classification to 
+Reduction from Cost-sensitive Multiclass Classification to
 One-versus-one Binary Classification.
 In: Proceedings of the Sixth Asian Conference on Machine Learning.
 JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).

@@ -48,7 +48,7 @@ test_that("resample", {
   f2 = factor(rep(td$negative, cv.i$size), levels = td$class.levels)
   expect_equal(rf4$data$response, f2)
 
-  ct = makeClassifTask(data = iris[,c("Species", "Petal.Width")], target = "Species")
+  ct = makeClassifTask(data = iris[, c("Species", "Petal.Width")], target = "Species")
   fit = resample(lrn1, ct, makeResampleDesc("CV", iters = 2))
 
   expect_error(resample("classif.rpart", multiclass.task, makeResampleDesc("Holdout"),
@@ -69,7 +69,7 @@ test_that("resampling, predicting train set works", {
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
-  
+
   rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
   lrn = makeLearner("classif.rpart")
   m1 = setAggregation(mmce, train.mean)
@@ -81,8 +81,8 @@ test_that("resampling, predicting train set works", {
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
   expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
-  
-  
+
+
 
 })
 
@@ -136,7 +136,7 @@ test_that("resample has error messages when prediction fails", {
   configureMlr(on.learner.warning = "quiet")
 
   lrn = makeLearner("classif.knn")
-  lrn$properties = c(lrn$properties, c("missings"))
+  lrn$properties = c(lrn$properties, "missings")
 
   task = makeClassifTask("test", data = Sonar, target = "Class")
   task$env$data$V1[1:2] = NA

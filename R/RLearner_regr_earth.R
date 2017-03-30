@@ -9,7 +9,7 @@ makeRLearner.regr.earth = function() {
       makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "penalty"),
       makeIntegerLearnerParam(id = "nk", lower = 0L),
-      makeNumericLearnerParam(id = "thres", default = 0.001),
+      makeNumericLearnerParam(id = "thresh", default = 0.001),
       makeIntegerLearnerParam(id = "minspan", default = 0L),
       makeIntegerLearnerParam(id = "endspan", default = 0L),
       makeNumericLearnerParam(id = "newvar.penalty", default = 0),
@@ -22,7 +22,8 @@ makeRLearner.regr.earth = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Multivariate Adaptive Regression Splines",
-    short.name = "earth"
+    short.name = "earth",
+    callees = "earth"
   )
 }
 
