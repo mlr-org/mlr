@@ -994,11 +994,7 @@ measureTNR = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
-<<<<<<< HEAD
   properties = c("oneclass", "classif" , "req.pred", "req.truth"),
-=======
-  properties = c("classif", "req.pred", "req.truth"),
->>>>>>> master
   name = "False positive rate",
   note = "Percentage of misclassified observations in the positive class. Also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1426,13 +1422,8 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
 #' @export G1
 #' @rdname measures
 #' @format none
-<<<<<<< HEAD
-G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
-  properties = c("oneclass", "cluster", "req.pred", "req.feats"),
-=======
 G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,  # nolint
-  properties = c("cluster", "req.pred", "req.feats"),
->>>>>>> master
+  properties = c("oneclass", "cluster", "req.pred", "req.feats"),
   name = "Calinski-Harabasz pseudo F statistic",
   note = "Defined as ratio of between-cluster variance to within cluster variance. See `?clusterSim::index.G1`.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1445,13 +1436,8 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,  # nolint
 #' @export G2
 #' @rdname measures
 #' @format none
-<<<<<<< HEAD
-G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
+G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0, # nolint
   properties = c("oneclass", "cluster", "req.pred", "req.feats"),
-=======
-G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,  # nolint
-  properties = c("cluster", "req.pred", "req.feats"),
->>>>>>> master
   name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
   note = "Defined as: (number of concordant comparisons - number of discordant comparisons) / (number of concordant comparisons + number of discordant comparisons). See `?clusterSim::index.G2`.",
   fun = function(task, model, pred, feats, extra.args) {
