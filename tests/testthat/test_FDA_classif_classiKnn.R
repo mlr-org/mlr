@@ -17,7 +17,7 @@ test_that("FDA_classif_classiKnn behaves like original api", {
   mtest = ArrowHead[test_inds,]
   gtest = classes[test_inds]
 
-  # fda.usc implementation
+  # classiFunc implementation
   set.seed(getOption("mlr.debug.seed"))
   a1 = classiFunc::classiKnn(glearn, mlearn, knn = 1L)
 
