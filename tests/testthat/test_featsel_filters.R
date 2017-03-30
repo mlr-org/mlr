@@ -45,7 +45,7 @@ test_that("filterFeatures", {
     more.args = list("rf.min.depth" = c(method = "vh", conservative = "low"))))
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
-      
+
   # extra tests for filters based on functions of the Rfast package, including
   # whether they use pairwise complete observations
   y = 1:10

@@ -10,7 +10,7 @@ test_that("classif_parallelForest", {
     )
 
   #parallelForest ist not reproducible with set.seed, so we just check for createability
-  for(i in 1:length(parset.list)){
+  for(i in seq_along(parset.list)){
     parset = parset.list[[i]]
     pf.classif.lrn = try(makeLearner("classif.parallelForest", par.vals = parset, predict.type = "response"))
     expect_is(pf.classif.lrn, "classif.parallelForest")

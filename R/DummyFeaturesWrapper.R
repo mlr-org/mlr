@@ -9,7 +9,7 @@
 #' @template ret_learner
 #' @family wrapper
 #' @export
-makeDummyFeaturesWrapper = function (learner, method = "1-of-n", cols = NULL) {
+makeDummyFeaturesWrapper = function(learner, method = "1-of-n", cols = NULL) {
   learner = checkLearner(learner)
   args = list(method = method, cols = cols)
   rm(list = names(args))
@@ -30,6 +30,6 @@ makeDummyFeaturesWrapper = function (learner, method = "1-of-n", cols = NULL) {
   addClasses(lrn, "DummyFeaturesWrapper")
 }
 
-getLearnerProperties.DummyFeaturesWrapper = function (learner) {
+getLearnerProperties.DummyFeaturesWrapper = function(learner) {
   union(getLearnerProperties(learner$next.learner), c("factors", "ordered"))
 }

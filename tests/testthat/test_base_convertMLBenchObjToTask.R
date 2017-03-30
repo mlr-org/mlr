@@ -5,7 +5,7 @@ test_that("convertMLbenchObjToTask", {
   # get all mlbench.* functions, 1spiral does not work
   fs = ls("package:mlbench", pattern = "mlbench")
   n = 77L
-  for (f in setdiff(fs, c("mlbench.1spiral"))) {
+  for (f in setdiff(fs, "mlbench.1spiral")) {
     task = convertMLBenchObjToTask(f, n = n)
     expect_is(task, "Task")
     # for some, n is not properly respected in mlbench

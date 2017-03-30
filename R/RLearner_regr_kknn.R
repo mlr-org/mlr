@@ -15,7 +15,8 @@ makeRLearner.regr.kknn = function() {
     ),
     properties = c("numerics", "factors"),
     name = "K-Nearest-Neighbor regression",
-    short.name = "kknn"
+    short.name = "kknn",
+    callees = "kknn"
   )
 }
 

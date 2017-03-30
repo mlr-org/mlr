@@ -17,7 +17,7 @@ test_that("learners work: regr ", {
 
   # Create smaller task: dont use feature 2, it is nearly always 0, don't use feature 4, it is a factor variable
   task = subsetTask(regr.task, subset = c(1:70), features = getTaskFeatureNames(regr.task)[c(1, 3)])
-  
+
   # normal regr
   lrns = mylist("regr", create = TRUE)
   lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
@@ -26,7 +26,7 @@ test_that("learners work: regr ", {
   # regr with factors
   lrns = mylist("regr", properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
-  
+
   # regr with ordered factors
   lrns = mylist("regr", properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
@@ -44,11 +44,11 @@ test_that("learners work: regr ", {
 
   # regr with missing
   lrns = mylist("regr", properties = "missings", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars) 
-  
+  lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
+
   # regr variable importance
   lrns = mylist("regr", properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars) 
+  lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 
   # regr with oobpreds
   lrns = mylist("regr", properties = "oobpreds", create = TRUE)

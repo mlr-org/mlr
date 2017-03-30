@@ -20,7 +20,8 @@ makeRLearner.classif.gbm = function() {
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = "`keep.data` is set to FALSE to reduce memory requirements. Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for
-      multiclass problems. The latter is the only setting that works for > 2 classes."
+      multiclass problems. The latter is the only setting that works for > 2 classes.",
+    callees = "gbm"
   )
 }
 
@@ -50,7 +51,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
     if (.learner$predict.type == "prob") {
       y = matrix(0, ncol = 2, nrow = nrow(.newdata))
       colnames(y) = levs
-      y[, 1L] = 1-p
+      y[, 1L] = 1 - p
       y[, 2L] = p
       return(y)
     } else {
@@ -59,7 +60,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(p)
     }
   } else {
-    p = p[,,1L]
+    p = p[, , 1L]
     if (.learner$predict.type == "prob") {
       return(p)
     } else {

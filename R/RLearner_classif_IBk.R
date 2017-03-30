@@ -15,7 +15,8 @@ makeRLearner.classif.IBk = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "k-Nearest Neighbours",
-    short.name = "ibk"
+    short.name = "ibk",
+    callees = c("IBk", "Weka_control")
   )
 }
 

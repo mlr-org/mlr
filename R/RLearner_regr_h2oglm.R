@@ -19,10 +19,11 @@ makeRLearner.regr.h2o.glm = function() {
       makeUntypedLearnerParam("beta_constraints"),
       makeLogicalLearnerParam("intercept", default = TRUE)
     ),
-    properties = c("numerics", "factors", "weights", "missings"),
+    properties = c("numerics", "factors", "weights"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'gaussian'."
+    note = "'family' is always set to 'gaussian'.",
+    callees = "h2o.glm"
   )
 }
 

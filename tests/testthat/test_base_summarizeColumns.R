@@ -1,7 +1,7 @@
 context("summarizeColumns")
 
 test_that("summarizeColumns", {
-  d = data.frame(x = 1:5, y = c("a","b", "c", "d", "e"),
+  d = data.frame(x = 1:5, y = c("a", "b", "c", "d", "e"),
     z = c(TRUE, TRUE, TRUE, FALSE, FALSE), stringsAsFactors = FALSE)
 
   s = summarizeColumns(d)

@@ -12,7 +12,7 @@ test_that("regr_kknn", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
 
     parset = parset.list[[i]]
     pars = list(formula = regr.formula, train = regr.train, test = regr.test)
@@ -25,7 +25,7 @@ test_that("regr_kknn", {
 
   testSimpleParsets("regr.kknn", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
 
-  tt = function (formula, data, k = 7) {
+  tt = function(formula, data, k = 7) {
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {

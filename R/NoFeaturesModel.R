@@ -4,7 +4,7 @@ makeNoFeaturesModel = function(targets, task.desc) {
 }
 
 
-predict_nofeatures = function(model, newdata) {
+predictNofeatures = function(model, newdata) {
   y = getLearnerModel(model)$targets
   type = model$learner$type
   # for regression return constant mean
