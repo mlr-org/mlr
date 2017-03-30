@@ -21,10 +21,11 @@ makeRLearner.classif.h2o.glm = function() {
       makeUntypedLearnerParam("beta_constraints"),
       makeLogicalLearnerParam("intercept", default = TRUE)
     ),
-    properties = c("twoclass", "numerics", "factors", "prob", "weights", "missings"),
+    properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'binomial' to get a binary classifier."
+    note = "'family' is always set to 'binomial' to get a binary classifier.",
+    callees = "h2o.glm"
   )
 }
 

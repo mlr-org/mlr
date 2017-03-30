@@ -26,7 +26,7 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
 
   # if we have budget, calc maxit, otherwise use CMAES default, now maxit is set
   maxit = if (is.null(budget))
-    ifelse(is.null(ctrl.cmaes$maxit), 100*N^2, ctrl.cmaes$maxit)
+    ifelse(is.null(ctrl.cmaes$maxit), 100 * N^2, ctrl.cmaes$maxit)
   else
     floor(budget / ctrl.cmaes$lambda)
 

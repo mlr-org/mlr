@@ -1,7 +1,7 @@
 context("plotResiduals")
 
 test_that("plotResiduals with prediction object", {
-  
+
   learner = makeLearner("regr.rpart")
   mod = train(learner, regr.task)
   preds = predict(mod, regr.task)
@@ -56,7 +56,7 @@ test_that("plotResiduals with BenchmarkResult", {
   doc = XML::xmlParse(path)
   # barplot now. We can't test for exact number of bars anymore
   expect_true(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)) > 0L)
-  
+
   # check pretty names
   testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
 

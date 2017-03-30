@@ -14,7 +14,7 @@ test_that("calculateConfusionMatrix", {
     #test absolute number of errors
     d = cm$result[1:l, 1:l]
     diag(d) = 0
-    expect_true(sum(unlist(d)) == cm$result[l + 1,l + 1])
+    expect_true(sum(unlist(d)) == cm$result[l + 1, l + 1])
 
     #test absolute with sums
     cm = calculateConfusionMatrix(p, sums = TRUE)
@@ -23,7 +23,7 @@ test_that("calculateConfusionMatrix", {
     #test absolute number of errors
     d = cm$result[1:l, 1:l]
     diag(d) = 0
-    expect_true(sum(unlist(d)) == cm$result[l + 1,l + 1])
+    expect_true(sum(unlist(d)) == cm$result[l + 1, l + 1])
 
     #test relative
     cm = calculateConfusionMatrix(p, relative = TRUE)
@@ -45,13 +45,13 @@ test_that("calculateConfusionMatrix", {
 
 
   #dropped class lvls
-  newdata = droplevels(multiclass.df[1L,])
+  newdata = droplevels(multiclass.df[1L, ])
   m = train("classif.rpart", multiclass.task)
   p = predict(m, newdata = newdata)
   test.confMatrix(p)
 
   #failure model
-  data = iris; data[,1] = 1
+  data = iris; data[, 1] = 1
   lrn = makeLearner("classif.lda", config = list(on.learner.error = "quiet"))
   task = makeClassifTask(data = data, target = "Species")
   r = holdout(lrn, task, measures = ber)
@@ -63,10 +63,10 @@ test_that("calculateConfusionMatrix", {
   truth = factor(rep("R", 5), levels = c("M", "R"))
   predicted = factor(c("R", "R", "M", "M", "M")) # two correct three wrong
   err.abs = 3
-  err.rel = 3/5
+  err.rel = 3 / 5
   pred$data$truth = truth
   pred$data$response = predicted
   cm = calculateConfusionMatrix(pred, relative = TRUE)
   expect_equal(cm$relative.error, err.rel)
-  expect_equal(cm$result[3,3], err.abs)
+  expect_equal(cm$result[3, 3], err.abs)
 })

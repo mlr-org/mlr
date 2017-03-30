@@ -83,6 +83,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
+<<<<<<< HEAD
     else if (is.null(feats)) {
       if (pred$task.desc$type == "oneclass") {
           feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
@@ -90,6 +91,11 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
         feats = task$env$data[pred$data$id,, drop = FALSE]
       }
     } else
+=======
+    else if (is.null(feats))
+      feats = task$env$data[pred$data$id, , drop = FALSE]
+    else
+>>>>>>> master
       assertClass(feats, "data.frame")
   }
   # we need to find desc somewhere
@@ -137,7 +143,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       perf.test = measure$fun(task, model, pred, feats, m$extra.args)
       list(perf.train = perf.train, perf.test = perf.test)
     }
-    perfs = as.data.table(pred$data)[, fun(.SD), by= "iter"]
+    perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
     measure$fun(task, model, pred, feats, m$extra.args)

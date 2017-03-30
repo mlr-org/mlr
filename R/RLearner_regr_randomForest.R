@@ -59,7 +59,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
         values = c("bootstrap", "jackknife",  "sd"),
-        requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE),
+        requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE),
         when = "both"),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L, when = "both"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
@@ -80,7 +80,8 @@ makeRLearner.regr.randomForest = function() {
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rf",
-    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE."
+    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures. keep.inbag is NULL by default but if predict.type = 'se' and se.method = 'jackknife' (the default) then it is automatically set to TRUE.",
+    callees = "randomForest"
   )
 }
 
@@ -146,7 +147,7 @@ bootstrapStandardError = function(.learner, .model, .newdata,
   # )
   bias = rowSums(matrix(vapply(pred.boot.all, function(p) rowSums(p - rowMeans(p))^2, numeric(nrow(pred.boot.all[[1]]))), nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE))
   bist = ((1 / se.ntree) - (1 / ntree)) / ( se.boot * se.ntree * (se.ntree - 1)) * bias
-  pred.boot.aggregated = extractSubList(pred.bagged, c("aggregate"))
+  pred.boot.aggregated = extractSubList(pred.bagged, "aggregate")
   pred.boot.aggregated = matrix(pred.boot.aggregated, nrow = nrow(.newdata), ncol = se.boot, byrow = FALSE)
   var.boot = apply(pred.boot.aggregated, 1, var) - bias
   var.boot = pmax(var.boot, 0)

@@ -2,7 +2,7 @@ context("multilabel_cforest")
 
 test_that("multilabel_cforest", {
   requirePackagesOrSkip("party", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(control = party::cforest_unbiased(mtry = 2)),
@@ -13,10 +13,10 @@ test_that("multilabel_cforest", {
     list(mtry = 2),
     list(ntree = 200)
   )
-  
+
   old.probs.list = list()
-  
-  for (i in 1:length(parset.list)) {
+
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(multilabel.formula, data = multilabel.train)
     pars = c(pars, parset)
@@ -26,9 +26,9 @@ test_that("multilabel_cforest", {
     p2 = do.call(rbind, p)
     old.probs.list[[i]] = data.frame(p2)
   }
-  
+
   testProbParsets("multilabel.cforest", multilabel.df, multilabel.target,
     multilabel.train.inds, old.probs.list, parset.list2)
-  
+
 })
 

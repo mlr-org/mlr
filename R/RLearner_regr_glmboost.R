@@ -8,7 +8,7 @@ makeRLearner.regr.glmboost = function() {
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       # families 'Poisson', 'NBinomial' and 'Hurdle' are for count data
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
       makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
@@ -21,12 +21,14 @@ makeRLearner.regr.glmboost = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
-    short.name = "glmboost"
+    short.name = "glmboost",
+    callees = c("glmboost", "mboost_fit", "boost_control", "Gaussian", "Laplace",
+      "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0,100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   data = getTaskData(.task, .subset)
   f = getTaskFormula(.task)

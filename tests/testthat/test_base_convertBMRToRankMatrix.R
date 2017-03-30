@@ -27,11 +27,11 @@ test_that("convertBMRToRankMatrix", {
 
   # check ties.method
   r = convertBMRToRankMatrix(res, featperc, ties.method = "first")
-  expect_equal(as.numeric(r[,1]), 1:2)
-  expect_equal(as.numeric(r[,2]), 1:2)
+  expect_equal(as.numeric(r[, 1]), 1:2)
+  expect_equal(as.numeric(r[, 2]), 1:2)
   r = convertBMRToRankMatrix(res, featperc, ties.method = "average")
-  expect_equal(as.numeric(r[,1]), c(1.5, 1.5))
-  expect_equal(as.numeric(r[,2]), c(1.5, 1.5))
+  expect_equal(as.numeric(r[, 1]), c(1.5, 1.5))
+  expect_equal(as.numeric(r[, 2]), c(1.5, 1.5))
 
   # check that col and row names are right if only one task is given
   res = benchmark(lrns, binaryclass.task, rdesc, meas)
