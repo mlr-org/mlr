@@ -47,10 +47,12 @@ train = function(learner, task, subset, weights = NULL) {
 
   # evaluate all unevaluated expressions in parameters and check their feasability
   # the parameter set of the returned learner will also be evaluated
-  learner$par.set = evaluateParamExpressions(learner$par.set, dict = as.list(environment()))
-  is.feasible = isFeasible(learner$par.set, learner$par.vals, use.defaults = TRUE, filter = TRUE)
-  if(!is.feasible)
-    stop(attributes(is.feasible))
+  if(hasExpression(learner$par.set)) {
+    learner$par.set = evaluateParamExpressions(learner$par.set, dict = as.list(environment()))
+    is.feasible = isFeasible(learner$par.set, learner$par.vals, use.defaults = TRUE, filter = TRUE)
+    if(!is.feasible)
+      stop(attributes(is.feasible))
+  }
 
   # make pars list for train call
   pars = list(.learner = learner, .task = task, .subset = subset)
@@ -85,8 +87,8 @@ train = function(learner, task, subset, weights = NULL) {
     fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
     fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
-        withCallingHandlers(x, error = function(c) utils::dump.frames())
-      }
+      withCallingHandlers(x, error = function(c) utils::dump.frames())
+    }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
