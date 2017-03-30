@@ -14,7 +14,7 @@
 #' @template ret_learner
 #' @family wrapper
 #' @export
-makePreprocWrapperCaret = function (learner, ...) {
+makePreprocWrapperCaret = function(learner, ...) {
 
   par.set = makeParamSet(
     makeLogicalLearnerParam("ppc.BoxCox", default = FALSE),

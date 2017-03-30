@@ -16,7 +16,7 @@ test_that("regr_xyf", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     pars = parset.list1[[i]]
     pars$data = as.matrix(regr.num.train[, -regr.num.class.col])
     pars$Y = regr.num.train[, regr.num.class.col]

@@ -15,9 +15,9 @@ test_that("classif_h2orandomForest", {
   parset.list = lapply(parset.list, function(x) c(x, seed = debug.seed))
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset,list(x = colnames(binaryclass.train[, -binaryclass.class.col]),
+    parset = c(parset, list(x = colnames(binaryclass.train[, -binaryclass.class.col]),
       y = binaryclass.target,
       training_frame = h2o::as.h2o(binaryclass.train)))
     m = do.call(h2o::h2o.randomForest, parset)

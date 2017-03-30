@@ -20,7 +20,7 @@ skip("still in todo")
 #
 #  old.predicts.list = list()
 #
-#  for (i in 1:length(parset.list1)) {
+#  for (i in seq_along(parset.list1)) {
 #    parset = parset.list1[[i]]
 #    pars = list(resp=mydata$y[1:60], bin=mydata[1:60, 1:5], select=1L)
 #    pars = c(pars, parset)

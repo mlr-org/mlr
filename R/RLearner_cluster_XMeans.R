@@ -21,10 +21,11 @@ makeRLearner.cluster.XMeans = function() {
       makeUntypedLearnerParam(id = "Y"),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "XMeans (k-means with automatic determination of k)",
     short.name = "xmeans",
-    note = "You may have to install the XMeans Weka package: `WPM('install-package', 'XMeans')`."
+    note = "You may have to install the XMeans Weka package: `WPM('install-package', 'XMeans')`.",
+    callees = c("XMeans", "Weka_control")
   )
 }
 

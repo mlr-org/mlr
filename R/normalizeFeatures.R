@@ -1,7 +1,7 @@
 #' @title Normalize features.
 #'
 #' @description
-#' Normalize features by different methods. 
+#' Normalize features by different methods.
 #' Internally \code{\link[BBmisc]{normalize}} is used for every feature column.
 #' Non numerical features will be left untouched and passed to the result.
 #' For constant features most methods fail, special behaviour for this case is implemented.
@@ -46,7 +46,7 @@ normalizeFeatures = function(obj, target = character(0L), method = "standardize"
 #' @export
 normalizeFeatures.data.frame = function(obj, target = character(0L), method = "standardize",
   cols = NULL, range = c(0, 1), on.constant = "quiet") {
-  
+
   df = obj
   # get all numeric feature names present in data
   work.cols = colnames(df)[vlapply(df, is.numeric)]

@@ -59,7 +59,7 @@ test_that("show info works in selectFeatures", {
 })
 
 # we had a bug here when an empty model was created and isFailureModel could not be called on it, cf. #284
-test_that("selectFeatures/sfs works with wrapper" , {
+test_that("selectFeatures/sfs works with wrapper", {
   ctrl = makeFeatSelControlSequential(method = "sfs")
   lrn1 = makeLearner("classif.LiblineaRL2LogReg")
   lrn2 = makeWeightedClassesWrapper(lrn1, wcw.param = "wi")

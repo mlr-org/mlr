@@ -24,7 +24,7 @@ test_that("oversampling in each bag works", {
    models = getLearnerModel(mod)
 
    # check min class size gets increased by rate/factor 5
-   tab = lapply(1:length(models), function(i) {
+   tab = lapply(seq_along(models), function(i) {
      data = getTaskData(task, models[[i]]$subset)
      tab = table(data[, binaryclass.target])
      expect_equal(tab1["M"], tab["M"])
@@ -42,7 +42,7 @@ test_that("oversampling bigger class works", {
    mod = train(lrn2, task)
    models = getLearnerModel(mod)
 
-   tab = lapply(1:length(models), function(i) {
+   tab = lapply(seq_along(models), function(i) {
      data = getTaskData(task, models[[1]]$subset)
      tab = table(data[, binaryclass.target])
      expect_equal(tab1["R"], tab["R"])

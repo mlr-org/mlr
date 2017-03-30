@@ -62,7 +62,7 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
     pv$osw.cl = osw.cl
   }
   id = stri_paste(learner$id, "oversampled", sep = ".")
-  ps = makeParamSet (
+  ps = makeParamSet(
     makeNumericLearnerParam(id = "osw.rate", lower = 1),
     makeUntypedLearnerParam(id = "osw.cl", default = NULL, tunable = FALSE)
   )

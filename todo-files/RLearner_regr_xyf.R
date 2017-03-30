@@ -2,7 +2,7 @@
 makeRLearner.regr.xyf = function() {
   makeRLearnerRegr(
     cl = "regr.xyf",
-    package = "kohonen",
+    package = c("kohonen", "class"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "xdim", default = 8L, lower = 1L),
       makeIntegerLearnerParam(id = "ydim", default = 6L, lower = 1L),
@@ -15,9 +15,10 @@ makeRLearner.regr.xyf = function() {
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square"))
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "X-Y fused self-organising maps",
-    short.name = "xyf"
+    short.name = "xyf",
+    callees = c("xyf", "somgrid")
   )
 }
 

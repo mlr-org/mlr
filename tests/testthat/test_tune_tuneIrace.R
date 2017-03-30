@@ -33,7 +33,7 @@ test_that("tuneIrace works with dependent params", {
   )
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlIrace(maxExperiments = 40 ,nbIterations = 2L, minNbSurvival = 1)
+  ctrl = makeTuneControlIrace(maxExperiments = 40, nbIterations = 2L, minNbSurvival = 1)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) >= 20 && getOptPathLength(tr$opt.path) <= 100)
   expect_true(!is.na(tr$y))
@@ -153,15 +153,15 @@ test_that("irace works with unnamed discrete values", {
   res = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl)
 })
 
-# there was a bug when the column of an opt-path was NA all the way 
+# there was a bug when the column of an opt-path was NA all the way
 test_that("irace handles parameters with unsatisfiable requirement gracefully", {
   lrn = makeLearner("classif.J48")
-  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival=1L)
-            
-  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3, requires=quote(R != R)), makeLogicalParam("R"))  # C never feasible
+  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival = 1L)
+
+  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3, requires = quote(R != R)), makeLogicalParam("R"))  # C never feasible
   res = tuneParams(lrn, pid.task, hout, par.set = ps, control = ctrl)
-  
-  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3), makeLogicalParam("R", requires=quote(C > 1)))  # R never feasible
+
+  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3), makeLogicalParam("R", requires = quote(C > 1)))  # R never feasible
   res = tuneParams(lrn, sonar.task, hout, par.set = ps, control = ctrl)
 })
-            
+

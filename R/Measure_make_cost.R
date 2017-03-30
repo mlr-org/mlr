@@ -30,13 +30,13 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
   assertFunction(combine)
   assertString(name)
   assertString(note)
-  
+
 
   makeMeasure(id = id, minimize = minimize, extra.args = list(costs, combine),
     properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
-      #check costs    
+      #check costs
       td = pred$task.desc
       levs = td$class.levels
       if (any(dim(costs))) {
