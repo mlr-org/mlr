@@ -21,7 +21,8 @@ makeRLearner.oneclass.svm = function() {
     par.vals = list(type = "one-classification"),
     properties =  c("oneclass", "numerics", "factors", "weights"),
     name = "one-class Support Vector Machines (libsvm)",
-    short.name = "one-class svm"
+    short.name = "one-class svm",
+    callees = "svm"
   )
 }
 

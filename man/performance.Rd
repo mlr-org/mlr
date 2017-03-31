@@ -4,7 +4,8 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-performance(pred, measures, task = NULL, model = NULL, feats = NULL)
+performance(pred, measures, task = NULL, model = NULL, feats = NULL,
+  truth = NULL)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr

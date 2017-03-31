@@ -969,9 +969,9 @@ test_that("check measure calculations", {
   # expect_equal(auc.test, auc$fun(pred = pred.oneclass))
   # expect_equal(auc.test, as.numeric(auc.perf))
   #mcc
-  mcc.test =  (tp.test * tn.test - fp.test * fn.test) /
-    sqrt((tp.test + fp.test) * (tp.test + fn.test) *
-        (tn.test + fp.test) * (tn.test + fn.test))
+  denom = sqrt((tp.test + fp.test) * (tp.test + fn.test) * (tn.test + fp.test) * (tn.test + fn.test))
+  if (denom == 0) denom = 1
+  mcc.test =  (tp.test * tn.test - fp.test * fn.test) / denom
   mcc.perf = performance(pred.oneclass, measures = mcc, model = mod.oneclass)
   expect_equal(mcc.test, mcc$fun(pred = pred.oneclass))
   expect_equal(mcc.test, as.numeric(mcc.perf))
