@@ -232,7 +232,8 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     par.vals = list(autoencoder = TRUE),
     properties = c("oneclass", "numerics", "factors", "weights", "prob"),
     name = "h2o.autoencoder",
-    short.name = "h2o.ae"
+    short.name = "h2o.ae",
+    callee = c("h2o.deeplearning", "h2o.predict", "h2o.anomaly")
   )
 }
 
@@ -258,29 +259,9 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
 predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
-
-  if (.learner$predict.type == "prob") {
-    if (per_feature == TRUE) {
-      p = h2o::h2o.anomaly(m, data = h2of, per_feature = TRUE)
-    } else {
-      p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
-    }
-  } else {
-    if (per_feature == FALSE) {
-      p = h2o::h2o.predict(m, newdata = h2of, ...) # anpassen mit threshold
-    } else {
-      p = h2o::h2o.predict(m, newdata = h2of, ...)
-    }
-  }
+  p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
   p.df = as.data.frame(p)
+  p.df = p.df[, 1]
   return(p.df)
-  # if (.learner$predict.type == "response") {
-  #   p = p[,1] < threshold
-  #   return(p)
-  # } else {
-  #   # in case of predict.type = "prob" not the probability is returned but the Reconstruction error
-  #   p = p[, 1]
-  #   return(p)
-  # }
 }
 
