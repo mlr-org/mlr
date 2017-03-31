@@ -14,6 +14,7 @@
 \alias{makeRLearnerSurv}
 \alias{makeRLearnerCluster}
 \alias{makeRLearnerCostSens}
+\alias{makeRLearnerOneClass}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
@@ -41,6 +42,9 @@ makeRLearnerCluster(cl, package, par.set, par.vals = list(),
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
   callees = character(0L))
+
+makeRLearnerOneClass(cl, package, par.set, par.vals = list(),
+  properties = character(0L), name = cl, short.name = cl, note = "")
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
