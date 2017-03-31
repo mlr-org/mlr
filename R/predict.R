@@ -117,7 +117,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     # HACK p needs to be a matrix with colnames == positive level
     # otherwise getPredictionProbabilities() will throw an error
     # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
-    if (object$task.desc$type == "oneclass") {
+    if (object$task.desc$type == "oneclass" & object$learner$predict.type == "prob") {
       p = as.matrix(p)
       colnames(p) = object$task.desc$positive
     }

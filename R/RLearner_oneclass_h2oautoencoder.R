@@ -76,12 +76,6 @@
 # score_duty_cycle
 # Maximum duty cycle fraction for scoring (lower: more training, higher: more scoring)
 
-# classification_stop
-# Stopping criterion for classification error fraction on training data (-1 to disable)
-
-# regression_stop
-# Stopping criterion for regression error (MSE) on training data (-1 to disable)
-
 # quiet_mode
 # Enable quiet mode for less output to standard output
 
@@ -161,8 +155,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeLogicalLearnerParam("autoencoder", default = TRUE),
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
-        "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"),
-        default = "Rectifier"),
+        "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
         len = NA_integer_, lower = 1L),
@@ -200,8 +193,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeIntegerLearnerParam("score_training_samples", default = 10000),
       makeIntegerLearnerParam("score_validation_samples", default = 0),
       makeNumericLearnerParam("score_duty_cycle", default = 0.1),
-      makeNumericLearnerParam("regression_stop", default = 1e-6, lower = -1),
-      makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
+        makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
       makeDiscreteLearnerParam("stopping_metric", values = c("AUTO", "deviance", "logloss",
         "MSE", "AUC", "r2", "misclassification"), default = "AUTO",
         requires = quote(stopping_rounds > 0L)),
@@ -233,7 +225,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     properties = c("oneclass", "numerics", "factors", "weights", "prob"),
     name = "h2o.autoencoder",
     short.name = "h2o.ae",
-    callee = c("h2o.deeplearning", "h2o.predict", "h2o.anomaly")
+    callees = c("h2o.deeplearning", "h2o.predict", "h2o.anomaly")
   )
 }
 
