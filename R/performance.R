@@ -12,9 +12,10 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
 #'   are extracted from it.
+#' @param truth
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
-#' @family performance
+#' @family performance For anomaly detection a truth column can be passed.
 #' @examples
 #' training.set = seq(1, nrow(iris), by = 2)
 #' test.set = seq(2, nrow(iris), by = 2)

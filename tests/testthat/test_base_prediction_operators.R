@@ -28,7 +28,7 @@ test_that("getPredictionTruth", {
   expect_true(is.numeric(getPredictionTruth(regr.pred)))
   expect_true(is.Surv(getPredictionTruth(surv.pred)))
   expect_error(getPredictionTruth(cluster.pred), "no truth")
-  expect_true(is.logical(getPredictionTruth(oneclass.pred)))
+  expect_true(is.factor(getPredictionTruth(oneclass.pred)))
 })
 
 test_that("getPredictionProbabilities", {
