@@ -10,7 +10,7 @@ getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
   if (inherits(model$learner.model, "NoFeaturesModel"))
     return(model$learner.model)
   if (more.unwrap)
-    model$learner.model$next.model$learner.model
+    getLearnerModel(model$learner.model$next.model, more.unwrap = TRUE)
   else
     model$learner.model$next.model
 }
@@ -19,5 +19,3 @@ getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
 print.ChainModel = function(x, ...) {
   print(x$next.model)
 }
-
-
