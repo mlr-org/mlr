@@ -8,6 +8,16 @@
 #' @docType data
 NULL
 
+#' Iris oneclass task.
+#'
+#' Contains the task (\code{iris.oneclass.task}).
+#'
+#' @name iris.oneclass.task
+#' @references See \code{\link[datasets]{iris}}.
+#' @keywords data
+#' @docType data
+NULL
+
 #' Sonar classification task.
 #'
 #' Contains the task (\code{sonar.task}).
