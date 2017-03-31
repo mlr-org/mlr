@@ -44,7 +44,8 @@ makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
   callees = character(0L))
 
 makeRLearnerOneClass(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
