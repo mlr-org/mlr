@@ -841,7 +841,7 @@ test_that("check measure calculations", {
   db.test = s1 / M
   db.perf = performance(pred.oneclass, measures = db,
     model = mod.oneclass, feats = data.oneclass[, -3])
-  expect_equal(db.test,db$fun(task = task.oneclass,
+  expect_equal(db.test, db$fun(task = task.oneclass,
     pred = pred.oneclass, feats = data.oneclass[, -3]))
   expect_equal(db.test, as.numeric(db.perf))
 
@@ -854,7 +854,7 @@ test_that("check measure calculations", {
   dunn.perf = performance(pred.oneclass, measures = dunn,
     model = mod.oneclass, feats = data.oneclass[, -3])
   expect_equal(dunn.test,
-    dunn$fun(pred = pred.oneclass, feats = data.oneclass[,-3]))
+    dunn$fun(pred = pred.oneclass, feats = data.oneclass[, -3]))
   expect_equal(dunn.test, as.numeric(dunn.perf))
   #g1 index
   exsum = sqrt(sum((c(1, 3) - c(3, 1))^2)) + sqrt(sum((c(2, 4) - c(3, 1))^2)) +
@@ -881,7 +881,7 @@ test_that("check measure calculations", {
   g2.test = (con.pairs - dis.pairs) / (con.pairs + dis.pairs)
   g2.perf = performance(pred.oneclass, measures = G2,
     model = mod.oneclass, feats = data.oneclass[, -3])
-  expect_equal(g2.test, G2$fun(pred = pred.oneclass, feats = data.oneclass[ ,-3]))
+  expect_equal(g2.test, G2$fun(pred = pred.oneclass, feats = data.oneclass[ , -3]))
   expect_equal(g2.test, as.numeric(g2.perf))
   #silhouette
   dists = as.matrix(clusterSim::dist.GDM(data.oneclass[, -3]))
@@ -890,7 +890,7 @@ test_that("check measure calculations", {
   bis = dists[-3L, 3L]
   sil.data = data.frame(t(rbind(ais, bis)))
   sils = (sil.data$bis - sil.data$ais) / pmax(sil.data$bis, sil.data$ais)
-  silhouette.test = sum(sils)/nrow(data.oneclass)
+  silhouette.test = sum(sils) / nrow(data.oneclass)
   silhouette.perf = performance(pred.oneclass, measures = silhouette,
     model = mod.oneclass, feats = data.oneclass[, -3])
   expect_equal(silhouette.test, silhouette$fun(pred = pred.oneclass, feats = data.oneclass[, -3]))
@@ -908,7 +908,7 @@ test_that("check measure calculations", {
   expect_equal(tn.test, tn$fun(pred = pred.oneclass))
   expect_equal(tn.test, as.numeric(tn.perf))
   #fp
-  fp.test = sum(tar.oneclass != pred.art.oneclass & pred.art.oneclass =="FALSE")
+  fp.test = sum(tar.oneclass != pred.art.oneclass & pred.art.oneclass == "FALSE")
   fp.perf = performance(pred.oneclass, measures = fp, model = mod.oneclass)
   expect_equal(fp.test, fp$fun(pred = pred.oneclass))
   expect_equal(fp.test, as.numeric(fp.perf))
@@ -981,7 +981,7 @@ test_that("check measure calculations", {
   expect_equal(f1.test, f1$fun(pred = pred.oneclass))
   expect_equal(f1.test, as.numeric(f1.perf))
   #gmean
-  gmean.test = sqrt((tp.test/(tp.test + fn.test)) * tn.test/(tn.test + fp.test))
+  gmean.test = sqrt((tp.test / (tp.test + fn.test)) * tn.test / (tn.test + fp.test))
   gmean.perf = performance(pred.oneclass, measures = gmean, model = mod.oneclass)
   expect_equal(gmean.test, gmean$fun(pred = pred.oneclass))
   expect_equal(gmean.test, as.numeric(gmean.perf))
