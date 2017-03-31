@@ -170,7 +170,7 @@ makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), propert
 #' @rdname RLearner
 makeRLearnerOneClass = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
-    makeRLearnerInternal(cl, "oneclass", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "oneclass", package, par.set, par.vals, properties, name, short.name, note, callees),
     c(cl, "RLearnerOneClass")
   )
 }
