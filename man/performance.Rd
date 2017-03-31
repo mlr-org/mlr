@@ -25,6 +25,8 @@ Model built on training data, might be requested by performance measure, usually
 Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a \code{task}, you can also pass this instead and the features
 are extracted from it.}
+
+\item{truth}{For anomaly detection a truth column can be passed to additionally calculate classification measures}
 }
 \value{
 [named \code{numeric}]. Performance value(s), named by measure(s).
@@ -45,13 +47,4 @@ performance(pred, measures = mmce)
 # Compute multiple performance measures at once
 ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 performance(pred, measures = ms, task, mod)
-}
-\seealso{
-Other performance: \code{\link{ConfusionMatrix}},
-  \code{\link{calculateConfusionMatrix}},
-  \code{\link{calculateROCMeasures}},
-  \code{\link{estimateRelativeOverfitting}},
-  \code{\link{makeCostMeasure}},
-  \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}}
 }

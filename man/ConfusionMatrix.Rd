@@ -24,6 +24,5 @@ Other performance: \code{\link{calculateConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}
+  \code{\link{makeMeasure}}, \code{\link{measures}}
 }
