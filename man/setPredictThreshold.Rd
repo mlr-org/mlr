@@ -29,6 +29,7 @@ For complex wrappers only the top-level \code{predict.type} is currently set.
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionTaskDesc}},
   \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictType}}
@@ -42,8 +43,9 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerPredictType}},
   \code{\link{getLearnerShortName}},
   \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{makeLearners}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}}, \code{\link{setPredictType}}
 }

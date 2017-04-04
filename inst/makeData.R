@@ -5,7 +5,7 @@ load_all("..")
 
 dn = "../data"
 stopifnot(isDirectory(dn))
-DATASEED = 7761
+DATASEED = 7761  # nolint
 
 # classification
 set.seed(DATASEED)
@@ -23,7 +23,7 @@ save(sonar.task, file = file.path(dn, "sonar.task.RData"), compress = "xz")
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
 BreastCancer$Id = NULL
-BreastCancer = BreastCancer[complete.cases(BreastCancer), ]
+BreastCancer = BreastCancer[complete.cases(BreastCancer), ]  # nolint
 bc.task = makeClassifTask("BreastCancer-example", data = BreastCancer, target = "Class")
 save(bc.task, file = file.path(dn, "bc.task.RData"), compress = "xz")
 
@@ -72,7 +72,7 @@ save(agri.task, file = file.path(dn, "agri.task.RData"), compress = "xz")
 # cost-sensitive classification
 set.seed(DATASEED)
 data(iris, package = "datasets")
-cost = matrix(runif(150*3,0,2000), 150) * (1 - diag(3))[iris$Species,]
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[iris$Species, ]
 iris$Species = NULL
 costiris.task = makeCostSensTask("cost-sensitive iris-example", data = iris, cost = cost)
 save(costiris.task, file = file.path(dn, "costiris.task.RData"), compress = "xz")

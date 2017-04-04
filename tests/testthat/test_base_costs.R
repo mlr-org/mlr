@@ -14,7 +14,7 @@ test_that("costs", {
 
   cc = matrix(0, 2, 2)
   rownames(cc) = colnames(cc) = getTaskClassLevels(task)
-  cc["R","M"] = 1
+  cc["R", "M"] = 1
   ms = makeCostMeasure(id = "foo", costs = cc, combine = sum)
   expect_equal(ms$id, "foo")
   r = resample(lrn, rdesc, task = task, measures = list(fp, ms))

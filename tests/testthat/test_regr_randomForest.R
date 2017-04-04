@@ -13,7 +13,7 @@ test_that("regr_randomForest", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = regr.formula, data = regr.train)
     pars = c(pars, parset)
@@ -83,7 +83,7 @@ test_that("dplyr data.frames work", {
   mpg$model = NULL
   for (cname in colnames(mpg)[sapply(mpg, is.character)])
     mpg[[cname]] = as.factor(mpg[[cname]])
-  expect_warning((task_mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
+  expect_warning((task.mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
   lrn = makeLearner("regr.randomForest", ntree = 2)
-  train(lrn, task_mpg)
+  train(lrn, task.mpg)
 })

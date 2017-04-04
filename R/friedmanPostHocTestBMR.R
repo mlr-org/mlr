@@ -31,7 +31,7 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
   requirePackages("PMCMR")
   assertClass(bmr, "BenchmarkResult")
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
-  assertChoice(aggregation, c('default', 'mean'))
+  assertChoice(aggregation, c("default", "mean"))
   measure = checkBMRMeasure(measure, bmr)
   n.learners = length(bmr$learners)
   if (n.learners < 2)
@@ -39,7 +39,7 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
   n.tasks = length(bmr$results)
   if (n.tasks < 2)
     stop("Benchmark results for at least two tasks are required")
-  
+
   # aggregate over iterations
   if (aggregation == "mean") {
     df = as.data.frame(bmr)
@@ -60,15 +60,15 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
              returning overall Friedman test.")
   } else {
     f.rejnull = FALSE
-    warning("P-value not computable. Learner performances might be exactly equal.") 
+    warning("P-value not computable. Learner performances might be exactly equal.")
   }
-  
+
   # calculate critical difference(s)
   q.nemenyi = qtukey(1 - p.value, n.learners, 1e+06) / sqrt(2L)
   cd.nemenyi = q.nemenyi * sqrt(n.learners * (n.learners + 1L) / (6L * n.tasks))
   q.bd = qtukey(1L - (p.value / (n.learners - 1L)), 2L, 1e+06) / sqrt(2L)
   cd.bd = q.bd * sqrt(n.learners * (n.learners + 1L) / (6L * n.tasks))
-  
+
   if (f.rejnull) {
     form = as.formula(stri_paste(aggr.meas, " ~ learner.id | task.id", sep = ""))
     nem.test = PMCMR::posthoc.friedman.nemenyi.test(form, data = df)

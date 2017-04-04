@@ -32,7 +32,7 @@ test_that("tuneMBO", {
   mbo.ctrl = mlrMBO::setMBOControlInfill(mbo.ctrl, crit = crit.ei)
   ctrl = makeTuneControlMBO(learner = sur.lrn, mbo.control = mbo.ctrl)
   tr = tuneParams(lrn1, multiclass.task, res, par.set = ps1, control = ctrl)
-  expect_equal(getOptPathLength(tr$opt.path), n.des+n.iter)
+  expect_equal(getOptPathLength(tr$opt.path), n.des + n.iter)
   expect_equal(dim(as.data.frame(tr$opt.path)), c(n.des + n.iter, 2 + 1 + 4))
 
   # Problem 2 with manually given initial design

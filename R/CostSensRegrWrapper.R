@@ -29,7 +29,7 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
   d = getTaskData(.task)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
-  models = parallelMap(doCostSensRegrTrainIteration, cl = getTaskDesc(.task)$class.levels,more.args = list("d" = d, "costs" = getTaskCosts(.task), "learner" = .learner), level = "mlr.ensemble")
+  models = parallelMap(doCostSensRegrTrainIteration, cl = getTaskDesc(.task)$class.levels, more.args = list("d" = d, "costs" = getTaskCosts(.task), "learner" = .learner), level = "mlr.ensemble")
   makeHomChainModel(.learner, models)
 }
 

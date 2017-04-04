@@ -46,7 +46,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     desc = makeResampleDesc(desc, ...)
   if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
-  } 
+  }
   if (!missing(task)) {
     assertClass(task, classes = "Task")
     size = getTaskSize(task)
@@ -118,7 +118,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   return(inst)
 }
 
-makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group = factor(c())) {
+makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group = factor()) {
   if (missing(test.inds) && !missing(train.inds)) {
     # shuffle data set and remove inds
     test.inds = sample(size)
