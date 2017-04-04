@@ -881,7 +881,7 @@ test_that("check measure calculations", {
   g2.test = (con.pairs - dis.pairs) / (con.pairs + dis.pairs)
   g2.perf = performance(pred.oneclass, measures = G2,
     model = mod.oneclass, feats = data.oneclass[, -3])
-  expect_equal(g2.test, G2$fun(pred = pred.oneclass, feats = data.oneclass[ , -3]))
+  expect_equal(g2.test, G2$fun(pred = pred.oneclass, feats = data.oneclass[, -3]))
   expect_equal(g2.test, as.numeric(g2.perf))
   #silhouette
   dists = as.matrix(clusterSim::dist.GDM(data.oneclass[, -3]))

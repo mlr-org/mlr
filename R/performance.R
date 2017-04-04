@@ -88,7 +88,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       if (pred$task.desc$type == "oneclass") {
           feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
       } else {
-        feats = task$env$data[pred$data$id,, drop = FALSE]
+        feats = task$env$data[pred$data$id, , drop = FALSE]
       }
     } else
       assertClass(feats, "data.frame")
