@@ -10,7 +10,7 @@ test_that("FDA_Regr_Task", {
                           fd.grids = fdg)
   expect_class(task1, "FDARegrTask")
   expect_equal(task1$type, "fdaregr")
-  expect_error(subsetTask(fuelSubset.task, features = 1:1000), regexp = "All elements must be")
+  expect_error(subsetTask(fuelsubset.task, features = 1:1000), regexp = "All elements must be")
   expect_equal(ncol(fuelsub), ncol(getTaskData(task1)))
   expect_equal(getTaskData(task1, target.extra = TRUE)$target, fuelsub$heatan)
 })

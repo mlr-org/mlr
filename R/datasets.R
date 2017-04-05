@@ -145,9 +145,9 @@ NULL
 #' ultraviolet radiation spectrum and infrared ray radiation and one scalar
 #' column called h2o.
 #'
-#' Contains the task (\code{fuelSubset.task}).
+#' Contains the task (\code{fuelsubset.task}).
 #'
-#' @name fuelSubset.task
+#' @name fuelsubset.task
 #' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
 #' @keywords data
 #' @docType data
