@@ -42,7 +42,8 @@ makeTaskDesc = function(task, id, ...) {
   UseMethod("makeTaskDesc")
 }
 
-makeTaskDescInternal = function(type, id, data, target, weights, blocking, formula = NULL) {  # get classes of feature cols
+makeTaskDescInternal = function(type, id, data, target, weights, blocking, formula = NULL) {
+  # get classes of feature cols
   cl = vcapply(data, function(x) class(x)[1L])
   cl = table(dropNamed(cl, target))
   n.feat = c(

@@ -19,7 +19,8 @@ makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = 
     assertNumeric(data[[target]], any.missing = FALSE, finite = TRUE, .var.name = target)
   }
 
-  task$task.desc = makeRegrTaskDesc(id, data, target, weights, blocking, formula = formula)  addClasses(task, "RegrTask")
+  task$task.desc = makeRegrTaskDesc(id, data, target, weights, blocking, formula = formula)
+  addClasses(task, "RegrTask")
 }
 
 makeRegrTaskDesc = function(id, data, target, weights, blocking, formula = NULL) {

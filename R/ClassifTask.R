@@ -26,10 +26,13 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
   }
 
-  task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive, formula = formula)  addClasses(task, "ClassifTask")
+  task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive, formula = formula)
+  addClasses(task, "ClassifTask")
 }
 
-makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, formula = NULL) {  m = length(levs)
+makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, formula = NULL) {
+  levs = levels(data[[target]])
+  m = length(levs)
   if (is.na(positive)) {
     if (m <= 2L)
       positive = levs[1L]
@@ -38,7 +41,8 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, fo
       stop("Cannot set a positive class for a multiclass problem!")
     assertChoice(positive, choices = levs)
   }
-  td = makeTaskDescInternal("classif", id, data, target, weights, blocking, formula = formula)  td$class.levels = levs
+  td = makeTaskDescInternal("classif", id, data, target, weights, blocking, formula = formula)
+  td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
