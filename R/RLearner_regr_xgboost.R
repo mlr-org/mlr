@@ -39,7 +39,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart"))
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
-    properties = c("numerics", "weights", "featimp"),
+    properties = c("numerics", "weights", "featimp", "missings"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
     note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default.",
