@@ -118,7 +118,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   # some shortcut names
   target = td$target
   data = getTaskData(task)
-  if (!(td$type %in% "cluster"))
+  if (td$type != "cluster")
     y = getTaskTargets(task)
   x1n = features[1L]
   x1 = data[, x1n]
