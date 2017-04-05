@@ -150,28 +150,33 @@ getTaskSize = function(x) {
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
   td = getTaskDescription(x)
-  type = td$type
-  if (type == "surv") {
-    lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-    target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
-  } else if (type == "multilabel") {
-    target = collapse(target, "+")
-  } else if (type == "costsens") {
-    stop("There is no formula available for cost-sensitive learning.")
-  } else if (type == "cluster") {
-    stop("There is no formula available for clustering.")
-  }
-  if (explicit.features) {
-    if (!inherits(x, "Task"))
-      stopf("'explicit.features' can only be used when 'x' is of type 'Task'!")
-    features = getTaskFeatureNames(x)
+  if (is.null(td$formula)) {
+    type = td$type
+    if (type == "surv") {
+      lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
+      target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
+    } else if (type == "multilabel") {
+      target = collapse(target, "+")
+    } else if (type == "costsens") {
+      stop("There is no formula available for cost-sensitive learning.")
+    } else if (type == "cluster") {
+      stop("There is no formula available for clustering.")
+    }
+    if (explicit.features) {
+      if (!inherits(x, "Task"))
+        stopf("'explicit.features' can only be used when 'x' is of type 'Task'!")
+      features = getTaskFeatureNames(x)
+    } else {
+      features = "."
+    }
+    # FIXME in the future we might want to create formulas w/o an environment
+    # currently this is impossible for survival because the namespace is not imported
+    # properly in many packages -> survival::Surv not found
+    as.formula(stri_paste(target, "~", stri_paste(features, collapse = " + ", sep = " "), sep = " "), env = env)
   } else {
-    features = "."
+    messagef("Using the formula: %s", capture.output(td$formula))
+    return(td$formula)
   }
-  # FIXME in the future we might want to create formulas w/o an environment
-  # currently this is impossible for survival because the namespace is not imported
-  # properly in many packages -> survival::Surv not found
-  as.formula(stri_paste(target, "~", stri_paste(features, collapse = " + ", sep = " "), sep = " "), env = env)
 }
 
 #' @title Get target data of task.
