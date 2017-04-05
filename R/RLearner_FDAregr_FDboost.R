@@ -53,7 +53,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   # also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
   #formula.terms = setNames(character(length = fdns))
-  formula.terms = c()
+  formula.terms = vector()
   # for each functional covariate
   for (fdn in fdns) {
     # ... create a corresponding grid name

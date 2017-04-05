@@ -12,7 +12,7 @@ test_that("FDA_Regr_Task", {
   expect_equal(task1$type, "fdaregr")
   expect_error(subsetTask(fuelSubset.task, features = 1:1000), regexp = "All elements must be")
   expect_equal(ncol(fuelsub), ncol(getTaskData(task1)))
-  expect_equal(getTaskData(task1, target.extra = T)$target, fuelsub$heatan)
+  expect_equal(getTaskData(task1, target.extra = TRUE)$target, fuelsub$heatan)
 })
 
 test_that("FDA_Classif_Task", {
@@ -32,7 +32,7 @@ test_that("FDA_Classif_Task", {
 })
 
 test_that("FDA_Task_error_regr", {
-  requirePackagesOrSkip('FDboost')
+  requirePackagesOrSkip("FDboost")
   data(fuelSubset)
   fuelsub = data.frame(heatan = fuelSubset$heatan, h2o = fuelSubset$h2o,
     NIR = fuelSubset$NIR, UVVIS = fuelSubset$UVVIS)
@@ -54,7 +54,7 @@ test_that("FDA_Task_error_regr", {
     fd.grids = fdg))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf4))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf5))
-  expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf6 , fd.grids = fdg))
+  expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf6, fd.grids = fdg))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf7, fd.grids = fdg))
   })
 test_that("FDA_Task_error_classif", {
