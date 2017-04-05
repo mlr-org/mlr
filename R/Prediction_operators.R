@@ -1,5 +1,5 @@
 #' @export
-as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
+as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
   x$data
 }
 
@@ -62,6 +62,19 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
+#' @title Get summarizing task description from prediction.
+#'
+#' @description See title.
+#'
+#' @template arg_pred
+#' @return ret_taskdesc
+#' @export
+#' @family predict
+getPredictionTaskDesc = function(pred) {
+  assertClass(pred, "Prediction")
+  pred$task.desc
+}
+
 #' Deprecated, use \code{getPredictionProbabilities} instead.
 #' @param pred Deprecated.
 #' @param cl Deprecated.
@@ -72,13 +85,13 @@ getProbabilities = function(pred, cl) {
 }
 
 #c.Prediction = function(...) {
-#	preds = list(...)
-#	id = Reduce(c, lapply(preds, function(x) x@id))
-#	response = Reduce(c, lapply(preds, function(x) x@response))
-#	target = Reduce(c, lapply(preds, function(x) x@target))
-#	weights = Reduce(c, lapply(preds, function(x) x@weights))
-#	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
-#	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
+#  preds = list(...)
+#  id = Reduce(c, lapply(preds, function(x) x@id))
+#  response = Reduce(c, lapply(preds, function(x) x@response))
+#  target = Reduce(c, lapply(preds, function(x) x@target))
+#  weights = Reduce(c, lapply(preds, function(x) x@weights))
+#  prob = Reduce(rbind, lapply(preds, function(x) x@prob))
+#  return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}
 
 
@@ -154,4 +167,19 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
   i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @title Return the error dump of a failed Prediction.
+#'
+#' @description
+#' Returns the error dump that can be used with \code{debugger()} to evaluate errors.
+#' If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE} or if the
+#' prediction did not fail, this returns \code{NULL}.
+#'
+#' @template arg_pred
+#' @return [\code{last.dump}].
+#' @family debug
+#' @export
+getPredictionDump = function(pred) {
+  pred$dump
 }

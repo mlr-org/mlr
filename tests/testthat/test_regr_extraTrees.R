@@ -17,7 +17,7 @@ test_that("regr_extraTrees", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset, list(x = x.train, y = y))
     set.seed(getOption("mlr.debug.seed"))

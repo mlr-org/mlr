@@ -15,7 +15,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   pr = predict(tr, task)
 
   if (sm.pt == "prob") {
-    expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
+    expect_equal(ncol(pr$data[, grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
   }
 
   if (method %nin% c("stack.cv", "hill.climb")) {
@@ -29,7 +29,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
 test_that("Stacking works", {
   tasks = list(binaryclass.task, multiclass.task, regr.task)
   for (task in tasks) {
-    td = getTaskDescription(task)
+    td = getTaskDesc(task)
     if (inherits(task, "ClassifTask")) {
       pts = c("response", "prob")
       base = c("classif.rpart", "classif.lda", "classif.svm")
@@ -54,7 +54,7 @@ test_that("Stacking works", {
 })
 
 test_that("Stacking works with wrapped learners (#687)", {
-  base = c("classif.rpart")
+  base = "classif.rpart"
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
   lrns[[1]] = makeFilterWrapper(lrns[[1]], fw.abs = 2)
@@ -76,7 +76,7 @@ test_that("Parameters for hill climb works", {
   metric = function(pred, true) {
     pred = colnames(pred)[max.col(pred)]
     tb = table(pred, true)
-    return( 1- sum(diag(tb))/sum(tb) )
+    return(1 - sum(diag(tb)) / sum(tb))
   }
 
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",

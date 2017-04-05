@@ -4,19 +4,19 @@ makeRLearner.regr.btgpllm = function() {
     cl = "regr.btgpllm",
     package = "tgp",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "meanfn", default = "linear", 
-        values = c("constant", "linear")), 
-      makeDiscreteLearnerParam(id = "bprior", default = "bflat", 
+      makeDiscreteLearnerParam(id = "meanfn", default = "linear",
+        values = c("constant", "linear")),
+      makeDiscreteLearnerParam(id = "bprior", default = "bflat",
         values = c("b0", "b0not", "bflat", "bmle", "bmznot", "bmzt")),
-      makeDiscreteLearnerParam(id = "corr", default = "expsep", 
+      makeDiscreteLearnerParam(id = "corr", default = "expsep",
         values = c("exp", "expsep", "matern", "sim")),
-      makeNumericVectorLearnerParam(id = "tree", len = 2, default = c(0.5, 2), 
+      makeNumericVectorLearnerParam(id = "tree", len = 2, default = c(0.5, 2),
         lower = c(0, 0), upper = c(1, Inf)),
-      makeNumericVectorLearnerParam(id = "gamma", len = 3, default = c(10, 0.2, 0.7), 
+      makeNumericVectorLearnerParam(id = "gamma", len = 3, default = c(10, 0.2, 0.7),
         lower = 0, upper = c(Inf, 1, 1)),
-      makeIntegerVectorLearnerParam(id = "BTE", len = 3, 
-        default = c(2000, 7000, 2), lower = 0), 
-      makeIntegerLearnerParam(id = "R", default = 1, lower = 1), 
+      makeIntegerVectorLearnerParam(id = "BTE", len = 3,
+        default = c(2000, 7000, 2), lower = 0),
+      makeIntegerLearnerParam(id = "R", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "m0r1", default = TRUE),
       makeLogicalLearnerParam(id = "linburn", default = FALSE),
       makeUntypedLearnerParam(id = "itemps", default = NULL),
@@ -24,14 +24,15 @@ makeRLearner.regr.btgpllm = function() {
       makeLogicalLearnerParam(id = "zcov", default = FALSE),
       makeLogicalLearnerParam(id = "Ds2x", default = FALSE),
       makeLogicalLearnerParam(id = "improv", default = FALSE),
-      makeNumericLearnerParam(id = "nu", default = 1.5, 
+      makeNumericLearnerParam(id = "nu", default = 1.5,
         requires = quote(corr == "matern")),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
-      makeIntegerLearnerParam(id = "verb", default = 1L, lower = 0L, upper = 4L, tunable = FALSE)      
+      makeIntegerLearnerParam(id = "verb", default = 1L, lower = 0L, upper = 4L, tunable = FALSE)
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model",
-    short.name = "btgpllm"
+    short.name = "btgpllm",
+    callees = "btgpllm"
   )
 }
 
@@ -73,4 +74,4 @@ predictLearner.regr.btgpllm = function(.learner, .model, .newdata, ...) {
   } else {
     return(cbind(p$ZZ.km, sqrt(p$ZZ.ks2)))
   }
-}  
+}

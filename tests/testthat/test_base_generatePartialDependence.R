@@ -178,6 +178,13 @@ test_that("generatePartialDependenceData", {
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
   bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
     individual = TRUE, gridsize = gridsize)
+  # test for issue 1536
+  bc.center1 = generatePartialDependenceData(fcpb, input = binaryclass.task, features = "V11",
+    individual = TRUE, gridsize = gridsize,
+    center = list("V11" = min(binaryclass.df$V11)))
+  bc.center2 = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
+    individual = TRUE, gridsize = gridsize,
+    center = list("V11" = min(binaryclass.df$V11), "V12" = min(binaryclass.df$V12)))
   nfeat = length(bc$features)
   n = getTaskSize(binaryclass.task)
   plotPartialDependence(bc, data = binaryclass.df)
@@ -240,7 +247,7 @@ test_that("generatePartialDependenceData", {
       weighted.mean(x, w)
     }
   }
-  
+
   pd = generatePartialDependenceData(fit, test.task, fun = fun,
     fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
   expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
@@ -289,15 +296,15 @@ test_that("generateFeatureGrid", {
   expect_that(out$z, is_a("integer"))
   expect_that(range(out$z), equals(range(data$z)))
 
-  out_sub = generateFeatureGrid(features, data, "subsample",
+  out.sub = generateFeatureGrid(features, data, "subsample",
     gridsize = gridsize, fmin, fmax)
-  expect_true(all(sapply(out_sub, length) == gridsize))
-  expect_that(out_sub$w, is_a("numeric"))
-  expect_that(length(out_sub$w), equals(gridsize))
-  expect_that(out_sub$x, is_a("factor"))
-  expect_that(length(out_sub$x), equals(gridsize))
-  expect_that(levels(out_sub$x), equals(levels(data$x)))
-  expect_that(out_sub$y, is_a("ordered"))
-  expect_that(levels(out_sub$y), equals(levels(data$y)))
-  expect_that(out_sub$z, is_a("integer"))
+  expect_true(all(sapply(out.sub, length) == gridsize))
+  expect_that(out.sub$w, is_a("numeric"))
+  expect_that(length(out.sub$w), equals(gridsize))
+  expect_that(out.sub$x, is_a("factor"))
+  expect_that(length(out.sub$x), equals(gridsize))
+  expect_that(levels(out.sub$x), equals(levels(data$x)))
+  expect_that(out.sub$y, is_a("ordered"))
+  expect_that(levels(out.sub$y), equals(levels(data$y)))
+  expect_that(out.sub$z, is_a("integer"))
 })

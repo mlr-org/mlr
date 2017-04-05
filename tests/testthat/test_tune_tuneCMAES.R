@@ -12,15 +12,15 @@ test_that("tuneCMAES", {
 
   ps2 = makeParamSet(
     makeNumericVectorParam("cutoff", lower = 0.0001, upper = 1, len = 3,
-      trafo = function(x) x / (1.1*sum(x))),
+      trafo = function(x) x / (1.1 * sum(x))),
     makeIntegerParam("ntree", lower = 100, upper = 500)
   )
 
-  ctrl2 = makeTuneControlCMAES(start = list(cutoff = c(1/3, 1/3, 1/3), ntree = 200L),
+  ctrl2 = makeTuneControlCMAES(start = list(cutoff = c(1 / 3, 1 / 3, 1 / 3), ntree = 200L),
     maxit = 5, sigma = 2)
   tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res,
     par.set = ps2, control = ctrl2)
-  expect_equal(ncol(as.data.frame(tr2$opt.path)), 4+1+2+2)
+  expect_equal(ncol(as.data.frame(tr2$opt.path)), 4 + 1 + 2 + 2)
   expect_true(is.numeric(tr2$y))
   expect_equal(length(tr2$y), 1)
   expect_true(is.list(tr2$x))
@@ -28,7 +28,7 @@ test_that("tuneCMAES", {
 
   ps3 = makeParamSet(
     makeNumericParam("cp", lower = 0.001, upper = 1),
-    makeDiscreteParam("minsplit", values = c(1,2))
+    makeDiscreteParam("minsplit", values = c(1, 2))
   )
   expect_error(tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps3, control = ctrl1))

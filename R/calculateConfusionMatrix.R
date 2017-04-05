@@ -53,10 +53,12 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   k = length(cls)
   n = getTaskSize(pred$task.desc)
   resp = getPredictionResponse(pred)
+  n.pred = length(resp)
   truth = getPredictionTruth(pred)
   tab = table(truth, resp)
   # create table for margins, where only the off-diag errs are in
-  mt = tab; diag(mt) = 0
+  mt = tab
+  diag(mt) = 0
   row.err = rowSums(mt)
   col.err = colSums(mt)
   result = rbind(cbind(tab, row.err), c(col.err, sum(col.err)))
@@ -70,7 +72,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
     rownames(result)[k + 2] = "-n-"
   }
 
-  result = list(result = result, task.desc = getTaskDescription(pred), relative = relative, sums = sums)
+  result = list(result = result, task.desc = getPredictionTaskDesc(pred), relative = relative, sums = sums)
 
   js = 1:k # indexes for nonmargin cols
 
@@ -93,7 +95,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
 
     result$relative.row = result.rel.row
     result$relative.col = result.rel.col
-    result$relative.error = sum(result$result[k+1, 1:(k+1)])/n
+    result$relative.error = result$result[k + 1, k + 1] / n.pred
   }
 
   addClasses(result, "ConfusionMatrix")
@@ -119,9 +121,9 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
   nsmall = digits
   digits = nsmall - 1
 
-  cls = getTaskDescription(x$task.desc)$class.levels
+  cls = getTaskDesc(x$task.desc)$class.levels
   k = length(cls)
-  n = getTaskDescription(x$task.desc)$size
+  n = getTaskDesc(x$task.desc)$size
 
 
   if (x$relative) {
@@ -131,14 +133,14 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
     attributes(res) = attributes(x$relative.row[js, js])
 
 
-    col.err = x$relative.col[k + 1,]
-    row.err = x$relative.row[,k + 1]
+    col.err = x$relative.col[k + 1, ]
+    row.err = x$relative.row[, k + 1]
     full.err = stri_pad_right(format(x$relative.error, digits = digits, nsmall = nsmall),
-      width = nchar(res[1,1]))
+      width = nchar(res[1, 1]))
 
     #bind marginal errors correctly formatted to rows and columns
     res = rbind(res, stri_pad_left(format(col.err, digits = digits, nsmall = nsmall),
-      width = nchar(res[1,1])))
+      width = nchar(res[1, 1])))
     res = cbind(res, c(format(row.err, digits = digits, nsmall = nsmall), full.err))
 
     #also bind the marginal sums to the relative confusion matrix for printing

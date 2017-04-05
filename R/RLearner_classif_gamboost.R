@@ -5,7 +5,7 @@ makeRLearner.classif.gamboost = function() {
     package = "mboost",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
-      makeIntegerLearnerParam(id = "dfbase", default = 4),
+      makeIntegerLearnerParam(id = "dfbase", default = 4L),
       makeNumericLearnerParam(id = "offset"),
       # FIXME: add family PropOdds, when mlr supports ordered factors as targets
       makeDiscreteLearnerParam(id = "family", default = "Binomial",
@@ -26,7 +26,8 @@ makeRLearner.classif.gamboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Gradient boosting with smooth components",
     short.name = "gamboost",
-    note = "`family` has been set to `Binomial()` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predicted."
+    note = "`family` has been set to `Binomial()` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predicted.",
+    callees = c("gamboost", "mboost_fit", "boost_control", "Binomial", "AdaExp", "AUC")
   )
 }
 
@@ -42,7 +43,7 @@ trainLearner.classif.gamboost = function(.learner, .task, .subset, .weights = NU
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
-    td = getTaskDescription(.task)
+    td = getTaskDesc(.task)
     levs = c(td$negative, td$positive)
     d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }

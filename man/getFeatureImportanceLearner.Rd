@@ -19,7 +19,7 @@ The learner.}
 The model.}
 
 \item{...}{[any]\cr
-Additional parameters, which are passed to the underlying importance value 
+Additional parameters, which are passed to the underlying importance value
 generating function.}
 }
 \value{

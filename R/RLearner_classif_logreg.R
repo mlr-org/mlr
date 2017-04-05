@@ -12,7 +12,8 @@ makeRLearner.classif.logreg = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Logistic Regression",
     short.name = "logreg",
-    note = "Delegates to `glm` with `family = binomial(link = 'logit')`. We set 'model' to FALSE by default to save memory."
+    note = "Delegates to `glm` with `family = binomial(link = 'logit')`. We set 'model' to FALSE by default to save memory.",
+    callees = "glm"
   )
 }
 

@@ -1,10 +1,22 @@
+#' @title Create control object for hyperparameter tuning with random search.
+#'
+#' @description
+#' Random search. All kinds of parameter types can be handled.
+#'
+#' @inherit TuneControl
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. The \code{budget} equals the number of iterations (\code{maxit}) performed by
+#'   the random search algorithm.
 #' @param maxit [\code{integer(1)} | NULL]\cr
 #'   Number of iterations for random search.
 #'   Default is 100.
+#' @return [\code{\link{TuneControlRandom}}]
+#' @aliases TuneControlRandom
+#' @family tune
 #' @export
-#' @rdname TuneControl
 makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  tune.threshold.args = list(), log.fun = "default", final.dw.perc = NULL, budget = NULL) {
 
   # if we dont get neither budget nor maxit, set it to default, otherwise take one of the 2
   if (is.null(budget) && is.null(maxit))

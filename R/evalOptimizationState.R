@@ -3,7 +3,7 @@
 # logs point and results
 # return y-value(s), exectime, and potential erorr msg
 evalOptimizationState = function(learner, task, resampling, measures, par.set, bits.to.features, control,
-  opt.path, show.info, dob, state, remove.nas) {
+  opt.path, show.info, dob, state, remove.nas, resample.fun) {
 
   setSlaveOptions()
   y = setNames(rep(NA_real_, length(measures)), vcapply(measures, measureAggrName))
@@ -13,6 +13,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   learner2 = learner
   threshold = NULL
   log.fun = control$log.fun
+  err.dumps = list()
 
   if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
     # set names before trafo
@@ -39,7 +40,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       state, NA_real_, remove.nas, stage = 1L)
   if (set.pars.ok) {
     exec.time = measureTime({
-      r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
+      r = resample.fun(learner2, task, resampling, measures = measures, show.info = FALSE)
     })
 
     if (control$tune.threshold) {
@@ -61,6 +62,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     notna = !is.na(errmsgs)
     if (any(notna))
       errmsg = errmsgs[notna][1L]
+    err.dumps = r$err.dumps
   } else {
     # we still need to define a non-NULL threshold, if tuning it was requested
     if (control$tune.threshold)
@@ -71,7 +73,8 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   if (show.info)
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y,
       remove.nas, stage = 2L, prev.stage = prev.stage)
-  list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold)
+  list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold,
+      err.dumps = err.dumps)
 }
 
 # evaluates a list of states by calling evalOptimizationState
@@ -81,7 +84,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
 # adds points to path
 # returns list of lists, the single eval results
 evalOptimizationStates = function(learner, task, resampling, measures, par.set, bits.to.features, control,
-  opt.path, show.info, states, dobs, eols, remove.nas, level) {
+  opt.path, show.info, states, dobs, eols, remove.nas, resample.fun, level) {
 
   n = length(states)
   if (length(dobs) == 1L)
@@ -93,11 +96,21 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   res.list = parallelMap(evalOptimizationState, dobs, states, level = level,
     more.args = list(learner = learner, task = task, resampling = resampling,
       measures = measures, par.set = par.set, bits.to.features = bits.to.features,
-      control = control, opt.path = opt.path, show.info = show.info, remove.nas = remove.nas))
+      control = control, opt.path = opt.path, show.info = show.info, remove.nas = remove.nas,
+      resample.fun = resample.fun))
+
+  on.error.dump = getMlrOption("on.error.dump")
   # add stuff to opt.path
   for (i in seq_len(n)) {
     res = res.list[[i]]
     extra = getTuneThresholdExtra(control, res)
+    # include error dumps if options tell us to.
+    if (on.error.dump) {
+      if (is.null(extra)) {
+        extra = list()
+      }
+      extra$.dump = res$err.dumps
+    }
     addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
       error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = TRUE,
       extra = extra)
@@ -106,15 +119,15 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
 }
 
 evalOptimizationStatesTune = function(learner, task, resampling, measures, par.set, control,
-  opt.path, show.info, states, dobs, eols, remove.nas) {
+  opt.path, show.info, states, dobs, eols, remove.nas, resample.fun) {
 
   evalOptimizationStates(learner, task, resampling, measures, par.set, NULL, control,
-    opt.path, show.info, states, dobs, eols, remove.nas, "mlr.tuneParams")
+    opt.path, show.info, states, dobs, eols, remove.nas, resample.fun, "mlr.tuneParams")
 }
 
 evalOptimizationStatesFeatSel = function(learner, task, resampling, measures, bits.to.features, control,
   opt.path, show.info, states, dobs, eols) {
 
   evalOptimizationStates(learner, task, resampling, measures, NULL, bits.to.features, control,
-    opt.path, show.info, states, dobs, eols, FALSE, "mlr.selectFeatures")
+    opt.path, show.info, states, dobs, eols, FALSE, resample, "mlr.selectFeatures")
 }

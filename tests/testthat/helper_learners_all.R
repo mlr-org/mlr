@@ -95,9 +95,7 @@ testBasicLearnerProperties = function(lrn, task, hyperpars, pred.type = "respons
       types = "numeric", any.missing = FALSE)
     expect_true(info = info, all(probdf >= 0 && probdf <= 1))
 
-    # FIXME: the "sum to 1" apparently does not work for all learners?
-    # I can see differences up to 0.1 for some cases, reported in issue #1017
-    # expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE)
+    expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE, tolerance = 0.01)
   }
 }
 
@@ -113,7 +111,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
+  d[, f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -131,7 +129,7 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
+  d[, f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
@@ -150,22 +148,22 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
-  d[1,f] = NA
+  d[1, f] = NA
   new.task = changeData(task = task, data = d)
 
   testBasicLearnerProperties(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
-# Test that the extraction of the out-of-bag predictions for the learner that supports 
+# Test that the extraction of the out-of-bag predictions for the learner that supports
 # this works correctly
 
 testThatGetOOBPredsWorks = function(lrn, task) {
   type = lrn$type
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
-  
+
   if (type == "classif") {
-    if(lrn$predict.type == "response") {
+    if (lrn$predict.type == "response") {
       expect_is(oob$data, "data.frame")
       expect_equal(levels(oob$data$response), task$task.desc$class.levels)
     } else {
@@ -175,7 +173,7 @@ testThatGetOOBPredsWorks = function(lrn, task) {
   } else {
     if (type %in% c("regr", "surv")) {
       expect_is(oob$data$response, "numeric")
-    } 
+    }
   }
   expect_equal(nrow(oob$data), nrow(getTaskData(task)))
 }

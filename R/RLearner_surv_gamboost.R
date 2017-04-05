@@ -5,10 +5,10 @@ makeRLearner.surv.gamboost = function() {
     package = c("!survival", "mboost"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
-      makeIntegerLearnerParam(id = "dfbase", default = 4),
+      makeIntegerLearnerParam(id = "dfbase", default = 4L),
       makeNumericLearnerParam(id = "offset"),
       makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan", "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
@@ -23,7 +23,8 @@ makeRLearner.surv.gamboost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient boosting with smooth components",
     short.name = "gamboost",
-    note = "`family` has been set to `CoxPH()` by default."
+    note = "`family` has been set to `CoxPH()` by default.",
+    callees = c("gamboost", "mboost_fit", "boost_control", "CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan")
   )
 }
 
@@ -39,7 +40,7 @@ trainLearner.surv.gamboost = function(.learner, .task, .subset, .weights = NULL,
     Gehan = mboost::Gehan(),
     custom.family = custom.family.definition
   )
-  
+
     f = getTaskFormula(.task)
     data = getTaskData(.task, subset = .subset, recode.target = "rcens")
     if (is.null(.weights)) {

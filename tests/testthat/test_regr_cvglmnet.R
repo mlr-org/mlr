@@ -5,13 +5,13 @@ test_that("regr_cvglmnet", {
 
   parset.list = list(
     list(),
-    list(nlambda = 20L, nfolds = 5L),
+    list(nlambda = 20L, nfolds = 5L, mxit = 95),
     list(family = "poisson", alpha = 0.5)
   )
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     x = regr.train
     y = x[, regr.class.col]
@@ -19,12 +19,13 @@ test_that("regr_cvglmnet", {
     info = getFixDataInfo(x, factors.to.dummies = TRUE, ordered.to.int = TRUE)
     pars = list(x = as.matrix(fixDataForLearner(x, info)), y = y)
     pars = c(pars, parset)
+    glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
+      on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet::cv.glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
     } else {
       m = do.call(glmnet::cv.glmnet, pars)
     }

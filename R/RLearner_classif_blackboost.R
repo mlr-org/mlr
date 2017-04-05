@@ -33,7 +33,8 @@ makeRLearner.classif.blackboost = function() {
     properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting With Regression Trees",
     short.name = "blackboost",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness. `family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited.",
+    callees = c("blackboost", "mboost_fit", "boost_control", "ctree_control", "Binomial", "AdaExp", "AUC", "predict.mboost")
   )
 }
 
@@ -75,11 +76,11 @@ predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
       # one observation prediction + family PropOdds returns a numeric vector instead of matrix
       # FIXME: add/change the outcommented line below to enable predicting one obs
       # (caution: check whether the right class is assigned)
-      # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) 
+      # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2)
       p = p[, 1L]
-      levs = c(td$negative, td$positive)
+      levs = td$class.levels
       return(propVectorToMatrix(p, levs))
-    }  
+    }
   } else {
     return(p)
   }

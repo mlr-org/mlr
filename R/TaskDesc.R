@@ -42,16 +42,15 @@ makeTaskDesc = function(task, id, ...) {
   UseMethod("makeTaskDesc")
 }
 
-makeTaskDescInternal = function(task, type, id, target, formula = NULL, ...) {
-  data = task$env$data
-  # get classes of feature cols
-  cl = vapply(data, function(x) head(class(x), 1L), character(1L))
-  cl = dropNamed(cl, target)
+makeTaskDescInternal = function(type, id, data, target, weights, blocking, formula = NULL) {  # get classes of feature cols
+  cl = vcapply(data, function(x) class(x)[1L])
+  cl = table(dropNamed(cl, target))
   n.feat = c(
-    numerics = sum(cl %in% c("integer", "numeric")),
-    factors = sum(cl == "factor"),
-    ordered = sum(cl == "ordered")
+    numerics = sum(cl[c("integer", "numeric")], na.rm = TRUE),
+    factors = sum(cl["factor"], na.rm = TRUE),
+    ordered = sum(cl["ordered"], na.rm = TRUE)
   )
+
   makeS3Obj("TaskDesc",
     id = id,
     type = type,
@@ -60,9 +59,7 @@ makeTaskDescInternal = function(task, type, id, target, formula = NULL, ...) {
     size = nrow(data),
     n.feat = n.feat,
     has.missings = anyMissing(data),
-    has.weights = !is.null(getTaskWeights(task)),
-    has.blocking = !is.null(task$blocking)
+    has.weights = !is.null(weights),
+    has.blocking = !is.null(blocking)
   )
 }
-
-

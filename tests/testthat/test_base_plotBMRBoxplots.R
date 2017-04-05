@@ -12,7 +12,7 @@ test_that("BenchmarkResult", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), length(getBMRTaskIds(res)))
-  
+
   # facetting works:
   q = plotBMRBoxplots(res, facet.wrap.nrow = 2L)
   testFacetting(q, 2L)
@@ -29,7 +29,7 @@ test_that("BenchmarkResult", {
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res), grid.size = 2L)
   testDocForStrings(doc, getBMRMeasures(res)[[1L]]$name)
-  
+
   plotBMRBoxplots(res, pretty.names = FALSE)
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -47,6 +47,15 @@ test_that("BenchmarkResult", {
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
     grid.size = 2L, ordered = TRUE)
+
+   # check error when learner short names are not unique
+  lrns = list(
+    rf = makeLearner("classif.randomForest", id = "rf1"),
+    rf2 = makeLearner("classif.randomForest", id = "rf2")
+  )
+  res = benchmark(lrns, tasks, rdesc, meas)
+  expect_error(plotBMRSummary(res),
+    "names are not unique")
 })
 
 test_that("BenchmarkResult allows spaces", {
@@ -56,6 +65,6 @@ test_that("BenchmarkResult allows spaces", {
     makeLearner("classif.rpart", predict.type = "prob")
   )
   res = benchmark(learners, sonar.task, cv, measures)
-  plotBMRBoxplots(res, measure=auc)
+  plotBMRBoxplots(res, measure = auc)
   ggsave(tempfile(fileext = ".png"))
 })

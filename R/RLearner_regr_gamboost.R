@@ -5,13 +5,13 @@ makeRLearner.regr.gamboost = function() {
     package = "mboost",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols", "btree")),
-      makeIntegerLearnerParam(id = "dfbase", default = 4),
+      makeIntegerLearnerParam(id = "dfbase", default = 4L),
       makeNumericLearnerParam(id = "offset"),
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       # families 'Poisson', 'NBinomial' and 'Hurdle' are for count data
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100),
         requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
       makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
@@ -24,12 +24,14 @@ makeRLearner.regr.gamboost = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Gradient Boosting with Smooth Components",
-    short.name = "gamboost"
+    short.name = "gamboost",
+    callees = c("gamboost", "mboost_fit", "boost_control", "Gaussian", "Laplace",
+      "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 
 #' @export
-trainLearner.regr.gamboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0,100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
+trainLearner.regr.gamboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
   requirePackages("mboost", why = "argument 'baselearner' requires package", suppress.warnings = TRUE)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   data = getTaskData(.task, .subset)

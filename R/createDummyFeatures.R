@@ -7,9 +7,12 @@
 #' @template arg_taskdf
 #' @template arg_taskdf_target
 #' @param method [\code{character(1)}]\cr
-#'   Available are:\cr
-#'   \dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr
-#'   \dQuote{reference}: There will be n-1 dummy variables leaving out the first factor level of each variable.\cr
+#'   Available are:
+#'   \describe{
+#'     \item{"1-of-n":}{For n factor levels there will be n dummy variables.}
+#'     \item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
+#'   }
+#'   Default is \dQuote{1-of-n}.
 #' @param cols [\code{character}]\cr
 #'   Columns to create dummy features for. Default is to use all columns.
 #' @template ret_taskdf
@@ -40,7 +43,7 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   options(na.action = "na.pass")
 
   prefix = colnames(obj[work.cols])
-  dfcol = obj[,work.cols]
+  dfcol = obj[, work.cols]
 
   dummies = as.data.frame(lapply(obj[work.cols], createDummyFeatures, method = method))
 

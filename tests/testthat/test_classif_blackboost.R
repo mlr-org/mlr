@@ -7,7 +7,7 @@ test_that("classif_blackboost", {
     list(family = mboost::Binomial()),
     # the blackboost defaults for tree_controls needs to be passed explicitely,
     # since the defaults of party::ctree_control() differ from defaults used within blackboost
-    list(family = mboost::Binomial(), 
+    list(family = mboost::Binomial(),
       control = mboost::boost_control(mstop = 10L),
       tree_controls = party::ctree_control(teststat = "max", testtype = "Teststatistic",
         mincriterion = 0, maxdepth = 4, savesplitstats = FALSE)),
@@ -24,7 +24,7 @@ test_that("classif_blackboost", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
@@ -33,7 +33,7 @@ test_that("classif_blackboost", {
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
-    old.probs.list[[i]] = predict(m, newdata = binaryclass.test, type = "response")[,1]
+    old.probs.list[[i]] = 1 - predict(m, newdata = binaryclass.test, type = "response")[, 1]
   }
 
   testSimpleParsets("classif.blackboost", binaryclass.df, binaryclass.target,
@@ -42,7 +42,7 @@ test_that("classif_blackboost", {
     binaryclass.train.inds, old.probs.list, parset.list2)
 })
 
- 
+
 test_that("classif_blackboost probability predictions with family 'AUC' and 'AdaExp'", {
   families = list("AUC", "AdaExp")
   lapply(families, FUN = function(x){
@@ -53,7 +53,7 @@ test_that("classif_blackboost probability predictions with family 'AUC' and 'Ada
 })
 
 
-# mlr does not support ordered factors as target yet. 
+# mlr does not support ordered factors as target yet.
 # FIXME: the following two tests can be used, when they are supported
 # test_that("classif_blackboost works with family PropOdds", {
 #   new.binary.df = binaryclass.df
@@ -73,10 +73,10 @@ test_that("classif_blackboost probability predictions with family 'AUC' and 'Ada
 #   old.predicts.list = predict(m, newdata = new.classif.test, type = "class")
 #   set.seed(getOption("mlr.debug.seed"))
 #   old.probs.list = predict(m, newdata = new.classif.test, type = "response")[,1]
-#   
+#
 #   testSimple("classif.blackboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list2)
 #   testProb("classif.blackboost", new.binary.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list2)
-# 
+#
 # })
 
 # test_that("classif_blackboost with family `PropOdds` works with one observation", {

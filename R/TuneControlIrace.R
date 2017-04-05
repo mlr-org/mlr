@@ -1,14 +1,37 @@
+#' @title Create control object for hyperparameter tuning with Irace.
+#'
+#' @description
+#' Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
+#' All kinds of parameter types can be handled. We return the best of the final elite
+#' candidates found by irace in the last race. Its estimated performance is the mean of all
+#' evaluations ever done for that candidate. More information on irace can be found in the TR at
+#' \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.
+#'
+#' For resampling you have to pass a \code{\link{ResampleDesc}},
+#' not a \code{\link{ResampleInstance}}.
+#' The resampling strategy is randomly instantiated \code{n.instances} times and
+#' these are the instances in the sense of irace (\code{instances} element of \code{tunerConfig}
+#' in \code{\link[irace]{irace}}). Also note that irace will always
+#' store its tuning results in a file on disk, see the package documentation for details on this
+#' and how to change the file path.
+#'
+#' @inherit TuneControl
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. It is passed to \code{maxExperiments}.
 #' @param n.instances [\code{integer(1)}]\cr
 #'   Number of random resampling instances for irace, see details.
 #'   Default is 100.
 #' @param show.irace.output [\code{logical(1)}]\cr
 #'   Show console output of irace while tuning?
 #'   Default is \code{FALSE}.
+#' @return [\code{\link{TuneControlIrace}}]
+#' @aliases TuneControlIrace
+#' @family tune
 #' @export
-#' @rdname TuneControl
 makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...) {
+  log.fun = "default", final.dw.perc = NULL, budget = NULL, ...) {
 
   n.instances = asCount(n.instances)
 

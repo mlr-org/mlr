@@ -19,10 +19,8 @@ makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = 
     assertNumeric(data[[target]], any.missing = FALSE, finite = TRUE, .var.name = target)
   }
 
-  task$task.desc = makeTaskDesc.RegrTask(task, id, target, formula = formula)
-  addClasses(task, "RegrTask")
+  task$task.desc = makeRegrTaskDesc(id, data, target, weights, blocking, formula = formula)  addClasses(task, "RegrTask")
 }
 
-makeTaskDesc.RegrTask = function(task, id, target, formula = NULL) {
-  addClasses(makeTaskDescInternal(task, "regr", id, target, formula), c("TaskDescRegr", "TaskDescSupervised"))
-}
+makeRegrTaskDesc = function(id, data, target, weights, blocking, formula = NULL) {
+  addClasses(makeTaskDescInternal("regr", id, data, target, weights, blocking, formula), c("RegrTaskDesc", "SupervisedTaskDesc"))}

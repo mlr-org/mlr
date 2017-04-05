@@ -15,25 +15,21 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
     x = data[[target]]
     if (is.character(x) || is.logical(x) || is.integer(x)) {
       data[[target]] = as.factor(x)
-    } else if (is.factor(x) && fixup.data == "warn" && any(table(x) == 0L)) {
+    } else if (is.factor(x) && fixup.data == "warn" && hasEmptyLevels(x)) {
       warningf("Target column '%s' contains empty factor levels", target)
       data[[target]] = droplevels(x)
     }
   }
-
   task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
   }
 
-  task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive, formula = formula)
-  addClasses(task, "ClassifTask")
+  task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive, formula = formula)  addClasses(task, "ClassifTask")
 }
 
-makeTaskDesc.ClassifTask = function(task, id, target, positive, formula = NULL) {
-  levs = levels(task$env$data[[target]])
-  m = length(levs)
+makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, formula = NULL) {  m = length(levs)
   if (is.na(positive)) {
     if (m <= 2L)
       positive = levs[1L]
@@ -42,15 +38,14 @@ makeTaskDesc.ClassifTask = function(task, id, target, positive, formula = NULL) 
       stop("Cannot set a positive class for a multiclass problem!")
     assertChoice(positive, choices = levs)
   }
-  td = makeTaskDescInternal(task, "classif", id, target, formula)
-  td$class.levels = levs
+  td = makeTaskDescInternal("classif", id, data, target, weights, blocking, formula = formula)  td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
     td$negative = stri_paste("not_", positive)
   else if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, positive)
-  return(addClasses(td, c("TaskDescClassif", "TaskDescSupervised")))
+  return(addClasses(td, c("ClassifTaskDesc", "SupervisedTaskDesc")))
 }
 
 #' @export

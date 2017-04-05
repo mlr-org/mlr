@@ -50,7 +50,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       stopf("You need to pass pred for measure %s!", m$id)
   }
   if ("req.truth" %in% props) {
-    type = getTaskDescription(pred)$type
+    type = getTaskDesc(pred)$type
     if (type == "surv") {
       if (is.null(pred$data$truth.time) || is.null(pred$data$truth.event))
         stopf("You need to have 'truth.time' and 'truth.event' columns in your pred object for measure %s!", m$id)
@@ -76,7 +76,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
     else if (is.null(feats))
-      feats = task$env$data[pred$data$id,, drop = FALSE]
+      feats = task$env$data[pred$data$id, , drop = FALSE]
     else
       assertClass(feats, "data.frame")
   }
@@ -86,7 +86,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   else if (!is.null(model))
     model$task.desc
   else if (!is.null(task))
-    getTaskDescription(task)
+    getTaskDesc(task)
 
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
@@ -125,7 +125,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       perf.test = measure$fun(task, model, pred, feats, m$extra.args)
       list(perf.train = perf.train, perf.test = perf.test)
     }
-    perfs = as.data.table(pred$data)[, fun(.SD), by= "iter"]
+    perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
     measure$fun(task, model, pred, feats, m$extra.args)

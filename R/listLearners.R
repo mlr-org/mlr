@@ -72,11 +72,13 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   should a warning be shown?
 #'   Default is \code{TRUE}.
 #' @param check.packages [\code{logical(1)}]\cr
-#'   Check if required packages are installed. Calls
-#'   \code{find.package()}. If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
-#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only contains learners whose dependencies are installed.
-#'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
-#'   actually be constructed because of missing packages may be returned.
+#'   Check if required packages are installed. Calls \code{find.package()}.
+#'   If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only
+#'   contains learners whose dependencies are installed.
+#'   If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because
+#'   of missing packages may be returned.
+#'   Default is \code{FALSE}.
 #' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return info table)?
 #'   Packages are loaded if and only if this option is \code{TRUE}.
@@ -93,7 +95,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
   assertSubset(properties, listLearnerProperties())
   assertFlag(quiet)
@@ -142,7 +144,7 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   task = obj
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   props = character(0L)
   if (td$n.feat["numerics"] > 0L) props = c(props, "numerics")

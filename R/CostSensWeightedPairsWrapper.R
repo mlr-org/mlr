@@ -17,9 +17,9 @@
 #' @template arg_learner_classif
 #' @return [\code{\link{Learner}}].
 #' @export
-#' @references 
+#' @references
 #' Lin, HT.:
-#' Reduction from Cost-sensitive Multiclass Classification to 
+#' Reduction from Cost-sensitive Multiclass Classification to
 #' One-versus-one Binary Classification.
 #' In: Proceedings of the Sixth Asian Conference on Machine Learning.
 #' JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
@@ -39,16 +39,16 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   classes = td$class.levels
   k = length(classes)
   feats = getTaskData(.task)
   models = vector("list", length = k * (k - 1) / 2)
 
   counter = 1
-  for (i in 1:(k-1)) {
+  for (i in 1:(k - 1)) {
     a1 = classes[i]
-    for (j in (i+1):k) {
+    for (j in (i + 1):k) {
       a2 = classes[j]
       y = ifelse(costs[, a1] < costs[, a2], a1, a2)
       # if on the sample one alg is always better, always predict it
