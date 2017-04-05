@@ -8,8 +8,8 @@ makeRLearner.fdaregr.FDboost = function() {
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),  # the learning rate
-      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),  # list of parameters for the custom family 
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),  # distribution parameters for families 
+      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),  # list of parameters for the custom family
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),  # distribution parameters for families
       makeNumericLearnerParam(id = "d", default = NULL, requires = quote(family == "Huber"), special.vals = list(NULL)), # delta parameter for Huber distribution
       # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
       makeNumericLearnerParam(id = "df", default = 4, lower = 0.5),  # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
@@ -19,7 +19,7 @@ makeRLearner.fdaregr.FDboost = function() {
       makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
       makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
       ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Functional linear array regression boosting",
     short.name = "FDboost",
     note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates"
@@ -27,9 +27,9 @@ makeRLearner.fdaregr.FDboost = function() {
 }
 
 #' @export
-trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, 
- knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, 
-  nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0,100), d = NULL, ...) {
+trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
+ knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
+  nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
   family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
@@ -54,7 +54,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   mat.list = namedList(fdns)
   #formula.terms = setNames(character(length = fdns))
   formula.terms = c()
-  # for each functional covariate ... 
+  # for each functional covariate
   for (fdn in fdns) {
     # ... create a corresponding grid name
     gn = stri_paste(fdn, ".grid")
@@ -64,7 +64,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
       fdn, gn, knots, df, degree, differences, bsignal.check.ident)
   }
-  # add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty  
+  # add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
   for (fsn in names(tdesc$fd.scalars)) {
     mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
@@ -75,8 +75,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
   # add target names
   mat.list[[tn]] = d[, tn]
   form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+")))
-  FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, 
-    control = ctrl, family = family)
+  FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, control = ctrl, family = family)
 }
 
 #' @export

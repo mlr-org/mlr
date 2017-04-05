@@ -1,8 +1,8 @@
 #' @title Functional data classification task.
 #'
 #' @description
-#' Create a functional data classification task. This means that some features 
-#' in the task will be so-called functional covariates / functional features, 
+#' Create a functional data classification task. This means that some features
+#' in the task will be so-called functional covariates / functional features,
 #' measured on a grid or time scale. Different covariates might come from
 #' different sensors for example.
 #'
