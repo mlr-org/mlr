@@ -52,7 +52,7 @@ test_that("multilabel learning", {
   expect_true(!is.na(p))
 })
 
-test_that("MultilabelBinaryRelevanceWrapper with glmnet", {
+test_that("MultilabelBinaryRelevanceWrapper with glmnet (#958)", {
   # multilabelBinaryRelevanceWrapper was not working properly for classif.glmnet, we had a bug here
   lrn = makeLearner("classif.glmnet", predict.type = "response")
   lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn)
