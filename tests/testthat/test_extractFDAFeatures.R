@@ -5,8 +5,8 @@ test_that("extractFDAFeatures", {
   # check output data
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
-  expect_integer(nrow(df), lower = c(129), upper = c(129))
-  expect_integer(ncol(df), lower = c(5), upper = c(5))
+  expect_integer(nrow(df), lower = 129, upper = 129)
+  expect_integer(ncol(df), lower = 5, upper = 5)
   expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "h2o", "heatan"))
 })
 
@@ -32,14 +32,14 @@ test_that("Wrong methods yield errors", {
 
 
   wrng2 = function() {
-    lrn = function(data) {data[,1]}
+    lrn = function(data) {data[, 1]}
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),
     "Must have formal arguments")
 
   wrng3 = function() {
-    lrn = function(data, target, cols, vals = NULL) {data.frame(c(1))}
+    lrn = function(data, target, cols, vals = NULL) {data.frame(1)}
     makeExtractFDAFeatMethod(z = lrn, rz = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng3())),
@@ -75,7 +75,7 @@ test_that("extractFDAFeaturesDesc", {
 test_that("extractFDAFeatures task equal data.frame", {
   # check data.frame output equal to task's data output
   gp.subset = subsetTask(gunpoint.task, features = c(1:10))
-  fm = list("fd1"= extractFDAFourier(trafo.coeff = "amplitude"))
+  fm = list("fd1" = extractFDAFourier(trafo.coeff = "amplitude"))
   t2 = extractFDAFeatures(gp.subset, feat.methods = fm)
   gp.desc = getTaskDesc(gp.subset)
   gp.grids = gp.desc$fd.grids
@@ -92,7 +92,7 @@ test_that("extractFDAFeatures task equal data.frame", {
 
 test_that("reExtractFDAFeatures", {
   gp.subset = subsetTask(gunpoint.task, features = c(1:10))
-  fm = list("fd1"= extractFDAFourier(trafo.coeff = "amplitude"))
+  fm = list("fd1" = extractFDAFourier(trafo.coeff = "amplitude"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reExtractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4$task))

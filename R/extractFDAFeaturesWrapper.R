@@ -16,7 +16,7 @@ makeExtractFDAFeaturesWrapper = function(learner, feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
 
   learner = checkLearner(learner)
-  args = list(feat.methods = feat.methods , fd.features = feat.methods , fd.grids = feat.methods)
+  args = list(feat.methods = feat.methods, fd.features = fd.features, fd.grids = fd.grids)
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
