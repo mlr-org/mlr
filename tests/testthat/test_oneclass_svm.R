@@ -3,7 +3,7 @@ context("classif_svm")
 # we cannot do a prob test, as set.seed sems not to work on e1071 svm for the prob parameters!
 #requirePackagesOrSkip("e1071", default.method = "load")
 
-test_that("oneclass_svm", {
+test_that ("oneclass_svm", {
   requirePackagesOrSkip("e1071", default.method = "load")
 
   parset.list = list(
