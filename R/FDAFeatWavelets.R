@@ -28,5 +28,7 @@ extractFDAFeatWavelets = function(data, target = NULL, filter = "la8", boundary 
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
 
-  as.data.frame(wtdata)
+  df = as.data.frame(wtdata)
+  colnames(df) = stri_paste("wav", filter, boundary, seq_len(ncol(wtdata)), sep = ".")
+  df
 }
