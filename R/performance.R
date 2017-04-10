@@ -76,7 +76,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
     else if (is.null(feats))
-      feats = task$env$data[pred$data$id,, drop = FALSE]
+      feats = task$env$data[pred$data$id, , drop = FALSE]
     else
       assertClass(feats, "data.frame")
   }
@@ -125,7 +125,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       perf.test = measure$fun(task, model, pred, feats, m$extra.args)
       list(perf.train = perf.train, perf.test = perf.test)
     }
-    perfs = as.data.table(pred$data)[, fun(.SD), by= "iter"]
+    perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
     measure$fun(task, model, pred, feats, m$extra.args)

@@ -5,7 +5,7 @@ makeRLearner.surv.glmboost = function() {
     package = c("!survival", "mboost"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan", "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("Weibull", "Loglog", "Lognormal"))),
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
@@ -23,7 +23,8 @@ makeRLearner.surv.glmboost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
-    note = "`family` has been set to `CoxPH()` by default."
+    note = "`family` has been set to `CoxPH()` by default.",
+    callees = c("glmboost", "mboost_fit", "boost_control", "CoxPH", "Weibull", "Loglog", "Lognormal", "Gehan")
   )
 }
 

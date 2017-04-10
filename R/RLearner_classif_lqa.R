@@ -33,10 +33,11 @@ makeRLearner.classif.lqa = function() {
       makeIntegerLearnerParam(id = "digits", default = 5L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass"),
-    par.vals = list(penalty = 'lasso', lambda = 0.1),
+    par.vals = list(penalty = "lasso", lambda = 0.1),
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
-    note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.'
+    note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.',
+    callees = c("lqa", "lqa.control", "adaptive.lasso", "ao", "bridge", "enet", "fused.lasso", "genet", "icb", "lasso", "licb", "oscar", "penalreg", "ridge", "scad", "weighted.fusion")
   )
 }
 

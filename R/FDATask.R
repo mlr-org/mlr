@@ -50,10 +50,8 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
   assertNames(names(fd.grids), permutation.of = names(fd.features))
   # two functional covariate can not occupy the same variable
   assert(length(unlist(fd.features)) == length(unique(unlist(fd.features))))
-  
   cns = colnames(getTaskData(task))
-  #cns = c(getTaskTargetNames(task), getTaskFeatureNames(task)) can't be used, please do not use it! 
-  
+  # cns = c(getTaskTargetNames(task), getTaskFeatureNames(task)) can't be used, please do not use it!
   # lets check integrity of every entry of fd.features, then convert indices to character vector
   fd.features = lapply(fd.features, function(f) {
     if (is.character(f)) {

@@ -28,7 +28,8 @@ makeRLearner.regr.gausspr = function() {
     name = "Gaussian Processes",
     short.name = "gausspr",
     note = "Kernel parameters have to be passed directly and not by using the `kpar` list in `gausspr`.
-    Note that `fit` has been set to `FALSE` by default for speed."
+    Note that `fit` has been set to `FALSE` by default for speed.",
+    callees = "gausspr"
   )
 }
 
@@ -51,6 +52,6 @@ predictLearner.regr.gausspr = function(.learner, .model, .newdata, ...) {
   } else {
     pred = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, ...))
     pred.se = matrix(kernlab::predict(.model$learner.model, newdata = .newdata, type = "sdeviation", ...))
-    cbind(pred,pred.se)
+    cbind(pred, pred.se)
   }
 }
