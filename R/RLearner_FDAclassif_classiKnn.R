@@ -58,11 +58,18 @@ makeRLearner.fdaclassif.classiKnn = function() {
 
 #' @export
 trainLearner.fdaclassif.classiKnn = function(.learner, .task, .subset, ...) {
+  task.desc = getTaskDesc(.task)
+  if(length(task.desc$fd.features) > 1) {
+    stop("This learner can only be used for data with one functional covariable.")
+  }
+  fd.features = unlist(task.desc$fd.features)
+  grid = unlist(task.desc$fd.grids, use.names = FALSE)
+
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
-  # # already done in my version of train
-  # .learner$par.set = evaluateParamExpressions(.learner$par.set, dict = list(task = .task))
+  .learner$par.set = evaluateParamExpressions(.learner$par.set, dict = list(task = .task))
   learned.model = do.call(classiFunc::classiKnn, c(list(classes = z$target,
-                                                        fdata = z$data),
+                                                        fdata = z$data[,fd.features],
+                                                        grid = grid),
                                                    getLearnerParVals(.learner)))
   return(learned.model)
 }

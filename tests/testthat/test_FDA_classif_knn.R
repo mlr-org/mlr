@@ -123,7 +123,8 @@ type = 'semimetric.basis'", {
   # fda.usc implementation
   set.seed(getOption("mlr.debug.seed"))
   a1 = fda.usc::classif.knn(glearn, mlearn, knn = 1L, par.CV = list(trim = 0.5),
-                            type.basis1 = "constant", nbasis1 = 10)
+                            metric = fda.usc::semimetric.basis,
+                            type.basis1 = "bspline", nbasis1 = 10)
 
   ph = as.data.frame(mlearn$data)
   ph[,"label"] = glearn
@@ -131,7 +132,8 @@ type = 'semimetric.basis'", {
   # mlr interface
   lrn = makeLearner("fdaclassif.knn",
                     par.vals = list(knn = 1L, trim = 0.5, nbasis1 = 10,
-                                    type.basis1 = "constant"))
+                                    metric = "semimetric.basis",
+                                    type.basis1 = "bspline"))
   task = makeFDAClassifTask(data = ph, target = "label")
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)

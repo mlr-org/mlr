@@ -152,9 +152,9 @@ test_that("FDA_classif_classiKnn handles upper and lower bounds correctly", {
   m.shortEucl = train(lrn.shortEucl, task)
   p.shortEucl = predict(m.shortEucl, newdata = as.data.frame(mtest))
 
-  # check that all expressions are evaluated
-  par.set = getParamSet(m.shortEucl$learner)
-  expect_equal(par.set, evaluateParamExpressions(par.set))
+  # evaluate all expressions
+  par.set.uneval = getParamSet(m.shortEucl$learner)
+  par.set = evaluateParamExpressions(par.set.uneval, list(task = task))
 
   # check that tuning works
   tune.par.set = par.set
