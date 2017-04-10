@@ -104,10 +104,6 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
     stop("feat.method needs to return a data.frame with one row
       per observation in the original data and equal nrow per column.")
   }
-
-
-
-
   # Cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
 
@@ -176,14 +172,6 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
   if (length(new.cols))
     stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
 
-  # check for same storage type
-  classes = vcapply(obj, function(x) class(x)[1L])
-  i = intersect(names(classes), names(desc$classes))
-  i = which.first(classes[i] != desc$classes[i])
-  if (length(i) > 0L) {
-    stopf("Some column types have changed, e.g. for column '%s' (expected '%s', got '%s')",
-      names(classes[i]), desc$classes[i], classes[i])
-  }
 
   # reExtract features using reExtractDescription and return
   reextract = Map(
@@ -191,9 +179,13 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
       do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
       }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
 
-  df = do.call(cbind, reextract)
-  df = cbind(df, obj[setdiff(desc$coln, unlist(desc$fd.features[names(desc$extractFDAFeat)]))])
-  list(data = df, desc = desc)
+  # cbind resulting columns. Use data.table to ensure proper naming.
+  df = as.data.frame(do.call(cbind, lapply(reextract, setDT)))
+
+  # Reappend target and non-functional features
+  keep.cols = setdiff(colnames(obj), unlist(desc$fd.features[names(desc$fd.features)]))
+  data = cbind(df, obj[keep.cols])
+  data
 }
 
 
@@ -202,11 +194,10 @@ reExtractFDAFeatures.Task = function(obj, desc) {
   # get data and pass to extractor
   df = getTaskData(obj)
   extracted = reExtractFDAFeatures.data.frame(df, desc)
-  extracted
 
   # Change Task type and other interals to reflect a normal task
   obj = changeFDATaskToNormalTask(obj)
   # And change data so it only contains non-functional features
-  task = changeData(obj, extracted$data)
-  list(task = task, desc = extracted$desc)
+  df = getTaskData(obj)
+  changeData(obj, extracted)
 }

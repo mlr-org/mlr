@@ -1,7 +1,6 @@
 context("FDA_FeatFourier")
 
 test_that("FDA_FeatFourier", {
-
   gp1 = data.frame(v1 = 1:5, v2 = 2:6, v3 = 3:7, v4 = 4:8)
 
   fourier.gp = extractFDAFeatFourier(data = gp1, trafo.coeff = "phase")
@@ -17,5 +16,4 @@ test_that("FDA_FeatFourier", {
   # Can not have factors
   gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
   expect_error(extractFDAFeatFourier(data = gp2, trafo.coeff = "amplitude"))
-
 })

@@ -12,7 +12,7 @@
 #' @family extractFDAFeatures
 #' @family wrapper
 #' @template ret_learner
-makeExtractFDAFeaturesWrapper = function(learner, feat.methods = list(),
+makeExtractFDAFeatsWrapper = function(learner, feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
 
   learner = checkLearner(learner)
@@ -30,10 +30,5 @@ makeExtractFDAFeaturesWrapper = function(learner, feat.methods = list(),
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
   lrn$id = stri_replace(lrn$id, replacement = ".extracted", regex = "[.]preproc$")
-  addClasses(lrn, "extractFDAFeaturesWrapper")
-}
-
-#' @export
-getLearnerProperties.extractFDAFeaturesWrapper = function(learner) {
-  union(getLearnerProperties(learner$next.learner), "functionals")
+  addClasses(lrn, "extractFDAFeatsWrapper")
 }
