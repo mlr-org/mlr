@@ -17,7 +17,7 @@
 #' The description object contains these slots
 #' \describe{
 #'   \item{target [\code{character}]}{See argument.}
-#'   \item{cols} [\code{character}]}{colum names of data}
+#'   \item{cols [\code{character}]}{colum names of data}
 #'   \item{fd.features [\code{character}]}{Feature names (column names of
 #'   \code{data}) for each functional feature.}
 #'   \item{fd.grids [\code{character}]}{Measure points (e.g time point for each
@@ -99,8 +99,8 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   vals = extractSubList(extractFDAFeat, "feats", simplify = FALSE)
   df = data.frame(do.call(cbind, vals))
 
-  # Reappend non-functional features
-  data = cbind(df, obj[, setdiff(desc$coln, unlist(desc$fd.features))])
+  # Reappend target and non-functional features
+  data = cbind(df, obj[setdiff(desc$coln, unlist(fd.features[names(feat.methods)]))])
   list(data = data, desc = desc)
 }
 
@@ -110,8 +110,8 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 
   assertList(feat.methods)
   # Get data from task / taskdesc
-  fd.features = getTaskDescription(obj)$fd.features
-  fd.grids = getTaskDescription(obj)$fd.grids
+  fd.features = getTaskDesc(obj)$fd.features
+  fd.grids = getTaskDesc(obj)$fd.grids
   data = getTaskData(obj)
   target = getTaskTargetNames(obj)
 
@@ -131,7 +131,8 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 print.extractFDAFeatDesc = function(x, ...) {
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
-  catf("Functional Features: %i; Extracted features: %i", length(x$fd.features), length(x$extractFDAFea))
+  catf("Functional Features: %i; Extracted features: %i", length(x$fd.features),
+    length(x$extractFDAFeat))
 }
 
 
@@ -171,11 +172,14 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
   }
 
   # reExtract features using reExtractDescription and return
-  df = Map(
+  reextract = Map(
     function(xn, x, fd.cols) {
       do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
       }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
-  data.frame(do.call(cbind, df))
+
+  df = do.call(cbind, reextract)
+  df = cbind(df, obj[setdiff(desc$coln, unlist(desc$fd.features[names(desc$extractFDAFeat)]))])
+  list(data = df, desc = desc)
 }
 
 
@@ -185,9 +189,10 @@ reExtractFDAFeatures.Task = function(obj, desc) {
   df = getTaskData(obj)
   extracted = reExtractFDAFeatures.data.frame(df, desc)
   extracted
-  # Reappend target
-  # df[-which(colnames(df) %in% unlist(desc$fd.features))]
-  # FIXME: convert Task to Normal Task instead
-  # We need to ensure this becomes a normal task
-  # changeData(obj, data = extracted)
+
+  # Change Task type and other interals to reflect a normal task
+  obj = changeFDATaskToNormalTask(obj)
+  # And change data so it only contains non-functional features
+  task = changeData(obj, extracted$data)
+  list(task = task, desc = extracted$desc)
 }

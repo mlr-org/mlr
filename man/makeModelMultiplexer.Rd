@@ -27,6 +27,9 @@ with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
 
 The predict.type of the Multiplexer is inherited from the predict.type of the
 base learners.
+
+The getter \code{\link{getLearnerProperties}} returns the properties of the
+selected base learner.
 }
 \note{
 Note that logging output during tuning is somewhat shortened to make it more readable.
@@ -86,6 +89,13 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsX}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }

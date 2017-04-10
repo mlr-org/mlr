@@ -20,7 +20,7 @@ makeRLearner.classif.bartMachine = function() {
       makeLogicalLearnerParam(id = "debug_log", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "run_in_sample", default = TRUE),
       makeNumericVectorLearnerParam(id = "cov_prior_vec"),
-      makeLogicalLearnerParam(id = "use_missing_data", default = TRUE),
+      makeLogicalLearnerParam(id = "use_missing_data", default = FALSE),
       makeIntegerLearnerParam(id = "num_rand_samps_in_library", default = 10000, lower = 1),
       makeLogicalLearnerParam(id = "use_missing_data_dummies_as_covars", default = FALSE),
       makeLogicalLearnerParam(id = "replace_missing_data_with_x_j_bar", default = FALSE),
@@ -43,7 +43,7 @@ makeRLearner.classif.bartMachine = function() {
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   levs = c(td$positive, td$negative)
   y = factor(y, levels = levs)
   bartMachine::bartMachine(X = d$data, y = y, ...)

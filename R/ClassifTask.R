@@ -15,24 +15,23 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
     x = data[[target]]
     if (is.character(x) || is.logical(x) || is.integer(x)) {
       data[[target]] = as.factor(x)
-    } else if (is.factor(x) && fixup.data == "warn" && any(table(x) == 0L)) {
+    } else if (is.factor(x) && fixup.data == "warn" && hasEmptyLevels(x)) {
       warningf("Target column '%s' contains empty factor levels", target)
       data[[target]] = droplevels(x)
     }
   }
-
   task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
   }
 
-  task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive)
+  task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
   addClasses(task, "ClassifTask")
 }
 
-makeTaskDesc.ClassifTask = function(task, id, target, positive) {
-  levs = levels(task$env$data[[target]])
+makeClassifTaskDesc = function(id, data, target, weights, blocking, positive) {
+  levs = levels(data[[target]])
   m = length(levs)
   if (is.na(positive)) {
     if (m <= 2L)
@@ -42,7 +41,7 @@ makeTaskDesc.ClassifTask = function(task, id, target, positive) {
       stop("Cannot set a positive class for a multiclass problem!")
     assertChoice(positive, choices = levs)
   }
-  td = makeTaskDescInternal(task, "classif", id, target)
+  td = makeTaskDescInternal("classif", id, data, target, weights, blocking)
   td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
@@ -50,7 +49,7 @@ makeTaskDesc.ClassifTask = function(task, id, target, positive) {
     td$negative = stri_paste("not_", positive)
   else if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, positive)
-  return(addClasses(td, c("TaskDescClassif", "TaskDescSupervised")))
+  return(addClasses(td, c("ClassifTaskDesc", "SupervisedTaskDesc")))
 }
 
 #' @export

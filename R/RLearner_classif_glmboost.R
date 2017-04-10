@@ -38,7 +38,7 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
-    td = getTaskDescription(.task)
+    td = getTaskDesc(.task)
     levs = c(td$negative, td$positive)
     d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }

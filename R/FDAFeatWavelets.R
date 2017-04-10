@@ -22,18 +22,11 @@ extractFDAFeatWavelets = function(data, target = NULL, filter = "la8", boundary 
   assertCharacter(filter)
   assertCharacter(boundary)
 
-  # Create wavelet coeffs row wise
-  # wtdata = NULL
-  # for (i in seq_row(data)) {
-  #   a = t(data[i,])
-  #   wt = wavelets::dwt(a, filter = filter, boundary = boundary)
-  #   wtdata = rbind(wtdata, unlist(c(wt@W,wt@V[[wt@level]])))
-  # }
   df = BBmisc::convertRowsToList(data)
   wtdata = t(BBmisc::dapply(df, fun = function(x) {
     wt = wavelets::dwt(as.numeric(x), filter = filter, boundary = boundary)
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
-  
+
   as.data.frame(wtdata)
 }

@@ -126,8 +126,8 @@ NULL
 NULL
 
 
-#' Gunpoint functional data classification task. Classify whether the person raise up a gun or just the 
-#'empty hand.
+#' Gunpoint functional data classification task. Classify whether the person
+#' raise up a gun or just the empty hand.
 #'
 #' Contains the task (\code{gunpoint.task}).
 #'
@@ -140,9 +140,9 @@ NULL
 NULL
 
 
-#' FuelSubset functional data regression task with 2 functional covariate and 1
+#' FuelSubset functional data regression task with 2 functional covariate and 1 
 #' scalar covariate. Regression #'about the heat value of some fuel based on the
-#' ultraviolet radiation spectrum and infrared ray radiation and one scalar
+#' ultraviolet radiation spectrum and infrared ray radiation and one scalar 
 #' column called h2o.
 #'
 #' Contains the task (\code{fuelSubset.task}).
