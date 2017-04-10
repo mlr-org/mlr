@@ -1,6 +1,9 @@
+#' @title
 #' Create a custom feature extraction method for functional data.
 #'
+#' @description
 #' This is a constructor to create your own imputation methods.
+#' All built-in methods are listed below.
 #' @param learn [\code{function(data, target, cols, ...)}]\cr
 #'   Function to learn and extract information on column \code{cols}
 #'   out of data frame \code{data}. Argument \code{target} specifies
@@ -17,24 +20,6 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
   setClasses(list(learn = learn, reextract = reextract, args = args), "extractFDAFeatMethod")
 }
 
-
-# # helper function to extract a single vector of length(nObs) from the data
-# simpleFDAExtract = function(data, target, cols, vals) {
-#   if (is.na(vals))
-#     stopf("Error extracting feature from column '%s' to '%t'. Maybe all input data was missing?",
-#       which.first(colnames(data) %in% cols, use.names = TRUE),
-#       which.last(colnames(data) %in% cols, use.names = TRUE))
-#
-#   x = data[[cols]]
-#
-#   # cast logicals to factor if required
-#   if (is.logical(vals)) {
-#     vals = as.factor(vals)
-#   }
-#   vals
-# }
-
-
 #' Built-in imputation methods.
 #'
 #' The built-ins are:
@@ -43,6 +28,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'   \item \code{extractFDAMean()} for extracting the mean from a curve.
 #'   \item \code{extractFDAMinMax()} for extracting the min and max from a curve.
 #'   \item \code{extractFDAFourier()} for extracting fourier coefficients from a curve.
+#'  }
 #' @name extractFDAFeatures
 #' @rdname extractFDAFeatures
 #' @family extractFDAFeatures
@@ -52,7 +38,7 @@ NULL
 #' @export
 #' @rdname extractFDAFeatures
 extractFDAMedian = function() {
-  lrn = function(data, target, cols, vals = NULL) {apply(data[, cols], 1, median, na.rm = TRUE)}
+  lrn = function(data, target, cols, vals = NULL) {data.frame("median" = apply(data[, cols], 1, median, na.rm = TRUE))}
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn
@@ -62,7 +48,7 @@ extractFDAMedian = function() {
 #' @export
 #' @rdname extractFDAFeatures
 extractFDAMean = function() {
-  lrn = function(data, target, cols, vals = NULL) {apply(data[, cols], 1, mean, na.rm = TRUE)}
+  lrn = function(data, target, cols, vals = NULL) {data.frame("mean" = apply(data[, cols], 1, mean, na.rm = TRUE))}
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn
@@ -91,7 +77,6 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     extractFDAFeatFourier(data = data, target = NULL, cols = cols, vals = NULL,
       trafo.coeff = trafo.coeff)
   }
-  # pass to learn and predict, as they are used equally in both
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn,

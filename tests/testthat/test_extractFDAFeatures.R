@@ -1,31 +1,79 @@
 context("FDA_extactFeatures")
 test_that("extractFDAFeatures", {
   methods = list("UVVIS" = extractFDAMean(), "NIR" = extractFDAMinMax())
-  t = extractFDAFeatures(fuelSubset.task, feat.methods = methods)
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
   expect_integer(nrow(df), lower = c(129), upper = c(129))
   expect_integer(ncol(df), lower = c(5), upper = c(5))
-  expect_subset(colnames(df), c("UVVIS", "NIR.min", "NIR.max", "V366", "heatan"))
+  expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "h2o", "heatan"))
+})
+
+test_that("extractFDAFeatures colnames work", {
+  methods = list("NIR" = extractFDAFourier())
+  t = subsetTask(fuelsubset.task, subset = 1:30)
+  t2 = extractFDAFeatures(t, feat.methods = methods)
+  cn = getTaskFeatureNames(t2$task)
+  expect_match(setdiff(cn, "h2o"), regexp = "[NIR]")
+})
 
 
+test_that("Wrong methods yield errors", {
+
+  t = subsetTask(fuelsubset.task, subset = 1:2)
+
+  wrng1 = function() {
+    lrn = function(data, target, cols, vals = NULL) {1}
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
+  }
+  expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
+    "feat.method needs to return")
+
+
+  wrng2 = function() {
+    lrn = function(data) {data[,1]}
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
+  }
+  expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),
+    "Must have formal arguments")
+
+  wrng3 = function() {
+    lrn = function(data, target, cols, vals = NULL) {data.frame(c(1))}
+    makeExtractFDAFeatMethod(z = lrn, rz = lrn)
+  }
+  expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng3())),
+    "unused arguments")
+})
+
+test_that("extractFDAFeatures colnames work", {
+  methods = list("NIR" = extractFDAFourier())
+  t = subsetTask(fuelsubset.task, subset = 1:30)
+  t2 = extractFDAFeatures(t, feat.methods = methods)
+  cn = getTaskFeatureNames(t2$task)
+  expect_match(setdiff(cn, "h2o"), regexp = "[NIR]")
+})
+test_that("extractFDAFeaturesDesc", {
+  methods = list("UVVIS" = extractFDAMean(), "NIR" = extractFDAMinMax())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check desc
   expect_is(t$desc, "extractFDAFeatDesc")
-  expect_subset(t$desc$coln, c(getTaskFeatureNames(fuelSubset.task),
-    getTaskTargetNames(fuelSubset.task)))
-  expect_subset(t$desc$target, getTaskTargetNames(fuelSubset.task))
+  expect_subset(t$desc$coln, c(getTaskFeatureNames(fuelsubset.task),
+    getTaskTargetNames(fuelsubset.task)))
+  expect_subset(t$desc$target, getTaskTargetNames(fuelsubset.task))
   expect_character(unique(t$desc$colclasses), pattern = "numeric")
   expect_subset(unlist(t$desc$fd.features),
-    unlist(getTaskDesc(fuelSubset.task)$fd.features))
-  expect_subset(unlist(t$desc$fd.grids), unlist(getTaskDesc(fuelSubset.task)$fd.grids))
+    unlist(getTaskDesc(fuelsubset.task)$fd.features))
+  expect_subset(unlist(t$desc$fd.grids), unlist(getTaskDesc(fuelsubset.task)$fd.grids))
   expect_list(t$desc$extractFDAFeat)
   expect_list(t$desc$extractFDAFeat$UVVIS$args)
   expect_function(t$desc$extractFDAFeat$UVVIS$reextract)
   expect_list(t$desc$extractFDAFeat$NIR$args)
   expect_function(t$desc$extractFDAFeat$NIR$reextract)
+})
 
-  # check for data.frame produces output equal to task
+test_that("extractFDAFeatures task equal data.frame", {
+  # check data.frame output equal to task's data output
   gp.subset = subsetTask(gunpoint.task, features = c(1:10))
   fm = list("fd1"= extractFDAFourier(trafo.coeff = "amplitude"))
   t2 = extractFDAFeatures(gp.subset, feat.methods = fm)
@@ -43,10 +91,12 @@ test_that("extractFDAFeatures", {
 })
 
 test_that("reExtractFDAFeatures", {
-  # check for data.frame produces output equal to task
   gp.subset = subsetTask(gunpoint.task, features = c(1:10))
   fm = list("fd1"= extractFDAFourier(trafo.coeff = "amplitude"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reExtractFDAFeatures(gp.subset, t3$desc)
-
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4$task))
+  expect_equal(t3$desc$target, t4$desc$target)
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4$task)))
+  expect_equivalent(getTaskData(t3$task), getTaskData(t4$task))
 })

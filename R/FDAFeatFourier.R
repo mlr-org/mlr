@@ -35,5 +35,8 @@ extractFDAFeatFourier = function(data, target = NULL, cols, vals = NULL, trafo.c
   if (!inherits(fft.pa, "matrix")) {
     fft.pa = as.data.frame(matrix(fft.pa, nrow = 1))
   }
-  as.data.frame(fft.pa)
+  # Add more legible names
+  df = as.data.frame(fft.pa)
+  colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)), sep = ".")
+  df
 }

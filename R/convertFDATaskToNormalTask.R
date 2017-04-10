@@ -1,5 +1,5 @@
-
-# Helper function to convert an arbitrary FDA Task to a normal Task
+# Helper function to convert an arbitrary FDA Task to a normal Task by changing
+# the class and dropping non-fda-task elements
 changeFDATaskToNormalTask = function(obj) {
   # Set class for obj to turn it back into a normal class
   # This gets rid of all-FDA Task classes

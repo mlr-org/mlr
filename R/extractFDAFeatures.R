@@ -2,13 +2,11 @@
 #'
 #' @description
 #' Extract non-functional features from functional features using various methods.
-#'
 #' The function \code{extractFDAFeatures} performs the extraction for a
 #' single functional covariate. Additionally, a \dQuote{extractFDAFeatDesc} object
-#' which can contain \dQuote{learned} coefficients and other helpful data for
+#' which can contains \dQuote{learned} coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
 #' \code{\link{reExtractFDAFeatures}} to extract features during the prediction phase.
-#'
 #' You can either provide an arbitrary object, use a built-in method listed
 #' under \code{\link{extractFDAFeatures}} or create one yourself using
 #' \code{\link{makeExtractFDAFeatMethod}}.
@@ -30,18 +28,20 @@
 #'   Default is \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
-#'   for each functional covariate.
+#'   for each functional covariate. A signature for the desired function can be provided for
+#'   every covariable. Multiple functions for a  single covariable are not allowed.
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object.}
+#' @family extractFDAFeatures
 #' @export
-#' @family
 #' @examples
 #' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
 #' extracted = extractFDAFeatures(df, target = character(0), fd.features = list(x1 = 1:4, x2=5:8),
 #'   fd.grids = list(x1 = 1:4, x2 = 1:4))
 #' print(extracted$data)
 #' reExtractFDAFeatures(data.frame(x = NA_real_), imputed$desc)
+
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
   assertList(feat.methods)
@@ -50,7 +50,6 @@ extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()
 
 
 #' @export
-#' # feat.methods are the function signature that one want to use for the corresponding covariate
 extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
 
@@ -97,10 +96,24 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   # Extract feats for every functional feature and cbind to data.frame
   vals = extractSubList(extractFDAFeat, "feats", simplify = FALSE)
-  df = data.frame(do.call(cbind, vals))
+
+  if (!any(vlapply(vals, is.data.frame))) {
+    stop("feat.method needs to return a data.frame with one row
+      per observation in the original data.")
+  } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))){
+    stop("feat.method needs to return a data.frame with one row
+      per observation in the original data and equal nrow per column.")
+  }
+
+
+
+
+  # Cbind resulting columns. Use data.table to ensure proper naming.
+  df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
 
   # Reappend target and non-functional features
-  data = cbind(df, obj[setdiff(desc$coln, unlist(fd.features[names(feat.methods)]))])
+  keep.cols = setdiff(desc$coln, unlist(fd.features[names(fd.features)]))
+  data = cbind(df, obj[keep.cols])
   list(data = data, desc = desc)
 }
 
@@ -138,6 +151,7 @@ print.extractFDAFeatDesc = function(x, ...) {
 
 #' Re-ExtractFDAFeatures a data set
 #'
+#' @description
 #' This function accepts a data frame or a task and an extractFDAFeatDesc
 #' (a FDA feature extraction description)
 #' as returned by \code{\link{extractFDAFeatures}} to extract features
