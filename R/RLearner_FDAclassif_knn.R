@@ -80,9 +80,17 @@ makeRLearner.fdaclassif.knn = function() {
 
 #' @export
 trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
+  task.desc = getTaskDesc(.task)
+  if(length(task.desc$fd.features) > 1) {
+    stop("This learner can only be used for data with one functional covariable.")
+  }
+  fd.features = unlist(task.desc$fd.features)
+  grid = unlist(task.desc$fd.grids, use.names = FALSE)
+
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   # transform the data into fda.usc:fdata class type.
-  data.fdclass = fda.usc::fdata(mdata = z$data)
+  data.fdclass = fda.usc::fdata(mdata = z$data[,fd.features],
+                                argvals = grid)
   par.cv = learnerArgsToControl(list, trim, draw)
   par.s = list(w = .weights)
   glearn = z$target
