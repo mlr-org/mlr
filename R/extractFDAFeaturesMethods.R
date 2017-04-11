@@ -83,3 +83,18 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     args = list(trafo.coeff = trafo.coeff)
   )
 }
+
+#' @export
+#' @rdname extractFDAFeatures
+extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
+  # create a function that calls extractFDAFeatWavelets
+  assertChoice(boundary, choices = c("periodic", "reflection" ))
+  lrn = function(data, target, cols, vals, filter, boundary) {
+    extractFDAFeatWavelets(data = data, target = NULL, cols = cols, vals = NULL,
+      filter = filter, boundary = boundary)
+  }
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
+    args = list(filter = filter, boundary = boundary)
+  )
+}
+

@@ -16,7 +16,7 @@
 #' @return \code{data.frame} object containing the wavelet
 #'   coefficients.
 #' @export
-extractFDAFeatWavelets = function(data, target = NULL, filter = "la8", boundary = "periodic") {
+extractFDAFeatWavelets = function(data, target = NULL, cols, vals = NULL, filter = "la8", boundary = "periodic") {
   requirePackages("wavelets", default.method = "load")
   assertClass(data, "data.frame")
   assertCharacter(filter)

@@ -37,10 +37,12 @@
 #' @export
 #' @examples
 #' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
-#' extracted = extractFDAFeatures(df, target = character(0), fd.features = list(x1 = 1:4, x2=5:8),
-#'   fd.grids = list(x1 = 1:4, x2 = 1:4))
-#' print(extracted$data)
-#' reExtractFDAFeatures(data.frame(x = NA_real_), imputed$desc)
+#' t = makeFDAClassifTask(data = df, target = "y", fd.features = list(x1 = 1:4, x2=5:8),
+#' fd.grids = list(x1 = 1:4, x2 = 1:4))
+#' extracted = extractFDAFeatures(train,
+#' feat.methods = list("x1" = extractFDAMean(), "x2" = extractFDAMinMax()))
+#' print(extracted$task)
+#' reExtractFDAFeatures(t, extracted$desc)
 
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
