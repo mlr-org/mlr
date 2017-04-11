@@ -30,6 +30,7 @@
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
 #'   for each functional covariate. A signature for the desired function can be provided for
 #'   every covariable. Multiple functions for a  single covariable are not allowed.
+#' @template arg_fdatask_pars
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object.}
