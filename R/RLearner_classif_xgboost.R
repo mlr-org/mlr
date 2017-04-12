@@ -40,22 +40,23 @@ makeRLearner.classif.xgboost = function() {
       makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart"))
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "featimp"),
+    properties = c("twoclass", "multiclass", "numerics", "prob", "weights", "missings", "featimp"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default. `num_class` is set internally, so do not set this manually."
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default. `num_class` is set internally, so do not set this manually.",
+    callees = "xgboost"
   )
 }
 
 #' @export
 trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  
-  td = getTaskDescription(.task)
+
+  td = getTaskDesc(.task)
   parlist = list(...)
   parlist$data = data.matrix(getTaskData(.task, .subset, target.extra = TRUE)$data)
   parlist$label = match(as.character(getTaskData(.task, .subset, target.extra = TRUE)$target), td$class.levels) - 1
   nc = length(td$class.levels)
-  
+
   if (is.null(parlist$objective))
     parlist$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
 
@@ -65,10 +66,10 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
   #if we use softprob or softmax as objective we have to add the number of classes 'num_class'
   if (parlist$objective %in% c("multi:softprob", "multi:softmax"))
     parlist$num_class = nc
-    
+
   if (!is.null(.weights))
     parlist$data = xgboost::xgb.DMatrix(data = parlist$data, label = parlist$label, weight = .weights)
-    
+
   do.call(xgboost::xgboost, parlist)
 }
 
@@ -79,7 +80,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   cls = td$class.levels
   nc = length(cls)
   obj = .learner$par.vals$objective
-  
+
   if (is.null(obj))
     .learner$par.vals$objective = ifelse(nc == 2L, "binary:logistic", "multi:softprob")
 

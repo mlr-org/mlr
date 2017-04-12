@@ -20,7 +20,15 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   mods = getLearnerModel(model, more.unwrap = FALSE)
   msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
-  ifelse(j == 0L, NA_character_ , msgs[j])
+  ifelse(j == 0L, NA_character_, msgs[j])
+}
+
+#' @export
+getFailureModelDump.HomogeneousEnsembleModel = function(model) {
+  mods = getLearnerModel(model, more.unwrap = FALSE)
+  msgs = lapply(mods, getFailureModelDump)
+  j = which.first(!is.null(msgs))
+  ifelse(j == 0L, NULL, msgs[[j]])
 }
 
 #' Deprecated, use \code{getLearnerModel} instead.
@@ -57,7 +65,6 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
   })
   do.call(cbind, preds)
 }
-
 
 # call this at end of trainLearner.CostSensRegrWrapper
 # FIXME: potentially remove this when ChainModel is removed

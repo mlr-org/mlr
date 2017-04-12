@@ -50,25 +50,30 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
 #' @export
 trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = NULL, mcw.method, ...) {
   .task = subsetTask(.task, .subset)
-  tn = getTaskTargetNames(.task)
-  d = getTaskData(.task)
   y = getTaskTargets(.task)
   cm = buildCMatrix(mcw.method, .task)
   x = multi.to.binary(y, cm)
-  # now fit models
-  models = lapply(seq_along(x$row.inds), function(i) {
-    data2 = d[x$row.inds[[i]], , drop = FALSE]
-    data2[, tn] = x$targets[[i]]
-    ct = changeData(.task, data2)
-    ct$task.desc$positive = "1"
-    ct$task.desc$negative = "-1"
-    train(.learner$next.learner, ct, weights = .weights)
-  })
+  args = list(x = x, learner = .learner, task = .task, weights = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(i = seq_along(x$row.inds), doMulticlassTrainIteration,
+                       more.args = args, level = "mlr.ensemble")
   m = makeHomChainModel(.learner, models)
   m$cm = cm
   return(m)
 }
 
+doMulticlassTrainIteration = function(x, i, learner, task, weights) {
+  setSlaveOptions()
+  d = getTaskData(task)
+  tn = getTaskTargetNames(task)
+  data2 = d[x$row.inds[[i]], , drop = FALSE]
+  data2[, tn] = x$targets[[i]]
+  ct = changeData(task, data2)
+  ct$task.desc$positive = "1"
+  ct$task.desc$negative = "-1"
+  train(learner$next.learner, ct, weights = weights)
+}
 
 #' @export
 predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
@@ -100,7 +105,7 @@ getLearnerProperties.MulticlassWrapper = function(learner){
 
 ##############################               helpers                      ##############################
 
-buildCMatrix = function (mcw.method, .task) {
+buildCMatrix = function(mcw.method, .task) {
   if (is.function(mcw.method)) {
     meth = mcw.method
   } else {
@@ -113,7 +118,7 @@ buildCMatrix = function (mcw.method, .task) {
   if (!setequal(rownames(cm), levs))
     stop("Rownames of codematrix must be class levels!")
   if (!all(cm == 1 | cm == -1 | cm == 0))
-    stop("Codematrix must only contain: -1,0,+1!")
+    stop("Codematrix must only contain: -1, 0, +1!")
   cm
 }
 
@@ -127,7 +132,7 @@ multi.to.binary = function(target, codematrix) {
   if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")
 
-  binary.targets = as.data.frame(codematrix[target,, drop = FALSE])
+  binary.targets = as.data.frame(codematrix[target, , drop = FALSE])
   row.inds = lapply(binary.targets, function(v) which(v != 0))
   names(row.inds) = NULL
   targets = Map(function(y, i) factor(y[i]), binary.targets, row.inds)

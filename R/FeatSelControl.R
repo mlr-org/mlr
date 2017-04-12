@@ -4,8 +4,8 @@
 #' Feature selection method used by \code{\link{selectFeatures}}.\cr
 #' The methods used here follow a wrapper approach, described in
 #' Kohavi and John (1997) (see references).
-#' 
-#' The following optimization algorithms are available: 
+#'
+#' The following optimization algorithms are available:
 #'  \describe{
 #'    \item{FeatSelControlExhaustive}{Exhaustive search. All feature sets (up to a certain number
 #'      of features \code{max.features}) are searched.}
@@ -58,15 +58,7 @@
 #' @param tune.threshold.args [\code{list}]\cr
 #'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
 #'   Default is none.
-#' @param log.fun [\code{function} | \code{NULL}]\cr
-#'   Function used for logging. If set to \code{NULL}, the internal default will be used.
-#'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
-#'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-#'   and \code{stage} is expected.
-#'   The default displays the performance measures, the time needed for evaluating,
-#'   the currently used memory and the max memory ever used before
-#'   (the latter two both taken from \code{\link{gc}}).
-#'   See the implementation for details.
+#' @template arg_log_fun
 #' @param prob [\code{numeric(1)}]\cr
 #'   Parameter of the random feature selection. Probability of choosing a feature.
 #' @param method [\code{character(1)}]\cr
@@ -109,12 +101,14 @@
 NULL
 
 makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, ..., cl) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = "default", ..., cl) {
 
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  if (is.null(log.fun))
+  if (identical(log.fun, "default"))
     log.fun = logFunFeatSel
+  else if (identical(log.fun, "memory"))
+    log.fun = logFunTuneMemory
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$maxit = maxit
   x$max.features = max.features

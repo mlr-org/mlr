@@ -18,7 +18,8 @@ makeRLearner.cluster.cmeans = function() {
     properties = c("numerics", "prob"),
     name = "Fuzzy C-Means Clustering",
     note = "The `predict` method uses `cl_predict` from the `clue` package to compute the cluster memberships for new data. The default `centers = 2` is added so the method runs without setting parameters, but this must in reality of course be changed by the user.",
-    short.name = "cmeans"
+    short.name = "cmeans",
+    callees = c("cmeans", "cl_predict")
   )
 }
 

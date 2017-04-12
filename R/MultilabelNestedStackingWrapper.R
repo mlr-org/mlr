@@ -53,7 +53,7 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
   for (i in seq_along(targets)) {
     tn = order[i]
     if (i >= 2) {
-      tnprevious = order[i-1]
+      tnprevious = order[i - 1]
       data2 = data.frame(data.nst, data[tnprevious]) #for inner resampling to produce predicted labels
       innertask = makeClassifTask(id = tnprevious, data = data2, target = tnprevious)
       rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)

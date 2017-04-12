@@ -7,18 +7,18 @@ test_that("regr_laGP", {
     list(),
     list(start = 6, end = 50, close = 50)
   )
-  dd = regr.df[1:100, c(1:3, 14)]
+  dd = regr.num.df[1:100, ]
   old.predicts.list = list()
-  des1 = dd[1:51, setdiff(colnames(dd), regr.target)]
-  des2 = dd[52:100, setdiff(colnames(dd), regr.target)]
-  y = dd[1:51, regr.target]
-  for (i in 1:length(parset.list)) {
+  des1 = dd[1:51, setdiff(colnames(dd), regr.num.target)]
+  des2 = dd[52:100, setdiff(colnames(dd), regr.num.target)]
+  y = dd[1:51, regr.num.target]
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(X = des1[, 1:3], Z = y, XX = des2[, 1:3], verb = 0,
+    pars = list(X = des1[, -regr.num.class.col], Z = y, XX = des2[, -regr.num.class.col], verb = 0,
                 Xi.ret = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = do.call(laGP::aGP, pars)$mean
   }
-  testSimpleParsets("regr.laGP", dd, regr.target, 1:51, old.predicts.list, parset.list)
+  testSimpleParsets("regr.laGP", dd, regr.num.target, 1:51, old.predicts.list, parset.list)
 })

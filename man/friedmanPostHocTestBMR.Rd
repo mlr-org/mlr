@@ -46,7 +46,7 @@ are required.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanTestBMR}},
   \code{\link{generateCritDifferencesData}},
@@ -60,11 +60,12 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
-  \code{\link{getBMRTaskDescriptions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }

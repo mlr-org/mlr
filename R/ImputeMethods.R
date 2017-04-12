@@ -34,6 +34,11 @@ simpleImpute = function(data, target, col, const) {
   if (is.na(const))
     stopf("Error imputing column '%s'. Maybe all input data was missing?", col)
   x = data[[col]]
+
+  # cast logicals to factor if required (#1522)
+  if (is.logical(x) && !is.logical(const)) {
+    x = as.factor(x)
+  }
   if (is.factor(x) && const %nin% levels(x)) {
     levels(x) = c(levels(x), as.character(const))
   }
@@ -289,8 +294,8 @@ imputeLearner = function(learner, features = NULL) {
       # we remove observations with NAs in column col before generating the task
       impute.feats = setdiff(features, col)
       if (anyMissing(data[impute.feats]) && !hasLearnerProperties(learner, "missings")) {
-      	has.na = vlapply(data[impute.feats], anyMissing)
-      	wrong.feats = clipString(collapse(colnames(data[impute.feats])[has.na], ", "), 50L)
+        has.na = vlapply(data[impute.feats], anyMissing)
+        wrong.feats = clipString(collapse(colnames(data[impute.feats])[has.na], ", "), 50L)
         stopf("Feature(s) '%s' used for imputation has/have missing values, but learner '%s' does not support that!", wrong.feats, learner$id)
       }
       # remove all observations with missing values in column col (which is the target in the imputation task)
@@ -305,7 +310,6 @@ imputeLearner = function(learner, features = NULL) {
       ind = is.na(x)
       # if no NAs are present in data, we always return it unchanged
       if (all(!ind)) return(x)
-      # FIXME: we do get a list instead of a data.frame?
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
       p = predict(model, newdata = newdata)$data$response
       replace(x, ind, p)

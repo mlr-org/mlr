@@ -96,7 +96,7 @@ print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")
   catf("Task: %s", x$task$task.desc$id)
   catf("Measures: %s", collapse(extractSubList(x$measures, "name")))
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Plot learning curve data using ggplot2.
 #'
@@ -201,7 +201,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
   if ((interaction == "learner" & nlearn == 1L) | (interaction == "measure" & nmeas == 1L))
     interaction = NULL
 
-  create_plot = function(data, color) {
+  createPlot = function(data, color) {
     if (!is.null(color)) {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("percentage")),
                          ggvis::prop("y", as.name("performance")),
@@ -231,12 +231,12 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
             )
         ))
     server = shiny::shinyServer(function(input, output) {
-      data_sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
-      plt = create_plot(data_sub, color)
+      data.sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
+      plt = createPlot(data.sub, color)
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
   } else {
-    create_plot(data, color)
+    createPlot(data, color)
   }
 }

@@ -31,8 +31,8 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
-    refunders/refund  # refund has bug for cran
-  
+  - jimhester/lintr
+
 before_install:
   # we want to see libpaths and installed packages from cache
   - Rscript -e 'message("LIBPATHS:"); .libPaths()'

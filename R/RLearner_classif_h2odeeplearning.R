@@ -221,7 +221,8 @@ makeRLearner.classif.h2o.deeplearning = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "h2o.deeplearning",
-    short.name = "h2o.dl"
+    short.name = "h2o.dl",
+    callees = "h2o.deeplearning"
   )
 }
 

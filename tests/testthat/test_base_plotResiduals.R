@@ -1,7 +1,7 @@
 context("plotResiduals")
 
 test_that("plotResiduals with prediction object", {
-  
+
   learner = makeLearner("regr.rpart")
   mod = train(learner, regr.task)
   preds = predict(mod, regr.task)
@@ -56,7 +56,7 @@ test_that("plotResiduals with BenchmarkResult", {
   doc = XML::xmlParse(path)
   # barplot now. We can't test for exact number of bars anymore
   expect_true(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)) > 0L)
-  
+
   # check pretty names
   testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
 
@@ -66,4 +66,13 @@ test_that("plotResiduals with BenchmarkResult", {
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
+
+  # check error when learner short names are not unique
+  lrns = list(
+    rf = makeLearner("classif.randomForest", id = "rf1"),
+    rf2 = makeLearner("classif.randomForest", id = "rf2")
+  )
+  res = benchmark(lrns, tasks, hout)
+  expect_error(plotBMRSummary(res),
+    "names are not unique")
 })

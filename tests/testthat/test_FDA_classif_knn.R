@@ -7,7 +7,7 @@ test_that("FDA_classif_knn behaves like original api", {
   mlearn = phoneme[["learn"]]
   # Use only 10 obs. for 5 classes, as knn training is really slow
   index = c(1:10, 50:60, 100:110, 150:160, 200:210)
-  mlearn$data = mlearn$data[index,]
+  mlearn$data = mlearn$data[index, ]
   glearn = phoneme[["classlearn"]][index]
 
   mtest = phoneme[["test"]]
@@ -18,7 +18,7 @@ test_that("FDA_classif_knn behaves like original api", {
   p2 = predict(a1, mlearn)
 
   ph = as.data.frame(mlearn$data)
-  ph[,"label"] = glearn
+  ph[, "label"] = glearn
 
   lrn = makeLearner("fdaclassif.knn", par.vals = list(knn = 1L, trim = 0.5))
   task = makeFDAClassifTask(data = ph, target = "label")

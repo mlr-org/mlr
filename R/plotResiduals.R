@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Plots for model diagnostics. Provides scatterplots of true vs. predicted values
-#' and histograms of the model's residuals. 
+#' and histograms of the model's residuals.
 #'
 #' @param obj [\code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
 #'   Input data.
@@ -25,7 +25,7 @@
 #' @export
 plotResiduals = function(obj, type = "scatterplot", loess.smooth = TRUE,
   rug = TRUE, pretty.names = TRUE) {
-  
+
   assertChoice(type, c("scatterplot", "hist"))
   assertLogical(loess.smooth, len = 1L)
   assertLogical(rug, len = 1L)
@@ -53,17 +53,19 @@ plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth
   rug = TRUE, pretty.names = TRUE) {
 
   task.type = getBMRObjects(obj, as.df = TRUE, fun = function(X){
-    getRRTaskDescription(X)$type
+    getRRTaskDesc(X)$type
   })
   task.type = unique(task.type$p)
-  
+
   if (task.type %nin% c("regr", "classif"))
     stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
 
   df = getBMRPredictions(obj, as.df = TRUE)
 
   if (pretty.names) {
-    levels(df$learner.id) = getBMRLearnerShortNames(obj)
+    learner.short.names = getBMRLearnerShortNames(obj)
+    checkDuplicatedLearnerNames(learner.short.names)
+    levels(df$learner.id) = learner.short.names
   }
 
   p = makeResidualPlot(df, type, loess.smooth, rug, task.type)

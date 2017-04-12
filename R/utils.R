@@ -57,3 +57,25 @@ generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
       }
   }, simplify = FALSE)
 }
+
+# shorter way of printing debug dumps
+#' @export
+print.mlr.dump = function(x, ...) {
+  cat("<debug dump>\n")
+  invisible(NULL)
+}
+
+# Create a list of only relevant functional covariates and grids. It is used in predict() in several FDAlearners.
+reformat2mat.list = function(data, tdesc) {
+  fdns = names(tdesc$fd.features)
+  mat.list = namedList(fdns)
+  # for each functional covariate
+  for (fdn in fdns) {
+    # extract functional covariate matrix (subsetted to relevant covariates)
+    mat.list[[fdn]] = as.matrix(subset(data, select = tdesc$fd.features[[fdn]]))
+    # add grids
+    mat.list[[stri_paste(fdn, ".index")]] = tdesc$fd.grids[[fdn]]
+  }
+  return(mat.list)
+}
+

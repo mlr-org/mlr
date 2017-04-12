@@ -45,6 +45,13 @@ getLearnerProperties.character = function(learner) {
   getLearnerProperties(checkLearner(learner))
 }
 
+#' @export
+getLearnerProperties.ModelMultiplexer = function(learner) {
+  selected = learner$par.vals$selected.learner
+  # NB: this is not set during construction
+  if (is.null(selected)) learner$properties else getLearnerProperties(learner$base.learners[[selected]])
+}
+
 #' @rdname LearnerProperties
 #' @export
 hasLearnerProperties = function(learner, props) {
@@ -74,7 +81,7 @@ hasProperties = function(learner, props) {
 #'
 #' @export
 listLearnerProperties = function(type = "any") {
-  allProps = c(listTaskTypes(), "any")
-  assertSubset(type, allProps)
+  all.props = c(listTaskTypes(), "any")
+  assertSubset(type, all.props)
   mlr$learner.properties[[type]]
 }

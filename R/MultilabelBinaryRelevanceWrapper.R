@@ -36,25 +36,34 @@ makeMultilabelBinaryRelevanceWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL,...) {
+trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
-  data = getTaskData(.task)
-  models = namedList(targets)
-  for (tn in targets) {
-    data2 = dropNamed(data, setdiff(targets, tn))
-    ctask = makeClassifTask(id = tn, data = data2, target = tn)
-    models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
-  }
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(
+    doMultilabelBinaryRelevanceTrainIteration, tn = targets,
+    more.args = list(weights = .weights, learner = .learner$next.learner, task = .task),
+    level = "mlr.ensemble")
+  names(models) = targets
   makeHomChainModel(.learner, models)
 }
+
+doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, weights) {
+  setSlaveOptions()
+  data = getTaskData(task)
+  task = makeClassifTask(id = tn, data = dropNamed(data, setdiff(getTaskTargetNames(task), tn)), target = tn)
+  train(learner, task, weights = weights)
+}
+
 
 #' @export
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset,...)))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
   else
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset,...), cl = "TRUE")
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }
+

@@ -55,7 +55,7 @@ test_that("TuneWrapper uses tune.threshold", {
   lrn = makeLearner("classif.lda", predict.type = "prob")
   rdesc = makeResampleDesc("Holdout")
   costs = matrix(c(0, 5, 1, 0), 2)
-  colnames(costs) = rownames(costs) = getTaskDescription(binaryclass.task)$class.levels
+  colnames(costs) = rownames(costs) = getTaskDesc(binaryclass.task)$class.levels
   mm = makeCostMeasure(id = "costs", costs = costs, best = 0, worst = 5)
   ps = makeParamSet(makeDiscreteParam("method", "moment"))
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
@@ -81,18 +81,18 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   opdf = getNestedTuneResultsOptPathDf(r)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 4)
-  
+
   # check trafo arg
-  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2, 
+  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2,
     trafo = function(x) 2^x))
-  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2, 
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2,
     control = makeTuneControlGrid())
-  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, 
+  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce,
     extract = getTuneResult)
   opdf = getNestedTuneResultsOptPathDf(r, trafo = TRUE)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 20)
-  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))                   
+  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))
 })
 
 
@@ -100,7 +100,7 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   ps = makeParamSet(
-    makeDiscreteParam("C", 2^(-1))
+    makeDiscreteParam("C", 2^ (-1))
   )
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),

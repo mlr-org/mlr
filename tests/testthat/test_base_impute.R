@@ -1,7 +1,7 @@
 context("impute")
 
 test_that("Impute data frame", {
-  data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4), z = NA)
+  data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4), z = NA)
   target = "z"
   data[6, ] = NA
 
@@ -36,7 +36,7 @@ test_that("Impute data frame", {
   expect_true(imputed$y[6] >= 0 && imputed$y[6] <= 5)
 
   # learner
-  data2 = data.frame(V1 = 1:10, V2 = 1:10, V3 = 1:10, col = factor(rep(1:2, c(3,7))), z = 1:10)
+  data2 = data.frame(V1 = 1:10, V2 = 1:10, V3 = 1:10, col = factor(rep(1:2, c(3, 7))), z = 1:10)
   data2$V2[9:10] = NA
   data2$V3[1:2] = NA
   data2$col[8:10] = NA
@@ -84,14 +84,15 @@ test_that("Impute data frame", {
   x = impute(data, target = target, cols = list(f = "xxx", x = imputeMode(), y = imputeMax(2)), impute.new.levels = TRUE)
   imputed = reimpute(data, x$desc)
   expect_equal(x$data, imputed)
-  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA), x$desc)
+  expect_error(reimpute(data.frame(f = factor("newlvl"), x = NA), x$desc), "column types have changed")
+  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA_real_), x$desc)
   expect_equal(as.character(imputed$f), "xxx")
   expect_equal(imputed$x, 1)
   #FIXME: y was never in input data? therefore next test fails?
   # expect_equal(imputed$y, 8)
 
   x = impute(data, target = target, cols = list(f = "xxx"), impute.new.levels = FALSE)
-  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA), x$desc)
+  imputed = reimpute(data.frame(f = factor("newlvl"), x = NA_real_), x$desc)
   expect_true(is.na(imputed$f))
   expect_true("xxx" %in% levels(imputed$f))
 
@@ -103,9 +104,9 @@ test_that("Impute data frame", {
   expect_equal(x$data[["x.dummy"]], as.numeric(c(rep(FALSE, 5), TRUE)))
   expect_equal(reimpute(data, x$desc), x$data)
 
-  x = impute(data, target = target, dummy.classes = c("numeric"))$data
+  x = impute(data, target = target, dummy.classes = "numeric")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy")))
-  x = impute(data, target = target, dummy.classes = c("numeric"), dummy.cols = "z")$data
+  x = impute(data, target = target, dummy.classes = "numeric", dummy.cols = "z")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy", "z.dummy")))
 
   x = impute(data, target = target, classes = list(factor = imputeMode(), numeric = imputeMedian(),
@@ -120,7 +121,7 @@ test_that("Impute data frame", {
 })
 
 test_that("Impute and reimpute task", {
-  data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
+  data = data.frame(f = letters[c(1, 1, 1, 1, 2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
   data[6L, ] = NA
   classif.tar = factor(c(rep(c("a", "b"), 3L)))
   regr.tar = rep(c(.1, .2), 3L)
@@ -149,7 +150,7 @@ test_that("Impute and reimpute task", {
 
 test_that("ImputeWrapper", {
   d = iris[seq(1, 150, 3), ]
-  d[1,1] = NA_real_
+  d[1, 1] = NA_real_
   task = makeClassifTask(data = d, target = "Species")
   lrn = makeImputeWrapper("classif.rpart", classes = list(numeric = imputeMedian()))
   m = train(lrn, task)
@@ -165,7 +166,7 @@ test_that("ImputeWrapper", {
 })
 
 test_that("Impute works on non missing data", { # we had issues here: 848,893
-  data = data.frame(a = c(1,1,2), b = 1:3)
+  data = data.frame(a = c(1, 1, 2), b = 1:3)
   impute.methods = list(
     imputeConstant(0),
     imputeMedian(),
@@ -179,7 +180,7 @@ test_that("Impute works on non missing data", { # we had issues here: 848,893
     imputeLearner(learner = makeLearner("regr.fnn"))
   )
   for (impute.method in impute.methods) {
-    imputed = impute(data, cols = list(a=impute.method))$data
+    imputed = impute(data, cols = list(a = impute.method))$data
     expect_equal(data, imputed)
   }
   # test it in resampling
@@ -188,4 +189,11 @@ test_that("Impute works on non missing data", { # we had issues here: 848,893
   implrn = imputeLearner(makeLearner("regr.rpart"))
   lrn = makeImputeWrapper(makeLearner("regr.lm"), cols = list(a = implrn))
   holdout(lrn, task)
+})
+
+test_that("Logicals are casted to factors instead of character (#1522)", {
+  x = data.frame(a = c(TRUE, FALSE, NA))
+  y = impute(x, cols = list(a = imputeConstant("__miss__")))
+  res = factor(c("TRUE", "FALSE", "__miss__"), levels = c("FALSE", "TRUE", "__miss__"))
+  expect_equal(y$data$a, res)
 })

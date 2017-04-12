@@ -14,10 +14,11 @@ makeRLearner.classif.h2o.gbm = function() {
       makeIntegerLearnerParam("max_after_balance_size", lower = 0L, default = 1L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "missings"),
     name = "h2o.gbm",
     short.name = "h2o.gbm",
-    note = "'distribution' is set automatically to 'gaussian'."
+    note = "'distribution' is set automatically to 'gaussian'.",
+    callees = "h2o.gbm"
   )
 }
 
@@ -32,7 +33,7 @@ trainLearner.classif.h2o.gbm = function(.learner, .task, .subset, .weights = NUL
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
   h2of = h2o::as.h2o(d)
-  distribution = ifelse(length(getTaskDescription(.task)$class.levels) == 2L, "bernoulli", "multinomial")
+  distribution = ifelse(length(getTaskDesc(.task)$class.levels) == 2L, "bernoulli", "multinomial")
   h2o::h2o.gbm(y = y, x = x, training_frame = h2of, distribution = distribution, ...)
 }
 

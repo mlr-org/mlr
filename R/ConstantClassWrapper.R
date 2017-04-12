@@ -37,7 +37,7 @@ trainLearner.ConstantClassWrapper = function(.learner, .task, .subset, .weights 
     mod = makeS3Obj("ConstantClassModelConstant",
         label = factor(names(most.frequent)),
         levels = .task$task.desc$class.levels)
-    m = makeWrappedModel.Learner(.learner, mod, getTaskDescription(.task), .subset,
+    m = makeWrappedModel.Learner(.learner, mod, getTaskDesc(.task), .subset,
         getTaskFeatureNames(.task), getTaskFactorLevels(.task), 0)
   } else {
     m = train(.learner$next.learner, .task, .subset, weights = .weights)
@@ -54,7 +54,7 @@ predictLearner.ConstantClassWrapper = function(.learner, .model, .newdata, ...) 
       response = rep.int(mod$label, nrow(.newdata)),
       prob = matrix(as.numeric(mod$levels == mod$label),
           ncol = length(mod$levels), nrow = nrow(.newdata),
-          byrow = TRUE, dimnames = list(c(), mod$levels))
+          byrow = TRUE, dimnames = list(NULL, mod$levels))
     )
   } else {
     NextMethod()

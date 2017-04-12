@@ -3,7 +3,7 @@ instantiateResampleInstance = function(desc, size, task) {
 }
 
 instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL) {
-  inds = sample(size, size*desc$split)
+  inds = sample(size, size * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
@@ -20,7 +20,7 @@ instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
 }
 
 instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL) {
-  inds = lapply(seq_len(desc$iters), function(x) sample(size, size*desc$split))
+  inds = lapply(seq_len(desc$iters), function(x) sample(size, size * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 

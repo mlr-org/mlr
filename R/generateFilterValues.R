@@ -4,10 +4,6 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use \code{\link{listFilterMethods}}.
 #'
-#' @family generate_plot_data
-#' @family filter
-#' @aliases FilterValues
-#'
 #' @template arg_task
 #' @param method [\code{character}]\cr
 #'   Filter method(s), see above.
@@ -23,33 +19,38 @@
 #'   Default is empty list.
 #' @return [\code{FilterValues}]. A \code{list} containing:
 #'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
-#'	   Task description.}
+#'     Task description.}
 #'   \item{data}{[\code{data.frame}] with columns:
 #'     \itemize{
-#'       \item \code{name} Name of feature.
-#'       \item \code{type} Feature column type.
-#'       \item A column for each \code{method} with
-#'                   the feature importance values.
+#'       \item \code{name}[\code{character}]\cr
+#'         Name of feature.
+#'       \item \code{type}[\code{character}]\cr
+#'         Feature column type.
+#'       \item \code{method}[\code{numeric}]\cr
+#'         One column for each method with the feature importance values.
 #'     }}
+#' @family generate_plot_data
+#' @family filter
+#' @aliases FilterValues
 #' @export
 generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
-  check_task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
-  if (any(check_task))
+  check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
+  if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
-          stri_paste("'", method[check_task], "'", collapse = ", "), td$type)
+          stri_paste("'", method[check.task], "'", collapse = ", "), td$type)
 
-  check_feat = lapply(filter, function(x) setdiff(names(td$n.feat[td$n.feat > 0L]), x$supported.features))
-  check_length = sapply(check_feat, length) > 0L
-  if (any(check_length)) {
+  check.feat = lapply(filter, function(x) setdiff(names(td$n.feat[td$n.feat > 0L]), x$supported.features))
+  check.length = sapply(check.feat, length) > 0L
+  if (any(check.length)) {
     stopf("Filter(s) %s not compatible with features of type %s respectively",
-          stri_paste("'", method[check_length], "'", collapse = ", "),
-          stri_paste(sapply(check_feat[check_length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
+          stri_paste("'", method[check.length], "'", collapse = ", "),
+          stri_paste(sapply(check.feat[check.length], function(x) stri_paste("'", x, "'", collapse = ", ")), collapse = ", and "))
   }
   assertCount(nselect)
   assertList(more.args, names = "unique", max.len = length(method))
@@ -90,7 +91,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
   catf("Task: %s", x$task.desc$id)
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Calculates feature filter values.
 #'
@@ -118,7 +119,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
   assertChoice(method, choices = ls(.FilterRegister))
   out = generateFilterValuesData(task, method, nselect, ...)
   colnames(out$data)[3] = "val"
-  out$data = out$data[, c(1,3,2)]
+  out$data = out$data[, c(1, 3, 2)]
   makeS3Obj("FilterValues",
             task.desc = out$task.desc,
             method = method,
@@ -146,7 +147,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #' @template ret_gg2
 #' @export
 #' @examples
-#' fv = generateFilterValuesData(iris.task, method = "chi.squared")
+#' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(fvalues, classes = "FilterValues")
@@ -203,7 +204,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #' @template ret_ggv
 #' @export
 #' @examples \dontrun{
-#' fv = generateFilterValuesData(iris.task, method = "chi.squared")
+#' fv = generateFilterValuesData(iris.task, method = "variance")
 #' plotFilterValuesGGVIS(fv)
 #' }
 plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
@@ -215,7 +216,7 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
   data = fvalues$data
   data = setDF(melt(as.data.table(data), id.vars = c("name", "type"), variable = "method"))
 
-  create_plot = function(data, feat.type.cols) {
+  createPlot = function(data, feat.type.cols) {
     if (feat.type.cols)
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
                          ggvis::prop("y", as.name("value")),
@@ -230,7 +231,7 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
     return(plt)
   }
 
-  gen_plot_data = function(data, sort_type, value_column, factor_column, n_show) {
+  genPlotData = function(data, sort_type, value_column, factor_column, n_show) {
     if (sort_type != "none") {
       data = head(sortByCol(data, "value", FALSE), n = n_show)
       data[[factor_column]] = factor(data[[factor_column]],
@@ -242,10 +243,10 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
 
   requirePackages("_shiny")
   header = shiny::headerPanel(sprintf("%s (%i features)", fvalues$task.desc$id, sum(fvalues$task.desc$n.feat)))
-  method_input = shiny::selectInput("level_variable", "choose a filter method",
+  method.input = shiny::selectInput("level_variable", "choose a filter method",
                                     unique(levels(data[["method"]])))
-  sort_input = shiny::radioButtons("sort_type", "sort features", c("increasing", "decreasing", "none"))
-  n_show_input = shiny::numericInput("n_show", "number of features to show",
+  sort.input = shiny::radioButtons("sort_type", "sort features", c("increasing", "decreasing", "none"))
+  n.show.input = shiny::numericInput("n_show", "number of features to show",
                                      value = sum(fvalues$task.desc$n.feat),
                                      min = 1,
                                      max = sum(fvalues$task.desc$n.feat),
@@ -253,14 +254,14 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
   ui = shiny::shinyUI(
     shiny::pageWithSidebar(
       header,
-      shiny::sidebarPanel(method_input, sort_input, n_show_input),
+      shiny::sidebarPanel(method.input, sort.input, n.show.input),
       shiny::mainPanel(shiny::uiOutput("ggvis_ui"), ggvis::ggvisOutput("ggvis"))
     )
   )
   server = shiny::shinyServer(function(input, output) {
     plt = shiny::reactive(
-      create_plot(
-        data = gen_plot_data(
+      createPlot(
+        data = genPlotData(
           data[which(data[["method"]] == input$level_variable), ],
           input$sort_type,
           "value",

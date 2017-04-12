@@ -17,9 +17,10 @@ makeRLearner.classif.h2o.randomForest = function() {
       makeIntegerLearnerParam("max_after_balance_size", lower = 0L, default = 5L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "missings", "prob"),
     name = "h2o.randomForest",
-    short.name = "h2o.rf"
+    short.name = "h2o.rf",
+    callees = "h2o.randomForest"
   )
 }
 

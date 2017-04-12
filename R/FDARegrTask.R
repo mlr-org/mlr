@@ -27,18 +27,14 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
 }
 
 # td is the old task description, the function return a new task description
-makeTaskDesc.FDARegrTask = function(task, id, target, fd.features, fd.grids) {
-  new.td = makeTaskDesc.RegrTask(task = task , id = id, target = target)
+makeFDARegrTaskDesc = function(id, data, target, fd.features, fd.grids, weights, blocking) {
+  new.td = makeRegrTaskDesc(id, data, target, weights, blocking)
   new.td$type = "fdaregr"
-  feat.remain = getTaskFeatureNames(task)
-  # Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-  # to make subset(FDATask, features = 1:10) work for example, we need to adapt the fd.features and fd.grids according to the subseted global feature index.
-  new.td$fd.features = setNames(lapply(names(fd.features), function(fdn) {
-      fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
-    }), names(fd.features))
-  # since feat.remain is a character vector, we have to use fd.features[[fdn]] rather than fd.grids[[fdn]]
-  new.td$fd.grids = setNames(lapply(names(fd.features), function(fdn) {
-      fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
-    }), names(fd.grids))
+  #feat.remain = getTaskFeatureNames(task)
+  feat.remain = setdiff(names(data), target)
+  # Create new fields called fd.features and fd.grids for functional data
+  updated.desc = updateFDATaskDesc(fd.features, fd.grids, feat.remain)
+  new.td$fd.features = updated.desc$fd.features
+  new.td$fd.grids = updated.desc$fd.grids
   addClasses(new.td, "FDARegrTaskDesc")
 }

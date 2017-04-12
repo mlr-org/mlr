@@ -36,7 +36,7 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
   }
   if (is.null(fd.grids)) {
     fd.grids = setNames(lapply(X = names(fd.features), FUN = function(name) {
-        as.numeric(1:length(fd.features[[name]]))
+        seq_len(length(fd.features[[name]]))
       }), names(fd.features))
   }
   # check if target column is not used as fct.covariate
@@ -51,6 +51,7 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
   # two functional covariate can not occupy the same variable
   assert(length(unlist(fd.features)) == length(unique(unlist(fd.features))))
   cns = colnames(getTaskData(task))
+  # cns = c(getTaskTargetNames(task), getTaskFeatureNames(task)) can't be used, please do not use it!
   # lets check integrity of every entry of fd.features, then convert indices to character vector
   fd.features = lapply(fd.features, function(f) {
     if (is.character(f)) {
@@ -72,9 +73,23 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
 #' @export
 print.FDATask = function(x, ...) {
   print.SupervisedTask(x, print.target = FALSE, print.weights = FALSE)
-  fdf = getTaskDescription(x)$fd.features
+  fdf = getTaskDesc(x)$fd.features
   # for every func covar get name and length
   s = vcapply(names(fdf), function(f) sprintf("%s (%i)", f, length(fdf[[f]])))
   catf("Functional features: %i\n%s", length(fdf), clipString(collapse(s, sep = ", "), 30L))
   catf("Scalar features: %i", getTaskNFeats(x) - sum(viapply(fdf, length)))
+}
+
+# Called in makeFDAClasifTask / makeFDARegrTask
+# Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
+updateFDATaskDesc = function(fd.features, fd.grids, feat.remain) {
+  # to make subset(FDATask, features = 1:10) work for example, we need to adapt the fd.features and fd.grids according to the subseted global feature index.
+  a.features = setNames(lapply(names(fd.features), function(fdn) {
+    fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
+  }), names(fd.features))
+  # since feat.remain is a character vector with variable names, we use fd.features[[fdn]] for indexing
+  a.grids = setNames(lapply(names(fd.features), function(fdn) {
+    fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
+  }), names(fd.grids))
+  list(fd.features = a.features, fd.grids = a.grids)
 }

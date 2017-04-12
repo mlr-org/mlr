@@ -5,25 +5,27 @@ test_that("classif_cvglmnet", {
 
   parset.list = list(
     list(),
+    list(mnlam = 4),
     list(nlambda = 20, nfolds = 5)
   )
 
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     x = binaryclass.train
     y = x[, binaryclass.class.col]
     x[, binaryclass.class.col] = NULL
     pars = list(x = as.matrix(x), y = y, family = "binomial")
     pars = c(pars, parset)
+    glmnet::glmnet.control(factory = TRUE)
     ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
+      on.exit(glmnet::glmnet.control(factory = TRUE))
       do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet::cv.glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet::glmnet.control(factory = TRUE)
     } else {
       m = do.call(glmnet::cv.glmnet, pars)
     }
@@ -37,6 +39,6 @@ test_that("classif_cvglmnet", {
 
   testSimpleParsets("classif.cvglmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.cvglmnet", binaryclass.df, binaryclass.target,
+  testProbParsets("classif.cvglmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
 })

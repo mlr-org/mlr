@@ -31,13 +31,15 @@ Default is empty list.}
 \value{
 [\code{FilterValues}]. A \code{list} containing:
   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
-   Task description.}
+    Task description.}
   \item{data}{[\code{data.frame}] with columns:
     \itemize{
-      \item \code{name} Name of feature.
-      \item \code{type} Feature column type.
-      \item A column for each \code{method} with
-                  the feature importance values.
+      \item \code{name}[\code{character}]\cr
+        Name of feature.
+      \item \code{type}[\code{character}]\cr
+        Feature column type.
+      \item \code{method}[\code{numeric}]\cr
+        One column for each method with the feature importance values.
     }}
 }
 \description{

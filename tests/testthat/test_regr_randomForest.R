@@ -13,7 +13,7 @@ test_that("regr_randomForest", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = regr.formula, data = regr.train)
     pars = c(pars, parset)
@@ -49,20 +49,32 @@ test_that("fix factors work", {
 })
 
 test_that("different se.methods work", {
-  se.methods = c("bootstrap", "jackknife")
+  se.methods = c("bootstrap", "jackknife", "sd")
+  preds = setNames(vector("list", length(se.methods)), se.methods)
   for (se.method in se.methods) {
-    keep.inbag = se.method %in% c("jackknife")
-    learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10L, keep.inbag = keep.inbag)
-    model = train(learner, task = regr.task, subset = regr.train.inds)
+    keep.inbag = se.method == "jackknife"
+    par.vals = list(se.method = se.method, ntree = 10L, keep.inbag = keep.inbag)
+    if (se.method == "bootstrap") {
+      par.vals = c(par.vals, list(se.ntree = 5L, se.boot = 3L))
+    }
+    learner = makeLearner("regr.randomForest", predict.type = "se", par.vals = par.vals)
+    set.seed(getOption("mlr.debug.seed"))
+    model = train(learner, task = bh.task, subset = 1:500)
 
-    pred.all = predict(model, task = regr.task, subset = 1)
-    expect_true(is.numeric(pred.all$data$se))
-    expect_true(all(pred.all$data$se >= 0))
+    set.seed(getOption("mlr.debug.seed"))
+    preds[[se.method]] = predict(model, task = bh.task)
+    expect_true(is.numeric(preds[[se.method]]$data$se))
+    expect_true(all(preds[[se.method]]$data$se >= 0))
 
-    pred.one = predict(model, task = regr.task, subset = 1)
+    # test if it works with one row
+    pred.one = predict(model, task = bh.task, subset = 501)
     expect_true(is.numeric(pred.one$data$se))
     expect_true(all(pred.one$data$se >= 0))
   }
+  # mean prediction should be unaffected from the se.method
+  expect_equal(preds$bootstrap$data$response, preds$sd$data$response)
+  expect_equal(preds$sd$data$response, preds$jackknife$data$response)
+
 })
 
 
@@ -71,7 +83,7 @@ test_that("dplyr data.frames work", {
   mpg$model = NULL
   for (cname in colnames(mpg)[sapply(mpg, is.character)])
     mpg[[cname]] = as.factor(mpg[[cname]])
-  expect_warning((task_mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
+  expect_warning((task.mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
   lrn = makeLearner("regr.randomForest", ntree = 2)
-  train(lrn, task_mpg)
+  train(lrn, task.mpg)
 })

@@ -10,10 +10,11 @@ makeRLearner.regr.elmNN = function() {
       # FIXME default of nhid and actfun not in the help, if the defaults are correct, par.vals is redundant
     ),
     par.vals = list(nhid = 1L, actfun = "sig"),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks",
     short.name = "elmNN",
-    note = '`nhid` has been set to `1` and `actfun` has been set to `"sig"` by default.'
+    note = '`nhid` has been set to `1` and `actfun` has been set to `"sig"` by default.',
+    callees = "elmtrain.default"
   )
 }
 
@@ -25,5 +26,5 @@ trainLearner.regr.elmNN = function(.learner, .task, .subset, .weights = NULL, ..
 
 #' @export
 predictLearner.regr.elmNN = function(.learner, .model, .newdata, ...) {
-  elmNN::predict.elmNN(.model$learner.model, newdata = as.matrix(.newdata), ...)[,1L]
+  elmNN::predict.elmNN(.model$learner.model, newdata = as.matrix(.newdata), ...)[, 1L]
 }

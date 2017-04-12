@@ -39,17 +39,18 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "skip_drop", default = 0, lower = 0, upper = 1, requires = quote(booster == "dart"))
     ),
     par.vals = list(nrounds = 1L, verbose = 0L),
-    properties = c("numerics", "factors", "weights", "featimp"),
+    properties = c("numerics", "weights", "featimp", "missings"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default."
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` and `verbose` to `0` by default.",
+    callees = "xgboost"
   )
 }
 
 #' @export
 trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   parlist = list(...)
-  
+
   parlist$label = getTaskData(.task, .subset, target.extra = TRUE)$target
   parlist$data = data.matrix(getTaskData(.task, .subset, target.extra = TRUE)$data)
 
@@ -58,7 +59,7 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 
   if (!is.null(.weights))
     parlist$data = xgboost::xgb.DMatrix(data = parlist$data, label = parlist$label, weight = .weights)
-  
+
   do.call(xgboost::xgboost, parlist)
 }
 

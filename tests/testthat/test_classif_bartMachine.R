@@ -12,7 +12,7 @@ test_that("classif_bartMachine", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     x = binaryclass.train
     y = factor(x[, binaryclass.class.col], levels = binaryclass.class.levs)
@@ -36,7 +36,7 @@ test_that("classif_bartMachine", {
   testProbParsets("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)
 
-  for (i in 1:length(parset.list)){
+  for (i in seq_along(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(binaryclass.test))
     expect_true(length(old.probs.list[[i]]) == nrow(binaryclass.test))
   }
@@ -47,6 +47,6 @@ test_that("classif_bartMachine", {
 test_that("classif_bartMachine works with missing values", {
   requirePackagesOrSkip("bartMachine", default.method = "load")
   foo = binaryclass.df
-  foo[1,1] = NA
+  foo[1, 1] = NA
   bartMachine::bartMachine(X = foo, y = foo[[binaryclass.target]], use_missing_data = TRUE)
 })

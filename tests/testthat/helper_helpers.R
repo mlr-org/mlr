@@ -1,6 +1,6 @@
 library(checkmate)
 
-requirePackagesOrSkip = function (packs, default.method = "attach") {
+requirePackagesOrSkip = function(packs, default.method = "attach") {
   ok = requirePackages(packs, why = "unit test", stop = FALSE, suppress.warnings = TRUE, default.method = default.method)
   if (any(!ok))
     skip(sprintf("Required packages not installed: %s", collapse(names(ok)[!ok])))
@@ -20,7 +20,7 @@ e1071CVToMlrCV = function(e1071.tune.result) {
     cv.instance$train.inds[[i]] = inds[[i]]
     cv.instance$test.inds[[i]] = setdiff(1:size, inds[[i]])
   }
-  return (cv.instance)
+  return(cv.instance)
 }
 
 
@@ -38,14 +38,14 @@ e1071BootstrapToMlrBootstrap = function(e1071.tune.result) {
     bs.instance$train.inds[[i]] = inds[[i]]
     bs.instance$test.inds[[i]] = setdiff(1:size, inds[[i]])
   }
-  return (bs.instance)
+  return(bs.instance)
 }
 
 
 testSimple = function(t.name, df, target, train.inds, old.predicts, parset = list()) {
   inds = train.inds
-  train = df[inds,]
-  test = df[-inds,]
+  train = df[inds, ]
+  test = df[-inds, ]
 
   lrn = do.call("makeLearner", c(list(t.name), parset))
   # FIXME this heuristic will backfire eventually
@@ -83,10 +83,10 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
 
 testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, parset.list) {
   inds = train.inds
-  train = df[inds,]
-  test = df[-inds,]
+  train = df[inds, ]
+  test = df[-inds, ]
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.predicts = old.predicts.list[[i]]
     testSimple(t.name, df, target, train.inds, old.predicts, parset)
@@ -96,10 +96,10 @@ testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, 
 
 testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) {
   inds = train.inds
-  train = df[inds,]
-  test = df[-inds,]
+  train = df[inds, ]
+  test = df[-inds, ]
 
-  if(length(target) == 1) {
+  if (length(target) == 1) {
     task = makeClassifTask(data = df, target = target)
   } else {
     task = makeMultilabelTask(data = df, target = target)
@@ -130,10 +130,10 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
 
 testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parset.list) {
   inds = train.inds
-  train = df[inds,]
-  test = df[-inds,]
+  train = df[inds, ]
+  test = df[-inds, ]
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
     testProb(t.name, df, target, train.inds, old.probs, parset)
@@ -146,13 +146,13 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
   data = df
   formula = formula(paste(target, "~."))
 
-  tt = function(formula, data, subset = 1:nrow(data), ...) {
+  tt = function(formula, data, subset = seq_len(nrow(data)), ...) {
     pars = list(formula = formula, data = data[subset, ])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output(
-      m <- do.call(tune.train, pars)
-      )
+    capture.output({
+      m = do.call(tune.train, pars)
+    })
     return(m)
   }
 
@@ -172,17 +172,17 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     task = makeClassifTask(data = df, target = target)
   ms = resample(lrn, task, cv.instance)$measures.test
   if (inherits(task, "ClassifTask")) {
-    expect_equal(mean(ms[,"mmce"]), tr$performances[1,2], check.names = FALSE)
-    expect_equal(sd  (ms[,"mmce"]), tr$performances[1,3], check.names = FALSE)
+    expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2], check.names = FALSE)
+    expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3], check.names = FALSE)
   } else {
-    expect_equal(mean(ms[,"mse"]), tr$performances[1,2], check.names = FALSE)
-    expect_equal(sd  (ms[,"mse"]), tr$performances[1,3], check.names = FALSE)
+    expect_equal(mean(ms[, "mse"]), tr$performances[1, 2], check.names = FALSE)
+    expect_equal(sd(ms[, "mse"]), tr$performances[1, 3], check.names = FALSE)
   }
 }
 
 testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     testCV(t.name, df, target, folds, parset, tune.train, tune.predict)
   }
@@ -206,11 +206,11 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
     task = makeClassifTask(data = df, target = target)
   ms = resample(lrn, task, bs.instance)$measures.test
   if (inherits(task, "ClassifTask")) {
-    expect_equal(mean(ms[,"mmce"]), tr$performances[1,2], check.names = FALSE)
-    expect_equal(sd  (ms[,"mmce"]), tr$performances[1,3], check.names = FALSE)
+    expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2], check.names = FALSE)
+    expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3], check.names = FALSE)
   } else {
-    expect_equal(mean(ms[,"mse"]), tr$performances[1,2], check.names = FALSE)
-    expect_equal(sd  (ms[,"mse"]), tr$performances[1,3], check.names = FALSE)
+    expect_equal(mean(ms[, "mse"]), tr$performances[1, 2], check.names = FALSE)
+    expect_equal(sd(ms[, "mse"]), tr$performances[1, 3], check.names = FALSE)
   }
 }
 
@@ -222,7 +222,7 @@ mylist = function(..., create = FALSE) {
     return(lrns[!grepl("mock", ids)])
   } else {
     ids = lrns$class
-    return(lrns[!grepl("mock", ids),])
+    return(lrns[!grepl("mock", ids), ])
   }
 }
 
@@ -252,4 +252,16 @@ testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {
     node.strings = vcapply(nodes, XML::getChildrenStrings)
     expect_equal(node.strings[seq_along(x)], x)
   }
+}
+
+constant05Resample = function(...) {
+  res = resample(...)
+  res$aggr = rep(0.5, length(res$aggr))
+  res
+}
+
+# evaluate expr without giving its output.
+quiet = function(expr) {
+  capture.output({ret = expr})
+  ret
 }

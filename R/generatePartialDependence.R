@@ -262,8 +262,8 @@ generatePartialDependenceData = function(obj, input, features,
         args$rng = rng
         out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
-          centerpred = doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
-            x, fun, td, 1, bounds = bounds, ...)
+          centerpred = as.data.frame(doPartialDependenceIteration(obj, data, center[, x, drop = FALSE],
+            x, fun, td, 1, bounds = bounds, ...))
         else
           centerpred = NULL
       }
@@ -441,15 +441,15 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   depths = sapply(U, length)
 
   effects = sapply(U, function(u) stri_paste(u, collapse = ":"))
-  fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
-  names(fixed_grid) = effects
+  fixed.grid = lapply(U, function(u) expand.grid(fixed[u]))
+  names(fixed.grid) = effects
 
   target = td$target
 
   ## generate each effect
   pd = lapply(U, function(u, args) {
     args$features = u
-    args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
+    args$rng = fixed.grid[[stri_paste(u, collapse = ":")]]
     out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(args$rng)), more.args = args)
     doAggregatePartialDependence(out, td, target, u, args$rng)
   }, args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds, ...))
@@ -465,11 +465,11 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
     if (length(u) > 1) {
       sub = combn(u, length(u) - 1, simplify = FALSE)
       loe = lapply(pd[unlist(sub)], function(x) {
-        to_match = colnames(x)[!(colnames(x) %in% target)]
-        out = merge(x, hoe[, to_match, drop = FALSE], by = to_match)
+        to.match = colnames(x)[!(colnames(x) %in% target)]
+        out = merge(x, hoe[, to.match, drop = FALSE], by = to.match)
         out[, colnames(out) %in% target]
       })
-      hoe[, target] = hoe[, target] - Reduce('+', loe)
+      hoe[, target] = hoe[, target] - Reduce("+", loe)
     }
     hoe
   })
@@ -494,7 +494,7 @@ print.FunctionalANOVAData = function(x, ...) {
   catf("Target: %s", stri_paste(x$target, collapse = ", "))
   catf("Interaction Depth: %s", x$depth)
   catf("Effects Computed: %s", stri_paste(levels(x$data$effect), collapse = ", "))
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 
 doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
@@ -531,12 +531,12 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
       t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun.wrapper, td = td, ...))
   } else {
     if (obj$learner$predict.type == "response")
-      sapply(1:nrow(data), function(idx)
-        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE],
+      sapply(seq_len(nrow(data)), function(idx)
+        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx, , drop = FALSE],
           features = features, fun = fun.wrapper, td = td, ...))
     else
-      t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
-        data = data[idx,, drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
+      t(sapply(seq_len(nrow(data)), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
+        data = data[idx, , drop = FALSE], features = features, fun = fun.wrapper, td = td, ...)))
   }
 }
 
@@ -591,8 +591,9 @@ doAggregatePartialDependence = function(out, td, target, features, rng) {
 doIndividualPartialDependence = function(out, td, n, rng, target, features, centerpred = NULL) {
   if (td$type == "classif" & length(td$class.levels) > 2L) {
     if (!is.null(centerpred))
-      out = lapply(out, function(x) x - centerpred)
-    out = as.data.frame(do.call("rbind", out))
+      out = lapply(out, function(x) x - centerpred) else
+        out = lapply(out, as.data.frame)
+    out = as.data.frame(rbindlist(out))
     colnames(out) = target
     idx = rep(seq_len(n), nrow(rng))
     rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
@@ -601,9 +602,9 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
       variable.name = "Class", value.name = "Probability", variable.factor = TRUE)
     out$idx = interaction(out$idx, out$Class)
   } else {
-    out = as.data.frame(do.call("rbind", out))
+    out = as.data.frame(setDT(transpose(out))) # see https://github.com/Rdatatable/data.table/issues/600
     if (!is.null(centerpred))
-      out = t(apply(out, 1, function(x) x - centerpred))
+      out = out - setDF(transpose(rep(centerpred, nrow(out)))) #t(as.data.frame(lapply(out, function(x) unname(x - centerpred))))
     colnames(out) = 1:n
     out = cbind(out, rng)
     out = melt(out, id.vars = features, variable.name = "idx", value.name = target)
@@ -625,7 +626,7 @@ print.PartialDependenceData = function(x, ...) {
   catf("Individual: %s", x$individual)
   if (x$individual)
     catf("Predictions centered: %s", x$center)
-  printHead(x$data)
+  printHead(x$data, ...)
 }
 #' @title Plot a partial dependence with ggplot2.
 #' @description
@@ -908,7 +909,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
   else
     target = "Risk"
 
-  create_plot = function(td, target, interaction, individual, data, x, bounds) {
+  createPlot = function(td, target, interaction, individual, data, x, bounds) {
     classif = td$type == "classif" & all(target %in% td$class.levels)
     if (classif) {
       if (interaction)
@@ -981,12 +982,12 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
         )
       ))
     server = shiny::shinyServer(function(input, output) {
-      plt = shiny::reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
+      plt = shiny::reactive(createPlot(obj$task.desc, obj$target, obj$interaction, obj$individual,
           obj$data[obj$data[[interact]] == input$interaction_select, ],
           x, bounds))
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
       })
     shiny::shinyApp(ui, server)
   } else
-    create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
+    createPlot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
 }

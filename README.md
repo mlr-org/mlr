@@ -19,8 +19,9 @@
     ```
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
-* [We are on Slack](https://mlr-org.slack.com/)
+* [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
 * [We have a blog on mlr](https://mlr-org.github.io/)
+* A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/List-of-Possible-Enhancements-to-mlr) - contributors welcome!
 * We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
 * **If you like the package, please "star" it on Github.**
 
@@ -34,6 +35,8 @@ If you use these parts, please cite the relevant work appropriately:
 
 * Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://dx.doi.org/10.1080/00949655.2014.929131).
 * Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://dx.doi.org/10.1007/978-3-319-28697-6_6).
+* Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
+* Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/pdf/1703.08991.pdf)
 
 A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).
 
@@ -92,6 +95,21 @@ News
 ====
 Changes of the packages can be accessed in the [NEWS file](https://github.com/mlr-org/mlr/blob/master/NEWS.md) shipped with the package.
 
+* OpenML has been accepted as a tutorial at useR2017! Blog post is
+  [here](http://mlr-org.github.io/OpenML-tutorial-at-useR/).
+* 2017-03-15: mlr 2.11 released to CRAN. About 1000 smaller fixes and convenience extensions and
+  functions. Larger new features are: Bayesian Optimization with
+  [mlrMBO](https://github.com/mlr-org/mlrMBO), learner API now supports extracting OOB predictions.
+* Our Bayesian Optimization framework [mlrMBO](https://github.com/mlr-org/mlrMBO) has FINALLY been released to CRAN.
+  Have a look at our paper [here](https://arxiv.org/abs/1703.03373).
+* 2017-03-06: We had a week-long very productive mlr workshop at the LMU in Munich.
+  Blog post is [here](http://mlr-org.github.io/mlr-workshop/). Many thanks to our sponsors that made
+  it possible that we could invite our American and Canadian friends.
+* 2017-02-07: mlr 2.10 released to CRAN. About 1000 smaller fixes and convenience extensions and
+  functions. Larger new features are: parallel irace tuning, learner API now supports feature
+  importance extractions, better tables for confusion matrix and ROC tables, dummy learners with
+  random or constant output for baseline comparisons and fuzzy matching to propose learner names
+  when you mistyped a string.
 * 2016-10-20:
   * The JMLR paper on mlr is finally published! See "How to cite" section above.
 * 2016-08-24:
