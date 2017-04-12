@@ -92,7 +92,7 @@ test_that("FDA_classif_knn behaves like original api", {
               "semimetric.deriv",
               "semimetric.fourier",
               "semimetric.hshift",
-              "semimetric.mplsr",
+              # "semimetric.mplsr",
               "semimetric.pca")
   lrn.metrics = list()
   for(i in 1:length(metrics)) {
@@ -140,3 +140,4 @@ type = 'semimetric.basis'", {
 
   expect_equal(a1$mdist, m$learner.model$mdist)
   })
+
