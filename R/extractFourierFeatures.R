@@ -5,7 +5,8 @@
 #' transform.
 #'
 #' @param data [\code{data.frame}]\cr
-#'   Data for a single functional covariate.
+#'   Data.frame with one row per observation of a single functional covariate or time series and
+#'   one column per measurement time point.
 #' @param target [\code{character}]\cr
 #'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
 #'   set to be consistent with the API.
@@ -16,7 +17,7 @@
 #' @return [\code{data.frame}] containing the fourier coefficients.
 #' @rdname extractFDAFeatures
 #' @export
-extractFDAFeatFourier = function(data, target = NULL, cols, vals = NULL, trafo.coeff = "phase") {
+extractFourierFeatures = function(data, target = NULL, cols, vals = NULL, trafo.coeff = "phase") {
 
   assertClass(data, "data.frame")
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))

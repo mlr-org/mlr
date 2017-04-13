@@ -63,9 +63,7 @@ extractFDAMinMax = function() {
     data.frame("min" = apply(data[, cols], 1, min, na.rm = TRUE),
       "max" = apply(data[, cols], 1, max, na.rm = TRUE))
   }
-  makeExtractFDAFeatMethod(
-    learn = lrn,
-    reextract = lrn)
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
 }
 
 #' @export
@@ -74,7 +72,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
   lrn = function(data, target, cols, vals, trafo.coeff) {
-    extractFDAFeatFourier(data = data, target = NULL, cols = cols, vals = NULL,
+    extractFourierFeatures(data = data, target = NULL, cols = cols, vals = NULL,
       trafo.coeff = trafo.coeff)
   }
   makeExtractFDAFeatMethod(
@@ -87,10 +85,8 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @export
 #' @rdname extractFDAFeatures
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
-  # create a function that calls extractFDAFeatWavelets
-  assertChoice(boundary, choices = c("periodic", "reflection" ))
   lrn = function(data, target, cols, vals, filter, boundary) {
-    extractFDAFeatWavelets(data = data, target = NULL, cols = cols, vals = NULL,
+    extractWaveletFeatures(data = data, target = NULL, cols = cols, vals = NULL,
       filter = filter, boundary = boundary)
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
