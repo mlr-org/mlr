@@ -15,6 +15,10 @@
 makeExtractFDAFeatsWrapper = function(learner, feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
 
+  # FIXME:
+  # This is stupid, we can not handle multiple tasks for a wrapper this way.
+  # (Impute cant do this neither if using cols = list("X1" = ...) )
+
   learner = checkLearner(learner)
   args = list(feat.methods = feat.methods, fd.features = fd.features, fd.grids = fd.grids)
   rm(list = names(args))

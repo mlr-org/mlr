@@ -30,6 +30,8 @@
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
 #'   for each functional covariate. A signature for the desired function can be provided for
 #'   every covariable. Multiple functions for a  single covariable are not allowed.
+#'   Specifying \code{feat.methods} = "all" applies the \code{extratFDAFeatures} method to each
+#'   functional covariate.
 #' @template arg_fdatask_pars
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
@@ -56,11 +58,23 @@ extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()
 extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list(),
   fd.features = list(), fd.grids = list()) {
 
-  assertSubset(names(feat.methods), names(fd.features))
+  # FIXME:
+  # Passing fd.features and fd.grids to the wrapper (which uses data.frame method) is stupid.
+  # The wrapped learner then can only be used for ONE task.
+  # We should get it from the respective task.
+  # ONLY for usage with a data.frame, those might somehow be needed.
+
+  assertSubset(names(feat.methods), c(names(fd.features), "all"))
   assertList(fd.features)
   assertList(fd.grids)
   assert(all(names(fd.features) == names(fd.grids)))
   assertSubset(unlist(fd.features), choices = colnames(obj))
+
+  # If the same transform should be applied to all features, rep method and name accordingly
+  if(names(feat.methods)[1] == "all") {
+    feat.methods = setNames(rep(feat.methods, length(fd.features)), names(fd.features))
+  }
+
 
   desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
@@ -90,7 +104,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
       # feats are the extracted features
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols))),
       args = x$args, # Args passed to x$reextract
-      reextract = x$reextract  # pass on reextraction learner for extraction in predict phase
+      reextract = x$reextract  # pass on reextraction learner for extraction in prediction
     )
   }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
 
@@ -107,7 +121,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
     stop("feat.method needs to return a data.frame with one row
       per observation in the original data and equal nrow per column.")
   }
-  # Cbind resulting columns. Use data.table to ensure proper naming.
+  # cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
 
   # Reappend target and non-functional features

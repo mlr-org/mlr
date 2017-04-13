@@ -20,7 +20,6 @@ test_that("extractFDAFeatures colnames work", {
 
 
 test_that("Wrong methods yield errors", {
-
   t = subsetTask(fuelsubset.task, subset = 1:2)
 
   wrng1 = function() {
@@ -93,6 +92,25 @@ test_that("extractFDAFeatures task equal data.frame", {
 test_that("reExtractFDAFeatures", {
   gp.subset = subsetTask(gunpoint.task, features = c(1:10))
   fm = list("fd1" = extractFDAFourier(trafo.coeff = "amplitude"))
+  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+})
+
+test_that("extract reExtract feat.methods all", {
+  fm2 = list("all" = extractFDAFourier(trafo.coeff = "amplitude"))
+  t3 = extractFDAFeatures(fuelsubset.task, feat.methods = fm2)
+  t4 = reExtractFDAFeatures(fuelsubset.task, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+})
+
+test_that("extract and reExtract Wavelets", {
+  gp.subset = subsetTask(gunpoint.task, features = c(1:10))
+  fm = list("fd1" = extractFDAWavelets(filter = "haar", boundary = "reflection"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reExtractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))

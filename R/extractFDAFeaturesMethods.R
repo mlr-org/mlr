@@ -28,6 +28,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'   \item \code{extractFDAMean()} for extracting the mean from a curve.
 #'   \item \code{extractFDAMinMax()} for extracting the min and max from a curve.
 #'   \item \code{extractFDAFourier()} for extracting fourier coefficients from a curve.
+#'   \item \code{extractFDAWavelets()} for extracting wavelets from a curve.
 #'  }
 #' @name extractFDAFeatures
 #' @rdname extractFDAFeatures

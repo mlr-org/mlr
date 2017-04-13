@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The function extracts features from functional data based on the fast fourier
-#' transform.
+#' transform. For more details refer to \code{\link[stats]{fft}}.
 #'
 #' @param data [\code{data.frame}]\cr
 #'   Data.frame with one row per observation of a single functional covariate or time series and
@@ -21,6 +21,7 @@ extractFourierFeatures = function(data, target = NULL, cols, vals = NULL, trafo.
 
   assertClass(data, "data.frame")
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
+
   # Transform data to matrix for stats::fft
   data = as.matrix(data[, cols])
   assertNumeric(data)
@@ -37,7 +38,7 @@ extractFourierFeatures = function(data, target = NULL, cols, vals = NULL, trafo.
   if (!inherits(fft.pa, "matrix")) {
     fft.pa = as.data.frame(matrix(fft.pa, nrow = 1))
   }
-  # Add more legible names
+  # Add more legible column names to the output
   df = as.data.frame(fft.pa)
   colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)), sep = ".")
   df
