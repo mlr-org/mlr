@@ -87,13 +87,10 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   # Add methods to description
   desc$extractFDAFeat[names(feat.methods)] = feat.methods
-
   # cleanup the empty list
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
-
   # Subset fd.features accordingly
   desc$fd.features = desc$fd.features[names(desc$extractFDAFeat)]
-
   # Assert that all functional features to be transformed are numeric
   assert(unique(vcapply(obj[, unlist(desc$fd.features)], function(x) class(x)[1L])) == "numeric")
 
