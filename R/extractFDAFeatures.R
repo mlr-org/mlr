@@ -71,10 +71,9 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   assertSubset(unlist(fd.features), choices = colnames(obj))
 
   # If the same transform should be applied to all features, rep method and name accordingly
-  if(names(feat.methods)[1] == "all") {
+  if (names(feat.methods)[1] == "all") {
     feat.methods = setNames(rep(feat.methods, length(fd.features)), names(fd.features))
   }
-
 
   desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
@@ -96,7 +95,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
-  extractFDAFeat = Map(function(xn, x, fd.cols) {
+  extracts = Map(function(xn, x, fd.cols) {
     list(
       # feats are the extracted features
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols))),
@@ -106,10 +105,10 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
 
   # Append Info relevant for reextraction to desc
-  desc$extractFDAFeat = lapply(extractFDAFeat, function(x) {c(x["args"], x["reextract"])})
+  desc$extractFDAFeat = lapply(extracts, function(x) {c(x["args"], x["reextract"])})
 
   # Extract feats for every functional feature and cbind to data.frame
-  vals = extractSubList(extractFDAFeat, "feats", simplify = FALSE)
+  vals = extractSubList(extracts, "feats", simplify = FALSE)
 
   if (!any(vlapply(vals, is.data.frame))) {
     stop("feat.method needs to return a data.frame with one row
@@ -191,7 +190,8 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
   reextract = Map(
     function(xn, x, fd.cols) {
       do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
-      }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
+    },
+    xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
 
   # cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(reextract, setDT)))
