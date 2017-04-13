@@ -12,7 +12,7 @@ test_that("FDA_multiResNaive", {
 
 
 test_that("FDA_multiResNaive2", {
-  
+
   I = 1000  # number of instances
   TL  = 200 # length of each time serie instance
   Ts = replicate(I, rnorm(TL))
@@ -22,17 +22,17 @@ test_that("FDA_multiResNaive2", {
 })
 
 test_that("FDA_multiResNaive3", {
-  df = getTaskData(fuelSubset.task)
-  rdesc = getTaskDescription(fuelSubset.task)
+  df = getTaskData(fuelsubset.task)
+  rdesc = getTaskDescription(fuelsubset.task)
   fdf = rdesc$fd.features
   dfn = getMultiFDAMultiResFeatures(data= df, fd.features = fdf)
   expect_true(nrow(df) == nrow(dfn))
 })
 
 test_that("FDA_multiResNaive4", {
-  df = getTaskData(fuelSubset.task, target.extra = TRUE)
+  df = getTaskData(fuelsubset.task, target.extra = TRUE)
   df = df$data
-  rdesc = getTaskDescription(fuelSubset.task)
+  rdesc = getTaskDescription(fuelsubset.task)
   fdf = rdesc$fd.features
   dfn = extractFDAMultiResFeatures(data= df, curve.lens = rep(180,2))
   expect_true(nrow(df) == nrow(dfn))
