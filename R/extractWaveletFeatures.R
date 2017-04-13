@@ -6,7 +6,7 @@
 #'
 #' @param data [\code{data.frame}]\cr
 #'   Data.frame with one row per observation of a single functional or time series and
-#'   one column per measurement time point.
+#'   one column per measurement time point. All entries need to be numeric.
 #' @param target [\code{character}]\cr
 #'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
 #'   set to be consistent with the API.
@@ -24,11 +24,13 @@
 #' @export
 extractWaveletFeatures = function(data, target = NULL, cols, vals = NULL, filter = "la8", boundary = "periodic") {
   requirePackages("wavelets", default.method = "load")
+
   assertClass(data, "data.frame")
+  assertNumeric(as.matrix(data[, cols]))
   assertCharacter(filter)
   assertChoice(boundary, c("periodic", "reflection"))
 
-  df = BBmisc::convertRowsToList(data)
+  df = BBmisc::convertRowsToList(data[, cols])
   wtdata = t(BBmisc::dapply(df, fun = function(x) {
     wt = wavelets::dwt(as.numeric(x), filter = filter, boundary = boundary)
     unlist(c(wt@W, wt@V[[wt@level]]))

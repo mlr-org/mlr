@@ -6,7 +6,7 @@
 #'
 #' @param data [\code{data.frame}]\cr
 #'   Data.frame with one row per observation of a single functional covariate or time series and
-#'   one column per measurement time point.
+#'   one column per measurement time point. All entries need to be numeric.
 #' @param target [\code{character}]\cr
 #'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
 #'   set to be consistent with the API.
@@ -23,6 +23,7 @@ extractFourierFeatures = function(data, target = NULL, cols, vals = NULL, trafo.
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
   # Transform data to matrix for stats::fft
   data = as.matrix(data[, cols])
+  assertNumeric(data)
 
   # Calculate fourier coefficients (row wise) which are complex numbers
   fft.trafo = t(apply(data, 1, fft))
