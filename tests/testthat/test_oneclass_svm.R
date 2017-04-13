@@ -15,7 +15,7 @@ test_that ("oneclass_svm", {
 
   old.predicts.list = list()
 
-  for (seq_along(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(x = oneclass.train[, -5])
     pars = c(pars, list(type = "one-classification"))
