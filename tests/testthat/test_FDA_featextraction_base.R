@@ -17,7 +17,7 @@ test_that("FDA_FeatExtraction", {
 
 test_that("FDA_MultiFeatExtraction", {
   fuel = getTaskData(fuelsubset.task, target.extra = TRUE)
-  tdesc = getTaskDescription(fuelsubset.task)
+  tdesc = getTaskDesc(fuelsubset.task)
   d = extractMultiFDAFeatures(data = fuel$data, target = getTaskTargetNames(fuelsubset.task), fd.features = tdesc$fd.features , method = "wavelets", args = list( filter = "d4", boundary = "reflection"))
   expect_true(dim(d)[1] == dim(fuel$data)[1])
   d = extractMultiFDAFeatures(data = fuel$data, target = getTaskTargetNames(fuelsubset.task), fd.features = tdesc$fd.features , method = "fourier", args = list())

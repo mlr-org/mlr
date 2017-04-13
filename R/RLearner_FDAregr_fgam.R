@@ -6,7 +6,7 @@ makeRLearner.fdaregr.fgam = function() {
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
       makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
-      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)), 
+      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),
       makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L),  # see mgcv::te() documentation
       makeIntegerVectorLearnerParam(id = "mgcv.teti.k", lower = 1L),  # see mgcv::te() documentation
       # skipped argvals
@@ -25,16 +25,16 @@ makeRLearner.fdaregr.fgam = function() {
 #  @param s.k [\code{integer}] \cr
 #  the dimension of the basis used to represent the smooth term.
 #  The default depends on the number of variables that the smooth is a function of.
-#  it should be chosen to be large enough that you are reasonably sure of having 
-#  enough degrees of freedom to represent the underlying ‘truth’ reasonably well, 
-#  but small enough to maintain reasonable computational efficiency. 
+#  it should be chosen to be large enough that you are reasonably sure of having
+#  enough degrees of freedom to represent the underlying ‘truth’ reasonably well,
+#  but small enough to maintain reasonable computational efficiency.
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
 trainLearner.fdaregr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
-  tdesc = getTaskDescription(.task)
+  tdesc = getTaskDesc(.task)
   fdf = tdesc$fd.features
   fdg = tdesc$fd.grids
   # later on, the grid elements in mat.list should have suffix ".grid"
@@ -76,7 +76,7 @@ reformat2list4mat2 = function(.data, tdesc){
 #' @export
 predictLearner.fdaregr.fgam = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
-  tdesc = getTaskDescription(.model)
+  tdesc = getTaskDesc(.model)
   list4mat = reformat2list4mat2(.newdata, tdesc)
   pred = predict(.model$learner.model, newdata = list4mat, type = 'response')
   return(as.vector(pred))

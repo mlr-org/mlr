@@ -1,7 +1,7 @@
 context("FDA_ConvertTask")
 test_that("FDA_ConvertTask", {
   fuel = getTaskData(fuelsubset.task, target.extra = TRUE)
-  tdesc = getTaskDescription(fuelsubset.task)
+  tdesc = getTaskDesc(fuelsubset.task)
   task = trafoFDATaskToRegrTask(task = fuelsubset.task, method = "wavelets", pars = list( filter = "d4", boundary = "reflection"))
   expect_true(nrow(getTaskData(task))== dim(fuel$data)[1])
   task = trafoFDATaskToRegrTask(task = fuelsubset.task, method = "fourier", pars = list())

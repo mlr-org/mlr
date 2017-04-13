@@ -23,7 +23,7 @@ test_that("FDA_multiResNaive2", {
 
 test_that("FDA_multiResNaive3", {
   df = getTaskData(fuelsubset.task)
-  rdesc = getTaskDescription(fuelsubset.task)
+  rdesc = getTaskDesc(fuelsubset.task)
   fdf = rdesc$fd.features
   dfn = getMultiFDAMultiResFeatures(data= df, fd.features = fdf)
   expect_true(nrow(df) == nrow(dfn))
@@ -32,7 +32,7 @@ test_that("FDA_multiResNaive3", {
 test_that("FDA_multiResNaive4", {
   df = getTaskData(fuelsubset.task, target.extra = TRUE)
   df = df$data
-  rdesc = getTaskDescription(fuelsubset.task)
+  rdesc = getTaskDesc(fuelsubset.task)
   fdf = rdesc$fd.features
   dfn = extractFDAMultiResFeatures(data= df, curve.lens = rep(180,2))
   expect_true(nrow(df) == nrow(dfn))
