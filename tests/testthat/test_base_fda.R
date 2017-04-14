@@ -1,5 +1,6 @@
-context("FDA_Task")
-test_that("FDA_Regr_Task", {
+context("fda tasks and operations")
+
+test_that("FDARegrTask", {
   requirePackagesOrSkip("FDboost")
   data(fuelSubset)
   fuelsub = data.frame(heatan = fuelSubset$heatan, h2o = fuelSubset$h2o,
@@ -15,7 +16,7 @@ test_that("FDA_Regr_Task", {
   expect_equal(getTaskData(task1, target.extra = TRUE)$target, fuelsub$heatan)
 })
 
-test_that("FDA_Classif_Task", {
+test_that("FDAClassifTask", {
   gunpoint = getTaskData(gunpoint.task, target.extra = FALSE)
   task2 = makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 2:3))
   expect_class(task2, "FDAClassifTask")
@@ -56,9 +57,23 @@ test_that("FDA_Task_error_regr", {
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf5))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf6, fd.grids = fdg))
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf7, fd.grids = fdg))
-  })
+})
+
 test_that("FDA_Task_error_classif", {
   gunpoint = getTaskData(gunpoint.task, target.extra = FALSE)
   expect_error(makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 1:3)))
   expect_error(makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 2:3), fd.grids = list(fd = 1:3)))
 })
+
+
+test_that("FDA_subsetTask", {
+  st = subsetTask(fuelsubset.task, features = 1:200)
+  expect_equal(length(st$task.desc$fd.features$NIR), 66L)
+  expect_equal(length(st$task.desc$fd.features$UVVIS), 134L)
+  expect_equal(length(st$task.desc$fd.grids$NIR), 66L)
+  expect_equal(length(st$task.desc$fd.grids$UVVIS), 134L)
+  st.gp = subsetTask(gunpoint.task, features = 1:10)
+  expect_equal(length(st.gp$task.desc$fd.features$fd1), 10L)
+  expect_equal(length(st.gp$task.desc$fd.grids$fd1), 10L)
+})
+
