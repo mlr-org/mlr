@@ -2,8 +2,8 @@
 #'
 #' @description
 #' Create a functional data classification task. This means that some features
-#' in the task will be so-called functional covariates / functional features,
-#' measured on a grid or time scale. Different covariates might come from
+#' in the task will be so-called functional features,
+#' measured on a grid or time scale. Different functional features might come from
 #' different sensors for example.
 #'
 #' @inheritParams Task
@@ -12,12 +12,12 @@
 #' @export
 #' @examples
 #' dat = data.frame(matrix(rnorm(20), nrow = 2))
-#' dat$target = as.factor(c(0,1))
-#' # X1 to X5 is functional covariate 1 and X6 to X10 functional covariate 2
-#' # grd specifies the time points the curves were sampled at.
-#' grd = list(fd_1 = 1:5, fd_2 = 1:5)
-#' # One row per Observation
-#' tsk = makeFDAClassifTask(data = dat, fd.features = list(fd_1 = 1:5, fd_2 = 6:10),
+#' dat$target = as.factor(c(0, 1))
+#' # X1 to X5 is functional feature 1 and X6 to X10 functional feature 2
+#' # grd specifies the time points the curves were sampled at
+#' grd = list(fd1 = 1:5, fd2 = 1:5)
+#' # one row per observation
+#' tsk = makeFDAClassifTask(data = dat, fd.features = list(fd1 = 1:5, fd2 = 6:10),
 #'   target = "target", fd.grid = grd, positive = "1")
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
