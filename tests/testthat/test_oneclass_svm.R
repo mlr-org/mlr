@@ -3,7 +3,7 @@ context("classif_svm")
 # we cannot do a prob test, as set.seed sems not to work on e1071 svm for the prob parameters!
 #requirePackagesOrSkip("e1071", default.method = "load")
 
-test_that ("oneclass_svm", {
+test_that("oneclass_svm", {
   requirePackagesOrSkip("e1071", default.method = "load")
 
   parset.list = list(
@@ -15,7 +15,7 @@ test_that ("oneclass_svm", {
 
   old.predicts.list = list()
 
-  for (seq_along(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(x = oneclass.train[, -5])
     pars = c(pars, list(type = "one-classification"))
