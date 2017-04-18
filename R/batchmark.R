@@ -132,5 +132,5 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
   makeS3Obj(classes = "BenchmarkResult",
     results = result,
     measures = data$measures,
-    learners = data$learner[unique(tab$algorithm)])
+    learners = data$learner[as.character(tab[, unique(algorithm)])])
 }
