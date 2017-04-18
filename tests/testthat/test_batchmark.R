@@ -264,8 +264,29 @@ test_that("batchmark works with resampling instances", {
   rdesc = makeResampleDesc("CV", iters = 2L)
   rin = makeResampleInstance(rdesc, task)
   ids = batchmark(learners = learners, task = task, resampling = rin)
-  expect_data_table(ids)
   expect_data_table(ids, nrow = 4)
+})
+
+test_that("batchmark works with incomplete results", {
+  skip_if_not_installed("batchtools")
+  library(batchtools)
+  reg = makeExperimentRegistry(file.dir = NA)
+  task = binaryclass.task
+  learner.names = c("classif.lda", "classif.rpart")
+  learners = lapply(learner.names, makeLearner)
+  rdesc = makeResampleDesc("CV", iters = 4L)
+  rin = makeResampleInstance(rdesc, task)
+  ids = batchmark(learners = learners, task = task, resampling = rin)
+  submitJobs(1:6)
+  expect_true(waitForJobs(reg = reg))
+  expect_warning(res <- reduceBatchmarkResults(ids = 1:6, reg = reg, keep.pred = FALSE), "subset")
+  expect_set_equal(getBMRLearnerIds(res), c("classif.lda", "classif.rpart"))
+
+  expect_warning(res <- reduceBatchmarkResults(ids = 1:3, reg = reg, keep.pred = FALSE), "subset")
+  expect_set_equal(getBMRLearnerIds(res), c("classif.lda"))
+
+  expect_warning(res <- reduceBatchmarkResults(ids = data.table(job.id = 5), reg = reg, keep.pred = FALSE), "subset")
+  expect_set_equal(getBMRLearnerIds(res), c("classif.rpart"))
 })
 
 options(batchtools.verbose = prev)

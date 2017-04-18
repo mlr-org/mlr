@@ -87,7 +87,7 @@ getAlgoFun = function(lrn, measures, models) {
 #'   A \code{\link[base]{data.frame}} (or \code{\link[data.table]{data.table}})
 #'   with a column named \dQuote{job.id}.
 #'   Alternatively, you may also pass a vector of integerish job ids.
-#'   If not set, defaults to all jobs.
+#'   If not set, defaults to all successfully terminated jobs (return value of \code{\link[batchtools]{findDone}}.
 #' @template arg_keep_pred
 #' @template arg_showinfo
 #' @param reg [\code{\link[batchtools]{ExperimentRegistry}}]\cr
@@ -102,37 +102,35 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
   assertFlag(keep.pred)
   assertClass(reg, "ExperimentRegistry")
 
-  problems = batchtools::getProblemIds(reg)
-  algorithms = batchtools::getAlgorithmIds(reg)
+  if (is.null(ids))
+    ids = batchtools::findDone(reg = reg)
+  if (NROW(ids) != nrow(batchtools::findExperiments(reg = reg)))
+    warning("Collecting results for a subset of jobs. The resulting BenchmarkResult may be misleading.")
 
-  result = replicate(length(problems), namedList(algorithms), simplify = FALSE)
-  names(result) = problems
+  problem = algorithm = NULL # for data.table's NSE
+  tab = batchtools::getJobPars(ids, flatten = FALSE, reg = reg)[, c("job.id", "problem", "algorithm")]
+  setkeyv(tab, cols = c("problem", "algorithm"), physical = FALSE)
+  result = namedList(tab[, unique(problem)])
 
-  for (prob in problems) {
-    exps = batchtools::findExperiments(prob.name = prob, ids = ids)
-    job = batchtools::makeJob(id = exps$job.id[1L])
-    problem = job$problem$data
-    rin = problem$rin
+  for (prob in names(result)) {
+    algos = unique(tab[problem == prob], by = "algorithm")
+    data = batchtools::makeJob(id = algos$job.id[1L])$problem$data
+    result[[prob]] = namedList(algos$algorithm)
 
-    if (nrow(exps) > 0L) {
-      for (algo in algorithms) {
-        # FIXME: Use prob.name + algo.name as soon as batchtools-0.9.3 hits CRAN
-        res = batchtools::reduceResultsList(batchtools::findExperiments(prob.pattern = stri_paste("^", prob, "$"),
-          algo.pattern = stri_paste("^", algo, "$"), ids = ids))
-        models = !is.null(res[[1L]]$model)
-        lrn = problem$learner[[algo]]
-        extract.this = getExtractor(lrn)
-        rs = mergeResampleResult(learner.id = algo, task = problem$task, iter.results = res, measures = problem$measures,
-          rin = rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
-        rs$learner = lrn
-        result[[prob]][[algo]] = addClasses(rs, "ResampleResult")
-      }
+    for (algo in names(result[[prob]])) {
+      res = batchtools::reduceResultsList(tab[problem == prob & algorithm == algo])
+      models = !is.null(res[[1L]]$model)
+      lrn = data$learner[[algo]]
+      extract.this = getExtractor(lrn)
+      rs = mergeResampleResult(learner.id = algo, task = data$task, iter.results = res, measures = data$measures,
+        rin = data$rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
+      rs$learner = lrn
+      result[[prob]][[algo]] = addClasses(rs, "ResampleResult")
     }
   }
-  result = filterNull(lapply(result, filterNull))
 
   makeS3Obj(classes = "BenchmarkResult",
     results = result,
-    measures = problem$measures,
-    learners = problem$learner)
+    measures = data$measures,
+    learners = data$learner[unique(tab$algorithm)])
 }
