@@ -10,7 +10,7 @@
 #'   the target column of the learning task.
 #'   The function has to return a named list of values.
 #' @param reextract [\code{function(data, target, cols, ...)}]\cr
-#'   Function used for reextracting data for predict phase. Can be equal to \code{learn}.
+#'   Function used for reextracting data in predict phase. Can be equal to \code{learn}.
 #' @param args [\code{list}]\cr
 #'   Named list of arguments to pass to \code{learn} via \code{...}.
 #' @family extractFDAFeatures
@@ -29,17 +29,17 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'   \item \code{extractFDAMedian()} for extracting the median from a curve.
 #'   \item \code{extractFDAMean()} for extracting the mean from a curve.
 #'   \item \code{extractFDAMinMax()} for extracting the min and max from a curve.
-#'   \item \code{extractFDAFourier()} for extracting fourier coefficients from a curve.
-#'   \item \code{extractFDAWavelets()} for extracting wavelets from a curve.
+#'   \item \code{extractFDAFourier(trafo.coeff)} for extracting fourier coefficients from a curve.
+#'   \item \code{extractFDAWavelets(filter, boundary)} for extracting wavelets from a curve.
 #'  }
-#' @name extractFDAFeatures
-#' @rdname extractFDAFeatures
+#' @name extractFDAFeatMethods
+#' @rdname extractFDAFeatMethods
 #' @family extractFDAFeatures
 NULL
 
 
 #' @export
-#' @rdname extractFDAFeatures
+#' @rdname extractFDAFeatMethods
 extractFDAMedian = function() {
   lrn = function(data, target, cols) {data.frame("median" = apply(data[, cols], 1, median, na.rm = TRUE))}
   makeExtractFDAFeatMethod(
@@ -49,7 +49,7 @@ extractFDAMedian = function() {
 }
 
 #' @export
-#' @rdname extractFDAFeatures
+#' @rdname extractFDAFeatMethods
 extractFDAMean = function() {
   lrn = function(data, target, cols) {data.frame("mean" = apply(data[, cols], 1, mean, na.rm = TRUE))}
   makeExtractFDAFeatMethod(
@@ -59,7 +59,7 @@ extractFDAMean = function() {
 }
 
 #' @export
-#' @rdname extractFDAFeatures
+#' @rdname extractFDAFeatMethods
 extractFDAMinMax = function() {
   # Used for quick testing with >1 columns per return
   lrn = function(data, target, cols) {
@@ -71,9 +71,8 @@ extractFDAMinMax = function() {
 
 
 #' @export
-#' @param trafo.coeff [\code{character}]\cr
-#'   See \code{\link[mlr]{extractFourierFeatures}} for more information.
-#' @rdname extractFDAFeatures
+#' @inheritParams extractFourierFeatures
+#' @rdname extractFDAFeatMethods
 extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
@@ -88,9 +87,8 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 }
 
 #' @export
-#' @param filter, boundary [\code{character}]\cr
-#'   See \code{\link[mlr]{extractWaveletFeatures}} for more information.
-#' @rdname extractFDAFeatures
+#' @inheritParams extractWaveletFeatures
+#' @rdname extractFDAFeatMethods
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   lrn = function(data, target, cols, vals, filter, boundary) {
     extractWaveletFeatures(data = data, target = NULL, cols = cols,

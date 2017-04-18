@@ -1,15 +1,15 @@
 #' @title Extract features from functional data.
 #'
 #' @description
-#' Extract non-functional features from functional features using various methods.
-#' The function \code{extractFDAFeatures} performs the extraction for a
-#' single functional feature. Additionally, a \dQuote{extractFDAFeatDesc} object
-#' which can contains \dQuote{learned} coefficients and other helpful data for
+#' Extract non-functional features from functional features using various methods. \cr
+#' The function \code{extractFDAFeatures} performs the extraction for all functional features
+#' and respective methods specified in \code{feat.methods}. \cr
+#' Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
+#' which can contains \code{learned} coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
-#' \code{\link{reExtractFDAFeatures}} to extract features during the prediction phase.
-#' You can either provide an arbitrary object, use a built-in method listed
-#' under \code{\link{extractFDAFeatures}} or create one yourself using
-#' \code{\link{makeExtractFDAFeatMethod}}.
+#' \code{\link{reExtractFDAFeatures}} in order to extract features during the prediction phase. \cr
+#' As \code{feat.methods}, either a method created using \code{\link{makeExtractFDAFeatMethod}}, use a built-in method listed
+#' or one of the buit-in methods listed in \code{\link{extractFDAFeatMethods}} can be supplied.
 #'
 #' @details
 #' The description object contains these slots
