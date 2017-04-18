@@ -253,4 +253,19 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_null(models11)
 })
 
+
+test_that("batchmark works with resampling instances", {
+  skip_if_not_installed("batchtools")
+  library(batchtools)
+  reg = makeExperimentRegistry(file.dir = NA)
+  task = binaryclass.task
+  learner.names = c("classif.lda", "classif.rpart")
+  learners = lapply(learner.names, makeLearner)
+  rdesc = makeResampleDesc("CV", iters = 2L)
+  rin = makeResampleInstance(rdesc, task)
+  ids = batchmark(learners = learners, task = task, resampling = rin)
+  expect_data_table(ids)
+  expect_data_table(ids, nrow = 4)
+})
+
 options(batchtools.verbose = prev)
