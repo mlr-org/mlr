@@ -5,7 +5,7 @@
 #' transform. For more details refer to \code{\link[stats]{fft}}.
 #'
 #' @param data [\code{data.frame}]\cr
-#'   Data.frame with one row per observation of a single functional covariate or time series and
+#'   Data.frame with one row per observation of a single functional feature or time series and
 #'   one column per measurement time point. All entries need to be numeric.
 #' @param target [\code{character}]\cr
 #'   Name of the target variable. Default: \dQuote{NULL}. The variable is only

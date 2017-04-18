@@ -3,7 +3,7 @@
 #' @description
 #' Extract non-functional features from functional features using various methods.
 #' The function \code{extractFDAFeatures} performs the extraction for a
-#' single functional covariate. Additionally, a \dQuote{extractFDAFeatDesc} object
+#' single functional feature. Additionally, a \dQuote{extractFDAFeatDesc} object
 #' which can contains \dQuote{learned} coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
 #' \code{\link{reExtractFDAFeatures}} to extract features during the prediction phase.
@@ -28,10 +28,10 @@
 #'   Default is \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
-#'   for each functional covariate. A signature for the desired function can be provided for
+#'   for each functional feature. A signature for the desired function can be provided for
 #'   every covariable. Multiple functions for a  single covariable are not allowed.
 #'   Specifying \code{feat.methods} = "all" applies the \code{extratFDAFeatures} method to each
-#'   functional covariate.
+#'   functional feature.
 #' @template arg_fdatask_pars
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
@@ -60,9 +60,8 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   # FIXME:
   # Passing fd.features and fd.grids to the wrapper (which uses data.frame method) is stupid.
-  # The wrapped learner then can only be used for ONE task.
+  # The wrapped learner then can only be used for ONE specific task (where fd.features names match.
   # We should get it from the respective task.
-  # ONLY for usage with a data.frame, those might somehow be needed.
 
   assertSubset(names(feat.methods), c(names(fd.features), "all"))
   assertList(fd.features)
@@ -71,9 +70,9 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   assertSubset(unlist(fd.features), choices = colnames(obj))
 
   # If the same transform should be applied to all features, rep method and name accordingly
-  if (names(feat.methods)[1] == "all") {
+  # "all" needs to be first list name.
+  if (names(feat.methods)[1] == "all")
     feat.methods = setNames(rep(feat.methods, length(fd.features)), names(fd.features))
-  }
 
   desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
@@ -113,7 +112,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   if (!any(vlapply(vals, is.data.frame))) {
     stop("feat.method needs to return a data.frame with one row
       per observation in the original data.")
-  } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))){
+  } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))) {
     stop("feat.method needs to return a data.frame with one row
       per observation in the original data and equal nrow per column.")
   }

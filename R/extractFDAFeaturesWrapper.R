@@ -18,6 +18,7 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list(),
   # FIXME:
   # This is stupid, we can not handle multiple tasks for a single wrapper this way.
   # (Impute cant do this neither if using cols = list("X1" = ...)).
+  # Solution is to be able to specify "all" features (regexp would be overkill?).
 
   learner = checkLearner(learner)
   args = list(feat.methods = feat.methods, fd.features = fd.features, fd.grids = fd.grids)
