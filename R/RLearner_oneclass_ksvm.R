@@ -36,18 +36,18 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
 
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, .subset)[, x]
-  k = as.kernelMatrix(crossprod(t(d)))
+  k = kernlab::as.kernelMatrix(crossprod(t(d)))
   # ksvm only support prob.model for C-svc, nu-svc and  C-bsvc not for one class
   if (base::length(kpar) > 0L){
     m = kernlab::ksvm(x = k, y = NULL, kpar = kpar, ...)
     # need support vectors for prediction
-    sv = d[SVindex(m),]
+    sv = d[kernlab::SVindex(m),]
     list(model = m, sv = sv)
   }
   else {
     m = kernlab::ksvm(x = k, y = NULL, ...)
     # need support vectors for prediction
-    sv = d[SVindex(m),]
+    sv = d[kernlab::SVindex(m),]
     list(model = m, sv = sv)
   }
 }
@@ -56,7 +56,7 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NULL, ...) {
   # ksvm currently can't predict probabilities only response
   type = switch(.learner$predict.type, prob = "response")
-  Ktest = as.kernelMatrix(crossprod(t(.newdata), t(.model$learner.model$sv)))
+  Ktest = kernlab::as.kernelMatrix(crossprod(t(.newdata), t(.model$learner.model$sv)))
   kernlab::predict(.model$learner.model$model, newdata = Ktest, type = type, ...)
 }
 
