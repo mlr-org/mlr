@@ -14,7 +14,7 @@ test_that("batchmark", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin)
+  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resamplings = rin)
 
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
