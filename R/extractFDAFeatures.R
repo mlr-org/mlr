@@ -23,6 +23,8 @@
 #' }
 #'
 #' @template arg_taskdf
+#' @param target [\code{character}]\cr
+#' Task target column. Not always neccessary, default: \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
 #'   for each functional feature. A signature for the desired function can be provided for
