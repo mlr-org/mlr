@@ -10,6 +10,8 @@
 #' @param target [\code{character}]\cr
 #'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
 #'   set to be consistent with the API.
+#' @param cols [\code{character} | \code{numeric}]\cr
+#'   The column names or indices, the extraction should be performed on.
 #' @param trafo.coeff [\code{character}]\cr
 #'   Specifies which transformation of the complex frequency domain
 #'   representation should be calculated as a feature representation. Must be one
@@ -17,7 +19,7 @@
 #' @return [\code{data.frame}] containing the fourier coefficients.
 #' @rdname extractFDAFeatures
 #' @export
-extractFourierFeatures = function(data, target = NULL, cols, vals = NULL, trafo.coeff = "phase") {
+extractFourierFeatures = function(data, target = NULL, cols, trafo.coeff = "phase") {
 
   assertClass(data, "data.frame")
   assertChoice(trafo.coeff, choices = c("amplitude", "phase"))

@@ -10,6 +10,8 @@
 #' @param target [\code{character}]\cr
 #'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
 #'   set to be consistent with the API.
+#' @param cols [\code{character} | \code{numeric}]\cr
+#'   Column names or indices, the extraction should be performed on.
 #' @param filter [\code{character}]\cr
 #'   Specifies which filter should be used.
 #'   Default: \code{filter} = \dQuote{la8}.
@@ -19,10 +21,9 @@
 #'   The default, \code{boundary} = \dQuote{periodic} assumes circular time series.
 #'   For \code{boundary} = \dQuote{reflection} the series is extended to twice its length.
 #'   See \code{\link[wavelets]{dwt}} for more information.
-#' @return \code{data.frame} object containing the wavelet
-#'   coefficients.
+#' @return \code{data.frame} object containing the wavelet coefficients.
 #' @export
-extractWaveletFeatures = function(data, target = NULL, cols, vals = NULL, filter = "la8", boundary = "periodic") {
+extractWaveletFeatures = function(data, target = NULL, cols, filter = "la8", boundary = "periodic") {
   requirePackages("wavelets", default.method = "load")
 
   assertClass(data, "data.frame")

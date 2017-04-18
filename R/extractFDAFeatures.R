@@ -23,9 +23,6 @@
 #' }
 #'
 #' @template arg_taskdf
-#' @param target [\code{character}]\cr
-#'   Name of the column(s) specifying the response.
-#'   Default is \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
 #'   for each functional feature. A signature for the desired function can be provided for
@@ -42,7 +39,7 @@
 #' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
 #' t = makeFDAClassifTask(data = df, target = "y", fd.features = list(x1 = 1:4, x2=5:8),
 #' fd.grids = list(x1 = 1:4, x2 = 1:4))
-#' extracted = extractFDAFeatures(train,
+#' extracted = extractFDAFeatures(t,
 #' feat.methods = list("x1" = extractFDAMean(), "x2" = extractFDAMinMax()))
 #' print(extracted$task)
 #' reExtractFDAFeatures(t, extracted$desc)
