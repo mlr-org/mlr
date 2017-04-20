@@ -118,8 +118,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   # 5 fold CV for all other learners
   if (is.null(resampling)) {
     if(method == "classif.bs.optimal") {
-      resampling = makeResampleDesc("LOO",
-                                    stratify = ifelse(baseType == "classif", TRUE, FALSE))
+      resampling = makeResampleDesc("LOO")
     } else {
       resampling = makeResampleDesc("CV", iters= 5L,
                                     stratify = ifelse(baseType == "classif", TRUE, FALSE))
