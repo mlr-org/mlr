@@ -35,7 +35,6 @@
 #'    learner predictions to determine the final prediction.
 #'    For regression tasks, the final prediction will be the average of the base learner predictions.}
 #'   }
-#'
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
@@ -47,6 +46,9 @@
 #'   \dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
 #'   with the weights chosen Brier Score optimal.
 #'   Default is \dQuote{stack.nocv},
+#' @param id [\code{character(1)}]\cr
+#'   Id string for object. Used to display object.
+#'   Default is \code{method}.
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
 #'   Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}. # meas.bs.optimal
@@ -55,7 +57,7 @@
 #'   the resampling strategy for \code{method = 'stack.cv'}. Currently only CV is allowed.
 #'   The default \code{NULL} uses 5-fold CV,
 #'   the resampling strategy for \code{method = 'classif.bs.optimal'}
-#'   Currently only LOO and CV are allowd.
+#'   Currently only LOO and CV are allowed.
 #'   The default \code{NULL} uses LOO.
 #' @param parset the parameters for \code{hill.climb} method, including
 #' \describe{
@@ -95,7 +97,7 @@
 #'   res = predict(tmp, tsk)
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
-                              method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
+                              method = "stack.nocv", id = method, use.feat = FALSE, resampling = NULL, parset = list()) {
   # Check the base learners
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
@@ -135,6 +137,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   # currently supported methods
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb",
                          "compress", "classif.bs.optimal"))
+  assertCharacter(id)
 
   assertClass(resampling, "ResampleDesc")
 
@@ -172,7 +175,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   # lrn$predict.type is "response" by default change it using setPredictType
   lrn =  makeBaseEnsemble(
-    id = "stack",
+    id = id,
     base.learners = base.learners,
     cl = "StackedLearner"
   )
