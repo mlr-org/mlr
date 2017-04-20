@@ -25,7 +25,7 @@ makeRLearner.regr.xgboost = function() {
 
       makeNumericLearnerParam(id = "missing", default = NULL, tunable = FALSE, when = "both",
         special.vals = list(NA, NA_real_, NULL)),
-      makeNumericVectorLearnerParam(id = "monotone_constraints", default = 0),
+      makeIntegerVectorLearnerParam(id = "monotone_constraints", default = 0, lower = -1, upper = 1),
       makeIntegerLearnerParam(id = "nthread", lower = 1L, tunable = FALSE),
       makeIntegerLearnerParam(id = "nrounds", default = 1L, lower = 1L),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
