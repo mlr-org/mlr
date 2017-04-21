@@ -17,7 +17,7 @@
 #' # grid specifies the time points the curves were sampled at
 #' grid = list(fd1 = 1:5, fd2 = 1:5)
 #' # one row per observation
-#' task = makeFDAClassifTask(data = dat, fd.features = list(fd1 = 1:5, fd2 = 6:10),
+#' task = makeFDAClassifTask(data = d, fd.features = list(fd1 = 1:5, fd2 = 6:10),
 #'   target = "target", fd.grid = grid, positive = "1")
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
