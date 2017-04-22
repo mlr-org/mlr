@@ -73,3 +73,4 @@ print.OneClassTask = function(x, ...) {
   catf(collapse(di, "\n"))
   catf("Positive class: %s", x$task.desc$positive)
 }
+
