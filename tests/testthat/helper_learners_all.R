@@ -213,3 +213,38 @@ testThatLearnerParamDefaultsAreInParamSet = function(lrn) {
   pv = lrn$par.vals
   expect_true(isSubset(names(pv), names(pars)))
 }
+
+
+# For breaking up the tests when checking all classif learners
+# Get all of the classif learners
+testThatGenerateClassifLearnerHyperPars = function() {
+   list(
+    classif.boosting = list(mfinal = 2L),
+    classif.cforest = list(mtry = 1L),
+    classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
+                               # without this (and despite use_missing_data being TRUE), the test with missing data fails with a null point exception, which manifests itself as a completely different rJava error in the test
+                               replace_missing_data_with_x_j_bar = TRUE,
+                               num_iterations_after_burn_in = 10L),
+    classif.bdk = list(ydim = 2L),
+    classif.earth = list(degree = 3L, nprune = 2L),
+    classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
+    classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
+    classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
+    classif.xyf = list(ydim = 2L),
+    classif.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
+    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
+  )
+}
+
+# For breaking up the tests when checking all classif learners
+testThatDefaultClassifAllLearners = function(subset) {
+  # settings to make learners faster and deal with small data size
+  hyperpars = testThatGenerateClassifLearnerHyperPars()
+  # binary classif
+  task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
+                    features = getTaskFeatureNames(binaryclass.task)[12:15])
+  lrns = mylist(task, create = FALSE)
+  lrns = lapply(lrns$class[subset], makeLearner)
+  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
+  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
+}

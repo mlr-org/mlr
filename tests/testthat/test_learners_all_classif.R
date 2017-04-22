@@ -1,31 +1,31 @@
 context("learners_all_classif")
 
-test_that("learners work: classif ", {
+test_that("learners work: classif 1:20", {
 
-  # settings to make learners faster and deal with small data size
-  hyperpars = list(
-    classif.boosting = list(mfinal = 2L),
-    classif.cforest = list(mtry = 1L),
-    classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-      # without this (and despite use_missing_data being TRUE), the test with missing data fails with a null point exception, which manifests itself as a completely different rJava error in the test
-      replace_missing_data_with_x_j_bar = TRUE,
-      num_iterations_after_burn_in = 10L),
-    classif.bdk = list(ydim = 2L),
-    classif.earth = list(degree = 3L, nprune = 2L),
-    classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
-    classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
-    classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
-    classif.xyf = list(ydim = 2L),
-    classif.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
-  )
+  testThatDefaultClassifAllLearners(1:20)
+})
 
+test_that("learners work: classif 21:40", {
+
+  testThatDefaultClassifAllLearners(21:40)
+})
+
+test_that("learners work: classif 41:60", {
+
+  testThatDefaultClassifAllLearners(41:60)
+})
+
+test_that("learners work: classif 61:84", {
+
+  testThatDefaultClassifAllLearners(61:84)
+})
+
+test_that("learners work: classif factor and ordered factor", {
+
+  hyperpars = testThatGenerateClassifLearnerHyperPars()
   # binary classif
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
-    features = getTaskFeatureNames(binaryclass.task)[12:15])
-  lrns = mylist(task, create = TRUE)
-  lapply(lrns, testThatLearnerParamDefaultsAreInParamSet)
-  lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
+                    features = getTaskFeatureNames(binaryclass.task)[12:15])
 
   # binary classif with factors
   lrns = mylist("classif", properties = "factors", create = TRUE)
@@ -34,6 +34,14 @@ test_that("learners work: classif ", {
   # binary classif with ordered factors
   lrns = mylist("classif", properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
+})
+
+test_that("learners work: classif prob and weights", {
+
+  hyperpars = testThatGenerateClassifLearnerHyperPars()
+  # binary classif
+  task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
+                    features = getTaskFeatureNames(binaryclass.task)[12:15])
 
   # binary classif with prob
   lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
@@ -47,6 +55,15 @@ test_that("learners work: classif ", {
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
+})
+
+test_that("learners work: classif missing and oobpreds", {
+
+  hyperpars = testThatGenerateClassifLearnerHyperPars()
+  # binary classif
+  task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
+                    features = getTaskFeatureNames(binaryclass.task)[12:15])
+
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
@@ -58,7 +75,14 @@ test_that("learners work: classif ", {
   lrns = mylist("classif", properties = c("oobpreds", "prob"), create = TRUE)
   lrns = lapply(lrns, setPredictType, predict.type = "prob")
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
+})
 
+test_that("learners work: classif featimp", {
+
+  hyperpars = testThatGenerateClassifLearnerHyperPars()
+  # binary classif
+  task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
+                    features = getTaskFeatureNames(binaryclass.task)[12:15])
   # classif with variable importance
   lrns = mylist("classif", properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
