@@ -14,8 +14,9 @@ makeLearner(cl, id = cl, predict.type = "response",
 Class of learner. By convention, all classification learners
 start with \dQuote{classif.}, all regression learners with
 \dQuote{regr.}, all survival learners start with \dQuote{surv.},
-all clustering learners with \dQuote{cluster.}, and all multilabel
-classification learners start with \dQuote{multilabel.}.
+all clustering learners with \dQuote{cluster.}, all multilabel
+classification learners with \dQuote{multilabel.} and all one-classification
+(anomaly detection) learners with \dQuote{oneclass.}.
 A list of all integrated learners is available on the
 \code{\link{learners}} help page.}
 
@@ -24,6 +25,7 @@ Id string for object. Used to display object.
 Default is \code{cl}.}
 
 \item{predict.type}{[\code{character(1)}]\cr
+One-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= mean squared error as anomaly score).
 Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
