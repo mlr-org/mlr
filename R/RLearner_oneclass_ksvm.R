@@ -25,7 +25,8 @@ makeRLearner.oneclass.ksvm = function() {
     par.vals = list(type = "one-svc", fit = FALSE),
     properties =  c("oneclass", "numerics", "factors", "weights"),
     name = "one-class kernlab-based SVM",
-    short.name = "one-class ksvm"
+    short.name = "one-class ksvm",
+    callees = "ksvm"
   )
 }
 
