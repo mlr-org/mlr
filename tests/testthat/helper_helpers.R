@@ -176,7 +176,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     task = makeClassifTask(data = df, target = target)
   else if (is.logical(df[, target]))
     task = makeOneClassTask(data = df, target = target)
-  ms = resample(lrn, task, cv.instance, measures = mmce)$measures.test
+  ms = resample(lrn, task, cv.instance)$measures.test
   if (inherits(task, "ClassifTask") | inherits(task, "OneClassTask")) {
     expect_equal(mean(ms[, "mmce"]), tr$performances[1, 2], check.names = FALSE)
     expect_equal(sd(ms[, "mmce"]), tr$performances[1, 3], check.names = FALSE)
