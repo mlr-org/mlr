@@ -89,3 +89,23 @@ trafoFDATaskToRegrTask = function(task, method, pars = NULL) {
   newtask = makeRegrTask(data = newdata, target = target)
   return(newtask)
 }
+# this is quick and dirty ,all copy and paste
+trafoFDATaskToClassifTask = function(task, method, pars = NULL) {
+  assertClass(task, classes = "FDATask")
+  target = task$task.desc$target
+  fdf = task$task.desc$fd.features
+  z = getTaskData(task, target.extra = TRUE)
+  # FIXME: extractMultiFDAFeatures should return "clean" names. potentially we would
+  # like to recognize the "block" from the name? so like V1_1?
+  tsf = extractMultiFDAFeatures(data = z$data, target = target, fd.features = fdf, method = method, args = pars)
+  newdata = as.data.frame(cbind((z$target), tsf))
+  # FIXME: we have a problem if the target is called Vi!
+  # FIXME: maybe make the extracted feature names a bit "stranger"?
+  # FIXME: and in the rare case we get a name clash throw error here!
+  # make sure that the feature column names are unique
+  colnames(newdata) = c(target, paste0('V', 1:(ncol(newdata) - 1) ))
+  newtask = makeClassifTask(data = newdata, target = target)
+  return(newtask)
+}
+
+
