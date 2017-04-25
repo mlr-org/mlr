@@ -90,6 +90,7 @@ trafoFDATaskToRegrTask = function(task, method, pars = NULL) {
   return(newtask)
 }
 # this is quick and dirty ,all copy and paste
+#' @export
 trafoFDATaskToClassifTask = function(task, method, pars = NULL) {
   assertClass(task, classes = "FDATask")
   target = task$task.desc$target
