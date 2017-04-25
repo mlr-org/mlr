@@ -114,11 +114,11 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
 
   for (prob in names(result)) {
     algos = unique(tab[problem == prob], by = "algorithm")
-    data = batchtools::makeJob(id = algos$job.id[1L])$problem$data
+    data = batchtools::makeJob(id = algos$job.id[1L], reg = reg)$problem$data
     result[[prob]] = namedList(algos$algorithm)
 
     for (algo in names(result[[prob]])) {
-      res = batchtools::reduceResultsList(tab[problem == prob & algorithm == algo])
+      res = batchtools::reduceResultsList(tab[problem == prob & algorithm == algo], reg = reg)
       models = !is.null(res[[1L]]$model)
       lrn = data$learner[[algo]]
       extract.this = getExtractor(lrn)
