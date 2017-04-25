@@ -22,7 +22,7 @@ A more detailed in depth and continuously updated tutorial can be found on the G
 
 ## Purpose
 
-The main goal of `mlr` is to provide a unified interface for *machine learning tasks* as *classification*, *regression*, *cluster analysis* and *survival analysis* in R.
+The main goal of `mlr` is to provide a unified interface for *machine learning tasks* as *classification*, *regression*, *cluster analysis*, *survival analysis* and *one-classification (anomaly detection)* in R.
 In lack of a common interface it becomes a hassle to carry out standard methods like cross-validation and hyperparameter tuning for different learners.
 Hence, `mlr` offers the following features:
 
