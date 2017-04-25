@@ -83,5 +83,24 @@ d = load2("../thirdparty/yeast.RData")
 yeast.task = makeMultilabelTask("yeast-example", data = d, target = paste0("label", 1:14))
 save(yeast.task, file = file.path(dn, "yeast.task.RData"), compress = "xz")
 
+# FDA classification
+set.seed(DATASEED)
+gunpoint = load2("../thirdparty/gunpoint.RData")
+gunpoint.task = makeFDAClassifTask(data = gunpoint, target = "X1", positive = "1")
+save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
 
+# FDA regression
+set.seed(DATASEED)
+data(fuelSubset, package = "FDboost")
+fuelSubset$UVVIS = scale(fuelSubset$UVVIS, scale = FALSE)
+fuelSubset$NIR = scale(fuelSubset$NIR, scale = FALSE)
+fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) / (max(uvvis.lambda) - min(uvvis.lambda) ))
+fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) / (max(nir.lambda) - min(nir.lambda) ))
+len1 = length(fuelSubset$uvvis.lambda)
+len2 = length(fuelSubset$nir.lambda)
 
+mdata = data.frame(fuelSubset[c("UVVIS", "NIR", "h2o", "heatan")])
+fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
+fdg = list(UVVIS = fuelSubset$uvvis.lambda, NIR = fuelSubset$nir.lambda)
+fuelsubset.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = fdf, fd.grids = fdg) # change fuelSubset.task to fuelsubset.task to pass lintr
+save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")

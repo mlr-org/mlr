@@ -38,13 +38,13 @@ predictFailureModel = function(model, newdata) {
   type = lrn$type
   ptype = lrn$predict.type
   n = nrow(newdata)
-  if (type == "classif") {
+  if (type == "classif" | type == "fdaclassif") {
     levs = model$task.desc$class.levels
     res = if (ptype == "response")
       factor(rep(NA_character_, n), levels = levs)
     else
       matrix(NA_real_, nrow = n, ncol = length(levs), dimnames = list(NULL, levs))
-  } else if (type == "regr") {
+  } else if (type == "regr" | type == "fdaregr") {
     res = if (ptype == "response")
       rep(NA_real_, n)
     else

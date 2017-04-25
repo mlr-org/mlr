@@ -124,3 +124,31 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+
+#' Gunpoint functional data classification task. Classify whether the person
+#' raise up a gun or just the empty hand.
+#'
+#' Contains the task (\code{gunpoint.task}).
+#'
+#' @name gunpoint.task
+#' @references See Ratanamahatana, C. A. & Keogh. E. (2004). Everything you know
+#'   about Dynamic Time Warping is Wrong. Proceedings of SIAM International
+#'   Conference on Data Mining (SDM05), 506-510.
+#' @keywords data
+#' @docType data
+NULL
+
+
+#' FuelSubset functional data regression task with 2 functional covariate and 1
+#' scalar covariate. Regression #'about the heat value of some fuel based on the
+#' ultraviolet radiation spectrum and infrared ray radiation and one scalar
+#' column called h2o.
+#'
+#' Contains the task (\code{fuelsubset.task}).
+#'
+#' @name fuelsubset.task
+#' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
+#' @keywords data
+#' @docType data
+NULL
