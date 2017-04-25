@@ -105,6 +105,7 @@ trafoFDATaskToClassifTask = function(task, method, pars = NULL) {
   # FIXME: and in the rare case we get a name clash throw error here!
   # make sure that the feature column names are unique
   colnames(newdata) = c(target, paste0('V', 1:(ncol(newdata) - 1) ))
+  newdata$target = as.factor(newdata$target)
   newtask = makeClassifTask(data = newdata, target = target)
   return(newtask)
 }
