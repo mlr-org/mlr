@@ -279,14 +279,14 @@ test_that("batchmark works with incomplete results", {
   ids = batchmark(learners = learners, task = task, resampling = rin)
   submitJobs(1:6)
   expect_true(waitForJobs(reg = reg))
-  expect_warning(res <- reduceBatchmarkResults(ids = 1:6, reg = reg, keep.pred = FALSE), "subset")
+  res = expect_warning(reduceBatchmarkResults(ids = 1:6, reg = reg, keep.pred = FALSE), "subset")
   expect_set_equal(getBMRLearnerIds(res), c("classif.lda", "classif.rpart"))
 
-  expect_warning(res <- reduceBatchmarkResults(ids = 1:3, reg = reg, keep.pred = FALSE), "subset")
-  expect_set_equal(getBMRLearnerIds(res), c("classif.lda"))
+  res = expect_warning(reduceBatchmarkResults(ids = 1:3, reg = reg, keep.pred = FALSE), "subset")
+  expect_set_equal(getBMRLearnerIds(res), "classif.lda")
 
-  expect_warning(res <- reduceBatchmarkResults(ids = data.table(job.id = 5), reg = reg, keep.pred = FALSE), "subset")
-  expect_set_equal(getBMRLearnerIds(res), c("classif.rpart"))
+  res = expect_warning(reduceBatchmarkResults(ids = data.table(job.id = 5), reg = reg, keep.pred = FALSE), "subset")
+  expect_set_equal(getBMRLearnerIds(res), "classif.rpart")
 })
 
 options(batchtools.verbose = prev)
