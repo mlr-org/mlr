@@ -6,7 +6,7 @@ options(batchtools.verbose = FALSE)
 test_that("batchmark", {
   skip_if_not_installed("batchtools")
   library(batchtools)
-  reg = makeExperimentRegistry(file.dir = NA)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
 
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
@@ -14,7 +14,7 @@ test_that("batchmark", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resamplings = rin)
+  ids = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resamplings = rin, reg = reg)
 
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
@@ -42,8 +42,8 @@ test_that("batchmark", {
   expect_equal(ncol(preds), 9)
   expect_equal(unique(preds$iter), 1:2)
 
-  reg = makeExperimentRegistry(file.dir = NA)
-  res = batchmark(learners = learners, task = tasks, resampling = rin)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  res = batchmark(learners = learners, task = tasks, resampling = rin, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
 
@@ -95,8 +95,8 @@ test_that("batchmark", {
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 2L))
   measures = list(mmce, acc)
 
-  reg = makeExperimentRegistry(file.dir = NA)
-  res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   expect_data_table(findErrors(reg = reg), nrow = 0L)
@@ -218,8 +218,8 @@ test_that("keep.preds and models are passed down to resample()", {
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
-  reg = makeExperimentRegistry(file.dir = NA)
-  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = TRUE)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = TRUE, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   res = reduceBatchmarkResults(reg = reg, keep.pred = TRUE)
@@ -241,8 +241,8 @@ test_that("keep.preds and models are passed down to resample()", {
   models111 = models11[[1L]]
   expect_is(models111, "WrappedModel")
 
-  reg = makeExperimentRegistry(file.dir = NA)
-  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = FALSE)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  res = batchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, models = FALSE, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
   res = reduceBatchmarkResults(reg = reg, keep.pred = FALSE)
@@ -257,27 +257,27 @@ test_that("keep.preds and models are passed down to resample()", {
 test_that("batchmark works with resampling instances", {
   skip_if_not_installed("batchtools")
   library(batchtools)
-  reg = makeExperimentRegistry(file.dir = NA)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
   task = binaryclass.task
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)
   rdesc = makeResampleDesc("CV", iters = 2L)
   rin = makeResampleInstance(rdesc, task)
-  ids = batchmark(learners = learners, task = task, resampling = rin)
+  ids = batchmark(learners = learners, task = task, resampling = rin, reg = reg)
   expect_data_table(ids, nrow = 4)
 })
 
 test_that("batchmark works with incomplete results", {
   skip_if_not_installed("batchtools")
   library(batchtools)
-  reg = makeExperimentRegistry(file.dir = NA)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
   task = binaryclass.task
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)
   rdesc = makeResampleDesc("CV", iters = 4L)
   rin = makeResampleInstance(rdesc, task)
-  ids = batchmark(learners = learners, task = task, resampling = rin)
-  submitJobs(1:6)
+  ids = batchmark(learners = learners, task = task, resampling = rin, reg = reg)
+  submitJobs(1:6, reg = reg)
   expect_true(waitForJobs(reg = reg))
   res = expect_warning(reduceBatchmarkResults(ids = 1:6, reg = reg, keep.pred = FALSE), "subset")
   expect_set_equal(getBMRLearnerIds(res), c("classif.lda", "classif.rpart"))
