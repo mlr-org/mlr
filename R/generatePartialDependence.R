@@ -91,7 +91,7 @@
 #'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 #'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
 #'   length of the evenly spaced grid created.
-#' @param rng [\code{numeric}]\cr
+#' @param rng [\code{list}]\cr
 #'   The range of values of the feature you would want the partial plots on - passed as a numeric list
 #' @param ... additional arguments to be passed to \code{\link{predict}}.
 #' @return [\code{PartialDependenceData}]. A named list, which contains the partial dependence,
@@ -232,7 +232,7 @@ generatePartialDependenceData = function(obj, input, features,
     stop("fmax must be a named list with an NA or value corresponding to each feature.")
   assertCount(gridsize, positive = TRUE)
 
-  if (missing(rng))
+  if (!is.null(rng))
     rng = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
