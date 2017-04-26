@@ -232,7 +232,7 @@ generatePartialDependenceData = function(obj, input, features,
     stop("fmax must be a named list with an NA or value corresponding to each feature.")
   assertCount(gridsize, positive = TRUE)
 
-  if (!is.null(rng))
+  if (is.null(rng))
     rng = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
