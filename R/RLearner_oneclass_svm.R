@@ -6,7 +6,7 @@ makeRLearner.oneclass.svm = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "type", default = "one-classification", values = "one-classification"),
       makeNumericLearnerParam(id = "cost",  default = 1, lower = 0, requires = quote(type == "C-classification")),
-      makeNumericLearnerParam(id = "nu", default = 0.5, requires = quote(type == "nu-classification")),
+      makeNumericLearnerParam(id = "nu", default = 0.5, requires = quote(type == "nu-classification" || type == "one-classification")),
       makeDiscreteLearnerParam(id = "kernel", default = "radial", values = c("linear", "polynomial", "radial", "sigmoid")),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L, requires = quote(kernel == "polynomial")),
       makeNumericLearnerParam(id = "coef0", default = 0, requires = quote(kernel == "polynomial" || kernel == "sigmoid")),
