@@ -67,7 +67,7 @@ test_that("Parameters for hill climb works", {
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",
-    parset = list(bagprob = 0.8, bagtime = 5, replace = FALSE))
+                         parset = list(bagprob = 0.8, bagtime = 5, replace = FALSE))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 
@@ -80,7 +80,7 @@ test_that("Parameters for hill climb works", {
   }
 
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",
-    parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
+                         parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 
@@ -115,6 +115,8 @@ test_that("the Brier Score optimal weighted sum (method = 'classif.bs.optimal') 
   base = c("classif.rpart", "classif.lda", "classif.svm")
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
+
+  set.seed(getOption("mlr.debug.seed"))
   m = makeStackedLearner(base.learners = lrns,
                          predict.type = "prob",
                          method = "classif.bs.optimal",
@@ -126,5 +128,26 @@ test_that("the Brier Score optimal weighted sum (method = 'classif.bs.optimal') 
                info = "The ensemble weights should add up to 1.")
   expect_true(all(tmp$learner.model$weights >= 0),
               info = "The ensemble weights should greater than or equal to 0.")
+})
+
+test_that("the choosing the best base learner works (method = 'best.baseLearner') works for stacking", {
+  tsk = iris.task
+  base = c("classif.rpart", "classif.lda", "classif.svm")
+
+  set.seed(getOption("mlr.debug.seed"))
+  stack.lrn = makeStackedLearner(base.learners = base,
+                                 predict.type = "prob",
+                                 method = "best.baseLearner")
+  mod = train(stack.lrn, tsk)
+  res = predict(mod, tsk)
+
+  # select the ebst individal base learner
+  best.lrn = makeLearner(mod$learner.model$best.bl.name,
+                         predict.type = "prob")
+  set.seed(getOption("mlr.debug.seed"))
+  mod2 = train(best.lrn, tsk)
+  res2 = predict(mod2, tsk)
+
+  expect_equal(res$data, res2$data)
 })
 
