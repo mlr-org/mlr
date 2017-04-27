@@ -812,7 +812,7 @@ measureAUC = function(probabilities, truth, negative, positive) {
 #' @rdname measures
 #' @format none
 brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
-  properties = c("oneclass", "classif", "req.pred", "req.truth", "req.prob"),
+  properties = c("classif", "req.pred", "req.truth", "req.prob"),
   name = "Brier score",
   note = "The Brier score is defined as the quadratic difference between the probability and the value (1,0) for the class.
   That means we use the numeric representation 1 and 0 for our target classes. It is similiar to the mean squared error in regression.
