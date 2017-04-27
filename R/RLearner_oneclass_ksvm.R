@@ -8,7 +8,6 @@ makeRLearner.oneclass.ksvm = function() {
       makeDiscreteLearnerParam(id = "type", default = "one-svc", values = c("one-svc")),
       makeDiscreteLearnerParam(id = "kernel", default = "rbfdot",
         values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot")),
-      makeNumericLearnerParam(id = "C", lower = 0, default = 1, requires = quote(type %in% c("C-svc", "C-bsvc", "spoc-svc", "kbb-svc"))),
       makeNumericLearnerParam(id = "nu", lower = 0, default = 0.2, requires = quote(type == "nu-svc" || type == "one-svc")),
       makeNumericLearnerParam(id = "sigma", lower = 0, requires = quote(kernel %in% c("rbfdot", "anovadot", "besseldot", "laplacedot"))),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L, requires = quote(kernel %in% c("polydot", "anovadot", "besseldot"))),
