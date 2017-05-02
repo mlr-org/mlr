@@ -56,12 +56,9 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
   p.df = as.data.frame(p)
 
   # check if class names are integers. if yes, colnames of p.df need to be adapted
-  int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
-  if (any(int)) {
-    pcol = stri_detect_regex("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol))
-      colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
-  }
+  pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
+  if (any(pcol))
+    colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
 
   if (.learner$predict.type == "response") {
     return(p.df$predict)
