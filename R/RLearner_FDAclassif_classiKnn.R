@@ -21,7 +21,7 @@ makeRLearner.fdaclassif.classiKnn = function() {
                                requires = quote(metric == "custom.metric"),
                                tunable = FALSE),
       # additional arguments to computeDistMat
-      makeNumericLearnerParam(id = "dmin", default = 1,
+      makeNumericLearnerParam(id = "dmin", default = 0,
                               lower = 0, upper = 1),
       makeNumericLearnerParam(id = "dmax", default = 1,
                               lower = 0, upper = 1),
