@@ -268,7 +268,7 @@ test_that("generatePartialDependenceData", {
   # test rng as paratmeter
   petal_width <- c(seq(0.1,0.6,6),seq(1,2.5,16))
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width", rng = petal_width)
-  expect_that(pd$data$Petal.Width,equals(petal_width))
+  expect_that(length(pd$data$Petal.Width),equals(length(unique(pd$data$Class))*length(petal_width)))
                                      
 })
 
