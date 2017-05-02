@@ -38,7 +38,7 @@ getNameProposals = function(input, possible.inputs, nproposals = 3L) {
 # expand.grid can be applied to this to find all possible combinations of the features
 generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
   sapply(features, function(feature) {
-      nunique = length(unique(data[[feature]][!is.na(data[[feature]])]))
+      nunique = length(na.omit(unique(data[[feature]])))
       cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
       if (resample == "none") {
         switch(paste0(class(data[[feature]]), collapse = ":"),
