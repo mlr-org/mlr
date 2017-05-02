@@ -269,7 +269,6 @@ test_that("generatePartialDependenceData", {
   petal.width = c(seq(0.1, 0.6, 0.1), seq(1, 2.5, 16))
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width", rng = petal.width)
   expect_that(length(pd$data$Petal.Width),equals(length(unique(pd$data$Class)) * length(petal.width)))
-                                     
 })
 
 test_that("generateFeatureGrid", {
