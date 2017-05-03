@@ -33,7 +33,7 @@ test_that("class names are integers and probabilities predicted (#1787)", {
   df = data.frame(matrix(runif(100, 0, 1), 100, 9))
   classx = factor(sample(c(0, 1), 100, replace = TRUE))
   df = cbind(classx, df)
-  
+
   classif.task = makeClassifTask(id = "example", data = df, target = "classx")
   gb.lrn  = makeLearner("classif.h2o.deeplearning", predict.type = "prob")
   rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
