@@ -46,7 +46,7 @@ makeRLearner.fdaclassif.classiKnn = function() {
       keys = c("task"),
       forbidden = expression(dmin > dmax,
                              dmin1 > dmax1,
-                             dmin1 > dmax2,
+                             dmin2 > dmax2,
                              knn %% 2 == 0)
     ),
     # par.vals = list(metric = "Euclidean", knn = 1L),
