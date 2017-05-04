@@ -42,6 +42,8 @@ hill climbing algorithm,
 while speeding up the predictions and reducing the size of the model and
 \dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
 with the weights chosen Brier Score optimal.
+\dQuote{best.baseLearner} for choosing only the best base learner selected
+by cross validation.
 Default is \dQuote{stack.nocv},}
 
 \item{id}{[\code{character(1)}]\cr
@@ -54,13 +56,15 @@ Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal'
 Default is \code{FALSE}.}
 
 \item{resampling}{[\code{\link{ResampleDesc}}]\cr
-the resampling strategy for \code{method = 'stack.cv'}. Currently only CV is allowed.
+the resampling strategy for \code{method \%in\% c('stack.cv', 'best.baseLearner'}.
+Currently only CV is allowed.
 The default \code{NULL} uses 5-fold CV,
 the resampling strategy for \code{method = 'classif.bs.optimal'}
 Currently only LOO and CV are allowed.
 The default \code{NULL} uses LOO.}
 
-\item{parset}{the parameters for \code{hill.climb} method, including
+\item{parset}{[\code{list}]\cr
+the parameters for \code{hill.climb} method, including
 \describe{
   \item{\code{replace}}{Whether a base learner can be selected more than once.}
   \item{\code{init}}{Number of best models being included before the selection algorithm.}
@@ -74,7 +78,10 @@ the parameters for \code{compress} method, including
    \item{k}{the size multiplier of the generated data}
    \item{prob}{the probability to exchange values}
    \item{s}{the standard deviation of each numerical feature}
-}}
+}
+the parameter \code{measure} for \code{best.baseLearner} method which gives
+the measure to be used for evaluating the base learners. Defaults to the
+default measure for the learner.}
 }
 \description{
 A stacked learner uses predictions of several base learners and fits
