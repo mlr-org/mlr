@@ -45,7 +45,7 @@ makeRLearner.fdaclassif.classiKnn = function() {
       # TODO additional arguments to custom metric
       keys = c("task"),
       forbidden = expression(dmin > dmax,
-                             dmin1 > dmax2,
+                             dmin1 > dmax1,
                              dmin1 > dmax2,
                              knn %% 2 == 0)
     ),
