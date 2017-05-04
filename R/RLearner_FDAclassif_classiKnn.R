@@ -38,14 +38,16 @@ makeRLearner.fdaclassif.classiKnn = function() {
       makeNumericLearnerParam(id = "t2", default = 1,
                               lower = 0, upper = 1),
       makeNumericVectorLearnerParam(id = ".poi", # default = expression(seq(0, 1, ncol(task))),
-                              lower = 0, upper = 1),
+                                    lower = 0, upper = 1),
       # additional arguments to metrics in computeDistMat
       makeNumericLearnerParam(id = "p", default = 2),
       # TODO additional arguments to Data2fd
       # TODO additional arguments to custom metric
       keys = c("task"),
       forbidden = expression(dmin >= dmax,
-                             dmin1 >= dmax1 | dmin2 >= dmax2,
+                             dmin1 >= dmax1 |
+                               # dmax1 > dmin2 |
+                               dmin2 >= dmax2,
                              knn %% 2 == 0)
     ),
     # par.vals = list(metric = "Euclidean", knn = 1L),
