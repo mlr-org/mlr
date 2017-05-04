@@ -44,9 +44,9 @@ makeRLearner.fdaclassif.classiKnn = function() {
       # TODO additional arguments to Data2fd
       # TODO additional arguments to custom metric
       keys = c("task"),
-      forbidden = expression(dmin > dmax,
-                             dmin1 > dmax1,
-                             dmin2 > dmax2,
+      forbidden = expression(dmin >= dmax,
+                             dmin1 >= dmax1,
+                             dmin2 >= dmax2,
                              knn %% 2 == 0)
     ),
     # par.vals = list(metric = "Euclidean", knn = 1L),
