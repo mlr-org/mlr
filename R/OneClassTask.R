@@ -8,8 +8,8 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   if (!missing(target)) {
     assertString(target)
   } else {
-    data$anomaly = FALSE
-    target = "anomaly"
+    data$normal = TRUE
+    target = "normal"
     warningf("No target column specified, add target column 'anomaly' with one class 'FALSE'")
   }
   # some code on cran passed stuff like positive=1, we can live with the convert here
@@ -71,6 +71,6 @@ print.OneClassTask = function(x, ...) {
   print.SupervisedTask(x)
   catf("Classes: %i", m)
   catf(collapse(di, "\n"))
-  catf("Positive class: %s", x$task.desc$positive)
+  catf("Positive/Normal class: %s", x$task.desc$positive)
 }
 
