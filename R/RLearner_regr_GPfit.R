@@ -39,7 +39,7 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
   }
-  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k + 0.5 ), ...)
+  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k + 0.5), ...)
   res = attachTrainingInfo(res, mlist)
   return(res)
 }
