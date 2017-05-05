@@ -38,7 +38,7 @@
 #'     \item{surv}{Is the measure applicable for survival?}
 #'     \item{cluster}{Is the measure applicable for cluster?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
-#'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
+#'     \item{oneclass}{Is the measure applicable for one-classification (anomaly detection) learning?}
 #'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
 #'     \item{req.task}{Is task object required in calculation? Usually not the case}
 #'     \item{req.model}{Is model object required in calculation? Usually not the case.}

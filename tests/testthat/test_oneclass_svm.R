@@ -31,6 +31,4 @@ test_that("oneclass_svm", {
   tt = function(formula, data, subset=1:150, ...) {
     e1071::svm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5, type = "one-classification")
   }
-
-  testCV("oneclass.svm", oneclass.df, oneclass.target, tune.train = tt, parset = list(kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5, type = "one-classification"))
 })

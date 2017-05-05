@@ -1,5 +1,5 @@
-#' @title Create a classification, regression, survival, cluster, cost-sensitive classification or
-#' multilabel task.
+#' @title Create a classification, regression, survival, cluster, cost-sensitive classification,
+#' multilabel task ore one-classification (anomaly detection).
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
