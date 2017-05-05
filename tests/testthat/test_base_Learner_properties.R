@@ -24,6 +24,6 @@ test_that("listLearnerProperties", {
   expect_equal(listLearnerProperties("surv"), surv)
   cluster = c("numerics", "factors", "ordered", "missings", "weights", "prob")
   expect_equal(listLearnerProperties("cluster"), cluster)
-  oneclass = c("oneclass", "numerics", "factors", "ordered", "missings", "weights", "prob" )
+  oneclass = c("oneclass", "numerics", "factors", "ordered", "missings", "weights", "prob")
   expect_equal(listLearnerProperties("oneclass"), oneclass)
 })

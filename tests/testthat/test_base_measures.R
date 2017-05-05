@@ -455,7 +455,7 @@ test_that("check measure calculations", {
   expect_equal(measureSSR(p2[1, , drop = FALSE], y2[1]), 0.1 / sqrt(0.1^2 + 0.9^2))
   expect_equal(measureSSR(p2[1, , drop = FALSE], y1[1]), 0.9 / sqrt(0.1^2 + 0.9^2))
   #qsr
-  qsr.test = 1 - mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
+  qsr.test = 1 - mean(rowSums((pred.probs - model.matrix(~ . + 0, data = as.data.frame(tar.classif)))^2))
   qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
   expect_equal(qsr.test, qsr$fun(pred = pred.classif))
   expect_equal(qsr.test, as.numeric(qsr.perf))
@@ -835,7 +835,7 @@ test_that("check measure calculations", {
   #db
   c2 = c(3, 1)
   c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
-  s1 = sqrt((sum((data.oneclass[1, -3 ] - c1)^2) + sum((data.oneclass[2, -3] - c1)^2) +
+  s1 = sqrt((sum((data.oneclass[1, -3] - c1)^2) + sum((data.oneclass[2, -3] - c1)^2) +
       sum((data.oneclass[4, -3] - c1)^2)) / 3L)
   M = sqrt(sum((c2 - c1)^2))
   db.test = s1 / M

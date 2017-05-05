@@ -22,7 +22,7 @@ test_that("tune", {
   for (i in seq_len(nrow(tr$performances))) {
     cp = tr$performances[i, "cp"]
     ms = tr$performances[i, "minsplit"]
-    j = which(pp$cp == cp & pp$minsplit == ms )
+    j = which(pp$cp == cp & pp$minsplit == ms)
     expect_equal(tr$performances[i, "error"], pp[j, "mmce.test.mean"])
     expect_equal(tr$performances[i, "dispersion"], pp[j, "mmce.test.sd"])
   }
