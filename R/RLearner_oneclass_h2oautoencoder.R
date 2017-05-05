@@ -187,8 +187,6 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
         "huber", "quantile"), default = "AUTO"),
       makeNumericLearnerParam("quantile_alpha", default = 0.5, lower = 0, upper = 1,
         requires = quote(distribution == "quantile")),
-      makeNumericLearnerParam("tweedie_power", default = 1.5, lower = 1, upper = 2,
-        requires = quote(distribution == "tweedie")),
       makeNumericLearnerParam("score_interval", default = 5),
       makeIntegerLearnerParam("score_training_samples", default = 10000),
       makeIntegerLearnerParam("score_validation_samples", default = 0),
