@@ -1,5 +1,5 @@
 #' @title Create a classification, regression, survival, cluster, cost-sensitive classification,
-#' multilabel task ore one-classification (anomaly detection).
+#' multilabel task or one-classification (anomaly detection).
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
@@ -36,7 +36,9 @@
 #'   For survival analysis these are the names of the survival time and event columns,
 #'   so it has length 2. For multilabel classification it contains the names of the logical
 #'   columns that encode whether a label is present or not and its length corresponds to the
-#'   number of classes.
+#'   number of classes. For one-classification the target variable is not required, but can be passed
+#'   for later evaluation, if no target variable is passed the task will create a class column with only
+#'   the class "normal" as entry.
 #' @param costs [\code{data.frame}]\cr
 #'   A numeric matrix or data frame containing the costs of misclassification.
 #'   We assume the general case of observation specific costs.

@@ -675,7 +675,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
       dist.mat.2 = hamming(mat[, ind2, drop = FALSE])
     }
     dist.mat = dist.mat.1 + dist.mat.2
-    neighbour = max.col( -dist.mat - diag(Inf, n))
+    neighbour = max.col(-dist.mat - diag(Inf, n))
     return(neighbour)
   }
 

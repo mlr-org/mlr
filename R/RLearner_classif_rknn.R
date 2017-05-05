@@ -22,7 +22,7 @@ makeRLearner.classif.rknn = function(){
 #' @export
 trainLearner.classif.rknn = function(.learner, .task, .subset, .weights = NULL,  ...){
   z = getTaskData(.task, .subset, target.extra = TRUE)
-  c(list(data = z$data, y = z$target ), list(...))
+  c(list(data = z$data, y = z$target), list(...))
 }
 
 #' @export

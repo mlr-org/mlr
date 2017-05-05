@@ -12,7 +12,7 @@ selectFeaturesRandom = function(learner, task, resampling, measures, bit.names, 
 
 createStates = function(n, max.features, prob){
   if (is.na(max.features))
-    return(rbinom(n, 1, prob) )
+    return(rbinom(n, 1, prob))
   run.loop = TRUE
   while (run.loop) {
     x = rbinom(n, 1, prob)
