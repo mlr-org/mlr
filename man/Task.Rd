@@ -17,8 +17,8 @@
 \alias{CostSensTask}
 \alias{ClusterTask}
 \alias{MultilabelTask}
-\title{Create a classification, regression, survival, cluster, cost-sensitive classification or
-multilabel task.}
+\title{Create a classification, regression, survival, cluster, cost-sensitive classification,
+multilabel task or one-classification (anomaly detection).}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, positive = NA_character_,
@@ -58,7 +58,9 @@ Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
 so it has length 2. For multilabel classification it contains the names of the logical
 columns that encode whether a label is present or not and its length corresponds to the
-number of classes.}
+number of classes. For one-classification the target variable is not required, but can be passed
+for later evaluation, if no target variable is passed the task will create a class column with only
+the class "normal" as entry.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
