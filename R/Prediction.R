@@ -186,8 +186,8 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
   if (predict.type == "response") {
     data$response = y
     data = as.data.frame(filterNull(data))
-    # HACK: For some reason the prediction will return table with the colnames c(truth, FALSE.)
-    # need response as name instead of FALSE.
+    # HACK: For some reason the prediction will return table with the colnames c(truth, TRUE.)
+    # need response as name instead of TRUE.
     # ex = grep("\\.",names(data))
     # names(data)[ex] = "response"
   } else {
