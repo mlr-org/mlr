@@ -8,8 +8,8 @@
 #' \item{id [\code{character(1)}]}{Id string of task.}
 #' \item{type [\code{character(1)}]}{Type of task, \dQuote{classif} for classification,
 #'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for
-#'   cluster analysis, \dQuote{costsens} for cost-sensitive classification, and
-#'   \dQuote{multilabel} for multilabel classification.}
+#'   cluster analysis, \dQuote{costsens} for cost-sensitive classification,
+#'   \dQuote{multilabel} for multilabel classification and \dQuote{oneclass} for one-classification (anomaly detection).}
 #' \item{target [\code{character(0)} | \code{character(1)} | \code{character(2)} | \code{character(n.classes)}]}{
 #'   Name(s) of the target variable(s).
 #'   For \dQuote{surv} these are the names of the survival time and event columns, so it has length 2.
