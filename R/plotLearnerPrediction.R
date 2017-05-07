@@ -163,7 +163,11 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   if (td$type %in% c("classif", "oneclass")) {
     data$.err = if (err.mark == "train")
-      y != yhat
+      if (td$type == "oneclass") {
+        as.numeric(y) != as.numeric(yhat)
+      } else {
+             y != yhat
+      }
     else if (err.mark == "cv")
       y != pred.cv$data[order(pred.cv$data$id), "response"]
     if (taskdim == 2L) {
