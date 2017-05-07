@@ -247,11 +247,14 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
 
 #' @export
 predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, ...) {
+  #type = switch(.learner$predict.type, prob = "prob", "class")
+  #predict(.model$learner.model, newdata = .newdata, type = type, ...)
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
-  p.df = as.data.frame(p)
-  p.df = p.df[, 1]
+  p.df = as.matrix(p)
+  colnames(p.df) = .model$task.desc$positive
+  # p.df = p.df[, 1]
   return(p.df)
 }
 
