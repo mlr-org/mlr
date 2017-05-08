@@ -46,8 +46,9 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   levs = levels(data[[target]])
   m = length(levs)
   if (is.na(positive)) {
-    if (m <= 2L)
-      positive = levs[1L]
+    if (m <= 2L) {
+      positive = names(which.max(table(data[[target]])))
+    }
   } else {
     if (m > 2L)
       stop("Cannot set a positive class for a multiclass problem!")
@@ -55,7 +56,7 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   }
   td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking)
   td$class.levels = levs
-  td$positive = as.logical(positive)
+  td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
     td$negative = setdiff(c(TRUE, FALSE), positive)
