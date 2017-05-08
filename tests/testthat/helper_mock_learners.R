@@ -108,7 +108,7 @@ trainLearner.regr.__mlrmocklearners__6 = function(.learner, .task, .subset, .wei
   list(weights = .weights)
 }
 
-predictLearner.regr.__mlrmocklearners__6 = function(.learner, .model, .newdata ) {  # nolint
+predictLearner.regr.__mlrmocklearners__6 = function(.learner, .model, .newdata) {  # nolint
   rep(1, nrow(.newdata))
 }
 registerS3method("makeRLearner", "regr.__mlrmocklearners__6", makeRLearner.regr.__mlrmocklearners__6)

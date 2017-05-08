@@ -12,8 +12,8 @@ test_that("learnerArgsToControl with list returns the input", {
   expect_equal(list(arg1 = arg1, arg2 = arg2), test1)
 
   # test missing values
-  arg1 = quote(expr = )
-  arg2 = quote(expr = )
+  arg1 = quote(expr = )  # nolint
+  arg2 = quote(expr = )  # nolint
   test2 = checkLearnerArgsToControl(arg1, arg2)
   expect_equal(list(), test2)
 
@@ -38,7 +38,7 @@ test_that("learnerArgsToControl works with a control object", {
   test1 = checkLearnerArgsToControlWithControl(fdev, devmax)
   expect_equal(test1, glmnet::glmnet.control(fdev = fdev, devmax = devmax))
 
-  devmax = quote(expr = )
+  devmax = quote(expr = )  # nolint
   glmnet::glmnet.control(factory = TRUE)
   test2 = checkLearnerArgsToControlWithControl(fdev, devmax, mnlam = 3)
   expect_equal(test2, glmnet::glmnet.control(fdev = fdev, devmax = devmax, mnlam = 3))
