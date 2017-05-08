@@ -246,7 +246,7 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
 }
 
 #' @export
-predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, ...) {
+predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, predict.threshold = NULL, ...) {
   #type = switch(.learner$predict.type, prob = "prob", "class")
   #predict(.model$learner.model, newdata = .newdata, type = type, ...)
   m = .model$learner.model
@@ -254,7 +254,19 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
   p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
   p.df = as.matrix(p)
   colnames(p.df) = .model$task.desc$positive
-  # p.df = p.df[, 1]
+  if(.learner$predict.type == "response"){
+    # set default threshold to the 80% quantile of the mse reconstruction error
+    if (is.null(predict.threshold)) {
+      indices.threshold = order(p.df)[round(length(p.df)*0.95)]  #mse reconstruction error in [0,inf[
+      predict.threshold = p.df[indices.threshold]
+      names(predict.threshold) = .model$task.desc$positive
+    }
+    p.df[is.nan(p.df)] = Inf
+    ind = which(p.df > predict.threshold)
+    p.df = rep(.model$task.desc$positive, length(p.df))
+    p.df[ind] = rep(.model$task.desc$negative, length(ind))
+    p.df = as.factor(p.df)
+  }
   return(p.df)
 }
 
