@@ -18,7 +18,7 @@ oneclass.pred = predict(train("oneclass.svm", oneclass.task), oneclass.task)
   expect_true(is.numeric(getPredictionResponse(regr.pred)))
   expect_true(is.numeric(getPredictionResponse(surv.pred)))
   expect_true(is.integer(getPredictionResponse(cluster.pred)))
-  expect_true(is.logical(getPredictionResponse(oneclass.pred)))
+  expect_true(is.factor(getPredictionResponse(oneclass.pred)))
 })
 
 test_that("getPredictionTruth", {
