@@ -29,7 +29,7 @@ getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
   if (ttype %nin% c("oneclass", "classif", "cluster", "multilabel"))
-    stop("Prediction was not generated from a ClassifTask, MultilabelTask or ClusterTask!")
+    stop("Prediction was not generated from a ClassifTask, MultilabelTask, ClusterTask or OneClassTask!")
   if (missing(cl)) {
     if (ttype == "classif") {
       if (length(pred$task.desc$class.levels) == 2L)
@@ -38,14 +38,15 @@ getPredictionProbabilities = function(pred, cl) {
         cl = pred$task.desc$class.levels
     } else if (ttype == "multilabel") {
       cl = pred$task.desc$class.levels
-    } else if (ttype == "oneclass") {
-      cl = pred$task.desc$positive
     }
   } else {
     if (ttype == "cluster")
       stopf("You can only ask for probs of all classes currently in clustering!")
     else
       assertCharacter(cl, any.missing = FALSE)
+  }
+  if ( ttype == "oneclass") {
+    cl = pred$task.desc$positive
   }
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
