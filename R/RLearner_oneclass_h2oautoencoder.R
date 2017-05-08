@@ -242,7 +242,8 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
     wcol = ".mlr.weights"
   }
   h2of = h2o::as.h2o(d)
-  h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol, ...)
+  # autoencoder = TRUE is set in the makeRLearner.oneclass.h2o.autoencoder() fkt
+  h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol,  ...)
 }
 
 #' @export
