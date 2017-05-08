@@ -49,6 +49,9 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.pred" %in% props) {
     if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
+    if(length(levels(pred$data$response)) == 1) {
+             levels(pred$data$response) = c(levels(pred$data$response), setdiff(c(pred$task.desc$positive, pred$task.desc$negative), levels(pred$data$response)))
+        }
   }
   if ("req.truth" %in% props) {
     type = getTaskDesc(pred)$type
@@ -64,6 +67,9 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
           stopf("You need to have a 'truth' column in your pred object or pass a 'truth' variable for measure %s!", m$id)
         } else if (is.null(pred$data$truth)) {
           pred$data$truth = truth
+        }
+        if(length(levels(pred$data$truth)) == 1) {
+             levels(pred$data$truth) = c(levels(pred$data$truth), setdiff(c(pred$task.desc$positive, pred$task.desc$negative), levels(pred$data$truth)))
         }
       } else {
         if (is.null(pred$data$truth))
