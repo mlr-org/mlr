@@ -7,6 +7,7 @@ getMultiChDtwFeatures = function(data, fd.features, ref) {
   as.data.frame(Reduce(cbind, x = feat.list))
 }
 
-getUniDTWFeatures = function (row, ref){ 
-  a = dtw(t,r, step.pattern = asymmetric, keep =TRUE)                                            a$distance 
+getUniDTWFeatures = function (row, ref){
+  a = dtw(t,r, step.pattern = asymmetric, keep =TRUE)
+  a$distance
 }

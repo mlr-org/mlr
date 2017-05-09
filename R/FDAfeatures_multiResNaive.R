@@ -19,10 +19,21 @@
 #' @return Returns a [\code{matrix}] object with each row containing the
 #'   multi-resolution features.
 #' @export
-getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.level = 3L, shift = 0.5) {
+
+
+# @description
+# extractFDAMultiResFeatures differs from getUniFDAMultiResFeatures that it accept customary segment
+# input, if the user does not provide this parameter then by default it extract on the whole curve
+# note that curve.lens is just some user defined segments in one channel! multiple channel are handled by the mlrFDA framework and is not considered here!
+getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.level = 3L, shift = 0.5, curve.lens = NULL) {
   # FIXME: Currently this just wraps up to make the API consistent, but the args target and include.target does not make sense at all
-  getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
+  if(is.null(curve.lens)) {
+    return(getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift))
+  }
+  extractFDAMultiResFeatures(data = data, curve.lens =curve.lens, res.level = res.level, shift = shift)
 }
+
+
 
 #' @title Multiresolution feature extraction on one functional covariate.
 #'
@@ -68,7 +79,7 @@ getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift 
 getUniFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5) {
   data = as.matrix(data)
   n.obs = nrow(data)
-  feat.list = vector("list", n.obs)  
+  feat.list = vector("list", n.obs)
   j = 1L
   for (i in 1:n.obs) {  # traverse the number of observations
     f = getCurveFeatures(data[i, ], res.level = res.level, shift = shift)
@@ -76,7 +87,6 @@ getUniFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5) {
   }
   do.call(rbind, feat.list)  # creat a matrix by combining the row
 }
-
 
 #' @title Multiresolution feature extraction.
 #'
