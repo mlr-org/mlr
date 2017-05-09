@@ -1,4 +1,4 @@
-context("classif_svm")
+context("oneclass_svm")
 
 # we cannot do a prob test, as set.seed sems not to work on e1071 svm for the prob parameters!
 #requirePackagesOrSkip("e1071", default.method = "load")
