@@ -553,7 +553,7 @@ compressBaseLearners = function(learner, task, parset = list()) {
   if (type == "regr") {
     new.task = makeRegrTask(data = pseudo.data, target = "target")
     if (is.null(learner$super.learner)) {
-      m = makeLearner("regr.nnet", predict.type = )
+      m = makeLearner("regr.nnet", predict.type = )  # nolint
     } else {
       m = learner$super.learner
     }
