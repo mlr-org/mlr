@@ -91,7 +91,7 @@
 #'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 #'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
 #'   length of the evenly spaced grid created.
-#' @param rng [\code{list}]\cr
+#' @param range [\code{list}]\cr
 #'   The range of values of the feature you would want the partial plots on - passed as a numeric list
 #' @param ... additional arguments to be passed to \code{\link{predict}}.
 #' @return [\code{PartialDependenceData}]. A named list, which contains the partial dependence,
