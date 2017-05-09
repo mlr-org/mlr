@@ -105,7 +105,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
 
   if (length(target) == 1) {
     if (grepl("oneclass", t.name)) {
-      task = makeOneClassTask(data = df)
+      task = makeOneClassTask(data = df, target = target)
     } else {
       task = makeClassifTask(data = df, target = target)
     }
