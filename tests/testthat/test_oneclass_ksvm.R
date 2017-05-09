@@ -5,7 +5,7 @@ test_that("oneclass_ksvm", {
 
   parset.list = list(
     list(),
-    list(gamma = 20),
+    list(scale = 20),
     list(kernel = "tanhdot", scale = 10),
     list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5)
   )
@@ -14,18 +14,15 @@ test_that("oneclass_ksvm", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(x = oneclass.train[, -5])
-    pars = c(pars, list(type = "one-classification"))
+    pars = list(x = as.kernelMatrix(crossprod(t(oneclass.train[1:4]))))
+    pars = c(pars, list(type = "one-svc"))
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m1 = do.call(kernlab::ksvm, pars)
-    old.predicts.list[[i]] = predict(m1, newdata = oneclass.test[, -5])
+    Ktest = as.kernelMatrix(crossprod(t(oneclass.test[1:4]), t(oneclass.train[1:4][SVindex(m1), ])))
+    old.predicts.list[[i]] = predict(m1, newdata = Ktest)
   }
 
    testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
      oneclass.train.inds, old.predicts.list,  parset.list)
-
-  tt = function(formula, data, subset=1:150, ...) {
-    kernlab::ksvm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5, type = "one-classification")
-  }
 })
