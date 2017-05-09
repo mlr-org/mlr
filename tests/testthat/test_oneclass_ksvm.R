@@ -20,7 +20,7 @@ test_that("oneclass_ksvm", {
     set.seed(getOption("mlr.debug.seed"))
     m1 = do.call(kernlab::ksvm, pars)
     Ktest = as.kernelMatrix(crossprod(t(oneclass.test[1:4]), t(oneclass.train[1:4][SVindex(m1), ])))
-    old.predicts.list[[i]] = predict(m1, newdata = Ktest)
+    old.predicts.list[[i]] = kernlab::predict(m1, Ktest)
   }
 
    testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
