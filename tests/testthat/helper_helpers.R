@@ -104,7 +104,11 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   test = df[-inds, ]
 
   if (length(target) == 1) {
-    task = makeClassifTask(data = df, target = target)
+    if (grepl("oneclass", t.name)) {
+      task = makeOneClassTask(data = df)
+    } else {
+      task = makeClassifTask(data = df, target = target)
+    }
   } else {
     task = makeMultilabelTask(data = df, target = target)
   }
