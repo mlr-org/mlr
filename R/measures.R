@@ -1089,7 +1089,7 @@ measureNPV = function(truth, response, negative) {
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False discovery rate",
-  note = "Defined as: (fp) / (tn + fn).",
+  note = "Defined as: (fp) / (tp + fp).",
   fun = function(task, model, pred, feats, extra.args) {
     measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
