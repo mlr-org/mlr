@@ -74,5 +74,6 @@ print.OneClassTask = function(x, ...) {
   catf(collapse(di, "\n"))
   catf("Negative/Normal class: %s", x$task.desc$negative)
   catf("Positive/Anomaly class: %s", x$task.desc$positive)
+  catf("Target column \"anomaly\" is not used in training, \n but is needed in case of evaluation with classification measures.")
 }
 
