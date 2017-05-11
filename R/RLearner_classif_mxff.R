@@ -8,7 +8,6 @@ makeRLearner.classif.mxff = function() {
       makeIntegerLearnerParam(id = "nodes1", lower = 1L, default = 1L),
       makeIntegerLearnerParam(id = "nodes2", lower = 1L, requires = quote(layers > 1)),
       makeIntegerLearnerParam(id = "nodes3", lower = 1L, requires = quote(layers > 2)),
-      makeIntegerLearnerParam(id = "nodes_out", lower = 1L, default = 2),
       makeDiscreteLearnerParam(id = "act1", default = "tanh", 
         values = c("tanh", "relu", "sigmoid", "softrelu")),
       makeDiscreteLearnerParam(id = "act2", default = "tanh", 
@@ -26,7 +25,7 @@ makeRLearner.classif.mxff = function() {
       makeIntegerLearnerParam(id = "num.round", default = 10),
       makeDiscreteLearnerParam(id = "optimizer", default = "sgd",
         values = c("sgd", "rmsprop", "adam", "adagrad", "adadelta")),
-      makeUntypedLearnerParam(id = "initializer", default = mx.init.uniform(0.01)),
+      makeUntypedLearnerParam(id = "initializer", default = NULL),
       makeUntypedLearnerParam(id = "eval.data", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "eval.metric", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "epoch.end.callback", default = NULL, tunable = FALSE),
@@ -71,7 +70,9 @@ makeRLearner.classif.mxff = function() {
     name = "mxff",
     note = "Default of `learning.rate` set to `0.1`. Default of `array.layout` set to `'rowmajor'`.
     Default of `verbose` is set to `FALSE`. If `symbol` is specified, it will be passed to mxnet 
-    ignoring other architectural specifications."
+    ignoring other architectural specifications. Default of `initializer` is set to NULL, which 
+    results in the default mxnet initializer being called when training a model. Number of output 
+    nodes is detected automatically."
   )
 }
 
@@ -106,9 +107,13 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     }
     
     # construct output layer
+    nodes_out = switch(act_out,
+      softmax = nlevels(d$target),
+      logistic = 1,
+      stop("Output activation not supported yet."))
     sym = mx.symbol.FullyConnected(sym, num_hidden = nodes_out)
     out = switch(act_out,
-      rmse = mx.symbol.LinearRegressionOutput(sym),
+      # rmse = mx.symbol.LinearRegressionOutput(sym),
       softmax = mx.symbol.SoftmaxOutput(sym),
       logistic = mx.symbol.LogisticRegressionOutput(sym),
       stop("Output activation not supported yet."))
