@@ -8,9 +8,9 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   if (!missing(target)) {
     assertString(target)
   } else {
-    data$anomaly = FALSE
-    target = "anomaly"
-    messagef("No target column specified, add target column 'anomaly' with one class 'FALSE'(= 'normal')")
+    data$normal = TRUE
+    target = "normal"
+    warningf("No target column specified, add target column 'anomaly' with one class 'FALSE'")
   }
   # some code on cran passed stuff like positive=1, we can live with the convert here
   if (isScalarNumeric(positive))
@@ -47,7 +47,7 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   m = length(levs)
   if (is.na(positive)) {
     if (m <= 2L) {
-      positive = setdiff(c(TRUE,FALSE), names(which.max(table(data[[target]]))))
+      positive = names(which.max(table(data[[target]])))
     }
   } else {
     if (m > 2L)
@@ -72,8 +72,6 @@ print.OneClassTask = function(x, ...) {
   print.SupervisedTask(x)
   catf("Classes: %i", m)
   catf(collapse(di, "\n"))
-  catf("Negative/Normal class: %s", x$task.desc$negative)
-  catf("Positive/Anomaly class: %s", x$task.desc$positive)
-  catf("Target column \"anomaly\" is not used in training, \n but is needed in case of evaluation with classification measures.")
+  catf("Positive/Normal class: %s", x$task.desc$positive)
 }
 
