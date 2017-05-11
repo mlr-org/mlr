@@ -4,22 +4,22 @@ makeRLearner.classif.mxff = function() {
     cl = "classif.mxff",
     package = "mxnet",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "layers", lower = 1L, upper = 3L, default = 1L),
       makeIntegerLearnerParam(id = "nodes1", lower = 1L, default = 1L),
-      makeIntegerLearnerParam(id = "nodes2", lower = 1L, requires = quote(layers > 1)),
-      makeIntegerLearnerParam(id = "nodes3", lower = 1L, requires = quote(layers > 2)),
+      makeIntegerLearnerParam(id = "nodes2", lower = 0L, 
+        requires = quote(testIntegerish(nodes1, lower = 1))),
+      makeIntegerLearnerParam(id = "nodes3", lower = 0L, 
+        requires = quote(testIntegerish(nodes2, lower = 1))),
       makeIntegerLearnerParam(id = "nodes_out", lower = 1L, default = 2),
       makeDiscreteLearnerParam(id = "act1", default = "tanh", 
         values = c("tanh", "relu", "sigmoid", "softrelu")),
       makeDiscreteLearnerParam(id = "act2", default = "tanh", 
         values = c("tanh", "relu", "sigmoid", "softrelu"), 
-        requires = quote(layers > 1)),
+        requires = quote(testIntegerish(nodes1, lower = 1) && testIntegerish(nodes2, lower = 1))),
       makeDiscreteLearnerParam(id = "act3", default = "tanh", 
         values = c("tanh", "relu", "sigmoid", "softrelu"), 
-        requires = quote(layers > 2)),
+        requires = quote(testIntegerish(nodes2, lower = 1) && testIntegerish(nodes3, lower = 1))),
       makeDiscreteLearnerParam(id = "act_out", default = "softmax", 
         values = c("rmse", "softmax", "logistic")),
-      # other hyperparameters
       makeNumericLearnerParam(id = "dropout", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "ctx", default = mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1),
@@ -38,8 +38,6 @@ makeRLearner.classif.mxff = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeUntypedLearnerParam(id = "arg.params", tunable = FALSE),
       makeUntypedLearnerParam(id = "aux.params", tunable = FALSE),
-      makeUntypedLearnerParam(id = "symbol", tunable = FALSE),
-      # optimizer specific hyperhyperparameters
       makeNumericLearnerParam(id = "rho", default = 0.9, requires = quote(optimizer %in% 
           c("adadelta"))),
       makeNumericLearnerParam(id = "epsilon",
@@ -65,54 +63,50 @@ makeRLearner.classif.mxff = function() {
       makeNumericLearnerParam(id = "momentum", default = 0, 
         requires = quote(optimizer %in% c("sgd")))
     ),
-    # FIXME: "probs" implementieren
     properties = c("twoclass", "multiclass", "numerics"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
     name = "mxff",
     note = "Default of `learning.rate` set to `0.1`. Default of `array.layout` set to `'rowmajor'`.
-    Default of `verbose` is set to `FALSE`. If `symbol` is specified, it will be passed to mxnet 
-    ignoring other architectural specifications."
+    Default of `verbose` is set to `FALSE`."
   )
 }
 
 #' @export
 trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
-  layers = 1, nodes1 = 1, nodes2 = NULL, nodes3 = NULL, nodes_out = NULL, 
-  act1 = "tanh", act2 = NULL, act3 = NULL, act_out = "softmax", dropout = NULL, symbol = NULL,
-  ...) {
-  # transform data in correct format
+  nodes1 = 1, nodes2 = NULL, nodes3 = NULL, nodes_out = NULL, 
+  act1 = "tanh", act2 = NULL, act3 = NULL, act_out = "softmax", dropout = NULL, ...) {
+  # transform data into correct format
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   y = as.numeric(d$target) - 1
   X = data.matrix(d$data)
-  
+ 
   # construct vectors with #nodes and activations
-  if (!is.null(symbol)) {
-    out = symbol
-  } else {
-    sym = mx.symbol.Variable("data")
-    act = list(act1, act2, act3)[1:layers]
-    nodes = list(nodes1, nodes2, nodes3)[1:layers]
-    
-    # construct hidden layers using symbols
-    for (i in seq_len(layers)) {
-      sym = mx.symbol.FullyConnected(sym, num_hidden = nodes[[i]])
-      sym = mx.symbol.Activation(sym, act_type = act[[i]])
-    }
-    
-    # add dropout if specified
-    if (!is.null(dropout)) {
-      dropout = min(dropout, (1 - 1e-7))
-      sym <- mx.symbol.Dropout(sym, p = dropout)
-    }
-    
-    # construct output layer
-    sym = mx.symbol.FullyConnected(sym, num_hidden = nodes_out)
-    out = switch(act_out,
-      rmse = mx.symbol.LinearRegressionOutput(sym),
-      softmax = mx.symbol.SoftmaxOutput(sym),
-      logistic = mx.symbol.LogisticRegressionOutput(sym),
-      stop("Output activation not supported yet."))
+  sym = mx.symbol.Variable("data")
+  act = list(act1, act2, act3)
+  nodes = list(nodes1, nodes2, nodes3)
+  l = min(which.first(!vapply(nodes, testIntegerish, logical(1), lower = 1)) - 1, length(nodes))
+  act = act[1:l]
+  nodes = nodes[1:l]
+  
+  # construct hidden layers using symbols
+  for (i in seq_len(l)) {
+    sym = mx.symbol.FullyConnected(sym, num_hidden = nodes[[i]])
+    sym = mx.symbol.Activation(sym, act_type = act[[i]])
   }
+  
+  # add dropout if specified
+  if (!is.null(dropout)) {
+    dropout = min(dropout, (1 - 1e-7))
+    sym <- mx.symbol.Dropout(sym, p = dropout)
+  }
+  
+  # construct output layer
+  sym = mx.symbol.FullyConnected(sym, num_hidden = nodes_out)
+  out = switch(act_out,
+    rmse = mx.symbol.LinearRegressionOutput(sym),
+    softmax = mx.symbol.SoftmaxOutput(sym),
+    logistic = mx.symbol.LogisticRegressionOutput(sym),
+    stop("Output activation not supported yet."))
   
   # create model
   model = mx.model.FeedForward.create(out, X = X, y = y, ...)
@@ -132,5 +126,4 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
     levels(p) = .model$task.desc$class.levels
     p
   }
-  # if (.learner$predict.type == "prob")
 }

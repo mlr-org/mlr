@@ -11,9 +11,9 @@ test_that("classif_mxff", {
   )
   parset.list.mlr = list(
     list(),
-    list(nodes1 = 10, nodes2 = 6, act1 = "sigmoid",
+    list(layers = 2, nodes1 = 10, nodes2 = 6, act1 = "sigmoid",
       act2 = "relu", learning.rate = 0.2),
-    list(nodes1 = 10, nodes2 = 6, act1 = "sigmoid",
+    list(layers = 2, nodes1 = 10, nodes2 = 6, act1 = "sigmoid",
       act2 = "relu", learning.rate = 0.2, dropout = 0.5)
   )
   
