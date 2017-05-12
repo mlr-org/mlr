@@ -266,8 +266,8 @@ test_that("generatePartialDependenceData", {
     individual = TRUE, derivative = TRUE, gridsize = gridsize)
 	
   # test rng as paratmeter
-  petal.width = c(seq(0.1, 0.6, 0.1), seq(1, 2.5, 16))
-  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width", rng = petal.width)
+  petal.width = c(seq(0.1, 0.6, 0.1), seq(1, 2.5, 0.1))
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width", range = petal.width)
   expect_that(length(pd$data$Petal.Width),equals(length(unique(pd$data$Class)) * length(petal.width)))
 })
 
