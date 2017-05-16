@@ -75,7 +75,7 @@
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
-#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
+#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask OneClassTask
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)
@@ -89,6 +89,7 @@
 #'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
 #'     positive = "good", blocking = blocking)
 #'   makeClusterTask(data = iris[, -5L])
+#'   makeOneClassTask(data = iris[, -5L])
 #' }
 NULL
 
