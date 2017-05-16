@@ -21,8 +21,8 @@ makeRLearner.classif.mxff = function() {
       # other hyperparameters
       makeNumericLearnerParam(id = "dropout", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "ctx", default = mx.ctx.default(), tunable = FALSE),
-      makeIntegerLearnerParam(id = "begin.round", default = 1),
-      makeIntegerLearnerParam(id = "num.round", default = 10),
+      makeIntegerLearnerParam(id = "begin.round", default = 1L),
+      makeIntegerLearnerParam(id = "num.round", default = 10L),
       makeDiscreteLearnerParam(id = "optimizer", default = "sgd",
         values = c("sgd", "rmsprop", "adam", "adagrad", "adadelta")),
       makeUntypedLearnerParam(id = "initializer", default = NULL),
@@ -30,7 +30,7 @@ makeRLearner.classif.mxff = function() {
       makeUntypedLearnerParam(id = "eval.metric", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "epoch.end.callback", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "batch.end.callback", default = NULL, tunable = FALSE),
-      makeIntegerLearnerParam(id = "array.batch.size", default = 128),
+      makeIntegerLearnerParam(id = "array.batch.size", default = 128L),
       makeDiscreteLearnerParam(id = "array.layout", default = "rowmajor",
         values = c("auto", "colmajor", "rowmajor"), tunable = FALSE),
       makeUntypedLearnerParam(id = "kvstore", default = "local", tunable = FALSE),
@@ -40,7 +40,7 @@ makeRLearner.classif.mxff = function() {
       makeUntypedLearnerParam(id = "symbol", tunable = FALSE),
       # optimizer specific hyperhyperparameters
       makeNumericLearnerParam(id = "rho", default = 0.9, requires = quote(optimizer %in%
-          c("adadelta"))),
+        c("adadelta"))),
       makeNumericLearnerParam(id = "epsilon",
         requires = quote(optimizer %in% c("adadelta", "adagrad", "adam"))),
       makeNumericLearnerParam(id = "wd", default = 0,
@@ -64,7 +64,6 @@ makeRLearner.classif.mxff = function() {
       makeNumericLearnerParam(id = "momentum", default = 0,
         requires = quote(optimizer %in% c("sgd")))
     ),
-    # FIXME: "probs" implementieren
     properties = c("twoclass", "multiclass", "numerics"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
     name = "Feedforward Neural Network",
@@ -79,7 +78,7 @@ makeRLearner.classif.mxff = function() {
 
 #' @export
 trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
-  layers = 1, nodes1 = 1, nodes2 = NULL, nodes3 = NULL, nodes_out = NULL,
+  layers = 1L, nodes1 = 1L, nodes2 = NULL, nodes3 = NULL, nodes_out = NULL,
   act1 = "tanh", act2 = NULL, act3 = NULL, act_out = "softmax", dropout = NULL, symbol = NULL,
   ...) {
   # transform data in correct format
@@ -122,7 +121,6 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
 
   # create model
   model = mx.model.FeedForward.create(out, X = X, y = y, ...)
-
   return(model)
 }
 
@@ -133,10 +131,11 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     p = apply(p, 2, function(i) {
       w = which.max(i)
-      return(ifelse(length(w > 0), w, NaN))})
+      return(ifelse(length(w > 0), w, NaN))
+      })
     p = factor(p, exclude = c(NaN))
     levels(p) = .model$task.desc$class.levels
-    p
+    return(p)
   }
   # if (.learner$predict.type == "prob")
 }
