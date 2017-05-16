@@ -29,6 +29,7 @@
 #'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
 #'   b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
 #'   columns are named with class labels.
+#' @param weight.positive [\code{numeric}]\cr For Weighted accuracy (wac) a weight for the positive class required. The weight should be element of the intervall (0,1)
 #' @name measures
 #' @rdname measures
 #' @family performance
@@ -885,13 +886,13 @@ wac = makeMeasure(id = "wac", minimize = FALSE, best = 1, worst = 0,
   note = "Weighted mean of true positive rate and true negative rate. Per default weight.positive = 0.5 and therefore equals to the balanced accuracy (bac). If using wac via the performance fct, pass the weight beforehand,
   e.g. wac$extra.args = list(weight.positive = 0.6).",
   fun = function(task, model, pred, feats, extra.args) {
-    if( is.null(extra.args$weight.positive)) {
+    if (is.null(extra.args$weight.positive)) {
       weight.positive = 0.5
     } else {
       weight.positive = extra.args$weight.positive
     }
     if (!(0 <= weight.positive & weight.positive <= 1))
-      stop("Weight for the summand of the positiv accuracy measure needs to be an element of (0,1).")
+      stop("Weiht for the positive class for the weightes accuracy must be an element of (0,1).")
       weight.negative = 1 - weight.positive
 
     sum(c(weight.positive * tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
@@ -904,7 +905,7 @@ wac = makeMeasure(id = "wac", minimize = FALSE, best = 1, worst = 0,
 #' @format none
 measureWAC = function(truth, response, negative, positive, weight.positive = 0.5) {
   if (!(0 <= weight.positive & weight.positive <= 1))
-    stop("Weight for the summand of the positiv accuracy measure needs to be an element of (0,1).")
+    stop("Weiht for the positive class for the weightes accuracy must be an element of (0,1).")
     weight.negative = 1 - weight.positive
   sum(c(
     weight.positive * measureTP(truth, response, positive) / sum(truth == positive),
