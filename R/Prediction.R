@@ -183,7 +183,7 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
   data$id = id
   if (!missing(truth)) {
     data$truth = truth
-    if(length(levels(data$truth)) == 1){
+    if (length(levels(data$truth)) == 1){
       levels(data$truth) = c(levels(data$truth), setdiff(task.desc$class.levels, levels(data$truth)))
     }
   }
