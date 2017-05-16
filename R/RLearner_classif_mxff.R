@@ -67,7 +67,8 @@ makeRLearner.classif.mxff = function() {
     # FIXME: "probs" implementieren
     properties = c("twoclass", "multiclass", "numerics"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
-    name = "mxff",
+    name = "Feedforward Neural Network",
+    short.name = "mxff",
     note = "Default of `learning.rate` set to `0.1`. Default of `array.layout` set to `'rowmajor'`.
     Default of `verbose` is set to `FALSE`. If `symbol` is specified, it will be passed to mxnet
     ignoring other architectural specifications. Default of `initializer` is set to NULL, which
