@@ -19,5 +19,5 @@ test_that("classif_logreg", {
     as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }
 
-  testCV("classif.logreg", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp )
+  testCV("classif.logreg", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp)
 })
