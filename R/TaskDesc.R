@@ -16,7 +16,8 @@
 #'   For \dQuote{costsens} it has length 0, as there is no target column, but a cost matrix instead.
 #'   For \dQuote{multilabel} these are the names of logical columns that indicate whether a
 #'   class label is present and the number of target variables corresponds to the number of
-#'   classes.}
+#'   classes.
+#'   For \dQuote{oneclass} there is no target column needed for the training model. But for applying classification measurements one can pass a target column, otherwise OneClassTask() will create a column with oneclass, namely a column called "normal" with only "TRUE" as entries. Note: Target column will be ignored for training.}
 #' \item{size [\code{integer(1)}]}{Number of cases in data set.}
 #' \item{n.feat [\code{integer(2)}]}{Number of features, named vector with entries:
 #'   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}.}

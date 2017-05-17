@@ -181,8 +181,12 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL, ...) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
-  if (!missing(truth))
+  if (!missing(truth)) {
     data$truth = truth
+    if (length(levels(data$truth)) == 1){
+      levels(data$truth) = c(levels(data$truth), setdiff(task.desc$class.levels, levels(data$truth)))
+    }
+  }
   if (predict.type == "response") {
     data$response = y
     data = as.data.frame(filterNull(data))

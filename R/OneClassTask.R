@@ -10,11 +10,12 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   } else {
     data$normal = TRUE
     target = "normal"
-    warningf("No target column specified, add target column 'anomaly' with one class 'FALSE'")
+    messagef("No target column specified, add target column 'normal' with one class 'TRUE' \n
+      As the assumption for oneclass classification is that one only have observation of one class.")
   }
   # some code on cran passed stuff like positive=1, we can live with the convert here
   if (isScalarNumeric(positive))
-    positive = as.character(positive)
+  positive = as.character(positive)
   assertString(positive, na.ok = TRUE)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
@@ -37,7 +38,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
     if (length(levels(data[[target]])) > 2)
       stopf("Target column '%s' contains more than two factor levels")
   }
-
+  levels(data[[target]]) = c(levels(data[[target]]), setdiff(c(FALSE, TRUE), levels(data[[target]])))
   task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive)
   addClasses(task, "OneClassTask")
 }
@@ -58,10 +59,12 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
-  if (length(td$class.levels) == 1L)
-    td$negative = setdiff(c(TRUE, FALSE), positive)
-  else if (length(td$class.levels) == 2L)
-    td$negative = setdiff(td$class.levels, positive)
+  if (length(td$class.levels) == 2L)
+    td$negative = setdiff(td$class.levels, td$positive)
+  # else if (length(td$class.levels) == 1L) {
+  #   td$class.levels = c(td$positive, setdiff(c(TRUE, FALSE),  td$positive))
+  #   td$negative = setdiff(td$class.levels, positive)
+  # }
   return(addClasses(td, c("OneClassTaskDesc", "SupervisedTaskDesc")))
 }
 
@@ -73,5 +76,9 @@ print.OneClassTask = function(x, ...) {
   catf("Classes: %i", m)
   catf(collapse(di, "\n"))
   catf("Positive/Normal class: %s", x$task.desc$positive)
+  catf("Negative/Anomaly class: %s", x$task.desc$negative)
+  catf("Note: As oneclass classification problem is an unsupervised learning problem,
+    the label TRUE and FALSE aren't the ground truth, if the class column is automatecially created by mlR,
+    but rather an assumption of the oneclass classification problem.")
 }
 

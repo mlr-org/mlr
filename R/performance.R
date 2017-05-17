@@ -61,22 +61,18 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     } else if (type == "multilabel") {
       if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
-    } else {
-      if (type == "oneclass") {
+    } else if (type == "oneclass") {
         if (is.null(truth) && is.null(pred$data$truth)) {
           stopf("You need to have a 'truth' column in your pred object or pass a 'truth' variable for measure %s!", m$id)
         } else if (is.null(pred$data$truth)) {
           pred$data$truth = truth
         }
-        if(length(levels(pred$data$truth)) == 1) {
-             levels(pred$data$truth) = c(levels(pred$data$truth), setdiff(c(pred$task.desc$positive, pred$task.desc$negative), levels(pred$data$truth)))
-        }
+      levels(pred$data$truth) = c(levels(pred$data$truth), setdiff(c(TRUE, FALSE), levels(pred$data$truth)))
       } else {
         if (is.null(pred$data$truth))
           stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
       }
     }
-  }
   if ("req.model" %in% props) {
     if (is.null(model))
       stopf("You need to pass model for measure %s!", m$id)
@@ -106,6 +102,9 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     model$task.desc
   else if (!is.null(task))
     getTaskDesc(task)
+  if ((pred$task.desc$type == "oneclass") & (length(levels(pred$data$truth)) == 1)) {
+    levels(pred$data$truth) = c(levels(pred$data$truth), setdiff(td$class.levels, levels(pred$data$truth)))
+  }
 
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
