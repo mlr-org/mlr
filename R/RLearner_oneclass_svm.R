@@ -38,6 +38,7 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
    p = predict(.model$learner.model, newdata = .newdata, ...)
    if (.learner$predict.type == "response") {
      p = as.factor(p)
+     levels(p) = c(levels(p), setdiff(c(TRUE,FALSE), levels(p)))
    }
   return(p)
 }

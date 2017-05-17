@@ -75,7 +75,7 @@
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
-#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
+#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask OneClassTask
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)
@@ -89,6 +89,7 @@
 #'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
 #'     positive = "good", blocking = blocking)
 #'   makeClusterTask(data = iris[, -5L])
+#'   makeOneClassTask(data = iris[, -5L])
 #' }
 NULL
 
@@ -127,6 +128,11 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
   }
 
   env = new.env(parent = emptyenv())
+  # Hack: Target column need to have level TRUE and FALSE, otherwise errors like "level sets of factors are different" occurs,
+  # when comparing y, yhat for some measurments or plotLearnerPrediction()
+  if (type == "oneclass") {
+    levels(data[, ncol(data)]) = c(levels(data[, ncol(data)]), setdiff(c(TRUE, FALSE), levels(data[, ncol(data)])))
+  }
   env$data = data
   makeS3Obj("Task",
     type = type,

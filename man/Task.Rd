@@ -17,6 +17,7 @@
 \alias{CostSensTask}
 \alias{ClusterTask}
 \alias{MultilabelTask}
+\alias{OneClassTask}
 \title{Create a classification, regression, survival, cluster, cost-sensitive classification,
 multilabel task or one-classification (anomaly detection).}
 \usage{
@@ -148,6 +149,7 @@ if (requireNamespace("mlbench")) {
   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
     positive = "good", blocking = blocking)
   makeClusterTask(data = iris[, -5L])
+  makeOneClassTask(data = iris[, -5L])
 }
 }
 \seealso{
