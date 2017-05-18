@@ -152,7 +152,6 @@ listLearners.Task = function(obj = NA_character_, properties = character(0L),
   if (td$n.feat["ordered"] > 0L) props = c(props, "ordered")
   if (td$has.missings) props = c(props, "missings")
   if (td$type == "classif") {
-    if (length(td$class.levels) == 1L) props = c(props, "oneclass")
     if (length(td$class.levels) == 2L) props = c(props, "twoclass")
     if (length(td$class.levels) >= 3L) props = c(props, "multiclass")
   }
