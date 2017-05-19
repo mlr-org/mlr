@@ -38,7 +38,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
     if (length(levels(data[[target]])) > 2)
       stopf("Target column '%s' contains more than two factor levels")
   }
-  levels(data[[target]]) = c(levels(data[[target]]), setdiff(c(FALSE, TRUE), levels(data[[target]])))
+  levels(data[[target]]) = union(levels(data[[target]]), c(TRUE, FALSE))
   task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive)
   addClasses(task, "OneClassTask")
 }
