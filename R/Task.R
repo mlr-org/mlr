@@ -131,7 +131,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
   # Hack: Target column need to have level TRUE and FALSE, otherwise errors like "level sets of factors are different" occurs,
   # when comparing y, yhat for some measurments or plotLearnerPrediction()
   if (type == "oneclass") {
-    levels(data[, ncol(data)]) = c(levels(data[, ncol(data)]), setdiff(c(TRUE, FALSE), levels(data[, ncol(data)])))
+    levels(data[, ncol(data)]) = union(levels(data[, ncol(data)]), c(TRUE, FALSE))
   }
   env$data = data
   makeS3Obj("Task",

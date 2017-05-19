@@ -184,7 +184,7 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
   if (!missing(truth)) {
     data$truth = truth
     if (length(levels(data$truth)) == 1){
-      levels(data$truth) = c(levels(data$truth), setdiff(task.desc$class.levels, levels(data$truth)))
+      levels(data$truth) = union(levels(data$truth), task.desc$class.levels)
     }
   }
   if (predict.type == "response") {

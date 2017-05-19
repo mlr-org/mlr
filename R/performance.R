@@ -67,7 +67,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
         } else if (is.null(pred$data$truth)) {
           pred$data$truth = truth
         }
-      levels(pred$data$truth) = c(levels(pred$data$truth), setdiff(c(TRUE, FALSE), levels(pred$data$truth)))
+      levels(pred$data$truth) = union(levels(pred$data$truth), pred$task.desc$class.levels)
       } else {
         if (is.null(pred$data$truth))
           stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
@@ -103,7 +103,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   else if (!is.null(task))
     getTaskDesc(task)
   if ((pred$task.desc$type == "oneclass") & (length(levels(pred$data$truth)) == 1)) {
-    levels(pred$data$truth) = c(levels(pred$data$truth), setdiff(td$class.levels, levels(pred$data$truth)))
+    levels(pred$data$truth) = union(levels(pred$data$truth), td$class.levels)
   }
 
   # null only happens in custom resampled measure when we do no individual measurements
