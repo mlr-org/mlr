@@ -39,8 +39,7 @@ makeRLearner.classif.mxff = function() {
       makeUntypedLearnerParam(id = "aux.params", tunable = FALSE),
       makeUntypedLearnerParam(id = "symbol", tunable = FALSE),
       # optimizer specific hyperhyperparameters
-      makeNumericLearnerParam(id = "rho", default = 0.9, requires = quote(optimizer %in%
-        c("adadelta"))),
+      makeNumericLearnerParam(id = "rho", default = 0.9, requires = quote(optimizer == "adadelta")),
       makeNumericLearnerParam(id = "epsilon",
         requires = quote(optimizer %in% c("adadelta", "adagrad", "adam"))),
       makeNumericLearnerParam(id = "wd", default = 0,
@@ -53,16 +52,13 @@ makeRLearner.classif.mxff = function() {
         requires = quote(optimizer %in% c("adagrad", "adam", "rmsprop", "sgd"))),
       makeNumericLearnerParam(id = "learning.rate",
         requires = quote(optimizer %in% c("adagrad", "adam", "rmsprop", "sgd"))),
-      makeNumericLearnerParam(id = "beta1", default = 0.9,
-        requires = quote(optimizer %in% c("adam"))),
-      makeNumericLearnerParam(id = "beta2", default = 0.999,
-        requires = quote(optimizer %in% c("adam"))),
+      makeNumericLearnerParam(id = "beta1", default = 0.9, requires = quote(optimizer == "adam")),
+      makeNumericLearnerParam(id = "beta2", default = 0.999, requires = quote(optimizer == "adam")),
       makeNumericLearnerParam(id = "gamma1", default = 0.95,
-        requires = quote(optimizer %in% c("rmsprop"))),
+        requires = quote(optimizer == "rmsprop")),
       makeNumericLearnerParam(id = "gamma2", default = 0.9,
-        requires = quote(optimizer %in% c("rmsprop"))),
-      makeNumericLearnerParam(id = "momentum", default = 0,
-        requires = quote(optimizer %in% c("sgd")))
+        requires = quote(optimizer == "rmsprop")),
+      makeNumericLearnerParam(id = "momentum", default = 0, requires = quote(optimizer == "sgd"))
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
@@ -78,7 +74,7 @@ makeRLearner.classif.mxff = function() {
 
 #' @export
 trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
-  layers = 1L, nodes1 = 1L, nodes2 = NULL, nodes3 = NULL, nodes_out = NULL,
+  layers = 1L, nodes1 = 1L, nodes2 = NULL, nodes3 = NULL, nodes.out = NULL,
   act1 = "tanh", act2 = NULL, act3 = NULL, act_out = "softmax", dropout = NULL, symbol = NULL,
   ...) {
   # transform data in correct format
@@ -107,11 +103,11 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     }
 
     # construct output layer
-    nodes_out = switch(act_out,
+    nodes.out = switch(act_out,
       softmax = nlevels(d$target),
       logistic = 1,
       stop("Output activation not supported yet."))
-    sym = mx.symbol.FullyConnected(sym, num_hidden = nodes_out)
+    sym = mx.symbol.FullyConnected(sym, num_hidden = nodes.out)
     out = switch(act_out,
       # rmse = mx.symbol.LinearRegressionOutput(sym),
       softmax = mx.symbol.SoftmaxOutput(sym),
@@ -133,7 +129,7 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
       w = which.max(i)
       return(ifelse(length(w > 0), w, NaN))
       })
-    p = factor(p, exclude = c(NaN))
+    p = factor(p, exclude = NaN)
     levels(p) = .model$task.desc$class.levels
     return(p)
   }
