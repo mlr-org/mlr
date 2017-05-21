@@ -15,7 +15,7 @@
 #' @param truth For anomaly detection a truth column can be passed to additionally calculate classification measures
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
-#' @family performance For anomaly detection a truth column can be passed.
+#' @family performance
 #' @examples
 #' training.set = seq(1, nrow(iris), by = 2)
 #' test.set = seq(2, nrow(iris), by = 2)
@@ -102,9 +102,6 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     model$task.desc
   else if (!is.null(task))
     getTaskDesc(task)
-  if ((pred$task.desc$type == "oneclass") & (length(levels(pred$data$truth)) == 1)) {
-    levels(pred$data$truth) = union(levels(pred$data$truth), td$class.levels)
-  }
 
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
