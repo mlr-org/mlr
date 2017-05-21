@@ -868,7 +868,7 @@ bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
     summandPositive = ifelse (denomPositive == 0, 0, tp$fun(pred = pred) / denomPositive)
     summandNegative = ifelse (denomNegative == 0, 0, tn$fun(pred = pred) / denomNegative)
 
-    mean(c(summandPositiv, summandNegativ))
+    mean(c(summandPositive, summandNegative))
   }
 )
 
@@ -883,7 +883,7 @@ measureBAC = function(truth, response, negative, positive) {
   summandPositive = ifelse (denomPositive == 0, 0, measureTP(truth, response, positive) / denomPositive)
   summandNegative = ifelse (denomNegative == 0, 0, measureTN(truth, response, negative) / denomNegative)
 
-  mean(c(summandPositiv, summandNegativ))
+  mean(c(summandPositive, summandNegative))
 }
 
 #' @export wac
@@ -910,7 +910,7 @@ wac = makeMeasure(id = "wac", minimize = FALSE, best = 1, worst = 0,
       summandPositive = ifelse (denomPositive == 0, 0,  weight.positive * tp$fun(pred = pred) / denomPositive)
       summandNegative = ifelse (denomNegative == 0, 0,  weight.negative * tn$fun(pred = pred) / denomNegative)
 
-      sum(c(summandPositiv, summandNegativ))
+      sum(c(summandPositive, summandNegative))
   }
 )
 
@@ -928,7 +928,7 @@ measureWAC = function(truth, response, negative, positive, weight.positive = 0.5
     summandPositive = ifelse (denomPositive == 0, 0,  weight.positive * measureTP(truth, response, positive) / denomPositive)
     summandNegative = ifelse (denomNegative == 0, 0,  weight.negative * measureTN(truth, response, negative) / denomNegative)
 
-    sum(c(summandPositiv, summandNegativ))
+    sum(c(summandPositive, summandNegative))
 }
 
 #' @export tp
