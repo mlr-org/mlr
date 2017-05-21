@@ -965,7 +965,8 @@ test_that("check measure calculations", {
   wac.test = (0.8 * firstterm + 0.2 * secondterm)
   wac$extra.args = list(weight.positive = 0.8)
   wac.perf = performance(pred.oneclass, measures = wac, model = mod.oneclass)
-  expect_equal(wac.test, wac$fun(pred = pred.oneclass))
+  extra.args = list(weight.positive = 0.8)
+  expect_equal(wac.test, wac$fun(pred = pred.oneclass, extra.args = extra.args))
   expect_equal(wac.test, as.numeric(wac.perf))
   #ber #NaN as TRUE in target,  # need prediction type response (svm can't predict prob)
   # ber.test = 1L - bac.test
