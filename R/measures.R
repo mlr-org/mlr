@@ -901,7 +901,7 @@ wac = makeMeasure(id = "wac", minimize = FALSE, best = 1, worst = 0,
       weight.positive = extra.args$weight.positive
     }
     if (!(0 <= weight.positive & weight.positive <= 1))
-      stop("Weiht for the positive class for the weightes accuracy must be an element of (0,1).")
+      stop("Weiht for the positive class for the weights accuracy must be an element of (0,1).")
       weight.negative = 1 - weight.positive
 
       denomPositive = sum(pred$data$truth == pred$task.desc$positive)
@@ -919,7 +919,7 @@ wac = makeMeasure(id = "wac", minimize = FALSE, best = 1, worst = 0,
 #' @format none
 measureWAC = function(truth, response, negative, positive, weight.positive = 0.5) {
   if (!(0 <= weight.positive & weight.positive <= 1))
-    stop("Weiht for the positive class for the weightes accuracy must be an element of (0,1).")
+    stop("Weiht for the positive class for the weights accuracy must be an element of (0,1).")
     weight.negative = 1 - weight.positive
 
     denomPositive = sum(truth == positive)

@@ -77,5 +77,5 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateROCMeasures}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}}, \code{\link{makeMeasure}},
-  \code{\link{measures}}
+  \code{\link{measures}}, \code{\link{performance}}
 }
