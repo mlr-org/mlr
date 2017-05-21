@@ -61,10 +61,6 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive) {
   td$negative = NA_character_
   if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, td$positive)
-  # else if (length(td$class.levels) == 1L) {
-  #   td$class.levels = c(td$positive, setdiff(c(TRUE, FALSE),  td$positive))
-  #   td$negative = setdiff(td$class.levels, positive)
-  # }
   return(addClasses(td, c("OneClassTaskDesc", "SupervisedTaskDesc")))
 }
 

@@ -182,25 +182,19 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   if (!missing(truth)) {
+    levels(truth) = union(levels(truth), task.desc$class.levels)
     data$truth = truth
-    if (length(levels(data$truth)) == 1){
-      levels(data$truth) = union(levels(data$truth), task.desc$class.levels)
-    }
   }
   if (predict.type == "response") {
     data$response = y
     data = as.data.frame(filterNull(data))
-    # HACK: For some reason the prediction will return table with the colnames c(truth, TRUE.)
-    # need response as name instead of TRUE.
-    # ex = grep("\\.",names(data))
-    # names(data)[ex] = "response"
   } else {
     data$prob = y
     data = as.data.frame(filterNull(data))
     # fix columnnames for prob if strange chars are in factor levels
     indices = stri_detect_fixed(names(data), "prob.")
 
-    # HACK need to create colnames with prob.<positive class> for one class
+    # HACK need to create colnames with prob.TRUE for the normal class
     # otherwise getPredictionProbabilities() will throw an error
     # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
     indices = stri_detect_fixed(names(data), colnames(y))
@@ -218,13 +212,7 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
     error = error
   )
   if (predict.type == "prob") {
-    # set default threshold to the 50% quantile of the mse reconstruction error
-    if (is.null(predict.threshold)) {
-      indices.threshold = order(y)[round(length(y) / 2)]  #mse reconstruction error in [0,inf[
-      predict.threshold = y[indices.threshold]
-      names(predict.threshold) = task.desc$positive
-    }
-    p = setThreshold(p, predict.threshold)
+# to be add in branch h2o and branch convertScoretoProb
   }
   return(p)
 }
