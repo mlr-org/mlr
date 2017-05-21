@@ -53,5 +53,6 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateROCMeasures}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{measures}}
+  \code{\link{makeMeasure}}, \code{\link{measures}},
+  \code{\link{performance}}
 }
