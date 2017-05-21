@@ -99,9 +99,6 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     model$task.desc
   else if (!is.null(task))
     getTaskDesc(task)
-  if ((pred$task.desc$type == "oneclass") & (length(levels(pred$data$truth)) == 1)) {
-    levels(pred$data$truth) = union(levels(pred$data$truth), td$class.levels)
-  }
 
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
