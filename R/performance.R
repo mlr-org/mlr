@@ -15,7 +15,7 @@
 #' @param truth For anomaly detection a truth column can be passed to additionally calculate classification measures
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
-#' @family performance For anomaly detection a truth column can be passed.
+#' @family performance
 #' @examples
 #' training.set = seq(1, nrow(iris), by = 2)
 #' test.set = seq(2, nrow(iris), by = 2)
