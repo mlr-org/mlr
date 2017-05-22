@@ -48,7 +48,7 @@ getPredictionProbabilities = function(pred, cl) {
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
-  if (ttype %in% c("classif", "multilabel")) {
+  if (ttype %in% c("classif", "multilabel", "fdaclassif")) {
     cl2 = stri_paste("prob", cl, sep = ".")
     if (!all(cl2 %in% cns))
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
