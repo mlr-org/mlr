@@ -40,6 +40,7 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
      p = as.factor(p)
      levels(p) = union(levels(p), .model$task.desc$class.levels)
    }
+
   return(p)
 }
 
