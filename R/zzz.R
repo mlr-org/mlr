@@ -3,7 +3,6 @@
 #' @importFrom graphics hist
 #' @importFrom utils browseURL capture.output combn data getFromNamespace getS3method head tail methods
 #' @import BBmisc
-#' @import backports
 #' @import checkmate
 #' @import parallelMap
 #' @import ParamHelpers
@@ -13,6 +12,7 @@
 #' @import data.table
 
 .onAttach = function(libname, pkgname) {
+  backports::import(pkgname)
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
 }
