@@ -19,7 +19,7 @@ makeRLearner.classif.mxff = function() {
       makeDiscreteLearnerParam(id = "act_out", default = "softmax",
         values = c("rmse", "softmax", "logistic")),
       # other hyperparameters
-      makeNumericLearnerParam(id = "dropout", lower = 0, upper = 1),
+      makeNumericLearnerParam(id = "dropout", lower = 0, upper = 1 - 1e-7),
       makeUntypedLearnerParam(id = "ctx", default = mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -98,7 +98,6 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
 
     # add dropout if specified
     if (!is.null(dropout)) {
-      dropout = min(dropout, (1 - 1e-7))
       sym = mx.symbol.Dropout(sym, p = dropout)
     }
 
