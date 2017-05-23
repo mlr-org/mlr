@@ -68,7 +68,8 @@ makeRLearner.classif.mxff = function() {
     Default of `verbose` is set to `FALSE`. If `symbol` is specified, it will be passed to mxnet
     ignoring other architectural specifications. Default of `initializer` is set to NULL, which
     results in the default mxnet initializer being called when training a model. Number of output
-    nodes is detected automatically."
+    nodes is detected automatically. The upper bound for dropout is set to `1 - 1e-7` as in `mx.mlp`
+    in the `mxnet` package."
   )
 }
 
