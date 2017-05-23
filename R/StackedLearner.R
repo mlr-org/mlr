@@ -183,7 +183,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   # check: classif.bs.optimal can only handle classification tasks
   if (method == "classif.bs.optimal") {
-    if (!all(baseType == "classif")) {
+    if (!all(base.type == "classif")) {
       stop("If method = 'classif.bs.optimal' all learners must be of type 'classif'.")
     }
   }
@@ -246,7 +246,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
   return(probs)
 }
 
-
+#' @importFrom quadprog solve.QP
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   # reduce to subset we want to train ensemble on
@@ -394,11 +394,7 @@ averageBaseLearners = function(learner, task) {
        pred.train = probs)
 }
 
-#' choose weights in a weighted sum to minimize the brier score
-#'
-#' internal helper function
-#'
-#' importFrom quadprog solve.QP
+
 classif.bs.optimal = function(learner, task) {
   bls = learner$base.learners
   base.models = probs = vector("list", length(bls))
