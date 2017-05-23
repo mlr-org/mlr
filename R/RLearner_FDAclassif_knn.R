@@ -81,7 +81,7 @@ makeRLearner.fdaclassif.knn = function() {
 #' @export
 trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
   task.desc = getTaskDesc(.task)
-  if(length(task.desc$fd.features) > 1) {
+  if (length(task.desc$fd.features) > 1) {
     stop("This learner can only be used for data with one functional covariable.")
   }
   fd.features = unlist(task.desc$fd.features)
@@ -89,7 +89,7 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
 
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   # transform the data into fda.usc:fdata class type.
-  data.fdclass = fda.usc::fdata(mdata = z$data[,fd.features],
+  data.fdclass = fda.usc::fdata(mdata = z$data[, fd.features],
                                 argvals = grid)
   par.cv = learnerArgsToControl(list, trim, draw)
   par.s = list(w = .weights)
@@ -118,7 +118,7 @@ predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
 
   if (.learner$predict.type == "response") {
     return(predict(m, nd.fdclass, type = "class", ...))
-  } else if(.learner$predict.type == "prob") {
+  } else if (.learner$predict.type == "prob") {
     pred = predict(m, nd.fdclass, type = "probs", ...)
     return(pred$prob.group)
   }

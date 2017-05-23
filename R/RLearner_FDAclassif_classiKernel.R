@@ -19,7 +19,8 @@ makeRLearner.fdaclassif.classiKernel = function() {
                                values = c("base.diff", "fda.deriv.fd")),
       makeFunctionLearnerParam(id = "custom.metric",
                                default = function(x, y, ...) {
-                                 return(sqrt(sum((x - y)^2)))},
+                                 return(sqrt(sum( (x - y) ^ 2)))
+                                 },
                                requires = quote(metric == "custom.metric"),
                                tunable = FALSE),
       makeFunctionLearnerParam(id = "custom.ker",
@@ -67,7 +68,7 @@ makeRLearner.fdaclassif.classiKernel = function() {
 #' @export
 trainLearner.fdaclassif.classiKernel = function(.learner, .task, .subset, ...) {
   task.desc = getTaskDesc(.task)
-  if(length(task.desc$fd.features) > 1) {
+  if (length(task.desc$fd.features) > 1) {
     stop("This learner can only be used for data with one functional covariable.")
   }
   fd.features = unlist(task.desc$fd.features)
@@ -78,7 +79,7 @@ trainLearner.fdaclassif.classiKernel = function(.learner, .task, .subset, ...) {
                                               dict = list(task = .task))
   learned.model = do.call(classiFunc::classiKernel,
                           c(list(classes = z$target,
-                                 fdata = z$data[,fd.features],
+                                 fdata = z$data[, fd.features],
                                  grid = grid),
                             getLearnerParVals(.learner)))
   return(learned.model)

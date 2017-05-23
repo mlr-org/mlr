@@ -17,7 +17,8 @@ makeRLearner.fdaclassif.classiKnn = function() {
                                values = c("base.diff", "fda.deriv.fd")),
       makeFunctionLearnerParam(id = "custom.metric",
                                default = function(x, y, ...) {
-                                 return(sqrt(sum((x - y)^2)))},
+                                 return(sqrt(sum( (x - y) ^ 2)))
+                                 },
                                requires = quote(metric == "custom.metric"),
                                tunable = FALSE),
       # additional arguments to computeDistMat
@@ -62,7 +63,7 @@ makeRLearner.fdaclassif.classiKnn = function() {
 #' @export
 trainLearner.fdaclassif.classiKnn = function(.learner, .task, .subset, ...) {
   task.desc = getTaskDesc(.task)
-  if(length(task.desc$fd.features) > 1) {
+  if (length(task.desc$fd.features) > 1) {
     stop("This learner can only be used for data with one functional covariable.")
   }
   fd.features = unlist(task.desc$fd.features)
@@ -71,7 +72,7 @@ trainLearner.fdaclassif.classiKnn = function(.learner, .task, .subset, ...) {
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   .learner$par.set = evaluateParamExpressions(.learner$par.set, dict = list(task = .task))
   learned.model = do.call(classiFunc::classiKnn, c(list(classes = z$target,
-                                                        fdata = z$data[,fd.features],
+                                                        fdata = z$data[, fd.features],
                                                         grid = grid),
                                                    getLearnerParVals(.learner)))
   return(learned.model)

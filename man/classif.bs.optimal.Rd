@@ -2,10 +2,13 @@
 % Please edit documentation in R/StackedLearner.R
 \name{classif.bs.optimal}
 \alias{classif.bs.optimal}
-\title{importFrom quadprog solve.QP}
+\title{choose weights in a weighted sum to minimize the brier score}
 \usage{
 classif.bs.optimal(learner, task)
 }
 \description{
+internal helper function
+}
+\details{
 importFrom quadprog solve.QP
 }
