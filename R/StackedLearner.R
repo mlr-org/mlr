@@ -6,6 +6,8 @@
 #'
 #'  \describe{
 #'   \item{\code{average}}{Averaging of base learner predictions without weights.}
+#'   \item{\code{best.baseLearner}}{Selecting the best base learner according to a given
+#'   \link{measures} using cross validation.}
 #'   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
 #'   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
 #'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
@@ -37,6 +39,8 @@
 #'   }
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
+#'   \dQuote{best.baseLearner} for choosing only the best base learner selected
+#'   by cross validation,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
 #'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
@@ -45,8 +49,6 @@
 #'   while speeding up the predictions and reducing the size of the model and
 #'   \dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
 #'   with the weights chosen Brier Score optimal.
-#'   \dQuote{best.baseLearner} for choosing only the best base learner selected
-#'   by cross validation.
 #'   Default is \dQuote{stack.nocv},
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.
@@ -391,7 +393,7 @@ averageBaseLearners = function(learner, task) {
        pred.train = probs)
 }
 
-
+#' importFrom quadprog solve.QP
 classif.bs.optimal = function(learner, task) {
   bls = learner$base.learners
   base.models = probs = vector("list", length(bls))
@@ -442,8 +444,6 @@ classif.bs.optimal = function(learner, task) {
   # E and F are onedimensional
   Neq = 1
 
-  # FIXME is this the correct way to access a package here?
-  requirePackages("quadprog")
   sol = quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq = Neq)
   # sol$IsError = FALSE
   # sol$X = sol$solution
