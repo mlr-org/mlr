@@ -44,7 +44,7 @@ Default is the first factor level of the target attribute.}
 \item{fixup.data}{[\code{character(1)}]\cr
 Should some basic cleaning up of data be performed?
 Currently this means removing empty factor levels for the columns.
-Possible coices are:
+Possible choices are:
 \dQuote{no} = Don't do it.
 \dQuote{warn} = Do it but warn about it.
 \dQuote{quiet} = Do it but keep silent.
@@ -55,36 +55,35 @@ Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is \code{TRUE}.}
 
-\item{fd.features}{[\code{list}]\cr Optional. Named list of column indices or
-column names of the passed data. Each list entry defines one functional covariate through
-either a character vector of column names or an integer vector of column
-indices. The list names specify the names of the functional covariates. All
-columns that are not referenced in \code{fd.features} are scalar variables.
-Default is \dQuote{fd1} which means we assume that all columns form one
-functional covariate.}
+\item{fd.features}{[Named \code{list} of \code{character} or \code{integer}]\cr
+Optional. Functional features, as column indices or column names of the passed data.
+The list names specify the names of the functional features.
+Each list entry defines one functional feature through column names or indices.
+Unreferenced columns are assumed to be scalar features.
+Default is \code{NULL}, then we assume all columns to form one functional feature called \dQuote{fd1}.}
 
-\item{fd.grids}{[\code{list}]\cr Optional. Named list of grids over which the
-functional variables are observed. Each grid of observation points must be
-provided as a numerical vector. Default is \code{NULL} then all functional
-variables are observed on equidistant observation grids 1, 2, …, <number of
+\item{fd.grids}{[\code{list} of \code{numeric}]\cr
+Optional. Grids over which the functional features are observed.
+Default is \code{NULL}, then all functional
+features are observed on equidistant observation grids 1, 2, …, <number of
 observations per function>.}
 }
 \value{
 [\code{\link{FDAClassifTask}}].
 }
 \description{
-Create a functional data classification task. This means that some features 
-in the task will be so-called functional covariates / functional features, 
-measured on a grid or time scale. Different covariates might come from
+Create a functional data classification task. This means that some features
+in the task will be so-called functional features,
+measured on a grid or time scale. Different functional features might come from
 different sensors for example.
 }
 \examples{
-dat = data.frame(matrix(rnorm(20), nrow = 2))
-dat$target = as.factor(c(0,1))
-# X1 to X5 is functional covariate 1 and X6 to X10 functional covariate 2
-# grd specifies the time points the curves were sampled at.
-grd = list(fd_1 = 1:5, fd_2 = 1:5)
-# One row per Observation
-tsk = makeFDAClassifTask(data = dat, fd.features = list(fd_1 = 1:5, fd_2 = 6:10),
-  target = "target", fd.grid = grd, positive = "1")
+d = data.frame(matrix(rnorm(20), nrow = 2))
+d$target = as.factor(c(0, 1))
+# X1 to X5 is functional feature 1 and X6 to X10 functional feature 2
+# grid specifies the time points the curves were sampled at
+grid = list(fd1 = 1:5, fd2 = 1:5)
+# one row per observation
+task = makeFDAClassifTask(data = d, fd.features = list(fd1 = 1:5, fd2 = 6:10),
+  target = "target", fd.grid = grid, positive = "1")
 }
