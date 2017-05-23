@@ -246,7 +246,6 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
   return(probs)
 }
 
-#' @importFrom quadprog solve.QP
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   # reduce to subset we want to train ensemble on
