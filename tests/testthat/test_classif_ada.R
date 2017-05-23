@@ -2,16 +2,16 @@ context("classif_ada")
 
 test_that("classif_ada", {
   requirePackagesOrSkip("ada", default.method = "load")
-  
+
   parset.list = list(
     list(),
     list(iter = 5L)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
@@ -19,7 +19,7 @@ test_that("classif_ada", {
     m = do.call(ada::ada, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = binaryclass.test, type = "probs")
-    old.probs.list[[i]] = p[,1]
+    old.probs.list[[i]] = p[, 1]
     old.predicts.list[[i]] = as.factor(binaryclass.class.levs[ifelse(p[, 2] > 0.5, 2, 1)])
   }
 

@@ -31,29 +31,29 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
   assertList(fd.grids, null.ok = TRUE, types = "numeric",
     any.missing = FALSE, min.len = 1L, names = "unique")
   # if the user doesn't specify the fd.features, we assume all features belong to one group or one covariate
-  if (is.null(fd.features)) {
+  if (is.null(fd.features))
     fd.features = list(fd1 = fnames)
-  }
+  fdfns = names(fd.features)
+  # if the user doesn't specify the fd.grids, we assume grids to be a list of 1,...,k
   if (is.null(fd.grids)) {
-    fd.grids = setNames(lapply(X = names(fd.features), FUN = function(name) {
-        seq_len(length(fd.features[[name]]))
-      }), names(fd.features))
+    fd.grids = lapply(fdfns, function(name) seq_along(fd.features[[name]]))
+    names(fd.grids) = fdfns
   }
-  # check if target column is not used as fct.covariate
-  assert(target %nin% colnames(getTaskData(task)[, unlist(fd.features)]))
   # check if length of each fct.covariate is equivalent to the length of its grid
-  lapply(names(fd.features), function(g) {
-    assert(length(fd.grids[[g]]) == length(fd.features[[g]]))
-  })
+  for (g in fdfns) {
+    n1 = length(fd.features[[g]])
+    n2 = length(fd.grids[[g]])
+    if (n1 != n2)
+      stopf("For func. feat. '%s', length of fd.features entry (%i) does not match length of fd.grids entry (%i)!",
+        g, n1, n2)
+  }
   # we don't support mixed integer and character specification for fd.features
   assertLogical(unique(vlapply(fd.features, is.integer)), len = 1)
-  assertNames(names(fd.grids), permutation.of = names(fd.features))
+  assertNames(names(fd.grids), permutation.of = fdfns)
   # two functional covariate can not occupy the same variable
   assert(length(unlist(fd.features)) == length(unique(unlist(fd.features))))
-  
   cns = colnames(getTaskData(task))
-  #cns = c(getTaskTargetNames(task), getTaskFeatureNames(task)) can't be used, please do not use it! 
-  
+  # cns = c(getTaskTargetNames(task), getTaskFeatureNames(task)) can't be used, please do not use it!
   # lets check integrity of every entry of fd.features, then convert indices to character vector
   fd.features = lapply(fd.features, function(f) {
     if (is.character(f)) {
@@ -64,6 +64,9 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
     }
     return(f)
   })
+  # check if target column is not used in fd.features
+  if (target %in% unlist(fd.features))
+    stopf("Target column cannot be included in 'fd.features'!")
   task$task.desc$fd.features = fd.features
   task$task.desc$fd.grids = fd.grids
   # if a variable does not belong to functional covariate, it is regarded as scalar

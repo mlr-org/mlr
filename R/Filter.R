@@ -1,4 +1,4 @@
-.FilterRegister = new.env()
+.FilterRegister = new.env()  # nolint
 
 #' Create a feature filter.
 #'
@@ -93,7 +93,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, inclu
   if (include.deprecated)
     df$deprecated = deprecated
   else
-    df = df[!deprecated,]
+    df = df[!deprecated, ]
   res = setRowNames(sortByCol(df, "id"), NULL)
   addClasses(res, "FilterMethodsList")
 }
@@ -201,7 +201,7 @@ rf.importance = makeFilter(
 .FilterRegister[["rf.importance"]] = rf.importance
 .FilterRegister[["rf.importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
 .FilterRegister[["rf.importance"]]$fun = function(...) {
-  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC.rfsrc'")
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForest.importance' (package randomForest) or Filter 'randomForestSRC.rfsrc' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
 }
 
@@ -251,16 +251,16 @@ makeFilter(
     p = getTaskNFeats(task)
     if (p < mtry)
       args$mtry = p
-    cforest_args = as.list(base::args(party::cforest))
-    cforest_args = args[names(args) %in% names(cforest_args)]
-    control_args = as.list(base::args(party::cforest_control))
-    control_args = args[names(args) %in% names(control_args)]
-    varimp_args = as.list(base::args(party::varimp))
-    varimp_args = args[names(args) %in% names(varimp_args)]
-    ctrl = do.call(party::cforest_unbiased, control_args)
+    cforest.args = as.list(base::args(party::cforest))
+    cforest.args = args[names(args) %in% names(cforest.args)]
+    control.args = as.list(base::args(party::cforest_control))
+    control.args = args[names(args) %in% names(control.args)]
+    varimp.args = as.list(base::args(party::varimp))
+    varimp.args = args[names(args) %in% names(varimp.args)]
+    ctrl = do.call(party::cforest_unbiased, control.args)
     fit = do.call(party::cforest, c(list(formula = getTaskFormula(task), data = getTaskData(task), controls = ctrl),
-                                    cforest_args))
-    im = do.call(party::varimp, c(list(obj = fit), varimp_args))
+                                    cforest.args))
+    im = do.call(party::varimp, c(list(obj = fit), varimp.args))
     im
   }
 )
@@ -307,7 +307,7 @@ makeFilter(
     d = getTaskData(task, target.extra = TRUE)
     y = Rfast::correls(d$target, d$data, type = "pearson")
     for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs")
+      y[i, "correlation"] = cor(d$target, d$data[, i], use = "complete.obs")
     }
     setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
@@ -328,7 +328,7 @@ makeFilter(
     d = getTaskData(task, target.extra = TRUE)
     y = Rfast::correls(d$target, d$data, type = "spearman")
     for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] = cor(d$target, d$data[,i], use = "complete.obs", method = "spearman")
+      y[i, "correlation"] = cor(d$target, d$data[, i], use = "complete.obs", method = "spearman")
     }
     setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
   }
@@ -517,15 +517,15 @@ makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
   pkg = "Rfast",
-  supported.tasks = c("classif"),
-  supported.features = c("numerics"),
+  supported.tasks = "classif",
+  supported.features = "numerics",
   fun = function(task, nselect, ...) {
     d = getTaskData(task, target.extra = TRUE)
     y = as.integer(d$target)
     X = as.matrix(d$data)
     an = Rfast::anovas(X, y)
     for (i in which(is.na(an[, "F value"]))) {
-      j = !is.na(X[,i])
+      j = !is.na(X[, i])
       if (any(j)) {
         an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j])
       }
@@ -547,12 +547,12 @@ makeFilter(
   name = "kruskal.test",
   desc = "Kruskal Test for binary and multiclass classification tasks",
   pkg = character(0L),
-  supported.tasks = c("classif"),
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
+      f = as.formula(stri_paste(feat.name, "~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
     })
@@ -570,7 +570,7 @@ makeFilter(
   desc = "A simple variance filter",
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics"),
+  supported.features = "numerics",
   fun = function(task, nselect, na.rm = FALSE, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {

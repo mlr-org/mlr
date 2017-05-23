@@ -8,7 +8,7 @@ test_that("classif_randomUniformForest", {
     list(ntree = 5, mtry = 4)
   )
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = c(list(formula = binaryclass.formula, data = binaryclass.train, OOB = FALSE,
     importance = FALSE, unsupervised = FALSE, threads = 1L), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))

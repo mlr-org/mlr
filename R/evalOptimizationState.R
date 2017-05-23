@@ -104,7 +104,7 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   for (i in seq_len(n)) {
     res = res.list[[i]]
     extra = getTuneThresholdExtra(control, res)
-    # include error dumps if options tell us to. 
+    # include error dumps if options tell us to.
     if (on.error.dump) {
       if (is.null(extra)) {
         extra = list()

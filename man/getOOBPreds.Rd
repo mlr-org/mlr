@@ -17,14 +17,14 @@ The task.}
 [\code{\link{Prediction}}].
 }
 \description{
-Learners like \code{randomForest} produce out-of-bag predictions. 
-\code{getOOBPreds} extracts this information from trained models and builds a 
-prediction object as provided by predict (with prediction time set to NA). 
-In the classification case: 
+Learners like \code{randomForest} produce out-of-bag predictions.
+\code{getOOBPreds} extracts this information from trained models and builds a
+prediction object as provided by predict (with prediction time set to NA).
+In the classification case:
 What is stored exactly in the [\code{\link{Prediction}}] object depends
 on the \code{predict.type} setting of the \code{\link{Learner}}.
 
-You can call \code{listLearners(properties = "oobpreds")} to get a list of learners 
+You can call \code{listLearners(properties = "oobpreds")} to get a list of learners
 which provide this.
 }
 \examples{

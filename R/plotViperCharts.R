@@ -45,7 +45,8 @@ plotViperCharts = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, 
 
 #' @export
 plotViperCharts.Prediction = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL) {
-  l = namedList(names = getTaskId(obj), init = obj)
+  td = getPredictionTaskDesc(obj)
+  l = namedList(names = getTaskId(td), init = obj)
   plotViperCharts.list(l, chart, browse, auth.key)
 }
 
@@ -77,9 +78,9 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
     chart = chart, data = inp, embedded = "false"
   )
   url = "http://viper.ijs.si/api/"
-  headers = list('Accept' = 'application/json', 'Content-Type' = 'application/json')
+  headers = list("Accept" = "application/json", "Content-Type" = "application/json")
   if (!is.null(auth.key))
-    headers['AUTH-KEY'] = auth.key
+    headers["AUTH-KEY"] = auth.key
   resp = RCurl::postForm(url, .opts = list(postfields = rjson::toJSON(inp), httpheader = headers))
   resp = rjson::fromJSON(resp)
   if (resp$url == "")

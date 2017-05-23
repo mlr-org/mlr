@@ -5,7 +5,7 @@ load_all("..")
 
 dn = "../data"
 stopifnot(isDirectory(dn))
-DATASEED = 7761
+DATASEED = 7761  # nolint
 
 # classification
 set.seed(DATASEED)
@@ -23,7 +23,7 @@ save(sonar.task, file = file.path(dn, "sonar.task.RData"), compress = "xz")
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
 BreastCancer$Id = NULL
-BreastCancer = BreastCancer[complete.cases(BreastCancer), ]
+BreastCancer = BreastCancer[complete.cases(BreastCancer), ]  # nolint
 bc.task = makeClassifTask("BreastCancer-example", data = BreastCancer, target = "Class")
 save(bc.task, file = file.path(dn, "bc.task.RData"), compress = "xz")
 
@@ -72,7 +72,7 @@ save(agri.task, file = file.path(dn, "agri.task.RData"), compress = "xz")
 # cost-sensitive classification
 set.seed(DATASEED)
 data(iris, package = "datasets")
-cost = matrix(runif(150*3,0,2000), 150) * (1 - diag(3))[iris$Species,]
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[iris$Species, ]
 iris$Species = NULL
 costiris.task = makeCostSensTask("cost-sensitive iris-example", data = iris, cost = cost)
 save(costiris.task, file = file.path(dn, "costiris.task.RData"), compress = "xz")
@@ -94,17 +94,13 @@ set.seed(DATASEED)
 data(fuelSubset, package = "FDboost")
 fuelSubset$UVVIS = scale(fuelSubset$UVVIS, scale = FALSE)
 fuelSubset$NIR = scale(fuelSubset$NIR, scale = FALSE)
-fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) / 
-    (max(uvvis.lambda) - min(uvvis.lambda) ))
-fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) / 
-    (max(nir.lambda) - min(nir.lambda) ))
+fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) / (max(uvvis.lambda) - min(uvvis.lambda) ))
+fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) / (max(nir.lambda) - min(nir.lambda) ))
 len1 = length(fuelSubset$uvvis.lambda)
 len2 = length(fuelSubset$nir.lambda)
 
-# mdata = data.frame(fuelSubset[c("UVVIS", "NIR", "h2o", "heatan")]) # Potential error, not doing it now. Cleared on friday.
-mdata = as.data.frame(Reduce(cbind, list(fuelSubset$UVVIS, fuelSubset$NIR, fuelSubset$h2o, fuelSubset$heatan)))
-colnames(mdata)[length(colnames(mdata))] = "heatan"
+mdata = data.frame(fuelSubset[c("UVVIS", "NIR", "h2o", "heatan")])
 fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
 fdg = list(UVVIS = fuelSubset$uvvis.lambda, NIR = fuelSubset$nir.lambda)
-fuelSubset.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = fdf, fd.grids = fdg)
-save(fuelSubset.task, file = file.path(dn, "fuelSubset.task.RData"), compress = "xz")
+fuelsubset.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = fdf, fd.grids = fdg) # change fuelSubset.task to fuelsubset.task to pass lintr
+save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")

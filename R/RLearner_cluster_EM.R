@@ -17,9 +17,10 @@ makeRLearner.cluster.EM = function() {
       makeLogicalLearnerParam(id = "V", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Expectation-Maximization Clustering",
-    short.name = "em"
+    short.name = "em",
+    callees = c("make_Weka_clusterer", "Weka_control")
   )
 }
 

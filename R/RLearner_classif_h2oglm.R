@@ -24,7 +24,8 @@ makeRLearner.classif.h2o.glm = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'binomial' to get a binary classifier."
+    note = "'family' is always set to 'binomial' to get a binary classifier.",
+    callees = "h2o.glm"
   )
 }
 

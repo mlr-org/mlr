@@ -51,7 +51,7 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
 
   # transfer caret parameters into mlr parameters
   params = lapply(colnames(caret.grid), function(i) {
-    par.vals = sort(unique(caret.grid[,i]))
+    par.vals = sort(unique(caret.grid[, i]))
     cl = class(par.vals)
     if (cl == "factor") {
       if (all(levels(par.vals) %in% c("TRUE", "FALSE"))) {
