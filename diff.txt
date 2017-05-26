@@ -4,31 +4,50 @@
 
 OneClassTask.R
   - angehesen nicht fertig
-Prediction.R
-RLearner.R
+Task
+ - hier muss die doku gut und korrekt sein für OneClassTask
+TaskDesc.R
+- müsste jetzt eigentlich OK sein
+
 RLearner_oneclass_svm
+
+
+Prediction.R
+- dast ist schlecht
+    # HACK need to create colnames with prob.TRUE for the normal class
+    # otherwise getPredictionProbabilities() will throw an error
+    # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
+- das ist auch schlecht
+# to be add in branch h2o and branch convertScoretoProb
+
+
 performance
+- das ist irgendwie auch konisch mit der truth spalte. muss gut besprochen werden
+
 measures.R
+- muss nochmal nachgesehen werden. hier müssen die ganzem cluster measures raus.
+  und was ist wac?
+  und bac wurde auch geändert. nochmal schaun
 
 ########### simple changes
 
+makeLearner.R ++++ setPredictType
+ - scheiße:One-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= mse reconstruction error as anomaly score (availabel for \code{h2o.autoencoder})).
+ - ansonsten OK
 
-Task
-TaskDesc.R
-Task_operators.R
-
-makeLearner.R
-setPredictType
-
-datasets.R
-makeData.R
-zzz.R
-helpers.R
+datasets.R +++ makeData.R
+  - ist halt scheiße dass es iris ist. sollten wir jetzt ändern
 
 Measure.R
+ - sieht komisch aus. warum ist req.pred gelöscht? und das default measure is doch  nicht db?
 
-listLearners.R
-listMeasures.R
 
-plotLearnerPrediction.R
+Task_operators.R - OK
+zzz.R    - OK
+helpers.R - OK
+listLearners.R  - OK
+listMeasures.R  - OK
+RLearner.R - OK
+plotLearnerPrediction.R - OK
+
 

@@ -17,7 +17,10 @@
 #'   For \dQuote{multilabel} these are the names of logical columns that indicate whether a
 #'   class label is present and the number of target variables corresponds to the number of
 #'   classes.
-#'   For \dQuote{oneclass} there is no target column needed for the training model. But for applying classification measurements one can pass a target column, otherwise OneClassTask() will create a column with oneclass, namely a column called "normal" with only "TRUE" as entries. Note: Target column will be ignored for training.}
+#'   For \dQuote{oneclass} there is always a defined target column, so is also \code{character(1)}
+#'   (so supervised evaluation is possible for test sets).
+#'   The denoted column is of type factor with two levels (\code{positive} (normal class) and
+#'   \code{negative} (anomaly class)). The target column will be ignored during training.}
 #' \item{size [\code{integer(1)}]}{Number of cases in data set.}
 #' \item{n.feat [\code{integer(2)}]}{Number of features, named vector with entries:
 #'   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}.}
