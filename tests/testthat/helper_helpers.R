@@ -56,10 +56,10 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     multi = makeMultilabelTask(data = df, target = target),
     oneclass = makeOneClassTask(data = df, target = target, positive = "TRUE", negative = "FALSE"))
 
-  if (is.null(task)) {
+  if (is.null(task))
     stop("Should not happen!")
     m = try(train(lrn, task, subset = inds))
-  }
+
   if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
   } else {
