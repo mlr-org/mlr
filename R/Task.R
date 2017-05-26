@@ -101,7 +101,14 @@
 #'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
 #'     positive = "good", blocking = blocking)
 #'   makeClusterTask(data = iris[, -5L])
-#'   makeOneClassTask(data = iris[, -5L])
+#'
+#'   # for anomaly create example data
+#'   oneclass.iris.data = iris
+#'   names(oneclass.iris.data)[5] = "normal"
+#'   oneclass.iris.data$normal = "TRUE"
+#'   oneclass.iris.data$normal[1:5] = "FALSE"
+#'   oneclass.iris.data[1:5 ,1:4] = matrix(sample(20:100, prod(dim(oneclass.iris.data[1:5 ,1:4])), replace = TRUE), 5, 4)
+#'   makeOneClassTask(data = oneclass.iris.data, target = "normal", positive = "TRUE", negative = "FALSE")
 #' }
 NULL
 
