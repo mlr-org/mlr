@@ -12,7 +12,6 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
 #'   are extracted from it.
-#' @param truth For anomaly detection a truth column can be passed to additionally calculate classification measures
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -59,11 +58,8 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
     } else {
-        if (is.null(pred$data$truth))
-          stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
-    }
-    if (type == "oneclass") {
-      levels(pred$data$truth) = union(levels(pred$data$truth), pred$task.desc$class.levels)
+      if (is.null(pred$data$truth))
+        stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
     }
   }
   if ("req.model" %in% props) {
@@ -79,13 +75,9 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
-    else if (is.null(feats)) {
-      if (pred$task.desc$type == "oneclass") {
-          feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
-      } else {
-        feats = task$env$data[pred$data$id, , drop = FALSE]
-      }
-    } else
+    else if (is.null(feats))
+      feats = task$env$data[pred$data$id, , drop = FALSE]
+    else
       assertClass(feats, "data.frame")
   }
   # we need to find desc somewhere
