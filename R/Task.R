@@ -21,10 +21,18 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
-#' Notes:
+#' Note on multilabel:
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
+#'
+#' Note one oneclass:
+#' Oneclass classification problem is an unsupervised learning problem, but we still require
+#' to define a target column, in order to allow supervised evalaution if labels are available.
+#' This class columns should be a factor, where the levels are the strings denoted by
+#' \code{positive} and \code{negative}, where the former denotes the name of the normal class
+#' and the latter the name of the anomaly class.
+#' If no target is passed, the task will auto-create a class-column with only normal (positive) entries.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
@@ -37,9 +45,6 @@
 #'   so it has length 2. For multilabel classification it contains the names of the logical
 #'   columns that encode whether a label is present or not and its length corresponds to the
 #'   number of classes.
-#'   For one-classification the target variable is not required, but can be passed
-#'   for later evaluation; if no target variable is passed the task will create a class-column named
-#'   the class \dQuote{normal} as entry.
 #' @param costs [\code{data.frame}]\cr
 #'   A numeric matrix or data frame containing the costs of misclassification.
 #'   We assume the general case of observation specific costs.

@@ -17,7 +17,7 @@
 #'   For \dQuote{multilabel} these are the names of logical columns that indicate whether a
 #'   class label is present and the number of target variables corresponds to the number of
 #'   classes.
-#'   For \dQuote{oneclass} there is always a defined target column, so is also \code{character(1)}
+#'   For \dQuote{oneclass} there is always a defined target column, so this is also \code{character(1)}
 #'   (so supervised evaluation is possible for test sets).
 #'   The denoted column is of type factor with two levels (\code{positive} (normal class) and
 #'   \code{negative} (anomaly class)). The target column will be ignored during training.}
