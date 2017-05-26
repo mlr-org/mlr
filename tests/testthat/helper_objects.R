@@ -73,13 +73,15 @@ data = na.omit(data)
 
 oneclass.truth = data$normal
 oneclass.df = data
-oneclass.target = "nomal"
+oneclass.target = "normal"
 
 oneclass.train.inds = c(1:500)
 oneclass.test.inds  = setdiff(seq_len(nrow(oneclass.df)), oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]
-oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = "normal", positive = "TRUE", negative = "FALSE")
+oneclass.positive = "TRUE"
+oneclass.negative = "FALSE"
+oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = oneclass.target, positive = oneclass.positive, negative = oneclass.negative)
 
 data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing
