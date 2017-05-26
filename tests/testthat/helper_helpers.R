@@ -60,7 +60,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]]))
     task = makeMultilabelTask(data = df, target = target)
   else if (is.logical(df[, target])) {
-    task = makeOneClassTask(data = df, target = target)
+    task = makeOneClassTask(data = df, target = target, positive = "TRUE", negative = "FALSE")
     test = test[, -5]
   }
   else

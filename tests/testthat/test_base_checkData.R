@@ -47,5 +47,5 @@ test_that("checkData", {
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 
   # check missing target column
-  expect_message(makeOneClassTask(data = oneclass.df[, -5]), "add target column 'normal'")
+  expect_message(makeOneClassTask(data = oneclass.df[, -5], positive = "TRUE", negative = "FALSE"), "add target column 'normal'")
 })

@@ -62,7 +62,7 @@ oneclass.train.inds = c(1:50)
 oneclass.test.inds  = setdiff(seq_len(nrow(oneclass.df)), oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]
-oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = "SpeciesClass")
+oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = "SpeciesClass", positive = "TRUE", negative = "FALSE")
 
 data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing

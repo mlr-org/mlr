@@ -2,8 +2,25 @@
 #' @rdname Task
 
 makeOneClassTask = function(id = deparse(substitute(data)), data, target = NULL,
-  weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+  weights = NULL, blocking = NULL, fixup.data = "warn", positive, negative, check.data = TRUE) {
   assertString(id)
+
+  # positive needs to be a string, if it's a number convert it into string
+  # makeSupervisedTask will check if it's a level of target
+  assert(
+    checkString(positive),
+    checkNumber(positive)
+  )
+  if (isScalarNumeric(positive))
+    positive = as.character(positive)
+
+  assert(
+    checkString(negative),
+    checkNumber(negative)
+  )
+    if (isScalarNumeric(negative))
+      negative = as.character(negative)
+
   assertDataFrame(data)
   if (!is.null(target))
     assertString(target) # that this is a valid colname will be check later in makeSupervisedTask
@@ -13,9 +30,12 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target = NULL,
 
   if (fixup.data != "no") {
     if (is.null(target)) {
-      data$normal = "TRUE"
+      if ("normal" %in% names(data)) {
+        stopf("Given dataset already has a column named 'normal', can't create a target column with the same name. Please rename the 'normal' column.")
+      }
+      data$normal = positive
       target = "normal"
-      messagef("No target column specified, add target column 'normal' with one class 'TRUE' \n
+      messagef("No target column specified, add target column 'normal' with one class 'TRUE' as the positive class \n
         As the assumption for oneclass classification is that one only have observation of one class.")
     }
     x = data[[target]]
@@ -36,17 +56,24 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target = NULL,
     if (length(levels(data[[target]])) > 2)
       stopf("Target column '%s' contains more than two factor levels")
   }
-  #FIXME: böse
-  levels(data[[target]]) = union(levels(data[[target]]), c(TRUE, FALSE))
-  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive)
+  # #FIXME: böse
+  levs = levels(data[[target]])
+    if (sum(levs %in% c(positive, negative)) >= 1) {
+      if (length(levs) == 1)
+        levels(data[[target]]) = union(levs, c(positive, negative))
+    } else {
+      stopf("Levels of target column is not element of defined positive or negative class.")
+    }
+
+  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive, negative)
   addClasses(task, "OneClassTask")
 }
 
-makeOneClassTaskDesc = function(id, data, target, weights, blocking) {
+makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive, negative) {
   td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking)
-  td$class.levels = c("TRUE", "FALSE")
-  td$positive = "TRUE"
-  td$negative = "FALSE"
+  td$class.levels = c(positive, negative)
+  td$positive = positive
+  td$negative = negative
   return(addClasses(td, c("OneClassTaskDesc", "SupervisedTaskDesc")))
 }
 
