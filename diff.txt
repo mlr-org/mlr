@@ -1,0 +1,34 @@
+
+
+########### important
+
+OneClassTask.R
+  - angehesen nicht fertig
+Prediction.R
+RLearner.R
+RLearner_oneclass_svm
+performance
+measures.R
+
+########### simple changes
+
+
+Task
+TaskDesc.R
+Task_operators.R
+
+makeLearner.R
+setPredictType
+
+datasets.R
+makeData.R
+zzz.R
+helpers.R
+
+Measure.R
+
+listLearners.R
+listMeasures.R
+
+plotLearnerPrediction.R
+
