@@ -6,7 +6,7 @@ test_that("oneclass task", {
   expect_equal(getTaskClassLevels(oc), c("TRUE", "FALSE"))
   y = getTaskTargets(oc)
   expect_true(is.factor(y))
-  expect_true(levels(y) == 2)
+  expect_true(length(levels(y)) == 2)
   expect_set_equal(levels(y), c("TRUE", "FALSE"))
 })
 
