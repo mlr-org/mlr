@@ -1,21 +1,8 @@
 
-
-das wir einfach eine spalte normal anlegen ist gefährlich.
-gibt es einen besseren namen? und man muss mindestens checken dass "normal" bosher nicht existiert
-au0erdem muss das ein factor sein
-und die msg nur ausgeben bei fixup data vermutrlich
-
-
-traget spalte sollte ein factor sein. "postive" beschreibt die normale klasse.
-gut checken und testen, dokumentieren.
-postive muss im construkctoir gesetzt werden. neg ist die andere klasse oder muss gesetzt werden
-
 supporten wir score outputs, und wenn ja wie?
 
-bei oneclass muss gecheckt werden dass neg eine valide klasse ist. wäre auch nett wenn man die nicht eingaben muss
-es muss gecheckt werden dass pos und neg valide level sind
+test schreiben:
+ - was passiert wenn man eins der supervised measures anwedendet auf ein test set was nur eine klass level hat
 
 was ist mit thresholding? wird das getestet?
 
-was ist ein sinnvolles defaulkt measure? auc?
-es solte eine sinnvolle felermeldung kommen wenn nur eine klasse
