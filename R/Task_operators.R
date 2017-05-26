@@ -106,6 +106,11 @@ getTaskClassLevels.MultilabelTask = function(x) {
 }
 
 #' @export
+getTaskClassLevels.OneClassTask = function(x) {
+  getTaskClassLevels(getTaskDesc(x))
+}
+
+#' @export
 getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDesc(x)$class.levels
 }
@@ -115,6 +120,10 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDesc(x)$class.levels
 }
 
+#' @export
+getTaskClassLevels.OneClassTaskDesc = function(x) {
+  getTaskDesc(x)$class.levels
+}
 #' Get feature names of task.
 #'
 #' Target column name is not included.

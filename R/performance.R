@@ -29,11 +29,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, truth = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, truth = truth)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -43,7 +43,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, truth = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -58,18 +58,14 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     } else if (type == "multilabel") {
       if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
-    } else if (type == "oneclass") {
-        if (is.null(truth) && is.null(pred$data$truth)) {
-          stopf("You need to have a 'truth' column in your pred object or pass a 'truth' variable for measure %s!", m$id)
-        } else if (is.null(pred$data$truth)) {
-          pred$data$truth = truth
-        }
-      levels(pred$data$truth) = union(levels(pred$data$truth), pred$task.desc$class.levels)
-      } else {
+    } else {
         if (is.null(pred$data$truth))
           stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
-      }
     }
+    if (type == "oneclass") {
+      levels(pred$data$truth) = union(levels(pred$data$truth), pred$task.desc$class.levels)
+    }
+  }
   if ("req.model" %in% props) {
     if (is.null(model))
       stopf("You need to pass model for measure %s!", m$id)
