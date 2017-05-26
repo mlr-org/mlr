@@ -1,4 +1,3 @@
-nearPD funktion muss entfernt werden
 
 supporten wir score outputs, und wenn ja wie?
 
