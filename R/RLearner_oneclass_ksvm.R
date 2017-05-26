@@ -20,7 +20,7 @@ makeRLearner.oneclass.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L)
     ),
-    par.vals = list(type = "one-svc", fit = FALSE),
+    par.vals = list(type = 'one-svc'),
     properties =  c("oneclass", "numerics", "factors", "weights"),
     name = "one-class kernlab-based SVM",
     short.name = "one-class ksvm",
@@ -29,34 +29,26 @@ makeRLearner.oneclass.ksvm = function() {
 }
 
 #' @export
-trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
+trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL, ...) {#, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
 
-  kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
+  #kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
 
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, .subset)[, x]
-  k = kernlab::as.kernelMatrix(crossprod(t(d)))
   # ksvm only support prob.model for C-svc, nu-svc and  C-bsvc not for one class
-  if (base::length(kpar) > 0L){
-    m = kernlab::ksvm(x = k, y = NULL, kpar = kpar, ...)
-    # need support vectors for prediction
-    sv = d[kernlab::SVindex(m),]
-    list(model = m, sv = sv)
-  }
-  else {
-    m = kernlab::ksvm(x = k, y = NULL, ...)
-    # need support vectors for prediction
-    sv = d[kernlab::SVindex(m),]
-    list(model = m, sv = sv)
-  }
+  #if (base::length(kpar) > 0L){
+   # kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = 'one-svc', ...)
+ # }
+  #else {
+    kernlab::ksvm(x = as.matrix(d), y = NULL, ...)
+  #}
 }
 
 #' @export
 predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NULL, ...) {
   # ksvm currently can't predict probabilities only response
   type = switch(.learner$predict.type, prob = "response")
-  Ktest = kernlab::as.kernelMatrix(crossprod(t(.newdata), t(.model$learner.model$sv)))
-  kernlab::predict(.model$learner.model$model, newdata = Ktest, type = type, ...)
+  as.factor(kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...))
 }
 
 
