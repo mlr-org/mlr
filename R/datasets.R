@@ -8,9 +8,16 @@
 #' @docType data
 NULL
 
-#' Data oneclass task.
+#' @title Artificial oneclass toy task.
 #'
-#' Contains the task (\code{oneclass2d.task}). The data for this class has two feature variables (V1, V2) and is simulated with 1000 normal observations and 50 anomalous observations. The features of the normal class were drawn from a multivariate normal distribution with mean zero and a covariance matrix with the values two and five on the major diagonal and zero on the minor diagonal. The anomaly class was sampled with replacement from the elements between 20 and 100. The column 'normal' indicates the class and is not used for training, as anomaly detection is an unsupervised learning problem, therefor this column is only use for evaluation.
+#' @description
+#' Contains the task (\code{oneclass2d.task}).
+#'
+#' The data for this class has two feature variables (V1, V2)
+#' and is simulated with 1000 normal observations and 50 anomalous observations.
+#' The features of the normal class were drawn from a multivariate normal distribution with zero mean
+#' and a diagonal covariance matrix with variances (2,5).
+#' The anomaly class was sampled with feature value uniformly distributed between 20 and 100.
 #'
 #' @name oneclass2d.task
 #' @keywords data
