@@ -5,22 +5,19 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target = NULL,
   weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
-  if (!is.null(target)) {
+  if (!is.null(target))
     assertString(target) # that this is a valid colname will be check later in makeSupervisedTask
-  } else {
-    data$normal = TRUE
-    target = "normal"
-    messagef("No target column specified, add target column 'normal' with one class 'TRUE' \n
-      As the assumption for oneclass classification is that one only have observation of one class.")
-  }
-  # some code on cran passed stuff like positive=1, we can live with the convert here
-  if (isScalarNumeric(positive))
-  positive = as.character(positive)
-  assertString(positive, na.ok = TRUE)
+
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
   if (fixup.data != "no") {
+    if (is.null(target)) {
+      data$normal = "TRUE"
+      target = "normal"
+      messagef("No target column specified, add target column 'normal' with one class 'TRUE' \n
+        As the assumption for oneclass classification is that one only have observation of one class.")
+    }
     x = data[[target]]
     if (is.character(x) || is.logical(x) || is.integer(x)) {
       data[[target]] = as.factor(x)
