@@ -1,10 +1,12 @@
 # mlr 2.12:
 
+## functions - general
+* generatePartialDependenceData: added parameter "range" to allow to specify the
+  range of values for the partial dependencies
+
 ## functions - new
 * makeClassificationViaRegressionWrapper
 * getPredictionTaskDesc
-
-## functions - new
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 
