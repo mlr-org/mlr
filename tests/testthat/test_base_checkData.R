@@ -47,5 +47,10 @@ test_that("checkData", {
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 
   # check missing target column
-  expect_message(makeOneClassTask(data = oneclass.df[, -5], positive = "TRUE", negative = "FALSE"), "add target column 'normal'")
+  expect_error(makeOneClassTask(data = oneclass.df, positive = "TRUE", negative = "FALSE"), "argument \"target\" is missing, with no default")
+  expect_error(makeOneClassTask(data = oneclass.df, target ="normal", negative = "FALSE"), "Assertion on \'levs\' failed")
+  expect_error(makeOneClassTask(data = oneclass.df, target ="normal", positive = "TRUE"), "Assertion on \'levs\' failed")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly", negative = "FALSE"), "Assertion on \'levs\' failed")
+  task = makeOneClassTask(data = oneclass.df[oneclass.df$normal == "TRUE",], target ="normal", positive = "TRUE", negative = "NoAnomaly")
+  expect_set_equal(levels(task$env$data$normal), c("TRUE", "NoAnomaly"))
 })

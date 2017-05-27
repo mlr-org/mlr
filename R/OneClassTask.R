@@ -32,9 +32,9 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
     if (is.character(x) || is.logical(x) || is.integer(x)) {
       data[[target]] = as.factor(x)
     }
-    # we probably dont want to autodrop empty target levels here (as in classif), as the anomaly class could be empy
+    # we probably dont want to autodrop empty target levels here (as in classif), as the anomaly class could be empty
   }
-  # check that class column is factor and has 2 class levels
+  # check that class column is factor and has max 2 class levels
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = TRUE, max.levels = 2L, .var.name = target)
   }
@@ -42,13 +42,17 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   task = makeSupervisedTask("oneclass", data, target, weights, blocking,
     fixup.data = fixup.data, check.data = check.data)
 
-  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive, negative)
   if (fixup.data != "no") {
     levs = levels(data[[target]])
     # add pos and neg as levels if they are missing
-    if (positive %nin% levs) levels(data[[target]]) = c(levs, task$task.desc$positive)
-    if (negative %nin% levs) levels(data[[target]]) = c(levs, task$task.desc$negative)
+    if (length(levs) == 1) {
+      if (positive %nin% levs) levels(data[[target]]) = c(levs, positive)
+      if (negative %nin% levs) levels(data[[target]]) = c(levs, negative)
+    }
+    task$env$data = data
   }
+
+  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive, negative)
   addClasses(task, "OneClassTask")
 }
 
