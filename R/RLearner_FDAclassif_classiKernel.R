@@ -10,9 +10,9 @@ makeRLearner.fdaclassif.classiKernel = function() {
       # FIXME: is it ok to hand over the values with this function
       # from the original package?
       makeDiscreteLearnerParam(id = "metric", default = "Euclidean",
-                               values = classiFunc::metric.choices()),
+                               values = classiFunc::metricChoices()),
       makeDiscreteLearnerParam(id = "ker", default = "Ker.norm",
-                               values = classiFunc::ker.choices()),
+                               values = classiFunc::kerChoices()),
       makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "derived", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "deriv.method", default = "base.diff",
