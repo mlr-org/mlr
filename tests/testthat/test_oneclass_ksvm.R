@@ -14,12 +14,12 @@ test_that("oneclass_ksvm", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(x = as.matrix(oneclass.train[,-3]))
+    pars = list(x = as.matrix(oneclass.train[, -oneclass.col]))
     pars = c(pars, list(type = "one-svc"))
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m1 = do.call(kernlab::ksvm, pars)
-    old.predicts.list[[i]] = kernlab::predict(m1, oneclass.test[,-3], type = "response")
+    old.predicts.list[[i]] = kernlab::predict(m1, oneclass.test[, -oneclass.col], type = "response")
   }
 
    testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
