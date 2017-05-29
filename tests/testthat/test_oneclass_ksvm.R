@@ -7,22 +7,19 @@ test_that("oneclass_ksvm", {
     list(),
     list(scaled = FALSE),
     list(kernel = "tanhdot", offset = 2),
-    list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5)
+    list(kernel = "polydot", degree = 3, offset = 2)
   )
 
   old.predicts.list = list()
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    #pars = list(x = as.kernelMatrix(crossprod(t(oneclass.train[1:4]))))
-    pars = list(x = as.matrix(oneclass.train[,1:4]))
+    pars = list(x = as.matrix(oneclass.train[,-3]))
     pars = c(pars, list(type = "one-svc"))
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m1 = do.call(kernlab::ksvm, pars)
-    #Ktest = as.kernelMatrix(crossprod(t(oneclass.test[1:4]), t(oneclass.train[1:4][SVindex(m1), ])))
-    #Ktest =
-    old.predicts.list[[i]] = kernlab::predict(m1, oneclass.test[,1:4], type = "response")
+    old.predicts.list[[i]] = kernlab::predict(m1, oneclass.test[,-3], type = "response")
   }
 
    testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
