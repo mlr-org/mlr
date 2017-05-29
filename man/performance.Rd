@@ -4,8 +4,7 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-performance(pred, measures, task = NULL, model = NULL, feats = NULL,
-  truth = NULL)
+performance(pred, measures, task = NULL, model = NULL, feats = NULL)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -25,8 +24,6 @@ Model built on training data, might be requested by performance measure, usually
 Features of predicted data, usually not needed except for clustering.
 If the prediction was generated from a \code{task}, you can also pass this instead and the features
 are extracted from it.}
-
-\item{truth}{For anomaly detection a truth column can be passed to additionally calculate classification measures}
 }
 \value{
 [named \code{numeric}]. Performance value(s), named by measure(s).

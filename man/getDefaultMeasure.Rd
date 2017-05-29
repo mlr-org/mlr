@@ -17,7 +17,7 @@ Task type, task, task description, learner name, a learner, or a type of learner
 Get the default measure for a task type, task, task description or a learner.
 Currently these are:
  \tabular{ll}{
-   oneclass    \tab db \cr
+   oneclass    \tab f1 \cr
    classif     \tab mmce\cr
    regr        \tab mse\cr
    cluster     \tab db\cr
@@ -25,4 +25,5 @@ Currently these are:
    costsens    \tab mcp\cr
    multilabel  \tab multilabel.hamloss\cr
 }
+Note: default measure f1 for oneclass is an adhoc solution and not the optimal measurement for unsupervised learning.
 }
