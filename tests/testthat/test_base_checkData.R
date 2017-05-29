@@ -60,7 +60,8 @@ test_that("checkData", {
   expect_error(makeOneClassTask(data = oneclass.df, target = "normal", negative = "Anomaly"), "'negative' not element of the two class levels")
 
   # if target column has one class levels
-  oneclass.df.TRUE = oneclass.df[oneclass.df$normal == "TRUE",]
+  oneclass.df.TRUE = oneclass.df[oneclass.df$normal == "TRUE", , drop = TRUE]
+  oneclass.df.TRUE$normal = droplevels(oneclass.df.TRUE$normal)
   expect_set_equal(levels(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", positive = "TRUE", negative = "FALSE")$env$data$normal),c("TRUE", "FALSE"))
   expect_error(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", negative = "TRUE"), "Cannot add second class level when 'negative' is equal to the only class level and no 'positive' is specified!")
   expect_set_equal(levels(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", negative = "FALSE")$env$data$normal), c("TRUE", "FALSE"))
