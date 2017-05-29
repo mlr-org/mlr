@@ -21,10 +21,17 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
-#' Notes:
+#' Note on multilabel:
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
+#'
+#' Note one oneclass:
+#' Oneclass classification problem is an unsupervised learning problem, but we still require
+#' to define a target column, in order to allow supervised evalaution if labels are available.
+#' This class columns should be a factor, where the levels are the strings denoted by
+#' \code{positive} and \code{negative}, where the former denotes the name of the normal class
+#' and the latter the name of the anomaly class.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
@@ -36,9 +43,7 @@
 #'   For survival analysis these are the names of the survival time and event columns,
 #'   so it has length 2. For multilabel classification it contains the names of the logical
 #'   columns that encode whether a label is present or not and its length corresponds to the
-#'   number of classes. For one-classification the target variable is not required, but can be passed
-#'   for later evaluation, if no target variable is passed the task will create a class column with only
-#'   the class "normal" as entry.
+#'   number of classes.
 #' @param costs [\code{data.frame}]\cr
 #'   A numeric matrix or data frame containing the costs of misclassification.
 #'   We assume the general case of observation specific costs.
@@ -58,8 +63,15 @@
 #'   during a resampling iteration.
 #'   Default is \code{NULL} which means no blocking.
 #' @param positive [\code{character(1)}]\cr
-#'   Positive class for binary classification (otherwise ignored and set to NA).
+#'   Positive class for binary and oneclass classification (otherwise ignored and set to NA).
+#'   For oneclass this is the name of the \dQuote{normal} class.
+#'   The negative class is assumed to be the other class level.
 #'   Default is the first factor level of the target attribute.
+#' @param negative [\code{character(1)}]\cr
+#'   Negative class name, currently only used in multilabel when only one level might
+#'   be present in \code{target}.
+#'   Default is the 2nd factor level (which is not \code{positive}),
+#'   if present, of target attribute.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.
@@ -89,7 +101,17 @@
 #'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
 #'     positive = "good", blocking = blocking)
 #'   makeClusterTask(data = iris[, -5L])
-#'   makeOneClassTask(data = iris[, -5L])
+#'
+#'   # for anomaly create example data
+#'   oneclass.iris.data = iris
+#'   names(oneclass.iris.data)[5] = "normal"
+#'   oneclass.iris.data$normal = "TRUE"
+#'   oneclass.iris.data$normal[1:5] = "FALSE"
+#'   oneclass.iris.data[1:5 ,1:4] = matrix(sample(20:100,
+#'   prod(dim(oneclass.iris.data[1:5 ,1:4])), replace = TRUE), 5, 4)
+#'
+#'   makeOneClassTask(data = oneclass.iris.data,
+#'   target = "normal", positive = "TRUE", negative = "FALSE")
 #' }
 NULL
 
@@ -128,11 +150,6 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
   }
 
   env = new.env(parent = emptyenv())
-  # Hack: Target column need to have level TRUE and FALSE, otherwise errors like "level sets of factors are different" occurs,
-  # when comparing y, yhat for some measurments or plotLearnerPrediction()
-  if (type == "oneclass") {
-    levels(data[, ncol(data)]) = union(levels(data[, ncol(data)]), c(TRUE, FALSE))
-  }
   env$data = data
   makeS3Obj("Task",
     type = type,

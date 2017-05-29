@@ -181,6 +181,7 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL, ...) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
+  # truth can come from a simple "newdata" df. then there might not be all factor levels present
   if (!is.null(truth)) {
     levels(truth) = union(levels(truth), task.desc$class.levels)
     data$truth = truth

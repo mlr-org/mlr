@@ -1,0 +1,8 @@
+
+supporten wir score outputs, und wenn ja wie?
+
+test schreiben:
+ - was passiert wenn man eins der supervised measures anwedendet auf ein test set was nur eine klass level hat
+
+was ist mit thresholding? wird das getestet?
+

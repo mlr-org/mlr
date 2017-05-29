@@ -132,7 +132,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   mod = train(learner, task)
   pred.train = predict(mod, task)
   yhat = pred.train$data$response
-  perf.train = performance(pred.train, task = task, measures = measures, ...)
+  perf.train = performance(pred.train, task = task, measures = measures)
   if (cv > 0L) {
     cv = crossval(learner, task, iters = 10L, measures = measures, show.info = FALSE)
     perf.cv = cv$aggr

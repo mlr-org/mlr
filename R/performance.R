@@ -12,7 +12,6 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
 #'   are extracted from it.
-#' @param truth For anomaly detection a truth column can be passed to additionally calculate classification measures
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -29,11 +28,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, truth = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, truth = truth)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -43,7 +42,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, truth = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -61,18 +60,11 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     } else if (type == "multilabel") {
       if (!(any(stri_detect_regex(colnames(pred$data), "^truth\\."))))
         stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
-    } else if (type == "oneclass") {
-        if (is.null(truth) && is.null(pred$data$truth)) {
-          stopf("You need to have a 'truth' column in your pred object or pass a 'truth' variable for measure %s!", m$id)
-        } else if (is.null(pred$data$truth)) {
-          pred$data$truth = truth
-        }
-      levels(pred$data$truth) = union(levels(pred$data$truth), pred$task.desc$class.levels)
-      } else {
-        if (is.null(pred$data$truth))
-          stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
-      }
+    } else {
+      if (is.null(pred$data$truth))
+        stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
     }
+  }
   if ("req.model" %in% props) {
     if (is.null(model))
       stopf("You need to pass model for measure %s!", m$id)
@@ -86,13 +78,9 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
-    else if (is.null(feats)) {
-      if (pred$task.desc$type == "oneclass") {
-          feats = task$env$data[pred$data$id, getTaskFeatureNames(task), drop = FALSE]
-      } else {
-        feats = task$env$data[pred$data$id, , drop = FALSE]
-      }
-    } else
+    else if (is.null(feats))
+      feats = task$env$data[pred$data$id, , drop = FALSE]
+    else
       assertClass(feats, "data.frame")
   }
   # we need to find desc somewhere

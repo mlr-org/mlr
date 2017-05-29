@@ -74,8 +74,6 @@
 \alias{measureBrierScaled}
 \alias{bac}
 \alias{measureBAC}
-\alias{wac}
-\alias{measureWAC}
 \alias{tp}
 \alias{measureTP}
 \alias{tn}
@@ -270,10 +268,6 @@ bac
 
 measureBAC(truth, response, negative, positive)
 
-wac
-
-measureWAC(truth, response, negative, positive, weight.positive = 0.5)
-
 tp
 
 measureTP(truth, response, positive)
@@ -389,8 +383,6 @@ The name of the negative class.}
 
 \item{positive}{[\code{character(1)}]\cr
 The name of the positive class.}
-
-\item{weight.positive}{[\code{numeric}]\cr For Weighted accuracy (wac) a weight for the positive class required. The weight should be element of the intervall (0,1)}
 }
 \description{
 A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality

@@ -36,8 +36,8 @@ makeMultilabelTask(id = deparse(substitute(data)), data, target,
   fixup.data = "warn", check.data = TRUE)
 
 makeOneClassTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, positive = NA_character_,
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, fixup.data = "warn",
+  positive = NA_character_, negative = NA_character_, check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
@@ -59,9 +59,7 @@ Name(s) of the target variable(s).
 For survival analysis these are the names of the survival time and event columns,
 so it has length 2. For multilabel classification it contains the names of the logical
 columns that encode whether a label is present or not and its length corresponds to the
-number of classes. For one-classification the target variable is not required, but can be passed
-for later evaluation, if no target variable is passed the task will create a class column with only
-the class "normal" as entry.}
+number of classes.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
@@ -76,7 +74,9 @@ during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
 
 \item{positive}{[\code{character(1)}]\cr
-Positive class for binary classification (otherwise ignored and set to NA).
+Positive class for binary and oneclass classification (otherwise ignored and set to NA).
+For oneclass this is the name of the \dQuote{normal} class.
+The negative class is assumed to be the other class level.
 Default is the first factor level of the target attribute.}
 
 \item{fixup.data}{[\code{character(1)}]\cr
@@ -101,6 +101,12 @@ The columns correspond to classes and their names are the class labels
 (if unnamed we use y1 to yk as labels).
 Each entry (i,j) of the matrix specifies the cost of predicting class j
 for observation i.}
+
+\item{negative}{[\code{character(1)}]\cr
+Negative class name, currently only used in multilabel when only one level might
+be present in \code{target}.
+Default is the 2nd factor level (which is not \code{positive}),
+if present, of target attribute.}
 
 \item{censoring}{[\code{character(1)}]\cr
 Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
@@ -131,10 +137,17 @@ Object members:
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
 
-Notes:
+Note on multilabel:
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
+
+Note one oneclass:
+Oneclass classification problem is an unsupervised learning problem, but we still require
+to define a target column, in order to allow supervised evalaution if labels are available.
+This class columns should be a factor, where the levels are the strings denoted by
+\code{positive} and \code{negative}, where the former denotes the name of the normal class
+and the latter the name of the anomaly class.
 }
 \examples{
 if (requireNamespace("mlbench")) {
@@ -149,7 +162,17 @@ if (requireNamespace("mlbench")) {
   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
     positive = "good", blocking = blocking)
   makeClusterTask(data = iris[, -5L])
-  makeOneClassTask(data = iris[, -5L])
+
+  # for anomaly create example data
+  oneclass.iris.data = iris
+  names(oneclass.iris.data)[5] = "normal"
+  oneclass.iris.data$normal = "TRUE"
+  oneclass.iris.data$normal[1:5] = "FALSE"
+  oneclass.iris.data[1:5 ,1:4] = matrix(sample(20:100,
+  prod(dim(oneclass.iris.data[1:5 ,1:4])), replace = TRUE), 5, 4)
+
+  makeOneClassTask(data = oneclass.iris.data,
+  target = "normal", positive = "TRUE", negative = "FALSE")
 }
 }
 \seealso{
