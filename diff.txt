@@ -1,0 +1,34 @@
+
+
+########### important
+
+RLearner_oneclass_svm
+
+Prediction.R
+- dast ist schlecht
+    # HACK need to create colnames with prob.TRUE for the normal class
+    # otherwise getPredictionProbabilities() will throw an error
+    # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
+- das ist auch schlecht
+# to be add in branch h2o and branch convertScoretoProb
+
+########### simple changes
+
+makeLearner.R ++++ setPredictType
+ - scheiße:One-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= mse reconstruction error as anomaly score (availabel for \code{h2o.autoencoder})).
+ - ansonsten OK
+
+
+Task_operators.R - OK
+zzz.R    - OK
+helpers.R - OK
+listLearners.R  - OK
+listMeasures.R  - OK
+RLearner.R - OK
+plotLearnerPrediction.R - OK
+OneClassTask.R - OK
+TaskDesc.R - OK
+datasets.R
+makeData.R
+MEasure.R
+measures.R

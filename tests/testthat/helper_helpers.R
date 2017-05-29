@@ -48,24 +48,17 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   test = df[-inds, ]
 
   lrn = do.call("makeLearner", c(list(t.name), parset))
-  # FIXME this heuristic will backfire eventually
-  if (length(target) == 0)
-    task = makeClusterTask(data = df)
-  else if (is.numeric(df[, target]))
-    task = makeRegrTask(data = df, target = target)
-  else if (is.factor(df[, target]))
-    task = makeClassifTask(data = df, target = target)
-  else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.logical(df[, target[2L]]))
-    task = makeSurvTask(data = df, target = target)
-  else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]]))
-    task = makeMultilabelTask(data = df, target = target)
-  else if (is.logical(df[, target])) {
-    task = makeOneClassTask(data = df, target = target)
-    test = test[, -5]
-  }
-  else
+  task = switch(lrn$type,
+    cluster = makeClusterTask(data = df),
+    regression = makeRegrTask(data = df, target = target),
+    classif = makeClassifTask(data = df, target = target),
+    surv = makeSurvTask(data = df, target = target),
+    multi = makeMultilabelTask(data = df, target = target),
+    oneclass = makeOneClassTask(data = df, target = target, positive = "TRUE", negative = "FALSE"))
+
+  if (is.null(task))
     stop("Should not happen!")
-  m = try(train(lrn, task, subset = inds))
+    m = try(train(lrn, task, subset = inds))
 
   if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")

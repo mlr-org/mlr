@@ -1,3 +1,5 @@
+library(Matrix)
+library(MASS)
 library(methods)
 library(BBmisc)
 library(devtools)
@@ -33,13 +35,22 @@ pid.task = makeClassifTask("PimaIndiansDiabetes-example", data = PimaIndiansDiab
 save(pid.task, file = file.path(dn, "pid.task.RData"), compress = "xz")
 
 # one-classification (anomaly detection)
-# temporary dataset until finding a better dataset
-# (problem: most of the open source dataset for anomaly detection don't have a
-# truth column for testing)
 set.seed(DATASEED)
-data(iris, package = "datasets")
-iris.oneclass.task = makeOneClassTask("iris-one-class-example", data = iris[, -5])
-save(iris.oneclass.task, file = file.path(dn, "iris.oneclass.task.RData"))
+Sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
+normal = mvrnorm(n = 1000, rep(0, 2), Sigma$mat)
+colnames(normal) = paste0("V", 1:2)
+normal = as.data.frame(normal)
+normal$normal = TRUE
+
+anomaly = matrix(sample(size = 50*2, x = 20:100, replace = TRUE), 50, 2)
+colnames(anomaly) = paste0("V", 1:2)
+anomaly = as.data.frame(anomaly)
+anomaly$normal = FALSE
+data = rbind(normal, anomaly)
+data = na.omit(data)
+
+oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data[, -4], target = "normal", positive = "TRUE", negative = "FALSE")
+save(oneclass2d.task, file = file.path(dn, "oneclass2d.task.RData"))
 
 # regression
 set.seed(DATASEED)

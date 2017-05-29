@@ -8,12 +8,18 @@
 #' @docType data
 NULL
 
-#' Iris oneclass task.
+#' @title Artificial oneclass toy task.
 #'
-#' Contains the task (\code{iris.oneclass.task}).
+#' @description
+#' Contains the task (\code{oneclass2d.task}).
 #'
-#' @name iris.oneclass.task
-#' @references See \code{\link[datasets]{iris}}.
+#' The data for this class has two feature variables (V1, V2)
+#' and is simulated with 1000 normal observations and 50 anomalous observations.
+#' The features of the normal class were drawn from a multivariate normal distribution with zero mean
+#' and a diagonal covariance matrix with variances (2,5).
+#' The anomaly class was sampled with feature value uniformly distributed between 20 and 100.
+#'
+#' @name oneclass2d.task
 #' @keywords data
 #' @docType data
 NULL

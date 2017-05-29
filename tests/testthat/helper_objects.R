@@ -1,3 +1,5 @@
+library(Matrix)
+library(MASS)
 data(Sonar, package = "mlbench", envir = environment())
 data(BreastCancer, package = "mlbench", envir = environment())
 
@@ -52,17 +54,34 @@ noclass.train = noclass.df[noclass.train.inds, ]
 noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
-# temporary working objects for one class: find a more appropriate dataset
-oneclass.truth = ifelse(iris[, 5] == "versicolor", TRUE, FALSE)
-oneclass.df = iris[, -5]
-oneclass.df$SpeciesClass = oneclass.truth
-oneclass.target = "SpeciesClass"
-# only class FALSE
-oneclass.train.inds = c(1:50)
+## create data for oneclass
+# one-classification (anomaly detection)
+set.seed(123)
+Sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
+normal = MASS::mvrnorm(n = 1000, rep(0, 2), Sigma)
+colnames(normal) = paste0("V", 1:2)
+normal = as.data.frame(normal)
+normal$normal = TRUE
+
+anomaly = matrix(sample(size = 50*2, x = 20:100, replace = TRUE), 50, 2)
+colnames(anomaly) = paste0("V", 1:2)
+anomaly = as.data.frame(anomaly)
+anomaly$normal = FALSE
+data = rbind(normal, anomaly)
+data = na.omit(data)
+data$normal = factor(data$normal)
+
+oneclass.truth = data$normal
+oneclass.df = data
+oneclass.target = "normal"
+
+oneclass.train.inds = c(1:500)
 oneclass.test.inds  = setdiff(seq_len(nrow(oneclass.df)), oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]
-oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = "SpeciesClass")
+oneclass.positive = "TRUE"
+oneclass.negative = "FALSE"
+oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = oneclass.target, positive = oneclass.positive, negative = oneclass.negative)
 
 data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing

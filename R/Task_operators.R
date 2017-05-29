@@ -106,6 +106,11 @@ getTaskClassLevels.MultilabelTask = function(x) {
 }
 
 #' @export
+getTaskClassLevels.OneClassTask = function(x) {
+  getTaskClassLevels(getTaskDesc(x))
+}
+
+#' @export
 getTaskClassLevels.ClassifTaskDesc = function(x) {
   getTaskDesc(x)$class.levels
 }
@@ -115,6 +120,10 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
   getTaskDesc(x)$class.levels
 }
 
+#' @export
+getTaskClassLevels.OneClassTaskDesc = function(x) {
+  getTaskDesc(x)$class.levels
+}
 #' Get feature names of task.
 #'
 #' Target column name is not included.
@@ -446,7 +455,7 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "oneclass" = makeOneClassTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
+    "oneclass" = makeOneClassTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$negative),
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
