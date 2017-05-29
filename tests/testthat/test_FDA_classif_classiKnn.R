@@ -143,7 +143,7 @@ test_that("FDA_classif_classiKnn handles upper and lower bounds correctly", {
   ph[,"label"] = glearn
 
   lrn.shortEucl = makeLearner(cl = "fdaclassif.classiKnn",
-                           par.vals = list(dmax = 10,
+                           par.vals = list(dmax = 0.7,
                                            metric = "shortEuclidean"
                                            ))
 
