@@ -52,7 +52,7 @@ test_that("checkData", {
   # if target column has two class levels: check if missing positive/negative input will correctly auto-set
   expect_equal(makeOneClassTask(data = oneclass.df, target = "normal", negative = "FALSE")$task.desc$positive, "TRUE")
   expect_equal(makeOneClassTask(data = oneclass.df, target = "normal", positive = "FALSE")$task.desc$negative, "TRUE")
-  expect_set_equal(makeOneClassTask(data = oneclass.df, target = "normal")$task.desc$class.levels, c("TRUE","FALSE"))
+  expect_set_equal(makeOneClassTask(data = oneclass.df, target = "normal")$task.desc$class.levels, c("TRUE", "FALSE"))
 
   # if target column has two class levels and positive or negative are wrongly named
   expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly", negative = "FALSE"), "'positive' or 'negative' not equal to class levels")
