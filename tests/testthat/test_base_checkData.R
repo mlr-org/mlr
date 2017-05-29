@@ -48,9 +48,21 @@ test_that("checkData", {
 
   # check missing target column
   expect_error(makeOneClassTask(data = oneclass.df, positive = "TRUE", negative = "FALSE"), "argument \"target\" is missing, with no default")
-  expect_error(makeOneClassTask(data = oneclass.df, target ="normal", negative = "FALSE"), "Assertion on \'levs\' failed")
-  expect_error(makeOneClassTask(data = oneclass.df, target ="normal", positive = "TRUE"), "Assertion on \'levs\' failed")
-  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly", negative = "FALSE"), "Assertion on \'levs\' failed")
-  task = makeOneClassTask(data = oneclass.df[oneclass.df$normal == "TRUE",], target ="normal", positive = "TRUE", negative = "NoAnomaly")
-  expect_set_equal(levels(task$env$data$normal), c("TRUE", "NoAnomaly"))
+
+  # if target column has two class levels: check if missing positive/negative input will correctly auto-set
+  expect_equal(makeOneClassTask(data = oneclass.df, target ="normal", negative = "FALSE")$task.desc$positive, "TRUE")
+  expect_equal(makeOneClassTask(data = oneclass.df, target ="normal", positive = "FALSE")$task.desc$negative, "TRUE")
+  expect_set_equal(makeOneClassTask(data = oneclass.df, target ="normal")$task.desc$class.levels, c("TRUE","FALSE"))
+
+  # if target column has two class levels and positive or negative are wrongly named
+  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly", negative = "FALSE"), "'positive' or 'negative' not equal to class levels")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly"), "'positive' not element of the two class levels")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", negative = "Anomaly"), "'negative' not element of the two class levels")
+
+  # if target column has one class levels
+  oneclass.df.TRUE = oneclass.df[oneclass.df$normal == "TRUE",]
+  expect_set_equal(levels(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", positive = "TRUE", negative = "FALSE")$env$data$normal),c("TRUE", "FALSE"))
+  expect_error(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", negative = "TRUE"), "Cannot add second class level when 'negative' is equal to the only class level and no 'positive' is specified!")
+  expect_set_equal(levels(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", negative = "FALSE")$env$data$normal), c("TRUE", "FALSE"))
+  expect_set_equal(levels(makeOneClassTask(data = oneclass.df.TRUE, target ="normal", positive = "TRUE", negative = "Anomaly")$env$data$normal), c("TRUE", "Anomaly"))
 })
