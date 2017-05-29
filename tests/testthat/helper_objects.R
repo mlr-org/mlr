@@ -69,6 +69,7 @@ anomaly = as.data.frame(anomaly)
 anomaly$normal = FALSE
 data = rbind(normal, anomaly)
 data = na.omit(data)
+data$normal = factor(data$normal)
 
 oneclass.truth = data$normal
 oneclass.df = data
