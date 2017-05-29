@@ -91,6 +91,8 @@
 #'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 #'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
 #'   length of the evenly spaced grid created.
+#' @param range [\code{list}]\cr
+#'   The range of values of the feature you would want the partial plots on - passed as a numeric list
 #' @param ... additional arguments to be passed to \code{\link{predict}}.
 #' @return [\code{PartialDependenceData}]. A named list, which contains the partial dependence,
 #'   input data, target, features, task description, and other arguments controlling the type of
@@ -166,7 +168,7 @@
 generatePartialDependenceData = function(obj, input, features,
   interaction = FALSE, derivative = FALSE, individual = FALSE, center = NULL,
   fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
-  resample = "none", fmin, fmax, gridsize = 10L, ...) {
+  resample = "none", fmin, fmax, gridsize = 10L, range = NULL, ...) {
 
   assertClass(obj, "WrappedModel")
   if (obj$learner$predict.type == "se" & individual)
@@ -230,7 +232,10 @@ generatePartialDependenceData = function(obj, input, features,
     stop("fmax must be a named list with an NA or value corresponding to each feature.")
   assertCount(gridsize, positive = TRUE)
 
-  rng = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
+  if (is.null(range))
+    rng = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
+  else
+    rng = range
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
 
