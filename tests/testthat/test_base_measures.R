@@ -445,7 +445,7 @@ test_that("check measure calculations", {
   expect_equal(measureSSR(p2[1, , drop = FALSE], y2[1]), 0.1 / sqrt(0.1^2 + 0.9^2))
   expect_equal(measureSSR(p2[1, , drop = FALSE], y1[1]), 0.9 / sqrt(0.1^2 + 0.9^2))
   #qsr
-  qsr.test = 1 - mean(rowSums((pred.probs - model.matrix( ~ . + 0, data = as.data.frame(tar.classif)))^2))
+  qsr.test = 1 - mean(rowSums((pred.probs - model.matrix(~ . + 0, data = as.data.frame(tar.classif)))^2))
   qsr.perf = performance(pred.classif, measures = qsr, model = mod.classif)
   expect_equal(qsr.test, qsr$fun(pred = pred.classif))
   expect_equal(qsr.test, as.numeric(qsr.perf))
