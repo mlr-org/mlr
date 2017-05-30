@@ -18,6 +18,13 @@ makeLearner.R ++++ setPredictType
  - scheiße:One-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= mse reconstruction error as anomaly score (availabel for \code{h2o.autoencoder})).
  - ansonsten OK
 
+calculateConfusionMatrix.R
+calculateROCMeasures.R
+FailureModel.R
+getOOBPreds.R
+plotResidulas.R
+ResampleInstance.R
+
 
 Task_operators.R - OK
 zzz.R    - OK

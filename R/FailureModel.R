@@ -38,7 +38,7 @@ predictFailureModel = function(model, newdata) {
   type = lrn$type
   ptype = lrn$predict.type
   n = nrow(newdata)
-  if (type == "classif") {
+  if (type %in% c("oneclass", "classif")) {
     levs = model$task.desc$class.levels
     res = if (ptype == "response")
       factor(rep(NA_character_, n), levels = levs)
