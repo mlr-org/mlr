@@ -16,5 +16,5 @@ test_that("classif_probit", {
     as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
   }
 
-  testCV("classif.probit", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp )
+  testCV("classif.probit", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp)
 })
