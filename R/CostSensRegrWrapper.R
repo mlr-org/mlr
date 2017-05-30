@@ -23,7 +23,7 @@ makeCostSensRegrWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
+trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset = NULL, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   d = getTaskData(.task)
