@@ -3,7 +3,6 @@
 #' @importFrom graphics hist
 #' @importFrom utils browseURL capture.output combn data getFromNamespace getS3method head tail methods
 #' @import BBmisc
-#' @import backports
 #' @import checkmate
 #' @import parallelMap
 #' @import ParamHelpers
@@ -11,6 +10,10 @@
 #' @import stats
 #' @import stringi
 #' @import data.table
+
+.onLoad = function(libname, pkgname) {
+  backports::import(pkgname)
+}
 
 .onAttach = function(libname, pkgname) {
   configureMlr()

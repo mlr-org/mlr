@@ -38,8 +38,8 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
   rug = TRUE, pretty.names = TRUE) {
 
   task.type = obj$task.desc$type
-  if (task.type %nin% c("regr", "classif"))
-    stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
+  if (task.type %nin% c("regr", "classif", "oneclass"))
+    stopf("Task type must be 'regr', 'classif' or 'oneclass'. But has type '%s'.", task.type)
 
   df = as.data.frame(obj)
 
@@ -57,8 +57,8 @@ plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth
   })
   task.type = unique(task.type$p)
 
-  if (task.type %nin% c("regr", "classif"))
-    stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
+  if (task.type %nin% c("regr", "classif", "oneclass"))
+    stopf("Task type must be 'regr', 'classif', 'oneclass'. But has type '%s'.", task.type)
 
   df = getBMRPredictions(obj, as.df = TRUE)
 
@@ -80,7 +80,7 @@ makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
 
   if (type == "scatterplot") {
     p = ggplot(df, aes_string("truth", "response"))
-    if (task.type == "classif") {
+    if (task.type %in% c("oneclass", "classif")) {
       p = p + geom_count()
     } else {
       p = p + geom_point()
@@ -94,7 +94,7 @@ makeResidualPlot = function(df, type = "scatterplot", loess.smooth = TRUE,
   } else {
     df$residuals = as.numeric(df$truth) - as.numeric(df$response)
     p = ggplot(df, aes_string("residuals"))
-    if (task.type == "classif") {
+    if (task.type %in% c("oneclass", "classif")) {
       p = p + geom_bar()
     } else {
       p = p + geom_histogram()

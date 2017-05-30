@@ -18,6 +18,13 @@ makeLearner.R ++++ setPredictType
  - scheiße:One-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= mse reconstruction error as anomaly score (availabel for \code{h2o.autoencoder})).
  - ansonsten OK
 
+calculateConfusionMatrix.R
+calculateROCMeasures.R
+FailureModel.R
+getOOBPreds.R
+plotResidulas.R
+ResampleInstance.R
+
 
 Task_operators.R - OK
 zzz.R    - OK
@@ -32,3 +39,31 @@ datasets.R
 makeData.R
 MEasure.R
 measures.R
+
+
+#### should oneclass working for
+BaggingWarpper.R
+makeClassificationViaRegressionWrapper.R
+makeConstantClassWrapper.R
+makeCostSensClassifWrapper.R
+makeCostSensWeightedPairsWrapper.R
+Filter.R
+generateCalibration.R
+makeCostMeasure.R
+stackedLearner.R
+
+Probably make no sense:
+getClassWeightParam.R (not make sense)
+MultiClassWrapper.R
+MultilabelBinaryRelevanceWrapper.R
+MultilabelClassifierChairsWrapper.R
+MultilabelBDRWrapper.R
+MultilabelNestedStackeringWrapper.R
+MultilabelStackingWrapper.R
+noFeaturesModel.R
+makeOverBaggingWrapper
+makeUndersamplingWrapper.R
+smoteWrapper
+weightClassWrapper
+
+
