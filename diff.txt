@@ -39,3 +39,31 @@ datasets.R
 makeData.R
 MEasure.R
 measures.R
+
+
+#### should oneclass working for
+BaggingWarpper.R
+makeClassificationViaRegressionWrapper.R
+makeConstantClassWrapper.R
+makeCostSensClassifWrapper.R
+makeCostSensWeightedPairsWrapper.R
+Filter.R
+generateCalibration.R
+makeCostMeasure.R
+stackedLearner.R
+
+Probably make no sense:
+getClassWeightParam.R (not make sense)
+MultiClassWrapper.R
+MultilabelBinaryRelevanceWrapper.R
+MultilabelClassifierChairsWrapper.R
+MultilabelBDRWrapper.R
+MultilabelNestedStackeringWrapper.R
+MultilabelStackingWrapper.R
+noFeaturesModel.R
+makeOverBaggingWrapper
+makeUndersamplingWrapper.R
+smoteWrapper
+weightClassWrapper
+
+
