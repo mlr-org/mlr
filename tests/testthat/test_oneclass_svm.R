@@ -17,12 +17,12 @@ test_that("oneclass_svm", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(x = oneclass.train[, -3])
+    pars = list(x = oneclass.train[, -oneclass.col])
     pars = c(pars, list(type = "one-classification"))
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m1 = do.call(e1071::svm, pars)
-    old.predicts.list[[i]] = predict(m1, newdata = oneclass.test[, -3])
+    old.predicts.list[[i]] = predict(m1, newdata = oneclass.test[, -oneclass.col])
   }
 
    testSimpleParsets("oneclass.svm", oneclass.df, oneclass.target,

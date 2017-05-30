@@ -39,7 +39,7 @@ plotResiduals.Prediction = function(obj, type = "scatterplot", loess.smooth = TR
 
   task.type = obj$task.desc$type
   if (task.type %nin% c("regr", "classif", "oneclass"))
-    stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
+    stopf("Task type must be 'regr', 'classif' or 'oneclass'. But has type '%s'.", task.type)
 
   df = as.data.frame(obj)
 
@@ -58,7 +58,7 @@ plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth
   task.type = unique(task.type$p)
 
   if (task.type %nin% c("regr", "classif", "oneclass"))
-    stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
+    stopf("Task type must be 'regr', 'classif', 'oneclass'. But has type '%s'.", task.type)
 
   df = getBMRPredictions(obj, as.df = TRUE)
 
