@@ -14,6 +14,7 @@ binaryclass.class.col = 61
 binaryclass.class.levs = levels(binaryclass.df[, binaryclass.class.col])
 binaryclass.task = makeClassifTask("binary", data = binaryclass.df, target = binaryclass.target)
 
+data(iris, package = "datasets")
 multiclass.df = iris
 multiclass.formula = Species~.
 multiclass.target = "Species"
