@@ -43,7 +43,7 @@ Depends:
     ParamHelpers (>= 1.10)
 Imports:
     BBmisc (>= 1.11),
-    backports,
+    backports (>= 1.1.0),
     ggplot2,
     stats,
     stringi,
