@@ -48,7 +48,9 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NULL, ...) {
   # ksvm currently can't predict probabilities only response
   type = switch(.learner$predict.type, prob = "response")
-  as.factor(kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...))
+  p = as.factor(kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...))
+  levels(p) = union(levels(p), .model$task.desc$class.levels)
+  return(p)
 }
 
 
