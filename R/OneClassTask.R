@@ -2,21 +2,21 @@
 #' @rdname Task
 
 makeOneClassTask = function(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, fixup.data = "warn", positive = NA_character_, negative = NA_character_,
+  weights = NULL, blocking = NULL, fixup.data = "warn", positive, negative_,
     check.data = TRUE) {
   assertString(id)
 
   # positive needs to be a string, if it's a number convert it into string
   assert(
-    checkString(positive, na.ok = TRUE),
-    checkNumber(positive, na.ok = TRUE)
+    checkString(positive),
+    checkNumber(positive)
   )
   if (isScalarNumeric(positive))
     positive = as.character(positive)
 
   assert(
-    checkString(negative, na.ok = TRUE),
-    checkNumber(negative, na.ok = TRUE)
+    checkString(negative),
+    checkNumber(negative)
   )
   if (isScalarNumeric(negative))
     negative = as.character(negative)
@@ -62,25 +62,25 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   task = makeSupervisedTask("oneclass", data, target, weights, blocking,
     fixup.data = fixup.data, check.data = check.data)
 
-  if (fixup.data != "no") {
-    # add pos and neg as levels if they are missing
-    if (length(levs) == 1) {
-      if (!is.na(positive) && !is.na(negative)) {
-        levels(data[[target]]) = union(levs, c(positive, negative))
-      } else {
-        if (!is.na(positive)) {
-          if (positive %nin% levs) levels(data[[target]]) = c(levs, positive)
-          else stopf("Cannot add second class level when 'positive' is equal to the only class level and no 'negative' is specified!")
-        }
-        if (!is.na(negative)) {
-          if (negative %nin% levs) levels(data[[target]]) = c(levs, negative)
-          else stopf("Cannot add second class level when 'negative' is equal to the only class level and no 'positive' is specified!")
-        }
-      }
-    }
 
-    task$env$data = data
-  }
+  # if (fixup.data != "no") {
+  #   # add pos and neg as levels if they are missing
+  #   if (length(levs) == 1) {
+  #     if (!is.na(positive) && !is.na(negative)) {
+  #       levels(data[[target]]) = union(levs, c(positive, negative))
+  #     } else {
+  #       if (!is.na(positive)) {
+  #         if (positive %nin% levs) levels(data[[target]]) = c(levs, positive)
+  #         else stopf("Cannot add second class level when 'positive' is equal to the only class level and no 'negative' is specified!")
+  #       }
+  #       if (!is.na(negative)) {
+  #         if (negative %nin% levs) levels(data[[target]]) = c(levs, negative)
+  #         else stopf("Cannot add second class level when 'negative' is equal to the only class level and no 'positive' is specified!")
+  #       }
+  #     }
+  #   }
+    # task$env$data = data
+  # }
 
   task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive, negative)
   addClasses(task, "OneClassTask")
@@ -90,18 +90,25 @@ makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive, n
   td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking)
   levs = levels(data[[target]])
   m = length(levs)
-  if (is.na(positive) && is.na(negative)) {
+  if (is.na(positive)) {
     positive = levs[1L]
+  } else  {
+
+      # if (m < 2L && negative %in% levs) stopf("Cannot auto-set positive class when there are < 2 class levels and negative is the only class level!")
+        # positive = setdiff(levs, negative)
+    # } else if (is.na(negative)) {
+      # if (m < 2L && positive %in% levs) stopf("Cannot auto-set negative class when there are < 2 class levels and positve is the only class level!")
+      # negative = setdiff(levs, positive)
+    # }
+  }
+
+  if (is.na(negative)) {
     if (m < 2L)
       stopf("Cannot auto-set negative class when there are < 2 class levels!")
-    negative = levs[2L]
-  } else if (is.na(positive)) {
-      if (m < 2L && negative %in% levs) stopf("Cannot auto-set positive class when there are < 2 class levels and negative is the only class level!")
-        positive = setdiff(levs, negative)
-    } else if (is.na(negative)) {
-      if (m < 2L && positive %in% levs) stopf("Cannot auto-set negative class when there are < 2 class levels and positve is the only class level!")
-      negative = setdiff(levs, positive)
-    }
+    else
+      negative =
+
+  }
 
   posneg = c(positive, negative)
   assertSetEqual(levs, posneg)
