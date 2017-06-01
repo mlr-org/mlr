@@ -28,18 +28,18 @@ makeRLearner.oneclass.ksvm = function() {
 }
 
 #' @export
-trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL, ...) {#, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
-  #kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
+trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
+  kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
 
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, .subset)[, x]
   # ksvm only support prob.model for C-svc, nu-svc and  C-bsvc not for one class
-  #if (base::length(kpar) > 0L){
-   # kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = 'one-svc', ...)
- # }
-  #else {
+  if (base::length(kpar) > 0L){
+    kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = 'one-svc', ...)
+  }
+  else {
     kernlab::ksvm(x = as.matrix(d), y = NULL, type = 'one-svc', ...)
-  #}
+  }
 }
 
 #' @export

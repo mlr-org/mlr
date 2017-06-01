@@ -3,25 +3,34 @@ context("oneclass_ksvm")
 test_that("oneclass_ksvm", {
   requirePackagesOrSkip("kernlab", default.method = "load")
 
-  parset.list = list(
+  parset.list1 = list(
+    list(fit = FALSE),
+    list(kpar = list(sigma = 20), fit = FALSE),
+    list(kernel = "laplacedot", kpar = list(sigma = 10), fit = FALSE),
+    list(kernel = "polydot", kpar = list(degree = 3, offset = 2, scale = 1.5))
+  )
+
+  parset.list2 = list(
     list(),
-    list(scaled = FALSE),
-    list(kernel = "tanhdot", offset = 2),
-    list(kernel = "polydot", degree = 3, offset = 2)
+    list(sigma = 20),
+    list(kernel = "laplacedot", sigma = 10),
+    list(kernel = "polydot", degree = 3, offset = 2, scale = 1.5)
   )
 
   old.predicts.list = list()
 
-  for (i in seq_along(parset.list)) {
-    parset = parset.list[[i]]
+  for (i in seq_along(parset.list1)) {
+    parset = parset.list1[[i]]
     pars = list(x = as.matrix(oneclass.train[, -oneclass.col]))
     pars = c(pars, list(type = "one-svc"))
     pars = c(pars, parset)
+    pars$prob.model = TRUE
+
     set.seed(getOption("mlr.debug.seed"))
-    m1 = do.call(kernlab::ksvm, pars)
-    old.predicts.list[[i]] = kernlab::predict(m1, oneclass.test[, -oneclass.col], type = "response")
+    m = do.call(kernlab::ksvm, pars)
+    old.predicts.list[[i]] =  kernlab::predict(m, oneclass.test[, -oneclass.col], type = "response")
   }
 
-   testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
-     oneclass.train.inds, old.predicts.list,  parset.list)
+  testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
+    oneclass.train.inds, old.predicts.list,  parset.list2)
 })
