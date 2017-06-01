@@ -228,7 +228,7 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
 }
 
 #' @export
-predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, predict.threshold = NULL, ...) {
+predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, predict.threshold = 0.8, ...) {
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)

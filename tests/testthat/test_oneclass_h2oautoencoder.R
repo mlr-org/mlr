@@ -29,16 +29,16 @@ test_that("oneclass_h2oautoencoder", {
   }
 
   testProbParsets("oneclass.h2o.autoencoder", oneclass.df,
-    oneclass.target, oneclass.train.inds, old.probs.list, parset.list)
+    oneclass.target, oneclass.positive, oneclass.negative, oneclass.train.inds, old.probs.list, parset.list)
 })
 
-test_that("class names are integers and probabilities predicted (#1787)", {
+test_that("class names are integers and response predicted", {
   df = data.frame(matrix(runif(100, 0, 1), 100, 9))
   classx = factor(sample(c(0, 1), 100, replace = TRUE))
   df = cbind(classx, df)
 
-  oneclass.task = makeOneClassTask(id = "example", data = df, target = "classx")
-  ae.lrn  = makeLearner("oneclass.h2o.autoencoder", predict.type = "prob", activation = "Tanh")
+  oneclass.task = makeOneClassTask(id = "example", data = df, target = "classx", positive = 1, negative = 0)
+  ae.lrn  = makeLearner("oneclass.h2o.autoencoder", predict.type = "response", activation = "Tanh")
   rdesc = makeResampleDesc("CV", iters = 2L)
   rin = makeResampleInstance(rdesc, task = oneclass.task)
   r = resample(ae.lrn, oneclass.task, rin)
