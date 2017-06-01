@@ -53,7 +53,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     regression = makeRegrTask(data = df, target = target),
     classif = makeClassifTask(data = df, target = target),
     surv = makeSurvTask(data = df, target = target),
-    multi = makeMultilabelTask(data = df, target = target),
+    multilabel = makeMultilabelTask(data = df, target = target),
     oneclass = makeOneClassTask(data = df, target = target, positive = "TRUE", negative = "FALSE"))
 
   if (is.null(task))
