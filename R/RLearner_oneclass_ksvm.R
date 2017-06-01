@@ -45,12 +45,10 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NULL, ...) {
   # ksvm currently can't predict probabilities only response
+  p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   td = getTaskDesc(.model)
   if (.learner$predict.type == "response") {
-    p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "response", ...)
     p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
   }
   return(p)
 }
-
-
