@@ -25,7 +25,7 @@ makeCostSensClassifWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
+trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset = NULL, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   feats = getTaskData(.task)

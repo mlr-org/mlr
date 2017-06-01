@@ -1,11 +1,12 @@
+# svm currently can't predict probabilities only response
+
 #' @export
 makeRLearner.oneclass.svm = function() {
   makeRLearnerOneClass(
     cl = "oneclass.svm",
     package = "e1071",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "type", default = "one-classification", values = "one-classification"),
-      makeNumericLearnerParam(id = "nu", default = 0.5, requires = quote(type == "nu-classification" || type == "one-classification" || type == "nu-regression")),
+      makeNumericLearnerParam(id = "nu", default = 0.5),
       makeDiscreteLearnerParam(id = "kernel", default = "radial", values = c("linear", "polynomial", "radial", "sigmoid")),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L, requires = quote(kernel == "polynomial")),
       makeNumericLearnerParam(id = "coef0", default = 0, requires = quote(kernel == "polynomial" || kernel == "sigmoid")),
@@ -17,29 +18,26 @@ makeRLearner.oneclass.svm = function() {
       makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
       makeLogicalVectorLearnerParam(id = "scale", default = TRUE, tunable = TRUE)
     ),
-    par.vals = list(type = "one-classification"),
-    properties =  c("oneclass", "numerics", "factors", "weights"),
-    name = "one-class Support Vector Machines (libsvm)",
-    short.name = "one-class svm",
+    properties =  c("oneclass", "numerics", "factors"),
+    note = "'type' is set to 'one-classification'",
+    name = "one-class SVM (libsvm)",
+    short.name = "ocsvm",
     callees = "svm"
   )
 }
 
 #' @export
 trainLearner.oneclass.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  x = getTaskFeatureNames(.task)
-  d = getTaskData(.task, .subset)[, x]
-    e1071::svm(d, y = NULL, ...)
+  z = getTaskData(.task, .subset, target.extra = TRUE)
+  e1071::svm(z$data, y = NULL, type = "one-classification", ...)
 }
 
 #' @export
 predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
-  # svm currently can't predict probabilities only response
-   p = predict(.model$learner.model, newdata = .newdata, ...)
-   if (.learner$predict.type == "response") {
-     p = as.factor(p)
-     levels(p) = union(levels(p), .model$task.desc$class.levels)
-   }
+  p = predict(.model$learner.model, newdata = .newdata, ...)
+  td = getTaskDesc(.model)
+  if (.learner$predict.type == "response")
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
   return(p)
 }
 
