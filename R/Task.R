@@ -64,14 +64,11 @@
 #'   Default is \code{NULL} which means no blocking.
 #' @param positive [\code{character(1)}]\cr
 #'   Positive class for binary and oneclass classification (otherwise ignored and set to NA).
-#'   For oneclass this is the name of the \dQuote{normal} class.
-#'   The negative class is assumed to be the other class level.
-#'   Default is the first factor level of the target attribute.
+#'   For oneclass this is the name of the \dQuote{normal} class and there is no default.
+#'   Default is the first factor level of the target attribute).
 #' @param negative [\code{character(1)}]\cr
-#'   Negative class name, currently only used in multilabel when only one level might
-#'   be present in \code{target}.
-#'   Default is the 2nd factor level (which is not \code{positive}),
-#'   if present, of target attribute.
+#'   Negative class name, currently only used in oneclass, here it encodes the name
+#'   of the \dQuote{anomaly} class.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.

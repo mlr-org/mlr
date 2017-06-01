@@ -2,15 +2,7 @@
 
 ########### important
 
-RLearner_oneclass_svm
 
-Prediction.R
-- dast ist schlecht
-    # HACK need to create colnames with prob.TRUE for the normal class
-    # otherwise getPredictionProbabilities() will throw an error
-    # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
-- das ist auch schlecht
-# to be add in branch h2o and branch convertScoretoProb
 
 ########### simple changes
 
@@ -18,14 +10,15 @@ makeLearner.R ++++ setPredictType
  - scheiße:One-Classification: \dQuote{response} (= labels) or \dQuote{prob} (= mse reconstruction error as anomaly score (availabel for \code{h2o.autoencoder})).
  - ansonsten OK
 
-calculateConfusionMatrix.R
-calculateROCMeasures.R
-FailureModel.R
-getOOBPreds.R
-plotResidulas.R
-ResampleInstance.R
 
 
+RLearner_oneclass_svm - OK
+calculateConfusionMatrix.R - OK
+calculateROCMeasures.R - OK
+FailureModel.R - OK
+getOOBPreds.R - OK
+plotResidulas.R - OK
+ResampleInstance.R - OK
 Task_operators.R - OK
 zzz.R    - OK
 helpers.R - OK
@@ -39,31 +32,5 @@ datasets.R
 makeData.R
 MEasure.R
 measures.R
-
-
-#### should oneclass working for
-BaggingWarpper.R
-makeClassificationViaRegressionWrapper.R
-makeConstantClassWrapper.R
-makeCostSensClassifWrapper.R
-makeCostSensWeightedPairsWrapper.R
-Filter.R
-generateCalibration.R
-makeCostMeasure.R
-stackedLearner.R
-
-Probably make no sense:
-getClassWeightParam.R (not make sense)
-MultiClassWrapper.R
-MultilabelBinaryRelevanceWrapper.R
-MultilabelClassifierChairsWrapper.R
-MultilabelBDRWrapper.R
-MultilabelNestedStackeringWrapper.R
-MultilabelStackingWrapper.R
-noFeaturesModel.R
-makeOverBaggingWrapper
-makeUndersamplingWrapper.R
-smoteWrapper
-weightClassWrapper
 
 

@@ -63,7 +63,7 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L,
 }
 
 #' @export
-trainLearner.SMOTEWrapper = function(.learner, .task, .subset, .weights = NULL, sw.rate = 1,
+trainLearner.SMOTEWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, sw.rate = 1,
   sw.nn = 5, sw.standardize = TRUE, sw.alt.logic = FALSE, ...) {
 
   .task = subsetTask(.task, .subset)

@@ -6,3 +6,5 @@ test schreiben:
 
 was ist mit thresholding? wird das getestet?
 
+wie setzen wir den prediction threshold im Prediction objekt als default?
+
