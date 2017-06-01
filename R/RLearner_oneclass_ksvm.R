@@ -22,7 +22,7 @@ makeRLearner.oneclass.ksvm = function() {
     properties =  c("oneclass", "numerics", "factors"),
     note = "'type' is set to 'one-svc'",
     name = "one-class kernlab-based SVM",
-    short.name = "kocsvm",
+    short.name = "ksvm",
     callees = "ksvm"
   )
 }
