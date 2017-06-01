@@ -1,6 +1,3 @@
-# autoencoder
-# Enable auto-encoder for model building.
-
 # use_all_factor_levels
 # Logical. Use all factor levels of categorical variance. Otherwise the first factor level is omittted (without loss of accuracy). Useful for variable imporotances and auto-enabled for autoencoder.
 
@@ -79,15 +76,6 @@
 # quiet_mode
 # Enable quiet mode for less output to standard output
 
-# max_confusion_matrix_size
-# Max. size (number of classes) for confusion matrices to be shown
-
-# max_hit_ratio_k
-# Max number (top K) of predictions to use for hit ration computation(for multi-class only, 0 to disable)
-
-# balance_classes
-# Balance training data class counts via over/under-sampling (for imbalanced data)
-
 # class_sampling_factors
 # Desired over/under-sampling ratios per class (in lexicographic order). If not specified, sampling factors will be automatically computed to obtain class balance during training. Requires balance_classes.
 
@@ -130,9 +118,6 @@
 # sparsity_beta
 # Sparsity regularization (Experimental)
 
-# max_categorical_features
-# Max. number of categorical features, enforced via hashing Experimental)
-
 # reproducible
 # Force reproducibility on small data (will be slow - only uses 1 thread)
 
@@ -152,7 +137,6 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     cl = "oneclass.h2o.autoencoder",
     package = "h2o",
     par.set = makeParamSet(
-      makeLogicalLearnerParam("autoencoder", default = TRUE),
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
         "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
@@ -198,7 +182,6 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeNumericLearnerParam("stopping_tolerance", default = 0, lower = 0),
       makeNumericLearnerParam("max_runtime_secs", default = 0, lower = 0),
       makeLogicalLearnerParam("quiet_mode", tunable = FALSE),
-      makeLogicalLearnerParam("balance_classes", default = FALSE),
       makeNumericLearnerParam("class_sampling_factors", requires = quote(balance_classes == TRUE)),
       makeNumericLearnerParam("max_after_balance_size", default = 5),
       makeDiscreteLearnerParam("score_validation_sampling", values = c("Uniform",
@@ -214,13 +197,12 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeLogicalLearnerParam("sparse", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("col_major", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("average_activation", tunable = FALSE),
-      #makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
+      makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)#,
-      #makeNumericLearnerParam("threshold", default = 0.5, lower = 0, when = "predict")
     ),
-    par.vals = list(autoencoder = TRUE),
     properties = c("oneclass", "numerics", "factors", "weights", "prob"),
+    note = "'autoencoder' is set to 'TRUE'",
     name = "h2o.autoencoder",
     short.name = "h2o.ae",
     callees = c("h2o.deeplearning", "h2o.predict", "h2o.anomaly")
@@ -242,8 +224,7 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
     wcol = ".mlr.weights"
   }
   h2of = h2o::as.h2o(d)
-  # autoencoder = TRUE is set in the makeRLearner.oneclass.h2o.autoencoder() fkt
-  h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol,  ...)
+  h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol, autoencoder = TRUE, ...)
 }
 
 #' @export
