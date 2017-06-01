@@ -5,7 +5,6 @@ makeRLearner.oneclass.ksvm = function() {
     package = "kernlab",
     par.set = makeParamSet(
       makeLogicalLearnerParam(id = "scaled", default = TRUE),
-      makeDiscreteLearnerParam(id = "type", default = "one-svc", values = c("one-svc")),
       makeDiscreteLearnerParam(id = "kernel", default = "rbfdot",
         values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot")),
       makeNumericLearnerParam(id = "nu", lower = 0, default = 0.2, requires = quote(type == "nu-svc" || type == "one-svc")),
@@ -20,17 +19,16 @@ makeRLearner.oneclass.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L)
     ),
-    par.vals = list(type = 'one-svc'),
-    properties =  c("oneclass", "numerics", "factors", "weights"),
+    properties =  c("oneclass", "numerics", "factors"),
+    note = "'type' is set to 'one-svc'",
     name = "one-class kernlab-based SVM",
-    short.name = "one-class ksvm",
+    short.name = "kocsvm",
     callees = "ksvm"
   )
 }
 
 #' @export
 trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL, ...) {#, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
-
   #kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
 
   x = getTaskFeatureNames(.task)
@@ -40,16 +38,18 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
    # kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = 'one-svc', ...)
  # }
   #else {
-    kernlab::ksvm(x = as.matrix(d), y = NULL, ...)
+    kernlab::ksvm(x = as.matrix(d), y = NULL, type = 'one-svc', ...)
   #}
 }
 
 #' @export
 predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NULL, ...) {
   # ksvm currently can't predict probabilities only response
-  type = switch(.learner$predict.type, prob = "response")
-  p = as.factor(kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...))
-  levels(p) = union(levels(p), .model$task.desc$class.levels)
+  td = getTaskDesc(.model)
+  if (.learner$predict.type == "response") {
+    p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "response", ...)
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+  }
   return(p)
 }
 
