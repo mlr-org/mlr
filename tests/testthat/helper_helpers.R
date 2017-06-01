@@ -50,7 +50,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   lrn = do.call("makeLearner", c(list(t.name), parset))
   task = switch(lrn$type,
     cluster = makeClusterTask(data = df),
-    regression = makeRegrTask(data = df, target = target),
+    regr = makeRegrTask(data = df, target = target),
     classif = makeClassifTask(data = df, target = target),
     surv = makeSurvTask(data = df, target = target),
     multilabel = makeMultilabelTask(data = df, target = target),
