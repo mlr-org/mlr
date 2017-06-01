@@ -36,8 +36,8 @@ makeMultilabelTask(id = deparse(substitute(data)), data, target,
   fixup.data = "warn", check.data = TRUE)
 
 makeOneClassTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, fixup.data = "warn",
-  positive = NA_character_, negative = NA_character_, check.data = TRUE)
+  weights = NULL, blocking = NULL, fixup.data = "warn", positive,
+  negative, check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
@@ -75,9 +75,8 @@ Default is \code{NULL} which means no blocking.}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary and oneclass classification (otherwise ignored and set to NA).
-For oneclass this is the name of the \dQuote{normal} class.
-The negative class is assumed to be the other class level.
-Default is the first factor level of the target attribute.}
+For oneclass this is the name of the \dQuote{normal} class and there is no default.
+Default is the first factor level of the target attribute).}
 
 \item{fixup.data}{[\code{character(1)}]\cr
 Should some basic cleaning up of data be performed?
@@ -103,10 +102,8 @@ Each entry (i,j) of the matrix specifies the cost of predicting class j
 for observation i.}
 
 \item{negative}{[\code{character(1)}]\cr
-Negative class name, currently only used in multilabel when only one level might
-be present in \code{target}.
-Default is the 2nd factor level (which is not \code{positive}),
-if present, of target attribute.}
+Negative class name, currently only used in oneclass, here it encodes the name
+of the \dQuote{anomaly} class.}
 
 \item{censoring}{[\code{character(1)}]\cr
 Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
