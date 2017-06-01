@@ -35,10 +35,10 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
   d = getTaskData(.task, .subset)[, x]
   # ksvm only support prob.model for C-svc, nu-svc and  C-bsvc not for one class
   if (base::length(kpar) > 0L){
-    kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = 'one-svc', ...)
+    kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = "one-svc", ...)
   }
   else {
-    kernlab::ksvm(x = as.matrix(d), y = NULL, type = 'one-svc', ...)
+    kernlab::ksvm(x = as.matrix(d), y = NULL, type = "one-svc", ...)
   }
 }
 
