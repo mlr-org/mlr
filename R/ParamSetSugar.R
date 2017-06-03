@@ -140,7 +140,7 @@ parseDimension = function(pdeco, pstring, pss.env) {
 }
 
 # parseDiscrete: parse the range part of a discrete parameter
-parseDiscrete = function(pdeco, pstring) {
+parseDiscrete = function(pdeco, pstring, pss.env) {
   if (length(pdeco) == 2) {
     # only one value given -> interpret it as expression that gives the values list
     return(eval(pdeco[[2]], envir = pss.env))
@@ -282,7 +282,7 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
 
   # interpret range of discrete parameters
   if (ptype == "discrete") {
-    values = parseDiscrete(pdeco, pstring)
+    constructorParams$values = parseDiscrete(pdeco, pstring, pss.env)
   }
   if (ptype %in% c("numeric", "integer")) {
     constructorParams = insert(constructorParams, parseNumeric(pdeco, ptype, pstring, pss.env))
