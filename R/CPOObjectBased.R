@@ -2,7 +2,7 @@
 #' @export
 makeCPOObject = function(..., par.set = NULL, par.vals = NULL, cpo.trafo, cpo.retrafo) {
   if (is.null(par.set)) {
-    par.set = paramSetSugar(..., pss.env=parent.frame())
+    par.set = paramSetSugar(..., pss.env = parent.frame())
   }
   if (is.null(par.vals)) {
     par.vals = getParamSetDefaults(par.set)
@@ -18,6 +18,6 @@ makeCPOObject = function(..., par.set = NULL, par.vals = NULL, cpo.trafo, cpo.re
   required.arglist.retrafo$data = substitute()
   required.arglist.retrafo$control = substitute()
   cpo.retrafo = makeFunction(substitute(cpo.retrafo), required.arglist.retrafo, env = parent.frame())
-  # TODO: make the actual object
+  # FIXME: make the actual object
 }
 

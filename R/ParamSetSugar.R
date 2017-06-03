@@ -2,7 +2,7 @@
 #' Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s
 #'
 #' The arguments are of the form \code{name = default: type range ^ dimension [settings]}.
-#' 
+#'
 #' \dQuote{name} is any valid R identifier name.
 #'
 #' \dQuote{= default} may be absent. If present, it determines the 'default' setting
@@ -25,7 +25,7 @@
 #' indicate an unbounded value which may not be infinite, use ond dot (\dQuote{.}).
 #' Note that \code{ParamHelpers} makes it impossible to specify values unbounded above and below
 #' that accept only infinite values with a specified sign.
-#' 
+#'
 #'
 #' \dQuote{^ dimension} may be absent, resulting in a normal \dQuote{LearnerParam}, or present,
 #' resulting in a \dQuote{VectorLearnerParam}. Note that a one-dimensional \dQuote{VectorLearnerParam}
@@ -33,7 +33,7 @@
 #'
 #' \dQuote{[settings]} may be a collection of further settings to supply to \dQuote{makeXXXLearnerParam}
 #' and is optional.
-#' 
+#'
 #' This makes definition of \code{ParamSet}s shorter and more readable.
 #'
 #' Examples:
@@ -80,33 +80,33 @@ formerr = function(pstring, specific) {
 
 # get the makeXXXParam function appropriate for the type and vector-ness
 getConstructor = function(type, is.learner, is.vector) {
-  normalConst = list(numeric = makeNumericParam,
+  normal.const = list(numeric = makeNumericParam,
                      integer = makeIntegerParam,
                      logical = makeLogicalParam,
                      discrete = makeDiscreteParam)
-  vectorConst = list(numeric = makeNumericVectorParam,
+  vector.const = list(numeric = makeNumericVectorParam,
                      integer = makeIntegerVectorParam,
                      logical = makeLogicalVectorParam,
                      discrete = makeDiscreteVectorParam)
-  normLrnConst = list(numeric = makeNumericLearnerParam,
+  normlrn.const = list(numeric = makeNumericLearnerParam,
                       integer = makeIntegerLearnerParam,
                       logical = makeLogicalLearnerParam,
                       discrete = makeDiscreteLearnerParam)
-  vectLrnConst = list(numeric = makeNumericVectorLearnerParam,
+  vectlrn.const = list(numeric = makeNumericVectorLearnerParam,
                       integer = makeIntegerVectorLearnerParam,
                       logical = makeLogicalVectorLearnerParam,
                       discrete = makeDiscreteVectorLearnerParam)
     if (is.vector) {
     if (is.learner) {
-      vectLrnConst[[type]]
+      vectlrn.const[[type]]
     } else {
-      vectorConst[[type]]
+      vector.const[[type]]
     }
   } else {
     if (is.learner) {
-      normLrnConst[[type]]
+      normlrn.const[[type]]
     } else {
-      normalConst[[type]]
+      normal.const[[type]]
     }
   }
 }
@@ -163,8 +163,8 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
   if (length(pdeco) != 3) {
     formerr(pstring, "invalid numeric / integer range")
   }
-  quasiInf = .Machine$double.xmax
-  parseBound = function(expr, lower) {
+  quasi.inf = .Machine$double.xmax
+  parse.bound = function(expr, lower) {
     if (is.recursive(expr) && identical(expr[[1]], quote(`~`))) {
       value = eval(expr[[2]], envir = pss.env)
       if (ptype == "integer") {
@@ -185,7 +185,7 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
       if (ptype == "integer") {
         formerr(pstring, '"."-bounds (unbounded but excluding "Inf") are only allowed for "numeric" variables.')
       }
-      value = ifelse(lower, -quasiInf, quasiInf)
+      value = ifelse(lower, -quasi.inf, quasi.inf)
     } else if (identical(expr, substitute())) {
       if (length(expr) > 1) {
         formerr(pstring, "invalid numeric / integer range")
@@ -195,24 +195,24 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
       value = eval(expr, envir = pss.env)
     }
   }
-  lowerBound = parseBound(pdeco[[2]], TRUE)
-  upperBound = parseBound(pdeco[[3]], FALSE)
+  lower.bound = parse.bound(pdeco[[2]], TRUE)
+  upper.bound = parse.bound(pdeco[[3]], FALSE)
 
   allow.inf = TRUE
-  if (lowerBound == -quasiInf || upperBound == quasiInf) {
-    if (lowerBound != -Inf && upperBound != Inf) {
-      # no true 'Inf' occurs, so we can translate quasiInf to Inf and
+  if (lower.bound == -quasi.inf || upper.bound == quasi.inf) {
+    if (lower.bound != -Inf && upper.bound != Inf) {
+      # no true 'Inf' occurs, so we can translate quasi.inf to Inf and
       # instead use the 'allow.inf' parameter
-      if (lowerBound == -quasiInf) {
-        lowerBound = -Inf
+      if (lower.bound == -quasi.inf) {
+        lower.bound = -Inf
       }
-      if (upperBound == quasiInf) {
-        upperBound = Inf
+      if (upper.bound == quasi.inf) {
+        upper.bound = Inf
       }
       allow.inf = FALSE
     }
   }
-  rl = list(lower = lowerBound, upper = upperBound)
+  rl = list(lower = lower.bound, upper = upper.bound)
   if (ptype == "numeric") {
     rl$allow.inf = allow.inf
   }
@@ -224,8 +224,8 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
 # it takes the name and expression of a given parameter and returns
 # the constructed ParamSet.
 parseSingleParameter = function(name, thispar, is.learner, pss.env) {
-  constructorParams = list()
-  additionalSettings = list()
+  constructor.params = list()
+  additional.settings = list()
   is.vector = FALSE
   pstring = deparseJoin(thispar)
   if (name != "") {
@@ -237,24 +237,24 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
   }
 
   if (name == "") {  # no default
-    constructorParams$id = as.character(thispar[[2]])
+    constructor.params$id = as.character(thispar[[2]])
   } else {
-    constructorParams$id = name
-    constructorParams$default = eval(thispar[[2]], envir = pss.env)
+    constructor.params$id = name
+    constructor.params$default = eval(thispar[[2]], envir = pss.env)
   }
 
   pdeco = thispar[[3]]
   if (is.recursive(pdeco) && identical(pdeco[[1]], quote(`^`))) { # dimension
     rl = parseDimension(pdeco, pstring, pss.env)
     pdeco = rl$pdeco
-    constructorParams$len = rl$len
+    constructor.params$len = rl$len
     is.vector = TRUE
   }
   if (is.recursive(pdeco) && identical(pdeco[[1]], quote(`[`))) {  # settings
-    additionalSettings = as.list(pdeco)
-    additionalSettings[[1]] <- NULL  # delete `[`
-    additionalSettings[[1]] <- NULL  # delete part before `[`
-    additionalSettings = lapply(additionalSettings, function(x) eval(x, envir = pss.env))
+    additional.settings = as.list(pdeco)
+    additional.settings[[1]] = NULL  # delete `[`
+    additional.settings[[1]] = NULL  # delete part before `[`
+    additional.settings = lapply(additional.settings, function(x) eval(x, envir = pss.env))
     pdeco = pdeco[[2]]
   }
   if (!is.recursive(pdeco)) {
@@ -275,11 +275,11 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
 
   # interpret range of discrete parameters
   if (ptype == "discrete") {
-    constructorParams$values = parseDiscrete(pdeco, pstring, pss.env)
+    constructor.params$values = parseDiscrete(pdeco, pstring, pss.env)
   }
   if (ptype %in% c("numeric", "integer")) {
-    constructorParams = insert(constructorParams, parseNumeric(pdeco, ptype, pstring, pss.env))
+    constructor.params = insert(constructor.params, parseNumeric(pdeco, ptype, pstring, pss.env))
   }
-  constructorParams = insert(constructorParams, additionalSettings)
-  do.call(getConstructor(ptype, is.learner, is.vector), constructorParams)
+  constructor.params = insert(constructor.params, additional.settings)
+  do.call(getConstructor(ptype, is.learner, is.vector), constructor.params)
 }
