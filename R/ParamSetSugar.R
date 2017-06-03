@@ -78,13 +78,6 @@ formerr = function(pstring, specific) {
           specific)
 }
 
-# deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
-# Note that this is a heuristic for user messages only, the result can not be
-# parsed again!
-deparseJoin = function(what) {
-  collapse(deparse(what, 500), sep = " ")
-}
-
 # get the makeXXXParam function appropriate for the type and vector-ness
 getConstructor = function(type, is.learner, is.vector) {
   normalConst = list(numeric = makeNumericParam,
