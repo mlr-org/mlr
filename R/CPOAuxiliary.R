@@ -1,5 +1,5 @@
 
-#' CPO Composition
+#' CPO Composition / Attachment operator
 #'
 #' @export
 `%>>%` = function(cpo1, cpo2) {
@@ -14,6 +14,35 @@
 #' @export
 `%>>%.CPOConstructor` = function(cpo1, cpo2) {
   stop("Cannot compose CPO Constructors.")
+}
+
+#' @export
+`%>>%.CPO` = function(cpo1, obj2) {
+  if ("CPO" %in% class(obj2)) {
+    # compose two CPOs
+    composeCPO(cpo1, obj2)
+  } else if ("RLearner" %in% class(obj2)) {
+    # wrap around learner
+    attachCPO(cpo1, obj2)
+  } else {
+    stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(obj2), '"', collapse=", "))
+  }
+}
+
+
+#' CPO Composition
+#'
+#' @export
+composeCPO = function(cpo1, cpo2) {
+  UseMethod("composeCPO")
+}
+
+
+#' CPO Attachment
+#'
+#' @export
+attachCPO = function(cpo, learner) {
+  UseMethod("attachCPO")
 }
 
 

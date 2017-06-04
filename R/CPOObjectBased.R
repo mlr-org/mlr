@@ -51,8 +51,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
 }
 
-#' @export
-`%>>%.CPOObject` = function(cpo1, cpo2) {
+composeCPO.CPOObject = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOObject")
   samenames = intersect(names(cpo1$par.set$pars), names(cpo2$par.set$pars))
   if (length(samenames)) {
@@ -96,3 +95,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
     retrafo = concatRetrafo(cpo1$retrafo, cpo2$retrafo))
 }
 
+attachCPO.CPOObject = function(cpo, learner) {
+
+
+}
