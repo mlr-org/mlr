@@ -38,7 +38,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
       assertString(args$id)
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
-    cpo = makeS3Obj(c("CPOObject", "CPOObjectPrimitive", "CPO"),
+    cpo = makeS3Obj(c("CPOObject", "CPOPrimitive", "CPO"),
       barename = name,
       name = name,
       id = NULL,
@@ -88,7 +88,7 @@ callCPORetrafo = function(cpo, args, data, control) {
 #' @export
 composeCPO.CPOObject = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOObject")
-  parameterClashAssert(cpo1$par.set, cpo2$par.set, cpo1$name, cpo2$name)
+  parameterClashAssert(cpo1, cpo2, cpo1$name, cpo2$name)
 
   makeS3Obj(c("CPOObject", "CPO"),
     barename = paste(cpo2$barename, cpo1$barename, sep="."),
@@ -116,7 +116,7 @@ attachCPO.CPOObject = function(cpo, learner) {
   id = paste(learner$id, cpo$barename, sep=".")
   # makeBaseWrapper checks for parameter name clash, but gives
   # less informative error message
-  parameterClashAssert(cpo$par.set, getParamSet(learner), cpo$name, learner$name)
+  parameterClashAssert(cpo, learner, cpo$name, learner$name)
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
     cpo$par.set, cpo$par.vals, "CPOObjectLearner", "CPOObjectModel")
   wlearner$cpo = cpo
@@ -142,37 +142,44 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
   NextMethod(.newdata = .newdata)
 }
 
-
-
-
 #' @export
-print.CPOObject = function(x, ...) {
-  argstring = paste(names(x$par.vals), sapply(x$par.vals, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
-  template = ifelse("CPOObjectPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
-  catf(template, x$name, argstring)
-}
-
-#' @export
-print.DetailedCPOObject = function(x, ...) {
-  NextMethod("print", x)
-  cat("\n")
-  print(x$par.set)
-}
-
-#' @export
-summary.CPOObject = function(object, ...) {
-  if (!"DetailedCPOObject" %in% object) {
-    class(object) = c(head(class(object), -1), "DetailedCPOObject", "CPO")
+removeHyperPars.CPOObjectLearner = function(learner, ids) {
+  i = intersect(names(learner$par.vals), ids)
+  if (length(i) > 0) {
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep=", "))
   }
-  object
+  learner$next.learner = removeHyperPars(learner$next.learner, ids)
+  learner
 }
 
+#' @export
+getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both")) {
+  learner$par.vals
+}
+
+#' @export
+setHyperPars2.CPOObject = function(learner, par.vals = list()) {
+  badpars = setdiff(names(par.vals), names(learner$par.set))
+  if (length(badpars)) {
+    stopf("CPO %s does not have parameter%s %s", learner$name,
+          ifelse(length(badpars) > 1, "s", ""), coalesce(badpars, ", "))
+  }
+  # FIXME: feasibility check
+  learner$par.vals = insert(learner$par.vals, par.vals)
+}
+
+#' @export
+getParamSet.CPOObject = function(x) {
+  x$par.set
+}
 
 setCPOId.CPOObject = function(cpo, id) {
   if (!is.null(id)) {
     assertString(id)
   }
-
+  if (!"CPOPrimitive" %in% class(cpo)) {
+    stop("Cannot set ID of compound CPO.")
+  }
   pasteIdIfNN = function(names) {
     if (is.null(id)) {
       names
@@ -193,4 +200,9 @@ setCPOId.CPOObject = function(cpo, id) {
   cpo$id = id
   cpo$name = collapse(c(cpo$barename, id), sep=".")
   cpo
+}
+
+#' @export
+getCPOName.CPOObject = function(cpo) {
+  cpo$name
 }

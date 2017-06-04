@@ -21,7 +21,8 @@ Default is \code{c("train", "predict", "both")}.}
 [\code{list}]. A named list of values.
 }
 \description{
-Retrieves the current hyperparameter settings of a learner.
+Retrieves the current hyperparameter settings of a learner or CPO.
+#FIXME: learner_or_cpo template
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},

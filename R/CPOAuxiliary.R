@@ -45,6 +45,10 @@ attachCPO = function(cpo, learner) {
   UseMethod("attachCPO")
 }
 
+#' @export
+getCPOName = function(cpo) {
+  UseMethod("getCPOName")
+}
 
 
 # deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
@@ -60,7 +64,9 @@ getParamSetDefaults = function(ps) {
 
 # check that ParamSets  ps1 and ps2 have distinct names; if not, give meaningful
 # error message, referring to the objects by name1 and name2.
-parameterClashAssert = function(ps1, ps2, name1, name2) {
+parameterClashAssert = function(obj1, obj2, name1, name2) {
+  ps1 = getParamSet(obj1)
+  ps2 = getParamSet(obj2)
   samenames = intersect(names(ps1$pars), names(ps2$pars))
   if (length(samenames)) {
     plur = length(samenames) > 1
@@ -140,4 +146,28 @@ print.CPOConstructor = function(x, ...) {
   argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
   argstring = paste(names(args), argvals, collapse=", ", sep="")
   catf("<<CPO %s(%s)>>", environment(x)$name, argstring)
+}
+
+
+#' @export
+print.CPO = function(x, ...) {
+  pv = getHyperPars(x)
+  argstring = paste(names(pv), sapply(pv, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
+  template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
+  catf(template, getCPOName(x), argstring)
+}
+
+#' @export
+print.DetailedCPO = function(x, ...) {
+  NextMethod("print", x)
+  cat("\n")
+  print(getParamSet(x))
+}
+
+#' @export
+summary.CPOObject = function(object, ...) {
+  if (!"DetailedCPO" %in% object) {
+    class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
+  }
+  object
 }

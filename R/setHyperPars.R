@@ -1,5 +1,5 @@
-#' Set the hyperparameters of a learner object.
-#'
+#' Set the hyperparameters of a learner object or CPO.
+#' #FIXME: arg_learner_or_cpo
 #' @template arg_learner
 #' @param ... [any]\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
@@ -21,7 +21,6 @@
 #' print(cl2)
 setHyperPars = function(learner, ..., par.vals = list()) {
   args = list(...)
-  assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
   setHyperPars2(learner, insert(par.vals, args))

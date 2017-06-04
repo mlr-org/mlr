@@ -1,8 +1,8 @@
 #' @title Get current parameter settings for a learner.
 #'
 #' @description
-#' Retrieves the current hyperparameter settings of a learner.
-#'
+#' Retrieves the current hyperparameter settings of a learner or CPO.
+#' #FIXME: learner_or_cpo template
 #' @template arg_learner
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}
@@ -13,7 +13,6 @@
 #' @family learner
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
-  assertClass(learner, classes = "Learner")
   assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }

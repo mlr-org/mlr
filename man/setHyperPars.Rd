@@ -2,7 +2,8 @@
 % Please edit documentation in R/setHyperPars.R
 \name{setHyperPars}
 \alias{setHyperPars}
-\title{Set the hyperparameters of a learner object.}
+\title{Set the hyperparameters of a learner object or CPO.
+#FIXME: arg_learner_or_cpo}
 \usage{
 setHyperPars(learner, ..., par.vals = list())
 }
@@ -23,7 +24,8 @@ Optional list of named (hyper)parameter settings. The arguments in
 [\code{\link{Learner}}].
 }
 \description{
-Set the hyperparameters of a learner object.
+Set the hyperparameters of a learner object or CPO.
+#FIXME: arg_learner_or_cpo
 }
 \note{
 If a named (hyper)parameter can't be found for the given learner, the 3
