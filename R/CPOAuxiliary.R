@@ -1,12 +1,17 @@
 
+#' CPO Composition
+#'
+#' @export
+`%>>%.default` = function(cpo1, cpo2) {
+  stopf("%>>% not defined for objects of class c(%s)", paste0('"', class(cpo1), '"', collapse=", "))
+}
 
 # deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
 # Note that this is a heuristic for user messages only, the result can not be
 # parsed again!
-deparseJoin = function(what) {
-  collapse(deparse(what, 500), sep = " ")
+deparseJoin = function(what, sep = " ") {
+  collapse(deparse(what, 500), sep = sep)
 }
-
 
 getParamSetDefaults = function(ps) {
   lapply(ps$pars[vlapply(ps$pars, function(x) x$has.default)], function(x) x$default)
@@ -92,15 +97,14 @@ setCPOId = function(cpo, id) {
 
 #' @export
 print.CPO = function(x, showid = FALSE, ...) {
-
-  argstring = paste(names(x$par.vals), x$par.vals, sep=" = ", collapse=", ")
-  catf("%s(%s)%s", x$name, argstring, ifelse(is.null(x$id) || !showid, "", paste0("[id ", x$id, "]")))
+  argstring = paste(names(x$par.vals), sapply(x$par.vals, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
+  catf("%s(%s)%s", x$name, argstring, ifelse(is.null(x$id) || !showid, "", paste0(" [id = ", x$id, "]")))
 }
 
 #' @export
 print.DetailedCPO = function(x, ...) {
-  showid = TRUE
-  NextMethod()
+  NextMethod("print", x, showid = TRUE)
+  cat("\n")
   print(x$par.set)
 }
 
@@ -110,4 +114,12 @@ summary.CPO = function(object, ...) {
     class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
   }
   object
+}
+
+#' @export
+print.CPOConstructor = function(x, ...) {
+  args = formals(x)
+  argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
+  argstring = paste(names(args), argvals, collapse=", ", sep="")
+  catf("<<CPO %s(%s)>>", environment(x)$name, argstring)
 }

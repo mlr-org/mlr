@@ -47,5 +47,6 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
       retrafo = cpo.retrafo)
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
   })
-  eval(call("function", as.pairlist(funargs), funbody))
+  addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
 }
+
