@@ -1,4 +1,6 @@
 
+### Creation
+
 #' @export
 makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, cpo.retrafo) {
   assertString(name)
@@ -52,38 +54,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
 }
 
-assertTrafoResult = function(result, name) {
-  if (!is.list(result) || length(result) != 2 || length(intersect(names(result), c("data", "control"))) != 2 ||
-      !is.data.frame(result$data)) {
-    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return list(data=[data.frame], control= ).", name)
-  }
-}
-
-assertRetrafoResult = function(result, name) {
-  if (!is.data.frame(result)) {
-    stopf("CPO %s cpo.retrafo gave bad result\ncpo.retrafo must return a data.frame.", name)
-  }
-}
-
-# filter args for the arguments relevant for cpo
-# then add whatever is in '...'.
-subsetCPOArgs = function(cpo, args, ...) {
-  args = args[names(cpo$par.set$pars)]
-  names(args) = cpo$bare.par.names
-  insert(args, list(...))
-}
-
-callCPOTrafo = function(cpo, args, data, target) {
-  result = do.call(cpo$trafo, subsetCPOArgs(cpo, args, data = data, target = target))
-  assertTrafoResult(result, cpo$name)
-  result
-}
-
-callCPORetrafo = function(cpo, args, data, control) {
-  result = do.call(cpo$retrafo, subsetCPOArgs(cpo, args, data = data, control = control))
-  assertRetrafoResult(result, cpo$name)
-  result
-}
+### Compose, Attach
 
 #' @export
 composeCPO.CPOObject = function(cpo1, cpo2) {
@@ -142,36 +113,7 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
   NextMethod(.newdata = .newdata)
 }
 
-#' @export
-removeHyperPars.CPOObjectLearner = function(learner, ids) {
-  i = intersect(names(learner$par.vals), ids)
-  if (length(i) > 0) {
-    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep=", "))
-  }
-  learner$next.learner = removeHyperPars(learner$next.learner, ids)
-  learner
-}
-
-#' @export
-getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both")) {
-  learner$par.vals
-}
-
-#' @export
-setHyperPars2.CPOObject = function(learner, par.vals = list()) {
-  badpars = setdiff(names(par.vals), names(learner$par.set))
-  if (length(badpars)) {
-    stopf("CPO %s does not have parameter%s %s", learner$name,
-          ifelse(length(badpars) > 1, "s", ""), coalesce(badpars, ", "))
-  }
-  # FIXME: feasibility check
-  learner$par.vals = insert(learner$par.vals, par.vals)
-}
-
-#' @export
-getParamSet.CPOObject = function(x) {
-  x$par.set
-}
+### IDs, ParamSets
 
 setCPOId.CPOObject = function(cpo, id) {
   if (!is.null(id)) {
@@ -203,6 +145,72 @@ setCPOId.CPOObject = function(cpo, id) {
 }
 
 #' @export
+getParamSet.CPOObject = function(x) {
+  x$par.set
+}
+
+#' @export
+getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both")) {
+  learner$par.vals
+}
+
+#' @export
+setHyperPars2.CPOObject = function(learner, par.vals = list()) {
+  badpars = setdiff(names(par.vals), names(learner$par.set))
+  if (length(badpars)) {
+    stopf("CPO %s does not have parameter%s %s", learner$name,
+          ifelse(length(badpars) > 1, "s", ""), coalesce(badpars, ", "))
+  }
+  # FIXME: feasibility check
+  learner$par.vals = insert(learner$par.vals, par.vals)
+}
+
+#' @export
+removeHyperPars.CPOObjectLearner = function(learner, ids) {
+  i = intersect(names(learner$par.vals), ids)
+  if (length(i) > 0) {
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep=", "))
+  }
+  learner$next.learner = removeHyperPars(learner$next.learner, ids)
+  learner
+}
+
+#' @export
 getCPOName.CPOObject = function(cpo) {
   cpo$name
+}
+
+### Auxiliaries
+
+assertTrafoResult = function(result, name) {
+  if (!is.list(result) || length(result) != 2 || length(intersect(names(result), c("data", "control"))) != 2 ||
+      !is.data.frame(result$data)) {
+    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return list(data=[data.frame], control= ).", name)
+  }
+}
+
+assertRetrafoResult = function(result, name) {
+  if (!is.data.frame(result)) {
+    stopf("CPO %s cpo.retrafo gave bad result\ncpo.retrafo must return a data.frame.", name)
+  }
+}
+
+# filter args for the arguments relevant for cpo
+# then add whatever is in '...'.
+subsetCPOArgs = function(cpo, args, ...) {
+  args = args[names(cpo$par.set$pars)]
+  names(args) = cpo$bare.par.names
+  insert(args, list(...))
+}
+
+callCPOTrafo = function(cpo, args, data, target) {
+  result = do.call(cpo$trafo, subsetCPOArgs(cpo, args, data = data, target = target))
+  assertTrafoResult(result, cpo$name)
+  result
+}
+
+callCPORetrafo = function(cpo, args, data, control) {
+  result = do.call(cpo$retrafo, subsetCPOArgs(cpo, args, data = data, control = control))
+  assertRetrafoResult(result, cpo$name)
+  result
 }

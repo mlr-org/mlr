@@ -1,4 +1,5 @@
 
+### Creation
 
 #' @export
 makeCPOFunctional = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo) {
@@ -35,12 +36,14 @@ makeCPOFunctional = function(name, ..., par.set = NULL, par.vals = NULL, cpo.tra
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
 
     outerTrafo = function(task, .par.vals) {
-
       assertClass(task, "Task")
+
       args = .par.vals[names(par.set$pars)]
       args$data = getTaskData(.task, .subset)
       args$target = getTaskTargetNames(.task)
+
       result = do.call(cpo.trafo, args)
+
       if (!is.data.frame(result) || is.null(attr(result, "retrafo"))) {
         stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame with attribute 'retrafo' (a function).", name)
       }
@@ -56,22 +59,92 @@ makeCPOFunctional = function(name, ..., par.set = NULL, par.vals = NULL, cpo.tra
           lower.retrafo(upper.retrafo(data))
         }
       }
+
       task = changeData(task, result)
+
       attr(task, "retrafo") = function(data) {
         result = retrafo(data)
         if (!is.data.frame(result)) {
           stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", name)
         }
       }
+
+      task
     }
     attr(outerTrafo, "name") = name
     attr(outerTrafo, "barename") = name
     attr(outerTrafo, "id") = NULL
+    # can't do the following in function head, since par.vals must be eval'd
     formals(outerTrafo) = as.pairlist(task = substitute(), .par.vals = par.vals)
     outerTrafo = addClasses(outerTrafo, c("CPOFunctional", "CPOFunctionalPrimitive", "CPO"))
     setCPOId(outerTrafo, args$id)
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOFunctionalConstructor", "CPOConstructor"))
+}
+
+### Compose, Attach
+
+#' @export
+compose.CPOFunctional = function(cpo1, cpo2) {
+  # in theory we could just do function composition, but then we
+  # would lose the ability to setHyperPars().
+  assertClass(cpo2, "CPOFunctional")
+  parameterClashAssert(cpo1, cpo2, attr(cpo1, "name"), attr(cpo2, "name"))
+  outerTrafo = function(task, .par.vals) {
+    pv1names = names(getParamSet(cpo1)$pars)
+    pv2names = names(getParamSet(cpo2)$pars)
+    assert(length(intersect(pv1names, pv2names)) == 0)
+    assert(length(setdiff(names(.par.vals), c(pv1names, pv2names))) == 0)
+    setHyperPars(cpo2, .par.vals[pv2names])(setHyperPars(cpo1, .par.vals[pv1names])(task))
+  }
+  attr(outerTrafo, "name") = paste(attr(cpo1, "name"), attr(cpo2, "name"), sep=" >> ")
+  attr(outerTrafo, "barename") = paste(attr(cpo2, "barename"), attr(cpo1, "barename"), sep=".")
+  addClasses(outerTrafo, c("CPOFunctional", "CPO"))
+}
+
+#' @export
+attachCPO.CPOFunctional = function(cpo, learner) {
+  learner = checkLearner(learner)
+  id = paste(learner$id, cpo$barename, sep=".")
+  # makeBaseWrapper checks for parameter name clash, but gives
+  # less informative error message
+  parameterClashAssert(cpo, learner, attr(cpo, "name"), learner$name)
+  wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
+    cpo$par.set, cpo$par.vals, "CPOFunctionalLearner", "CPOFunctionalModel")
+  wlearner$cpo = cpo
+  wlearner
+}
+
+#' @export
+trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ...) {
+  args = .learner$par.vals
+  cpo = setHyperPars(.learner$cpo, par.vals = args)
+  .task = cpo(.task)
+  retrafo = attr(cpo, "retrafo")
+  attr(cpo, "retrafo") = NULL
+  model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectModel")
+  model$retrafo = retrafo
+  model
+}
+
+#' @export
+predictLearner.CPOFunctionalLearner = function(.learner, .model, .newdata, ...) {
+  .newdata = .model$learner.model$retrafo(.newdata)
+  NextMethod(.newdata = .newdata)
+}
+
+### IDs, ParamSets
+
+setCPOId.CPOFunctional = function(cpo, id) {
+  if (!is.null(id)) {
+    assertString(id)
+  }
+  if (!"CPOFunctionalPrimitive" %in% class(cpo)) {
+    stop("Cannot set ID of compound CPO.")
+  }
+  attr(cpo, "id") = id
+  attr(cpo, "name") = collapse(c(attr(cpo, "barename"), id), sep=".")
+  cpo
 }
 
 #' @export
@@ -113,69 +186,6 @@ setHyperPars2.CPOFunctional = function(learner, par.vals = list()) {
   }
   formals(learner) = as.pairlist(task = substitute(), .par.vals = pv)
   learner
-}
-
-#' @export
-compose.CPOFunctional = function(cpo1, cpo2) {
-  # in theory we could just do function composition, but then we
-  # would lose the ability to setHyperPars().
-  assertClass(cpo2, "CPOFunctional")
-  parameterClashAssert(cpo1, cpo2, attr(cpo1, "name"), attr(cpo2, "name"))
-  outerTrafo = function(task, .par.vals) {
-    pv1names = names(getParamSet(cpo1)$pars)
-    pv2names = names(getParamSet(cpo2)$pars)
-    assert(length(intersect(pv1names, pv2names)) == 0)
-    assert(length(setdiff(names(.par.vals), c(pv1names, pv2names))) == 0)
-    setHyperPars(cpo2, .par.vals[pv2names])(setHyperPars(cpo1, .par.vals[pv1names])(task))
-  }
-  attr(outerTrafo, "name") = paste(attr(cpo1, "name"), attr(cpo2, "name"), sep=" >> ")
-  attr(outerTrafo, "barename") = paste(attr(cpo2, "barename"), attr(cpo1, "barename"), sep=".")
-  addClasses(outerTrafo, c("CPOFunctional", "CPO"))
-}
-
-#' @export
-setCPOId.CPOFunctional = function(cpo, id) {
-  if (!is.null(id)) {
-    assertString(id)
-  }
-  if (!"CPOFunctionalPrimitive" %in% class(cpo)) {
-    stop("Cannot set ID of compound CPO.")
-  }
-  attr(cpo, "id") = id
-  attr(cpo, "name") = collapse(c(attr(cpo, "barename"), id), sep=".")
-  cpo
-}
-
-
-#' @export
-attachCPO.CPOFunctional = function(cpo, learner) {
-  learner = checkLearner(learner)
-  id = paste(learner$id, cpo$barename, sep=".")
-  # makeBaseWrapper checks for parameter name clash, but gives
-  # less informative error message
-  parameterClashAssert(cpo, learner, attr(cpo, "name"), learner$name)
-  wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
-    cpo$par.set, cpo$par.vals, "CPOFunctionalLearner", "CPOFunctionalModel")
-  wlearner$cpo = cpo
-  wlearner
-}
-
-#' @export
-trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ...) {
-  args = .learner$par.vals
-  cpo = setHyperPars(.learner$cpo, par.vals = args)
-  .task = cpo(.task)
-  retrafo = attr(cpo, "retrafo")
-  attr(cpo, "retrafo") = NULL
-  model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectModel")
-  model$retrafo = retrafo
-  model
-}
-
-#' @export
-predictLearner.CPOFunctionalLearner = function(.learner, .model, .newdata, ...) {
-  .newdata = .model$learner.model$retrafo(.newdata)
-  NextMethod(.newdata = .newdata)
 }
 
 #' @export

@@ -1,4 +1,6 @@
 
+### Generics
+
 #' CPO Composition / Attachment operator
 #'
 #' @export
@@ -50,6 +52,50 @@ getCPOName = function(cpo) {
   UseMethod("getCPOName")
 }
 
+
+setCPOId = function(cpo, id) {
+  UseMethod("setCPOId")
+}
+
+setCPOId.default = function(cpo, id) {
+  stop("setCPOId for object not defined.")
+}
+
+### Printing
+
+#' @export
+print.CPOConstructor = function(x, ...) {
+  args = formals(x)
+  argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
+  argstring = paste(names(args), argvals, collapse=", ", sep="")
+  catf("<<CPO %s(%s)>>", environment(x)$name, argstring)
+}
+
+
+#' @export
+print.CPO = function(x, ...) {
+  pv = getHyperPars(x)
+  argstring = paste(names(pv), sapply(pv, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
+  template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
+  catf(template, getCPOName(x), argstring)
+}
+
+#' @export
+print.DetailedCPO = function(x, ...) {
+  NextMethod("print", x)
+  cat("\n")
+  print(getParamSet(x))
+}
+
+#' @export
+summary.CPOObject = function(object, ...) {
+  if (!"DetailedCPO" %in% object) {
+    class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
+  }
+  object
+}
+
+### Auxiliaries
 
 # deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
 # Note that this is a heuristic for user messages only, the result can not be
@@ -131,43 +177,4 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
   newfun
 }
 
-setCPOId = function(cpo, id) {
-  UseMethod("setCPOId")
-}
 
-setCPOId.default = function(cpo, id) {
-  stop("setCPOId for object not defined.")
-}
-
-
-#' @export
-print.CPOConstructor = function(x, ...) {
-  args = formals(x)
-  argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
-  argstring = paste(names(args), argvals, collapse=", ", sep="")
-  catf("<<CPO %s(%s)>>", environment(x)$name, argstring)
-}
-
-
-#' @export
-print.CPO = function(x, ...) {
-  pv = getHyperPars(x)
-  argstring = paste(names(pv), sapply(pv, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
-  template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
-  catf(template, getCPOName(x), argstring)
-}
-
-#' @export
-print.DetailedCPO = function(x, ...) {
-  NextMethod("print", x)
-  cat("\n")
-  print(getParamSet(x))
-}
-
-#' @export
-summary.CPOObject = function(object, ...) {
-  if (!"DetailedCPO" %in% object) {
-    class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
-  }
-  object
-}
