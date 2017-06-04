@@ -37,7 +37,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
       assertString(args$id)
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
-    cpo = makeS3Obj(c("CPOObject", "CPO"),
+    cpo = makeS3Obj(c("CPOObject", "CPOPrimitive", "CPO"),
       name = name,
       id = NULL,
       bare.par.names = names(par.set$pars),
@@ -48,5 +48,32 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
+}
+
+concatTrafoCPOObject = function(fun1, fun2) {
+
+}
+
+concatRetrafoCPOObject = function(fun1, fun2) {
+
+}
+
+#' @export
+`%>>%.CPOObject` = function(cpo1, cpo2) {
+  assertClass(cpo2, "CPOObject")
+  samenames = intersect(names(cpo1$par.set$pars), names(cpo2$par.set$pars))
+  if (length(samenames)) {
+    plur = length(samenames) > 1
+    stopf("Parameter%s %s occur%s in both %s and %s\n%s", ifelse(plur, "s", ""),
+      paste0('"', samenames, '"', collapse=", "), ifelse(plur, "", "s"), cpo1$name, cpo2$name,
+      "Use the id parameter when constructing, or setCPOId, to prevent name collisions.")
+  }
+  makeS3Obj(c("CPOObject", "CPO"),
+    name = paste(cpo1$name, cpo2$name, sep=" >> "),
+    bare.par.names = c(cpo1$bare.par.names, cpo2$bare.par.names),
+    par.set = c(cpo1$par.set, cpo2$par.set),
+    par.vals = c(cpo1$par.vals, cpo2$par.vals),
+    trafo = concatTrafoCPOObject(cpo1$trafo, cpo2$trafo),
+    retrafo = concatRetrafoCPOObject(cpo1$retrafo, cpo2$retrafo))
 }
 

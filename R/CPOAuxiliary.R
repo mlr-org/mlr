@@ -2,9 +2,21 @@
 #' CPO Composition
 #'
 #' @export
-`%>>%.default` = function(cpo1, cpo2) {
-  stopf("%>>% not defined for objects of class c(%s)", paste0('"', class(cpo1), '"', collapse=", "))
+`%>>%` = function(cpo1, cpo2) {
+  UseMethod("%>>%")
 }
+
+#' @export
+`%>>%.default` = function(cpo1, cpo2) {
+  stopf("%%>>%% not defined for objects of class c(%s)", paste0('"', class(cpo1), '"', collapse=", "))
+}
+
+#' @export
+`%>>%.CPOConstructor` = function(cpo1, cpo2) {
+  stop("Cannot compose CPO Constructors.")
+}
+
+
 
 # deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
 # Note that this is a heuristic for user messages only, the result can not be
@@ -77,7 +89,6 @@ setCPOId = function(cpo, id) {
   if (!is.null(id)) {
     assertString(id)
   }
-  assertClass(cpo, "CPO")
 
   pasteIdIfNN = function(names) {
     if (is.null(id)) {
@@ -89,7 +100,12 @@ setCPOId = function(cpo, id) {
   par.names = names(cpo$par.set$pars)
   bare.par.vals.names = cpo$bare.par.names[match(names(cpo$par.vals), par.names)]
   names(cpo$par.vals) = pasteIdIfNN(bare.par.vals.names)
-  names(cpo$par.set$pars) = pasteIdIfNN(par.names)
+
+  newparnames = pasteIdIfNN(cpo$bare.par.names)
+  names(cpo$par.set$pars) = newparnames
+  for (n in newparnames) {
+    cpo$par.set$pars[[n]]$id = n
+  }
   cpo$id = id
   cpo
 }
@@ -98,7 +114,8 @@ setCPOId = function(cpo, id) {
 #' @export
 print.CPO = function(x, showid = FALSE, ...) {
   argstring = paste(names(x$par.vals), sapply(x$par.vals, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
-  catf("%s(%s)%s", x$name, argstring, ifelse(is.null(x$id) || !showid, "", paste0(" [id = ", x$id, "]")))
+  template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)%s", "(%s)(%s)%s")
+  catf(template, x$name, argstring, ifelse(is.null(x$id) || !showid, "", paste0(" [id = ", x$id, "]")))
 }
 
 #' @export
