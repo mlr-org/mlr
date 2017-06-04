@@ -106,21 +106,23 @@ setCPOId = function(cpo, id) {
   for (n in newparnames) {
     cpo$par.set$pars[[n]]$id = n
   }
+  # FIXME: need to handle requirement changes
   cpo$id = id
+  cpo$name = collapse(c(cpo$barename, id), sep=".")
   cpo
 }
 
 
 #' @export
-print.CPO = function(x, showid = FALSE, ...) {
+print.CPO = function(x, ...) {
   argstring = paste(names(x$par.vals), sapply(x$par.vals, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
-  template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)%s", "(%s)(%s)%s")
-  catf(template, x$name, argstring, ifelse(is.null(x$id) || !showid, "", paste0(" [id = ", x$id, "]")))
+  template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
+  catf(template, x$name, argstring)
 }
 
 #' @export
 print.DetailedCPO = function(x, ...) {
-  NextMethod("print", x, showid = TRUE)
+  NextMethod("print", x)
   cat("\n")
   print(x$par.set)
 }
