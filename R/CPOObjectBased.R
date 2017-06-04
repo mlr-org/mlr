@@ -38,7 +38,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
       assertString(args$id)
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
-    cpo = makeS3Obj(c("CPOObject", "CPOPrimitive", "CPO"),
+    cpo = makeS3Obj(c("CPOObject", "CPOObjectPrimitive", "CPO"),
       barename = name,
       name = name,
       id = NULL,
@@ -140,4 +140,57 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
   args = .learner$par.vals
   .newdata = callCPORetrafo(cpo, args, .newdata, .model$learner.model$control)
   NextMethod(.newdata = .newdata)
+}
+
+
+
+
+#' @export
+print.CPOObject = function(x, ...) {
+  argstring = paste(names(x$par.vals), sapply(x$par.vals, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
+  template = ifelse("CPOObjectPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
+  catf(template, x$name, argstring)
+}
+
+#' @export
+print.DetailedCPOObject = function(x, ...) {
+  NextMethod("print", x)
+  cat("\n")
+  print(x$par.set)
+}
+
+#' @export
+summary.CPOObject = function(object, ...) {
+  if (!"DetailedCPOObject" %in% object) {
+    class(object) = c(head(class(object), -1), "DetailedCPOObject", "CPO")
+  }
+  object
+}
+
+
+setCPOId.CPOObject = function(cpo, id) {
+  if (!is.null(id)) {
+    assertString(id)
+  }
+
+  pasteIdIfNN = function(names) {
+    if (is.null(id)) {
+      names
+    } else {
+      paste(id, names, sep=".")
+    }
+  }
+  par.names = names(cpo$par.set$pars)
+  bare.par.vals.names = cpo$bare.par.names[match(names(cpo$par.vals), par.names)]
+  names(cpo$par.vals) = pasteIdIfNN(bare.par.vals.names)
+
+  newparnames = pasteIdIfNN(cpo$bare.par.names)
+  names(cpo$par.set$pars) = newparnames
+  for (n in newparnames) {
+    cpo$par.set$pars[[n]]$id = n
+  }
+  # FIXME: need to handle requirement changes
+  cpo$id = id
+  cpo$name = collapse(c(cpo$barename, id), sep=".")
+  cpo
 }
