@@ -60,7 +60,7 @@ makeRLearner.classif.mxff = function() {
         requires = quote(optimizer == "rmsprop")),
       makeNumericLearnerParam(id = "momentum", default = 0, requires = quote(optimizer == "sgd"))
     ),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
     name = "Feedforward Neural Network",
     short.name = "mxff",
@@ -133,5 +133,9 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
     levels(p) = .model$task.desc$class.levels
     return(p)
   }
-  # if (.learner$predict.type == "prob")
+  if (.learner$predict.type == "prob") {
+    p = t(p)
+    colnames(p) = .model$task.desc$class.levels
+    return(p)
+  }
 }
