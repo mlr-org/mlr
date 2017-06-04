@@ -10,7 +10,7 @@
 
 #' @export
 `%>>%.default` = function(cpo1, cpo2) {
-  stopf("%%>>%% not defined for objects of class c(%s)", paste0('"', class(cpo1), '"', collapse=", "))
+  stopf("%%>>%% not defined for objects of class c(%s)", paste0('"', class(cpo1), '"', collapse = ", "))
 }
 
 #' @export
@@ -27,7 +27,7 @@
     # wrap around learner
     attachCPO(cpo1, obj2)
   } else {
-    stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(obj2), '"', collapse=", "))
+    stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(obj2), '"', collapse = ", "))
   }
 }
 
@@ -67,7 +67,7 @@ setCPOId.default = function(cpo, id) {
 print.CPOConstructor = function(x, ...) {
   args = formals(x)
   argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
-  argstring = paste(names(args), argvals, collapse=", ", sep="")
+  argstring = paste(names(args), argvals, collapse = ", ", sep = "")
   catf("<<CPO %s(%s)>>", environment(x)$name, argstring)
 }
 
@@ -75,7 +75,7 @@ print.CPOConstructor = function(x, ...) {
 #' @export
 print.CPO = function(x, ...) {
   pv = getHyperPars(x)
-  argstring = paste(names(pv), sapply(pv, deparseJoin, sep="\n"), sep=" = ", collapse=", ")
+  argstring = paste(names(pv), sapply(pv, deparseJoin, sep = "\n"), sep = " = ", collapse = ", ")
   template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
   catf(template, getCPOName(x), argstring)
 }
@@ -117,7 +117,7 @@ parameterClashAssert = function(obj1, obj2, name1, name2) {
   if (length(samenames)) {
     plur = length(samenames) > 1
     stopf("Parameter%s %s occur%s in both %s and %s\n%s", ifelse(plur, "s", ""),
-      paste0('"', samenames, '"', collapse=", "), ifelse(plur, "", "s"), name1, name2,
+      paste0('"', samenames, '"', collapse = ", "), ifelse(plur, "", "s"), name1, name2,
       "Use the id parameter when constructing, or setCPOId, to prevent name collisions.")
   }
 }
@@ -131,11 +131,11 @@ noMissingAssert = function(paramlist) {
 }
 
 namesPresentAssert = function(present, needed, name) {
-  missingPars = setdiff(needed, present)
-  if (length(missingPars)) {
-    plur = length(missingPars) > 1
+  missing.pars = setdiff(needed, present)
+  if (length(missing.pars)) {
+    plur = length(missing.pars) > 1
     stopf("Parameter%s %s of CPO %s %s missing\n%s", ifelse(plur, "s", ""),
-      collapse(missingPars, sep = ", "), name, ifelse(plur, "are", "is"),
+      collapse(missing.pars, sep = ", "), name, ifelse(plur, "are", "is"),
       "Either give it during construction, or with setHyperPars.")
   }
 }

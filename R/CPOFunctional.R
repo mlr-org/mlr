@@ -7,9 +7,9 @@ makeCPOFunctional = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
-  reservedParams = c("data", "target", "id", "cpo.name")
-  if (any(names(par.set$pars) %in% reservedParams)) {
-    stopf("Parameters %s are reserved", collapse(reservedParams, ", "))
+  reserved.params = c("data", "target", "id", "cpo.name")
+  if (any(names(par.set$pars) %in% reserved.params)) {
+    stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
   if (is.null(par.vals)) {
     par.vals = getParamSetDefaults(par.set)
@@ -38,13 +38,8 @@ makeCPOFunctional = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo
     par.set = par.set  # get par.set into current env
     outerTrafo = function(task, .par.vals) {
       assertClass(task, "Task")
-      missingPars = setdiff(names(par.set$pars), names(.par.vals))
-      if (length(missingPars)) {
-        plur = length(missingPars) > 1
-        stopf("Parameter%s %s of CPO %s %s missing\n%s", ifelse(plur, "s", ""),
-              collapse(missingPars, sep = ", "), cpo.name, ifelse(plur, "are", "is"),
-              "Either give it during construction, or with setHyperPars.")
-      }
+      namesPresentAssert(names(.par.vals), names(par.set$pars), cpo.name)
+
       args = .par.vals[names(par.set$pars)]
 
       args$data = getTaskData(task)
@@ -85,7 +80,7 @@ makeCPOFunctional = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo
     attr(outerTrafo, "name") = cpo.name
     attr(outerTrafo, "barename") = cpo.name
     attr(outerTrafo, "id") = NULL
-    outerTrafo = addClasses(outerTrafo, c("CPOFunctional", "CPOFunctionalPrimitive", "CPO"))
+    outerTrafo = addClasses(outerTrafo, c("CPOFunctional", "CPOFunctionalPrimitive", "CPO"))  # nolint
     setCPOId(outerTrafo, args$id)
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOFunctionalConstructor", "CPOConstructor"))
@@ -109,15 +104,15 @@ composeCPO.CPOFunctional = function(cpo1, cpo2) {
       setHyperPars(cpo1, par.vals = .par.vals[intersect(names(.par.vals), pv1names)])(task))
   }
   formals(outerTrafo) = as.pairlist(list(task = substitute(), .par.vals = c(getHyperPars(cpo1), getHyperPars(cpo2))))
-  attr(outerTrafo, "name") = paste(attr(cpo1, "name"), attr(cpo2, "name"), sep=" >> ")
-  attr(outerTrafo, "barename") = paste(attr(cpo2, "barename"), attr(cpo1, "barename"), sep=".")
+  attr(outerTrafo, "name") = paste(attr(cpo1, "name"), attr(cpo2, "name"), sep = " >> ")
+  attr(outerTrafo, "barename") = paste(attr(cpo2, "barename"), attr(cpo1, "barename"), sep = ".")
   addClasses(outerTrafo, c("CPOFunctional", "CPO"))
 }
 
 #' @export
 attachCPO.CPOFunctional = function(cpo, learner) {
   learner = checkLearner(learner)
-  id = paste(learner$id, attr(cpo, "barename"), sep=".")
+  id = paste(learner$id, attr(cpo, "barename"), sep = ".")
   # makeBaseWrapper checks for parameter name clash, but gives
   # less informative error message
   parameterClashAssert(cpo, learner, attr(cpo, "name"), learner$name)
@@ -155,7 +150,7 @@ setCPOId.CPOFunctional = function(cpo, id) {
     stop("Cannot set ID of compound CPO.")
   }
   attr(cpo, "id") = id
-  attr(cpo, "name") = collapse(c(attr(cpo, "barename"), id), sep=".")
+  attr(cpo, "name") = collapse(c(attr(cpo, "barename"), id), sep = ".")
   cpo
 }
 
@@ -207,7 +202,7 @@ setHyperPars2.CPOFunctional = function(learner, par.vals = list()) {
 removeHyperPars.CPOFunctionalLearner = function(learner, ids) {
   i = intersect(names(learner$par.vals), ids)
   if (length(i) > 0) {
-    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep=", "))
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
   }
   learner$next.learner = removeHyperPars(learner$next.learner, ids)
   learner

@@ -7,9 +7,9 @@ makeCPOObject = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.tra
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
-  reservedParams = c("cpo.name", "data", "target", "control", "id")
-  if (any(names(par.set$pars) %in% reservedParams)) {
-    stopf("Parameters %s are reserved", collapse(reservedParams, ", "))
+  reserved.params = c("cpo.name", "data", "target", "control", "id")
+  if (any(names(par.set$pars) %in% reserved.params)) {
+    stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
   if (is.null(par.vals)) {
     par.vals = getParamSetDefaults(par.set)
@@ -64,8 +64,8 @@ composeCPO.CPOObject = function(cpo1, cpo2) {
   parameterClashAssert(cpo1, cpo2, cpo1$name, cpo2$name)
 
   makeS3Obj(c("CPOObject", "CPO"),
-    barename = paste(cpo2$barename, cpo1$barename, sep="."),
-    name = paste(cpo1$name, cpo2$name, sep=" >> "),
+    barename = paste(cpo2$barename, cpo1$barename, sep = "."),
+    name = paste(cpo1$name, cpo2$name, sep = " >> "),
     bare.par.names = c(names(cpo1$par.set$pars), names(cpo2$par.set$pars)),
     par.set = c(cpo1$par.set, cpo2$par.set),
     par.vals = c(cpo1$par.vals, cpo2$par.vals),
@@ -87,7 +87,7 @@ composeCPO.CPOObject = function(cpo1, cpo2) {
 #' @export
 attachCPO.CPOObject = function(cpo, learner) {
   learner = checkLearner(learner)
-  id = paste(learner$id, cpo$barename, sep=".")
+  id = paste(learner$id, cpo$barename, sep = ".")
   # makeBaseWrapper checks for parameter name clash, but gives
   # less informative error message
   parameterClashAssert(cpo, learner, cpo$name, learner$name)
@@ -129,7 +129,7 @@ setCPOId.CPOObject = function(cpo, id) {
     if (is.null(id)) {
       names
     } else {
-      paste(id, names, sep=".")
+      paste(id, names, sep = ".")
     }
   }
   par.names = names(cpo$par.set$pars)
@@ -143,7 +143,7 @@ setCPOId.CPOObject = function(cpo, id) {
   }
   # FIXME: need to handle requirement changes
   cpo$id = id
-  cpo$name = collapse(c(cpo$barename, id), sep=".")
+  cpo$name = collapse(c(cpo$barename, id), sep = ".")
   cpo
 }
 
@@ -172,7 +172,7 @@ setHyperPars2.CPOObject = function(learner, par.vals = list()) {
 removeHyperPars.CPOObjectLearner = function(learner, ids) {
   i = intersect(names(learner$par.vals), ids)
   if (length(i) > 0) {
-    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep=", "))
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
   }
   learner$next.learner = removeHyperPars(learner$next.learner, ids)
   learner
