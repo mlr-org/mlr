@@ -67,4 +67,47 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
   newfun
 }
 
-    
+
+setCPOId = function(cpo, id) {
+  if (!is.null(id)) {
+    assertString(id)
+  }
+  assertClass(cpo, "CPO")
+
+  pasteIdIfNN = function(names) {
+    if (is.null(id)) {
+      names
+    } else {
+      paste(id, names, sep=".")
+    }
+  }
+  par.names = names(cpo$par.set$pars)
+  bare.par.vals.names = cpo$bare.par.names[match(names(cpo$par.vals), par.names)]
+  names(cpo$par.vals) = pasteIdIfNN(bare.par.vals.names)
+  names(cpo$par.set$pars) = pasteIdIfNN(par.names)
+  cpo$id = id
+  cpo
+}
+
+
+#' @export
+print.CPO = function(x, showid = FALSE, ...) {
+
+  argstring = paste(names(x$par.vals), x$par.vals, sep=" = ", collapse=", ")
+  catf("%s(%s)%s", x$name, argstring, ifelse(is.null(x$id) || !showid, "", paste0("[id ", x$id, "]")))
+}
+
+#' @export
+print.DetailedCPO = function(x, ...) {
+  showid = TRUE
+  NextMethod()
+  print(x$par.set)
+}
+
+#' @export
+summary.CPO = function(object, ...) {
+  if (!"DetailedCPO" %in% object) {
+    class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
+  }
+  object
+}
