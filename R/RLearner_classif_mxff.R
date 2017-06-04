@@ -123,7 +123,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
   x = data.matrix(.newdata)
-  p = predict(.model$learner.model, X = x)
+  p = predict(.model$learner.model, X = x, array.layout = .model$learner$par.vals$array.layout)
   if (.learner$predict.type == "response") {
     p = apply(p, 2, function(i) {
       w = which.max(i)
