@@ -2,12 +2,12 @@
 ### Creation
 
 #' @export
-makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, cpo.retrafo) {
-  assertString(name)
+makeCPOObject = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, cpo.retrafo) {
+  assertString(cpo.name)
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
-  reservedParams = c("data", "target", "control", "id")
+  reservedParams = c("cpo.name", "data", "target", "control", "id")
   if (any(names(par.set$pars) %in% reservedParams)) {
     stopf("Parameters %s are reserved", collapse(reservedParams, ", "))
   }
@@ -41,8 +41,8 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
     cpo = makeS3Obj(c("CPOObject", "CPOPrimitive", "CPO"),
-      barename = name,
-      name = name,
+      barename = cpo.name,
+      name = cpo.name,
       id = NULL,
       bare.par.names = names(par.set$pars),
       par.set = par.set,
@@ -198,6 +198,7 @@ assertRetrafoResult = function(result, name) {
 # filter args for the arguments relevant for cpo
 # then add whatever is in '...'.
 subsetCPOArgs = function(cpo, args, ...) {
+  namesPresentAssert(names(args), names(cpo$par.set$pars), cpo$name)
   args = args[names(cpo$par.set$pars)]
   names(args) = cpo$bare.par.names
   insert(args, list(...))

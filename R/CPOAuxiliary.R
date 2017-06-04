@@ -122,6 +122,24 @@ parameterClashAssert = function(obj1, obj2, name1, name2) {
   }
 }
 
+noMissingAssert = function(paramlist) {
+  lapply(names(paramlist), function(x) {
+    if (identical(paramlist[[x]], substitute())) {
+      stopf("Parameter %s missing, with no default.", x)
+    }
+  })
+}
+
+namesPresentAssert = function(present, needed, name) {
+  missingPars = setdiff(needed, present)
+  if (length(missingPars)) {
+    plur = length(missingPars) > 1
+    stopf("Parameter%s %s of CPO %s %s missing\n%s", ifelse(plur, "s", ""),
+      collapse(missingPars, sep = ", "), name, ifelse(plur, "are", "is"),
+      "Either give it during construction, or with setHyperPars.")
+  }
+}
+
 makeFunction = function(expr, required.arglist, env = parent.frame()) {
   if (is.recursive(expr) && identical(expr[[1]], quote(`{`))) {
     # we have a headless list of expressions
