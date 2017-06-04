@@ -8,9 +8,8 @@
 #' @docType data
 NULL
 
-#' @title Artificial oneclass toy task.
+#' Artificial oneclass toy task.
 #'
-#' @description
 #' Contains the task (\code{oneclass2d.task}).
 #'
 #' The data for this class has two feature variables (V1, V2)

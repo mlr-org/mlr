@@ -6,7 +6,8 @@
 \title{Artificial oneclass toy task.}
 \description{
 Contains the task (\code{oneclass2d.task}).
-
+}
+\details{
 The data for this class has two feature variables (V1, V2)
 and is simulated with 1000 normal observations and 50 anomalous observations.
 The features of the normal class were drawn from a multivariate normal distribution with zero mean
