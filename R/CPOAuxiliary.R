@@ -58,6 +58,18 @@ getParamSetDefaults = function(ps) {
   lapply(ps$pars[vlapply(ps$pars, function(x) x$has.default)], function(x) x$default)
 }
 
+# check that ParamSets  ps1 and ps2 have distinct names; if not, give meaningful
+# error message, referring to the objects by name1 and name2.
+parameterClashAssert = function(ps1, ps2, name1, name2) {
+  samenames = intersect(names(ps1$pars), names(ps2$pars))
+  if (length(samenames)) {
+    plur = length(samenames) > 1
+    stopf("Parameter%s %s occur%s in both %s and %s\n%s", ifelse(plur, "s", ""),
+      paste0('"', samenames, '"', collapse=", "), ifelse(plur, "", "s"), name1, name2,
+      "Use the id parameter when constructing, or setCPOId, to prevent name collisions.")
+  }
+}
+
 makeFunction = function(expr, required.arglist, env = parent.frame()) {
   if (is.recursive(expr) && identical(expr[[1]], quote(`{`))) {
     # we have a headless list of expressions

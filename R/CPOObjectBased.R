@@ -5,7 +5,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
-  reservedParams = c("data", "control", "id")
+  reservedParams = c("data", "target", "control", "id")
   if (any(names(par.set$pars) %in% reservedParams)) {
     stopf("Parameters %s are reserved", collapse(reservedParams, ", "))
   }
@@ -19,6 +19,7 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
 
   required.arglist.trafo = funargs
   required.arglist.trafo$data = substitute()
+  required.arglist.trafo$target = substitute()
   cpo.trafo = makeFunction(substitute(cpo.trafo), required.arglist.trafo, env = parent.frame())
 
   required.arglist.retrafo = funargs
@@ -51,51 +52,92 @@ makeCPOObject = function(name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, 
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
 }
 
+assertTrafoResult = function(result, name) {
+  if (!is.list(result) || length(result) != 2 || length(intersect(names(result), c("data", "control"))) != 2 ||
+      !is.data.frame(result$data)) {
+    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return list(data=[data.frame], control= ).", name)
+  }
+}
+
+assertRetrafoResult = function(result, name) {
+  if (!is.data.frame(result)) {
+    stopf("CPO %s cpo.retrafo gave bad result\ncpo.retrafo must return a data.frame.", name)
+  }
+}
+
+# filter args for the arguments relevant for cpo
+# then add whatever is in '...'.
+subsetCPOArgs = function(cpo, args, ...) {
+  args = args[names(cpo$par.set$pars)]
+  names(args) = cpo$bare.par.names
+  insert(args, list(...))
+}
+
+callCPOTrafo = function(cpo, args, data, target) {
+  result = do.call(cpo$trafo, subsetCPOArgs(cpo, args, data = data, target = target))
+  assertTrafoResult(result, cpo$name)
+  result
+}
+
+callCPORetrafo = function(cpo, args, data, control) {
+  result = do.call(cpo$retrafo, subsetCPOArgs(cpo, args, data = data, control = control))
+  assertRetrafoResult(result, cpo$name)
+  result
+}
+
+#' @export
 composeCPO.CPOObject = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOObject")
-  samenames = intersect(names(cpo1$par.set$pars), names(cpo2$par.set$pars))
-  if (length(samenames)) {
-    plur = length(samenames) > 1
-    stopf("Parameter%s %s occur%s in both %s and %s\n%s", ifelse(plur, "s", ""),
-      paste0('"', samenames, '"', collapse=", "), ifelse(plur, "", "s"), cpo1$name, cpo2$name,
-      "Use the id parameter when constructing, or setCPOId, to prevent name collisions.")
-  }
-
-  # filter args for the arguments relevant for cpo
-  # then add whatever is in '...'.
-  getArgs = function(cpo, args, ...) {
-    args = args[names(cpo$par.set$pars)]
-    names(args) = cpo$bare.par.names
-    insert(args, list(...))
-  }
-
-  concatTrafo = function(fun1, fun2) {
-    function(data, ...) {
-      args = list(...)
-      result = do.call(fun1, getArgs(cpo1, args, data = data))
-      result2 = do.call(fun2, getArgs(cpo2, args, data = result$data))
-      list(data = result2$data, control = list(fun1 = result$control, fun2 = result2$control))
-    }
-  }
-
-  concatRetrafo = function(fun1, fun2) {
-    function(data, control, ...) {
-      args = list(...)
-      result = do.call(fun1, getArgs(cpo1, args, data = data, control = control$fun1))
-      do.call(fun2, getArgs(cpo2, args, data = result, control = control$fun2))
-    }
-  }
+  parameterClashAssert(cpo1$par.set, cpo2$par.set, cpo1$name, cpo2$name)
 
   makeS3Obj(c("CPOObject", "CPO"),
+    barename = paste(cpo2$barename, cpo1$barename, sep="."),
     name = paste(cpo1$name, cpo2$name, sep=" >> "),
     bare.par.names = c(names(cpo1$par.set$pars), names(cpo2$par.set$pars)),
     par.set = c(cpo1$par.set, cpo2$par.set),
     par.vals = c(cpo1$par.vals, cpo2$par.vals),
-    trafo = concatTrafo(cpo1$trafo, cpo2$trafo),
-    retrafo = concatRetrafo(cpo1$retrafo, cpo2$retrafo))
+    trafo = function(data, target, ...) {
+      args = list(...)
+      result = callCPOTrafo(cpo1, args, data, target)
+      result2 = callCPOTrafo(cpo2, args, result$data, target)
+      list(data = result2$data, control = list(fun1 = result$control, fun2 = result2$control))
+    },
+    retrafo = function(data, control, ...) {
+      args = list(...)
+      result = callCPORetrafo(cpo1, args, data, control$fun1)
+      finalres = callCPORetrafo(cpo2, args, result, control$fun2)
+      finalres
+    })
 }
 
+#' @export
 attachCPO.CPOObject = function(cpo, learner) {
+  learner = checkLearner(learner)
+  id = paste(learner$id, cpo$barename, sep=".")
+  # makeBaseWrapper checks for parameter name clash, but gives
+  # less informative error message
+  parameterClashAssert(cpo$par.set, getParamSet(learner), cpo$name, learner$name)
+  wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
+    cpo$par.set, cpo$par.vals, "CPOObjectLearner", "CPOObjectModel")
+  wlearner$cpo = cpo
+  wlearner
+}
 
+#' @export
+trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
+  cpo = .learner$cpo
+  args = .learner$par.vals
+  transformed = callCPOTrafo(cpo, args, getTaskData(.task, .subset), getTaskTargetNames(.task))
+  .task = changeData(.task, transformed$data)
+  model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectModel")
+  model$control = transformed$control
+  model
+}
 
+#' @export
+predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
+  cpo = .learner$cpo
+  args = .learner$par.vals
+  .newdata = callCPORetrafo(cpo, args, .newdata, .model$learner.model$control)
+  NextMethod(.newdata = .newdata)
 }

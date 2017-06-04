@@ -2,10 +2,10 @@
 % Please edit documentation in R/CPOAuxiliary.R
 \name{\%>>\%}
 \alias{\%>>\%}
-\title{CPO Composition}
+\title{CPO Composition / Attachment operator}
 \usage{
 cpo1 \%>>\% cpo2
 }
 \description{
-CPO Composition
+CPO Composition / Attachment operator
 }
