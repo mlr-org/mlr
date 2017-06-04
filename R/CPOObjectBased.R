@@ -24,6 +24,8 @@ makeCPOObject = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.tra
   required.arglist.trafo$target = substitute()
   cpo.trafo = makeFunction(substitute(cpo.trafo), required.arglist.trafo, env = parent.frame())
 
+  cpo.trafo = captureEnvWrapper(cpo.trafo)
+
   required.arglist.retrafo = funargs
   required.arglist.retrafo$data = substitute()
   required.arglist.retrafo$control = substitute()
@@ -67,12 +69,13 @@ composeCPO.CPOObject = function(cpo1, cpo2) {
     bare.par.names = c(names(cpo1$par.set$pars), names(cpo2$par.set$pars)),
     par.set = c(cpo1$par.set, cpo2$par.set),
     par.vals = c(cpo1$par.vals, cpo2$par.vals),
-    trafo = function(data, target, ...) {
+    trafo = captureEnvWrapper(function(data, target, ...) {
       args = list(...)
       result = callCPOTrafo(cpo1, args, data, target)
       result2 = callCPOTrafo(cpo2, args, result$data, target)
-      list(data = result2$data, control = list(fun1 = result$control, fun2 = result2$control))
-    },
+      control = list(fun1 = result$control, fun2 = result2$control)
+      result2$data
+    }),
     retrafo = function(data, control, ...) {
       args = list(...)
       result = callCPORetrafo(cpo1, args, data, control$fun1)
@@ -182,10 +185,17 @@ getCPOName.CPOObject = function(cpo) {
 
 ### Auxiliaries
 
+captureEnvWrapper = function(fun) {
+  envcapture = quote({ assign(".ENV", tail(sys.frames(), 1)[[1]], envir = environment(sys.function())) ; 0 })
+  envcapture[[3]] = body(fun)
+  body(fun) = envcapture
+  environment(fun) = new.env(parent = environment(fun))
+  fun
+}
+
 assertTrafoResult = function(result, name) {
-  if (!is.list(result) || length(result) != 2 || length(intersect(names(result), c("data", "control"))) != 2 ||
-      !is.data.frame(result$data)) {
-    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return list(data=[data.frame], control= ).", name)
+  if (!is.data.frame(result)) {
+    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame.", name)
   }
 }
 
@@ -207,6 +217,12 @@ subsetCPOArgs = function(cpo, args, ...) {
 callCPOTrafo = function(cpo, args, data, target) {
   result = do.call(cpo$trafo, subsetCPOArgs(cpo, args, data = data, target = target))
   assertTrafoResult(result, cpo$name)
+  trafoenv = environment(cpo$trafo)$.ENV
+  assign(".ENV", NULL, envir = environment(cpo$trafo))
+  if (!"control" %in% ls(trafoenv)) {
+    stopf("CPO %s did not create a 'control' object.", cpo$name)
+  }
+  result = list(data = result, control = trafoenv$control)
   result
 }
 

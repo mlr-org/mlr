@@ -195,4 +195,3 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
   newfun
 }
 
-
