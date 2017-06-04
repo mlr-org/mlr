@@ -49,7 +49,7 @@ setThreshold = function(pred, threshold) {
   p = getPredictionProbabilities(pred, cl = levs)
   # resort so we have same order in threshold and p
   threshold = threshold[levs]
-  if (ttype == "classif") {
+  if (ttype %in% c("oneclass", "classif")) {
     # divide all rows by threshold then get max el
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "/", threshold)
     # 0 / 0 can produce NaNs. For a 0 threshold we always want Inf weight for that class

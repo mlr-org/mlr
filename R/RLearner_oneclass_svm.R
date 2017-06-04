@@ -34,13 +34,17 @@ trainLearner.oneclass.svm = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
+  td = getTaskDesc(.model)
+  label = c(td$positive, td$negative)
   if (.learner$predict.type == "response") {
-    td = getTaskDesc(.model)
     p = predict(.model$learner.model, newdata = .newdata, ...)
-    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
   } else {
     p = predict(.model$learner.model, newdata = .newdata, decision.values = TRUE, ...)
-    attr(p, "decision.values")
+    p = attr(p, "decision.values")
+    p = convertingScoresToProbability(p, parainit = c(1, 0))
+    p = cbind(p, 1-p)
+    colnames(p) = label
   }
   return(p)
 }
