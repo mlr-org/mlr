@@ -18,7 +18,7 @@ makeRLearner.oneclass.svm = function() {
       makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
       makeLogicalVectorLearnerParam(id = "scale", default = TRUE, tunable = TRUE)
     ),
-    properties =  c("oneclass", "numerics", "factors"),
+    properties =  c("oneclass", "numerics", "factors", "prob"),
     note = "'type' is set to 'one-classification'",
     name = "one-class SVM (libsvm)",
     short.name = "svm",
@@ -34,10 +34,14 @@ trainLearner.oneclass.svm = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, newdata = .newdata, ...)
-  td = getTaskDesc(.model)
-  if (.learner$predict.type == "response")
+  if (.learner$predict.type == "response") {
+    td = getTaskDesc(.model)
+    p = predict(.model$learner.model, newdata = .newdata, ...)
     p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+  } else {
+    p = predict(.model$learner.model, newdata = .newdata, decision.values = TRUE, ...)
+    attr(p, "decision.values")
+  }
   return(p)
 }
 

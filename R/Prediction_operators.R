@@ -28,7 +28,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
-  if (ttype %nin% c("classif", "cluster", "multilabel"))
+  if (ttype %nin% c("oneclass", "classif", "cluster", "multilabel"))
     stop("Prediction was not generated from a ClassifTask, MultilabelTask or ClusterTask!")
   if (missing(cl)) {
     if (ttype == "classif") {
@@ -38,6 +38,8 @@ getPredictionProbabilities = function(pred, cl) {
         cl = pred$task.desc$class.levels
     } else if (ttype == "multilabel") {
       cl = pred$task.desc$class.levels
+    } else if (ttype == "oneclass") {
+      cl = pred$task.desc$positive
     }
   } else {
     if (ttype == "cluster")
