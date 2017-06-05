@@ -470,7 +470,7 @@ test_that("preprocessing actually changes data", {
   testCPO(cpoMultiplierF, cpoAdderF)
   testCPO(cpoMultiplierO, cpoAdderO)
 
-}
+})
 
 test_that("CPO trafo functions work", {
 
@@ -527,7 +527,7 @@ test_that("CPO trafo functions work", {
 
 test_that("CPO arguments may be missing if requirements allow", {
 
-  cpoc = makeCPOObject("testCPO", a = FALSE: logical, b: integer(, ) [requires = expression(!!a)],
+  cpoc = makeCPOObject("testCPO", a = FALSE: logical, b: integer(, ) [requires = quote(!!a)],
     cpo.trafo = {
       if (!a) {
         expect_true(missing(b))
@@ -545,9 +545,22 @@ test_that("CPO arguments may be missing if requirements allow", {
       data
     })
 
-  train(cpoc() %>>% makeLearner("classif.logreg"), pid.task)
+  t = train(cpoc() %>>% makeLearner("classif.logreg"), pid.task)
+  predict(t, pid.task)
+  expect_error(train(cpoc(a = TRUE) %>>% makeLearner("classif.logreg"), pid.task), "Parameter b .*missing")
+  t = train(cpoc(a = TRUE, b = 1L) %>>% makeLearner("classif.logreg"), pid.task)
+  predict(t, pid.task)
 
-  cpoc = makeCPOFunctional("testCPO", a = FALSE: logical, b: integer(, ) [requires = expression(!!a)],
+  t = train(cpoc(id = "test") %>>% makeLearner("classif.logreg"), pid.task)
+  predict(t, pid.task)
+  expect_error(train(cpoc(a = TRUE, id = "test") %>>% makeLearner("classif.logreg"), pid.task), "Parameter test\\.b .*missing")
+  t = train(cpoc(a = TRUE, b = 1L, id = "test") %>>% makeLearner("classif.logreg"), pid.task)
+  predict(t, pid.task)
+
+  expect_identical(getParamSet(cpoc(a = TRUE, id = "test"))$pars$test.b$requires, quote(!!test.a))
+
+
+  cpoc = makeCPOFunctional("testCPO", a = FALSE: logical, b: integer(, ) [requires = quote(!!a)],
     cpo.trafo = {
       if (!a) {
         expect_true(missing(b))
@@ -563,5 +576,9 @@ test_that("CPO arguments may be missing if requirements allow", {
   expect_error(train(cpoc(a = TRUE) %>>% makeLearner("classif.logreg"), pid.task), "Parameter b .*missing")
   train(cpoc(a = TRUE, b = 1L) %>>% makeLearner("classif.logreg"), pid.task)
 
+  train(cpoc(id = "test") %>>% makeLearner("classif.logreg"), pid.task)
+  expect_error(train(cpoc(a = TRUE, id = "test") %>>% makeLearner("classif.logreg"), pid.task), "Parameter b .*missing")
+  train(cpoc(a = TRUE, b = 1L, id = "test") %>>% makeLearner("classif.logreg"), pid.task)
 
+  expect_identical(getParamSet(cpoc(a = TRUE, id = "test"))$pars$test.b$requires, quote(!!test.a))
 })

@@ -169,12 +169,16 @@ setCPOId.CPOFunctional = function(cpo, id) {
 getParamSet.CPOFunctional = function(x) {
   ps = environment(x)$par.set
   id = attr(x, "id")
-  if (!is.null(id)) {
-    if (length(ps$pars)) {
-      names(ps$pars) = paste(id, names(ps$pars), sep = ".")
-    }
+  if (!is.null(id) && length(ps$pars)) {
+    nametranslation = paste(id, names(ps$pars), sep = ".")
+    names(nametranslation) = names(ps$pars)
+    names(ps$pars) = nametranslation
+
     ps$pars = lapply(ps$pars, function(x) {
       x$id = paste(id, x$id, sep = ".")
+      if (!is.null(x$requires)) {
+        x$requires = renameNonfunctionNames(x$requires, nametranslation)
+      }
       x
     })
   }

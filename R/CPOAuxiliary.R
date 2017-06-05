@@ -168,6 +168,29 @@ checkParamsFeasible = function(par.set, par.vals) {
   }
 }
 
+renameNonfunctionNames = function(expr, translate) {
+  startfrom = 1
+  if (is.call(expr)) {
+    if (!is.recursive(expr)) {
+      return(expr)
+    }
+    startfrom = 2
+    if (is.recursive(expr[[1]])) {
+      startfrom = 1
+    } else if (length(expr) == 1) {
+      return(expr)
+    }
+  }
+  if (is.recursive(expr)) {
+    for (idx in seq(startfrom, length(expr))) {
+      expr[[idx]] = renameNonfunctionNames(expr[[idx]], translate)
+    }
+  } else if (is.symbol(expr) && as.character(expr) %in% names(translate)) {
+    expr = as.symbol(translate[[as.character(expr)]])
+  }
+  return(expr)
+}
+
 
 makeFunction = function(expr, required.arglist, env = parent.frame()) {
   if (is.recursive(expr) && identical(expr[[1]], quote(`{`))) {

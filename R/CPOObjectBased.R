@@ -133,6 +133,7 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
 ### IDs, ParamSets
 
 setCPOId.CPOObject = function(cpo, id) {
+
   if (!is.null(id)) {
     assertString(id)
   }
@@ -155,11 +156,17 @@ setCPOId.CPOObject = function(cpo, id) {
   if (length(cpo$bare.par.names)) {
     newparnames = pasteIdIfNN(cpo$bare.par.names)
     names(cpo$par.set$pars) = newparnames
+
+    names(newparnames) = par.names  # translation table: old names -> new names
     for (n in newparnames) {
       cpo$par.set$pars[[n]]$id = n
+      if (!is.null(cpo$par.set$pars[[n]]$requires)) {
+        cpo$par.set$pars[[n]]$requires = renameNonfunctionNames(
+            cpo$par.set$pars[[n]]$requires, newparnames)
+      }
     }
   }
-  # FIXME: need to handle requirement changes
+
   cpo$id = id
   cpo$name = collapse(c(cpo$barename, id), sep = ".")
   cpo

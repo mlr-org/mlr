@@ -281,6 +281,6 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
     constructor.params = insert(constructor.params, parseNumeric(pdeco, ptype, pstring, pss.env))
   }
   constructor.params = insert(constructor.params, additional.settings)
-  do.call(getConstructor(ptype, is.learner, is.vector), constructor.params)
+  do.call(getConstructor(ptype, is.learner, is.vector), constructor.params, quote = TRUE)
 }
 
