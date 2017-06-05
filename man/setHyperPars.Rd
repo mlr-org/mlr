@@ -2,15 +2,14 @@
 % Please edit documentation in R/setHyperPars.R
 \name{setHyperPars}
 \alias{setHyperPars}
-\title{Set the hyperparameters of a learner object or CPO.
-#FIXME: arg_learner_or_cpo}
+\title{Set the hyperparameters of a learner object or a CPO.}
 \usage{
 setHyperPars(learner, ..., par.vals = list())
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)} | \code{\link{CPO}}]\cr
+The learner, or CPO.
+If you pass a string , a learner will be created via \code{\link{makeLearner}}.}
 
 \item{...}{[any]\cr
 Named (hyper)parameters with new setting. Alternatively these can be passed
@@ -24,8 +23,7 @@ Optional list of named (hyper)parameter settings. The arguments in
 [\code{\link{Learner}}].
 }
 \description{
-Set the hyperparameters of a learner object or CPO.
-#FIXME: arg_learner_or_cpo
+Set the hyperparameters of a learner object or a CPO.
 }
 \note{
 If a named (hyper)parameter can't be found for the given learner, the 3
@@ -54,4 +52,11 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setId}}, \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
+
+Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
+  \code{\link{applyCPO}}, \code{\link{attachCPO}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{makeCPOFunctional}},
+  \code{\link{makeCPOObject}}
 }

@@ -6,6 +6,26 @@
 \usage{
 attachCPO(cpo, learner)
 }
+\arguments{
+\item{cpo}{[\code{\link{CPO}}]\cr
+The CPO object}
+
+\item{cpo1}{[\code{\link{Learner}}]\cr
+The learner.}
+}
 \description{
-CPO Attachment
+The second argument is a \code{\link{Learner}} and the CPO will be attached to
+this learner. The same operation will be performed during the \dQuote{train} and
+\dQuote{predict} phase; the behaviour during the predict phase may furthermore
+be depend on the training data.
+
+See the preferred \code{\link{\%>>\%}} for more info.
+}
+\seealso{
+Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
+  \code{\link{applyCPO}}, \code{\link{cpoPca}},
+  \code{\link{cpoScale}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
+  \code{\link{makeCPOFunctional}},
+  \code{\link{makeCPOObject}}, \code{\link{setHyperPars}}
 }

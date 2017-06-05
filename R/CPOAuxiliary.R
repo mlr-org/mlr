@@ -1,7 +1,49 @@
+#' @title CPO: Composable Preprocessing Operators
+#'
+#' @family CPO
+#' @name CPO
+NULL
+
 
 ### Generics
 
-#' CPO Composition / Attachment operator
+#' @title CPO Composition / Attachment operator
+#'
+#' @description
+#' This operator \dQuote{pipes} data from the source into the target object.
+#'
+#' If both objects are a \link{CPO} object, they will be composed. A new object,
+#' representing the operation of performing both object's operations in succession,
+#' will be created, which can be handled like a new \link{CPO} object.
+#'
+#' If the left object is a \code{data.frame} or a \code{link{Task}}, the
+#' transformation operation will be applied to this data, and the same resulting
+#' data will be returned.
+#'
+#' If the right object is a \code{\link{Learner}}, the CPO will be attached to
+#' this learner. The same operation will be performed during the \dQuote{train} and
+#' \dQuote{predict} phase; the behaviour during the predict phase may furthermore
+#' be depend on the training data.
+#'
+#' Note that you can not link a \code{data.frame} or \code{\link{Task}} directly
+#' to a \code{\link{Learner}}, since this operation is not algebraically associative
+#' with the composition of CPOs. Use \code{\link{train}} for this.
+#'
+#' @param cpo1 [\code{data.frame} | \code{\link{Task}} | \code{\link{CPO}}]\cr
+#'   The source object.
+#' @param cpo1 [\code{\link{CPO}} | \code{\link{Learner}}]\cr
+#'   The target object.
+#'
+#' @family CPO
+#' @examples
+#' # PCA-rotate pid.task
+#' rotated.pid.task = pid.task %>>% cpoPca()
+#'
+#' # Centering / Scaling *after* PCA
+#' neoPCA = cpoPca(center = FALSE, scale = FALSE, id = "pca") %>>% cpoScale()
+#'
+#' # Attach the above to learner
+#' pcaLogreg = neoPCA %>>% makeLearner("classif.logreg")
 #'
 #' @export
 `%>>%` = function(cpo1, cpo2) {
@@ -57,29 +99,71 @@
   }
 }
 
-
-#' CPO Composition
+#' @title CPO Composition
+#'
+#' @description
+#' The arguments will be composed. A new object,
+#' representing the operation of performing both object's operations in succession,
+#' will be created, which can be handled like a new \link{CPO} object.
+#'
+#' See the preferred \code{\link{\%>>\%}} for more info.
+#'
+#' @param cpo1 [\code{\link{CPO}}]\cr
+#'   The operation to perform first.
+#' @param cpo1 [\code{\link{CPO}}]\cr
+#'   The operation to perform second.
 #'
 #' @export
 composeCPO = function(cpo1, cpo2) {
   UseMethod("composeCPO")
 }
 
-
-#' CPO Attachment
+#' @title CPO Attachment
+#'
+#' @description
+#' The second argument is a \code{\link{Learner}} and the CPO will be attached to
+#' this learner. The same operation will be performed during the \dQuote{train} and
+#' \dQuote{predict} phase; the behaviour during the predict phase may furthermore
+#' be depend on the training data.
+#'
+#' See the preferred \code{\link{\%>>\%}} for more info.
+#'
+#' @param cpo [\code{\link{CPO}}]\cr
+#'   The CPO object
+#' @param cpo1 [\code{\link{Learner}}]\cr
+#'   The learner.
+#'
+#' @family CPO
 #'
 #' @export
 attachCPO = function(cpo, learner) {
   UseMethod("attachCPO")
 }
 
-#' CPO Applicatin
+#' @title CPO Apply
 #'
+#' @description
+#' The given transformation will be applied to the data in the given \code{link{Task}}.
+#'
+#' See the preferred \code{\link{\%>>\%}} for more info.
+#'
+#' @param cpo [\code{\link{CPO}}]\cr
+#'   The CPO representing the operation to perform.
+#' @param cpo1 [\code{\link{Task}}]\cr
+#'   The task to operate on.
+#'
+#' @family CPO
 #' @export
 applyCPO = function(cpo, task) {
   UseMethod("applyCPO")
 }
 
+#' @title Get the CPO object's Name
+#'
+#' @param cpo [\code{\link{CPO}}]\cr
+#'   The CPO object.
+#'
+#' @family CPO
 #' @export
 getCPOName = function(cpo) {
   UseMethod("getCPOName")
@@ -186,7 +270,7 @@ subsetParams = function(par.vals, par.set, name) {
 
 checkParamsFeasible = function(par.set, par.vals) {
   # names(par.vals) must be a subset of names(par.set$pars)
-  oobreaction = getMlrOption("on.par.out.of.bounds")
+  oobreaction = coalesce(getMlrOption("on.par.out.of.bounds"), TRUE)
   if (oobreaction != "quiet") {
     for (n in names(par.vals)) {
       if (!isFeasible(par.set$pars[[n]], par.vals[[n]])) {

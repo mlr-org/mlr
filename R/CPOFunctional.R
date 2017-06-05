@@ -1,6 +1,34 @@
-
+#' @include options.R
 ### Creation
 
+#' @title Create a custom CPO constructor
+#'
+#' @param .cpo.name [\code{character(1)}]\cr
+#'   The name of the resulting CPO constructor / CPO. This is used for identification in output.
+#' @param ...
+#'   Parameters of the CPO, in the format of \code{\link{paramSetSugar}}.
+#' @param .par.set [\code{ParamSet}]\cr
+#'   Optional parameter set. If this is not \code{NULL}, the \dQuote{...} parameters are ignored.
+#' @param .par.vals [\code{list}]\cr
+#'   Named list of default parameter values for the CPO. These are used additionally to the
+#'   parameter default values in \dQuote{...} and \code{.par.set}. It is preferred to use
+#'   these default values, and not \code{.par.vals}.
+#' @param cpo.trafo [\code{language} | \code{function}]\cr
+#'   This can either be a function, just the expressions to perform wrapped in curly braces.
+#'   If this is a function, it must have the parameters \dQuote{data} and \dQuote{target},
+#'   as well as the parameters specified in \dQuote{...} or \dQuote{.par.set}. (Alternatively,
+#'   the function may have a dotdotdot argument). It must return a \dQuote{data.frame} object
+#'   with an attribute \dQuote{retrafo}. This attribute must be a function with the argument
+#'   \dQuote{data} and return another \dQuote{data.frame}.\cr
+#'   If \dQuote{cpo.trafo} is a list of expressions (preferred), it is turned into a function
+#'   by mlr, with the above mentioned criteria.
+#' @family CPO
+#' @examples
+#' noop = makeCPOFunctional("noop", dummy: logical, cpo.trafo = {
+#'   attr(data, "retrafo") = function(data) data
+#'   data
+#' })
+#'
 #' @export
 makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cpo.trafo) {
   # dotted parameter names are necessary to avoid problems with partial argument matching.

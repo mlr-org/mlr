@@ -17,8 +17,7 @@ function's frame.}
 }
 \description{
 The arguments are of the form \code{name = default: type range ^ dimension [settings]}.
-}
-\details{
+
 \dQuote{name} is any valid R identifier name.
 
 \dQuote{= default} may be absent. If present, it determines the 'default' setting
@@ -41,6 +40,7 @@ an exclusive bound, prefix the values with a tilda (\dQuote{~}). For a "numeric"
 indicate an unbounded value which may not be infinite, use ond dot (\dQuote{.}).
 Note that \code{ParamHelpers} makes it impossible to specify values unbounded above and below
 that accept only infinite values with a specified sign.
+
 
 \dQuote{^ dimension} may be absent, resulting in a normal \dQuote{LearnerParam}, or present,
 resulting in a \dQuote{VectorLearnerParam}. Note that a one-dimensional \dQuote{VectorLearnerParam}

@@ -6,6 +6,49 @@
 \usage{
 cpo1 \%>>\% cpo2
 }
+\arguments{
+\item{cpo1}{[\code{data.frame} | \code{\link{Task}} | \code{\link{CPO}}]\cr
+The source object.}
+
+\item{cpo1}{[\code{\link{CPO}} | \code{\link{Learner}}]\cr
+The target object.}
+}
 \description{
-CPO Composition / Attachment operator
+This operator \dQuote{pipes} data from the source into the target object.
+
+If both objects are a \link{CPO} object, they will be composed. A new object,
+representing the operation of performing both object's operations in succession,
+will be created, which can be handled like a new \link{CPO} object.
+
+If the left object is a \code{data.frame} or a \code{link{Task}}, the
+transformation operation will be applied to this data, and the same resulting
+data will be returned.
+
+If the right object is a \code{\link{Learner}}, the CPO will be attached to
+this learner. The same operation will be performed during the \dQuote{train} and
+\dQuote{predict} phase; the behaviour during the predict phase may furthermore
+be depend on the training data.
+
+Note that you can not link a \code{data.frame} or \code{\link{Task}} directly
+to a \code{\link{Learner}}, since this operation is not algebraically associative
+with the composition of CPOs. Use \code{\link{train}} for this.
+}
+\examples{
+# PCA-rotate pid.task
+rotated.pid.task = pid.task \%>>\% cpoPca()
+
+# Centering / Scaling *after* PCA
+neoPCA = cpoPca(center = FALSE, scale = FALSE, id = "pca") \%>>\% cpoScale()
+
+# Attach the above to learner
+pcaLogreg = neoPCA \%>>\% makeLearner("classif.logreg")
+
+}
+\seealso{
+Other CPO: \code{\link{CPO}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{cpoPca}},
+  \code{\link{cpoScale}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
+  \code{\link{makeCPOFunctional}},
+  \code{\link{makeCPOObject}}, \code{\link{setHyperPars}}
 }

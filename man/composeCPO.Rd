@@ -6,6 +6,17 @@
 \usage{
 composeCPO(cpo1, cpo2)
 }
+\arguments{
+\item{cpo1}{[\code{\link{CPO}}]\cr
+The operation to perform first.}
+
+\item{cpo1}{[\code{\link{CPO}}]\cr
+The operation to perform second.}
+}
 \description{
-CPO Composition
+The arguments will be composed. A new object,
+representing the operation of performing both object's operations in succession,
+will be created, which can be handled like a new \link{CPO} object.
+
+See the preferred \code{\link{\%>>\%}} for more info.
 }

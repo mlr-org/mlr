@@ -7,9 +7,9 @@
 getHyperPars(learner, for.fun = c("train", "predict", "both"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)} | \code{\link{CPO}}]\cr
+The learner, or CPO.
+If you pass a string , a learner will be created via \code{\link{makeLearner}}.}
 
 \item{for.fun}{[\code{character(1)}]\cr
 Restrict the returned settings to hyperparameters corresponding to \code{when}
@@ -22,7 +22,6 @@ Default is \code{c("train", "predict", "both")}.}
 }
 \description{
 Retrieves the current hyperparameter settings of a learner or CPO.
-#FIXME: learner_or_cpo template
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
@@ -41,4 +40,11 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
+
+Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
+  \code{\link{applyCPO}}, \code{\link{attachCPO}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOName}},
+  \code{\link{makeCPOFunctional}},
+  \code{\link{makeCPOObject}}, \code{\link{setHyperPars}}
 }

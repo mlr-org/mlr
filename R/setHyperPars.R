@@ -1,6 +1,6 @@
-#' Set the hyperparameters of a learner object or CPO.
-#' #FIXME: arg_learner_or_cpo
-#' @template arg_learner
+#' Set the hyperparameters of a learner object or a CPO.
+#'
+#' @template arg_learner_or_cpo
 #' @param ... [any]\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
 #'   using the \code{par.vals} argument.
@@ -12,6 +12,7 @@
 #' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
 #' @family learner
+#' @family CPO
 #' @importFrom utils adist
 #' @examples
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)

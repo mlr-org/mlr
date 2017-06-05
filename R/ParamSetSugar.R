@@ -1,6 +1,7 @@
 
-#' Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s
+#' @title Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s
 #'
+#' @description
 #' The arguments are of the form \code{name = default: type range ^ dimension [settings]}.
 #'
 #' \dQuote{name} is any valid R identifier name.
