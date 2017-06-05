@@ -10,7 +10,7 @@ cpo1 \%>>\% cpo2
 \item{cpo1}{[\code{data.frame} | \code{\link{Task}} | \code{\link{CPO}}]\cr
 The source object.}
 
-\item{cpo1}{[\code{\link{CPO}} | \code{\link{Learner}}]\cr
+\item{cpo2}{[\code{\link{CPO}} | \code{\link{Learner}}]\cr
 The target object.}
 }
 \description{

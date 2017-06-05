@@ -3,6 +3,7 @@ library("roxygen2")
 
 roxygenise("..")
 
+
 rm(cpotest.parvals)
 
 devtools::load_all("..")
@@ -36,32 +37,10 @@ t = train(mkl(), pid.task)
 p = predict(t, pid.task)
 
 
-cpoPca = makeCPOObject("pca", center = TRUE: logical, scale = TRUE: logical, cpo.trafo = {
-  targetdata = data[target]
-  data[target] = NULL
-  pcr = prcomp(as.matrix(data), center = center, scale. = scale)
-  data = as.data.frame(pcr$x)
-  data[target] = targetdata
-  control = list(rotation = pcr$rotation, center = pcr$center, scale = pcr$scale)
-  data
-}, cpo.retrafo = {
-  as.data.frame(scale(as.matrix(data), center = control$center, scale = control$scale) %*% control$rotation)
-})
-
-cpoScale = makeCPOObject("scale", center = TRUE: logical, scale = TRUE: logical, cpo.trafo = {
-  targetdata = data[target]
-  data[target] = NULL
-  result = scale(as.matrix(data), center = center, scale = scale)
-  data[] = result
-  data[target] = targetdata
-  control = list(center = attr(result, "scaled:center"), scale = attr(result, "scaled:scale"))
-  data
-}, cpo.retrafo = {
-  as.data.frame(scale(as.matrix(data) , center = control$center, scale = control$scale))
-})
-
 
 cpoo = cpoPca()
+
+pid.task %>>% cpoPca
 debugonce(cpoo$trafo)
 
 pid.task %>>% cpoPca()
@@ -72,11 +51,13 @@ debugonce(cpoo$trafo)
 debugonce(cpoo$retrafo)
 debugonce(trainLearner.classif.logreg)
 debugonce(predictLearner.classif.logreg)
-resample(makeLearner("classif.logreg"), pid.task, cv5)
-resample(cpoo %>>% makeLearner("classif.logreg"), pid.task, cv5)
+resample(makeLearner("classif.naiveBayes"), pid.task, cv5)
+resample(cpoPca() %>>% makeLearner("classif.naiveBayes"), pid.task, cv5)
+
+
 
 cpoo = cpoPca()
-t = train(cpoo %>>% makeLearner("classif.logreg"), pid.task)
+t = train(cpoScale() %>>% makeLearner("classif.logreg"), pid.task)
 predict(t, pid.task)
 
 
@@ -88,3 +69,9 @@ df = as.data.frame(t(replicate(1000, rnorm(2) + 10 * rnorm(1))))
 plot(df)
 
 plot(df %>>% cpoPca())
+
+cpo = cpoPca(scale = FALSE)
+
+setHyperPars(cpo, list(center = FALSE))
+
+

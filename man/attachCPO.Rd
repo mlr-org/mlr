@@ -10,7 +10,7 @@ attachCPO(cpo, learner)
 \item{cpo}{[\code{\link{CPO}}]\cr
 The CPO object}
 
-\item{cpo1}{[\code{\link{Learner}}]\cr
+\item{learner}{[\code{\link{Learner}}]\cr
 The learner.}
 }
 \description{

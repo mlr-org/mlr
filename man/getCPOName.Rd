@@ -10,6 +10,10 @@ getCPOName(cpo)
 \item{cpo}{[\code{\link{CPO}}]\cr
 The CPO object.}
 }
+\description{
+Return the name given at creation as \dQuote{.cpo.name} to the
+CPO creator. If the CPO object has an ID, it will be appended.
+}
 \seealso{
 Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},

@@ -10,7 +10,7 @@ applyCPO(cpo, task)
 \item{cpo}{[\code{\link{CPO}}]\cr
 The CPO representing the operation to perform.}
 
-\item{cpo1}{[\code{\link{Task}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task to operate on.}
 }
 \description{

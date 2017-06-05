@@ -48,5 +48,5 @@ cpoScale = makeCPOObject("scale", center = TRUE: logical, scale = TRUE: logical,
   control = list(center = attr(result, "scaled:center"), scale = attr(result, "scaled:scale"))
   data
 }, cpo.retrafo = {
-  as.data.frame(scale(as.matrix(data) , center = control$center, scale = control$scale))
+  as.data.frame(scale(as.matrix(data), center = control$center, scale = control$scale))
 })

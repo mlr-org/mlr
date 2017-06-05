@@ -10,7 +10,7 @@ composeCPO(cpo1, cpo2)
 \item{cpo1}{[\code{\link{CPO}}]\cr
 The operation to perform first.}
 
-\item{cpo1}{[\code{\link{CPO}}]\cr
+\item{cpo2}{[\code{\link{CPO}}]\cr
 The operation to perform second.}
 }
 \description{

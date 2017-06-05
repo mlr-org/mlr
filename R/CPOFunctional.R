@@ -3,6 +3,11 @@
 
 #' @title Create a custom CPO constructor
 #'
+#' @description
+#' Create a function-based CPO constructor. This has the advantage of being possibly more
+#' elegant and less boilerplate-heavy than object-based CPOs, but it uses more memory
+#' and is a bit harder to debug. For object-based CPOs, see \code{\link{makeCPOFunctional}}.
+#'
 #' @param .cpo.name [\code{character(1)}]\cr
 #'   The name of the resulting CPO constructor / CPO. This is used for identification in output.
 #' @param ...

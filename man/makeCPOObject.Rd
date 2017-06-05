@@ -38,6 +38,11 @@ instead of a \dQuote{target} argument, it has a \dQuote{control} argument, which
 the value created in the \dQuote{cpo.trafo} run. This function must similarly return a
 \dQuote{data.frame} object.}
 }
+\description{
+Create an object-based CPO constructor. This has the advantage of being more memory efficient
+and being easier to debug, but possibly less elegant than function-based CPOs (as created
+by \code{\link{makeCPOFunctional}}).
+}
 \examples{
 noop = makeCPOObject("noop", dummy: logical, cpo.trafo = {
   control = 0

@@ -1,5 +1,8 @@
 #' @title CPO: Composable Preprocessing Operators
 #'
+#' @description
+#' FIXME to come
+#'
 #' @family CPO
 #' @name CPO
 NULL
@@ -31,7 +34,7 @@ NULL
 #'
 #' @param cpo1 [\code{data.frame} | \code{\link{Task}} | \code{\link{CPO}}]\cr
 #'   The source object.
-#' @param cpo1 [\code{\link{CPO}} | \code{\link{Learner}}]\cr
+#' @param cpo2 [\code{\link{CPO}} | \code{\link{Learner}}]\cr
 #'   The target object.
 #'
 #' @family CPO
@@ -56,13 +59,13 @@ NULL
 }
 
 #' @export
-`%>>%.data.frame` = function(data, cpo2) {
-  name = deparse(substitute(data), 20)[1]
-  getTaskData(makeClusterTask(name, data) %>>% cpo2)
+`%>>%.data.frame` = function(cpo1, cpo2) {
+  name = deparse(substitute(cpo1), 20)[1]
+  getTaskData(makeClusterTask(name, cpo1) %>>% cpo2)
 }
 
 #' @export
-`%>>%.Task` = function(data, cpo2) {
+`%>>%.Task` = function(cpo1, cpo2) {
   if ("RLearner" %in% class(cpo2)) {
     stopf("%s\n%s\n%s\n%s",
       "Cannot pipe data into learner!",
@@ -70,7 +73,7 @@ NULL
       "train(preproc %>>% learner, data). Note that this is different from",
       "'train(learner, data %>>% preproc), which is usually not what you want.")
   } else if ("CPO" %in% class(cpo2)) {
-    applyCPO(cpo2, data)
+    applyCPO(cpo2, cpo1)
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
@@ -85,17 +88,17 @@ NULL
 }
 
 #' @export
-`%>>%.CPO` = function(cpo1, obj2) {
-  if ("CPO" %in% class(obj2)) {
+`%>>%.CPO` = function(cpo1, cpo2) {
+  if ("CPO" %in% class(cpo2)) {
     # compose two CPOs
-    composeCPO(cpo1, obj2)
-  } else if ("RLearner" %in% class(obj2)) {
+    composeCPO(cpo1, cpo2)
+  } else if ("RLearner" %in% class(cpo2)) {
     # wrap around learner
-    attachCPO(cpo1, obj2)
+    attachCPO(cpo1, cpo2)
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
-    stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(obj2), '"', collapse = ", "))
+    stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
 }
 
@@ -110,7 +113,7 @@ NULL
 #'
 #' @param cpo1 [\code{\link{CPO}}]\cr
 #'   The operation to perform first.
-#' @param cpo1 [\code{\link{CPO}}]\cr
+#' @param cpo2 [\code{\link{CPO}}]\cr
 #'   The operation to perform second.
 #'
 #' @export
@@ -130,7 +133,7 @@ composeCPO = function(cpo1, cpo2) {
 #'
 #' @param cpo [\code{\link{CPO}}]\cr
 #'   The CPO object
-#' @param cpo1 [\code{\link{Learner}}]\cr
+#' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
 #'
 #' @family CPO
@@ -149,7 +152,7 @@ attachCPO = function(cpo, learner) {
 #'
 #' @param cpo [\code{\link{CPO}}]\cr
 #'   The CPO representing the operation to perform.
-#' @param cpo1 [\code{\link{Task}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task to operate on.
 #'
 #' @family CPO
@@ -159,6 +162,10 @@ applyCPO = function(cpo, task) {
 }
 
 #' @title Get the CPO object's Name
+#'
+#' @description
+#' Return the name given at creation as \dQuote{.cpo.name} to the
+#' CPO creator. If the CPO object has an ID, it will be appended.
 #'
 #' @param cpo [\code{\link{CPO}}]\cr
 #'   The CPO object.

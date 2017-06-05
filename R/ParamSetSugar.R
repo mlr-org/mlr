@@ -52,6 +52,7 @@
 #'   )
 #' }
 #'
+#' @param ... Parameters, see description.
 #' @param pss.learner.params [\code{logical}]\cr
 #'   Whether to create \dQuote{LearnerParam} instead of \dQuote{Param} objects.
 #'   Default is \dQuote{TRUE}.

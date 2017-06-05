@@ -31,6 +31,11 @@ with an attribute \dQuote{retrafo}. This attribute must be a function with the a
 If \dQuote{cpo.trafo} is a list of expressions (preferred), it is turned into a function
 by mlr, with the above mentioned criteria.}
 }
+\description{
+Create a function-based CPO constructor. This has the advantage of being possibly more
+elegant and less boilerplate-heavy than object-based CPOs, but it uses more memory
+and is a bit harder to debug. For object-based CPOs, see \code{\link{makeCPOFunctional}}.
+}
 \examples{
 noop = makeCPOFunctional("noop", dummy: logical, cpo.trafo = {
   attr(data, "retrafo") = function(data) data

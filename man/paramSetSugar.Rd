@@ -7,6 +7,8 @@
 paramSetSugar(..., pss.learner.params = TRUE, pss.env = parent.frame())
 }
 \arguments{
+\item{...}{Parameters, see description.}
+
 \item{pss.learner.params}{[\code{logical}]\cr
 Whether to create \dQuote{LearnerParam} instead of \dQuote{Param} objects.
 Default is \dQuote{TRUE}.}

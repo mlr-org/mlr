@@ -3,6 +3,9 @@
 \name{CPO}
 \alias{CPO}
 \title{CPO: Composable Preprocessing Operators}
+\description{
+FIXME to come
+}
 \seealso{
 Other CPO: \code{\link{\%>>\%}}, \code{\link{applyCPO}},
   \code{\link{attachCPO}}, \code{\link{cpoPca}},
