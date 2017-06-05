@@ -30,7 +30,7 @@
   } else if ("CPO" %in% class(cpo2)) {
     applyCPO(cpo2, data)
   } else {
-    stop("Cannot compose data with object of class c(%s)", paste0('"', class(obj2), '"', collapse = ", "))
+    stop("Cannot compose data with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
 }
 
