@@ -211,3 +211,171 @@ test_that("CPO parameters behave as expected", {
   testCPO(cpoO, cpo2O, cpo3O)
 
 })
+
+
+test_that("Functional CPO Parameter feasibility is checked", {
+
+  expect_error(makeCPOFunctional("testCPOF",
+    a: integer(, ),
+    .par.vals = list(a = 1, b = 2),
+    cpo.trafo = { }))
+
+  cpo = makeCPOFunctional("testCPOF",
+    a: integer(, ), b: integer(, ),
+    .par.vals = list(a = 1, b = 2),
+    cpo.trafo = { })
+
+  expect_error(cpo(1.5, 2), "is not feasible for parameter 'a'")
+
+  cpoo = cpo(1, 2)
+  expect_class(cpoo, "CPO")
+  expect_class(setHyperPars(cpoo, a = 10), "CPO")
+  expect_error(setHyperPars(cpoo, a = 0.4), "is not feasible for parameter 'a'")
+
+  expect_error(makeCPOFunctional("testCPOF",
+    a: integer(, ), b: integer(0, 1),
+    .par.vals = list(a = 1, b = 2),
+    cpo.trafo = { }), "2 is not feasible for parameter 'b'")
+
+  cpo = makeCPOFunctional("testCPOF",
+    a: integer(, ), b: integer(0, 1),
+    cpo.trafo = { })
+
+  expect_error(cpo(1, 2), "2 is not feasible for parameter 'b'")
+  cpoo = cpo(0, 0)
+  expect_class(setHyperPars(cpoo, b = 1), "CPO")
+  expect_error(setHyperPars(cpoo, b = 3), "is not feasible for parameter 'b'")
+
+  expect_error(makeCPOFunctional("testCPOF",
+    a: integer(, ), b = 2: integer(0, 1),
+    cpo.trafo = { }), "'default' must be a feasible parameter setting")
+
+  makeCPOFunctional("testCPOF",
+    a = (function() 1): discrete(a = function() 1, b = function() 2),
+    cpo.trafo = { })
+
+  expect_error(makeCPOFunctional("testCPOF",
+    a = (function() 3): discrete(a = function() 1, b = function() 2),
+    cpo.trafo = { }),  "'default' must be a feasible parameter setting")
+
+  cpo = makeCPOFunctional("testCPOF",
+    a: discrete(a = function() 1, b = function() 2),
+    .par.vals = list(a = function() 1),
+    cpo.trafo = { })
+
+  expect_error(cpo(function() 3), "<function> is not feasible for parameter 'a'")
+  cpoo = cpo(function() 1)
+  expect_class(cpoo, "CPO")
+  expect_class(setHyperPars(cpoo, a = function() 1), "CPO")
+  expect_error(setHyperPars(cpoo, a = function() 3), "not feasible for parameter 'a'")
+
+  expect_error(makeCPOFunctional("testCPOF",
+    a: discrete(a = function() 1, b = function() 2),
+    .par.vals = list(a = function() 3),
+    cpo.trafo = { }),  "<function> is not feasible for parameter 'a'")
+
+})
+
+test_that("Object based CPO Parameter feasibility is checked", {
+
+  expect_error(makeCPOObject("testCPOO",
+    a: integer(, ),
+    .par.vals = list(a = 1, b = 2),
+    cpo.trafo = { }, cpo.retrafo = { }))
+
+  cpo = makeCPOObject("testCPOO",
+    a: integer(, ), b: integer(, ),
+    .par.vals = list(a = 1, b = 2),
+    cpo.trafo = { }, cpo.retrafo = { })
+
+  expect_error(cpo(1.5, 2), "is not feasible for parameter 'a'")
+
+  cpoo = cpo(1, 2)
+  expect_class(cpoo, "CPO")
+  expect_class(setHyperPars(cpoo, a = 10), "CPO")
+  expect_error(setHyperPars(cpoo, a = 0.4), "is not feasible for parameter 'a'")
+
+  expect_error(makeCPOObject("testCPOO",
+    a: integer(, ), b: integer(0, 1),
+    .par.vals = list(a = 1, b = 2),
+    cpo.trafo = { }, cpo.retrafo = { }), "2 is not feasible for parameter 'b'")
+
+  cpo = makeCPOObject("testCPOO",
+    a: integer(, ), b: integer(0, 1),
+    cpo.trafo = { }, cpo.retrafo = { })
+
+  expect_error(cpo(1, 2), "2 is not feasible for parameter 'b'")
+  cpoo = cpo(0, 0)
+  expect_class(setHyperPars(cpoo, b = 1), "CPO")
+  expect_error(setHyperPars(cpoo, b = 3), "is not feasible for parameter 'b'")
+
+  expect_error(makeCPOObject("testCPOO",
+    a: integer(, ), b = 2: integer(0, 1),
+    cpo.trafo = { }, cpo.retrafo = { }), "'default' must be a feasible parameter setting")
+
+  makeCPOObject("testCPOO",
+    a = (function() 1): discrete(a = function() 1, b = function() 2),
+    cpo.trafo = { }, cpo.retrafo = { })
+
+  expect_error(makeCPOObject("testCPOO",
+    a = (function() 3): discrete(a = function() 1, b = function() 2),
+    cpo.trafo = { }, cpo.retrafo = { }),  "'default' must be a feasible parameter setting")
+
+  cpo = makeCPOObject("testCPOO",
+    a: discrete(a = function() 1, b = function() 2),
+    .par.vals = list(a = function() 1),
+    cpo.trafo = { }, cpo.retrafo = { })
+
+  expect_error(cpo(function() 3), "<function> is not feasible for parameter 'a'")
+  cpoo = cpo(function() 1)
+  expect_class(cpoo, "CPO")
+  expect_class(setHyperPars(cpoo, a = function() 1), "CPO")
+  expect_error(setHyperPars(cpoo, a = function() 3), "not feasible for parameter 'a'")
+
+  expect_error(makeCPOObject("testCPOO",
+    a: discrete(a = function() 1, b = function() 2),
+    .par.vals = list(a = function() 3),
+    cpo.trafo = { }, cpo.retrafo = { }),  "<function> is not feasible for parameter 'a'")
+
+})
+
+
+test_that("discrete parameters work well", {
+  cpotest.parvals = list()
+
+  X = 1
+  Y = 2
+
+  cpoF = makeCPOFunctional("testCPOF",
+    a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
+    cpo.trafo = {
+      cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
+      attr(data, "retrafo") = function(data) data
+      data
+    })
+
+  cpoO = makeCPOObject("testCPOO",
+    a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
+    .par.vals = list(a = 1, b = 2, d = 1),
+    cpo.trafo = {
+      cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
+      control = 0
+      data
+    },
+    cpo.retrafo = {
+      data
+    })
+
+  testCPO = function(cpo) {
+    cpotest.parvals <<- list()  # nolint
+    train(cpoF(TRUE, "a", e = list(function() 1, function() 1)) %>>% makeLearner("classif.logreg"), pid.task)
+    expect_identical(cpotest.parvals, list(a = TRUE, b = "a", c = 1, d = c(TRUE, TRUE), e = c(1, 1)))
+
+    cpotest.parvals <<- list()  # nolint
+    train(cpoF(TRUE, 1, e = list(function() Y, function() 1)) %>>% makeLearner("classif.logreg"), pid.task)
+    expect_identical(cpotest.parvals, list(a = TRUE, b = 1, c = 1, d = c(TRUE, TRUE), e = c(2, 1)))
+  }
+
+  testCPO(cpoF)
+  testCPO(cpoO)
+})
