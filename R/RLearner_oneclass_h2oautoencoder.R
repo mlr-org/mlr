@@ -228,25 +228,23 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
 }
 
 #' @export
-predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, predict.threshold = 0.8, ...) {
+predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
   p.df = as.matrix(p)
-  colnames(p.df) = .model$task.desc$positive
+  td = getTaskDesc(.model)
+  label = c(td$positive, td$negative)
   if(.learner$predict.type == "response"){
-    # set default threshold to the 80% quantile of the mse reconstruction error
-    if (is.null(predict.threshold)) {
+    # per default assume 5% anomalies
       indices.threshold = order(p.df)[round(length(p.df)*0.95)]  #mse reconstruction error in [0,inf[
       predict.threshold = p.df[indices.threshold]
-      names(predict.threshold) = .model$task.desc$positive
-    }
-    p.df[is.nan(p.df)] = Inf
-    ind = which(p.df > predict.threshold)
-    p.df = rep(.model$task.desc$positive, length(p.df))
-    p.df[ind] = rep(.model$task.desc$negative, length(ind))
-    p.df = as.factor(p.df)
+      p = p.df <= predict.threshold
+      p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
+  } else {
+    p = convertingScoresToProbability(p.df, parainit = c(1, 0))
+    p = cbind(p, 1-p)
+    colnames(p) = label
   }
-  return(p.df)
+  return(p)
 }
-

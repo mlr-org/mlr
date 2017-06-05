@@ -17,7 +17,7 @@
 #' prop = convertingScoresToProbability(dv, parainit = c(0, 1), method = "sigmoid")
 #' plot(1:length(prop$probability), prop$probability, ylim = c(0, 1))
 #'
-convertingScoresToProbability = function(anomaly.score, parainit, max.iter = 100){
+convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100){
   f = anomaly.score
   p = parainit
   loop = TRUE

@@ -1,3 +1,4 @@
+
 #' @title Predict new data.
 #'
 #' @description
@@ -113,14 +114,6 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       options(warn = -1L)
     }
     time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
-
-    # HACK p needs to be a matrix with colnames == positive level
-    # otherwise getPredictionProbabilities() will throw an error
-    # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
-    if (object$task.desc$type == "oneclass" & object$learner$predict.type == "prob") {
-      p = as.matrix(p)
-      colnames(p) = object$task.desc$positive
-    }
 
     # was there an error during prediction?
     if (is.error(p)) {
