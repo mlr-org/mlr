@@ -44,7 +44,6 @@ setThreshold = function(pred, threshold) {
     threshold = c(threshold, 1 - threshold)
     names(threshold) = c(td$positive, td$negative)
   }
-
   if (length(threshold) > 1L && !setequal(levs, names(threshold)))
     stop("Threshold names must correspond to classes!")
   p = getPredictionProbabilities(pred, cl = levs)
@@ -62,11 +61,6 @@ setThreshold = function(pred, threshold) {
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "-", threshold)
     i = stri_paste("response.", levs)
     pred$data[, i] = p > 0
-  } else if (ttype == "oneclass") {
-    p[is.nan(p)] = Inf
-    ind = which(p > threshold)
-    pred$data$response = td$positive
-    pred$data$response[ind] = td$negative
   }
   pred$threshold = threshold
   return(pred)

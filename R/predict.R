@@ -1,4 +1,3 @@
-
 #' @title Predict new data.
 #'
 #' @description
@@ -132,5 +131,5 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   else
     ids = subset
   makePrediction(task.desc = td, row.names = rownames(newdata), id = ids, truth = truth,
-    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error, dump = dump, ...)
+    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error, dump = dump)
 }

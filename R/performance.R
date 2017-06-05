@@ -48,9 +48,6 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.pred" %in% props) {
     if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
-    if(length(levels(pred$data$response)) == 1) {
-             levels(pred$data$response) = c(levels(pred$data$response), setdiff(c(pred$task.desc$positive, pred$task.desc$negative), levels(pred$data$response)))
-        }
   }
   if ("req.truth" %in% props) {
     type = getTaskDesc(pred)$type

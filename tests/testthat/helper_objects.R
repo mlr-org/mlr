@@ -85,7 +85,6 @@ oneclass.positive = "TRUE"
 oneclass.negative = "FALSE"
 oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = oneclass.target, positive = oneclass.positive, negative = oneclass.negative)
 
-
 data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing
 regr.formula = medv ~ .
