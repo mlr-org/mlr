@@ -25,7 +25,7 @@ test_that("ParamSetSugar generates the expected ParamSets", {
         makeNumericVectorParam("d", 2, lower = 0, upper = 1, default = c(0.5, 0.5), requires = expression(a == 0))),
         paramSetSugar(a = 1: numeric(, ) [tunable = FALSE],
           b = 2: numeric(0, ),
-          c: numeric(., x - 10)^(2 + 1) [special.vals = list(1 - 2)],
+          c: numeric(., x - 10) ^ (2 + 1) [special.vals = list(1 - 2)],
           d = c(1 / 2, 0.5): numeric(0, 1)^2 [requires = expression(a == 0), allow.inf = FALSE], pss.learner.params = FALSE)),
       list(makeParamSet(),
         paramSetSugar())

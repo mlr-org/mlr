@@ -24,13 +24,13 @@ test_that("CPOs can be created", {
 
 test_that("CPO with no parameters don't crash", {
 
-  emptycpoF = makeCPOFunctional("testCPOEmptyF", cpo.trafo = {
+  emptycpo.f = makeCPOFunctional("testCPOEmptyF", cpo.trafo = {
     attr(data, "retrafo") = function(data) data
     data
   })
 
 
-  emptycpoO = makeCPOObject("testCPOEmptyF", cpo.trafo = {
+  emptycpo.o = makeCPOObject("testCPOEmptyF", cpo.trafo = {
     control = 0
     data
   }, cpo.retrafo = {
@@ -52,8 +52,8 @@ test_that("CPO with no parameters don't crash", {
     expect_equal(length(getParamSet(ecpo("test"))$pars), 0)
   }
 
-  testCPO(emptycpoF)
-  testCPO(emptycpoO)
+  testCPO(emptycpo.f)
+  testCPO(emptycpo.o)
 })
 
 test_that("CPO parameters behave as expected", {
@@ -63,7 +63,7 @@ test_that("CPO parameters behave as expected", {
   cpotest.parvals3 = list()
 
 
-  cpoF = makeCPOFunctional("testCPOF",
+  cpof = makeCPOFunctional("testCPOF",
     a: integer(, ), b = 1: integer(, ), c = 1: integer(, ), d: integer(, ), e: integer(, ),
     .par.vals = list(a = 1, b = 2, d = 1),
     cpo.trafo = {
@@ -72,7 +72,7 @@ test_that("CPO parameters behave as expected", {
       data
     })
 
-  cpo2F = makeCPOFunctional("testCPO2F",
+  cpo2f = makeCPOFunctional("testCPO2F",
     a: numeric(, ), z: integer(, ), model = TRUE: logical,
     cpo.trafo = {
       cpotest.parvals2 <<- list(a = a, z = z)  # nolint
@@ -80,7 +80,7 @@ test_that("CPO parameters behave as expected", {
       data
     })
 
-  cpo3F = makeCPOFunctional("testCPO3F",
+  cpo3f = makeCPOFunctional("testCPO3F",
     f: integer(, ),
     cpo.trafo = {
       cpotest.parvals3 <<- c(cpotest.parvals3, f)  # nolint
@@ -88,7 +88,7 @@ test_that("CPO parameters behave as expected", {
       data
     })
 
-  cpoO = makeCPOObject("testCPOO",
+  cpoo = makeCPOObject("testCPOO",
     a: integer(, ), b = 1: integer(, ), c = 1: integer(, ), d: integer(, ), e: integer(, ),
     .par.vals = list(a = 1, b = 2, d = 1),
     cpo.trafo = {
@@ -100,7 +100,7 @@ test_that("CPO parameters behave as expected", {
       data
     })
 
-  cpo2O = makeCPOObject("testCPO2O",
+  cpo2o = makeCPOObject("testCPO2O",
     a: numeric(, ), z: integer(, ), model = TRUE: logical,
     cpo.trafo = {
       cpotest.parvals2 <<- list(a = a, z = z)  # nolint
@@ -111,7 +111,7 @@ test_that("CPO parameters behave as expected", {
       data
     })
 
-  cpo3O = makeCPOObject("testCPO3O",
+  cpo3o = makeCPOObject("testCPO3O",
     f: integer(, ),
     cpo.trafo = {
       cpotest.parvals3 <<- c(cpotest.parvals3, f)  # nolint
@@ -133,18 +133,18 @@ test_that("CPO parameters behave as expected", {
 
     expect_identical(getHyperPars(cpo(3)), list(a = 3, b = 2, c = 1, d = 1))
 
-    cpoObj = setHyperPars(cpo(3, 4), b = 0, c = -1)
+    cpo.obj = setHyperPars(cpo(3, 4), b = 0, c = -1)
 
-    expect_identical(getHyperPars(cpoObj), list(a = 3, b = 0, c = -1, d = 1))
+    expect_identical(getHyperPars(cpo.obj), list(a = 3, b = 0, c = -1, d = 1))
 
-    cpoLearner = cpoObj %>>% makeLearner("classif.logreg", model = FALSE)
+    cpo.learner = cpo.obj %>>% makeLearner("classif.logreg", model = FALSE)
 
-    expect_identical(getHyperPars(cpoLearner), list(model = FALSE, a = 3, b = 0, c = -1, d = 1))
+    expect_identical(getHyperPars(cpo.learner), list(model = FALSE, a = 3, b = 0, c = -1, d = 1))
 
-    expect_error(train(cpoLearner, pid.task), "Parameter e.*missing")
+    expect_error(train(cpo.learner, pid.task), "Parameter e.*missing")
 
     cpotest.parvals <<- list()  # nolint
-    train(setHyperPars(cpoLearner, e = 900), pid.task)
+    train(setHyperPars(cpo.learner, e = 900), pid.task)
     expect_identical(cpotest.parvals, list(a = 3, b = 0, c = -1, d = 1, e = 900))
 
     # parameters of cpo with id
@@ -152,25 +152,25 @@ test_that("CPO parameters behave as expected", {
 
     expect_identical(getHyperPars(cpo(b = 3, id = "x")), list(x.a = 1, x.b = 3, x.c = 1, x.d = 1))
 
-    cpoObj = setHyperPars(cpo(3, 4, id = "x"), x.b = 0, x.c = -1)
+    cpo.obj = setHyperPars(cpo(3, 4, id = "x"), x.b = 0, x.c = -1)
 
-    expect_identical(getHyperPars(cpoObj), list(x.a = 3, x.b = 0, x.c = -1, x.d = 1))
+    expect_identical(getHyperPars(cpo.obj), list(x.a = 3, x.b = 0, x.c = -1, x.d = 1))
 
-    cpoLearner = cpoObj %>>% makeLearner("classif.logreg", model = FALSE)
+    cpo.learner = cpo.obj %>>% makeLearner("classif.logreg", model = FALSE)
 
-    expect_identical(getHyperPars(cpoLearner), list(model = FALSE, x.a = 3, x.b = 0, x.c = -1, x.d = 1))
+    expect_identical(getHyperPars(cpo.learner), list(model = FALSE, x.a = 3, x.b = 0, x.c = -1, x.d = 1))
 
-    expect_error(train(cpoLearner, pid.task), "Parameter (x\\.)?e .*missing")
+    expect_error(train(cpo.learner, pid.task), "Parameter (x\\.)?e .*missing")
 
-    cpoLearner = setCPOId(cpoObj, "y") %>>% makeLearner("classif.logreg", model = FALSE)
+    cpo.learner = setCPOId(cpo.obj, "y") %>>% makeLearner("classif.logreg", model = FALSE)
 
-    expect_error(train(cpoLearner, pid.task), "Parameter (y\\.)?e .*missing")
+    expect_error(train(cpo.learner, pid.task), "Parameter (y\\.)?e .*missing")
 
     cpotest.parvals <<- list()  # nolint
-    train(setHyperPars(cpoLearner, y.e = 901), pid.task)
+    train(setHyperPars(cpo.learner, y.e = 901), pid.task)
     expect_identical(cpotest.parvals, list(a = 3, b = 0, c = -1, d = 1, e = 901))
 
-    expect_error(setCPOId(cpoObj %>>% cpo3(), "testx"), "Cannot set ID of compound CPO")
+    expect_error(setCPOId(cpo.obj %>>% cpo3(), "testx"), "Cannot set ID of compound CPO")
 
     # parameters of coupled CPOs
     expect_error(cpo(3) %>>% cpo2(4) %>>% cpo3(), 'Parameter "a" occurs in both')
@@ -197,18 +197,18 @@ test_that("CPO parameters behave as expected", {
 
     # multiple instances of the same CPO
     cpotest.parvals3 <<- list()  # nolint
-    train(cpo3(id = 'a', 100) %>>% cpo3(id = 'b', 10) %>>% cpo3(20) %>>% makeLearner("classif.logreg"), pid.task)
+    train(cpo3(id = "a", 100) %>>% cpo3(id = "b", 10) %>>% cpo3(20) %>>% makeLearner("classif.logreg"), pid.task)
     expect_identical(cpotest.parvals3, list(100, 10, 20))
 
     cpotest.parvals3 <<- list()  # nolint
-    lrn = cpo3(id = 'a') %>>% cpo3(id = 'b', 10) %>>% cpo3() %>>% makeLearner("classif.logreg")
+    lrn = cpo3(id = "a") %>>% cpo3(id = "b", 10) %>>% cpo3() %>>% makeLearner("classif.logreg")
     train(setHyperPars(lrn, a.f = 1000, f = 99), pid.task)
     expect_identical(cpotest.parvals3, list(1000, 10, 99))
   }
 
-  testCPO(cpoF, cpo2F, cpo3F)
+  testCPO(cpof, cpo2f, cpo3f)
 
-  testCPO(cpoO, cpo2O, cpo3O)
+  testCPO(cpoo, cpo2o, cpo3o)
 
 })
 
@@ -345,7 +345,7 @@ test_that("discrete parameters work well", {
   X = 1
   Y = 2
 
-  cpoF = makeCPOFunctional("testCPOF",
+  cpof = makeCPOFunctional("testCPOF",
     a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
@@ -353,7 +353,7 @@ test_that("discrete parameters work well", {
       data
     })
 
-  cpoO = makeCPOObject("testCPOO",
+  cpoo = makeCPOObject("testCPOO",
     a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
@@ -366,16 +366,16 @@ test_that("discrete parameters work well", {
 
   testCPO = function(cpo) {
     cpotest.parvals <<- list()  # nolint
-    train(cpoF(TRUE, "a", e = list(function() 1, function() 1)) %>>% makeLearner("classif.logreg"), pid.task)
+    train(cpo(TRUE, "a", e = list(function() 1, function() 1)) %>>% makeLearner("classif.logreg"), pid.task)
     expect_identical(cpotest.parvals, list(a = TRUE, b = "a", c = 1, d = c(TRUE, TRUE), e = c(1, 1)))
 
     cpotest.parvals <<- list()  # nolint
-    train(cpoF(TRUE, 1, e = list(function() Y, function() 1)) %>>% makeLearner("classif.logreg"), pid.task)
+    train(cpo(TRUE, 1, e = list(function() Y, function() 1)) %>>% makeLearner("classif.logreg"), pid.task)
     expect_identical(cpotest.parvals, list(a = TRUE, b = 1, c = 1, d = c(TRUE, TRUE), e = c(2, 1)))
   }
 
-  testCPO(cpoF)
-  testCPO(cpoO)
+  testCPO(cpof)
+  testCPO(cpoo)
 })
 
 test_that("preprocessing actually changes data", {
@@ -408,7 +408,7 @@ test_that("preprocessing actually changes data", {
   predict(t, testtask2)
   expect_identical(cpotest.parvals, list(1, 3))
 
-  cpoMultiplierF = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     data[[1]] = data[[1]] * factor
     attr(data, "retrafo") = function(data) {
@@ -418,7 +418,7 @@ test_that("preprocessing actually changes data", {
     data
   })
 
-  cpoAdderF = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     meandata = mean(data[[1]])
     data[[1]] = data[[1]] + summand
@@ -429,7 +429,7 @@ test_that("preprocessing actually changes data", {
     data
   })
 
-  cpoMultiplierO = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     data[[1]] = data[[1]] * factor
     control = 0
@@ -440,7 +440,7 @@ test_that("preprocessing actually changes data", {
   })
 
 
-  cpoAdderO = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.o = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     control = mean(data[[1]])
     data[[1]] = data[[1]] + summand
@@ -467,7 +467,11 @@ test_that("preprocessing actually changes data", {
 
 
     cpotest.parvals <<- list()  # nolint
-    predict(train(cpoAdder(3) %>>% cpoMultiplier(3) %>>% cpoAdder(2, id="second") %>>% cpoMultiplier(10, id="second") %>>% testlearner, testtask), testtask2)
+    predict(train(cpoAdder(3) %>>%
+                  cpoMultiplier(3) %>>%
+                  cpoAdder(2, id = "second") %>>%
+                  cpoMultiplier(10, id = "second") %>>%
+                  testlearner, testtask), testtask2)
     # Calculation happening:
     # Training:
     #   c(1, 2), +3, *3, +2, *10 -> c(140, 170)
@@ -477,8 +481,8 @@ test_that("preprocessing actually changes data", {
     expect_identical(cpotest.parvals, list(140, -1.6))
   }
 
-  testCPO(cpoMultiplierF, cpoAdderF)
-  testCPO(cpoMultiplierO, cpoAdderO)
+  testCPO(cpomultiplier.f, cpoadder.f)
+  testCPO(cpomultiplier.o, cpoadder.o)
 
 })
 
@@ -502,11 +506,11 @@ test_that("CPO trafo functions work", {
   cpotest.parvals = list()
   t = train(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
     cpo.trafo = function(data, target, b, ...) {
-      cpotest.parvals <<- list(b, list(...))
+      cpotest.parvals <<- list(b, list(...))  # nolint
       control = 0
       data
     }, cpo.retrafo = function(data, b, ...) {
-      cpotest.parvals <<- list(b, list(...))
+      cpotest.parvals <<- list(b, list(...))  # nolint
       data
     })(1, 2) %>>% makeLearner("classif.logreg"), pid.task)
 
@@ -519,9 +523,9 @@ test_that("CPO trafo functions work", {
   cpotest.parvals = list()
   t = train(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
     cpo.trafo = function(data, target, b, ...) {
-      cpotest.parvals <<- list(b, list(...))
+      cpotest.parvals <<- list(b, list(...))  # nolint
       attr(data, "retrafo") = function(data, ...) {
-        cpotest.parvals <<- list(b, list(...))
+        cpotest.parvals <<- list(b, list(...))  # nolint
         data
       }
       data
