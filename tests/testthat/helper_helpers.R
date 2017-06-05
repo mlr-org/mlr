@@ -91,13 +91,17 @@ testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, 
 }
 
 
-testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) {
+testProb = function(t.name, df, target, positive, negative, train.inds, old.probs, parset = list()) {
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
 
   if (length(target) == 1) {
-    task = makeClassifTask(data = df, target = target)
+    if (grepl("oneclass", t.name)) {
+      task = makeOneClassTask(data = df, target = target, positive = positive, negative = negative)
+    } else {
+      task = makeClassifTask(data = df, target = target)
+    }
   } else {
     task = makeMultilabelTask(data = df, target = target)
   }
@@ -125,7 +129,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   }
 }
 
-testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parset.list) {
+testProbParsets = function(t.name, df, target, positive, negative, train.inds, old.probs.list, parset.list) {
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -133,7 +137,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
-    testProb(t.name, df, target, train.inds, old.probs, parset)
+    testProb(t.name, df, target, positive, negative, train.inds, old.probs, parset)
   }
 }
 
