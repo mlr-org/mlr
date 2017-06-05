@@ -21,8 +21,8 @@
 #' print(cl2)
 setHyperPars = function(learner, ..., par.vals = list()) {
   args = list(...)
-  assertList(args, names = "named", .var.name = "parameter settings")
-  assertList(par.vals, names = "named", .var.name = "parameter settings")
+  assertList(args, names = "unique", .var.name = "parameter settings")
+  assertList(par.vals, names = "unique", .var.name = "parameter settings")
   setHyperPars2(learner, insert(par.vals, args))
 }
 
