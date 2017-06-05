@@ -68,7 +68,7 @@ print.CPOConstructor = function(x, ...) {
   args = formals(x)
   argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
   argstring = paste(names(args), argvals, collapse = ", ", sep = "")
-  catf("<<CPO %s(%s)>>", environment(x)$name, argstring)
+  catf("<<CPO %s(%s)>>", environment(x)$cpo.name, argstring)
 }
 
 

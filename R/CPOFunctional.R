@@ -2,19 +2,26 @@
 ### Creation
 
 #' @export
-makeCPOFunctional = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.trafo) {
+makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, cpo.trafo) {
+  # dotted parameter names are necessary to avoid problems with partial argument matching.
+  cpo.name = .cpo.name
+  par.set = .par.set
+  par.vals = .par.vals
   assertString(cpo.name)
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
-  reserved.params = c("data", "target", "id", "cpo.name")
+
+  # these parameters are either special parameters given to the constructor function (id),
+  # special parameters given to the cpo.trafo function (data, target)
+  reserved.params = c("data", "target", "id")
   if (any(names(par.set$pars) %in% reserved.params)) {
     stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
-  if (is.null(par.vals)) {
-    par.vals = getParamSetDefaults(par.set)
-  }
-  assertSubset(names(par.vals), names(par.set$pars))
+
+  par.vals = insert(getParamSetDefaults(par.set), par.vals)
+
+  assert(length(setdiff(names(par.vals), names(par.set$pars))) == 0)
 
   funargs = lapply(par.set$pars, function(dummy) substitute())
   funargs = insert(funargs, par.vals)
@@ -26,7 +33,8 @@ makeCPOFunctional = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo
   funargs = insert(funargs, list(id = NULL))
 
   funbody = quote({
-    args = match.call()
+    args = base::match.call()
+    base::rm(list = base::setdiff(base::ls(), "args"))  # delete all arguments to avoid name clashes
     args[[1]] = quote(list)
     args = eval(args, envir = parent.frame())
     args = insert(funargs, args)
@@ -159,7 +167,9 @@ getParamSet.CPOFunctional = function(x) {
   ps = environment(x)$par.set
   id = attr(x, "id")
   if (!is.null(id)) {
-    names(ps$pars) = paste(id, names(ps$pars), sep = ".")
+    if (length(ps$pars)) {
+      names(ps$pars) = paste(id, names(ps$pars), sep = ".")
+    }
     ps$pars = lapply(ps$pars, function(x) {
       x$id = paste(id, x$id, sep = ".")
       x
@@ -172,7 +182,7 @@ getParamSet.CPOFunctional = function(x) {
 getHyperPars.CPOFunctional = function(learner, for.fun = c("train", "predict", "both")) {
   id = attr(learner, "id")
   pv = formals(learner)$.par.vals
-  if (!is.null(id)) {
+  if (!is.null(id) && length(pv) > 0) {
     names(pv) = paste(id, names(pv), sep = ".")
   }
   pv
@@ -212,3 +222,4 @@ removeHyperPars.CPOFunctionalLearner = function(learner, ids) {
 getCPOName.CPOFunctional = function(cpo) {
   attr(cpo, "name")
 }
+

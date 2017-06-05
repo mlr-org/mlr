@@ -2,19 +2,28 @@
 ### Creation
 
 #' @export
-makeCPOObject = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.trafo, cpo.retrafo) {
+makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, cpo.trafo, cpo.retrafo) {
+  # dotted parameter names are necessary to avoid problems with partial argument matching.
+  cpo.name = .cpo.name
+  par.set = .par.set
+  par.vals = .par.vals
   assertString(cpo.name)
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
-  reserved.params = c("cpo.name", "data", "target", "control", "id")
+
+  # these parameters are either special parameters given to the constructor function (id),
+  # special parameters given to the cpo.trafo function (data, target), special parameters given to the
+  # cpo.retrafo function (control),
+
+  reserved.params = c("data", "target", "control", "id")
   if (any(names(par.set$pars) %in% reserved.params)) {
     stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
-  if (is.null(par.vals)) {
-    par.vals = getParamSetDefaults(par.set)
-  }
-  assertSubset(names(par.vals), names(par.set$pars))
+
+  par.vals = insert(getParamSetDefaults(par.set), par.vals)
+
+  assert(length(setdiff(names(par.vals), names(par.set$pars))) == 0)
 
   funargs = lapply(par.set$pars, function(dummy) substitute())
   funargs = insert(funargs, par.vals)
@@ -34,7 +43,8 @@ makeCPOObject = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.tra
   funargs = insert(funargs, list(id = NULL))
 
   funbody = quote({
-    args = match.call()
+    args = base::match.call()
+    base::rm(list = base::setdiff(base::ls(), "args"))  # delete all arguments to avoid name clashes
     args[[1]] = quote(list)
     args = eval(args, envir = parent.frame())
     args = insert(funargs, args)
@@ -42,7 +52,7 @@ makeCPOObject = function(cpo.name, ..., par.set = NULL, par.vals = NULL, cpo.tra
       assertString(args$id)
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
-    cpo = makeS3Obj(c("CPOObject", "CPOPrimitive", "CPO"),
+    cpo = makeS3Obj(base::c("CPOObject", "CPOPrimitive", "CPO"),
       barename = cpo.name,
       name = cpo.name,
       id = NULL,
@@ -134,12 +144,16 @@ setCPOId.CPOObject = function(cpo, id) {
   }
   par.names = names(cpo$par.set$pars)
   bare.par.vals.names = cpo$bare.par.names[match(names(cpo$par.vals), par.names)]
-  names(cpo$par.vals) = pasteIdIfNN(bare.par.vals.names)
+  if (length(cpo$par.vals)) {
+    names(cpo$par.vals) = pasteIdIfNN(bare.par.vals.names)
+  }
 
-  newparnames = pasteIdIfNN(cpo$bare.par.names)
-  names(cpo$par.set$pars) = newparnames
-  for (n in newparnames) {
-    cpo$par.set$pars[[n]]$id = n
+  if (length(cpo$bare.par.names)) {
+    newparnames = pasteIdIfNN(cpo$bare.par.names)
+    names(cpo$par.set$pars) = newparnames
+    for (n in newparnames) {
+      cpo$par.set$pars[[n]]$id = n
+    }
   }
   # FIXME: need to handle requirement changes
   cpo$id = id
@@ -159,13 +173,14 @@ getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both
 
 #' @export
 setHyperPars2.CPOObject = function(learner, par.vals = list()) {
-  badpars = setdiff(names(par.vals), names(learner$par.set))
+  badpars = setdiff(names(par.vals), names(learner$par.set$pars))
   if (length(badpars)) {
     stopf("CPO %s does not have parameter%s %s", learner$name,
-          ifelse(length(badpars) > 1, "s", ""), coalesce(badpars, ", "))
+          ifelse(length(badpars) > 1, "s", ""), collapse(badpars, ", "))
   }
   # FIXME: feasibility check
   learner$par.vals = insert(learner$par.vals, par.vals)
+  learner
 }
 
 #' @export
