@@ -29,6 +29,8 @@
       "'train(learner, data %>>% preproc), which is usually not what you want.")
   } else if ("CPO" %in% class(cpo2)) {
     applyCPO(cpo2, data)
+  } else if ("CPOConstructor" %in% class(cpo2)) {
+    stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
     stop("Cannot compose data with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
@@ -48,6 +50,8 @@
   } else if ("RLearner" %in% class(obj2)) {
     # wrap around learner
     attachCPO(cpo1, obj2)
+  } else if ("CPOConstructor" %in% class(cpo2)) {
+    stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
     stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(obj2), '"', collapse = ", "))
   }
