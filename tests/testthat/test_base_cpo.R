@@ -382,22 +382,31 @@ test_that("preprocessing actually changes data", {
 
   cpotest.parvals = list()
 
-  testlearner = makeRLearnerClassif("testlearner", package = character(0), par.set = paramSetSugar(),
+  testlearner = makeRLearnerClassif("testlearner", package = character(0), par.set = makeParamSet(makeUntypedLearnerParam("env", when = "both")),
     properties = c("twoclass", "multiclass", "numerics", "factors"))
   testlearner$fix.factors.prediction = TRUE
 
-  trainLearner.testlearner = function(.learner, .task, .subset, .weights = NULL, ...) {
-    cpotest.parvals <<- c(cpotest.parvals, getTaskData(.task)[1, 1])  # nolint
+  trainLearner.testlearner = function(.learner, .task, .subset, .weights = NULL, env, ...) {
+    env$cpotest.parvals = c(env$cpotest.parvals, getTaskData(.task)[1, 1])
     getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1]
   }
 
-  predictLearner.testlearner = function(.learner, .model, .newdata, ...) {
-    cpotest.parvals <<- c(cpotest.parvals, .newdata[1, 1])  # nolint
+  predictLearner.testlearner = function(.learner, .model, .newdata, env, ...) {
+    env$cpotest.parvals = c(env$cpotest.parvals, .newdata[1, 1])
     rep(.model$learner.model, nrow(.newdata))
   }
 
+  registerS3method("trainLearner", "testlearner", trainLearner.testlearner)
+  registerS3method("predictLearner", "testlearner", predictLearner.testlearner)
+
+  testlearner = setHyperPars(testlearner, env = environment(trainLearner.testlearner))
+
   testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
   testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
+
+  t = train(testlearner, testtask)
+  predict(t, testtask2)
+  expect_identical(cpotest.parvals, list(1, 3))
 
   cpoMultiplierF = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
@@ -443,7 +452,8 @@ test_that("preprocessing actually changes data", {
 
   testCPO = function(cpoMultiplier, cpoAdder) {
     cpotest.parvals <<- list()  # nolint
-    predict(train(testlearner, testtask), testtask2)
+    t = train(testlearner, testtask)
+    predict(t, testtask2)
     expect_identical(cpotest.parvals, list(1, 3))
 
 
