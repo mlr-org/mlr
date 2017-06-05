@@ -7,18 +7,18 @@ test_that("CPOs can be created", {
 
   expect_class(makeCPOFunctional("testCPO", a: integer(, 1), cpo.trafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOFunctional("testCPO", a = 1: integer(, 1), par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
+  expect_class(makeCPOFunctional("testCPO", a = 1: integer(, 1), .par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOFunctional("testCPO", par.set = paramSetSugar(a: integer(0, 1)), par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
+  expect_class(makeCPOFunctional("testCPO", .par.set = paramSetSugar(a: integer(0, 1)), .par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
 
 
   expect_class(makeCPOObject("testCPO", cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
   expect_class(makeCPOObject("testCPO", a: integer(, 1), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOObject("testCPO", a = 1: integer(, 1), par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
+  expect_class(makeCPOObject("testCPO", a = 1: integer(, 1), .par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOObject("testCPO", par.set = paramSetSugar(a: integer(0, 1)), par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
+  expect_class(makeCPOObject("testCPO", .par.set = paramSetSugar(a: integer(0, 1)), .par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
 })
 
@@ -336,6 +336,7 @@ test_that("Object based CPO Parameter feasibility is checked", {
     a: discrete(a = function() 1, b = function() 2),
     .par.vals = list(a = function() 3),
     cpo.trafo = { }, cpo.retrafo = { }),  "<function> is not feasible for parameter 'a'")
+
 })
 
 test_that("discrete parameters work well", {
@@ -354,7 +355,6 @@ test_that("discrete parameters work well", {
 
   cpoO = makeCPOObject("testCPOO",
     a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
-    .par.vals = list(a = 1, b = 2, d = 1),
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
       control = 0
@@ -522,5 +522,46 @@ test_that("CPO trafo functions work", {
   cpotest.parvals = list()
   predict(t, pid.task)
   expect_identical(cpotest.parvals, list(2, list()))
+
+})
+
+test_that("CPO arguments may be missing if requirements allow", {
+
+  cpoc = makeCPOObject("testCPO", a = FALSE: logical, b: integer(, ) [requires = expression(!!a)],
+    cpo.trafo = {
+      if (!a) {
+        expect_true(missing(b))
+      } else {
+        expect_class(b, "integer")
+      }
+      control = 0
+      data
+    }, cpo.retrafo = {
+      if (!a) {
+        expect_true(missing(b))
+      } else {
+        expect_class(b, "integer")
+      }
+      data
+    })
+
+  train(cpoc() %>>% makeLearner("classif.logreg"), pid.task)
+
+  cpoc = makeCPOFunctional("testCPO", a = FALSE: logical, b: integer(, ) [requires = expression(!!a)],
+    cpo.trafo = {
+      if (!a) {
+        expect_true(missing(b))
+      } else {
+        expect_class(b, "integer")
+      }
+      control = 0
+      attr(data, "retrafo") = function(data) data
+      data
+    })
+
+  train(cpoc() %>>% makeLearner("classif.logreg"), pid.task)
+  expect_error(train(cpoc(a = TRUE) %>>% makeLearner("classif.logreg"), pid.task), "Parameter b .*missing")
+  train(cpoc(a = TRUE, b = 1L) %>>% makeLearner("classif.logreg"), pid.task)
+
 
 })
