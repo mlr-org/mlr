@@ -2,12 +2,13 @@
 ### Creation
 
 #' @export
-makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, cpo.trafo, cpo.retrafo) {
+makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cpo.trafo, cpo.retrafo) {
   # dotted parameter names are necessary to avoid problems with partial argument matching.
   cpo.name = .cpo.name
   par.set = .par.set
   par.vals = .par.vals
   assertString(cpo.name)
+  assertList(par.vals, names = "unique")
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
   }
@@ -24,6 +25,8 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, cpo.
   par.vals = insert(getParamSetDefaults(par.set), par.vals)
 
   assert(length(setdiff(names(par.vals), names(par.set$pars))) == 0)
+
+  checkParamsFeasible(par.set, par.vals)
 
   funargs = lapply(par.set$pars, function(dummy) substitute())
   funargs = insert(funargs, par.vals)
@@ -52,6 +55,7 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, cpo.
       assertString(args$id)
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
+    checkParamsFeasible(par.set, present.pars)
     cpo = makeS3Obj(base::c("CPOObject", "CPOPrimitive", "CPO"),
       barename = cpo.name,
       name = cpo.name,
@@ -178,7 +182,7 @@ setHyperPars2.CPOObject = function(learner, par.vals = list()) {
     stopf("CPO %s does not have parameter%s %s", learner$name,
           ifelse(length(badpars) > 1, "s", ""), collapse(badpars, ", "))
   }
-  # FIXME: feasibility check
+  checkParamsFeasible(learner$par.set, par.vals)
   learner$par.vals = insert(learner$par.vals, par.vals)
   learner
 }

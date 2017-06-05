@@ -2,11 +2,12 @@
 ### Creation
 
 #' @export
-makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, cpo.trafo) {
+makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cpo.trafo) {
   # dotted parameter names are necessary to avoid problems with partial argument matching.
   cpo.name = .cpo.name
   par.set = .par.set
   par.vals = .par.vals
+  assertList(par.vals, names = "unique")
   assertString(cpo.name)
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., pss.env = parent.frame())
@@ -22,6 +23,8 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, 
   par.vals = insert(getParamSetDefaults(par.set), par.vals)
 
   assert(length(setdiff(names(par.vals), names(par.set$pars))) == 0)
+
+  checkParamsFeasible(par.set, par.vals)
 
   funargs = lapply(par.set$pars, function(dummy) substitute())
   funargs = insert(funargs, par.vals)
@@ -43,6 +46,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = NULL, 
     }
 
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
+    checkParamsFeasible(par.set, present.pars)
     par.set = par.set  # get par.set into current env
     outerTrafo = function(task, .par.vals) {
       assertClass(task, "Task")
@@ -197,6 +201,7 @@ setHyperPars2.CPOFunctional = function(learner, par.vals = list()) {
     stopf("CPO %s does not have parameter%s %s", getCPOName(learner),
           ifelse(length(badpars) > 1, "s", ""), coalesce(badpars, ", "))
   }
+  checkParamsFeasible(ps, par.vals)
   pv = getHyperPars(learner)
   pv = insert(pv, par.vals)
   if (!is.null(id)) {

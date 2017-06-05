@@ -140,6 +140,24 @@ namesPresentAssert = function(present, needed, name) {
   }
 }
 
+checkParamsFeasible = function(par.set, par.vals) {
+  # names(par.vals) must be a subset of names(par.set$pars)
+  oobreaction = getMlrOption("on.par.out.of.bounds")
+  if (oobreaction != "quiet") {
+    for (n in names(par.vals)) {
+      if (!isFeasible(par.set$pars[[n]], par.vals[[n]])) {
+        msg = sprintf("%s is not feasible for parameter '%s'!", convertToShortString(par.vals[[n]]), n)
+        if (oobreaction == "stop") {
+          stop(msg)
+        } else {
+          warning(msg)
+        }
+      }
+    }
+  }
+}
+
+
 makeFunction = function(expr, required.arglist, env = parent.frame()) {
   if (is.recursive(expr) && identical(expr[[1]], quote(`{`))) {
     # we have a headless list of expressions
