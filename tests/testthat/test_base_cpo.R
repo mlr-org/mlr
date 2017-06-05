@@ -471,3 +471,56 @@ test_that("preprocessing actually changes data", {
   testCPO(cpoMultiplierO, cpoAdderO)
 
 }
+
+test_that("CPO trafo functions work", {
+
+  expect_error(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(a) { }, cpo.retrafo = function(b, ...) { }), "Must have formal arguments")
+
+  expect_error(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(a, ...) { }, cpo.retrafo = function(b) { }), "Must have formal arguments")
+
+  expect_class(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(a, ...) { }, cpo.retrafo = function(b, ...) { }), "CPOConstructor")
+
+  expect_error(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(a) { }), "Must have formal arguments")
+
+  expect_class(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(a, ...) { }), "CPOConstructor")
+
+  cpotest.parvals = list()
+  t = train(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(data, target, b, ...) {
+      cpotest.parvals <<- list(b, list(...))
+      control = 0
+      data
+    }, cpo.retrafo = function(data, b, ...) {
+      cpotest.parvals <<- list(b, list(...))
+      data
+    })(1, 2) %>>% makeLearner("classif.logreg"), pid.task)
+
+  expect_identical(cpotest.parvals, list(2, list(a = 1)))
+
+  cpotest.parvals = list()
+  predict(t, pid.task)
+  expect_identical(cpotest.parvals, list(2, list(a = 1, control = 0)))
+
+  cpotest.parvals = list()
+  t = train(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
+    cpo.trafo = function(data, target, b, ...) {
+      cpotest.parvals <<- list(b, list(...))
+      attr(data, "retrafo") = function(data, ...) {
+        cpotest.parvals <<- list(b, list(...))
+        data
+      }
+      data
+    })(1, 2) %>>% makeLearner("classif.logreg"), pid.task)
+
+  expect_identical(cpotest.parvals, list(2, list(a = 1)))
+
+  cpotest.parvals = list()
+  predict(t, pid.task)
+  expect_identical(cpotest.parvals, list(2, list()))
+
+})
