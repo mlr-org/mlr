@@ -65,7 +65,7 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
 
 checkPredictLearnerOutput = function(learner, model, p) {
   cl = class(p)[1L]
-  if (learner$type == "classif") {
+  if (learner$type %in% c("oneclass", "classif")) {
     levs = model$task.desc$class.levels
     if (learner$predict.type == "response") {
       # the levels of the predicted classes might not be complete....
