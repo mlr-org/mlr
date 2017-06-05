@@ -151,6 +151,13 @@ predictLearner.CPOFunctionalLearner = function(.learner, .model, .newdata, ...) 
   NextMethod(.newdata = .newdata)
 }
 
+#' @export
+applyCPO.CPOFunctional = function(cpo, task) {
+  task = cpo(task)
+  attr(task, "retrafo") = NULL
+  task
+}
+
 ### IDs, ParamSets
 
 setCPOId.CPOFunctional = function(cpo, id) {

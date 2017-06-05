@@ -70,7 +70,7 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cp
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
 }
 
-### Compose, Attach
+### Compose, Attach, Apply
 
 #' @export
 composeCPO.CPOObject = function(cpo1, cpo2) {
@@ -128,6 +128,12 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
   args = .learner$par.vals
   .newdata = callCPORetrafo(cpo, args, .newdata, .model$learner.model$control)
   NextMethod(.newdata = .newdata)
+}
+
+#' @export
+applyCPO.CPOObject = function(cpo, task) {
+  transformed = callCPOTrafo(cpo, getHyperPars(cpo), getTaskData(task), getTaskTargetNames(task))
+  changeData(task, transformed$data)
 }
 
 ### IDs, ParamSets
@@ -258,3 +264,4 @@ callCPORetrafo = function(cpo, args, data, control) {
   assertRetrafoResult(result, cpo$name)
   result
 }
+

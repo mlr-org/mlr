@@ -596,3 +596,86 @@ test_that("CPO arguments may be missing if requirements allow", {
 
   expect_identical(getParamSet(cpoc(a = TRUE, id = "test"))$pars$test.b$requires, quote(!!test.a))
 })
+
+test_that("CPOs can be applied to data", {
+
+  testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
+  testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
+
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
+    if (length(target)) {
+      expect_identical(data[[target]], factor(c("a", "b")))
+    }
+    data[[1]] = data[[1]] * factor
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] / factor
+      data
+    }
+    data
+  })
+
+  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
+    if (length(target)) {
+      expect_identical(data[[target]], factor(c("a", "b")))
+    }
+    meandata = mean(data[[1]])
+    data[[1]] = data[[1]] + summand
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] - summand - meandata
+      data
+    }
+    data
+  })
+
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
+    if (length(target)) {
+      expect_identical(data[[target]], factor(c("a", "b")))
+    }
+    data[[1]] = data[[1]] * factor
+    control = 0
+    data
+  }, cpo.retrafo = {
+    data[[1]] = data[[1]] / factor
+    data
+  })
+
+
+  cpoadder.o = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
+    if (length(target)) {
+      expect_identical(data[[target]], factor(c("a", "b")))
+    }
+    control = mean(data[[1]])
+    data[[1]] = data[[1]] + summand
+    data
+  }, cpo.retrafo = {
+    data[[1]] = data[[1]] - summand - control
+    data
+  })
+
+  expect_identical(getTaskData(testtask %>>% cpomultiplier.f(10))$A, c(10, 20))
+  expect_identical(getTaskData(testtask %>>% cpoadder.f(10))$A, c(11, 12))
+  expect_identical(getTaskData(testtask %>>% cpoadder.f(10) %>>% cpomultiplier.f(10))$A, c(110, 120))
+  expect_identical(getTaskData(testtask %>>% (cpoadder.f(10) %>>% cpomultiplier.f(10)))$A, c(110, 120))
+
+
+  expect_identical(getTaskData(testtask %>>% cpomultiplier.o(10))$A, c(10, 20))
+  expect_identical(getTaskData(testtask %>>% cpoadder.o(10))$A, c(11, 12))
+  expect_identical(getTaskData(testtask %>>% cpoadder.o(10) %>>% cpomultiplier.o(10))$A, c(110, 120))
+  expect_identical(getTaskData(testtask %>>% (cpoadder.o(10) %>>% cpomultiplier.o(10)))$A, c(110, 120))
+
+  testdata = data.frame(A = c(1, 2))
+
+  testdata %>>% cpomultiplier.f(10)
+
+  expect_identical((testdata %>>% cpomultiplier.f(10))$A, c(10, 20))
+  expect_identical((testdata %>>% cpoadder.f(10))$A, c(11, 12))
+  expect_identical((testdata %>>% cpoadder.f(10) %>>% cpomultiplier.f(10))$A, c(110, 120))
+  expect_identical((testdata %>>% (cpoadder.f(10) %>>% cpomultiplier.f(10)))$A, c(110, 120))
+
+
+  expect_identical((testdata %>>% cpomultiplier.o(10))$A, c(10, 20))
+  expect_identical((testdata %>>% cpoadder.o(10))$A, c(11, 12))
+  expect_identical((testdata %>>% cpoadder.o(10) %>>% cpomultiplier.o(10))$A, c(110, 120))
+  expect_identical((testdata %>>% (cpoadder.o(10) %>>% cpomultiplier.o(10)))$A, c(110, 120))
+
+})

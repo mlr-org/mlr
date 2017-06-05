@@ -14,6 +14,28 @@
 }
 
 #' @export
+`%>>%.data.frame` = function(data, cpo2) {
+  name = deparse(substitute(data), 20)[1]
+  getTaskData(makeClusterTask(name, data) %>>% cpo2)
+}
+
+#' @export
+`%>>%.Task` = function(data, cpo2) {
+  if ("RLearner" %in% class(cpo2)) {
+    stopf("%s\n%s\n%s\n%s",
+      "Cannot pipe data into learner!",
+      "If you called 'data %>>% preproc %>>% learner', you probably meant",
+      "train(preproc %>>% learner, data). Note that this is different from",
+      "'train(learner, data %>>% preproc), which is usually not what you want.")
+  } else if ("CPO" %in% class(cpo2)) {
+    applyCPO(cpo2, data)
+  } else {
+    stop("Cannot compose data with object of class c(%s)", paste0('"', class(obj2), '"', collapse = ", "))
+  }
+}
+
+
+#' @export
 `%>>%.CPOConstructor` = function(cpo1, cpo2) {
   stop("Cannot compose CPO Constructors.")
 }
@@ -45,6 +67,13 @@ composeCPO = function(cpo1, cpo2) {
 #' @export
 attachCPO = function(cpo, learner) {
   UseMethod("attachCPO")
+}
+
+#' CPO Applicatin
+#'
+#' @export
+applyCPO = function(cpo, task) {
+  UseMethod("applyCPO")
 }
 
 #' @export
