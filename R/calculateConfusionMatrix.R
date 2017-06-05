@@ -48,7 +48,6 @@
 calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   checkPrediction(pred, task.type = c("oneclass", "classif"), check.truth = TRUE, no.na = TRUE)
 
-
   assertFlag(relative)
   assertFlag(sums)
   cls = getTaskClassLevels(pred$task.desc)
