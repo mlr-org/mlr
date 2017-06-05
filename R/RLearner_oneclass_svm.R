@@ -1,5 +1,3 @@
-# svm currently can't predict probabilities only response
-
 #' @export
 makeRLearner.oneclass.svm = function() {
   makeRLearnerOneClass(

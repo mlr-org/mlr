@@ -19,7 +19,7 @@ makeRLearner.oneclass.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L)
     ),
-    properties =  c("oneclass", "numerics", "factors"),
+    properties =  c("oneclass", "numerics", "factors", "prob"),
     note = "'type' is set to 'one-svc'",
     name = "one-class kernlab-based SVM",
     short.name = "ksvm",
@@ -44,11 +44,16 @@ trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NULL, ...) {
-  # ksvm currently can't predict probabilities only response
-  p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   td = getTaskDesc(.model)
+  label = c(td$positive, td$negative)
   if (.learner$predict.type == "response") {
-    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+    p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "response", ...)
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
+  } else {
+    p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "decision", ...)
+    p = convertingScoresToProbability(p, parainit = c(1, 0))
+    p = cbind(p, 1-p)
+    colnames(p) = label
   }
   return(p)
 }
