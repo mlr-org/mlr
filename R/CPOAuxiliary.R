@@ -130,7 +130,16 @@ noMissingAssert = function(paramlist) {
   })
 }
 
-namesPresentAssert = function(present, needed, name) {
+subsetParams = function(par.vals, par.set, name) {
+
+  # these parameters are either present or have fulfilled requirements
+  needed = names(Filter(function(x) {
+    x$id %in% names(par.vals) ||
+          is.null(x$requires) || isTRUE(try(eval(x$requires, envir = par.vals), silent = TRUE))
+  }, par.set$pars))
+
+  present = names(par.vals)
+
   missing.pars = setdiff(needed, present)
   if (length(missing.pars)) {
     plur = length(missing.pars) > 1
@@ -138,6 +147,8 @@ namesPresentAssert = function(present, needed, name) {
       collapse(missing.pars, sep = ", "), name, ifelse(plur, "are", "is"),
       "Either give it during construction, or with setHyperPars.")
   }
+
+  par.vals[needed]
 }
 
 checkParamsFeasible = function(par.set, par.vals) {

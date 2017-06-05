@@ -227,9 +227,10 @@ assertRetrafoResult = function(result, name) {
 # filter args for the arguments relevant for cpo
 # then add whatever is in '...'.
 subsetCPOArgs = function(cpo, args, ...) {
-  namesPresentAssert(names(args), names(cpo$par.set$pars), cpo$name)
-  args = args[names(cpo$par.set$pars)]
-  names(args) = cpo$bare.par.names
+  args = subsetParams(args, cpo$par.set, cpo$name)
+  namestranslation = cpo$bare.par.names
+  names(namestranslation) = names(cpo$par.set$pars)
+  names(args) = namestranslation[names(args)]
   insert(args, list(...))
 }
 

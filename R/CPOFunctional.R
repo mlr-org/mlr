@@ -50,9 +50,8 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
     par.set = par.set  # get par.set into current env
     outerTrafo = function(task, .par.vals) {
       assertClass(task, "Task")
-      namesPresentAssert(names(.par.vals), names(par.set$pars), cpo.name)
 
-      args = .par.vals[names(par.set$pars)]
+      args = subsetParams(.par.vals, par.set, cpo.name)
 
       args$data = getTaskData(task)
       args$target = getTaskTargetNames(task)
