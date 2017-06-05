@@ -10,12 +10,12 @@
 #' @references Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
 #' @examples
 #'
-#' # Data = data[, 1:4] # find better dataset later
-#' svm.model <- svm(Data, y = NULL, type = 'one-classification', kernel = "radial", nu = 0.05)
+#' Data = iris[, 1:4] # find better dataset later
+#' svm.model <- e1071::svm(Data, y = NULL, type = 'one-classification', kernel = "radial", nu = 0.05)
 #  svm.pred <- predict(svm.model, Data)
 #' dv = svm.model$decision.values
-#' prop = convertingScoresToProbability(dv, parainit = c(0, 1), method = "sigmoid")
-#' plot(1:length(prop$probability), prop$probability, ylim = c(0, 1))
+#' prob = convertingScoresToProbability(dv, parainit = c(0, 1))
+#' plot(1:length(prob), prob, ylim = c(0, 1))
 #'
 convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100){
   f = anomaly.score
@@ -42,7 +42,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       c(gA(p), gB(p))
     }
 
-    optim = trust.optim(p, fn = LL, gr = g,  method = "BFGS", control = list(report.level = 0, maxit = max.iter))
+    optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS", control = list(report.level = 0, maxit = max.iter))
     pnew = optim$solution
     diff = sum(abs(pnew - p))
 
