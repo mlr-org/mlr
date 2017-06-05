@@ -39,16 +39,13 @@ getPredictionProbabilities = function(pred, cl) {
     } else if (ttype == "multilabel") {
       cl = pred$task.desc$class.levels
     } else if (ttype == "oneclass") {
-      cl = pred$task.desc$positive
+      cl = pred$task.desc$class.levels
     }
   } else {
     if (ttype == "cluster")
       stopf("You can only ask for probs of all classes currently in clustering!")
     else
       assertCharacter(cl, any.missing = FALSE)
-  }
-  if ( ttype == "oneclass") {
-    cl = pred$task.desc$positive
   }
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
