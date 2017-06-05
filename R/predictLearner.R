@@ -65,7 +65,7 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
 
 checkPredictLearnerOutput = function(learner, model, p) {
   cl = class(p)[1L]
-  if (learner$type == "classif") {
+  if (learner$type %in% c("oneclass", "classif")) {
     levs = model$task.desc$class.levels
     if (learner$predict.type == "response") {
       # the levels of the predicted classes might not be complete....
@@ -116,6 +116,27 @@ checkPredictLearnerOutput = function(learner, model, p) {
      } else if (learner$predict.type == "prob") {
       if (!(is.matrix(p) && typeof(p) == "double"))
         stopf("predictLearner for %s has returned a class %s instead of a numerical matrix!", learner$id, cl)
+    }
+   }  else if (learner$type == "oneclass") {
+    levs = model$task.desc$class.levels
+    if (learner$predict.type == "response") {
+      # the levels of the predicted classes might not be complete....
+      # be sure to add the levels at the end, otherwise data gets changed!!!
+      if (!is.factor(p))
+        stopf("predictLearner for %s has returned a class %s instead of a factor!", learner$id, cl)
+      levs2 = levels(p)
+      if (length(levs2) != length(levs) || any(levs != levs2))
+        p = factor(p, levels = levs2)
+    } else if (learner$predict.type == "prob") {
+       if (!is.matrix(p))
+         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+      cns = colnames(p)
+      if (is.null(cns) || length(cns) == 0L)
+        stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
+          learner$id)
+      if (!(cns %in% levs))
+        stopf("predictLearner for %s has returned not the class levels as column names: %s",
+          learner$id, collapse(colnames(p)))
     }
   }
   return(p)
