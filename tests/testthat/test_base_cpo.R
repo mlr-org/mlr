@@ -336,9 +336,7 @@ test_that("Object based CPO Parameter feasibility is checked", {
     a: discrete(a = function() 1, b = function() 2),
     .par.vals = list(a = function() 3),
     cpo.trafo = { }, cpo.retrafo = { }),  "<function> is not feasible for parameter 'a'")
-
 })
-
 
 test_that("discrete parameters work well", {
   cpotest.parvals = list()
@@ -379,3 +377,97 @@ test_that("discrete parameters work well", {
   testCPO(cpoF)
   testCPO(cpoO)
 })
+
+test_that("preprocessing actually changes data", {
+
+  cpotest.parvals = list()
+
+  testlearner = makeRLearnerClassif("testlearner", package = character(0), par.set = paramSetSugar(),
+    properties = c("twoclass", "multiclass", "numerics", "factors"))
+  testlearner$fix.factors.prediction = TRUE
+
+  trainLearner.testlearner = function(.learner, .task, .subset, .weights = NULL, ...) {
+    cpotest.parvals <<- c(cpotest.parvals, getTaskData(.task)[1, 1])  # nolint
+    getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1]
+  }
+
+  predictLearner.testlearner = function(.learner, .model, .newdata, ...) {
+    cpotest.parvals <<- c(cpotest.parvals, .newdata[1, 1])  # nolint
+    rep(.model$learner.model, nrow(.newdata))
+  }
+
+  testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
+  testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
+
+  cpoMultiplierF = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
+    expect_identical(data[[target]], factor(c("a", "b")))
+    data[[1]] = data[[1]] * factor
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] / factor
+      data
+    }
+    data
+  })
+
+  cpoAdderF = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
+    expect_identical(data[[target]], factor(c("a", "b")))
+    meandata = mean(data[[1]])
+    data[[1]] = data[[1]] + summand
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] - summand - meandata
+      data
+    }
+    data
+  })
+
+  cpoMultiplierO = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
+    expect_identical(data[[target]], factor(c("a", "b")))
+    data[[1]] = data[[1]] * factor
+    control = 0
+    data
+  }, cpo.retrafo = {
+    data[[1]] = data[[1]] / factor
+    data
+  })
+
+
+  cpoAdderO = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
+    expect_identical(data[[target]], factor(c("a", "b")))
+    control = mean(data[[1]])
+    data[[1]] = data[[1]] + summand
+    data
+  }, cpo.retrafo = {
+    data[[1]] = data[[1]] - summand - control
+    data
+  })
+
+  testCPO = function(cpoMultiplier, cpoAdder) {
+    cpotest.parvals <<- list()  # nolint
+    predict(train(testlearner, testtask), testtask2)
+    expect_identical(cpotest.parvals, list(1, 3))
+
+
+    cpotest.parvals <<- list()  # nolint
+    predict(train(cpoMultiplier(10) %>>% testlearner, testtask), testtask2)
+    expect_identical(cpotest.parvals, list(10, 0.3))
+
+    cpotest.parvals <<- list()  # nolint
+    predict(train(cpoAdder(3) %>>% testlearner, testtask), testtask2)
+    expect_identical(cpotest.parvals, list(4, -1.5))
+
+
+    cpotest.parvals <<- list()  # nolint
+    predict(train(cpoAdder(3) %>>% cpoMultiplier(3) %>>% cpoAdder(2, id="second") %>>% cpoMultiplier(10, id="second") %>>% testlearner, testtask), testtask2)
+    # Calculation happening:
+    # Training:
+    #   c(1, 2), +3, *3, +2, *10 -> c(140, 170)
+    #   first adder gets a meandata of 1.5, second adder gets meandata of 13.5
+    # Prediction:
+    #   c(3, 4) - 3 - 1.5, / 3, - 2 - 13.5, / 10 -> c(-1.6, -1.57)
+    expect_identical(cpotest.parvals, list(140, -1.6))
+  }
+
+  testCPO(cpoMultiplierF, cpoAdderF)
+  testCPO(cpoMultiplierO, cpoAdderO)
+
+}
