@@ -31,7 +31,7 @@
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (missing(subset)) {
+  if (missing(subset) || is.null(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
     if (is.logical(subset))

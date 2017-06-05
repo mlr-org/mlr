@@ -201,7 +201,7 @@ rf.importance = makeFilter(
 .FilterRegister[["rf.importance"]] = rf.importance
 .FilterRegister[["rf.importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
 .FilterRegister[["rf.importance"]]$fun = function(...) {
-  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC.rfsrc'")
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForest.importance' (package randomForest) or Filter 'randomForestSRC.rfsrc' (package randomForestSRC)")
   .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
 }
 

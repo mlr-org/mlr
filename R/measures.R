@@ -1108,7 +1108,7 @@ measureFDR = function(truth, response, positive) {
 mcc = makeMeasure(id = "mcc", minimize = FALSE,
   properties = c("classif", "req.pred", "req.truth"), best = 1, worst = -1,
   name = "Matthews correlation coefficient",
-  note = "Defined as sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))",
+  note = "Defined as sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
   fun = function(task, model, pred, feats, extra.args) {
     measureMCC(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
@@ -1122,8 +1122,12 @@ measureMCC = function(truth, response, negative, positive) {
   tp = as.numeric(measureTP(truth, response, positive))
   fn = as.numeric(measureFN(truth, response, negative))
   fp = as.numeric(measureFP(truth, response, positive))
-  (tp * tn - fp * fn) /
-    sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+
+  denom = sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
+  # According to Wikipedia, the denominator can be set arbitrarily if it's 0. 1 seems to make as much sense as anything else.
+  if (denom == 0) denom = 1
+
+  (tp * tn - fp * fn) / denom
 }
 
 #' @export f1

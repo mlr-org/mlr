@@ -259,3 +259,9 @@ constant05Resample = function(...) {
   res$aggr = rep(0.5, length(res$aggr))
   res
 }
+
+# evaluate expr without giving its output.
+quiet = function(expr) {
+  capture.output({ret = expr})
+  ret
+}

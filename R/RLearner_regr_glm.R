@@ -56,9 +56,9 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
     inverse.gaussian = stats::inverse.gaussian(link = make.link(inverse.gaussian.link))
   )
   if (is.null(.weights))
-    m = stats::glm(f, data = d, control = ctrl, family = family, ... )
+    m = stats::glm(f, data = d, control = ctrl, family = family, ...)
   else
-    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ... )
+    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ...)
   return(m)
 }
 
