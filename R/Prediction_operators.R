@@ -38,6 +38,8 @@ getPredictionProbabilities = function(pred, cl) {
         cl = pred$task.desc$class.levels
     } else if (ttype == "multilabel") {
       cl = pred$task.desc$class.levels
+    } else if (ttype == "oneclass") {
+      cl = pred$task.desc$positive
     }
   } else {
     if (ttype == "cluster")

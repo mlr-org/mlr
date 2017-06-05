@@ -1,5 +1,3 @@
-# svm currently can't predict probabilities only response
-
 #' @export
 makeRLearner.oneclass.svm = function() {
   makeRLearnerOneClass(
@@ -18,7 +16,7 @@ makeRLearner.oneclass.svm = function() {
       makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
       makeLogicalVectorLearnerParam(id = "scale", default = TRUE, tunable = TRUE)
     ),
-    properties =  c("oneclass", "numerics", "factors"),
+    properties =  c("oneclass", "numerics", "factors", "prob"),
     note = "'type' is set to 'one-classification'",
     name = "one-class SVM (libsvm)",
     short.name = "svm",
@@ -34,10 +32,18 @@ trainLearner.oneclass.svm = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, newdata = .newdata, ...)
   td = getTaskDesc(.model)
-  if (.learner$predict.type == "response")
-    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+  label = c(td$positive, td$negative)
+  if (.learner$predict.type == "response") {
+    p = predict(.model$learner.model, newdata = .newdata, ...)
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
+  } else {
+    p = predict(.model$learner.model, newdata = .newdata, decision.values = TRUE, ...)
+    p = attr(p, "decision.values")
+    p = convertingScoresToProbability(p, parainit = c(1, 0))
+    p = cbind(p, 1-p)
+    colnames(p) = label
+  }
   return(p)
 }
 

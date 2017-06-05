@@ -177,62 +177,23 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
   return(p)
 }
 
-#' @export
-# makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL, ...) {
-  # data = namedList(c("id", "truth", "response", "prob"))
-  # data$id = id
-  # # truth can come from a simple "newdata" df. then there might not be all factor levels present
-  # if (!is.null(truth)) {
-  #   levels(truth) = union(levels(truth), task.desc$class.levels)
-  #   data$truth = truth
-  # }
-  # if (predict.type == "response") {
-  #   data$response = y
-  #   data = as.data.frame(filterNull(data))
-  # } else {
-  #   data$prob = y
-  #   data = as.data.frame(filterNull(data))
-  #   # fix columnnames for prob if strange chars are in factor levels
-  #   indices = stri_detect_fixed(names(data), "prob.")
-  #
-  #   # HACK need to create colnames with prob.TRUE for the normal class
-  #   # otherwise getPredictionProbabilities() will throw an error
-  #   # otherwise getPredictionProbabilities() will throw an error:
-  #   # "Trying to get probabilities for nonexistant classes: %s", collapse(cl) (line 56)
-  #   indices = stri_detect_fixed(names(data), colnames(y))
-  #   if (sum(indices) > 0) #?
-  #     # can't be named "Reconstruction.MSE", it needs be named like follow,
-  #     # otherwise getPredictionProbabilitie() can't get the prob
-  #     names(data)[indices] = stri_paste("prob.", colnames(y))
-  # }
-  #
-  # p = makeS3Obj(c("PredictionOneClass", "Prediction"),
-  #   predict.type = predict.type,
-  #   data = setRowNames(data, row.names),
-  #   threshold = NA_real_,
-  #   task.desc = task.desc,
-  #   time = time,
-  #   error = error
-  # )
-  # if (predict.type == "prob") {
-  #   # set default threshold to the 95% quantile of the mse reconstruction error
-  #   if (is.null(predict.threshold)) {
-  #       indices.threshold = order(y)[round(length(y)*0.95)]  #mse reconstruction error in [0,inf[
-  #
-  #     predict.threshold = y[indices.threshold]
-  #     names(predict.threshold) = task.desc$positive
-  #   }
-  #   p = setThreshold(p, predict.threshold)
-  # }
-  # return(p)
-
 makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
   # we simply inherit from PredictionClassif, as structure is the same
   p = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth, predict.type, predict.threshold, y, time, error, dump)
   addClasses(p, "PredictionOneClass")
 
+  # if we want to set predict.threshold different than classiftask, than shoudl not inherit from ClassifTaskDesc
+  # example to set theshold as the 5% quantile
+  # would like to make it possible to set a quantile instead of a absolut threshold
+  # if (predict.type == "prob") {
+  #   # set default threshold to the 5% quantile
+  #   if (is.null(predict.threshold)) {
+  #     predict.threshold = quantile(y, probs = 0.05)
+  #     names(predict.threshold) = task.desc$positive
+  #   }
+  #   p = setThreshold(p, predict.threshold)
+  # }
 }
-
 
 #' @export
 makePrediction.CostSensTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL, ...) {
