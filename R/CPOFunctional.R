@@ -23,14 +23,14 @@
 #'   If this is a function, it must have the parameters \dQuote{data} and \dQuote{target},
 #'   as well as the parameters specified in \dQuote{...} or \dQuote{.par.set}. (Alternatively,
 #'   the function may have a dotdotdot argument). It must return a \dQuote{data.frame} object
-#'   with an attribute \dQuote{retrafo}. This attribute must be a function with the argument
+#'   with an added \dQuote{\link{retrafo}}. This must be a function with the argument
 #'   \dQuote{data} and return another \dQuote{data.frame}.\cr
 #'   If \dQuote{cpo.trafo} is a list of expressions (preferred), it is turned into a function
 #'   by mlr, with the above mentioned criteria.
 #' @family CPO
 #' @examples
 #' noop = makeCPOFunctional("noop", dummy: logical, cpo.trafo = {
-#'   attr(data, "retrafo") = function(data) data
+#'   retrafo(data) = function(data) data
 #'   data
 #' })
 #'
@@ -83,7 +83,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
     par.set = par.set  # get par.set into current env
     outerTrafo = function(task, .par.vals) {
       assertClass(task, "Task")
-
+      upper.retrafo = retrafo(task)
       args = subsetParams(.par.vals, par.set, cpo.name)
 
       args$data = getTaskData(task)
@@ -91,18 +91,17 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
 
       result = do.call(cpo.trafo, args)
 
-      if (!is.data.frame(result) || is.null(attr(result, "retrafo"))) {
+      if (!is.data.frame(result) || is.null(retrafo(result))) {
         stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame with attribute 'retrafo' (a function).", cpo.name)
       }
-      retrafo = attr(result, "retrafo")
-      attr(result, "retrafo") = NULL
-      assertFunction(retrafo, "data", nargs = 1)
+      retrafo.fn = retrafo(result)
+      retrafo(result) = NULL
+      assertFunction(retrafo.fn, "data", nargs = 1)
 
-      upper.retrafo = attr(task, "retrafo")
       if (!is.null(upper.retrafo)) {
         assertFunction(upper.retrafo, "data", nargs = 1)
-        lower.retrafo = retrafo
-        retrafo = function(data) {
+        lower.retrafo = retrafo.fn
+        retrafo.fn = function(data) {
           lower.retrafo(upper.retrafo(data))
         }
       }
@@ -115,7 +114,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
         if (wasTask) {
           data = getTaskData(data)
         }
-        result = retrafo(data)
+        result = retrafo.fn(data)
         if (!is.data.frame(result)) {
           stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", cpo.name)
         }
@@ -179,8 +178,8 @@ trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ..
   args = .learner$par.vals
   cpo = setHyperPars(.learner$cpo, par.vals = args)
   .task = cpo(subsetTask(.task, .subset))
-  retrafo = attr(.task, "retrafo")
-  attr(cpo, "retrafo") = NULL
+  retrafo = retrafo(.task)
+  retrafo(cpo) = NULL
   model = makeChainModel(train(.learner$next.learner, .task), c("CPOFunctionalModel", "CPOModel"))
   model$retrafo = retrafo
   model

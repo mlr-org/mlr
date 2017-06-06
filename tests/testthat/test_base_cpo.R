@@ -679,3 +679,6 @@ test_that("CPOs can be applied to data", {
   expect_identical((testdata %>>% (cpoadder.o(10) %>>% cpomultiplier.o(10)))$A, c(110, 120))
 
 })
+
+# test what happens when trafo returns bad value
+# test what happens when retrafo returns bad value
