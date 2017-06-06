@@ -1,4 +1,3 @@
-
 #' @title Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s
 #'
 #' @description
@@ -11,10 +10,10 @@
 #' \dQuote{= default} Determines the 'default' setting
 #' in \dQuote{makeXXXLearnerParam}. Note that this is different from an R function parameter
 #' default value, in that it serves only as information to the user and does not set the
-#' parameter to this value if it is not given. To define `no default`, use a dot (\dQuote{.}) or
+#' parameter to this value if it is not given. To define `no default`, use NA or
 #' leave the \dQuote{= default} part out. Leaving it out can cause problems when R's static
 #' type checker verifies a package, so this is *only* recommended for interactive sessions
-#' and top-level applications!
+#' and top-level applications! (To actually set a parameter default to NA, put it in parentheses)
 #'
 #' \dQuote{type} is one of
 #' \dQuote{integer}, \dQuote{numeric}, \dQuote{logical}, \dQuote{discrete}.
@@ -27,8 +26,9 @@
 #' \dQuote{range} is of the form \code{[lowBound, upBound]}, where \dQuote{lowBound}
 #' and \dQuote{upBound} must either be numerical (or integer) values indicating the
 #' lower and upper bound, or may be missing (indicating the absence of a bound). To indicate
-#' an exclusive bound, prefix the values with a tilda (\dQuote{~}). For a "numeric" variable, to
-#' indicate an unbounded value which may not be infinite, use a dot (\dQuote{.}).
+#' an exclusive bound, prefix the values with a tilde (\dQuote{~}). For a "numeric" variable, to
+#' indicate an unbounded value which may not be infinite, you can use \code{~Inf} resp \code{~-Inf},
+#' or use tilde-dot (\dQuote{~.}).
 #'
 #' \dQuote{^ dimension} may be absent, resulting in a normal \dQuote{LearnerParam}, or present,
 #' resulting in a \dQuote{VectorLearnerParam}. Note that a one-dimensional \dQuote{VectorLearnerParam}
@@ -170,8 +170,19 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
   quasi.inf = .Machine$double.xmax
   parse.bound = function(expr, lower) {
     if (is.recursive(expr) && identical(expr[[1]], quote(`~`))) {
-      value = eval(expr[[2]], envir = pss.env)
-      if (ptype == "integer") {
+      if (length(expr) == 2 &&  identical(expr[[2]], quote(`.`))) {
+        value = ifelse(lower, -Inf, Inf)
+      } else {
+        value = eval(expr[[2]], envir = pss.env)
+      }
+      if (is.infinite(value)) {
+        if (ptype == "integer") {
+          formerr(pstring, '"."-bounds (unbounded but excluding "Inf") are only allowed for "numeric" variables.')
+        }
+        if ((value < 0) == lower) {
+          value = ifelse(lower, -quasi.inf, quasi.inf)
+        }
+      } else if (ptype == "integer") {
         value = value + ifelse(lower, 1, -1)
       } else {
         if (value == 0) {
@@ -181,15 +192,6 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
           value = value + epsilon * value
         }
       }
-    } else if (identical(expr, quote(`.`)) ||
-               (is.recursive(expr) && identical(expr[[1]], quote(`.`)))) {
-      if (length(expr) > 1) {
-        formerr(pstring, "invalid numeric / integer range")
-      }
-      if (ptype == "integer") {
-        formerr(pstring, '"."-bounds (unbounded but excluding "Inf") are only allowed for "numeric" variables.')
-      }
-      value = ifelse(lower, -quasi.inf, quasi.inf)
     } else if (identical(expr, substitute())) {
       if (length(expr) > 1) {
         formerr(pstring, "invalid numeric / integer range")
@@ -244,7 +246,7 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
     constructor.params$id = as.character(thispar[[2]])
   } else {
     constructor.params$id = name
-    if (!identical(thispar[[2]], quote(.))) {
+    if (!identical(thispar[[2]], NA)) {
       constructor.params$default = eval(thispar[[2]], envir = pss.env)
     }
   }

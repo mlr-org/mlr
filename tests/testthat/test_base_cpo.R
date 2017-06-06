@@ -36,7 +36,6 @@ test_that("CPO with no parameters don't crash", {
   }, cpo.retrafo = {
     data
   })
-ecpo = emptycpo.f
 
   testCPO = function(ecpo) {
     assert_class(ecpo(), "CPO")
@@ -408,7 +407,7 @@ test_that("preprocessing actually changes data", {
   predict(t, testtask2)
   expect_identical(cpotest.parvals, list(1, 3))
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[., .], cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     data[[1]] = data[[1]] * factor
     attr(data, "retrafo") = function(data) {
@@ -429,7 +428,7 @@ test_that("preprocessing actually changes data", {
     data
   })
 
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[., .], cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     data[[1]] = data[[1]] * factor
     control = 0
@@ -602,7 +601,7 @@ test_that("CPOs can be applied to data", {
   testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
   testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[., .], cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -627,7 +626,7 @@ test_that("CPOs can be applied to data", {
     data
   })
 
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[., .], cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -730,7 +729,7 @@ test_that("retrafo accessor does what it is supposed to do", {
   predict(t, testtask2)
   expect_identical(cpotest.parvals, list(1, 3))
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[., .], cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -755,7 +754,7 @@ test_that("retrafo accessor does what it is supposed to do", {
     data
   })
 
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[., .], cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
