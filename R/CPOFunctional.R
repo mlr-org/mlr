@@ -75,7 +75,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
     args = eval(args, envir = parent.frame())
     args = insert(funargs, args)
     if (!is.null(args$id)) {
-      assertString(args$id, .var.name ="id")
+      assertString(args$id, .var.name = "id")
     }
 
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
@@ -109,16 +109,16 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
       task = changeData(task, result)
 
       retrafo(task) = function(data) {
-        wasTask = "Task" %in% class(data)
+        was.task = "Task" %in% class(data)
         task = data
-        if (wasTask) {
+        if (was.task) {
           data = getTaskData(data, target.extra = TRUE)$data
         }
         result = retrafo.fn(data)
         if (!is.data.frame(result)) {
           stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", cpo.name)
         }
-        if (wasTask) {
+        if (was.task) {
           newdata = getTaskData(task)
           newdata[getTaskFeatureNames(task)] = result
           result = changeData(task, newdata)
@@ -182,7 +182,7 @@ trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ..
   .task = cpo(subsetTask(.task, .subset))
   retrafo = retrafo(.task)
   retrafo(.task) = NULL
-  model = makeChainModel(train(.learner$next.learner, .task), c("CPOFunctionalWrappedModel"))
+  model = makeChainModel(train(.learner$next.learner, .task), "CPOFunctionalWrappedModel")
   model$retrafo = retrafo
   model
 }
