@@ -137,7 +137,6 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
   }
 }
 
-
 testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tune.predict = predict) {
   requirePackages("e1071", default.method = "load")
   data = df
