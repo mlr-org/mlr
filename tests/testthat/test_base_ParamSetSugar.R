@@ -26,7 +26,7 @@ test_that("ParamSetSugar generates the expected ParamSets", {
         paramSetSugar(a = 1: numeric(, ) [tunable = FALSE],
           b = 2: numeric(0, ),
           c: numeric(., x - 10) ^ (2 + 1) [special.vals = list(1 - 2)],
-          d = c(1 / 2, 0.5): numeric(0, 1)^2 [requires = expression(a == 0), allow.inf = FALSE], pss.learner.params = FALSE)),
+          d = c(1 / 2, 0.5): numeric(0, 1)^2 [requires = expression(a == 0), allow.inf = FALSE], .pss.learner.params = FALSE)),
       list(makeParamSet(),
         paramSetSugar())
   )
@@ -92,7 +92,7 @@ test_that("ParamSetSugar works when called indirectly", {
 
   pss2 = function(..., env) {
     x = 3
-    paramSetSugar(..., pss.env = env)
+    paramSetSugar(..., .pss.env = env)
   }
 
   pss1 = function(...) {
@@ -101,7 +101,7 @@ test_that("ParamSetSugar works when called indirectly", {
   }
 
   x = 1
-  expect_identical(pss1(pss.learner.params = FALSE, a = x: integer(x, x * 2)^x [tunable = (x == 2)]),
+  expect_identical(pss1(.pss.learner.params = FALSE, a = x: integer(x, x * 2)^x [tunable = (x == 2)]),
     makeParamSet(makeIntegerVectorParam("a", 1, 1, 2, default = 1, tunable = FALSE)))
 })
 
