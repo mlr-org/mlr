@@ -75,7 +75,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
     args = eval(args, envir = parent.frame())
     args = insert(funargs, args)
     if (!is.null(args$id)) {
-      assertString(args$id, .var.name("id"))
+      assertString(args$id, .var.name ="id")
     }
 
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
