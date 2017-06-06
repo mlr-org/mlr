@@ -36,7 +36,7 @@ plotOutlierProbabilities = function(pred) {
     geom_hline(aes(yintercept = th, linetype = "setted threshold")) +
     scale_linetype_manual(name = "", values = 1, guide = guide_legend()) +
     aes(shape = factor(truth, levels = c("TRUE", "FALSE"), labels = c("21", "24")), fill = predictedResponse) + guides(fill=FALSE) +
-    scale_shape_manual(name = "prediction != truth", labels = c("TRUE", "FALSE"), values = c(21, 24))
+    scale_shape_manual(name = "truth", labels = c("TRUE", "FALSE"), values = c(21, 24))
 
   # plot white borders for false predicted values
   sub = subset(df, df$.err)
