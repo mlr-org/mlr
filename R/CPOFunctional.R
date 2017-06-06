@@ -75,7 +75,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
     args = eval(args, envir = parent.frame())
     args = insert(funargs, args)
     if (!is.null(args$id)) {
-      assertString(args$id)
+      assertString(args$id, .var.name("id"))
     }
 
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
@@ -96,10 +96,10 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
       }
       retrafo.fn = retrafo(result)
       retrafo(result) = NULL
-      assertFunction(retrafo.fn, nargs = 1)
+      assertFunction(retrafo.fn, nargs = 1, .var.name = "retrafo(<CPO trafo result>)")
 
       if (!is.null(upper.retrafo)) {
-        assertFunction(upper.retrafo, nargs = 1)
+        assertFunction(upper.retrafo, nargs = 1, .var.name = "retrafo(task)")
         lower.retrafo = retrafo.fn
         retrafo.fn = function(data) {
           lower.retrafo(upper.retrafo(data))
