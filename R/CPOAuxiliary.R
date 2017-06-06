@@ -176,6 +176,88 @@ getCPOName = function(cpo) {
   UseMethod("getCPOName")
 }
 
+#' @title Get the Retransformation function from a resulting object
+#'
+#' @description
+#' When applying a CPO to a \code{data.frame} or \code{\link{Task}},
+#' the data is not only changed, additionally a retransformation
+#' function is created that can be applied to other data of the same
+#' kind.
+#'
+#' For example, when performing PCA on training data, the rotation
+#' matrix is saved and can be used on new (prediction) data.
+#'
+#' \dQuote{retrafo} retrieves a function that can be applied to new
+#' data sets and \code{Task}s.
+#'
+#' When chaining \code{\link{\%>>\%}} on a data object, the retrafo
+#' associated with the result is also chained automatically. Beware,
+#' however, that this just accesses the retrafu function with
+#' \code{retrafo} internally. Therefore, if you plan to do apply
+#' multiple transformations with certain operations in between,
+#' make sure to reset the retrafo function by setting it to \code{NULL}.
+#' See examples.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
+#'
+#' @return [\code{function}]\cr
+#'   The retransformation function that can be applied to new data.
+#'
+#' @examples
+#' traindat = subsetTask(pid.task, 1:400)
+#' preddat = subsetTask(pid.task, 401:768)
+#'
+#' trained = traindat %>>% cpoPca()
+#' reFun = retrafo(trained)
+#' predicted = reFun(preddat)
+#'
+#' # chaining works
+#' trained = traindat %>>% cpoPca(FALSE, FALSE) %>>% cpoScale()
+#' reFun = retrafo(trained)
+#' predicted = reFun(preddat)
+#'
+#' # reset the retrafo when doing other steps!
+#' trained.tmp = traindat %>>% cpoPca(FALSE, FALSE)
+#' reFun1 = retrafo(trained.tmp)
+#'
+#' imp = impute(trained.tmp)
+#' trained.tmp = imp$task  # nonsensical example
+#' retrafo(trained.tmp) = NULL  # NECESSARY HERE
+#'
+#' trained = trained.tmp %>>% cpoScale()
+#'
+#' reFun2 = retrafo(trained)
+#' predicted = reFun2(reimpute(reFun1(preddat), imp$desc))
+#' @family CPO
+#' @export
+retrafo = function(data) {
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    warningf("data is not a Task or data.frame.\n%s\n%s",
+      "are you sure you are applying it to the result",
+      "of a %>>% transformation?")
+  }
+  attr(data, "retrafo")
+}
+
+#' @title set an object's retransformation
+#'
+#' @description
+#' Set an object's retransformation function, as described
+#' in \code{\link{retrafo}}. Set to \code{NULL} to delete.
+#'
+#' @export
+`retrafo<-` = function(data, value) {
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    warningf("data is not a Task or data.frame.\n%s\n%s",
+      "are you sure you are applying it to the input or",
+      "result of a %>>% transformation?")
+  }
+  if (!is.null(value)) {
+    assertFunction(value, "data", nargs = 1)
+  }
+  attr(data, "retrafo") = value
+}
 
 setCPOId = function(cpo, id) {
   UseMethod("setCPOId")
