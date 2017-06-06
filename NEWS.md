@@ -12,6 +12,7 @@
 
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
+* classif.mxnet now supports probabilities
 
 ## learners - new
 * classif.mxff
@@ -19,6 +20,7 @@
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
 * {classif,regr}.xyf: broke our API, stability issues
+* classif.hdrda: package removed from CRAN
 
 # mlr 2.11:
 
