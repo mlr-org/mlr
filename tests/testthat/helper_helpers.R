@@ -141,7 +141,6 @@ testProbParsets = function(t.name, df, target, positive, negative, train.inds, o
   }
 }
 
-
 testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tune.predict = predict) {
   requirePackages("e1071", default.method = "load")
   data = df
