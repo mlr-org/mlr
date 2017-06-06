@@ -18,24 +18,29 @@ Which environment to use when evaluating expressions. Defaults to the calling
 function's frame.}
 }
 \description{
-The arguments are of the form \code{name = default: type range ^ dimension [settings]}.
+The arguments are of the form
+
+\code{name = default: type range [^ dimension] [settings]}.
 
 \dQuote{name} is any valid R identifier name.
 
-\dQuote{= default} may be absent. If present, it determines the 'default' setting
+\dQuote{= default} Determines the 'default' setting
 in \dQuote{makeXXXLearnerParam}. Note that this is different from an R function parameter
 default value, in that it serves only as information to the user and does not set the
-parameter to this value if it is not given.
+parameter to this value if it is not given. To define `no default`, use a dot (\dQuote{.}) or
+leave the \dQuote{= default} part out. Leaving it out can cause problems when R's static
+type checker verifies a package, so this is *only* recommended for interactive sessions
+and top-level applications!
 
 \dQuote{type} is one of
 \dQuote{integer}, \dQuote{numeric}, \dQuote{logical}, \dQuote{discrete}.
 
 \dQuote{range} is absent for type \dQuote{logical}. For \dQuote{discrete},
-it is either \code{(valuelist)} with \dQuote{valuelist} evaluating to a list,
-or of the form \code{(value1, value2, ...)}, creating a discrete parameter of character
+it is either \code{[valuelist]} with \dQuote{valuelist} evaluating to a list,
+or of the form \code{[value1, value2, ...]}, creating a discrete parameter of character
 or numeric values according to \dQuote{value1},
 \dQuote{value2} etc. If \dQuote{type} is one of \dQuote{integer} or \dQuote{numeric},
-\dQuote{range} is of the form \code{(lowBound, upBound)}, where \dQuote{lowBound}
+\dQuote{range} is of the form \code{[lowBound, upBound]}, where \dQuote{lowBound}
 and \dQuote{upBound} must either be numerical (or integer) values indicating the
 lower and upper bound, or may be missing (indicating the absence of a bound). To indicate
 an exclusive bound, prefix the values with a tilda (\dQuote{~}). For a "numeric" variable, to
@@ -45,14 +50,15 @@ indicate an unbounded value which may not be infinite, use a dot (\dQuote{.}).
 resulting in a \dQuote{VectorLearnerParam}. Note that a one-dimensional \dQuote{VectorLearnerParam}
 is distinct from a normal \dQuote{LearnerParam}.
 
-\dQuote{[settings]} may be a collection of further settings to supply to \dQuote{makeXXXLearnerParam}
-and is optional.
+\dQuote{settings} may be a collection of further settings to supply to \dQuote{makeXXXLearnerParam}
+and is optional. To specify a series of settings, put in double square brackets (\dQuote{[[}, \dQuote{]]}),
+and comma-separate settings if more than one is present.
 
 This makes definition of \code{ParamSet}s shorter and more readable.
 }
 \examples{
-paramSetSugar(a: integer (~0, )^2 [requires = expression(b != 0)],
-    b = -10: numeric (., 0), c: discrete (x, y, 1))
+paramSetSugar(a = .: integer [~0, ]^2 [[requires = expression(b != 0)]],
+    b = -10: numeric [., 0], c: discrete [x, y, 1])
 # is equivalent to
 makeParamSet(
     makeIntegerVectorLearnerParam('a', len = 2, lower = 1,  # note exclusive bound

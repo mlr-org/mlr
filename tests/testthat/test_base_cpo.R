@@ -5,20 +5,20 @@ test_that("CPOs can be created", {
 
   expect_class(makeCPOFunctional("testCPO", cpo.trafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOFunctional("testCPO", a: integer(, 1), cpo.trafo = { }), "CPOConstructor")
+  expect_class(makeCPOFunctional("testCPO", a: integer[, 1], cpo.trafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOFunctional("testCPO", a = 1: integer(, 1), .par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
+  expect_class(makeCPOFunctional("testCPO", a = 1: integer[, 1], .par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOFunctional("testCPO", .par.set = paramSetSugar(a: integer(0, 1)), .par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
+  expect_class(makeCPOFunctional("testCPO", .par.set = paramSetSugar(a: integer[0, 1]), .par.vals = list(a = 0), cpo.trafo = { }), "CPOConstructor")
 
 
   expect_class(makeCPOObject("testCPO", cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOObject("testCPO", a: integer(, 1), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
+  expect_class(makeCPOObject("testCPO", a: integer[, 1], cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOObject("testCPO", a = 1: integer(, 1), .par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
+  expect_class(makeCPOObject("testCPO", a = 1: integer[, 1], .par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
-  expect_class(makeCPOObject("testCPO", .par.set = paramSetSugar(a: integer(0, 1)), .par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
+  expect_class(makeCPOObject("testCPO", .par.set = paramSetSugar(a: integer[0, 1]), .par.vals = list(a = 0), cpo.trafo = { }, cpo.retrafo = { }), "CPOConstructor")
 
 })
 
@@ -64,7 +64,7 @@ test_that("CPO parameters behave as expected", {
 
 
   cpof = makeCPOFunctional("testCPOF",
-    a: integer(, ), b = 1: integer(, ), c = 1: integer(, ), d: integer(, ), e: integer(, ),
+    a: integer[, ], b = 1: integer[, ], c = 1: integer[, ], d: integer[, ], e: integer[, ],
     .par.vals = list(a = 1, b = 2, d = 1),
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = e)  # nolint
@@ -73,7 +73,7 @@ test_that("CPO parameters behave as expected", {
     })
 
   cpo2f = makeCPOFunctional("testCPO2F",
-    a: numeric(, ), z: integer(, ), model = TRUE: logical,
+    a: numeric[, ], z: integer[, ], model = TRUE: logical,
     cpo.trafo = {
       cpotest.parvals2 <<- list(a = a, z = z)  # nolint
       attr(data, "retrafo") = function(data) data
@@ -81,7 +81,7 @@ test_that("CPO parameters behave as expected", {
     })
 
   cpo3f = makeCPOFunctional("testCPO3F",
-    f: integer(, ),
+    f: integer[, ],
     cpo.trafo = {
       cpotest.parvals3 <<- c(cpotest.parvals3, f)  # nolint
       attr(data, "retrafo") = function(data) data
@@ -89,7 +89,7 @@ test_that("CPO parameters behave as expected", {
     })
 
   cpoo = makeCPOObject("testCPOO",
-    a: integer(, ), b = 1: integer(, ), c = 1: integer(, ), d: integer(, ), e: integer(, ),
+    a: integer[, ], b = 1: integer[, ], c = 1: integer[, ], d: integer[, ], e: integer[, ],
     .par.vals = list(a = 1, b = 2, d = 1),
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = e)  # nolint
@@ -101,7 +101,7 @@ test_that("CPO parameters behave as expected", {
     })
 
   cpo2o = makeCPOObject("testCPO2O",
-    a: numeric(, ), z: integer(, ), model = TRUE: logical,
+    a: numeric[, ], z: integer[, ], model = TRUE: logical,
     cpo.trafo = {
       cpotest.parvals2 <<- list(a = a, z = z)  # nolint
       control = 0
@@ -112,7 +112,7 @@ test_that("CPO parameters behave as expected", {
     })
 
   cpo3o = makeCPOObject("testCPO3O",
-    f: integer(, ),
+    f: integer[, ],
     cpo.trafo = {
       cpotest.parvals3 <<- c(cpotest.parvals3, f)  # nolint
       control = 0
@@ -216,12 +216,12 @@ test_that("CPO parameters behave as expected", {
 test_that("Functional CPO Parameter feasibility is checked", {
 
   expect_error(makeCPOFunctional("testCPOF",
-    a: integer(, ),
+    a: integer[, ],
     .par.vals = list(a = 1, b = 2),
     cpo.trafo = { }))
 
   cpo = makeCPOFunctional("testCPOF",
-    a: integer(, ), b: integer(, ),
+    a: integer[, ], b: integer[, ],
     .par.vals = list(a = 1, b = 2),
     cpo.trafo = { })
 
@@ -233,12 +233,12 @@ test_that("Functional CPO Parameter feasibility is checked", {
   expect_error(setHyperPars(cpoo, a = 0.4), "is not feasible for parameter 'a'")
 
   expect_error(makeCPOFunctional("testCPOF",
-    a: integer(, ), b: integer(0, 1),
+    a: integer[, ], b: integer[0, 1],
     .par.vals = list(a = 1, b = 2),
     cpo.trafo = { }), "2 is not feasible for parameter 'b'")
 
   cpo = makeCPOFunctional("testCPOF",
-    a: integer(, ), b: integer(0, 1),
+    a: integer[, ], b: integer[0, 1],
     cpo.trafo = { })
 
   expect_error(cpo(1, 2), "2 is not feasible for parameter 'b'")
@@ -247,19 +247,19 @@ test_that("Functional CPO Parameter feasibility is checked", {
   expect_error(setHyperPars(cpoo, b = 3), "is not feasible for parameter 'b'")
 
   expect_error(makeCPOFunctional("testCPOF",
-    a: integer(, ), b = 2: integer(0, 1),
+    a: integer[, ], b = 2: integer[0, 1],
     cpo.trafo = { }), "'default' must be a feasible parameter setting")
 
   makeCPOFunctional("testCPOF",
-    a = (function() 1): discrete(a = function() 1, b = function() 2),
+    a = (function() 1): discrete[a = function() 1, b = function() 2],
     cpo.trafo = { })
 
   expect_error(makeCPOFunctional("testCPOF",
-    a = (function() 3): discrete(a = function() 1, b = function() 2),
+    a = (function() 3): discrete[a = function() 1, b = function() 2],
     cpo.trafo = { }),  "'default' must be a feasible parameter setting")
 
   cpo = makeCPOFunctional("testCPOF",
-    a: discrete(a = function() 1, b = function() 2),
+    a: discrete[a = function() 1, b = function() 2],
     .par.vals = list(a = function() 1),
     cpo.trafo = { })
 
@@ -270,7 +270,7 @@ test_that("Functional CPO Parameter feasibility is checked", {
   expect_error(setHyperPars(cpoo, a = function() 3), "not feasible for parameter 'a'")
 
   expect_error(makeCPOFunctional("testCPOF",
-    a: discrete(a = function() 1, b = function() 2),
+    a: discrete[a = function() 1, b = function() 2],
     .par.vals = list(a = function() 3),
     cpo.trafo = { }),  "<function> is not feasible for parameter 'a'")
 
@@ -279,12 +279,12 @@ test_that("Functional CPO Parameter feasibility is checked", {
 test_that("Object based CPO Parameter feasibility is checked", {
 
   expect_error(makeCPOObject("testCPOO",
-    a: integer(, ),
+    a: integer[, ],
     .par.vals = list(a = 1, b = 2),
     cpo.trafo = { }, cpo.retrafo = { }))
 
   cpo = makeCPOObject("testCPOO",
-    a: integer(, ), b: integer(, ),
+    a: integer[, ], b: integer[, ],
     .par.vals = list(a = 1, b = 2),
     cpo.trafo = { }, cpo.retrafo = { })
 
@@ -296,12 +296,12 @@ test_that("Object based CPO Parameter feasibility is checked", {
   expect_error(setHyperPars(cpoo, a = 0.4), "is not feasible for parameter 'a'")
 
   expect_error(makeCPOObject("testCPOO",
-    a: integer(, ), b: integer(0, 1),
+    a: integer[, ], b: integer[0, 1],
     .par.vals = list(a = 1, b = 2),
     cpo.trafo = { }, cpo.retrafo = { }), "2 is not feasible for parameter 'b'")
 
   cpo = makeCPOObject("testCPOO",
-    a: integer(, ), b: integer(0, 1),
+    a: integer[, ], b: integer[0, 1],
     cpo.trafo = { }, cpo.retrafo = { })
 
   expect_error(cpo(1, 2), "2 is not feasible for parameter 'b'")
@@ -310,19 +310,19 @@ test_that("Object based CPO Parameter feasibility is checked", {
   expect_error(setHyperPars(cpoo, b = 3), "is not feasible for parameter 'b'")
 
   expect_error(makeCPOObject("testCPOO",
-    a: integer(, ), b = 2: integer(0, 1),
+    a: integer[, ], b = 2: integer[0, 1],
     cpo.trafo = { }, cpo.retrafo = { }), "'default' must be a feasible parameter setting")
 
   makeCPOObject("testCPOO",
-    a = (function() 1): discrete(a = function() 1, b = function() 2),
+    a = (function() 1): discrete[a = function() 1, b = function() 2],
     cpo.trafo = { }, cpo.retrafo = { })
 
   expect_error(makeCPOObject("testCPOO",
-    a = (function() 3): discrete(a = function() 1, b = function() 2),
+    a = (function() 3): discrete[a = function() 1, b = function() 2],
     cpo.trafo = { }, cpo.retrafo = { }),  "'default' must be a feasible parameter setting")
 
   cpo = makeCPOObject("testCPOO",
-    a: discrete(a = function() 1, b = function() 2),
+    a: discrete[a = function() 1, b = function() 2],
     .par.vals = list(a = function() 1),
     cpo.trafo = { }, cpo.retrafo = { })
 
@@ -333,7 +333,7 @@ test_that("Object based CPO Parameter feasibility is checked", {
   expect_error(setHyperPars(cpoo, a = function() 3), "not feasible for parameter 'a'")
 
   expect_error(makeCPOObject("testCPOO",
-    a: discrete(a = function() 1, b = function() 2),
+    a: discrete[a = function() 1, b = function() 2],
     .par.vals = list(a = function() 3),
     cpo.trafo = { }, cpo.retrafo = { }),  "<function> is not feasible for parameter 'a'")
 
@@ -346,7 +346,7 @@ test_that("discrete parameters work well", {
   Y = 2
 
   cpof = makeCPOFunctional("testCPOF",
-    a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
+    a: logical, b: discrete[a, b, 1], c = 1: discrete[a, b, 1], d = c(TRUE, TRUE): logical^2, e: discrete[a = function() 1, b = function() Y]^2,
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
       attr(data, "retrafo") = function(data) data
@@ -354,7 +354,7 @@ test_that("discrete parameters work well", {
     })
 
   cpoo = makeCPOObject("testCPOO",
-    a: logical, b: discrete(a, b, 1), c = 1: discrete(a, b, 1), d = c(TRUE, TRUE): logical^2, e: discrete(a = function() 1, b = function() Y)^2,
+    a: logical, b: discrete[a, b, 1], c = 1: discrete[a, b, 1], d = c(TRUE, TRUE): logical^2, e: discrete[a = function() 1, b = function() Y]^2,
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
       control = 0
@@ -408,7 +408,7 @@ test_that("preprocessing actually changes data", {
   predict(t, testtask2)
   expect_identical(cpotest.parvals, list(1, 3))
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[., .], cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     data[[1]] = data[[1]] * factor
     attr(data, "retrafo") = function(data) {
@@ -418,7 +418,7 @@ test_that("preprocessing actually changes data", {
     data
   })
 
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     meandata = mean(data[[1]])
     data[[1]] = data[[1]] + summand
@@ -429,7 +429,7 @@ test_that("preprocessing actually changes data", {
     data
   })
 
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[., .], cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     data[[1]] = data[[1]] * factor
     control = 0
@@ -440,7 +440,7 @@ test_that("preprocessing actually changes data", {
   })
 
 
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
     expect_identical(data[[target]], factor(c("a", "b")))
     control = mean(data[[1]])
     data[[1]] = data[[1]] + summand
@@ -488,23 +488,23 @@ test_that("preprocessing actually changes data", {
 
 test_that("CPO trafo functions work", {
 
-  expect_error(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+  expect_error(makeCPOObject("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(a) { }, cpo.retrafo = function(b, ...) { }), "Must have formal arguments")
 
-  expect_error(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+  expect_error(makeCPOObject("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(a, ...) { }, cpo.retrafo = function(b) { }), "Must have formal arguments")
 
-  expect_class(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+  expect_class(makeCPOObject("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(a, ...) { }, cpo.retrafo = function(b, ...) { }), "CPOConstructor")
 
-  expect_error(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
+  expect_error(makeCPOFunctional("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(a) { }), "Must have formal arguments")
 
-  expect_class(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
+  expect_class(makeCPOFunctional("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(a, ...) { }), "CPOConstructor")
 
   cpotest.parvals = list()
-  t = train(makeCPOObject("testCPO", a: integer(, ), b: integer(, ),
+  t = train(makeCPOObject("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(data, target, b, ...) {
       cpotest.parvals <<- list(b, list(...))  # nolint
       control = 0
@@ -521,7 +521,7 @@ test_that("CPO trafo functions work", {
   expect_identical(cpotest.parvals, list(2, list(a = 1, control = 0)))
 
   cpotest.parvals = list()
-  t = train(makeCPOFunctional("testCPO", a: integer(, ), b: integer(, ),
+  t = train(makeCPOFunctional("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(data, target, b, ...) {
       cpotest.parvals <<- list(b, list(...))  # nolint
       attr(data, "retrafo") = function(data, ...) {
@@ -541,7 +541,7 @@ test_that("CPO trafo functions work", {
 
 test_that("CPO arguments may be missing if requirements allow", {
 
-  cpoc = makeCPOObject("testCPO", a = FALSE: logical, b: integer(, ) [requires = quote(!!a)],
+  cpoc = makeCPOObject("testCPO", a = FALSE: logical, b: integer[, ] [[requires = quote(!!a)]],
     cpo.trafo = {
       if (!a) {
         expect_true(missing(b))
@@ -574,7 +574,7 @@ test_that("CPO arguments may be missing if requirements allow", {
   expect_identical(getParamSet(cpoc(a = TRUE, id = "test"))$pars$test.b$requires, quote(!!test.a))
 
 
-  cpoc = makeCPOFunctional("testCPO", a = FALSE: logical, b: integer(, ) [requires = quote(!!a)],
+  cpoc = makeCPOFunctional("testCPO", a = FALSE: logical, b: integer[, ] [[requires = quote(!!a)]],
     cpo.trafo = {
       if (!a) {
         expect_true(missing(b))
@@ -602,7 +602,7 @@ test_that("CPOs can be applied to data", {
   testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
   testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[., .], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -614,7 +614,7 @@ test_that("CPOs can be applied to data", {
     data
   })
 
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -627,7 +627,7 @@ test_that("CPOs can be applied to data", {
     data
   })
 
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[., .], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -640,7 +640,7 @@ test_that("CPOs can be applied to data", {
   })
 
 
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -730,7 +730,7 @@ test_that("retrafo accessor does what it is supposed to do", {
   predict(t, testtask2)
   expect_identical(cpotest.parvals, list(1, 3))
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[., .], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -742,7 +742,7 @@ test_that("retrafo accessor does what it is supposed to do", {
     data
   })
 
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -755,7 +755,7 @@ test_that("retrafo accessor does what it is supposed to do", {
     data
   })
 
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric(., .), cpo.trafo = {
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[., .], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }
@@ -768,7 +768,7 @@ test_that("retrafo accessor does what it is supposed to do", {
   })
 
 
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer(, ), cpo.trafo = {
+  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
     if (length(target)) {
       expect_identical(data[[target]], factor(c("a", "b")))
     }

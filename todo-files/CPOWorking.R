@@ -3,8 +3,7 @@ library("roxygen2")
 
 roxygenise("..")
 
-
-rm(cpotest.parvals)
+codetools::checkUsagePackage("mlr")
 
 devtools::load_all("..")
 options(error = dump.frames)
@@ -73,5 +72,21 @@ plot(df %>>% cpoPca())
 cpo = cpoPca(scale = FALSE)
 
 setHyperPars(cpo, list(center = FALSE))
+
+
+debugger()
+
+
+
+asat = function(obj, val) {
+  eval.parent(substitute({attr(obj, "retrafo") = val}))
+}
+
+x = 10
+x
+asat(x, 10)
+x
+
+attributes(x)
 
 
