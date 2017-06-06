@@ -157,7 +157,7 @@ trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
   args = .learner$par.vals
   transformed = callCPOTrafo(cpo, args, getTaskData(.task, .subset), getTaskTargetNames(.task))
   .task = changeData(.task, transformed$data)
-  model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectModel")
+  model = makeChainModel(train(.learner$next.learner, .task), c("CPOObjectModel", "CPOModel"))
   model$control = transformed$control
   model
 }
@@ -191,31 +191,8 @@ cpoObjectRetrafo = function(cpo, params, control, prevfun) {
   }
 }
 
-#' @export
-retrafo.CPOObjectModel = function(data) {
-  recurseRetrafo = function(model, prevfun) {
-    resfun = cpoObjectRetrafo(model$learner$cpo, model$learner$par.vals, model$learner.model$control, prevfun)
-    next.model = model$learner.model$next.model
-    if ("BaseWrapperModel" %in% class(next.model)) {
-      if ("CPOObjectModel" %in% class(next.model)) {
-        return(recurseRetrafo(next.model, resfun))
-      }
-      while (!is.null(next.model)) {
-        next.model = model$learner.model$next.model
-        if ("CPOObjectModel" %in% class(next.model)) {
-          warningf("The model apparently is wrapped by CPOs and other wrappers\n%s\n%s",
-            "The resulting retrafo will only cover the operations up to",
-            "This non-CPO wrapper!")
-          break
-        }
-        if (!"BaseWrapperModel" %in% class(next.model)) {
-          break
-        }
-      }
-    }
-    resfun
-  }
-  recurseRetrafo(data, identity)
+singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
+  cpoObjectRetrafo(model$learner$cpo, model$learner$par.vals, model$learner.model$control, prevfun)
 }
 
 ### IDs, ParamSets

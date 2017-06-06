@@ -179,7 +179,7 @@ trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ..
   cpo = setHyperPars(.learner$cpo, par.vals = args)
   .task = cpo(subsetTask(.task, .subset))
   retrafo = retrafo(.task)
-  retrafo(cpo) = NULL
+  retrafo(.task) = NULL
   model = makeChainModel(train(.learner$next.learner, .task), c("CPOFunctionalModel", "CPOModel"))
   model$retrafo = retrafo
   model

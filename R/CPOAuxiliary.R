@@ -241,7 +241,7 @@ retrafo = function(data, default.to.identity = FALSE) {
 }
 
 #' @export
-retrafo.WrappedModel = function(data, default.to.identity) {
+retrafo.WrappedModel = function(data, default.to.identity = FALSE) {
   warning("retrafo of a model not available if the outermost wrapper was not a CPO.")
   if (default.to.identity) {
     identity
@@ -287,8 +287,7 @@ singleModelRetrafo = function(model, prevfun) {
 }
 
 #' @export
-retrafo.default = function(data, default.to.identity) {
-  UseMethod("retrafo")
+retrafo.default = function(data, default.to.identity = FALSE) {
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("data is not a Task or data.frame.\n%s\n%s",
       "are you sure you are applying it to the result",
@@ -324,15 +323,18 @@ retrafo.default = function(data, default.to.identity) {
 
 #' @export
 `retrafo<-.default` = function(data, value) {
+  if (!is.null(value)) {
+    assertFunction(value, nargs = 1)
+  }
   if (!any(c("data.frame", "Task") %in% class(data))) {
-    warningf("data is not a Task or data.frame.\n%s\n%s",
+    warningf("argument is neither a Task nor data.frame.\n%s\n%s",
       "are you sure you are applying it to the input or",
       "result of a %>>% transformation?")
-  }
-  if (!is.null(value)) {
-    assertFunction(value, "data", nargs = 1)
+
   }
   attr(data, "retrafo") = value
+
+  data
 }
 
 setCPOId = function(cpo, id) {
