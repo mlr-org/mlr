@@ -61,12 +61,17 @@ NULL
 #' @export
 `%>>%.data.frame` = function(cpo1, cpo2) {
   name = deparse(substitute(cpo1), 20)[1]
-  getTaskData(makeClusterTask(name, cpo1) %>>% cpo2)
+  task = makeClusterTask(name, cpo1)
+  retrafo(task) = retrafo(cpo1)
+  resulttask = task %>>% cpo2
+  result = getTaskData(resulttask)
+  retrafo(result) = retrafo(resulttask)
+  result
 }
 
 #' @export
 `%>>%.Task` = function(cpo1, cpo2) {
-  if ("RLearner" %in% class(cpo2)) {
+  if ("Learner" %in% class(cpo2)) {
     stopf("%s\n%s\n%s\n%s",
       "Cannot pipe data into learner!",
       "If you called 'data %>>% preproc %>>% learner', you probably meant",
@@ -92,13 +97,13 @@ NULL
   if ("CPO" %in% class(cpo2)) {
     # compose two CPOs
     composeCPO(cpo1, cpo2)
-  } else if ("RLearner" %in% class(cpo2)) {
+  } else if ("Learner" %in% class(cpo2)) {
     # wrap around learner
     attachCPO(cpo1, cpo2)
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
-    stop("Cannot compose CPO with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
+    stopf("Cannot compose CPO with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
 }
 
@@ -260,21 +265,28 @@ retrafo.CPOModel = function(data) {
     resfun = singleModelRetrafo(model, prevfun)
     next.model = model$learner.model$next.model
     if ("BaseWrapperModel" %in% class(next.model)) {
-      if ("CPOObjectModel" %in% class(next.model)) {
+      if ("CPOModel" %in% class(next.model)) {
         return(recurseRetrafo(next.model, resfun))
       }
+      do.message = FALSE
       while (!is.null(next.model)) {
-        next.model = model$learner.model$next.model
-        if ("CPOObjectModel" %in% class(next.model)) {
+        if (!is.list(next.model$learner.model)) {
+          break
+        }
+        next.model = next.model$learner.model$next.model
+        if ("CPOModel" %in% class(next.model)) {
           warningf("The model apparently has some CPOs wrapped by other wrappers\n%s\n%s",
             "The resulting retrafo will only cover the operations up to",
             "the first non-CPO wrapper!")
+          do.message = FALSE
           break
         }
         if (!"BaseWrapperModel" %in% class(next.model)) {
-          message("The model has some wrappers besides CPOs, which will not be part of the retrafo.")
-          break
+          do.message = TRUE
         }
+      }
+      if (do.message) {
+        message("The model has some wrappers besides CPOs, which will not be part of the retrafo.")
       }
     }
     resfun
@@ -413,6 +425,11 @@ noMissingAssert = function(paramlist) {
     }
   })
 }
+
+getLearnerName = function(learner) {
+  coalesce(learner$name, learner$shortname, learner$id)
+}
+
 
 subsetParams = function(par.vals, par.set, name) {
 

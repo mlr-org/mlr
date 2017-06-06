@@ -96,10 +96,10 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
       }
       retrafo.fn = retrafo(result)
       retrafo(result) = NULL
-      assertFunction(retrafo.fn, "data", nargs = 1)
+      assertFunction(retrafo.fn, nargs = 1)
 
       if (!is.null(upper.retrafo)) {
-        assertFunction(upper.retrafo, "data", nargs = 1)
+        assertFunction(upper.retrafo, nargs = 1)
         lower.retrafo = retrafo.fn
         retrafo.fn = function(data) {
           lower.retrafo(upper.retrafo(data))
@@ -112,14 +112,16 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
         wasTask = "Task" %in% class(data)
         task = data
         if (wasTask) {
-          data = getTaskData(data)
+          data = getTaskData(data, target.extra = TRUE)$data
         }
         result = retrafo.fn(data)
         if (!is.data.frame(result)) {
           stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", cpo.name)
         }
         if (wasTask) {
-          result = changeData(task, result)
+          newdata = getTaskData(task)
+          newdata[getTaskFeatureNames(task)] = result
+          result = changeData(task, newdata)
         }
         result
       }
@@ -166,9 +168,9 @@ attachCPO.CPOFunctional = function(cpo, learner) {
   id = paste(learner$id, attr(cpo, "barename"), sep = ".")
   # makeBaseWrapper checks for parameter name clash, but gives
   # less informative error message
-  parameterClashAssert(cpo, learner, attr(cpo, "name"), learner$name)
+  parameterClashAssert(cpo, learner, attr(cpo, "name"), getLearnerName(learner))
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
-    getParamSet(cpo), getHyperPars(cpo), "CPOFunctionalLearner", "CPOFunctionalModel")
+    getParamSet(cpo), getHyperPars(cpo), "CPOFunctionalLearner", c("CPOFunctionalModel", "CPOModel"))
   wlearner$cpo = cpo
   wlearner
 }
@@ -180,7 +182,7 @@ trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ..
   .task = cpo(subsetTask(.task, .subset))
   retrafo = retrafo(.task)
   retrafo(.task) = NULL
-  model = makeChainModel(train(.learner$next.learner, .task), c("CPOFunctionalModel", "CPOModel"))
+  model = makeChainModel(train(.learner$next.learner, .task), c("CPOFunctionalWrappedModel"))
   model$retrafo = retrafo
   model
 }
@@ -196,7 +198,7 @@ applyCPO.CPOFunctional = function(cpo, task) {
   cpo(task)
 }
 
-singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
+singleModelRetrafo.CPOFunctionalModel = function(model, prevfun) {
   function(data) model$learner.model$retrafo(prevfun(data))
 }
 

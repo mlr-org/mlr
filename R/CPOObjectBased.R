@@ -144,9 +144,9 @@ attachCPO.CPOObject = function(cpo, learner) {
   id = paste(learner$id, cpo$barename, sep = ".")
   # makeBaseWrapper checks for parameter name clash, but gives
   # less informative error message
-  parameterClashAssert(cpo, learner, cpo$name, learner$name)
+  parameterClashAssert(cpo, learner, cpo$name, getLearnerName(learner))
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
-    cpo$par.set, cpo$par.vals, "CPOObjectLearner", "CPOObjectModel")
+    cpo$par.set, cpo$par.vals, "CPOObjectLearner", c("CPOObjectModel", "CPOModel"))
   wlearner$cpo = cpo
   wlearner
 }
@@ -157,7 +157,7 @@ trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
   args = .learner$par.vals
   transformed = callCPOTrafo(cpo, args, getTaskData(.task, .subset), getTaskTargetNames(.task))
   .task = changeData(.task, transformed$data)
-  model = makeChainModel(train(.learner$next.learner, .task), c("CPOObjectModel", "CPOModel"))
+  model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectWrappedModel")
   model$control = transformed$control
   model
 }
@@ -186,7 +186,10 @@ cpoObjectRetrafo = function(cpo, params, control, prevfun) {
     if (is.data.frame(data)) {
       callCPORetrafo(cpo, params, prevfun(data), control)
     } else {
-      changeData(data, callCPORetrafo(cpo, params, prevfun(getTaskData(data)), control))
+      newdata = getTaskData(data)
+      newdata[getTaskFeatureNames(data)] = callCPORetrafo(cpo, params,
+        prevfun(getTaskData(data, target.extra = TRUE)$data), control)
+      changeData(data, newdata)
     }
   }
 }
@@ -251,7 +254,7 @@ getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both
 setHyperPars2.CPOObject = function(learner, par.vals = list()) {
   badpars = setdiff(names(par.vals), names(learner$par.set$pars))
   if (length(badpars)) {
-    stopf("CPO %s does not have parameter%s %s", learner$name,
+    stopf("CPO %s does not have parameter%s %s", getLearnerName(learner),
           ifelse(length(badpars) > 1, "s", ""), collapse(badpars, ", "))
   }
   checkParamsFeasible(learner$par.set, par.vals)
