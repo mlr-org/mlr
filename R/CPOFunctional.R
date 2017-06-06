@@ -43,7 +43,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
   assertList(par.vals, names = "unique")
   assertString(cpo.name)
   if (is.null(par.set)) {
-    par.set = paramSetSugar(..., pss.env = parent.frame())
+    par.set = paramSetSugar(..., .pss.env = parent.frame())
   }
 
   # these parameters are either special parameters given to the constructor function (id),
@@ -109,10 +109,18 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
 
       task = changeData(task, result)
 
-      attr(task, "retrafo") = function(data) {
+      retrafo(task) = function(data) {
+        wasTask = "Task" %in% class(data)
+        task = data
+        if (wasTask) {
+          data = getTaskData(data)
+        }
         result = retrafo(data)
         if (!is.data.frame(result)) {
           stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", cpo.name)
+        }
+        if (wasTask) {
+          result = changeData(task, result)
         }
         result
       }
@@ -173,7 +181,7 @@ trainLearner.CPOFunctionalLearner = function(.learner, .task, .subset = NULL, ..
   .task = cpo(subsetTask(.task, .subset))
   retrafo = attr(.task, "retrafo")
   attr(cpo, "retrafo") = NULL
-  model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectModel")
+  model = makeChainModel(train(.learner$next.learner, .task), c("CPOFunctionalModel", "CPOModel"))
   model$retrafo = retrafo
   model
 }
@@ -186,9 +194,11 @@ predictLearner.CPOFunctionalLearner = function(.learner, .model, .newdata, ...) 
 
 #' @export
 applyCPO.CPOFunctional = function(cpo, task) {
-  task = cpo(task)
-  attr(task, "retrafo") = NULL
-  task
+  cpo(task)
+}
+
+singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
+  function(data) model$learner.model$retrafo(prevfun(data))
 }
 
 ### IDs, ParamSets

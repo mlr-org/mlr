@@ -50,7 +50,7 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cp
   assertString(cpo.name)
   assertList(par.vals, names = "unique")
   if (is.null(par.set)) {
-    par.set = paramSetSugar(..., pss.env = parent.frame())
+    par.set = paramSetSugar(..., .pss.env = parent.frame())
   }
 
   # these parameters are either special parameters given to the constructor function (id),
@@ -172,8 +172,50 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
 
 #' @export
 applyCPO.CPOObject = function(cpo, task) {
+  prevfun = retrafo(task, default.to.identity = TRUE)
   transformed = callCPOTrafo(cpo, getHyperPars(cpo), getTaskData(task), getTaskTargetNames(task))
-  changeData(task, transformed$data)
+  task = changeData(task, transformed$data)
+  retrafo(task) = cpoObjectRetrafo(cpo, getHyperPars(cpo), transformed$control, prevfun)
+  task
+}
+
+# put this in its own function because we want it to keep a slim environment.
+cpoObjectRetrafo = function(cpo, params, control, prevfun) {
+  function(data) {
+    assert(checkClass(data, "data.frame"), checkClass(data, "Task"))
+    if (is.data.frame(data)) {
+      callCPORetrafo(cpo, params, prevfun(data), control)
+    } else {
+      changeData(data, callCPORetrafo(cpo, params, prevfun(getTaskData(data)), control))
+    }
+  }
+}
+
+#' @export
+retrafo.CPOObjectModel = function(data) {
+  recurseRetrafo = function(model, prevfun) {
+    resfun = cpoObjectRetrafo(model$learner$cpo, model$learner$par.vals, model$learner.model$control, prevfun)
+    next.model = model$learner.model$next.model
+    if ("BaseWrapperModel" %in% class(next.model)) {
+      if ("CPOObjectModel" %in% class(next.model)) {
+        return(recurseRetrafo(next.model, resfun))
+      }
+      while (!is.null(next.model)) {
+        next.model = model$learner.model$next.model
+        if ("CPOObjectModel" %in% class(next.model)) {
+          warningf("The model apparently is wrapped by CPOs and other wrappers\n%s\n%s",
+            "The resulting retrafo will only cover the operations up to",
+            "This non-CPO wrapper!")
+          break
+        }
+        if (!"BaseWrapperModel" %in% class(next.model)) {
+          break
+        }
+      }
+    }
+    resfun
+  }
+  recurseRetrafo(data, identity)
 }
 
 ### IDs, ParamSets
@@ -304,4 +346,5 @@ callCPORetrafo = function(cpo, args, data, control) {
   assertRetrafoResult(result, cpo$name)
   result
 }
+
 

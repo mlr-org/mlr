@@ -198,8 +198,11 @@ getCPOName = function(cpo) {
 #' make sure to reset the retrafo function by setting it to \code{NULL}.
 #' See examples.
 #'
-#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#' @param data [\code{data.frame} | \code{\link{Task}} | \code{\link{CPOModel}}]\cr
 #'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
+#' @param default.to.identity [\code{logical}]\cr
+#'   Whether to return the identity function when no trafo was found.
+#'   Default is \code{FALSE}.
 #'
 #' @return [\code{function}]\cr
 #'   The retransformation function that can be applied to new data.
@@ -229,16 +232,77 @@ getCPOName = function(cpo) {
 #'
 #' reFun2 = retrafo(trained)
 #' predicted = reFun2(reimpute(reFun1(preddat), imp$desc))
+#'
+#'
 #' @family CPO
 #' @export
-retrafo = function(data) {
+retrafo = function(data, default.to.identity = FALSE) {
+  UseMethod("retrafo")
+}
+
+#' @export
+retrafo.WrappedModel = function(data, default.to.identity) {
+  warning("retrafo of a model not available if the outermost wrapper was not a CPO.")
+  if (default.to.identity) {
+    identity
+  } else {
+    NULL
+  }
+}
+
+
+#' @export
+retrafo.CPOModel = function(data) {
+  # go through the chained model and see if there are wrapped models that
+  # are not %>>%-chained (since the user probably wants to be warned about
+  # that.
+  recurseRetrafo = function(model, prevfun) {
+    resfun = singleModelRetrafo(model, prevfun)
+    next.model = model$learner.model$next.model
+    if ("BaseWrapperModel" %in% class(next.model)) {
+      if ("CPOObjectModel" %in% class(next.model)) {
+        return(recurseRetrafo(next.model, resfun))
+      }
+      while (!is.null(next.model)) {
+        next.model = model$learner.model$next.model
+        if ("CPOObjectModel" %in% class(next.model)) {
+          warningf("The model apparently has some CPOs wrapped by other wrappers\n%s\n%s",
+            "The resulting retrafo will only cover the operations up to",
+            "the first non-CPO wrapper!")
+          break
+        }
+        if (!"BaseWrapperModel" %in% class(next.model)) {
+          message("The model has some wrappers besides CPOs, which will not be part of the retrafo.")
+          break
+        }
+      }
+    }
+    resfun
+  }
+  recurseRetrafo(data, identity)
+}
+
+singleModelRetrafo = function(model, prevfun) {
+  UseMethod("singleModelRetrafo")
+}
+
+#' @export
+retrafo.default = function(data, default.to.identity) {
+  UseMethod("retrafo")
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("data is not a Task or data.frame.\n%s\n%s",
       "are you sure you are applying it to the result",
       "of a %>>% transformation?")
   }
-  attr(data, "retrafo")
+  res = attr(data, "retrafo")
+  if (default.to.identity && is.null(res)) {
+    identity
+  } else {
+    res
+  }
 }
+
+
 
 #' @title set an object's retransformation
 #'
@@ -248,6 +312,18 @@ retrafo = function(data) {
 #'
 #' @export
 `retrafo<-` = function(data, value) {
+  UseMethod("retrafo<-")
+}
+
+
+#' @export
+`retrafo<-.WrappedModel` = function(data, value) {
+  stop("Cannot change retrafo of a model!")
+}
+
+
+#' @export
+`retrafo<-.default` = function(data, value) {
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("data is not a Task or data.frame.\n%s\n%s",
       "are you sure you are applying it to the input or",
