@@ -4,16 +4,16 @@
 \alias{paramSetSugar}
 \title{Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s}
 \usage{
-paramSetSugar(..., pss.learner.params = TRUE, pss.env = parent.frame())
+paramSetSugar(..., .pss.learner.params = TRUE, .pss.env = parent.frame())
 }
 \arguments{
 \item{...}{Parameters, see description.}
 
-\item{pss.learner.params}{[\code{logical}]\cr
+\item{.pss.learner.params}{[\code{logical}]\cr
 Whether to create \dQuote{LearnerParam} instead of \dQuote{Param} objects.
 Default is \dQuote{TRUE}.}
 
-\item{pss.env}{[\code{environment}]\cr
+\item{.pss.env}{[\code{environment}]\cr
 Which environment to use when evaluating expressions. Defaults to the calling
 function's frame.}
 }
@@ -39,10 +39,7 @@ or numeric values according to \dQuote{value1},
 and \dQuote{upBound} must either be numerical (or integer) values indicating the
 lower and upper bound, or may be missing (indicating the absence of a bound). To indicate
 an exclusive bound, prefix the values with a tilda (\dQuote{~}). For a "numeric" variable, to
-indicate an unbounded value which may not be infinite, use ond dot (\dQuote{.}).
-Note that \code{ParamHelpers} makes it impossible to specify values unbounded above and below
-that accept only infinite values with a specified sign.
-
+indicate an unbounded value which may not be infinite, use a dot (\dQuote{.}).
 
 \dQuote{^ dimension} may be absent, resulting in a normal \dQuote{LearnerParam}, or present,
 resulting in a \dQuote{VectorLearnerParam}. Note that a one-dimensional \dQuote{VectorLearnerParam}
@@ -52,19 +49,18 @@ is distinct from a normal \dQuote{LearnerParam}.
 and is optional.
 
 This makes definition of \code{ParamSet}s shorter and more readable.
-
-Examples:
-
-\code{paramSetSugar(a: integer (~0, )^2 [requires = expression(b != 0)],
-    b = -10: numeric (., 0), c: discrete (x, y, 1))}
-is equivalent to
-\code{
-  makeParamSet(
+}
+\examples{
+paramSetSugar(a: integer (~0, )^2 [requires = expression(b != 0)],
+    b = -10: numeric (., 0), c: discrete (x, y, 1))
+# is equivalent to
+makeParamSet(
     makeIntegerVectorLearnerParam('a', len = 2, lower = 1,  # note exclusive bound
          upper = Inf, allow.inf = TRUE, requires = expression(b != 0)),
     makeNumericLearnerParam('b', lower = -Inf, upper = 0,
          allow.inf = FALSE, default = -10),  # note infinite value is prohibited.
     makeDiscreteLearnerParam('c', values = list(x = "x", y = "y", `1` = 1))
-  )
-}
+)
+
+
 }

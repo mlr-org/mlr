@@ -26,7 +26,7 @@ This can either be a function, just the expressions to perform wrapped in curly 
 If this is a function, it must have the parameters \dQuote{data} and \dQuote{target},
 as well as the parameters specified in \dQuote{...} or \dQuote{.par.set}. (Alternatively,
 the function may have a dotdotdot argument). It must return a \dQuote{data.frame} object
-with an attribute \dQuote{retrafo}. This attribute must be a function with the argument
+with an added \dQuote{\link{retrafo}}. This must be a function with the argument
 \dQuote{data} and return another \dQuote{data.frame}.\cr
 If \dQuote{cpo.trafo} is a list of expressions (preferred), it is turned into a function
 by mlr, with the above mentioned criteria.}
@@ -38,7 +38,7 @@ and is a bit harder to debug. For object-based CPOs, see \code{\link{makeCPOFunc
 }
 \examples{
 noop = makeCPOFunctional("noop", dummy: logical, cpo.trafo = {
-  attr(data, "retrafo") = function(data) data
+  retrafo(data) = function(data) data
   data
 })
 
@@ -48,5 +48,6 @@ Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
-  \code{\link{makeCPOObject}}, \code{\link{setHyperPars}}
+  \code{\link{makeCPOObject}}, \code{\link{retrafo}},
+  \code{\link{setHyperPars}}
 }

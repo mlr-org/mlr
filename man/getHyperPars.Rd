@@ -46,5 +46,6 @@ Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}},
   \code{\link{makeCPOFunctional}},
-  \code{\link{makeCPOObject}}, \code{\link{setHyperPars}}
+  \code{\link{makeCPOObject}}, \code{\link{retrafo}},
+  \code{\link{setHyperPars}}
 }

@@ -55,6 +55,6 @@ Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
-  \code{\link{makeCPOFunctional}},
+  \code{\link{makeCPOFunctional}}, \code{\link{retrafo}},
   \code{\link{setHyperPars}}
 }
