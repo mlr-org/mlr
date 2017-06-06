@@ -54,7 +54,7 @@
 #' # is equivalent to
 #' makeParamSet(
 #'     makeIntegerVectorLearnerParam('a', len = 2, lower = 1,  # note exclusive bound
-#'          upper = Inf, allow.inf = TRUE, requires = expression(b != 0)),
+#'          upper = Inf, requires = expression(b != 0)),
 #'     makeNumericLearnerParam('b', lower = -Inf, upper = 0,
 #'          allow.inf = FALSE, default = -10),  # note infinite value is prohibited.
 #'     makeDiscreteLearnerParam('c', values = list(x = "x", y = "y", `1` = 1))

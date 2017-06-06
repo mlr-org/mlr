@@ -15,8 +15,8 @@ Whether to return the identity function when no trafo was found.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{function}]\cr
-  The retransformation function that can be applied to new data.
+[\code{function}]. The retransformation function that can be
+applied to new data.
 }
 \description{
 When applying a CPO to a \code{data.frame} or \code{\link{Task}},
@@ -39,6 +39,7 @@ make sure to reset the retrafo function by setting it to \code{NULL}.
 See examples.
 }
 \examples{
+
 traindat = subsetTask(pid.task, 1:400)
 preddat = subsetTask(pid.task, 401:768)
 
@@ -52,6 +53,7 @@ reFun = retrafo(trained)
 predicted = reFun(preddat)
 
 # reset the retrafo when doing other steps!
+\dontrun{
 trained.tmp = traindat \%>>\% cpoPca(FALSE, FALSE)
 reFun1 = retrafo(trained.tmp)
 
@@ -62,9 +64,11 @@ retrafo(trained.tmp) = NULL  # NECESSARY HERE
 trained = trained.tmp \%>>\% cpoScale()
 
 reFun2 = retrafo(trained)
-predicted = reFun2(reimpute(reFun1(preddat), imp$desc))
+predicted = reFun2(getTaskData(reimpute(
+  reFun1(preddat), imp$desc), target.extra = TRUE)$data)
 
 
+}
 }
 \seealso{
 Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},

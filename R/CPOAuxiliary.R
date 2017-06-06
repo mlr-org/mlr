@@ -209,10 +209,11 @@ getCPOName = function(cpo) {
 #'   Whether to return the identity function when no trafo was found.
 #'   Default is \code{FALSE}.
 #'
-#' @return [\code{function}]\cr
-#'   The retransformation function that can be applied to new data.
+#' @return [\code{function}]. The retransformation function that can be
+#' applied to new data.
 #'
 #' @examples
+#'
 #' traindat = subsetTask(pid.task, 1:400)
 #' preddat = subsetTask(pid.task, 401:768)
 #'
@@ -226,6 +227,7 @@ getCPOName = function(cpo) {
 #' predicted = reFun(preddat)
 #'
 #' # reset the retrafo when doing other steps!
+#' \dontrun{
 #' trained.tmp = traindat %>>% cpoPca(FALSE, FALSE)
 #' reFun1 = retrafo(trained.tmp)
 #'
@@ -236,9 +238,11 @@ getCPOName = function(cpo) {
 #' trained = trained.tmp %>>% cpoScale()
 #'
 #' reFun2 = retrafo(trained)
-#' predicted = reFun2(reimpute(reFun1(preddat), imp$desc))
+#' predicted = reFun2(getTaskData(reimpute(
+#'   reFun1(preddat), imp$desc), target.extra = TRUE)$data)
 #'
 #'
+#' }
 #' @family CPO
 #' @export
 retrafo = function(data, default.to.identity = FALSE) {
