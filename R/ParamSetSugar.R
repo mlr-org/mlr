@@ -49,8 +49,8 @@
 #'   function's frame.
 #'
 #' @examples
-#' paramSetSugar(a = .: integer [~0, ]^2 [[requires = expression(b != 0)]],
-#'     b = -10: numeric [., 0], c: discrete [x, y, 1])
+#' paramSetSugar(a = NA: integer [~0, ]^2 [[requires = expression(b != 0)]],
+#'     b = -10: numeric [~., 0], c: discrete [x, y, 1])
 #' # is equivalent to
 #' makeParamSet(
 #'     makeIntegerVectorLearnerParam('a', len = 2, lower = 1,  # note exclusive bound

@@ -7,7 +7,7 @@
 retrafo(data, default.to.identity = FALSE)
 }
 \arguments{
-\item{data}{[\code{data.frame} | \code{\link{Task}} | \code{\link{CPOModel}}]\cr
+\item{data}{[\code{data.frame} | \code{\link{Task}} | \code{\link{WrappedModel}}]\cr
 The result of a \code{\link{\%>>\%}} chain applied to a data set.}
 
 \item{default.to.identity}{[\code{logical}]\cr

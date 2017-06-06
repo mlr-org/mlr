@@ -203,7 +203,7 @@ getCPOName = function(cpo) {
 #' make sure to reset the retrafo function by setting it to \code{NULL}.
 #' See examples.
 #'
-#' @param data [\code{data.frame} | \code{\link{Task}} | \code{\link{CPOModel}}]\cr
+#' @param data [\code{data.frame} | \code{\link{Task}} | \code{\link{WrappedModel}}]\cr
 #'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
 #' @param default.to.identity [\code{logical}]\cr
 #'   Whether to return the identity function when no trafo was found.
@@ -256,8 +256,9 @@ retrafo.WrappedModel = function(data, default.to.identity = FALSE) {
 }
 
 
+# default.to.identity is ignored, since a CPOModel always has a retrafo
 #' @export
-retrafo.CPOModel = function(data) {
+retrafo.CPOModel = function(data, default.to.identity = FALSE) {
   # go through the chained model and see if there are wrapped models that
   # are not %>>%-chained (since the user probably wants to be warned about
   # that.
@@ -320,6 +321,17 @@ retrafo.default = function(data, default.to.identity = FALSE) {
 #' @description
 #' Set an object's retransformation function, as described
 #' in \code{\link{retrafo}}. Set to \code{NULL} to delete.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   The task of which to set the retrafo.
+#' @param value [\code{function} | NULL]\cr
+#'   The retrafo function to set. This must either be a
+#'   function accepting a \code{data.frame} and returning
+#'   an object of the same kind, or NULL.
+#'   In most cases, you should use this only within
+#'   \code{CPOFunctionalConstructor} functions OR to
+#'   reset an object's retrafo to NULL.
+#'
 #'
 #' @export
 `retrafo<-` = function(data, value) {

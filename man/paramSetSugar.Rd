@@ -27,10 +27,10 @@ The arguments are of the form
 \dQuote{= default} Determines the 'default' setting
 in \dQuote{makeXXXLearnerParam}. Note that this is different from an R function parameter
 default value, in that it serves only as information to the user and does not set the
-parameter to this value if it is not given. To define `no default`, use a dot (\dQuote{.}) or
+parameter to this value if it is not given. To define `no default`, use NA or
 leave the \dQuote{= default} part out. Leaving it out can cause problems when R's static
 type checker verifies a package, so this is *only* recommended for interactive sessions
-and top-level applications!
+and top-level applications! (To actually set a parameter default to NA, put it in parentheses)
 
 \dQuote{type} is one of
 \dQuote{integer}, \dQuote{numeric}, \dQuote{logical}, \dQuote{discrete}.
@@ -43,8 +43,9 @@ or numeric values according to \dQuote{value1},
 \dQuote{range} is of the form \code{[lowBound, upBound]}, where \dQuote{lowBound}
 and \dQuote{upBound} must either be numerical (or integer) values indicating the
 lower and upper bound, or may be missing (indicating the absence of a bound). To indicate
-an exclusive bound, prefix the values with a tilda (\dQuote{~}). For a "numeric" variable, to
-indicate an unbounded value which may not be infinite, use a dot (\dQuote{.}).
+an exclusive bound, prefix the values with a tilde (\dQuote{~}). For a "numeric" variable, to
+indicate an unbounded value which may not be infinite, you can use \code{~Inf} resp \code{~-Inf},
+or use tilde-dot (\dQuote{~.}).
 
 \dQuote{^ dimension} may be absent, resulting in a normal \dQuote{LearnerParam}, or present,
 resulting in a \dQuote{VectorLearnerParam}. Note that a one-dimensional \dQuote{VectorLearnerParam}
@@ -57,8 +58,8 @@ and comma-separate settings if more than one is present.
 This makes definition of \code{ParamSet}s shorter and more readable.
 }
 \examples{
-paramSetSugar(a = .: integer [~0, ]^2 [[requires = expression(b != 0)]],
-    b = -10: numeric [., 0], c: discrete [x, y, 1])
+paramSetSugar(a = NA: integer [~0, ]^2 [[requires = expression(b != 0)]],
+    b = -10: numeric [~., 0], c: discrete [x, y, 1])
 # is equivalent to
 makeParamSet(
     makeIntegerVectorLearnerParam('a', len = 2, lower = 1,  # note exclusive bound

@@ -6,6 +6,18 @@
 \usage{
 retrafo(data) <- value
 }
+\arguments{
+\item{data}{[\code{data.frame} | \code{\link{Task}}]\cr
+The task of which to set the retrafo.}
+
+\item{value}{[\code{function} | NULL]\cr
+The retrafo function to set. This must either be a
+function accepting a \code{data.frame} and returning
+an object of the same kind, or NULL.
+In most cases, you should use this only within
+\code{CPOFunctionalConstructor} functions OR to
+reset an object's retrafo to NULL.}
+}
 \description{
 Set an object's retransformation function, as described
 in \code{\link{retrafo}}. Set to \code{NULL} to delete.
