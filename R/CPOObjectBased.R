@@ -315,7 +315,7 @@ callCPOTrafo = function(cpo, args, data, target) {
   trafoenv = environment(cpo$trafo)$.ENV
   assign(".ENV", NULL, envir = environment(cpo$trafo))
   if (!"control" %in% ls(trafoenv)) {
-    stopf("CPO %s did not create a 'control' object.", cpo$name)
+    stopf("CPO %s cpo.trafo did not create a 'control' object.", cpo$name)
   }
   result = list(data = result, control = trafoenv$control)
   result
