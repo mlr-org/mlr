@@ -937,10 +937,10 @@ test_that("retrafo catabolization and anabolization work", {
 
     for (retgen in retrafos) {
       ret = retrafo(retgen)
-      expect_equal((testdf2 %>>% ret)[[1]], (c(3, 4) - 10 - 1.5) / 2)
-      expect_equal((testdf2 %>>% as.list(ret)[[1]])[[1]], c(3, 4) - 10 - 1.5)
-      expect_equal((testdf2 %>>% as.list(ret)[[2]])[[1]], c(3, 4) / 2)
-      expect_equal((testdf2 %>>% chainCPO(as.list(ret)[c(2, 1)]))[[1]], c(3, 4) / 2 - 10 - 1.5)
+      expect_equal((testdfcpo2 %>>% ret)[[1]], (c(3, 4) - 10 - 1.5) / 2)
+      expect_equal((testdfcpo2 %>>% as.list(ret)[[1]])[[1]], c(3, 4) - 10 - 1.5)
+      expect_equal((testdfcpo2 %>>% as.list(ret)[[2]])[[1]], c(3, 4) / 2)
+      expect_equal((testdfcpo2 %>>% chainCPO(as.list(ret)[c(2, 1)]))[[1]], c(3, 4) / 2 - 10 - 1.5)
     }
   }
 
