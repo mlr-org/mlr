@@ -29,7 +29,6 @@ test_that("CPO with no parameters don't crash", {
     data
   })
 
-
   emptycpo.o = makeCPOObject("testCPOEmptyF", cpo.trafo = {
     control = 0
     data
@@ -60,7 +59,6 @@ test_that("CPO parameters behave as expected", {
   cpotest.parvals = list()
   cpotest.parvals2 = list()
   cpotest.parvals3 = list()
-
 
   cpof = makeCPOFunctional("testCPOF",
     a: integer[, ], b = 1: integer[, ], c = 1: integer[, ], d: integer[, ], e: integer[, ],
@@ -339,7 +337,7 @@ test_that("Object based CPO Parameter feasibility is checked", {
 })
 
 test_that("discrete parameters work well", {
-  cpotest.parvals = list()
+
 
   X = 1
   Y = 2
@@ -379,89 +377,24 @@ test_that("discrete parameters work well", {
 
 test_that("preprocessing actually changes data", {
 
-  cpotest.parvals = list()
-
-  testlearner = makeRLearnerClassif("testlearner", package = character(0), par.set = makeParamSet(makeUntypedLearnerParam("env", when = "both")),
-    properties = c("twoclass", "multiclass", "numerics", "factors"))
-  testlearner$fix.factors.prediction = TRUE
-
-  trainLearner.testlearner = function(.learner, .task, .subset, .weights = NULL, env, ...) {
-    env$cpotest.parvals = c(env$cpotest.parvals, getTaskData(.task)[1, 1])
-    getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1]
-  }
-
-  predictLearner.testlearner = function(.learner, .model, .newdata, env, ...) {
-    env$cpotest.parvals = c(env$cpotest.parvals, .newdata[1, 1])
-    rep(.model$learner.model, nrow(.newdata))
-  }
-
-  registerS3method("trainLearner", "testlearner", trainLearner.testlearner)
-  registerS3method("predictLearner", "testlearner", predictLearner.testlearner)
-
-  testlearner = setHyperPars(testlearner, env = environment(trainLearner.testlearner))
-
-  testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
-  testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
-
-  t = train(testlearner, testtask)
-  predict(t, testtask2)
+  cpotest.parvals <<- list()  # nolint
+  t = train(testlearnercpo, testtaskcpo)
+  predict(t, testtaskcpo2)
   expect_identical(cpotest.parvals, list(1, 3))
-
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
-    expect_identical(data[[target]], factor(c("a", "b")))
-    data[[1]] = data[[1]] * factor
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] / factor
-      data
-    }
-    data
-  })
-
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
-    expect_identical(data[[target]], factor(c("a", "b")))
-    meandata = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] - summand - meandata
-      data
-    }
-    data
-  })
-
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
-    expect_identical(data[[target]], factor(c("a", "b")))
-    data[[1]] = data[[1]] * factor
-    control = 0
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] / factor
-    data
-  })
-
-
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
-    expect_identical(data[[target]], factor(c("a", "b")))
-    control = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] - summand - control
-    data
-  })
 
   testCPO = function(cpoMultiplier, cpoAdder) {
     cpotest.parvals <<- list()  # nolint
-    t = train(testlearner, testtask)
-    predict(t, testtask2)
+    t = train(testlearnercpo, testtaskcpo)
+    predict(t, testtaskcpo2)
     expect_identical(cpotest.parvals, list(1, 3))
 
 
     cpotest.parvals <<- list()  # nolint
-    predict(train(cpoMultiplier(10) %>>% testlearner, testtask), testtask2)
+    predict(train(cpoMultiplier(10) %>>% testlearnercpo, testtaskcpo), testtaskcpo2)
     expect_identical(cpotest.parvals, list(10, 0.3))
 
     cpotest.parvals <<- list()  # nolint
-    predict(train(cpoAdder(3) %>>% testlearner, testtask), testtask2)
+    predict(train(cpoAdder(3) %>>% testlearnercpo, testtaskcpo), testtaskcpo2)
     expect_identical(cpotest.parvals, list(4, -1.5))
 
 
@@ -470,7 +403,7 @@ test_that("preprocessing actually changes data", {
                   cpoMultiplier(3) %>>%
                   cpoAdder(2, id = "second") %>>%
                   cpoMultiplier(10, id = "second") %>>%
-                  testlearner, testtask), testtask2)
+                  testlearnercpo, testtaskcpo), testtaskcpo2)
     # Calculation happening:
     # Training:
     #   c(1, 2), +3, *3, +2, *10 -> c(140, 170)
@@ -480,8 +413,8 @@ test_that("preprocessing actually changes data", {
     expect_identical(cpotest.parvals, list(140, -1.6))
   }
 
-  testCPO(cpomultiplier.f, cpoadder.f)
-  testCPO(cpomultiplier.o, cpoadder.o)
+  testCPO(cpomultiplier.task.f, cpoadder.f)
+  testCPO(cpomultiplier.task.o, cpoadder.o)
 
 })
 
@@ -598,69 +531,16 @@ test_that("CPO arguments may be missing if requirements allow", {
 
 test_that("CPOs can be applied to data", {
 
-  testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
-  testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
-
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    data[[1]] = data[[1]] * factor
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] / factor
-      data
-    }
-    data
-  })
-
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    meandata = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] - summand - meandata
-      data
-    }
-    data
-  })
-
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    data[[1]] = data[[1]] * factor
-    control = 0
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] / factor
-    data
-  })
+  expect_identical(getTaskData(testtaskcpo %>>% cpomultiplier.f(10))$A, c(10, 20))
+  expect_identical(getTaskData(testtaskcpo %>>% cpoadder.f(10))$A, c(11, 12))
+  expect_identical(getTaskData(testtaskcpo %>>% cpoadder.f(10) %>>% cpomultiplier.f(10))$A, c(110, 120))
+  expect_identical(getTaskData(testtaskcpo %>>% (cpoadder.f(10) %>>% cpomultiplier.f(10)))$A, c(110, 120))
 
 
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    control = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] - summand - control
-    data
-  })
-
-  expect_identical(getTaskData(testtask %>>% cpomultiplier.f(10))$A, c(10, 20))
-  expect_identical(getTaskData(testtask %>>% cpoadder.f(10))$A, c(11, 12))
-  expect_identical(getTaskData(testtask %>>% cpoadder.f(10) %>>% cpomultiplier.f(10))$A, c(110, 120))
-  expect_identical(getTaskData(testtask %>>% (cpoadder.f(10) %>>% cpomultiplier.f(10)))$A, c(110, 120))
-
-
-  expect_identical(getTaskData(testtask %>>% cpomultiplier.o(10))$A, c(10, 20))
-  expect_identical(getTaskData(testtask %>>% cpoadder.o(10))$A, c(11, 12))
-  expect_identical(getTaskData(testtask %>>% cpoadder.o(10) %>>% cpomultiplier.o(10))$A, c(110, 120))
-  expect_identical(getTaskData(testtask %>>% (cpoadder.o(10) %>>% cpomultiplier.o(10)))$A, c(110, 120))
+  expect_identical(getTaskData(testtaskcpo %>>% cpomultiplier.o(10))$A, c(10, 20))
+  expect_identical(getTaskData(testtaskcpo %>>% cpoadder.o(10))$A, c(11, 12))
+  expect_identical(getTaskData(testtaskcpo %>>% cpoadder.o(10) %>>% cpomultiplier.o(10))$A, c(110, 120))
+  expect_identical(getTaskData(testtaskcpo %>>% (cpoadder.o(10) %>>% cpomultiplier.o(10)))$A, c(110, 120))
 
   testdata = data.frame(A = c(1, 2))
 
@@ -698,86 +578,10 @@ test_that("retrafo accessor does what it is supposed to do", {
 
   expect_equal(getTaskData(retrafo(transformed)(pid.task)), getTaskData(transformed))
 
-  cpotest.parvals = list()
-
-  testlearner = makeRLearnerClassif("testlearner", package = character(0), par.set = makeParamSet(makeUntypedLearnerParam("env", when = "both")),
-    properties = c("twoclass", "multiclass", "numerics", "factors"))
-  testlearner$fix.factors.prediction = TRUE
-
-  trainLearner.testlearner = function(.learner, .task, .subset, .weights = NULL, env, ...) {
-    env$cpotest.parvals = c(env$cpotest.parvals, getTaskData(.task)[1, 1])
-    getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1]
-  }
-
-  predictLearner.testlearner = function(.learner, .model, .newdata, env, ...) {
-    env$cpotest.parvals = c(env$cpotest.parvals, .newdata[1, 1])
-    rep(.model$learner.model, nrow(.newdata))
-  }
-
-  registerS3method("trainLearner", "testlearner", trainLearner.testlearner)
-  registerS3method("predictLearner", "testlearner", predictLearner.testlearner)
-
-  testlearner = setHyperPars(testlearner, env = environment(trainLearner.testlearner))
-
-  testtask = makeClassifTask(data = data.frame(A = c(1, 2), B = factor(c("a", "b"))), target = "B")
-  testtask2 = makeClassifTask(data = data.frame(A = c(3, 4), B = factor(c("a", "b"))), target = "B")
-
-  testdf = data.frame(A = c(1, 2), B = c(0, 1))
-  testdf2 = data.frame(A = c(3, 4), B = c(-1, -2))
-
-  t = train(testlearner, testtask)
-  predict(t, testtask2)
+  cpotest.parvals <<- list()  # nolint
+  t = train(testlearnercpo, testtaskcpo)
+  predict(t, testtaskcpo2)
   expect_identical(cpotest.parvals, list(1, 3))
-
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    data[[1]] = data[[1]] * factor
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] / factor
-      data
-    }
-    data
-  })
-
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    meandata = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] - summand - meandata
-      data
-    }
-    data
-  })
-
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    data[[1]] = data[[1]] * factor
-    control = 0
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] / factor
-    data
-  })
-
-
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
-    if (length(target)) {
-      expect_identical(data[[target]], factor(c("a", "b")))
-    }
-    control = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] - summand - control
-    data
-  })
 
   f1 = function(data, target, args) {
     data[[1]] = data[[1]] * 10
@@ -788,80 +592,80 @@ test_that("retrafo accessor does what it is supposed to do", {
     data[[1]] = data[[1]] / 10
     return(data)
   }
-  wrappedlearner = makePreprocWrapper(testlearner, train = f1, predict = f2, par.set = makeParamSet(), par.vals = list())
+  wrappedlearner = makePreprocWrapper(testlearnercpo, train = f1, predict = f2, par.set = makeParamSet(), par.vals = list())
 
 
   testCPO = function(cpoadder, cpomultiplier) {
     # short chain, task
-    result = testtask %>>% cpoadder(10)
+    result = testtaskcpo %>>% cpoadder(10)
     expect_identical(getTaskData(result)$A, c(11, 12))
-    expect_equal(getTaskData(retrafo(result)(testtask2))$A, c(-8.5, -7.5))
+    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, c(-8.5, -7.5))
 
     # short chain, data.frame
-    result = testdf %>>% cpoadder(10)
+    result = testdfcpo %>>% cpoadder(10)
     expect_identical(result$A, c(11, 12))
-    expect_equal(getTaskData(retrafo(result)(testtask2))$A, c(-8.5, -7.5))
-    expect_equal(retrafo(result)(testdf2)$A, c(-8.5, -7.5))
+    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, c(-8.5, -7.5))
+    expect_equal(retrafo(result)(testdfcpo2)$A, c(-8.5, -7.5))
 
     # long chain, task
-    result = (testtask %>>% cpoadder(10) %>>% cpomultiplier(2)) %>>% (cpoadder(-10) %>>% cpomultiplier(2))
+    result = (testtaskcpo %>>% cpoadder(10) %>>% cpomultiplier(2)) %>>% (cpoadder(-10) %>>% cpomultiplier(2))
     expect_equal(getTaskData(result)$A, c(24, 28))
-    expect_equal(getTaskData(retrafo(result)(testtask2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     # long chain, data.frame
-    result = (testdf %>>% cpoadder(10) %>>% cpomultiplier(2)) %>>% (cpoadder(-10) %>>% cpomultiplier(2))
+    result = (testdfcpo %>>% cpoadder(10) %>>% cpomultiplier(2)) %>>% (cpoadder(-10) %>>% cpomultiplier(2))
     expect_equal(result$A, c(24, 28))
-    expect_equal(getTaskData(retrafo(result)(testtask2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     # short chain, learner model
     cpotest.parvals <<- list()  # nolint
-    m = train(cpoadder(10) %>>% testlearner, testtask)
+    m = train(cpoadder(10) %>>% testlearnercpo, testtaskcpo)
 
     expect_equal(cpotest.parvals, list(11))
-    expect_equal(getTaskData(retrafo(m)(testtask2))$A, c(-8.5, -7.5))
-    expect_equal(retrafo(m)(testdf2)$A, c(-8.5, -7.5))
-    predict(m, testtask2)
+    expect_equal(getTaskData(retrafo(m)(testtaskcpo2))$A, c(-8.5, -7.5))
+    expect_equal(retrafo(m)(testdfcpo2)$A, c(-8.5, -7.5))
+    predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list(11, -8.5))
 
 
     # long chain, learner model
     cpotest.parvals <<- list()  # nolint
     m = train((cpoadder(10, id = "fst") %>>% cpomultiplier(2, id = "snd")) %>>%
-              ((cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>% testlearner), testtask)
+              ((cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>% testlearnercpo), testtaskcpo)
 
     expect_equal(cpotest.parvals,  list(24))
-    expect_equal(getTaskData(retrafo(m)(testtask2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    predict(m, testtask2)
+    expect_equal(getTaskData(retrafo(m)(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list(24, ((3 - 10 - 1.5) / 2 + 10 - 23) / 2))
 
     # message when learner contains something else
     # THIS WILL NOT WORK WHEN PREPROC WRAPPERS ARE GONE!
     cpotest.parvals <<- list()  # nolint
     m = train((cpoadder(10, id = "fst") %>>% cpomultiplier(2, id = "snd")) %>>%
-              ((cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>% wrappedlearner), testtask)
+              ((cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>% wrappedlearner), testtaskcpo)
     expect_equal(cpotest.parvals, list(240))
 
     expect_message({ retr = retrafo(m) }, "has some wrappers besides CPOs", all = TRUE)
-    expect_equal(getTaskData(retr(testtask2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    expect_equal(retr(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    predict(m, testtask2)
+    expect_equal(getTaskData(retr(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(retr(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list(240, (((3 - 10 - 1.5) / 2 + 10 - 23) / 2) / 10))
 
     # warning when learner contains buried CPOs
     # THIS WILL NOT HAPPEN WHEN PREPROC WRAPPERS ARE GONE!
-    buriedlearner = makePreprocWrapper(cpoadder(-10, id = "thd") %>>% (cpomultiplier(2, id = "frth") %>>% testlearner),
+    buriedlearner = makePreprocWrapper(cpoadder(-10, id = "thd") %>>% (cpomultiplier(2, id = "frth") %>>% testlearnercpo),
       train = f1, predict = f2, par.set = makeParamSet(), par.vals = list())
 
     cpotest.parvals <<- list()  # nolint
-    m = train((cpoadder(10, id = "fst") %>>% (cpomultiplier(2, id = "snd")) %>>% buriedlearner), testtask)
+    m = train((cpoadder(10, id = "fst") %>>% (cpomultiplier(2, id = "snd")) %>>% buriedlearner), testtaskcpo)
     expect_equal(cpotest.parvals, list((11 * 2 * 10 - 10) * 2))
 
     expect_warning({ retr = retrafo(m) }, "has some CPOs wrapped by other wrappers", all = TRUE)
-    expect_equal(getTaskData(retr(testtask2))$A, ((c(3, 4) - 10 - 1.5) / 2))
-    expect_equal(retr(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2))
-    predict(m, testtask2)
+    expect_equal(getTaskData(retr(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2))
+    expect_equal(retr(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2))
+    predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list((11 * 2 * 10 - 10) * 2, (((3 - 10 - 1.5) / 2 / 10 + 10 - 230) / 2)))
   }
 
@@ -997,56 +801,15 @@ test_that("object based trafo and retrafo return values are checked", {
 
 test_that("to.list and chainCPO work", {
 
-  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
-    data[[1]] = data[[1]] * factor
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] / factor
-      data
-    }
-    data
-  })
-
-  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
-    meandata = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    attr(data, "retrafo") = function(data) {
-      data[[1]] = data[[1]] - summand - meandata
-      data
-    }
-    data
-  })
-
-  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
-    data[[1]] = data[[1]] * factor
-    control = 0
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] / factor
-    data
-  })
-
-
-  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
-    control = mean(data[[1]])
-    data[[1]] = data[[1]] + summand
-    data
-  }, cpo.retrafo = {
-    data[[1]] = data[[1]] - summand - control
-    data
-  })
-
-  testdf = data.frame(A = c(1, 2), B = c(0, 1))
-  testdf2 = data.frame(A = c(3, 4), B = c(-1, -2))
-
   testCPO = function(cpoadder, cpomultiplier) {
 
     cpochain = ((cpoadder(10, id = "fst") %>>% cpomultiplier(2, id = "snd")) %>>%
                 (cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")))
 
 
-    result = testdf %>>% cpochain
+    result = testdfcpo %>>% cpochain
     expect_equal(result$A, c(24, 28))
-    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     cpolist = as.list(cpochain)
     expect_list(cpolist, len = 4)
@@ -1055,9 +818,9 @@ test_that("to.list and chainCPO work", {
     expect_equal(cpolist[[3]], cpoadder(-10, id = "thd"))
     expect_equal(cpolist[[4]], cpomultiplier(2, id = "frth"))
 
-    result = testdf %>>% chainCPO(cpolist)
+    result = testdfcpo %>>% chainCPO(cpolist)
     expect_equal(result$A, c(24, 28))
-    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     expect_equal(cpolist, as.list(chainCPO(cpolist)))
 
@@ -1065,9 +828,9 @@ test_that("to.list and chainCPO work", {
     expect_equal(cpolist.chg[[1]], cpoadder(20, id = "fst"))
 
     cpolist.chg[[2]] = setHyperPars(cpolist.chg[[2]], snd.factor = 10)
-    result = testdf %>>% chainCPO(cpolist.chg)
-    expect_equal(result$A, ((c(1, 2) + 20) * 10 - 10 ) * 2)
-    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 20 - 1.5) / 10 + 10 - 215) / 2)
+    result = testdfcpo %>>% chainCPO(cpolist.chg)
+    expect_equal(result$A, ((c(1, 2) + 20) * 10 - 10) * 2)
+    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 20 - 1.5) / 10 + 10 - 215) / 2)
 
   }
 
