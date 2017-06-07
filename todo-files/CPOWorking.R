@@ -37,7 +37,7 @@ p = predict(t, pid.task)
 
 rm(cpotest.parvals)
 
-
+rm(cpotest.parvals)
 cpoo = cpoPca()
 
 pid.task %>>% cpoPca
@@ -132,7 +132,7 @@ attributes(x)
 
 retrafo(testdf %>>% cpomultiplier.f(2))
 
-orig = retrafo(testdf %>>% cpomultiplier.f(2) %>>% cpomultiplier.f(10, id="xy"))
+orig = retrafo(testdf %>>% cpomultiplier.f(2) %>>% cpomultiplier.f(10, id = "xy"))
 xl = as.list(orig)
 compound2 = (xl[[1]] %>>% xl[[2]])
 orig(testdf2)
@@ -171,4 +171,3 @@ y()
 f()
 
 
-# TODO: different retrafo inner and outer
