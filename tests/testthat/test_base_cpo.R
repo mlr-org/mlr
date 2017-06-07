@@ -841,7 +841,11 @@ test_that("to.list and chainCPO work", {
 
 test_that("retrafo catabolization and anabolization work", {
 
+  cpoadder = cpoadder.o
+  cpomultiplier = cpomultiplier.o
+
   testCPO = function(cpoadder, cpomultiplier) {
+
     cpochain = ((cpoadder(20, id = "fst") %>>% cpomultiplier(2, id = "snd")) %>>%
                 (cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>%
                 cpoadder(10) %>>% cpomultiplier(2))
@@ -860,6 +864,13 @@ test_that("retrafo catabolization and anabolization work", {
     retrafochain = retrafo(train(setHyperPars(lrn, fst.summand = 10), testtaskcpo))
 
     rfclist = as.list(retrafochain)
+
+#    expect_equal(getRetrafoState(rfclist[[1]])$factor, 2)
+#    expect_equal(getRetrafoState(rfclist[[2]])$factor, 0.5)
+#    expect_equal(getRetrafoState(rfclist[[3]])$summand, 10)
+#    expect_equal(getRetrafoState(rfclist[[6]])$factor, -2)
+
+
 
     expect_equal(chainCPO(rfclist)(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 

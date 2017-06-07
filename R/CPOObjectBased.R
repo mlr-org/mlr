@@ -383,7 +383,8 @@ getHyperPars.CPOObjectRetrafo = function(learner, for.fun = c("train", "predict"
 
 #' @export
 getHyperPars.CPOObjectRetrafoPrimitive = function(learner, for.fun = c("train", "predict", "both")) {
-  params = environment(learner)$params
+  params = getHyperPars(environment(learner)$cpo)
+  params = insert(params, environment(learner)$params)
   translateCPOArgnames(environment(learner)$cpo, params)
 }
 
@@ -451,9 +452,11 @@ assertRetrafoResult = function(result, name) {
 }
 
 translateCPOArgnames = function(cpo, args) {
-  namestranslation = cpo$bare.par.names
-  names(namestranslation) = names(cpo$par.set$pars)
-  names(args) = namestranslation[names(args)]
+  if (length(args)) {
+    namestranslation = cpo$bare.par.names
+    names(namestranslation) = names(cpo$par.set$pars)
+    names(args) = namestranslation[names(args)]
+  }
   args
 }
 
@@ -491,3 +494,32 @@ predict.CPOObjectRetrafo = function(object, data, ...) {
   assert(length(list(...)) == 0)
   object(data)
 }
+
+
+#' @export
+getRetrafoState.CPOObjectRetrafo = function(rtf) {
+  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getRetrafoState.CPOObjectRetrafoPrimitive = function(retrafo.object) {
+  cpo = environment(retrafo.object)$cpo
+  pv = getHyperPars(retrafo.object)
+  control = environment(retrafo.object)$control
+  insert(pv, list(control = control))
+}
+
+#' @export
+makeRetrafoFromState.CPOObjectConstructor = function(constructor, state) {
+  assertList(state, names = "unique")
+  assertSubset("control", names(state))
+  control = state$control
+  state$control = NULL
+  state['id'] = list(NULL)
+  assertSetEqual(names(state), names(formals(constructor)))
+  bare = do.call(constructor, state)
+  retr = cpoObjectRetrafo(bare, getHyperPars(bare), control, NULL)
+  addClasses(retr, c("CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
+}
+
+

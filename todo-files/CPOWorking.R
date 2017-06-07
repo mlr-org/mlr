@@ -63,10 +63,6 @@ cpoo = cpoPca()
 t = train(cpoScale() %>>% makeLearner("classif.logreg"), pid.task)
 predict(t, pid.task)
 
-
-
-
-
 df = as.data.frame(t(replicate(1000, rnorm(2) + 10 * rnorm(1))))
 
 plot(df)
@@ -79,8 +75,6 @@ retrafo(pid.task %>>% cpo)
 
 retrafo(pid.task %>>% cpo)
 
-
-retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd")))
 
 retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd")))
 
