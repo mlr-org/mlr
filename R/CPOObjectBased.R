@@ -387,17 +387,19 @@ predict.CPOObjectRetrafo = function(object, data, ...) {
 # RETRAFO splitting
 
 #' @export
-as.list.CPOObjectRetrafoPrimitive = function(rtf) {
-  list(rtf)
+as.list.CPOObjectRetrafoPrimitive = function(x, ...) {
+  assert(length(list(...)) == 0)
+  list(x)
 }
 
 #' @export
-as.list.CPOObjectRetrafo = function(rtf) {
-  if (!is.null(environment(rtf)$prevfun)) {
+as.list.CPOObjectRetrafo = function(x, ...) {
+  assert(length(list(...)) == 0)
+  if (!is.null(environment(x)$prevfun)) {
     # chained via prevfun
     # call as.list on both fragments again, since they might still be chained
     # with at least one other method
-    c(as.list(environment(rtf)$prevfun), as.list(copyCpoObjectRetrafo(rtf)))
+    c(as.list(environment(x)$prevfun), as.list(copyCpoObjectRetrafo(x)))
   } else {
     # chained via composition
     cpoToRetrafo = function(cpo, pv, control) {
@@ -406,9 +408,9 @@ as.list.CPOObjectRetrafo = function(rtf) {
       is.prim = ("CPOPrimitive" %in% class(cpo))
       addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
     }
-    ctl = environment(rtf)$control
-    prs = getHyperPars(environment(rtf)$cpo)
-    retenv = environment(environment(rtf)$cpo$retrafo)
+    ctl = environment(x)$control
+    prs = getHyperPars(environment(x)$cpo)
+    retenv = environment(environment(x)$cpo$retrafo)
     c(as.list(cpoToRetrafo(retenv$cpo1, prs, ctl$fun1)),
       as.list(cpoToRetrafo(retenv$cpo2, prs, ctl$fun2)))
   }

@@ -200,6 +200,8 @@ applyCPO.CPOFunctional = function(cpo, task) {
 #' @export
 as.list.CPOFunctional = function(x, ...) {
   assert(length(list(...)) == 0)
+  cpo1 = substitute()  # pacify static checker
+  cpo2 = substitute()  # pacify static checker
   catabolize = function(task, .par.vals) {
     pv1names = names(getParamSet(cpo1)$pars)
     pv2names = names(getParamSet(cpo2)$pars)
@@ -348,6 +350,10 @@ singleModelRetrafo.CPOFunctionalModel = function(model, prevfun) {
   class(cpo2) = setdiff(class(cpo2), "CPOFunctionalRetrafoPrimitive")
 
   environment(cpo2)$upper.retrafo = cpo1
+
+  lower.retrafo = substitute()  # pacify static checker
+  upper.retrafo = substitute()  # pacify static checker
+
   retrafo.fn = function(data) {
     lower.retrafo(upper.retrafo(data))
   }
@@ -367,13 +373,14 @@ predict.CPOFunctionalRetrafo = function(object, data, ...) {
 # RETRAFO splitting
 
 #' @export
-as.list.CPOFunctionalRetrafo = function(rtf) {
-  oldenv = environment(rtf)
-  rtf = copyFunctionalRetrafo(rtf)
+as.list.CPOFunctionalRetrafo = function(x, ...) {
+  assert(length(list(...)) == 0)
+  oldenv = environment(x)
+  x = copyFunctionalRetrafo(x)
   if (!is.null(oldenv$upper.retrafo)) {
     assertClass(oldenv$upper.retrafo, "CPORetrafo")
   }
-  c(as.list(oldenv$upper.retrafo), list(rtf))
+  c(as.list(oldenv$upper.retrafo), list(x))
 }
 
 copyFunctionalRetrafo = function(rtf) {

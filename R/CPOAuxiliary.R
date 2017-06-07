@@ -396,6 +396,9 @@ getRetrafoState = function(retrafo.object) {
 
 #' @title Set the internal state of a Retrafo object
 #'
+#' @description
+#' This creates a new \code{Retrafo} object which will
+#' behave according to \dQuote{state}.
 #'
 #' @param constructor
 #'   A cpo constructor
@@ -677,7 +680,7 @@ as.list.CPOPrimitive = function(x, ...) {
 
 
 #' @export
-getRetrafoState.CPORetrafo = function(rtf) {
+getRetrafoState.CPORetrafo = function(retrafo.object) {
   stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
 }
 

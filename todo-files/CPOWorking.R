@@ -12,6 +12,7 @@ configureMlr(show.info = TRUE, on.learner.error = "stop", show.learner.output = 
 debugger()
 
 library("testthat")
+
 devtools::test(pkg = "..", filter = "cpo", reporter = c("summary", "stop"))
 devtools::test(pkg = "..", filter = "ParamSetSugar")
 

@@ -1,3 +1,4 @@
+#' defined to avoid problems with the static type checker
 #' @export
 discrete = list
 

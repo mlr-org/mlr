@@ -15,6 +15,10 @@ makeRetrafoFromState(constructor, state)
 \value{
 a \code{CPORetrafo}.
 }
+\description{
+This creates a new \code{Retrafo} object which will
+behave according to \dQuote{state}.
+}
 \seealso{
 Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},
