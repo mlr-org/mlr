@@ -1,3 +1,6 @@
+#' @export
+discrete = list
+
 #' @title Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s
 #'
 #' @description

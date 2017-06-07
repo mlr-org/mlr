@@ -133,7 +133,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
     attr(outerTrafo, "name") = cpo.name
     attr(outerTrafo, "barename") = cpo.name
     attr(outerTrafo, "id") = NULL
-    outerTrafo = addClasses(outerTrafo, c("CPOFunctional", "CPOFunctionalPrimitive", "CPO"))  # nolint
+    outerTrafo = addClasses(outerTrafo, c("CPOFunctionalPrimitive", "CPOFunctional", "CPO"))  # nolint
     setCPOId(outerTrafo, args$id)
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOFunctionalConstructor", "CPOConstructor"))
@@ -201,6 +201,30 @@ applyCPO.CPOFunctional = function(cpo, task) {
 singleModelRetrafo.CPOFunctionalModel = function(model, prevfun) {
   function(data) model$learner.model$retrafo(prevfun(data))
 }
+
+#' @export
+as.list.CPOFunctionalPrimitive = function(x, ...) {
+  assert(length(list(...)) == 0)
+  list(x)
+}
+
+#' @export
+as.list.CPOFunctional = function(x, ...) {
+  assert(length(list(...)) == 0)
+  catabolize = function(task, .par.vals) {
+    pv1names = names(getParamSet(cpo1)$pars)
+    pv2names = names(getParamSet(cpo2)$pars)
+    assert(length(intersect(pv1names, pv2names)) == 0)
+    assert(length(setdiff(names(.par.vals), c(pv1names, pv2names))) == 0)
+    c(as.list(setHyperPars(cpo1, par.vals = .par.vals[intersect(names(.par.vals), pv1names)])),
+      as.list(setHyperPars(cpo2, par.vals = .par.vals[intersect(names(.par.vals), pv2names)])))
+  }
+  formals(catabolize) = formals(x)
+  environment(catabolize) = environment(x)
+  catabolize(NULL)
+}
+
+
 
 ### IDs, ParamSets
 

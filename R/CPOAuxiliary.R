@@ -8,6 +8,7 @@
 NULL
 
 
+
 ### Generics
 
 #' @title CPO Composition / Attachment operator
@@ -336,7 +337,7 @@ retrafo.default = function(data, default.to.identity = FALSE) {
 #'   \code{CPOFunctionalConstructor} functions OR to
 #'   reset an object's retrafo to NULL.
 #'
-#'
+#' @family CPO
 #' @export
 `retrafo<-` = function(data, value) {
   UseMethod("retrafo<-")
@@ -371,6 +372,23 @@ setCPOId = function(cpo, id) {
 
 setCPOId.default = function(cpo, id) {
   stop("setCPOId for object not defined.")
+}
+
+#' @title Turn a list of preprocessing operators into a single chained one
+#'
+#' @description
+#' Chain a list of preprocessing operators, turning \code{list(a, b, c)} into
+#' \code{a \%>>\% b \%>>\% c}. This is the inverse operation of \code{as.list},
+#' applied on a \code{CPO} chain.
+#'
+#' @param pplist [\code{list}]\cr
+#'   A list of \code{CPO} objects.
+#'
+#' @family CPO
+#' @export
+chainCPO = function(pplist) {
+  assertList(pplist, types = "CPO", min.len = 1)
+  Reduce(`%>>%`, pplist)
 }
 
 ### Printing
@@ -564,3 +582,12 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
   newfun
 }
 
+## TODO:
+#- toList: turns into individual preprocs / retrafos
+#- fromList: apply %>>%
+#- getControl for retrafo
+#- fromControl: create from control
+
+#- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
+#- task disassemble / assemble methods
+#- column names

@@ -994,3 +994,86 @@ test_that("object based trafo and retrafo return values are checked", {
                             makeLearner("classif.logreg"), pid.task)}, "WrappedModel")
   expect_error(predict(res, pid.task), "badretrafo cpo\\.retrafo .*must return a data.frame")
 })
+
+test_that("to.list and chainCPO work", {
+
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
+    data[[1]] = data[[1]] * factor
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] / factor
+      data
+    }
+    data
+  })
+
+  cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
+    meandata = mean(data[[1]])
+    data[[1]] = data[[1]] + summand
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] - summand - meandata
+      data
+    }
+    data
+  })
+
+  cpomultiplier.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
+    data[[1]] = data[[1]] * factor
+    control = 0
+    data
+  }, cpo.retrafo = {
+    data[[1]] = data[[1]] / factor
+    data
+  })
+
+
+  cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
+    control = mean(data[[1]])
+    data[[1]] = data[[1]] + summand
+    data
+  }, cpo.retrafo = {
+    data[[1]] = data[[1]] - summand - control
+    data
+  })
+
+  testdf = data.frame(A = c(1, 2), B = c(0, 1))
+  testdf2 = data.frame(A = c(3, 4), B = c(-1, -2))
+
+  testCPO = function(cpoadder, cpomultiplier) {
+
+    cpochain = ((cpoadder(10, id = "fst") %>>% cpomultiplier(2, id = "snd")) %>>%
+                (cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")))
+
+
+    result = testdf %>>% cpochain
+    expect_equal(result$A, c(24, 28))
+    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+
+    cpolist = as.list(cpochain)
+    expect_list(cpolist, len = 4)
+    expect_equal(cpolist[[1]], cpoadder(10, id = "fst"))
+    expect_equal(cpolist[[2]], cpomultiplier(2, id = "snd"))
+    expect_equal(cpolist[[3]], cpoadder(-10, id = "thd"))
+    expect_equal(cpolist[[4]], cpomultiplier(2, id = "frth"))
+
+    result = testdf %>>% chainCPO(cpolist)
+    expect_equal(result$A, c(24, 28))
+    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+
+    expect_equal(cpolist, as.list(chainCPO(cpolist)))
+
+    cpolist.chg = as.list(setHyperPars(cpochain, fst.summand = 20))
+    expect_equal(cpolist.chg[[1]], cpoadder(20, id = "fst"))
+
+    cpolist.chg[[2]] = setHyperPars(cpolist.chg[[2]], snd.factor = 10)
+    result = testdf %>>% chainCPO(cpolist.chg)
+    expect_equal(result$A, ((c(1, 2) + 20) * 10 - 10 ) * 2)
+    expect_equal(retrafo(result)(testdf2)$A, ((c(3, 4) - 20 - 1.5) / 10 + 10 - 215) / 2)
+
+  }
+
+  testCPO(cpoadder.f, cpomultiplier.f)
+  testCPO(cpoadder.o, cpomultiplier.o)
+})
+
+
+

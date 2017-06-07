@@ -96,7 +96,7 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cp
     }
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(par.set$pars)])
     checkParamsFeasible(par.set, present.pars)
-    cpo = makeS3Obj(base::c("CPOObject", "CPOPrimitive", "CPO"),
+    cpo = makeS3Obj(base::c("CPOPrimitive", "CPOObject", "CPO"),
       barename = cpo.name,
       name = cpo.name,
       id = NULL,
@@ -196,6 +196,32 @@ cpoObjectRetrafo = function(cpo, params, control, prevfun) {
 
 singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
   cpoObjectRetrafo(model$learner$cpo, model$learner$par.vals, model$learner.model$control, prevfun)
+}
+
+
+#' @export
+as.list.CPOPrimitive = function(x, ...) {
+  assert(length(list(...)) == 0)
+  list(x)
+}
+
+#' @export
+as.list.CPOObject = function(x, ...) {
+  applyParams = function(cpo, par.vals) {
+    assertClass(cpo, "CPOObject")
+    relevant.names = intersect(names(cpo$par.set$pars), names(par.vals))
+    # apply the parameter set to the cpo
+    if (length(relevant.names)) {
+      setHyperPars(cpo, par.vals = par.vals[relevant.names])
+    } else {
+      cpo
+    }
+  }
+  cpo1 = parent.env(environment(x$trafo))$cpo1
+  cpo2 = parent.env(environment(x$trafo))$cpo2
+  par.vals = getHyperPars(x)
+  c(as.list(applyParams(cpo1, par.vals)),
+    as.list(applyParams(cpo2, par.vals)))
 }
 
 ### IDs, ParamSets
