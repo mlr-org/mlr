@@ -1,6 +1,6 @@
-
-### Creation
-
+##################################
+### Creator                    ###
+##################################
 
 #' @title Create a custom CPO constructor
 #'
@@ -110,7 +110,29 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(), cp
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOObjectConstructor", "CPOConstructor"))
 }
 
-### Compose, Attach, Apply
+##################################
+### Primary Trafo Operations   ###
+##################################
+
+# TRAFO main function
+# - accepts only Tasks
+# - automatically subsets 'args' to the relevant ones for cpo
+# - collects control from called function
+# - checks the result is a df, does not check for columns
+
+callCPOTrafo = function(cpo, data, target) {
+  result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), list(data = data, target = target)))
+  assertTrafoResult(result, cpo$name)
+  trafoenv = environment(cpo$trafo)$.ENV
+  assign(".ENV", NULL, envir = environment(cpo$trafo))
+  if (!"control" %in% ls(trafoenv)) {
+    stopf("CPO %s cpo.trafo did not create a 'control' object.", cpo$name)
+  }
+  result = list(data = result, control = trafoenv$control)
+  result
+}
+
+# CPO %>>% CPO
 
 #' @export
 composeCPO.CPOObject = function(cpo1, cpo2) {
@@ -125,18 +147,24 @@ composeCPO.CPOObject = function(cpo1, cpo2) {
     par.vals = c(cpo1$par.vals, cpo2$par.vals),
     trafo = captureEnvWrapper(function(data, target, ...) {
       args = list(...)
-      result = callCPOTrafo(cpo1, args, data, target)
-      result2 = callCPOTrafo(cpo2, args, result$data, target)
+      cpo1$par.vals = subsetParams(args, cpo1$par.set, cpo1$name)
+      cpo2$par.vals = subsetParams(args, cpo2$par.set, cpo2$name)
+      result = callCPOTrafo(cpo1, data, target)
+      result2 = callCPOTrafo(cpo2, result$data, target)
       control = list(fun1 = result$control, fun2 = result2$control)
       result2$data
     }),
     retrafo = function(data, control, ...) {
       args = list(...)
-      result = callCPORetrafo(cpo1, args, data, control$fun1)
-      finalres = callCPORetrafo(cpo2, args, result, control$fun2)
+      cpo1$par.vals = subsetParams(args, cpo1$par.set, cpo1$name)
+      cpo2$par.vals = subsetParams(args, cpo2$par.set, cpo2$name)
+      result = callCPORetrafo(cpo1, data, control$fun1)
+      finalres = callCPORetrafo(cpo2, result, control$fun2)
       finalres
     })
 }
+
+# CPO %>>% LEARNER
 
 #' @export
 attachCPO.CPOObject = function(cpo, learner) {
@@ -154,8 +182,8 @@ attachCPO.CPOObject = function(cpo, learner) {
 #' @export
 trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
   cpo = .learner$cpo
-  args = .learner$par.vals
-  transformed = callCPOTrafo(cpo, args, getTaskData(.task, .subset), getTaskTargetNames(.task))
+  cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
+  transformed = callCPOTrafo(cpo, getTaskData(.task, .subset), getTaskTargetNames(.task))
   .task = changeData(.task, transformed$data)
   model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectWrappedModel")
   model$control = transformed$control
@@ -165,54 +193,35 @@ trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
 #' @export
 predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
   cpo = .learner$cpo
-  args = .learner$par.vals
-  .newdata = callCPORetrafo(cpo, args, .newdata, .model$learner.model$control)
+  cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
+  .newdata = callCPORetrafo(cpo, .newdata, .model$learner.model$control)
   NextMethod(.newdata = .newdata)
 }
 
 #' @export
+removeHyperPars.CPOObjectLearner = function(learner, ids) {
+  i = intersect(names(learner$par.vals), ids)
+  if (length(i) > 0) {
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
+  }
+  learner$next.learner = removeHyperPars(learner$next.learner, ids)
+  learner
+}
+
+# DATA %>>% CPO
+
+#' @export
 applyCPO.CPOObject = function(cpo, task) {
   prevfun = retrafo(task)
-  transformed = callCPOTrafo(cpo, getHyperPars(cpo), getTaskData(task), getTaskTargetNames(task))
+  transformed = callCPOTrafo(cpo, getTaskData(task), getTaskTargetNames(task))
   task = changeData(task, transformed$data)
-  retr = cpoObjectRetrafo(cpo, getHyperPars(cpo), transformed$control, prevfun)
+  retr = cpoObjectRetrafo(cpo, transformed$control, prevfun)
   is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(cpo))
   retrafo(task) = addClasses(retr, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
   task
 }
 
-# put this in its own function because we want it to keep a slim environment.
-cpoObjectRetrafo = function(cpo, params, control, prevfun) {
-  function(data) {
-    assert(checkClass(data, "data.frame"), checkClass(data, "Task"))
-    if (is.data.frame(data)) {
-      if (!is.null(prevfun)) {
-        data = prevfun(data)
-      }
-      callCPORetrafo(cpo, params, data, control)
-    } else {
-      taskdata = getTaskData(data, target.extra = TRUE)$data
-      if (!is.null(prevfun)) {
-        taskdata = prevfun(taskdata)
-      }
-      newdata = getTaskData(data)
-      newdata[getTaskFeatureNames(data)] = callCPORetrafo(cpo, params, taskdata, control)
-      changeData(data, newdata)
-    }
-  }
-}
-
-singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
-  cpo = model$learner$cpo
-  args = model$learner$par.vals
-  control = model$learner.model$control
-  pv = subsetCPOArgs(cpo, args, FALSE)
-  res = cpoObjectRetrafo(cpo, pv, control, prevfun)
-  is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(model$learner$cpo))
-
-  addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
-}
-
+# CPO splitting
 
 #' @export
 as.list.CPOPrimitive = function(x, ...) {
@@ -239,76 +248,38 @@ as.list.CPOObject = function(x, ...) {
     as.list(applyParams(cpo2, par.vals)))
 }
 
+# Param Sets
+
 #' @export
-as.list.CPOObjectRetrafoPrimitive = function(rtf) {
-  list(rtf)
-}
-
-copyCpoObjectRetrafo = function(rtf) {
-  # make a 'primitive' copy with prevfun set to NULL
-  copyvars = c("cpo", "params", "control")
-  oldenv = environment(rtf)
-
-  assert((is.null(oldenv$prevfun) && "CPOPrimitive" %in% class(oldenv$cpo)) ==
-         ("CPOObjectRetrafoPrimitive" %in% class(rtf)))
-
-  newenv = new.env(parent = parent.env(oldenv))
-  for (cp in copyvars) {
-    newenv[[cp]] = oldenv[[cp]]
-  }
-  assign("prevfun", NULL, envir = newenv)
-  environment(rtf) = newenv
-  if ("CPOPrimitive" %in% class(newenv$cpo)) {
-    class(rtf) = union("CPOObjectRetrafoPrimitive", class(rtf))
-  }
-  rtf
+getParamSet.CPOObject = function(x) {
+  x$par.set
 }
 
 #' @export
-as.list.CPOObjectRetrafo = function(rtf) {
-  if (!is.null(environment(rtf)$prevfun)) {
-    # chained via prevfun
-    # call as.list on both fragments again, since they might still be chained
-    # with at least one other method
-    c(as.list(environment(rtf)$prevfun), as.list(copyCpoObjectRetrafo(rtf)))
-  } else {
-    # chained via composition
-    cpoToRetrafo = function(cpo, pv, control) {
-      pv = subsetCPOArgs(cpo, pv, FALSE)
-      res = cpoObjectRetrafo(cpo, pv, control, NULL)
-      is.prim = ("CPOPrimitive" %in% class(cpo))
-      addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
-    }
-    ctl = environment(rtf)$control
-    prs = environment(rtf)$params
-    retenv = environment(environment(rtf)$cpo$retrafo)
-    c(as.list(cpoToRetrafo(retenv$cpo1, prs, ctl$fun1)),
-      as.list(cpoToRetrafo(retenv$cpo2, prs, ctl$fun2)))
-  }
+getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both")) {
+  learner$par.vals
 }
 
 #' @export
-`%>>%.CPOObjectRetrafo` = function(cpo1, cpo2) {
-  assertClass(cpo2, "CPOObjectRetrafo")
-  oldenv = environment(cpo2)
-  assert((is.null(oldenv$prevfun) && "CPOPrimitive" %in% class(oldenv$cpo)) ==
-         ("CPOObjectRetrafoPrimitive" %in% class(cpo2)))
-
-  cpo2 = copyCpoObjectRetrafo(cpo2)
-  if (!is.null(oldenv$prevfun)) {
-    cpo1 = cpo1 %>>% oldenv$prevfun
+setHyperPars2.CPOObject = function(learner, par.vals = list()) {
+  badpars = setdiff(names(par.vals), names(learner$par.set$pars))
+  if (length(badpars)) {
+    stopf("CPO %s does not have parameter%s %s", getLearnerName(learner),
+          ifelse(length(badpars) > 1, "s", ""), collapse(badpars, ", "))
   }
-  class(cpo2) = setdiff(class(cpo2), "CPOObjectRetrafoPrimitive")
-
-  environment(cpo2)$prevfun = cpo1
-
-  cpo2
+  checkParamsFeasible(learner$par.set, par.vals)
+  learner$par.vals = insert(learner$par.vals, par.vals)
+  learner
 }
 
-### IDs, ParamSets
+# CPO ID, NAME
+
+#' @export
+getCPOName.CPOObject = function(cpo) {
+  cpo$name
+}
 
 setCPOId.CPOObject = function(cpo, id) {
-
   if (!is.null(id)) {
     assertString(id)
   }
@@ -347,11 +318,174 @@ setCPOId.CPOObject = function(cpo, id) {
   cpo
 }
 
-#' @export
-getParamSet.CPOObject = function(x) {
-  x$par.set
+
+##################################
+### Primary Retrafo Operations ###
+##################################
+
+# RETRAFO main function
+
+cpoObjectRetrafo = function(cpo, control, prevfun) {
+  function(data) {
+    assert(checkClass(data, "data.frame"), checkClass(data, "Task"))
+    if (is.data.frame(data)) {
+      if (!is.null(prevfun)) {
+        data = prevfun(data)
+      }
+      callCPORetrafo(cpo, data, control)
+    } else {
+      taskdata = getTaskData(data, target.extra = TRUE)$data
+      if (!is.null(prevfun)) {
+        taskdata = prevfun(taskdata)
+      }
+      newdata = getTaskData(data)
+      newdata[getTaskFeatureNames(data)] = callCPORetrafo(cpo, taskdata, control)
+      changeData(data, newdata)
+    }
+  }
 }
 
+# RETRAFO bare function
+# does no conversion of data.frames, no checking
+# of column equality etc.
+
+callCPORetrafo = function(cpo, data, control) {
+  result = do.call(cpo$retrafo, insert(getBareHyperPars(cpo), list(data = data, control = control)))
+  assertRetrafoResult(result, cpo$name)
+  result
+}
+
+# get RETRAFO from learner
+
+singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
+  cpo = model$learner$cpo
+  args = model$learner$par.vals
+  cpo$par.vals = subsetParams(args, cpo$par.set, cpo$name)
+  control = model$learner.model$control
+
+  res = cpoObjectRetrafo(cpo, control, prevfun)
+
+  is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(model$learner$cpo))
+  addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
+}
+
+# RETRAFO %>>% RETRAFO
+
+#' @export
+`%>>%.CPOObjectRetrafo` = function(cpo1, cpo2) {
+  assertClass(cpo2, "CPOObjectRetrafo")
+  oldenv = environment(cpo2)
+  assert((is.null(oldenv$prevfun) && "CPOPrimitive" %in% class(oldenv$cpo)) ==
+         ("CPOObjectRetrafoPrimitive" %in% class(cpo2)))
+
+  cpo2 = copyCpoObjectRetrafo(cpo2)
+  if (!is.null(oldenv$prevfun)) {
+    cpo1 = cpo1 %>>% oldenv$prevfun
+  }
+  class(cpo2) = setdiff(class(cpo2), "CPOObjectRetrafoPrimitive")
+
+  environment(cpo2)$prevfun = cpo1
+
+  cpo2
+}
+
+# DATA %>>% RETRAFO
+
+#' @export
+predict.CPOObjectRetrafo = function(object, data, ...) {
+  assert(length(list(...)) == 0)
+  object(data)
+}
+
+# RETRAFO splitting
+
+#' @export
+as.list.CPOObjectRetrafoPrimitive = function(rtf) {
+  list(rtf)
+}
+
+#' @export
+as.list.CPOObjectRetrafo = function(rtf) {
+  if (!is.null(environment(rtf)$prevfun)) {
+    # chained via prevfun
+    # call as.list on both fragments again, since they might still be chained
+    # with at least one other method
+    c(as.list(environment(rtf)$prevfun), as.list(copyCpoObjectRetrafo(rtf)))
+  } else {
+    # chained via composition
+    cpoToRetrafo = function(cpo, pv, control) {
+      cpo$par.vals = subsetParams(pv, cpo$par.set, cpo$name)
+      res = cpoObjectRetrafo(cpo, control, NULL)
+      is.prim = ("CPOPrimitive" %in% class(cpo))
+      addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
+    }
+    ctl = environment(rtf)$control
+    prs = getHyperPars(environment(rtf)$cpo)
+    retenv = environment(environment(rtf)$cpo$retrafo)
+    c(as.list(cpoToRetrafo(retenv$cpo1, prs, ctl$fun1)),
+      as.list(cpoToRetrafo(retenv$cpo2, prs, ctl$fun2)))
+  }
+}
+
+copyCpoObjectRetrafo = function(rtf) {
+  # make a 'primitive' copy with prevfun set to NULL
+  copyvars = c("cpo", "control")
+  oldenv = environment(rtf)
+
+  assert((is.null(oldenv$prevfun) && "CPOPrimitive" %in% class(oldenv$cpo)) ==
+         ("CPOObjectRetrafoPrimitive" %in% class(rtf)))
+
+  newenv = new.env(parent = parent.env(oldenv))
+  for (cp in copyvars) {
+    newenv[[cp]] = oldenv[[cp]]
+  }
+  assign("prevfun", NULL, envir = newenv)
+  environment(rtf) = newenv
+  if ("CPOPrimitive" %in% class(newenv$cpo)) {
+    class(rtf) = union("CPOObjectRetrafoPrimitive", class(rtf))
+  }
+  rtf
+}
+
+# RETRAFO State
+
+#' @export
+getRetrafoState.CPOObjectRetrafo = function(rtf) {
+  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getRetrafoState.CPOObjectRetrafoPrimitive = function(retrafo.object) {
+  control = environment(retrafo.object)$control
+
+  insert(getHyperPars(retrafo.object), list(control = control))
+}
+
+#' @export
+makeRetrafoFromState.CPOObjectConstructor = function(constructor, state) {
+  assertList(state, names = "unique")
+  assertSubset("control", names(state))
+  control = state$control
+  state$control = NULL
+  state['id'] = list(NULL)
+  assertSetEqual(names(state), names(formals(constructor)))
+  bare = do.call(constructor, state)
+  retr = cpoObjectRetrafo(bare, control, NULL)
+  addClasses(retr, c("CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
+}
+
+
+# Param Sets
+
+#' @export
+getParamSet.CPOObjectRetrafo = function(x) {
+  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getHyperPars.CPOObjectRetrafo = function(learner, for.fun = c("train", "predict", "both")) {
+  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
+}
 
 #' @export
 getParamSet.CPOObjectRetrafoPrimitive = function(x) {
@@ -365,59 +499,9 @@ getParamSet.CPOObjectRetrafoPrimitive = function(x) {
 }
 
 #' @export
-getParamSet.CPOObjectRetrafo = function(x) {
-  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
-}
-
-
-
-#' @export
-getHyperPars.CPOObject = function(learner, for.fun = c("train", "predict", "both")) {
-  learner$par.vals
-}
-
-#' @export
-getHyperPars.CPOObjectRetrafo = function(learner, for.fun = c("train", "predict", "both")) {
-  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
-}
-
-#' @export
 getHyperPars.CPOObjectRetrafoPrimitive = function(learner, for.fun = c("train", "predict", "both")) {
-  params = getHyperPars(environment(learner)$cpo)
-  params = insert(params, environment(learner)$params)
-  translateCPOArgnames(environment(learner)$cpo, params)
+  getBareHyperPars(environment(learner)$cpo)
 }
-
-
-#' @export
-setHyperPars2.CPOObject = function(learner, par.vals = list()) {
-  badpars = setdiff(names(par.vals), names(learner$par.set$pars))
-  if (length(badpars)) {
-    stopf("CPO %s does not have parameter%s %s", getLearnerName(learner),
-          ifelse(length(badpars) > 1, "s", ""), collapse(badpars, ", "))
-  }
-  checkParamsFeasible(learner$par.set, par.vals)
-  learner$par.vals = insert(learner$par.vals, par.vals)
-  learner
-}
-
-
-
-#' @export
-removeHyperPars.CPOObjectLearner = function(learner, ids) {
-  i = intersect(names(learner$par.vals), ids)
-  if (length(i) > 0) {
-    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
-  }
-  learner$next.learner = removeHyperPars(learner$next.learner, ids)
-  learner
-}
-
-#' @export
-getCPOName.CPOObject = function(cpo) {
-  cpo$name
-}
-
 
 #' @export
 getCPOName.CPOObjectRetrafoPrimitive = function(cpo) {
@@ -429,8 +513,12 @@ getCPOName.CPOObjectRetrafo = function(cpo) {
   paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
 }
 
-### Auxiliaries
 
+##################################
+### Auxiliary Functions        ###
+##################################
+
+# capture the environment of the call to 'fun'
 captureEnvWrapper = function(fun) {
   envcapture = quote({ assign(".ENV", tail(sys.frames(), 1)[[1]], envir = environment(sys.function())) ; 0 })
   envcapture[[3]] = body(fun)
@@ -439,87 +527,29 @@ captureEnvWrapper = function(fun) {
   fun
 }
 
+# check the trafo result what it is supposed to be
 assertTrafoResult = function(result, name) {
   if (!is.data.frame(result)) {
     stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame.", name)
   }
 }
 
+# check the retrafo result is what it is supposed to be
 assertRetrafoResult = function(result, name) {
   if (!is.data.frame(result)) {
     stopf("CPO %s cpo.retrafo gave bad result\ncpo.retrafo must return a data.frame.", name)
   }
 }
 
-translateCPOArgnames = function(cpo, args) {
+# get par.vals with bare par.set names
+getBareHyperPars = function(cpo) {
+  args = cpo$par.vals
   if (length(args)) {
     namestranslation = cpo$bare.par.names
     names(namestranslation) = names(cpo$par.set$pars)
     names(args) = namestranslation[names(args)]
   }
   args
-}
-
-
-# filter args for the arguments relevant for cpo
-# then add whatever is in '...'.
-subsetCPOArgs = function(cpo, args, translatenames = TRUE, ...) {
-  args = subsetParams(args, cpo$par.set, cpo$name)
-  if (translatenames) {
-    args = translateCPOArgnames(cpo, args)
-  }
-  insert(args, list(...))
-}
-
-callCPOTrafo = function(cpo, args, data, target) {
-  result = do.call(cpo$trafo, subsetCPOArgs(cpo, args, data = data, target = target))
-  assertTrafoResult(result, cpo$name)
-  trafoenv = environment(cpo$trafo)$.ENV
-  assign(".ENV", NULL, envir = environment(cpo$trafo))
-  if (!"control" %in% ls(trafoenv)) {
-    stopf("CPO %s cpo.trafo did not create a 'control' object.", cpo$name)
-  }
-  result = list(data = result, control = trafoenv$control)
-  result
-}
-
-callCPORetrafo = function(cpo, args, data, control) {
-  result = do.call(cpo$retrafo, subsetCPOArgs(cpo, args, data = data, control = control))
-  assertRetrafoResult(result, cpo$name)
-  result
-}
-
-#' @export
-predict.CPOObjectRetrafo = function(object, data, ...) {
-  assert(length(list(...)) == 0)
-  object(data)
-}
-
-
-#' @export
-getRetrafoState.CPOObjectRetrafo = function(rtf) {
-  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
-}
-
-#' @export
-getRetrafoState.CPOObjectRetrafoPrimitive = function(retrafo.object) {
-  cpo = environment(retrafo.object)$cpo
-  pv = getHyperPars(retrafo.object)
-  control = environment(retrafo.object)$control
-  insert(pv, list(control = control))
-}
-
-#' @export
-makeRetrafoFromState.CPOObjectConstructor = function(constructor, state) {
-  assertList(state, names = "unique")
-  assertSubset("control", names(state))
-  control = state$control
-  state$control = NULL
-  state['id'] = list(NULL)
-  assertSetEqual(names(state), names(formals(constructor)))
-  bare = do.call(constructor, state)
-  retr = cpoObjectRetrafo(bare, getHyperPars(bare), control, NULL)
-  addClasses(retr, c("CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
 }
 
 
