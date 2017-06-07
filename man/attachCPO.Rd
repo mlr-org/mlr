@@ -23,10 +23,10 @@ See the preferred \code{\link{\%>>\%}} for more info.
 }
 \seealso{
 Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
-  \code{\link{applyCPO}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{getCPOName}},
-  \code{\link{getHyperPars}},
+  \code{\link{applyCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{makeCPOFunctional}},
-  \code{\link{makeCPOObject}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}
+  \code{\link{makeCPOObject}}, \code{\link{retrafo<-}},
+  \code{\link{retrafo}}, \code{\link{setHyperPars}}
 }
