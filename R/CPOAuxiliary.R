@@ -80,6 +80,8 @@ NULL
       "'train(learner, data %>>% preproc), which is usually not what you want.")
   } else if ("CPO" %in% class(cpo2)) {
     applyCPO(cpo2, cpo1)
+  } else if ("CPORetrafo" %in% class(cpo2)) {
+    cpo2(cpo1)
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
@@ -297,7 +299,7 @@ retrafo.CPOModel = function(data, default.to.identity = FALSE) {
     }
     resfun
   }
-  recurseRetrafo(data, identity)
+  recurseRetrafo(data, NULL)
 }
 
 singleModelRetrafo = function(model, prevfun) {
@@ -377,19 +379,31 @@ setCPOId.default = function(cpo, id) {
 #' @title Turn a list of preprocessing operators into a single chained one
 #'
 #' @description
-#' Chain a list of preprocessing operators, turning \code{list(a, b, c)} into
+#' Chain a list of preprocessing operators, or retrafo objects, turning \code{list(a, b, c)} into
 #' \code{a \%>>\% b \%>>\% c}. This is the inverse operation of \code{as.list},
 #' applied on a \code{CPO} chain.
 #'
-#' @param pplist [\code{list}]\cr
-#'   A list of \code{CPO} objects.
+#' @param pplist [\code{list} of \code{CPO} | \code{list} of \code{CPORetrafo}]\cr
+#'   A list of \code{CPO} or \code{CPORetrafo} objects.
 #'
 #' @family CPO
 #' @export
 chainCPO = function(pplist) {
-  assertList(pplist, types = "CPO", min.len = 1)
+  assert(checkList(pplist, types = "CPO", min.len = 1),
+    checkList(pplist, types = "CPORetrafo", min.len = 1))
   Reduce(`%>>%`, pplist)
 }
+
+#' @export
+setHyperPars2.CPORetrafo = function(learner, par.vals = list()) {
+  stop("Cannot change parameter values of retrafo object\nTo change the behaviour of retrafo post-hoc, use setRetrafoControl.")
+}
+
+#' @export
+removeHyperPars.CPORetrafo = function(learner, ids) {
+  stop("Cannot change parameter values of retrafo object\nTo change the behaviour of retrafo post-hoc, use setRetrafoControl.")
+}
+
 
 ### Printing
 
@@ -423,6 +437,21 @@ summary.CPOObject = function(object, ...) {
     class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
   }
   object
+}
+
+#' @export
+print.CPORetrafo = function(x, ...) {
+  first = TRUE
+  for (primitive in as.list(x)) {
+    if (!first) {
+      cat(" =>\n")
+      first = TRUE
+    }
+    pv = getHyperPars(x)
+    argstring = paste(names(pv), sapply(pv, deparseJoin, sep = "\n"), sep = " = ", collapse = ", ")
+    catf("[RETRAFO %s(%s)]", name, argstring, newline = FALSE)
+  }
+  cat("\n")
 }
 
 ### Auxiliaries
@@ -582,11 +611,10 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
   newfun
 }
 
-## TODO:
-#- toList: turns into individual preprocs / retrafos
-#- fromList: apply %>>%
+# TO-DO:
 #- getControl for retrafo
 #- fromControl: create from control
+# setControl
 
 #- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
 #- task disassemble / assemble methods

@@ -7,11 +7,11 @@
 chainCPO(pplist)
 }
 \arguments{
-\item{pplist}{[\code{list}]\cr
-A list of \code{CPO} objects.}
+\item{pplist}{[\code{list} of \code{CPO} | \code{list} of \code{CPORetrafo}]\cr
+A list of \code{CPO} or \code{CPORetrafo} objects.}
 }
 \description{
-Chain a list of preprocessing operators, turning \code{list(a, b, c)} into
+Chain a list of preprocessing operators, or retrafo objects, turning \code{list(a, b, c)} into
 \code{a \%>>\% b \%>>\% c}. This is the inverse operation of \code{as.list},
 applied on a \code{CPO} chain.
 }
