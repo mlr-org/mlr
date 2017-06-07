@@ -42,7 +42,7 @@ testdfcpo2 = data.frame(A = c(3, 4))
 cpomultiplier.task.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
   expect_identical(data[[target]], factor(c("a", "b")))
   data[[1]] = data[[1]] * factor
-  attr(data, "retrafo") = function(data) {
+  cpo.retrafo = function(data) {
     data[[1]] = data[[1]] / factor
     data
   }
@@ -53,7 +53,7 @@ cpoadder.task.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.traf
   expect_identical(data[[target]], factor(c("a", "b")))
   meandata = mean(data[[1]])
   data[[1]] = data[[1]] + summand
-  attr(data, "retrafo") = function(data) {
+  cpo.retrafo = function(data) {
     data[[1]] = data[[1]] - summand - meandata
     data
   }
@@ -88,7 +88,7 @@ cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], 
     expect_identical(data[[target]], factor(c("a", "b")))
   }
   data[[1]] = data[[1]] * factor
-  attr(data, "retrafo") = function(data) {
+  cpo.retrafo = function(data) {
     data[[1]] = data[[1]] / factor
     data
   }
@@ -101,7 +101,7 @@ cpoadder.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
   }
   meandata = mean(data[[1]])
   data[[1]] = data[[1]] + summand
-  attr(data, "retrafo") = function(data) {
+  cpo.retrafo = function(data) {
     data[[1]] = data[[1]] - summand - meandata
     data
   }

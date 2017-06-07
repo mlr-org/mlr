@@ -25,7 +25,7 @@ test_that("CPOs can be created", {
 test_that("CPO with no parameters don't crash", {
 
   emptycpo.f = makeCPOFunctional("testCPOEmptyF", cpo.trafo = {
-    attr(data, "retrafo") = function(data) data
+    cpo.retrafo = function(data) data
     data
   })
 
@@ -65,7 +65,7 @@ test_that("CPO parameters behave as expected", {
     .par.vals = list(a = 1, b = 2, d = 1),
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = e)  # nolint
-      attr(data, "retrafo") = function(data) data
+      cpo.retrafo = function(data) data
       data
     })
 
@@ -73,7 +73,7 @@ test_that("CPO parameters behave as expected", {
     a: numeric[, ], z: integer[, ], model = TRUE: logical,
     cpo.trafo = {
       cpotest.parvals2 <<- list(a = a, z = z)  # nolint
-      attr(data, "retrafo") = function(data) data
+      cpo.retrafo = function(data) data
       data
     })
 
@@ -81,7 +81,7 @@ test_that("CPO parameters behave as expected", {
     f: integer[, ],
     cpo.trafo = {
       cpotest.parvals3 <<- c(cpotest.parvals3, f)  # nolint
-      attr(data, "retrafo") = function(data) data
+      cpo.retrafo = function(data) data
       data
     })
 
@@ -346,7 +346,7 @@ test_that("discrete parameters work well", {
     a: logical, b: discrete[a, b, 1], c = 1: discrete[a, b, 1], d = c(TRUE, TRUE): logical^2, e: discrete[a = function() 1, b = function() Y]^2,
     cpo.trafo = {
       cpotest.parvals <<- list(a = a, b = b, c = c, d = d, e = c(e[[1]](), e[[2]]()))  # nolint
-      attr(data, "retrafo") = function(data) data
+      cpo.retrafo = function(data) data
       data
     })
 
@@ -456,7 +456,7 @@ test_that("CPO trafo functions work", {
   t = train(makeCPOFunctional("testCPO", a: integer[, ], b: integer[, ],
     cpo.trafo = function(data, target, b, ...) {
       cpotest.parvals <<- list(b, list(...))  # nolint
-      attr(data, "retrafo") = function(data, ...) {
+      cpo.retrafo = function(data, ...) {
         cpotest.parvals <<- list(b, list(...))  # nolint
         data
       }
@@ -514,7 +514,7 @@ test_that("CPO arguments may be missing if requirements allow", {
         expect_class(b, "integer")
       }
       control = 0
-      attr(data, "retrafo") = function(data) data
+      cpo.retrafo = function(data) data
       data
     })
 
@@ -678,22 +678,22 @@ test_that("retrafo accessor does what it is supposed to do", {
 test_that("functional trafo and retrafo return values are checked", {
 
   cpoone.f = makeCPOFunctional("one", a: logical, cpo.trafo = {
-    retrafo(data) = identity
+    cpo.retrafo = identity
     data
   })
 
   cpotwo.f = makeCPOFunctional("two", b: logical, cpo.trafo = {
-    retrafo(data) = identity
+    cpo.retrafo = identity
     data
   })
 
   cpobad.trafo.f = makeCPOFunctional("badtrafo", c: logical, cpo.trafo = {
-    retrafo(data) = identity
+    cpo.retrafo = identity
     data[[1]]
   })
 
   cpobad.retrafo.f = makeCPOFunctional("badretrafo", d: logical, cpo.trafo = {
-    retrafo(data) = function(data) data[[1]]
+    cpo.retrafo = function(data) data[[1]]
     data
   })
 

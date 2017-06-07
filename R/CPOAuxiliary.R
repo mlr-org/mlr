@@ -648,6 +648,35 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
   newfun
 }
 
+# capture the environment of the call to 'fun'
+captureEnvWrapper = function(fun) {
+  envcapture = quote({ assign(".ENV", tail(sys.frames(), 1)[[1]], envir = environment(sys.function())) ; 0 })
+  envcapture[[3]] = body(fun)
+  body(fun) = envcapture
+  environment(fun) = new.env(parent = environment(fun))
+  fun
+}
+
+
+
+#' @export
+removeHyperPars.CPOLearner = function(learner, ids) {
+  i = intersect(names(learner$par.vals), ids)
+  if (length(i) > 0) {
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
+  }
+  learner$next.learner = removeHyperPars(learner$next.learner, ids)
+  learner
+}
+
+#' @export
+as.list.CPOPrimitive = function(x, ...) {
+  assert(length(list(...)) == 0)
+  list(x)
+}
+
+
+
 # TO-DO:
 #- getControl for retrafo
 #- fromControl: create from control

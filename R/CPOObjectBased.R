@@ -174,7 +174,7 @@ attachCPO.CPOObject = function(cpo, learner) {
   # less informative error message
   parameterClashAssert(cpo, learner, cpo$name, getLearnerName(learner))
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
-    cpo$par.set, cpo$par.vals, "CPOObjectLearner", c("CPOObjectModel", "CPOModel"))
+    cpo$par.set, cpo$par.vals, c("CPOObjectLearner", "CPOLearner"), c("CPOObjectModel", "CPOModel"))
   wlearner$cpo = cpo
   wlearner
 }
@@ -183,29 +183,20 @@ attachCPO.CPOObject = function(cpo, learner) {
 trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
   cpo = .learner$cpo
   cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
+
   transformed = callCPOTrafo(cpo, getTaskData(.task, .subset), getTaskTargetNames(.task))
   .task = changeData(.task, transformed$data)
+
   model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectWrappedModel")
   model$control = transformed$control
+  model$cpo = cpo
   model
 }
 
 #' @export
 predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
-  cpo = .learner$cpo
-  cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
-  .newdata = callCPORetrafo(cpo, .newdata, .model$learner.model$control)
+  .newdata = callCPORetrafo(.model$learner.model$cpo, .newdata, .model$learner.model$control)
   NextMethod(.newdata = .newdata)
-}
-
-#' @export
-removeHyperPars.CPOObjectLearner = function(learner, ids) {
-  i = intersect(names(learner$par.vals), ids)
-  if (length(i) > 0) {
-    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
-  }
-  learner$next.learner = removeHyperPars(learner$next.learner, ids)
-  learner
 }
 
 # DATA %>>% CPO
@@ -213,8 +204,10 @@ removeHyperPars.CPOObjectLearner = function(learner, ids) {
 #' @export
 applyCPO.CPOObject = function(cpo, task) {
   prevfun = retrafo(task)
+
   transformed = callCPOTrafo(cpo, getTaskData(task), getTaskTargetNames(task))
   task = changeData(task, transformed$data)
+
   retr = cpoObjectRetrafo(cpo, transformed$control, prevfun)
   is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(cpo))
   retrafo(task) = addClasses(retr, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
@@ -222,12 +215,6 @@ applyCPO.CPOObject = function(cpo, task) {
 }
 
 # CPO splitting
-
-#' @export
-as.list.CPOPrimitive = function(x, ...) {
-  assert(length(list(...)) == 0)
-  list(x)
-}
 
 #' @export
 as.list.CPOObject = function(x, ...) {
@@ -517,15 +504,6 @@ getCPOName.CPOObjectRetrafo = function(cpo) {
 ##################################
 ### Auxiliary Functions        ###
 ##################################
-
-# capture the environment of the call to 'fun'
-captureEnvWrapper = function(fun) {
-  envcapture = quote({ assign(".ENV", tail(sys.frames(), 1)[[1]], envir = environment(sys.function())) ; 0 })
-  envcapture[[3]] = body(fun)
-  body(fun) = envcapture
-  environment(fun) = new.env(parent = environment(fun))
-  fun
-}
 
 # check the trafo result what it is supposed to be
 assertTrafoResult = function(result, name) {
