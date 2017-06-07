@@ -380,7 +380,7 @@ test_that("preprocessing actually changes data", {
   cpotest.parvals <<- list()  # nolint
   t = train(testlearnercpo, testtaskcpo)
   predict(t, testtaskcpo2)
-  expect_identical(cpotest.parvals, list(1, 3))
+  expect_equal(cpotest.parvals, list(1, 3))
 
   testCPO = function(cpoMultiplier, cpoAdder) {
     cpotest.parvals <<- list()  # nolint
@@ -838,5 +838,95 @@ test_that("to.list and chainCPO work", {
   testCPO(cpoadder.o, cpomultiplier.o)
 })
 
+
+test_that("retrafo catabolization and anabolization work", {
+
+  testCPO = function(cpoadder, cpomultiplier) {
+    cpochain = ((cpoadder(20, id = "fst") %>>% cpomultiplier(2, id = "snd")) %>>%
+                (cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>%
+                cpoadder(10) %>>% cpomultiplier(2))
+
+    cpochain = setHyperPars(cpochain, frth.factor = -2)
+
+    res = testdfcpo %>>% cpochain
+
+    expect_equal(res[[1]], (((c(1, 2) + 20) * 2 - 10) * -2 + 10) * 2)
+
+
+    expect_equal(retrafo(res)(testdfcpo2)[[1]], (((c(3, 4) - 20 - 1.5) / 2 + 10 - 43) / -2 - 10 + 66) / 2)
+
+    lrn = cpomultiplier(2, id = "a") %>>% cpomultiplier(0.5, id = "b") %>>% cpochain %>>% testlearnercpo
+
+    retrafochain = retrafo(train(setHyperPars(lrn, fst.summand = 10), testtaskcpo))
+
+    rfclist = as.list(retrafochain)
+
+    expect_equal(chainCPO(rfclist)(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+
+    expect_equal((chainCPO(rfclist[c(1:5)]) %>>% chainCPO(rfclist[c(6:8)]))(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+
+    chain2 = chainCPO(rfclist[c(1, 2, 3)]) %>>% chainCPO(rfclist[c(4, 5, 6, 7, 8)])
+
+    expect_equal(chain2(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+
+    chain3 = chainCPO(rfclist[3:4]) %>>% chainCPO(rfclist[c(5:6, 1:2)]) %>>% chainCPO(rfclist[7:8])
+
+    expect_equal(chain3(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+
+    expect_equal((testdfcpo2 %>>% chainCPO(rfclist[7:8]) %>>% chainCPO(rfclist[5:6]) %>>% chainCPO(rfclist[1:2]) %>>% chainCPO(rfclist[3:4]))[[1]],
+      (((c(3, 4) - 10 + 26) / 2 + 10 - 23) / -2 - 10 - 1.5) / 2)
+    expect_equal((testdfcpo2 %>>% chainCPO(rfclist[c(7, 8, 5, 6, 3, 4, 1, 2)]))[[1]], (((c(3, 4) - 10 + 26) / 2 + 10 - 23) / -2 - 10 - 1.5) / 2)
+    chained.again = chainCPO(rfclist[7:8]) %>>% (chainCPO(rfclist[5:6]) %>>% chainCPO(rfclist[1:4]))
+    expect_equal((testdfcpo2 %>>% chained.again)[[1]], (((c(3, 4) - 10 + 26) / 2 + 10 - 23) / -2 - 10 - 1.5) / 2)
+
+    expect_error(setHyperPars(as.list(chained.again)[[1]], summand = 10), "Cannot change parameter values")
+    expect_error(removeHyperPars(as.list(chained.again)[[1]], "summand"))
+
+    expect_error(getHyperPars(chained.again), "Cannot get parameters of compound retrafo")
+    expect_error(getParamSet(chained.again), "Cannot get param set of compound retrafo")
+
+    expect_identical(getHyperPars(as.list(chained.again)[[1]]), list(summand = 10))
+    expect_identical(getHyperPars(as.list(chained.again)[[7]]), list(summand = 10))
+    expect_identical(getHyperPars(as.list(chained.again)[[4]]), list(factor = -2))
+
+    expect_identical(getParamSet(as.list(chained.again)[[1]]), paramSetSugar(summand = 1: integer[, ]))
+    expect_identical(getParamSet(as.list(chained.again)[[7]]), paramSetSugar(summand = 1: integer[, ]))
+    expect_identical(getParamSet(as.list(chained.again)[[4]]), paramSetSugar(factor = 1: numeric[~., ~.]))
+
+    testdfcpo %>>% chainCPO(as.list(cpochain)[1:3])
+    firsthalf = retrafo(testdfcpo %>>% chainCPO(as.list(cpochain)[1:3]))
+    secondhalf = retrafo(testdfcpo %>>% chainCPO(as.list(cpochain)[4:6]))
+
+    expect_equal((testdfcpo2 %>>% firsthalf)[[1]], (c(3, 4) - 20 - 1.5) / 2 + 10 - 43)
+    expect_equal((testdfcpo2 %>>% secondhalf)[[1]], (c(3, 4) / -2 - 10 + 3) / 2)
+
+    expect_equal((testdfcpo2 %>>% (firsthalf %>>% secondhalf))[[1]], (((c(3, 4) - 20 - 1.5) / 2 + 10 - 43) / -2 - 10 + 3) / 2)
+
+    cpotest.parvals <<- list()  # nolint
+    retrafos = list(
+        (testdfcpo %>>% cpoadder(10, id = "fst")) %>>% cpomultiplier(2, id = "snd"),  # apply CPO twice
+        testdfcpo %>>% (cpoadder(10, id = "fst") %>>% cpomultiplier(2, id = "snd")),  # apply compound CPO
+        train(setHyperPars(cpoadder(1, id = "fst") %>>% (cpomultiplier(1, id = "snd") %>>%
+                                                         testlearnercpo), fst.summand = 10, snd.factor = 2), testtaskcpo), # wrap with CPO twice
+        train(setHyperPars((cpoadder(1, id = "fst") %>>% cpomultiplier(1, id = "snd")), fst.summand = 10, snd.factor = 2) %>>%
+              testlearnercpo, testtaskcpo))  # wrap with compound CPO
+
+    expect_equal(cpotest.parvals, list(22, 22))
+
+
+    for (retgen in retrafos) {
+      ret = retrafo(retgen)
+      expect_equal((testdf2 %>>% ret)[[1]], (c(3, 4) - 10 - 1.5) / 2)
+      expect_equal((testdf2 %>>% as.list(ret)[[1]])[[1]], c(3, 4) - 10 - 1.5)
+      expect_equal((testdf2 %>>% as.list(ret)[[2]])[[1]], c(3, 4) / 2)
+      expect_equal((testdf2 %>>% chainCPO(as.list(ret)[c(2, 1)]))[[1]], c(3, 4) / 2 - 10 - 1.5)
+    }
+  }
+
+  testCPO(cpoadder.o, cpomultiplier.o)
+  testCPO(cpoadder.f, cpomultiplier.f)
+
+
+})
 
 

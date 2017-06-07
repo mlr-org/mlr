@@ -35,6 +35,7 @@ predictLearner.testlearner = function(.learner, .model, .newdata, ...) {
 t = train(mkl(), pid.task)
 p = predict(t, pid.task)
 
+rm(cpotest.parvals)
 
 
 cpoo = cpoPca()
@@ -55,6 +56,9 @@ resample(cpoPca() %>>% makeLearner("classif.naiveBayes"), pid.task, cv5)
 
 
 
+
+
+
 cpoo = cpoPca()
 t = train(cpoScale() %>>% makeLearner("classif.logreg"), pid.task)
 predict(t, pid.task)
@@ -71,7 +75,34 @@ plot(df %>>% cpoPca())
 
 cpo = cpoPca(scale = FALSE)
 
-setHyperPars(cpo, list(center = FALSE))
+retrafo(pid.task %>>% cpo)
+
+retrafo(pid.task %>>% cpo)
+
+
+retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd")))
+
+retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd")))
+
+retrafo(pid.task %>>% cpo %>>% cpoPca(id = "snd"))
+
+retrafo(train(cpo %>>% cpoPca(id = "snd") %>>% makeLearner("classif.logreg"), pid.task))
+
+retrafo(train(cpo %>>% (cpoPca(id = "snd") %>>% makeLearner("classif.logreg")), pid.task))
+
+
+cpo = setHyperPars(cpo, par.vals = list(center = FALSE))
+
+ls(environment(retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd"))))$cpo)
+
+environment(retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd"))))$cpo$retrafo
+ls(environment(environment(retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd"))))$cpo$retrafo))
+
+environment(retrafo(pid.task %>>% cpo %>>% cpoPca(id = "snd")))$prevfun
+
+environment(retrafo(train(cpo %>>% cpoPca(id = "snd") %>>% makeLearner("classif.logreg"), pid.task)))$prevfun
+
+environment(retrafo(train(cpo %>>% (cpoPca(id = "snd") %>>% makeLearner("classif.logreg")), pid.task)))$prevfun
 
 
 debugger()
@@ -90,3 +121,54 @@ x
 attributes(x)
 
 
+  cpomultiplier.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], dummy = TRUE: logical, cpo.trafo = {
+    data[[1]] = data[[1]] * factor
+    attr(data, "retrafo") = function(data) {
+      data[[1]] = data[[1]] / factor
+      data
+    }
+    data
+  })
+
+retrafo(testdf %>>% cpomultiplier.f(2))
+
+orig = retrafo(testdf %>>% cpomultiplier.f(2) %>>% cpomultiplier.f(10, id="xy"))
+xl = as.list(orig)
+compound2 = (xl[[1]] %>>% xl[[2]])
+orig(testdf2)
+
+compound2
+
+getCPOName(orig)
+getHyperPars(orig)
+getParamSet(orig)
+getHyperPars(xl[[1]])
+getHyperPars(xl[[2]])
+getParamSet(xl[[1]])
+setHyperPars(orig, par.vals = list())
+setHyperPars(xl[[1]], par.vals = list())
+
+debugger()
+
+getCPOName(compound2)
+lapply(as.list(compound2), getHyperPars)
+
+parent.env(parent.env(environment(retrafo(testdf %>>% cpomultiplier.f(2)))))$cpo.name
+
+
+f = (function(x) {
+  function() x
+})(10)
+
+class(f) = "xyz"
+
+y = f
+y
+environment(y)$z
+environment(y) = new.env()
+environment(y)$x = 100
+y()
+f()
+
+
+# TODO: different retrafo inner and outer

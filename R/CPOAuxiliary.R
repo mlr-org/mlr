@@ -85,7 +85,7 @@ NULL
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
-    stop("Cannot compose data with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
+    stopf("Cannot compose data with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
 }
 
@@ -399,12 +399,6 @@ setHyperPars2.CPORetrafo = function(learner, par.vals = list()) {
   stop("Cannot change parameter values of retrafo object\nTo change the behaviour of retrafo post-hoc, use setRetrafoControl.")
 }
 
-#' @export
-removeHyperPars.CPORetrafo = function(learner, ids) {
-  stop("Cannot change parameter values of retrafo object\nTo change the behaviour of retrafo post-hoc, use setRetrafoControl.")
-}
-
-
 ### Printing
 
 #' @export
@@ -445,11 +439,11 @@ print.CPORetrafo = function(x, ...) {
   for (primitive in as.list(x)) {
     if (!first) {
       cat(" =>\n")
-      first = TRUE
     }
-    pv = getHyperPars(x)
+    first = FALSE
+    pv = getHyperPars(primitive)
     argstring = paste(names(pv), sapply(pv, deparseJoin, sep = "\n"), sep = " = ", collapse = ", ")
-    catf("[RETRAFO %s(%s)]", name, argstring, newline = FALSE)
+    catf("[RETRAFO %s(%s)]", getCPOName(primitive), argstring, newline = FALSE)
   }
   cat("\n")
 }
