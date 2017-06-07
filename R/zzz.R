@@ -16,6 +16,7 @@
 }
 
 .onAttach = function(libname, pkgname) {
+  backports::import(pkgname)
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
 }
