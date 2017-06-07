@@ -865,16 +865,26 @@ test_that("retrafo catabolization and anabolization work", {
 
     rfclist = as.list(retrafochain)
 
-#    expect_equal(getRetrafoState(rfclist[[1]])$factor, 2)
-#    expect_equal(getRetrafoState(rfclist[[2]])$factor, 0.5)
-#    expect_equal(getRetrafoState(rfclist[[3]])$summand, 10)
-#    expect_equal(getRetrafoState(rfclist[[6]])$factor, -2)
+    expect_equal(getRetrafoState(rfclist[[1]])$factor, 2)
+    expect_equal(getRetrafoState(rfclist[[2]])$factor, 0.5)
+    expect_equal(getRetrafoState(rfclist[[3]])$summand, 10)
+    expect_equal(getRetrafoState(rfclist[[6]])$factor, -2)
 
+    rfclistStates = lapply(rfclist, getRetrafoState)
 
+    constructors = list(cpomultiplier, cpomultiplier, cpoadder, cpomultiplier, cpoadder, cpomultiplier, cpoadder, cpomultiplier)
+    rfclist2 = lapply(seq_along(constructors), function(idx) makeRetrafoFromState(constructors[[idx]], rfclistStates[[idx]]))
 
     expect_equal(chainCPO(rfclist)(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(chainCPO(rfclist2)(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
     expect_equal((chainCPO(rfclist[c(1:5)]) %>>% chainCPO(rfclist[c(6:8)]))(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal((chainCPO(rfclist2[c(1:5)]) %>>% chainCPO(rfclist2[c(6:8)]))(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+
+    rfclistStates2 = rfclistStates
+    rfclistStates2[[1]]$factor = 4
+    rfclist2 = lapply(seq_along(constructors), function(idx) makeRetrafoFromState(constructors[[idx]], rfclistStates2[[idx]]))
+    expect_equal(chainCPO(rfclist2)(testdfcpo2)[[1]], (((c(3, 4) / 2 - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
     chain2 = chainCPO(rfclist[c(1, 2, 3)]) %>>% chainCPO(rfclist[c(4, 5, 6, 7, 8)])
 
