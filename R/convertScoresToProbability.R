@@ -17,7 +17,9 @@
 #' prob = convertingScoresToProbability(dv, parainit = c(0, 1))
 #' plot(1:length(prob), prob, ylim = c(0, 1))
 #'
-convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100){
+convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "Nelder-Mead"){
+
+  assertChoice(optim.method, c("trust region", "Nelder-Mead"))
   f = anomaly.score
   p = parainit
   loop = TRUE
@@ -32,18 +34,46 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     stop("Too little/many starting parameters. For calibration using sigmoid function starting values for parameter A and B are needed.")
   }
 
-  while (loop) {
-    t = ifelse(p[1] * f + p[2] > 0, 1, 0)
-    # LL and its derivatives
-    LL = function(p) { t((1-t)) %*% (p[1] * f + p[2]) + sum.help %*% log(1 + exp(-p[1] * f - p[2])) }
-    gA = function(p) { t(f) %*% ( (1-t) - (1 / exp(p[1] * f + p[2]))) }
-    gB = function(p) { sum.help %*% ((1-t) - (1 / exp(p[1]*f + p[2]))) }
-    g = function(p) {
-      c(gA(p), gB(p))
-    }
+  prob.outlier = function(x, score) {
+    1 / (1 + exp(-x[1] * f - x[2]))
+  }
 
-    optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS", control = list(report.level = 0, maxit = max.iter))
-    pnew = optim$solution
+  if (optim.method == "trust region") {
+    while (loop) {
+      t = ifelse(p[1] * f + p[2] > 0, 1, 0)
+      # LL and its derivatives
+      LL = function(p) { t((1-t)) %*% (p[1] * f + p[2])
+        + sum.help %*% log(1 + exp(-p[1] * f - p[2])) }
+      gA = function(p) { t(f) %*% ( (1-t) - (1 / exp(p[1] * f + p[2]))) }
+      gB = function(p) { sum.help %*% ((1-t) - (1 / exp(p[1]*f + p[2]))) }
+      g = function(p) {
+        c(gA(p), gB(p))
+      }
+
+      optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS",
+        control = list(report.level = 0, maxit = max.iter))
+
+      pnew = optim$solution
+      diff = sum(abs(pnew - p))
+
+      if ( diff > 1e-4) {
+        loop = TRUE
+        p = pnew
+      } else {
+        loop = FALSE
+        list$pnew = pnew
+        list$probability = prob.outlier(pnew, f)
+      }
+    }
+  } else if (optim.method == "Nelder-Mead") {
+    while (loop) {
+    t = ifelse(p[1] * f + p[2] > 0, 1, 0)
+    # negative Log likelihood
+    LL = function(p, label, score) { t((1-label)) %*% (p[1] * score + p[2])
+      + sum.help %*% log(1 + exp(-p[1] * score - p[2])) }
+
+    optim = optim(par = p, fn = LL, label = t, score = f, method = "Nelder-Mead")
+    pnew = optim$par
     diff = sum(abs(pnew - p))
 
     if ( diff > 1e-4) {
@@ -51,9 +81,12 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       p = pnew
     } else {
       loop = FALSE
-      probability = 1 / (1 + exp(-pnew[1] * f - pnew[2]))
+      list$pnew = pnew
+      list$probability = prob.outlier(pnew, f)
     }
   }
-  return(probability)
+}
+  #return(probability)
+  return(list)
 }
 
