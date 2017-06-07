@@ -19,7 +19,10 @@ Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},
   \code{\link{chainCPO}}, \code{\link{cpoPca}},
   \code{\link{cpoScale}}, \code{\link{getHyperPars}},
+  \code{\link{getRetrafoState}},
   \code{\link{makeCPOFunctional}},
-  \code{\link{makeCPOObject}}, \code{\link{retrafo<-}},
-  \code{\link{retrafo}}, \code{\link{setHyperPars}}
+  \code{\link{makeCPOObject}},
+  \code{\link{makeRetrafoFromState}},
+  \code{\link{retrafo<-}}, \code{\link{retrafo}},
+  \code{\link{setHyperPars}}
 }
