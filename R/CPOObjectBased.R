@@ -437,11 +437,6 @@ copyCpoObjectRetrafo = function(rtf) {
 # RETRAFO State
 
 #' @export
-getRetrafoState.CPOObjectRetrafo = function(rtf) {
-  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
-}
-
-#' @export
 getRetrafoState.CPOObjectRetrafoPrimitive = function(retrafo.object) {
   control = environment(retrafo.object)$control
 
@@ -461,18 +456,7 @@ makeRetrafoFromState.CPOObjectConstructor = function(constructor, state) {
   addClasses(retr, c("CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
 }
 
-
 # Param Sets
-
-#' @export
-getParamSet.CPOObjectRetrafo = function(x) {
-  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
-}
-
-#' @export
-getHyperPars.CPOObjectRetrafo = function(learner, for.fun = c("train", "predict", "both")) {
-  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
-}
 
 #' @export
 getParamSet.CPOObjectRetrafoPrimitive = function(x) {

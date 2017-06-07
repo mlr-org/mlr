@@ -841,8 +841,8 @@ test_that("to.list and chainCPO work", {
 
 test_that("retrafo catabolization and anabolization work", {
 
-  cpoadder = cpoadder.o
-  cpomultiplier = cpomultiplier.o
+  cpoadder = cpoadder.f
+  cpomultiplier = cpomultiplier.f
 
   testCPO = function(cpoadder, cpomultiplier) {
 

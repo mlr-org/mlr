@@ -676,6 +676,26 @@ as.list.CPOPrimitive = function(x, ...) {
 }
 
 
+#' @export
+getRetrafoState.CPORetrafo = function(rtf) {
+  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getParamSet.CPORetrafo = function(x) {
+  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
+}
+
+
+#' @export
+getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "both")) {
+  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getCPOName.CPORetrafo = function(cpo) {
+  paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
+}
 
 # TO-DO:
 #- getControl for retrafo
@@ -685,3 +705,4 @@ as.list.CPOPrimitive = function(x, ...) {
 #- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
 #- task disassemble / assemble methods
 #- column names
+

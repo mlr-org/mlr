@@ -97,7 +97,6 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
       result = do.call(cpo.trafo, args)
 
       trafoenv = environment(cpo.trafo)$.ENV
-      assign(".ENV", NULL, envir = environment(cpo.trafo))
 
       # check result & retrafo
       if (!is.data.frame(result)) {
@@ -111,37 +110,8 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
         stopf("CPO %s cpo.trafo did not set a variable 'cpo.retrafo' to a function with one argument.", cpo.name)
       }
 
-      # chain retrafo
-      lower.retrafo = retrafo.fn  # lower.retrafo must be present in any case, for later chaining of retrafos
-      if (!is.prim) {
-        assertFunction(upper.retrafo, nargs = 1, .var.name = "retrafo(task)")
-        retrafo.fn = function(data) {
-          lower.retrafo(upper.retrafo(data))
-        }
-      }
-
-
-      cpo.name = cpo.name  # get cpo.name into the 'retrafo' env for easier manipulation later
-      par.set = par.set  # same
-
-      retrafo(task) = function(data) {
-        was.task = "Task" %in% class(data)
-        task = data
-        if (was.task) {
-          data = getTaskData(data, target.extra = TRUE)$data
-        }
-        result = retrafo.fn(data)
-        if (!is.data.frame(result)) {
-          stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", cpo.name)
-        }
-        if (was.task) {
-          newdata = getTaskData(task)
-          newdata[getTaskFeatureNames(task)] = result
-          result = changeData(task, newdata)
-        }
-        result
-      }
-      retrafo(task) = addClasses(retrafo(task), c(if (is.prim) "CPOFunctionalRetrafoPrimitive", "CPOFunctionalRetrafo", "CPORetrafo"))
+      retrafo(task) = addClasses(cpoFunctionalRetrafo(retrafo.fn, upper.retrafo, args, par.set, cpo.name),
+        c(if (is.prim) "CPOFunctionalRetrafoPrimitive", "CPOFunctionalRetrafo", "CPORetrafo"))
 
       task
     }
@@ -155,6 +125,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOFunctionalConstructor", "CPOConstructor"))
 }
+
 
 ##################################
 ### Primary Trafo Operations   ###
@@ -317,6 +288,39 @@ setCPOId.CPOFunctional = function(cpo, id) {
 ### Primary Retrafo Operations ###
 ##################################
 
+# RETRAFO main function
+
+cpoFunctionalRetrafo = function(retrafo.fn, upper.retrafo, args, par.set, cpo.name) {
+  # args, par.set, cpo.name are in the 'retrafo' env printing
+
+  is.prim = is.null(upper.retrafo)
+  # chain retrafo
+  lower.retrafo = retrafo.fn  # lower.retrafo must be present in any case, for later chaining of retrafos
+  if (!is.prim) {
+    assertFunction(upper.retrafo, nargs = 1, .var.name = "retrafo(task)")
+    retrafo.fn = function(data) {
+      lower.retrafo(upper.retrafo(data))
+    }
+  }
+  function(data) {
+    was.task = "Task" %in% class(data)
+    task = data
+    if (was.task) {
+      data = getTaskData(data, target.extra = TRUE)$data
+    }
+    result = retrafo.fn(data)
+    if (!is.data.frame(result)) {
+      stopf("CPO %s retrafo gave bad result\nretrafo must return a data.frame.", cpo.name)
+    }
+    if (was.task) {
+      newdata = getTaskData(task)
+      newdata[getTaskFeatureNames(task)] = result
+      result = changeData(task, newdata)
+    }
+    result
+  }
+}
+
 # get RETRAFO from learner
 
 singleModelRetrafo.CPOFunctionalModel = function(model, prevfun) {
@@ -391,22 +395,36 @@ copyFunctionalRetrafo = function(rtf) {
 
 # RETRAFO State
 
-# TODO
-
-
-
-### Param Sets
-
 #' @export
-getParamSet.CPOFunctionalRetrafo = function(x) {
-  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
+getRetrafoState.CPOFunctionalRetrafoPrimitive = function(retrafo.object) {
+  as.list(environment(environment(retrafo.object)$retrafo.fn))
+  # the 'cpo.retrafo' contains the retrafo.fn, which is 'primitive',
+  # so no need to copy it.
 }
 
-
 #' @export
-getHyperPars.CPOFunctionalRetrafo = function(learner, for.fun = c("train", "predict", "both")) {
-  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
+makeRetrafoFromState.CPOFunctionalConstructor = function(constructor, state) {
+  assertList(state, names = "unique")
+  assertSubset("cpo.retrafo", names(state))
+
+  retrafo.fn = state$cpo.retrafo
+
+  env = new.env(parent = parent.env(environment(retrafo.fn)))
+
+  list2env(state, envir = env)
+
+  environment(retrafo.fn) = env
+
+  env$cpo.retrafo = retrafo.fn  # in case of recursion
+
+  bare = constructor()
+
+  # par.set set to empty because the parameters are not part of the state.
+  retr = cpoFunctionalRetrafo(retrafo.fn, NULL, list(), getParamSet(bare), getCPOName(bare))
+  addClasses(retr, c("CPOFunctionalRetrafoPrimitive", "CPOFunctionalRetrafo", "CPORetrafo"))
 }
+
+# Param Sets
 
 #' @export
 getParamSet.CPOFunctionalRetrafoPrimitive = function(x) {
@@ -425,9 +443,3 @@ getHyperPars.CPOFunctionalRetrafoPrimitive = function(learner, for.fun = c("trai
 getCPOName.CPOFunctionalRetrafoPrimitive = function(cpo) {
   environment(cpo)$cpo.name
 }
-
-#' @export
-getCPOName.CPOFunctionalRetrafo = function(cpo) {
-  paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
-}
-
