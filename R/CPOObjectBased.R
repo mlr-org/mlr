@@ -449,7 +449,7 @@ makeRetrafoFromState.CPOObjectConstructor = function(constructor, state) {
   assertSubset("control", names(state))
   control = state$control
   state$control = NULL
-  state['id'] = list(NULL)
+  state["id"] = list(NULL)
   assertSetEqual(names(state), names(formals(constructor)))
   bare = do.call(constructor, state)
   retr = cpoObjectRetrafo(bare, control, NULL)
@@ -478,12 +478,6 @@ getHyperPars.CPOObjectRetrafoPrimitive = function(learner, for.fun = c("train", 
 getCPOName.CPOObjectRetrafoPrimitive = function(cpo) {
   environment(cpo)$cpo$barename
 }
-
-#' @export
-getCPOName.CPOObjectRetrafo = function(cpo) {
-  paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
-}
-
 
 ##################################
 ### Auxiliary Functions        ###

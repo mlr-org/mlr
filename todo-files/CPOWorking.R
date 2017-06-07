@@ -12,7 +12,7 @@ configureMlr(show.info = TRUE, on.learner.error = "stop", show.learner.output = 
 debugger()
 
 library("testthat")
-devtools::test(pkg = "..", filter = "cpo")
+devtools::test(pkg = "..", filter = "cpo", reporter = c("summary", "stop"))
 devtools::test(pkg = "..", filter = "ParamSetSugar")
 
 mkl = function() {
@@ -73,7 +73,7 @@ cpo = cpoPca(scale = FALSE)
 
 retrafo(pid.task %>>% cpo)
 
-retrafo(pid.task %>>% cpo)
+environment(retrafo(pid.task %>>% cpo))$cpo
 
 
 retrafo(pid.task %>>% (cpo %>>% cpoPca(id = "snd")))
