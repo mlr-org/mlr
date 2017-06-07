@@ -485,3 +485,9 @@ callCPORetrafo = function(cpo, args, data, control) {
   assertRetrafoResult(result, cpo$name)
   result
 }
+
+#' @export
+predict.CPOObjectRetrafo = function(object, data, ...) {
+  assert(length(list(...)) == 0)
+  object(data)
+}

@@ -81,7 +81,7 @@ NULL
   } else if ("CPO" %in% class(cpo2)) {
     applyCPO(cpo2, cpo1)
   } else if ("CPORetrafo" %in% class(cpo2)) {
-    cpo2(cpo1)
+    predict(cpo2, cpo1)
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
@@ -608,7 +608,7 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
 # TO-DO:
 #- getControl for retrafo
 #- fromControl: create from control
-# setControl
+#  setControl
 
 #- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
 #- task disassemble / assemble methods

@@ -394,3 +394,9 @@ getCPOName.CPOFunctionalRetrafoPrimitive = function(cpo) {
 getCPOName.CPOFunctionalRetrafo = function(cpo) {
   paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
 }
+
+#' @export
+predict.CPOFunctionalRetrafo = function(object, data, ...) {
+  assert(length(list(...)) == 0)
+  object(data)
+}
