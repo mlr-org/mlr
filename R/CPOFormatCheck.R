@@ -9,12 +9,12 @@
 #  - check the properties are fulfilled
 #  - split the data
 #  - get a shape info object
-#  --> return list(indata = list(data, target), shapeinfo)
+#  --> return list(indata = list(data, target), shapeinfo, properties)
 prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
 
-  checkDataConformsProperties(indata, allowed.properties, sprintf("Data going into %s trafo", name))
-
+  present.properties = getDataProperties(indata)
+  assertSubset(present.properties, allowed.properties, .var.name = sprintf("Data going into %s trafo", name))
   shapeinfo = makeInputShapeInfo(indata)
 
   indata = if (is.data.frame(indata)) {
@@ -22,7 +22,7 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   } else {
     splittask(indata, datasplit)
   }
-  list(indata, shapeinfo)
+  list(indata = indata, shapeinfo = shapeinfo, properties = present.properties)
 }
 
 # do the preparation before calling retrafo:
@@ -30,7 +30,7 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
 #  - check the properties are fulfilled
 #  - check the shape is the same as during trafo
 #  - split the data
-#  --> return the data in a shape fit to be fed into retrafo
+#  --> return list(data in a shape fit to be fed into retrafo, properties)
 # how does mlr predict handle this stuff? they just drop target columns by name
 prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.input, name) {
 
@@ -47,14 +47,14 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 
   assertShapeConform(indata, shapeinfo, datasplit == "all", name)
 
-  checkDataConformsProperties(indata, allowed.properties, sprintf("Data going into %s retrafo", name))
+  present.properties = getDataProperties(indata)
+  assertSubset(present.properties, allowed.properties, .var.name = sprintf("Data going into %s retrafo", name))
 
   if (datasplit %in% c("most", "all")) {
     splitinto = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
-    splitColsByType(splitinto, indata)
-  } else {
-    indata
+    indata = splitColsByType(splitinto, indata)
   }
+  list(indata = indata, properties = present.properties)
 }
 
 # do the check of the trafo's return value
@@ -69,7 +69,9 @@ handleTrafoOutput(outdata, olddata, datasplit, allowed.properties, name) {
   } else {
     recombinetask(olddata, outdata, datasplit, name)
   }
-  checkDataConformsProperties(recombined, allowed.properties, sprintf("%s trafo return value", name))
+
+  present.properties = getDataProperties(recombined)
+  assertSubset(present.properties, allowed.properties, .var.name = sprintf("%s trafo return value", name))
 
   shapeinfo = makeOutputShapeInfo(outdata)
 
@@ -89,7 +91,8 @@ handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, 
     recombinetask(olddata, outdata, datasplit, name)
   }
 
-  checkDataConformsProperties(recombined, allowed.properties, sprintf("%s retrafo return value", name))
+  present.properties = getDataProperties(recombined)
+  assertSubset(present.properties, allowed.properties, .var.name = sprintf("%s retrafo return value", name))
 
   # check the shape of outdata is as expected
   if (datasplit %in% c("all", "most")) {
@@ -106,9 +109,9 @@ handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, 
 ### Shape & Properties         ###
 ##################################
 
-# data can be a task or a data.frame
-# description should be something like 'data going into / coming out of %NAME%'
-checkDataConformsProperties(data, allowed.properties, description) {
+# calculate the properties of the data (only feature types & missings)
+# data can be a task or data.frame
+getDataProperties = function(data) {
   if (is.data.frame(data)) {
     td = makeTaskDescInternal(NULL, NULL, data, character(0), NULL, NULL)
   } else {
@@ -116,12 +119,13 @@ checkDataConformsProperties(data, allowed.properties, description) {
     td = getTaskDesc(data)
   }
   nf = td$n.feat
-  present.properties = c(names(nf)[nf > 0], if (td$has.missings) "missings")
-  assertSubset(present.properties, allowed.properties, .var.name = description)
+  c(names(nf)[nf > 0], if (td$has.missings) "missings")
+}
+
 }
 
 # give error when shape is different than dictated by shapeinfo.
-assertShapeConform(df, shapeinfo, checkordered, name) {
+assertShapeConform = function(df, shapeinfo, checkordered, name) {
   assertSubsetEqual(names(indata), shapeinfo$colnames)
   indata = indata[shapeinfo$colnames]
 
@@ -381,14 +385,22 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
   }
 }
 
-
-
-
 # test that:
 #  changing some of the columns leaves the others in order
 #  change of target gives error
 #  duplicate introduced name gives error
 #  new task is actually changed, has the expected data
-
 # training with data.frame, predicting with task, etc.
 #
+
+# with split type, generating bad data:
+#  no df
+#  missing / too many names
+#  row number mismatch
+#
+# attaching cpo that needs wrong properties (multi level)
+# combining cpos with incompatible property requirements
+# properties change after detaching preprocs / retrafos
+#
+# adding properties to data that shouldn't be added (in preproc / retrafo)
+

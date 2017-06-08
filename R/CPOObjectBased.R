@@ -150,9 +150,10 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
       bare.par.names = names(par.set$pars),
       par.set = par.set,
       par.vals = present.pars,
-      properties = .properties
-      properties.adding = .properties.adding
-      properties.needed = .properties.needed
+      properties = .properties,
+      properties.adding = .properties.adding,
+      properties.needed = .properties.needed,
+      datasplit = .datasplit,
       trafo = cpo.trafo,
       retrafo = cpo.retrafo)
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
@@ -165,20 +166,32 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 ##################################
 
 # TRAFO main function
-# - data is already pre-formatted
+# - checks the inbound and outbound data is in the right format
+# - data will be turned into the shape requested by the cpo
+# - properties check (inbound, and outbound)
 # - automatically subsets 'args' to the relevant ones for cpo
 # - collects control from called function
-# - checks the result is a df, does not check for columns
+# - returns list(data, info = list(control, shapeinfo.input, shapeinfo.output)
 
-callCPOTrafo = function(cpo, data, target) {
-  result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), list(data = data, target = target)))
+# receiver.properties are the properties of the next layer
+callCPOTrafo = function(cpo, data, receiver.properties) {
+  allowed.properties = union(intersect(receiver.properties, cpo$properties), cpo$properties.adding)
+  tin = prepareTrafoInput(data, cpo$datasplit, allowed.properties, cpo$name)
+
+  result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), tin$indata))
+
   trafoenv = environment(cpo$trafo)$.ENV
   assign(".ENV", NULL, envir = environment(cpo$trafo))
   if (!"control" %in% ls(trafoenv)) {
     stopf("CPO %s cpo.trafo did not create a 'control' object.", cpo$name)
   }
-  result = list(data = result, control = trafoenv$control)
-  result
+
+  # the properties of the output should only be the input properties + the ones we're adding
+  allowed.properties = union(tin$properties, cpo$properties.adding)
+  tout = handleTrafoOutput(result, data, cpo$datasplit, allowed.properties, name)
+
+  list(data = tout$outdata, info = list(control = trafoenv$control,
+    shapeinfo.input = tin$shapeinfo, shapeinfo.output = tout$shapeinfo)
 }
 
 # CPO %>>% CPO
@@ -198,7 +211,7 @@ composeCPO.CPOObject = function(cpo1, cpo2) {
       args = list(...)
       cpo1$par.vals = subsetParams(args, cpo1$par.set, cpo1$name)
       cpo2$par.vals = subsetParams(args, cpo2$par.set, cpo2$name)
-      result = callCPOTrafo(cpo1, data, target)
+      result = callCPOTrafo(cpo1, data, target)  # TODO
       result2 = callCPOTrafo(cpo2, result$data, target)
       control = list(fun1 = result$control, fun2 = result2$control)
       result2$data
@@ -207,7 +220,7 @@ composeCPO.CPOObject = function(cpo1, cpo2) {
       args = list(...)
       cpo1$par.vals = subsetParams(args, cpo1$par.set, cpo1$name)
       cpo2$par.vals = subsetParams(args, cpo2$par.set, cpo2$name)
-      result = callCPORetrafo(cpo1, data, control$fun1)
+      result = callCPORetrafo(cpo1, data, control$fun1)  # TODO
       finalres = callCPORetrafo(cpo2, result, control$fun2)
       finalres
     })
@@ -233,7 +246,7 @@ trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
   cpo = .learner$cpo
   cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
 
-  transformed = callCPOTrafo(cpo, getTaskData(.task, .subset), getTaskTargetNames(.task))
+  transformed = callCPOTrafo(cpo, getTaskData(.task, .subset), getTaskTargetNames(.task)) # TODO
   .task = changeData(.task, transformed$data)
 
   model = makeChainModel(train(.learner$next.learner, .task), "CPOObjectWrappedModel")
@@ -244,7 +257,7 @@ trainLearner.CPOObjectLearner = function(.learner, .task, .subset = NULL, ...) {
 
 #' @export
 predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
-  .newdata = callCPORetrafo(.model$learner.model$cpo, .newdata, .model$learner.model$control)
+  .newdata = callCPORetrafo(.model$learner.model$cpo, .newdata, .model$learner.model$control) # TODO
   NextMethod(.newdata = .newdata)
 }
 
@@ -254,9 +267,9 @@ predictLearner.CPOObjectLearner = function(.learner, .model, .newdata, ...) {
 applyCPO.CPOObject = function(cpo, task) {
   prevfun = retrafo(task)
 
-  transformed = callCPOTrafo(cpo, getTaskData(task), getTaskTargetNames(task))
+  transformed = callCPOTrafo(cpo, getTaskData(task), getTaskTargetNames(task)) # TODO
   task = changeData(task, transformed$data)
-
+#TODO: renamed
   retr = cpoObjectRetrafo(cpo, transformed$control, prevfun)
   is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(cpo))
   retrafo(task) = addClasses(retr, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
@@ -306,6 +319,17 @@ setHyperPars2.CPOObject = function(learner, par.vals = list()) {
   checkParamsFeasible(learner$par.set, par.vals)
   learner$par.vals = insert(learner$par.vals, par.vals)
   learner
+}
+
+# get par.vals with bare par.set names
+getBareHyperPars = function(cpo) {
+  args = cpo$par.vals
+  if (length(args)) {
+    namestranslation = cpo$bare.par.names
+    names(namestranslation) = names(cpo$par.set$pars)
+    names(args) = namestranslation[names(args)]
+  }
+  args
 }
 
 # CPO ID, NAME
@@ -361,34 +385,33 @@ setCPOId.CPOObject = function(cpo, id) {
 
 # RETRAFO main function
 
-cpoObjectRetrafo = function(cpo, control, prevfun) {
-  function(data) {
-    assert(checkClass(data, "data.frame"), checkClass(data, "Task"))
-    if (is.data.frame(data)) {
-      if (!is.null(prevfun)) {
-        data = prevfun(data)
-      }
-      callCPORetrafo(cpo, data, control)
-    } else {
-      taskdata = getTaskData(data, target.extra = TRUE)$data
-      if (!is.null(prevfun)) {
-        taskdata = prevfun(taskdata)
-      }
-      newdata = getTaskData(data)
-      newdata[getTaskFeatureNames(data)] = callCPORetrafo(cpo, taskdata, control)
-      changeData(data, newdata)
+# - checks the inbound and outbound data is in the right format
+# - checks the shape of input and output is as was before
+# - data will be turned into the shape requested by the cpo
+# - properties check (inbound, and outbound)
+# - automatically subsets 'args' to the relevant ones for cpo
+# - returns the resulting data
+
+# info is list(control, shapeinfo.input, shapeinfo.output)
+# receiver.properties are the properties of the next layer
+
+callCPORetrafo = function(cpo, info, prevfun) {
+  function(data, .receiver.properties = c("numerics", "factors", "ordered", "missings")) {
+    allowed.properties = union(intersect(.receiver.properties, cpo$properties), cpo$properties.adding)
+
+    if (!is.null(prevfun)) {
+      data = prevfun(data, allowed.properties)
     }
+
+    tin = prepareRetrafoInput(data, cpo$datasplit, allowed.properties, info$shapeinfo.input, cpo$barename)
+
+    result = do.call(cpo$retrafo, insert(getBareHyperPars(cpo), tin$indata))
+
+    # the properties of the output should only be the input properties + the ones we're adding
+    allowed.properties = union(tin$properties, cpo$properties.adding)
+
+    handleRetrafoOutput(result, data, cpo$datasplit, allowed.properties, info$shapeinfo.output, cpo$barename)
   }
-}
-
-# RETRAFO bare function
-# does no conversion of data.frames, no checking
-# of column equality etc.
-
-callCPORetrafo = function(cpo, data, control) {
-  result = do.call(cpo$retrafo, insert(getBareHyperPars(cpo), list(data = data, control = control)))
-  assertRetrafoResult(result, cpo$name)
-  result
 }
 
 # get RETRAFO from learner
@@ -398,7 +421,7 @@ singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
   args = model$learner$par.vals
   cpo$par.vals = subsetParams(args, cpo$par.set, cpo$name)
   control = model$learner.model$control
-
+# TODO: renamed
   res = cpoObjectRetrafo(cpo, control, prevfun)
 
   is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(model$learner$cpo))
@@ -453,6 +476,7 @@ as.list.CPOObjectRetrafo = function(x, ...) {
     # chained via composition
     cpoToRetrafo = function(cpo, pv, control) {
       cpo$par.vals = subsetParams(pv, cpo$par.set, cpo$name)
+# TODO: renamed
       res = cpoObjectRetrafo(cpo, control, NULL)
       is.prim = ("CPOPrimitive" %in% class(cpo))
       addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
@@ -503,6 +527,7 @@ makeRetrafoFromState.CPOObjectConstructor = function(constructor, state) {
   state["id"] = list(NULL)
   assertSetEqual(names(state), names(formals(constructor)))
   bare = do.call(constructor, state)
+# TODO: renamed
   retr = cpoObjectRetrafo(bare, control, NULL)
   addClasses(retr, c("CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
 }
@@ -529,27 +554,3 @@ getHyperPars.CPOObjectRetrafoPrimitive = function(learner, for.fun = c("train", 
 getCPOName.CPOObjectRetrafoPrimitive = function(cpo) {
   environment(cpo)$cpo$barename
 }
-
-##################################
-### Auxiliary Functions        ###
-##################################
-
-# check the retrafo result is what it is supposed to be
-assertRetrafoResult = function(result, name) {
-  if (!is.data.frame(result)) {
-    stopf("CPO %s cpo.retrafo gave bad result\ncpo.retrafo must return a data.frame.", name)
-  }
-}
-
-# get par.vals with bare par.set names
-getBareHyperPars = function(cpo) {
-  args = cpo$par.vals
-  if (length(args)) {
-    namestranslation = cpo$bare.par.names
-    names(namestranslation) = names(cpo$par.set$pars)
-    names(args) = namestranslation[names(args)]
-  }
-  args
-}
-
-
