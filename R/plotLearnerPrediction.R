@@ -217,6 +217,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     } else if (taskdim == 2L) {
       #FIXME: color are not scaled correctly? can be improved?
       # plot background from model / grid
+
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
       p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
       p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
