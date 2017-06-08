@@ -355,7 +355,7 @@ retrafo.default = function(data, default.to.identity = FALSE) {
 #' @export
 `retrafo<-.default` = function(data, value) {
   if (!is.null(value)) {
-    assertFunction(value, nargs = 1)
+    assertClass(value, "CPORetrafo")
   }
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("argument is neither a Task nor data.frame.\n%s\n%s",
