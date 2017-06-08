@@ -701,11 +701,8 @@ getCPOName.CPORetrafo = function(cpo) {
 }
 
 # TO-DO:
-#- getControl for retrafo
-#- fromControl: create from control
-#  setControl
-
+#- retrafo() type check
 #- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
 #- task disassemble / assemble methods
 #- column names
-
+#- core rewrite
