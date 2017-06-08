@@ -5,6 +5,9 @@
 \title{Create a custom CPO constructor}
 \usage{
 makeCPOObject(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
+  .datasplit = c("target", "most", "all", "no", "task"),
+  .properties = c("numerics", "factors", "ordered", "missings"),
+  .properties.adding = character(0), .properties.needed = character(0),
   cpo.trafo, cpo.retrafo)
 }
 \arguments{
@@ -20,6 +23,28 @@ Optional parameter set. If this is not \code{NULL}, the \dQuote{...} parameters 
 Named list of default parameter values for the CPO. These are used additionally to the
 parameter default values in \dQuote{...} and \code{.par.set}. It is preferred to use
 these default values, and not \code{.par.vals}.}
+
+\item{.properties}{[\code{character}]\cr
+The kind if data that the CPO will be able to handle. This can be one or many of: \dQuote{numerics},
+\dQuote{factors}, \dQuote{ordered}, \dQuote{missings}.
+There should be a bias towards including properties. If a property is absent, the preproc
+operator will reject the data. If an operation e.g. only works on numeric columns that have no
+missings (like PCA), it is recommended to give all properties, ignore the columns that
+are not numeric (using \dQuote{.datasplit} = \dQuote{most}), and giving an error when
+there are missings in the numeric columns (since missings in factorial features are not a problem).
+Defaults to the maximal set.}
+
+\item{.properties.adding}{[\code{character}]\cr
+Can be one or many of the same values as \dQuote{.properties}. These properties get added to
+a Learner (or CPO) coming after / behind this CPO. When a CPO imputes missing values, for example,
+this should be \dQuote{missings}. This must be a subset of \dQuote{.properties}. Default is
+\code{character(0)}.}
+
+\item{.properties.needed}{[\code{character}]\cr
+Can be one or many of the same values as \dQuote{.properties}. These properties are required
+from a Learner (or CPO) coming after / behind this CPO. E.g., when a CPO converts factors to
+numerics, this should be \dQuote{numerics} (and \dQuote{.properties.adding} should be \dQuote{factors}).
+Default is \code{character(0)}.}
 
 \item{cpo.trafo}{[\code{language} | \code{function}]\cr
 This can either be a function, just the expressions to perform wrapped in curly braces.

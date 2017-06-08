@@ -701,8 +701,10 @@ getCPOName.CPORetrafo = function(cpo) {
 }
 
 # TO-DO:
-#- retrafo() type check
+#- remove 'data' from function environment
+#- properties
 #- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
 #- task disassemble / assemble methods
 #- column names
 #- core rewrite
+#
