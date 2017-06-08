@@ -34,13 +34,13 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     stop("Too little/many starting parameters. For calibration using sigmoid function starting values for parameter A and B are needed.")
   }
 
-  prob.outlier = function(x, score) {
-    1 / (1 + exp(-x[2] * f - x[1]))
+  prob.outlier = function(p, score) {
+    1 / (1 + exp(-p[2] * f - p[1]))
   }
 
   if (optim.method == "trust region") {
     while (loop) {
-      t = ifelse(p[2] * f + p[1] > 0, 1, 0)
+      t =  prob.outlier(p, f)
       # LL and its derivatives
       LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
         + sum.help %*% log(1 + exp(-p[2] * f - p[1])) }
@@ -67,7 +67,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     }
   } else if (optim.method == "Nelder-Mead") {
     while (loop) {
-      t = ifelse(p[2] * f + p[1] > 0, 1, 0)
+      t =  prob.outlier(p, f)
       # negative Log likelihood
       LL = function(p, label, score) { t((1-label)) %*% (p[2] * score + p[1])
         + sum.help %*% log(1 + exp(-p[2] * score - p[1])) }
@@ -87,7 +87,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     }
   } else if (optim.method == "glm") {
     while (loop) {
-      t = ifelse(p[2] * f + p[1] > 0, 1, 0)
+      t =  prob.outlier(p, f)
       df = data.frame(t, f)
       mod = glm(t ~ f, family = binomial(link = "logit"), data = df)
       pnew = coef(mod)
@@ -107,8 +107,9 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       label = ifelse(p[2] * f + p[1] > 0, 1, 0)
       prior1 = sum(label)
       prior0 = length(label) - prior1
+      t =  prob.outlier(p, f)
 
-      pnew = newton.optim(deci = f, label = label, prior1, prior0)
+      pnew = newton.optim(t = t, p = p, deci = f, label = label, prior1, prior0)
       diff = sum(abs(pnew - p))
 
       if ( diff > 1e-2) {
@@ -128,22 +129,25 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
 
 
-newton.optim = function(deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
+newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
   # Construct initial values:
   # target support in array t
   # initial function value in fval
-  hiTarget = (prior1 + 1) / (prior1 + 2)
-  loTarget = 1 / (prior0 + 2)
-  len = prior1 + prior0 # total number of data
-  t = c()
-
-  for (i in 1:len) {
-    if(label[i] > 0) t[i] = hiTarget
-    else t[i] = loTarget
-  }
-
-  A = 0
-  B = log( (prior0 + 1) / (prior1 + 1) )
+  # hiTarget = (prior1 + 1) / (prior1 + 2)
+  # loTarget = 1 / (prior0 + 2)
+  # len = prior1 + prior0 # total number of data
+  # t = c()
+  #
+  # for (i in 1:len) {
+  #   if(label[i] > 0) t[i] = hiTarget
+  #   else t[i] = loTarget
+  # }
+  len = length(t)
+  A = p[2]
+  B = p[1]
+  #A = 0
+  #B = log( (prior0 + 1) / (prior1 + 1) )
+  #B = log(0.05)
   fval = 0
   for (i in 1:len) {
     fApB = deci[i] * A + B
