@@ -707,4 +707,8 @@ getCPOName.CPORetrafo = function(cpo) {
 #- task disassemble / assemble methods
 #- column names
 #- core rewrite
-#
+#- attach retrafo to model
+#- apply retrafo to prediction
+#- remove retrafo from learner
+#- functional retrafo: check for data reference and warn
+

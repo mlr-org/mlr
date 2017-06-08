@@ -19,6 +19,25 @@
 #'   Named list of default parameter values for the CPO. These are used additionally to the
 #'   parameter default values in \dQuote{...} and \code{.par.set}. It is preferred to use
 #'   these default values, and not \code{.par.vals}.
+#' @param .datasplit [\code{character(1)}]\cr
+#'   Indicate what format the data should be as seen by \dQuote{cpo.trafo}. Possibilities are:
+#'   \itemize{
+#'     \item target the \dQuote{data} variable contains the data in a data.frame without
+#'       the target column(s), the \dQuote{target} variable contains the target column(s) in
+#'       a data.frame.
+#'     \item most the \dQuote{data} is a list containing three data.frames: \dQuote{numeric}
+#'       the numeric columns, \dQuote{factor} the factorial columns (ordered and unordered),
+#'       \dQuote{other} the columns that are neither numeric nor factors. The \dQuote{target}
+#'       variable contains the target column(s) in a data.frame.
+#'     \item all similarly to \dQuote{most}, but factors are split up into \dQuote{factor}
+#'       (unordered factors) and \dQuote{ordered}.
+#'     \item no the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
+#'       variable is a \code{character} indicating the names of the target columns.
+#'     \item task the \dQuote{data} variable contains the data as a \dQuote{\link{Task}}.
+#'   }
+#'   Note that the returned data must always be in the same format as the one requested.
+#'   Currently it is an error to change the target column(s) in the \dQuote{no} and \dQuote{task}
+#'   cases. Default is \dQuote{target}.
 #' @param .properties [\code{character}]\cr
 #'   The kind if data that the CPO will be able to handle. This can be one or many of: \dQuote{numerics},
 #'   \dQuote{factors}, \dQuote{ordered}, \dQuote{missings}.
@@ -76,6 +95,11 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     par.set = paramSetSugar(..., .pss.env = parent.frame())
   }
 
+  .datasplit = match.arg(.datasplit)
+  .properties = match.arg(.properties, several.ok = TRUE)
+  assertSubset(.properties.adding, .properties)
+  assertSubset(.properties.needed, c("numerics", "factors", "ordered", "missings"))
+
   # these parameters are either special parameters given to the constructor function (id),
   # special parameters given to the cpo.trafo function (data, target), special parameters given to the
   # cpo.retrafo function (control),
@@ -126,6 +150,9 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
       bare.par.names = names(par.set$pars),
       par.set = par.set,
       par.vals = present.pars,
+      properties = .properties
+      properties.adding = .properties.adding
+      properties.needed = .properties.needed
       trafo = cpo.trafo,
       retrafo = cpo.retrafo)
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
@@ -138,7 +165,7 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 ##################################
 
 # TRAFO main function
-# - accepts only Tasks
+# - data is already pre-formatted
 # - automatically subsets 'args' to the relevant ones for cpo
 # - collects control from called function
 # - checks the result is a df, does not check for columns
