@@ -29,7 +29,7 @@
 #'       the numeric columns, \dQuote{factor} the factorial columns (ordered and unordered),
 #'       \dQuote{other} the columns that are neither numeric nor factors. The \dQuote{target}
 #'       variable contains the target column(s) in a data.frame.
-#'     \item all similarly to \dQuote{most}, but factors are split up into \dQuote{factor}
+#'     \item all similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
 #'       (unordered factors) and \dQuote{ordered}.
 #'     \item no the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
 #'       variable is a \code{character} indicating the names of the target columns.
@@ -172,7 +172,6 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
 callCPOTrafo = function(cpo, data, target) {
   result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), list(data = data, target = target)))
-  assertTrafoResult(result, cpo$name)
   trafoenv = environment(cpo$trafo)$.ENV
   assign(".ENV", NULL, envir = environment(cpo$trafo))
   if (!"control" %in% ls(trafoenv)) {
@@ -534,13 +533,6 @@ getCPOName.CPOObjectRetrafoPrimitive = function(cpo) {
 ##################################
 ### Auxiliary Functions        ###
 ##################################
-
-# check the trafo result what it is supposed to be
-assertTrafoResult = function(result, name) {
-  if (!is.data.frame(result)) {
-    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame.", name)
-  }
-}
 
 # check the retrafo result is what it is supposed to be
 assertRetrafoResult = function(result, name) {
