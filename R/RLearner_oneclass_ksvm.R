@@ -51,7 +51,7 @@ predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NUL
     p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
   } else {
     p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "decision", ...)
-    p = convertingScoresToProbability(p, parainit = c(1, 0))
+    p = convertingScoresToProbability(p, parainit = c(1, 0))$probability
     p = cbind(p, 1-p)
     colnames(p) = label
   }

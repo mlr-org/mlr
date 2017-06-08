@@ -40,7 +40,7 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
   } else {
     p = predict(.model$learner.model, newdata = .newdata, decision.values = TRUE, ...)
     p = attr(p, "decision.values")
-    p = convertingScoresToProbability(p, parainit = c(1, 0))
+    p = convertingScoresToProbability(p, parainit = c(1, 0))$probability
     p = cbind(p, 1-p)
     colnames(p) = label
   }
