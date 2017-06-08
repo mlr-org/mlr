@@ -7,9 +7,9 @@
 #' @name CPO
 NULL
 
-
-
-### Generics
+##################################
+### %>>% Operator              ###
+##################################
 
 #' @title CPO Composition / Attachment operator
 #'
@@ -109,6 +109,11 @@ NULL
     stopf("Cannot compose CPO with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
 }
+
+##################################
+### Generics                   ###
+##################################
+
 
 #' @title CPO Composition
 #'
@@ -252,121 +257,6 @@ retrafo = function(data, default.to.identity = FALSE) {
   UseMethod("retrafo")
 }
 
-#' @export
-retrafo.WrappedModel = function(data, default.to.identity = FALSE) {
-  warning("retrafo of a model not available if the outermost wrapper was not a CPO.")
-  if (default.to.identity) {
-    identity
-  } else {
-    NULL
-  }
-}
-
-
-# default.to.identity is ignored, since a CPOModel always has a retrafo
-#' @export
-retrafo.CPOModel = function(data, default.to.identity = FALSE) {
-  # go through the chained model and see if there are wrapped models that
-  # are not %>>%-chained (since the user probably wants to be warned about
-  # that.
-  recurseRetrafo = function(model, prevfun) {
-    resfun = singleModelRetrafo(model, prevfun)
-    next.model = model$learner.model$next.model
-    if ("BaseWrapperModel" %in% class(next.model)) {
-      if ("CPOModel" %in% class(next.model)) {
-        return(recurseRetrafo(next.model, resfun))
-      }
-      do.message = FALSE
-      while (!is.null(next.model)) {
-        if (!is.list(next.model$learner.model)) {
-          break
-        }
-        next.model = next.model$learner.model$next.model
-        if ("CPOModel" %in% class(next.model)) {
-          warningf("The model apparently has some CPOs wrapped by other wrappers\n%s\n%s",
-            "The resulting retrafo will only cover the operations up to",
-            "the first non-CPO wrapper!")
-          do.message = FALSE
-          break
-        }
-        if (!"BaseWrapperModel" %in% class(next.model)) {
-          do.message = TRUE
-        }
-      }
-      if (do.message) {
-        message("The model has some wrappers besides CPOs, which will not be part of the retrafo.")
-      }
-    }
-    resfun
-  }
-  recurseRetrafo(data, NULL)
-}
-
-singleModelRetrafo = function(model, prevfun) {
-  UseMethod("singleModelRetrafo")
-}
-
-#' @export
-retrafo.default = function(data, default.to.identity = FALSE) {
-  if (!any(c("data.frame", "Task") %in% class(data))) {
-    warningf("data is not a Task or data.frame.\n%s\n%s",
-      "are you sure you are applying it to the result",
-      "of a %>>% transformation?")
-  }
-  res = attr(data, "retrafo")
-  if (default.to.identity && is.null(res)) {
-    identity
-  } else {
-    res
-  }
-}
-
-
-
-#' @title set an object's retransformation
-#'
-#' @description
-#' Set an object's retransformation function, as described
-#' in \code{\link{retrafo}}. Set to \code{NULL} to delete.
-#'
-#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
-#'   The task of which to set the retrafo.
-#' @param value [\code{function} | NULL]\cr
-#'   The retrafo function to set. This must either be a
-#'   function accepting a \code{data.frame} and returning
-#'   an object of the same kind, or NULL.
-#'   In most cases, you should use this only within
-#'   \code{CPOFunctionalConstructor} functions OR to
-#'   reset an object's retrafo to NULL.
-#'
-#' @family CPO
-#' @export
-`retrafo<-` = function(data, value) {
-  UseMethod("retrafo<-")
-}
-
-
-#' @export
-`retrafo<-.WrappedModel` = function(data, value) {
-  stop("Cannot change retrafo of a model!")
-}
-
-
-#' @export
-`retrafo<-.default` = function(data, value) {
-  if (!is.null(value)) {
-    assertClass(value, "CPORetrafo")
-  }
-  if (!any(c("data.frame", "Task") %in% class(data))) {
-    warningf("argument is neither a Task nor data.frame.\n%s\n%s",
-      "are you sure you are applying it to the input or",
-      "result of a %>>% transformation?")
-
-  }
-  attr(data, "retrafo") = value
-
-  data
-}
 
 #' @title Get the internal state of a Retrafo object
 #'
@@ -412,6 +302,28 @@ makeRetrafoFromState = function(constructor, state) {
   UseMethod("makeRetrafoFromState")
 }
 
+#' @title set an object's retransformation
+#'
+#' @description
+#' Set an object's retransformation function, as described
+#' in \code{\link{retrafo}}. Set to \code{NULL} to delete.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   The task of which to set the retrafo.
+#' @param value [\code{function} | NULL]\cr
+#'   The retrafo function to set. This must either be a
+#'   function accepting a \code{data.frame} and returning
+#'   an object of the same kind, or NULL.
+#'   In most cases, you should use this only within
+#'   \code{CPOFunctionalConstructor} functions OR to
+#'   reset an object's retrafo to NULL.
+#'
+#' @family CPO
+#' @export
+`retrafo<-` = function(data, value) {
+  UseMethod("retrafo<-")
+}
+
 setCPOId = function(cpo, id) {
   UseMethod("setCPOId")
 }
@@ -419,6 +331,104 @@ setCPOId = function(cpo, id) {
 setCPOId.default = function(cpo, id) {
   stop("setCPOId for object not defined.")
 }
+
+##################################
+### Retrafo                    ###
+##################################
+
+#' @export
+retrafo.default = function(data, default.to.identity = FALSE) {
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    warningf("data is not a Task or data.frame.\n%s\n%s",
+      "are you sure you are applying it to the result",
+      "of a %>>% transformation?")
+  }
+  res = attr(data, "retrafo")
+  if (default.to.identity && is.null(res)) {
+    identity
+  } else {
+    res
+  }
+}
+
+#' @export
+retrafo.WrappedModel = function(data, default.to.identity = FALSE) {
+  warning("retrafo of a model not available if the outermost wrapper was not a CPO.")
+  if (default.to.identity) {
+    identity
+  } else {
+    NULL
+  }
+}
+
+# default.to.identity is ignored, since a CPOModel always has a retrafo
+#' @export
+retrafo.CPOModel = function(data, default.to.identity = FALSE) {
+  # go through the chained model and see if there are wrapped models that
+  # are not %>>%-chained (since the user probably wants to be warned about
+  # that.
+  recurseRetrafo = function(model, prevfun) {
+    resfun = singleModelRetrafo(model, prevfun)
+    next.model = model$learner.model$next.model
+    if ("BaseWrapperModel" %in% class(next.model)) {
+      if ("CPOModel" %in% class(next.model)) {
+        return(recurseRetrafo(next.model, resfun))
+      }
+      do.message = FALSE
+      while (!is.null(next.model)) {
+        if (!is.list(next.model$learner.model)) {
+          break
+        }
+        next.model = next.model$learner.model$next.model
+        if ("CPOModel" %in% class(next.model)) {
+          warningf("The model apparently has some CPOs wrapped by other wrappers\n%s\n%s",
+            "The resulting retrafo will only cover the operations up to",
+            "the first non-CPO wrapper!")
+          do.message = FALSE
+          break
+        }
+        if (!"BaseWrapperModel" %in% class(next.model)) {
+          do.message = TRUE
+        }
+      }
+      if (do.message) {
+        message("The model has some wrappers besides CPOs, which will not be part of the retrafo.")
+      }
+    }
+    resfun
+  }
+  recurseRetrafo(data, NULL)
+}
+
+singleModelRetrafo = function(model, prevfun) {
+  UseMethod("singleModelRetrafo")
+}
+
+#' @export
+`retrafo<-.default` = function(data, value) {
+  if (!is.null(value)) {
+    assertClass(value, "CPORetrafo")
+  }
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    warningf("argument is neither a Task nor data.frame.\n%s\n%s",
+      "are you sure you are applying it to the input or",
+      "result of a %>>% transformation?")
+
+  }
+  attr(data, "retrafo") = value
+
+  data
+}
+
+#' @export
+`retrafo<-.WrappedModel` = function(data, value) {
+  stop("Cannot change retrafo of a model!")
+}
+
+##################################
+### Chaining                   ###
+##################################
+
 
 #' @title Turn a list of preprocessing operators into a single chained one
 #'
@@ -438,6 +448,11 @@ chainCPO = function(pplist) {
   Reduce(`%>>%`, pplist)
 }
 
+##################################
+### General Generics           ###
+##################################
+
+
 #' @export
 setHyperPars2.CPORetrafo = function(learner, par.vals = list()) {
   stopf("Cannot change parameter values of retrafo object\n%s\n%s\n",
@@ -445,7 +460,47 @@ setHyperPars2.CPORetrafo = function(learner, par.vals = list()) {
     "Get the state of an existing retrafo using getRetrafoState.")
 }
 
-### Printing
+#' @export
+removeHyperPars.CPOLearner = function(learner, ids) {
+  i = intersect(names(learner$par.vals), ids)
+  if (length(i) > 0) {
+    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
+  }
+  learner$next.learner = removeHyperPars(learner$next.learner, ids)
+  learner
+}
+
+#' @export
+as.list.CPOPrimitive = function(x, ...) {
+  assert(length(list(...)) == 0)
+  list(x)
+}
+
+#' @export
+getRetrafoState.CPORetrafo = function(retrafo.object) {
+  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getParamSet.CPORetrafo = function(x) {
+  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
+}
+
+
+#' @export
+getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "both")) {
+  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getCPOName.CPORetrafo = function(cpo) {
+  paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
+}
+
+
+##################################
+### Printing                   ###
+##################################
 
 #' @export
 print.CPOConstructor = function(x, ...) {
@@ -494,7 +549,9 @@ print.CPORetrafo = function(x, ...) {
   cat("\n")
 }
 
-### Auxiliaries
+##################################
+### Auxiliaries                ###
+##################################
 
 # deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
 # Note that this is a heuristic for user messages only, the result can not be
@@ -533,7 +590,9 @@ getLearnerName = function(learner) {
   coalesce(learner$name, learner$shortname, learner$id)
 }
 
-
+# get the subset of par.vals described by par set.
+# check furthermore that this subset is complete,
+# i.e. all parameters that have no unfulfilled requirements are there
 subsetParams = function(par.vals, par.set, name) {
 
   # these parameters are either present or have fulfilled requirements
@@ -555,6 +614,8 @@ subsetParams = function(par.vals, par.set, name) {
   par.vals[needed]
 }
 
+# check that all parameters are feasible according to their limits
+# 'infeasible' parameters according to requirements are allowed
 checkParamsFeasible = function(par.set, par.vals) {
   # names(par.vals) must be a subset of names(par.set$pars)
   oobreaction = coalesce(getMlrOption("on.par.out.of.bounds"), TRUE)
@@ -572,6 +633,11 @@ checkParamsFeasible = function(par.set, par.vals) {
   }
 }
 
+# Manipulate requirement expressions: rename all variables from
+# one name to another. This gets problematic when e.g. one variable
+# is named 'c', because then c(1, 2, 3) gets broken. Therefore we
+# go through the expressions and change only those requirements that
+# are not function calls.
 renameNonfunctionNames = function(expr, translate) {
   startfrom = 1
   if (is.call(expr)) {
@@ -595,7 +661,13 @@ renameNonfunctionNames = function(expr, translate) {
   return(expr)
 }
 
-
+# create a function with expressions 'expr' in the environment 'env'.
+# the function gets the argument list 'required.arglist.
+# if 'expr' is actually a function, we just check that it has at least all the
+# arguments in 'required.arglist' (or that is has ellipses), that all
+# arguments have the same default values as required.arglist, and that
+# arguments of the function that are not 'required' have a default value so
+# there won't be an error when the function gets called later.
 makeFunction = function(expr, required.arglist, env = parent.frame()) {
   if (is.recursive(expr) && identical(expr[[1]], quote(`{`))) {
     # we have a headless list of expressions
@@ -658,46 +730,6 @@ captureEnvWrapper = function(fun) {
   body(fun) = envcapture
   environment(fun) = new.env(parent = environment(fun))
   fun
-}
-
-
-
-#' @export
-removeHyperPars.CPOLearner = function(learner, ids) {
-  i = intersect(names(learner$par.vals), ids)
-  if (length(i) > 0) {
-    stopf("CPO Parameters (%s) can not be removed", collapse(i, sep = ", "))
-  }
-  learner$next.learner = removeHyperPars(learner$next.learner, ids)
-  learner
-}
-
-#' @export
-as.list.CPOPrimitive = function(x, ...) {
-  assert(length(list(...)) == 0)
-  list(x)
-}
-
-
-#' @export
-getRetrafoState.CPORetrafo = function(retrafo.object) {
-  stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
-}
-
-#' @export
-getParamSet.CPORetrafo = function(x) {
-  stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
-}
-
-
-#' @export
-getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "both")) {
-  stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
-}
-
-#' @export
-getCPOName.CPORetrafo = function(cpo) {
-  paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
 }
 
 # TO-DO:

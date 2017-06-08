@@ -1,5 +1,193 @@
 
 
+##################################
+### Externals                  ###
+##################################
+
+# do the preparation before calling trafo:
+#  - check the data is in an acceptable format (task or df)
+#  - check the properties are fulfilled
+#  - split the data
+#  - get a shape info object
+#  --> return list(indata = list(data, target), shapeinfo)
+prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
+  assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
+
+  checkDataConformsProperties(indata, allowed.properties, sprintf("Data going into %s trafo", name))
+
+  shapeinfo = makeInputShapeInfo(indata)
+
+  indata = if (is.data.frame(indata)) {
+    splitdf(indata, datasplit)
+  } else {
+    splittask(indata, datasplit)
+  }
+  list(indata, shapeinfo)
+}
+
+# do the preparation before calling retrafo:
+#  - check data is in an acceptable format (task or df)
+#  - check the properties are fulfilled
+#  - check the shape is the same as during trafo
+#  - split the data
+#  --> return the data in a shape fit to be fed into retrafo
+# how does mlr predict handle this stuff? they just drop target columns by name
+prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.input, name) {
+
+  # check that input column names and general types match (num / fac, or num/fac/ordered if datasplit == "all"
+  if ("Task" %in% class(indata)) {
+    if (!is.null(shapeinfo.input$target)) {
+      assertSetEqual(getTaskTargetNames(indata), shapeinfo.input$target)
+    }
+    indata = getTaskData(indata)
+  }
+  if (!is.data.frame(indata)) {
+    stopf("Data fed into CPO %s retrafo is not a data.frame.", name)
+  }
+
+  assertShapeConform(indata, shapeinfo, datasplit == "all", name)
+
+  checkDataConformsProperties(indata, allowed.properties, sprintf("Data going into %s retrafo", name))
+
+  if (datasplit %in% c("most", "all")) {
+    splitinto = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
+    splitColsByType(splitinto, indata)
+  } else {
+    indata
+  }
+}
+
+# do the check of the trafo's return value
+#  - check the data is in an acceptable format (task, df, split dfs)
+#  - recombine into a task / df
+#  - check properties are allowed
+#  - get a shape info object
+#  --> return list(outdata, shapeinfo)
+handleTrafoOutput(outdata, olddata, datasplit, allowed.properties, name) {
+  recombined = if (is.data.frame(olddata)) {
+    recombinedf(olddata, outdata, datasplit, name)
+  } else {
+    recombinetask(olddata, outdata, datasplit, name)
+  }
+  checkDataConformsProperties(recombined, allowed.properties, sprintf("%s trafo return value", name))
+
+  shapeinfo = makeOutputShapeInfo(outdata)
+
+  list(outdata = recombined, shapeinfo = shapeinfo)
+}
+
+# do the check of the retrafo's return value
+#  - check data is in an acceptable format (task, df, split dfs)
+#  - recombine into a task / df
+#  - check the properties are fulfilled
+#  - check the shape is the same as during trafo
+#  --> return the data that can be returned by the outer retrafo layer
+handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, shapeinfo.output, name) {
+  recombined = if (is.data.frame(olddata)) {
+    recombinedf(olddata, outdata, datasplit, name)
+  } else {
+    recombinetask(olddata, outdata, datasplit, name)
+  }
+
+  checkDataConformsProperties(recombined, allowed.properties, sprintf("%s retrafo return value", name))
+
+  # check the shape of outdata is as expected
+  if (datasplit %in% c("all", "most")) {
+    assertSetEqual(names(outdata), names(shapeinfo.output))
+    for (n in names(outdata)) {
+      assertShapeConform(outdata[[n]], shapeinfo.output[[n]], datasplit == "all", name)
+    }
+  }
+
+  recombined
+}
+
+##################################
+### Shape & Properties         ###
+##################################
+
+# data can be a task or a data.frame
+# description should be something like 'data going into / coming out of %NAME%'
+checkDataConformsProperties(data, allowed.properties, description) {
+  if (is.data.frame(data)) {
+    td = makeTaskDescInternal(NULL, NULL, data, character(0), NULL, NULL)
+  } else {
+    assertClass(data, "Task")
+    td = getTaskDesc(data)
+  }
+  nf = td$n.feat
+  present.properties = c(names(nf)[nf > 0], if (td$has.missings) "missings")
+  assertSubset(present.properties, allowed.properties, .var.name = description)
+}
+
+# give error when shape is different than dictated by shapeinfo.
+assertShapeConform(df, shapeinfo, checkordered, name) {
+  assertSubsetEqual(names(indata), shapeinfo$colnames)
+  indata = indata[shapeinfo$colnames]
+
+  if (checkordered) {
+    typesmatch = list(
+        c("integer", "numeric"),
+        "factor", "ordered")
+  } else {
+    typesmatch = list(
+        c("integer", "numeric"),
+        c("factor", "ordered"))
+  }
+
+  newcoltypes = vcapply(indata, function(x) class(x)[1])
+
+  for (t in typesmatch) {
+    typemismatch = (newcoltypes %in% t) != (newcoltypes %in% shapeinfo$coltypes)
+    if (any(typemismatch)) {
+      stopf("Error in CPO %s: Types of column%s %s mismatch.", name,
+        ifelse(sum(typemismatch) > 1, "s", ""), collapse(names(indata)[typemismatch], sep = ", "))
+    }
+  }
+}
+
+# prepare some information about the data shape, so retrafo can check that
+# it gets the kind of data it expects
+# this needs to be checked both for input and for output
+makeShapeInfo = function(data) {
+  # expects a data.frame
+  prep.info = list()
+  prep.info$colnames = colnames(data)
+  prep.info$coltypes = vcapply(data, function(x) class(x)[1])
+  prep.info
+}
+
+# like makeShapeInfo, but additionally get the target names
+makeInputShapeInfo = function(indata) {
+  if ("Task" %in% class(indata)) {
+    target = getTaskTargetNames(indata)
+    indata = getTaskData(indata, target.extra = TRUE)$data
+    ret = makeShapeInfo(indata)
+    ret$target = target
+  } else {
+    ret = makeShapeInfo(indata)
+  }
+  ret
+}
+
+# called before recombinetask for better error messages later
+# it is recommended to call this after recombinetask was called
+# (but with the not yet recombined data)
+# since that checks that outdata has the correct types.
+makeOutputShapeInfo = function(outdata) {
+  if (is.data.frame(outdata)) {
+    makeShapeInfo(outdata)
+  } else if ("Task" %in% class(outdata)) {
+    makeShapeInfo(getTaskData(outdata))
+  } else {
+    # data is split by type, so we get the shape of each of the constituents
+    lapply(outdata, makeShapeInfo)
+  }
+}
+
+##################################
+### Task Splitting             ###
+##################################
 
 splitColsByType = function(which = c("numeric", "factor", "ordered", "other"), data, types) {
   if (missing(types)) {
@@ -57,6 +245,11 @@ splitdf = function(df, datasplit = c("target", "most", "all", "no", "task")) {
       target = df[, character(0), drop = FALSE]))
 }
 
+##################################
+### Task Recombination         ###
+##################################
+
+# 'LL' == low level
 recombineLL = function(olddata, allnames, targetdata, name) {
 # need 'allnames' to preserve ordering of target columns within whole DF
   tnames = names(targetdata)
@@ -186,198 +379,6 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
     }
     newdata
   }
-}
-
-
-# prepare some information about the data shape, so retrafo can check that
-# it gets the kind of data it expects
-# this needs to be checked both for input and for output
-makeShapeInfo = function(data) {
-  # expects a data.frame
-  prep.info = list()
-  prep.info$colnames = colnames(data)
-  prep.info$coltypes = vcapply(data, function(x) class(x)[1])
-  prep.info
-}
-
-# like makeShapeInfo, but additionally get the target names
-makeInputShapeInfo = function(indata) {
-  if ("Task" %in% class(indata)) {
-    target = getTaskTargetNames(indata)
-    indata = getTaskData(indata, target.extra = TRUE)$data
-    ret = makeShapeInfo(indata)
-    ret$target = target
-  } else {
-    ret = makeShapeInfo(indata)
-  }
-  ret
-}
-
-# called before recombinetask for better error messages later
-# it is recommended to call this after recombinetask was called
-# (but with the not yet recombined data)
-# since that checks that outdata has the correct types.
-makeOutputShapeInfo = function(outdata) {
-  if (is.data.frame(outdata)) {
-    makeShapeInfo(outdata)
-  } else if ("Task" %in% class(outdata)) {
-    makeShapeInfo(getTaskData(outdata))
-  } else {
-    # data is split by type, so we get the shape of each of the constituents
-    lapply(outdata, makeShapeInfo)
-  }
-}
-
-# give error when shape is different than dictated by shapeinfo.
-assertShapeConform(df, shapeinfo, checkordered, name) {
-  assertSubsetEqual(names(indata), shapeinfo$colnames)
-  indata = indata[shapeinfo$colnames]
-
-  if (checkordered) {
-    typesmatch = list(
-        c("integer", "numeric"),
-        "factor", "ordered")
-  } else {
-    typesmatch = list(
-        c("integer", "numeric"),
-        c("factor", "ordered"))
-  }
-
-  newcoltypes = vcapply(indata, function(x) class(x)[1])
-
-  for (t in typesmatch) {
-    typemismatch = (newcoltypes %in% t) != (newcoltypes %in% shapeinfo$coltypes)
-    if (any(typemismatch)) {
-      stopf("Error in CPO %s: Types of column%s %s mismatch.", name,
-        ifelse(sum(typemismatch) > 1, "s", ""), collapse(names(indata)[typemismatch], sep = ", "))
-    }
-  }
-}
-
-checkRetrafoInput = function(indata, checkordered, shapeinfo, name) {
-  # check that input column names and general types match (num / fac, or num/fac/ordered if datasplit == "all"
-  #
-  # how does mlr predict handle this stuff? they just drop target columns by name
-
-  if ("Task" %in% class(indata)) {
-    if (!is.null(shapeinfo$target)) {
-      assertSetEqual(getTaskTargetNames(indata), shapeinfo$target)
-    }
-    indata = getTaskData(indata)
-  }
-  if (!is.data.frame(indata)) {
-    stopf("Data fed into CPO %s retrafo is not a data.frame.", name)
-  }
-
-  assertShapeConform(indata, shapeinfo, checkordered, name)
-
-}
-
-# check the shape of outdata is as expected. Does not recombine the task.
-# should be called after recombinetask was called (but with the not-combined data)
-# because that one gives info about type errors etc.
-assertRetrafoOutput = function(outdata, datasplit, shapeinfo, name) {
-  if (datasplit %in% c("all", "most")) {
-    assertSetEqual(names(outdata), names(shapeinfo))
-    for (n in names(outdata)) {
-      assertShapeConform(outdata[[n]], shapeinfo[[n]], datasplit == "all", name)
-    }
-  }
-  invisible(NULL)
-}
-
-# data can be a task or a data.frame
-# description should be something like 'data going into / coming out of %NAME%'
-checkDataConformsProperties(data, allowed.properties, description) {
-  if (is.data.frame(data)) {
-    td = makeTaskDescInternal(NULL, NULL, data, character(0), NULL, NULL)
-  } else {
-    assertClass(data, "Task")
-    td = getTaskDesc(data)
-  }
-  nf = td$n.feat
-  present.properties = c(names(nf)[nf > 0], if (td$has.missings) "missings")
-  assertSubset(present.properties, allowed.properties, .var.name = description)
-}
-
-# do the preparation before calling trafo:
-#  - check the data is in an acceptable format (task or df)
-#  - check the properties are fulfilled
-#  - split the data
-#  - get a shape info object
-#  --> return list(indata = list(data, target), shapeinfo)
-prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
-  assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
-
-  checkDataConformsProperties(indata, allowed.properties, sprintf("Data going into %s trafo", name))
-
-  shapeinfo = makeInputShapeinfo(indata)
-
-  indata = if (is.data.frame(indata)) {
-    splitdf(indata, datasplit)
-  } else {
-    splittask(indata, datasplit)
-  }
-  list(indata, shapeinfo)
-}
-
-# do the preparation before calling retrafo:
-#  - check data is in an acceptable format (task or df)
-#  - check the properties are fulfilled
-#  - check the shape is the same as during trafo
-#  - split the data
-#  --> return the data in a shape fit to be fed into retrafo
-prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.input, name) {
-
-  checkRetrafoInput(indata, datasplit == "all", shapeinfo.input, name)
-
-  checkDataConformsProperties(indata, allowed.properties, sprintf("Data going into %s retrafo", name))
-
-  if (datasplit %in% c("most", "all")) {
-    splitinto = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
-    splitColsByType(splitinto, indata)
-  } else {
-    indata
-  }
-}
-
-# do the check of the trafo's return value
-#  - check the data is in an acceptable format (task, df, split dfs)
-#  - recombine into a task / df
-#  - check properties are allowed
-#  - get a shape info object
-#  --> return list(outdata, shapeinfo)
-handleTrafoOutput(outdata, olddata, datasplit, allowed.properties, name) {
-  recombined = if (is.data.frame(olddata)) {
-    recombinedf(olddata, outdata, datasplit, name)
-  } else {
-    recombinetask(olddata, outdata, datasplit, name)
-  }
-  checkDataConformsProperties(recombined, allowed.properties, sprintf("%s trafo return value", name))
-
-  shapeinfo = makeOutputShapeInfo(olddata)
-
-  list(outdata = recombined, shapeinfo = shapeinfo)
-}
-
-# do the check of the retrafo's return value
-#  - check data is in an acceptable format (task, df, split dfs)
-#  - check the properties are fulfilled
-#  - check the shape is the same as during trafo
-#  - recombine into a task / df
-#  --> return the data in a shape fit to be fed into retrafo
-handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, shapeinfo.output, name) {
-  recombined = if (is.data.frame(olddata)) {
-    recombinedf(olddata, outdata, datasplit, name)
-  } else {
-    recombinetask(olddata, outdata, datasplit, name)
-  }
-
-  checkDataConformsProperties(recombined, allowed.properties, sprintf("%s retrafo return value", name))
-
-  assertRetrafoOutput(outdata, datasplit, shapeinfo.output, name)
-
-  recombined
 }
 
 
