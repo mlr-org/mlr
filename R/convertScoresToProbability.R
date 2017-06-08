@@ -19,7 +19,7 @@
 #'
 convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "Newton"){
 
-  assertChoice(optim.method, c("trust region", "Nelder-Mead", "glm", "Newton"))
+  assertChoice(optim.method, c("trust region", "BFGS", "glm", "Newton"))
   f = anomaly.score
   p = parainit
   loop = TRUE
@@ -28,12 +28,14 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
   if (is.null(p)) {
     p = c(B = 0, A = 1)
-    messagef("Starting parameter values are missing. For calibration using sigmoid function the default is: \n A = 1, B = 0")
+    messagef("Starting parameter values are missing.
+      For calibration using sigmoid function the default is: \n A = 1, B = 0")
   }
   if (length(p) != 2) {
-    stop("Too little/many starting parameters. For calibration using sigmoid function starting values for parameter A and B are needed.")
+    stop("Too little/many starting parameters for optimization.")
   }
 
+  # probability for outlier given the scores
   prob.outlier = function(p, score) {
     1 / (1 + exp(-p[2] * f - p[1]))
   }
@@ -41,21 +43,24 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
   if (optim.method == "trust region") {
     while (loop) {
       t =  prob.outlier(p, f)
-      # LL and its derivatives
+      # LL negative log likelihood
       LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
         + sum.help %*% log(1 + exp(-p[2] * f - p[1])) }
+      # first derivative for A and B
       gA = function(p) { t(f) %*% ( (1-t) - (exp(-p[2] * f - p[1]) / (1 + exp(-p[2] * f - p[1])))) }
       gB = function(p) { sum.help %*% ((1-t) - (exp(-p[2] * f - p[1]) / (1 + exp(-p[2]*f - p[1])))) }
       g = function(p) {
         c(gA(p), gB(p))
       }
 
+      # trust region optimization
       optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS",
         control = list(report.level = 0, maxit = max.iter))
 
       pnew = optim$solution
-      diff = sum(abs(pnew - p))
 
+      # check if pnew is converging
+      diff = sum(abs(pnew - p))
       if ( diff > 1e-4) {
         loop = TRUE
         p = pnew
@@ -65,14 +70,15 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
         list$probability = prob.outlier(pnew, f)
       }
     }
-  } else if (optim.method == "Nelder-Mead") {
+  } else if (optim.method == "BFGS") {
     while (loop) {
       t =  prob.outlier(p, f)
       # negative Log likelihood
-      LL = function(p, label, score) { t((1-label)) %*% (p[2] * score + p[1])
-        + sum.help %*% log(1 + exp(-p[2] * score - p[1])) }
+      LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
+        + sum.help %*% log(1 + exp(-p[2] * f - p[1])) }
 
-      optim = optim(par = p, fn = LL, label = t, score = f, method = "Nelder-Mead")
+      # unconstraint optimization
+      optim = optim(par = p, fn = LL, method = "BFGS")
       pnew = optim$par
       diff = sum(abs(pnew - p))
 
@@ -88,8 +94,11 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
   } else if (optim.method == "glm") {
     while (loop) {
       t =  prob.outlier(p, f)
+
+      # minimizing negative likelihood with glm
       df = data.frame(t, f)
       mod = glm(t ~ f, family = binomial(link = "logit"), data = df)
+
       pnew = coef(mod)
       diff = sum(abs(pnew - p))
 
@@ -133,21 +142,18 @@ newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minste
   # Construct initial values:
   # target support in array t
   # initial function value in fval
-  # hiTarget = (prior1 + 1) / (prior1 + 2)
-  # loTarget = 1 / (prior0 + 2)
-  # len = prior1 + prior0 # total number of data
-  # t = c()
-  #
-  # for (i in 1:len) {
-  #   if(label[i] > 0) t[i] = hiTarget
-  #   else t[i] = loTarget
-  # }
-  len = length(t)
-  A = p[2]
-  B = p[1]
-  #A = 0
-  #B = log( (prior0 + 1) / (prior1 + 1) )
-  #B = log(0.05)
+  hiTarget = (prior1 + 1) / (prior1 + 2)
+  loTarget = 1 / (prior0 + 2)
+  len = prior1 + prior0 # total number of data
+  t = c()
+
+  for (i in 1:len) {
+    if(label[i] > 0) t[i] = hiTarget
+    else t[i] = loTarget
+  }
+
+  A = 0
+  B = log( (prior0 + 1) / (prior1 + 1) )
   fval = 0
   for (i in 1:len) {
     fApB = deci[i] * A + B
