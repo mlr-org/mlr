@@ -80,6 +80,7 @@ makeResampleInstance = function(desc, task, size, ...) {
       td = getTaskDesc(task)
       stratify.cols = switch(td$type,
         "classif" = getTaskTargetNames(task),
+        "fdaclassif" = getTaskTargetNames(task),
         "surv" = getTaskTargetNames(task)[2L],
         stopf("Stratification for tasks of type '%s' not supported", td$type))
     } else {

@@ -59,8 +59,11 @@ propVectorToMatrix = function(p, levs) {
 #'
 #' @return [\code{character}].
 #' @export
-listTaskTypes = function() {
-  c("classif", "regr", "surv", "costsens", "cluster", "multilabel", "fdaclassif", "fdaregr")
+# listTaskTypes = function() {
+#   c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+# }
+listTaskTypes <- function() {
+  names(mlr$learner.properties)[names(mlr$learner.properties) != "any"]
 }
 
 # Maybe move to BBmisc at some point

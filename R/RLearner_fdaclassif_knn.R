@@ -4,32 +4,110 @@ makeRLearner.fdaclassif.knn = function() {
     cl = "fdaclassif.knn",
     package = "fda.usc",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
-      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = c("metric.lp", "metric.kl",
-        "metric.hausdorff", "metric.dist")),
-      makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = c("GCV.S", "CV.S", "GCCV.S")),
+      makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL,
+                              special.vals = list(NULL)),
+      # metric.kl throws (cryptic) warning messages
+      # metric.dist does (intentionally) not work in the original fda.usc::classif.knn()
+      makeDiscreteLearnerParam(id = "metric", default = "metric.lp",
+                               values = c("metric.lp",
+                                          # "metric.kl", "metric.dist",
+                                          "metric.hausdorff",
+                                          "inprod.fdata",
+                                          "semimetric.basis",
+                                          "semimetric.deriv",
+                                          "semimetric.fourier",
+                                          "semimetric.hshift",
+                                          "semimetric.mplsr",
+                                          "semimetric.pca")),
+      makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S",
+                               values = c("GCV.S", "CV.S", "GCCV.S")),
       # trim and draw (= plot!) are the par.CV parameters
       makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
-      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "draw", default = FALSE, tunable = FALSE),
+      # parameters for (semi)metrics
+      makeIntegerLearnerParam(id = "lp", default = 2L,
+                              requires = quote(metric == "metric.lp")),
+      makeIntegerLearnerParam(id = "nderiv", default = 0L, lower = 0L,
+                              requires = quote(metric %in% c("semimetric.basis",
+                                                             "semimetric.deriv",
+                                                             "semimetric.fourier"))),
+      makeIntegerLearnerParam(id = "nknot", lower = 1L,
+                              requires = quote(metric == "semimetric.deriv")),
+      makeIntegerLearnerParam(id = "nbasis", lower = 1L,
+                              requires = quote(metric == "semimetric.fourier")),
+      makeIntegerLearnerParam(id = "q", lower = 1L,
+                              default = quote(ifelse(metric == "metric.pca", 1L, 2L)),
+                              special.vals = list(quote(ifelse(metric == "metric.pca", 1L, 2L))),
+                              requires = quote(metric %in% c("semimetric.pca", "semimetric.mplsr"))),
+      makeNumericLearnerParam(id = "period", lower = 0,
+                              requires = quote(metric == "semimetric.fourier")),
+      # TM: I do not know what this parameter does
+      makeUntypedLearnerParam(id = "class1",
+                              requires = quote(metric == "metric.mplsr"),
+                              tunable = FALSE),
+      makeIntegerVectorLearnerParam(id = "t",
+                                    lower = 1L, upper = Inf,
+                                    requires = quote(metric == "metric.hshift")),
+      # parameters for basis representation in semimetric.basis
+      makeDiscreteLearnerParam(id = "type.basis1", default = NULL,
+                               values = list("bspline", "constant", "exponential",
+                                             "fourier", "monomial", "pc", "pls",
+                                             "polygonial", "power", "NULL" = NULL),
+                               requires = quote(metric == "semimetric.basis")),
+      makeDiscreteLearnerParam(id = "type.basis2", default = expression(type.basis1),
+                               values = list("bspline", "constant", "exponential",
+                                             "fourier", "monomial", "pc", "pls",
+                                             "polygonial", "power",
+                                             "Default" = expression(type.basis1)),
+                               requires = quote(metric == "semimetric.basis")),
+      makeIntegerLearnerParam(id = "nbasis1", default = NULL, lower = 1L,
+                              special.vals = list(NULL),
+                              requires = quote(metric == "semimetric.basis")),
+      makeIntegerLearnerParam(id = "nbasis2", default = expression(nbasis1), lower = 1L,
+                              special.vals = list(NULL, expression(nbasis1)),
+                              requires = quote(metric == "semimetric.basis")),
+      # FIXME is this correct use of the key argument?
+      keys = c("type.basis1", "nbasis1")
     ),
-    par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "weights"),
+    par.vals = list(draw = FALSE, metric = "metric.lp"),
+    properties = c("twoclass", "multiclass", "numerics", "weights", "prob"),
     name = "Knn on FDA",
     short.name = "knnFDA",
     note = "Draw parameter is set to FALSE as default."
   )
 }
 
+
 #' @export
-trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
+  task.desc = getTaskDesc(.task)
+  if (length(task.desc$fd.features) > 1) {
+    stop("This learner can only be used for data with one functional covariable.")
+  }
+  fd.features = unlist(task.desc$fd.features)
+  grid = unlist(task.desc$fd.grids, use.names = FALSE)
+
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   # transform the data into fda.usc:fdata class type.
-  data.fdclass = fda.usc::fdata(mdata = z$data)
+  data.fdclass = fda.usc::fdata(mdata = z$data[, fd.features],
+                                argvals = grid)
   par.cv = learnerArgsToControl(list, trim, draw)
   par.s = list(w = .weights)
   glearn = z$target
+  metric.fun = switch(metric,
+                      metric.lp = fda.usc::metric.lp,
+                      metric.hausdorff = fda.usc::metric.hausdorff,
+                      inprod.fdata = fda.usc::inprod.fdata,
+                      semimetric.basis = fda.usc::semimetric.basis,
+                      semimetric.deriv = fda.usc::semimetric.deriv,
+                      semimetric.fourier = fda.usc::semimetric.fourier,
+                      semimetric.hshift = fda.usc::semimetric.hshift,
+                      semimetric.mplsr = fda.usc::semimetric.mplsr,
+                      semimetric.pca = fda.usc::semimetric.pca
+  )
   learned.model = fda.usc::classif.knn(group = glearn, fdataobj = data.fdclass,
-    par.CV = par.cv, par.S = par.s, ...)
+                                       par.CV = par.cv, par.S = par.s,
+                                       metric = metric.fun, ...)
   return(learned.model)
 }
 
@@ -37,6 +115,11 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
 predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd.fdclass = fda.usc::fdata(mdata = .newdata)# transform the data into fda.usc:fdata class type.
-  class.pred = predict(m, nd.fdclass, ...)
-  return(class.pred)
+
+  if (.learner$predict.type == "response") {
+    return(predict(m, nd.fdclass, type = "class", ...))
+  } else if (.learner$predict.type == "prob") {
+    pred = predict(m, nd.fdclass, type = "probs", ...)
+    return(pred$prob.group)
+  }
 }
