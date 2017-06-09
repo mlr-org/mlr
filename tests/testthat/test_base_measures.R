@@ -5,7 +5,7 @@ test_that("measures", {
   options(warn = 2)
   mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
     "regr", "predtype.response", "predtype.prob"),
-    fun = function(task, model, pred, feats, extra.args) {
+    fun = function(task, model, pred, feats, train, extra.args) {
       tt = pred
       1
     }
@@ -897,4 +897,28 @@ test_that("measures ppv denominator 0", {
 test_that("measures MCC denominator 0 (#1736)", {
   res = measureMCC(c(TRUE, TRUE, TRUE), c(TRUE, TRUE, TRUE), TRUE, FALSE)
   expect_equal(res, 0)
+})
+
+test_that("train is passed correctly", {
+  myee = new.env()
+  fun = function(task, model, pred, feats, train, extra.args) {
+    myee$train.inds = c(myee$train.inds, list(train))
+    1
+  }
+  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "regr", "surv", "req.task", "req.train"), fun = fun)
+
+  myee$train.inds = list()
+  rin = makeResampleInstance(makeResampleDesc("Holdout"), task = regr.task)
+  resample(learner = "regr.featureless", task = regr.task, measures = mymeasure, resampling = rin)
+  expect_identical(rin$train.inds[[1L]], myee$train.inds[[1L]])
+
+  myee$train.inds = list()
+  rin = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 3), task = binaryclass.task)
+  resample(learner = "classif.featureless", task = binaryclass.task, measures = mymeasure, resampling = rin)
+  expect_identical(rin$train.inds, myee$train.inds)
+
+  myee$train.inds = list()
+  rin = makeResampleInstance(makeResampleDesc("CV", iters = 10), task = bh.task)
+  resample(learner = "regr.featureless", task = bh.task, measures = mymeasure, resampling = rin)
+  expect_identical(rin$train.inds, myee$train.inds)
 })

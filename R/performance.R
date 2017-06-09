@@ -12,6 +12,8 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
 #'   are extracted from it.
+#' @param train [\code{integer}]\cr
+#'   Indices of rows used for training, usually not needed except for some survival measures.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -28,11 +30,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, train = NULL) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, train = train)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -42,7 +44,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, train = NULL) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -80,6 +82,11 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     else
       assertClass(feats, "data.frame")
   }
+  if ("req.train" %in% props) {
+    if (is.null(train) || is.null(task))
+      stopf("You need to pass task and train indices for measure %s", m$id)
+    assertIntegerish(train, lower = 1L, upper = getTaskSize(task), any.missing = FALSE)
+  }
   # we need to find desc somewhere
   td = if (!is.null(pred))
     pred$task.desc
@@ -115,19 +122,20 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     if (is.null(pred$data$set)) pred$data$set = "test"
     fun = function(ss) {
       is.train = ss$set == "train"
-      if (any(is.train)) {
-        pred$data = as.data.frame(ss[is.train, ])
-        perf.train = measure$fun(task, model, pred, feats, m$extra.args)
+      train.idx = which(is.train)
+      if (length(train.idx)) {
+        pred$data = as.data.frame(ss[is.train,, drop = FALSE])
+        perf.train = measure$fun(task, model, pred, feats, train.idx, m$extra.args)
       } else {
         perf.train = NA_real_
       }
-      pred$data = as.data.frame(ss[!is.train, ])
-      perf.test = measure$fun(task, model, pred, feats, m$extra.args)
+      pred$data = as.data.frame(ss[!is.train,, drop = FALSE])
+      perf.test = measure$fun(task, model, pred, feats, train.idx, m$extra.args)
       list(perf.train = perf.train, perf.test = perf.test)
     }
     perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
-    measure$fun(task, model, pred, feats, m$extra.args)
+    measure$fun(task, model, pred, feats, train, m$extra.args)
   }
 }
