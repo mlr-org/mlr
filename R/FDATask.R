@@ -64,6 +64,9 @@ convertTaskToFDATask = function(task, type, fd.features, fd.grids, task.cl, desc
     }
     return(f)
   })
+
+  # ensure that fd.features and fd.features have same order
+  fd.grids = fd.grids[fdfns]
   # check if target column is not used in fd.features
   if (target %in% unlist(fd.features))
     stopf("Target column cannot be included in 'fd.features'!")
@@ -86,15 +89,17 @@ print.FDATask = function(x, ...) {
 }
 
 # Called in makeFDAClasifTask / makeFDARegrTask
-# Create new fields called fd.features and fd.grids for functional data (the same is done in makeFDATask)
-updateFDATaskDesc = function(fd.features, fd.grids, feat.remain) {
-  # to make subset(FDATask, features = 1:10) work for example, we need to adapt the fd.features and fd.grids according to the subseted global feature index.
-  a.features = setNames(lapply(names(fd.features), function(fdn) {
-    fd.features[[fdn]][fd.features[[fdn]] %in% feat.remain]
-  }), names(fd.features))
-  # since feat.remain is a character vector with variable names, we use fd.features[[fdn]] for indexing
-  a.grids = setNames(lapply(names(fd.features), function(fdn) {
-    fd.grids[[fdn]][fd.features[[fdn]] %in% feat.remain]
-  }), names(fd.grids))
-  list(fd.features = a.features, fd.grids = a.grids)
+# takes fd.features and fd.grids and updates them so only names from fd.remain are used
+# eg when this happens: subset(FDATask, features = 1:10)
+# feat.remain is a charvec of colnames, that we want to restrict our data to
+# returns (list(fd.features, fd.grids))
+updateFDAFeaturesAndGrids = function(fd.features, fd.grids, feat.remain) {
+  # for each func feat: find out index of kept elements and also use this to restrict grid
+  for (i in seq_along(fd.features)) {
+    cns = fd.features[[i]]
+    ok = cns %in% feat.remain
+    fd.features[[i]] = cns[ok]
+    fd.grids[[i]] = fd.grids[[i]][ok]
+  }
+  list(fd.features = fd.features, fd.grids = fd.grids)
 }

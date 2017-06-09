@@ -7,8 +7,7 @@ test_that("FDARegrTask", {
     NIR = fuelSubset$NIR, UVVIS = fuelSubset$UVVIS)
   fdf = list(NIR = stri_paste("NIR.", 1:231), UVVIS = stri_paste("UVVIS.", 1:134))
   fdg = list(NIR = fuelSubset$nir.lambda, UVVIS = fuelSubset$uvvis.lambda)
-  task1 = makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf,
-                          fd.grids = fdg)
+  task1 = makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf, fd.grids = fdg)
   expect_class(task1, "FDARegrTask")
   expect_equal(task1$type, "fdaregr")
   expect_error(subsetTask(fuelsubset.task, features = 1:1000), regexp = "All elements must be")

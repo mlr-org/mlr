@@ -26,15 +26,13 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
   convertTaskToFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
 
-# td is the old task description, the function return a new task description
 makeFDARegrTaskDesc = function(id, data, target, fd.features, fd.grids, weights, blocking) {
-  new.td = makeRegrTaskDesc(id, data, target, weights, blocking)
-  new.td$type = "fdaregr"
-  #feat.remain = getTaskFeatureNames(task)
+  td = makeRegrTaskDesc(id, data, target, weights, blocking)
+  td$type = "fdaregr"
+  # we cannot call getTaskFeatureNames here, task is not fully constructed
   feat.remain = setdiff(names(data), target)
-  # Create new fields called fd.features and fd.grids for functional data
-  updated.desc = updateFDATaskDesc(fd.features, fd.grids, feat.remain)
-  new.td$fd.features = updated.desc$fd.features
-  new.td$fd.grids = updated.desc$fd.grids
-  addClasses(new.td, "FDARegrTaskDesc")
+  z = updateFDAFeaturesAndGrids(fd.features, fd.grids, feat.remain)
+  td$fd.features = z$fd.features
+  td$fd.grids = z$fd.grids
+  addClasses(td, "FDARegrTaskDesc")
 }

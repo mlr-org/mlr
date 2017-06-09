@@ -17,7 +17,7 @@
 #' # grid specifies the time points the curves were sampled at
 #' grid = list(fd1 = 1:5, fd2 = 1:5)
 #' # one row per observation
-#' task = makeFDAClassifTask(data = dat, fd.features = list(fd1 = 1:5, fd2 = 6:10),
+#' task = makeFDAClassifTask(data = d, fd.features = list(fd1 = 1:5, fd2 = 6:10),
 #'   target = "target", fd.grid = grid, positive = "1")
 #' @aliases FDAClassifTask
 makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
@@ -29,16 +29,14 @@ makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
   convertTaskToFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
 }
 
-# td is the old task description, the function returns a new FDAClassifTask description
 makeFDAClassifTaskDesc = function(id, data, target, positive, fd.features, fd.grids, weights, blocking) {
-  new.td = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
-  new.td$type = "fdaclassif"
+  td = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
+  td$type = "fdaclassif"
   # we cannot call getTaskFeatureNames here, task is not fully constructed
   feat.remain = setdiff(names(data), target)
-  # Create new fields called fd.features and fd.grids for functional data
-  updated.desc = updateFDATaskDesc(fd.features, fd.grids, feat.remain)
-  new.td$fd.features = updated.desc$fd.features
-  new.td$fd.grids = updated.desc$fd.grids
-  addClasses(new.td, "FDAClassifTaskDesc")
+  z = updateFDAFeaturesAndGrids(fd.features, fd.grids, feat.remain)
+  td$fd.features = z$fd.features
+  td$fd.grids = z$fd.grids
+  addClasses(td, "FDAClassifTaskDesc")
 }
 
