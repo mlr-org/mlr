@@ -102,5 +102,5 @@ len2 = length(fuelSubset$nir.lambda)
 mdata = data.frame(fuelSubset[c("UVVIS", "NIR", "h2o", "heatan")])
 fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
 fdg = list(UVVIS = fuelSubset$uvvis.lambda, NIR = fuelSubset$nir.lambda)
-fuelsubset.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = fdf, fd.grids = fdg) # change fuelSubset.task to fuelsubset.task to pass lintr
+fuelsubset.task = makeFDARegrTask(data = mdata, target = "heatan", fd.features = fdf, fd.grids = fdg)
 save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")
