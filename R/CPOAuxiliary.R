@@ -328,9 +328,36 @@ setCPOId = function(cpo, id) {
   UseMethod("setCPOId")
 }
 
-setCPOId.default = function(cpo, id) {
-  stop("setCPOId for object not defined.")
+
+#' @title Get the Properties of the given CPO object
+#'
+#' @description
+#' The properties of a CPO object determine the kind of data the CPO will be able to handle, and how
+#' it transforms data. Each entry can be one of: \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered},
+#' \dQuote{missings}.
+#'
+#' This function returns a list of three values: \dQuote{properties}, \dQuote{properties.adding}, and
+#' \dQuote{properties.needed}.
+#'
+#' The \dQuote{properties} determines what data the CPO handles. If a property of a given data set is absent,
+#' the preproc operator will reject the data.
+#'
+#' \dQuote{properties.adding} can be one or many of the same values as \dQuote{properties}. These properties
+#' get added to a Learner (or CPO) coming after / behind this CPO. When a CPO imputes missing values, for example,
+#' this is \dQuote{missings}. This is always a subset of \dQuote{properties}.
+#'
+#' \dQuote{properties.needed} can be one or many of the same values as \dQuote{properties}. These properties
+#' are required from a Learner (or CPO) coming after / behind this CPO. E.g., when a CPO converts factors to
+#' numerics, this is \dQuote{numerics} (and \dQuote{properties.adding} is \dQuote{factors}).
+#'
+#' @param cpo [\code{CPO}]\cr
+#'   The CPO to query.
+#'
+#' @export
+getCPOProperties = function(cpo) {
+  UseMethod("getCPOProperties")
 }
+
 
 ##################################
 ### Retrafo                    ###
@@ -449,7 +476,7 @@ chainCPO = function(pplist) {
 }
 
 ##################################
-### General Generics           ###
+### General Generic Functions  ###
 ##################################
 
 
@@ -492,11 +519,37 @@ getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "bot
   stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
 }
 
+setCPOId.default = function(cpo, id) {
+  stop("setCPOId for object not defined.")
+}
+
 #' @export
 getCPOName.CPORetrafo = function(cpo) {
   paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
 }
 
+#' @export
+getLearnerProperties.CPOLearner = function(learner) {
+  # we could do this dynamically, always query the learner below.
+  # then learner's properties could depend on its hyperparameters.
+  # Whenever there is a conflict of properties (a cpo producing
+  # missings when the learner below in its configuration happens to
+  # not be able to handle missings) one could return 'empty' properties
+  # -- the learner is not able to handle any data.
+  #
+  # One would ideally check whether some properties are fixed or depend
+  # on parameters, and give an error on construction if there is a conflict
+  # that will always be present.
+  #
+  # The much simpler and almost as good solution is to give maximal freedom
+  # with properties and to just let the learner crash when something does not
+  # work together as it should. This is bound to happen anyways
+  # (e.g. because missings don't give info which kind of data is missing, and
+  #  some CPO might be fine with missings in factors, but not with missings in
+  #  numerics) unless one rewrites the whole properties-datatypes-hyperparameter
+  # stuff in something like prolog.
+  learner$properties
+}
 
 ##################################
 ### Printing                   ###
@@ -734,64 +787,19 @@ captureEnvWrapper = function(fun) {
 
 # TO-DO:
 #- remove 'data' from function environment
-#- properties
-#- taskstyle: whether to get the task, data as whole df, data sep from target, data sep into types
-#- task disassemble / assemble methods
-#- column names
+#- functional retrafo: check for data reference and warn
+#- get trafo from learner
 #- core rewrite
 #- attach retrafo to model
-#- retrafo: need to remove target
-# --> nothing happens for empty features
-# -->
-#- apply retrafo to prediction
-# --> have parameter 'targetbound' --> must not change data, but may change target, will have empty retrafo but meaningful predictTrafo
-#- remove retrafo from learner
-#- functional retrafo: check for data reference and warn
+#- remove retrafo from learner --> general unwrapLearner function; also getCPO
+#- target retrafo (parameter 'targetbound')
+#  - is a noop for data.frames; possibly warn
+#  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
+#  - type.from, type.to: convert tasks from x to y ("classif", "multilabel", "regr", "surv", "cluster", "costsens").
+#  - same splits as before (though "most", "all" less sensible)
+#  - check data instead of target didn't change in "no", "target"
+#  - return target instead of data in other split modes
+#  - apply retrafo to prediction
+#  - also a function retrafoPrediction, with optional data argument
+#  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
 
-##################################
-### To Be Sorted               ###
-##################################
-
-#' @title Get the Properties of the given CPO object
-#'
-#' @description
-#' The properties of a CPO object determine the kind of data the CPO will be able to handle, and how
-#' it transforms data. Each entry can be one of: \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered},
-#' \dQuote{missings}.
-#'
-#' This function returns a list of three values: \dQuote{properties}, \dQuote{properties.adding}, and
-#' \dQuote{properties.needed}.
-#'
-#' The \dQuote{properties} determines what data the CPO handles. If a property of a given data set is absent,
-#' the preproc operator will reject the data.
-#'
-#' \dQuote{properties.adding} can be one or many of the same values as \dQuote{properties}. These properties
-#' get added to a Learner (or CPO) coming after / behind this CPO. When a CPO imputes missing values, for example,
-#' this is \dQuote{missings}. This is always a subset of \dQuote{properties}.
-#'
-#' \dQuote{properties.needed} can be one or many of the same values as \dQuote{properties}. These properties
-#' are required from a Learner (or CPO) coming after / behind this CPO. E.g., when a CPO converts factors to
-#' numerics, this is \dQuote{numerics} (and \dQuote{properties.adding} is \dQuote{factors}).
-#'
-#' @param cpo [\code{CPO}]\cr
-#'   The CPO to query.
-#'
-#' @export
-getCPOProperties = function(cpo) {
-  UseMethod("getCPOProperties")
-}
-
-#' @export
-getLearnerProperties.CPOLearner = function(learner) {
-  # we could do this dynamically, always query the learner below.
-  # then learner's properties could depend on its hyperparameters.
-  # Whenever there is a conflict of properties (a cpo producing
-  # missings when the learner below in its configuration happens to
-  # not be able to handle missings) one could return 'empty' properties
-  # -- the learner is not able to handle any data.
-  #
-  # One would ideally check whether some properties are fixed or depend
-  # on parameters, and give an error on construction if there is a conflict
-  # that will always be present.
-  learner$properties
-}

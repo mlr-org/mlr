@@ -451,23 +451,3 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
     newdata
   }
 }
-
-# test that:
-#  changing some of the columns leaves the others in order
-#  change of target gives error
-#  duplicate introduced name gives error
-#  new task is actually changed, has the expected data
-# training with data.frame, predicting with task, etc.
-#
-
-# with split type, generating bad data:
-#  no df
-#  missing / too many names
-#  row number mismatch
-#
-# attaching cpo that needs wrong properties (multi level)
-# combining cpos with incompatible property requirements
-# properties change after detaching preprocs / retrafos
-#
-# adding properties to data that shouldn't be added (in preproc / retrafo)
-# composing CPOs with incompatible properties

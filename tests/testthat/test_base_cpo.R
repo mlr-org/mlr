@@ -382,9 +382,6 @@ test_that("preprocessing actually changes data", {
   predict(t, testtaskcpo2)
   expect_equal(cpotest.parvals, list(1, 3))
 
-  cpoMultiplier = cpomultiplier.task.o # TODO
-  cpoAdder = cpoadder.task.o
-
   testCPO = function(cpoMultiplier, cpoAdder) {
     cpotest.parvals <<- list()  # nolint
     t = train(testlearnercpo, testtaskcpo)
