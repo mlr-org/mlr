@@ -61,13 +61,18 @@ NULL
 
 #' @export
 `%>>%.data.frame` = function(cpo1, cpo2) {
-  name = deparse(substitute(cpo1), 20)[1]
-  task = makeClusterTask(name, cpo1)
-  retrafo(task) = retrafo(cpo1)
-  resulttask = task %>>% cpo2
-  result = getTaskData(resulttask)
-  retrafo(result) = retrafo(resulttask)
-  result
+  if (any(c("CPOObject", "CPOObjectRetrafo") %in% class(cpo2))) {
+    `%>>%.Task`(cpo1, cpo2)
+  } else {
+    # TODO: to be removed as soon as CPOFunctional uses CPOFormatCheck.
+    name = deparse(substitute(cpo1), 20)[1]
+    task = makeClusterTask(name, cpo1)
+    retrafo(task) = retrafo(cpo1)
+    resulttask = task %>>% cpo2
+    result = getTaskData(resulttask)
+    retrafo(result) = retrafo(resulttask)
+    result
+  }
 }
 
 #' @export

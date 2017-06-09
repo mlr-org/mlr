@@ -192,7 +192,7 @@ callCPOObjectTrafo = function(cpo, data) {
 
   # the properties of the output should only be the input properties + the ones we're adding
   allowed.properties = setdiff(tin$properties, cpo$properties.adding)
-  tout = handleTrafoOutput(result, data, cpo$datasplit, allowed.properties, name)
+  tout = handleTrafoOutput(result, data, cpo$datasplit, allowed.properties, cpo$name)
 
   list(data = tout$outdata, info = list(control = trafoenv$control,
     shapeinfo.input = tin$shapeinfo, shapeinfo.output = tout$shapeinfo))
