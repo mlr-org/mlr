@@ -154,7 +154,6 @@ Suggests:
     SwarmSVM,
     svglite,
     testthat,
-    timeROC,
     tgp,
     TH.data,
     xgboost (>= 0.6-2),
