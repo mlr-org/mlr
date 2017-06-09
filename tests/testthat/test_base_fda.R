@@ -31,7 +31,30 @@ test_that("FDAClassifTask", {
   expect_equal(getTaskData(task3, target.extra = TRUE)$target, gunpoint$X1)
 })
 
-test_that("FDA regr Task will generate an error in case of extreme input", {
+test_that("FDAClassif with multiclass", {
+  task2 = makeFDAClassifTask(data = iris, target = "Species")
+  expect_class(task2, "FDAClassifTask")
+  expect_equal(task2$type, "fdaclassif")
+  expect_length(task2$task.desc$fd.features$fd, 4L)
+
+  task3 = makeFDAClassifTask(data = iris, target = "Species", fd.features = list(fd1 = 1:2, fd2 = 3:4))
+  expect_class(task3, "FDAClassifTask")
+  expect_equal(task3$type, "fdaclassif")
+  expect_length(unlist(task3$task.desc$fd.features), 4L)
+  expect_equal(task3$task.desc$fd.features$fd1, c("Sepal.Length", "Sepal.Width"))
+  expect_equal(getTaskData(task2, target.extra = TRUE)$target, iris$Species)
+  expect_equal(getTaskData(task3, target.extra = TRUE)$target, iris$Species)
+})
+
+
+test_that("measures for multiclass", {
+  requirePackagesOrSkip("fda.usc", default.method = "load")
+  expect_error(holdout("fdaclassif.knn", fda.multiclass.task, measures = tpr), "multiclass")
+  r = holdout("fdaclassif.knn", fda.multiclass.task, measures = multiclass.au1p)
+  expect_true(!is.na(r$aggr))
+})
+
+test_that("FDA regr Task will generate an error in case of faulty input", {
   requirePackagesOrSkip("FDboost")
   data(fuelSubset)
   fuelsub = data.frame(heatan = fuelSubset$heatan, h2o = fuelSubset$h2o,
@@ -66,13 +89,13 @@ test_that("FDA classif Task will generate an error in case of extreme input", {
 
 
 test_that("subsetTask works for FDATask", {
-  st = subsetTask(fuelsubset.task, features = 1:200)
-  expect_equal(length(st$task.desc$fd.features$NIR), 66L)
-  expect_equal(length(st$task.desc$fd.features$UVVIS), 134L)
-  expect_equal(length(st$task.desc$fd.grids$NIR), 66L)
-  expect_equal(length(st$task.desc$fd.grids$UVVIS), 134L)
-  st.gp = subsetTask(gunpoint.task, features = 1:10)
-  expect_equal(length(st.gp$task.desc$fd.features$fd1), 10L)
-  expect_equal(length(st.gp$task.desc$fd.grids$fd1), 10L)
+  task = subsetTask(fda.binary.fs.task, features = 1:200)
+  expect_equal(length(task$task.desc$fd.features$NIR), 66L)
+  expect_equal(length(task$task.desc$fd.features$UVVIS), 134L)
+  expect_equal(length(task$task.desc$fd.grids$NIR), 66L)
+  expect_equal(length(task$task.desc$fd.grids$UVVIS), 134L)
+  task = subsetTask(fda.binary.gp.task, features = 1:10)
+  expect_equal(length(task$task.desc$fd.features$fd1), 10L)
+  expect_equal(length(task$task.desc$fd.grids$fd1), 10L)
 })
 

@@ -52,6 +52,7 @@ test_fdaregr_FDboost - OK
 
 NEWS and last TODOS:
 
+- check DESC + suggests
 - remove issues.txt
 - email fabian sarah fdboost
 - check tutorial

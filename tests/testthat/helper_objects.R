@@ -108,6 +108,21 @@ costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
+fda.binary.gp.task = gunpoint.task
+fda.binary.fs.task = fuelsubset.task
+
+# nonsense fda multiclass task
+fda.multiclass.df = iris
+fda.multiclass.formula = Species~.
+fda.multiclass.target = "Species"
+fda.multiclass.train.inds = c(1:30, 51:80, 101:130)
+fda.multiclass.test.inds  = setdiff(1:150, multiclass.train.inds)
+fda.multiclass.train = multiclass.df[multiclass.train.inds, ]
+fda.multiclass.test  = multiclass.df[multiclass.test.inds, ]
+fda.multiclass.class.col = 5
+fda.multiclass.task = makeFDAClassifTask("multiclass", data = multiclass.df, target = multiclass.target,
+  fd.features = list(fda1 = 1:2, fda2 = 3:4))
+
 ns.svg = c(svg = "http://www.w3.org/2000/svg")
 black.circle.xpath = "/svg:svg//svg:circle[contains(@style, 'fill: #000000')]"
 grey.rect.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #EBEBEB;')]"
