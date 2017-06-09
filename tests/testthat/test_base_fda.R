@@ -31,7 +31,7 @@ test_that("FDAClassifTask", {
   expect_equal(getTaskData(task3, target.extra = TRUE)$target, gunpoint$X1)
 })
 
-test_that("FDA_Task_error_regr", {
+test_that("FDA regr Task will generate an error in case of extreme input", {
   requirePackagesOrSkip("FDboost")
   data(fuelSubset)
   fuelsub = data.frame(heatan = fuelSubset$heatan, h2o = fuelSubset$h2o,
@@ -58,14 +58,14 @@ test_that("FDA_Task_error_regr", {
   expect_error(makeFDARegrTask(data = fuelsub, target = "heatan", fd.features = fdf7, fd.grids = fdg))
 })
 
-test_that("FDA_Task_error_classif", {
+test_that("FDA classif Task will generate an error in case of extreme input", {
   gunpoint = getTaskData(gunpoint.task, target.extra = FALSE)
   expect_error(makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 1:3)))
   expect_error(makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 2:3), fd.grids = list(fd = 1:3)))
 })
 
 
-test_that("FDA_subsetTask", {
+test_that("subsetTask works for FDATask", {
   st = subsetTask(fuelsubset.task, features = 1:200)
   expect_equal(length(st$task.desc$fd.features$NIR), 66L)
   expect_equal(length(st$task.desc$fd.features$UVVIS), 134L)
