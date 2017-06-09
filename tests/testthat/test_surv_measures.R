@@ -9,7 +9,7 @@ test_that("survival measures do not do stupid things", {
   task = makeSurvTask(id = "dummy", data = data, target = c("time", "status"))
 
   ms = list(cindex, cindex.uno, iauc.uno)
-  learners = c("surv.coxph", "surv.CoxBoost", "surv.rpart", "surv.ranger", "surv.cvglmnet", "surv.glmnet", "surv.gamboost", "surv.glmboost", "surv.randomForestSRC", "surv.cforest")
+  learners = listLearners("surv", warn.missing.packages = FALSE)$class
   learners = lapply(learners, makeLearner)
 
   for (lrn in learners) {
@@ -19,7 +19,7 @@ test_that("survival measures do not do stupid things", {
       r = range(measure$worst, measure$best)
       x = aggr[[sprintf("%s.test.mean", measure$id)]]
       expect_number(x, lower = r[1], upper = r[2], label = sprintf("%s/%s", lrn$id, measure$id))
-      if (!anyInfinte(r))
+      if (!anyInfinite(r))
         expect_true(abs(x - measure$worst) >= abs(x - measure$best), label = sprintf("%s/%s", lrn$id, measure$id))
     }
   }
