@@ -65,16 +65,16 @@ print.mlr.dump = function(x, ...) {
   invisible(NULL)
 }
 
-# Create a list of only relevant functional covariates and grids. It is used in predict() in several FDAlearners.
-reformat2mat.list = function(data, tdesc) {
+# For FDA: create a list of only relevant functional covariates and grids
+# Used in predict() in several FDA learners
+# Returns a list, each func feature is a matrix
+convertFDAData2ListOfMatrices = function(data, tdesc) {
   fdns = names(tdesc$fd.features)
-  mat.list = namedList(fdns)
-  # for each functional covariate
-  for (fdn in fdns) {
-    # extract functional covariate matrix (subsetted to relevant covariates)
-    mat.list[[fdn]] = as.matrix(subset(data, select = tdesc$fd.features[[fdn]]))
-    # add grids
-    mat.list[[stri_paste(fdn, ".index")]] = tdesc$fd.grids[[fdn]]
+  res = namedList(fdns)
+  for (fdn in fdns) { # for each func feature
+    # extract functional covariate matrix (subsetted to relevant covariates), then add grids
+    res[[fdn]] = as.matrix(data[, tdesc$fd.features[[fdn]]])
+    res[[stri_paste(fdn, ".index")]] = tdesc$fd.grids[[fdn]]
   }
   return(mat.list)
 }

@@ -1,0 +1,51 @@
+FDATask
+
+FDAClassifTask
+
+FDARegrTask
+
+man_roygen/FDA_Task_pars.R
+
+############
+
+FailureModel - OK
+
+measures -
+  measures must be handled consitently, and shouldnt we have 2 classif properties
+
+Task_operators - OK
+
+checkLearnerBeforeTrain
+
+datasets.R - OK
+
+helpers - OK
+
+utils - OK
+
+zzz - OK
+
+inst/makeData.R
+  there is some scaling going on for some feautures. is that documented in datasets.R?
+
+############
+
+RLearner_fdaclassif_knn - OK
+
+RLearner_fdaregr_FDboost
+  email fabian whether this is correct
+############
+
+test_base_fda.R -
+  better headlines for chunks
+
+test_base_helpers.R - OK
+
+test_base_listLearner.R - OK
+
+test_fdaclassif_knn - OK
+
+test_fdaregr_FDboost - OK
+
+
+
