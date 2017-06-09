@@ -4,6 +4,8 @@ context("cpo")
 
 test_that("data actually has the form requested", {
   # split according to argument
+
+
   for (type in c("o", "f")) {
     if (type == "f") next  # TODO
 
