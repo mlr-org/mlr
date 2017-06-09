@@ -81,7 +81,6 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
 #' @export
 predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
   tdesc = getTaskDesc(.model)
-  mat.list = reformat2mat.list(.newdata, tdesc)
-  pred = predict(object = .model$learner.model, newdata = mat.list)
-  return(pred)
+  nd = convertFDAData2ListOfMatrices(.newdata, tdesc)
+  predict(object = .model$learner.model, newdata = nd)
 }
