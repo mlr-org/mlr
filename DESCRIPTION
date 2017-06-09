@@ -172,6 +172,7 @@ Collate:
     'BenchmarkResultOrderLevels.R'
     'BenchmarkResult_operators.R'
     'CPOAuxiliary.R'
+    'CPOFormatCheck.R'
     'options.R'
     'CPOFunctional.R'
     'CPOObjectBased.R'

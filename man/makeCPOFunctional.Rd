@@ -34,7 +34,7 @@ Indicate what format the data should be as seen by \dQuote{cpo.trafo}. Possibili
     the numeric columns, \dQuote{factor} the factorial columns (ordered and unordered),
     \dQuote{other} the columns that are neither numeric nor factors. The \dQuote{target}
     variable contains the target column(s) in a data.frame.
-  \item all similarly to \dQuote{most}, but factors are split up into \dQuote{factor}
+  \item all similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
     (unordered factors) and \dQuote{ordered}.
   \item no the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
     variable is a \code{character} indicating the names of the target columns.

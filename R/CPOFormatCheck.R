@@ -63,7 +63,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 #  - check properties are allowed
 #  - get a shape info object
 #  --> return list(outdata, shapeinfo)
-handleTrafoOutput(outdata, olddata, datasplit, allowed.properties, name) {
+handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, name) {
   recombined = if (is.data.frame(olddata)) {
     recombinedf(olddata, outdata, datasplit, name)
   } else {
@@ -122,6 +122,57 @@ getDataProperties = function(data) {
   c(names(nf)[nf > 0], if (td$has.missings) "missings")
 }
 
+# calculate the properties, properties.adding and properties.needed for a composed CPO
+# CPO1 %>>% CPO2
+# returns a list(properties, properties.adding, properties.needed)
+compositeProperties = function(properties.1, properties.adding.1, properties.needed.1,
+                               properties.2, properties.adding.2, properties.needed.2,
+                               name1, name2) {
+  # some explanation about properties:
+  # * 'properties' are the properties that a CPO can handle.
+  # * 'properties.adding' are the properties it adds to the things coming after it, it is therefore
+  #   the things it *removes* from a dataset. E.g. if it removes 'missings' from data, it adds the property
+  #   'missings' to the pipeline.
+  # * properties.needed are the properties it needs from the things coming after it, this are the
+  #   the things it *adds* to a dataset. E.g. if it converts numerics to factors, it 'needs' the learner /
+  #   CPOs coming after it to have the property 'factors'.
+
+  # The conditions on the properties are:
+  # A) properties.adding is a subset of properties
+  # B) properties.adding and properties.needed have no common elements
+  # (these should be checked upon creation of a CPO)
+
+  # When composing two CPOs (CPO1 %>>% CPO2), there is an additional requirement:
+  # * properties.needed.1 is a subset of properties.2
+  missing.properties = setdiff(properties.needed.1, properties.2)
+  if (length(missing.properties)) {
+    stopf("CPO %s creates data with propert%s %s that %s can not handle.",
+      name1, ifelse(length(missing.properties) > 1, "ies", "y"),
+      collapse(missing.properties, sep = ", "),
+      name2)
+  }
+
+  # The properties of the new CPO are obtained thus:
+  properties.composite = intersect(properties.1, union(properties.2, properties.adding.1))
+  properties.adding.composite = union(setdiff(properties.adding.1, properties.needed.2), intersect(properties.1, properties.adding.2))
+  properties.needed.composite = union(setdiff(properties.needed.1, properties.adding.2), properties.needed.2)
+
+  # Proofs that conditions (A) and (B) are still fulfilled:
+  # A) using distribution of union and intersect, and the fact that (cond (A)) intersect(properties.adding.1, properties.1) == properties.adding.1,
+  #    we rewrite
+  #      properties.composite = union(properties.adding.1, intersect(properties.1, properties.2))
+  #    Now the first term in the union of properties.adding.composite is a subset of the first term of the union of properties.composite;
+  #    same with the second term of both.
+  # B) We show that intersect(properties.adding.composite, properties.needed.composite) is empty by showing that both terms in the union
+  #    of properties.adding.composite have empty intersect each with both terms in the union of properties.needed.composite.
+  #    1) intersect(properties.adding.1 - properties.needed.2, properties.needed.2) is empty because properties.needed.2 is subtracted from the lhs
+  #    2) intersect(properties.adding.1 - properties.needed.2, properties.needed.1 - properties.adding.2) is empty because
+  #       intersect(properties.adding.1, properties.needed.1) is empty per condition (B)
+  #    3) intersect(intersect(properties.1, properties.adding.2), properties.needed.1 - properties.adding.2) is empty because properties.adding.2
+  #       is subtracted from the rhs
+  #    4) intersect(intersect(properties.1, properties.adding.2), properties.needed.2) is empty because properties.needed.2 and properties.adding.2
+  #       have empty intersect per condition (B)
+  list(properties = properties.composite, propserties.adding = properties.adding.composite, properties.needed = properties.needed.composite)
 }
 
 # give error when shape is different than dictated by shapeinfo.
@@ -403,4 +454,4 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
 # properties change after detaching preprocs / retrafos
 #
 # adding properties to data that shouldn't be added (in preproc / retrafo)
-
+# composing CPOs with incompatible properties

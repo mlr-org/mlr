@@ -747,3 +747,51 @@ captureEnvWrapper = function(fun) {
 # --> have parameter 'targetbound' --> must not change data, but may change target, will have empty retrafo but meaningful predictTrafo
 #- remove retrafo from learner
 #- functional retrafo: check for data reference and warn
+
+##################################
+### To Be Sorted               ###
+##################################
+
+#' @title Get the Properties of the given CPO object
+#'
+#' @description
+#' The properties of a CPO object determine the kind of data the CPO will be able to handle, and how
+#' it transforms data. Each entry can be one of: \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered},
+#' \dQuote{missings}.
+#'
+#' This function returns a list of three values: \dQuote{properties}, \dQuote{properties.adding}, and
+#' \dQuote{properties.needed}.
+#'
+#' The \dQuote{properties} determines what data the CPO handles. If a property of a given data set is absent,
+#' the preproc operator will reject the data.
+#'
+#' \dQuote{properties.adding} can be one or many of the same values as \dQuote{properties}. These properties
+#' get added to a Learner (or CPO) coming after / behind this CPO. When a CPO imputes missing values, for example,
+#' this is \dQuote{missings}. This is always a subset of \dQuote{properties}.
+#'
+#' \dQuote{properties.needed} can be one or many of the same values as \dQuote{properties}. These properties
+#' are required from a Learner (or CPO) coming after / behind this CPO. E.g., when a CPO converts factors to
+#' numerics, this is \dQuote{numerics} (and \dQuote{properties.adding} is \dQuote{factors}).
+#'
+#' @param cpo [\code{CPO}]\cr
+#'   The CPO to query.
+#'
+#' @export
+getCPOProperties = function(cpo) {
+  UseMethod("getCPOProperties")
+}
+
+#' @export
+getLearnerProperties.CPOLearner = function(learner) {
+  # we could do this dynamically, always query the learner below.
+  # then learner's properties could depend on its hyperparameters.
+  # Whenever there is a conflict of properties (a cpo producing
+  # missings when the learner below in its configuration happens to
+  # not be able to handle missings) one could return 'empty' properties
+  # -- the learner is not able to handle any data.
+  #
+  # One would ideally check whether some properties are fixed or depend
+  # on parameters, and give an error on construction if there is a conflict
+  # that will always be present.
+  learner$properties
+}

@@ -24,6 +24,26 @@ Named list of default parameter values for the CPO. These are used additionally 
 parameter default values in \dQuote{...} and \code{.par.set}. It is preferred to use
 these default values, and not \code{.par.vals}.}
 
+\item{.datasplit}{[\code{character(1)}]\cr
+Indicate what format the data should be as seen by \dQuote{cpo.trafo}. Possibilities are:
+\itemize{
+  \item target the \dQuote{data} variable contains the data in a data.frame without
+    the target column(s), the \dQuote{target} variable contains the target column(s) in
+    a data.frame.
+  \item most the \dQuote{data} is a list containing three data.frames: \dQuote{numeric}
+    the numeric columns, \dQuote{factor} the factorial columns (ordered and unordered),
+    \dQuote{other} the columns that are neither numeric nor factors. The \dQuote{target}
+    variable contains the target column(s) in a data.frame.
+  \item all similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
+    (unordered factors) and \dQuote{ordered}.
+  \item no the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
+    variable is a \code{character} indicating the names of the target columns.
+  \item task the \dQuote{data} variable contains the data as a \dQuote{\link{Task}}.
+}
+Note that the returned data must always be in the same format as the one requested.
+Currently it is an error to change the target column(s) in the \dQuote{no} and \dQuote{task}
+cases. Default is \dQuote{target}.}
+
 \item{.properties}{[\code{character}]\cr
 The kind if data that the CPO will be able to handle. This can be one or many of: \dQuote{numerics},
 \dQuote{factors}, \dQuote{ordered}, \dQuote{missings}.
