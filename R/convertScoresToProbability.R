@@ -41,7 +41,8 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
   }
 
   if (optim.method == "trust region") {
-    while (loop) {
+    repeat {
+      pold = p
       t =  prob.outlier(p, f)
       # LL negative log likelihood
       LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
@@ -57,21 +58,19 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS",
         control = list(report.level = 0, maxit = max.iter))
 
-      pnew = optim$solution
+      p = optim$solution
 
       # check if pnew is converging
-      diff = sum(abs(pnew - p))
-      if ( diff > 1e-4) {
-        loop = TRUE
-        p = pnew
-      } else {
-        loop = FALSE
-        list$pnew = pnew
-        list$probability = prob.outlier(pnew, f)
+      diff = abs(p - pold)
+      if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
+        list$p = p
+        list$probability = prob.outlier(p, f)
+        break
       }
     }
   } else if (optim.method == "BFGS") {
-    while (loop) {
+    repeat {
+      pold = p
       t =  prob.outlier(p, f)
       # negative Log likelihood
       LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
@@ -79,36 +78,33 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
       # unconstraint optimization
       optim = optim(par = p, fn = LL, method = "BFGS")
-      pnew = optim$par
-      diff = sum(abs(pnew - p))
+      p = optim$par
 
-      if ( diff > 1e-4) {
-        loop = TRUE
-        p = pnew
-      } else {
-        loop = FALSE
-        list$pnew = pnew
-        list$probability = prob.outlier(pnew, f)
+      # check if pnew is converging
+      diff = abs(p - pold)
+      if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
+        list$p = p
+        list$probability = prob.outlier(p, f)
+        break
       }
     }
   } else if (optim.method == "glm") {
-    while (loop) {
+    repeat {
+      pold = p
       t =  prob.outlier(p, f)
 
       # minimizing negative likelihood with glm
       df = data.frame(t, f)
       mod = glm(t ~ f, family = binomial(link = "logit"), data = df)
 
-      pnew = coef(mod)
-      diff = sum(abs(pnew - p))
+      p = coef(mod)
 
-      if ( diff > 1e-4) {
-        loop = TRUE
-        p = pnew
-      } else {
-        loop = FALSE
-        list$pnew = pnew
-        list$probability = prob.outlier(pnew, f)
+      # check if pnew is converging
+      diff = abs(p - pold)
+      if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
+        list$p = p
+        list$probability = prob.outlier(p, f)
+        break
       }
     }
   } else if (optim.method == "Newton") {
