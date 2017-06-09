@@ -20,7 +20,7 @@ makeRLearner.classif.mxff = function() {
         values = c("rmse", "softmax", "logistic")),
       # other hyperparameters
       makeNumericLearnerParam(id = "dropout", lower = 0, upper = 1 - 1e-7),
-      makeUntypedLearnerParam(id = "ctx", default = mx.ctx.default(), tunable = FALSE),
+      makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
       makeDiscreteLearnerParam(id = "optimizer", default = "sgd",
@@ -87,19 +87,19 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   if (!is.null(symbol)) {
     out = symbol
   } else {
-    sym = mx.symbol.Variable("data")
+    sym = mxnet::mx.symbol.Variable("data")
     act = list(act1, act2, act3)[1:layers]
     nodes = list(nodes1, nodes2, nodes3)[1:layers]
 
     # construct hidden layers using symbols
     for (i in seq_len(layers)) {
-      sym = mx.symbol.FullyConnected(sym, num_hidden = nodes[[i]])
-      sym = mx.symbol.Activation(sym, act_type = act[[i]])
+      sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = nodes[[i]])
+      sym = mxnet::mx.symbol.Activation(sym, act_type = act[[i]])
     }
 
     # add dropout if specified
     if (!is.null(dropout)) {
-      sym = mx.symbol.Dropout(sym, p = dropout)
+      sym = mxnet::mx.symbol.Dropout(sym, p = dropout)
     }
 
     # construct output layer
@@ -107,16 +107,16 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
       softmax = nlevels(d$target),
       logistic = 1,
       stop("Output activation not supported yet."))
-    sym = mx.symbol.FullyConnected(sym, num_hidden = nodes.out)
+    sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = nodes.out)
     out = switch(act_out,
-      # rmse = mx.symbol.LinearRegressionOutput(sym),
-      softmax = mx.symbol.SoftmaxOutput(sym),
-      logistic = mx.symbol.LogisticRegressionOutput(sym),
+      # rmse = mxnet::mx.symbol.LinearRegressionOutput(sym),
+      softmax = mxnet::mx.symbol.SoftmaxOutput(sym),
+      logistic = mxnet::mx.symbol.LogisticRegressionOutput(sym),
       stop("Output activation not supported yet."))
   }
 
   # create model
-  model = mx.model.FeedForward.create(out, X = X, y = y, ...)
+  model = mxnet::mx.model.FeedForward.create(out, X = X, y = y, ...)
   return(model)
 }
 
