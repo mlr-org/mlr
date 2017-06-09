@@ -35,7 +35,7 @@
 setThreshold = function(pred, threshold) {
   # dont check for NAs in response, this will get overwritten anyway.
   # and object might not be constructed in full when we call this in Prediction
-  checkPrediction(pred, task.type = c("classif", "multilabel"), predict.type = "prob", no.na = FALSE)
+  checkPrediction(pred, task.type = c("classif", "multilabel", "fdaclassif"), predict.type = "prob", no.na = FALSE)
   assertNumeric(threshold, any.missing = FALSE)
   td = pred$task.desc
   ttype = td$type

@@ -28,7 +28,7 @@ generateThreshVsPerfData = function(obj, measures, gridsize = 100L, aggregate = 
 #' @export
 generateThreshVsPerfData.Prediction = function(obj, measures, gridsize = 100L, aggregate = TRUE,
                                                task.id = NULL) {
-  checkPrediction(obj, task.type = "classif", binary = TRUE, predict.type = "prob")
+  checkPrediction(obj, task.type = c("classif", "fdaclassif"), binary = TRUE, predict.type = "prob")
   generateThreshVsPerfData.list(namedList("prediction", obj), measures, gridsize, aggregate, task.id)
 }
 #' @export
