@@ -146,7 +146,9 @@ NULL
 #' 2 functional covariates and 1 scalar covariate.
 #' You have to predict the heat value of some fuel based on the
 #' ultraviolet radiation spectrum and infrared ray radiation and one scalar
-#' column called h2o.
+#' column called h2o. The columns UVVIS and NIR are scaled according to the
+#' \code{\link[FDboost]{}}.
+
 #'
 #' @name fuelsubset.task
 #' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.

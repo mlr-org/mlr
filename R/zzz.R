@@ -39,5 +39,5 @@ mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 
 ### Measure properties
 mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv",
-  "cluster", "costsens", "fdaregr", "fdaclassif",
+  "cluster", "costsens", "fdaregr", "fdaclassif", "fdaclassif.multi",
   "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
