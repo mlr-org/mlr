@@ -25,8 +25,7 @@ utils - OK
 
 zzz - OK
 
-inst/makeData.R
-  there is some scaling going on for some feautures. is that documented in datasets.R?
+inst/makeData.R - OK
 
 ############
 
