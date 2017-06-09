@@ -66,8 +66,5 @@ predictLearner.surv.glmboost = function(.learner, .model, .newdata, use.formula,
     info = getTrainingInfo(.model)
     .newdata = as.matrix(fixDataForLearner(.newdata, info))
   }
-  if (.learner$predict.type == "response")
-    predict(.model$learner.model, newdata = .newdata, type = "link")
-  else
-    stop("Unknown predict type")
+  predict(.model$learner.model, newdata = .newdata, type = "link")
 }

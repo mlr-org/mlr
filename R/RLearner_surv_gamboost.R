@@ -52,8 +52,5 @@ trainLearner.surv.gamboost = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.surv.gamboost = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response")
-    predict(.model$learner.model, newdata = .newdata, type = "link")
-  else
-    stop("Unknown predict type")
+  predict(.model$learner.model, newdata = .newdata, type = "link")
 }

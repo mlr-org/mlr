@@ -39,11 +39,7 @@ trainLearner.surv.rpart = function(.learner, .task, .subset, .weights = NULL, ..
 
 #' @export
 predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
-  } else {
-    stop("Unsupported predict type")
-  }
+  predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
 }
 
 #' @export

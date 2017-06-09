@@ -53,7 +53,8 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, ...)
+  # cforest returns median survival times; multiply by -1 so that high values correspond to high risk
+  -1 * predict(.model$learner.model, newdata = .newdata, type = "response", ...)
 }
 
 #' @export
