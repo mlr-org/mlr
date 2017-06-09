@@ -81,7 +81,7 @@
 #'
 #' @export
 makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
-                         .datasplit = c("target", "most", "all", "no", "task"),
+                         .datasplit = c("no", "target", "most", "all", "task"),  # TODO: put "no" after "all"
                          .properties = c("numerics", "factors", "ordered", "missings"),
                          .properties.adding = character(0), .properties.needed = character(0),
                          cpo.trafo, cpo.retrafo) {
@@ -251,7 +251,7 @@ attachCPO.CPOObject = function(cpo, learner) {
 
   oldprops = getLearnerProperties(learner)
   oldprops.relevant = intersect(oldprops, c("numerics", "factors", "ordered", "missings"))
-  oldprops.relevant = compositeProperties(cpoprops$properties, cpoprops$properties.adding, cpoprops$properties.needed,
+  oldprops.relevant = compositeProperties(cpo$properties, cpo$cpoproperties.adding, cpo$properties.needed,
     oldprops.relevant, character(0), character(0))$properties  # checks for property problems automatically
 
 
@@ -293,7 +293,7 @@ applyCPO.CPOObject = function(cpo, task) {
   prevfun = retrafo(task)
 
   transformed = callCPOObjectTrafo(cpo, task)
-  task = changeData(task, transformed$data)
+  task = transformed$data
 
   retrafo.fn = getCPOObjectRetrafoFn(cpo, transformed$info, prevfun)
   is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(cpo))
@@ -447,7 +447,7 @@ getCPOObjectRetrafoFn = function(cpo, info, prevfun) {
 # get RETRAFO from learner
 
 singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
-  res = getCPOObjectRetrafoFn(model$learner$cpo, model$learner.model$info, prevfun)
+  res = getCPOObjectRetrafoFn(model$learner.model$cpo, model$learner.model$info, prevfun)
 
   is.prim = (is.null(prevfun) && "CPOPrimitive" %in% class(model$learner$cpo))
   addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
@@ -506,7 +506,7 @@ as.list.CPOObjectRetrafo = function(x, ...) {
       is.prim = ("CPOPrimitive" %in% class(cpo))
       addClasses(res, c(if (is.prim) "CPOObjectRetrafoPrimitive", "CPOObjectRetrafo", "CPORetrafo"))
     }
-    ctl = environment(x)$info
+    ctl = environment(x)$info$control
     prs = getHyperPars(environment(x)$cpo)
     retenv = environment(environment(x)$cpo$retrafo)
     c(as.list(cpoToRetrafo(retenv$cpo1, prs, ctl$fun1)),
@@ -542,7 +542,7 @@ getRetrafoState.CPOObjectRetrafoPrimitive = function(retrafo.object) {
   control = info$control
   info$control = NULL
 
-  insert(getHyperPars(retrafo.object), list(control = info$control, data = info))
+  insert(getHyperPars(retrafo.object), list(control = control, data = info))
 }
 
 #' @export

@@ -36,16 +36,21 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 
   # check that input column names and general types match (num / fac, or num/fac/ordered if datasplit == "all"
   if ("Task" %in% class(indata)) {
-    if (!is.null(shapeinfo.input$target)) {
-      assertSetEqual(getTaskTargetNames(indata), shapeinfo.input$target)
+    if (length(shapeinfo.input$target) && length(getTaskTargetNames(indata))) {
+      # FIXME: this might be too strict: maybe the user wants to retrafo a Task with the target having a different name?
+      # HOWEVER, then either the training data's task didnt matter (and he should have trained with a data.set?), or it
+      #  DID matter, in which case it is probably important to have the same data type <==> target name
+      assertSetEqual(getTaskTargetNames(indata), shapeinfo.input$target, .var.name = sprintf("Target names of Task %s", getTaskId(indata)))
     }
-    indata = getTaskData(indata)
+    indata = getTaskData(indata, target.extra = TRUE)$data
+  } else {
+    shapeinfo.input$target = NULL
   }
   if (!is.data.frame(indata)) {
-    stopf("Data fed into CPO %s retrafo is not a data.frame.", name)
+    stopf("Data fed into CPO %s retrafo is not a Task or data.frame.", name)
   }
 
-  assertShapeConform(indata, shapeinfo, datasplit == "all", name)
+  assertShapeConform(indata, shapeinfo.input, datasplit == "all", name)
 
   present.properties = getDataProperties(indata)
   assertSubset(present.properties, allowed.properties, .var.name = sprintf("Data going into %s retrafo", name))
@@ -72,8 +77,12 @@ handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, na
 
   present.properties = getDataProperties(recombined)
   assertSubset(present.properties, allowed.properties, .var.name = sprintf("%s trafo return value", name))
-
-  shapeinfo = makeOutputShapeInfo(outdata)
+  if (datasplit %in% c("no", "task")) {
+    # in this case, take shape info with 'target' separated
+    shapeinfo = makeOutputShapeInfo(recombined)
+  } else {
+    shapeinfo = makeOutputShapeInfo(outdata)
+  }
 
   list(outdata = recombined, shapeinfo = shapeinfo)
 }
@@ -85,6 +94,10 @@ handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, na
 #  - check the shape is the same as during trafo
 #  --> return the data that can be returned by the outer retrafo layer
 handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, shapeinfo.output, name) {
+  if (datasplit %in% c("no", "task")) {
+    # target is always split off during retrafo
+    datasplit = "target"
+  }
   recombined = if (is.data.frame(olddata)) {
     recombinedf(olddata, outdata, datasplit, name)
   } else {
@@ -177,8 +190,8 @@ compositeProperties = function(properties.1, properties.adding.1, properties.nee
 
 # give error when shape is different than dictated by shapeinfo.
 assertShapeConform = function(df, shapeinfo, checkordered, name) {
-  assertSubsetEqual(names(indata), shapeinfo$colnames)
-  indata = indata[shapeinfo$colnames]
+  assertSetEqual(names(df), shapeinfo$colnames)
+  indata = df[shapeinfo$colnames]
 
   if (checkordered) {
     typesmatch = list(
@@ -193,9 +206,9 @@ assertShapeConform = function(df, shapeinfo, checkordered, name) {
   newcoltypes = vcapply(indata, function(x) class(x)[1])
 
   for (t in typesmatch) {
-    typemismatch = (newcoltypes %in% t) != (newcoltypes %in% shapeinfo$coltypes)
+    typemismatch = (newcoltypes %in% t) != (shapeinfo$coltypes %in% t)
     if (any(typemismatch)) {
-      stopf("Error in CPO %s: Types of column%s %s mismatch.", name,
+      stopf("Error in CPO %s: Types of column%s %s mismatch between training and test data.", name,
         ifelse(sum(typemismatch) > 1, "s", ""), collapse(names(indata)[typemismatch], sep = ", "))
     }
   }
@@ -233,7 +246,7 @@ makeOutputShapeInfo = function(outdata) {
   if (is.data.frame(outdata)) {
     makeShapeInfo(outdata)
   } else if ("Task" %in% class(outdata)) {
-    makeShapeInfo(getTaskData(outdata))
+    makeShapeInfo(getTaskData(outdata, target.extra = TRUE)$data)
   } else {
     # data is split by type, so we get the shape of each of the constituents
     lapply(outdata, makeShapeInfo)
@@ -279,7 +292,7 @@ splittask = function(task, datasplit = c("target", "most", "all", "no", "task"))
 
   switch(datasplit,
     task = list(data = task, target = getTaskTargetNames(task)),
-    no = list(data = getTaskData(task), getTaskTargetNames(task)),
+    no = list(data = getTaskData(task), target = getTaskTargetNames(task)),
     target = list(data = getTaskData(task, target.extra = TRUE)$data,
      target = getTaskData(task, features = character(0))),  # want the target to always be a data.frame
     most = list(data = splitColsByType(c("numeric", "factor", "other"), splt$data),
@@ -292,7 +305,7 @@ splitdf = function(df, datasplit = c("target", "most", "all", "no", "task")) {
   datasplit = match.arg(datasplit)
   switch(datasplit,
     task = list(data = makeClusterTask(data = df), target = character(0)),
-    no = list(data = df, character(0)),
+    no = list(data = df, target = character(0)),
     target = list(data = df, target = df[, character(0), drop = FALSE]),
     most = list(data = splitColsByType(c("numeric", "factor", "other"), df),
       target = df[, character(0), drop = FALSE]),
@@ -392,13 +405,13 @@ recombinetask = function(task, newdata, datasplit = c("target", "most", "all", "
       }
     }
 
-    return(task)
+    return(newdata)
   }
   if (datasplit == "target") {
     if (!is.data.frame(newdata)) {
       stopf("CPO %s gave bad result\nmust return a data.frame.", name)
     }
-    if (nrow(newdata) != getTaskDescription(task)$size) {
+    if (nrow(newdata) != getTaskDesc(task)$size) {
       stopf("CPO %s must not change number of rows.", name)
     }
     newdata = cbind(newdata, getTaskData(task, features = character(0)))
@@ -422,13 +435,16 @@ recombinetask = function(task, newdata, datasplit = c("target", "most", "all", "
 # this assumes we that if 'datasplit' was task, it was created from a target-less task.
 recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no", "task"), name) {
   datasplit = match.arg(datasplit)
-  assertSetEqual(names(newdata), c("numeric", "factor", "other", if (datasplit == "all") "ordered"))
   if (datasplit == "task") {
     assertClass(newdata, "Task")
     getTaskData(newdata)
   } else if (datasplit %in% c("most", "all")) {
+    assertSetEqual(names(newdata), c("numeric", "factor", "other", if (datasplit == "all") "ordered"))
     return(recombineLL(df, names(df), df[, character(0), drop = FALSE], name))
   } else {
+    if (!is.data.frame(newdata)) {
+      stopf("CPO %s gave bad result\nmust return a data.frame.", name)
+    }
     if (nrow(df) != nrow(newdata)) {
       stopf("CPO %s must not change number of rows.", name)
     }

@@ -208,6 +208,7 @@ attachCPO.CPOFunctional = function(cpo, learner) {
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
     getParamSet(cpo), getHyperPars(cpo), c("CPOFunctionalLearner", "CPOLearner"), c("CPOFunctionalModel", "CPOModel"))
   wlearner$cpo = cpo
+  wlearner$properties = getLearnerProperties(learner)  # TODO
   wlearner
 }
 
