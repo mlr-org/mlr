@@ -291,7 +291,7 @@ cpo.df.ordered2 = data.frame(O1 = factor(c("x", "y", "x"), ordered = TRUE),
   O2 = factor(c("y", "z", "z"), ordered = TRUE),
   O3 = factor(c("y", "z", "y"), ordered = TRUE))
 
-cpo.df.ordered3 = data.frame(O4 = factor(c("x", "y", "x"), ordered = TRUE), O5 = factor(c("y", "y", "y"), levels=c("y", "z"), ordered = TRUE))
+cpo.df.ordered3 = data.frame(O4 = factor(c("x", "y", "x"), ordered = TRUE), O5 = factor(c("y", "y", "y"), levels = c("y", "z"), ordered = TRUE))
 
 cpo.df.other = data.frame(U1 = c("m", "n", "o"), U2 = c("p", "q", "r"), U3 = c("s", "t", "u"), U4 = c("v", "w", "w"), stringsAsFactors = FALSE)
 cpo.df.other2 = data.frame(U1 = c("mx", "nx", "ox"), U2 = c("px", "qx", "rx"), U3 = c("sx", "tx", "ux"), U4 = c("vx", "wx", "wx"), stringsAsFactors = FALSE)

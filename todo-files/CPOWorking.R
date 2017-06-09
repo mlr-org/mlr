@@ -13,7 +13,8 @@ debugger()
 
 library("testthat")
 
-devtools::test(pkg = "..", filter = "cpo", reporter = c("summary", "stop"))
+devtools::test(pkg = "..", filter = "cpo$", reporter = c("summary", "stop"))
+devtools::test(pkg = "..", filter = "cpo_dataformat", reporter = c("summary", "stop"))
 devtools::test(pkg = "..", filter = "ParamSetSugar")
 
 mkl = function() {
