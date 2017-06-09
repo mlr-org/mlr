@@ -21,6 +21,6 @@ test_that("measures for multilclass", {
   lrn = makeLearner("fdaclassif.knn", par.vals = list(knn = 1L, trim = 0.5))
   task = makeFDAClassifTask(data = iris, target = "Species")
   holdout("fdaclassif.knn", task, measures = tpr)
-  holdout("fdaclassif.knn", task, measures = multiclass.au1p)
+  expect_error(holdout("fdaclassif.knn", task, measures = multiclass.au1p))
 })
 
