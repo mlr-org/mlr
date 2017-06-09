@@ -76,6 +76,6 @@ convertFDAData2ListOfMatrices = function(data, tdesc) {
     res[[fdn]] = as.matrix(data[, tdesc$fd.features[[fdn]]])
     res[[stri_paste(fdn, ".index")]] = tdesc$fd.grids[[fdn]]
   }
-  return(mat.list)
+  return(res)
 }
 
