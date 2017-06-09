@@ -1,10 +1,10 @@
-FDATask
+FDATask - OK
 
-FDAClassifTask
+FDAClassifTask - OK
 
-FDARegrTask
+FDARegrTask - OK
 
-man_roygen/FDA_Task_pars.R
+man_roygen/FDA_Task_pars.R - OK
 
 ############
 
@@ -15,7 +15,7 @@ measures -
 
 Task_operators - OK
 
-checkLearnerBeforeTrain
+checkLearnerBeforeTrain - OK
 
 datasets.R - OK
 
@@ -32,12 +32,13 @@ inst/makeData.R
 
 RLearner_fdaclassif_knn - OK
 
-RLearner_fdaregr_FDboost
-  email fabian whether this is correct
+RLearner_fdaregr_FDboost - OK
+
 ############
 
 test_base_fda.R -
   better headlines for chunks
+  and recheck code
 
 test_base_helpers.R - OK
 
@@ -46,6 +47,28 @@ test_base_listLearner.R - OK
 test_fdaclassif_knn - OK
 
 test_fdaregr_FDboost - OK
+
+############
+
+NEWS and last TODOS:
+
+- remove issues.txt
+- email fabian sarah fdboost
+- check tutorial
+
+NEWS:
+
+## general
+- mlr now supports (somewhat experimental) classifcation and regression for functional features.
+  These are tasks where some features are of functional form, e.g. as their values vary over time.
+  See new API below and tutorial for details.
+
+## functions - new
+  - makeFDAClasifTask, makeFDARegrTask
+
+## learners - new
+- fdaclassif.knn
+- fdaregr.FDBoost
 
 
 
