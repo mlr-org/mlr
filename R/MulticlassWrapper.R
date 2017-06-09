@@ -48,7 +48,7 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
 }
 
 #' @export
-trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = NULL, mcw.method, ...) {
+trainLearner.MulticlassWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, mcw.method, ...) {
   .task = subsetTask(.task, .subset)
   y = getTaskTargets(.task)
   cm = buildCMatrix(mcw.method, .task)
@@ -76,13 +76,13 @@ doMulticlassTrainIteration = function(x, i, learner, task, weights) {
 }
 
 #' @export
-predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = .model$learner.model$next.model
   cm = .model$learner.model$cm
   # predict newdata with every binary model, get n x n.models matrix of +1,-1
   # FIXME: this will break for length(models) == 1? do not use sapply!
   p = sapply(models, function(m) {
-    pred = predict(m, newdata = .newdata, ...)$data$response
+    pred = predict(m, newdata = .newdata, subset = .subset, ...)$data$response
     if (is.factor(pred))
       pred = as.numeric(pred == "1") * 2 - 1
     pred

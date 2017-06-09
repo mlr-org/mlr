@@ -15,5 +15,5 @@ test_that("classif_qda", {
   tt = MASS::qda
   tp = function(model, newdata) predict(model, newdata)$class
 
-  testCV("classif.qda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp )
+  testCV("classif.qda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp)
 })

@@ -18,7 +18,7 @@ test_that("classif_multinom", {
   tt = nnet::multinom
   tp = function(model, newdata) predict(model, newdata)
 
-  testCV("classif.multinom", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp )
+  testCV("classif.multinom", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp)
 
   # test multinom for 2 classes
   wl = makeLearner("classif.multinom", predict.type = "prob")
