@@ -148,7 +148,6 @@ Suggests:
     sda,
     shiny,
     smoof,
-    sparsediscrim,
     sparseLDA,
     stepPlr,
     SwarmSVM,
