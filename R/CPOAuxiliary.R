@@ -94,7 +94,6 @@ NULL
   }
 }
 
-
 #' @export
 `%>>%.CPOConstructor` = function(cpo1, cpo2) {
   stop("Cannot compose CPO Constructors.")
@@ -112,6 +111,19 @@ NULL
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
     stopf("Cannot compose CPO with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
+  }
+}
+
+#' @export
+`%>>%.CPORetrafo` = function(cpo1, cpo2) {
+  if ("CPORetrafo" %in% class(cpo2)) {
+    composeCPO(cpo1, cpo2)
+  } else if ("WrappedModel" %in% class(cpo2)) {
+    stop("Attaching CPO Retrafo to a model is not implemented.")
+  } else if ("CPO" %in% class(cpo2) || "CPOConstructor" %in% class(cpo2)) {
+    stop("Cannot compose CPO Retrafo with CPO.")
+  } else {
+    stopf("Cannot compose CPO Retrafo with object of class c(%s)", paste0('"', class(cpo2), '"', collapse = ", "))
   }
 }
 
@@ -361,6 +373,82 @@ setCPOId = function(cpo, id) {
 #' @export
 getCPOProperties = function(cpo) {
   UseMethod("getCPOProperties")
+}
+
+##################################
+### CPO-Learner Disassembly    ###
+##################################
+
+#' @title Get the CPO associated with a learner
+#'
+#' @description
+#' Returns the (outermost) chain of CPOs that are part of a learner. This is useful to inspect the
+#' preprocessing done by a learner object.
+#'
+#' If there are hidden CPOs (e.g. if \dQuote{learner} has CPOs, but is wrapped by a \code{TuneWrapper}),
+#' this function can not retrieve these CPOs, but it will emit a warning if \dQuote{warn.buried} is \dQuote{TRUE}.
+#'
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner to query
+#' @param warn.buried [\code{logical(1)}]\cr
+#'   Whether to warn about CPOs that could not be retrieved.
+#' @export
+getLearnerCPO = function(learner, warn.buried = TRUE) {
+  checkLearner(learner)
+  name = getLearnerName(learner)
+  appending = TRUE
+  result = NULL
+  repeat {
+    if (!"CPOLearner" %in% class(learner)) {
+      if (is.atomic(learner) || is.null(learner$next.learner)) {
+        break
+      }
+      appending = FALSE
+    } else {
+      if (is.atomic(learner) || is.null(learner$next.learner)) {
+        stop("Error: found learner with class CPOLearner but without $next.learner slot.")
+      }
+      if (appending) {
+        if (is.null(result)) {
+          result = singleLearnerCPO(learner)
+        } else {
+          result = result %>>% singleLearnerCPO(learner)
+        }
+      } else {
+        warningf("Learner %s had buried CPOs", name)
+        break
+      }
+    }
+    learner = learner$next.learner
+  }
+  result
+}
+
+#' @title Get the learner with the reachable CPOs removed
+#'
+#' @description
+#' Get the bare Learner without the CPOs that were previously added.
+#'
+#' It is still possible for the result to be a wrapped learner, e.g. a
+#' TuningWrapper wrapped learner. It is also possible that below the
+#' tuning wrapper, there are more CPOs. These will not be removed.
+#'
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner to strip.
+#' @export
+getLearnerBare = function(learner) {
+  checkLearner(learner)
+  while ("CPOLearner" %in% class(learner)) {
+    if (is.atomic(learner) || is.null(learner$next.learner)) {
+      stop("Error: found learner with class CPOLearner but without $next.learner slot.")
+    }
+    learner = learner$next.learner
+  }
+  learner
+}
+
+singleLearnerCPO = function(learner) {
+  UseMethod("singleLearnerCPO")
 }
 
 
@@ -719,6 +807,33 @@ renameNonfunctionNames = function(expr, translate) {
   return(expr)
 }
 
+# Search for references to variables (not function) named in 'pattern'
+# return TRUE if any were found, FALE otherwise
+referencesNonfunctionNames = function(expr, pattern) {
+  startfrom = 1
+  if (is.call(expr)) {
+    if (!is.recursive(expr)) {
+      return(FALSE)
+    }
+    startfrom = 2
+    if (is.recursive(expr[[1]])) {
+      startfrom = 1
+    } else if (length(expr) == 1) {
+      return(FALSE)
+    }
+  }
+  if (is.recursive(expr)) {
+    for (idx in seq(startfrom, length(expr))) {
+      if (referencesNonfunctionNames(expr[[idx]], pattern)) {
+        return(TRUE)
+      }
+    }
+  } else if (is.symbol(expr) && as.character(expr) %in% pattern) {
+    return(TRUE)
+  }
+  return(FALSE)
+}
+
 # create a function with expressions 'expr' in the environment 'env'.
 # the function gets the argument list 'required.arglist.
 # if 'expr' is actually a function, we just check that it has at least all the
@@ -791,14 +906,15 @@ captureEnvWrapper = function(fun) {
 }
 
 # TO-DO:
-#- remove 'data' from function environment
-#- functional retrafo: check for data reference and warn
-#- get trafo from learner
-#- accept matrix in numeric split
-#- splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
-#- core rewrite
-#- attach retrafo to model
-#- remove retrafo from learner --> general unwrapLearner function; also getCPO
+#- finish properties in Object
+#  -> retrafo property checking
+#- port property & task stuff to Functional
+#- small stuff
+#  -> remove 'data' from function environment
+#  -> functional retrafo: check for data reference and warn
+#- datasplit ext
+#  -> accept matrix in numeric split
+#  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
 #- target retrafo (parameter 'targetbound')
 #  - is a noop for data.frames; possibly warn
 #  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
@@ -809,4 +925,5 @@ captureEnvWrapper = function(fun) {
 #  - apply retrafo to prediction
 #  - also a function retrafoPrediction, with optional data argument
 #  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
+#- core rewrite
 

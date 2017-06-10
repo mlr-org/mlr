@@ -89,8 +89,8 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   cpo.name = .cpo.name
   par.set = .par.set
   par.vals = .par.vals
-  assertString(cpo.name)
   assertList(par.vals, names = "unique")
+  assertString(cpo.name)
   if (is.null(par.set)) {
     par.set = paramSetSugar(..., .pss.env = parent.frame())
   }
@@ -301,6 +301,15 @@ applyCPO.CPOObject = function(cpo, task) {
   task
 }
 
+# get CPO from learner
+
+singleLearnerCPO.CPOObjectLearner = function(learner) {
+  cpo = learner$cpo
+  cpo$par.vals = subsetParams(learner$par.vals, cpo$par.set, cpo$name)
+  cpo
+}
+
+
 # CPO splitting
 
 #' @export
@@ -456,7 +465,7 @@ singleModelRetrafo.CPOObjectModel = function(model, prevfun) {
 # RETRAFO %>>% RETRAFO
 
 #' @export
-`%>>%.CPOObjectRetrafo` = function(cpo1, cpo2) {
+composeCPO.CPOObjectRetrafo = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOObjectRetrafo")
   oldenv = environment(cpo2)
   assert((is.null(oldenv$prevfun) && "CPOPrimitive" %in% class(oldenv$cpo)) ==
