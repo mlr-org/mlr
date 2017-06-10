@@ -14,7 +14,8 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
 
   present.properties = getDataProperties(indata)
-  assertSubset(present.properties, allowed.properties, .var.name = sprintf("Data going into %s trafo", name))
+  assertPropertiesOk(present.properties, allowed.properties, "trafo", "in", name)
+
   shapeinfo = makeInputShapeInfo(indata)
 
   indata = if (is.data.frame(indata)) {
@@ -62,7 +63,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
   assertShapeConform(indata, shapeinfo.input, datasplit == "all", name)
 
   present.properties = getDataProperties(indata)
-  assertSubset(present.properties, allowed.properties, .var.name = sprintf("Data going into %s retrafo", name))
+  assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
   if (datasplit %in% c("most", "all")) {
     splitinto = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
@@ -77,7 +78,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 #  - check properties are allowed
 #  - get a shape info object
 #  --> return list(outdata, shapeinfo)
-handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, name) {
+handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, properties.adding, name) {
   recombined = if (is.data.frame(olddata)) {
     recombinedf(olddata, outdata, datasplit, NULL, name)
   } else {
@@ -85,7 +86,8 @@ handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, na
   }
 
   present.properties = getDataProperties(recombined)
-  assertSubset(present.properties, allowed.properties, .var.name = sprintf("%s trafo return value", name))
+  assertPropertiesOk(present.properties, allowed.properties, "trafo", "out", name)
+  assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "trafo", "adding", name)
   if (datasplit %in% c("no", "task")) {
     # in this case, take shape info with 'target' separated
     shapeinfo = makeOutputShapeInfo(recombined)
@@ -105,7 +107,7 @@ handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, na
 #  - check the properties are fulfilled
 #  - check the shape is the same as during trafo
 #  --> return the data that can be returned by the outer retrafo layer
-handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, shapeinfo.output, name) {
+handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, properties.adding, shapeinfo.output, name) {
   if (datasplit %in% c("no", "task")) {
     # target is always split off during retrafo
     datasplit = "target"
@@ -124,7 +126,8 @@ handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, 
   }
 
   present.properties = getDataProperties(recombined, names(targetcols))
-  assertSubset(present.properties, allowed.properties, .var.name = sprintf("properties of %s retrafo return value", name))
+  assertPropertiesOk(present.properties, allowed.properties, "retrafo", "out", name)
+  assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "retrafo", "adding", name)
 
   # check the shape of outdata is as expected
   shapeinfo.output$target = NULL
@@ -163,6 +166,14 @@ getDataProperties = function(data, targetnames) {
 compositeProperties = function(properties.1, properties.adding.1, properties.needed.1,
                                properties.2, properties.adding.2, properties.needed.2,
                                name1, name2) {
+  assertCharacter(properties.1)
+  assertCharacter(properties.2)
+  assertCharacter(properties.adding.1)
+  assertCharacter(properties.adding.2)
+  assertCharacter(properties.needed.1)
+  assertCharacter(properties.needed.2)
+  assertCharacter(name1)
+  assertCharacter(name2)
   # some explanation about properties:
   # * 'properties' are the properties that a CPO can handle.
   # * 'properties.adding' are the properties it adds to the things coming after it, it is therefore
@@ -207,7 +218,7 @@ compositeProperties = function(properties.1, properties.adding.1, properties.nee
   #       is subtracted from the rhs
   #    4) intersect(intersect(properties.1, properties.adding.2), properties.needed.2) is empty because properties.needed.2 and properties.adding.2
   #       have empty intersect per condition (B)
-  list(properties = properties.composite, propserties.adding = properties.adding.composite, properties.needed = properties.needed.composite)
+  list(properties = properties.composite, properties.adding = properties.adding.composite, properties.needed = properties.needed.composite)
 }
 
 # give error when shape is different than dictated by shapeinfo.
@@ -278,6 +289,30 @@ makeOutputShapeInfo = function(outdata) {
   } else {
     # data is split by type, so we get the shape of each of the constituents
     lapply(outdata, makeShapeInfo)
+  }
+}
+
+# give userfriendly error message when needed properties are absent
+assertPropertiesOk = function(present.properties, allowed.properties, whichfun, direction, name) {
+  badprops = setdiff(present.properties, allowed.properties)
+  if (length(badprops)) {
+    if (direction == "in") {
+      stopf("Data going into CPO %s has propert%s %s that %s can not handle.",
+        whichfun, ifelse(length(badprops) > 1, "ies", "y"),
+        collapse(badprops, sep = ", "), name)
+    } else if (direction == "out") {
+      stopf("Data returned by CPO %s has propert%s %s that %s did not declare in .properties.needed.",
+        whichfun, ifelse(length(badprops) > 1, "ies", "y"),
+        collapse(badprops, sep = ", "), name)
+    } else {
+      # 'adding' properties may not be present during output, but the error message
+      # would be confusing if we used the 'out' message for this.
+      assert(direction == "adding")
+      stopf("Data returned by CPO %s has propert%s %s that %s declared in .properties.adding.\n%s",
+        whichfun, ifelse(length(badprops) > 1, "ies", "y"),
+        collapse(badprops, sep = ", "), name,
+        paste("properties in .properties.adding may not be present in", whichfun, "output."))
+    }
   }
 }
 

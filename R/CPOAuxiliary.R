@@ -794,6 +794,8 @@ captureEnvWrapper = function(fun) {
 #- remove 'data' from function environment
 #- functional retrafo: check for data reference and warn
 #- get trafo from learner
+#- accept matrix in numeric split
+#- splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
 #- core rewrite
 #- attach retrafo to model
 #- remove retrafo from learner --> general unwrapLearner function; also getCPO

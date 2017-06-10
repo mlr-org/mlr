@@ -101,7 +101,7 @@ makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   assertSubset(.properties.needed, c("numerics", "factors", "ordered", "missings"))
   badprops = intersect(.properties.adding, .properties.needed)
   if (length(badprops)) {
-    stop(".properties.adding and .properties.needed must not contain the same properties, but both contained %s.",
+    stopf(".properties.adding and .properties.needed must not contain the same properties, but both contained %s.",
       collapse(badprops, sep = ", "))
   }
 
@@ -191,8 +191,8 @@ callCPOObjectTrafo = function(cpo, data) {
   }
 
   # the properties of the output should only be the input properties + the ones we're adding
-  allowed.properties = setdiff(tin$properties, cpo$properties.adding)
-  tout = handleTrafoOutput(result, data, cpo$datasplit, allowed.properties, cpo$name)
+  allowed.properties = union(tin$properties, cpo$properties.needed)
+  tout = handleTrafoOutput(result, data, cpo$datasplit, allowed.properties, cpo$properties.adding, cpo$name)
 
   list(data = tout$outdata, info = list(control = trafoenv$control,
     shapeinfo.input = tin$shapeinfo, shapeinfo.output = tout$shapeinfo))
@@ -251,8 +251,8 @@ attachCPO.CPOObject = function(cpo, learner) {
 
   oldprops = getLearnerProperties(learner)
   oldprops.relevant = intersect(oldprops, c("numerics", "factors", "ordered", "missings"))
-  oldprops.relevant = compositeProperties(cpo$properties, cpo$cpoproperties.adding, cpo$properties.needed,
-    oldprops.relevant, character(0), character(0))$properties  # checks for property problems automatically
+  oldprops.relevant = compositeProperties(cpo$properties, cpo$properties.adding, cpo$properties.needed,
+    oldprops.relevant, character(0), character(0), cpo$name, getLearnerName(learner))$properties  # checks for property problems automatically
 
 
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
@@ -438,9 +438,9 @@ getCPOObjectRetrafoFn = function(cpo, info, prevfun) {
     result = do.call(cpo$retrafo, insert(getBareHyperPars(cpo), list(data = tin$indata, control = info$control)))
 
     # the properties of the output should only be the input properties + the ones we're adding
-    allowed.properties = union(tin$properties, cpo$properties.adding)
+    allowed.properties = union(tin$properties, cpo$properties.needed)
 
-    handleRetrafoOutput(result, data, cpo$datasplit, allowed.properties, info$shapeinfo.output, cpo$barename)
+    handleRetrafoOutput(result, data, cpo$datasplit, allowed.properties, cpo$properties.adding, info$shapeinfo.output, cpo$barename)
   }
 }
 
