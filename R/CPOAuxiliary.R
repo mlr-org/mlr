@@ -906,15 +906,12 @@ captureEnvWrapper = function(fun) {
 }
 
 # TO-DO:
-#- finish properties in Object
-#  -> retrafo property checking
-#- port property & task stuff to Functional
-#- small stuff
-#  -> remove 'data' from function environment
-#  -> functional retrafo: check for data reference and warn
+#- finish properties
+#  -> retrafo concat property checking
 #- datasplit ext
 #  -> accept matrix in numeric split
 #  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
+#- core rewrite
 #- target retrafo (parameter 'targetbound')
 #  - is a noop for data.frames; possibly warn
 #  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
@@ -925,5 +922,3 @@ captureEnvWrapper = function(fun) {
 #  - apply retrafo to prediction
 #  - also a function retrafoPrediction, with optional data argument
 #  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
-#- core rewrite
-

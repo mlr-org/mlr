@@ -5,7 +5,7 @@
 \title{Create a custom CPO constructor}
 \usage{
 makeCPOFunctional(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
-  .datasplit = c("target", "most", "all", "no", "task"),
+  .datasplit = c("no", "target", "most", "all", "no", "task"),
   .properties = c("numerics", "factors", "ordered", "missings"),
   .properties.adding = character(0), .properties.needed = character(0),
   cpo.trafo)
