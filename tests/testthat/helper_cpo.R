@@ -195,7 +195,17 @@ cpogen = function(name, type = c("o", "f"), ps, trafo, retrafo, datasplit,
       .properties = properties, .properties.adding = properties.adding, .properties.needed = properties.needed,
       cpo.trafo = trafo, cpo.retrafo = retrafo)
   } else {
-    stop("not yet implemented")
+    makeCPOFunctional(name, .par.set = ps, .datasplit = datasplit,
+      .properties = properties, .properties.adding = properties.adding, .properties.needed = properties.needed,
+      cpo.trafo = function(data, target, ...) {
+        cpo.retrafo = function(data) {
+          retrafo(data = data, control = control, ...)
+        }
+        trafo = captureEnvWrapper(trafo)
+        res = trafo(data = data, target = target, ...)
+        control = environment(trafo)$.ENV$control
+        res
+      })
   }
 }
 

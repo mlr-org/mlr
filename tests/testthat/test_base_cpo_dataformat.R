@@ -3,10 +3,8 @@
 context("cpo")
 
 test_that("data actually has the form requested", {
-  testthat::skip("temporarily")
   # split according to argument
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
 
     nosplit = generateCPO(type, "no")
     tasksplit = generateCPO(type, "task")
@@ -100,9 +98,7 @@ test_that("changing some columns leaves the others in order", {
   # datasplit: most, all; also target in 'target'
   # introducing columns where there were none before
 
-
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
     for (split in c("target", "most", "all")) {
 
       cpo = cpogen("colchangetest", type, pss(test: discrete[none, target, other, all]), function(data, target, test) {
@@ -249,7 +245,6 @@ test_that("changing some columns leaves the others in order", {
 
 test_that("changing the target gives an error", {
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
     for (split in c("no", "task")) {
 
       changedata = function(data, target, test, chgname) {
@@ -321,7 +316,6 @@ test_that("changing the target gives an error", {
 test_that("introducing duplicate names gives an error", {
   # datasplit: target, most, all
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
     for (split in c("target", "most", "all")) {
 
       cpo = cpogen("duplicatetest", type, pss(test: discrete [none, nosplit, split]), function(data, target, test) {
@@ -352,7 +346,6 @@ test_that("new task is actually changed, has the expected data", {
   # all datasplits
 
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
     for (split in c("no", "task", "target", "most", "all")) {
 
       chgfct = function(data, ...) {
@@ -411,8 +404,6 @@ test_that("cpo framework detects bad data", {
   # row number mismatch
 split = "task"
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
-
     for (split in c("no", "task", "target")) {
 
       chgfct = function(data, pred, ...) {
@@ -535,7 +526,6 @@ split = "task"
 test_that("format change between trafo and retrafo are detected", {
 
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
 
     for (split in c("no", "task", "target", "most", "all")) {
 
@@ -692,8 +682,6 @@ test_that("attaching cpo with mismatching properties gives error", {
   }
 
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
-
 
     propercpo = function(properties, adding = character(0), needed = character(0)) {
       cpogen("propertytest", type, pss(), cponoop, cponoop, "task", properties, adding, needed)()
@@ -821,7 +809,6 @@ test_that("returning properties that are not allowed is detected", {
 # during prediction (only missings, factors, ordered
 
   for (type in c("o", "f")) {
-    if (type == "f") next  # TODO
 
     makepcpo = function(split, properties.present, astask, generate, properties, adding = character(0), needed = character(0), inretrafo = FALSE,
                         retrafoprops = properties.present, convertinretrafo = inretrafo) {
@@ -1005,7 +992,7 @@ test_that("returning properties that are not allowed is detected", {
 
 
 
-# tests todo:
+# tests to-do:
 # getLearnerCPO: do hyperparameter changes propagate?
 # warning about buried CPO
 # getLearnerBare works, gets the right hyperparameters

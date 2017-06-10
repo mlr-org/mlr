@@ -148,7 +148,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
       args = subsetParams(.par.vals, par.set, cpo.name)
 
       # prepare input
-      tin = prepareTrafoInput(data, datasplit, properties, cpo.name)
+      tin = prepareTrafoInput(data, .datasplit, properties, cpo.name)
 
       result = do.call(cpo.trafo, insert(args, tin$indata))
 
@@ -172,7 +172,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
 
       # check result & retrafo
       allowed.properties = union(tin$properties, properties.needed)
-      tout = handleTrafoOutput(result, data, datasplit, allowed.properties, properties.adding, cpo.name)
+      tout = handleTrafoOutput(result, data, .datasplit, allowed.properties, properties.adding, cpo.name)
 
       returning = tout$outdata
 
@@ -185,7 +185,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
           properties.needed = .properties.needed,
           datasplit = .datasplit,
           shapeinfo.input = tin$shapeinfo,
-          shapeinfo.output = tin$shapeinfo)
+          shapeinfo.output = tout$shapeinfo)
 
       retrafo(returning) = addClasses(cpoFunctionalRetrafo(retrafo.fn, upper.retrafo, retrafo.info),
         c(if (is.prim) "CPOFunctionalRetrafoPrimitive", "CPOFunctionalRetrafo", "CPORetrafo"))
@@ -193,7 +193,7 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
       returning
     }
     # can't do the following in function head, since par.vals must be eval'd
-    formals(outerTrafo) = as.pairlist(list(task = substitute(), .par.vals = present.pars))
+    formals(outerTrafo) = as.pairlist(list(data = substitute(), .par.vals = present.pars))
     attr(outerTrafo, "name") = cpo.name
     attr(outerTrafo, "barename") = cpo.name
     attr(outerTrafo, "id") = NULL
@@ -217,15 +217,24 @@ composeCPO.CPOFunctional = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOFunctional")
   parameterClashAssert(cpo1, cpo2, attr(cpo1, "name"), attr(cpo2, "name"))
   par.set = c(getParamSet(cpo1), getParamSet(cpo2))
-  outerTrafo = function(task, .par.vals) {
+  cpo1props = getCPOProperties(cpo1)
+  cpo2props = getCPOProperties(cpo2)
+  newprops = compositeProperties(cpo1props$properties, cpo1props$properties.adding, cpo1props$properties.needed,
+      cpo2props$properties, cpo2props$properties.adding, cpo2props$properties.needed,
+      attr(cpo1, "name"), attr(cpo2, "name"))
+  properties = newprops$properties
+  properties.adding = newprops$properties.adding
+  properties.needed = newprops$properties.needed
+
+  outerTrafo = function(data, .par.vals) {
     pv1names = names(getParamSet(cpo1)$pars)
     pv2names = names(getParamSet(cpo2)$pars)
     assert(length(intersect(pv1names, pv2names)) == 0)
     assert(length(setdiff(names(.par.vals), c(pv1names, pv2names))) == 0)
     setHyperPars(cpo2, par.vals = .par.vals[intersect(names(.par.vals), pv2names)])(
-      setHyperPars(cpo1, par.vals = .par.vals[intersect(names(.par.vals), pv1names)])(task))
+      setHyperPars(cpo1, par.vals = .par.vals[intersect(names(.par.vals), pv1names)])(data))
   }
-  formals(outerTrafo) = as.pairlist(list(task = substitute(), .par.vals = c(getHyperPars(cpo1), getHyperPars(cpo2))))
+  formals(outerTrafo) = as.pairlist(list(data = substitute(), .par.vals = c(getHyperPars(cpo1), getHyperPars(cpo2))))
   attr(outerTrafo, "name") = paste(attr(cpo1, "name"), attr(cpo2, "name"), sep = " >> ")
   attr(outerTrafo, "barename") = paste(attr(cpo2, "barename"), attr(cpo1, "barename"), sep = ".")
   addClasses(outerTrafo, c("CPOFunctional", "CPO"))
@@ -243,8 +252,9 @@ attachCPO.CPOFunctional = function(cpo, learner) {
 
   oldprops = getLearnerProperties(learner)
   oldprops.relevant = intersect(oldprops, c("numerics", "factors", "ordered", "missings"))
-  oldprops.relevant = compositeProperties(cpo$properties, cpo$properties.adding, cpo$properties.needed,
-    oldprops.relevant, character(0), character(0), cpo$name, getLearnerName(learner))$properties  # checks for property problems automatically
+  cpprops = getCPOProperties(cpo)
+  oldprops.relevant = compositeProperties(cpprops$properties, cpprops$properties.adding, cpprops$properties.needed,
+    oldprops.relevant, character(0), character(0), getCPOName(cpo), getLearnerName(learner))$properties  # checks for property problems automatically
 
   wlearner = makeBaseWrapper(id, learner$type, learner, learner$package,
     getParamSet(cpo), getHyperPars(cpo), c("CPOFunctionalLearner", "CPOLearner"), c("CPOFunctionalModel", "CPOModel"))
@@ -293,7 +303,7 @@ as.list.CPOFunctional = function(x, ...) {
   assert(length(list(...)) == 0)
   cpo1 = substitute()  # pacify static checker
   cpo2 = substitute()  # pacify static checker
-  catabolize = function(task, .par.vals) {
+  catabolize = function(data, .par.vals) {
     pv1names = names(getParamSet(cpo1)$pars)
     pv2names = names(getParamSet(cpo2)$pars)
     assert(length(intersect(pv1names, pv2names)) == 0)
@@ -353,7 +363,7 @@ setHyperPars2.CPOFunctional = function(learner, par.vals = list()) {
     names(pv) = stri_sub(names(pv), nchar(id) + 2)
   }
   at = attributes(learner)
-  formals(learner) = as.pairlist(list(task = substitute(), .par.vals = pv))
+  formals(learner) = as.pairlist(list(data = substitute(), .par.vals = pv))
   attributes(learner) = at
   learner
 }
@@ -519,7 +529,7 @@ makeRetrafoFromState.CPOFunctionalConstructor = function(constructor, state) {
     args = list(),
     par.set = getParamSet(bare),
     cpo.name = getCPOName(bare),
-    datasplit = environment(bare)$.datasplit), getCPOProperties(bare))
+    datasplit = environment(constructor)$.datasplit), getCPOProperties(bare))
 
 
 

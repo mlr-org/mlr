@@ -706,13 +706,13 @@ test_that("functional trafo and retrafo return values are checked", {
   expect_error(pid.task %>>% cpobad.trafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE), "badtrafo cpo\\.trafo .*cpo.trafo must return a data.frame")
 
   expect_class({res = pid.task %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>% cpobad.retrafo.f(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% cpoone.f(TRUE) %>>% cpobad.retrafo.f(TRUE) %>>% cpotwo.f(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% cpobad.retrafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% (cpobad.retrafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE))}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
 
   expect_class(train(cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>% makeLearner("classif.logreg"), pid.task), "WrappedModel")
   expect_error(train(cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>%
@@ -728,13 +728,13 @@ test_that("functional trafo and retrafo return values are checked", {
 
   expect_class({res = train(cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>% cpobad.retrafo.f(TRUE) %>>%
                             makeLearner("classif.logreg"), pid.task)}, "WrappedModel")
-  expect_error(predict(res, pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(predict(res, pid.task), "badretrafo .*must return a data.frame")
   expect_class({res = train(cpoone.f(TRUE) %>>% cpobad.retrafo.f(TRUE) %>>% cpotwo.f(TRUE) %>>%
                             makeLearner("classif.logreg"), pid.task)}, "WrappedModel")
-  expect_error(predict(res, pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(predict(res, pid.task), "badretrafo .*must return a data.frame")
   expect_class({res = train(cpobad.retrafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>%
                             makeLearner("classif.logreg"), pid.task)}, "WrappedModel")
-  expect_error(predict(res, pid.task), "badretrafo retrafo .*must return a data.frame")
+  expect_error(predict(res, pid.task), "badretrafo .*must return a data.frame")
 })
 
 test_that("object based trafo and retrafo return values are checked", {
@@ -844,8 +844,8 @@ test_that("to.list and chainCPO work", {
 
 test_that("retrafo catabolization and anabolization work", {
 
-  cpoadder = cpoadder.o
-  cpomultiplier = cpomultiplier.o
+  cpoadder = cpoadder.f
+  cpomultiplier = cpomultiplier.f
 
   testCPO = function(cpoadder, cpomultiplier) {
 

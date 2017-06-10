@@ -309,7 +309,6 @@ singleLearnerCPO.CPOObjectLearner = function(learner) {
   cpo
 }
 
-
 # CPO splitting
 
 #' @export
@@ -368,7 +367,8 @@ getBareHyperPars = function(cpo) {
 
 # Properties
 
-getCPOProperties.CPOObject = function(cpo, which = NULL) {
+#' @export
+getCPOProperties.CPOObject = function(cpo) {
   list(properties = cpo$properties,
     properties.adding = cpo$properties.adding,
     properties.needed = cpo$properties.needed)
