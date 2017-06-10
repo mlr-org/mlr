@@ -224,39 +224,39 @@ generateCPO = function(type, split = c("no", "target", "most", "all", "task")) {
       numordered: integer[-1, ] [[requires = quote(!isdf && !istask)]],  # -1 for no 'numordered'
       isdf = (split %in% c("no", "target")): logical, istask = (split == "task"): logical, targetisdf = (!split %in% c("no", "task")): logical),
     function(isdf, istask, targetisdf, numrows, numnumeric, numfactor, numother, numordered, numtarget, data, target) {
-      expect_equal(length(target), numtarget)
+      assert(length(target) == numtarget)
       if (istask) {
-        expect_class(data, "Task")
-        expect_class(target, "character")
-        expect_equal(getTaskTargetNames(data), target)
-        expect_equal(getTaskDesc(data)$size, numrows)
-        expect_equal(sum(getTaskDesc(data)$n.feat), numnumeric + numfactor + numother + max(numordered, 0))
+        assertClass(data, "Task")
+        assertClass(target, "character")
+        assert(identical(getTaskTargetNames(data), target))
+        assert(getTaskDesc(data)$size == numrows)
+        assert(sum(getTaskDesc(data)$n.feat) == numnumeric + numfactor + numother + max(numordered, 0))
       } else if (isdf) {
-        expect_class(data, "data.frame")
+        assertClass(data, "data.frame")
         if (targetisdf) {
-          expect_class(target, "data.frame")
-          expect_equal(nrow(target), numrows)
+          assertClass(target, "data.frame")
+          assert(nrow(target) == numrows)
           target = names(target)
         } else {
-          expect_class(target, "character")
-          expect_subset(target, names(data))
+          assertClass(target, "character")
+          assertSubset(target, names(data))
         }
-        expect_equal(nrow(data), numrows)
-        expect_equal(ncol(data), numtarget * (!targetisdf) + numnumeric + numfactor + numother + max(numordered, 0))
+        assert(nrow(data) == numrows)
+        assert(ncol(data) == numtarget * (!targetisdf) + numnumeric + numfactor + numother + max(numordered, 0))
       } else {
-        expect_class(target, "data.frame")
-        expect_equal(nrow(target), numrows)
+        assertClass(target, "data.frame")
+        assert(nrow(target) == numrows)
         target = names(target)
 
         expectnames = c("numeric", "factor", "other", if (numordered >= 0) "ordered")
-        expect_set_equal(expectnames, names(data))
+        assertSetEqual(expectnames, names(data))
         numbers = c(numeric = numnumeric, factor = numfactor, other = numother, ordered = numordered)
         lapply(names(data), function(n) {
           x = data[[n]]
-          expect_class(x, "data.frame")
-          expect_true(length(intersect(target, names(x))) == 0)
-          expect_equal(nrow(x), numrows)
-          expect_equal(ncol(x), numbers[[n]])
+          assertClass(x, "data.frame")
+          assert(length(intersect(target, names(x))) == 0)
+          assert(nrow(x) == numrows)
+          assert(ncol(x) == numbers[[n]])
         })
       }
       control = target
@@ -264,21 +264,21 @@ generateCPO = function(type, split = c("no", "target", "most", "all", "task")) {
     },
     function(isdf, istask, targetisdf, numrows, numnumeric, numfactor, numother, numordered, numtarget, data, control) {
       if (isdf || istask) {
-        expect_class(data, "data.frame")
-        expect_true(length(intersect(control, names(data))) == 0)
-        expect_equal(data[[1]][1], nrow(data))
-        expect_equal(ncol(data), numnumeric + numfactor + numother + max(numordered, 0))
+        assertClass(data, "data.frame")
+        assert(length(intersect(control, names(data))) == 0)
+        assert(data[[1]][1] == nrow(data))
+        assert(ncol(data) == numnumeric + numfactor + numother + max(numordered, 0))
       } else {
         expectnames = c("numeric", "factor", "other", if (numordered >= 0) "ordered")
-        expect_set_equal(expectnames, names(data))
+        assertSetEqual(expectnames, names(data))
         numbers = c(numeric = numnumeric, factor = numfactor, other = numother, ordered = numordered)
         lapply(names(data), function(n) {
           x = data[[n]]
-          expect_true(length(intersect(control, names(x))) == 0)
+          assert(length(intersect(control, names(x))) == 0)
 
-          expect_class(x, "data.frame")
-          expect_equal(nrow(x), nrow(data[[1]]))
-          expect_equal(ncol(x), numbers[[n]])
+          assertClass(x, "data.frame")
+          assert(identical(nrow(x), nrow(data[[1]])))
+          assert(ncol(x) == numbers[[n]])
         })
       }
       data
