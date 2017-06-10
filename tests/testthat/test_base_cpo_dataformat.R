@@ -4,8 +4,6 @@ context("cpo")
 
 test_that("data actually has the form requested", {
   # split according to argument
-
-
   for (type in c("o", "f")) {
     if (type == "f") next  # TODO
 
@@ -35,9 +33,9 @@ test_that("data actually has the form requested", {
         }
       }
 
-      testsingle(nosplit(nr, numtarget))
-      testsingle(tasksplit(nr, numtarget))
-      testsingle(targetsplit(nr, numtarget))
+      testsingle(nosplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
+      testsingle(tasksplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
+      testsingle(targetsplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
       testsingle(mostsplit(nr, numtarget, numnumeric, numfactor + numordered, numother, -1))
       testsingle(allsplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
       invisible(NULL)
@@ -101,28 +99,6 @@ test_that("changing some columns leaves the others in order", {
   # datasplit: most, all; also target in 'target'
   # introducing columns where there were none before
 
-  df1 = cbind(cpo.df.numeric, cpo.df.factorial)
-  df2 = cbind(cpo.df.numeric, cpo.df.other, cpo.df.factorial, cpo.df.ordered)
-  df2 = df2[c(1, 4, 8, 12, 2, 5, 9, 11, 3, 6, 7, 10)]
-
-  df3 = cbind(cpo.df.numeric, cpo.df.logical, cpo.df.factorial)
-  df3 = df3[, c(1, 4, 6, 2, 3, 5, 7)]
-
-  df4 = cbind(cpo.df.numeric, cpo.df.logical, cpo.df.factorial, cpo.df.ordered)
-  df4 = df4[c(1, 4, 8, 2, 5, 9, 3, 6, 7, 10)]
-
-  df5 = cbind(cpo.df.numeric, cpo.df.factorial3, cpo.df.factorial, cpo.df.ordered)
-  df5 = df5[c(1, 4, 8, 2, 5, 9, 3, 6, 7)]
-
-  df1c = makeClassifTask(data = df1, target = "F1")
-  df1cc = makeClusterTask(data = df1)
-  df3l = makeMultilabelTask(data = df3, target = c("T1", "T2"))
-
-  df4l = makeMultilabelTask(data = df4, target = c("T1", "T2"))
-
-  df5c = makeClassifTask(data = df5, target = "F1")
-  df5cc = makeClusterTask(data = df5)
-
 
   for (type in c("o", "f")) {
     if (type == "f") next  # TODO
@@ -153,117 +129,117 @@ test_that("changing some columns leaves the others in order", {
 
       if (split == "target") {
 
-        tr = df1c %>>% cpo("none")
-        expect_equal(getTaskData(tr), df1)
-        expect_equal(df1[c(1, 2, 3, 5)] %>>% retrafo(tr), df1[c(1, 2, 3, 5)])
-        expect_equal(df1 %>>% retrafo(tr), df1)
-        expect_equal(getTaskData(df1c %>>% retrafo(tr)), df1)
+        tr = cpo.df1c %>>% cpo("none")
+        expect_equal(getTaskData(tr), cpo.df1)
+        expect_equal(cpo.df1[c(1, 2, 3, 5)] %>>% retrafo(tr), cpo.df1[c(1, 2, 3, 5)])
+        expect_equal(cpo.df1 %>>% retrafo(tr), cpo.df1)
+        expect_equal(getTaskData(cpo.df1c %>>% retrafo(tr)), cpo.df1)
 
-        tr = df1c %>>% cpo("target")
-        expected = df1[c(1, 2, 3, 5, 4)]
+        tr = cpo.df1c %>>% cpo("target")
+        expected = cpo.df1[c(1, 2, 3, 5, 4)]
         names(expected)[2] = "X"
         expect_equal(getTaskData(tr), expected)
-        expect_equal(df1[c(1, 2, 3, 5)] %>>% retrafo(tr), expected[1:4])
-        expect_equal(df1 %>>% retrafo(tr), expected)
-        expect_equal(getTaskData(df1c %>>% retrafo(tr)), expected)
+        expect_equal(cpo.df1[c(1, 2, 3, 5)] %>>% retrafo(tr), expected[1:4])
+        expect_equal(cpo.df1 %>>% retrafo(tr), expected)
+        expect_equal(getTaskData(cpo.df1c %>>% retrafo(tr)), expected)
 
-        tr = df1cc %>>% cpo("none")
-        expect_equal(getTaskData(tr), df1)
-        expect_equal(df1 %>>% retrafo(tr), df1)
-        expect_equal(getTaskData(df1cc %>>% retrafo(tr)), df1)
+        tr = cpo.df1cc %>>% cpo("none")
+        expect_equal(getTaskData(tr), cpo.df1)
+        expect_equal(cpo.df1 %>>% retrafo(tr), cpo.df1)
+        expect_equal(getTaskData(cpo.df1cc %>>% retrafo(tr)), cpo.df1)
 
-        tr = df1cc %>>% cpo("target")
-        expected = df1
+        tr = cpo.df1cc %>>% cpo("target")
+        expected = cpo.df1
         names(expected)[2] = "X"
         expect_equal(getTaskData(tr), expected)
 
-        tr = df3l %>>% cpo("none")
-        expect_equal(getTaskData(tr), df3)
-        expect_equal(df3[c(1, 3, 4, 5, 7)] %>>% retrafo(tr), df3[c(1, 3, 4, 5, 7)])
-        expect_equal(df3 %>>% retrafo(tr), df3)
-        expect_equal(getTaskData(df3l %>>% retrafo(tr)), df3)
+        tr = cpo.df3l %>>% cpo("none")
+        expect_equal(getTaskData(tr), cpo.df3)
+        expect_equal(cpo.df3[c(1, 3, 4, 5, 7)] %>>% retrafo(tr), cpo.df3[c(1, 3, 4, 5, 7)])
+        expect_equal(cpo.df3 %>>% retrafo(tr), cpo.df3)
+        expect_equal(getTaskData(cpo.df3l %>>% retrafo(tr)), cpo.df3)
 
-        tr = df3l %>>% cpo("target")
-        expected = df3[c(1, 3, 4, 5, 7, 2, 6)]
+        tr = cpo.df3l %>>% cpo("target")
+        expected = cpo.df3[c(1, 3, 4, 5, 7, 2, 6)]
         names(expected)[2] = "X"
         expect_equal(getTaskData(tr), expected)
-        expect_equal(df3[c(1, 3, 4, 5, 7)] %>>% retrafo(tr), expected[1:5])
-        expect_equal(df3 %>>% retrafo(tr), expected)
-        expect_equal(getTaskData(df3l %>>% retrafo(tr)), expected)
+        expect_equal(cpo.df3[c(1, 3, 4, 5, 7)] %>>% retrafo(tr), expected[1:5])
+        expect_equal(cpo.df3 %>>% retrafo(tr), expected)
+        expect_equal(getTaskData(cpo.df3l %>>% retrafo(tr)), expected)
 
       } else {
-        tr = df2 %>>% cpo("other")
-        expected = df2[c(1, 3, 4, 5, 7, 8, 9, 12, 2, 6, 10, 11)]
+        tr = cpo.df2 %>>% cpo("other")
+        expected = cpo.df2[c(1, 3, 4, 5, 7, 8, 9, 12, 2, 6, 10, 11)]
         names(expected)[10] = "X"
         ret = retrafo(tr)
         retrafo(tr) = NULL
         expect_equal(tr, expected)
 
-        tr = df2 %>>% ret
+        tr = cpo.df2 %>>% ret
         expect_equal(tr, expected)
 
-        df2c = makeClassifTask(data = df2, target = "F1", check.data = FALSE)
-        tr = df2c %>>% cpo("other")
-        expected = df2[c(1, 3, 4, 5, 7, 8, 9, 12, 2, 6, 10, 11)]
+        cpo.df2c = makeClassifTask(data = cpo.df2, target = "F1", check.data = FALSE)
+        tr = cpo.df2c %>>% cpo("other")
+        expected = cpo.df2[c(1, 3, 4, 5, 7, 8, 9, 12, 2, 6, 10, 11)]
         names(expected)[10] = "X"
         expect_equal(getTaskData(tr), expected)
-        expect_equal(getTaskData(df2c %>>% retrafo(tr)), expected)
-        expect_equal(df2 %>>% retrafo(tr), expected)
-        expect_equal(df2[c(1:2, 4:12)] %>>% retrafo(tr), expected[c(1, 3:12)])
+        expect_equal(getTaskData(cpo.df2c %>>% retrafo(tr)), expected)
+        expect_equal(cpo.df2 %>>% retrafo(tr), expected)
+        expect_equal(cpo.df2[c(1:2, 4:12)] %>>% retrafo(tr), expected[c(1, 3:12)])
 
         if (split == "most") {
-          tr = df5c %>>% cpo("all")
-          expected = df5[c(5, 1, 4, 7, 2, 3, 6, 8, 9)]
+          tr = cpo.df5c %>>% cpo("all")
+          expected = cpo.df5[c(5, 1, 4, 7, 2, 3, 6, 8, 9)]
           names(expected)[3] = "X"
           names(expected)[5] = "Y"
           expect_equal(getTaskData(tr), expected)
-          expect_equal(df5[c(1:4, 6:9)] %>>% retrafo(tr), expected[2:9])
-          expect_equal(df5 %>>% retrafo(tr), expected)
-          expect_equal(getTaskData(df5c %>>% retrafo(tr)), expected)
+          expect_equal(cpo.df5[c(1:4, 6:9)] %>>% retrafo(tr), expected[2:9])
+          expect_equal(cpo.df5 %>>% retrafo(tr), expected)
+          expect_equal(getTaskData(cpo.df5c %>>% retrafo(tr)), expected)
 
-          tr = df5cc %>>% cpo("all")
-          expected = df5[c(1, 4, 7, 2, 3, 5, 6, 8, 9)]
+          tr = cpo.df5cc %>>% cpo("all")
+          expected = cpo.df5[c(1, 4, 7, 2, 3, 5, 6, 8, 9)]
           names(expected)[2] = "X"
           names(expected)[4] = "Y"
           expect_equal(getTaskData(tr), expected)
-          expect_equal(df5 %>>% retrafo(tr), expected)
-          expect_equal(getTaskData(df5cc %>>% retrafo(tr)), expected)
+          expect_equal(cpo.df5 %>>% retrafo(tr), expected)
+          expect_equal(getTaskData(cpo.df5cc %>>% retrafo(tr)), expected)
 
-          tr = df4l %>>% cpo("all")
-          expected = df4[c(2, 5, 1, 4, 7, 3, 6, 8:10)]
+          tr = cpo.df4l %>>% cpo("all")
+          expected = cpo.df4[c(2, 5, 1, 4, 7, 3, 6, 8:10)]
           names(expected)[4] = "X"
           names(expected)[6] = "Y"
           expect_equal(getTaskData(tr), expected)
-          expect_equal(df4 %>>% retrafo(tr), expected)
-          expect_equal(getTaskData(df4l %>>% retrafo(tr)), expected)
-          expect_equal(df4[c(1, 3, 4, 6:10)] %>>% retrafo(tr), expected[3:10])
+          expect_equal(cpo.df4 %>>% retrafo(tr), expected)
+          expect_equal(getTaskData(cpo.df4l %>>% retrafo(tr)), expected)
+          expect_equal(cpo.df4[c(1, 3, 4, 6:10)] %>>% retrafo(tr), expected[3:10])
 
         } else {
-          tr = df5c %>>% cpo("all")
-          expected = df5[c(3, 5, 6, 9, 1, 4, 7, 2, 8)]
+          tr = cpo.df5c %>>% cpo("all")
+          expected = cpo.df5[c(3, 5, 6, 9, 1, 4, 7, 2, 8)]
           names(expected)[6] = "X"
           names(expected)[8] = "Y"
           expect_equal(getTaskData(tr), expected)
-          expect_equal(df5[c(1:4, 6:9)] %>>% retrafo(tr), expected[c(1, 3:9)])
-          expect_equal(df5 %>>% retrafo(tr), expected)
-          expect_equal(getTaskData(df5c %>>% retrafo(tr)), expected)
+          expect_equal(cpo.df5[c(1:4, 6:9)] %>>% retrafo(tr), expected[c(1, 3:9)])
+          expect_equal(cpo.df5 %>>% retrafo(tr), expected)
+          expect_equal(getTaskData(cpo.df5c %>>% retrafo(tr)), expected)
 
-          tr = df5cc %>>% cpo("all")
-          expected = df5[c(3, 6, 9, 1, 4, 7, 2, 5, 8)]
+          tr = cpo.df5cc %>>% cpo("all")
+          expected = cpo.df5[c(3, 6, 9, 1, 4, 7, 2, 5, 8)]
           names(expected)[5] = "X"
           names(expected)[7] = "Y"
           expect_equal(getTaskData(tr), expected)
-          expect_equal(df5 %>>% retrafo(tr), expected)
-          expect_equal(getTaskData(df5cc %>>% retrafo(tr)), expected)
+          expect_equal(cpo.df5 %>>% retrafo(tr), expected)
+          expect_equal(getTaskData(cpo.df5cc %>>% retrafo(tr)), expected)
 
-          tr = df4l %>>% cpo("all")
-          expected = df4[c(2, 3, 5, 6, 10, 1, 4, 7, 8, 9)]
+          tr = cpo.df4l %>>% cpo("all")
+          expected = cpo.df4[c(2, 3, 5, 6, 10, 1, 4, 7, 8, 9)]
           names(expected)[7] = "X"
           names(expected)[9] = "Y"
           expect_equal(getTaskData(tr), expected)
-          expect_equal(df4 %>>% retrafo(tr), expected)
-          expect_equal(getTaskData(df4l %>>% retrafo(tr)), expected)
-          expect_equal(df4[c(1, 3, 4, 6:10)] %>>% retrafo(tr), expected[c(2, 4:10)])
+          expect_equal(cpo.df4 %>>% retrafo(tr), expected)
+          expect_equal(getTaskData(cpo.df4l %>>% retrafo(tr)), expected)
+          expect_equal(cpo.df4[c(1, 3, 4, 6:10)] %>>% retrafo(tr), expected[c(2, 4:10)])
         }
       }
     }
@@ -271,30 +247,415 @@ test_that("changing some columns leaves the others in order", {
 })
 
 test_that("changing the target gives an error", {
-  # datasplit: task, no
+  for (type in c("o", "f")) {
+    if (type == "f") next  # TODO
+    for (split in c("no", "task")) {
 
+      changedata = function(data, target, test, chgname) {
+        if (test == "df") {
+          if (chgname == "yes") {
+            targetidx = which(names(data) %in% target)[1]
+            names(data)[targetidx] = "X"
+          } else if (chgname == "no") {
+            data[[target[1]]] = data[[target[1]]][1]
+          } else {
+            assert(length(target) > 1)
+            data[target[1]] = NULL
+          }
+        } else if (test == "task") {
+          constructor = switch(substr(class(data)[1], 1, 3),
+            Cla = makeClassifTask,
+            Mul = makeMultilabelTask)
+          data = getTaskData(data)
+          if (chgname == "yes") {
+            targetidx = which(names(data) %in% target)[1]
+            names(data)[targetidx] = "X"
+            target[1] = "X"
+          } else if (chgname == "no") {
+            data[[target[1]]] = data[[target[1]]][1]
+          } else {
+            assert(length(target) > 1)
+            data[target[1]] = NULL
+            target = target[-1]
+          }
+          data = constructor(data = data, target = target, fixup.data = "no", check.data = FALSE)
+        }
+        data
+      }
+
+      cpo = cpogen("targetchangetest", type, pss(test: discrete[none, df, task],
+        chgname: discrete [no, yes, remove] [[requires = quote(test != "none")]]), function(data, target, test, chgname) {
+          control = 0
+          changedata(data, target, test, chgname)
+        }, function(data, control, test, chgname) {
+          data
+        }, split)
+
+      expect_class(cpo.df1c %>>% cpo("none"), "Task")
+      expect_class(cpo.df1 %>>% cpo("none"), "data.frame")
+
+      failmode = switch(split, no = "df", task = "task")
+      if (split == "no") {
+        expect_class(cpo.df1 %>>% cpo(failmode, "yes"), "data.frame")
+      }
+      if (split == "no") {
+        expect_error(cpo.df1c %>>% cpo(failmode, "yes"), "did not contain target column")
+        expect_error(cpo.df3l %>>% cpo(failmode, "yes"), "did not contain target column")
+      } else {
+        expect_error(cpo.df1c %>>% cpo(failmode, "yes"), "must not change target column names")
+        expect_error(cpo.df3l %>>% cpo(failmode, "yes"), "must not change target column names")
+      }
+      expect_error(cpo.df1c %>>% cpo(failmode, "no"), "must not change target, but changed F1")
+      expect_error(cpo.df3l %>>% cpo(failmode, "no"), "must not change target, but changed T1")
+
+      if (split == "no") {
+        expect_error(cpo.df3l %>>% cpo(failmode, "remove"), "did not contain target column T1")
+      } else {
+        expect_error(cpo.df4l2 %>>% cpo(failmode, "remove"), "must not change target column")
+      }
+    }
+  }
 })
 
 test_that("introducing duplicate names gives an error", {
   # datasplit: target, most, all
+  for (type in c("o", "f")) {
+    if (type == "f") next  # TODO
+    for (split in c("target", "most", "all")) {
 
+      cpo = cpogen("duplicatetest", type, pss(test: discrete [none, nosplit, split]), function(data, target, test) {
+          control = 0
+          if (test == "nosplit") {
+            names(data)[1] = names(target)[1]
+          } else if (test == "split") {
+            names(data[[1]])[1] = names(data[[2]])[1]
+          }
+          data
+        }, function(data, control, test) {
+          data
+        }, split)
 
+      expect_class(cpo.df1c %>>% cpo("none"), "Task")
+      expect_class(cpo.df1 %>>% cpo("none"), "data.frame")
+
+      failmode = switch(split, target = "nosplit", "split")
+
+      expect_error(cpo.df1c %>>% cpo(failmode), switch(failmode, nosplit = "column names F1 duplicated", split = "duplicate column names F2"))
+      expect_error(cpo.df3l %>>% cpo(failmode), switch(failmode, nosplit = "column names T1 duplicated", split = "duplicate column names F1"))
+
+    }
+  }
 })
 
 test_that("new task is actually changed, has the expected data", {
   # all datasplits
 
-})
+  for (type in c("o", "f")) {
+    if (type == "f") next  # TODO
+    for (split in c("no", "task", "target", "most", "all")) {
 
-test_that("training / predicting with different data types works as expected", {
-  # target column is removed on prediction
+      chgfct = function(data, ...) {
+        control = 0
+        val = (("control" %in% names(list(...))) + 1) * 100
+        if (val == 200 && split == "task") {
+          split = "no"
+        }
+        switch(split,
+          task = {
+            tdata = getTaskData(data)
+            numcol = which(sapply(tdata, is.numeric))[1]
+            tdata[1, numcol] = val
+            changeData(data, tdata)
+          },
+          no = {
+            numcol = which(sapply(data, is.numeric))[1]
+            data[1, numcol] = val
+            data
+          },
+          target = {
+            numcol = which(sapply(data, is.numeric))[1]
+            data[1, numcol] = val
+            data
+          },
+          {
+            data$numeric[1, 1] = val
+            data
+          })
+      }
 
+      cpo = cpogen("changetest", type, pss(), chgfct, chgfct, split)
+
+      exp.df1.t = cpo.df1
+      exp.df1.r = cpo.df1
+      exp.df1.t[1, 1] = 100
+      exp.df1.r[1, 1] = 200
+
+      val = cpo.df1 %>>% cpo()
+      val2 = cpo.df1 %>>% retrafo(val)
+      retrafo(val) = NULL
+      expect_equal(val, exp.df1.t)
+      expect_equal(val2, exp.df1.r)
+
+      val = cpo.df1c %>>% cpo()
+      val2 = cpo.df1c %>>% retrafo(val)
+      expect_equal(getTaskData(val), exp.df1.t)
+      expect_equal(getTaskData(val2), exp.df1.r)
+    }
+  }
 })
 
 test_that("cpo framework detects bad data", {
   # in splits: one of the returned things is not a df
   # missing / too many names in split
   # row number mismatch
+split = "task"
+  for (type in c("o", "f")) {
+    if (type == "f") next  # TODO
+
+    for (split in c("no", "task", "target")) {
+
+      chgfct = function(data, pred, ...) {
+        control = 0
+        ispredicting = "control" %in% names(list(...))
+        if (split == "task" && !ispredicting) {
+          task = data
+          data = getTaskData(task)
+        }
+        if (pred == ispredicting) {
+          data = data[-1, ]
+        }
+        if (split == "task" && !ispredicting) {
+          data = changeData(task, data)
+        }
+        data
+      }
+      cpo = cpogen("numrowtest", type, pss(pred = FALSE: logical), chgfct, chgfct, split)
+
+      expect_error(cpo.df1 %>>% cpo(), "must not change number of rows")
+      expect_error(cpo.df1c %>>% cpo(), "must not change number of rows")
+
+      rr = retrafo(cpo.df1 %>>% cpo(TRUE))
+      expect_error(cpo.df1 %>>% rr, "must not change number of rows")
+
+      rr = retrafo(cpo.df1c %>>% cpo(TRUE))
+      expect_error(cpo.df1 %>>% rr, "must not change number of rows")
+      expect_error(cpo.df1c %>>% rr, "must not change number of rows")
+    }
+
+    for (split in c("most", "all")) {
+      # 'one of the returned things is not a df'
+      chgfct = function(data, pred, ...) {
+        control = 0
+        ispredicting = "control" %in% names(list(...))
+        if (pred == ispredicting) {
+          data$numeric = data$numeric[[1]]
+        }
+        data
+      }
+      cpo = cpogen("baddatatest", type, pss(pred = FALSE: logical), chgfct, chgfct, split)
+
+      expect_error(cpo.df1 %>>% cpo(), "numeric is not a data.frame")
+      expect_error(cpo.df1c %>>% cpo(), "numeric is not a data.frame")
+
+      rr = retrafo(cpo.df1 %>>% cpo(TRUE))
+      expect_error(cpo.df1 %>>% rr, "numeric is not a data.frame")
+
+      rr = retrafo(cpo.df1c %>>% cpo(TRUE))
+      expect_error(cpo.df1 %>>% rr, "numeric is not a data.frame")
+      expect_error(cpo.df1c %>>% rr, "numeric is not a data.frame")
+
+      chgfct = function(data, pred, ...) {
+        control = 0
+        ispredicting = "control" %in% names(list(...))
+        if (pred == ispredicting) {
+          data$numeric = data$numeric[-1, ]
+        }
+        data
+      }
+      cpo = cpogen("rowchangetest", type, pss(pred = FALSE: logical), chgfct, chgfct, split)
+
+      expect_error(cpo.df1 %>>% cpo(), "rows of numeric data.*must not change row number")
+      expect_error(cpo.df1c %>>% cpo(), "rows of numeric data.*must not change row number")
+
+      rr = retrafo(cpo.df1 %>>% cpo(TRUE))
+      expect_error(cpo.df1 %>>% rr, "rows of numeric data.*must not change row number")
+
+      rr = retrafo(cpo.df1c %>>% cpo(TRUE))
+      expect_error(cpo.df1 %>>% rr, "rows of numeric data.*must not change row number")
+      expect_error(cpo.df1c %>>% rr, "rows of numeric data.*must not change row number")
+
+
+      chgfct = function(data, pred, ...) {
+        control = 0
+        ispredicting = "control" %in% names(list(...))
+        if (pred == ispredicting || ispredicting) {
+          data$ordered = data$numeric
+          names(data$ordered) = paste(names(data$ordered), "x", sep = ".")
+        }
+        data
+      }
+      cpo = cpogen("badsplittest", type, pss(pred = FALSE: logical), chgfct, chgfct, split)
+
+      if (split == "most") {
+        expect_error(cpo.df1 %>>% cpo(), "'numeric','factor','other'")
+        expect_error(cpo.df1c %>>% cpo(), "'numeric','factor','other'")
+
+        rr = retrafo(cpo.df1 %>>% cpo(TRUE))
+        expect_error(cpo.df1 %>>% rr, "'numeric','factor','other'")
+
+        rr = retrafo(cpo.df1c %>>% cpo(TRUE))
+        expect_error(cpo.df1 %>>% rr, "'numeric','factor','other'")
+        expect_error(cpo.df1c %>>% rr, "'numeric','factor','other'")
+      } else {
+        expected = cpo.df1[c(1, 2, 3, 4, 5, 1, 2, 3)]
+        names(expected)[6:8] = paste(names(expected)[1:3], "x", sep = ".")
+        rr = cpo.df1 %>>% cpo()
+        rt = retrafo(rr)
+        retrafo(rr) = NULL
+        expect_equal(rr, expected)
+        expect_equal(cpo.df1 %>>% rt, expected)
+
+        rr = cpo.df1 %>>% cpo(TRUE)
+        rt = retrafo(rr)
+        retrafo(rr) = NULL
+        expect_equal(rr, cpo.df1)
+        expect_error(cpo.df1 %>>% rt, "column name mismatch")
+
+        rr = cpo.df1c %>>% cpo()
+        expect_equal(getTaskData(rr), expected)
+        rt = retrafo(rr)
+        expect_equal(cpo.df1 %>>% rt, expected)
+        expect_equal(getTaskData(cpo.df1c %>>% rt), expected)
+      }
+    }
+  }
+})
+
+test_that("format change between trafo and retrafo are detected", {
+
+  for (type in c("o", "f")) {
+    if (type == "f") next  # TODO
+
+    for (split in c("no", "task", "target", "most", "all")) {
+
+      cpo = cpogen("numrowtest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) data, split)
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+
+      expect_equal(cpo.df1 %>>% rt, cpo.df1)
+
+      expect_error(cpo.df1[-1] %>>% rt, "column name mismatch")
+
+      xmp = cpo.df1
+      xmp[[1]] = as.factor(xmp[[1]])
+      expect_error(xmp %>>% rt, "Types? of column N1 mismatches")
+
+      expect_error(cpo.df1c %>>% rt, "column name mismatch")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+
+      expect_equal(cpo.df1 %>>% rt, cpo.df1)
+
+      expect_error(cpo.df1[-1] %>>% rt, "column name mismatch")
+
+      xmp = cpo.df1
+      xmp[[1]] = as.factor(xmp[[1]])
+      expect_error(xmp %>>% rt, "Type of column N1 mismatches")
+
+      expect_class(cpo.df1c %>>% rt, "Task")
+
+      xmp = cpo.df1
+      xmp[[5]] = as.ordered(xmp[[5]])
+      if (split == "all") {
+        expect_error(xmp %>>% rt, "Type of column F2 mismatches")
+      } else {
+        expect_class(xmp %>>% rt, "data.frame")
+      }
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1c %>>% rt, "column name mismatch")
+      expect_class(cpo.df1cc %>>% rt, "Task")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_class(cpo.df1 %>>% rt, "data.frame")
+      expect_error(cpo.df1cc %>>% rt, "column name mismatch")
+
+    }
+
+
+    for (split in c("no", "task", "target")) {
+
+      cpo = cpogen("numrowtest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data[-1] }, split)
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1cc %>>% rt, "column name mismatch between training and test data")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
+
+      cpo = cpogen("numrowtest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data[[1]] = as.factor(data[[1]]) ; data }, split)
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "Type of column N1 mismatches")
+      expect_error(cpo.df1cc %>>% rt, "Type of column N1 mismatches")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "Type of column N1 mismatches")
+      expect_error(cpo.df1c %>>% rt, "Type of column N1 mismatches")
+    }
+
+    for (split in c("most", "all")) {
+
+      cpo = cpogen("numrowtest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric = data$numeric[-1] ; data }, split)
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1cc %>>% rt, "column name mismatch between training and test data")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
+
+      cpo = cpogen("numrowtest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric[[1]] = as.factor(data$numeric[[1]]) ; data }, split)
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "Type of column N1 mismatches")
+      expect_error(cpo.df1cc %>>% rt, "Type of column N1 mismatches")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "Type of column N1 mismatches")
+      expect_error(cpo.df1c %>>% rt, "Type of column N1 mismatches")
+
+      cpo = cpogen("numrowtest", type, pss(), properties.adding = "ordered",
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data$factor[[1]] = as.ordered(data$factor[[1]]) ; data }, split)
+
+      if (split == "all") {
+        rt = retrafo(cpo.df1 %>>% cpo())
+        expect_error(cpo.df1 %>>% rt, "Type of column F1 mismatches")
+        expect_error(cpo.df1cc %>>% rt, "Type of column F1 mismatches")
+
+        rt = retrafo(cpo.df1c %>>% cpo())
+        expect_error(cpo.df1 %>>% rt, "Type of column F2 mismatches")
+        expect_error(cpo.df1c %>>% rt, "Type of column F2 mismatches")
+      } else {
+        rt = retrafo(cpo.df1 %>>% cpo())
+        expect_class(cpo.df1 %>>% rt, "data.frame")
+        expect_class(cpo.df1cc %>>% rt, "Task")
+
+        rt = retrafo(cpo.df1c %>>% cpo())
+        expect_class(cpo.df1 %>>% rt, "data.frame")
+        expect_class(cpo.df1c %>>% rt, "Task")
+      }
+
+
+    }
+  }
 })
 
 test_that("attaching cpo with mismatching properties gives error", {
@@ -307,7 +668,3 @@ test_that("returning properties that are not allowed is detected", {
 
 })
 
-
-
-
-# TEST: one target is missing (even with DFs)

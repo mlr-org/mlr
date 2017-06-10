@@ -123,8 +123,8 @@ handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, 
     recombinetask(olddata, outdata, datasplit, name)
   }
 
-  present.properties = getDataProperties(recombined)
-  assertSubset(present.properties, allowed.properties, .var.name = sprintf("%s retrafo return value", name))
+  present.properties = getDataProperties(recombined, names(targetcols))
+  assertSubset(present.properties, allowed.properties, .var.name = sprintf("properties of %s retrafo return value", name))
 
   # check the shape of outdata is as expected
   shapeinfo.output$target = NULL
@@ -133,6 +133,8 @@ handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, 
     for (n in names(outdata)) {
       assertShapeConform(outdata[[n]], shapeinfo.output[[n]], datasplit == "all", name)
     }
+  } else {
+    assertShapeConform(outdata, shapeinfo.output, FALSE, name)
   }
 
   recombined
@@ -144,9 +146,9 @@ handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, 
 
 # calculate the properties of the data (only feature types & missings)
 # data can be a task or data.frame
-getDataProperties = function(data) {
+getDataProperties = function(data, targetnames) {
   if (is.data.frame(data)) {
-    td = makeTaskDescInternal(NULL, NULL, data, character(0), NULL, NULL)
+    td = makeTaskDescInternal(NULL, NULL, data, coalesce(targetnames, character(0)), NULL, NULL)
   } else {
     assertClass(data, "Task")
     td = getTaskDesc(data)
@@ -209,8 +211,12 @@ compositeProperties = function(properties.1, properties.adding.1, properties.nee
 }
 
 # give error when shape is different than dictated by shapeinfo.
+# wasresult: whether we are checking the result of retrafo
 assertShapeConform = function(df, shapeinfo, checkordered, name) {
-  assertSetEqual(names(df), shapeinfo$colnames)
+  if (!isTRUE(checkSetEqual(names(df), shapeinfo$colnames))) {
+    stopf("Error in CPO %s: column name mismatch between training and test data.\nWas %s during training, is %s now.",
+          name, collapse(shapeinfo$colnames, sep = ", "), collapse(names(df), sep = ", "))
+  }
   indata = df[shapeinfo$colnames]
 
   if (checkordered) {
@@ -228,8 +234,10 @@ assertShapeConform = function(df, shapeinfo, checkordered, name) {
   for (t in typesmatch) {
     typemismatch = (newcoltypes %in% t) != (shapeinfo$coltypes %in% t)
     if (any(typemismatch)) {
-      stopf("Error in CPO %s: Types of column%s %s mismatch between training and test data.", name,
-        ifelse(sum(typemismatch) > 1, "s", ""), collapse(names(indata)[typemismatch], sep = ", "))
+      plurs = ifelse(sum(typemismatch) > 1, "s", "")
+      singes = ifelse(sum(typemismatch) > 1, "", "es")
+      stopf("Error in CPO %s: Type%s of column%s %s mismatch%s between training and test data.", name,
+        plurs, plurs, collapse(names(indata)[typemismatch], sep = ", "), singes)
     }
   }
 }
@@ -389,9 +397,11 @@ recombinetask = function(task, newdata, datasplit = c("target", "most", "all", "
   datasplit = match.arg(datasplit)
 
   assertTargetsEqual = function(old.targets, new.targets) {
-    assertSetEqual(names(old.targets), names(new.targets))
+    if (!isTRUE(checkSetEqual(names(old.targets), names(new.targets)))) {
+      stopf("CPO %s must not change target column names.", name)
+    }
     for (n in names(old.targets)) {
-      if (any(old.targets[[n]] != new.targets[[n]])) {
+      if (!identical(old.targets[[n]], new.targets[[n]])) {
         stopf("CPO %s must not change target, but changed %s.", name, n)
       }
     }
@@ -404,11 +414,21 @@ recombinetask = function(task, newdata, datasplit = c("target", "most", "all", "
         stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame.", name)
       }
       assertClass(newdata, "data.frame")
+      tnames = getTaskTargetNames(task)
+      missingt = tnames[!tnames %in% names(newdata)]
+      if (length(missingt)) {
+        stopf("CPO %s cpo.trafo gave bad result\ndata.frame did not contain target column%s %s.",
+              name, ifelse(length(missingt) > 1, "s", ""), missingt)
+      }
       newdata = changeData(task, newdata)
     }
     assertClass(newdata, "Task")
     #check type didn't change
     assert(getTaskType(task) == getTaskType(newdata))
+
+    if (getTaskDesc(task)$size != getTaskDesc(newdata)$size) {
+      stopf("CPO %s must not change number of rows", name)
+    }
 
     # check target didn't change
     assertTargetsEqual(getTaskData(task, features = character(0)),
@@ -439,6 +459,10 @@ recombinetask = function(task, newdata, datasplit = c("target", "most", "all", "
     if (identical(datanames, getTaskFeatureNames(task))) {
       # names didn't change, so we preserve column order
       newdata = newdata[names(task$env$data)]
+    }
+    dubs = duplicated(names(newdata))
+    if (any(dubs)) {
+      stopf("CPO %s gave bad result\ncolumn names %s duplicated (possibly with target)", name, collapse(unique(names(newdata)[dubs], sep = ", ")))
     }
 
   } else {

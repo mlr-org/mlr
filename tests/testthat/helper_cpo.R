@@ -220,6 +220,7 @@ generateCPO = function(type, split = c("no", "target", "most", "all", "task")) {
         expect_class(target, "character")
         expect_equal(getTaskTargetNames(data), target)
         expect_equal(getTaskDesc(data)$size, numrows)
+        expect_equal(sum(getTaskDesc(data)$n.feat), numnumeric + numfactor + numother + max(numordered, 0))
       } else if (isdf) {
         expect_class(data, "data.frame")
         if (targetisdf) {
@@ -231,6 +232,7 @@ generateCPO = function(type, split = c("no", "target", "most", "all", "task")) {
           expect_subset(target, names(data))
         }
         expect_equal(nrow(data), numrows)
+        expect_equal(ncol(data), numtarget * (!targetisdf) + numnumeric + numfactor + numother + max(numordered, 0))
       } else {
         expect_class(target, "data.frame")
         expect_equal(nrow(target), numrows)
@@ -255,6 +257,7 @@ generateCPO = function(type, split = c("no", "target", "most", "all", "task")) {
         expect_class(data, "data.frame")
         expect_true(length(intersect(control, names(data))) == 0)
         expect_equal(data[[1]][1], nrow(data))
+        expect_equal(ncol(data), numnumeric + numfactor + numother + max(numordered, 0))
       } else {
         expectnames = c("numeric", "factor", "other", if (numordered >= 0) "ordered")
         expect_set_equal(expectnames, names(data))
@@ -282,7 +285,7 @@ cpo.df.factorial3 = data.frame(F3 = factor(c("b", "b", "a")))
 
 cpo.df.logical = data.frame(T1 = c(TRUE, TRUE, FALSE), T2 = c(FALSE, TRUE, FALSE))
 cpo.df.logical2 = data.frame(T1 = c(TRUE, TRUE, TRUE), T2 = c(FALSE, FALSE, FALSE))
-
+cpo.df.logical3 = data.frame(T3 = c(TRUE, TRUE, TRUE), T4 = c(FALSE, FALSE, FALSE))
 
 cpo.df.ordered = data.frame(O1 = factor(c("x", "x", "y"), ordered = TRUE),
   O2 = factor(c("y", "y", "z"), ordered = TRUE),
@@ -296,3 +299,28 @@ cpo.df.ordered3 = data.frame(O4 = factor(c("x", "y", "x"), ordered = TRUE), O5 =
 cpo.df.other = data.frame(U1 = c("m", "n", "o"), U2 = c("p", "q", "r"), U3 = c("s", "t", "u"), U4 = c("v", "w", "w"), stringsAsFactors = FALSE)
 cpo.df.other2 = data.frame(U1 = c("mx", "nx", "ox"), U2 = c("px", "qx", "rx"), U3 = c("sx", "tx", "ux"), U4 = c("vx", "wx", "wx"), stringsAsFactors = FALSE)
 cpo.df.other3 = data.frame(U5 = c("mx", "nx", "ox"), U6 = c("px", "qx", "rx"), stringsAsFactors = FALSE)
+
+
+cpo.df1 = cbind(cpo.df.numeric, cpo.df.factorial)
+cpo.df2 = cbind(cpo.df.numeric, cpo.df.other, cpo.df.factorial, cpo.df.ordered)
+cpo.df2 = cpo.df2[c(1, 4, 8, 12, 2, 5, 9, 11, 3, 6, 7, 10)]
+
+cpo.df3 = cbind(cpo.df.numeric, cpo.df.logical, cpo.df.factorial)
+cpo.df3 = cpo.df3[, c(1, 4, 6, 2, 3, 5, 7)]
+
+cpo.df4 = cbind(cpo.df.numeric, cpo.df.logical, cpo.df.factorial, cpo.df.ordered)
+cpo.df4 = cpo.df4[c(1, 4, 8, 2, 5, 9, 3, 6, 7, 10)]
+
+cpo.df5 = cbind(cpo.df.numeric, cpo.df.factorial3, cpo.df.factorial, cpo.df.ordered)
+cpo.df5 = cpo.df5[c(1, 4, 8, 2, 5, 9, 3, 6, 7)]
+
+cpo.df1c = makeClassifTask(data = cpo.df1, target = "F1")
+cpo.df1cc = makeClusterTask(data = cpo.df1)
+cpo.df3l = makeMultilabelTask(data = cpo.df3, target = c("T1", "T2"))
+
+cpo.df4l = makeMultilabelTask(data = cpo.df4, target = c("T1", "T2"))
+
+cpo.df5c = makeClassifTask(data = cpo.df5, target = "F1")
+cpo.df5cc = makeClusterTask(data = cpo.df5)
+
+cpo.df4l2 = makeMultilabelTask(data = cbind(cpo.df4, cpo.df.logical3), target = c("T1", "T2", "T3", "T4"))
