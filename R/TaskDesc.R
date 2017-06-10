@@ -44,10 +44,6 @@
 #' @rdname TaskDesc
 NULL
 
-makeTaskDesc = function(task, id, ...) {
-  UseMethod("makeTaskDesc")
-}
-
 makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   # get classes of feature cols
   cl = vcapply(data, function(x) class(x)[1L])
