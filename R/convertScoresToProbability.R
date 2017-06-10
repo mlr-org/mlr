@@ -17,7 +17,7 @@
 #' prob = convertingScoresToProbability(dv, parainit = c(0, 1))
 #' plot(1:length(prob), prob, ylim = c(0, 1))
 #'
-convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "trust region"){
+convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "glm"){
 
   assertChoice(optim.method, c("trust region", "BFGS", "glm", "Newton"))
   f = anomaly.score
@@ -54,13 +54,12 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
         c(gA(p), gB(p))
       }
 
-      # trust region optimization
       optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS",
         control = list(report.level = 0, maxit = max.iter))
 
       p = optim$solution
 
-      # check if pnew is converging
+      # check if p is converging
       diff = abs(p - pold)
       if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
         list$p = p
