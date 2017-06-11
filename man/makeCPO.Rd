@@ -8,7 +8,9 @@ makeCPO(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   .datasplit = c("target", "most", "all", "no", "task", "factor",
   "onlyfactor", "ordered", "numeric"), .properties = c("numerics", "factors",
   "ordered", "missings"), .properties.adding = character(0),
-  .properties.needed = character(0), cpo.trafo, cpo.retrafo)
+  .properties.needed = character(0), .properties.target = c("cluster",
+  "classif", "multilabel", "regr", "surv", "oneclass", "twoclass", "multiclass",
+  "lcens", "rcens", "icens"), cpo.trafo, cpo.retrafo)
 }
 \arguments{
 \item{.cpo.name}{[\code{character(1)}]\cr
@@ -114,6 +116,7 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
+  \code{\link{makeCPOTargetOp}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
   \code{\link{setHyperPars}}

@@ -300,7 +300,7 @@ callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo) {
   # the properties of the output should only be the input properties + the ones we're adding
   allowed.properties = union(tin$properties, cpo$properties$properties.needed)
   tout = handleTrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties, cpo$properties$properties.adding,
-    cpo$bound == "targetbound", cpo$convertto, cpo$cpo$name)
+    cpo$bound == "targetbound", cpo$convertto, cpo$name)
 
   retrafo = makeS3Obj(c("CPOS3RetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
     cpo = setCPOId(cpo, NULL),
@@ -522,7 +522,7 @@ getBareHyperPars = function(cpo) {
 
 #' @export
 getCPOProperties.CPOS3 = function(cpo) {
-  properties = cpo$properties
+  cpo$properties
 }
 
 

@@ -33,7 +33,7 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
-  \code{\link{makeCPO}},
+  \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
   \code{\link{setHyperPars}}

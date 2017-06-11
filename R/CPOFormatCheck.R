@@ -98,7 +98,7 @@ handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.prop
       censstyle = intersect(allowed.properties, c("lcens", "rcens", "icens"))
       assert(length(censstyle) == 1)
     }
-    recombined = recombinetask(olddata, outdata, datasplit, TRUE, targetbound, convertto, censstyle, name)
+    recombined = recombinetask(olddata, outdata, datasplit, TRUE, convertto, censstyle, name)
   } else {
     recombined = if (is.data.frame(olddata)) {
       recombinedf(olddata, outdata, datasplit, character(0), name)
@@ -472,9 +472,9 @@ splitdf = function(df, datasplit = c("target", "most", "all", "no", "task")) {
 recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
   allnames = names(olddata)
   needednames = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
-  if (!isTRUE(checkSetEqual(allnames, needednames))) {
+  if (!isTRUE(checkSetEqual(names(newdata), needednames))) {
     stopf('CPO %s gave bad return. The returned value must be a list with names {"%s"}.',
-      collapse(needednames, sep = '", "'))
+      name, collapse(needednames, sep = '", "'))
   }
 
   targetdata = olddata[targetnames]
@@ -516,29 +516,6 @@ recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
   newdata = cbind(do.call(cbind, unname(newdata)), targetdata)
   assertSetEqual(names(newdata), namesorder)
   newdata[namesorder]
-}
-
-
-recombineTargetbound = function(task, newdata, newtasktype = cpo.tasktypes,
-                                datasplit = c("no", "task", "target", "most", "all"), name) {
-  datasplit = match.arg(datasplit)
-
-  if (is.data.frame(task)) {
-    task = makeClusterTask(task)
-  }
-  if (datasplit == "no") {
-    checkDFBasics(task, newdata, TRUE, name)
-    if (newtasktype == getTaskType(task)) {
-      # not changing task type
-      newdata = changeData(task, newdata)
-    } else {
-      newdata = constructTask(newdata, getTaskTargetNames(task), newtasktype, getTaskId(task))
-    }
-  }
-  checkTaskBasics(task, newdata)
-  checkColumnsEqual(getTaskData(task, target.extra = TRUE)$data,
-    getTaskData(newdata, target.extra = TRUE)$data, "non-target columns")
-  newdata
 }
 
 # this checks that the result has the proper type, that target and type didn't change
@@ -597,7 +574,7 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
 
   if (targetbound) {
     checkColumnsEqual(getTaskData(task, target.extra = TRUE)$data,
-      getTaskData(newdata, target.extra = TRUE)$data, "non-target columns")
+      getTaskData(newdata, target.extra = TRUE)$data, "non-target column", name)
     # everything may change except size, n.feat and missings
     allowed.td.changes = setdiff(names(oldtd), c("n.feat", "has.missings", "size"))
   } else {
@@ -606,7 +583,7 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
 
     # check target didn't change
     checkColumnsEqual(getTaskData(task, features = character(0)),
-      getTaskData(newdata, features = character(0)), "target columns")
+      getTaskData(newdata, features = character(0)), "target column", name)
 
     assertSetEqual(names(old.td), names(new.td))
     allowed.td.changes = c("id", "n.feat", "has.missings")
@@ -636,14 +613,15 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
   if (nrow(df) != nrow(newdata)) {
     stopf("CPO %s must not change number of rows.", name)
   }
-  dubs = duplicated(c(names(newdata), targetcols))
+  fullnames = c(names(newdata), targetcols)
+  dubs = duplicated(fullnames)
   if (any(dubs)) {
-    stopf("CPO %s gave bad result\ncolumn names %s duplicated (possibly with target)", name, collapse(unique(names(newdata)[dubs], sep = ", ")))
+    stopf("CPO %s gave bad result\ncolumn names %s duplicated (possibly with target)", name, collapse(unique(fullnames[dubs], sep = ", ")))
   }
 
   datanames = names(newdata)
   newdata = cbind(newdata, df[targetcols])
-  if (identical(datanames, setdiff(names(df), names(targetcols)))) {
+  if (identical(datanames, setdiff(names(df), targetcols))) {
     # names didn't change, so we preserve column order
     newdata = newdata[names(df)]
   }
@@ -652,13 +630,13 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
 
 # relevant should be 'targets' or 'non-target features'
 # old.relevants and new.relevants are the relevant columns.
-checkColumnsEqual = function(old.relevants, new.relevants, relevant.name) {
+checkColumnsEqual = function(old.relevants, new.relevants, relevant.name, name) {
   if (!isTRUE(checkSetEqual(names(old.relevants), names(new.relevants)))) {
-    stopf("CPO %s must not change %s column names.", name, relevant)
+    stopf("CPO %s must not change %s names.", name, relevant.name)
   }
   for (n in names(old.relevants)) {
     if (!identical(old.relevants[[n]], new.relevants[[n]])) {
-      stopf("CPO %s must not change %s, but changed %s.", name, relevant.name, n)
+      stopf("CPO %s must not change %ss, but changed %s.", name, relevant.name, n)
     }
   }
 }

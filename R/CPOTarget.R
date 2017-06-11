@@ -32,7 +32,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   if (length(possible.properties[[.type]])) {
     assertSubset(.properties, possible.properties[[.type]])
     if (.type.out != .type && length(setdiff(.properties, .properties.adding))) {
-      stopf('For conversion away from %s, .properties.adding must equal .properties.', .type)
+      stopf("For conversion away from %s, .properties.adding must equal .properties.", .type)
     }
   } else if (length(.properties)) {
     stopf("CPO handling type %s must have empty properties.", .type)

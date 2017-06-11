@@ -244,6 +244,7 @@ test_that("changing some columns leaves the others in order", {
 })
 
 test_that("changing the target gives an error", {
+
   for (type in c("o", "f")) {
     for (split in c("no", "task")) {
 
@@ -301,8 +302,8 @@ test_that("changing the target gives an error", {
         expect_error(cpo.df1c %>>% cpo(failmode, "yes"), "must not change target column names")
         expect_error(cpo.df3l %>>% cpo(failmode, "yes"), "must not change target column names")
       }
-      expect_error(cpo.df1c %>>% cpo(failmode, "no"), "must not change target, but changed F1")
-      expect_error(cpo.df3l %>>% cpo(failmode, "no"), "must not change target, but changed T1")
+      expect_error(cpo.df1c %>>% cpo(failmode, "no"), "must not change target columns, but changed F1")
+      expect_error(cpo.df3l %>>% cpo(failmode, "no"), "must not change target columns, but changed T1")
 
       if (split == "no") {
         expect_error(cpo.df3l %>>% cpo(failmode, "remove"), "did not contain target column T1")
@@ -315,6 +316,7 @@ test_that("changing the target gives an error", {
 
 test_that("introducing duplicate names gives an error", {
   # datasplit: target, most, all
+
   for (type in c("o", "f")) {
     for (split in c("target", "most", "all")) {
 
@@ -334,7 +336,6 @@ test_that("introducing duplicate names gives an error", {
       expect_class(cpo.df1 %>>% cpo("none"), "data.frame")
 
       failmode = switch(split, target = "nosplit", "split")
-
       expect_error(cpo.df1c %>>% cpo(failmode), switch(failmode, nosplit = "column names F1 duplicated", split = "duplicate column names F2"))
       expect_error(cpo.df3l %>>% cpo(failmode), switch(failmode, nosplit = "column names T1 duplicated", split = "duplicate column names F1"))
 
@@ -489,15 +490,15 @@ split = "task"
       cpo = cpogen("badsplittest", type, pss(pred = FALSE: logical), chgfct, chgfct, split)
 
       if (split == "most") {
-        expect_error(cpo.df1 %>>% cpo(), "'numeric','factor','other'")
-        expect_error(cpo.df1c %>>% cpo(), "'numeric','factor','other'")
+        expect_error(cpo.df1 %>>% cpo(), '"numeric", "factor", "other"')
+        expect_error(cpo.df1c %>>% cpo(), '"numeric", "factor", "other"')
 
         rr = retrafo(cpo.df1 %>>% cpo(TRUE))
-        expect_error(cpo.df1 %>>% rr, "'numeric','factor','other'")
+        expect_error(cpo.df1 %>>% rr, '"numeric", "factor", "other"')
 
         rr = retrafo(cpo.df1c %>>% cpo(TRUE))
-        expect_error(cpo.df1 %>>% rr, "'numeric','factor','other'")
-        expect_error(cpo.df1c %>>% rr, "'numeric','factor','other'")
+        expect_error(cpo.df1 %>>% rr, '"numeric", "factor", "other"')
+        expect_error(cpo.df1c %>>% rr, '"numeric", "factor", "other"')
       } else {
         expected = cpo.df1[c(1, 2, 3, 4, 5, 1, 2, 3)]
         names(expected)[6:8] = paste(names(expected)[1:3], "x", sep = ".")
@@ -655,7 +656,7 @@ test_that("format change between trafo and retrafo are detected", {
 test_that("attaching cpo with mismatching properties gives error", {
   # check along multiple levels
   # even after detaching from learner
-
+type = "o"
   expectCpo = function(cpo) {
     if ("CPO" %in% class(cpo)) {
       retr = cpo.df1 %>>% cpo
@@ -681,17 +682,25 @@ test_that("attaching cpo with mismatching properties gives error", {
     t
   }
 
+  getRestrictedCPOProperties = function(x) {
+    lapply(getCPOProperties(x), function(y)
+      intersect(y, cpo.dataproperties))
+  }
+  getRestrictedLearnerProperties = function(x) {
+    intersect(getLearnerProperties(x), cpo.dataproperties)
+  }
+
   for (type in c("o", "f")) {
 
     propercpo = function(properties, adding = character(0), needed = character(0)) {
       cpogen("propertytest", type, pss(), cponoop, cponoop, "task", properties, adding, needed)()
     }
 
-    expect_set_equal(getCPOProperties(propercpo(c("numerics", "factors")))$properties, c("numerics", "factors"))
+    expect_set_equal(getRestrictedCPOProperties(propercpo(c("numerics", "factors")))$properties, c("numerics", "factors"))
 
-    expect_set_equal(getCPOProperties(propercpo(c("numerics", "factors")) %>>% propercpo(c("factors", "ordered")))$properties, "factors")
+    expect_set_equal(getRestrictedCPOProperties(propercpo(c("numerics", "factors")) %>>% propercpo(c("factors", "ordered")))$properties, "factors")
 
-    expect_set_equal(getCPOProperties(propercpo(c("numerics", "factors"), "numerics") %>>%
+    expect_set_equal(getRestrictedCPOProperties(propercpo(c("numerics", "factors"), "numerics") %>>%
                                       propercpo(c("factors", "ordered")))$properties, c("factors", "numerics"))
 
     expect_error(propercpo("numerics", "factors"), "Must be a subset")
@@ -723,7 +732,7 @@ test_that("attaching cpo with mismatching properties gives error", {
 
     # cpo1 %>>% lrn, cpo1 needs properties that lrn doesn't have
     lrn = needsordered %>>% properlrn(c("numerics", "factors", "ordered"))
-    expect_set_equal(getLearnerProperties(lrn), c("numerics", "factors", "twoclass"))
+    expect_set_equal(getRestrictedLearnerProperties(lrn), c("numerics", "factors"))
     expectCpo(lrn)
 
     expect_error(needsmissing %>>% hasordered,
@@ -732,7 +741,7 @@ test_that("attaching cpo with mismatching properties gives error", {
     # cpo1 %>>% cpo2 %>>% lrn, cpo1 needs properties that lrn doesn't have
     lrn = (needsordered %>>% hasordered) %>>%
       properlrn(c("numerics", "factors", "ordered"))
-    expect_set_equal(getLearnerProperties(lrn), c("numerics", "factors", "twoclass"))
+    expect_set_equal(getRestrictedLearnerProperties(lrn), c("numerics", "factors"))
     expectCpo(lrn)
 
     expect_error((needsmissing %>>% hasordered) %>>% hasordered,
@@ -741,7 +750,7 @@ test_that("attaching cpo with mismatching properties gives error", {
     lrn = needsordered %>>%
       (hasordered %>>%
       properlrn(c("numerics", "factors", "ordered")))
-    expect_set_equal(getLearnerProperties(lrn), c("numerics", "factors", "twoclass"))
+    expect_set_equal(getRestrictedLearnerProperties(lrn), c("numerics", "factors"))
     expectCpo(lrn)
 
     expect_error(needsmissing %>>% (hasordered %>>% hasordered),
@@ -755,12 +764,12 @@ test_that("attaching cpo with mismatching properties gives error", {
 
     # cpo1 %>>% cpo2 %>>% lrn, cpo1 needs properties that lrn doesn't have, but cpo2 adds
     lrn = (needsordered %>>% addsordered) %>>% properlrn(c("numerics", "factors"))
-    expect_set_equal(getLearnerProperties(lrn), c("numerics", "factors", "twoclass"))
+    expect_set_equal(getRestrictedLearnerProperties(lrn), c("numerics", "factors"))
     expectCpo(lrn)
 
     lrn = propercpo(c("numerics", "factors", "ordered"), needed = "ordered") %>>%
       (addsordered %>>% properlrn(c("numerics", "factors")))
-    expect_set_equal(getLearnerProperties(lrn), c("numerics", "factors", "ordered", "twoclass"))
+    expect_set_equal(getRestrictedLearnerProperties(lrn), c("numerics", "factors", "ordered"))
     expectCpo(lrn)
 
     # cpo1 %>>% cpo2 %>>% cpo3 %>>% cpo4, cpo1 needs properties that cpo4 doesn't have, but cpo2  adds
