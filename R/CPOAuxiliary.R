@@ -659,7 +659,7 @@ getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "bot
 }
 
 #' @export
-getHyperPars.NULLCPO = function(x) {
+getHyperPars.NULLCPO = function(learner, for.fun = c("train", "predict", "both")) {
   setNames(list(), character(0))
 }
 

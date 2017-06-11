@@ -529,13 +529,13 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
 
   if (is.data.frame(task)) {
     # only if 'targetbound'
-    task = makeClusterTask(id = "CPO-constructed", id = task)
+    task = makeClusterTask(id = "CPO-constructed", data = task)
   }
 
   if (datasplit %in% c("target", "most", "all")) {
     if (targetbound) {
       # return is just 'target' in a df.
-      if (!is.df(newdata)) {
+      if (!is.data.frame(newdata)) {
         stopf("CPO %s gave bad result\nmust return a data.frame containing the target.",
           name)
       }
@@ -576,7 +576,7 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
     checkColumnsEqual(getTaskData(task, target.extra = TRUE)$data,
       getTaskData(newdata, target.extra = TRUE)$data, "non-target column", name)
     # everything may change except size, n.feat and missings
-    allowed.td.changes = setdiff(names(oldtd), c("n.feat", "has.missings", "size"))
+    allowed.td.changes = setdiff(names(old.td), c("n.feat", "has.missings", "size"))
   } else {
     #check type didn't change
     assert(getTaskType(task) == getTaskType(newdata))
@@ -650,11 +650,11 @@ constructTask = function(oldtask, data, target, type, id, censtype) {
   }
   if (type == "classif" && getTaskType(oldtask) == "classif") {
     assert(length(target) == 1)
-    oldtargets = levels(getTaskData(oldtask, targets.extra = TRUE)$target)
+    oldtargets = levels(getTaskData(oldtask, target.extra = TRUE)$target)
     newtarget = levels(data[[target]])
-    if (setequal(oldtargets, newtargets)) {
-      positive = getTaskDesc(pid.task)$positive
-      if (length(oldtargets) == 2 && oldtargets[1] != newtargets[1]) {
+    if (setequal(oldtargets, newtarget)) {
+      positive = getTaskDesc(oldtask)$positive
+      if (length(oldtargets) == 2 && oldtargets[1] != newtarget[1]) {
         positive = setdiff(oldtargets, positive)
       }
       return(makeClassifTask(id = id, data = data, target = target,
