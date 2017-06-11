@@ -1,4 +1,7 @@
 
+cpo.dataproperties = c("numerics", "factors", "ordered", "missings")
+cpo.tasktypes = c("cluster", "classif", "multilabel", "regr", "surv")  # these are the SUPPORTED tasks
+cpo.targetproperties = c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
 
 ##################################
 ### Externals                  ###
@@ -13,7 +16,12 @@
 prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
 
-  present.properties = getDataProperties(indata)
+  targets = if ("Task" %in% class(indata)) {
+    getTaskTargetNames(indata)
+  } else {
+    character(0)
+  }
+  present.properties = getTaskProperties(indata)
   assertPropertiesOk(present.properties, allowed.properties, "trafo", "in", name)
 
   shapeinfo = makeInputShapeInfo(indata)
@@ -65,7 +73,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 
   assertShapeConform(indata, shapeinfo.input, lldatasplit == "all", name)
 
-  present.properties = getDataProperties(indata)
+  present.properties = getDataProperties(indata, character(0))
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
   if (lldatasplit %in% c("most", "all")) {
@@ -82,16 +90,24 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 #  - check properties are allowed
 #  - get a shape info object
 #  --> return list(outdata, shapeinfo)
-handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, name) {
+handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, targetbound, convertto, name) {
   outdata = rebuildOutdata(outdata, tempdata, datasplit)
   datasplit = getLLDatasplit(datasplit)
-  recombined = if (is.data.frame(olddata)) {
-    recombinedf(olddata, outdata, datasplit, NULL, name)
+  if (targetbound) {
+    if (convertto == "surv") {
+      censstyle = intersect(allowed.properties, c("lcens", "rcens", "icens"))
+      assert(length(censstyle) == 1)
+    }
+    recombined = recombinetask(olddata, outdata, datasplit, TRUE, targetbound, convertto, censstyle, name)
   } else {
-    recombinetask(olddata, outdata, datasplit, name)
+    recombined = if (is.data.frame(olddata)) {
+      recombinedf(olddata, outdata, datasplit, character(0), name)
+    } else {
+      recombinetask(olddata, outdata, datasplit, FALSE, name = name)
+    }
   }
 
-  present.properties = getDataProperties(recombined)
+  present.properties = getTaskProperties(recombined)
   assertPropertiesOk(present.properties, allowed.properties, "trafo", "out", name)
   assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "trafo", "adding", name)
   if (datasplit %in% c("no", "task")) {
@@ -120,20 +136,20 @@ handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.pr
     # target is always split off during retrafo
     datasplit = "target"
   }
-  targetcols = NULL
+  targetcols = character(0)
 
   recombined = if (is.data.frame(olddata)) {
     if (any(shapeinfo.output$target %in% names(olddata))) {
       assert(all(shapeinfo.output$target %in% names(olddata)))  # we also check this in prepareRetrafoInput
-      targetcols = olddata[shapeinfo.output$target]
+      targetcols = shapeinfo.output$target
     }
 
     recombinedf(olddata, outdata, datasplit, targetcols, name)
   } else {
-    recombinetask(olddata, outdata, datasplit, name)
+    recombinetask(olddata, outdata, datasplit, FALSE, name = name)
   }
 
-  present.properties = getDataProperties(recombined, names(targetcols))
+  present.properties = getDataProperties(recombined, targetcols)
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "out", name)
   assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "retrafo", "adding", name)
 
@@ -151,6 +167,7 @@ handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.pr
   recombined
 }
 
+
 ##################################
 ### Shape & Properties         ###
 ##################################
@@ -159,13 +176,41 @@ handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.pr
 # data can be a task or data.frame
 getDataProperties = function(data, targetnames) {
   if (is.data.frame(data)) {
-    td = makeTaskDescInternal(NULL, NULL, data, coalesce(targetnames, character(0)), NULL, NULL)
+    td = makeTaskDescInternal(NULL, NULL, data, targetnames, NULL, NULL)
   } else {
     assertClass(data, "Task")
     td = getTaskDesc(data)
   }
   nf = td$n.feat
   c(names(nf)[nf > 0], if (td$has.missings) "missings")
+}
+
+# calculate the properties of the data, as if it were a task.
+# If data is a data.frame, we give it the property 'cluster'
+# otherwise, we give it the propertye of the task type. If
+# applicable, we also set oneclass, multiclass, etc (any from
+# the variable 'cpo.targetproperties')
+getTaskProperties = function(data) {
+  if ("Task" %in% data) {
+    targetnames = getTaskTargetNames(data)
+  } else {
+    targetnames = character(0)
+  }
+  props = getDataProperties(data, targetnames)
+  if (is.data.frame(data)) {
+    c(props, "cluster")
+  } else {
+    td = getTaskDesc(data)
+    if (td$type == "classif") {
+      others = switch(as.character(length(td$class.levels)),
+        `1` = "oneclass", `2` = "twoclass", "multiclass")
+    } else if (td$type == "surv") {
+      others = td$censoring
+    } else {
+      others = NULL
+    }
+    c(props, td$type, others)
+  }
 }
 
 # calculate the properties, properties.adding and properties.needed for a composed CPO
@@ -424,9 +469,16 @@ splitdf = function(df, datasplit = c("target", "most", "all", "no", "task")) {
 ##################################
 
 # 'LL' == low level
-recombineLL = function(olddata, newdata, allnames, targetdata, name) {
-# need 'allnames' to preserve ordering of target columns within whole DF
-  tnames = names(targetdata)
+recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
+  allnames = names(olddata)
+  needednames = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
+  if (!isTRUE(checkSetEqual(allnames, needednames))) {
+    stopf('CPO %s gave bad return. The returned value must be a list with names {"%s"}.',
+      collapse(needednames, sep = '", "'))
+  }
+
+  targetdata = olddata[targetnames]
+  olddata = dropNamed(olddata, targetnames)
 
   dfs = sapply(newdata, is.data.frame)
   if (any(!dfs)) {
@@ -439,25 +491,25 @@ recombineLL = function(olddata, newdata, allnames, targetdata, name) {
   # this kind of sucks when a CPO just happens to change the names to something thats already there
   # but we also don't want to surprise the user about us unilaterally changing names, so he needs to
   # take care of that.
-  jointnames = c(tnames, unlist(lapply(newdata, names)))
-  if (any(duplicated(jointnames))) {
-    stopf("CPO %s gave bad result\nduplicate column names %s", name, collapse(unique(jointnames[duplicated(jointnames)], sep = ", ")))
+  jointargetnames = c(targetnames, unlist(lapply(newdata, names)))
+  if (any(duplicated(jointargetnames))) {
+    stopf("CPO %s gave bad result\nduplicate column names %s", name, collapse(unique(jointargetnames[duplicated(jointargetnames)], sep = ", ")))
   }
 
   types = vcapply(olddata, function(x) class(x)[1])
 
-  splitnames = splitColsByType(names(newdata), names(olddata), types) # list(numeric = [colnames], factor = [colnames]...
+  splitargetnames = splitColsByType(names(newdata), names(olddata), types) # list(numeric = [colnames], factor = [colnames]...
 
   numrows = nrow(olddata)
   namesorder = allnames
-  for (splittype in names(splitnames)) {
+  for (splittype in names(splitargetnames)) {
     if (numrows != nrow(newdata[[splittype]])) {
       stopf("Number of rows of %s data returned by %s did not match input\nCPO must not change row number.",
         splittype, name)
     }
-    if (!identical(splitnames[[splittype]], names(newdata[[splittype]]))) {
-        namesorder = setdiff(namesorder, c(splitnames[[splittype]]))
-        namesorder = c(namesorder, c(names(newdata[[splittype]])))
+    if (!identical(splitargetnames[[splittype]], names(newdata[[splittype]]))) {
+      namesorder = setdiff(namesorder, c(splitargetnames[[splittype]]))
+      namesorder = c(namesorder, c(names(newdata[[splittype]])))
     }
   }
 
@@ -466,109 +518,114 @@ recombineLL = function(olddata, newdata, allnames, targetdata, name) {
   newdata[namesorder]
 }
 
-# this checks that the result has the proper type, that target and type didn't change
-# (if datasplit == "task"), and that the number of rows is the same.
-# checking that the properties are adhered to must also happen (somewhere else)
-# in retrafo functions, it must also be checked that the number of columns matches the one
-# seen after trafo.
-recombinetask = function(task, newdata, datasplit = c("target", "most", "all", "no", "task"), name) {
+
+recombineTargetbound = function(task, newdata, newtasktype = cpo.tasktypes,
+                                datasplit = c("no", "task", "target", "most", "all"), name) {
   datasplit = match.arg(datasplit)
 
-  assertTargetsEqual = function(old.targets, new.targets) {
-    if (!isTRUE(checkSetEqual(names(old.targets), names(new.targets)))) {
-      stopf("CPO %s must not change target column names.", name)
+  if (is.data.frame(task)) {
+    task = makeClusterTask(task)
+  }
+  if (datasplit == "no") {
+    checkDFBasics(task, newdata, TRUE, name)
+    if (newtasktype == getTaskType(task)) {
+      # not changing task type
+      newdata = changeData(task, newdata)
+    } else {
+      newdata = constructTask(newdata, getTaskTargetNames(task), newtasktype, getTaskId(task))
     }
-    for (n in names(old.targets)) {
-      if (!identical(old.targets[[n]], new.targets[[n]])) {
-        stopf("CPO %s must not change target, but changed %s.", name, n)
+  }
+  checkTaskBasics(task, newdata)
+  checkColumnsEqual(getTaskData(task, target.extra = TRUE)$data,
+    getTaskData(newdata, target.extra = TRUE)$data, "non-target columns")
+  newdata
+}
+
+# this checks that the result has the proper type, that target and type didn't change
+# (if datasplit == "task"), and that the number of rows is the same.
+# targetbound: TRUE or FALSE
+# newtasktype: only if targetbound, type of new task. Give even if no task conversion happens.
+# censtype only needed if newtasktype == surv
+recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "most", "all"),
+                         targetbound, newtasktype, censtype, name) {
+  datasplit = match.arg(datasplit)
+
+  if (is.data.frame(task)) {
+    # only if 'targetbound'
+    task = makeClusterTask(id = "CPO-constructed", id = task)
+  }
+
+  if (datasplit %in% c("target", "most", "all")) {
+    if (targetbound) {
+      # return is just 'target' in a df.
+      if (!is.df(newdata)) {
+        stopf("CPO %s gave bad result\nmust return a data.frame containing the target.",
+          name)
       }
+      olddata = getTaskData(task)
+      oldtnames = getTaskTargetNames(task)
+      newtnames = names(newdata)
+      if (setequal(newtnames, oldtnames)) {
+        olddata[newtnames] = newdata
+        newdata = olddata
+      } else if (length(oldtnames) == 1 && length(newdata) == 1) {
+        # note that this can NOT be combined with
+        # the olddata[newtnames] block above!
+        # also note the double brackets [[ ]].
+        olddata[[oldtnames]] = newdata
+        newdata = olddata
+      } else {
+        newdata = cbind(dropNamed(olddata, oldtnames), newdata)
+      }
+      return(constructTask(task, newdata, newtnames, newtasktype, getTaskId(task), censtype))
+    } else {
+      return(changeData(task, recombinedf(getTaskData(task), newdata, datasplit, getTaskTargetNames(task), name)))
     }
   }
 
-
-  if (datasplit %in% c("no", "task")) {
-    if (datasplit == "no") {
-      if (!is.data.frame(newdata)) {
-        stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame.", name)
-      }
-      assertClass(newdata, "data.frame")
-      tnames = getTaskTargetNames(task)
-      missingt = tnames[!tnames %in% names(newdata)]
-      if (length(missingt)) {
-        stopf("CPO %s cpo.trafo gave bad result\ndata.frame did not contain target column%s %s.",
-              name, ifelse(length(missingt) > 1, "s", ""), missingt)
-      }
+  if (datasplit == "no") {
+    checkDFBasics(task, newdata, targetbound, name)
+    if (!targetbound) {
       newdata = changeData(task, newdata)
+    } else {
+      newdata = constructTask(task, newdata, getTaskTargetNames(task), newtasktype, getTaskId(task), censtype)
     }
-    assertClass(newdata, "Task")
+  }
+  checkTaskBasics(task, newdata, name)
+  old.td = getTaskDesc(task)
+  new.td = getTaskDesc(newdata)
+
+  if (targetbound) {
+    checkColumnsEqual(getTaskData(task, target.extra = TRUE)$data,
+      getTaskData(newdata, target.extra = TRUE)$data, "non-target columns")
+    # everything may change except size, n.feat and missings
+    allowed.td.changes = setdiff(names(oldtd), c("n.feat", "has.missings", "size"))
+  } else {
     #check type didn't change
     assert(getTaskType(task) == getTaskType(newdata))
 
-    if (getTaskDesc(task)$size != getTaskDesc(newdata)$size) {
-      stopf("CPO %s must not change number of rows", name)
-    }
-
     # check target didn't change
-    assertTargetsEqual(getTaskData(task, features = character(0)),
-      getTaskData(newdata, features = character(0)))
+    checkColumnsEqual(getTaskData(task, features = character(0)),
+      getTaskData(newdata, features = character(0)), "target columns")
 
-    # check most of task description didn't change
-    allowed.td.changes = c("id", "n.feat", "has.missings")
-    old.td = getTaskDesc(task)
-    new.td = getTaskDesc(newdata)
     assertSetEqual(names(old.td), names(new.td))
-    for (n in names(old.td)) {  # implicitly checks row number
-      if (!n %in% allowed.td.changes && !identical(old.td[[n]], new.td[[n]])) {
-        stopf("CPO %s changed task description item %s.", name, n)
-      }
-    }
-
-    return(newdata)
+    allowed.td.changes = c("id", "n.feat", "has.missings")
   }
-  if (datasplit == "target") {
-    if (!is.data.frame(newdata)) {
-      stopf("CPO %s gave bad result\nmust return a data.frame.", name)
-    }
-    if (nrow(newdata) != getTaskDesc(task)$size) {
-      stopf("CPO %s must not change number of rows.", name)
-    }
-    datanames = names(newdata)
-    newdata = cbind(newdata, getTaskData(task, features = character(0)))
-    if (identical(datanames, getTaskFeatureNames(task))) {
-      # names didn't change, so we preserve column order
-      newdata = newdata[names(task$env$data)]
-    }
-    dubs = duplicated(names(newdata))
-    if (any(dubs)) {
-      stopf("CPO %s gave bad result\ncolumn names %s duplicated (possibly with target)", name, collapse(unique(names(newdata)[dubs], sep = ", ")))
-    }
 
-  } else {
-    # datasplit is 'most' or 'all'
-    assertSetEqual(names(newdata), c("numeric", "factor", "other", if (datasplit == "all") "ordered"))
-
-    target = getTaskData(task, features = character(0))
-
-    newdata = recombineLL(getTaskData(task, target.extra = TRUE)$data,
-      newdata, names(task$env$data), target, name)
+  # check most of task description didn't change
+  for (n in names(old.td)) {  # implicitly checks row number
+    if (!n %in% allowed.td.changes && !identical(old.td[[n]], new.td[[n]])) {
+      stopf("CPO %s changed task description item %s.", name, n)
+    }
   }
-  changeData(task, newdata)
+  newdata
 }
 
-# this assumes we that if 'datasplit' was task, it was created from a target-less task.
 recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no", "task"), targetcols, name) {
-# targetcols may be NULL
 # otherwise it contains the columns removed from the DF because they were target columns.
   datasplit = match.arg(datasplit)
   if (datasplit %in% c("most", "all")) {
-    allnames = names(df)
-    assertSetEqual(names(newdata), c("numeric", "factor", "other", if (datasplit == "all") "ordered"))
-    if (is.null(targetcols)) {
-      targetcols = df[, character(0), drop = FALSE]
-    } else {
-      df = df[!names(df) %in% names(targetcols)]
-    }
-    return(recombineLL(df, newdata, allnames, targetcols, name))
+    return(recombineLL(df, newdata, targetcols, datasplit, name))
   } else if (datasplit == "task") {
     assertClass(newdata, "Task")
     newdata = getTaskData(newdata)
@@ -579,12 +636,85 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
   if (nrow(df) != nrow(newdata)) {
     stopf("CPO %s must not change number of rows.", name)
   }
-  if (!is.null(targetcols)) {
-    datanames = names(newdata)
-    newdata = cbind(newdata, targetcols)
-    if (identical(datanames, setdiff(names(df), names(targetcols)))) {
-      newdata = newdata[names(df)]
-    }
+  dubs = duplicated(c(names(newdata), targetcols))
+  if (any(dubs)) {
+    stopf("CPO %s gave bad result\ncolumn names %s duplicated (possibly with target)", name, collapse(unique(names(newdata)[dubs], sep = ", ")))
+  }
+
+  datanames = names(newdata)
+  newdata = cbind(newdata, df[targetcols])
+  if (identical(datanames, setdiff(names(df), names(targetcols)))) {
+    # names didn't change, so we preserve column order
+    newdata = newdata[names(df)]
   }
   newdata
+}
+
+# relevant should be 'targets' or 'non-target features'
+# old.relevants and new.relevants are the relevant columns.
+checkColumnsEqual = function(old.relevants, new.relevants, relevant.name) {
+  if (!isTRUE(checkSetEqual(names(old.relevants), names(new.relevants)))) {
+    stopf("CPO %s must not change %s column names.", name, relevant)
+  }
+  for (n in names(old.relevants)) {
+    if (!identical(old.relevants[[n]], new.relevants[[n]])) {
+      stopf("CPO %s must not change %s, but changed %s.", name, relevant.name, n)
+    }
+  }
+}
+
+constructTask = function(oldtask, data, target, type, id, censtype) {
+  if (type == "cluster") {
+    return(makeClusterTask(id = id, data = data))
+  }
+  if (type == "surv") {
+    return(makeSurvTask(id = id, data = data, censoring = censtype))
+  }
+  if (type == "classif" && getTaskType(oldtask) == "classif") {
+    assert(length(target) == 1)
+    oldtargets = levels(getTaskData(oldtask, targets.extra = TRUE)$target)
+    newtarget = levels(data[[target]])
+    if (setequal(oldtargets, newtargets)) {
+      positive = getTaskDesc(pid.task)$positive
+      if (length(oldtargets) == 2 && oldtargets[1] != newtargets[1]) {
+        positive = setdiff(oldtargets, positive)
+      }
+      return(makeClassifTask(id = id, data = data, target = target,
+        positive = positive))
+    }
+  }
+
+  constructor = switch(
+      multilabel = makeMultilabelTask,
+      regr = makeRegrTask,
+      surv = makeSurvTask)
+  constructor(id = id, data = data, target = target)
+}
+
+checkTaskBasics = function(task, newdata, name) {
+  if (!"Task" %in% class(newdata)) {
+    stopf("CPO %s must return a Task", name)
+  }
+
+  if (getTaskDesc(task)$size != getTaskDesc(newdata)$size) {
+    stopf("CPO %s must not change number of rows", name)
+  }
+}
+
+checkDFBasics = function(task, newdata, targetbound, name) {
+  if (!is.data.frame(newdata)) {
+    stopf("CPO %s cpo.trafo gave bad result\ncpo.trafo must return a data.frame.", name)
+  }
+  assertClass(newdata, "data.frame")
+  tnames = getTaskTargetNames(task)
+  missingt = tnames[!tnames %in% names(newdata)]
+  if (length(missingt)) {
+    addendum = ""
+    if (targetbound) {
+      addendum = paste("\nIf you want to change names or number of target columns in targetbound CPOs",
+        'you must use other .datasplit values, e.g. "target".', sep = "\n")
+    }
+   stopf("CPO %s cpo.trafo gave bad result\ndata.frame did not contain target column%s %s.%s",
+     name, ifelse(length(missingt) > 1, "s", ""), missingt, addendum)
+  }
 }

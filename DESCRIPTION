@@ -173,6 +173,7 @@ Collate:
     'CPO.R'
     'CPOAuxiliary.R'
     'CPOFormatCheck.R'
+    'CPOTarget.R'
     'ParamSetSugar.R'
     'CPO_concrete.R'
     'ChainModel.R'

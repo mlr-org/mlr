@@ -463,6 +463,26 @@ singleLearnerCPO = function(learner) {
   UseMethod("singleLearnerCPO")
 }
 
+#' @title determine the bound of a CPO or Retrafo
+#'
+#' @description
+#' Gives the bound of a CPO or Retrafo. These can be
+#' \dQuote{targetbound} for a CPO / Retrafo that
+#' manipulates target columns, \dQuote{databound} for
+#' a CPO / Retrafo that manipulates non-target columns.
+#'
+#' For a CPO that affects both, it is a \code{character(2)}
+#' with both values; for one that affects neither, it is
+#' \code{character(0)}.
+#'
+#' @param cpo [\code{CPO} | \code{CPORetrafo}]\cr
+#'   The CPO or Retrafo to inspect.
+#'
+#' @export
+getCPOBound = function(cpo) {
+  UseMethod("getCPOBound")
+}
+
 
 ##################################
 ### Retrafo                    ###
@@ -661,6 +681,11 @@ getCPOName.CPORetrafo = function(cpo) {
 #' @export
 getCPOName.NULLCPO = function(cpo) {
   "NULLCPO"
+}
+
+#' @export
+getCPOBound.NULLCPO = function(cpo) {
+  character(0)
 }
 
 #' @export
@@ -962,16 +987,10 @@ captureEnvWrapper = function(fun) {
 
 # TO-DO:
 #- target retrafo (parameter 'targetbound')
-#  - is a noop for data.frames; possibly warn
-#  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
-#  - type.from, type.to: convert tasks from x to y ("classif", "multilabel", "regr", "surv", "cluster", "costsens").
-#  - same splits as before (though "most", "all" less sensible)
-#  - check data instead of target didn't change in "no", "target"
-#  - return target instead of data in other split modes
 #  - apply retrafo to prediction
 #  - also a function retrafoPrediction, with optional data argument
 #  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
-# NULL-TRAFO: the neutral element of %>>%
+# makeMultilabelTask: 'positive' seems to be without effect
 
 # tests to-do:
 # getLearnerCPO: do hyperparameter changes propagate?
@@ -987,4 +1006,19 @@ captureEnvWrapper = function(fun) {
 # datasplit
 #  -> accept matrix in numeric split
 #  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
-
+# NULLCPO
+# costsens task
+#  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
+#  - type.from, type.to: convert tasks from x to y ("classif", "multilabel", "regr", "surv", "cluster", "costsens").
+#  - same splits as before (though "most", "all" less sensible)
+# 'bound' well behaved: after splitting, uniting, for trafos and retrafos
+# changing task names in targetbound, datasplit 'no'
+# targetbound CPO: switching classif levels switches 'positive'
+#
+# changing task with 'no', smth else: it is classif, and
+#  - number of classes changes
+#  - positive / negative get switched
+#  - number of classes the same, names change
+#  - can convert data.frames if input type allows cluster
+#  - check data instead of target didn't change in "no", "target"
+#  - return target instead of data in other split modes
