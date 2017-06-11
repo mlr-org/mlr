@@ -508,7 +508,7 @@ measureBER = function(truth, response) {
   # special case for predictions from FailureModel
   if (anyMissing(response))
     return(NA_real_)
-  mean(diag(1 - (table(truth, response)/table(truth, truth))))
+  mean(diag(1 - (table(truth, response) / table(truth, truth))))
 }
 
 #' @export multiclass.aunu
