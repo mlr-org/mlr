@@ -217,6 +217,9 @@ callCPO = function(cpo, data, prev.retrafo) {
 
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo) {
+  if ("NULLCPO" %in% class(prev.retrafo)) {
+    prev.retrafo = NULL
+  }
   if (is.null(prev.retrafo)) {
     prevneeded = character(0)
   } else {

@@ -16,10 +16,11 @@ Chain a list of preprocessing operators, or retrafo objects, turning \code{list(
 applied on a \code{CPO} chain.
 }
 \seealso{
-Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
-  \code{\link{applyCPO}}, \code{\link{attachCPO}},
-  \code{\link{cpoPca}}, \code{\link{cpoScale}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
+  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{cpoPca}},
+  \code{\link{cpoScale}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},

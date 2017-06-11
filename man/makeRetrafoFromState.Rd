@@ -20,11 +20,11 @@ This creates a new \code{Retrafo} object which will
 behave according to \dQuote{state}.
 }
 \seealso{
-Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
-  \code{\link{applyCPO}}, \code{\link{attachCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{getCPOName}},
-  \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
+  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}}, \code{\link{makeCPO}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
   \code{\link{setHyperPars}}

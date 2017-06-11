@@ -15,10 +15,11 @@ Return the name given at creation as \dQuote{.cpo.name} to the
 CPO creator. If the CPO object has an ID, it will be appended.
 }
 \seealso{
-Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
-  \code{\link{applyCPO}}, \code{\link{attachCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
+  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},

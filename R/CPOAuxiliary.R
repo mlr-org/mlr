@@ -7,6 +7,14 @@
 #' @name CPO
 NULL
 
+#' @title CPO composition neutral element
+#'
+#' @description
+#' FIXME to come
+#'
+#' @family CPO
+NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "PCORetrafo", "CPO"))  # nolint
+
 ##################################
 ### %>>% Operator              ###
 ##################################
@@ -87,8 +95,20 @@ NULL
 }
 
 #' @export
+`%>>%.NULLCPO` = function(cpo1, cpo2) {
+  if (any(c("Learner", "CPO") %in% class(cpo2))) {
+    cpo2
+  } else {
+    NextMethod()
+  }
+}
+
+
+#' @export
 `%>>%.CPO` = function(cpo1, cpo2) {
-  if ("CPO" %in% class(cpo2)) {
+  if ("NULLCPO" %in% class(cpo2)) {
+    cpo1
+  } else if ("CPO" %in% class(cpo2)) {
     # compose two CPOs
     composeCPO(cpo1, cpo2)
   } else if ("Learner" %in% class(cpo2)) {
@@ -103,7 +123,9 @@ NULL
 
 #' @export
 `%>>%.CPORetrafo` = function(cpo1, cpo2) {
-  if ("CPORetrafo" %in% class(cpo2)) {
+  if ("NULLCPO" %in% class(cpo2)) {
+    cpo1
+  } else if ("CPORetrafo" %in% class(cpo2)) {
     composeCPO(cpo1, cpo2)
   } else if ("WrappedModel" %in% class(cpo2)) {
     stop("Attaching CPO Retrafo to a model is not implemented.")
@@ -391,7 +413,7 @@ getLearnerCPO = function(learner, warn.buried = TRUE) {
   checkLearner(learner)
   name = getLearnerName(learner)
   appending = TRUE
-  result = NULL
+  result = NULLCPO
   repeat {
     if (!"CPOLearner" %in% class(learner)) {
       if (is.atomic(learner) || is.null(learner$next.learner)) {
@@ -403,11 +425,7 @@ getLearnerCPO = function(learner, warn.buried = TRUE) {
         stop("Error: found learner with class CPOLearner but without $next.learner slot.")
       }
       if (appending) {
-        if (is.null(result)) {
-          result = singleLearnerCPO(learner)
-        } else {
-          result = result %>>% singleLearnerCPO(learner)
-        }
+        result = result %>>% singleLearnerCPO(learner)
       } else {
         warningf("Learner %s had buried CPOs", name)
         break
@@ -452,18 +470,20 @@ singleLearnerCPO = function(learner) {
 
 #' @export
 retrafo.default = function(data) {
+  res = attr(data, "retrafo")
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("data is not a Task or data.frame.\n%s\n%s",
       "are you sure you are applying 'retrafo' to the result",
       "of a %>>% transformation?")
+  } else if (is.null(res)) {
+    res = NULLCPO
   }
-  attr(data, "retrafo")
+  res
 }
 
 #' @export
 retrafo.WrappedModel = function(data) {
-  warning("retrafo of a model not available if the outermost wrapper was not a CPO.")
-  NULL
+  NULLCPO
 }
 
 
@@ -519,6 +539,9 @@ singleModelRetrafo = function(model, prev) {
       "are you sure you are applying it to the input or",
       "result of a %>>% transformation?")
   }
+  if ("NULLCPO" %in% class(value)) {
+    value = NULL
+  }
   attr(data, "retrafo") = value
   data
 }
@@ -548,7 +571,7 @@ singleModelRetrafo = function(model, prev) {
 chainCPO = function(pplist) {
   assert(checkList(pplist, types = "CPO", min.len = 1),
     checkList(pplist, types = "CPORetrafo", min.len = 1))
-  Reduce(composeCPO, pplist)
+  Reduce(`%>>%`, pplist)
 }
 
 ##################################
@@ -585,8 +608,19 @@ predict.CPORetrafo = function(object, data, ...) {
 }
 
 #' @export
+predict.NULLCPO = function(object, data, ...) {
+  assert(length(list(...)) == 0)
+  data
+}
+
+#' @export
 getRetrafoState.CPORetrafo = function(retrafo.object) {
   stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getRetrafoState.NULLCPO = function(retrafo.object) {
+  NULL
 }
 
 #' @export
@@ -595,8 +629,18 @@ getParamSet.CPORetrafo = function(x) {
 }
 
 #' @export
+getParamSet.NULLCPO = function(x) {
+  makeParamSet()
+}
+
+#' @export
 getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "both")) {
   stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
+}
+
+#' @export
+getHyperPars.NULLCPO = function(x) {
+  setNames(list(), character(0))
 }
 
 #' @export
@@ -605,8 +649,18 @@ setCPOId.default = function(cpo, id) {
 }
 
 #' @export
+setCPOId.NULLCPO = function(cpo, id) {
+  stop("Cannot set ID of NULLCPO.")
+}
+
+#' @export
 getCPOName.CPORetrafo = function(cpo) {
   paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
+}
+
+#' @export
+getCPOName.NULLCPO = function(cpo) {
+  "NULLCPO"
 }
 
 #' @export
@@ -689,6 +743,11 @@ print.CPORetrafo = function(x, ...) {
     catf("[RETRAFO %s(%s)]", getCPOName(primitive), argstring, newline = FALSE)
   }
   cat("\n")
+}
+
+#' @export
+print.NULLCPO = function(x, ...) {
+  cat("NULLCPO\n")
 }
 
 ##################################
@@ -902,10 +961,6 @@ captureEnvWrapper = function(fun) {
 }
 
 # TO-DO:
-#- datasplit ext
-#  -> accept matrix in numeric split
-#  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
-#- core rewrite
 #- target retrafo (parameter 'targetbound')
 #  - is a noop for data.frames; possibly warn
 #  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
@@ -929,4 +984,7 @@ captureEnvWrapper = function(fun) {
 # cpo functional recursion after state
 # cpo state fails if 'cpo.retrafo' in cpo.retrafo's environment mismatches
 # cpo state disassembly and assembly if 'cpo.retrafo' is absent from cpo.retrafo's environment
+# datasplit
+#  -> accept matrix in numeric split
+#  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
 

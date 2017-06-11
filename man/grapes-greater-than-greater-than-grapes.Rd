@@ -45,10 +45,11 @@ pcaLogreg = neoPCA \%>>\% makeLearner("classif.logreg")
 
 }
 \seealso{
-Other CPO: \code{\link{CPO}}, \code{\link{applyCPO}},
-  \code{\link{attachCPO}}, \code{\link{chainCPO}},
-  \code{\link{cpoPca}}, \code{\link{cpoScale}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
+  \code{\link{applyCPO}}, \code{\link{attachCPO}},
+  \code{\link{chainCPO}}, \code{\link{cpoPca}},
+  \code{\link{cpoScale}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},

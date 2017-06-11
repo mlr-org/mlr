@@ -562,7 +562,7 @@ test_that("CPOs can be applied to data", {
 
 test_that("retrafo accessor does what it is supposed to do", {
 
-  expect_null(retrafo(pid.task))
+  expect_identical(retrafo(pid.task), NULLCPO)
 
   expect_warning(expect_null(retrafo(10)), "not a Task or data.frame")
 
