@@ -72,10 +72,8 @@ NULL
       "If you called 'data %>>% preproc %>>% learner', you probably meant",
       "train(preproc %>>% learner, data). Note that this is different from",
       "'train(learner, data %>>% preproc), which is usually not what you want.")
-  } else if ("CPO" %in% class(cpo2)) {
+  } else if (any(c("CPORetrafo", "CPO") %in% class(cpo2))) {
     applyCPO(cpo2, cpo1)
-  } else if ("CPORetrafo" %in% class(cpo2)) {
-    predict(cpo2, cpo1)
   } else if ("CPOConstructor" %in% class(cpo2)) {
     stop("Cannot compose CPO Constructors.\nDid you forget to construct the CPO?")
   } else {
@@ -134,8 +132,6 @@ NULL
 #'   The operation to perform first.
 #' @param cpo2 [\code{\link{CPO}}]\cr
 #'   The operation to perform second.
-#'
-#' @export
 composeCPO = function(cpo1, cpo2) {
   UseMethod("composeCPO")
 }
@@ -156,8 +152,6 @@ composeCPO = function(cpo1, cpo2) {
 #'   The learner.
 #'
 #' @family CPO
-#'
-#' @export
 attachCPO = function(cpo, learner) {
   UseMethod("attachCPO")
 }
@@ -175,7 +169,6 @@ attachCPO = function(cpo, learner) {
 #'   The task to operate on.
 #'
 #' @family CPO
-#' @export
 applyCPO = function(cpo, task) {
   UseMethod("applyCPO")
 }
@@ -218,16 +211,14 @@ getCPOName = function(cpo) {
 #' See examples.
 #'
 #' @param data [\code{data.frame} | \code{\link{Task}} | \code{\link{WrappedModel}}]\cr
-#'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
-#' @param default.to.identity [\code{logical}]\cr
-#'   Whether to return the identity function when no trafo was found.
-#'   Default is \code{FALSE}.
+#'   The retrafo of a \code{\link{\%>>\%}} chain applied to a data set.
 #'
-#' @return [\code{function}]. The retransformation function that can be
-#' applied to new data.
+#' @return [\code{CPORetrafo}]. The retransformation function that can be
+#'   applied to new data.
 #'
 #' @examples
-#'
+#' \dontrun{
+#' # FIXME: need to update this
 #' traindat = subsetTask(pid.task, 1:400)
 #' preddat = subsetTask(pid.task, 401:768)
 #'
@@ -241,7 +232,7 @@ getCPOName = function(cpo) {
 #' predicted = reFun(preddat)
 #'
 #' # reset the retrafo when doing other steps!
-#' \dontrun{
+#'
 #' trained.tmp = traindat %>>% cpoPca(FALSE, FALSE)
 #' reFun1 = retrafo(trained.tmp)
 #'
@@ -259,7 +250,7 @@ getCPOName = function(cpo) {
 #' }
 #' @family CPO
 #' @export
-retrafo = function(data, default.to.identity = FALSE) {
+retrafo = function(data) {
   UseMethod("retrafo")
 }
 
@@ -330,7 +321,21 @@ makeRetrafoFromState = function(constructor, state) {
   UseMethod("retrafo<-")
 }
 
+#' @title the ID of a CPO object.
+#'
+#' @description
+#' Setting the ID of a CPO to a value will prefix all its
+#' parameter names with this ID. This makes it possible to
+#' compose CPOs that have clashing parameter names.
+#'
+#' @export
 setCPOId = function(cpo, id) {
+  if (!is.null(id)) {
+    assertString(id)
+  }
+  if (!"CPOPrimitive" %in% class(cpo)) {
+    stop("Cannot set ID of compound CPO.")
+  }
   UseMethod("setCPOId")
 }
 
@@ -446,42 +451,33 @@ singleLearnerCPO = function(learner) {
 ##################################
 
 #' @export
-retrafo.default = function(data, default.to.identity = FALSE) {
+retrafo.default = function(data) {
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("data is not a Task or data.frame.\n%s\n%s",
-      "are you sure you are applying it to the result",
+      "are you sure you are applying 'retrafo' to the result",
       "of a %>>% transformation?")
   }
-  res = attr(data, "retrafo")
-  if (default.to.identity && is.null(res)) {
-    identity
-  } else {
-    res
-  }
+  attr(data, "retrafo")
 }
 
 #' @export
-retrafo.WrappedModel = function(data, default.to.identity = FALSE) {
+retrafo.WrappedModel = function(data) {
   warning("retrafo of a model not available if the outermost wrapper was not a CPO.")
-  if (default.to.identity) {
-    identity
-  } else {
-    NULL
-  }
+  NULL
 }
 
-# default.to.identity is ignored, since a CPOModel always has a retrafo
+
 #' @export
-retrafo.CPOModel = function(data, default.to.identity = FALSE) {
+retrafo.CPOModel = function(data) {
   # go through the chained model and see if there are wrapped models that
   # are not %>>%-chained (since the user probably wants to be warned about
   # that.
-  recurseRetrafo = function(model, prevfun) {
-    resfun = singleModelRetrafo(model, prevfun)
+  recurseRetrafo = function(model, prev) {
+    res = singleModelRetrafo(model, prev)
     next.model = model$learner.model$next.model
     if ("BaseWrapperModel" %in% class(next.model)) {
       if ("CPOModel" %in% class(next.model)) {
-        return(recurseRetrafo(next.model, resfun))
+        return(recurseRetrafo(next.model, res))
       }
       do.message = FALSE
       while (!is.null(next.model)) {
@@ -504,12 +500,12 @@ retrafo.CPOModel = function(data, default.to.identity = FALSE) {
         message("The model has some wrappers besides CPOs, which will not be part of the retrafo.")
       }
     }
-    resfun
+    res
   }
   recurseRetrafo(data, NULL)
 }
 
-singleModelRetrafo = function(model, prevfun) {
+singleModelRetrafo = function(model, prev) {
   UseMethod("singleModelRetrafo")
 }
 
@@ -522,10 +518,8 @@ singleModelRetrafo = function(model, prevfun) {
     warningf("argument is neither a Task nor data.frame.\n%s\n%s",
       "are you sure you are applying it to the input or",
       "result of a %>>% transformation?")
-
   }
   attr(data, "retrafo") = value
-
   data
 }
 
@@ -554,13 +548,12 @@ singleModelRetrafo = function(model, prevfun) {
 chainCPO = function(pplist) {
   assert(checkList(pplist, types = "CPO", min.len = 1),
     checkList(pplist, types = "CPORetrafo", min.len = 1))
-  Reduce(`%>>%`, pplist)
+  Reduce(composeCPO, pplist)
 }
 
 ##################################
 ### General Generic Functions  ###
 ##################################
-
 
 #' @export
 setHyperPars2.CPORetrafo = function(learner, par.vals = list()) {
@@ -586,6 +579,12 @@ as.list.CPOPrimitive = function(x, ...) {
 }
 
 #' @export
+predict.CPORetrafo = function(object, data, ...) {
+  assert(length(list(...)) == 0)
+  applyCPO(object, data)
+}
+
+#' @export
 getRetrafoState.CPORetrafo = function(retrafo.object) {
   stop("Cannot get state of compound retrafo. Use as.list to get individual elements")
 }
@@ -595,12 +594,12 @@ getParamSet.CPORetrafo = function(x) {
   stop("Cannot get param set of compound retrafo. Use as.list to get individual elements")
 }
 
-
 #' @export
 getHyperPars.CPORetrafo = function(learner, for.fun = c("train", "predict", "both")) {
   stop("Cannot get parameters of compound retrafo. Use as.list to get individual elements")
 }
 
+#' @export
 setCPOId.default = function(cpo, id) {
   stop("setCPOId for object not defined.")
 }
@@ -642,9 +641,8 @@ print.CPOConstructor = function(x, ...) {
   args = formals(x)
   argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
   argstring = paste(names(args), argvals, collapse = ", ", sep = "")
-  catf("<<CPO %s(%s)>>", environment(x)$cpo.name, argstring)
+  catf("<<CPO %s(%s)>>", environment(x)$.cpo.name, argstring)
 }
-
 
 #' @export
 print.CPO = function(x, ...) {
@@ -656,9 +654,18 @@ print.CPO = function(x, ...) {
 
 #' @export
 print.DetailedCPO = function(x, ...) {
-  NextMethod("print", x)
-  cat("\n")
-  print(getParamSet(x))
+  chain = as.list(x)
+  catf("Retrafo chain of %d elements:", length(chain))
+  is.first = TRUE
+  for (retrafo in chain) {
+    if (!is.first) {
+      cat("  ====>\n")
+    }
+    is.first = FALSE
+    print(x)
+    cat("\n")
+    print(getParamSet(x))
+  }
 }
 
 #' @export
@@ -674,7 +681,7 @@ print.CPORetrafo = function(x, ...) {
   first = TRUE
   for (primitive in as.list(x)) {
     if (!first) {
-      cat(" =>\n")
+      cat("=>")
     }
     first = FALSE
     pv = getHyperPars(primitive)
@@ -895,8 +902,6 @@ captureEnvWrapper = function(fun) {
 }
 
 # TO-DO:
-#- finish properties
-#  -> retrafo concat property checking
 #- datasplit ext
 #  -> accept matrix in numeric split
 #  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
@@ -911,3 +916,17 @@ captureEnvWrapper = function(fun) {
 #  - apply retrafo to prediction
 #  - also a function retrafoPrediction, with optional data argument
 #  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
+# NULL-TRAFO: the neutral element of %>>%
+
+# tests to-do:
+# getLearnerCPO: do hyperparameter changes propagate?
+# warning about buried CPO
+# getLearnerBare works, gets the right hyperparameters
+# check that hyperparameters propagate.
+# functional cpo:
+#  -> remove 'data' from function environment
+#  -> functional retrafo: check for data reference and warn
+# cpo functional recursion after state
+# cpo state fails if 'cpo.retrafo' in cpo.retrafo's environment mismatches
+# cpo state disassembly and assembly if 'cpo.retrafo' is absent from cpo.retrafo's environment
+

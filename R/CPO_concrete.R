@@ -14,7 +14,7 @@
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoPca = makeCPOObject("pca", center = TRUE: logical, scale = TRUE: logical, cpo.trafo = {  # nolint
+cpoPca = makeCPO("pca", center = TRUE: logical, scale = TRUE: logical, .datasplit = "no", cpo.trafo = {  # nolint
   targetdata = data[target]
   data[target] = NULL
   pcr = prcomp(as.matrix(data), center = center, scale. = scale)
@@ -39,7 +39,7 @@ cpoPca = makeCPOObject("pca", center = TRUE: logical, scale = TRUE: logical, cpo
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoScale = makeCPOObject("scale", center = TRUE: logical, scale = TRUE: logical, cpo.trafo = {  # nolint
+cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .datasplit = "no", cpo.trafo = {  # nolint
   targetdata = data[target]
   data[target] = NULL
   result = scale(as.matrix(data), center = center, scale = scale)

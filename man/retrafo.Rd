@@ -4,19 +4,15 @@
 \alias{retrafo}
 \title{Get the Retransformation function from a resulting object}
 \usage{
-retrafo(data, default.to.identity = FALSE)
+retrafo(data)
 }
 \arguments{
 \item{data}{[\code{data.frame} | \code{\link{Task}} | \code{\link{WrappedModel}}]\cr
-The result of a \code{\link{\%>>\%}} chain applied to a data set.}
-
-\item{default.to.identity}{[\code{logical}]\cr
-Whether to return the identity function when no trafo was found.
-Default is \code{FALSE}.}
+The retrafo of a \code{\link{\%>>\%}} chain applied to a data set.}
 }
 \value{
-[\code{function}]. The retransformation function that can be
-applied to new data.
+[\code{CPORetrafo}]. The retransformation function that can be
+  applied to new data.
 }
 \description{
 When applying a CPO to a \code{data.frame} or \code{\link{Task}},
@@ -39,7 +35,8 @@ make sure to reset the retrafo function by setting it to \code{NULL}.
 See examples.
 }
 \examples{
-
+\dontrun{
+# FIXME: need to update this
 traindat = subsetTask(pid.task, 1:400)
 preddat = subsetTask(pid.task, 401:768)
 
@@ -53,7 +50,7 @@ reFun = retrafo(trained)
 predicted = reFun(preddat)
 
 # reset the retrafo when doing other steps!
-\dontrun{
+
 trained.tmp = traindat \%>>\% cpoPca(FALSE, FALSE)
 reFun1 = retrafo(trained.tmp)
 
@@ -76,9 +73,7 @@ Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{chainCPO}}, \code{\link{cpoPca}},
   \code{\link{cpoScale}}, \code{\link{getCPOName}},
   \code{\link{getHyperPars}},
-  \code{\link{getRetrafoState}},
-  \code{\link{makeCPOFunctional}},
-  \code{\link{makeCPOObject}},
+  \code{\link{getRetrafoState}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{setHyperPars}}
 }

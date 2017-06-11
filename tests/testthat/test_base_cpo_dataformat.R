@@ -989,14 +989,3 @@ test_that("returning properties that are not allowed is detected", {
     }
   }
 })
-
-
-
-# tests to-do:
-# getLearnerCPO: do hyperparameter changes propagate?
-# warning about buried CPO
-# getLearnerBare works, gets the right hyperparameters
-# check that hyperparameters propagate.
-# functional cpo:
-#  -> remove 'data' from function environment
-#  -> functional retrafo: check for data reference and warn

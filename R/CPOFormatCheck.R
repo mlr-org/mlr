@@ -163,17 +163,21 @@ getDataProperties = function(data, targetnames) {
 # calculate the properties, properties.adding and properties.needed for a composed CPO
 # CPO1 %>>% CPO2
 # returns a list(properties, properties.adding, properties.needed)
-compositeProperties = function(properties.1, properties.adding.1, properties.needed.1,
-                               properties.2, properties.adding.2, properties.needed.2,
-                               name1, name2) {
-  assertCharacter(properties.1)
-  assertCharacter(properties.2)
-  assertCharacter(properties.adding.1)
-  assertCharacter(properties.adding.2)
-  assertCharacter(properties.needed.1)
-  assertCharacter(properties.needed.2)
-  assertCharacter(name1)
-  assertCharacter(name2)
+compositeProperties = function(prop1, prop2, name1, name2) {
+  properties.1 = prop1$properties
+  properties.adding.1 = prop1$properties.adding
+  properties.needed.1 = prop1$properties.needed
+  properties.2 = prop2$properties
+  properties.adding.2 = prop2$properties.adding
+  properties.needed.2 = prop2$properties.needed
+  assertCharacter(properties.1, unique = TRUE)
+  assertCharacter(properties.2, unique = TRUE)
+  assertCharacter(properties.adding.1, unique = TRUE)
+  assertCharacter(properties.adding.2, unique = TRUE)
+  assertCharacter(properties.needed.1, unique = TRUE)
+  assertCharacter(properties.needed.2, unique = TRUE)
+  assertString(name1)
+  assertString(name2)
   # some explanation about properties:
   # * 'properties' are the properties that a CPO can handle.
   # * 'properties.adding' are the properties it adds to the things coming after it, it is therefore

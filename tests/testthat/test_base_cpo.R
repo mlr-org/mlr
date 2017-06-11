@@ -524,7 +524,7 @@ test_that("CPO arguments may be missing if requirements allow", {
   train(cpoc(a = TRUE, b = 1L) %>>% makeLearner("classif.logreg"), pid.task)
 
   train(cpoc(id = "test") %>>% makeLearner("classif.logreg"), pid.task)
-  expect_error(train(cpoc(a = TRUE, id = "test") %>>% makeLearner("classif.logreg"), pid.task), "Parameter b .*missing")
+  expect_error(train(cpoc(a = TRUE, id = "test") %>>% makeLearner("classif.logreg"), pid.task), "Parameter test\\.b .*missing")
   train(cpoc(a = TRUE, b = 1L, id = "test") %>>% makeLearner("classif.logreg"), pid.task)
 
   expect_identical(getParamSet(cpoc(a = TRUE, id = "test"))$pars$test.b$requires, quote(!!test.a))
@@ -576,9 +576,9 @@ test_that("retrafo accessor does what it is supposed to do", {
 
   transformed = pid.task %>>% cpoScale()
 
-  expect_function(retrafo(transformed))
+  expect_class(retrafo(transformed), "CPORetrafo")
 
-  expect_equal(getTaskData(retrafo(transformed)(pid.task)), getTaskData(transformed))
+  expect_equal(getTaskData(pid.task %>>% retrafo(transformed)), getTaskData(transformed))
 
   cpotest.parvals <<- list()  # nolint
   t = train(testlearnercpo, testtaskcpo)
@@ -601,33 +601,33 @@ test_that("retrafo accessor does what it is supposed to do", {
     # short chain, task
     result = testtaskcpo %>>% cpoadder(10)
     expect_identical(getTaskData(result)$A, c(11, 12))
-    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, c(-8.5, -7.5))
+    expect_equal(getTaskData(testtaskcpo2 %>>% retrafo(result))$A, c(-8.5, -7.5))
 
 
     # short chain, data.frame
     result = testdfcpo %>>% cpoadder(10)
     expect_identical(result$A, c(11, 12))
-    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, c(-8.5, -7.5))
-    expect_equal(retrafo(result)(testdfcpo2)$A, c(-8.5, -7.5))
+    expect_equal(getTaskData(testtaskcpo2 %>>% retrafo(result))$A, c(-8.5, -7.5))
+    expect_equal((testdfcpo2 %>>% retrafo(result))$A, c(-8.5, -7.5))
 
     # long chain, task
     result = (testtaskcpo %>>% cpoadder(10) %>>% cpomultiplier(2)) %>>% (cpoadder(-10) %>>% cpomultiplier(2))
     expect_equal(getTaskData(result)$A, c(24, 28))
-    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(getTaskData(testtaskcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     # long chain, data.frame
     result = (testdfcpo %>>% cpoadder(10) %>>% cpomultiplier(2)) %>>% (cpoadder(-10) %>>% cpomultiplier(2))
     expect_equal(result$A, c(24, 28))
-    expect_equal(getTaskData(retrafo(result)(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(getTaskData(testtaskcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal((testdfcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     # short chain, learner model
     cpotest.parvals <<- list()  # nolint
     m = train(cpoadder(10) %>>% testlearnercpo, testtaskcpo)
 
     expect_equal(cpotest.parvals, list(11))
-    expect_equal(getTaskData(retrafo(m)(testtaskcpo2))$A, c(-8.5, -7.5))
-    expect_equal(retrafo(m)(testdfcpo2)$A, c(-8.5, -7.5))
+    expect_equal(getTaskData(testtaskcpo2 %>>% retrafo(m))$A, c(-8.5, -7.5))
+    expect_equal((testdfcpo2 %>>% retrafo(m))$A, c(-8.5, -7.5))
     predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list(11, -8.5))
 
@@ -638,8 +638,8 @@ test_that("retrafo accessor does what it is supposed to do", {
               ((cpoadder(-10, id = "thd") %>>% cpomultiplier(2, id = "frth")) %>>% testlearnercpo), testtaskcpo)
 
     expect_equal(cpotest.parvals,  list(24))
-    expect_equal(getTaskData(retrafo(m)(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(getTaskData(testtaskcpo2 %>>% retrafo(m))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal((testdfcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
     predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list(24, ((3 - 10 - 1.5) / 2 + 10 - 23) / 2))
 
@@ -651,8 +651,8 @@ test_that("retrafo accessor does what it is supposed to do", {
     expect_equal(cpotest.parvals, list(240))
 
     expect_message({ retr = retrafo(m) }, "has some wrappers besides CPOs", all = TRUE)
-    expect_equal(getTaskData(retr(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
-    expect_equal(retr(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(getTaskData(predict(retr, testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal(predict(retr, testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
     predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list(240, (((3 - 10 - 1.5) / 2 + 10 - 23) / 2) / 10))
 
@@ -666,8 +666,8 @@ test_that("retrafo accessor does what it is supposed to do", {
     expect_equal(cpotest.parvals, list((11 * 2 * 10 - 10) * 2))
 
     expect_warning({ retr = retrafo(m) }, "has some CPOs wrapped by other wrappers", all = TRUE)
-    expect_equal(getTaskData(retr(testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2))
-    expect_equal(retr(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2))
+    expect_equal(getTaskData(predict(retr, testtaskcpo2))$A, ((c(3, 4) - 10 - 1.5) / 2))
+    expect_equal(predict(retr, testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2))
     predict(m, testtaskcpo2)
     expect_equal(cpotest.parvals, list((11 * 2 * 10 - 10) * 2, (((3 - 10 - 1.5) / 2 / 10 + 10 - 230) / 2)))
   }
@@ -706,13 +706,13 @@ test_that("functional trafo and retrafo return values are checked", {
   expect_error(pid.task %>>% cpobad.trafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE), "badtrafo cpo\\.trafo .*cpo.trafo must return a data.frame")
 
   expect_class({res = pid.task %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>% cpobad.retrafo.f(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% cpoone.f(TRUE) %>>% cpobad.retrafo.f(TRUE) %>>% cpotwo.f(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% cpobad.retrafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% (cpobad.retrafo.f(TRUE) %>>% cpoone.f(TRUE) %>>% cpotwo.f(TRUE))}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
 
   expect_class(train(cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>% makeLearner("classif.logreg"), pid.task), "WrappedModel")
   expect_error(train(cpoone.f(TRUE) %>>% cpotwo.f(TRUE) %>>%
@@ -772,13 +772,13 @@ test_that("object based trafo and retrafo return values are checked", {
   expect_error(pid.task %>>% cpobad.trafo.o(TRUE) %>>% cpoone.o(TRUE) %>>% cpotwo.o(TRUE), "badtrafo cpo\\.trafo did not create a 'control'")
 
   expect_class({res = pid.task %>>% cpoone.o(TRUE) %>>% cpotwo.o(TRUE) %>>% cpobad.retrafo.o(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% cpoone.o(TRUE) %>>% cpobad.retrafo.o(TRUE) %>>% cpotwo.o(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% cpobad.retrafo.o(TRUE) %>>% cpoone.o(TRUE) %>>% cpotwo.o(TRUE)}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
   expect_class({res = pid.task %>>% (cpobad.retrafo.o(TRUE) %>>% cpoone.o(TRUE) %>>% cpotwo.o(TRUE))}, "Task")
-  expect_error(retrafo(res)(pid.task), "badretrafo .*must return a data.frame")
+  expect_error(pid.task %>>% retrafo(res), "badretrafo .*must return a data.frame")
 
   expect_class(train(cpoone.o(TRUE) %>>% cpotwo.o(TRUE) %>>% makeLearner("classif.logreg"), pid.task), "WrappedModel")
   expect_error(train(cpoone.o(TRUE) %>>% cpotwo.o(TRUE) %>>%
@@ -812,7 +812,7 @@ test_that("to.list and chainCPO work", {
 
     result = testdfcpo %>>% cpochain
     expect_equal(result$A, c(24, 28))
-    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal((testdfcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     cpolist = as.list(cpochain)
     expect_list(cpolist, len = 4)
@@ -823,7 +823,7 @@ test_that("to.list and chainCPO work", {
 
     result = testdfcpo %>>% chainCPO(cpolist)
     expect_equal(result$A, c(24, 28))
-    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
+    expect_equal((testdfcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / 2)
 
     expect_equal(cpolist, as.list(chainCPO(cpolist)))
 
@@ -833,7 +833,7 @@ test_that("to.list and chainCPO work", {
     cpolist.chg[[2]] = setHyperPars(cpolist.chg[[2]], snd.factor = 10)
     result = testdfcpo %>>% chainCPO(cpolist.chg)
     expect_equal(result$A, ((c(1, 2) + 20) * 10 - 10) * 2)
-    expect_equal(retrafo(result)(testdfcpo2)$A, ((c(3, 4) - 20 - 1.5) / 10 + 10 - 215) / 2)
+    expect_equal((testdfcpo2 %>>% retrafo(result))$A, ((c(3, 4) - 20 - 1.5) / 10 + 10 - 215) / 2)
 
   }
 
@@ -844,8 +844,8 @@ test_that("to.list and chainCPO work", {
 
 test_that("retrafo catabolization and anabolization work", {
 
-  cpoadder = cpoadder.f
-  cpomultiplier = cpomultiplier.f
+  cpoadder = cpoadder.o
+  cpomultiplier = cpomultiplier.o
 
   testCPO = function(cpoadder, cpomultiplier) {
 
@@ -860,7 +860,7 @@ test_that("retrafo catabolization and anabolization work", {
     expect_equal(res[[1]], (((c(1, 2) + 20) * 2 - 10) * -2 + 10) * 2)
 
 
-    expect_equal(retrafo(res)(testdfcpo2)[[1]], (((c(3, 4) - 20 - 1.5) / 2 + 10 - 43) / -2 - 10 + 66) / 2)
+    expect_equal((testdfcpo2 %>>% retrafo(res))[[1]], (((c(3, 4) - 20 - 1.5) / 2 + 10 - 43) / -2 - 10 + 66) / 2)
 
     lrn = cpomultiplier(2, id = "a") %>>% cpomultiplier(0.5, id = "b") %>>% cpochain %>>% testlearnercpo
 
@@ -878,24 +878,24 @@ test_that("retrafo catabolization and anabolization work", {
     constructors = list(cpomultiplier, cpomultiplier, cpoadder, cpomultiplier, cpoadder, cpomultiplier, cpoadder, cpomultiplier)
     rfclist2 = lapply(seq_along(constructors), function(idx) makeRetrafoFromState(constructors[[idx]], rfclist.states[[idx]]))
 
-    expect_equal(chainCPO(rfclist)(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
-    expect_equal(chainCPO(rfclist2)(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chainCPO(rfclist), testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chainCPO(rfclist2), testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
-    expect_equal((chainCPO(rfclist[c(1:5)]) %>>% chainCPO(rfclist[c(6:8)]))(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
-    expect_equal((chainCPO(rfclist2[c(1:5)]) %>>% chainCPO(rfclist2[c(6:8)]))(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chainCPO(rfclist[c(1:5)]) %>>% chainCPO(rfclist[c(6:8)]), testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chainCPO(rfclist2[c(1:5)]) %>>% chainCPO(rfclist2[c(6:8)]), testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
     rfclist.states2 = rfclist.states
     rfclist.states2[[1]]$factor = 4
     rfclist2 = lapply(seq_along(constructors), function(idx) makeRetrafoFromState(constructors[[idx]], rfclist.states2[[idx]]))
-    expect_equal(chainCPO(rfclist2)(testdfcpo2)[[1]], (((c(3, 4) / 2 - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chainCPO(rfclist2), testdfcpo2)[[1]], (((c(3, 4) / 2 - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
     chain2 = chainCPO(rfclist[c(1, 2, 3)]) %>>% chainCPO(rfclist[c(4, 5, 6, 7, 8)])
 
-    expect_equal(chain2(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chain2, testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
     chain3 = chainCPO(rfclist[3:4]) %>>% chainCPO(rfclist[c(5:6, 1:2)]) %>>% chainCPO(rfclist[7:8])
 
-    expect_equal(chain3(testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
+    expect_equal(predict(chain3, testdfcpo2)[[1]], (((c(3, 4) - 10 - 1.5) / 2 + 10 - 23) / -2 - 10 + 26) / 2)
 
     expect_equal((testdfcpo2 %>>% chainCPO(rfclist[7:8]) %>>% chainCPO(rfclist[5:6]) %>>% chainCPO(rfclist[1:2]) %>>% chainCPO(rfclist[3:4]))[[1]],
       (((c(3, 4) - 10 + 26) / 2 + 10 - 23) / -2 - 10 - 1.5) / 2)

@@ -1,6 +1,41 @@
 
 # helper objects for cpo tests in test_base_cpo
 
+# emulate makeCPOObject, makeFunctionalObject
+
+makeCPOObject = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
+                             .datasplit = "no",
+                             .properties = c("numerics", "factors", "ordered", "missings"),
+                             .properties.adding = character(0), .properties.needed = character(0),
+                             cpo.trafo, cpo.retrafo) {
+  if (is.null(.par.set)) {
+    .par.set = paramSetSugar(..., .pss.env = parent.frame())
+  }
+
+  eval.parent(substitute(makeCPO(.cpo.name = .cpo.name,
+    .par.set = .par.set, .par.vals = .par.vals, .datasplit = .datasplit, .properties = .properties, .properties.adding = .properties.adding,
+    .properties.needed = .properties.needed, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
+}
+
+
+makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
+                             .datasplit = "no",
+                             .properties = c("numerics", "factors", "ordered", "missings"),
+                             .properties.adding = character(0), .properties.needed = character(0),
+                             cpo.trafo) {
+  if (is.null(.par.set)) {
+    .par.set = paramSetSugar(..., .pss.env = parent.frame())
+  }
+
+  eval.parent(substitute(makeCPO(.cpo.name = .cpo.name,
+    .par.set = .par.set, .par.vals = .par.vals, .datasplit = .datasplit, .properties = .properties, .properties.adding = .properties.adding,
+    .properties.needed = .properties.needed, cpo.trafo = cpo.trafo, cpo.retrafo = NULL)))
+}
+
+
+
+
+
 # this list is written using '<<-' to communicate the state inside
 # a function during execution to the "outside"
 cpotest.parvals = list()

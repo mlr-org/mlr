@@ -13,8 +13,16 @@ configureMlr(show.info = TRUE, on.learner.error = "stop", show.learner.output = 
 
 library("testthat")
 
+devtools::test(pkg = "..", filter = "cpo$")
+
+system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
+
+
 devtools::test(pkg = "..", filter = "cpo$", reporter = c("summary", "stop"))
-devtools::test(pkg = "..", filter = "cpo_dataformat", reporter = c("summary", "stop"))
+
+system.time(devtools::test(pkg = "..", filter = "cpo_dataformat", reporter = c("summary", "stop")), gcFirst = FALSE)
+
+
 devtools::test(pkg = "..", filter = "ParamSetSugar")
 
 debugger()
