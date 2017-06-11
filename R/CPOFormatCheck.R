@@ -19,12 +19,13 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   shapeinfo = makeInputShapeInfo(indata)
 
   indata = if (is.data.frame(indata)) {
-    splitdf(indata, datasplit)
+    splitdf(indata, getLLDatasplit(datasplit))
   } else {
-    splittask(indata, datasplit)
+    splittask(indata, getLLDatasplit(datasplit))
   }
-  list(indata = indata, shapeinfo = shapeinfo, properties = present.properties)
+  list(indata = getIndata(indata, datasplit), shapeinfo = shapeinfo, properties = present.properties, tempdata = indata)
 }
+
 
 # do the preparation before calling retrafo:
 #  - check data is in an acceptable format (task or df)
@@ -60,16 +61,19 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
     stopf("Data fed into CPO %s retrafo is not a Task or data.frame.", name)
   }
 
-  assertShapeConform(indata, shapeinfo.input, datasplit == "all", name)
+  lldatasplit = getLLDatasplit(datasplit)
+
+  assertShapeConform(indata, shapeinfo.input, lldatasplit == "all", name)
 
   present.properties = getDataProperties(indata)
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
-  if (datasplit %in% c("most", "all")) {
-    splitinto = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
+  if (lldatasplit %in% c("most", "all")) {
+    splitinto = c("numeric", "factor", "other", if (lldatasplit == "all") "ordered")
     indata = splitColsByType(splitinto, indata)
   }
-  list(indata = indata, properties = present.properties)
+
+  list(indata = getIndata(indata, datasplit), properties = present.properties, tempdata = indata)
 }
 
 # do the check of the trafo's return value
@@ -78,7 +82,9 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 #  - check properties are allowed
 #  - get a shape info object
 #  --> return list(outdata, shapeinfo)
-handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, properties.adding, name) {
+handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, name) {
+  outdata = rebuildOutdata(outdata, tempdata, datasplit)
+  datasplit = getLLDatasplit(datasplit)
   recombined = if (is.data.frame(olddata)) {
     recombinedf(olddata, outdata, datasplit, NULL, name)
   } else {
@@ -107,7 +113,9 @@ handleTrafoOutput = function(outdata, olddata, datasplit, allowed.properties, pr
 #  - check the properties are fulfilled
 #  - check the shape is the same as during trafo
 #  --> return the data that can be returned by the outer retrafo layer
-handleRetrafoOutput = function(outdata, olddata, datasplit, allowed.properties, properties.adding, shapeinfo.output, name) {
+handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, shapeinfo.output, name) {
+  outdata = rebuildOutdata(outdata, tempdata, datasplit)
+  datasplit = getLLDatasplit(datasplit)
   if (datasplit %in% c("no", "task")) {
     # target is always split off during retrafo
     datasplit = "target"
@@ -323,6 +331,37 @@ assertPropertiesOk = function(present.properties, allowed.properties, whichfun, 
 ##################################
 ### Task Splitting             ###
 ##################################
+
+# most of CPOFormatCheck doesn't care about "factor", "onlyfactor", "ordered" or "numeric"
+# so we translate those
+getLLDatasplit = function(datasplit) {
+  if (datasplit %in% c("factor", "numeric")) {
+    datasplit = "most"
+  } else if (datasplit %in% c("onlyfactor", "ordered")) {
+    datasplit = "all"
+  }
+  datasplit
+}
+
+getIndata = function(indata, datasplit) {
+  if (datasplit %in% c("factor", "onlyfactor", "ordered", "numeric")) {
+    indata[[ifelse(datasplit == "onlyfactor", "factor", "datasplit")]]
+  } else {
+    indata
+  }
+}
+
+rebuildOutdata = function(outdata, tempdata, datasplit) {
+  if (datasplit %in% c("factor", "onlyfactor", "ordered", "numeric")) {
+    tempdata[[ifelse(datasplit == "onlyfactor", "factor", "datasplit")]] = outdata
+    outdata = tempdata
+  }
+  if (datasplit %in% c("numeric", "most", "all") && is.matrix(outdata$numeric)) {
+    outdata$numeric = as.data.frame(outdata$numeric)
+  }
+  outdata
+}
+
 
 splitColsByType = function(which = c("numeric", "factor", "ordered", "other"), data, types) {
   if (missing(types)) {

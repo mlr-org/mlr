@@ -254,7 +254,7 @@ callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo) {
 
   # the properties of the output should only be the input properties + the ones we're adding
   allowed.properties = union(tin$properties, cpo$properties$properties.needed)
-  tout = handleTrafoOutput(result, data, cpo$datasplit, allowed.properties, cpo$properties$properties.adding, cpo$name)
+  tout = handleTrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties, cpo$properties$properties.adding, cpo$name)
 
   retrafo = makeS3Obj(c("CPOS3RetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
     cpo = setCPOId(cpo, NULL),
@@ -327,7 +327,7 @@ applyCPO.CPOS3Retrafo = function(retrafo, data) {
   # the properties of the output should only be the input properties + the ones we're adding
   allowed.properties = union(tin$properties, cpo$properties$properties.needed)
 
-  handleRetrafoOutput(result, data, cpo$datasplit, allowed.properties, cpo$properties$properties.adding, retrafo$shapeinfo.output, cpo$bare.name)
+  handleRetrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties, cpo$properties$properties.adding, retrafo$shapeinfo.output, cpo$bare.name)
 }
 
 ##################################

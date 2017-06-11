@@ -13,6 +13,8 @@ configureMlr(show.info = TRUE, on.learner.error = "stop", show.learner.output = 
 
 library("testthat")
 
+devtools::test(pkg = "..", filter = "cpo")
+
 devtools::test(pkg = "..", filter = "cpo$")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
