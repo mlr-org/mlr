@@ -117,6 +117,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       prior0 = ifelse(names(prior) %in% -1, prior0, 0)
 
       pnew = newton.optim(p = p, deci = f, label = label, prior1, prior0)
+      diff = sum(abs(pnew - p))
 
       if ( diff > 1e-2) {
         loop = TRUE
