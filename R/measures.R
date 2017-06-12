@@ -1356,13 +1356,13 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 #' @references
-#' Uno H, Cai T, Pencina MJ, D'Agostino RB, Wei LJ.
+#' H. Uno et al.
 #' \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
 #' Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
 cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model"),
   name = "Uno's Concordance index",
-  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno.",
+  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno. Implemented in survAUC::UnoC.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("_survAUC")
     y = getPredictionResponse(pred)
@@ -1378,10 +1378,14 @@ cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 
 #' @export iauc.uno
 #' @rdname measures
 #' @format none
+#' @references
+#' H. Uno et al.
+#' \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
+#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
 iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
   name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
-  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task). Implemented in survAUC::AUC.uno.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("_survAUC")
     max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])

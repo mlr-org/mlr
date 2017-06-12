@@ -414,9 +414,13 @@ He, H. & Garcia, E. A. (2009)
 \emph{Learning from Imbalanced Data.}
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 
-Uno H, Cai T, Pencina MJ, D'Agostino RB, Wei LJ.
+H. Uno et al.
 \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
 Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
+
+H. Uno et al.
+\emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
+Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
 }
 \seealso{
 Other performance: \code{\link{ConfusionMatrix}},
