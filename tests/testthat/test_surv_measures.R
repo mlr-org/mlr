@@ -24,3 +24,20 @@ test_that("survival measures do not do stupid things", {
     }
   }
 })
+
+test_that("setting measure pars works", {
+  mod = train("surv.rpart", wpbc.task)
+  pred = predict(mod, wpbc.task)
+
+  measures = list(setMeasurePars(cindex.uno, max.time = 50), cindex.uno)
+  perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
+  expect_true(perf[1] < perf[2])
+
+  measures = list(setMeasurePars(iauc.uno, max.time = 50), iauc.uno)
+  perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
+  expect_true(perf[1] < perf[2])
+
+  measures = list(setMeasurePars(iauc.uno, resolution = 10), iauc.uno)
+  perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
+  expect_string(all.equal(perf[1], perf[2]))
+})
