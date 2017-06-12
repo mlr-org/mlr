@@ -2,9 +2,12 @@
 % Please edit documentation in R/CPOAuxiliary.R
 \name{\%>>\%}
 \alias{\%>>\%}
+\alias{\%<<\%}
 \title{CPO Composition / Attachment operator}
 \usage{
 cpo1 \%>>\% cpo2
+
+cpo2 \%<<\% cpo1
 }
 \arguments{
 \item{cpo1}{[\code{data.frame} | \code{\link{Task}} | \code{\link{CPO}}]\cr
@@ -51,8 +54,9 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{cpoScale}}, \code{\link{getCPOName}},
   \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter}},
   \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}
+  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
 }

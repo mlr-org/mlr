@@ -14,6 +14,7 @@
 #' @export
 makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                            .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
+                           .data.dependent = TRUE,
                            .properties = character(0),
                            .properties.adding = character(0), .properties.needed = character(0),
                            .properties.data = c("numerics", "factors", "ordered", "missings"),
@@ -29,6 +30,17 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   .datasplit = match.arg(.datasplit)
 
+  assertFlag(.data.dependent)
+
+  if (!.data.dependent) {
+    if (.datasplit %in% c("no", "task")) {
+      stop("When .data.dependent is FALSE, .datasplit must not be 'no' or 'task'")
+    }
+    if (!setequal(.properties.data, c("numerics", "factors", "ordered", "missings"))) {
+      stop("When .data.dependent is FALSE, .properties.data must have the default value.")
+    }
+  }
+
   if (length(possible.properties[[.type]])) {
     assertSubset(.properties, possible.properties[[.type]])
     if (.type.out != .type && length(setdiff(.properties, .properties.adding))) {
@@ -42,7 +54,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     if (.type.out == "surv" && .type != "surv" && length(.properties.needed) != 1) {
       stop("For conversion to 'surv', there must be exactly one '.properties.needed' argument given.")
     }
-    assertSubset(.properties.needed, possible.properties[[.type]])
+    assertSubset(.properties.needed, possible.properties[[.type.out]])
   } else if (length(.properties.needed)) {
     stopf("Output type is %s, so .properties.needed must be empty.", .type.out)
   }
@@ -50,9 +62,10 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "targetbound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .properties = .properties, .properties.adding = .properties.adding,
-    .properties.needed = .properties.needed, .properties.target = .properties.data,
-    .type.from = .type, .type.to = .type.out, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
+    .datasplit = .datasplit, .data.dependent = .data.dependent, .properties = .properties,
+    .properties.adding = .properties.adding, .properties.needed = .properties.needed,
+    .properties.target = .properties.data, .type.from = .type, .type.to = .type.out,
+    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
 }
 
 

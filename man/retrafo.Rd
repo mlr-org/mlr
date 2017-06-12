@@ -8,7 +8,7 @@ retrafo(data)
 }
 \arguments{
 \item{data}{[\code{data.frame} | \code{\link{Task}} | \code{\link{WrappedModel}}]\cr
-The retrafo of a \code{\link{\%>>\%}} chain applied to a data set.}
+The result of a \code{\link{\%>>\%}} chain applied to a data set.}
 }
 \value{
 [\code{CPORetrafo}]. The retransformation function that can be
@@ -74,7 +74,9 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter}},
   \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
-  \code{\link{retrafo<-}}, \code{\link{setHyperPars}}
+  \code{\link{retrafo<-}}, \code{\link{setHyperPars}},
+  \code{\link{tagInvert}}
 }

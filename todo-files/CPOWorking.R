@@ -36,3 +36,19 @@ debugger()
 codetools::checkUsagePackage("mlr")
 
 rm(list = ls())
+
+tst = makeCPOTargetOp("test", .type = "regr",
+                      cpo.trafo = {
+                        control = 0
+                        data.frame(target = target + 1000)
+                      }, cpo.retrafo = { data })
+
+df = data.frame(a = c(1, 2, 1), b = c(1, , 1))
+
+getTaskData(df %>>% tst(), target.extra = TRUE)
+
+x = train(tst() %>>% makeLearner("regr.lm"), makeRegrTask(data=df, target='a'))
+
+x$learner.model$next.model$learner.model
+
+getLearnerType(makeLearner("classif.logreg"))

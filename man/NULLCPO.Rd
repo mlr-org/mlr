@@ -4,7 +4,7 @@
 \name{NULLCPO}
 \alias{NULLCPO}
 \title{CPO composition neutral element}
-\format{An object of class \code{NULLCPO} (inherits from \code{CPOPrimitive}, \code{PCORetrafo}, \code{CPO}) of length 0.}
+\format{An object of class \code{NULLCPO} (inherits from \code{CPOPrimitive}, \code{CPORetrafo}, \code{CPO}) of length 0.}
 \usage{
 NULLCPO
 }
@@ -18,9 +18,10 @@ Other CPO: \code{\link{CPO}}, \code{\link{\%>>\%}},
   \code{\link{cpoScale}}, \code{\link{getCPOName}},
   \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter}},
   \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}
+  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
 }
 \keyword{datasets}

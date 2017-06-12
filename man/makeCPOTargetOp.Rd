@@ -6,11 +6,11 @@
 \usage{
 makeCPOTargetOp(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   .datasplit = c("target", "most", "all", "no", "task", "factor",
-  "onlyfactor", "ordered", "numeric"), .properties = character(0),
-  .properties.adding = character(0), .properties.needed = character(0),
-  .properties.data = c("numerics", "factors", "ordered", "missings"),
-  .type = c("cluster", "classif", "multilabel", "regr", "surv"),
-  .type.out = .type, cpo.trafo, cpo.retrafo)
+  "onlyfactor", "ordered", "numeric"), .data.dependent = TRUE,
+  .properties = character(0), .properties.adding = character(0),
+  .properties.needed = character(0), .properties.data = c("numerics",
+  "factors", "ordered", "missings"), .type = c("cluster", "classif",
+  "multilabel", "regr", "surv"), .type.out = .type, cpo.trafo, cpo.retrafo)
 }
 \description{
 Create a CPO constructor.
@@ -23,8 +23,10 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
-  \code{\link{getRetrafoState}}, \code{\link{makeCPO}},
+  \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter}},
+  \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}
+  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
 }

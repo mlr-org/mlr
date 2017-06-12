@@ -13,7 +13,7 @@ NULL
 #' FIXME to come
 #'
 #' @family CPO
-NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "PCORetrafo", "CPO"))  # nolint
+NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 
 ##################################
 ### %>>% Operator              ###
@@ -60,6 +60,14 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "PCORetrafo", "CPO"))  # nolint
 #' @export
 `%>>%` = function(cpo1, cpo2) {
   UseMethod("%>>%")
+}
+
+#' @title CPO Composition / Attachment operator
+#'
+#' @rdname grapes-greater-than-greater-than-grapes
+#' @export
+`%<<%` = function(cpo2, cpo1) {
+  cpo1 %>>% cpo2
 }
 
 #' @export
@@ -233,7 +241,7 @@ getCPOName = function(cpo) {
 #' See examples.
 #'
 #' @param data [\code{data.frame} | \code{\link{Task}} | \code{\link{WrappedModel}}]\cr
-#'   The retrafo of a \code{\link{\%>>\%}} chain applied to a data set.
+#'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
 #'
 #' @return [\code{CPORetrafo}]. The retransformation function that can be
 #'   applied to new data.
@@ -276,6 +284,20 @@ retrafo = function(data) {
   UseMethod("retrafo")
 }
 
+
+#' @title Get the prediction inverse function
+#'
+#' @description
+#' Gets the retrafo function that can be applied to the prediction.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
+#'
+#' @family CPO
+#' @export
+inverter = function(data) {
+  UseMethod("inverter")
+}
 
 #' @title Get the internal state of a Retrafo object
 #'
@@ -343,6 +365,25 @@ makeRetrafoFromState = function(constructor, state) {
   UseMethod("retrafo<-")
 }
 
+
+#' @title Set the prediction inverse function
+#'
+#' @description
+#' Sets the retrafo function that can be applied to the prediction.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   Something to be applied to a \code{\link{\%>>\%}} chain.
+#'
+#' @param value [\code{CPORetrafo}]\cr
+#'   An inverter chain.
+#'
+#' @family CPO
+#' @export
+inverter = function(data, value) {
+  UseMethod("inverter")
+}
+
+
 #' @title the ID of a CPO object.
 #'
 #' @description
@@ -389,6 +430,20 @@ setCPOId = function(cpo, id) {
 #' @export
 getCPOProperties = function(cpo) {
   UseMethod("getCPOProperties")
+}
+
+
+#' @title Get the CPO Kind
+#'
+#' @description
+#' Is either "trafo", "retrafo", or "inverter"
+#'
+#' @param cpo [\code{CPO}]\cr
+#'   The CPO.
+#'
+#' @export
+getCPOKind = function(cpo) {
+  UseMethod("getCPOKind")
 }
 
 ##################################
@@ -571,6 +626,234 @@ singleModelRetrafo = function(model, prev) {
   stop("Cannot change retrafo of a model!")
 }
 
+
+##################################
+### Inverter                   ###
+##################################
+
+
+#' @export
+inverter.default = function(data) {
+  res = attr(data, "inverter")
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    warningf("data is not a Task or data.frame.\n%s\n%s",
+      "are you sure you are applying 'retrafo' to the result",
+      "of a %>>% transformation?")
+  } else if (is.null(res)) {
+    res = NULLCPO
+  }
+  res
+}
+
+
+#' @export
+`inverter<-.default` = function(data, value) {
+  if (!is.null(value)) {
+    assertClass(value, "CPOInverter")
+  }
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    warningf("argument is neither a Task nor data.frame.\n%s\n%s",
+      "are you sure you are applying it to the input or",
+      "result of a %>>% transformation?")
+  }
+  if ("NULLCPO" %in% class(value)) {
+    value = NULL
+  }
+  attr(data, "inverter") = value
+  data
+}
+
+#' @title Set the Inverter Tag
+#'
+#' @description
+#' Tag the data that when it is sent through
+#' a \code{\link{\%>>\%}} chain, the inverter
+#' will be kept.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   The data to tag
+#'
+#' @param set [\code{logical(1)}]\cr
+#'   Whether to set the tag  or unset it. Default is TRUE.
+#'
+#' @family CPO
+#' @export
+tagInvert = function(data, set = TRUE) {
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    stop("data is not a Task or data.frame.")
+  }
+  assertFlag(set)
+  if (set) {
+    attr(data, "keep.inverter") = TRUE
+  } else {
+    attr(data, "keep.inverter") = NULL
+  }
+  data
+}
+
+#' @title Get the Inverter Tag
+#'
+#' @description
+#' Check whether the data is tagged for inverter saving
+#' when it is sent through a \code{\link{\%>>\%}} chain.
+#'
+#' @param data [\code{data.frame} | \code{\link{Task}}]\cr
+#'   The result of a \code{\link{\%>>\%}} chain applied to a data set.
+#'
+#' @family CPO
+#' @export
+hasTagInvert = function(data) {
+  if (!any(c("data.frame", "Task") %in% class(data))) {
+    stop("data is not a Task or data.frame.")
+  }
+  identical(attr(data, "keep.inverter"), TRUE)
+}
+
+#' @title Invert Target Preprocessing
+#'
+#' @description
+#' Invert the transformation, done on the target column(s)
+#' of a data set, after prediction.
+#'
+#' Use either a retrafo object, or an inverter retrieved with
+#' \code{\link{inverter}} from a data object that was fed through a retrafo
+#' chain with \code{\link{tagInvert}} set to \code{TRUE}.
+#'
+#' If the retrafo object used had no target-bound transformations,
+#' this is mostly a no-op, except that it possibly changes the task description
+#' of the prediction.
+#'
+#' @param inverter [\code{CPORetrafo}]\cr
+#'   The retrafo or inverter to apply
+#' @param prediction [\code{\link{Prediction}} | \code{matrix} | \code{data.frame}]\cr
+#'   The prediction to invert
+#' @return A transformed \code{\link{Prediction}} if a prediction was given,
+#'   or a \code{data.frame}. The 'truth' column(s) of the prediction will be dropped.
+#'
+#' @export
+invert = function(inverter, prediction) {
+  assertClass(inverter, "CPORetrafo")
+  have.prediction = "Prediction" %in% class(prediction)
+  if (have.prediction) {
+    preddf = prediction$data
+    probs = grepl("^prob(\\..*)$", names(preddf))
+    if (length(probs)) {
+      preddf = preddf[probs]
+    } else if ("se" %in% names(preddf)) {
+      preddf = preddf[c("response", "se")]
+    } else {
+      preddf = preddf$response
+    }
+    preddf = sanitizePrediction(preddf)
+  } else {
+    preddf = sanitizePrediction(prediction)
+  }
+
+  inverted = invertCPO(inverter, preddf)
+  invdata = inverted$new.prediction
+  assert(all(grepl("^se$|^(prob|response)(\\..*)?$", names(invdata))))
+  if (is.null(inverted$new..td)) {
+    cat("(Inversion was a noop)\n")
+    prediction
+  } else if (have.prediction) {
+    makePrediction(inverted$new.td, row.names = rownames(invdata), id = prediction$data$id,
+      truth = NULL, predict.type = type, predict.threshold = NULL, y = invdata, time = prediction$time,
+      error = prediction$error, dump = prediction$dump)
+  } else {
+    invdata
+  }
+}
+
+sanitizePrediction = function(data) {
+  if (is.data.frame(data)) {
+    if (length(unique(sapply(data, function(x) class(x)[1]))) != 1) {
+      stop("Prediction had columns of multiple modes.")
+    }
+    if (ncol(data) > 1) {
+      data = as.matrix(data)
+    } else {
+      data = data[[1]]
+    }
+  }
+  if (is.matrix(data) && ncol(data) == 1) {
+    data = data[, 1, drop = TRUE]
+  }
+  if (!is.logical(data) && !is.numeric(data) && !is.factor(data)) {
+    stop("Data did not conform to any possible prediction: Was not numeric, factorial, or logical")
+  }
+  data
+}
+
+inferPredictionTypePossibilities = function(data) {
+  # numeric ---> regr, no SE
+  # 2-D numeric matrix / data.frame --> c(regr, SE)
+
+  # N-D numeric matrix --> cluster "prob"
+  # numeric --> cluster "response"
+
+  # N-D numeric matrix --> classif "prob"
+  # factor --> classif "response"
+
+  # N-D numeric matrix --> multilabel prob
+  # N-D logical matrix --> multilabel response
+
+  # numeric --> surv response
+  data = sanitizePrediction(data)
+  if (is.matrix(data)) {
+    if (mode(data) == "logical") {
+      return("multilabel")
+    }
+    return(c("cluster", "classif", "multilabel", "surv", if (ncol(data) == 2) "regr"))
+  }
+
+  if (is.factor(data)) {
+    "classif"
+  } else if (!is.numeric(data)) {
+    stop("Data did not conform to any possible prediction: Was not numeric or factorial")
+  } else {
+    areWhole = function(x, tol = .Machine$double.eps^0.25)  all(abs(x - round(x)) < tol)
+    c(if (areWhole(data)) "cluster", "surv", "regr")
+  }
+}
+
+getPredResponseType = function(data, typepossibilities) {
+  assertSubset(typepossibilities, cpo.tasktypes, empty.ok = FALSE)
+  errout = function() stopf("Data did not conform to any of the possible prediction types %s", collapse(typepossibilities))
+  data = sanitizePrediction(data)
+  if (is.matrix(data)) {
+    if (mode(data) == "logical") {
+      if (!"multilabel" %in% typepossibilities) errout()
+      return("response")
+    }
+    if (ncol(data) == 2) {
+      if (identical(typepossibilities, "regr")) {
+        return("se")
+      }
+      return(c("se", "prob"))
+    }
+    if ("regr" %in% typepossibilities) errout()
+    return("prob")
+  }
+
+  if (is.factor(data)) {
+    if (!"classif" %in% typepossibilities) errout()
+    return("response")
+  }
+  if (!numeric(data)) errout()
+  areWhole = function(x, tol = .Machine$double.eps^0.25)  all(abs(x - round(x)) < tol)
+  if (!areWhole(data) && !"surv" %in% typepossibilities && !"regr" %in% typepossibilities) errout()
+  "response"
+}
+
+# 'prediction' is whatever type the prediction usually has (depending on type). must return
+# a list (new.prediction, new.td)
+#
+# new.td may be NULL if no target change occurred.
+invertCPO = function(inverter, prediction) {
+  UseMethod("invertCPO")
+}
+
+
 ##################################
 ### Chaining                   ###
 ##################################
@@ -686,6 +969,10 @@ getCPOName.NULLCPO = function(cpo) {
 #' @export
 getCPOBound.NULLCPO = function(cpo) {
   character(0)
+}
+
+invertCPO.NULLCPO = function(inverter, prediction) {
+  list(new.prediction = prediction, new.td = NULL)
 }
 
 #' @export
@@ -990,7 +1277,9 @@ captureEnvWrapper = function(fun) {
 #  - apply retrafo to prediction
 #  - also a function retrafoPrediction, with optional data argument
 #  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
-# makeMultilabelTask: 'positive' seems to be without effect
+#- check shapeinfo when reattaching retrafos
+#- is.nullcpo
+#- bare model (through retrafo() = NULL)
 
 # tests to-do:
 # getLearnerCPO: do hyperparameter changes propagate?
@@ -1014,7 +1303,7 @@ captureEnvWrapper = function(fun) {
 # 'bound' well behaved: after splitting, uniting, for trafos and retrafos
 # changing task names in targetbound, datasplit 'no'
 # targetbound CPO: switching classif levels switches 'positive'
-#
+# - targetbound functional: must set function with one argument or with two and 'data', 'target'
 # changing task with 'no', smth else: it is classif, and
 #  - number of classes changes
 #  - positive / negative get switched
@@ -1022,3 +1311,7 @@ captureEnvWrapper = function(fun) {
 #  - can convert data.frames if input type allows cluster
 #  - check data instead of target didn't change in "no", "target"
 #  - return target instead of data in other split modes
+#  - inverter kind disappears when composed with a data dependent targetbound, reappears after split
+#  - inverter does nothing when no targetbounds
+# - invert() function
+#inferPredictionTypePossibilities, getResponseType: with examples

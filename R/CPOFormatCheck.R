@@ -662,10 +662,11 @@ constructTask = function(oldtask, data, target, type, id, censtype) {
     }
   }
 
-  constructor = switch(
-      multilabel = makeMultilabelTask,
-      regr = makeRegrTask,
-      surv = makeSurvTask)
+  constructor = switch(type,
+    classif = makeClassifTask,
+    multilabel = makeMultilabelTask,
+    regr = makeRegrTask,
+    surv = makeSurvTask)
   constructor(id = id, data = data, target = target)
 }
 

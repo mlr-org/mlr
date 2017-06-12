@@ -26,7 +26,8 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter}},
   \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}
+  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
 }
