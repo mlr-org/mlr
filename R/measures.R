@@ -1355,6 +1355,10 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 #' @export cindex.uno
 #' @rdname measures
 #' @format none
+#' @references
+#' Uno H, Cai T, Pencina MJ, D'Agostino RB, Wei LJ.
+#' \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
+#' Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
 cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model"),
   name = "Uno's Concordance index",

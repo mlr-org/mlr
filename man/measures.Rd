@@ -413,6 +413,10 @@ overwritten using \code{\link{setMeasurePars}}.
 He, H. & Garcia, E. A. (2009)
 \emph{Learning from Imbalanced Data.}
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
+
+Uno H, Cai T, Pencina MJ, D'Agostino RB, Wei LJ.
+\emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
+Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
 }
 \seealso{
 Other performance: \code{\link{ConfusionMatrix}},
