@@ -118,10 +118,6 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
       pnew = newton.optim(p = p, deci = f, label = label, prior1, prior0)
 
-
-      pnew = newton.optim(t = t, p = p, deci = f, label = label, prior1, prior0)
-      diff = sum(abs(pnew - p))
-
       if ( diff > 1e-2) {
         loop = TRUE
         p = pnew
@@ -139,7 +135,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
 
 
-newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
+newton.optim = function(p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
   # Construct initial values:
   # target support in array t
   # initial function value in fval
