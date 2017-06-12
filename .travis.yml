@@ -54,7 +54,7 @@ before_script:
 script:
   - |
     R CMD build .
-    travis_wait 70 R CMD check mlr*.tar.gz
+    travis_wait 100 R CMD check mlr*.tar.gz
 
 after_success:
   - git checkout master

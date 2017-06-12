@@ -1280,6 +1280,7 @@ captureEnvWrapper = function(fun) {
 #- check shapeinfo when reattaching retrafos
 #- is.nullcpo
 #- bare model (through retrafo() = NULL)
+#- feature subsetting: names, indices, grepl
 
 # tests to-do:
 # getLearnerCPO: do hyperparameter changes propagate?
