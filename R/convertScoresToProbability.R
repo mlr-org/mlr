@@ -108,12 +108,14 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     }
   } else if (optim.method == "Newton") {
     while (loop) {
-      label = ifelse(p[2] * f + p[1] > 0, 1, 0)
-      prior1 = sum(label)
-      prior0 = length(label) - prior1
-      t =  prob.outlier(p, f)
+      label = ifelse(p[2] * f + p[1] > 0, 1, -1) # real labels in paper 1, -1
+      prior = table(label)
+      prior1 = prior[names(prior) == "1"]
+      prior1 = ifelse(names(prior) %in% 1, prior1, 0)
+      prior0 = prior[names(prior) == "-1"]
+      prior0 = ifelse(names(prior) %in% -1, prior0, 0)
 
-      pnew = newton.optim(t = t, p = p, deci = f, label = label, prior1, prior0)
+      pnew = newton.optim(p = p, deci = f, label = label, prior1, prior0)
       diff = sum(abs(pnew - p))
 
       if ( diff > 1e-2) {
@@ -121,7 +123,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
         p = pnew
       } else {
         loop = FALSE
-        list$pnew = pnew
+        list$p = pnew
         list$probability = prob.outlier(pnew, f)
       }
     }
@@ -133,7 +135,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
 
 
-newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
+newton.optim = function(p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
   # Construct initial values:
   # target support in array t
   # initial function value in fval
@@ -179,11 +181,13 @@ newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minste
     }
     if (abs(g1) < 1e-5 && abs(g2) < 1e-5) break #stopping criteria
 
-    # Compute modified Newton directions
+    # Compute modified Newton directions/ finding newton direction
     det = h11 * h22 - h21 * h21
     dA = -(h22 * g1 - h21 * g2) / det
     dB = -(-h21 * g1 + h11 * g2) / det
     gd = g1 * dA + g2 * dB
+
+    # line search
     stepsize = 1
     while (stepsize >= minstep) { #Line search
       newA = A + stepsize * dA
@@ -207,7 +211,9 @@ newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minste
       break
     }
   }
-  if (it >= maxiter) messagef("Reaching maximum iterations")
+  if (it >= maxiter-1) {
+    message("Reaching maximum iterations")
+  }
   return(c(A,B))
 }
 
