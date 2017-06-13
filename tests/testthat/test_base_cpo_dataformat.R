@@ -656,7 +656,8 @@ test_that("format change between trafo and retrafo are detected", {
 test_that("attaching cpo with mismatching properties gives error", {
   # check along multiple levels
   # even after detaching from learner
-type = "o"
+
+
   expectCpo = function(cpo) {
     if ("CPO" %in% class(cpo)) {
       retr = cpo.df1 %>>% cpo

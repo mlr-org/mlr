@@ -44,7 +44,8 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
 # how does mlr predict handle this stuff? they just drop target columns by name
 prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.input, name) {
 
-  indata = prepareRetrafoData(indata, datasplit, allowed.properties, shapeinfo.input, name)$data
+  prepared = prepareRetrafoData(indata, datasplit, allowed.properties, shapeinfo.input, name)
+  indata = prepared$data
 
   lldatasplit = getLLDatasplit(datasplit)
 
@@ -54,7 +55,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
     indata = splitColsByType(splitinto, indata)
   }
 
-  list(indata = getIndata(indata, datasplit), properties = present.properties, tempdata = indata)
+  list(indata = getIndata(indata, datasplit), properties = prepared$properties, tempdata = indata)
 }
 
 # do the check of the trafo's return value
@@ -164,8 +165,8 @@ prepareRetrafoData = function(data, datasplit, allowed.properties, shapeinfo.inp
         stopf("Some, but not all target columns of training data found in new data. This is probably an error.\n%s%s: %s",
           "Offending column", ifelse(length(badcols) > 1, "s", ""), collapse(badcols, sep = ", "))
       }
-      data = dropNamed(data, shapeinfo.input$target)
       target = data[shapeinfo.input$target]
+      data = dropNamed(data, shapeinfo.input$target)
     } else {
       target = data[character(0)]
       shapeinfo.input$target = NULL
@@ -182,7 +183,7 @@ prepareRetrafoData = function(data, datasplit, allowed.properties, shapeinfo.inp
   present.properties = getDataProperties(data, character(0))
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
-  list(data = data, target = target)
+  list(data = data, target = target, properties = present.properties)
 }
 
 

@@ -379,8 +379,8 @@ makeRetrafoFromState = function(constructor, state) {
 #'
 #' @family CPO
 #' @export
-inverter = function(data, value) {
-  UseMethod("inverter")
+`inverter<-` = function(data, value) {
+  UseMethod("inverter<-")
 }
 
 
@@ -793,14 +793,14 @@ invert = function(inverter, prediction, predict.type = "response") {
       },
       cluster = makeClusterTaskDesc(tdname, data.frame(), NULL, NULL),
       regr = makeRegrTaskDesc(tdname, data.frame(target = numeric(0)), "target", NULL, NULL),
-      multilabel = makeMultilabelTask(tdname, as.data.frame(invdata)[integer(0), ], colnames(invdata), NULL, NULL),
-      surv = makeSur(tdname, data.frame(target1 = numeric(0), target2 = numeric(0)), c("target1", "target2"), NULL, NULL, "rcens"),
+      multilabel = makeMultilabelTaskDesc(tdname, as.data.frame(invdata)[integer(0), ], colnames(invdata), NULL, NULL),
+      surv = makeSurvTaskDesc(tdname, data.frame(target1 = numeric(0), target2 = numeric(0)), c("target1", "target2"), NULL, NULL, "rcens"),
       # assuming rcens since nothing else ever gets used.
       stop("unknown outputtype"))
   }
   if (have.prediction) {
     makePrediction(inverted$new.td, row.names = rownames(invdata), id = prediction$data$id,
-      truth = inverted$new.truth, predict.type = type, predict.threshold = NULL, y = invdata, time = prediction$time,
+      truth = inverted$new.truth, predict.type = predict.type, predict.threshold = NULL, y = invdata, time = prediction$time,
       error = prediction$error, dump = prediction$dump)
   } else {
     invdata
@@ -1391,3 +1391,4 @@ captureEnvWrapper = function(fun) {
 # stateless
 #  - retrafo target bound is possible, if there are targets!
 #- is.nullcpo
+# chaining retrafo to learner that doesn't support the predict.type it needs

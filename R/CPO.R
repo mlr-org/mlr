@@ -137,6 +137,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   if (is.null(.predict.type)) {
     # for databound CPOs, this is the identity.
     .predict.type = c(response = "response", prob = "prob", se = "se")
+    .properties = c(.properties, "prob", "se")
   }
   assertCharacter(.predict.type, any.missing = FALSE, names = "unique")
 
@@ -232,6 +233,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
         properties.adding = .properties.adding,
         properties.needed = .properties.needed),
       bound = .cpotype,
+      predict.type = .predict.type,
       # --- CPOS3Primitive part
       id = NULL,
       bare.par.set = .par.set,
@@ -242,9 +244,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       retrafo = cpo.retrafo,
       convertfrom = .type.from,
       convertto = .type.to,
-      predict.type = .predict.type,
       data.dependent = .data.dependent,
-      hybrid.inverter = .cpotype == "targetbound" && stateless)
+      hybrid.inverter = .cpotype == "targetbound" && .stateless)
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
@@ -262,11 +263,11 @@ makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
   inverter$truth = prepareRetrafoData(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)$target
 }
 
-makeCPOS3Retrafo = function(cpo, state, prev.retrafo, tin, tout) {
+makeCPOS3Retrafo = function(cpo, state, prev.retrafo, shapeinfo.input, shapeinfo.output) {
   retrafo = makeCPOS3RetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (cpo$hybrid.inverter) "inverter"))
   # --- only in "retrafo" kind
-  retrafo$shapeinfo.input = tin$shapeinfo
-  retrafo$shapeinfo.output = tout$shapeinfo
+  retrafo$shapeinfo.input = shapeinfo.input
+  retrafo$shapeinfo.output = shapeinfo.output
   retrafo$properties.needed = cpo$properties$properties.needed
   retrafo
 }
@@ -296,7 +297,7 @@ makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
 # the leaves, CPOS3Tree the nodes.
 # CPOS3Retrafo is a linked list, which gets automatically
 # constructed in 'callCPO'.
-callCPO = function(cpo, data, prev.retrafo, build.inverter, prev.inverter) {
+callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
   UseMethod("callCPO")
 }
 
@@ -362,7 +363,7 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
     if (!"control" %in% ls(trafoenv) && !cpo$stateless) {
       stopf("CPO %s cpo.trafo did not create a 'control' object. Use the .stateless flag on creation if you don't need a control object.", cpo$name)
     }
-    state = ifelse(cpo$stateless, NULL, trafoenv$control)
+    state = if (cpo$stateless) NULL else trafoenv$control
   }
 
   # the properties of the output should only be the input properties + the ones we're adding
@@ -372,9 +373,9 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
 
 
 
-  retrafo = ifelse(build.retrafo, makeCPOS3Retrafo(cpo, state, prev.retrafo, tin, tout), prev.retrafo)
+  retrafo = if (build.retrafo) makeCPOS3Retrafo(cpo, state, prev.retrafo, tin$shapeinfo, tout$shapeinfo) else prev.retrafo
 
-  inverter = ifelse(build.inverter && cpo$bound == "targetbound", makeCPOS3Inverter(cpo, state, prev.inverter, data, tin$shapeinfo), prev.inverter)
+  inverter = if (build.inverter && cpo$bound == "targetbound") makeCPOS3Inverter(cpo, state, prev.inverter, data, tin$shapeinfo) else prev.inverter
 
   list(data = tout$outdata, retrafo = retrafo, inverter = inverter)
 }
@@ -420,7 +421,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
   assertClass(retrafo, "CPOS3Retrafo")
   cpo = retrafo$cpo
   if (!"retrafo" %in% retrafo$kind) {
-    stop("Object %s is an inverter, not a retrafo.", cpo$barename)
+    stop("Object %s is an inverter, not a retrafo.", cpo$bare.name)
   }
 
   if (!is.null(retrafo$prev.retrafo)) {
@@ -488,6 +489,7 @@ composeCPO.CPOS3 = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOS3")
   parameterClashAssert(cpo1, cpo2, cpo1$name, cpo2$name)
   newprops = compositeProperties(cpo1$properties, cpo2$properties, cpo1$name, cpo2$name)
+  newpt = chainPredictType(cpo1$predict.type, cpo2$predict.type, cpo1$name, cpo2$name)
 
   makeS3Obj(c("CPOS3Tree", "CPOS3", "CPO"),
     # --- CPOS3 Part
@@ -497,6 +499,7 @@ composeCPO.CPOS3 = function(cpo1, cpo2) {
     par.vals = c(cpo1$par.vals, cpo2$par.vals),
     properties = newprops,
     bound = unique(cpo1$bound, cpo2$bound),
+    predict.type = newpt,
     # --- CPOS3Tree part
     first = cpo1,
     second = cpo2)
@@ -516,7 +519,7 @@ as.list.CPOS3Tree = function(x, ...) {
 
 attachCPO.CPOS3 = function(cpo, learner) {
   learner = checkLearner(learner)
-  if (cpo$bound == "targetbound" && !identical(learner$type, cpo$convertto)) {
+  if (!learner$type %in% union(cpo$properties$properties.needed, setdiff(cpo$properties$properties, cpo$properties$properties.adding))) {
     stopf("Cannot combine CPO that outputs type %s with learner of type %s.",
       cpo$convertto, learner$type)
   }
@@ -581,7 +584,11 @@ trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
 predictLearner.CPOS3Learner = function(.learner, .model, .newdata, ...) {
   retrafod = applyCPORetrafoEx(.model$learner.model$retrafo, .newdata, TRUE, NULL)
   prediction = NextMethod(.newdata = retrafod$data)
-  invertCPO(retrafod$inverter, prediction, .learner$predict.type)$new.prediction
+  if (!is.null(retrafod$inverter)) {
+    invertCPO(retrafod$inverter, prediction, .learner$predict.type)$new.prediction
+  } else {
+    prediction
+  }
 }
 
 # get CPO from learner
@@ -755,27 +762,37 @@ composeCPO.CPOS3Retrafo = function(cpo1, cpo2) {
       assertString(cpo1$cpo$convertto)
       assertString(cpo2$cpo$convertfrom)
       if (cpo1$convertto != cpo2$convertfrom) {
-        stop("Incompatible chaining of inverters: %s converts to %s, but %s needs %s.",
-          cpo1$cpo$barename, cpo1$cpo$convertto, cpo2$cpo$barename, cpo2$cpo$barename)
+        stopf("Incompatible chaining of inverters: %s converts to %s, but %s needs %s.",
+          cpo1$cpo$barelname, cpo1$cpo$convertto, cpo2$cpo$bare.name, cpo2$cpo$bare.name)
       }
       compositeProperties(cpo1$cpo$properties, cpo2$cpo$properties, cpo1$cpo$bare.name, cpo2$cpo$bare.name)  # just for checking
     }
     assert(length(cpo1$predict.type) <= 2)  # predict.type cannot be the identity
     assert(length(cpo2$predict.type) <= 2)  # the identity (and only the identity) has more than 2 elements.
   }
-  cpo2$predict.type = sapply(cpo1$predict.type, function(x) unname(cpo2$cpo$predict.type[x]))
-  cpo2$predict.type = cpo2$predict.type[!is.na(cpo2$predict.type)]
-  if (!length(cpo2$predict.type)) {
-    # So this is a bit of a weird situation: The CPO chain would work for trafo AND retrafo, but not for predictions.
-    stop("Incompatible chaining of inverters: %s needs a predict.type being%s '%s', but %s can only deliver type%s '%s'.",
-      getCPOName(cpo1), ifelse(length(cpo1$predict.type) == 1, " one of", ""), collapse(cpo1$predict.type, sep = "', '"),
-      cpo2$cpo$barename, ifelse(length(cpo2$cpo$predict.type) > 1, "s", ""), collapse(cpo2$cpo$predict.type, sep = "', '"))
-  }
+
+  cpo2$predict.type = chainPredictType(cpo1$predict.type, cpo2$cpo$predict.type, getCPOName(cpo1), cpo2$cpo$bare.name)
   cpo2$prev.retrafo = cpo1
   cpo2$bound = unique(cpo2$cpo$bound, cpo1$bound)
   cpo2$kind = newkind
   cpo2
 }
+
+# chain CPOs with predict.type pt1 %>>% pt2  # FIXME: sort this where it belongs
+chainPredictType = function(pt1, pt2, name1, name2) {
+  result = sapply(pt1, function(x) unname(pt2[x]))
+  result = result[!is.na(result)]
+  if (!length(result)) {
+    # So this is a bit of a weird situation: The CPO chain would work for trafo AND retrafo, but not for predictions.
+    stopf("Incompatible chaining of inverters: %s needs a predict.type being%s '%s', but %s can only deliver type%s '%s'.",
+      name1, ifelse(length(pt1) == 1, " one of", ""), collapse(pt1, sep = "', '"),
+      name2, ifelse(length(pt2) > 1, "s", ""), collapse(pt2, sep = "', '"))
+  }
+  result
+}
+
+
+
 
 # RETRAFO splitting
 
@@ -790,7 +807,7 @@ as.list.CPOS3Retrafo = function(x, ...) {
   x$predict.type = x$cpo$predict.type
   x$bound = x$cpo$bound
   if (identical(x$kind, "retrafo")) {
-    if (cpo$hybrid.inverter) {
+    if (x$cpo$hybrid.inverter) {
       x$kind = c("retrafo", "inverter")
     }
   }
@@ -857,14 +874,7 @@ makeRetrafoFromState.CPOS3Constructor = function(constructor, state) {
     assertSubset(names(bare$par.vals), names(bare$bare.par.set$pars))
   }
 
-  retrafo = insert(makeS3Obj(c("CPOS3RetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
-    cpo = bare,
-    state = newstate,
-    properties.needed = bare$properties$properties.needed,
-    prev.retrafo = NULL,
-    bound = bare$bound,
-    kind = c("retrafo", if (bare$hybrid.inverter) "inverter")),
-    data)
+  makeCPOS3Retrafo(bare, newstate, NULL, data$shapeinfo.input, data$shapeinfo.output)
 }
 
 # Param Sets

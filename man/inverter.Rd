@@ -2,27 +2,16 @@
 % Please edit documentation in R/CPOAuxiliary.R
 \name{inverter}
 \alias{inverter}
-\alias{inverter}
 \title{Get the prediction inverse function}
 \usage{
-inverter(data, value)
-
-inverter(data, value)
+inverter(data)
 }
 \arguments{
 \item{data}{[\code{data.frame} | \code{\link{Task}}]\cr
 The result of a \code{\link{\%>>\%}} chain applied to a data set.}
-
-\item{value}{[\code{CPORetrafo}]\cr
-An inverter chain.}
-
-\item{data}{[\code{data.frame} | \code{\link{Task}}]\cr
-Something to be applied to a \code{\link{\%>>\%}} chain.}
 }
 \description{
 Gets the retrafo function that can be applied to the prediction.
-
-Sets the retrafo function that can be applied to the prediction.
 }
 \seealso{
 Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
@@ -31,19 +20,7 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
-  \code{\link{hasTagInvert}},
-  \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
-  \code{\link{makeRetrafoFromState}},
-  \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
-
-Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
-  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
-  \code{\link{attachCPO}}, \code{\link{chainCPO}},
-  \code{\link{cpoPca}}, \code{\link{cpoScale}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
-  \code{\link{getRetrafoState}},
-  \code{\link{hasTagInvert}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{makeCPOTargetOp}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},

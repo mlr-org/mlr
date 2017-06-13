@@ -98,7 +98,8 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     .properties.needed = c(.properties.needed, unname(.predict.type["response"]))
   }
 
-  .properties.adding = setdiff(names(.predict.type), c("response", unname(.predict.type)))
+  .properties.adding = c(.properties.adding, setdiff(names(.predict.type), c("response", unname(.predict.type))))
+  .properties = c(.properties, setdiff(names(.predict.type), "response"))
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "targetbound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
@@ -164,7 +165,7 @@ invertCPO.CPOS3Retrafo = function(inverter, prediction, predict.type) {
 # ultimate.predict.type: for output: what is the ultimate type we want?
 validateSupposedPredictionFormat = function(prediction, type, predict.type, ultimate.predict.type, direction = c("input", "output"), inverter) {
   direction = match.arg(direction)
-  name = inverter$cpo$barename
+  name = inverter$cpo$bare.name
   if (!type %in% inferPredictionTypePossibilities(prediction)) {
     # data format in 'prediction' is not compatible with what this CPO is supposed to have converted to
     stopf("Prediction %s of CPO Inverter %s is not compatible with supposed type %s",
