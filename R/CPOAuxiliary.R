@@ -1392,3 +1392,4 @@ captureEnvWrapper = function(fun) {
 #  - retrafo target bound is possible, if there are targets!
 #- is.nullcpo
 # chaining retrafo to learner that doesn't support the predict.type it needs
+# stateless cpo.trafo-less CPOs

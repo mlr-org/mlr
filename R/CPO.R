@@ -187,7 +187,19 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     required.arglist.trafo$data = substitute()
   }
   required.arglist.trafo$target = substitute()
-  cpo.trafo = makeFunction(substitute(cpo.trafo), required.arglist.trafo, env = parent.frame())
+  trafo.expr = substitute(cpo.trafo)
+  if (!.stateless || (is.recursive(trafo.expr) && identical(trafo.expr[[1]], quote(`{`))) || !is.null(cpo.trafo)) {
+    cpo.trafo = makeFunction(substitute(cpo.trafo), required.arglist.trafo, env = parent.frame())
+  } else if (.cpotype == "targetbound") {
+    stop("A target-bound CPO must have a cpo.trafo function, even if stateless.")
+  } else if (.datasplit == "task") {
+    stop("A stateless CPO without cpo.trafo cannot have .datasplit 'task'.")
+  } else {
+    if (.datasplit == "no") {
+      .datasplit = "target"
+    }
+    cpo.trafo = NULL
+  }
   cpo.trafo = captureEnvWrapper(cpo.trafo)
 
   retrafo.expr = substitute(cpo.retrafo)
@@ -334,10 +346,16 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
     assert(cpo$bound == "targetbound")
     tin$indata$data = NULL
   }
-  result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), tin$indata))
+  if (is.null(cpo$trafo)) {
+    # stateless trafo-less CPO
+    tin$indata$target = NULL
+    result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), tin$indata))
+  } else {
+    result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), tin$indata))
 
-  trafoenv = environment(cpo$trafo)$.ENV
-  assign(".ENV", NULL, envir = environment(cpo$trafo))
+    trafoenv = environment(cpo$trafo)$.ENV
+    assign(".ENV", NULL, envir = environment(cpo$trafo))
+  }
   assertChoice(cpo$type, c("functional", "object"))
   if (cpo$type == "functional") {
     state = trafoenv$cpo.retrafo
@@ -360,7 +378,7 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
     }
     trafoenv$data = NULL
   } else {  # cpo$type == "object"
-    if (!"control" %in% ls(trafoenv) && !cpo$stateless) {
+    if (!cpo$stateless && !"control" %in% ls(trafoenv)) {
       stopf("CPO %s cpo.trafo did not create a 'control' object. Use the .stateless flag on creation if you don't need a control object.", cpo$name)
     }
     state = if (cpo$stateless) NULL else trafoenv$control
