@@ -319,10 +319,10 @@ callCPO = function(cpo, data, prev.retrafo, build.inverter, prev.inverter) {
 
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
-  if ("NULLCPO" %in% class(prev.retrafo)) {
+  if (is.nullcpo(prev.retrafo)) {
     prev.retrafo = NULL
   }
-  if ("NULLCPO" %in% class(prev.inverter)) {
+  if (is.nullcpo(prev.inverter)) {
     prev.inverter = NULL
   }
   if (!build.inverter) {
@@ -470,7 +470,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
 applyCPO.CPOS3Retrafo = function(retrafo, data) {
   build.inverter = hasTagInvert(data)
   prev.inverter = inverter(data)
-  if ("NULLCPO" %in% class(prev.inverter)) {
+  if (is.nullcpo(prev.inverter)) {
     prev.inverter = NULL
   }
   if (!build.inverter && !is.null(prev.inverter)) {
@@ -623,7 +623,7 @@ applyCPO.CPOS3 = function(cpo, task) {
   }
   build.inverter = hasTagInvert(task)
   prev.inverter = inverter(task)
-  if ("NULLCPO" %in% class(prev.inverter)) {
+  if (is.nullcpo(prev.inverter)) {
     prev.inverter = NULL
   }
   if (!build.inverter && !is.null(prev.inverter)) {

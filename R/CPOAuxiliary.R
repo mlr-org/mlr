@@ -114,7 +114,7 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 
 #' @export
 `%>>%.CPO` = function(cpo1, cpo2) {
-  if ("NULLCPO" %in% class(cpo2)) {
+  if (is.nullcpo(cpo2)) {
     cpo1
   } else if ("CPO" %in% class(cpo2)) {
     # compose two CPOs
@@ -131,7 +131,7 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 
 #' @export
 `%>>%.CPORetrafo` = function(cpo1, cpo2) {
-  if ("NULLCPO" %in% class(cpo2)) {
+  if (is.nullcpo(cpo2)) {
     cpo1
   } else if ("CPORetrafo" %in% class(cpo2)) {
     composeCPO(cpo1, cpo2)
@@ -629,7 +629,7 @@ singleModelRetrafo = function(model, prev) {
       "are you sure you are applying it to the input or",
       "result of a %>>% transformation?")
   }
-  if ("NULLCPO" %in% class(value)) {
+  if (is.nullcpo(value)) {
     value = NULL
   }
   attr(data, "retrafo") = value
@@ -671,7 +671,7 @@ inverter.default = function(data) {
       "are you sure you are applying it to the input or",
       "result of a %>>% transformation?")
   }
-  if ("NULLCPO" %in% class(value)) {
+  if (is.nullcpo(value)) {
     value = NULL
   }
   attr(data, "inverter") = value
@@ -766,7 +766,7 @@ invert = function(inverter, prediction, predict.type = "response") {
   }
   preddf = sanitizePrediction(preddf)
 
-  if ("NULLCPO" %in% class(inverter) || length(inverter$predict.type) > 2) {  # predict.type is the identity
+  if (is.nullcpo(inverter) || length(inverter$predict.type) > 2) {  # predict.type is the identity
     cat("(Inversion was a no-op.)\n")
     # we check this here and not earlier because the user might rely on inverter()
     # to check his data for consistency
@@ -1023,6 +1023,10 @@ invertCPO.NULLCPO = function(inverter, prediction, predict.type) {
 
 invertCPO.CPO = function(inverter, prediction, predict.type) {
   stop("Cannot invert prediction with a CPO object; need a CPORetrafo object.")
+}
+
+is.nullcpo = function(cpo) {  # nolint
+  "NULLCPO" %in% class(cpo)
 }
 
 #' @export
@@ -1335,9 +1339,6 @@ captureEnvWrapper = function(fun) {
 }
 
 # TO-DO:
-#  - retrafo target bound is possible, if there are targets!
-
-
 #- check shapeinfo when reattaching retrafos
 #- is.nullcpo
 #- bare model (through retrafo() = NULL)
@@ -1388,3 +1389,5 @@ captureEnvWrapper = function(fun) {
 # chaining inverters with incompatible conversion
 # if no control is referenceed in retrafo, no complaint about missing 'control'. otherwise, complain.
 # after attaching CPO, predict.type stays the same if possible
+# stateless
+#  - retrafo target bound is possible, if there are targets!
