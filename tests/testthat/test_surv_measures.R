@@ -41,3 +41,17 @@ test_that("setting measure pars works", {
   perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
   expect_string(all.equal(perf[1], perf[2]))
 })
+
+test_that("hand constructed tests", {
+  n = 100
+  time = sort(rexp(n, 0.1)) + 1
+  data = data.frame(time = time, status = 1, x1 = order(time))
+  task = makeSurvTask(id = "dummy", data = data, target = c("time", "status"))
+  mod = suppressWarnings(train("surv.coxph", task))
+
+  pred = predict(mod, task)
+  expect_numeric(-getPredictionResponse(pred), sorted = TRUE, any.missing = FALSE) # perfect predictor
+
+  perf = performance(pred = pred, model = mod, task = task, measures = list(cindex, cindex.uno, iauc.uno))
+  expect_equal(unname(perf), c(1, 1, 0.99))
+})
