@@ -446,6 +446,21 @@ getCPOKind = function(cpo) {
   UseMethod("getCPOKind")
 }
 
+
+#' @title Get the CPO predict.type
+#'
+#' @description
+#' Get the possible predict.types this CPO is able to handle.
+#'
+#' @param cpo [\code{CPO}]\cr
+#'   The CPO.
+#'
+#' @export
+getCPOPredictType = function(cpo) {
+  UseMethod("getCPOPredictType")
+}
+
+
 ##################################
 ### CPO-Learner Disassembly    ###
 ##################################
@@ -731,8 +746,9 @@ hasTagInvert = function(data) {
 #'   or a \code{data.frame}. The 'truth' column(s) of the prediction will be dropped.
 #'
 #' @export
-invert = function(inverter, prediction) {
+invert = function(inverter, prediction, predict.type = "response") {
   assertClass(inverter, "CPORetrafo")
+
   have.prediction = "Prediction" %in% class(prediction)
   if (have.prediction) {
     preddf = prediction$data
@@ -744,20 +760,47 @@ invert = function(inverter, prediction) {
     } else {
       preddf = preddf$response
     }
-    preddf = sanitizePrediction(preddf)
+    assert(is.data.frame(preddf))
   } else {
-    preddf = sanitizePrediction(prediction)
+    preddf = prediction
+  }
+  preddf = sanitizePrediction(preddf)
+
+  if ("NULLCPO" %in% class(inverter) || length(inverter$predict.type) > 2) {  # predict.type is the identity
+    cat("(Inversion was a no-op.)\n")
+    # we check this here and not earlier because the user might rely on inverter()
+    # to check his data for consistency
+    prediction
   }
 
-  inverted = invertCPO(inverter, preddf)
+  inverted = invertCPO(inverter, preddf, predict.type)
   invdata = inverted$new.prediction
   assert(all(grepl("^se$|^(prob|response)(\\..*)?$", names(invdata))))
-  if (is.null(inverted$new..td)) {
-    cat("(Inversion was a noop)\n")
-    prediction
-  } else if (have.prediction) {
+  if (is.null(inverted$new.td)) {
+    assert("retrafo" %in% getCPOKind(inverter))  # only hybrid retrafos should return a NULL td
+
+    outputtype = intersect(getCPOProperties(inverter)$properties, cpo.tasktypes)
+    assert(length(outputtype) == 1)  # hybrid retrafos should always have one, otherwise it is a bug.
+
+    tdconstructor = get(sprintf("make%sTaskDesc", stri_trans_totitle(outputtype)), mode = "function")
+
+    tdname = "[CPO CONSTRUCTED]",
+
+    inverted$new.td = switch(outputtype,
+      classif = {
+        levels = ifelse(predict.type == "prob", colnames(invdata), levels(invdata))
+        makeClassifTaskDesc(tdname, data.frame(target = factor(character(0), levels = levels)), "target", NULL, NULL, levels[1])
+      },
+      cluster = makeClusterTaskDesc(tdname, data.frame(), NULL, NULL),
+      regr = makeRegrTaskDesc(tdname, data.frame(target = numeric(0)), "target", NULL, NULL),
+      multilabel = makeMultilabelTask(tdname, as.data.frame(invdata)[integer(0), ], colnames(invdata), NULL, NULL),
+      surv = makeSur(tdname, data.frame(target1 = numeric(0), target2 = numeric(0)), c("target1", "target2"), NULL, NULL, "rcens"),
+      # assuming rcens since nothing else ever gets used.
+      stop("unknown outputtype"))
+  }
+  if (have.prediction) {
     makePrediction(inverted$new.td, row.names = rownames(invdata), id = prediction$data$id,
-      truth = NULL, predict.type = type, predict.threshold = NULL, y = invdata, time = prediction$time,
+      truth = inverted$new.truth, predict.type = type, predict.threshold = NULL, y = invdata, time = prediction$time,
       error = prediction$error, dump = prediction$dump)
   } else {
     invdata
@@ -778,6 +821,9 @@ sanitizePrediction = function(data) {
   if (is.matrix(data) && ncol(data) == 1) {
     data = data[, 1, drop = TRUE]
   }
+  if (is.logical(data) && !is.matrix(data)) {
+    data = matrix(data, ncol = 1)
+  }
   if (!is.logical(data) && !is.numeric(data) && !is.factor(data)) {
     stop("Data did not conform to any possible prediction: Was not numeric, factorial, or logical")
   }
@@ -785,19 +831,18 @@ sanitizePrediction = function(data) {
 }
 
 inferPredictionTypePossibilities = function(data) {
-  # numeric ---> regr, no SE
-  # 2-D numeric matrix / data.frame --> c(regr, SE)
+  # the canonical data layout, after sanitizePrediction
+  # regr response: numeric vector
+  # regr se: numeric 2-column matrix
+  # cluster response: integer vector
+  # cluster prob: numeric matrix. This could also be a 1-D matrix but will be returned as numeric vector
+  # classif response: logical vector
+  # classif prob: numeric matrix > 1 column, except for oneclass possibly (numeric vector)
+  # surv response: numeric vector
+  # surv prob: assuming a numeric matrix > 1 column, but doesn't seem to currently exist
+  # multiclass response: logical matrix > 1 column
+  # multiclass prob: matrix > 1 column
 
-  # N-D numeric matrix --> cluster "prob"
-  # numeric --> cluster "response"
-
-  # N-D numeric matrix --> classif "prob"
-  # factor --> classif "response"
-
-  # N-D numeric matrix --> multilabel prob
-  # N-D logical matrix --> multilabel response
-
-  # numeric --> surv response
   data = sanitizePrediction(data)
   if (is.matrix(data)) {
     if (mode(data) == "logical") {
@@ -816,6 +861,7 @@ inferPredictionTypePossibilities = function(data) {
   }
 }
 
+# if 'typepossibilities' has one element, this will also return one element EXCEPT FOR CLASSIF, CLUSTER
 getPredResponseType = function(data, typepossibilities) {
   assertSubset(typepossibilities, cpo.tasktypes, empty.ok = FALSE)
   errout = function() stopf("Data did not conform to any of the possible prediction types %s", collapse(typepossibilities))
@@ -842,14 +888,14 @@ getPredResponseType = function(data, typepossibilities) {
   if (!numeric(data)) errout()
   areWhole = function(x, tol = .Machine$double.eps^0.25)  all(abs(x - round(x)) < tol)
   if (!areWhole(data) && !"surv" %in% typepossibilities && !"regr" %in% typepossibilities) errout()
-  "response"
+  c("response", if (any(c("classif", "cluster") %in% typepossibilities)) "prob")
 }
 
 # 'prediction' is whatever type the prediction usually has (depending on type). must return
-# a list (new.prediction, new.td)
+# a list (new.prediction, new.td, new.truth)
 #
-# new.td may be NULL if no target change occurred.
-invertCPO = function(inverter, prediction) {
+# new.td & new.truth may be NULL if no target change occurred.
+invertCPO = function(inverter, prediction, predict.type) {
   UseMethod("invertCPO")
 }
 
@@ -971,8 +1017,12 @@ getCPOBound.NULLCPO = function(cpo) {
   character(0)
 }
 
-invertCPO.NULLCPO = function(inverter, prediction) {
-  list(new.prediction = prediction, new.td = NULL)
+invertCPO.NULLCPO = function(inverter, prediction, predict.type) {
+  list(new.prediction = prediction, new.td = NULL, new.truth = NULL)
+}
+
+invertCPO.CPO = function(inverter, prediction, predict.type) {
+  stop("Cannot invert prediction with a CPO object; need a CPORetrafo object.")
 }
 
 #' @export
@@ -1045,6 +1095,18 @@ summary.CPOObject = function(object, ...) {
 #' @export
 print.CPORetrafo = function(x, ...) {
   first = TRUE
+  kind = getCPOKind(x)
+  pt = getCPOPredictType(x)
+  if (length(pt) == 3) {
+    assert("retrafo" %in% kind)
+    kind = "retrafo"
+  }
+  catf("CPO %s chain", collapse(stri_trans_totitle(kind), sep = " / "), newline = FALSE)
+  if ("inverter" %in% kind) {
+    catf("(able to predict '%s')", collapse(pt, sep = "', '"))
+  } else {
+    cat("\n")
+  }
   for (primitive in as.list(x)) {
     if (!first) {
       cat("=>")
@@ -1273,14 +1335,17 @@ captureEnvWrapper = function(fun) {
 }
 
 # TO-DO:
-#- target retrafo (parameter 'targetbound')
-#  - apply retrafo to prediction
-#  - also a function retrafoPrediction, with optional data argument
-#  - target always a df in retrafo, given as 'target' parameter. data parameter is optional (and missing if applied to a prediction)
+#  - retrafo target bound is possible, if there are targets!
+
+
 #- check shapeinfo when reattaching retrafos
 #- is.nullcpo
 #- bare model (through retrafo() = NULL)
 #- feature subsetting: names, indices, grepl
+# --> but only those which support that? --> but only ignoring properties then?
+# --> how about as a further datasplit-kind of property. If given, properties.adding must be 0, properties must be maximal.
+# --> how about as an added parameter and automatic wrapping. much simpler, and setHyperPars friendly.
+# --> how about subsetting is possible, but invalidates properties.adding
 
 # tests to-do:
 # getLearnerCPO: do hyperparameter changes propagate?
@@ -1314,5 +1379,12 @@ captureEnvWrapper = function(fun) {
 #  - return target instead of data in other split modes
 #  - inverter kind disappears when composed with a data dependent targetbound, reappears after split
 #  - inverter does nothing when no targetbounds
+#  - keep the truth
 # - invert() function
+#  - inverse keeps truth information, even if not data dependent
+#  - apply retrafo to prediction
 #inferPredictionTypePossibilities, getResponseType: with examples
+# incompatibility of cpo prediction and predict type
+# chaining inverters with incompatible conversion
+# if no control is referenceed in retrafo, no complaint about missing 'control'. otherwise, complain.
+# after attaching CPO, predict.type stays the same if possible

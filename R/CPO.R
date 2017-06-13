@@ -101,11 +101,12 @@
 #' @export
 makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                    .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
+                   .stateless = FALSE,
                    .properties = c("numerics", "factors", "ordered", "missings"),
                    .properties.adding = character(0), .properties.needed = character(0),
                    .properties.target = c("cluster", "classif", "multilabel", "regr", "surv",
                      "oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens"),
-                   cpo.trafo, cpo.retrafo) {
+                    cpo.trafo, cpo.retrafo) {
   # dotted parameter names are necessary to avoid problems with partial argument matching.
   # The reason cpo.trafo and cpo.retrafo are not dotted is that they always need to be given.
   # If that changes, they would also neede to be dotted.
@@ -118,19 +119,20 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "databound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .data.dependent = TRUE, .properties = .properties,
+    .datasplit = .datasplit, .data.dependent = TRUE, .stateless = .stateless, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
-    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
+    .predict.type = NULL, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
 }
 
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
                           .datasplit, .data.dependent, .properties, .properties.adding, .properties.needed,
-                          .properties.target, .type.from, .type.to, cpo.trafo, cpo.retrafo, ...) {
+                          .properties.target, .type.from, .type.to, .predict.type, cpo.trafo, cpo.retrafo, ...) {
   .cpotype = match.arg(.cpotype)
   assertFlag(.data.dependent)
   assertString(.cpo.name)
   assertList(.par.vals, names = "unique")
+  assertFlag(.stateless)
 
   if (is.null(.par.set)) {
     .par.set = paramSetSugar(..., .pss.env = parent.frame())
@@ -140,6 +142,11 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   assertCharacter(.properties.needed, unique = TRUE)
   assertCharacter(.properties.adding, unique = TRUE)
   assertCharacter(.properties.target, unique = TRUE)
+  if (is.null(.predict.type)) {
+    # for databound CPOs, this is the identity.
+    .predict.type = c(response = "response", prob = "prob", se = "se")
+  }
+  assertCharacter(.predict.type, any.missing = FALSE, names = "unique")
 
   if (.cpotype == "targetbound") {
     assertChoice(.type.from, cpo.tasktypes)
@@ -166,9 +173,9 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 
   # these parameters are either special parameters given to the constructor function (id),
   # special parameters given to the cpo.trafo function (data, target), special parameters given to the
-  # cpo.retrafo function (control),
+  # cpo.retrafo function (predict.type, control),
 
-  reserved.params = c("data", "target", "control", "id")
+  reserved.params = c("data", "target", "predict.type", "control", "id")
   if (any(names(.par.set$pars) %in% reserved.params)) {
     stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
@@ -195,12 +202,17 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     required.arglist.retrafo = funargs
     if (.cpotype == "targetbound") {
       required.arglist.retrafo$target = substitute()
+      required.arglist.retrafo$predict.type = substitute()
     }
     if (.data.dependent) {
       required.arglist.retrafo$data = substitute()
     }
-    required.arglist.retrafo$control = substitute()
+    if (.stateless) {
+      required.arglist.retrafo$control = substitute()
+    }
     cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame())
+  } else if (.stateless) {
+    stop("Cannot have a functional stateless CPO.")
   }
 
   funargs = insert(funargs, list(id = NULL))
@@ -233,17 +245,63 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       id = NULL,
       bare.par.set = .par.set,
       datasplit = .datasplit,
+      stateless = .stateless
       type = ifelse(is.null(cpo.retrafo), "functional", "object"),
       trafo = cpo.trafo,
       retrafo = cpo.retrafo,
       convertfrom = .type.from,
       convertto = .type.to,
+      predict.type = .predict.type,
       data.dependent = .data.dependent,
       data.caching = .cpotype == "targetbound" && .data.dependent)
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
 }
+
+
+makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
+  if (cpo$data.caching) {
+    inverter.indata = prepareRetrafoInput(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)
+  } else {
+    inverter.indata = NULL
+  }
+  if (!"Task" %in% class(data)) {
+    data = makeClusterTask("CPO Generated", data, check.data = FALSE)
+  }
+
+  inverter = makeCPOS3RetrafoBasic(cpo, state, prev.inverter, "inverter")
+  # --- only in pure "inverter" kind
+  inverter$indatatd = getTaskDesc(data)
+  inverter$inverter.indata = inverter.indata
+  inverter$truth = prepareRetrafoData(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)$target
+}
+
+makeCPOS3Retrafo = function(cpo, state, prev.retrafo, tin, tout) {
+  retrafo = makeCPOS3RetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (!cpo$data.caching) "inverter"))
+  # --- only in "retrafo" kind
+  retrafo$shapeinfo.input = tin$shapeinfo
+  retrafo$shapeinfo.output = tout$shapeinfo
+  retrafo$properties.needed = cpo$properties$properties.needed
+  retrafo
+}
+
+
+makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
+  retrafo = makeS3Obj(c("CPOS3RetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
+    cpo = setCPOId(cpo, NULL),
+    state = state,
+    prev.retrafo = NULL,
+    # --- Target Bound things
+    bound = cpo$bound,
+    predict.type = cpo$predict.type  # named list type to predict --> needed type
+    kind = kind)
+  if (!is.null(prev.retrafo)) {
+    retrafo = composeCPO(prev.retrafo, retrafo)
+  }
+  retrafo
+}
+
 
 ##################################
 ### Primary Operations         ###
@@ -253,7 +311,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 # the leaves, CPOS3Tree the nodes.
 # CPOS3Retrafo is a linked list, which gets automatically
 # constructed in 'callCPO'.
-callCPO = function(cpo, data, prev.retrafo) {
+callCPO = function(cpo, data, prev.retrafo, build.inverter, prev.inverter) {
   UseMethod("callCPO")
 }
 
@@ -266,7 +324,7 @@ callCPO = function(cpo, data, prev.retrafo) {
 # - returns list(data, retrafo = [CPORetrafo object])
 
 # attaches prev.retrafo to the returned retrafo object, if present.
-callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo, build.inverter = FALSE, prev.inverter = NULL) {
+callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
   if ("NULLCPO" %in% class(prev.retrafo)) {
     prev.retrafo = NULL
   }
@@ -287,7 +345,7 @@ callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo, build.inverter = FALS
 
   tin = prepareTrafoInput(data, cpo$datasplit, cpo$properties$properties, cpo$name)
   if (!cpo$data.dependent) {
-    assert(cpo$bound == "target")
+    assert(cpo$bound == "targetbound")
     tin$indata$data = NULL
   }
   result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), tin$indata))
@@ -297,10 +355,11 @@ callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo, build.inverter = FALS
   assertChoice(cpo$type, c("functional", "object"))
   if (cpo$type == "functional") {
     state = trafoenv$cpo.retrafo
-    if (cpo$data.caching) {
-      if (is.null(state) || !isTRUE(checkFunction(state, args = c("target", "data"), nargs = 2))) {
-        stopf(".data.dependent targetbound CPO %s cpo.trafo must set a variable 'cpo.retrafo'\n%s",
-          cpo$name, "to a function with two arguments 'target' and 'data'.")
+    if (cpo$bound == "targetbound") {
+      requiredargs = c("target", "predict.type", if (cpo$data.dependent) "data")
+      if (is.null(state) || !isTRUE(checkFunction(state, args = requiredargs, nargs = 2))) {
+        stopf('.data.dependent targetbound CPO %s cpo.trafo must set a variable "cpo.retrafo"\n%s"%s".',
+          cpo$name, "to a function with two arguments ", collapse(requiredargs, sep = '", "'))
       }
     } else if (is.null(state) || !isTRUE(checkFunction(state, nargs = 1))) {
       stopf("CPO %s cpo.trafo did not set a variable 'cpo.retrafo' to a function with one argument.", cpo$name)
@@ -316,9 +375,11 @@ callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo, build.inverter = FALS
     trafoenv$data = NULL
   } else {  # cpo$type == "object"
     if (!"control" %in% ls(trafoenv)) {
-      stopf("CPO %s cpo.trafo did not create a 'control' object.", cpo$name)
+      if (!cpo$stateless && referencesNonfunctionNames(body(cpo$retrafo))) {
+        stopf("CPO %s cpo.trafo did not create a 'control' object, but retrafo appears to reference a 'control' object.", cpo$name)
+      }
     }
-    state = trafoenv$control
+    state = if (!cpo$stateless) trafoenv$control
   }
 
   # the properties of the output should only be the input properties + the ones we're adding
@@ -326,51 +387,13 @@ callCPO.CPOS3Primitive = function(cpo, data, prev.retrafo, build.inverter = FALS
   tout = handleTrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties, cpo$properties$properties.adding,
     cpo$bound == "targetbound", cpo$convertto, cpo$name)
 
-  retrafo = makeCPOS3Retrafo(cpo, state, prev.retrafo, tin, tout)
 
-  inverter = if (build.inverter) makeCPOS3Inverter(cpo, state, prev.inverter, data, tin$shapeinfo)
+
+  retrafo = ifelse(build.retrafo, makeCPOS3Retrafo(cpo, state, prev.retrafo, tin, tout), prev.retrafo)
+
+  inverter = ifelse(build.inverter && cpo$bound == "targetbound", makeCPOS3Inverter(cpo, state, prev.inverter, data, tin$shapeinfo), prev.inverter)
 
   list(data = tout$outdata, retrafo = retrafo, inverter = inverter)
-}
-
-makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
-  if (cpo$data.caching) {
-    inverter.indata = prepareRetrafoInput(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)
-  } else {
-    inverter.indata = NULL
-  }
-  if (!"Task" %in% class(data)) {
-    data = makeClusterTask("CPO Generated", data, check.data = FALSE)
-  }
-
-  inverter = makeCPOS3RetrafoBasic(cpo, state, prev.inverter, "inverter")
-  # --- only in pure "inverter" kind
-  inverter$indatatd = getTaskDesc(data)
-  inverter$inverter.indata = inverter.indata
-}
-
-makeCPOS3Retrafo = function(cpo, state, prev.retrafo, tin, tout) {
-  retrafo = makeCPOS3RetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (!cpo$data.caching) "inverter"))
-  # --- only in "retrafo" kind
-  retrafo$shapeinfo.input = tin$shapeinfo
-  retrafo$shapeinfo.output = tout$shapeinfo
-  retrafo$properties.needed = cpo$properties$properties.needed
-  retrafo
-}
-
-
-makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
-  retrafo = makeS3Obj(c("CPOS3RetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
-    cpo = setCPOId(cpo, NULL),
-    state = state,
-    # --- Target Bound things
-    bound = cpo$bound,
-    prev.retrafo = NULL,
-    kind = kind)
-  if (!is.null(prev.retrafo)) {
-    retrafo = composeCPO(prev.retrafo, retrafo)
-  }
-  retrafo
 }
 
 # call cpo$first, then cpo$second, and chain the retrafos.
@@ -391,13 +414,13 @@ makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
 #
 # retr.1 <-- retr.2 <-- retr.3 <-- retr.4
 #
-callCPO.CPOS3Tree = function(cpo, data, prev.retrafo) {
+callCPO.CPOS3Tree = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
   first = cpo$first
   second = cpo$second
   first$par.vals = subsetParams(cpo$par.vals, first$par.set, first$name)
   second$par.vals = subsetParams(cpo$par.vals, second$par.set, second$name)
-  intermediate = callCPO(first, data, prev.retrafo)
-  callCPO(second, intermediate$data, intermediate$retrafo)
+  intermediate = callCPO(first, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter)
+  callCPO(second, intermediate$data, build.retrafo, intermediate$retrafo, build.inverter, intermediate$inverter)
 }
 
 # RETRAFO main function
@@ -410,28 +433,23 @@ callCPO.CPOS3Tree = function(cpo, data, prev.retrafo) {
 # - returns the resulting data
 
 # receiver.properties are the properties of the next layer
-applyCPO.CPOS3Retrafo = function(retrafo, data) {
+applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
+  assertClass(retrafo, "CPOS3Retrafo")
   cpo = retrafo$cpo
+  if (!"retrafo" %in% retrafo$kind) {
+    stop("Object %s is an inverter, not a retrafo.", cpo$barename)
+  }
+
   if (!is.null(retrafo$prev.retrafo)) {
     assertSubset(retrafo$prev.retrafo$properties.needed, cpo$properties$properties)  # this is already tested during composition
     assertClass(retrafo$prev.retrafo, "CPOS3Retrafo")
-    data = applyCPO(retrafo$prev.retrafo, data)
-  }
-
-  build.inverter = hasTagInvert(data)
-  prev.inverter = inverter(data)
-  if ("NULLCPO" %in% class(prev.inverter)) {
-    prev.inverter = NULL
-  }
-  if (!build.inverter && !is.null(prev.inverter)) {
-    stop("Data had 'inverter' attribute set, but not the 'keep.inverter' tag.")
+    upper.result = applyCPORetrafoEx(retrafo$prev.retrafo, data, build.inverter, prev.inverter)
+    data = upper.result$data
+    prev.inverter = upper.result$inverter
   }
 
   if (cpo$bound == "targetbound") {
-    if (build.inverter) {
-      inverter(data) = makeCPOS3Inverter(cpo, retrafo$state, prev.inverter, data, retrafo$shapeinfo.input)
-    }
-    return(data)
+    return(callCPO(cpo, data, FALSE, NULL, build.inverter, prev.inverter))
   }
   assert(cpo$bound == "databound")
 
@@ -447,8 +465,30 @@ applyCPO.CPOS3Retrafo = function(retrafo, data) {
   # the properties of the output should only be the input properties + the ones we're adding
   allowed.properties = union(tin$properties, cpo$properties$properties.needed)
 
-  handleRetrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties, cpo$properties$properties.adding, retrafo$shapeinfo.output, cpo$bare.name)
+  list(data = handleRetrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties,
+    cpo$properties$properties.adding, retrafo$shapeinfo.output, cpo$bare.name),
+    inverter = prev.inverter)
 }
+
+applyCPO.CPOS3Retrafo = function(retrafo, data) {
+  build.inverter = hasTagInvert(data)
+  prev.inverter = inverter(data)
+  if ("NULLCPO" %in% class(prev.inverter)) {
+    prev.inverter = NULL
+  }
+  if (!build.inverter && !is.null(prev.inverter)) {
+    stop("Data had 'inverter' attribute set, but not the 'keep.inverter' tag.")
+  }
+  if (!is.null(prev.inverter)) {
+    assertClass(prev.inverter, "CPOS3Retrafo")
+  }
+
+  result = applyCPORetrafoEx(retrafo, data, build.inverter, prev.inverter)
+  data = result$data
+  inverter(data) = result$inverter
+  data
+}
+
 
 ##################################
 ### Trafo Operations           ###
@@ -497,6 +537,7 @@ attachCPO.CPOS3 = function(cpo, learner) {
   if (!"CPOS3Learner" %in% class(learner)) {
     learner = makeBaseWrapper(learner$id, learner$type, learner,
       learner.subclass = c("CPOS3Learner", "CPOLearner"), model.subclass = c("CPOS3Model", "CPOModel"))
+    learner$predict.type = learner$next.learner$predict.type
   } else {
     cpo = composeCPO(cpo, learner$cpo)
   }
@@ -508,14 +549,21 @@ attachCPO.CPOS3 = function(cpo, learner) {
   learner$par.vals = cpo$par.vals
   learner$par.set = cpo$par.set
   learner$id = paste(learner$id, cpo$bare.name, sep = ".")
-  learner
+
+  # possibly need to reset 'predict.type', or just change it to something else.
+  prev.predict.type = learner$next.learner$predict.type
+  next.predict.type = "response"
+  if (prev.predict.type %in% c("response", getLearnerProperties(learner))) {  # if the previous predict.type is still supported
+    next.predict.type = prev.predict.type
+  }
+  setPredictType(learner, next.predict.type)
 }
 
 compositeCPOLearnerProps = function(cpo, learner) {
   props = setdiff(getLearnerProperties(learner), "weights")
   props = union(props, getLearnerType(learner))
   # relevant: we only have an influence on these properties.
-  relevant = c(cpo.dataproperties, cpo.targetproperties, cpo.tasktypes)
+  relevant = c(cpo.dataproperties, cpo.targetproperties, cpo.tasktypes, "prob", "se")
   props.relevant = intersect(props, relevant)
   props.relevant = compositeProperties(cpo$properties,
     list(properties = props.relevant, properties.adding = character(0), properties.needed = character(0)),
@@ -532,7 +580,9 @@ trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
   cpo = .learner$cpo
   cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
 
-  transformed = callCPO(cpo, .task, NULL)
+  # note that an inverter for a model makes no sense, since the inverter is crucially bound to
+  # the data that is supposed to be *predicted*.
+  transformed = callCPO(cpo, .task, TRUE, NULL, FALSE, NULL)
 
   model = makeChainModel(train(.learner$next.learner, transformed$data), "CPOS3WrappedModel")
   model$retrafo = transformed$retrafo
@@ -541,7 +591,9 @@ trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
 
 #' @export
 predictLearner.CPOS3Learner = function(.learner, .model, .newdata, ...) {
-  NextMethod(.newdata = applyCPO(.model$learner.model$retrafo, .newdata))
+  retrafod = applyCPORetrafoEx(.model$learner.model$retrafo, .newdata, TRUE, NULL)
+  prediction = NextMethod(.newdata = retrafod$data)
+  invertCPO(retrafod$inverter, prediction, .learner$predict.type)$new.prediction
 }
 
 # get CPO from learner
@@ -551,15 +603,43 @@ singleLearnerCPO.CPOObjectLearner = function(learner) {
   cpo
 }
 
+#' @export
+setPredictType.CPOS3Learner = function(learner, predict.type) {
+  assertChoice(predict.type, c("response", "prob", "se"))
+  ptconvert = learner$cpo$predict.type
+  supported.below = c(intersect(getLearnerProperties(learner$next.learner), c("prob", "se")), "response")
+  supported.here = names(ptconvert)[ptconvert %in% supported.below]
+  assertSetEqual(supported.here, c(intersect(getLearnerProperties(learner), c("prob", "se")), "response"))
+  if (!predict.type %in% supported.here) {
+    stopf("Trying to predict %s, but %s does not support that.", predict.type, learner$id)
+  }
+  learner$predict.type = predict.type
+  learner$next.learner = setPredictType(learner$next.learner, ptconvert[predict.type])
+  learner
+}
+
 # DATA %>>% CPO
 
 applyCPO.CPOS3 = function(cpo, task) {
   if ("Task" %in% class(task) && !is.null(getTaskWeights(task))) {
     stop("CPO can not handle tasks with weights!")
   }
-  result = callCPO(cpo, task, retrafo(task))
+  build.inverter = hasTagInvert(task)
+  prev.inverter = inverter(task)
+  if ("NULLCPO" %in% class(prev.inverter)) {
+    prev.inverter = NULL
+  }
+  if (!build.inverter && !is.null(prev.inverter)) {
+    stop("Data had 'inverter' attribute set, but not the 'keep.inverter' tag.")
+  }
+  if (!is.null(prev.inverter)) {
+    assertClass(prev.inverter, "CPOS3Retrafo")
+  }
+
+  result = callCPO(cpo, task, TRUE, retrafo(task), build.inverter, prev.inverter)
   task = result$data
   retrafo(task) = result$retrafo
+  inverter(task) = result$inverter
   task
 }
 
@@ -680,6 +760,29 @@ composeCPO.CPOS3Retrafo = function(cpo1, cpo2) {
         list(properties = character(0), properties.adding = character(0), properties.needed = cpo1$properties.needed),
         cpo2$cpo$properties, getCPOName(cpo1), cpo2$cpo$bare.name)$properties.needed
   }
+  if ("inverter" %in% newkind) {
+    if (length(newkind) == 1) {
+      # pure inverter chaining: do myopic property checking
+      assert(length(cpo1$kind) == 1)
+      assertString(cpo1$cpo$convertto)
+      assertString(cpo2$cpo$convertfrom)
+      if (cpo1$convertto != cpo2$convertfrom) {
+        stop("Incompatible chaining of inverters: %s converts to %s, but %s needs %s.",
+          cpo1$cpo$barename, cpo1$cpo$convertto, cpo2$cpo$barename, cpo2$cpo$barename)
+      }
+      compositeProperties(cpo1$cpo$properties, cpo2$cpo$properties, cpo1$cpo$bare.name, cpo2$cpo$bare.name)  # just for checking
+    }
+    assert(length(cpo1$predict.type) <= 2)  # predict.type cannot be the identity
+    assert(length(cpo2$predict.type) <= 2)  # the identity (and only the identity) has more than 2 elements.
+  }
+  cpo2$predict.type = sapply(cpo1$predict.type, function(x) unname(cpo2$cpo$predict.type[x]))
+  cpo2$predict.type = cpo2$predict.type[!is.na(cpo2$predict.type)]
+  if (!length(cpo2$predict.type)) {
+    # So this is a bit of a weird situation: The CPO chain would work for trafo AND retrafo, but not for predictions.
+    stop("Incompatible chaining of inverters: %s needs a predict.type being%s '%s', but %s can only deliver type%s '%s'.",
+      getCPOName(cpo1), ifelse(length(cpo1$predict.type) == 1, " one of", ""), collapse(cpo1$predict.type, sep = "', '"),
+      cpo2$cpo$barename, ifelse(length(cpo2$cpo$predict.type) > 1, "s", ""), collapse(cpo2$cpo$predict.type, sep = "', '"))
+  }
   cpo2$prev.retrafo = cpo1
   cpo2$bound = unique(cpo2$cpo$bound, cpo1$bound)
   cpo2$kind = newkind
@@ -696,6 +799,7 @@ as.list.CPOS3Retrafo = function(x, ...) {
   if ("retrafo" %in% x$kind) {
     x$properties.needed = x$cpo$properties$properties.needed
   }
+  x$predict.type = x$cpo$predict.type
   x$bound = x$cpo$bound
   if (identical(x$kind, "retrafo")) {
     if (!cpo$data.caching) {
@@ -809,4 +913,9 @@ getCPOBound.CPOS3Retrafo = function(cpo) {
 #' @export
 getCPOKind.CPOS3Retrafo = function(cpo) {
   cpo$kind
+}
+
+#' @export
+getCPOPredictType.CPOS3Retrafo = function(cpo) {
+  names(cpo$predict.type)
 }

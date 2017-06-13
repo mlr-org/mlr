@@ -44,37 +44,10 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
 # how does mlr predict handle this stuff? they just drop target columns by name
 prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.input, name) {
 
-  # check that input column names and general types match (num / fac, or num/fac/ordered if datasplit == "all"
-  if ("Task" %in% class(indata)) {
-    if (length(shapeinfo.input$target) && length(getTaskTargetNames(indata))) {
-      # FIXME: this might be too strict: maybe the user wants to retrafo a Task with the target having a different name?
-      # HOWEVER, then either the training data's task didnt matter (and he should have trained with a data.set?), or it
-      #  DID matter, in which case it is probably important to have the same data type <==> target name
-      assertSetEqual(getTaskTargetNames(indata), shapeinfo.input$target, .var.name = sprintf("Target names of Task %s", getTaskId(indata)))
-    }
-    indata = getTaskData(indata, target.extra = TRUE)$data
-  } else {
-    if (any(shapeinfo.input$target %in% names(indata))) {
-      if (!all(shapeinfo.input$target %in% names(indata))) {
-        badcols = intersect(shapeinfo.input$target, names(indata))
-        stopf("Some, but not all target columns of training data found in new data. This is probably an error.\n%s%s: %s",
-          "Offending column", ifelse(length(badcols) > 1, "s", ""), collapse(badcols, sep = ", "))
-      }
-      indata = indata[!names(indata) %in% shapeinfo.input$target]
-    } else {
-      shapeinfo.input$target = NULL
-    }
-  }
-  if (!is.data.frame(indata)) {
-    stopf("Data fed into CPO %s retrafo is not a Task or data.frame.", name)
-  }
+  indata = prepareRetrafoData(indata, datasplit, allowed.properties, shapeinfo.input, name)$data
 
   lldatasplit = getLLDatasplit(datasplit)
 
-  assertShapeConform(indata, shapeinfo.input, lldatasplit == "all", name)
-
-  present.properties = getDataProperties(indata, character(0))
-  assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
   if (lldatasplit %in% c("most", "all")) {
     splitinto = c("numeric", "factor", "other", if (lldatasplit == "all") "ordered")
@@ -165,6 +138,51 @@ handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.pr
   }
 
   recombined
+}
+
+
+# this is a subset of retrafo preparation which also needs to happen for target retrafo
+# data prep.
+# - split data into 'data' and 'target' DFs (latter possibly empty df)
+# - test shapeinfo.input conformity
+prepareRetrafoData = function(data, datasplit, allowed.properties, shapeinfo.input, name) {
+
+  # check that input column names and general types match (num / fac, or num/fac/ordered if datasplit == "all"
+  if ("Task" %in% class(data)) {
+    if (length(shapeinfo.input$target) && length(getTaskTargetNames(data))) {
+      # FIXME: this might be too strict: maybe the user wants to retrafo a Task with the target having a different name?
+      # HOWEVER, then either the training data's task didnt matter (and he should have trained with a data.set?), or it
+      #  DID matter, in which case it is probably important to have the same data type <==> target name
+      assertSetEqual(getTaskTargetNames(data), shapeinfo.input$target, .var.name = sprintf("Target names of Task %s", getTaskId(data)))
+    }
+    target = getTaskData(data, features = character(0))
+    data = getTaskData(data, target.extra = TRUE)$data
+  } else {
+    if (any(shapeinfo.input$target %in% names(data))) {
+      if (!all(shapeinfo.input$target %in% names(data))) {
+        badcols = intersect(shapeinfo.input$target, names(data))
+        stopf("Some, but not all target columns of training data found in new data. This is probably an error.\n%s%s: %s",
+          "Offending column", ifelse(length(badcols) > 1, "s", ""), collapse(badcols, sep = ", "))
+      }
+      data = dropNamed(data, shapeinfo.input$target)
+      target = data[shapeinfo.input$target]
+    } else {
+      target = data[character(0)]
+      shapeinfo.input$target = NULL
+    }
+  }
+  if (!is.data.frame(data)) {
+    stopf("Data fed into CPO %s retrafo is not a Task or data.frame.", name)
+  }
+
+  lldatasplit = getLLDatasplit(datasplit)
+
+  assertShapeConform(data, shapeinfo.input, lldatasplit == "all", name)
+
+  present.properties = getDataProperties(data, character(0))
+  assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
+
+  list(data = data, target = target)
 }
 
 
@@ -463,6 +481,8 @@ splitdf = function(df, datasplit = c("target", "most", "all", "no", "task")) {
     all = list(data = splitColsByType(c("numeric", "factor", "ordered", "other"), df),
       target = df[, character(0), drop = FALSE]))
 }
+
+
 
 ##################################
 ### Task Recombination         ###
