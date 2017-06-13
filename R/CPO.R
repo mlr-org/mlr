@@ -118,7 +118,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 }
 
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
-                          .datasplit, .data.dependent, .properties, .properties.adding, .properties.needed,
+                          .datasplit, .data.dependent, .stateless, .properties, .properties.adding, .properties.needed,
                           .properties.target, .type.from, .type.to, .predict.type, cpo.trafo, cpo.retrafo, ...) {
   .cpotype = match.arg(.cpotype)
   assertFlag(.data.dependent)

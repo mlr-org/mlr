@@ -7,10 +7,24 @@
 makeCPOTargetOp(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   .datasplit = c("target", "most", "all", "no", "task", "factor",
   "onlyfactor", "ordered", "numeric"), .data.dependent = TRUE,
-  .properties = character(0), .properties.adding = character(0),
-  .properties.needed = character(0), .properties.data = c("numerics",
-  "factors", "ordered", "missings"), .type = c("cluster", "classif",
-  "multilabel", "regr", "surv"), .type.out = .type, cpo.trafo, cpo.retrafo)
+  .stateless = FALSE, .properties = character(0),
+  .properties.adding = character(0), .properties.needed = character(0),
+  .properties.data = c("numerics", "factors", "ordered", "missings"),
+  .type = c("cluster", "classif", "multilabel", "regr", "surv"),
+  .type.out = .type, .predict.type = c(response = "response"), cpo.trafo,
+  cpo.retrafo)
+}
+\arguments{
+\item{.predict.type}{[\code{character} | \code{list}]\cr
+Must be a named \code{character}, or named \code{list} of \code{character(1)}, indicating
+what \code{predict.type} (see \link{Prediction}) a prediction must have if the out put prediction
+is to be of some type. E.g. if a CPO converts a \dQuote{regr} \code{Task} into a
+\dQuote{classif} \code{Task}, and if for \dQuote{se} prediction it needs a classification
+learner to give \dQuote{prob} type predictions, while for \dQuote{response} prediction it
+also needs \dQuote{response} predictions, this would be \code{c(response = "response",
+se = "prob")}. The names are the prediction types that are requested from this CPO, the
+values are types that this CPO will request from an underlying learner. If a name is not
+present, the \code{predict.type} is assumed not supported. Default is \code{c(response = "response")}.}
 }
 \description{
 Create a CPO constructor.

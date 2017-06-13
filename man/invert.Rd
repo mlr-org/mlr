@@ -4,7 +4,7 @@
 \alias{invert}
 \title{Invert Target Preprocessing}
 \usage{
-invert(inverter, prediction)
+invert(inverter, prediction, predict.type = "response")
 }
 \arguments{
 \item{inverter}{[\code{CPORetrafo}]\cr

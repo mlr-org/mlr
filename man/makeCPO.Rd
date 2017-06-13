@@ -6,11 +6,12 @@
 \usage{
 makeCPO(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   .datasplit = c("target", "most", "all", "no", "task", "factor",
-  "onlyfactor", "ordered", "numeric"), .properties = c("numerics", "factors",
-  "ordered", "missings"), .properties.adding = character(0),
-  .properties.needed = character(0), .properties.target = c("cluster",
-  "classif", "multilabel", "regr", "surv", "oneclass", "twoclass", "multiclass",
-  "lcens", "rcens", "icens"), cpo.trafo, cpo.retrafo)
+  "onlyfactor", "ordered", "numeric"), .stateless = FALSE,
+  .properties = c("numerics", "factors", "ordered", "missings"),
+  .properties.adding = character(0), .properties.needed = character(0),
+  .properties.target = c("cluster", "classif", "multilabel", "regr", "surv",
+  "oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens"), cpo.trafo,
+  cpo.retrafo)
 }
 \arguments{
 \item{.cpo.name}{[\code{character(1)}]\cr
@@ -56,11 +57,7 @@ change the target column(s) in the \dQuote{no} and \dQuote{task}. If \dQuote{.da
 \dQuote{most} or \dQuote{all}, the \dQuote{$numeric} slot of the returned object may also be a
 \code{matrix}. If \dQuote{.datasplit} is \dQuote{numeric}, the returned object may also be a
 matrix.
-Default is \dQuote{target}.
-If \dQuote{type} is \dQuote{targetbound}, the returned data must be either the full \dQuote{data.frame}
-(if \dQuote{.datasplit} is \dQuote{no}), the full task (if \dQuote{.datasplit} is \dQuote{task}), or
-a \dQuote{data.frame} only consisting of the target features (if \dQuote{.datasplit} is any other value
--- in this case, the returned value is \dQuote{target} as given to the function's \dQuote{target} argument).}
+Default is \dQuote{target}.}
 
 \item{.properties}{[\code{character}]\cr
 The kind if data that the CPO will be able to handle. This can be one or many of: \dQuote{numerics},

@@ -162,7 +162,7 @@ invertCPO.CPOS3Retrafo = function(inverter, prediction, predict.type) {
 # type: the Task type that the prediction should conform to
 # predict.type: what predict.type should prediction conform to?
 # ultimate.predict.type: for output: what is the ultimate type we want?
-validateSupposedPredictionFormat(prediction, type, predict.type, ultimate.predict.type, direction = c("input", "output"), inverter) {
+validateSupposedPredictionFormat = function(prediction, type, predict.type, ultimate.predict.type, direction = c("input", "output"), inverter) {
   direction = match.arg(direction)
   name = inverter$cpo$barename
   if (!type %in% inferPredictionTypePossibilities(prediction)) {
