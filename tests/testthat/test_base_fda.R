@@ -49,9 +49,9 @@ test_that("FDAClassif with multiclass", {
 
 test_that("measures for multiclass", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
-  expect_error(holdout("fdaclassif.knn", fda.multiclass.task, measures = tpr), "multiclass")
-  r = holdout("fdaclassif.knn", fda.multiclass.task, measures = multiclass.au1p)
-  expect_true(!is.na(r$aggr))
+  expect_error(holdout("fdaclassif.knn", fda.multiclass.task, measures = tpr), "ulticlass")
+  r = holdout("fdaclassif.knn", fda.multiclass.task, split = 0.9, measures = list(mmce, ber, timetrain))
+  expect_true(!any(is.na(r$aggr)))
 })
 
 test_that("FDA regr Task will generate an error in case of faulty input", {

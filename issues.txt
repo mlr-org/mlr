@@ -10,8 +10,7 @@ man_roygen/FDA_Task_pars.R - OK
 
 FailureModel - OK
 
-measures -
-  measures must be handled consitently, and shouldnt we have 2 classif properties
+measures - OK
 
 Task_operators - OK
 
@@ -25,8 +24,7 @@ utils - OK
 
 zzz - OK
 
-inst/makeData.R
-  there is some scaling going on for some feautures. is that documented in datasets.R?
+inst/makeData.R - OK
 
 ############
 
@@ -36,9 +34,7 @@ RLearner_fdaregr_FDboost - OK
 
 ############
 
-test_base_fda.R -
-  better headlines for chunks
-  and recheck code
+test_base_fda.R - OK
 
 test_base_helpers.R - OK
 

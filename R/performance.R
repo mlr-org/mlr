@@ -90,9 +90,16 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
 
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
-    if (td$type %nin% props)
-      stopf("Measure %s does not support task type %s!", m$id, td$type)
-    if (td$type == "classif" && length(td$class.levels) > 2L && "classif.multi" %nin% props)
+    # FIXME: not really the best code, but makes sure that normal measurses can also be applied to fda
+    ttype1 = td$type
+    ttype2 = switch(ttype1,
+      fdaclassif = "classif",
+      fdaregr = "regr",
+      ttype1
+    )
+    if (ttype2 %nin% props)
+      stopf("Measure %s does not support task type %s!", m$id, ttype1)
+    if (ttype2 == "classif" && length(td$class.levels) > 2L && "classif.multi" %nin% props)
       stopf("Multiclass problems cannot be used for measure %s!", m$id)
 
     # if we have multiple req.pred.types, check if we have one of them (currently we only need prob)
@@ -108,7 +115,6 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       return(NA_real_)
     }
   }
-
   # if it's a ResamplePrediction, aggregate
   if (inherits(pred, "ResamplePrediction")) {
     if (is.null(pred$data$iter)) pred$data$iter = 1L
