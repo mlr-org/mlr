@@ -109,12 +109,14 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     }
   } else if (optim.method == "Newton") {
     while (loop) {
-      label = ifelse(p[2] * f + p[1] > 0, 1, 0)
-      prior1 = sum(label)
-      prior0 = length(label) - prior1
-      t =  prob.outlier(p, f)
+      label = ifelse(p[2] * f + p[1] > 0, 1, -1) # real labels in paper 1, -1
+      prior = table(label)
+      prior1 = prior[names(prior) == "1"]
+      prior1 = ifelse(names(prior) %in% 1, prior1, 0)
+      prior0 = prior[names(prior) == "-1"]
+      prior0 = ifelse(names(prior) %in% -1, prior0, 0)
 
-      pnew = newton.optim(t = t, p = p, deci = f, label = label, prior1, prior0)
+      pnew = newton.optim(p = p, deci = f, label = label, prior1, prior0)
       diff = sum(abs(pnew - p))
 
       if ( diff > 1e-2) {
@@ -134,7 +136,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
 
 
-newton.optim = function(t, p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
+newton.optim = function(p, deci, label, prior1, prior0, maxiter = 100, minstep = 1e-10, sigma = 1e-12) {
   # Construct initial values:
   # target support in array t
   # initial function value in fval
