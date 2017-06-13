@@ -784,7 +784,7 @@ invert = function(inverter, prediction, predict.type = "response") {
 
     tdconstructor = get(sprintf("make%sTaskDesc", stri_trans_totitle(outputtype)), mode = "function")
 
-    tdname = "[CPO CONSTRUCTED]",
+    tdname = "[CPO CONSTRUCTED]"
 
     inverted$new.td = switch(outputtype,
       classif = {
@@ -1340,7 +1340,6 @@ captureEnvWrapper = function(fun) {
 
 # TO-DO:
 #- check shapeinfo when reattaching retrafos
-#- is.nullcpo
 #- bare model (through retrafo() = NULL)
 #- feature subsetting: names, indices, grepl
 # --> but only those which support that? --> but only ignoring properties then?
@@ -1391,3 +1390,4 @@ captureEnvWrapper = function(fun) {
 # after attaching CPO, predict.type stays the same if possible
 # stateless
 #  - retrafo target bound is possible, if there are targets!
+#- is.nullcpo

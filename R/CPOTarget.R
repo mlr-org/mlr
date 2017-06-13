@@ -122,7 +122,7 @@ invertCPO.CPOS3Retrafo = function(inverter, prediction, predict.type) {
     # make sure some things that should always be true are actually true
     assertString(cpo$convertfrom)
     assertString(cpo$convertto)
-    assert(!"retrafo" %in% inverter$kind || !cpo$data.caching)  # for data caching inverters, no hybrids are created
+    assert(!"retrafo" %in% inverter$kind || cpo$stateless)  # for data caching inverters, no hybrids are created
     assert(("retrafo" %in% inverter$kind) == is.null(inverter$inverter.indata))
 
     if (!predict.type %in% names(inverter$predict.type)) {
@@ -138,15 +138,18 @@ invertCPO.CPOS3Retrafo = function(inverter, prediction, predict.type) {
 
     prediction = validateSupposedPredictionFormat(prediction, cpo$convertto, input.predict.type, predict.type, "input", inverter)
     args = list(target = prediction, predict.type = output.predict.type)
-    if (cpo$data.caching) {
-      args$data = inverter$inverter.indata
-    }
     assertChoice(cpo$type, c("functional", "object"))
-    if (cpo$type == "object") {
+    if (cpo$type == "functional") {
+      result = do.call(cpo$state, args)
+    } else {
       args = insert(args, cpo$par.vals)
+      if (!cpo$stateless) {
+        args$control = inverter$state
+      }
+      result = do.call(cpo$retrafo, args)
     }
 
-    result = do.call(cpo$state, args)
+
     result = sanitizePrediction(result)
     result = validateSupposedPredictionFormat(result, cpo$convertfrom, output.predict.type, predict.type, "output", inverter)
   }

@@ -49,14 +49,6 @@
 #'   \code{matrix}. If \dQuote{.datasplit} is \dQuote{numeric}, the returned object may also be a
 #'   matrix.
 #'   Default is \dQuote{target}.
-
-
-#'   If \dQuote{type} is \dQuote{targetbound}, the returned data must be either the full \dQuote{data.frame}
-#'   (if \dQuote{.datasplit} is \dQuote{no}), the full task (if \dQuote{.datasplit} is \dQuote{task}), or
-#'   a \dQuote{data.frame} only consisting of the target features (if \dQuote{.datasplit} is any other value
-#'   -- in this case, the returned value is \dQuote{target} as given to the function's \dQuote{target} argument).
-
-
 #' @param .properties [\code{character}]\cr
 #'   The kind if data that the CPO will be able to handle. This can be one or many of: \dQuote{numerics},
 #'   \dQuote{factors}, \dQuote{ordered}, \dQuote{missings}.
@@ -203,11 +195,10 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     if (.cpotype == "targetbound") {
       required.arglist.retrafo$target = substitute()
       required.arglist.retrafo$predict.type = substitute()
-    }
-    if (.data.dependent) {
+    } else if (.data.dependent) {
       required.arglist.retrafo$data = substitute()
     }
-    if (.stateless) {
+    if (!.stateless) {
       required.arglist.retrafo$control = substitute()
     }
     cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame())
@@ -245,7 +236,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       id = NULL,
       bare.par.set = .par.set,
       datasplit = .datasplit,
-      stateless = .stateless
+      stateless = .stateless,
       type = ifelse(is.null(cpo.retrafo), "functional", "object"),
       trafo = cpo.trafo,
       retrafo = cpo.retrafo,
@@ -288,7 +279,7 @@ makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
     prev.retrafo = NULL,
     # --- Target Bound things
     bound = cpo$bound,
-    predict.type = cpo$predict.type  # named list type to predict --> needed type
+    predict.type = cpo$predict.type,  # named list type to predict --> needed type
     kind = kind)
   if (!is.null(prev.retrafo)) {
     retrafo = composeCPO(prev.retrafo, retrafo)
@@ -350,7 +341,7 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
   if (cpo$type == "functional") {
     state = trafoenv$cpo.retrafo
     if (cpo$bound == "targetbound") {
-      requiredargs = c("target", "predict.type", if (cpo$data.dependent) "data")
+      requiredargs = c("target", "predict.type")
       if (is.null(state) || !isTRUE(checkFunction(state, args = requiredargs, nargs = 2))) {
         stopf('.data.dependent targetbound CPO %s cpo.trafo must set a variable "cpo.retrafo"\n%s"%s".',
           cpo$name, "to a function with two arguments ", collapse(requiredargs, sep = '", "'))
