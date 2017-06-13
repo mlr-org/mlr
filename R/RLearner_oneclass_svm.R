@@ -46,5 +46,3 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
   }
   return(p)
 }
-
-
