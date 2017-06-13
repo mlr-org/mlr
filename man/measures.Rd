@@ -35,6 +35,7 @@
 \alias{msle}
 \alias{measureMSLE}
 \alias{rmsle}
+\alias{measureRMSLE}
 \alias{kendalltau}
 \alias{measureKendallTau}
 \alias{spearmanrho}
@@ -44,6 +45,7 @@
 \alias{acc}
 \alias{measureACC}
 \alias{ber}
+\alias{measureBER}
 \alias{multiclass.aunu}
 \alias{measureAUNU}
 \alias{multiclass.aunp}
@@ -99,6 +101,7 @@
 \alias{mcc}
 \alias{measureMCC}
 \alias{f1}
+\alias{measureF1}
 \alias{gmean}
 \alias{measureGMEAN}
 \alias{gpr}
@@ -190,6 +193,8 @@ measureMSLE(truth, response)
 
 rmsle
 
+measureRMSLE(truth, response)
+
 kendalltau
 
 measureKendallTau(truth, response)
@@ -207,6 +212,8 @@ acc
 measureACC(truth, response)
 
 ber
+
+measureBER(truth, response)
 
 multiclass.aunu
 
@@ -317,6 +324,8 @@ mcc
 measureMCC(truth, response, negative, positive)
 
 f1
+
+measureF1(truth, response, positive)
 
 gmean
 

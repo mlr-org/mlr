@@ -108,3 +108,14 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   r = resample(lrn2, iris.task, rdesc, measures = mmce)
   expect_identical(sort(names(r$pred$threshold)), c("setosa", "versicolor", "virginica"))
 })
+
+test_that("TuneWrapper with glmnet (#958)", {
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
+    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),
+    control = makeTuneControlRandom())
+  mod = train(lrn2, multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_error(pred, NA)
+})
+

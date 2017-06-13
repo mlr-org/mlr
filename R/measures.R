@@ -397,9 +397,16 @@ rmsle = makeMeasure(id = "rmsle", minimize = TRUE, best = 0, worst = Inf,
   This measure is mostly used for count data, note that all predicted and actual target values
   must be greater or equal '-1' to compute the measure.",
   fun = function(task, model, pred, feats, extra.args) {
-    sqrt(measureMSLE(pred$data$truth, pred$data$response))
+    measureRMSLE(pred$data$truth, pred$data$response)
   }
 )
+
+#' @export measureRMSLE
+#' @rdname measures
+#' @format none
+measureRMSLE = function(truth, response) {
+  sqrt(measureMSLE(truth, response))
+}
 
 #' @export kendalltau
 #' @rdname measures
@@ -490,13 +497,19 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   name = "Balanced error rate",
   note = "Mean of misclassification error rates on all individual classes.",
   fun = function(task, model, pred, feats, extra.args) {
-    # special case for predictions from FailureModel
-    if (anyMissing(pred$data$response))
-      return(NA_real_)
-    n = length(pred$task.desc$class.levels) + 1L
-    mean(calculateConfusionMatrix(pred, relative = TRUE)$relative.row[-n, n])
+    measureBER(pred$data$truth, pred$data$response)
   }
 )
+
+#' @export measureBER
+#' @rdname measures
+#' @format none
+measureBER = function(truth, response) {
+  # special case for predictions from FailureModel
+  if (anyMissing(response))
+    return(NA_real_)
+  mean(diag(1 - (table(truth, response) / table(truth, truth))))
+}
 
 #' @export multiclass.aunu
 #' @rdname measures
@@ -1142,6 +1155,9 @@ f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
+#' @export measureF1
+#' @rdname measures
+#' @format none
 measureF1 = function(truth, response, positive) {
   2 * measureTP(truth, response, positive) /
     (sum(truth == positive) + sum(response == positive))

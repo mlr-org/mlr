@@ -1,19 +1,27 @@
 # mlr 2.12:
 
+## functions - general
+* generatePartialDependenceData: added parameter "range" to allow to specify the
+  range of values for the partial dependencies
+
 ## functions - new
 * makeClassificationViaRegressionWrapper
 * getPredictionTaskDesc
-
-## functions - new
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
+
+## measures - new
+* measureBER, measureRMSLE, measureF1
 
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 
+## learners - new
+
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
 * {classif,regr}.xyf: broke our API, stability issues
+* classif.hdrda: package removed from CRAN
 
 # mlr 2.11:
 

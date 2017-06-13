@@ -36,7 +36,7 @@ makeMultilabelBinaryRelevanceWrapper = function(learner) {
 }
 
 #' @export
-trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
