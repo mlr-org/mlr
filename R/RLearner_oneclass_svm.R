@@ -40,5 +40,3 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
     p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
   return(p)
 }
-
-
