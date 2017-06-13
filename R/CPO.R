@@ -253,7 +253,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       convertto = .type.to,
       predict.type = .predict.type,
       data.dependent = .data.dependent,
-      data.caching = .cpotype == "targetbound" && .data.dependent)
+      hybrid.inverter = .cpotype == "targetbound" && stateless)
     setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
@@ -261,11 +261,6 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 
 
 makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
-  if (cpo$data.caching) {
-    inverter.indata = prepareRetrafoInput(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)
-  } else {
-    inverter.indata = NULL
-  }
   if (!"Task" %in% class(data)) {
     data = makeClusterTask("CPO Generated", data, check.data = FALSE)
   }
@@ -273,12 +268,11 @@ makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
   inverter = makeCPOS3RetrafoBasic(cpo, state, prev.inverter, "inverter")
   # --- only in pure "inverter" kind
   inverter$indatatd = getTaskDesc(data)
-  inverter$inverter.indata = inverter.indata
   inverter$truth = prepareRetrafoData(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)$target
 }
 
 makeCPOS3Retrafo = function(cpo, state, prev.retrafo, tin, tout) {
-  retrafo = makeCPOS3RetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (!cpo$data.caching) "inverter"))
+  retrafo = makeCPOS3RetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (cpo$hybrid.inverter) "inverter"))
   # --- only in "retrafo" kind
   retrafo$shapeinfo.input = tin$shapeinfo
   retrafo$shapeinfo.output = tout$shapeinfo
@@ -374,12 +368,10 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
     }
     trafoenv$data = NULL
   } else {  # cpo$type == "object"
-    if (!"control" %in% ls(trafoenv)) {
-      if (!cpo$stateless && referencesNonfunctionNames(body(cpo$retrafo))) {
-        stopf("CPO %s cpo.trafo did not create a 'control' object, but retrafo appears to reference a 'control' object.", cpo$name)
-      }
+    if (!"control" %in% ls(trafoenv) && !cpo$stateless) {
+      stopf("CPO %s cpo.trafo did not create a 'control' object. Use the .stateless flag on creation if you don't need a control object.", cpo$name)
     }
-    state = if (!cpo$stateless) trafoenv$control
+    state = ifelse(cpo$stateless, NULL, trafoenv$control)
   }
 
   # the properties of the output should only be the input properties + the ones we're adding
@@ -459,7 +451,12 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
   if (cpo$type == "functional") {
     result = retrafo$state(tin$indata)
   } else {  # cpo$type == "object"
-    result = do.call(cpo$retrafo, insert(cpo$par.vals, list(data = tin$indata, control = retrafo$state)))
+    args = cpo$par.vals
+    args$data = tin$indata
+    if (!cpo$stateless) {
+      args$control = retrafo$state
+    }
+    result = do.call(cpo$retrafo, args)
   }
 
   # the properties of the output should only be the input properties + the ones we're adding
@@ -802,7 +799,7 @@ as.list.CPOS3Retrafo = function(x, ...) {
   x$predict.type = x$cpo$predict.type
   x$bound = x$cpo$bound
   if (identical(x$kind, "retrafo")) {
-    if (!cpo$data.caching) {
+    if (cpo$hybrid.inverter) {
       x$kind = c("retrafo", "inverter")
     }
   }
@@ -875,7 +872,7 @@ makeRetrafoFromState.CPOS3Constructor = function(constructor, state) {
     properties.needed = bare$properties$properties.needed,
     prev.retrafo = NULL,
     bound = bare$bound,
-    kind = c("retrafo", if (!bare$data.caching) "inverter")),
+    kind = c("retrafo", if (bare$hybrid.inverter) "inverter")),
     data)
 }
 
