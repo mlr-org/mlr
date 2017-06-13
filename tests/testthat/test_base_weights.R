@@ -31,10 +31,13 @@ test_that("weights", {
 test_that("weights remain after subset", {
   tasks = list(binaryclass.task, multiclass.task, multilabel.task, regr.task, surv.task)
   for (t in tasks) {
+    expect_false(getTaskDesc(t)$has.weights)
     ws = seq_len(getTaskDesc(t)$size)
     wtask = changeData(t, weights = ws)
+    expect_true(getTaskDesc(wtask)$has.weights)
     expect_equal(wtask$weights, ws)
     expect_equal(subsetTask(wtask, 1:10)$weights, 1:10)
+    expect_true(getTaskDesc(subsetTask(wtask, 1:10))$has.weights)
   }
 })
     
