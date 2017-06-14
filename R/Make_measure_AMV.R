@@ -14,8 +14,9 @@
 #'   Default is \dQuote{costs}.
 #' @param alphas [\code{numeric}] \cr
 #'   Numeric vector of alphas from 0 to 1, representing the computed quantiles.
-#'   Default: 0.05, 0.1, 0.15, ... , 1.
-#' @param nsim [\code{numeric(1)}] \cr
+#'   Default: 0.9 to 0.99 by 0.01 steps as we are interested in the performance
+#'   of the scoring function in the the low density regions.
+#' @param n.sim [\code{numeric(1)}] \cr
 #'   Number of Monte-Carlo Samples, Default: 10^4.
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV).
@@ -26,65 +27,120 @@
 #' @export
 #' @family performance.
 #'
-makeAMVMeasure = function(id = "amv", minimize = FALSE, alphas = seq(from = 0.05, to = 1, by = 0.05), nsim = 10e3, feat.subsampling = FALSE, nfeat.subsampling = NULL, best = 1, worst = 0, name = id, note = "") {
+makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, to = 0.99, by = 0.01), n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
 
   assertString(id)
   assertFlag(minimize)
   assertNumeric(alphas, lower = 0, upper = 1)
-  assertCount(nsim)
-  assertFlag(feat.subsampling)
-  # Curse of dimensionality for more than 5 features
-  assertNumeric(nfeat.subsampling, lower = 0, upper = 5, null.ok = TRUE)
+  assertCount(n.sim)
   assertString(name)
   assertString(note)
 
-  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, nsim, feat.subsampling, nfeat.subsampling),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, n.sim),
     properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
 
-    n.feat = sum(task$task.desc$n.feat)
-    data = task$env$data[,1:n.feat]
+      n.feat =   getTaskNFeats(task)
+      data = getTaskData(task)
 
-    if (n.feat >=5 && feat.subsampling == FALSE) {
-      warningf("Dimension might be too high for volume estimation. Apply feature resampling")
-    }
+      if (n.feat > 8) {
+        warningf("Dimension might be too high for volume estimation. Apply feature resampling")
+      }
 
-  # vector of offsets for different alphas
-  # type = 8: The resulting quantile estimates are approximately median-unbiased
-  # regardless of the distribution of x.
-    prob = getPredictionProbabilities(pred)[1]
-    offsets = quantile(as.matrix(prob), 1 - alphas, type = 8)
+        # vector of offsets for different alphas
+        # type = 8: The resulting quantile estimates are approximately median-unbiased
+        # regardless of the distribution of x.
+        prob = getPredictionProbabilities(pred)[1]
+        offsets = quantile(as.matrix(prob), 1 - alphas, type = 8)
 
-  ### Monte Carlo (MC) Integration for lambda
+        ### Monte Carlo (MC) Integration for lambda
 
-  # Compute hypercube where data lies
-  bounds = sapply(data, FUN = function(x) c(min(x), max(x)))
-  # Volume of the hypercube enclosing the data.
-  volume = prod(bounds[2, ] - bounds[1,])
+        # Compute hypercube where data lies
+        bounds = sapply(data[, 1:n.feat], FUN = function(x) c(min(x), max(x)))
+        # Volume of the hypercube enclosing the data.
+        volume = prod(bounds[2, ] - bounds[1,])
 
-  # Sample nsim points from the hypercube (MCMC Samples)
-  dfu = data.frame(Map(runif, n = nsim, min = bounds[1, ], max = bounds[2, ]))
-  colnames(dfu) = colnames(bounds)
+        # Sample nsim points from the hypercube (MCMC Samples)
+        dfu = data.frame(Map(runif, n = n.sim, min = bounds[1, ], max = bounds[2, ]))
+        colnames(dfu) = colnames(bounds)
 
-  # get scores for sampled data from the hypercube
-  su = predict(model, newdata = dfu)
-  su = getPredictionProbabilities(su)[,1]
+        # get scores for sampled data from the hypercube
+        su = predict(model, newdata = dfu)
+        su = getPredictionProbabilities(su)[,1]
 
-  # calculate volume via monte carlo (share of scores higher as the offset in relation to the whole volume of the hypercube)
-  vol = sapply(offsets, function(offset) {mean(su >= offset)}) * volume
+        # calculate volume via monte carlo (share of scores higher as the offset in relation to the whole volume of the hypercube)
+        vol = sapply(offsets, function(offset) {mean(su >= offset)}) * volume
 
-  ### MC end
+        ### MC end
 
-  # Trapezoidal Integration for AMV
-    sum.vol = vol[-length(vol)] * 2 + diff(vol)
-    amv = ((diff(alphas)) %*% (sum.vol) / 2) / volume
-
-    # Return area under mass-volume curve
-    as.numeric(amv)
+        # Trapezoidal Integration for AMV
+        sum.vol = vol[-length(vol)] * 2 + diff(vol)
+        amv = ((diff(alphas)) %*% (sum.vol) / 2)
+      # Return area under mass-volume curve
+      as.numeric(amv)
     },
     name = name,
     note = note
   )
 }
 
+
+makeSubSamplingAMVMeasure = function(id = "SubSamplingAMV", minimize = TRUE, alphas = seq(from = 0.9, to = 0.99, by = 0.01), n.sim = 10e4, n.feat.subsampling = 2, n.draw.feat.subsampling = 50, best = 0, worst = NULL, name = id, note = "") {
+
+  assertString(id)
+  assertFlag(minimize)
+  assertNumeric(alphas, lower = 0, upper = 1)
+  assertCount(n.sim)
+  # Curse of dimensionality for more than 5 features
+  assertNumeric(n.feat.subsampling, lower = 0, upper = 5, null.ok = TRUE)
+  assertNumeric(n.draw.feat.subsampling, lower = 0, null.ok = TRUE)
+  assertString(name)
+  assertString(note)
+
+  measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.sim = n.sim, best = best, worst = worst, name = id)
+
+  if(!is.null(n.feat.subsampling) && n.feat.subsampling >= 5) {
+    warningf("Dimension might be too high for volume estimation. Choose a smaller feature subsampling size.")
+  }
+
+  makeMeasure(id = id, minimize = minimize, extra.args = list(n.feat.subsampling, n.draw.feat.subsampling, measureAMV),
+    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob"),
+    best = best, worst = worst,
+    fun = function(task, model, pred, feats, extra.args) {
+
+      n.feat =   getTaskNFeats(task)
+      data = getTaskData(task)
+
+      n.feat.subsampling = extra.args[[1]]
+      n.draw.feat.subsampling = extra.args[[2]]
+      measureAMV = extra.args[[3]]
+
+      if (n.feat.subsampling >= n.feat) {
+        stopf("Cannot take a sample of (%i) of size (%i)", n.feat.subsampling, n.feat)
+      }
+
+        amv.k = c()
+        for (k in 1:n.draw.feat.subsampling) {
+          inds.feat.subsample = sample(n.feat, n.feat.subsampling)
+          inds.target = ncol(data)
+          #sub.train.data = data[, c(inds.feat.subsample, inds.target)]
+          sub.test.data = pred$data[, inds.feat.subsample]
+
+          subsetTask(task, subset = c(inds.feat.subsample, inds.target))
+          #sub.task = makeOneClassTask(data = sub.train.data, target = task$task.desc$target, positive = task$task.desc$positive, negative = task$task.desc$negative)
+          sub.lrn = makeLearner(model$learner$id, predict.type = model$learner$predict.type, predict.threshold = model$learner$predict.threshold)
+          sub.mod = train(sub.lrn, sub.task)
+
+          sub.pred = predict(sub.mod, newdata = sub.test.data)
+
+          amv.k[i] = performance(pred, measureAMV, task, model)
+        }
+        amv = mean(amv.k)
+      # Return area under mass-volume curve
+      as.numeric(amv)
+    },
+    name = name,
+    note = note
+  )
+}
