@@ -334,7 +334,7 @@ assertShapeConform = function(df, shapeinfo, checkordered, name) {
 # this needs to be checked both for input and for output
 makeShapeInfo = function(data) {
   # expects a data.frame
-  prep.info = makeS3Obj(c("ShapeInfo"))
+  prep.info = makeS3Obj("ShapeInfo")
   prep.info$colnames = colnames(data)
   prep.info$coltypes = vcapply(data, function(x) class(x)[1])
   prep.info
@@ -395,27 +395,32 @@ assertPropertiesOk = function(present.properties, allowed.properties, whichfun, 
 
 
 catSI = function(x) {
-  cat(collapse(sprintf("%s: %s", x$colnames, substr(x$coltypes, 1, 3)), sep = ", "))
+  if (length(x$colnames)) {
+    cat(collapse(sprintf("%s: %s", x$colnames, substr(x$coltypes, 1, 3)), sep = ", "))
+  } else {
+    cat("(empty)")
+  }
 }
 
 #' @export
-print.InputShapeInfo = function(x, ...) {
-  cat("<ShapeInfo (input)")
+print.OutputShapeInfo = function(x, ...) {
+  cat("<ShapeInfo (output)")
   if (all(c("colnames", "coltypes") %in% names(x))) {
     cat(" ")
     catSI(x)
     cat(">\n")
   } else {
     cat(">:\n")
-    for (s in x) {
-      print(s)
+    for (s in names(x)) {
+      cat(s, ":\n", sep = "")
+      print(x[[s]])
     }
   }
 }
 
 #' @export
-print.OutputShapeInfo = function(x, ...) {
-  cat("<ShapeInfo (output) ")
+print.InputShapeInfo = function(x, ...) {
+  cat("<ShapeInfo (input) ")
   catSI(x)
   cat(">\n")
 }
