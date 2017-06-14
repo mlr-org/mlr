@@ -76,7 +76,7 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "OCHoldout", "OCCV", "OCRepCV", "OCSubsample", "OCBootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -135,10 +135,41 @@ makeResampleDescBootstrap = function(iters = 30L) {
   makeResampleDescInternal("OOB bootstrapping", iters = iters)
 }
 
-makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
+##############################################################################################
+# resampling for oneclass-classification, which only have oneclass in train data
+makeResampleDescRepOCCV = function(reps = 10L, folds = 10L) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
-  makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps)
+  makeResampleDescInternal("repeated cross-validation for oneclass-classification", iters = folds * reps, folds = folds, reps = reps)
+}
+
+
+makeResampleDescOCHoldout = function(iters, split = 2 / 3) {
+  assertNumber(split, lower = 0, upper = 1)
+  makeResampleDescInternal("holdout for oneclass-classification", iters = 1L, split = split)
+}
+
+makeResampleDescOCCV = function(iters = 10L) {
+  iters = asInt(iters, lower = 2L)
+  makeResampleDescInternal("cross-validation for oneclass-classification", iters = iters)
+}
+
+
+makeResampleDescOCSubsample = function(iters = 30L, split = 2 / 3) {
+  iters = asCount(iters, positive = TRUE)
+  assertNumber(split, lower = 0, upper = 1)
+  makeResampleDescInternal("subsampling for oneclass-classification", iters = iters, split = split)
+}
+
+makeResampleDescOCBootstrap = function(iters = 30L) {
+  iters = asCount(iters, positive = TRUE)
+  makeResampleDescInternal("OOB bootstrapping for oneclass-classification", iters = iters)
+}
+
+makeResampleDescOCRepCV = function(reps = 10L, folds = 10L) {
+  reps = asInt(reps, lower = 2L)
+  folds = asInt(folds, lower = 2L)
+  makeResampleDescInternal("repeated cross-validation for oneclass-classification", iters = folds * reps, folds = folds, reps = reps)
 }
 
 ##############################################################################################

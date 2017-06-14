@@ -44,7 +44,9 @@ makeResampleInstance = function(desc, task, size, ...) {
   assert(checkClass(desc, "ResampleDesc"), checkString(desc))
   if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
-  if (!xor(missing(task), missing(size))) {
+  if (grepl("oneclass", desc$id)) {
+    if (missing(task)) stop("For resampling for oneclass classification 'task' must be supplied")
+  } else if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
   }
   if (!missing(task)) {
@@ -130,6 +132,7 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
     train.inds = sample(size)
     train.inds = lapply(test.inds, function(x) setdiff(train.inds, x))
   }
+
   makeS3Obj("ResampleInstance",
     desc = desc,
     size = size,
