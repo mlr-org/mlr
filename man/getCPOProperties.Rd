@@ -4,11 +4,14 @@
 \alias{getCPOProperties}
 \title{Get the Properties of the given CPO object}
 \usage{
-getCPOProperties(cpo)
+getCPOProperties(cpo, only.data = FALSE)
 }
 \arguments{
 \item{cpo}{[\code{CPO}]\cr
 The CPO to query.}
+
+\item{only.data}{[\code{logical(1)}]\cr
+Only get the CPO properties relevant for data (not target or task types). Default is \code{FALSE}.}
 }
 \description{
 The properties of a CPO object determine the kind of data the CPO will be able to handle, and how

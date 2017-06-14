@@ -691,8 +691,12 @@ getBareHyperPars = function(cpo) {
 # Properties
 
 #' @export
-getCPOProperties.CPOS3 = function(cpo) {
-  cpo$properties
+getCPOProperties.CPOS3 = function(cpo, only.data = FALSE) {
+  if (only.data) {
+    lapply(cpo$properties, intersect, y = cpo.dataproperties)
+  } else {
+    cpo$properties
+  }
 }
 
 
@@ -908,11 +912,16 @@ getHyperPars.CPOS3RetrafoPrimitive = function(learner, for.fun = c("train", "pre
 }
 
 #' @export
-getCPOProperties.CPOS3Retrafo = function(cpo) {
+getCPOProperties.CPOS3Retrafo = function(cpo, only.data = FALSE) {
   if (!is.null(cpo$prev.retrafo)) {
-    compositeProperties(getCPOProperties(cpo$prev.retrafo), cpo$cpo$properties, "[PREVIOUS RETRAFO CHAIN]", cpo$cpo$bare.name)
+    props = compositeProperties(getCPOProperties(cpo$prev.retrafo), cpo$cpo$properties, "[PREVIOUS RETRAFO CHAIN]", cpo$cpo$bare.name)
   } else {
-    cpo$cpo$properties
+    props = cpo$cpo$properties
+  }
+  if (only.data) {
+    lapply(props, intersect, y = cpo.dataproperties)
+  } else {
+    props
   }
 }
 
@@ -934,4 +943,14 @@ getCPOKind.CPOS3Retrafo = function(cpo) {
 #' @export
 getCPOPredictType.CPOS3Retrafo = function(cpo) {
   names(cpo$predict.type)
+}
+
+#' @export
+getCPOName.CPOS3Constructor = function(cpo) {
+  environment(cpo)$.cpo.name
+}
+
+#' @export
+getCPOId.CPOS3Primitive = function(cpo) {
+  cpo$id
 }

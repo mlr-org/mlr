@@ -402,6 +402,22 @@ setCPOId = function(cpo, id) {
   UseMethod("setCPOId")
 }
 
+#' @title Get the ID of a CPO object.
+#'
+#' @description
+#' The ID of a CPO to a value will prefix all its
+#' parameter names with this ID.
+#'
+#' @export
+getCPOId = function(cpo) {
+  UseMethod("getCPOId")
+}
+
+#' @export
+getCPOId.CPO = function(cpo) {
+  stop("Compound CPOs have no IDs.")
+}
+
 
 #' @title Get the Properties of the given CPO object
 #'
@@ -427,8 +443,12 @@ setCPOId = function(cpo, id) {
 #' @param cpo [\code{CPO}]\cr
 #'   The CPO to query.
 #'
+#' @param only.data [\code{logical(1)}]\cr
+#'   Only get the CPO properties relevant for data (not target or task types). Default is \code{FALSE}.
+#'
 #' @export
-getCPOProperties = function(cpo) {
+getCPOProperties = function(cpo, only.data = FALSE) {
+  assertFlag(only.data)
   UseMethod("getCPOProperties")
 }
 
@@ -1003,6 +1023,11 @@ setCPOId.NULLCPO = function(cpo, id) {
 }
 
 #' @export
+getCPOId.NULLCPO = function(cpo) {
+  NULL
+}
+
+#' @export
 getCPOName.CPORetrafo = function(cpo) {
   paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
 }
@@ -1059,15 +1084,15 @@ getLearnerProperties.CPOLearner = function(learner) {
 #' @export
 print.CPOConstructor = function(x, ...) {
   args = formals(x)
-  argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", deparseJoin(y, "\n")))
+  argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", convertToShortString(y)))
   argstring = paste(names(args), argvals, collapse = ", ", sep = "")
-  catf("<<CPO %s(%s)>>", environment(x)$.cpo.name, argstring)
+  catf("<<CPO %s(%s)>>", getCPOName(x), argstring)
 }
 
 #' @export
 print.CPO = function(x, ...) {
   pv = getHyperPars(x)
-  argstring = paste(names(pv), sapply(pv, deparseJoin, sep = "\n"), sep = " = ", collapse = ", ")
+  argstring = paste(names(pv), sapply(pv, convertToShortString), sep = " = ", collapse = ", ")
   template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
   catf(template, getCPOName(x), argstring)
 }
@@ -1117,7 +1142,7 @@ print.CPORetrafo = function(x, ...) {
     }
     first = FALSE
     pv = getHyperPars(primitive)
-    argstring = paste(names(pv), sapply(pv, deparseJoin, sep = "\n"), sep = " = ", collapse = ", ")
+    argstring = paste(names(pv), sapply(pv, convertToShortString), sep = " = ", collapse = ", ")
     catf("[RETRAFO %s(%s)]", getCPOName(primitive), argstring, newline = FALSE)
   }
   cat("\n")
@@ -1347,6 +1372,7 @@ captureEnvWrapper = function(fun) {
 # --> how about as an added parameter and automatic wrapping. much simpler, and setHyperPars friendly.
 # --> how about subsetting is possible, but invalidates properties.adding
 
+
 # tests to-do:
 # getLearnerCPO: do hyperparameter changes propagate?
 # warning about buried CPO
@@ -1393,3 +1419,4 @@ captureEnvWrapper = function(fun) {
 #- is.nullcpo
 # chaining retrafo to learner that doesn't support the predict.type it needs
 # stateless cpo.trafo-less CPOs
+# what happens with targetbound retrafo on targetless data.frames?

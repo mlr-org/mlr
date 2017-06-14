@@ -24,9 +24,9 @@ See the preferred \code{\link{\%>>\%}} for more info.
 \seealso{
 Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{\%>>\%}}, \code{\link{applyCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{getCPOName}},
-  \code{\link{getHyperPars}},
+  \code{\link{chainCPO}}, \code{\link{cpoMultiplex}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
