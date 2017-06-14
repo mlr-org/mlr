@@ -1,5 +1,5 @@
 
-context("cpo")
+context("cpo base")
 
 test_that("CPOs can be created", {
 

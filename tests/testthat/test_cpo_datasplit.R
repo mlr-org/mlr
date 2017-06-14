@@ -1,6 +1,6 @@
 
 
-context("cpo")
+context("cpo data format")
 
 test_that("data actually has the form requested", {
   # split according to argument
