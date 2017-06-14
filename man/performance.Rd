@@ -15,10 +15,10 @@ Performance measure(s) to evaluate.
 Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{task}{[\code{\link{Task}}]\cr
-Learning task, might be requested by performance measure, usually not needed except for clustering.}
+Learning task, might be requested by performance measure, usually not needed except for clustering or survival.}
 
 \item{model}{[\code{\link{WrappedModel}}]\cr
-Model built on training data, might be requested by performance measure, usually not needed.}
+Model built on training data, might be requested by performance measure, usually not needed except for survival.}
 
 \item{feats}{[\code{data.frame}]\cr
 Features of predicted data, usually not needed except for clustering.

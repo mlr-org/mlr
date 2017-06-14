@@ -17,8 +17,7 @@ makeRLearner.surv.rpart = function() {
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
-    properties = c("rcens", "missings", "numerics", "factors", "ordered",
-      "weights", "featimp"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "featimp"),
     name = "Survival Tree",
     short.name = "rpart",
     note = "`xval` has been set to `0` by default for speed.",

@@ -129,7 +129,7 @@ makeFilter(
   supported.features = c("numerics", "ordered"),
   fun = function(task, nselect, ...) {
     if (inherits(task, "SurvTask")) {
-      data = getTaskData(task, target.extra = TRUE, recode.target = "rcens")
+      data = getTaskData(task, target.extra = TRUE, recode.target = "surv")
       data = cbind(..surv = data$target, data$data)
       target.ind = 1L
     } else {

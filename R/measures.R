@@ -1384,7 +1384,7 @@ cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 
     y = getPredictionResponse(pred)
     if (anyMissing(y))
       return(NA_real_)
-    surv.train = getTaskTargets(task, recode.target = "rcens")[model$subset]
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
     max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
     survAUC::UnoC(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), time = max.time, lpnew = y)
   },
@@ -1406,7 +1406,7 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
     requirePackages("_survAUC")
     max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
     times = seq(from = 0, to = max.time, length.out = extra.args$resolution)
-    surv.train = getTaskTargets(task, recode.target = "rcens")[model$subset]
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
     y = getPredictionResponse(pred)
     if (anyMissing(y))
       return(NA_real_)

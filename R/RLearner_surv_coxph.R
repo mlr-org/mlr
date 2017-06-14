@@ -15,7 +15,7 @@ makeRLearner.surv.coxph = function() {
       makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "y", default = TRUE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "weights", "rcens"),
+    properties = c("numerics", "factors", "weights"),
     name = "Cox Proportional Hazard Model",
     short.name = "coxph",
     callees = c("coxph", "coxph.control")
