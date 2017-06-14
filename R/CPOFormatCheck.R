@@ -334,7 +334,7 @@ assertShapeConform = function(df, shapeinfo, checkordered, name) {
 # this needs to be checked both for input and for output
 makeShapeInfo = function(data) {
   # expects a data.frame
-  prep.info = list()
+  prep.info = makeS3Obj(c("ShapeInfo"))
   prep.info$colnames = colnames(data)
   prep.info$coltypes = vcapply(data, function(x) class(x)[1])
   prep.info
@@ -350,7 +350,7 @@ makeInputShapeInfo = function(indata) {
   } else {
     ret = makeShapeInfo(indata)
   }
-  ret
+  addClasses(ret, "InputShapeInfo")
 }
 
 # called before recombinetask for better error messages later
@@ -359,13 +359,14 @@ makeInputShapeInfo = function(indata) {
 # since that checks that outdata has the correct types.
 makeOutputShapeInfo = function(outdata) {
   if (is.data.frame(outdata)) {
-    makeShapeInfo(outdata)
+    res = makeShapeInfo(outdata)
   } else if ("Task" %in% class(outdata)) {
-    makeShapeInfo(getTaskData(outdata, target.extra = TRUE)$data)
+    res = makeShapeInfo(getTaskData(outdata, target.extra = TRUE)$data)
   } else {
     # data is split by type, so we get the shape of each of the constituents
-    lapply(outdata, makeShapeInfo)
+    res = lapply(outdata, makeShapeInfo)
   }
+  addClasses(res, "OutputShapeInfo")
 }
 
 # give userfriendly error message when needed properties are absent
@@ -390,6 +391,40 @@ assertPropertiesOk = function(present.properties, allowed.properties, whichfun, 
         paste("properties in .properties.adding may not be present in", whichfun, "output."))
     }
   }
+}
+
+
+catSI = function(x) {
+  cat(collapse(sprintf("%s: %s", x$colnames, substr(x$coltypes, 1, 3)), sep = ", "))
+}
+
+#' @export
+print.InputShapeInfo = function(x, ...) {
+  cat("<ShapeInfo (input)")
+  if (all(c("colnames", "coltypes") %in% names(x))) {
+    cat(" ")
+    catSI(x)
+    cat(">\n")
+  } else {
+    cat(">:\n")
+    for (s in x) {
+      print(s)
+    }
+  }
+}
+
+#' @export
+print.OutputShapeInfo = function(x, ...) {
+  cat("<ShapeInfo (output) ")
+  catSI(x)
+  cat(">\n")
+}
+
+#' @export
+print.ShapeInfo = function(x, ...) {
+  cat("<ShapeInfo ")
+  catSI(x)
+  cat(">\n")
 }
 
 ##################################
