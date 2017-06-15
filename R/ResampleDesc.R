@@ -81,6 +81,8 @@ makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, str
   assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
+  if (stratify && grepl("OC", method))
+    stop("Stratification cannot be done for resampling for oneclass!")
   if (stratify && ! is.null(stratify.cols))
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
   d = do.call(stri_paste("makeResampleDesc", method), list(...))
