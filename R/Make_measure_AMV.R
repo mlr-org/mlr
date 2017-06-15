@@ -125,7 +125,7 @@ makeSubSamplingAMVMeasure = function(id = "SubSamplingAMV", minimize = TRUE, alp
           inds.feat.subsample = sample(n.feat, n.feat.subsampling)
           inds.target = ncol(data)
           #sub.train.data = data[, c(inds.feat.subsample, inds.target)]
-          sub.test.data = pred$data[, inds.feat.subsample]
+          sub.test.data = #### Hier müssen die daten aus Prediction rein.
 
           subsetTask(task, subset = c(inds.feat.subsample, inds.target))
           #sub.task = makeOneClassTask(data = sub.train.data, target = task$task.desc$target, positive = task$task.desc$positive, negative = task$task.desc$negative)
