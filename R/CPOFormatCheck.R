@@ -449,7 +449,8 @@ getLLDatasplit = function(datasplit) {
 
 getIndata = function(indata, datasplit) {
   if (datasplit %in% c("factor", "onlyfactor", "ordered", "numeric")) {
-    indata[[ifelse(datasplit == "onlyfactor", "factor", "datasplit")]]
+    list(data = indata$data[[ifelse(datasplit == "onlyfactor", "factor", datasplit)]],
+      target = indata$target)
   } else {
     indata
   }
