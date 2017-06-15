@@ -32,8 +32,8 @@ makeCostSensTask(id = deparse(substitute(data)), data, costs,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, positive = NA_character_,
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, fixup.data = "warn",
+  check.data = TRUE)
 
 makeOneClassTask(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, fixup.data = "warn", positive,
