@@ -274,7 +274,7 @@ measureEXPVAR = function(truth, response) {
 #' @export arsq
 #' @rdname measures
 #' @format none
-arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
+arsq = makeMeasure(id = "arsq", minimize = FALSE, best = 1, worst = 0,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Adjusted coefficient of determination",
   note = "Defined as: 1 - (1 - rsq) * (p / (n - p - 1L)). Adjusted R-squared is only defined for normal linear regression.",
