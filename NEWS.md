@@ -10,6 +10,9 @@
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 
+## measures - general
+* measure "arsq" now has ID "arsq"
+
 ## measures - new
 * measureBER, measureRMSLE, measureF1
 
