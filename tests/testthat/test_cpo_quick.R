@@ -245,6 +245,50 @@ test_that("datasplit 'factor', 'ordered', 'onlyfactor', 'numeric'", {
 
 test_that("datasplit with matrix in numeric split works", {
 
+  checkfn = function(data, ...) {
+    control = 0
+    if ("numeric" %in% names(data)) {
+      data$numeric = as.matrix(data$numeric)[c(3, 2, 1), ]
+      data
+    } else {
+      as.matrix(data[c(3, 2, 1), , drop = FALSE])
+    }
+  }
+
+  tsk = makeClassifTask("cpo.df2", cpo.df2, target = "F1", check.data = FALSE)
+  reverseSubset = function(df, subset) {
+    if (is.logical(subset)) {
+      subset = which(subset)
+    }
+    for (idx in subset) {
+      df[[idx]] = rev(df[[idx]])
+    }
+    df
+  }
+
+  expected = reverseSubset(cpo.df2, c(1, 5, 9))
+  row.names(expected) = as.integer(rev(row.names(expected)))
+
+  expected.chr = reverseSubset(cpo.df2, c(1, 5, 9))
+  row.names(expected.chr) = row.names(expected)
+
+  cpo = function(split) {
+    makeCPOObject("datasplit_numeric_matrix",
+    .datasplit = split,
+    cpo.trafo = checkfn, cpo.retrafo = checkfn)()
+  }
+
+  retd = tsk %>>% cpo("numeric")
+  expect_equal(getTaskData(retd), expected.chr)
+  expect_equal(cpo.df2 %>>% retrafo(retd), expected.chr)
+
+  retd = tsk %>>% cpo("most")
+  expect_equal(getTaskData(retd), expected)
+  expect_equal(cpo.df2 %>>% retrafo(retd), expected)
+
+  retd = tsk %>>% cpo("all")
+  expect_equal(getTaskData(retd), expected)
+  expect_equal(cpo.df2 %>>% retrafo(retd), expected)
 })
 
 test_that("NULLCPO", {
