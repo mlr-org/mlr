@@ -42,11 +42,11 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
 
 # Resample for oneclass-classification. Train data only contains one class, which is the normal class
 
-instantiateResampleInstance.OCHoldoutDesc = function(desc, size = NULL, task) {
+instantiateResampleInstance.OCHoldoutDesc = function(desc, size, task) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$positive) #only normal class
-  size = length(normal.inds)
-  inds = sample(normal.inds, size * desc$split)
+  size.normal = length(normal.inds)
+  inds = sample(normal.inds, size.normal * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
@@ -69,31 +69,31 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
 }
 
 
-instantiateResampleInstance.OCSubsampleDesc = function(desc, size = NULL, task) {
+instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$positive) #only normal class
-  size = length(normal.inds)
+  size.normal = length(normal.inds)
   # sample without replacement only from the normal data to create train set
   # all anomaly are going to be in the test set
-  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size * desc$split))
+  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size.normal * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.OCBootstrapDesc = function(desc, size = NULL, task) {
+instantiateResampleInstance.OCBootstrapDesc = function(desc, size, task) {
 
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$positive) #only normal class
-  size = length(normal.inds)
+  size.normal = length(normal.inds)
   # sample with replacement only from the normal data to create train set
   # all anomaly are going to be in the test set
-  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size, replace))
+  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size.normal, replace = TRUE))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
 instantiateResampleInstance.OCRepCVDesc = function(desc, size = NULL, task) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("OCCV", iters = folds)
-  i = replicate(desc$reps, makeResampleInstance(d), simplify = FALSE)
+  i = replicate(desc$reps, makeResampleInstance(d, task), simplify = FALSE)
   train.inds = Reduce(c, lapply(i, function(j) j$train.inds))
   test.inds = Reduce(c, lapply(i, function(j) j$test.inds))
   g = as.factor(rep(seq_len(desc$reps), each = folds))

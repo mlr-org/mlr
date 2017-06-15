@@ -45,7 +45,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
   if (grepl("oneclass", desc$id)) {
-    if (missing(task)) stop("For resampling for oneclass classification 'task' must be supplied")
+    if (missing(task)) stop("For resampling for oneclass-classification 'task' must be supplied")
   } else if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
   }

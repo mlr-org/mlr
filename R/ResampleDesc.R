@@ -198,6 +198,34 @@ print.RepCVDesc = function(x, ...) {
   catf("Stratification: %s", x$stratify)
 }
 
+
+#' @export
+print.OCHoldoutDesc = function(x, ...) {
+  catf("Resample description: %s with %.2f split rate.",
+    x$id, x$split)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+  catf("Oneclass Holdout only allows normal observation in training")
+}
+
+#' @export
+print.OCSubsampleDesc = function(x, ...) {
+  catf("Resample description: %s with %i iterations and %.2f split rate.",
+    x$id, x$iters, x$split)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+  catf("Oneclass Holdout only allows normal observation in training")
+}
+
+#' @export
+print.OCRepCVDesc = function(x, ...) {
+  catf("Resample description: %s with %i iterations: %i folds and %i reps.",
+    x$id, x$iters, x$iters / x$reps, x$reps)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+  catf("Oneclass Holdout only allows normal observation in training")
+}
+
 ##############################################################################################
 # Resample Convenience Objects, like cv10
 ##############################################################################################
