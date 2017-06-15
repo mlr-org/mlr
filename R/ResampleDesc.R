@@ -32,7 +32,8 @@
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout.
+#'   subsampling, \dQuote{Holdout} for holdout. Methods with prefix \dQuote{OC} are resampling exspecially for the oneclass
+#'   classification case, where only normal observations (non-anomaly) are used for training.
 #' @param predict [\code{character(1)}]\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
@@ -54,7 +55,7 @@
 #'   individually and the resulting index sets are joined to make sure that the proportion of
 #'   observations in each training set is as in the original data set. Useful for imbalanced class sizes.
 #'   For survival tasks stratification is done on the events, resulting in training sets with comparable
-#'   censoring rates.
+#'   censoring rates. Stratification is not working for methods with prefix \dQuote{OC}
 #' @param stratify.cols [\code{character}]\cr
 #'   Stratify on specific columns referenced by name. All columns have to be factors.
 #'   Note that you have to ensure yourself that stratification is possible, i.e.
@@ -137,15 +138,14 @@ makeResampleDescBootstrap = function(iters = 30L) {
   makeResampleDescInternal("OOB bootstrapping", iters = iters)
 }
 
-##############################################################################################
-# resampling for oneclass-classification, which only have oneclass in train data
-makeResampleDescRepOCCV = function(reps = 10L, folds = 10L) {
+makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
-  makeResampleDescInternal("repeated cross-validation for oneclass-classification", iters = folds * reps, folds = folds, reps = reps)
+  makeResampleDescInternal("", iters = folds * reps, folds = folds, reps = reps)
 }
 
-
+##############################################################################################
+# resampling for oneclass-classification, which only have oneclass in train data
 makeResampleDescOCHoldout = function(iters, split = 2 / 3) {
   assertNumber(split, lower = 0, upper = 1)
   makeResampleDescInternal("holdout for oneclass-classification", iters = 1L, split = split)
