@@ -14,7 +14,10 @@ library("testthat")
 
 devtools::test(pkg = "..", filter = "cpo")
 
-devtools::test(pkg = "..", filter = "cpo$")
+
+devtools::test(pkg = "..", filter = "cpo_basic")
+devtools::test(pkg = "..", filter = "cpo_properties")
+devtools::test(pkg = "..", filter = "cpo_datasplit")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
 

@@ -1114,7 +1114,7 @@ print.DetailedCPO = function(x, ...) {
 }
 
 #' @export
-summary.CPOObject = function(object, ...) {
+summary.CPO = function(object, ...) {
   if (!"DetailedCPO" %in% object) {
     class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
   }

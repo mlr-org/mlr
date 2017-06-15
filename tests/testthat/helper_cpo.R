@@ -410,3 +410,5 @@ cpo.df5c = makeClassifTask(data = cpo.df5, target = "F1")
 cpo.df5cc = makeClusterTask(data = cpo.df5)
 
 cpo.df4l2 = makeMultilabelTask(data = cbind(cpo.df4, cpo.df.logical3), target = c("T1", "T2", "T3", "T4"))
+
+cpo.df5r = makeRegrTask(data = cpo.df5, target = "N1")
