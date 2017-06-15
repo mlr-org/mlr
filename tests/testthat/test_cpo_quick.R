@@ -193,11 +193,57 @@ test_that("complaint about missing parameter", {
 
 })
 
-test_that("datasplit with matrix in numeric split works", {
+test_that("datasplit 'factor', 'ordered', 'onlyfactor', 'numeric'", {
+
+  checkfn = function(data, test, ...) {
+    control = 0
+    subset = switch(test,
+      numeric = c(1, 5, 9),
+      factor = c(4, 7, 8, 12),
+      onlyfactor = 7,
+      ordered = c(4, 8, 12))
+    expect_equal(cpo.df2[subset], data)
+    data[c(3, 2, 1), , drop = FALSE]
+  }
+
+  cpo = function(test) {
+    makeCPOObject("datasplit_extra", test: discrete[numeric, factor, onlyfactor, ordered],
+    .datasplit = test,
+    cpo.trafo = checkfn, cpo.retrafo = checkfn)(test)
+  }
+
+  tsk = makeClassifTask("cpo.df2", cpo.df2, target = "F1", check.data = FALSE)
+
+  reverseSubset = function(df, subset) {
+    if (is.logical(subset)) {
+      subset = which(subset)
+    }
+    for (idx in subset) {
+      df[[idx]] = rev(df[[idx]])
+    }
+    row.names(df) = as.integer(rev(row.names(df)))
+    df
+  }
+
+  expected = reverseSubset(cpo.df2, c(1, 5, 9))
+  expect_equal(getTaskData(tsk %>>% cpo("numeric")), expected)
+  expect_equal(cpo.df2 %>>% retrafo(tsk %>>% cpo("numeric")), expected)
+
+  expected = reverseSubset(cpo.df2, c(4, 7, 8, 12))
+  expect_equal(getTaskData(tsk %>>% cpo("factor")), expected)
+  expect_equal(cpo.df2 %>>% retrafo(tsk %>>% cpo("factor")), expected)
+
+  expected = reverseSubset(cpo.df2, 7)
+  expect_equal(getTaskData(tsk %>>% cpo("onlyfactor")), expected)
+  expect_equal(cpo.df2 %>>% retrafo(tsk %>>% cpo("onlyfactor")), expected)
+
+  expected = reverseSubset(cpo.df2, c(4, 8, 12))
+  expect_equal(getTaskData(tsk %>>% cpo("ordered")), expected)
+  expect_equal(cpo.df2 %>>% retrafo(tsk %>>% cpo("ordered")), expected)
 
 })
 
-test_that("datasplit 'factor', 'ordered', 'onlyfactor', 'numeric'", {
+test_that("datasplit with matrix in numeric split works", {
 
 })
 

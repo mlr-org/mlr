@@ -31,7 +31,10 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   } else {
     splittask(indata, getLLDatasplit(datasplit))
   }
-  list(indata = getIndata(indata, datasplit), shapeinfo = shapeinfo, properties = present.properties, tempdata = indata)
+
+  tempdata = indata$data
+  indata$data = getIndata(indata$data, datasplit)
+  list(indata = indata, shapeinfo = shapeinfo, properties = present.properties, tempdata = tempdata)
 }
 
 
@@ -449,8 +452,7 @@ getLLDatasplit = function(datasplit) {
 
 getIndata = function(indata, datasplit) {
   if (datasplit %in% c("factor", "onlyfactor", "ordered", "numeric")) {
-    list(data = indata$data[[ifelse(datasplit == "onlyfactor", "factor", datasplit)]],
-      target = indata$target)
+    indata[[ifelse(datasplit == "onlyfactor", "factor", datasplit)]]
   } else {
     indata
   }
@@ -458,7 +460,7 @@ getIndata = function(indata, datasplit) {
 
 rebuildOutdata = function(outdata, tempdata, datasplit) {
   if (datasplit %in% c("factor", "onlyfactor", "ordered", "numeric")) {
-    tempdata[[ifelse(datasplit == "onlyfactor", "factor", "datasplit")]] = outdata
+    tempdata[[ifelse(datasplit == "onlyfactor", "factor", datasplit)]] = outdata
     outdata = tempdata
   }
   if (datasplit %in% c("numeric", "most", "all") && is.matrix(outdata$numeric)) {
