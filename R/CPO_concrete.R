@@ -14,12 +14,9 @@
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoPca = makeCPO("pca", center = TRUE: logical, scale = TRUE: logical, .datasplit = "no", cpo.trafo = {  # nolint
-  targetdata = data[target]
-  data[target] = NULL
+cpoPca = makeCPO("pca", center = TRUE: logical, scale = TRUE: logical, .datasplit = "numeric", cpo.trafo = {  # nolint
   pcr = prcomp(as.matrix(data), center = center, scale. = scale)
   data = as.data.frame(pcr$x)
-  data[target] = targetdata
   control = list(rotation = pcr$rotation, center = pcr$center, scale = pcr$scale)
   data
 }, cpo.retrafo = {
@@ -39,12 +36,9 @@ cpoPca = makeCPO("pca", center = TRUE: logical, scale = TRUE: logical, .dataspli
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .datasplit = "no", cpo.trafo = {  # nolint
-  targetdata = data[target]
-  data[target] = NULL
+cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .datasplit = "numeric", cpo.trafo = {  # nolint
   result = scale(as.matrix(data), center = center, scale = scale)
   data[] = result
-  data[target] = targetdata
   control = list(center = attr(result, "scaled:center"), scale = attr(result, "scaled:scale"))
   data
 }, cpo.retrafo = {
