@@ -1,7 +1,7 @@
 #' @export
 #' @rdname Task
 makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+  blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertCharacter(target, any.missing = FALSE, min.len = 2L)
   assertDataFrame(data)
