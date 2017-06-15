@@ -96,6 +96,8 @@ makeResampleInstance = function(desc, task, size, ...) {
     index = getTaskData(task, features = stratify.cols, target.extra = FALSE)[stratify.cols]
     if (any(vlapply(index, is.numeric)))
       stop("Stratification on numeric variables not possible")
+
+    # make list with each list element is a class
     grp = tapply(seq_row(index), index, simplify = FALSE)
     grp = unname(split(seq_row(index), grp))
 

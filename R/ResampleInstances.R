@@ -44,7 +44,7 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.OCHoldoutDesc = function(desc, size, task) {
   label = getTaskTargets(task)
-  normal.inds = which(label == task$task.desc$positive) #only normal class
+  normal.inds = which(label == task$task.desc$positive) #index of only normal class
   size.normal = length(normal.inds)
   inds = sample(normal.inds, size.normal * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
@@ -54,11 +54,11 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
 
-  label = getTaskTargets(task)
-  normal.inds = which(label == task$task.desc$positive) #only normal class
-
   # testset will have normal and anomaly observations
   test.inds = chunk(seq_len(size), shuffle = TRUE, n.chunks = desc$iters)
+
+  label = getTaskTargets(task)
+  normal.inds = which(label == task$task.desc$positive) #index of only normal class
 
   # only allow normal obs in training and shuffle data set of normal observation
   # basically drop anomaly in training
