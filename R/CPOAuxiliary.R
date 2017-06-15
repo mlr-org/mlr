@@ -1197,15 +1197,18 @@ getLearnerName = function(learner) {
 # get the subset of par.vals described by par set.
 # check furthermore that this subset is complete,
 # i.e. all parameters that have no unfulfilled requirements are there
-subsetParams = function(par.vals, par.set, name) {
+subsetParams = function(par.vals, par.set) {
+  par.vals[intersect(names(par.vals), names(par.set$pars))]
+}
+
+checkAllParams = function(par.vals, par.set, name) {
+  present = names(par.vals)
 
   # these parameters are either present or have fulfilled requirements
   needed = names(Filter(function(x) {
     x$id %in% names(par.vals) ||
           is.null(x$requires) || isTRUE(try(eval(x$requires, envir = par.vals), silent = TRUE))
   }, par.set$pars))
-
-  present = names(par.vals)
 
   missing.pars = setdiff(needed, present)
   if (length(missing.pars)) {
@@ -1214,9 +1217,9 @@ subsetParams = function(par.vals, par.set, name) {
       collapse(missing.pars, sep = ", "), name, ifelse(plur, "are", "is"),
       "Either give it during construction, or with setHyperPars.")
   }
-
-  par.vals[needed]
 }
+
+
 
 # check that all parameters are feasible according to their limits
 # 'infeasible' parameters according to requirements are allowed
@@ -1371,52 +1374,3 @@ captureEnvWrapper = function(fun) {
 # --> how about as a further datasplit-kind of property. If given, properties.adding must be 0, properties must be maximal.
 # --> how about as an added parameter and automatic wrapping. much simpler, and setHyperPars friendly.
 # --> how about subsetting is possible, but invalidates properties.adding
-
-
-# tests to-do:
-# getLearnerCPO: do hyperparameter changes propagate?
-# warning about buried CPO
-# getLearnerBare works, gets the right hyperparameters
-# check that hyperparameters propagate.
-# functional cpo:
-#  -> remove 'data' from function environment
-#  -> functional retrafo: check for data reference and warn
-# cpo functional recursion after state
-# cpo state fails if 'cpo.retrafo' in cpo.retrafo's environment mismatches
-# cpo state disassembly and assembly if 'cpo.retrafo' is absent from cpo.retrafo's environment
-# datasplit
-#  -> accept matrix in numeric split
-#  -> splittype: also 'factor', 'ordered', 'onlyfactor', 'numeric'
-# NULLCPO
-# costsens task
-#  - properties, properties.needed, properties.adding now subsets of c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
-#  - type.from, type.to: convert tasks from x to y ("classif", "multilabel", "regr", "surv", "cluster", "costsens").
-#  - same splits as before (though "most", "all" less sensible)
-# 'bound' well behaved: after splitting, uniting, for trafos and retrafos
-# changing task names in targetbound, datasplit 'no'
-# targetbound CPO: switching classif levels switches 'positive'
-# - targetbound functional: must set function with one argument or with two and 'data', 'target'
-# changing task with 'no', smth else: it is classif, and
-#  - number of classes changes
-#  - positive / negative get switched
-#  - number of classes the same, names change
-#  - can convert data.frames if input type allows cluster
-#  - check data instead of target didn't change in "no", "target"
-#  - return target instead of data in other split modes
-#  - inverter kind disappears when composed with a data dependent targetbound, reappears after split
-#  - inverter does nothing when no targetbounds
-#  - keep the truth
-# - invert() function
-#  - inverse keeps truth information, even if not data dependent
-#  - apply retrafo to prediction
-#inferPredictionTypePossibilities, getResponseType: with examples
-# incompatibility of cpo prediction and predict type
-# chaining inverters with incompatible conversion
-# if no control is referenceed in retrafo, no complaint about missing 'control'. otherwise, complain.
-# after attaching CPO, predict.type stays the same if possible
-# stateless
-#  - retrafo target bound is possible, if there are targets!
-#- is.nullcpo
-# chaining retrafo to learner that doesn't support the predict.type it needs
-# stateless cpo.trafo-less CPOs
-# what happens with targetbound retrafo on targetless data.frames?

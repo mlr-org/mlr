@@ -323,6 +323,7 @@ callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.
 
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
+  checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   if (is.nullcpo(prev.retrafo)) {
     prev.retrafo = NULL
   }
@@ -417,10 +418,11 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
 # retr.1 <-- retr.2 <-- retr.3 <-- retr.4
 #
 callCPO.CPOS3Tree = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
+  checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   first = cpo$first
   second = cpo$second
-  first$par.vals = subsetParams(cpo$par.vals, first$par.set, first$name)
-  second$par.vals = subsetParams(cpo$par.vals, second$par.set, second$name)
+  first$par.vals = subsetParams(cpo$par.vals, first$par.set)
+  second$par.vals = subsetParams(cpo$par.vals, second$par.set)
   intermediate = callCPO(first, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter)
   callCPO(second, intermediate$data, build.retrafo, intermediate$retrafo, build.inverter, intermediate$inverter)
 }
@@ -528,8 +530,8 @@ composeCPO.CPOS3 = function(cpo1, cpo2) {
 as.list.CPOS3Tree = function(x, ...) {
   first = x$first
   second = x$second
-  first$par.vals = subsetParams(x$par.vals, first$par.set, first$name)
-  second$par.vals = subsetParams(x$par.vals, second$par.set, second$name)
+  first$par.vals = subsetParams(x$par.vals, first$par.set)
+  second$par.vals = subsetParams(x$par.vals, second$par.set)
   c(as.list(first), as.list(second))
 }
 
@@ -587,7 +589,7 @@ trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
   }
 
   cpo = .learner$cpo
-  cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set, cpo$name)
+  cpo$par.vals = subsetParams(.learner$par.vals, cpo$par.set)
 
   # note that an inverter for a model makes no sense, since the inverter is crucially bound to
   # the data that is supposed to be *predicted*.
@@ -610,9 +612,9 @@ predictLearner.CPOS3Learner = function(.learner, .model, .newdata, ...) {
 }
 
 # get CPO from learner
-singleLearnerCPO.CPOObjectLearner = function(learner) {
+singleLearnerCPO.CPOS3Learner = function(learner) {
   cpo = learner$cpo
-  cpo$par.vals = subsetParams(learner$par.vals, cpo$par.set, cpo$name)
+  cpo$par.vals = subsetParams(learner$par.vals, cpo$par.set)
   cpo
 }
 
