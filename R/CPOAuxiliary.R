@@ -1107,6 +1107,7 @@ print.DetailedCPO = function(x, ...) {
       cat("  ====>\n")
     }
     is.first = FALSE
+    class(x) = setdiff(class(x), "DetailedCPO")
     print(x)
     cat("\n")
     print(getParamSet(x))
@@ -1115,7 +1116,7 @@ print.DetailedCPO = function(x, ...) {
 
 #' @export
 summary.CPO = function(object, ...) {
-  if (!"DetailedCPO" %in% object) {
+  if (!"DetailedCPO" %in% class(object)) {
     class(object) = c(head(class(object), -1), "DetailedCPO", "CPO")
   }
   object
