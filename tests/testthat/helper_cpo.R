@@ -41,7 +41,8 @@ makeCPOFunctional = function(.cpo.name, ..., .par.set = NULL, .par.vals = list()
 cpotest.parvals = list()
 
 # simple learner that writes the first data element it receives to cpotest.parvals
-testlearnercpo = makeRLearnerClassif("testlearnercpo", package = character(0), par.set = makeParamSet(makeUntypedLearnerParam("env", when = "both")),
+testlearnercpo = makeRLearnerClassif("testlearnercpo", package = character(0), par.set = makeParamSet(makeUntypedLearnerParam("env", when = "both"),
+  makeIntegerLearnerParam("int")),
   properties = c("twoclass", "multiclass", "numerics", "factors", "ordered"))
 testlearnercpo$fix.factors.prediction = TRUE
 
@@ -218,6 +219,46 @@ cpoadder.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
   data[[1]] = data[[1]] - summand - control
   data
 })
+
+
+cpomultiplier.nt.f = makeCPOFunctional("multiplierF", factor = 1: numeric[~., ~.], cpo.trafo = {
+  data[[1]] = data[[1]] * factor
+  cpo.retrafo = function(data) {
+    data[[1]] = data[[1]] / factor
+    data
+  }
+  data
+})
+
+cpoadder.nt.f = makeCPOFunctional("adderF", summand = 1: integer[, ], cpo.trafo = {
+  meandata = mean(data[[1]])
+  data[[1]] = data[[1]] + summand
+  cpo.retrafo = function(data) {
+    data[[1]] = data[[1]] - summand - meandata
+    data
+  }
+  data
+})
+
+cpomultiplier.nt.o = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
+  data[[1]] = data[[1]] * factor
+  control = 0
+  data
+}, cpo.retrafo = {
+  data[[1]] = data[[1]] / factor
+  data
+})
+
+
+cpoadder.nt.o = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
+  control = mean(data[[1]])
+  data[[1]] = data[[1]] + summand
+  data
+}, cpo.retrafo = {
+  data[[1]] = data[[1]] - summand - control
+  data
+})
+
 
 pss = paramSetSugar
 

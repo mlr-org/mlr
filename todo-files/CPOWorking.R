@@ -4,7 +4,6 @@ library("roxygen2")
 roxygenise("..")
 
 
-
 devtools::load_all("..")
 options(error = dump.frames)
 configureMlr(show.info = TRUE, on.learner.error = "stop", show.learner.output = TRUE)
