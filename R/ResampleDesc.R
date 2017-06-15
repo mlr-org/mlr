@@ -141,7 +141,8 @@ makeResampleDescBootstrap = function(iters = 30L) {
 makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
-  makeResampleDescInternal("", iters = folds * reps, folds = folds, reps = reps)
+  makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps)
+
 }
 
 ##############################################################################################

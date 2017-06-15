@@ -20,7 +20,7 @@ test_that("OCholdout instance works", {
   expect_equal(length(rin$test.inds[[1]]), size - 0.25*normal.size)
 
   # does training only have normal data?
-  expect_false(any(i1 %nin% normal.inds))
+  expect_false(any(length(rin$train.inds[[1]]) %nin% normal.inds))
 })
 
 test_that("holdout test.join works somehow", {
