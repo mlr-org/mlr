@@ -177,6 +177,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 
   assert(length(setdiff(names(.par.vals), names(.par.set$pars))) == 0)
 
+  .par.vals = convertItemsToNamesDVP(.par.vals, .par.set)
+
   checkParamsFeasible(.par.set, .par.vals)
 
   funargs = lapply(.par.set$pars, function(dummy) substitute())

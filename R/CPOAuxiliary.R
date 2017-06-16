@@ -1226,7 +1226,8 @@ checkAllParams = function(par.vals, par.set, name) {
 # 'infeasible' parameters according to requirements are allowed
 checkParamsFeasible = function(par.set, par.vals) {
   # names(par.vals) must be a subset of names(par.set$pars)
-  oobreaction = coalesce(getMlrOption("on.par.out.of.bounds"), TRUE)
+  oobreaction = coalesce(getMlrOption("on.par.out.of.bounds"), "stop")
+  par.vals = par.vals = convertNamesToItemsDVP(par.vals, par.set)
   if (oobreaction != "quiet") {
     for (n in names(par.vals)) {
       if (!isFeasible(par.set$pars[[n]], par.vals[[n]])) {
@@ -1240,6 +1241,54 @@ checkParamsFeasible = function(par.set, par.vals) {
     }
   }
 }
+
+
+# convert between character vectors and lists for discrete vector params
+convertNamesToItemsDVP = function(par.vals, par.set) {
+  oobreaction = coalesce(getMlrOption("on.par.out.of.bounds"), "stop")
+  reactionFn = switch(oobreaction, stop = stopf, warn = warningf, quiet = list)  # nolint
+  for (n in names(par.set$pars)) {
+    par = par.set$pars[[n]]
+    if (par$type != "discretevector") {
+      next
+    }
+    if (!all(sapply(names(par$values), function(nn) identical(par$values[[nn]], nn)))) {
+      next
+    }
+    if (!is.character(par.vals[[n]])) {
+      reactionFn("Discrete Vector Parameter %s requires character vector, not list, as values.", n)
+    }
+
+    badpars = setdiff(par.vals[[n]], names(par$values))
+    if (length(badpars)) {
+      reactionFn("Value%s '%s' do%s not occur in (names of) feasible values for parameter %s.",
+        ifelse(length(badpars) > 1, "s", ""), collapse(badpars, sep = "', '"),
+        ifelse(length(badpars) > 1, "es", ""), n)
+      next
+    }
+    par.vals[[n]] = par$values[par.vals[[n]]]
+  }
+  par.vals
+}
+
+convertItemsToNamesDVP = function(par.vals, par.set) {
+  for (n in names(par.set$pars)) {
+    par = par.set$pars[[n]]
+    if (par$type != "discretevector") {
+      next
+    }
+    if (!all(sapply(names(par$values), function(nn) identical(par$values[[nn]], nn)))) {
+      next
+    }
+    if (all(sapply(par.vals[[n]], is.character))) {
+      par.vals[[n]] = as.character(par.vals[[n]])
+    }
+  }
+  par.vals
+}
+
+
+
 
 # Manipulate requirement expressions: rename all variables from
 # one name to another. This gets problematic when e.g. one variable
@@ -1367,6 +1416,8 @@ captureEnvWrapper = function(fun) {
   fun
 }
 
+
+
 # TO-DO:
 #- check shapeinfo when reattaching retrafos
 #- bare model (through retrafo() = NULL)
@@ -1375,3 +1426,7 @@ captureEnvWrapper = function(fun) {
 # --> how about as a further datasplit-kind of property. If given, properties.adding must be 0, properties must be maximal.
 # --> how about as an added parameter and automatic wrapping. much simpler, and setHyperPars friendly.
 # --> how about subsetting is possible, but invalidates properties.adding
+
+# test todo
+# convertNamesToItems, ItemsToNames
+# on.par.out.of.bounds setting
