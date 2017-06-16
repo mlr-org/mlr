@@ -13,6 +13,7 @@ NULL
 #' FIXME to come
 #'
 #' @family CPO
+#' @export
 NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 
 ##################################
@@ -104,7 +105,7 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 
 #' @export
 `%>>%.NULLCPO` = function(cpo1, cpo2) {
-  if (any(c("Learner", "CPO") %in% class(cpo2))) {
+  if (any(c("Learner", "CPO", "CPORetrafo") %in% class(cpo2))) {
     cpo2
   } else {
     NextMethod()
@@ -938,9 +939,9 @@ invertCPO = function(inverter, prediction, predict.type) {
 #' @family CPO
 #' @export
 chainCPO = function(pplist) {
-  assert(checkList(pplist, types = "CPO", min.len = 1),
-    checkList(pplist, types = "CPORetrafo", min.len = 1))
-  Reduce(`%>>%`, pplist)
+  assert(checkList(pplist, types = "CPO"),
+    checkList(pplist, types = "CPORetrafo"))
+  Reduce(`%>>%`, c(list(NULLCPO), pplist))
 }
 
 ##################################
@@ -1046,6 +1047,11 @@ invertCPO.NULLCPO = function(inverter, prediction, predict.type) {
   list(new.prediction = prediction, new.td = NULL, new.truth = NULL)
 }
 
+#' @export
+as.list.NULLCPO = function(x, ...) {
+  list()
+}
+
 invertCPO.CPO = function(inverter, prediction, predict.type) {
   stop("Cannot invert prediction with a CPO object; need a CPORetrafo object.")
 }
@@ -1107,10 +1113,9 @@ print.DetailedCPO = function(x, ...) {
       cat("  ====>\n")
     }
     is.first = FALSE
-    class(x) = setdiff(class(x), "DetailedCPO")
-    print(x)
+    print(retrafo)
     cat("\n")
-    print(getParamSet(x))
+    print(getParamSet(retrafo))
   }
 }
 
@@ -1248,6 +1253,9 @@ convertNamesToItemsDVP = function(par.vals, par.set) {
   oobreaction = coalesce(getMlrOption("on.par.out.of.bounds"), "stop")
   reactionFn = switch(oobreaction, stop = stopf, warn = warningf, quiet = list)  # nolint
   for (n in names(par.set$pars)) {
+    if (!n %in% names(par.vals)) {
+      next
+    }
     par = par.set$pars[[n]]
     if (par$type != "discretevector") {
       next

@@ -172,6 +172,7 @@ Collate:
     'BenchmarkResult_operators.R'
     'CPO.R'
     'CPOAuxiliary.R'
+    'CPOCbind.R'
     'CPOFormatCheck.R'
     'CPOTarget.R'
     'ParamSetSugar.R'

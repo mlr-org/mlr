@@ -60,7 +60,7 @@ cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .data
 #' @family CPO
 #' @export
 cpoMultiplex = function(cpos, selected.cpo = NULL, id = NULL) {
-  assertList(cpos, c("CPO", "CPOConstructor"), min.len = 1)
+  assertList(cpos, c("CPO", "CPOConstructor"), min.len = 1)  # FIXME: require databound
   has.names = !is.null(names(cpos))
   if (!has.names) {
     names(cpos) = sapply(cpos, function(c) {
@@ -142,7 +142,7 @@ cpoMultiplex = function(cpos, selected.cpo = NULL, id = NULL) {
 #' @export
 cpoApply = makeCPO("apply", .par.set = makeParamSet(makeUntypedLearnerParam("cpo")), .datasplit = "task",  # nolint
                    cpo.trafo = { control = retrafo({res = data %>>% cpo}) ; res }, cpo.retrafo = { data %>>% control })
-
+# FIXME: require databound
 
 
 #' @title Drop All Columns Except Certain Selected Ones from Data
@@ -157,6 +157,12 @@ cpoApply = makeCPO("apply", .par.set = makeParamSet(makeUntypedLearnerParam("cpo
 #' @param type [\code{character}]\cr
 #'   One or more out of \dQuote{numeric}, \dQuote{ordered}, \dQuote{factor}, \dQuote{other}.
 #'   The type of columns to keep. Default is \code{character(0)}.
+#' @param index [\code{integer}]\cr
+#'   Indices of columns to keep. Note that the index counts columns without the target column(s).
+#'   This parameter makes it possible to re-order columns. While all columns which match either
+#'   \dQuote{type}, \dQuote{pattern} or \dQuote{index} remain in the resulting data, the ones
+#'   selected by \dQuote{index} are put at the front in the order specified.
+#'   Default is \code{integer(0)}.
 #' @param pattern [\code{character(1)}]\cr
 #'   A pattern to match against the column names. Same as in \code{\link{grep}}.
 #'   Default is \code{NULL} for no matching.
@@ -171,7 +177,8 @@ cpoApply = makeCPO("apply", .par.set = makeParamSet(makeUntypedLearnerParam("cpo
 #'   Default is \code{FALSE}.
 cpoSelect = makeCPO("select",  # nolint
   .par.set = c(
-      paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA),
+      paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA,
+        index = integer(0): integer[1, ]^NA),
       makeParamSet(makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
       paramSetSugar(
           ignore.case = FALSE: logical, perl = FALSE: logical,
@@ -182,15 +189,11 @@ cpoSelect = makeCPO("select",  # nolint
     coltypes[!coltypes %in% c("numeric", "factor", "ordered")] = "other"
     matchcols = coltypes %in% type
     if (!is.null(pattern)) {
-      matchcols = grepl(pattern, colnames(data), ignore.case, perl, fixed)
+      matchcols = matchcols | grepl(pattern, colnames(data), ignore.case, perl, fixed)
     }
+    index = c(index, setdiff(which(matchcols), index))
     cpo.retrafo = function(data) {
-      data[matchcols]
+      data[index]
     }
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
-
-
-
-
-
