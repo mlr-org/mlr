@@ -170,10 +170,12 @@ cpoApply = makeCPO("apply", .par.set = makeParamSet(makeUntypedLearnerParam("cpo
 #'   Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
 cpoSelect = makeCPO("select",  # nolint
-  .par.set = c(makeParamSet(makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
-   paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA,
-  ignore.case = FALSE: logical, perl = FALSE: logical,
-  fixed = FALSE: logical)),
+  .par.set = c(
+      paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA),
+      makeParamSet(makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
+      paramSetSugar(
+          ignore.case = FALSE: logical, perl = FALSE: logical,
+          fixed = FALSE: logical)),
   .datasplit = "target", cpo.trafo = {
     coltypes = vcapply(data, function(x) class(x)[1])
     coltypes[coltypes == "integer"] = "numeric"
