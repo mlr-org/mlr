@@ -134,7 +134,7 @@ parseDimension = function(pdeco, pstring, pss.env) {
     pdeco = pdeco[[2]]  # remove '^...' part
   }
   len = eval(exponent, envir = pss.env)
-  if (!is.numeric(len)) {
+  if (!is.numeric(len) && !is.na(len)) {
     formerr(pstring, sprintf("`^` found, but exponent %s did not eval to numeric.", deparseJoin(exponent)))
   }
   list(pdeco = pdeco, len = len)
