@@ -54,7 +54,7 @@ test_that("cbind with NULLCPO works", {
 
   copycopy = cpoCbind(copier, copyx = copier, copyy = copier)
 
-  indf = data.frame(a=1:3, b=-3:-1)
+  indf = data.frame(a = 1:3, b = -3:-1)
   expected = data.frame(indf, copy = indf, copyx = indf, copyx.copy = indf, copyy = indf, copyy.copy = indf)
   result = indf %>>% copycopy
   expect_equal(indf %>>% retrafo(result), expected)
@@ -76,7 +76,7 @@ test_that("cbind does what it is supposed to do", {
 
   cpo.clist = numeric(0)
 
-  mul = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], cpo.trafo = {
+  mul = makeCPOObject("multiplierO", factor = 1: numeric[~., ~.], .datasplit = "target", cpo.trafo = {
     cpo.clist <<- c(cpo.clist, data[[1]][1])  # nolint
     data[[1]] = data[[1]] * factor
     data[[2]] = data[[2]] * factor
@@ -89,7 +89,7 @@ test_that("cbind does what it is supposed to do", {
   })
 
 
-  add = makeCPOObject("adderO", summand = 1: integer[, ], cpo.trafo = {
+  add = makeCPOObject("adderO", summand = 1: integer[, ], .datasplit = "target", cpo.trafo = {
     cpo.clist <<- c(cpo.clist, data[[1]][1])  # nolint
     control = mean(data[[1]])
     data[[1]] = data[[1]] + summand
@@ -220,6 +220,24 @@ test_that("cbind does what it is supposed to do", {
   expect_equal(fullroute, fullroutedf)
   expect_equal(fullrouteretrafo, fullroutedf.rt)
 
+  # see explanation of expect_set_equal above
   expect_set_equal(fullroute.trafo.clist, fullroute.trafo.df.clist)
+  expect_set_equal(fullroute.retrafo.clist, fullroute.retrafo.df.clist)
+
+  dftask = makeClassifTask("df", data.frame(c = factor(c("a", "b", "c")), df), target = "c")
+  df2task = makeClassifTask("df2", data.frame(c = factor(c("x", "y", "x")), df2), target = "c")
+
+  cpo.clist = numeric(0)
+  fullroute.task = dftask %>>% result
+  fullroute.task.trafo.clist = cpo.clist
+  expect_equal(fullroute.task.trafo.clist, fullroute.trafo.clist)
+
+  cpo.clist = numeric(0)
+  fullrouteretrafo.task = df2task %>>% retrafo(fullroute.task)
+  fullroute.task.retrafo.clist = cpo.clist
+  expect_equal(fullroute.task.retrafo.clist, fullroute.retrafo.clist)
+
+  expect_equal(getTaskData(fullroute.task, target.extra = TRUE)$data, fullroutedf)
+  expect_equal(getTaskData(fullrouteretrafo.task, target.extra = TRUE)$data, fullroutedf.rt)
 
 })
