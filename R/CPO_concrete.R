@@ -142,3 +142,53 @@ cpoMultiplex = function(cpos, selected.cpo = NULL, id = NULL) {
 #' @export
 cpoApply = makeCPO("apply", .par.set = makeParamSet(makeUntypedLearnerParam("cpo")), .datasplit = "task",  # nolint
                    cpo.trafo = { control = retrafo({res = data %>>% cpo}) ; res }, cpo.retrafo = { data %>>% control })
+
+
+
+#' @title Drop All Columns Except Certain Selected Ones from Data
+#'
+#' @description
+#' Select columns by type or name. The parameters \dQuote{type} and
+#' \dQuote{pattern} are additive; if both are given, all column that match
+#' either will be returned.
+#'
+#' @template cpo_description
+#'
+#' @param type [\code{character}]\cr
+#'   One or more out of \dQuote{numeric}, \dQuote{ordered}, \dQuote{factor}, \dQuote{other}.
+#'   The type of columns to keep. Default is \code{character(0)}.
+#' @param pattern [\code{character(1)}]\cr
+#'   A pattern to match against the column names. Same as in \code{\link{grep}}.
+#'   Default is \code{NULL} for no matching.
+#' @param ignore.case [\code{logical(1)}]\cr
+#'   Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
+#'   Default is \code{FALSE}.
+#' @param perl [\code{logical(1)}]\cr
+#'   Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
+#'   Default is \code{FALSE}.
+#' @param fixed [\code{logical(1)}]\cr
+#'   Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
+#'   Default is \code{FALSE}.
+cpoSelect = makeCPO("select",  # nolint
+  .par.set = c(makeParamSet(makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
+   paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA,
+  ignore.case = FALSE: logical, perl = FALSE: logical,
+  fixed = FALSE: logical)),
+  .datasplit = "target", cpo.trafo = {
+    coltypes = vcapply(data, function(x) class(x)[1])
+    coltypes[coltypes == "integer"] = "numeric"
+    coltypes[!coltypes %in% c("numeric", "factor", "ordered")] = "other"
+    matchcols = coltypes %in% type
+    if (!is.null(pattern)) {
+      matchcols = grepl(pattern, colnames(data), ignore.case, perl, fixed)
+    }
+    cpo.retrafo = function(data) {
+      data[matchcols]
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
+
+
+
+
+
