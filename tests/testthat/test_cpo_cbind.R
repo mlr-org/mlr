@@ -83,7 +83,7 @@ test_that("cbind does what it is supposed to do", {
     control = 0
     data
   }, cpo.retrafo = {
-    cpo.clist = c(cpo.clist, data[[1]][1])
+    cpo.clist <<- c(cpo.clist, data[[1]][1])  # nolint
     data[[1]] = data[[1]] / factor
     data
   })
@@ -96,7 +96,7 @@ test_that("cbind does what it is supposed to do", {
     data[[2]] = data[[2]] + summand
     data
   }, cpo.retrafo = {
-    cpo.clist = c(cpo.clist, data[[1]][1])
+    cpo.clist <<- c(cpo.clist, data[[1]][1])  # nolint
     data[[1]] = data[[1]] - summand - control
     data[[2]] = data[[2]] - summand - control
     data
@@ -120,19 +120,34 @@ test_that("cbind does what it is supposed to do", {
 
   route1 = cpoCbind(mul2 = pre %>>% mul(id = "sndrow", factor = 2), pre %>>% cpoSelect(index = c(4, 3, 2, 1)), copy1 = NULLCPO)
   route1 = setHyperPars(route1, sndrow.factor = 4)
+  cpo.clist = numeric(0)
   checkroute1 = df %>>% route1
   checkroute1retrafo = df2 %>>% retrafo(checkroute1)
   retrafo(checkroute1) = NULL
+  clist1 = cpo.clist
 
+  cpo.clist = numeric(0)
   predf = df %>>% pre
   predf.rt = df2 %>>% retrafo(predf)
   retrafo(predf) = NULL
+  tmp1 = predf %>>% mul(4)
+  tmp2 = predf %>>% cpoSelect(index = c(4, 3, 2, 1))
+  route1df = data.frame(mul2 = tmp1, tmp2, copy1 = df)
+  clist1.df = cpo.clist
+  cpo.clist = numeric(0)
 
-  route1df = data.frame(mul2 = predf %>>% mul(4), predf %>>% cpoSelect(index = c(4, 3, 2, 1)), copy1 = df)
-  route1df.rt = data.frame(mul2 = predf.rt %>>% retrafo(predf %>>% mul(4)), predf.rt %>>% retrafo(predf %>>% cpoSelect(index = c(4, 3, 2, 1))), copy1 = df2)
+
+  route1df.rt = data.frame(mul2 = predf.rt %>>% retrafo(tmp1), predf.rt %>>% retrafo(tmp2), copy1 = df2)
 
   expect_equal(checkroute1, route1df)
   expect_equal(checkroute1retrafo, route1df.rt)
+  clist1.df.rt = cpo.clist
+  # clist gets set by the CPOs whenever they are called
+  # while the order in which they are called (and write their characteristic
+  # values into clist) may vary, the values themselves should be the same
+  # if each CPO gets called the same amount of times and with the same data
+  # in both cpoCbind and manual application.
+  expect_set_equal(clist1, c(clist1.df, clist1.df.rt))
 
 
   route2 = cpoCbind(route1, add3 = pre %>>% add(id = "thrdrow")) %>>% mul(id = "frthrow", factor = 3)
@@ -154,35 +169,57 @@ test_that("cbind does what it is supposed to do", {
   route3 = cpoCbind(mul4 = pre %>>% mul(id = "ffthrow", factor = 1.2), cpoSelect(index = c(2, 1), id = "select2") %>>%  cpoApply(pre), copy2 = NULLCPO)
   result = setHyperPars(cpoCbind(r1 = route1, r2 = route2, r3 = route3), lvl1.summand = 20)
 
+  cpo.clist = numeric(0)
   fullroute = df %>>% result
+  fullroute.trafo.clist = cpo.clist
+
+  cpo.clist = numeric(0)
   fullrouteretrafo = df2 %>>% retrafo(fullroute)
+  fullroute.retrafo.clist = cpo.clist
   retrafo(fullroute) = NULL
 
 
+  cpo.clist = numeric(0)
+  tmp1 = df %>>% mul(factor = 10)
+  tmp2 = df %>>% add(summand = 20)
+  predf = data.frame(mul1 = tmp1, add1 = tmp2)
 
-  predf = data.frame(mul1 = df %>>% mul(factor = 10), add1 = df %>>% add(summand = 20))
-  predf.rt = data.frame(mul1 = df2 %>>% retrafo(df %>>% mul(factor = 10)), add1 = df2 %>>% retrafo(df %>>% add(summand = 20)))
+  tmp3 = predf %>>% mul(4)
+  tmp4 = predf %>>% cpoSelect(index = c(4, 3, 2, 1))
+  route1df = data.frame(mul2 = tmp3, tmp4, copy1 = df)
 
-  route1df = data.frame(mul2 = predf %>>% mul(4), predf %>>% cpoSelect(index = c(4, 3, 2, 1)), copy1 = df)
-  route1df.rt = data.frame(mul2 = predf.rt %>>% retrafo(predf %>>% mul(4)), predf.rt %>>% retrafo(predf %>>% cpoSelect(index = c(4, 3, 2, 1))), copy1 = df2)
-
-  route2df = data.frame(route1df, add3 = predf %>>% add(id = "thrdrow")) %>>% mul(id = "frthrow", factor = 3)
-  route2df.rt = data.frame(route1df.rt, add3 = predf.rt %>>% retrafo(predf %>>% add(id = "thrdrow"))) %>>% retrafo(route2df)
+  tmp5 = predf %>>% add(id = "thrdrow")
+  route2df = data.frame(route1df, add3 = tmp5) %>>% mul(id = "frthrow", factor = 3)
 
   df.select = df %>>% cpoSelect(index = c(2, 1))
-  df.select.rt = df2 %>>% retrafo(df.select)
+  rtselect = retrafo(df.select)
   retrafo(df.select) = NULL
 
-  preinsert = data.frame(mul1 = df.select %>>% mul(factor = 10), add1 = df.select %>>% add(summand = 10))
-  preinsert.rt = data.frame(mul1 = df.select.rt %>>% retrafo(df.select %>>% mul(factor = 10)), add1 = df.select.rt %>>% retrafo(df.select %>>% add(summand = 10)))
+  tmp6 = df.select %>>% mul(factor = 10)
+  tmp7 = df.select %>>% add(summand = 10)
+  preinsert = data.frame(mul1 = tmp6, add1 = tmp7)
 
-  route3df = data.frame(mul4 = predf %>>% mul(factor = 1.2), preinsert, copy2 = df)
-  route3df.rt = data.frame(mul4 = predf.rt %>>% retrafo(predf %>>% mul(factor = 1.2)), preinsert.rt, copy2 = df2)
+  tmp8 = predf %>>% mul(factor = 1.2)
+  route3df = data.frame(mul4 = tmp8, preinsert, copy2 = df)
 
   fullroutedf = data.frame(r1 = route1df, r2 = route2df, r3 = route3df)
+  fullroute.trafo.df.clist = cpo.clist
+
+
+  cpo.clist = numeric(0)
+  predf.rt = data.frame(mul1 = df2 %>>% retrafo(tmp1), add1 = df2 %>>% retrafo(tmp2))
+  route1df.rt = data.frame(mul2 = predf.rt %>>% retrafo(tmp3), predf.rt %>>% retrafo(tmp4), copy1 = df2)
+  route2df.rt = data.frame(route1df.rt, add3 = predf.rt %>>% retrafo(tmp5)) %>>% retrafo(route2df)
+  df.select.rt = df2 %>>% rtselect
+  preinsert.rt = data.frame(mul1 = df.select.rt %>>% retrafo(tmp6), add1 = df.select.rt %>>% retrafo(tmp7))
+  route3df.rt = data.frame(mul4 = predf.rt %>>% retrafo(tmp8), preinsert.rt, copy2 = df2)
   fullroutedf.rt = data.frame(r1 = route1df.rt, r2 = route2df.rt, r3 = route3df.rt)
+
+  fullroute.retrafo.df.clist = cpo.clist
 
   expect_equal(fullroute, fullroutedf)
   expect_equal(fullrouteretrafo, fullroutedf.rt)
+
+  expect_set_equal(fullroute.trafo.clist, fullroute.trafo.df.clist)
 
 })
