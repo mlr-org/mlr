@@ -1,4 +1,4 @@
-
+#' @include getHyperPars.R
 
 #' @title \dQuote{cbind} the Result of multiple CPOs
 #'
@@ -55,7 +55,7 @@ cpoCbind = function(..., .cpos = list()) {
   # "SOURCE" item at position 1.
   cpograph = list(makeCPOGraphItem(type = "SOURCE", parents = integer(0), children = integer(0), content = NULL))
 
-  dangling = integer(0)
+  dangling = setNames(integer(0), character(0))
   for (cidx in seq_along(cpos)) {
     cname = names(cpos)[cidx]
     if (is.null(cname)) {
@@ -90,7 +90,9 @@ cpoCbind = function(..., .cpos = list()) {
       ifelse(all(dupnames == ""), "which are unnamed", collapse(Filter(function(x) x != "", dupnames), sep = ", ")))
   }
 
-  cpograph = synchronizeGraph(cpograph)
+  if (length(cpos)) {
+    cpograph = synchronizeGraph(cpograph)
+  }
 
   allcpos = lapply(Filter(function(x) x$type == "CPO", cpograph), function(x) x$content)
   par.set = do.call(base::c, lapply(allcpos, getParamSet))
@@ -110,6 +112,7 @@ cpoCbind = function(..., .cpos = list()) {
       applyGraph(control, data, FALSE, NULL)$data
     })(), "CPOCbind")
 }
+
 
 applyGraph = function(graph, data, is.trafo, args) {
   graph[[1]]$data[[1]] = data
@@ -412,3 +415,5 @@ synchronizeGraph = function(cpograph) {
   }
   newgraph
 }
+
+registerCPO(cpoCbind, "meta", NULL, "Combine multiple CPO operations by joining their outputs column-wise.")

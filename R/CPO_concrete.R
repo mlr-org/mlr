@@ -22,6 +22,7 @@ cpoPca = makeCPO("pca", center = TRUE: logical, scale = TRUE: logical, .dataspli
 }, cpo.retrafo = {
   as.data.frame(scale(as.matrix(data), center = control$center, scale = control$scale) %*% control$rotation)
 })
+registerCPO(cpoPca, "data", "numeric data preprocessing", "Perform Principal Component Analysis (PCA) using stats::prcomp.")
 
 #' @title Construct a CPO for scaling / centering
 #'
@@ -44,6 +45,7 @@ cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .data
 }, cpo.retrafo = {
   as.data.frame(scale(as.matrix(data), center = control$center, scale = control$scale))
 })
+registerCPO(cpoScale, "data", "numeric data preprocessing", "Center and / or scale the data using base::scale.")
 
 #' @title CPO Multiplexer
 #'
@@ -124,7 +126,7 @@ cpoMultiplex = function(cpos, selected.cpo = NULL, id = NULL) {
             res
           }, cpo.retrafo = function(data, control, ...) { data %>>% control })(id = id)
 }
-
+registerCPO(list(name = "cpoMultiplex", cponame = "multiplex"), "meta", NULL, "Apply one of a given set of CPOs, each having their hyperparameters exported.")
 
 #' @title CPO Applicator
 #'
@@ -143,6 +145,7 @@ cpoMultiplex = function(cpos, selected.cpo = NULL, id = NULL) {
 cpoApply = makeCPO("apply", .par.set = makeParamSet(makeUntypedLearnerParam("cpo")), .datasplit = "task",  # nolint
                    cpo.trafo = { control = retrafo({res = data %>>% cpo}) ; res }, cpo.retrafo = { data %>>% control })
 # FIXME: require databound
+registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporting its hyperparameters.")
 
 
 #' @title Drop All Columns Except Certain Selected Ones from Data
@@ -197,3 +200,4 @@ cpoSelect = makeCPO("select",  # nolint
     }
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
+registerCPO(cpoSelect, "data", "feature selection ", "Select features from a data set by type, column name, or column index.")
