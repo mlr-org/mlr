@@ -243,16 +243,17 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       assertString(id)
     }
     affect.args = args[affect.params]
-    assertSubset(affect.args$affect.type, c("numeric", "factor", "ordered", "other"))
-    assertIntegerish(affect.args$affect.index, any.missing = FALSE, unique = TRUE)
-    assertCharacter(affect.args$affect.names, any.missing = FALSE, unique = TRUE)
-    if (!is.null(affect.args$affect.pattern)) {
-      assertString(affect.args$affect.pattern)
+    names(affect.args) = substring(names(affect.args), 8)
+    assertSubset(affect.args$type, c("numeric", "factor", "ordered", "other"))
+    assertIntegerish(affect.args$index, any.missing = FALSE, unique = TRUE)
+    assertCharacter(affect.args$names, any.missing = FALSE, unique = TRUE)
+    if (!is.null(affect.args$pattern)) {
+      assertString(affect.args$pattern)
     }
-    assertFlag(affect.args$affect.invert)
-    assertFlag(affect.args$affect.pattern.ignore.case)
-    assertFlag(affect.args$affect.pattern.perl)
-    assertFlag(affect.args$affect.pattern.fixed)
+    assertFlag(affect.args$invert)
+    assertFlag(affect.args$pattern.ignore.case)
+    assertFlag(affect.args$pattern.perl)
+    assertFlag(affect.args$pattern.fixed)
     args = dropNamed(args, affect.params)
 
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(.par.set$pars)])
@@ -264,6 +265,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       par.set = .par.set,
       par.vals = present.pars,
       properties = list(properties = .properties,
+        properties.data = .properties,
         properties.adding = .properties.adding,
         properties.needed = .properties.needed),
       bound = .cpotype,
@@ -282,6 +284,10 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       convertto = .type.to,
       data.dependent = .data.dependent,
       hybrid.inverter = .cpotype == "targetbound" && .stateless)
+    if (length(getCPOAffect(cpo))) {
+      # data is subset, so the overall 'properties' is the maximal set
+      cpo$properties$properties = union(cpo$properties$properties,  c("numerics", "factors", "ordered", "missings"))
+    }
     setCPOId(cpo, id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
@@ -365,7 +371,9 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
     assertSubset(prevneeded, cpo$properties$properties)  # this should never happen, since we test this during CPO composition
   }
 
-  tin = prepareTrafoInput(data, cpo$datasplit, cpo$properties$properties, cpo$fix.factors, cpo$name)
+
+
+  tin = prepareTrafoInput(data, cpo$datasplit, cpo$properties$properties.data, getCPOAffect(cpo, FALSE), cpo$fix.factors, cpo$name)
   if (!cpo$data.dependent) {
     assert(cpo$bound == "targetbound")
     tin$indata$data = NULL
@@ -411,7 +419,7 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
   # the properties of the output should only be the input properties + the ones we're adding
   allowed.properties = union(tin$properties, cpo$properties$properties.needed)
   tout = handleTrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties, cpo$properties$properties.adding,
-    cpo$bound == "targetbound", cpo$convertto, cpo$name)
+    cpo$bound == "targetbound", cpo$convertto, tin$subset.index, cpo$name)
 
 
 
@@ -480,7 +488,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
   }
   assert(cpo$bound == "databound")
 
-  tin = prepareRetrafoInput(data, cpo$datasplit, cpo$properties$properties, retrafo$shapeinfo.input, cpo$bare.name)
+  tin = prepareRetrafoInput(data, cpo$datasplit, cpo$properties$properties.data, retrafo$shapeinfo.input, cpo$bare.name)
 
   assertChoice(cpo$type, c("functional", "object"))
   if (cpo$type == "functional") {
@@ -498,7 +506,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
   allowed.properties = union(tin$properties, cpo$properties$properties.needed)
 
   list(data = handleRetrafoOutput(result, data, tin$tempdata, cpo$datasplit, allowed.properties,
-    cpo$properties$properties.adding, retrafo$shapeinfo.output, cpo$bare.name),
+    cpo$properties$properties.adding, retrafo$shapeinfo.output, tin$subset.index, cpo$bare.name),
     inverter = prev.inverter)
 }
 
@@ -771,19 +779,19 @@ getCPOAffect.CPOS3Primitive = function(cpo, drop.defaults = TRUE) {
     return(cpo$affect.args)
   }
   affect.args = cpo$affect.args
-  if (setequal(affect.args$affect.type, c("numeric", "factor", "ordered", "other"))) {
-    affect.args$affect.type = NULL
+  if (setequal(affect.args$type, c("numeric", "factor", "ordered", "other"))) {
+    affect.args$type = NULL
   }
-  if (!length(affect.args$affect.index)) {
-    affect.args$affect.index = NULL
+  if (!length(affect.args$index)) {
+    affect.args$index = NULL
   }
-  if (!length(affect.args$affect.names)) {
-    affect.args$affect.names = NULL
+  if (!length(affect.args$names)) {
+    affect.args$names = NULL
   }
-  if (is.null(affect.args$affect.pattern)) {
-    affect.args$affect.pattern.ignore.case = NULL
-    affect.args$affect.pattern.perl = NULL
-    affect.args$affect.pattern.fixed = NULL
+  if (is.null(affect.args$pattern)) {
+    affect.args$pattern.ignore.case = NULL
+    affect.args$pattern.perl = NULL
+    affect.args$pattern.fixed = NULL
   }
   Filter(function(x) !is.null(x) && !identical(x, FALSE), affect.args)
 }

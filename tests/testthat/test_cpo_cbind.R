@@ -64,6 +64,7 @@ test_that("cbind with NULLCPO works", {
   result = cpo.df1c %>>% copycopy
   indf = cpo.df1[c(1, 2, 3, 5)]
   expected = data.frame(cpo.df1[4], indf, copy = indf, copyx = indf, copyx.copy = indf, copyy = indf, copyy.copy = indf)
+
   expect_equal(getTaskData(result), expected)
   expect_equal(cpo.df1 %>>% retrafo(result), cbind(expected[-1], expected[1]))
 

@@ -8,7 +8,7 @@ devtools::load_all("..")
 options(error = dump.frames)
 configureMlr(show.info = TRUE, on.learner.error = "stop", show.learner.output = TRUE)
 
-
+listCPO()
 
 library("testthat")
 
@@ -18,6 +18,8 @@ devtools::test(pkg = "..", filter = "cpo")
 devtools::test(pkg = "..", filter = "cpo_basic")
 devtools::test(pkg = "..", filter = "cpo_properties")
 devtools::test(pkg = "..", filter = "cpo_datasplit")
+devtools::test(pkg = "..", filter = "cpo_quick")
+devtools::test(pkg = "..", filter = "cpo_cbind")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
 

@@ -5,12 +5,13 @@
 \title{Drop All Columns Except Certain Selected Ones from Data}
 \usage{
 cpoSelect(type = character(0), index = integer(0), names = character(0),
-  pattern = NULL, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
-  invert = FALSE, id = NULL, affect.type = c("numeric", "factor",
-  "ordered", "other"), affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  pattern = NULL, pattern.ignore.case = FALSE, pattern.perl = FALSE,
+  pattern.fixed = FALSE, invert = FALSE, id = NULL,
+  affect.type = c("numeric", "factor", "ordered", "other"),
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{type}{[\code{character}]\cr
@@ -32,15 +33,15 @@ the columns indicated in \dQuote{index}.}
 A pattern to match against the column names. Same as in \code{\link{grep}}.
 Default is \code{NULL} for no matching.}
 
-\item{ignore.case}{[\code{logical(1)}]\cr
+\item{pattern.ignore.case}{[\code{logical(1)}]\cr
 Influences behaviour of \dQuote{pattern}: Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
 Default is \code{FALSE}.}
 
-\item{perl}{[\code{logical(1)}]\cr
+\item{pattern.perl}{[\code{logical(1)}]\cr
 Influences behaviour of \dQuote{pattern}: Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
 Default is \code{FALSE}.}
 
-\item{fixed}{[\code{logical(1)}]\cr
+\item{pattern.fixed}{[\code{logical(1)}]\cr
 Influences behaviour of \dQuote{pattern}: Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
 Default is \code{FALSE}.}
 

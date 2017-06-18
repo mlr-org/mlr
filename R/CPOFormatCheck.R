@@ -13,18 +13,25 @@ cpo.targetproperties = c("oneclass", "twoclass", "multiclass", "lcens", "rcens",
 #  - split the data
 #  - get a shape info object
 #  --> return list(indata = list(data, target), shapeinfo, properties)
-prepareTrafoInput = function(indata, datasplit, allowed.properties, capture.factors, name) {
+prepareTrafoInput = function(indata, datasplit, allowed.properties, subset.selector, capture.factors, name) {
   assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
-
-  targets = if ("Task" %in% class(indata)) {
-    getTaskTargetNames(indata)
+  if ("Task" %in% class(indata)) {
+    targets = getTaskTargetNames(indata)
+    subset.selector$data = getTaskData(indata, target.extra = TRUE)$data
+    subset.index = do.call(getColIndices, subset.selector)
+    indata = subsetTask(indata, features = subset.index)
   } else {
-    character(0)
+    targets = character(0)
+    subset.selector$data = indata
+    subset.index = do.call(getColIndices, subset.selector)
+    indata = indata[subset.index]
   }
+
   present.properties = getTaskProperties(indata)
   assertPropertiesOk(present.properties, allowed.properties, "trafo", "in", name)
 
   shapeinfo = makeInputShapeInfo(indata, capture.factors)
+  shapeinfo$subset.selector = subset.selector
 
   indata = if (is.data.frame(indata)) {
     splitdf(indata, getLLDatasplit(datasplit))
@@ -34,7 +41,7 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, capture.fact
 
   tempdata = indata$data
   indata$data = getIndata(indata$data, datasplit)
-  list(indata = indata, shapeinfo = shapeinfo, properties = present.properties, tempdata = tempdata)
+  list(indata = indata, shapeinfo = shapeinfo, properties = present.properties, tempdata = tempdata, subset.index = subset.index)
 }
 
 
@@ -58,7 +65,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
     indata = splitColsByType(splitinto, indata)
   }
 
-  list(indata = getIndata(indata, datasplit), properties = prepared$properties, tempdata = indata)
+  list(indata = getIndata(indata, datasplit), properties = prepared$properties, tempdata = indata, subset.index = prepared$subset.index)
 }
 
 # do the check of the trafo's return value
@@ -67,7 +74,7 @@ prepareRetrafoInput = function(indata, datasplit, allowed.properties, shapeinfo.
 #  - check properties are allowed
 #  - get a shape info object
 #  --> return list(outdata, shapeinfo)
-handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, targetbound, convertto, name) {
+handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, targetbound, convertto, subset.index, name) {
   outdata = rebuildOutdata(outdata, tempdata, datasplit)
   datasplit = getLLDatasplit(datasplit)
   if (targetbound) {
@@ -75,16 +82,20 @@ handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.prop
       censstyle = intersect(allowed.properties, c("lcens", "rcens", "icens"))
       assert(length(censstyle) == 1)
     }
-    recombined = recombinetask(olddata, outdata, datasplit, TRUE, convertto, censstyle, name)
+    recombined = recombinetask(olddata, outdata, datasplit, subset.index, TRUE, convertto, censstyle, name)
+    small.recombined = recombinetask(subsetTask(olddata, features = subset.index), outdata, datasplit, seq_along(subset.index), TRUE, convertto, censstyle, name)
   } else {
-    recombined = if (is.data.frame(olddata)) {
-      recombinedf(olddata, outdata, datasplit, character(0), name)
+    if (is.data.frame(olddata)) {
+      recombined = recombinedf(olddata, outdata, datasplit, subset.index, character(0), name)
+      small.recombined = recombinedf(olddata[subset.index], outdata, datasplit, seq_along(subset.index), character(0), name)
+
     } else {
-      recombinetask(olddata, outdata, datasplit, FALSE, name = name)
+      recombined = recombinetask(olddata, outdata, datasplit, subset.index, FALSE, name = name)
+      small.recombined = recombinetask(subsetTask(olddata, features = subset.index), outdata, datasplit, seq_along(subset.index), FALSE, name = name)
     }
   }
 
-  present.properties = getTaskProperties(recombined)
+  present.properties = getTaskProperties(small.recombined)
   assertPropertiesOk(present.properties, allowed.properties, "trafo", "out", name)
   assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "trafo", "adding", name)
   if (datasplit %in% c("no", "task")) {
@@ -106,7 +117,7 @@ handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.prop
 #  - check the properties are fulfilled
 #  - check the shape is the same as during trafo
 #  --> return the data that can be returned by the outer retrafo layer
-handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, shapeinfo.output, name) {
+handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.properties, properties.adding, shapeinfo.output, subset.index, name) {
   outdata = rebuildOutdata(outdata, tempdata, datasplit)
   datasplit = getLLDatasplit(datasplit)
   if (datasplit %in% c("no", "task")) {
@@ -115,18 +126,21 @@ handleRetrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.pr
   }
   targetcols = character(0)
 
-  recombined = if (is.data.frame(olddata)) {
+  if (is.data.frame(olddata)) {
     if (any(shapeinfo.output$target %in% names(olddata))) {
       assert(all(shapeinfo.output$target %in% names(olddata)))  # we also check this in prepareRetrafoInput
       targetcols = shapeinfo.output$target
     }
 
-    recombinedf(olddata, outdata, datasplit, targetcols, name)
+    recombined = recombinedf(olddata, outdata, datasplit, subset.index, targetcols, name)
+    small.recombined = recombinedf(cbind(dropNamed(olddata, targetcols)[subset.index], olddata[targetcols]), outdata, datasplit,
+      seq_along(subset.index), targetcols, name)
   } else {
-    recombinetask(olddata, outdata, datasplit, FALSE, name = name)
+    recombined = recombinetask(olddata, outdata, datasplit, subset.index, FALSE, name = name)
+    small.recombined = recombinetask(subsetTask(olddata, features = subset.index), outdata, datasplit, seq_along(subset.index), FALSE, name = name)
   }
 
-  present.properties = getDataProperties(recombined, targetcols)
+  present.properties = getDataProperties(small.recombined, targetcols)
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "out", name)
   assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "retrafo", "adding", name)
 
@@ -179,6 +193,11 @@ prepareRetrafoData = function(data, datasplit, allowed.properties, shapeinfo.inp
     stopf("Data fed into CPO %s retrafo is not a Task or data.frame.", name)
   }
 
+  shapeinfo.input$subset.selector$data = data
+  subset.index = do.call(getColIndices, shapeinfo.input$subset.selector)
+  data = data[subset.index]
+  shapeinfo.input$subset.selector = NULL
+
   lldatasplit = getLLDatasplit(datasplit)
 
   assertShapeConform(data, shapeinfo.input, lldatasplit == "all", name)
@@ -190,7 +209,7 @@ prepareRetrafoData = function(data, datasplit, allowed.properties, shapeinfo.inp
   present.properties = getDataProperties(data, character(0))
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
-  list(data = data, target = target, properties = present.properties)
+  list(data = data, target = target, properties = present.properties, subset.index = subset.index)
 }
 
 fixFactors = function(data, levels) {
@@ -452,6 +471,42 @@ print.ShapeInfo = function(x, ...) {
 ### Task Splitting             ###
 ##################################
 
+getColIndices = function(data, type, index, names, pattern, invert, pattern.ignore.case, pattern.perl, pattern.fixed) {
+  coltypes = vcapply(data, function(x) class(x)[1])
+  coltypes[coltypes == "integer"] = "numeric"
+  coltypes[!coltypes %in% c("numeric", "factor", "ordered")] = "other"
+  matchcols = coltypes %in% type
+  if (!is.null(pattern)) {
+    matchcols = matchcols | grepl(pattern, colnames(data), pattern.ignore.case, pattern.perl, pattern.fixed)
+  }
+  badnames = names[!names %in% names(data)]
+  if (length(badnames)) {
+    stopf("Column%s not found: %s", ifelse(length(badnames) > 1, "s", ""), collapse(badnames, sep = ", "))
+  }
+  index = c(index, setdiff(match(names, names(data)), index))
+
+  index = c(index, setdiff(which(matchcols), index))
+
+  if (invert) {
+    index = setdiff(seq_along(data), index)
+  }
+  index
+}
+
+subsetIndata = function(indata, subset.selector) {
+  if ("Task" %in% class(indata)) {
+    indata = getTaskData(indata, target.extra = TRUE)$data
+  }
+  subset.selector$data = indata
+  index = do.call(getColIndices, subset.selector)
+  if ("Task" %in% class(indata)) {
+    subsetTask(indata, features = index)
+  } else {
+    indata[index]
+  }
+}
+
+
 # most of CPOFormatCheck doesn't care about "factor", "onlyfactor", "ordered" or "numeric"
 # so we translate those
 getLLDatasplit = function(datasplit) {
@@ -546,7 +601,7 @@ splitdf = function(df, datasplit = c("target", "most", "all", "no", "task")) {
 ##################################
 
 # 'LL' == low level
-recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
+recombineLL = function(olddata, newdata, targetnames, datasplit, subset.index, name) {
   allnames = names(olddata)
   needednames = c("numeric", "factor", "other", if (datasplit == "all") "ordered")
   if (!isTRUE(checkSetEqual(names(newdata), needednames))) {
@@ -556,6 +611,8 @@ recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
 
   targetdata = olddata[targetnames]
   olddata = dropNamed(olddata, targetnames)
+  unsubsetdata = olddata[-subset.index]
+  olddata = olddata[subset.index]
 
   dfs = sapply(newdata, is.data.frame)
   if (any(!dfs)) {
@@ -590,7 +647,7 @@ recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
     }
   }
 
-  newdata = cbind(do.call(cbind, unname(newdata)), targetdata)
+  newdata = cbind(unsubsetdata, do.call(cbind, unname(newdata)), targetdata)
   assertSetEqual(names(newdata), namesorder)
   newdata[namesorder]
 }
@@ -601,7 +658,7 @@ recombineLL = function(olddata, newdata, targetnames, datasplit, name) {
 # newtasktype: only if targetbound, type of new task. Give even if no task conversion happens.
 # censtype only needed if newtasktype == surv
 recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "most", "all"),
-                         targetbound, newtasktype, censtype, name) {
+                         subset.index, targetbound, newtasktype, censtype, name) {
   datasplit = match.arg(datasplit)
 
   if (is.data.frame(task)) {
@@ -633,7 +690,7 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
       }
       return(constructTask(task, newdata, newtnames, newtasktype, getTaskId(task), censtype))
     } else {
-      return(changeData(task, recombinedf(getTaskData(task), newdata, datasplit, getTaskTargetNames(task), name)))
+      return(changeData(task, recombinedf(getTaskData(task), newdata, datasplit, subset.index, getTaskTargetNames(task), name)))
     }
   }
 
@@ -646,7 +703,7 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
     }
   }
   checkTaskBasics(task, newdata, name)
-  old.td = getTaskDesc(task)
+  old.td = getTaskDesc(subsetTask(task, features = subset.index))
   new.td = getTaskDesc(newdata)
 
   if (targetbound) {
@@ -672,14 +729,19 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
       stopf("CPO %s changed task description item %s.", name, n)
     }
   }
-  newdata
+  targetnames = getTaskTargetNames(newdata)
+  newdata = getTaskData(newdata)
+  fullindices = seq_along(newdata)
+  aretargets = names(newdata) %in% targetnames
+  subset.index = sort(c(fullindices[aretargets], fullindices[!aretargets][subset.index]))
+  changeData(task, recombinedf(getTaskData(task), newdata, "no", subset.index, character(0), name))
 }
 
-recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no", "task"), targetcols, name) {
+recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no", "task"), subset.index, targetcols, name) {
 # otherwise it contains the columns removed from the DF because they were target columns.
   datasplit = match.arg(datasplit)
   if (datasplit %in% c("most", "all")) {
-    return(recombineLL(df, newdata, targetcols, datasplit, name))
+    return(recombineLL(df, newdata, targetcols, datasplit, subset.index, name))
   } else if (datasplit == "task") {
     assertClass(newdata, "Task")
     newdata = getTaskData(newdata)
@@ -690,18 +752,21 @@ recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no",
   if (nrow(df) != nrow(newdata)) {
     stopf("CPO %s must not change number of rows.", name)
   }
-  fullnames = c(names(newdata), targetcols)
+  outsetcols = dropNamed(df, targetcols)[-subset.index]
+  fullnames = c(names(newdata), names(outsetcols), targetcols)
   dubs = duplicated(fullnames)
   if (any(dubs)) {
     stopf("CPO %s gave bad result\ncolumn names %s duplicated (possibly with target)", name, collapse(unique(fullnames[dubs], sep = ", ")))
   }
 
   datanames = names(newdata)
-  newdata = cbind(newdata, df[targetcols])
-  if (identical(datanames, setdiff(names(df), targetcols))) {
+  newdata = cbind(outsetcols, newdata, df[targetcols])
+  if (identical(datanames, setdiff(names(df), targetcols)[subset.index])) {
     # names didn't change, so we preserve column order
     newdata = newdata[names(df)]
   }
+
+  row.names(newdata) = attr(df, "row.names")
   newdata
 }
 

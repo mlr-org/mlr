@@ -220,13 +220,13 @@ registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporti
 #' @param pattern [\code{character(1)}]\cr
 #'   A pattern to match against the column names. Same as in \code{\link{grep}}.
 #'   Default is \code{NULL} for no matching.
-#' @param ignore.case [\code{logical(1)}]\cr
+#' @param pattern.ignore.case [\code{logical(1)}]\cr
 #'   Influences behaviour of \dQuote{pattern}: Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
-#' @param perl [\code{logical(1)}]\cr
+#' @param pattern.perl [\code{logical(1)}]\cr
 #'   Influences behaviour of \dQuote{pattern}: Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
-#' @param fixed [\code{logical(1)}]\cr
+#' @param pattern.fixed [\code{logical(1)}]\cr
 #'   Influences behaviour of \dQuote{pattern}: Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
 #' @param invert [\code{logical(1)}]\cr
@@ -239,31 +239,15 @@ cpoSelect = makeCPO("select",  # nolint
       makeParamSet(makeUntypedLearnerParam("names", default = character(0)),
         makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
       paramSetSugar(
-          ignore.case = FALSE: logical [[requires = quote(!is.null(pattern))]],
-          perl = FALSE: logical [[requires = quote(!is.null(pattern))]],
-          fixed = FALSE: logical [[requires = quote(!is.null(pattern))]],
+          pattern.ignore.case = FALSE: logical [[requires = quote(!is.null(pattern))]],
+          pattern.perl = FALSE: logical [[requires = quote(!is.null(pattern))]],
+          pattern.fixed = FALSE: logical [[requires = quote(!is.null(pattern))]],
           invert = FALSE: logical)),
   .datasplit = "target", cpo.trafo = {
     assertCharacter(names, any.missing = FALSE, unique = TRUE)
     assertIntegerish(index, any.missing = FALSE, unique = TRUE)
-    coltypes = vcapply(data, function(x) class(x)[1])
-    coltypes[coltypes == "integer"] = "numeric"
-    coltypes[!coltypes %in% c("numeric", "factor", "ordered")] = "other"
-    matchcols = coltypes %in% type
-    if (!is.null(pattern)) {
-      matchcols = matchcols | grepl(pattern, colnames(data), ignore.case, perl, fixed)
-    }
-    badnames = names[!names %in% names(data)]
-    if (length(badnames)) {
-      stopf("Column%s not found: %s", ifelse(length(badnames) > 1, "s", ""), collapse(badnames, sep = ", "))
-    }
-    index = c(index, setdiff(match(names, names(data)), index))
 
-    index = c(index, setdiff(which(matchcols), index))
-
-    if (invert) {
-      index = setdiff(seq_along(data), index)
-    }
+    index = getColIndices(data, type, index, names, pattern, invert, pattern.ignore.case, pattern.perl, pattern.fixed)
 
     cpo.retrafo = function(data) {
       data[index]

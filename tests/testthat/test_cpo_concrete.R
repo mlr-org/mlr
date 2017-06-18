@@ -11,7 +11,6 @@ test_that("cpoPca test", {
 
   expect_equal(iris %>>% ret, ip)
   hip = head(ip)
-  row.names(hip) = row.names(hip)
   expect_equal(head(iris) %>>% ret, hip)
 
   prc = prcomp(iris[1:4])
@@ -38,7 +37,7 @@ test_that("cpoScale test", {
 
     expect_equal(iris %>>% ret, ip)
     hip = head(ip)
-    row.names(hip) = row.names(hip)
+
     expect_equal(head(iris) %>>% ret, hip)
   }
 
@@ -103,7 +102,7 @@ test_that("cpo applicator", {
 
   expect_equal(iris %>>% ret, ip)
   hip = head(ip)
-  row.names(hip) = row.names(hip)
+
   expect_equal(head(iris) %>>% ret, hip)
 
   expect_equal(getTaskData(iris.task %>>% cpoPca()), iris %>>% ret)
@@ -115,7 +114,7 @@ test_that("cpo applicator", {
 
   expect_equal(iris %>>% ret, ip)
   hip = head(ip)
-  row.names(hip) = row.names(hip)
+
   expect_equal(head(iris) %>>% ret, hip)
 
   expect_equal(getTaskData(iris.task %>>% cpoScale(center = FALSE)), iris %>>% ret)
@@ -161,7 +160,7 @@ test_that("cpo dummyencoder", {
   retrafo(hip) = NULL
 
   expect_equal(head(iris %>>% ret), hip)
-  row.names(expected) = row.names(expected)
+
   expect_equal(hip, expected)
 
   hip2 = hi %>>% cpoDummyEncode(TRUE)
