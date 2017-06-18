@@ -221,13 +221,13 @@ registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporti
 #'   A pattern to match against the column names. Same as in \code{\link{grep}}.
 #'   Default is \code{NULL} for no matching.
 #' @param ignore.case [\code{logical(1)}]\cr
-#'   Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
+#'   Influences behaviour of \dQuote{pattern}: Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
 #' @param perl [\code{logical(1)}]\cr
-#'   Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
+#'   Influences behaviour of \dQuote{pattern}: Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
 #' @param fixed [\code{logical(1)}]\cr
-#'   Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
+#'   Influences behaviour of \dQuote{pattern}: Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
 #' @param invert [\code{logical(1)}]\cr
 #'   Invert column selection: Drop the named columns and return the rest, instead of keeping the selected
@@ -239,10 +239,13 @@ cpoSelect = makeCPO("select",  # nolint
       makeParamSet(makeUntypedLearnerParam("names", default = character(0)),
         makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
       paramSetSugar(
-          ignore.case = FALSE: logical, perl = FALSE: logical,
-          fixed = FALSE: logical, invert = FALSE: logical)),
+          ignore.case = FALSE: logical [[requires = quote(!is.null(pattern))]],
+          perl = FALSE: logical [[requires = quote(!is.null(pattern))]],
+          fixed = FALSE: logical [[requires = quote(!is.null(pattern))]],
+          invert = FALSE: logical)),
   .datasplit = "target", cpo.trafo = {
-    assertCharacter(names)
+    assertCharacter(names, any.missing = FALSE, unique = TRUE)
+    assertIntegerish(index, any.missing = FALSE, unique = TRUE)
     coltypes = vcapply(data, function(x) class(x)[1])
     coltypes[coltypes == "integer"] = "numeric"
     coltypes[!coltypes %in% c("numeric", "factor", "ordered")] = "other"

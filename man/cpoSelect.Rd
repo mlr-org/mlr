@@ -4,8 +4,13 @@
 \alias{cpoSelect}
 \title{Drop All Columns Except Certain Selected Ones from Data}
 \usage{
-cpoSelect(type = character(0), index = integer(0), pattern = NULL,
-  ignore.case = FALSE, perl = FALSE, fixed = FALSE, id = NULL)
+cpoSelect(type = character(0), index = integer(0), names = character(0),
+  pattern = NULL, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
+  invert = FALSE, id = NULL, affect.type = c("numeric", "factor",
+  "ordered", "other"), affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{type}{[\code{character}]\cr
@@ -14,26 +19,34 @@ The type of columns to keep. Default is \code{character(0)}.}
 
 \item{index}{[\code{integer}]\cr
 Indices of columns to keep. Note that the index counts columns without the target column(s).
-This parameter makes it possible to re-order columns. While all columns which match either
+This and the next parameter make it possible to re-order columns. While all columns which match either
 \dQuote{type}, \dQuote{pattern} or \dQuote{index} remain in the resulting data, the ones
 selected by \dQuote{index} are put at the front in the order specified.
 Default is \code{integer(0)}.}
+
+\item{names}{[\code{character}]\cr
+Names of columns to keep. Matching columns will be kept in order of their names occurring, but after
+the columns indicated in \dQuote{index}.}
 
 \item{pattern}{[\code{character(1)}]\cr
 A pattern to match against the column names. Same as in \code{\link{grep}}.
 Default is \code{NULL} for no matching.}
 
 \item{ignore.case}{[\code{logical(1)}]\cr
-Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
+Influences behaviour of \dQuote{pattern}: Whether to perform case insensitive matching. Same as in \code{\link{grep}}.
 Default is \code{FALSE}.}
 
 \item{perl}{[\code{logical(1)}]\cr
-Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
+Influences behaviour of \dQuote{pattern}: Should Perl-compatible regexps be used? Same as in \code{\link{grep}}.
 Default is \code{FALSE}.}
 
 \item{fixed}{[\code{logical(1)}]\cr
-Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
+Influences behaviour of \dQuote{pattern}: Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
 Default is \code{FALSE}.}
+
+\item{invert}{[\code{logical(1)}]\cr
+Invert column selection: Drop the named columns and return the rest, instead of keeping the selected
+columns only. Default is \code{FALSE}.}
 }
 \description{
 Select columns by type or name. The parameters \dQuote{type} and

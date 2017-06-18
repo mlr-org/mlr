@@ -10,3 +10,19 @@ getCPOId(cpo)
 The ID of a CPO to a value will prefix all its
 parameter names with this ID.
 }
+\seealso{
+Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
+  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
+  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
+  \code{\link{cpoScale}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
+  \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
+  \code{\link{makeCPO}},
+  \code{\link{makeRetrafoFromState}},
+  \code{\link{retrafo<-}}, \code{\link{retrafo}},
+  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
+}

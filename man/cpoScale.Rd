@@ -4,7 +4,12 @@
 \alias{cpoScale}
 \title{Construct a CPO for scaling / centering}
 \usage{
-cpoScale(center = TRUE, scale = TRUE, id = NULL)
+cpoScale(center = TRUE, scale = TRUE, id = NULL,
+  affect.type = c("numeric", "factor", "ordered", "other"),
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{center}{[\code{logical(1)}]\cr
@@ -41,6 +46,7 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
   \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
   \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
+  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},

@@ -4,7 +4,12 @@
 \alias{cpoDummyEncode}
 \title{CPO Dummy Encoder}
 \usage{
-cpoDummyEncode(reference.cat = FALSE, id = NULL)
+cpoDummyEncode(reference.cat = FALSE, id = NULL,
+  affect.type = c("numeric", "factor", "ordered", "other"),
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{reference.cat}{[\code{logical}]\cr
@@ -38,6 +43,7 @@ Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
   \code{\link{cpoApply}}, \code{\link{cpoMultiplex}},
   \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
   \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},

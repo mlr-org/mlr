@@ -409,6 +409,7 @@ setCPOId = function(cpo, id) {
 #' The ID of a CPO to a value will prefix all its
 #' parameter names with this ID.
 #'
+#' @family CPO
 #' @export
 getCPOId = function(cpo) {
   UseMethod("getCPOId")
@@ -417,6 +418,28 @@ getCPOId = function(cpo) {
 #' @export
 getCPOId.CPO = function(cpo) {
   stop("Compound CPOs have no IDs.")
+}
+
+#' @title Get the Selection Arguments for affected CPOs
+#'
+#' @description
+#' Get the \code{affected.*} arguments from when the CPO was constructed.
+#'
+#' @param cpo [\code{CPO}]\cr
+#'   The CPO.
+#' @param drop.defaults [\code{logical(1)}]\cr
+#'   Whether to only return the arguments that deviate from the default.
+#'   Default is \code{TRUE}.
+#'
+#' @family CPO
+#' @export
+getCPOAffect = function(cpo, drop.defaults = TRUE) {
+  UseMethod("getCPOAffect")
+}
+
+#' @export
+getCPOAffect.CPO = function(cpo) {
+  stop("Compound CPOs have no affect arguments.")
 }
 
 
@@ -1029,6 +1052,11 @@ getCPOId.NULLCPO = function(cpo) {
 }
 
 #' @export
+getCPOAffect.NULLCPO = function(cpo) {
+  list()
+}
+
+#' @export
 getCPOName.CPORetrafo = function(cpo) {
   paste(sapply(as.list(cpo), getCPOName), collapse = " => ")
 }
@@ -1100,7 +1128,11 @@ print.CPO = function(x, ...) {
   pv = getHyperPars(x)
   argstring = paste(names(pv), sapply(pv, convertToShortString), sep = " = ", collapse = ", ")
   template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
-  catf(template, getCPOName(x), argstring)
+  catf(template, getCPOName(x), argstring, newline = FALSE)
+  if (("CPOPrimitive" %in% class(x)) && length({affect = getCPOAffect(x)})) {
+    catf(" [%s]", paste(names(affect), sapply(affect, convertToShortString), sep = " = ", collapse = ", "))
+  }
+  cat("\n")
 }
 
 #' @export

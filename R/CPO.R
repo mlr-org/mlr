@@ -165,11 +165,13 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       collapse(badprops, sep = ", "))
   }
 
-  # these parameters are either special parameters given to the constructor function (id),
+  # these parameters are either special parameters given to the constructor function (id, affect.*),
   # special parameters given to the cpo.trafo function (data, target), special parameters given to the
   # cpo.retrafo function (predict.type, control),
 
-  reserved.params = c("data", "target", "predict.type", "control", "id")
+  affect.params = c("affect.type", "affect.index", "affect.names", "affect.pattern", "affect.invert", "affect.pattern.ignore.case",
+    "affect.pattern.perl", "affect.pattern.fixed")
+  reserved.params = c("data", "target", "predict.type", "control", "id", affect.params)
   if (any(names(.par.set$pars) %in% reserved.params)) {
     stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
@@ -222,7 +224,9 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     stop("Cannot have a functional stateless CPO.")
   }
 
-  funargs = insert(funargs, list(id = NULL))
+  funargs = insert(funargs, list(id = NULL, affect.type = c("numeric", "factor", "ordered", "other"), affect.index = integer(0),
+    affect.names = character(0), affect.pattern = NULL, affect.invert = FALSE,
+    affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE))
 
   funbody = quote({
     # in the first two code lines, there are still arguments around that we don't know the names of.
@@ -233,9 +237,24 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     args[[1]] = quote(list)
     args = eval(args, envir = parent.frame())
     args = insert(funargs, args)
-    if (!is.null(args$id)) {
-      assertString(args$id)
+    id = args$id
+    args$id = NULL
+    if (!is.null(id)) {
+      assertString(id)
     }
+    affect.args = args[affect.params]
+    assertSubset(affect.args$affect.type, c("numeric", "factor", "ordered", "other"))
+    assertIntegerish(affect.args$affect.index, any.missing = FALSE, unique = TRUE)
+    assertCharacter(affect.args$affect.names, any.missing = FALSE, unique = TRUE)
+    if (!is.null(affect.args$affect.pattern)) {
+      assertString(affect.args$affect.pattern)
+    }
+    assertFlag(affect.args$affect.invert)
+    assertFlag(affect.args$affect.pattern.ignore.case)
+    assertFlag(affect.args$affect.pattern.perl)
+    assertFlag(affect.args$affect.pattern.fixed)
+    args = dropNamed(args, affect.params)
+
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(.par.set$pars)])
     checkParamsFeasible(.par.set, present.pars)
     cpo = makeS3Obj(c("CPOS3Primitive", "CPOPrimitive", "CPOS3", "CPO"),
@@ -251,6 +270,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       predict.type = .predict.type,
       # --- CPOS3Primitive part
       id = NULL,
+      affect.args = affect.args,
       bare.par.set = .par.set,
       datasplit = .datasplit,
       stateless = .stateless,
@@ -262,11 +282,10 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       convertto = .type.to,
       data.dependent = .data.dependent,
       hybrid.inverter = .cpotype == "targetbound" && .stateless)
-    setCPOId(cpo, args$id)  # this also adjusts par.set and par.vals
+    setCPOId(cpo, id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
 }
-
 
 makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
   if (!"Task" %in% class(data)) {
@@ -746,6 +765,28 @@ getCPOKind.CPOS3 = function(cpo) {
   "trafo"
 }
 
+#' @export
+getCPOAffect.CPOS3Primitive = function(cpo, drop.defaults = TRUE) {
+  if (!drop.defaults) {
+    return(cpo$affect.args)
+  }
+  affect.args = cpo$affect.args
+  if (setequal(affect.args$affect.type, c("numeric", "factor", "ordered", "other"))) {
+    affect.args$affect.type = NULL
+  }
+  if (!length(affect.args$affect.index)) {
+    affect.args$affect.index = NULL
+  }
+  if (!length(affect.args$affect.names)) {
+    affect.args$affect.names = NULL
+  }
+  if (is.null(affect.args$affect.pattern)) {
+    affect.args$affect.pattern.ignore.case = NULL
+    affect.args$affect.pattern.perl = NULL
+    affect.args$affect.pattern.fixed = NULL
+  }
+  Filter(function(x) !is.null(x) && !identical(x, FALSE), affect.args)
+}
 
 ##################################
 ### Retrafo Operations         ###
