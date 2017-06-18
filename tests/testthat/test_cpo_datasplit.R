@@ -528,7 +528,7 @@ test_that("format change between trafo and retrafo are detected", {
 
     for (split in c("no", "task", "target", "most", "all")) {
 
-      cpo = cpogen("numrowtest", type, pss(),
+      cpo = cpogen("formattest", type, pss(),
         function(data, ...) { control = 0 ; data }, function(data, ...) data, split)
 
       rt = retrafo(cpo.df1 %>>% cpo())
@@ -572,11 +572,11 @@ test_that("format change between trafo and retrafo are detected", {
       expect_error(cpo.df1cc %>>% rt, "column name mismatch")
 
     }
-
-
+split = "no"
+type = "o"
     for (split in c("no", "task", "target")) {
 
-      cpo = cpogen("numrowtest", type, pss(),
+      cpo = cpogen("formattest", type, pss(),
         function(data, ...) { control = 0 ; data }, function(data, ...) { data[-1] }, split)
 
       rt = retrafo(cpo.df1 %>>% cpo())
@@ -587,7 +587,18 @@ test_that("format change between trafo and retrafo are detected", {
       expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
       expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
 
-      cpo = cpogen("numrowtest", type, pss(),
+      cpo = cpogen("formattest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) { cbind(data[c(2, 1)], data[-(1:2)]) }, split)
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1cc %>>% rt, "column name mismatch between training and test data")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
+
+      cpo = cpogen("formattest", type, pss(),
         function(data, ...) { control = 0 ; data }, function(data, ...) { data[[1]] = as.factor(data[[1]]) ; data },
         split, properties.needed = "factors")
 
@@ -601,9 +612,20 @@ test_that("format change between trafo and retrafo are detected", {
     }
 
     for (split in c("most", "all")) {
-
+split = "most"
       cpo = cpogen("numrowtest", type, pss(),
         function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric = data$numeric[-1] ; data }, split)
+
+      rt = retrafo(cpo.df1 %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1cc %>>% rt, "column name mismatch between training and test data")
+
+      rt = retrafo(cpo.df1c %>>% cpo())
+      expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
+      expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
+
+      cpo = cpogen("numrowtest", type, pss(),
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric = cbind(data$numeric[c(2, 1)],data$numeric[-c(1, 2)]) ; data }, split)
 
       rt = retrafo(cpo.df1 %>>% cpo())
       expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
@@ -623,6 +645,7 @@ test_that("format change between trafo and retrafo are detected", {
       rt = retrafo(cpo.df1c %>>% cpo())
       expect_error(cpo.df1 %>>% rt, "Type of column N1 mismatches")
       expect_error(cpo.df1c %>>% rt, "Type of column N1 mismatches")
+
 
       cpo = cpogen("numrowtest", type, pss(),
         function(data, ...) { control = 0 ; data }, function(data, ...) { data$factor[[1]] = as.ordered(data$factor[[1]]) ; data },
