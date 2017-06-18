@@ -229,6 +229,9 @@ registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporti
 #' @param fixed [\code{logical(1)}]\cr
 #'   Whether to use match \code{pattern} as as is. Same as in \code{\link{grep}}.
 #'   Default is \code{FALSE}.
+#' @param invert [\code{logical(1)}]\cr
+#'   Invert column selection: Drop the named columns and return the rest, instead of keeping the selected
+#'   columns only. Default is \code{FALSE}.
 cpoSelect = makeCPO("select",  # nolint
   .par.set = c(
       paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA,
@@ -237,7 +240,7 @@ cpoSelect = makeCPO("select",  # nolint
         makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
       paramSetSugar(
           ignore.case = FALSE: logical, perl = FALSE: logical,
-          fixed = FALSE: logical)),
+          fixed = FALSE: logical, invert = FALSE: logical)),
   .datasplit = "target", cpo.trafo = {
     assertCharacter(names)
     coltypes = vcapply(data, function(x) class(x)[1])
@@ -254,6 +257,10 @@ cpoSelect = makeCPO("select",  # nolint
     index = c(index, setdiff(match(names, names(data)), index))
 
     index = c(index, setdiff(which(matchcols), index))
+
+    if (invert) {
+      index = setdiff(seq_along(data), index)
+    }
 
     cpo.retrafo = function(data) {
       data[index]

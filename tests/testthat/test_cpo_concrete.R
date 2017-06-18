@@ -140,6 +140,11 @@ names(iris)
 
   expect_error(iris %>>% cpoSelect(index = 1000), "undefined columns selected")
 
+  ip = iris %>>% cpoSelect(type = "factor", index = c(2, 1), names = c("Petal.Length", "Sepal.Width"), invert = TRUE)
+  retrafo(ip) = NULL
+
+  expect_equal(ip, iris[4])
+
 })
 
 test_that("cpo dummyencoder", {
