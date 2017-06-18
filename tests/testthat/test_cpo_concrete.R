@@ -28,10 +28,10 @@ test_that("cpoPca test", {
 
 test_that("cpoScale test", {
 
-  for (sets in list(list(TRUE, TRUE),
+  for (sets in list(list(FALSE, FALSE),
     list(TRUE, FALSE),
     list(FALSE, TRUE),
-    list(FALSE, FALSE))) {
+    list(TRUE, TRUE))) {
     ip = iris %>>% do.call(cpoScale, sets)
     ret = retrafo(ip)
     retrafo(ip) = NULL
@@ -45,7 +45,8 @@ test_that("cpoScale test", {
 
 
   scld = scale(iris[1:4])
-
+  # last iteration of the loop above has both 'center' and 'scale' set to TRUE
+  # otherwise, the following wouldn't work
   expect_equal(getRetrafoState(ret)$control$center, attr(scld, "scaled:center"))
   expect_equal(getRetrafoState(ret)$control$scale, attr(scld, "scaled:scale"))
 
@@ -135,3 +136,38 @@ test_that("cpo selector", {
 
 })
 
+test_that("cpo dummyencoder", {
+
+  hi = head(iris)
+
+  expected = hi
+  expected$Species = NULL
+  expected[paste0("Species", levels(iris$Species))] = 0
+  expected$Speciessetosa = 1
+
+  hip = hi %>>% cpoDummyEncode()
+  ret = retrafo(hip)
+  retrafo(hip) = NULL
+
+  expect_equal(head(iris %>>% ret), hip)
+  row.names(expected) = row.names(expected)
+  expect_equal(hip, expected)
+
+  hi2 = hi
+  hi2$Species = factor(as.character(hi2$Species), levels = c("setosa", "versicolor"))
+  hi3 = hi2
+  hi3$Species = factor(as.character(hi3$Species), levels = c("versicolor", "setosa"))
+
+  hi2p = hi2 %>>% cpoDummyEncode()
+  ret2 = retrafo(hi2p)
+  retrafo(hi2p) = NULL
+  expect_equal(hi3 %>>% ret2, hi2p)
+
+  expect_equal(hi %>>% ret2, hi2p)
+
+  it = makeRegrTask("iris2", iris, target = "Sepal.Length")
+
+  nodumpred = predict(train("regr.lm", it), it)
+  dumpred = predict(train(cpoDummyEncode() %>>% makeLearner("regr.lm"), it), it)
+
+})

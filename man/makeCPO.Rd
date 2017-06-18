@@ -6,12 +6,12 @@
 \usage{
 makeCPO(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   .datasplit = c("target", "most", "all", "no", "task", "factor",
-  "onlyfactor", "ordered", "numeric"), .stateless = FALSE,
-  .properties = c("numerics", "factors", "ordered", "missings"),
-  .properties.adding = character(0), .properties.needed = character(0),
-  .properties.target = c("cluster", "classif", "multilabel", "regr", "surv",
-  "oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens"), cpo.trafo,
-  cpo.retrafo)
+  "onlyfactor", "ordered", "numeric"), .fix.factors = FALSE,
+  .stateless = FALSE, .properties = c("numerics", "factors", "ordered",
+  "missings"), .properties.adding = character(0),
+  .properties.needed = character(0), .properties.target = c("cluster",
+  "classif", "multilabel", "regr", "surv", "oneclass", "twoclass", "multiclass",
+  "lcens", "rcens", "icens"), cpo.trafo, cpo.retrafo)
 }
 \arguments{
 \item{.cpo.name}{[\code{character(1)}]\cr
@@ -110,9 +110,10 @@ Create a CPO constructor.
 Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{\%>>\%}}, \code{\link{applyCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
-  \code{\link{cpoApply}}, \code{\link{cpoMultiplex}},
-  \code{\link{cpoPca}}, \code{\link{cpoScale}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
+  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
+  \code{\link{cpoScale}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},

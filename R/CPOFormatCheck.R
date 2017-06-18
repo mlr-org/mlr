@@ -13,7 +13,7 @@ cpo.targetproperties = c("oneclass", "twoclass", "multiclass", "lcens", "rcens",
 #  - split the data
 #  - get a shape info object
 #  --> return list(indata = list(data, target), shapeinfo, properties)
-prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
+prepareTrafoInput = function(indata, datasplit, allowed.properties, capture.factors, name) {
   assert(checkClass(indata, "data.frame"), checkClass(indata, "Task"))
 
   targets = if ("Task" %in% class(indata)) {
@@ -24,7 +24,7 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, name) {
   present.properties = getTaskProperties(indata)
   assertPropertiesOk(present.properties, allowed.properties, "trafo", "in", name)
 
-  shapeinfo = makeInputShapeInfo(indata)
+  shapeinfo = makeInputShapeInfo(indata, capture.factors)
 
   indata = if (is.data.frame(indata)) {
     splitdf(indata, getLLDatasplit(datasplit))
@@ -183,10 +183,20 @@ prepareRetrafoData = function(data, datasplit, allowed.properties, shapeinfo.inp
 
   assertShapeConform(data, shapeinfo.input, lldatasplit == "all", name)
 
+  if ("factor.levels" %in% names(shapeinfo.input)) {
+    data = fixFactors(data, shapeinfo.input$factor.levels)
+  }
+
   present.properties = getDataProperties(data, character(0))
   assertPropertiesOk(present.properties, allowed.properties, "retrafo", "in", name)
 
   list(data = data, target = target, properties = present.properties)
+}
+
+fixFactors = function(data, levels) {
+  assertSubset(names(levels), names(data))
+  data[names(levels)] = mapply(factor, data[names(levels)], levels, SIMPLIFY = FALSE)
+  data
 }
 
 
@@ -344,7 +354,7 @@ makeShapeInfo = function(data) {
 }
 
 # like makeShapeInfo, but additionally get the target names
-makeInputShapeInfo = function(indata) {
+makeInputShapeInfo = function(indata, capture.factors) {
   if ("Task" %in% class(indata)) {
     target = getTaskTargetNames(indata)
     indata = getTaskData(indata, target.extra = TRUE)$data
@@ -352,6 +362,9 @@ makeInputShapeInfo = function(indata) {
     ret$target = target
   } else {
     ret = makeShapeInfo(indata)
+  }
+  if (capture.factors) {
+    ret$factor.levels = Filter(function(x) !is.null(x), lapply(indata, levels))
   }
   addClasses(ret, "InputShapeInfo")
 }

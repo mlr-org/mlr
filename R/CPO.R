@@ -93,6 +93,7 @@
 #' @export
 makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                    .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
+                   .fix.factors = FALSE,
                    .stateless = FALSE,
                    .properties = c("numerics", "factors", "ordered", "missings"),
                    .properties.adding = character(0), .properties.needed = character(0),
@@ -111,14 +112,14 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "databound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .data.dependent = TRUE, .stateless = .stateless, .properties = .properties,
+    .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE, .stateless = .stateless, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
     .predict.type = NULL, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
 }
 
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
-                          .datasplit, .data.dependent, .stateless, .properties, .properties.adding, .properties.needed,
+                          .datasplit, .fix.factors, .data.dependent, .stateless, .properties, .properties.adding, .properties.needed,
                           .properties.target, .type.from, .type.to, .predict.type, cpo.trafo, cpo.retrafo, ...) {
   .cpotype = match.arg(.cpotype)
   assertFlag(.data.dependent)
@@ -253,6 +254,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       bare.par.set = .par.set,
       datasplit = .datasplit,
       stateless = .stateless,
+      fix.factors = .fix.factors,
       type = ifelse(is.null(cpo.retrafo), "functional", "object"),
       trafo = cpo.trafo,
       retrafo = cpo.retrafo,
@@ -344,7 +346,7 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
     assertSubset(prevneeded, cpo$properties$properties)  # this should never happen, since we test this during CPO composition
   }
 
-  tin = prepareTrafoInput(data, cpo$datasplit, cpo$properties$properties, cpo$name)
+  tin = prepareTrafoInput(data, cpo$datasplit, cpo$properties$properties, cpo$fix.factors, cpo$name)
   if (!cpo$data.dependent) {
     assert(cpo$bound == "targetbound")
     tin$indata$data = NULL

@@ -612,7 +612,6 @@ type = "o"
     }
 
     for (split in c("most", "all")) {
-split = "most"
       cpo = cpogen("numrowtest", type, pss(),
         function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric = data$numeric[-1] ; data }, split)
 
@@ -673,4 +672,30 @@ split = "most"
     }
   }
 })
+
+test_that("factor fixing works", {
+
+  factormemcpo = makeCPO("dummyencode", .datasplit = "target", .fix.factors = FALSE,
+    cpo.trafo = {
+      control = lapply(data, levels)
+      data
+    }, cpo.retrafo = {
+      newlevels = lapply(data, levels)
+      levelsfit = mapply(identical, control, newlevels)
+      data[[1]] = sum(levelsfit)
+    })
+
+  hi = head(iris)
+  hi2 = hi
+  hi2$Species = factor(as.character(hi2$Species), levels = c("setosa", "versicolor"))
+  hi3 = hi2
+  hi3$Species = factor(as.character(hi3$Species), levels = c("versicolor", "setosa"))
+
+  hi %>>% retrafo(hi %>>% factormemcpo())
+
+
+
+
+})
+
 

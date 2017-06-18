@@ -47,6 +47,34 @@ cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .data
 })
 registerCPO(cpoScale, "data", "numeric data preprocessing", "Center and / or scale the data using base::scale.")
 
+#' @title CPO Dummy Encoder
+#'
+#' @template cpo_description
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoDummyEncode = makeCPO("dummyencode", .datasplit = "target", .fix.factors = TRUE,
+  .properties.needed = "numerics", .properties.adding = c("factors", "ordered"),
+  cpo.trafo = {
+  mf = stats::model.frame(~., data)
+  control = list()
+  control$model = attr(mf, "terms")
+  attr(control$model, "intercept") = 0
+  control$flevels = lapply(data, levels)
+  as.data.frame(model.matrix(control$model, data))
+}, cpo.retrafo = {
+  newlevels = lapply(data, levels)
+  levelsfit = mapply(identical, control$flevels, newlevels)
+  if (!all(levelsfit)) {
+    stop("dummyencode: levels of new data did not fit levels of training data. You can try prepending cpoFixLevels (on training AND test step).")
+  }
+  as.data.frame(model.matrix(control$model, data))
+})
+registerCPO(cpoDummyEncode, "data", "feature conversion", "Convert factorial columns to numeric columns by dummy encoding them")
+
+
+
 #' @title CPO Multiplexer
 #'
 #' @template cpo_description

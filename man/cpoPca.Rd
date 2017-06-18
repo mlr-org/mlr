@@ -4,7 +4,7 @@
 \alias{cpoPca}
 \title{Construct a CPO for PCA preprocessing}
 \usage{
-cpoPca(center = TRUE, scale = TRUE, id = NULL)
+cpoPca(center = TRUE, scale = FALSE, id = NULL)
 }
 \arguments{
 \item{center}{[\code{logical(1)}]\cr
@@ -40,9 +40,9 @@ the parameters of the creator function.
 Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{\%>>\%}}, \code{\link{applyCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
-  \code{\link{cpoApply}}, \code{\link{cpoMultiplex}},
-  \code{\link{cpoScale}}, \code{\link{getCPOName}},
-  \code{\link{getHyperPars}},
+  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
+  \code{\link{cpoMultiplex}}, \code{\link{cpoScale}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},

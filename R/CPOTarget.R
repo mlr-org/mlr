@@ -103,7 +103,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "targetbound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .data.dependent = .data.dependent, .stateless = .stateless, .properties = .properties,
+    .datasplit = .datasplit, .fix.factors = FALSE, .data.dependent = .data.dependent, .stateless = .stateless, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.data, .type.from = .type, .type.to = .type.out,
     .predict.type = .predict.type, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
