@@ -402,10 +402,7 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  if (is.null(weights))
-    task["weights"] = list(NULL)
-  else
-    task$weights = weights
+  task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
@@ -414,7 +411,7 @@ changeData = function(task, data, costs, weights) {
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
   )
 
   return(task)
