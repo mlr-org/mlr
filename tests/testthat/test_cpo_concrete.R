@@ -153,6 +153,11 @@ test_that("cpo dummyencoder", {
   row.names(expected) = row.names(expected)
   expect_equal(hip, expected)
 
+  hip2 = hi %>>% cpoDummyEncode(TRUE)
+  expected$Speciessetosa = NULL
+  retrafo(hip2) = NULL
+  expect_equal(hip2, expected)
+
   hi2 = hi
   hi2$Species = factor(as.character(hi2$Species), levels = c("setosa", "versicolor"))
   hi3 = hi2
@@ -165,9 +170,13 @@ test_that("cpo dummyencoder", {
 
   expect_equal(hi %>>% ret2, hi2p)
 
+  expect_equal(nrow(iris %>>% ret2), nrow(iris))
+
   it = makeRegrTask("iris2", iris, target = "Sepal.Length")
 
   nodumpred = predict(train("regr.lm", it), it)
-  dumpred = predict(train(cpoDummyEncode() %>>% makeLearner("regr.lm"), it), it)
+  dumpred = predict(train(cpoDummyEncode(TRUE) %>>% makeLearner("regr.lm"), it), it)
+
+  expect_equal(nodumpred$data, dumpred$data)
 
 })

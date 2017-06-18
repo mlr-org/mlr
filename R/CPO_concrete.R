@@ -51,25 +51,43 @@ registerCPO(cpoScale, "data", "numeric data preprocessing", "Center and / or sca
 #'
 #' @template cpo_description
 #'
+#' @param reference.cat [\code{logical}]\cr
+#'   If \dQuote{reference.cat} is \code{TRUE}, the first level of every factor column
+#'   is taken as the reference category and the encoding is \code{c(0, 0, 0, ...)}.
+#'   If this is \code{FALSE}, the encoding is always one-hot-encoding. Default is \code{FALSE}.
+#'
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoDummyEncode = makeCPO("dummyencode", .datasplit = "target", .fix.factors = TRUE,
+cpoDummyEncode = makeCPO("dummyencode", reference.cat = FALSE: logical, .datasplit = "target", .fix.factors = TRUE,
   .properties.needed = "numerics", .properties.adding = c("factors", "ordered"),
   cpo.trafo = {
   mf = stats::model.frame(~., data)
   control = list()
-  control$model = attr(mf, "terms")
-  attr(control$model, "intercept") = 0
-  control$flevels = lapply(data, levels)
-  as.data.frame(model.matrix(control$model, data))
-}, cpo.retrafo = {
-  newlevels = lapply(data, levels)
-  levelsfit = mapply(identical, control$flevels, newlevels)
-  if (!all(levelsfit)) {
-    stop("dummyencode: levels of new data did not fit levels of training data. You can try prepending cpoFixLevels (on training AND test step).")
+  control = attr(mf, "terms")
+  if (!reference.cat) {
+    attr(control, "intercept") = 0
   }
-  as.data.frame(model.matrix(control$model, data))
+  prev.action = options()$na.action
+  options(na.action = "na.pass")
+  result = as.data.frame(model.matrix(control, data))
+  options(na.action = prev.action)
+  if (reference.cat) {
+    result[-1]
+  } else {
+    result
+  }
+}, cpo.retrafo = {
+  prev.action = options()$na.action
+  options(na.action = "na.pass")
+  result = as.data.frame(model.matrix(control, data))
+  options(na.action = prev.action)
+  if (reference.cat) {
+    result[-1]
+  } else {
+    result
+  }
+
 })
 registerCPO(cpoDummyEncode, "data", "feature conversion", "Convert factorial columns to numeric columns by dummy encoding them")
 

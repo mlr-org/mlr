@@ -4,9 +4,14 @@
 \alias{cpoDummyEncode}
 \title{CPO Dummy Encoder}
 \usage{
-cpoDummyEncode(id = NULL)
+cpoDummyEncode(reference.cat = FALSE, id = NULL)
 }
 \arguments{
+\item{reference.cat}{[\code{logical}]\cr
+If \dQuote{reference.cat} is \code{TRUE}, the first level of every factor column
+is taken as the reference category and the encoding is \code{c(0, 0, 0, ...)}.
+If this is \code{FALSE}, the encoding is always one-hot-encoding. Default is \code{FALSE}.}
+
 \item{id}{[\code{character(1)}]\cr
 id to use as prefix for the CPO's hyperparameters. this
 must be used to avoid name clashes when composing two

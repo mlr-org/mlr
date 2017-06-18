@@ -683,7 +683,8 @@ test_that("factor fixing works", {
       newlevels = lapply(data, levels)
       levelsfit = mapply(identical, control, newlevels)
       data[[1]] = sum(levelsfit)
-    })
+      data
+    })()
 
   hi = head(iris)
   hi2 = hi
@@ -691,10 +692,29 @@ test_that("factor fixing works", {
   hi3 = hi2
   hi3$Species = factor(as.character(hi3$Species), levels = c("versicolor", "setosa"))
 
-  hi %>>% retrafo(hi %>>% factormemcpo())
+  expect_equal((hi %>>% retrafo(hi %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi2 %>>% retrafo(hi %>>% factormemcpo))[1, 1], 4)
+  expect_equal((hi3 %>>% retrafo(hi %>>% factormemcpo))[1, 1], 4)
+  expect_equal((hi %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 4)
+  expect_equal((hi2 %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi3 %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 4)
+  expect_equal((iris %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 4)
 
+  expect_set_equal(names(table((iris %>>% retrafo(hi2 %>>% factormemcpo))$Species)), c("setosa", "versicolor", "virginica"))
 
+  factormemcpo$fix.factors = TRUE
 
+  expect_equal((hi %>>% retrafo(hi %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi2 %>>% retrafo(hi %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi3 %>>% retrafo(hi %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi2 %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 5)
+  expect_equal((hi3 %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 5)
+  expect_equal((iris %>>% retrafo(hi2 %>>% factormemcpo))[1, 1], 5)
+
+  expect_set_equal(names(table((iris %>>% retrafo(hi2 %>>% factormemcpo))$Species)), c("setosa", "versicolor"))
+  expect_equal(length((iris %>>% retrafo(hi2 %>>% factormemcpo))$Species), nrow(iris))
+  expect_equal(is.na((iris %>>% retrafo(hi2 %>>% factormemcpo))$Species), iris$Species == "virginica")
 
 })
 
