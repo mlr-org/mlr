@@ -19,7 +19,12 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, subset.selec
     targets = getTaskTargetNames(indata)
     subset.selector$data = getTaskData(indata, target.extra = TRUE)$data
     subset.index = do.call(getColIndices, subset.selector)
-    indata = subsetTask(indata, features = subset.index)
+    # subsetTask, but keep everything in order
+    indata.data = getTaskData(indata)
+    fullindices = seq_along(indata.data)
+    aretargets = names(indata.data) %in% getTaskTargetNames(indata)
+    new.subset.index = sort(c(which(aretargets), fullindices[!aretargets][subset.index]))
+    indata = changeData(indata, indata.data[new.subset.index])
   } else {
     targets = character(0)
     subset.selector$data = indata
@@ -100,7 +105,7 @@ handleTrafoOutput = function(outdata, olddata, tempdata, datasplit, allowed.prop
   assertPropertiesOk(present.properties, setdiff(allowed.properties, properties.adding), "trafo", "adding", name)
   if (datasplit %in% c("no", "task")) {
     # in this case, take shape info with 'target' separated
-    shapeinfo = makeOutputShapeInfo(recombined)
+    shapeinfo = makeOutputShapeInfo(small.recombined)
   } else {
     shapeinfo = makeOutputShapeInfo(outdata)
   }
@@ -493,20 +498,6 @@ getColIndices = function(data, type, index, names, pattern, invert, pattern.igno
   index
 }
 
-subsetIndata = function(indata, subset.selector) {
-  if ("Task" %in% class(indata)) {
-    indata = getTaskData(indata, target.extra = TRUE)$data
-  }
-  subset.selector$data = indata
-  index = do.call(getColIndices, subset.selector)
-  if ("Task" %in% class(indata)) {
-    subsetTask(indata, features = index)
-  } else {
-    indata[index]
-  }
-}
-
-
 # most of CPOFormatCheck doesn't care about "factor", "onlyfactor", "ordered" or "numeric"
 # so we translate those
 getLLDatasplit = function(datasplit) {
@@ -729,12 +720,12 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
       stopf("CPO %s changed task description item %s.", name, n)
     }
   }
-  targetnames = getTaskTargetNames(newdata)
-  newdata = getTaskData(newdata)
-  fullindices = seq_along(newdata)
-  aretargets = names(newdata) %in% targetnames
-  subset.index = sort(c(fullindices[aretargets], fullindices[!aretargets][subset.index]))
-  changeData(task, recombinedf(getTaskData(task), newdata, "no", subset.index, character(0), name))
+  targetnames = getTaskTargetNames(task)
+  olddata = getTaskData(task)
+  fullindices = seq_along(olddata)
+  aretargets = names(olddata) %in% targetnames
+  new.subset.index = sort(c(which(aretargets), fullindices[!aretargets][subset.index]))
+  changeData(task, recombinedf(getTaskData(task), getTaskData(newdata), "no", new.subset.index, character(0), name))
 }
 
 recombinedf = function(df, newdata, datasplit = c("target", "most", "all", "no", "task"), subset.index, targetcols, name) {

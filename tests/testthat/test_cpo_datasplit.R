@@ -30,11 +30,11 @@ test_that("data actually has the form requested", {
         }
       }
 
-      testsingle(nosplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
-      testsingle(tasksplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
-      testsingle(targetsplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
-      testsingle(mostsplit(nr, numtarget, numnumeric, numfactor + numordered, numother, -1))
-      testsingle(allsplit(nr, numtarget, numnumeric, numfactor, numother, numordered))
+      testsingle(nosplit(nr, numtarget, numnumeric, numfactor, numother, numordered, affect.pattern = "^OUT\\.", affect.invert = TRUE))
+      testsingle(tasksplit(nr, numtarget, numnumeric, numfactor, numother, numordered, affect.pattern = "^OUT\\.", affect.invert = TRUE))
+      testsingle(targetsplit(nr, numtarget, numnumeric, numfactor, numother, numordered, affect.pattern = "^OUT\\.", affect.invert = TRUE))
+      testsingle(mostsplit(nr, numtarget, numnumeric, numfactor + numordered, numother, -1, affect.pattern = "^OUT\\.", affect.invert = TRUE))
+      testsingle(allsplit(nr, numtarget, numnumeric, numfactor, numother, numordered, affect.pattern = "^OUT\\.", affect.invert = TRUE))
       invisible(NULL)
     }
 
@@ -56,33 +56,29 @@ test_that("data actually has the form requested", {
     ml = testmlcpo
 
 
-    doallsplit(cl, testdfcpo, testdfcpo3, 0, 1, 0, 0, 0)
-    doallsplit(cl, testtaskcpo, testdfcpo3, 1, 1, 0, 0, 0)
-    doallsplit(cl, testtaskcpo, testtaskcpo3, 1, 1, 0, 0, 0)
-    doallsplit(cl, testdfcpo, testtaskcpo3, 0, 1, 0, 0, 0)
-
-
-    doallsplittask(cl, makeClassifTask, "F1", cbind(cpo.df.numeric, cpo.df.factorial), cbind(cpo.df.numeric2, cpo.df.factorial2), 1, 3, 1, 0, 0)
+    doallsplittask(cl, makeClassifTask, "F1", cbind(cpo.df.numeric, OUT = cpo.df.ordered, cpo.df.factorial),
+                   cbind(OUT = cpo.df.ordered, cpo.df.numeric2, cpo.df.factorial2), 1, 3, 1, 0, 0)
     doallsplittask(cl, makeClassifTask, "F1",
-      cbind(cpo.df.numeric, cpo.df.factorial, cpo.df.ordered),
-      cbind(cpo.df.numeric2, cpo.df.factorial2, cpo.df.ordered), 1, 3, 1, 0, 3)
+      cbind(cpo.df.numeric, cpo.df.factorial, cpo.df.ordered, OUT = cpo.df.ordered),
+      cbind(cpo.df.numeric2, cpo.df.factorial2, OUT = cpo.df.ordered, cpo.df.ordered), 1, 3, 1, 0, 3)
     doallsplittask(cl, makeClassifTask, "O2",
-      cbind(cpo.df.numeric, cpo.df.factorial, cpo.df.ordered),
-      cbind(cpo.df.numeric2, cpo.df.factorial2, cpo.df.ordered), 1, 3, 2, 0, 2)
+      cbind(OUT = cpo.df.ordered, cpo.df.numeric, cpo.df.factorial, cpo.df.ordered),
+      cbind(cpo.df.numeric2, OUT = cpo.df.ordered, cpo.df.factorial2, cpo.df.ordered), 1, 3, 2, 0, 2)
     doallsplittask(cl, makeClassifTask, "O2",
-      cbind(cpo.df.numeric, cpo.df.ordered),
-      cbind(cpo.df.numeric2, cpo.df.ordered), 1, 3, 0, 0, 2)
+      cbind(cpo.df.numeric, cpo.df.ordered, OUT = cpo.df.ordered),
+      cbind(OUT = cpo.df.numeric, cpo.df.numeric2, cpo.df.ordered, OUT = cpo.df.ordered), 1, 3, 0, 0, 2)
 
-    doallsplittask(rl, makeRegrTask, "N2", cbind(cpo.df.numeric, cpo.df.factorial), cbind(cpo.df.numeric2, cpo.df.factorial2), 1, 2, 2, 0, 0)
+    doallsplittask(rl, makeRegrTask, "N2", cbind(cpo.df.numeric, cpo.df.factorial, OUT = cpo.df.ordered), cbind(cpo.df.numeric2, cpo.df.factorial2), 1, 2, 2, 0, 0)
     doallsplittask(rl, makeRegrTask, "N2",
-      cbind(cpo.df.numeric, cpo.df.factorial, cpo.df.ordered),
+      cbind(cpo.df.numeric, cpo.df.factorial, OUT = cpo.df.ordered, cpo.df.ordered),
       cbind(cpo.df.numeric2, cpo.df.factorial2, cpo.df.ordered), 1, 2, 2, 0, 3)
     doallsplittask(rl, makeRegrTask, "N2", cpo.df.numeric, cpo.df.numeric2, 1, 2, 0, 0, 0)
 
-    doallsplittask(cc, makeClusterTask, NULL, cbind(cpo.df.numeric, cpo.df.factorial), cbind(cpo.df.numeric2, cpo.df.factorial2), 0, 3, 2, 0, 0)
+    doallsplittask(cc, makeClusterTask, NULL, cbind(cpo.df.numeric, cpo.df.factorial, OUT = cpo.df.ordered, OUT = cpo.df.numeric),
+                   cbind(cpo.df.numeric2, cpo.df.factorial2), 0, 3, 2, 0, 0)
     doallsplittask(cc, makeClusterTask, NULL,
       cbind(cpo.df.numeric, cpo.df.factorial, cpo.df.ordered),
-      cbind(cpo.df.numeric2, cpo.df.factorial2, cpo.df.ordered), 0, 3, 2, 0, 3)
+      cbind(cpo.df.numeric2, OUT = cpo.df.ordered, cpo.df.factorial2, cpo.df.ordered), 0, 3, 2, 0, 3)
     doallsplittask(cc, makeClusterTask, NULL, cpo.df.numeric, cpo.df.numeric2, 0, 3, 0, 0, 0)
 
     doallsplittask(ml, makeMultilabelTask, c("T1", "T2"), cbind(cpo.df.numeric, cpo.df.logical), cbind(cpo.df.numeric2, cpo.df.logical2), 2, 3, 0, 0, 0)

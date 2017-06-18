@@ -40,8 +40,8 @@ test_that("attaching cpo with mismatching properties gives error", {
 
   for (type in c("o", "f")) {
 
-    propercpo = function(properties, adding = character(0), needed = character(0)) {
-      cpogen("propertytest", type, pss(), cponoop, cponoop, "task", properties, adding, needed)()
+    propercpo = function(properties, adding = character(0), needed = character(0), ...) {
+      cpogen("propertytest", type, pss(), cponoop, cponoop, "task", properties, adding, needed)(...)
     }
 
     expect_set_equal(getRestrictedCPOProperties(propercpo(c("numerics", "factors")))$properties, c("numerics", "factors"))
@@ -59,6 +59,9 @@ test_that("attaching cpo with mismatching properties gives error", {
     expectCpo(propercpo(c("numerics", "factors"), needed = "missings") %>>% propercpo(c("numerics", "factors", "missings")))
     expect_error(propercpo(c("numerics", "factors"), needed = "missings") %>>% propercpo(c("numerics", "factors")),
       "property missings that \\w* can not handle")
+
+    # property requirements ignored if subsetting
+    expectCpo(propercpo(c("numerics", "factors"), needed = "missings") %>>% propercpo(c("numerics", "factors"), affect.type = "numeric"))
 
     needsmissing = propercpo(c("numerics", "factors"), needed = "missings")
     needsordered = propercpo(c("numerics", "factors"), needed = "ordered")

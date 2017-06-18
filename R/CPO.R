@@ -224,7 +224,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     stop("Cannot have a functional stateless CPO.")
   }
 
-  funargs = insert(funargs, list(id = NULL, affect.type = c("numeric", "factor", "ordered", "other"), affect.index = integer(0),
+  funargs = insert(funargs, list(id = NULL, affect.type = NULL, affect.index = integer(0),
     affect.names = character(0), affect.pattern = NULL, affect.invert = FALSE,
     affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE))
 
@@ -244,7 +244,9 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     }
     affect.args = args[affect.params]
     names(affect.args) = substring(names(affect.args), 8)
-    assertSubset(affect.args$type, c("numeric", "factor", "ordered", "other"))
+    if (!is.null(affect.args$type)) {
+      assertSubset(affect.args$type, c("numeric", "factor", "ordered", "other"))
+    }
     assertIntegerish(affect.args$index, any.missing = FALSE, unique = TRUE)
     assertCharacter(affect.args$names, any.missing = FALSE, unique = TRUE)
     if (!is.null(affect.args$pattern)) {
@@ -775,10 +777,13 @@ getCPOKind.CPOS3 = function(cpo) {
 
 #' @export
 getCPOAffect.CPOS3Primitive = function(cpo, drop.defaults = TRUE) {
-  if (!drop.defaults) {
-    return(cpo$affect.args)
-  }
   affect.args = cpo$affect.args
+  if (!drop.defaults) {
+    if (!length(getCPOAffect(cpo))) {
+      affect.args$type = c("numeric", "factor", "ordered", "other")
+    }
+    return(affect.args)
+  }
   if (setequal(affect.args$type, c("numeric", "factor", "ordered", "other"))) {
     affect.args$type = NULL
   }
