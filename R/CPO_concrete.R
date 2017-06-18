@@ -210,10 +210,13 @@ registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporti
 #'   The type of columns to keep. Default is \code{character(0)}.
 #' @param index [\code{integer}]\cr
 #'   Indices of columns to keep. Note that the index counts columns without the target column(s).
-#'   This parameter makes it possible to re-order columns. While all columns which match either
+#'   This and the next parameter make it possible to re-order columns. While all columns which match either
 #'   \dQuote{type}, \dQuote{pattern} or \dQuote{index} remain in the resulting data, the ones
 #'   selected by \dQuote{index} are put at the front in the order specified.
 #'   Default is \code{integer(0)}.
+#' @param names [\code{character}]\cr
+#'   Names of columns to keep. Matching columns will be kept in order of their names occurring, but after
+#'   the columns indicated in \dQuote{index}.
 #' @param pattern [\code{character(1)}]\cr
 #'   A pattern to match against the column names. Same as in \code{\link{grep}}.
 #'   Default is \code{NULL} for no matching.
@@ -230,11 +233,13 @@ cpoSelect = makeCPO("select",  # nolint
   .par.set = c(
       paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA,
         index = integer(0): integer[1, ]^NA),
-      makeParamSet(makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
+      makeParamSet(makeUntypedLearnerParam("names", default = character(0)),
+        makeCharacterParam("pattern", NULL, special.vals = list(NULL))),
       paramSetSugar(
           ignore.case = FALSE: logical, perl = FALSE: logical,
           fixed = FALSE: logical)),
   .datasplit = "target", cpo.trafo = {
+    assertCharacter(names)
     coltypes = vcapply(data, function(x) class(x)[1])
     coltypes[coltypes == "integer"] = "numeric"
     coltypes[!coltypes %in% c("numeric", "factor", "ordered")] = "other"
@@ -242,7 +247,14 @@ cpoSelect = makeCPO("select",  # nolint
     if (!is.null(pattern)) {
       matchcols = matchcols | grepl(pattern, colnames(data), ignore.case, perl, fixed)
     }
+    badnames = names[!names %in% names(data)]
+    if (length(badnames)) {
+      stopf("Column%s not found: %s", ifelse(length(badnames) > 1, "s", ""), collapse(badnames, sep = ", "))
+    }
+    index = c(index, setdiff(match(names, names(data)), index))
+
     index = c(index, setdiff(which(matchcols), index))
+
     cpo.retrafo = function(data) {
       data[index]
     }

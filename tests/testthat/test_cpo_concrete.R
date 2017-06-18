@@ -124,15 +124,21 @@ test_that("cpo applicator", {
 
 test_that("cpo selector", {
 
-  ip = iris %>>% cpoSelect(type = "factor", index = c(2, 1))
+names(iris)
+
+  ip = iris %>>% cpoSelect(type = "factor", index = c(2, 1), names = c("Petal.Length", "Sepal.Width"))
   ret = retrafo(ip)
   retrafo(ip) = NULL
 
   expect_equal(iris %>>% ret, ip)
 
-  expect_equal(iris %>>% ret, iris[c(2, 1, 5)])
+  expect_equal(iris %>>% ret, iris[c(2, 1, 3, 5)])
 
   expect_equal(names(iris %>>% cpoSelect(pattern = "Width")), c("Sepal.Width", "Petal.Width"))
+
+  expect_error(iris %>>% cpoSelect(names = "nosuchcol"), "not found.*nosuchcol")
+
+  expect_error(iris %>>% cpoSelect(index = 1000), "undefined columns selected")
 
 })
 
