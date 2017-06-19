@@ -1148,6 +1148,7 @@ print.DetailedCPO = function(x, ...) {
       cat("  ====>\n")
     }
     is.first = FALSE
+    class(retrafo) = setdiff(class(retrafo), "DetailedCPO")
     print(retrafo)
     cat("\n")
     print(getParamSet(retrafo))
