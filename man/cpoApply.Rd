@@ -4,11 +4,10 @@
 \alias{cpoApply}
 \title{CPO Applicator}
 \usage{
-cpoApply(cpo, id = NULL, affect.type = c("numeric", "factor", "ordered",
-  "other"), affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+cpoApply(cpo, id = NULL, affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr

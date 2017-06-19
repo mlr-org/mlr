@@ -4,8 +4,7 @@
 \alias{cpoPca}
 \title{Construct a CPO for PCA preprocessing}
 \usage{
-cpoPca(center = TRUE, scale = FALSE, id = NULL,
-  affect.type = c("numeric", "factor", "ordered", "other"),
+cpoPca(center = TRUE, scale = FALSE, id = NULL, affect.type = NULL,
   affect.index = integer(0), affect.names = character(0),
   affect.pattern = NULL, affect.invert = FALSE,
   affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,

@@ -4,8 +4,7 @@
 \alias{cpoScale}
 \title{Construct a CPO for scaling / centering}
 \usage{
-cpoScale(center = TRUE, scale = TRUE, id = NULL,
-  affect.type = c("numeric", "factor", "ordered", "other"),
+cpoScale(center = TRUE, scale = TRUE, id = NULL, affect.type = NULL,
   affect.index = integer(0), affect.names = character(0),
   affect.pattern = NULL, affect.invert = FALSE,
   affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,

@@ -123,8 +123,6 @@ test_that("cpo applicator", {
 
 test_that("cpo selector", {
 
-names(iris)
-
   ip = iris %>>% cpoSelect(type = "factor", index = c(2, 1), names = c("Petal.Length", "Sepal.Width"))
   ret = retrafo(ip)
   retrafo(ip) = NULL

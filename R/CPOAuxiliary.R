@@ -438,7 +438,7 @@ getCPOAffect = function(cpo, drop.defaults = TRUE) {
 }
 
 #' @export
-getCPOAffect.CPO = function(cpo) {
+getCPOAffect.CPO = function(cpo, drop.defaults = TRUE) {
   stop("Compound CPOs have no affect arguments.")
 }
 
@@ -1052,7 +1052,7 @@ getCPOId.NULLCPO = function(cpo) {
 }
 
 #' @export
-getCPOAffect.NULLCPO = function(cpo) {
+getCPOAffect.NULLCPO = function(cpo, drop.defaults = TRUE) {
   list()
 }
 

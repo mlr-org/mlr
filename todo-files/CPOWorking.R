@@ -20,6 +20,7 @@ devtools::test(pkg = "..", filter = "cpo_properties")
 devtools::test(pkg = "..", filter = "cpo_datasplit")
 devtools::test(pkg = "..", filter = "cpo_quick")
 devtools::test(pkg = "..", filter = "cpo_cbind")
+devtools::test(pkg = "..", filter = "cpo_concrete")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
 

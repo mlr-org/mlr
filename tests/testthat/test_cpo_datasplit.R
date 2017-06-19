@@ -288,21 +288,36 @@ test_that("changing the target gives an error", {
       failmode = switch(split, no = "df", task = "task")
       if (split == "no") {
         expect_class(cpo.df1 %>>% cpo(failmode, "yes"), "data.frame")
+        expect_class(cpo.df1 %>>% cpo(failmode, "yes", affect.names = "N3", affect.invert = TRUE), "data.frame")
       }
       if (split == "no") {
         expect_error(cpo.df1c %>>% cpo(failmode, "yes"), "did not contain target column")
         expect_error(cpo.df3l %>>% cpo(failmode, "yes"), "did not contain target column")
+
+        expect_error(cpo.df1c %>>% cpo(failmode, "yes", affect.names = "N3", affect.invert = TRUE), "did not contain target column")
+        expect_error(cpo.df3l %>>% cpo(failmode, "yes", affect.names = "N3", affect.invert = TRUE), "did not contain target column")
       } else {
         expect_error(cpo.df1c %>>% cpo(failmode, "yes"), "must not change target column names")
         expect_error(cpo.df3l %>>% cpo(failmode, "yes"), "must not change target column names")
+
+        expect_error(cpo.df1c %>>% cpo(failmode, "yes", affect.names = "N3", affect.invert = TRUE), "must not change target column names")
+        expect_error(cpo.df3l %>>% cpo(failmode, "yes", affect.names = "N3", affect.invert = TRUE), "must not change target column names")
+
       }
       expect_error(cpo.df1c %>>% cpo(failmode, "no"), "must not change target columns, but changed F1")
       expect_error(cpo.df3l %>>% cpo(failmode, "no"), "must not change target columns, but changed T1")
 
+      expect_error(cpo.df1c %>>% cpo(failmode, "no", affect.names = "N3", affect.invert = TRUE), "must not change target columns, but changed F1")
+      expect_error(cpo.df3l %>>% cpo(failmode, "no", affect.names = "N3", affect.invert = TRUE), "must not change target columns, but changed T1")
+
       if (split == "no") {
         expect_error(cpo.df3l %>>% cpo(failmode, "remove"), "did not contain target column T1")
+
+        expect_error(cpo.df3l %>>% cpo(failmode, "remove", affect.names = "N3", affect.invert = TRUE), "did not contain target column T1")
       } else {
         expect_error(cpo.df4l2 %>>% cpo(failmode, "remove"), "must not change target column")
+
+        expect_error(cpo.df4l2 %>>% cpo(failmode, "remove", affect.names = "N3", affect.invert = TRUE), "must not change target column")
       }
     }
   }
@@ -319,7 +334,7 @@ test_that("introducing duplicate names gives an error", {
           if (test == "nosplit") {
             names(data)[1] = names(target)[1]
           } else if (test == "split") {
-            names(data[[1]])[1] = names(data[[2]])[1]
+            names(data$numeric)[1] = "F2"
           }
           data
         }, function(data, control, test) {
@@ -331,10 +346,25 @@ test_that("introducing duplicate names gives an error", {
 
       failmode = switch(split, target = "nosplit", "split")
       expect_error(cpo.df1c %>>% cpo(failmode), switch(failmode, nosplit = "column names F1 duplicated", split = "duplicate column names F2"))
-      expect_error(cpo.df3l %>>% cpo(failmode), switch(failmode, nosplit = "column names T1 duplicated", split = "duplicate column names F1"))
+      expect_error(cpo.df3l %>>% cpo(failmode), switch(failmode, nosplit = "column names T1 duplicated", split = "duplicate column names F2"))
+
+      expect_error(cpo.df1c %>>% cpo(failmode, affect.name = "F2", affect.invert = TRUE),
+        switch(failmode, nosplit = "column names F1 duplicated", split = "duplicate column names F2"))
+      expect_error(cpo.df3l %>>% cpo(failmode, affect.name = "F2", affect.invert = TRUE),
+        switch(failmode, nosplit = "column names T1 duplicated", split = "duplicate column names F2"))
+
+      if (failmode == "split") {
+        expect_error(cpo.df1 %>>% cpo(failmode), "duplicate column names F2")
+        expect_error(cpo.df3 %>>% cpo(failmode), "duplicate column names F2")
+
+        expect_error(cpo.df1 %>>% cpo(failmode, affect.name = "F2", affect.invert = TRUE), "duplicate column names F2")
+        expect_error(cpo.df3 %>>% cpo(failmode, affect.name = "F2", affect.invert = TRUE), "duplicate column names F2")
+
+      }
 
     }
   }
+
 })
 
 test_that("new task is actually changed, has the expected data", {
@@ -389,8 +419,21 @@ test_that("new task is actually changed, has the expected data", {
       val2 = cpo.df1c %>>% retrafo(val)
       expect_equal(getTaskData(val), exp.df1.t)
       expect_equal(getTaskData(val2), exp.df1.r)
+
+      val = cpo.df1 %>>% cpo(affect.name = "F2", affect.invert = TRUE)
+      val2 = cpo.df1 %>>% retrafo(val)
+      retrafo(val) = NULL
+      expect_equal(val, exp.df1.t)
+      expect_equal(val2, exp.df1.r)
+
+      val = cpo.df1c %>>% cpo(affect.name = "F2", affect.invert = TRUE)
+      val2 = cpo.df1c %>>% retrafo(val)
+      expect_equal(getTaskData(val), exp.df1.t)
+      expect_equal(getTaskData(val2), exp.df1.r)
+
     }
   }
+
 })
 
 test_that("cpo framework detects bad data", {
@@ -528,14 +571,20 @@ test_that("format change between trafo and retrafo are detected", {
         function(data, ...) { control = 0 ; data }, function(data, ...) data, split)
 
       rt = retrafo(cpo.df1 %>>% cpo())
+      rt.ignore1 = retrafo(cpo.df1 %>>% cpo(affect.pattern = "^N1$", affect.invert = TRUE))
 
       expect_equal(cpo.df1 %>>% rt, cpo.df1)
-
       expect_error(cpo.df1[-1] %>>% rt, "column name mismatch")
+
+      expect_equal(cpo.df1 %>>% rt.ignore1, cpo.df1)
+      expect_equal(cpo.df1[-1] %>>% rt.ignore1, cpo.df1[-1])
 
       xmp = cpo.df1
       xmp[[1]] = as.factor(xmp[[1]])
       expect_error(xmp %>>% rt, "Types? of column N1 mismatches")
+
+      expect_equal(xmp %>>% rt.ignore1, xmp)
+
 
       expect_error(cpo.df1c %>>% rt, "column name mismatch")
 
@@ -548,6 +597,8 @@ test_that("format change between trafo and retrafo are detected", {
       xmp = cpo.df1
       xmp[[1]] = as.factor(xmp[[1]])
       expect_error(xmp %>>% rt, "Type of column N1 mismatches")
+
+      expect_equal(xmp %>>% rt.ignore1, xmp)
 
       expect_class(cpo.df1c %>>% rt, "Task")
 
@@ -584,7 +635,7 @@ type = "o"
       expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
 
       cpo = cpogen("formattest", type, pss(),
-        function(data, ...) { control = 0 ; data }, function(data, ...) { cbind(data[c(2, 1)], data[-(1:2)]) }, split)
+        function(data, ...) { control = 0 ; data }, function(data, ...) { cbind(data[c(2, 1)], data[-c(1, 2)]) }, split)
 
       rt = retrafo(cpo.df1 %>>% cpo())
       expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")
@@ -620,7 +671,7 @@ type = "o"
       expect_error(cpo.df1c %>>% rt, "column name mismatch between training and test data")
 
       cpo = cpogen("numrowtest", type, pss(),
-        function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric = cbind(data$numeric[c(2, 1)],data$numeric[-c(1, 2)]) ; data }, split)
+        function(data, ...) { control = 0 ; data }, function(data, ...) { data$numeric = cbind(data$numeric[c(2, 1)], data$numeric[-c(1, 2)]) ; data }, split)
 
       rt = retrafo(cpo.df1 %>>% cpo())
       expect_error(cpo.df1 %>>% rt, "column name mismatch between training and test data")

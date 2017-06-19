@@ -23,7 +23,12 @@ prepareTrafoInput = function(indata, datasplit, allowed.properties, subset.selec
     indata.data = getTaskData(indata)
     fullindices = seq_along(indata.data)
     aretargets = names(indata.data) %in% getTaskTargetNames(indata)
-    new.subset.index = sort(c(which(aretargets), fullindices[!aretargets][subset.index]))
+    new.subset.index = fullindices[!aretargets][subset.index]
+    if (all(new.subset.index == sort(new.subset.index))) {
+      new.subset.index = sort(c(which(aretargets), new.subset.index))
+    } else {
+      new.subset.index = c(which(aretargets), new.subset.index)
+    }
     indata = changeData(indata, indata.data[new.subset.index])
   } else {
     targets = character(0)
@@ -616,7 +621,7 @@ recombineLL = function(olddata, newdata, targetnames, datasplit, subset.index, n
   # this kind of sucks when a CPO just happens to change the names to something thats already there
   # but we also don't want to surprise the user about us unilaterally changing names, so he needs to
   # take care of that.
-  jointargetnames = c(targetnames, unlist(lapply(newdata, names)))
+  jointargetnames = c(targetnames, names(unsubsetdata), unlist(lapply(newdata, names)))
   if (any(duplicated(jointargetnames))) {
     stopf("CPO %s gave bad result\nduplicate column names %s", name, collapse(unique(jointargetnames[duplicated(jointargetnames)], sep = ", ")))
   }
@@ -724,7 +729,12 @@ recombinetask = function(task, newdata, datasplit = c("no", "task", "target", "m
   olddata = getTaskData(task)
   fullindices = seq_along(olddata)
   aretargets = names(olddata) %in% targetnames
-  new.subset.index = sort(c(which(aretargets), fullindices[!aretargets][subset.index]))
+  new.subset.index = fullindices[!aretargets][subset.index]
+  if (all(new.subset.index == sort(new.subset.index))) {
+    new.subset.index = sort(c(which(aretargets), new.subset.index))
+  } else {
+    new.subset.index = c(which(aretargets), new.subset.index)
+  }
   changeData(task, recombinedf(getTaskData(task), getTaskData(newdata), "no", new.subset.index, character(0), name))
 }
 

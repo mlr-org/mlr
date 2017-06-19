@@ -59,7 +59,7 @@ registerCPO(cpoScale, "data", "numeric data preprocessing", "Center and / or sca
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoDummyEncode = makeCPO("dummyencode", reference.cat = FALSE: logical, .datasplit = "target", .fix.factors = TRUE,
+cpoDummyEncode = makeCPO("dummyencode", reference.cat = FALSE: logical, .datasplit = "target", .fix.factors = TRUE,  # nolint
   .properties.needed = "numerics", .properties.adding = c("factors", "ordered"),
   cpo.trafo = {
   mf = stats::model.frame(~., data)
@@ -305,8 +305,8 @@ cpoMeta = function(..., .cpo.name = "meta", .par.set = NULL, .par.vals = list(),
 
   allprops = lapply(constructed, getCPOProperties, only.data = TRUE)
   .properties = coalesce(.properties, Reduce(union, extractSubList(allprops, "properties", simplify = FALSE)))
-  .properties.needed = .coalesce(.properties.needed, Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE)))
-  .properties.adding = .coalesce(.properties.adding, Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE)))
+  .properties.needed = coalesce(.properties.needed, Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE)))
+  .properties.adding = coalesce(.properties.adding, Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE)))
 
   makeCPO(.cpo.name, .par.set = .par.set, .par.vals = .par.vals,
     .datasplit = "task", .properties = .properties, .properties.adding = .properties.adding,
