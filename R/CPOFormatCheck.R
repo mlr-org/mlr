@@ -2,6 +2,7 @@
 cpo.dataproperties = c("numerics", "factors", "ordered", "missings")
 cpo.tasktypes = c("cluster", "classif", "multilabel", "regr", "surv")  # these are the SUPPORTED tasks
 cpo.targetproperties = c("oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens")
+cpo.predict.properties = c("prob", "se")
 
 ##################################
 ### Externals                  ###

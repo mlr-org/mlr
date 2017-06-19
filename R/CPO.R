@@ -106,8 +106,8 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   .datasplit = match.arg(.datasplit)
 
-  .properties = match.arg(.properties, several.ok = TRUE)
-  .properties.target = match.arg(.properties.target, several.ok = TRUE)
+  assertSubset(.properties, cpo.dataproperties)
+  assertSubset(.properties.target, c(cpo.tasktypes, cpo.targetproperties))
   assertSubset(.properties.needed, cpo.dataproperties)
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "databound",
