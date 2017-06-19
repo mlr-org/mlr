@@ -21,6 +21,7 @@ devtools::test(pkg = "..", filter = "cpo_datasplit")
 devtools::test(pkg = "..", filter = "cpo_quick")
 devtools::test(pkg = "..", filter = "cpo_cbind")
 devtools::test(pkg = "..", filter = "cpo_concrete")
+devtools::test(pkg = "..", filter = "cpo_meta")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
 
@@ -28,17 +29,7 @@ system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FAL
 devtools::test(pkg = "..", filter = "cpo$", reporter = c("summary", "stop"))
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat", reporter = c("summary", "stop")), gcFirst = FALSE)
-
-
 devtools::test(pkg = "..", filter = "ParamSetSugar")
-
-debugger()
-
-1 + 1
-2 + 2
-3 + 3
-
-codetools::checkUsagePackage("mlr")
 
 rm(list = ls())
 

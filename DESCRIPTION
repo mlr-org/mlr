@@ -178,6 +178,7 @@ Collate:
     'CPOTarget.R'
     'ParamSetSugar.R'
     'CPO_concrete.R'
+    'CPO_meta.R'
     'ChainModel.R'
     'ChainModel_operators.R'
     'ClassifTask.R'

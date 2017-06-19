@@ -194,7 +194,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   required.arglist.trafo$target = substitute()
   trafo.expr = substitute(cpo.trafo)
   if (!.stateless || (is.recursive(trafo.expr) && identical(trafo.expr[[1]], quote(`{`))) || !is.null(cpo.trafo)) {
-    cpo.trafo = makeFunction(substitute(cpo.trafo), required.arglist.trafo, env = parent.frame())
+    cpo.trafo = makeFunction(trafo.expr, required.arglist.trafo, env = parent.frame())
   } else if (.cpotype == "targetbound") {
     stop("A target-bound CPO must have a cpo.trafo function, even if stateless.")
   } else if (.datasplit == "task") {
@@ -518,6 +518,8 @@ applyCPO.CPOS3Retrafo = function(retrafo, data) {
   if (is.nullcpo(prev.inverter)) {
     prev.inverter = NULL
   }
+  inverter(data) = NULL
+  data = tagInvert(data, FALSE)
   if (!build.inverter && !is.null(prev.inverter)) {
     stop("Data had 'inverter' attribute set, but not the 'keep.inverter' tag.")
   }
@@ -525,10 +527,17 @@ applyCPO.CPOS3Retrafo = function(retrafo, data) {
     assertClass(prev.inverter, "CPOS3Retrafo")
   }
 
+  prev.retrafo = retrafo(data)
+  if (is.nullcpo(prev.retrafo)) {
+    prev.retrafo = NULL
+  }
+  retrafo(data) = NULL
+
   result = applyCPORetrafoEx(retrafo, data, build.inverter, prev.inverter)
   data = result$data
+  retrafo(data) = prev.retrafo
   inverter(data) = result$inverter
-  data
+  tagInvert(data, build.inverter)
 }
 
 
@@ -626,6 +635,9 @@ trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
 
   # note that an inverter for a model makes no sense, since the inverter is crucially bound to
   # the data that is supposed to be *predicted*.
+  retrafo(.task) = NULL
+  inverter(.task) = NULL
+  .task = tagInvert(.task, FALSE)
   transformed = callCPO(cpo, .task, TRUE, NULL, FALSE, NULL)
 
   model = makeChainModel(train(.learner$next.learner, transformed$data), "CPOS3WrappedModel")
@@ -683,12 +695,17 @@ applyCPO.CPOS3 = function(cpo, task) {
   if (!is.null(prev.inverter)) {
     assertClass(prev.inverter, "CPOS3Retrafo")
   }
+  prev.retrafo = retrafo(task)
 
-  result = callCPO(cpo, task, TRUE, retrafo(task), build.inverter, prev.inverter)
+  retrafo(task) = NULL
+  inverter(task) = NULL
+  task = tagInvert(task, FALSE)
+
+  result = callCPO(cpo, task, TRUE, prev.retrafo, build.inverter, prev.inverter)
   task = result$data
   retrafo(task) = result$retrafo
   inverter(task) = result$inverter
-  task
+  tagInvert(task, build.inverter)
 }
 
 # Param Sets

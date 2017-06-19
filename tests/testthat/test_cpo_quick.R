@@ -244,7 +244,7 @@ test_that("datasplit 'factor', 'ordered', 'onlyfactor', 'numeric'", {
 })
 
 test_that("datasplit with matrix in numeric split works", {
-skip("not yet done")
+
   checkfn = function(data, ...) {
     control = 0
     if ("numeric" %in% names(data)) {
@@ -268,6 +268,8 @@ skip("not yet done")
 
   expected = reverseSubset(cpo.df2, c(1, 5, 9))
   row.names(expected) = as.integer(rev(row.names(expected)))
+  expected.invrn = expected
+  row.names(expected.invrn) = as.integer(rev(row.names(expected)))
 
   expected.chr = reverseSubset(cpo.df2, c(1, 5, 9))
   row.names(expected.chr) = row.names(expected)
@@ -283,12 +285,12 @@ skip("not yet done")
   expect_equal(cpo.df2 %>>% retrafo(retd), expected.chr)
 
   retd = tsk %>>% cpo("most")
-  expect_equal(getTaskData(retd), expected)
-  expect_equal(cpo.df2 %>>% retrafo(retd), expected)
+  expect_equal(getTaskData(retd), expected.invrn)
+  expect_equal(cpo.df2 %>>% retrafo(retd), expected.invrn)
 
   retd = tsk %>>% cpo("all")
-  expect_equal(getTaskData(retd), expected)
-  expect_equal(cpo.df2 %>>% retrafo(retd), expected)
+  expect_equal(getTaskData(retd), expected.invrn)
+  expect_equal(cpo.df2 %>>% retrafo(retd), expected.invrn)
 })
 
 test_that("NULLCPO", {

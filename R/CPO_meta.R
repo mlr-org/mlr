@@ -66,20 +66,15 @@ cpoMultiplex = function(cpos, selected.cpo = NULL, id = NULL) {
 
   pv = unlist(unname(lapply(constructed, getHyperPars)), recursive = FALSE)
 
-  allprops = lapply(constructed, getCPOProperties, only.data = TRUE)
-  properties = Reduce(union, extractSubList(allprops, "properties", simplify = FALSE))
-  properties.needed = Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE))
-  properties.adding = Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE))
+  pr = collectProperties(constructed)
 
-  all.allprops = lapply(constructed, function(x) setdiff(getCPOProperties(x)$properties, c(cpo.dataproperties, cpo.predict.properties)))
-  properties.target = Reduce(union, all.allprops)
-
-  makeCPO("multiplex", .par.set = paramset, .par.vals = pv, .datasplit = "task", .properties = properties, .properties.adding = properties.adding,
-          .properties.needed = properties.needed, .properties.target = properties.target, cpo.trafo = function(data, target, selected.cpo, ...) {
+  makeCPO("multiplex", .par.set = paramset, .par.vals = pv, .datasplit = "task", .properties = pr$properties, .properties.adding = pr$properties.adding,
+          .properties.needed = pr$properties.needed, .properties.target = pr$properties.target, cpo.trafo = function(data, target, selected.cpo, ...) {
             cpo = constructed[[selected.cpo]]
             cpo = setHyperPars(cpo, par.vals = list(...)[names(getParamSet(cpo)$pars)])
             res = data %>>% cpo
             control = retrafo(res)
+            retrafo(res) = NULL
             res
           }, cpo.retrafo = function(data, control, ...) { data %>>% control })(id = id)
 }
@@ -112,11 +107,12 @@ registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporti
 #' The Meta-CPO determines what CPO to apply to a data depending on
 #' a provided function
 cpoMeta = function(..., .cpo.name = "meta", .par.set = NULL, .par.vals = list(), .export = list(),
+                   .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
                    .properties = NULL, .properties.adding = NULL, .properties.needed = NULL,
                    .properties.target = NULL, cpo.build) {
   .datasplit = match.arg(.datasplit)
-  if (!is.null(names(.export))) {
-    names(cpos) = sapply(cpos, function(c) {
+  if (is.null(names(.export))) {
+    names(.export) = sapply(.export, function(c) {
       if ("CPOConstructor" %in% class(c)) {
         stopf("If .export has no names, all CPOs must be constructed. %s is not.",
           getCPOName(c))
@@ -131,8 +127,7 @@ cpoMeta = function(..., .cpo.name = "meta", .par.set = NULL, .par.vals = list(),
       }
     })
   }
-
-  assertList(.export, types = "CPO", names = "unique")  # FIXME: target bound separately
+  assertList(.export, types = c("CPO", "CPOConstructor"), names = "unique")  # FIXME: target bound separately
 
   constructed = lapply(names(.export), function(n) {
     if ("CPOConstructor" %in% class(.export[[n]])) {
@@ -143,24 +138,70 @@ cpoMeta = function(..., .cpo.name = "meta", .par.set = NULL, .par.vals = list(),
   })
   names(constructed) = names(.export)
 
-
   if (is.null(.par.set)) {
     .par.set = paramSetSugar(..., .pss.env = parent.frame())
   }
 
-  pass.on.par.set = .par.set
+  paramset.pass.on = .par.set
+  pv.pass.on = insert(getParamSetDefaults(paramset.pass.on), .par.vals)
+  if (length(paramset.pass.on$pars)) {
+    assertSubset(names(pv.pass.on), names(paramset.pass.on$pars))
+  } else {
+    assert(length(pv.pass.on) == 0)
+  }
+  name.collision = intersect(names(paramset.pass.on$pars), names(.export))
+  if (length(name.collision)) {
+    stopf("Names of cpo.build function arguments and .export elements clash: %s", collapse(name.collision, sep = ", "))
+  }
 
   paramset.others = do.call(base::c, lapply(names(constructed), function(n) getParamSet(constructed[[n]])))
+  pv.others = unlist(unname(lapply(constructed, getHyperPars)), recursive = FALSE)
 
-  allprops = lapply(constructed, getCPOProperties, only.data = TRUE)
-  .properties = coalesce(.properties, Reduce(union, extractSubList(allprops, "properties", simplify = FALSE)))
-  .properties.needed = coalesce(.properties.needed, Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE)))
-  .properties.adding = coalesce(.properties.adding, Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE)))
 
-  makeCPO(.cpo.name, .par.set = .par.set, .par.vals = .par.vals,
+  pr = collectProperties(constructed)
+  .properties = coalesce(.properties.adding, pr$properties, (cpo.dataproperties))
+  .properties.adding = coalesce(.properties.adding, pr$properties.adding, character(0))
+  .properties.needed = coalesce(.properties.needed, pr$properties.needed, character(0))
+  .properties.target = coalesce(.properties.target, pr$properties.target, c(cpo.targetproperties, cpo.tasktypes))
+
+  required.arglist = lapply(c(paramset.pass.on$pars, .export), function(dummy) substitute())
+  required.arglist = insert(required.arglist, pv.pass.on)
+  required.arglist$data = substitute()
+  required.arglist$target = substitute()
+
+  buildfun = makeFunction(substitute(cpo.build), required.arglist, env = parent.frame())
+
+  fullaffect = list(type = c("numeric", "factor", "ordered", "other"),
+    index = integer(0), names = character(0), pattern = NULL, invert = FALSE, pattern.ignore.case = FALSE,
+    pattern.perl = FALSE, pattern.fixed = FALSE)
+
+  makeCPO(.cpo.name, .par.set = c(paramset.pass.on, paramset.others), .par.vals = c(pv.pass.on, pv.others),
     .datasplit = "task", .properties = .properties, .properties.adding = .properties.adding,
     .properties.needed = .properties.needed, .properties.target = .properties.target,
-    cpo.trafo = function() { },
-    cpo.retrafo = function() { })
+    cpo.trafo = function(data, target, ...) {
+      args = list(...)
+      buildfunargs = c(args[names(paramset.pass.on$pars)], lapply(.export, function(cpo)
+        setHyperPars(cpo, par.vals = args[names(getParamSet(cpo)$pars)])))
+      tin = prepareTrafoInput(data, .datasplit, c(.properties, .properties.target, cpo.predict.properties), fullaffect, FALSE, .cpo.name)
+
+      cpo = do.call(buildfun, insert(buildfunargs, tin$indata))
+      result = data %>>% cpo
+      control = retrafo(result)
+      retrafo(result) = NULL
+      result
+    },
+    cpo.retrafo = function(data, control, ...) {
+      data %>>% control
+    })
 }
 
+collectProperties = function(constructed) {
+  allprops = lapply(constructed, getCPOProperties, only.data = TRUE)
+  all.allprops = lapply(constructed, function(x) setdiff(getCPOProperties(x)$properties, c(cpo.dataproperties, cpo.predict.properties)))
+
+  list(
+    properties = Reduce(union, extractSubList(allprops, "properties", simplify = FALSE)),
+    properties.needed = Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE)),
+    properties.adding = Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE)),
+    properties.target = Reduce(union, all.allprops))
+}

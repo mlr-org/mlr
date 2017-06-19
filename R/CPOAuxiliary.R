@@ -83,7 +83,9 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 
 #' @export
 `%>>%.Task` = function(cpo1, cpo2) {
-  if ("Learner" %in% class(cpo2)) {
+  if (is.nullcpo(cpo2)) {
+    cpo1
+  } else if ("Learner" %in% class(cpo2)) {
     stopf("%s\n%s\n%s\n%s",
       "Cannot pipe data into learner!",
       "If you called 'data %>>% preproc %>>% learner', you probably meant",
