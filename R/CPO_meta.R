@@ -106,6 +106,8 @@ registerCPO(cpoApply, "meta", NULL, "Apply a freely chosen CPOs, without exporti
 #' @description
 #' The Meta-CPO determines what CPO to apply to a data depending on
 #' a provided function
+#'
+#' @export
 cpoMeta = function(..., .cpo.name = "meta", .par.set = NULL, .par.vals = list(), .export = list(),
                    .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
                    .properties = NULL, .properties.adding = NULL, .properties.needed = NULL,
