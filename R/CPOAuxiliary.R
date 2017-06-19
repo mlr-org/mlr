@@ -1117,7 +1117,7 @@ getLearnerProperties.CPOLearner = function(learner) {
 
 #' @export
 print.CPOConstructor = function(x, ...) {
-  args = formals(x)
+  args = dropNamed(formals(x), environment(x)$reserved.params)
   argvals = sapply(args, function(y) if (identical(y, substitute())) "" else paste(" =", convertToShortString(y)))
   argstring = paste(names(args), argvals, collapse = ", ", sep = "")
   catf("<<CPO %s(%s)>>", getCPOName(x), argstring)
@@ -1131,8 +1131,9 @@ print.CPO = function(x, ...) {
   catf(template, getCPOName(x), argstring, newline = FALSE)
   if (("CPOPrimitive" %in% class(x)) && length({affect = getCPOAffect(x)})) {
     catf(" [%s]", paste(names(affect), sapply(affect, convertToShortString), sep = " = ", collapse = ", "))
+  } else {
+    cat("\n")
   }
-  cat("\n")
 }
 
 #' @export
