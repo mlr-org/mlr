@@ -127,6 +127,7 @@ registerCPO(cpoDummyEncode, "data", "feature conversion", "Convert factorial col
 #' @param invert [\code{logical(1)}]\cr
 #'   Invert column selection: Drop the named columns and return the rest, instead of keeping the selected
 #'   columns only. Default is \code{FALSE}.
+#' @export
 cpoSelect = makeCPO("select",  # nolint
   .par.set = c(
       paramSetSugar(type = list(): discrete[numeric, ordered, factor, other]^NA,

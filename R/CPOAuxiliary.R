@@ -1086,6 +1086,7 @@ invertCPO.CPO = function(inverter, prediction, predict.type) {
   stop("Cannot invert prediction with a CPO object; need a CPORetrafo object.")
 }
 
+#' @export
 is.nullcpo = function(cpo) {  # nolint
   "NULLCPO" %in% class(cpo)
 }

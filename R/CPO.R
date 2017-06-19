@@ -118,6 +118,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     .predict.type = NULL, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
 }
 
+#' @export
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
                           .datasplit, .fix.factors, .data.dependent, .stateless, .properties, .properties.adding, .properties.needed,
                           .properties.target, .type.from, .type.to, .predict.type, cpo.trafo, cpo.retrafo, ...) {
