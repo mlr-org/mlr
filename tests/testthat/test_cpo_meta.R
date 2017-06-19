@@ -60,10 +60,10 @@ test_that("cpoMeta", {
     getTaskData(iris.task %>>% cpoScale(center = FALSE)))
 
 
-  multiplexEmu = cpoMeta(selected.cpo = "a": discrete[a, b], .export = list(a = cpoScale(center = FALSE), b = cpoPca(center = FALSE, scale = FALSE, id = "pcaX")),
+  multiplex.emu = cpoMeta(selected.cpo = "a": discrete[a, b], .export = list(a = cpoScale(center = FALSE), b = cpoPca(center = FALSE, scale = FALSE, id = "pcaX")),
     cpo.build = { switch(selected.cpo, a = a, b = b) })
 
-  expect_equal(getTaskData(iris.task %>>% setHyperPars(multiplexEmu(), selected.cpo = "b", pcaX.scale = TRUE)),
+  expect_equal(getTaskData(iris.task %>>% setHyperPars(multiplex.emu(), selected.cpo = "b", pcaX.scale = TRUE)),
     getTaskData(iris.task %>>% cpoPca(center = FALSE, scale = TRUE)))
 
 
