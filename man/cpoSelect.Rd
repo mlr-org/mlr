@@ -47,6 +47,12 @@ Default is \code{FALSE}.}
 \item{invert}{[\code{logical(1)}]\cr
 Invert column selection: Drop the named columns and return the rest, instead of keeping the selected
 columns only. Default is \code{FALSE}.}
+
+\item{id}{[\code{character(1)}]\cr
+id to use as prefix for the CPO's hyperparameters. this
+must be used to avoid name clashes when composing two
+CPOs of the same type, or with learners or other CPOS
+with hyperparameters with clashing names.}
 }
 \description{
 Select columns by type or name. The parameters \dQuote{type} and
@@ -65,4 +71,21 @@ and \code{\link{getParamSet}} similarly work as one expects.
 If the \dQuote{id} parameter is given, the hyperparameters
 will have this id as aprefix; this will, however, not change
 the parameters of the creator function.
+}
+\seealso{
+Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
+  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
+  \code{\link{cpoImpute}}, \code{\link{cpoMultiplex}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{getRetrafoState}},
+  \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
+  \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
+  \code{\link{makeCPO}},
+  \code{\link{makeRetrafoFromState}},
+  \code{\link{retrafo<-}}, \code{\link{retrafo}},
+  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
 }
