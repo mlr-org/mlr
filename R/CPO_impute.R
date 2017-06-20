@@ -98,7 +98,7 @@ cpoImpute = makeCPO("impute", # nolint
   }, cpo.retrafo = function(data, control, ...) {
     reimpute(data, control)
   })
-registerCPO(cpoImpute, "data", "imputation", "General imputation CPO that uses mlr::impute.")
+registerCPO(cpoImpute, "imputation", "general", "General imputation CPO that uses mlr::impute.")
 
 
 #' @rdname cpoImpute
@@ -123,7 +123,7 @@ cpoImputeAll = makeCPO("impute", # nolint
   }, cpo.retrafo = function(data, control, ...) {
     reimpute(data, control)
   })
-registerCPO(cpoImputeAll, "data", "imputation", "General imputation CPO that uses mlr::impute and checks that all columns were imputed.")
+registerCPO(cpoImputeAll, "imputation", "general", "General imputation CPO that uses mlr::impute and checks that all columns were imputed.")
 
 declareImputeFunction = function(name, method, additional.params) {
   makeCPO(paste0("impute.", name),
@@ -202,35 +202,35 @@ NULL
 #' @param const [any]\cr
 #'  Constant valued use for imputation.
 #' @rdname CPOImputer
-cpoImputeConstant = declareImputeFunction("constant", imputeConstant, makeParamSet(makeUntypedLearnerParam("const")))
-registerCPO(cpoImputeConstant, "data", "imputation", "Imputation using a constant value.")
+cpoImputeConstant = declareImputeFunction("constant", imputeConstant, makeParamSet(makeUntypedLearnerParam("const")))  # nolint
+registerCPO(cpoImputeConstant, "imputation", "specialised", "Imputation using a constant value.")
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMedian = declareImputeFunction("median", imputeMedian, makeParamSet())
-registerCPO(cpoImputeMedian, "data", "imputation", "Imputation using the median.")
+cpoImputeMedian = declareImputeFunction("median", imputeMedian, makeParamSet())  # nolint
+registerCPO(cpoImputeMedian, "imputation", "specialised", "Imputation using the median.")
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMean = declareImputeFunction("mean", imputeMean, makeParamSet())
-registerCPO(cpoImputeMean, "data", "imputation", "Imputation using the mean.")
+cpoImputeMean = declareImputeFunction("mean", imputeMean, makeParamSet())  # nolint
+registerCPO(cpoImputeMean, "imputation", "specialised", "Imputation using the mean.")
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMode = declareImputeFunction("mode", imputeMode, makeParamSet())
-registerCPO(cpoImputeMode, "data", "imputation", "Imputation using the mode.")
+cpoImputeMode = declareImputeFunction("mode", imputeMode, makeParamSet())  # nolint
+registerCPO(cpoImputeMode, "imputation", "specialised", "Imputation using the mode.")
 
 #' @export
 #' @param multiplier [\code{numeric(1)}]\cr
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname CPOImputer
-cpoImputeMin = declareImputeFunction("min", imputeMin, paramSetSugar(multiplier = 1: numeric[, ]))
-registerCPO(cpoImputeMin, "data", "imputation", "Imputation using constant values shifted below the minimum.")
+cpoImputeMin = declareImputeFunction("min", imputeMin, paramSetSugar(multiplier = 1: numeric[, ]))  # nolint
+registerCPO(cpoImputeMin, "imputation", "specialised", "Imputation using constant values shifted below the minimum.")
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMax = declareImputeFunction("max", imputeMax, paramSetSugar(multiplier = 1: numeric[, ]))
-registerCPO(cpoImputeMax, "data", "imputation", "Imputation using constant values shifted above the maximum.")
+cpoImputeMax = declareImputeFunction("max", imputeMax, paramSetSugar(multiplier = 1: numeric[, ]))  # nolint
+registerCPO(cpoImputeMax, "imputation", "specialised", "Imputation using constant values shifted above the maximum.")
 
 #' @export
 #' @param min [\code{numeric(1)}]\cr
@@ -240,14 +240,14 @@ registerCPO(cpoImputeMax, "data", "imputation", "Imputation using constant value
 #'   Upper bound for uniform distribution.
 #'   If NA (default), it will be estimated from the data.
 #' @rdname CPOImputer
-cpoImputeUniform = declareImputeFunction("uniform", imputeUniform, {
+cpoImputeUniform = declareImputeFunction("uniform", imputeUniform, {  # nolint
   ps = paramSetSugar(min = 0: numeric[, ] [[special.vals = list(NA_real_)]],
     max = 0: numeric[, ] [[special.vals = list(NA_real_)]])
   ps$pars$min$default = NA_real_
   ps$pars$max$default = NA_real_
   ps
 })
-registerCPO(cpoImputeUniform, "data", "imputation", "Imputation using uniformly distributed random values.")
+registerCPO(cpoImputeUniform, "imputation", "specialised", "Imputation using uniformly distributed random values.")
 
 #' @export
 #' @param mu [\code{numeric(1)}]\cr
@@ -255,14 +255,14 @@ registerCPO(cpoImputeUniform, "data", "imputation", "Imputation using uniformly 
 #' @param sd [\code{numeric(1)}]\cr
 #'   Standard deviation of normal distribution. If missing it will be estimated from the data.
 #' @rdname CPOImputer
-cpoImputeNormal = declareImputeFunction("normal", imputeNormal, {
+cpoImputeNormal = declareImputeFunction("normal", imputeNormal, {  # nolint
   ps = paramSetSugar(mu = 0: numeric[, ] [[special.vals = list(NA_real_)]],
     sd = 0: numeric[, ] [[special.vals = list(NA_real_)]])
   ps$pars$mu$default = NA_real_
   ps$pars$sd$default = NA_real_
   ps
 })
-registerCPO(cpoImputeNormal, "data", "imputation", "Imputation using normally distributed random values.")
+registerCPO(cpoImputeNormal, "imputation", "specialised", "Imputation using normally distributed random values.")
 
 #' @export
 #' @param breaks [\code{numeric(1)} | \dQuote{Sturges}]\cr
@@ -272,9 +272,9 @@ registerCPO(cpoImputeNormal, "data", "imputation", "Imputation using normally di
 #'  If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 #'  or instead draw uniformly distributed samples within bin range.
 #' @rdname CPOImputer
-cpoImputeHist = declareImputeFunction("hist", imputeHist, paramSetSugar(breaks = "Sturges": integer[1, ] [[special.vals = list("Sturges")]],
+cpoImputeHist = declareImputeFunction("hist", imputeHist, paramSetSugar(breaks = "Sturges": integer[1, ] [[special.vals = list("Sturges")]],  # nolint
   use.mids = TRUE: logical))
-registerCPO(cpoImputeHist, "data", "imputation", "Imputation using random values with probabilities approximating the data.")
+registerCPO(cpoImputeHist, "imputation", "specialised", "Imputation using random values with probabilities approximating the data.")
 
 #' @export
 #' @param learner [\code{\link{Learner}} | \code{character(1)}]\cr
@@ -286,6 +286,6 @@ registerCPO(cpoImputeHist, "data", "imputation", "Imputation using random values
 #'  Default is \code{NULL} which uses all available features except the target column
 #'  of the original task.
 #' @rdname CPOImputer
-cpoImputeLearner = declareImputeFunction("learner", imputeLearner, makeParamSet(makeUntypedLearnerParam("learner"),
+cpoImputeLearner = declareImputeFunction("learner", imputeLearner, makeParamSet(makeUntypedLearnerParam("learner"),  # nolint
   makeUntypedLearnerParam("features", default = NULL)))
-registerCPO(cpoImputeLearner, "data", "imputation", "Imputation using the response of a classification or regression learner.")
+registerCPO(cpoImputeLearner, "imputation", "specialised", "Imputation using the response of a classification or regression learner.")
