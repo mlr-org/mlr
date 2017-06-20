@@ -228,6 +228,11 @@ test_that("cpoImputeXXX work", { # we had issues here: 848,893
     expect_equal(imputed$a, c(1, 1, 2))
     expect_true(all(!is.na(imputed)))
     expect_equal((data %>>% retrafo(imputed))[c(1, 2)], data)
+    imputed = data2 %>>% setHyperPars(impute.method, make.dummy.cols = FALSE)
+    expect_equal(names(imputed), c("a", "b"))
+    expect_equal(imputed$a, c(1, 1, 2))
+    expect_true(all(!is.na(imputed)))
+    expect_equal(data %>>% retrafo(imputed), data)
   }
 
   # test it in resampling

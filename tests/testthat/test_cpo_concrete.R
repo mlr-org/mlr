@@ -149,3 +149,4 @@ test_that("cpo dummyencoder", {
   expect_equal(nodumpred$data, dumpred$data)
 
 })
+
