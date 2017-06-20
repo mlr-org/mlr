@@ -1568,6 +1568,29 @@ cbinder.select
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Listing-CPOs">Listing CPOs<a class="anchor-link" href="#Listing-CPOs">&#182;</a></h2><p>Builtin CPOs can be listed with <code>listCPO()</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>listCPO<span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="cpoScale">cpoScale<a class="anchor-link" href="#cpoScale">&#182;</a></h2><p>Implements the <code>base::scale</code> function.</p>
 
 </div>
@@ -1713,10 +1736,153 @@ cbinder.select
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Imputation">Imputation<a class="anchor-link" href="#Imputation">&#182;</a></h2><p>There are two <em>general</em> and many <em>specialised</em> imputation CPOs. The general imputation CPOs have parameters that let them use different imputation methods on different columns. They are a thin wrapper around <code>mlr</code>'s <code>impute()</code> and <code>reimpute()</code> functions. The specialised imputation CPOs each implement exactly one imputation method and are closer to the behaviour of typical CPOs.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="General-Imputation-Wrappers">General Imputation Wrappers<a class="anchor-link" href="#General-Imputation-Wrappers">&#182;</a></h3><p><code>cpoImpute</code> and <code>cpoImputeAll</code> both have parameters very much like <code>impute()</code>. The latter assumes that <em>all</em> columns of its input is somehow being imputed and can be preprended to a learner to give it the ability to work with missing data. It will, however, throw an error if data is missing after imputation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>impdata <span class="o">=</span> df
+impdata<span class="p">[[</span><span class="m">1</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">NA</span>
+impdata
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>a <span class="o">=</span> imputeMedian<span class="p">()))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>b <span class="o">=</span> imputeMedian<span class="p">()))</span>  <span class="c1"># NAs remain</span>
+<span class="c1">#impdata %&gt;&gt;% cpoImputeAll(cols = list(b = imputeMedian()))  # error, since NAs remain</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>missing.task <span class="o">=</span> makeRegrTask<span class="p">(</span><span class="s">&quot;missing.task&quot;</span><span class="p">,</span> impdata<span class="p">,</span> target <span class="o">=</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
+<span class="c1"># the following gives an error, since &#39;cpoImpute&#39; does not make sure all missings are removed</span>
+<span class="c1"># and hence does not add the &#39;missings&#39; property.</span>
+<span class="c1">#train(cpoImpute(cols = list(a = imputeMedian())) %&gt;&gt;% makeLearner(&quot;regr.lm&quot;), missing.task)</span>
+<span class="c1"># instead, the following works:</span>
+train<span class="p">(</span>cpoImputeAll<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>a <span class="o">=</span> imputeMedian<span class="p">()))</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;regr.lm&quot;</span><span class="p">),</span> missing.task<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Specialised-Imputation-Wrappers">Specialised Imputation Wrappers<a class="anchor-link" href="#Specialised-Imputation-Wrappers">&#182;</a></h3><p>There is one for each imputation method.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImputeConstant<span class="p">(</span><span class="m">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>getTaskData<span class="p">(</span>missing.task <span class="o">%&gt;&gt;%</span> cpoImputeMedian<span class="p">(</span>make.dummy.cols <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised impute CPOs are:</span>
+listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Creating-Custom-CPOs">Creating Custom CPOs<a class="anchor-link" href="#Creating-Custom-CPOs">&#182;</a></h1><p>I will write this up some other time.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">

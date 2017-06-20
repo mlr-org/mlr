@@ -12,6 +12,8 @@ listCPO()
 
 library("testthat")
 
+devtools::test(pkg = "..")
+
 devtools::test(pkg = "..", filter = "cpo")
 
 
@@ -22,6 +24,7 @@ devtools::test(pkg = "..", filter = "cpo_quick")
 devtools::test(pkg = "..", filter = "cpo_cbind")
 devtools::test(pkg = "..", filter = "cpo_concrete")
 devtools::test(pkg = "..", filter = "cpo_meta")
+devtools::test(pkg = "..", filter = "cpo_impute")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
 
