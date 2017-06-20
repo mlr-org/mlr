@@ -101,8 +101,8 @@ print(imputed$data)
 reimpute(data.frame(x = NA_real_), imputed$desc)
 }
 \seealso{
-Other impute: \code{\link{cpoImpute}},
-  \code{\link{imputations}},
+Other impute: \code{\link{CPOImputer}},
+  \code{\link{cpoImpute}}, \code{\link{imputations}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }

@@ -199,6 +199,47 @@ test_that("CPO Impute works on non missing data", { # we had issues here: 848,89
   holdout(lrn, task)
 })
 
+
+test_that("cpoImputeXXX work", { # we had issues here: 848,893
+
+  data = data.frame(a = c(1, 1, 2), b = 1:3)
+  data2 = data
+  data2[[2]][1] = NA
+
+  impute.methods = list(
+    cpoImputeConstant(0),
+    cpoImputeMedian(),
+    cpoImputeMean(),
+    cpoImputeMode(),
+    cpoImputeMin(),
+    cpoImputeMax(),
+    cpoImputeUniform(),
+    cpoImputeNormal(),
+    cpoImputeHist(),
+    cpoImputeLearner(learner = makeLearner("regr.rpart"), features = "a")
+  )
+
+  for (impute.method in impute.methods) {
+    imputed = data %>>% impute.method
+    retrafo(imputed) = NULL
+    expect_equal(data, imputed)
+    imputed = data2 %>>% impute.method
+    expect_equal(imputed$b.dummy, factor(c(TRUE, FALSE, FALSE), levels = c(FALSE, TRUE)))
+    expect_equal(imputed$a, c(1, 1, 2))
+    expect_true(all(!is.na(imputed)))
+    expect_equal((data %>>% retrafo(imputed))[c(1, 2)], data)
+  }
+
+  # test it in resampling
+  dat = data.frame(y = rnorm(10), a = c(NA, rnorm(9)), b = rnorm(10))
+  task = makeRegrTask(data = dat, target = "y")
+  implrn = cpoImputeLearner(makeLearner("regr.rpart"))
+  lrn = implrn %>>% makeLearner("regr.lm")
+  holdout(lrn, task)
+
+})
+
+
 test_that("CPO Logicals are casted to factors instead of character (#1522)", {
   x = data.frame(a = c(TRUE, FALSE, NA))
   y = x %>>% cpoImpute(cols = list(a = imputeConstant("__miss__")))

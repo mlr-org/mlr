@@ -19,14 +19,15 @@ The given transformation will be applied to the data in the given \code{link{Tas
 See the preferred \code{\link{\%>>\%}} for more info.
 }
 \seealso{
-Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
-  \code{\link{\%>>\%}}, \code{\link{attachCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoApply}},
-  \code{\link{cpoDummyEncode}}, \code{\link{cpoImpute}},
-  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{cpoSelect}},
-  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
+  \code{\link{NULLCPO}}, \code{\link{\%>>\%}},
+  \code{\link{attachCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
+  \code{\link{cpoImpute}}, \code{\link{cpoMultiplex}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOId}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},

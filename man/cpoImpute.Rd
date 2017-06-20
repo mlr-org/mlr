@@ -73,14 +73,6 @@ id to use as prefix for the CPO's hyperparameters. this
 must be used to avoid name clashes when composing two
 CPOs of the same type, or with learners or other CPOS
 with hyperparameters with clashing names.}
-
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
-Input data.}
-}
-\value{
-[\code{list}]
-  \item{data [\code{data.frame}]}{Imputed data.}
-  \item{desc [\code{ImputationDesc}]}{Description object.}
 }
 \description{
 Allows imputation of missing feature values through various techniques.
@@ -132,18 +124,20 @@ The description object contains these slots
 }
 }
 \seealso{
-Other impute: \code{\link{imputations}},
-  \code{\link{impute}}, \code{\link{makeImputeMethod}},
+Other impute: \code{\link{CPOImputer}},
+  \code{\link{imputations}}, \code{\link{impute}},
+  \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 
-Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
-  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
-  \code{\link{attachCPO}}, \code{\link{chainCPO}},
-  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
-  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{cpoSelect}},
-  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
+  \code{\link{NULLCPO}}, \code{\link{\%>>\%}},
+  \code{\link{applyCPO}}, \code{\link{attachCPO}},
+  \code{\link{chainCPO}}, \code{\link{cpoApply}},
+  \code{\link{cpoDummyEncode}}, \code{\link{cpoMultiplex}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOId}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},

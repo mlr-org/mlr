@@ -7,14 +7,15 @@
 FIXME to come
 }
 \seealso{
-Other CPO: \code{\link{NULLCPO}}, \code{\link{\%>>\%}},
-  \code{\link{applyCPO}}, \code{\link{attachCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoApply}},
-  \code{\link{cpoDummyEncode}}, \code{\link{cpoImpute}},
-  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{cpoSelect}},
-  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+Other CPO: \code{\link{CPOImputer}}, \code{\link{NULLCPO}},
+  \code{\link{\%>>\%}}, \code{\link{applyCPO}},
+  \code{\link{attachCPO}}, \code{\link{chainCPO}},
+  \code{\link{cpoApply}}, \code{\link{cpoDummyEncode}},
+  \code{\link{cpoImpute}}, \code{\link{cpoMultiplex}},
+  \code{\link{cpoPca}}, \code{\link{cpoScale}},
+  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOId}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
