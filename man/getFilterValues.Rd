@@ -32,7 +32,8 @@ For a list of features, use \code{\link{listFilterMethods}}.
 \code{getFilterValues} is deprecated in favor of \code{\link{generateFilterValuesData}}.
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
+Other filter: \code{\link{cpoFilterFeatures}},
+  \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
@@ -49,7 +50,8 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{plotFilterValues}}
 
-Other filter: \code{\link{filterFeatures}},
+Other filter: \code{\link{cpoFilterFeatures}},
+  \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},

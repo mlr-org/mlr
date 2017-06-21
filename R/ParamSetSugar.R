@@ -251,7 +251,7 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
   } else {
     constructor.params$id = name
     if (!identical(thispar[[2]], NA)) {
-      constructor.params$default = eval(thispar[[2]], envir = pss.env)
+      constructor.params["default"] = list(eval(thispar[[2]], envir = pss.env))
     }
   }
 

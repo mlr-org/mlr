@@ -25,6 +25,7 @@ devtools::test(pkg = "..", filter = "cpo_cbind")
 devtools::test(pkg = "..", filter = "cpo_concrete")
 devtools::test(pkg = "..", filter = "cpo_meta")
 devtools::test(pkg = "..", filter = "cpo_impute")
+devtools::test(pkg = "..", filter = "cpo_filter")
 
 system.time(devtools::test(pkg = "..", filter = "cpo_dataformat"), gcFirst = FALSE)
 

@@ -1853,7 +1853,65 @@ train<span class="p">(</span>cpoImputeAll<span class="p">(</span>cols <span clas
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised impute CPOs are:</span>
-listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
+listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span><span class="kt">category</span> <span class="o">==</span> <span class="s">&quot;imputation&quot;</span> <span class="o">&amp;</span> listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span>
+          <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Feature-Filtering">Feature Filtering<a class="anchor-link" href="#Feature-Filtering">&#182;</a></h2><p>There is one <em>general</em> and many <em>specialised</em> feature filtering CPOs. The general filtering CPO, <code>cpoFilterFeatures</code>, is a thin wrapper around <code>filterFeatures</code> and takes the filtering method as its argument. The specialised CPOs each call a specific filtering method.</p>
+<p>Most arguments of <code>filterFeatures</code> are reflected in the CPOs. The exceptions being:</p>
+<ol>
+<li>for <code>filterFeatures</code>, the filter method arguments are given in a list <code>filter.args</code>, instead of in <code>...</code></li>
+<li>The argument <code>fval</code> was dropped for the specialised filter CPOs.</li>
+<li>The argument <code>mandatory.feat</code> was dropped. Use <code>affect.*</code> parameters to prevent features from being filtered.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterFeatures<span class="p">(</span>method <span class="o">=</span> <span class="s">&quot;variance&quot;</span><span class="p">,</span> perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterVariance<span class="p">(</span>perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised filter CPOs are:</span>
+listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span><span class="kt">category</span> <span class="o">==</span> <span class="s">&quot;featurefilter&quot;</span> <span class="o">&amp;</span> listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span>
+          <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
 </pre></div>
 
 </div>

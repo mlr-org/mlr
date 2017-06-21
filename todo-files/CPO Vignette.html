@@ -3241,7 +3241,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>listCPO<span class="p">()</span>
@@ -3265,21 +3265,41 @@ O   CBIND[scaled,pcad,original]
 	<tr><th scope=row>5</th><td>cpoSelect                                                                             </td><td>select                                                                                </td><td>data                                                                                  </td><td>feature selection                                                                     </td><td>Select features from a data set by type, column name, or column index.                </td></tr>
 	<tr><th scope=row>2</th><td>cpoPca                                                                                </td><td>pca                                                                                   </td><td>data                                                                                  </td><td>numeric data preprocessing                                                            </td><td>Perform Principal Component Analysis (PCA) using stats::prcomp.                       </td></tr>
 	<tr><th scope=row>3</th><td>cpoScale                                                                              </td><td>scale                                                                                 </td><td>data                                                                                  </td><td>numeric data preprocessing                                                            </td><td>Center and / or scale the data using base::scale.                                     </td></tr>
-	<tr><th scope=row>6</th><td>cpoImpute                                                                             </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute.                                         </td></tr>
-	<tr><th scope=row>7</th><td>cpoImputeAll                                                                          </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute and checks that all columns were imputed.</td></tr>
-	<tr><th scope=row>8</th><td>cpoImputeConstant                                                                     </td><td>impute.constant                                                                       </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using a constant value.                                                    </td></tr>
-	<tr><th scope=row>16</th><td>cpoImputeHist                                                                         </td><td>impute.hist                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using random values with probabilities approximating the data.             </td></tr>
-	<tr><th scope=row>17</th><td>cpoImputeLearner                                                                      </td><td>impute.learner                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the response of a classification or regression learner.              </td></tr>
-	<tr><th scope=row>13</th><td>cpoImputeMax                                                                          </td><td>impute.max                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted above the maximum.                           </td></tr>
-	<tr><th scope=row>10</th><td>cpoImputeMean                                                                         </td><td>impute.mean                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mean.                                                            </td></tr>
-	<tr><th scope=row>9</th><td>cpoImputeMedian                                                                       </td><td>impute.median                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the median.                                                          </td></tr>
-	<tr><th scope=row>12</th><td>cpoImputeMin                                                                          </td><td>impute.min                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted below the minimum.                           </td></tr>
-	<tr><th scope=row>11</th><td>cpoImputeMode                                                                         </td><td>impute.mode                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mode.                                                            </td></tr>
-	<tr><th scope=row>15</th><td>cpoImputeNormal                                                                       </td><td>impute.normal                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using normally distributed random values.                                  </td></tr>
-	<tr><th scope=row>14</th><td>cpoImputeUniform                                                                      </td><td>impute.uniform                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using uniformly distributed random values.                                 </td></tr>
-	<tr><th scope=row>19</th><td>cpoApply                                                                              </td><td>apply                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply a freely chosen CPOs, without exporting its hyperparameters.                    </td></tr>
+	<tr><th scope=row>6</th><td>cpoFilterFeatures                                                                     </td><td>filterFeatures                                                                        </td><td>featurefilter                                                                         </td><td>general                                                                               </td><td>Filter features using a provided method.                                              </td></tr>
+	<tr><th scope=row>22</th><td>cpoFilterAnova                                                                        </td><td>anova.test                                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using analysis of variance.                                           </td></tr>
+	<tr><th scope=row>8</th><td>cpoFilterCarscore                                                                     </td><td>carscore                                                                              </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using correlation-adjusted marginal correlation.                      </td></tr>
+	<tr><th scope=row>18</th><td>cpoFilterChiSquared                                                                   </td><td>chi.squared                                                                           </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using chi-squared test.                                               </td></tr>
+	<tr><th scope=row>16</th><td>cpoFilterGainRatio                                                                    </td><td>gain.ratio                                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based information gain ratio                            </td></tr>
+	<tr><th scope=row>15</th><td>cpoFilterInformationGain                                                              </td><td>information.gain                                                                      </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based information gain.                                 </td></tr>
+	<tr><th scope=row>23</th><td>cpoFilterKruskal                                                                      </td><td>kruskal.test                                                                          </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the Kruskal-Wallis rank sum test.                               </td></tr>
+	<tr><th scope=row>13</th><td>cpoFilterLinearCorrelation                                                            </td><td>linear.correlation                                                                    </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using Pearson correlation.                                            </td></tr>
+	<tr><th scope=row>7</th><td>cpoFilterMrmr                                                                         </td><td>mrmr                                                                                  </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using 'minimum redundancy, maximum relevance'.                        </td></tr>
+	<tr><th scope=row>20</th><td>cpoFilterOneR                                                                         </td><td>oneR                                                                                  </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the OneR learner.                                               </td></tr>
+	<tr><th scope=row>25</th><td>cpoFilterPermutationImportance                                                        </td><td>permutation.importance                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using predictiveness loss upon permutation of a variable.             </td></tr>
+	<tr><th scope=row>14</th><td>cpoFilterRankCorrelation                                                              </td><td>rank.correlation                                                                      </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using Spearman correlation.                                           </td></tr>
+	<tr><th scope=row>19</th><td>cpoFilterRelief                                                                       </td><td>relief                                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the ReliefF algorithm.                                          </td></tr>
+	<tr><th scope=row>11</th><td>cpoFilterRfCImportance                                                                </td><td>cforest.importance                                                                    </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using party::cforest variable importance.                             </td></tr>
+	<tr><th scope=row>12</th><td>cpoFilterRfImportance                                                                 </td><td>randomForest.importance                                                               </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForest variable importance.                               </td></tr>
+	<tr><th scope=row>9</th><td>cpoFilterRfSRCImportance                                                              </td><td>randomForestSRC.rfsrc                                                                 </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForestSRC.rfsrc.                                          </td></tr>
+	<tr><th scope=row>10</th><td>cpoFilterRfSRCMinDepth                                                                </td><td>randomForestSRC.var.select                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForestSRC minimal depth.                                  </td></tr>
+	<tr><th scope=row>17</th><td>cpoFilterSymmetricalUncertainty                                                       </td><td>symmetrical.uncertainty                                                               </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based symmetrical uncertainty                           </td></tr>
+	<tr><th scope=row>21</th><td>cpoFilterUnivariate                                                                   </td><td>univariate.model.score                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the predictiveness using a given learner.                       </td></tr>
+	<tr><th scope=row>24</th><td>cpoFilterVariance                                                                     </td><td>variance                                                                              </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using feature variance.                                               </td></tr>
+	<tr><th scope=row>26</th><td>cpoImpute                                                                             </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute.                                         </td></tr>
+	<tr><th scope=row>27</th><td>cpoImputeAll                                                                          </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute and checks that all columns were imputed.</td></tr>
+	<tr><th scope=row>28</th><td>cpoImputeConstant                                                                     </td><td>impute.constant                                                                       </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using a constant value.                                                    </td></tr>
+	<tr><th scope=row>36</th><td>cpoImputeHist                                                                         </td><td>impute.hist                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using random values with probabilities approximating the data.             </td></tr>
+	<tr><th scope=row>37</th><td>cpoImputeLearner                                                                      </td><td>impute.learner                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the response of a classification or regression learner.              </td></tr>
+	<tr><th scope=row>33</th><td>cpoImputeMax                                                                          </td><td>impute.max                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted above the maximum.                           </td></tr>
+	<tr><th scope=row>30</th><td>cpoImputeMean                                                                         </td><td>impute.mean                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mean.                                                            </td></tr>
+	<tr><th scope=row>29</th><td>cpoImputeMedian                                                                       </td><td>impute.median                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the median.                                                          </td></tr>
+	<tr><th scope=row>32</th><td>cpoImputeMin                                                                          </td><td>impute.min                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted below the minimum.                           </td></tr>
+	<tr><th scope=row>31</th><td>cpoImputeMode                                                                         </td><td>impute.mode                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mode.                                                            </td></tr>
+	<tr><th scope=row>35</th><td>cpoImputeNormal                                                                       </td><td>impute.normal                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using normally distributed random values.                                  </td></tr>
+	<tr><th scope=row>34</th><td>cpoImputeUniform                                                                      </td><td>impute.uniform                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using uniformly distributed random values.                                 </td></tr>
+	<tr><th scope=row>39</th><td>cpoApply                                                                              </td><td>apply                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply a freely chosen CPOs, without exporting its hyperparameters.                    </td></tr>
 	<tr><th scope=row>1</th><td>cpoCbind                                                                              </td><td>cbind                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Combine multiple CPO operations by joining their outputs column-wise.                 </td></tr>
-	<tr><th scope=row>18</th><td>cpoMultiplex                                                                          </td><td>multiplex                                                                             </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply one of a given set of CPOs, each having their hyperparameters exported.         </td></tr>
+	<tr><th scope=row>38</th><td>cpoMultiplex                                                                          </td><td>multiplex                                                                             </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply one of a given set of CPOs, each having their hyperparameters exported.         </td></tr>
 </tbody>
 </table>
 
@@ -3303,7 +3323,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">()</span>
@@ -3339,7 +3359,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">(</span>scale <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>  <span class="c1"># center = TRUE</span>
@@ -3385,7 +3405,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
@@ -3421,7 +3441,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">(</span>scale <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
@@ -3467,7 +3487,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoDummyEncode<span class="p">())</span>
@@ -3506,7 +3526,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoDummyEncode<span class="p">(</span>reference.cat <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span>
@@ -3555,7 +3575,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoSelect<span class="p">(</span>pattern <span class="o">=</span> <span class="s">&quot;Width&quot;</span><span class="p">))</span>
@@ -3594,7 +3614,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># selection is additive</span>
@@ -3654,7 +3674,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[91]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">=</span> df
@@ -3692,7 +3712,7 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>a <span class="o">=</span> imputeMedian<span class="p">()))</span>
@@ -3728,7 +3748,7 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>b <span class="o">=</span> imputeMedian<span class="p">()))</span>  <span class="c1"># NAs remain</span>
@@ -3765,7 +3785,7 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>missing.task <span class="o">=</span> makeRegrTask<span class="p">(</span><span class="s">&quot;missing.task&quot;</span><span class="p">,</span> impdata<span class="p">,</span> target <span class="o">=</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
@@ -3811,7 +3831,7 @@ Hyperparameters: target.cols=character(0),classes=,cols=a=&lt;ImputeMethod&gt;,d
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImputeConstant<span class="p">(</span><span class="m">10</span><span class="p">)</span>
@@ -3847,7 +3867,7 @@ Hyperparameters: target.cols=character(0),classes=,cols=a=&lt;ImputeMethod&gt;,d
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getTaskData<span class="p">(</span>missing.task <span class="o">%&gt;&gt;%</span> cpoImputeMedian<span class="p">(</span>make.dummy.cols <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
@@ -3883,11 +3903,12 @@ Hyperparameters: target.cols=character(0),classes=,cols=a=&lt;ImputeMethod&gt;,d
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised impute CPOs are:</span>
-listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
+listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span><span class="kt">category</span> <span class="o">==</span> <span class="s">&quot;imputation&quot;</span> <span class="o">&amp;</span> listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span>
+          <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
 </pre></div>
 
 </div>
@@ -3904,16 +3925,164 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 <table>
 <thead><tr><th></th><th scope=col>name</th><th scope=col>description</th></tr></thead>
 <tbody>
-	<tr><th scope=row>8</th><td>cpoImputeConstant                                                        </td><td>Imputation using a constant value.                                       </td></tr>
-	<tr><th scope=row>16</th><td>cpoImputeHist                                                            </td><td>Imputation using random values with probabilities approximating the data.</td></tr>
-	<tr><th scope=row>17</th><td>cpoImputeLearner                                                         </td><td>Imputation using the response of a classification or regression learner. </td></tr>
-	<tr><th scope=row>13</th><td>cpoImputeMax                                                             </td><td>Imputation using constant values shifted above the maximum.              </td></tr>
-	<tr><th scope=row>10</th><td>cpoImputeMean                                                            </td><td>Imputation using the mean.                                               </td></tr>
-	<tr><th scope=row>9</th><td>cpoImputeMedian                                                          </td><td>Imputation using the median.                                             </td></tr>
-	<tr><th scope=row>12</th><td>cpoImputeMin                                                             </td><td>Imputation using constant values shifted below the minimum.              </td></tr>
-	<tr><th scope=row>11</th><td>cpoImputeMode                                                            </td><td>Imputation using the mode.                                               </td></tr>
-	<tr><th scope=row>15</th><td>cpoImputeNormal                                                          </td><td>Imputation using normally distributed random values.                     </td></tr>
-	<tr><th scope=row>14</th><td>cpoImputeUniform                                                         </td><td>Imputation using uniformly distributed random values.                    </td></tr>
+	<tr><th scope=row>28</th><td>cpoImputeConstant                                                        </td><td>Imputation using a constant value.                                       </td></tr>
+	<tr><th scope=row>36</th><td>cpoImputeHist                                                            </td><td>Imputation using random values with probabilities approximating the data.</td></tr>
+	<tr><th scope=row>37</th><td>cpoImputeLearner                                                         </td><td>Imputation using the response of a classification or regression learner. </td></tr>
+	<tr><th scope=row>33</th><td>cpoImputeMax                                                             </td><td>Imputation using constant values shifted above the maximum.              </td></tr>
+	<tr><th scope=row>30</th><td>cpoImputeMean                                                            </td><td>Imputation using the mean.                                               </td></tr>
+	<tr><th scope=row>29</th><td>cpoImputeMedian                                                          </td><td>Imputation using the median.                                             </td></tr>
+	<tr><th scope=row>32</th><td>cpoImputeMin                                                             </td><td>Imputation using constant values shifted below the minimum.              </td></tr>
+	<tr><th scope=row>31</th><td>cpoImputeMode                                                            </td><td>Imputation using the mode.                                               </td></tr>
+	<tr><th scope=row>35</th><td>cpoImputeNormal                                                          </td><td>Imputation using normally distributed random values.                     </td></tr>
+	<tr><th scope=row>34</th><td>cpoImputeUniform                                                         </td><td>Imputation using uniformly distributed random values.                    </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Feature-Filtering">Feature Filtering<a class="anchor-link" href="#Feature-Filtering">&#182;</a></h2><p>There is one <em>general</em> and many <em>specialised</em> feature filtering CPOs. The general filtering CPO, <code>cpoFilterFeatures</code>, is a thin wrapper around <code>filterFeatures</code> and takes the filtering method as its argument. The specialised CPOs each call a specific filtering method.</p>
+<p>Most arguments of <code>filterFeatures</code> are reflected in the CPOs. The exceptions being:</p>
+<ol>
+<li>for <code>filterFeatures</code>, the filter method arguments are given in a list <code>filter.args</code>, instead of in <code>...</code></li>
+<li>The argument <code>fval</code> was dropped for the specialised filter CPOs.</li>
+<li>The argument <code>mandatory.feat</code> was dropped. Use <code>affect.*</code> parameters to prevent features from being filtered.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterFeatures<span class="p">(</span>method <span class="o">=</span> <span class="s">&quot;variance&quot;</span><span class="p">,</span> perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Sepal.Length</th><th scope=col>Petal.Length</th><th scope=col>Species</th></tr></thead>
+<tbody>
+	<tr><td>5.1   </td><td>1.4   </td><td>setosa</td></tr>
+	<tr><td>4.9   </td><td>1.4   </td><td>setosa</td></tr>
+	<tr><td>4.7   </td><td>1.3   </td><td>setosa</td></tr>
+	<tr><td>4.6   </td><td>1.5   </td><td>setosa</td></tr>
+	<tr><td>5.0   </td><td>1.4   </td><td>setosa</td></tr>
+	<tr><td>5.4   </td><td>1.7   </td><td>setosa</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterVariance<span class="p">(</span>perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Sepal.Length</th><th scope=col>Petal.Length</th><th scope=col>Species</th></tr></thead>
+<tbody>
+	<tr><td>5.1   </td><td>1.4   </td><td>setosa</td></tr>
+	<tr><td>4.9   </td><td>1.4   </td><td>setosa</td></tr>
+	<tr><td>4.7   </td><td>1.3   </td><td>setosa</td></tr>
+	<tr><td>4.6   </td><td>1.5   </td><td>setosa</td></tr>
+	<tr><td>5.0   </td><td>1.4   </td><td>setosa</td></tr>
+	<tr><td>5.4   </td><td>1.7   </td><td>setosa</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised filter CPOs are:</span>
+listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o">$</span><span class="kt">category</span> <span class="o">==</span> <span class="s">&quot;featurefilter&quot;</span> <span class="o">&amp;</span> listCPO<span class="p">()</span><span class="o">$</span>subcategory <span class="o">==</span> <span class="s">&quot;specialised&quot;</span><span class="p">,</span>
+          <span class="kt">c</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope=col>name</th><th scope=col>description</th></tr></thead>
+<tbody>
+	<tr><th scope=row>22</th><td>cpoFilterAnova                                                           </td><td>Filter features using analysis of variance.                              </td></tr>
+	<tr><th scope=row>8</th><td>cpoFilterCarscore                                                        </td><td>Filter features using correlation-adjusted marginal correlation.         </td></tr>
+	<tr><th scope=row>18</th><td>cpoFilterChiSquared                                                      </td><td>Filter features using chi-squared test.                                  </td></tr>
+	<tr><th scope=row>16</th><td>cpoFilterGainRatio                                                       </td><td>Filter features using entropy-based information gain ratio               </td></tr>
+	<tr><th scope=row>15</th><td>cpoFilterInformationGain                                                 </td><td>Filter features using entropy-based information gain.                    </td></tr>
+	<tr><th scope=row>23</th><td>cpoFilterKruskal                                                         </td><td>Filter features using the Kruskal-Wallis rank sum test.                  </td></tr>
+	<tr><th scope=row>13</th><td>cpoFilterLinearCorrelation                                               </td><td>Filter features using Pearson correlation.                               </td></tr>
+	<tr><th scope=row>7</th><td>cpoFilterMrmr                                                            </td><td>Filter features using 'minimum redundancy, maximum relevance'.           </td></tr>
+	<tr><th scope=row>20</th><td>cpoFilterOneR                                                            </td><td>Filter features using the OneR learner.                                  </td></tr>
+	<tr><th scope=row>25</th><td>cpoFilterPermutationImportance                                           </td><td>Filter features using predictiveness loss upon permutation of a variable.</td></tr>
+	<tr><th scope=row>14</th><td>cpoFilterRankCorrelation                                                 </td><td>Filter features using Spearman correlation.                              </td></tr>
+	<tr><th scope=row>19</th><td>cpoFilterRelief                                                          </td><td>Filter features using the ReliefF algorithm.                             </td></tr>
+	<tr><th scope=row>11</th><td>cpoFilterRfCImportance                                                   </td><td>Filter features using party::cforest variable importance.                </td></tr>
+	<tr><th scope=row>12</th><td>cpoFilterRfImportance                                                    </td><td>Filter features using randomForest variable importance.                  </td></tr>
+	<tr><th scope=row>9</th><td>cpoFilterRfSRCImportance                                                 </td><td>Filter features using randomForestSRC.rfsrc.                             </td></tr>
+	<tr><th scope=row>10</th><td>cpoFilterRfSRCMinDepth                                                   </td><td>Filter features using randomForestSRC minimal depth.                     </td></tr>
+	<tr><th scope=row>17</th><td>cpoFilterSymmetricalUncertainty                                          </td><td>Filter features using entropy-based symmetrical uncertainty              </td></tr>
+	<tr><th scope=row>21</th><td>cpoFilterUnivariate                                                      </td><td>Filter features using the predictiveness using a given learner.          </td></tr>
+	<tr><th scope=row>24</th><td>cpoFilterVariance                                                        </td><td>Filter features using feature variance.                                  </td></tr>
 </tbody>
 </table>
 

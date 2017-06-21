@@ -1503,14 +1503,15 @@ listCPO = function() {
 
 
 # TO-DO:
+#- exporting / fixing / hiding hyperparameters
+#- cpoCbind: prevent copies
 #- check shapeinfo when reattaching retrafos
-#- bare model (through retrafo() = NULL)
-#- feature subsetting: names, indices, grepl
-# --> but only those which support that? --> but only ignoring properties then?
-# --> how about as a further datasplit-kind of property. If given, properties.adding must be 0, properties must be maximal.
-# --> how about as an added parameter and automatic wrapping. much simpler, and setHyperPars friendly.
-# --> how about subsetting is possible, but invalidates properties.adding
+#- meta-CPOs: difficulties with 'properties.needed', 'properties.adding:
+#  - properties.needed is the union of all properties.needed, properties and properties.adding are intersections
+#  - optionally set to less strict properties: needed is intersection, properties and adding are unions; properties.needed must be ignored internally then.
+#  - cpoApply must have all properties, all properties.adding, must ignore properties.needed
 
 # test todo
 # convertNamesToItems, ItemsToNames
 # on.par.out.of.bounds setting
+# task types checked

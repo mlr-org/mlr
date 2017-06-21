@@ -40,7 +40,8 @@ fv = generateFilterValuesData(iris.task, method = "variance")
 plotFilterValues(fv)
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}},
+Other filter: \code{\link{cpoFilterFeatures}},
+  \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
