@@ -129,7 +129,8 @@ makeSubSamplingAMVMeasure = function(id = "SubSamplingAMV", minimize = TRUE, alp
 
           subsetTask(task, subset = c(inds.feat.subsample, inds.target))
           #sub.task = makeOneClassTask(data = sub.train.data, target = task$task.desc$target, positive = task$task.desc$positive, negative = task$task.desc$negative)
-          sub.lrn = makeLearner(model$learner$id, predict.type = model$learner$predict.type, predict.threshold = model$learner$predict.threshold)
+          sub.lrn = makeLearner(model$learner$id, predict.type = model$learner$predict.type,
+            predict.threshold = model$learner$predict.threshold, par.vals = mod_svm_resp$learner$par.vals)
           sub.mod = train(sub.lrn, sub.task)
 
           sub.pred = predict(sub.mod, newdata = sub.test.data)
