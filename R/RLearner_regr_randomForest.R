@@ -166,7 +166,6 @@ bootstrapStandardError = function(.learner, .model, .newdata,
 # Computes the mc bias-corrected jackknife after bootstrap
 jacknifeStandardError = function(aggregated.predictions, individual.predictions, bag.counts) {
   ntree = ncol(individual.predictions)
-  xx.bag.counts <<- bag.counts
   bag.counts = bag.counts[rowSums(bag.counts == 0) > 0, , drop = FALSE]
   n = nrow(bag.counts)
   oob = bag.counts == 0
