@@ -25,7 +25,8 @@ makeRLearner.regr.ranger = function() {
       makeIntegerLearnerParam(id = "num.random.splits", lower = 1, default = 1, requires = quote(splitrule == "extratrees")),
       makeNumericLearnerParam(id = "alpha", lower = 0L, upper = 1L, default = 0.5, requires = quote(splitrule == "maxstat")),
       makeNumericLearnerParam(id = "minprop", lower = 0L, upper = 1L, default = 0.1, requires = quote(splitrule == "maxstat")),
-      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE),
+      makeDiscreteLearnerParam(id = "se.method", default = "jackknife", values = c("jackknife",  "sd"), requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE), when = "both")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
     properties = c("numerics", "factors", "ordered", "se", "oobpreds", "featimp"),
@@ -37,36 +38,34 @@ makeRLearner.regr.ranger = function() {
 }
 
 #' @export
-trainLearner.regr.ranger = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.regr.ranger = function(.learner, .task, .subset, .weights, se.method = "jackknife", keep.inbag = NULL, ...) {
   tn = getTaskTargetNames(.task)
-  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset), ...)
+  if (is.null(keep.inbag)) keep.inbag = (se.method == "jackknife" && .learner$predict.type == "se")
+  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset), keep.inbag = keep.inbag, ...)
 }
 
 #' @export
-predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.ranger = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
 
-  p = predict(object = .model$learner.model, data = .newdata, ...)$predictions
+  predict.se = .learner$predict.type == "se"
+  pred = predict(object = .model$learner.model, data = .newdata, predict.all = predict.se, ...)
 
   # Computes the mc bias-corrected jackknife after bootstrap
-  if (.learner$predict.type == "se") {
-    model = .model$learner.model
-    model$inbag.counts = do.call(cbind, model$inbag.counts)
-    model$inbag.counts = model$inbag.counts[rowSums(model$inbag.counts == 0) > 0, , drop = FALSE]
-    n = nrow(model$inbag.counts)
-    ntree = model$num.trees
-    pred = predict(model, data = .newdata, predict.all = TRUE, ...)
-    oob = model$inbag.counts == 0
-    jack.n = apply(oob, 1, function(x) rowMeans(pred$predictions[, x, drop = FALSE]))
-    if (is.vector(jack.n)) {
-      jack.n = t(as.matrix(jack.n))
+  if (predict.se) {
+    p = rowMeans(pred$predictions)
+    if (se.method == "jackknife") {
+      se = jacknifeStandardError(
+        aggregated.predictions = p,
+        individual.predictions = pred$predictions,
+        bag.counts = matrix(unlist(.model$learner.model$inbag.counts), ncol = length(.model$learner.model$inbag.counts), byrow = FALSE))
+    } else if (se.method == "sd") {
+      se = sdStandardError(
+        individual.predictions = pred$predictions
+        )
     }
-    jack = (n - 1) / n * rowSums((jack.n - rowMeans(pred$predictions))^2)
-    bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$predictions - rowMeans(pred$predictions))^2)
-    jab = pmax(jack - bias, 0)
-    se = sqrt(jab)
     return(cbind(p, se))
   } else {
-    return(p)
+    return(pred$predictions)
   }
 }
 

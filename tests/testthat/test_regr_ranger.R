@@ -22,3 +22,24 @@ test_that("regr_ranger", {
 
   testSimpleParsets("regr.ranger", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
 })
+
+test_that("different se.methods work", {
+  se.methods = c("jackknife", "sd")
+  preds = setNames(vector("list", length(se.methods)), se.methods)
+  for (se.method in se.methods) {
+    par.vals = list(se.method = se.method, num.trees = 10L)
+    learner = makeLearner("regr.ranger", predict.type = "se", par.vals = par.vals)
+    set.seed(getOption("mlr.debug.seed"))
+    model = train(learner, task = bh.task, subset = 1:500)
+    set.seed(getOption("mlr.debug.seed"))
+    preds[[se.method]] = predict(model, task = bh.task)
+    expect_true(is.numeric(preds[[se.method]]$data$se))
+    expect_true(all(preds[[se.method]]$data$se >= 0))
+    # test if it works with one row
+    pred.one = predict(model, task = bh.task, subset = 501)
+    expect_true(is.numeric(pred.one$data$se))
+    expect_true(all(pred.one$data$se >= 0))
+  }
+  # mean prediction should be unaffected from the se.method
+  expect_equal(preds$sd$data$response, preds$jackknife$data$response)
+})
