@@ -513,6 +513,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
     inverter = prev.inverter)
 }
 
+#' @export
 applyCPO.CPOS3Retrafo = function(retrafo, data) {
   build.inverter = hasTagInvert(data)
   prev.inverter = inverter(data)
@@ -682,7 +683,7 @@ setPredictType.CPOS3Learner = function(learner, predict.type) {
 }
 
 # DATA %>>% CPO
-
+#' @export
 applyCPO.CPOS3 = function(cpo, task) {
   if ("Task" %in% class(task) && !is.null(getTaskWeights(task))) {
     stop("CPO can not handle tasks with weights!")
