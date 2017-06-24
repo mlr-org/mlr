@@ -213,3 +213,43 @@ cpoDropConstants = makeCPO("dropconst", rel.tol = 1e-8: numeric[~0, ], abs.tol =
   }, cpo.retrafo = {
     data[control]
   })
+registerCPO(cpoDropConstants, "data", "cleanup", "Drop constant or near-constant Features.")
+
+#' @title Clean up Factorial Features.
+#'
+#' @description
+#' Prevent common pitfalls when using factorial data, by making factorial data have the
+#' same levels in training and prediction, and by dropping factor levels that do not
+#' occur in training data.
+#'
+#' @template cpo_description
+#'
+#' @param drop.unused.levels
+#'   Factor levels of data that have no instances in the data are dropped. If
+#'   \dQuote{fix.factors.prediction} is false, this can lead to training data having
+#'   different factor levels than prediction data. Default is \code{TRUE}.
+#' @param fix.factors.prediction
+#'   Factor levels are kept the same in training and prediction. This is
+#'   recommended. Default is \code{TRUE}.
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoFixFactors = makeCPO("fixfactors", drop.unused.levels = TRUE: logical, fix.factors.prediction = TRUE: logical,
+  .datasplit = "target",
+  .properties.needed = "missings",
+  cpo.trafo = {
+    if (drop.unused.levels) {
+      data = droplevels(data)
+    }
+    control = Filter(function(x) !is.null(x), lapply(data, levels))
+    data
+  }, cpo.retrafo = {
+    if (fix.factors.prediction) {
+      data = fixFactors(data, control)
+    } else if (drop.unused.levels) {
+      data = droplevels(data)
+    }
+    data
+  })
+registerCPO(cpoFixFactors, "data", "cleanup", "Clean up Factorial Features.")
+
