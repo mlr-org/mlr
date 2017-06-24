@@ -166,6 +166,9 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 #' @param cpo2 [\code{\link{CPO}}]\cr
 #'   The operation to perform second.
 composeCPO = function(cpo1, cpo2) {
+  if (is.nullcpo(cpo2)) {
+    cpo1
+  }
   UseMethod("composeCPO")
 }
 
@@ -1076,6 +1079,12 @@ getCPOBound.NULLCPO = function(cpo) {
   character(0)
 }
 
+#' @export
+composeCPO.NULLCPO = function(cpo1, cpo2) {
+  cpo2
+}
+
+#' @export
 invertCPO.NULLCPO = function(inverter, prediction, predict.type) {
   list(new.prediction = prediction, new.td = NULL, new.truth = NULL)
 }
@@ -1085,6 +1094,7 @@ as.list.NULLCPO = function(x, ...) {
   list()
 }
 
+#' @export
 invertCPO.CPO = function(inverter, prediction, predict.type) {
   stop("Cannot invert prediction with a CPO object; need a CPORetrafo object.")
 }
