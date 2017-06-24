@@ -59,36 +59,36 @@ registerCPO(cpoScale, "data", "numeric data preprocessing", "Center and / or sca
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoDummyEncode = makeCPO("dummyencode", reference.cat = FALSE: logical, .datasplit = "target", .fix.factors = TRUE,  # nolint
+cpoDummyEncode = makeCPO("dummyencode", reference.cat = FALSE: logical, .datasplit = "target",  # nolint
   .properties.needed = "numerics", .properties.adding = c("factors", "ordered"),
   cpo.trafo = {
-  mf = stats::model.frame(~., data)
-  control = list()
-  control = attr(mf, "terms")
-  if (!reference.cat) {
-    attr(control, "intercept") = 0
-  }
-  prev.action = options()$na.action
-  options(na.action = "na.pass")
-  result = as.data.frame(model.matrix(control, data))
-  options(na.action = prev.action)
-  if (reference.cat) {
-    result[-1]
-  } else {
-    result
-  }
-}, cpo.retrafo = {
-  prev.action = options()$na.action
-  options(na.action = "na.pass")
-  result = as.data.frame(model.matrix(control, data))
-  options(na.action = prev.action)
-  if (reference.cat) {
-    result[-1]
-  } else {
-    result
-  }
+    lvls = lapply(data, levels)
 
-})
+    cpo.retrafo = function(data) {
+      datas = lapply(names(data), function(d) {
+        if (is.factor(data[[d]])) {
+          df = do.call(data.frame, lapply(lvls[[d]], function(l)
+            as.integer(data[[d]] == l)))
+          names(df) = paste0(d, lvls[[d]])
+          if (reference.cat) {
+            # check that no unknown factors occurred
+            cleand = data[[d]][!is.na(data[[d]])]
+            if (!all(cleand %in% lvls[[d]])) {
+              stopf("dummyencode retrafo encountered factor level that wasn't seen before. Try using cpoFixFactors.")
+            }
+            df[-1]
+          } else {
+            # unseen factors are ok here.
+            df
+          }
+        } else {
+          data[d]
+        }
+      })
+      do.call(cbind, datas)
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
 registerCPO(cpoDummyEncode, "data", "feature conversion", "Convert factorial columns to numeric columns by dummy encoding them")
 
 #' @title Drop All Columns Except Certain Selected Ones from Data

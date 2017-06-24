@@ -167,7 +167,8 @@ NULLCPO = makeS3Obj(c("NULLCPO", "CPOPrimitive", "CPORetrafo", "CPO"))  # nolint
 #'   The operation to perform second.
 #' @export
 composeCPO = function(cpo1, cpo2) {
-  assertClass(cpo2, "CPO")
+  assert(checkClass(cpo2, "CPO"),
+    checkClass(cpo2, "CPORetrafo"))
   if (is.nullcpo(cpo2)) {
     cpo1
   }
@@ -210,8 +211,8 @@ attachCPO = function(cpo, learner) {
 #' @export
 #' @family CPO
 applyCPO = function(cpo, task) {
-  assert(isTRUE(checkClass(task, "Task")),
-    isTRUE(checkClass(task, "data.frame")))
+  assert(checkClass(task, "Task"),
+    checkClass(task, "data.frame"))
   UseMethod("applyCPO")
 }
 
