@@ -205,22 +205,17 @@ collectProperties = function(constructed, do.intersect = FALSE) {
   all.allprops = lapply(constructed, function(x) setdiff(getCPOProperties(x)$properties, c(cpo.dataproperties, cpo.predict.properties)))
 
   if (do.intersect) {
-    un = union
-    isct = intersect
-    union.first = character(0)
-    isct.first = cpo.dataproperties
-    isct.first.adding = if (length(oc) > length(constructed)) character(0) else isct.first
-    isct.first.target = c(cpo.tasktypes, cpo.targetproperties)
-  } else {
-    un = intersect
-    isct = union
-    union.first = cpo.dataproperties
-    isct.first = character(0)
-    isct.first.target = character(0)
-  }
   list(
-    properties = Reduce(isct, extractSubList(allprops, "properties", simplify = FALSE), isct.first),
-    properties.needed = Reduce(un, extractSubList(allprops, "properties.needed", simplify = FALSE), union.first),
-    properties.adding = Reduce(isct, extractSubList(allprops, "properties.adding", simplify = FALSE), isct.first.adding),
-    properties.target = Reduce(isct, all.allprops, isct.first.target))
+      properties = Reduce(intersect, extractSubList(allprops, "properties", simplify = FALSE), cpo.dataproperties),
+      properties.needed = Reduce(union, extractSubList(allprops, "properties.needed", simplify = FALSE), character(0)),
+      properties.adding = Reduce(intersect, extractSubList(allprops, "properties.adding", simplify = FALSE),
+        if (!length(oc) || length(oc) > length(constructed)) character(0) else cpo.dataproperties),
+      properties.target = Reduce(intersect, all.allprops, c(cpo.tasktypes, cpo.targetproperties)))
+  } else {
+    list(
+        properties = Reduce(union, extractSubList(allprops, "properties", simplify = FALSE)),
+        properties.needed = Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE)),
+        properties.adding = Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE)),
+        properties.target = Reduce(union, all.allprops))
+  }
 }
