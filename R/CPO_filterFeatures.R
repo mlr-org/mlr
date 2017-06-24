@@ -68,9 +68,13 @@ declareFilterCPO = function(method, ..., .par.set = NULL) {
   makeCPO(method, .par.set = .par.set, .datasplit = "task", .properties.target = c(methodobj$supported.tasks, cpo.targetproperties),
     cpo.trafo = function(data, target, perc, abs, threshold, ...) {
       filter.args = list(...)
-      data = do.call(filterFeatures, c(list(task = data, method = method, fval = NULL, perc = perc, abs = abs, threshold = threshold), filter.args))
-      control = getTaskFeatureNames(data)
-      data
+      td = getTaskData(data, target.extra = TRUE)$data
+      tt = vcapply(td, function(x) class(x)[1])
+      tt = c(numeric = "numerics", factor = "factors", ordered = "ordered")[tt]
+      stask = subsetTask(data, features = tt %in% methodobj$supported.features)
+      ftask = do.call(filterFeatures, c(list(task = stask, method = method, fval = NULL, perc = perc, abs = abs, threshold = threshold), filter.args))
+      control = setdiff(getTaskFeatureNames(data), setdiff(getTaskFeatureNames(stask), getTaskFeatureNames(ftask)))
+      subsetTask(data, features = control)
     }, cpo.retrafo = function(data, control, ...) {
       data[control]
     })
