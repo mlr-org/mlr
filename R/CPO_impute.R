@@ -125,7 +125,10 @@ cpoImputeAll = makeCPO("impute", # nolint
   })
 registerCPO(cpoImputeAll, "imputation", "general", "General imputation CPO that uses mlr::impute and checks that all columns were imputed.")
 
-declareImputeFunction = function(name, method, additional.params) {
+# 'types':
+#   types == NULL: all types
+#   otherwise: subset of "numerics", "factors", "ordered"
+declareImputeFunction = function(name, method, additional.params, types = NULL) {
   makeCPO(paste0("impute.", name),
     .par.set = c(additional.params,
       paramSetSugar(make.dummy.cols = TRUE: logical,
@@ -133,6 +136,7 @@ declareImputeFunction = function(name, method, additional.params) {
         impute.new.levels = TRUE: logical,
         recode.factor.levels = TRUE: logical)),
     .datasplit = "target",
+    .properties = c("missings", if (is.null(types)) c("numerics", "factors", "ordered") else types),
     .properties.needed = "factors",
     .properties.adding = "missings",
     cpo.trafo = function(data, target, make.dummy.cols, force.dummies, impute.new.levels, recode.factor.levels, ...) {
@@ -207,12 +211,12 @@ registerCPO(cpoImputeConstant, "imputation", "specialised", "Imputation using a 
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMedian = declareImputeFunction("median", imputeMedian, makeParamSet())  # nolint
+cpoImputeMedian = declareImputeFunction("median", imputeMedian, makeParamSet(), "numerics")  # nolint
 registerCPO(cpoImputeMedian, "imputation", "specialised", "Imputation using the median.")
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMean = declareImputeFunction("mean", imputeMean, makeParamSet())  # nolint
+cpoImputeMean = declareImputeFunction("mean", imputeMean, makeParamSet(), "numerics")  # nolint
 registerCPO(cpoImputeMean, "imputation", "specialised", "Imputation using the mean.")
 
 #' @export
@@ -224,12 +228,12 @@ registerCPO(cpoImputeMode, "imputation", "specialised", "Imputation using the mo
 #' @param multiplier [\code{numeric(1)}]\cr
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname CPOImputer
-cpoImputeMin = declareImputeFunction("min", imputeMin, paramSetSugar(multiplier = 1: numeric[, ]))  # nolint
+cpoImputeMin = declareImputeFunction("min", imputeMin, paramSetSugar(multiplier = 1: numeric[, ]), "numerics")  # nolint
 registerCPO(cpoImputeMin, "imputation", "specialised", "Imputation using constant values shifted below the minimum.")
 
 #' @export
 #' @rdname CPOImputer
-cpoImputeMax = declareImputeFunction("max", imputeMax, paramSetSugar(multiplier = 1: numeric[, ]))  # nolint
+cpoImputeMax = declareImputeFunction("max", imputeMax, paramSetSugar(multiplier = 1: numeric[, ]), "numerics")  # nolint
 registerCPO(cpoImputeMax, "imputation", "specialised", "Imputation using constant values shifted above the maximum.")
 
 #' @export
@@ -246,7 +250,7 @@ cpoImputeUniform = declareImputeFunction("uniform", imputeUniform, {  # nolint
   ps$pars$min$default = NA_real_
   ps$pars$max$default = NA_real_
   ps
-})
+}, "numerics")
 registerCPO(cpoImputeUniform, "imputation", "specialised", "Imputation using uniformly distributed random values.")
 
 #' @export
@@ -261,7 +265,7 @@ cpoImputeNormal = declareImputeFunction("normal", imputeNormal, {  # nolint
   ps$pars$mu$default = NA_real_
   ps$pars$sd$default = NA_real_
   ps
-})
+}, "numerics")
 registerCPO(cpoImputeNormal, "imputation", "specialised", "Imputation using normally distributed random values.")
 
 #' @export
