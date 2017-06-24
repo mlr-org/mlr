@@ -548,6 +548,7 @@ applyCPO.CPOS3Retrafo = function(retrafo, data) {
 
 # CPO %>>% CPO
 
+#' @export
 composeCPO.CPOS3 = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOS3")
   parameterClashAssert(cpo1, cpo2, cpo1$name, cpo2$name)
@@ -580,6 +581,7 @@ as.list.CPOS3Tree = function(x, ...) {
 
 # CPO %>>% Learner
 
+#' @export
 attachCPO.CPOS3 = function(cpo, learner) {
   learner = checkLearner(learner)
   if (!learner$type %in% union(cpo$properties$properties.needed, setdiff(cpo$properties$properties, cpo$properties$properties.adding))) {
@@ -835,6 +837,7 @@ singleModelRetrafo.CPOS3Model = function(model, prev) {
 
 # RETRAFO %>>% RETRAFO
 
+#' @export
 composeCPO.CPOS3Retrafo = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOS3Retrafo")
   is.prim = "CPOS3RetrafoPrimitive" %in% class(cpo2)
