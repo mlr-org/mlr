@@ -200,9 +200,12 @@ attachCPO = function(cpo, learner) {
 #'   The CPO representing the operation to perform.
 #' @param task [\code{\link{Task}}]\cr
 #'   The task to operate on.
-#'
+#' @export
 #' @family CPO
 applyCPO = function(cpo, task) {
+  if (is.nullcpo(cpo)) {
+    return(task)
+  }
   UseMethod("applyCPO")
 }
 
