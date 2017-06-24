@@ -514,7 +514,8 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
 }
 
 #' @export
-applyCPO.CPOS3Retrafo = function(retrafo, data) {
+applyCPO.CPOS3Retrafo = function(cpo, data) {
+  retrafo = cpo
   build.inverter = hasTagInvert(data)
   prev.inverter = inverter(data)
   if (is.nullcpo(prev.inverter)) {

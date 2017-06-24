@@ -1,4 +1,5 @@
 #' @include getHyperPars.R
+#' @include CPO_meta.R
 
 #' @title \dQuote{cbind} the Result of multiple CPOs
 #'
@@ -46,7 +47,9 @@
 cpoCbind = function(..., .cpos = list()) {
   cpos = list(...)
   cpos = c(cpos, .cpos)
+
   assertList(cpos, types = "CPO", any.missing = FALSE)  # FIXME: require databound
+  collectedprops = collectProperties(cpos, do.intersect = TRUE)
 
   # the graph representing the operations being performed.
   # types: SOURCE, CPO, CBIND. SOURCE has no parents, CPO has only one parent.
@@ -103,6 +106,10 @@ cpoCbind = function(..., .cpos = list()) {
   control = NULL  # pacify static code analyser
 
   addClasses(makeCPO("cbind", .par.set = par.set, .par.vals = par.vals, .datasplit = "task",
+    .properties = collectedprops$properties,
+    .properties.adding = collectedprops$properties.adding,
+    .properties.needed = collectedprops$properties.needed,
+    .properties.target = collectedprops$properties.target,
     cpo.trafo = function(data, target, .CPO, ...) {
       args = list(...)
       ag = applyGraph(.CPO, data, TRUE, args)
@@ -142,8 +149,14 @@ applyGraph = function(graph, data, is.trafo, args) {
         }
         assert(length(datas) == length(curgi$content))
         assert(!any(sapply(datas, is.null)))
-        names(datas) = curgi$content
-        datas = lapply(seq_along(datas), function(i) do.call(data.frame,  datas[i]))
+        datas = lapply(seq_along(datas), function(i) {
+          df = data.frame(datas[[i]])
+          prefix = curgi$content[i]
+          if (!is.null(prefix) && prefix != "") {
+            names(df) = paste(prefix, names(df), sep = ".")
+          }
+          df
+        })
         if (is.trafo) {
           datas = c(list(getTaskData(data, features = character(0))), datas)
         }

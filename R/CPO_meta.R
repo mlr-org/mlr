@@ -197,13 +197,30 @@ cpoMeta = function(..., .cpo.name = "meta", .par.set = NULL, .par.vals = list(),
     })
 }
 
-collectProperties = function(constructed) {
+# intersect: properties get intersected instead of union'd
+collectProperties = function(constructed, do.intersect = FALSE) {
+  oc = constructed
+  constructed = Filter(function(x) !is.nullcpo(x), constructed)
   allprops = lapply(constructed, getCPOProperties, only.data = TRUE)
   all.allprops = lapply(constructed, function(x) setdiff(getCPOProperties(x)$properties, c(cpo.dataproperties, cpo.predict.properties)))
 
+  if (do.intersect) {
+    un = union
+    isct = intersect
+    union.first = character(0)
+    isct.first = cpo.dataproperties
+    isct.first.adding = if (length(oc) > length(constructed)) character(0) else isct.first
+    isct.first.target = c(cpo.tasktypes, cpo.targetproperties)
+  } else {
+    un = intersect
+    isct = union
+    union.first = cpo.dataproperties
+    isct.first = character(0)
+    isct.first.target = character(0)
+  }
   list(
-    properties = Reduce(union, extractSubList(allprops, "properties", simplify = FALSE)),
-    properties.needed = Reduce(intersect, extractSubList(allprops, "properties.needed", simplify = FALSE)),
-    properties.adding = Reduce(union, extractSubList(allprops, "properties.adding", simplify = FALSE)),
-    properties.target = Reduce(union, all.allprops))
+    properties = Reduce(isct, extractSubList(allprops, "properties", simplify = FALSE), isct.first),
+    properties.needed = Reduce(un, extractSubList(allprops, "properties.needed", simplify = FALSE), union.first),
+    properties.adding = Reduce(isct, extractSubList(allprops, "properties.adding", simplify = FALSE), isct.first.adding),
+    properties.target = Reduce(isct, all.allprops, isct.first.target))
 }
