@@ -184,7 +184,7 @@ registerCPO(cpoSelect, "data", "feature selection ", "Select features from a dat
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoDropConstants = makeCPO("dropconst", rel.tol = 1e-8: numeric[~0, ], abs.tol = 1e-8: numeric[~0, ],
+cpoDropConstants = makeCPO("dropconst", rel.tol = 1e-8: numeric[~0, ], abs.tol = 1e-8: numeric[~0, ],  # nolint
   ignore.na = FALSE: logical,
   .datasplit = "target", cpo.trafo = {
     control = sapply(data, function(col) {
@@ -234,7 +234,7 @@ registerCPO(cpoDropConstants, "data", "cleanup", "Drop constant or near-constant
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoFixFactors = makeCPO("fixfactors", drop.unused.levels = TRUE: logical, fix.factors.prediction = TRUE: logical,
+cpoFixFactors = makeCPO("fixfactors", drop.unused.levels = TRUE: logical, fix.factors.prediction = TRUE: logical,  # nolint
   .datasplit = "target",
   .properties.needed = "missings",
   cpo.trafo = {
@@ -270,7 +270,7 @@ registerCPO(cpoFixFactors, "data", "cleanup", "Clean up Factorial Features.")
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoMissingIndicators = makeCPO("missingindicators", force.dummies = FALSE: logical,
+cpoMissingIndicators = makeCPO("missingindicators", force.dummies = FALSE: logical,  # nolint
   .datasplit = "target",
   .properties.needed = "factors",
   .properties.adding = c("numerics", "ordered", "missings"),

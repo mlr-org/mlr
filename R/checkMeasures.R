@@ -1,5 +1,5 @@
-checkMeasures = function(measures = NULL, obj, aggr = NULL) {
-  if (is.null(measures)) {
+checkMeasures = function(measures, obj, aggr = NULL) {
+  if (missing(measures) || is.null(measures)) {
     measures = list(getDefaultMeasure(obj))
   } else {
     measures = ensureVector(measures, n = 1L, cl = "Measure")
