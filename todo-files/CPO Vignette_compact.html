@@ -469,7 +469,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CPO-Application-using-%&gt;&gt;%">CPO Application using %&gt;&gt;%<a class="anchor-link" href="#CPO-Application-using-%&gt;&gt;%">&#182;</a></h3><p><code>CPO</code>s can be applied to <code>data.frame</code> and <code>Task</code> objects.</p>
+<h3 id="CPO-Application-using-%&gt;&gt;%-or-applyCPO">CPO Application using <code>%&gt;&gt;%</code> or <code>applyCPO</code><a class="anchor-link" href="#CPO-Application-using-%&gt;&gt;%-or-applyCPO">&#182;</a></h3><p><code>CPO</code>s can be applied to <code>data.frame</code> and <code>Task</code> objects.</p>
 
 </div>
 </div>
@@ -480,7 +480,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
-<span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()))</span>
+<span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>applyCPO<span class="p">(</span>cpoPca<span class="p">(),</span> iris.task<span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -493,7 +493,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CPO-Composition-using-%&gt;&gt;%">CPO Composition using %&gt;&gt;%<a class="anchor-link" href="#CPO-Composition-using-%&gt;&gt;%">&#182;</a></h3><p><code>CPO</code> composition results in a new CPO which mostly behaves like a primitive CPO. Exceptions are:</p>
+<h3 id="CPO-Composition-using-%&gt;&gt;%-or-composeCPO">CPO Composition using <code>%&gt;&gt;%</code> or <code>composeCPO</code><a class="anchor-link" href="#CPO-Composition-using-%&gt;&gt;%-or-composeCPO">&#182;</a></h3><p><code>CPO</code> composition results in a new CPO which mostly behaves like a primitive CPO. Exceptions are:</p>
 <ul>
 <li>Compound CPOs have no <code>id</code></li>
 <li>Affect of compound CPOs cannot be retrieved</li>
@@ -511,19 +511,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 scale <span class="o">=</span> cpoScale<span class="p">()</span>
 <span class="c1"># pca %&gt;&gt;% scale  # error! parameters &#39;center&#39; and &#39;scale&#39; occur in both</span>
 compound <span class="o">=</span> setCPOId<span class="p">(</span>pca<span class="p">,</span> <span class="s">&quot;pca&quot;</span><span class="p">)</span> <span class="o">%&gt;&gt;%</span> setCPOId<span class="p">(</span><span class="kp">scale</span><span class="p">,</span> <span class="s">&quot;scale&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>compound
+composeCPO<span class="p">(</span>setCPOId<span class="p">(</span>pca<span class="p">,</span> <span class="s">&quot;pca&quot;</span><span class="p">),</span> setCPOId<span class="p">(</span><span class="kp">scale</span><span class="p">,</span> <span class="s">&quot;scale&quot;</span><span class="p">))</span>  <span class="c1"># same</span>
 </pre></div>
 
 </div>
@@ -663,7 +651,7 @@ getCPOAffect<span class="p">(</span>compound<span class="p">)</span>  <span clas
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CPO---Learner-attachment-using-%&gt;&gt;%">CPO - Learner attachment using %&gt;&gt;%<a class="anchor-link" href="#CPO---Learner-attachment-using-%&gt;&gt;%">&#182;</a></h3>
+<h3 id="CPO---Learner-attachment-using-%&gt;&gt;%-or-attachCPO">CPO - Learner attachment using <code>%&gt;&gt;%</code> or <code>attachCPO</code><a class="anchor-link" href="#CPO---Learner-attachment-using-%&gt;&gt;%-or-attachCPO">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -698,7 +686,7 @@ getCPOAffect<span class="p">(</span>compound<span class="p">)</span>  <span clas
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>compound <span class="o">%&gt;&gt;%</span> lrn  <span class="c1"># attaching compound CPO</span>
+<div class=" highlight hl-r"><pre><span></span>attachCPO<span class="p">(</span>compound<span class="p">,</span> lrn<span class="p">)</span>  <span class="c1"># attaching compound CPO</span>
 </pre></div>
 
 </div>
@@ -817,7 +805,7 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Application-of-Retrafo-using-%&gt;&gt;%-or-predict">Application of Retrafo using %&gt;&gt;% or <code>predict</code><a class="anchor-link" href="#Application-of-Retrafo-using-%&gt;&gt;%-or-predict">&#182;</a></h3>
+<h3 id="Application-of-Retrafo-using-%&gt;&gt;%,-applyCPO,-or-predict">Application of Retrafo using <code>%&gt;&gt;%</code>, <code>applyCPO</code>, or <code>predict</code><a class="anchor-link" href="#Application-of-Retrafo-using-%&gt;&gt;%,-applyCPO,-or-predict">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -829,6 +817,7 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> retrafo<span class="p">(</span>transformed<span class="p">)</span>
 <span class="c1"># should give the same as head(transformed), since the same data was used.</span>
 <span class="c1"># same:</span>
+<span class="kp">invisible</span><span class="p">(</span>applyCPO<span class="p">(</span>retrafo<span class="p">(</span>transformed<span class="p">),</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)))</span>
 <span class="kp">invisible</span><span class="p">(</span>predict<span class="p">(</span>retrafo<span class="p">(</span>transformed<span class="p">),</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)))</span>
 </pre></div>
 
@@ -1314,7 +1303,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cp<span class="p">,</span> cpo <span class="o">=</span> cpoScale<span class="p">())</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpa<span class="p">,</span> cpo <span class="o">=</span> cpoScale<span class="p">())</span>
 </pre></div>
 
 </div>
@@ -1327,7 +1316,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cp<span class="p">,</span> cpo <span class="o">=</span> cpoPca<span class="p">())</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpa<span class="p">,</span> cpo <span class="o">=</span> cpoPca<span class="p">())</span>
 </pre></div>
 
 </div>
@@ -1736,17 +1725,83 @@ cbinder.select
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Imputation">Imputation<a class="anchor-link" href="#Imputation">&#182;</a></h2><p>There are two <em>general</em> and many <em>specialised</em> imputation CPOs. The general imputation CPOs have parameters that let them use different imputation methods on different columns. They are a thin wrapper around <code>mlr</code>'s <code>impute()</code> and <code>reimpute()</code> functions. The specialised imputation CPOs each implement exactly one imputation method and are closer to the behaviour of typical CPOs.</p>
+<h2 id="cpoDropConstants">cpoDropConstants<a class="anchor-link" href="#cpoDropConstants">&#182;</a></h2><p>Drops constant features or numerics, with variable tolerance</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoDropConstants<span class="p">()</span>  <span class="c1"># drops &#39;species&#39;</span>
+<span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoDropConstants<span class="p">(</span>abs.tol <span class="o">=</span> <span class="m">0.2</span><span class="p">)</span>  <span class="c1"># also drops &#39;Petal.Width&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="General-Imputation-Wrappers">General Imputation Wrappers<a class="anchor-link" href="#General-Imputation-Wrappers">&#182;</a></h3><p><code>cpoImpute</code> and <code>cpoImputeAll</code> both have parameters very much like <code>impute()</code>. The latter assumes that <em>all</em> columns of its input is somehow being imputed and can be preprended to a learner to give it the ability to work with missing data. It will, however, throw an error if data is missing after imputation.</p>
+<h2 id="cpoFixFactors">cpoFixFactors<a class="anchor-link" href="#cpoFixFactors">&#182;</a></h2><p>Drops unused factors and makes sure prediction data has the same factor levels as training data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">levels</span><span class="p">(</span>iris<span class="o">$</span>Species<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>irisfix <span class="o">=</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoFixFactors<span class="p">()</span>  <span class="c1"># Species only has level &#39;setosa&#39; in train</span>
+<span class="kp">levels</span><span class="p">(</span>irisfix<span class="o">$</span>Species<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>rf <span class="o">=</span> retrafo<span class="p">(</span>irisfix<span class="p">)</span>
+iris<span class="p">[</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">140</span><span class="p">),</span> <span class="p">]</span>
+iris<span class="p">[</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">140</span><span class="p">),</span> <span class="p">]</span> <span class="o">%&gt;&gt;%</span> rf
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="cpoMissingIndicators">cpoMissingIndicators<a class="anchor-link" href="#cpoMissingIndicators">&#182;</a></h2><p>Creates columns indicating missing data. Most useful in combination with cpoCbind.</p>
 
 </div>
 </div>
@@ -1765,6 +1820,40 @@ impdata
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoMissingIndicators<span class="p">()</span>
+impdata <span class="o">%&gt;&gt;%</span> cpoCbind<span class="p">(</span>NULLCPO<span class="p">,</span> dummy <span class="o">=</span> cpoMissingIndicators<span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Imputation">Imputation<a class="anchor-link" href="#Imputation">&#182;</a></h2><p>There are two <em>general</em> and many <em>specialised</em> imputation CPOs. The general imputation CPOs have parameters that let them use different imputation methods on different columns. They are a thin wrapper around <code>mlr</code>'s <code>impute()</code> and <code>reimpute()</code> functions. The specialised imputation CPOs each implement exactly one imputation method and are closer to the behaviour of typical CPOs.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="General-Imputation-Wrappers">General Imputation Wrappers<a class="anchor-link" href="#General-Imputation-Wrappers">&#182;</a></h3><p><code>cpoImpute</code> and <code>cpoImputeAll</code> both have parameters very much like <code>impute()</code>. The latter assumes that <em>all</em> columns of its input is somehow being imputed and can be preprended to a learner to give it the ability to work with missing data. It will, however, throw an error if data is missing after imputation.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">

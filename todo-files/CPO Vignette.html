@@ -824,7 +824,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CPO-Application-using-%&gt;&gt;%">CPO Application using %&gt;&gt;%<a class="anchor-link" href="#CPO-Application-using-%&gt;&gt;%">&#182;</a></h3><p><code>CPO</code>s can be applied to <code>data.frame</code> and <code>Task</code> objects.</p>
+<h3 id="CPO-Application-using-%&gt;&gt;%-or-applyCPO">CPO Application using <code>%&gt;&gt;%</code> or <code>applyCPO</code><a class="anchor-link" href="#CPO-Application-using-%&gt;&gt;%-or-applyCPO">&#182;</a></h3><p><code>CPO</code>s can be applied to <code>data.frame</code> and <code>Task</code> objects.</p>
 
 </div>
 </div>
@@ -835,7 +835,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
-<span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()))</span>
+<span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>applyCPO<span class="p">(</span>cpoPca<span class="p">(),</span> iris.task<span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -893,7 +893,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CPO-Composition-using-%&gt;&gt;%">CPO Composition using %&gt;&gt;%<a class="anchor-link" href="#CPO-Composition-using-%&gt;&gt;%">&#182;</a></h3><p><code>CPO</code> composition results in a new CPO which mostly behaves like a primitive CPO. Exceptions are:</p>
+<h3 id="CPO-Composition-using-%&gt;&gt;%-or-composeCPO">CPO Composition using <code>%&gt;&gt;%</code> or <code>composeCPO</code><a class="anchor-link" href="#CPO-Composition-using-%&gt;&gt;%-or-composeCPO">&#182;</a></h3><p><code>CPO</code> composition results in a new CPO which mostly behaves like a primitive CPO. Exceptions are:</p>
 <ul>
 <li>Compound CPOs have no <code>id</code></li>
 <li>Affect of compound CPOs cannot be retrieved</li>
@@ -911,19 +911,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 scale <span class="o">=</span> cpoScale<span class="p">()</span>
 <span class="c1"># pca %&gt;&gt;% scale  # error! parameters &#39;center&#39; and &#39;scale&#39; occur in both</span>
 compound <span class="o">=</span> setCPOId<span class="p">(</span>pca<span class="p">,</span> <span class="s">&quot;pca&quot;</span><span class="p">)</span> <span class="o">%&gt;&gt;%</span> setCPOId<span class="p">(</span><span class="kp">scale</span><span class="p">,</span> <span class="s">&quot;scale&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>compound
+composeCPO<span class="p">(</span>setCPOId<span class="p">(</span>pca<span class="p">,</span> <span class="s">&quot;pca&quot;</span><span class="p">),</span> setCPOId<span class="p">(</span><span class="kp">scale</span><span class="p">,</span> <span class="s">&quot;scale&quot;</span><span class="p">))</span>  <span class="c1"># same</span>
 </pre></div>
 
 </div>
@@ -949,7 +937,7 @@ compound <span class="o">=</span> setCPOId<span class="p">(</span>pca<span class
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">class</span><span class="p">(</span>compound<span class="p">)</span>
@@ -982,7 +970,7 @@ compound <span class="o">=</span> setCPOId<span class="p">(</span>pca<span class
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">summary</span><span class="p">(</span>compound<span class="p">)</span>
@@ -1022,7 +1010,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOName<span class="p">(</span>compound<span class="p">)</span>
@@ -1050,7 +1038,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOId<span class="p">(</span>compound<span class="p">)</span>  <span class="c1"># error: no ID for compound CPOs</span>
@@ -1083,7 +1071,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getParamSet<span class="p">(</span>compound<span class="p">)</span>
@@ -1116,7 +1104,7 @@ scale.scale  logical   -  TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getHyperPars<span class="p">(</span>compound<span class="p">)</span>
@@ -1154,7 +1142,7 @@ scale.scale  logical   -  TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>setHyperPars<span class="p">(</span>compound<span class="p">,</span> pca.center <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> scale.center <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
@@ -1192,7 +1180,7 @@ scale.scale  logical   -  TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">as.list</span><span class="p">(</span>compound<span class="p">)</span>
@@ -1226,7 +1214,7 @@ scale.scale(scale.center = TRUE, scale.scale = TRUE)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>chainCPO<span class="p">(</span><span class="kp">as.list</span><span class="p">(</span>compound<span class="p">))</span>  <span class="c1"># chainCPO: list CPO -&gt; CPO</span>
@@ -1258,13 +1246,13 @@ scale.scale(scale.center = TRUE, scale.scale = TRUE)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CPO---Learner-attachment-using-%&gt;&gt;%">CPO - Learner attachment using %&gt;&gt;%<a class="anchor-link" href="#CPO---Learner-attachment-using-%&gt;&gt;%">&#182;</a></h3>
+<h3 id="CPO---Learner-attachment-using-%&gt;&gt;%-or-attachCPO">CPO - Learner attachment using <code>%&gt;&gt;%</code> or <code>attachCPO</code><a class="anchor-link" href="#CPO---Learner-attachment-using-%&gt;&gt;%-or-attachCPO">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>lrn <span class="o">=</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.logreg&quot;</span><span class="p">)</span>
@@ -1277,7 +1265,7 @@ scale.scale(scale.center = TRUE, scale.scale = TRUE)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>cpolrn <span class="o">=</span> cpo <span class="o">%&gt;&gt;%</span> lrn<span class="p">)</span>  <span class="c1"># the new learner has the CPO hyperparameters</span>
@@ -1313,10 +1301,10 @@ Hyperparameters: model=FALSE,center=TRUE,scale=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>compound <span class="o">%&gt;&gt;%</span> lrn  <span class="c1"># attaching compound CPO</span>
+<div class=" highlight hl-r"><pre><span></span>attachCPO<span class="p">(</span>compound<span class="p">,</span> lrn<span class="p">)</span>  <span class="c1"># attaching compound CPO</span>
 </pre></div>
 
 </div>
@@ -1349,7 +1337,7 @@ Hyperparameters: model=FALSE,pca.center=FALSE,pca.scale=FALSE,scale.center=TRUE,
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># CPO learner decomposition</span>
@@ -1407,7 +1395,7 @@ Hyperparameters: model=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>transformed <span class="o">=</span> iris <span class="o">%&gt;&gt;%</span> cpo
@@ -1447,7 +1435,7 @@ Hyperparameters: model=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>retrafo<span class="p">(</span>transformed<span class="p">)</span>
@@ -1477,7 +1465,7 @@ Hyperparameters: model=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># retrafos are stored as attributes</span>
@@ -1538,7 +1526,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>state <span class="o">=</span> getRetrafoState<span class="p">(</span>retrafo<span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">())))</span>
@@ -1596,7 +1584,7 @@ other:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>state<span class="o">$</span>control<span class="o">$</span>center<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">=</span> <span class="m">1000</span>  <span class="c1"># will now subtract 1000 from the first column</span>
@@ -1640,18 +1628,19 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Application-of-Retrafo-using-%&gt;&gt;%-or-predict">Application of Retrafo using %&gt;&gt;% or <code>predict</code><a class="anchor-link" href="#Application-of-Retrafo-using-%&gt;&gt;%-or-predict">&#182;</a></h3>
+<h3 id="Application-of-Retrafo-using-%&gt;&gt;%,-applyCPO,-or-predict">Application of Retrafo using <code>%&gt;&gt;%</code>, <code>applyCPO</code>, or <code>predict</code><a class="anchor-link" href="#Application-of-Retrafo-using-%&gt;&gt;%,-applyCPO,-or-predict">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> retrafo<span class="p">(</span>transformed<span class="p">)</span>
 <span class="c1"># should give the same as head(transformed), since the same data was used.</span>
 <span class="c1"># same:</span>
+<span class="kp">invisible</span><span class="p">(</span>applyCPO<span class="p">(</span>retrafo<span class="p">(</span>transformed<span class="p">),</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)))</span>
 <span class="kp">invisible</span><span class="p">(</span>predict<span class="p">(</span>retrafo<span class="p">(</span>transformed<span class="p">),</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)))</span>
 </pre></div>
 
@@ -1697,7 +1686,7 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>cpomodel <span class="o">=</span> train<span class="p">(</span>cpolrn<span class="p">,</span> pid.task<span class="p">)</span>
@@ -1710,7 +1699,7 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>retrafo<span class="p">(</span>cpomodel<span class="p">)</span>
@@ -1740,7 +1729,7 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>pid.task <span class="o">%&gt;&gt;%</span> retrafo<span class="p">(</span>cpomodel<span class="p">)))</span>
@@ -1790,7 +1779,7 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>data <span class="o">=</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> pca
@@ -1821,7 +1810,7 @@ retrafo<span class="p">(</span>data<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>data2 <span class="o">=</span> data <span class="o">%&gt;&gt;%</span> <span class="kp">scale</span>
@@ -1853,7 +1842,7 @@ retrafo<span class="p">(</span>data2<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># to interrupt this chain, set retrafo to NULL</span>
@@ -1895,7 +1884,7 @@ retrafo<span class="p">(</span>data2<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>compound.retrafo <span class="o">=</span> retrafo<span class="p">(</span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> compound<span class="p">)</span>
@@ -1926,7 +1915,7 @@ compound.retrafo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>retrafolist <span class="o">=</span> <span class="kp">as.list</span><span class="p">(</span>compound.retrafo<span class="p">))</span>
@@ -1962,7 +1951,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>retrafolist<span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">%&gt;&gt;%</span> retrafolist<span class="p">[[</span><span class="m">2</span><span class="p">]]</span>
@@ -1992,7 +1981,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>chainCPO<span class="p">(</span>retrafolist<span class="p">)</span>
@@ -2033,7 +2022,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># there is currently no example targetbound cpo</span>
@@ -2052,7 +2041,7 @@ logtransform <span class="o">=</span> makeCPOTargetOp<span class="p">(</span><sp
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>log.retrafo <span class="o">=</span> retrafo<span class="p">(</span>bh.task <span class="o">%&gt;&gt;%</span> logtransform<span class="p">())</span>  <span class="c1"># get a target-bound retrafo</span>
@@ -2094,7 +2083,7 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>inverter<span class="p">(</span>bh.task <span class="o">%&gt;&gt;%</span> log.retrafo<span class="p">)</span>
@@ -2123,7 +2112,7 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#inverter(tagInvert(bh.task) %&gt;&gt;% log.retrafo)</span>
@@ -2147,7 +2136,7 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>log.bh <span class="o">=</span> bh.task <span class="o">%&gt;&gt;%</span> logtransform<span class="p">()</span>
@@ -2161,7 +2150,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># invert(retrafo(log.bh), log.prediction)  # not implemented :-/</span>
@@ -2185,7 +2174,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOProperties<span class="p">(</span>cpoDummyEncode<span class="p">())</span>
@@ -2265,7 +2254,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>train<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">,</span> bc.task<span class="p">)</span>  <span class="c1"># gives an error</span>
@@ -2298,7 +2287,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>train<span class="p">(</span>cpoDummyEncode<span class="p">(</span>reference.cat <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">),</span> bc.task<span class="p">)</span>
@@ -2329,7 +2318,7 @@ Hyperparameters: validation=NULL,reference.cat=TRUE</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getLearnerProperties<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">)</span>
@@ -2362,7 +2351,7 @@ Hyperparameters: validation=NULL,reference.cat=TRUE</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getLearnerProperties<span class="p">(</span>cpoDummyEncode<span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">))</span>
@@ -2416,7 +2405,7 @@ Hyperparameters: validation=NULL,reference.cat=TRUE</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>NULLCPO
@@ -2445,7 +2434,7 @@ Hyperparameters: validation=NULL,reference.cat=TRUE</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>is.nullcpo<span class="p">(</span>NULLCPO<span class="p">)</span>
@@ -2473,7 +2462,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>NULLCPO <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">()</span>
@@ -2502,7 +2491,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>NULLCPO <span class="o">%&gt;&gt;%</span> NULLCPO
@@ -2531,7 +2520,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">print</span><span class="p">(</span><span class="kp">as.list</span><span class="p">(</span>NULLCPO<span class="p">))</span>
@@ -2558,7 +2547,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>chainCPO<span class="p">(</span><span class="kt">list</span><span class="p">())</span>
@@ -2597,7 +2586,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>cpa <span class="o">=</span> cpoApply<span class="p">()</span>
@@ -2631,10 +2620,10 @@ cpo untyped   -   -      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cp<span class="p">,</span> cpo <span class="o">=</span> cpoScale<span class="p">())</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpa<span class="p">,</span> cpo <span class="o">=</span> cpoScale<span class="p">())</span>
 </pre></div>
 
 </div>
@@ -2646,20 +2635,75 @@ cpo untyped   -   -      -   -    TRUE     -</pre>
 
 
 <div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-Error in setHyperPars2(learner, insert(par.vals, args)): object &apos;cp&apos; not found
-Traceback:
-
-1. head(iris) %&gt;&gt;% setHyperPars(cp, cpo = cpoScale())
-2. &#96;%&gt;&gt;%.data.frame&#96;(head(iris), setHyperPars(cp, cpo = cpoScale()))
-3. &#96;%&gt;&gt;%.Task&#96;(cpo1, cpo2)
-4. is.nullcpo(cpo2)
-5. &quot;NULLCPO&quot; %in% class(cpo)
-6. match(x, table, nomatch = 0L)
-7. setHyperPars(cp, cpo = cpoScale())
-8. setHyperPars2(learner, insert(par.vals, args))</pre>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in makeTask(type, data, weights, blocking, fixup.data = fixup.data, :
+“Empty factor levels were dropped for columns: Species”</pre>
 </div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th><th scope=col>Petal.Width</th><th scope=col>Species</th></tr></thead>
+<tbody>
+	<tr><td> 0.5206576</td><td> 0.3401105</td><td>-0.3627381</td><td>-0.4082483</td><td>setosa    </td></tr>
+	<tr><td>-0.1735525</td><td>-1.1175060</td><td>-0.3627381</td><td>-0.4082483</td><td>setosa    </td></tr>
+	<tr><td>-0.8677627</td><td>-0.5344594</td><td>-1.0882144</td><td>-0.4082483</td><td>setosa    </td></tr>
+	<tr><td>-1.2148677</td><td>-0.8259827</td><td> 0.3627381</td><td>-0.4082483</td><td>setosa    </td></tr>
+	<tr><td> 0.1735525</td><td> 0.6316338</td><td>-0.3627381</td><td>-0.4082483</td><td>setosa    </td></tr>
+	<tr><td> 1.5619728</td><td> 1.5062037</td><td> 1.8136906</td><td> 2.0412415</td><td>setosa    </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpa<span class="p">,</span> cpo <span class="o">=</span> cpoPca<span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in makeTask(type, data, weights, blocking, fixup.data = fixup.data, :
+“Empty factor levels were dropped for columns: Species”</pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Species</th><th scope=col>PC1</th><th scope=col>PC2</th><th scope=col>PC3</th><th scope=col>PC4</th></tr></thead>
+<tbody>
+	<tr><td>setosa       </td><td>-0.1634147   </td><td> 0.017230444 </td><td>-0.11038321  </td><td>-0.0231625616</td></tr>
+	<tr><td>setosa       </td><td> 0.3324970   </td><td>-0.189351624 </td><td>-0.08152883  </td><td> 0.0005612917</td></tr>
+	<tr><td>setosa       </td><td> 0.3268659   </td><td> 0.101103375 </td><td>-0.02238439  </td><td> 0.0464537730</td></tr>
+	<tr><td>setosa       </td><td> 0.4202367   </td><td> 0.005523981 </td><td> 0.17106514  </td><td>-0.0222757931</td></tr>
+	<tr><td>setosa       </td><td>-0.1768684   </td><td> 0.140149101 </td><td>-0.04185224  </td><td>-0.0194870755</td></tr>
+	<tr><td>setosa       </td><td>-0.7393165   </td><td>-0.074655279 </td><td> 0.08508352  </td><td> 0.0179103657</td></tr>
+</tbody>
+</table>
+
+</div>
+
 </div>
 
 </div>
@@ -2669,43 +2713,6 @@ Traceback:
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[69]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cp<span class="p">,</span> cpo <span class="o">=</span> cpoPca<span class="p">())</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-Error in setHyperPars2(learner, insert(par.vals, args)): object &apos;cp&apos; not found
-Traceback:
-
-1. head(iris) %&gt;&gt;% setHyperPars(cp, cpo = cpoPca())
-2. &#96;%&gt;&gt;%.data.frame&#96;(head(iris), setHyperPars(cp, cpo = cpoPca()))
-3. &#96;%&gt;&gt;%.Task&#96;(cpo1, cpo2)
-4. is.nullcpo(cpo2)
-5. &quot;NULLCPO&quot; %in% class(cpo)
-6. match(x, table, nomatch = 0L)
-7. setHyperPars(cp, cpo = cpoPca())
-8. setHyperPars2(learner, insert(par.vals, args))</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># attaching the cpo applicator to a learner gives this learner a &quot;cpo&quot; hyperparameter</span>
@@ -2748,7 +2755,7 @@ model logical   - TRUE      -   -   FALSE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>cpm <span class="o">=</span> cpoMultiplex<span class="p">(</span><span class="kt">list</span><span class="p">(</span>cpoScale<span class="p">,</span> cpoPca<span class="p">))</span>
@@ -2786,7 +2793,7 @@ pca.scale     logical   - FALSE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpm<span class="p">,</span> selected.cpo <span class="o">=</span> <span class="s">&quot;scale&quot;</span><span class="p">)</span>
@@ -2832,7 +2839,7 @@ pca.scale     logical   - FALSE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># every CPO&#39;s Hyperparameters are exported</span>
@@ -2879,7 +2886,7 @@ pca.scale     logical   - FALSE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpm<span class="p">,</span> selected.cpo <span class="o">=</span> <span class="s">&quot;pca&quot;</span><span class="p">)</span>
@@ -2935,7 +2942,7 @@ pca.scale     logical   - FALSE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>s.and.p <span class="o">=</span> cpoMeta<span class="p">(</span>logical.param<span class="o">:</span> <span class="kt">logical</span><span class="p">,</span>
@@ -2957,7 +2964,7 @@ cpo.build <span class="o">=</span> <span class="kr">function</span><span class="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">summary</span><span class="p">(</span>s.and.p<span class="p">())</span>
@@ -3015,7 +3022,7 @@ The all CPOs listed in <code>.export</code> are passed to the <code>cpo.build</c
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>scale <span class="o">=</span> cpoScale<span class="p">(</span>id <span class="o">=</span> <span class="s">&quot;scale&quot;</span><span class="p">)</span>
@@ -3030,7 +3037,7 @@ cbinder <span class="o">=</span> cpoCbind<span class="p">(</span>scaled <span cl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># cpoCbind recognises that &quot;scale.scale&quot; happens before &quot;pca.pca&quot; but is also fed to the</span>
@@ -3081,7 +3088,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cbinder<span class="p">)</span>
@@ -3120,7 +3127,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># the unnecessary copies of &quot;Species&quot; are unfortunate. Remove them with cpoSelect:</span>
@@ -3182,7 +3189,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># alternatively, we apply the cbinder only to numerical data</span>
@@ -3241,7 +3248,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>listCPO<span class="p">()</span>
@@ -3261,45 +3268,48 @@ O   CBIND[scaled,pcad,original]
 <table>
 <thead><tr><th></th><th scope=col>name</th><th scope=col>cponame</th><th scope=col>category</th><th scope=col>subcategory</th><th scope=col>description</th></tr></thead>
 <tbody>
-	<tr><th scope=row>4</th><td>cpoDummyEncode                                                                        </td><td>dummyencode                                                                           </td><td>data                                                                                  </td><td>feature conversion                                                                    </td><td>Convert factorial columns to numeric columns by dummy encoding them                   </td></tr>
-	<tr><th scope=row>5</th><td>cpoSelect                                                                             </td><td>select                                                                                </td><td>data                                                                                  </td><td>feature selection                                                                     </td><td>Select features from a data set by type, column name, or column index.                </td></tr>
-	<tr><th scope=row>2</th><td>cpoPca                                                                                </td><td>pca                                                                                   </td><td>data                                                                                  </td><td>numeric data preprocessing                                                            </td><td>Perform Principal Component Analysis (PCA) using stats::prcomp.                       </td></tr>
-	<tr><th scope=row>3</th><td>cpoScale                                                                              </td><td>scale                                                                                 </td><td>data                                                                                  </td><td>numeric data preprocessing                                                            </td><td>Center and / or scale the data using base::scale.                                     </td></tr>
-	<tr><th scope=row>6</th><td>cpoFilterFeatures                                                                     </td><td>filterFeatures                                                                        </td><td>featurefilter                                                                         </td><td>general                                                                               </td><td>Filter features using a provided method.                                              </td></tr>
-	<tr><th scope=row>22</th><td>cpoFilterAnova                                                                        </td><td>anova.test                                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using analysis of variance.                                           </td></tr>
-	<tr><th scope=row>8</th><td>cpoFilterCarscore                                                                     </td><td>carscore                                                                              </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using correlation-adjusted marginal correlation.                      </td></tr>
-	<tr><th scope=row>18</th><td>cpoFilterChiSquared                                                                   </td><td>chi.squared                                                                           </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using chi-squared test.                                               </td></tr>
-	<tr><th scope=row>16</th><td>cpoFilterGainRatio                                                                    </td><td>gain.ratio                                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based information gain ratio                            </td></tr>
-	<tr><th scope=row>15</th><td>cpoFilterInformationGain                                                              </td><td>information.gain                                                                      </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based information gain.                                 </td></tr>
-	<tr><th scope=row>23</th><td>cpoFilterKruskal                                                                      </td><td>kruskal.test                                                                          </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the Kruskal-Wallis rank sum test.                               </td></tr>
-	<tr><th scope=row>13</th><td>cpoFilterLinearCorrelation                                                            </td><td>linear.correlation                                                                    </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using Pearson correlation.                                            </td></tr>
-	<tr><th scope=row>7</th><td>cpoFilterMrmr                                                                         </td><td>mrmr                                                                                  </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using 'minimum redundancy, maximum relevance'.                        </td></tr>
-	<tr><th scope=row>20</th><td>cpoFilterOneR                                                                         </td><td>oneR                                                                                  </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the OneR learner.                                               </td></tr>
-	<tr><th scope=row>25</th><td>cpoFilterPermutationImportance                                                        </td><td>permutation.importance                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using predictiveness loss upon permutation of a variable.             </td></tr>
-	<tr><th scope=row>14</th><td>cpoFilterRankCorrelation                                                              </td><td>rank.correlation                                                                      </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using Spearman correlation.                                           </td></tr>
-	<tr><th scope=row>19</th><td>cpoFilterRelief                                                                       </td><td>relief                                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the ReliefF algorithm.                                          </td></tr>
-	<tr><th scope=row>11</th><td>cpoFilterRfCImportance                                                                </td><td>cforest.importance                                                                    </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using party::cforest variable importance.                             </td></tr>
-	<tr><th scope=row>12</th><td>cpoFilterRfImportance                                                                 </td><td>randomForest.importance                                                               </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForest variable importance.                               </td></tr>
-	<tr><th scope=row>9</th><td>cpoFilterRfSRCImportance                                                              </td><td>randomForestSRC.rfsrc                                                                 </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForestSRC.rfsrc.                                          </td></tr>
-	<tr><th scope=row>10</th><td>cpoFilterRfSRCMinDepth                                                                </td><td>randomForestSRC.var.select                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForestSRC minimal depth.                                  </td></tr>
-	<tr><th scope=row>17</th><td>cpoFilterSymmetricalUncertainty                                                       </td><td>symmetrical.uncertainty                                                               </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based symmetrical uncertainty                           </td></tr>
-	<tr><th scope=row>21</th><td>cpoFilterUnivariate                                                                   </td><td>univariate.model.score                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the predictiveness using a given learner.                       </td></tr>
-	<tr><th scope=row>24</th><td>cpoFilterVariance                                                                     </td><td>variance                                                                              </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using feature variance.                                               </td></tr>
-	<tr><th scope=row>26</th><td>cpoImpute                                                                             </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute.                                         </td></tr>
-	<tr><th scope=row>27</th><td>cpoImputeAll                                                                          </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute and checks that all columns were imputed.</td></tr>
-	<tr><th scope=row>28</th><td>cpoImputeConstant                                                                     </td><td>impute.constant                                                                       </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using a constant value.                                                    </td></tr>
-	<tr><th scope=row>36</th><td>cpoImputeHist                                                                         </td><td>impute.hist                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using random values with probabilities approximating the data.             </td></tr>
-	<tr><th scope=row>37</th><td>cpoImputeLearner                                                                      </td><td>impute.learner                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the response of a classification or regression learner.              </td></tr>
-	<tr><th scope=row>33</th><td>cpoImputeMax                                                                          </td><td>impute.max                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted above the maximum.                           </td></tr>
-	<tr><th scope=row>30</th><td>cpoImputeMean                                                                         </td><td>impute.mean                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mean.                                                            </td></tr>
-	<tr><th scope=row>29</th><td>cpoImputeMedian                                                                       </td><td>impute.median                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the median.                                                          </td></tr>
-	<tr><th scope=row>32</th><td>cpoImputeMin                                                                          </td><td>impute.min                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted below the minimum.                           </td></tr>
-	<tr><th scope=row>31</th><td>cpoImputeMode                                                                         </td><td>impute.mode                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mode.                                                            </td></tr>
-	<tr><th scope=row>35</th><td>cpoImputeNormal                                                                       </td><td>impute.normal                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using normally distributed random values.                                  </td></tr>
-	<tr><th scope=row>34</th><td>cpoImputeUniform                                                                      </td><td>impute.uniform                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using uniformly distributed random values.                                 </td></tr>
-	<tr><th scope=row>39</th><td>cpoApply                                                                              </td><td>apply                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply a freely chosen CPOs, without exporting its hyperparameters.                    </td></tr>
-	<tr><th scope=row>1</th><td>cpoCbind                                                                              </td><td>cbind                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Combine multiple CPO operations by joining their outputs column-wise.                 </td></tr>
-	<tr><th scope=row>38</th><td>cpoMultiplex                                                                          </td><td>multiplex                                                                             </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply one of a given set of CPOs, each having their hyperparameters exported.         </td></tr>
+	<tr><th scope=row>8</th><td>cpoDropConstants                                                                      </td><td>dropconst                                                                             </td><td>data                                                                                  </td><td>cleanup                                                                               </td><td>Drop constant or near-constant Features.                                              </td></tr>
+	<tr><th scope=row>9</th><td>cpoFixFactors                                                                         </td><td>fixfactors                                                                            </td><td>data                                                                                  </td><td>cleanup                                                                               </td><td>Clean up Factorial Features.                                                          </td></tr>
+	<tr><th scope=row>6</th><td>cpoDummyEncode                                                                        </td><td>dummyencode                                                                           </td><td>data                                                                                  </td><td>feature conversion                                                                    </td><td>Convert factorial columns to numeric columns by dummy encoding them                   </td></tr>
+	<tr><th scope=row>7</th><td>cpoSelect                                                                             </td><td>select                                                                                </td><td>data                                                                                  </td><td>feature selection                                                                     </td><td>Select features from a data set by type, column name, or column index.                </td></tr>
+	<tr><th scope=row>4</th><td>cpoPca                                                                                </td><td>pca                                                                                   </td><td>data                                                                                  </td><td>numeric data preprocessing                                                            </td><td>Perform Principal Component Analysis (PCA) using stats::prcomp.                       </td></tr>
+	<tr><th scope=row>5</th><td>cpoScale                                                                              </td><td>scale                                                                                 </td><td>data                                                                                  </td><td>numeric data preprocessing                                                            </td><td>Center and / or scale the data using base::scale.                                     </td></tr>
+	<tr><th scope=row>11</th><td>cpoFilterFeatures                                                                     </td><td>filterFeatures                                                                        </td><td>featurefilter                                                                         </td><td>general                                                                               </td><td>Filter features using a provided method.                                              </td></tr>
+	<tr><th scope=row>27</th><td>cpoFilterAnova                                                                        </td><td>anova.test                                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using analysis of variance.                                           </td></tr>
+	<tr><th scope=row>13</th><td>cpoFilterCarscore                                                                     </td><td>carscore                                                                              </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using correlation-adjusted marginal correlation.                      </td></tr>
+	<tr><th scope=row>23</th><td>cpoFilterChiSquared                                                                   </td><td>chi.squared                                                                           </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using chi-squared test.                                               </td></tr>
+	<tr><th scope=row>21</th><td>cpoFilterGainRatio                                                                    </td><td>gain.ratio                                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based information gain ratio                            </td></tr>
+	<tr><th scope=row>20</th><td>cpoFilterInformationGain                                                              </td><td>information.gain                                                                      </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based information gain.                                 </td></tr>
+	<tr><th scope=row>28</th><td>cpoFilterKruskal                                                                      </td><td>kruskal.test                                                                          </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the Kruskal-Wallis rank sum test.                               </td></tr>
+	<tr><th scope=row>18</th><td>cpoFilterLinearCorrelation                                                            </td><td>linear.correlation                                                                    </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using Pearson correlation.                                            </td></tr>
+	<tr><th scope=row>12</th><td>cpoFilterMrmr                                                                         </td><td>mrmr                                                                                  </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using 'minimum redundancy, maximum relevance'.                        </td></tr>
+	<tr><th scope=row>25</th><td>cpoFilterOneR                                                                         </td><td>oneR                                                                                  </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the OneR learner.                                               </td></tr>
+	<tr><th scope=row>30</th><td>cpoFilterPermutationImportance                                                        </td><td>permutation.importance                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using predictiveness loss upon permutation of a variable.             </td></tr>
+	<tr><th scope=row>19</th><td>cpoFilterRankCorrelation                                                              </td><td>rank.correlation                                                                      </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using Spearman correlation.                                           </td></tr>
+	<tr><th scope=row>24</th><td>cpoFilterRelief                                                                       </td><td>relief                                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the ReliefF algorithm.                                          </td></tr>
+	<tr><th scope=row>16</th><td>cpoFilterRfCImportance                                                                </td><td>cforest.importance                                                                    </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using party::cforest variable importance.                             </td></tr>
+	<tr><th scope=row>17</th><td>cpoFilterRfImportance                                                                 </td><td>randomForest.importance                                                               </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForest variable importance.                               </td></tr>
+	<tr><th scope=row>14</th><td>cpoFilterRfSRCImportance                                                              </td><td>randomForestSRC.rfsrc                                                                 </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForestSRC.rfsrc.                                          </td></tr>
+	<tr><th scope=row>15</th><td>cpoFilterRfSRCMinDepth                                                                </td><td>randomForestSRC.var.select                                                            </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using randomForestSRC minimal depth.                                  </td></tr>
+	<tr><th scope=row>22</th><td>cpoFilterSymmetricalUncertainty                                                       </td><td>symmetrical.uncertainty                                                               </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using entropy-based symmetrical uncertainty                           </td></tr>
+	<tr><th scope=row>26</th><td>cpoFilterUnivariate                                                                   </td><td>univariate.model.score                                                                </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using the predictiveness using a given learner.                       </td></tr>
+	<tr><th scope=row>29</th><td>cpoFilterVariance                                                                     </td><td>variance                                                                              </td><td>featurefilter                                                                         </td><td>specialised                                                                           </td><td>Filter features using feature variance.                                               </td></tr>
+	<tr><th scope=row>31</th><td>cpoImpute                                                                             </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute.                                         </td></tr>
+	<tr><th scope=row>32</th><td>cpoImputeAll                                                                          </td><td>impute                                                                                </td><td>imputation                                                                            </td><td>general                                                                               </td><td>General imputation CPO that uses mlr::impute and checks that all columns were imputed.</td></tr>
+	<tr><th scope=row>33</th><td>cpoImputeConstant                                                                     </td><td>impute.constant                                                                       </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using a constant value.                                                    </td></tr>
+	<tr><th scope=row>41</th><td>cpoImputeHist                                                                         </td><td>impute.hist                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using random values with probabilities approximating the data.             </td></tr>
+	<tr><th scope=row>42</th><td>cpoImputeLearner                                                                      </td><td>impute.learner                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the response of a classification or regression learner.              </td></tr>
+	<tr><th scope=row>38</th><td>cpoImputeMax                                                                          </td><td>impute.max                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted above the maximum.                           </td></tr>
+	<tr><th scope=row>35</th><td>cpoImputeMean                                                                         </td><td>impute.mean                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mean.                                                            </td></tr>
+	<tr><th scope=row>34</th><td>cpoImputeMedian                                                                       </td><td>impute.median                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the median.                                                          </td></tr>
+	<tr><th scope=row>37</th><td>cpoImputeMin                                                                          </td><td>impute.min                                                                            </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using constant values shifted below the minimum.                           </td></tr>
+	<tr><th scope=row>36</th><td>cpoImputeMode                                                                         </td><td>impute.mode                                                                           </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using the mode.                                                            </td></tr>
+	<tr><th scope=row>40</th><td>cpoImputeNormal                                                                       </td><td>impute.normal                                                                         </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using normally distributed random values.                                  </td></tr>
+	<tr><th scope=row>39</th><td>cpoImputeUniform                                                                      </td><td>impute.uniform                                                                        </td><td>imputation                                                                            </td><td>specialised                                                                           </td><td>Imputation using uniformly distributed random values.                                 </td></tr>
+	<tr><th scope=row>2</th><td>cpoApply                                                                              </td><td>apply                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply a freely chosen CPOs, without exporting its hyperparameters.                    </td></tr>
+	<tr><th scope=row>3</th><td>cpoCbind                                                                              </td><td>cbind                                                                                 </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Combine multiple CPO operations by joining their outputs column-wise.                 </td></tr>
+	<tr><th scope=row>1</th><td>cpoMultiplex                                                                          </td><td>multiplex                                                                             </td><td>meta                                                                                  </td><td>                                                                                      </td><td>Apply one of a given set of CPOs, each having their hyperparameters exported.         </td></tr>
+	<tr><th scope=row>10</th><td>cpoMissingIndicators                                                                  </td><td>missingindicators                                                                     </td><td>tools                                                                                 </td><td>imputation                                                                            </td><td>Generate factorial columns indicating whether data was NA.                            </td></tr>
 </tbody>
 </table>
 
@@ -3323,7 +3333,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">()</span>
@@ -3359,7 +3369,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">(</span>scale <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>  <span class="c1"># center = TRUE</span>
@@ -3405,7 +3415,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
@@ -3441,7 +3451,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">(</span>scale <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
@@ -3487,7 +3497,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoDummyEncode<span class="p">())</span>
@@ -3526,7 +3536,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoDummyEncode<span class="p">(</span>reference.cat <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span>
@@ -3575,7 +3585,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoSelect<span class="p">(</span>pattern <span class="o">=</span> <span class="s">&quot;Width&quot;</span><span class="p">))</span>
@@ -3614,7 +3624,7 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># selection is additive</span>
@@ -3657,17 +3667,76 @@ O   CBIND[scaled,pcad,original]
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Imputation">Imputation<a class="anchor-link" href="#Imputation">&#182;</a></h2><p>There are two <em>general</em> and many <em>specialised</em> imputation CPOs. The general imputation CPOs have parameters that let them use different imputation methods on different columns. They are a thin wrapper around <code>mlr</code>'s <code>impute()</code> and <code>reimpute()</code> functions. The specialised imputation CPOs each implement exactly one imputation method and are closer to the behaviour of typical CPOs.</p>
+<h2 id="cpoDropConstants">cpoDropConstants<a class="anchor-link" href="#cpoDropConstants">&#182;</a></h2><p>Drops constant features or numerics, with variable tolerance</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoDropConstants<span class="p">()</span>  <span class="c1"># drops &#39;species&#39;</span>
+<span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoDropConstants<span class="p">(</span>abs.tol <span class="o">=</span> <span class="m">0.2</span><span class="p">)</span>  <span class="c1"># also drops &#39;Petal.Width&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th><th scope=col>Petal.Width</th></tr></thead>
+<tbody>
+	<tr><td>5.1</td><td>3.5</td><td>1.4</td><td>0.2</td></tr>
+	<tr><td>4.9</td><td>3.0</td><td>1.4</td><td>0.2</td></tr>
+	<tr><td>4.7</td><td>3.2</td><td>1.3</td><td>0.2</td></tr>
+	<tr><td>4.6</td><td>3.1</td><td>1.5</td><td>0.2</td></tr>
+	<tr><td>5.0</td><td>3.6</td><td>1.4</td><td>0.2</td></tr>
+	<tr><td>5.4</td><td>3.9</td><td>1.7</td><td>0.4</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th></tr></thead>
+<tbody>
+	<tr><td>5.1</td><td>3.5</td><td>1.4</td></tr>
+	<tr><td>4.9</td><td>3.0</td><td>1.4</td></tr>
+	<tr><td>4.7</td><td>3.2</td><td>1.3</td></tr>
+	<tr><td>4.6</td><td>3.1</td><td>1.5</td></tr>
+	<tr><td>5.0</td><td>3.6</td><td>1.4</td></tr>
+	<tr><td>5.4</td><td>3.9</td><td>1.7</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="General-Imputation-Wrappers">General Imputation Wrappers<a class="anchor-link" href="#General-Imputation-Wrappers">&#182;</a></h3><p><code>cpoImpute</code> and <code>cpoImputeAll</code> both have parameters very much like <code>impute()</code>. The latter assumes that <em>all</em> columns of its input is somehow being imputed and can be preprended to a learner to give it the ability to work with missing data. It will, however, throw an error if data is missing after imputation.</p>
+<h2 id="cpoFixFactors">cpoFixFactors<a class="anchor-link" href="#cpoFixFactors">&#182;</a></h2><p>Drops unused factors and makes sure prediction data has the same factor levels as training data.</p>
 
 </div>
 </div>
@@ -3675,6 +3744,132 @@ O   CBIND[scaled,pcad,original]
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="kp">levels</span><span class="p">(</span>iris<span class="o">$</span>Species<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<ol class=list-inline>
+	<li>'setosa'</li>
+	<li>'versicolor'</li>
+	<li>'virginica'</li>
+</ol>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>irisfix <span class="o">=</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoFixFactors<span class="p">()</span>  <span class="c1"># Species only has level &#39;setosa&#39; in train</span>
+<span class="kp">levels</span><span class="p">(</span>irisfix<span class="o">$</span>Species<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+'setosa'
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>rf <span class="o">=</span> retrafo<span class="p">(</span>irisfix<span class="p">)</span>
+iris<span class="p">[</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">140</span><span class="p">),</span> <span class="p">]</span>
+iris<span class="p">[</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">140</span><span class="p">),</span> <span class="p">]</span> <span class="o">%&gt;&gt;%</span> rf
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th><th scope=col>Petal.Width</th><th scope=col>Species</th></tr></thead>
+<tbody>
+	<tr><th scope=row>1</th><td>5.1       </td><td>3.5       </td><td>1.4       </td><td>0.2       </td><td>setosa    </td></tr>
+	<tr><th scope=row>100</th><td>5.7       </td><td>2.8       </td><td>4.1       </td><td>1.3       </td><td>versicolor</td></tr>
+	<tr><th scope=row>140</th><td>6.9       </td><td>3.1       </td><td>5.4       </td><td>2.1       </td><td>virginica </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th><th scope=col>Petal.Width</th><th scope=col>Species</th></tr></thead>
+<tbody>
+	<tr><th scope=row>1</th><td>5.1   </td><td>3.5   </td><td>1.4   </td><td>0.2   </td><td>setosa</td></tr>
+	<tr><th scope=row>100</th><td>5.7   </td><td>2.8   </td><td>4.1   </td><td>1.3   </td><td>NA    </td></tr>
+	<tr><th scope=row>140</th><td>6.9   </td><td>3.1   </td><td>5.4   </td><td>2.1   </td><td>NA    </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="cpoMissingIndicators">cpoMissingIndicators<a class="anchor-link" href="#cpoMissingIndicators">&#182;</a></h2><p>Creates columns indicating missing data. Most useful in combination with cpoCbind.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">=</span> df
@@ -3712,7 +3907,80 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoMissingIndicators<span class="p">()</span>
+impdata <span class="o">%&gt;&gt;%</span> cpoCbind<span class="p">(</span>NULLCPO<span class="p">,</span> dummy <span class="o">=</span> cpoMissingIndicators<span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>a</th></tr></thead>
+<tbody>
+	<tr><td>TRUE </td></tr>
+	<tr><td>FALSE</td></tr>
+	<tr><td>FALSE</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>a</th><th scope=col>b</th><th scope=col>dummy.a</th></tr></thead>
+<tbody>
+	<tr><td>NA   </td><td>-10  </td><td>TRUE </td></tr>
+	<tr><td> 2   </td><td>-20  </td><td>FALSE</td></tr>
+	<tr><td> 3   </td><td>-30  </td><td>FALSE</td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Imputation">Imputation<a class="anchor-link" href="#Imputation">&#182;</a></h2><p>There are two <em>general</em> and many <em>specialised</em> imputation CPOs. The general imputation CPOs have parameters that let them use different imputation methods on different columns. They are a thin wrapper around <code>mlr</code>'s <code>impute()</code> and <code>reimpute()</code> functions. The specialised imputation CPOs each implement exactly one imputation method and are closer to the behaviour of typical CPOs.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="General-Imputation-Wrappers">General Imputation Wrappers<a class="anchor-link" href="#General-Imputation-Wrappers">&#182;</a></h3><p><code>cpoImpute</code> and <code>cpoImputeAll</code> both have parameters very much like <code>impute()</code>. The latter assumes that <em>all</em> columns of its input is somehow being imputed and can be preprended to a learner to give it the ability to work with missing data. It will, however, throw an error if data is missing after imputation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>a <span class="o">=</span> imputeMedian<span class="p">()))</span>
@@ -3748,7 +4016,7 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>b <span class="o">=</span> imputeMedian<span class="p">()))</span>  <span class="c1"># NAs remain</span>
@@ -3785,7 +4053,7 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>missing.task <span class="o">=</span> makeRegrTask<span class="p">(</span><span class="s">&quot;missing.task&quot;</span><span class="p">,</span> impdata<span class="p">,</span> target <span class="o">=</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
@@ -3831,7 +4099,7 @@ Hyperparameters: target.cols=character(0),classes=,cols=a=&lt;ImputeMethod&gt;,d
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImputeConstant<span class="p">(</span><span class="m">10</span><span class="p">)</span>
@@ -3867,7 +4135,7 @@ Hyperparameters: target.cols=character(0),classes=,cols=a=&lt;ImputeMethod&gt;,d
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getTaskData<span class="p">(</span>missing.task <span class="o">%&gt;&gt;%</span> cpoImputeMedian<span class="p">(</span>make.dummy.cols <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
@@ -3903,7 +4171,7 @@ Hyperparameters: target.cols=character(0),classes=,cols=a=&lt;ImputeMethod&gt;,d
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised impute CPOs are:</span>
@@ -3925,16 +4193,16 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 <table>
 <thead><tr><th></th><th scope=col>name</th><th scope=col>description</th></tr></thead>
 <tbody>
-	<tr><th scope=row>28</th><td>cpoImputeConstant                                                        </td><td>Imputation using a constant value.                                       </td></tr>
-	<tr><th scope=row>36</th><td>cpoImputeHist                                                            </td><td>Imputation using random values with probabilities approximating the data.</td></tr>
-	<tr><th scope=row>37</th><td>cpoImputeLearner                                                         </td><td>Imputation using the response of a classification or regression learner. </td></tr>
-	<tr><th scope=row>33</th><td>cpoImputeMax                                                             </td><td>Imputation using constant values shifted above the maximum.              </td></tr>
-	<tr><th scope=row>30</th><td>cpoImputeMean                                                            </td><td>Imputation using the mean.                                               </td></tr>
-	<tr><th scope=row>29</th><td>cpoImputeMedian                                                          </td><td>Imputation using the median.                                             </td></tr>
-	<tr><th scope=row>32</th><td>cpoImputeMin                                                             </td><td>Imputation using constant values shifted below the minimum.              </td></tr>
-	<tr><th scope=row>31</th><td>cpoImputeMode                                                            </td><td>Imputation using the mode.                                               </td></tr>
-	<tr><th scope=row>35</th><td>cpoImputeNormal                                                          </td><td>Imputation using normally distributed random values.                     </td></tr>
-	<tr><th scope=row>34</th><td>cpoImputeUniform                                                         </td><td>Imputation using uniformly distributed random values.                    </td></tr>
+	<tr><th scope=row>33</th><td>cpoImputeConstant                                                        </td><td>Imputation using a constant value.                                       </td></tr>
+	<tr><th scope=row>41</th><td>cpoImputeHist                                                            </td><td>Imputation using random values with probabilities approximating the data.</td></tr>
+	<tr><th scope=row>42</th><td>cpoImputeLearner                                                         </td><td>Imputation using the response of a classification or regression learner. </td></tr>
+	<tr><th scope=row>38</th><td>cpoImputeMax                                                             </td><td>Imputation using constant values shifted above the maximum.              </td></tr>
+	<tr><th scope=row>35</th><td>cpoImputeMean                                                            </td><td>Imputation using the mean.                                               </td></tr>
+	<tr><th scope=row>34</th><td>cpoImputeMedian                                                          </td><td>Imputation using the median.                                             </td></tr>
+	<tr><th scope=row>37</th><td>cpoImputeMin                                                             </td><td>Imputation using constant values shifted below the minimum.              </td></tr>
+	<tr><th scope=row>36</th><td>cpoImputeMode                                                            </td><td>Imputation using the mode.                                               </td></tr>
+	<tr><th scope=row>40</th><td>cpoImputeNormal                                                          </td><td>Imputation using normally distributed random values.                     </td></tr>
+	<tr><th scope=row>39</th><td>cpoImputeUniform                                                         </td><td>Imputation using uniformly distributed random values.                    </td></tr>
 </tbody>
 </table>
 
@@ -3964,7 +4232,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterFeatures<span class="p">(</span>method <span class="o">=</span> <span class="s">&quot;variance&quot;</span><span class="p">,</span> perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
@@ -4003,7 +4271,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterVariance<span class="p">(</span>perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
@@ -4064,25 +4332,25 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 <table>
 <thead><tr><th></th><th scope=col>name</th><th scope=col>description</th></tr></thead>
 <tbody>
-	<tr><th scope=row>22</th><td>cpoFilterAnova                                                           </td><td>Filter features using analysis of variance.                              </td></tr>
-	<tr><th scope=row>8</th><td>cpoFilterCarscore                                                        </td><td>Filter features using correlation-adjusted marginal correlation.         </td></tr>
-	<tr><th scope=row>18</th><td>cpoFilterChiSquared                                                      </td><td>Filter features using chi-squared test.                                  </td></tr>
-	<tr><th scope=row>16</th><td>cpoFilterGainRatio                                                       </td><td>Filter features using entropy-based information gain ratio               </td></tr>
-	<tr><th scope=row>15</th><td>cpoFilterInformationGain                                                 </td><td>Filter features using entropy-based information gain.                    </td></tr>
-	<tr><th scope=row>23</th><td>cpoFilterKruskal                                                         </td><td>Filter features using the Kruskal-Wallis rank sum test.                  </td></tr>
-	<tr><th scope=row>13</th><td>cpoFilterLinearCorrelation                                               </td><td>Filter features using Pearson correlation.                               </td></tr>
-	<tr><th scope=row>7</th><td>cpoFilterMrmr                                                            </td><td>Filter features using 'minimum redundancy, maximum relevance'.           </td></tr>
-	<tr><th scope=row>20</th><td>cpoFilterOneR                                                            </td><td>Filter features using the OneR learner.                                  </td></tr>
-	<tr><th scope=row>25</th><td>cpoFilterPermutationImportance                                           </td><td>Filter features using predictiveness loss upon permutation of a variable.</td></tr>
-	<tr><th scope=row>14</th><td>cpoFilterRankCorrelation                                                 </td><td>Filter features using Spearman correlation.                              </td></tr>
-	<tr><th scope=row>19</th><td>cpoFilterRelief                                                          </td><td>Filter features using the ReliefF algorithm.                             </td></tr>
-	<tr><th scope=row>11</th><td>cpoFilterRfCImportance                                                   </td><td>Filter features using party::cforest variable importance.                </td></tr>
-	<tr><th scope=row>12</th><td>cpoFilterRfImportance                                                    </td><td>Filter features using randomForest variable importance.                  </td></tr>
-	<tr><th scope=row>9</th><td>cpoFilterRfSRCImportance                                                 </td><td>Filter features using randomForestSRC.rfsrc.                             </td></tr>
-	<tr><th scope=row>10</th><td>cpoFilterRfSRCMinDepth                                                   </td><td>Filter features using randomForestSRC minimal depth.                     </td></tr>
-	<tr><th scope=row>17</th><td>cpoFilterSymmetricalUncertainty                                          </td><td>Filter features using entropy-based symmetrical uncertainty              </td></tr>
-	<tr><th scope=row>21</th><td>cpoFilterUnivariate                                                      </td><td>Filter features using the predictiveness using a given learner.          </td></tr>
-	<tr><th scope=row>24</th><td>cpoFilterVariance                                                        </td><td>Filter features using feature variance.                                  </td></tr>
+	<tr><th scope=row>27</th><td>cpoFilterAnova                                                           </td><td>Filter features using analysis of variance.                              </td></tr>
+	<tr><th scope=row>13</th><td>cpoFilterCarscore                                                        </td><td>Filter features using correlation-adjusted marginal correlation.         </td></tr>
+	<tr><th scope=row>23</th><td>cpoFilterChiSquared                                                      </td><td>Filter features using chi-squared test.                                  </td></tr>
+	<tr><th scope=row>21</th><td>cpoFilterGainRatio                                                       </td><td>Filter features using entropy-based information gain ratio               </td></tr>
+	<tr><th scope=row>20</th><td>cpoFilterInformationGain                                                 </td><td>Filter features using entropy-based information gain.                    </td></tr>
+	<tr><th scope=row>28</th><td>cpoFilterKruskal                                                         </td><td>Filter features using the Kruskal-Wallis rank sum test.                  </td></tr>
+	<tr><th scope=row>18</th><td>cpoFilterLinearCorrelation                                               </td><td>Filter features using Pearson correlation.                               </td></tr>
+	<tr><th scope=row>12</th><td>cpoFilterMrmr                                                            </td><td>Filter features using 'minimum redundancy, maximum relevance'.           </td></tr>
+	<tr><th scope=row>25</th><td>cpoFilterOneR                                                            </td><td>Filter features using the OneR learner.                                  </td></tr>
+	<tr><th scope=row>30</th><td>cpoFilterPermutationImportance                                           </td><td>Filter features using predictiveness loss upon permutation of a variable.</td></tr>
+	<tr><th scope=row>19</th><td>cpoFilterRankCorrelation                                                 </td><td>Filter features using Spearman correlation.                              </td></tr>
+	<tr><th scope=row>24</th><td>cpoFilterRelief                                                          </td><td>Filter features using the ReliefF algorithm.                             </td></tr>
+	<tr><th scope=row>16</th><td>cpoFilterRfCImportance                                                   </td><td>Filter features using party::cforest variable importance.                </td></tr>
+	<tr><th scope=row>17</th><td>cpoFilterRfImportance                                                    </td><td>Filter features using randomForest variable importance.                  </td></tr>
+	<tr><th scope=row>14</th><td>cpoFilterRfSRCImportance                                                 </td><td>Filter features using randomForestSRC.rfsrc.                             </td></tr>
+	<tr><th scope=row>15</th><td>cpoFilterRfSRCMinDepth                                                   </td><td>Filter features using randomForestSRC minimal depth.                     </td></tr>
+	<tr><th scope=row>22</th><td>cpoFilterSymmetricalUncertainty                                          </td><td>Filter features using entropy-based symmetrical uncertainty              </td></tr>
+	<tr><th scope=row>26</th><td>cpoFilterUnivariate                                                      </td><td>Filter features using the predictiveness using a given learner.          </td></tr>
+	<tr><th scope=row>29</th><td>cpoFilterVariance                                                        </td><td>Filter features using feature variance.                                  </td></tr>
 </tbody>
 </table>
 
