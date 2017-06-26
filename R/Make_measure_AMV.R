@@ -41,7 +41,7 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
 
-      n.feat =   getTaskNFeats(task)
+      n.feat = getTaskNFeats(task)
       data = getTaskData(task)
 
       if (n.feat > 8) {
@@ -85,63 +85,3 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
   )
 }
 
-
-makeSubSamplingAMVMeasure = function(id = "SubSamplingAMV", minimize = TRUE, alphas = seq(from = 0.9, to = 0.99, by = 0.01), n.sim = 10e4, n.feat.subsampling = 2, n.draw.feat.subsampling = 50, best = 0, worst = NULL, name = id, note = "") {
-
-  assertString(id)
-  assertFlag(minimize)
-  assertNumeric(alphas, lower = 0, upper = 1)
-  assertCount(n.sim)
-  # Curse of dimensionality for more than 5 features
-  assertNumeric(n.feat.subsampling, lower = 0, upper = 5, null.ok = TRUE)
-  assertNumeric(n.draw.feat.subsampling, lower = 0, null.ok = TRUE)
-  assertString(name)
-  assertString(note)
-
-  measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.sim = n.sim, best = best, worst = worst, name = id)
-
-  if(!is.null(n.feat.subsampling) && n.feat.subsampling >= 5) {
-    warningf("Dimension might be too high for volume estimation. Choose a smaller feature subsampling size.")
-  }
-
-  makeMeasure(id = id, minimize = minimize, extra.args = list(n.feat.subsampling, n.draw.feat.subsampling, measureAMV),
-    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob"),
-    best = best, worst = worst,
-    fun = function(task, model, pred, feats, extra.args) {
-
-      n.feat =   getTaskNFeats(task)
-      data = getTaskData(task)
-
-      n.feat.subsampling = extra.args[[1]]
-      n.draw.feat.subsampling = extra.args[[2]]
-      measureAMV = extra.args[[3]]
-
-      if (n.feat.subsampling >= n.feat) {
-        stopf("Cannot take a sample of (%i) of size (%i)", n.feat.subsampling, n.feat)
-      }
-
-        amv.k = c()
-        for (k in 1:n.draw.feat.subsampling) {
-          inds.feat.subsample = sample(n.feat, n.feat.subsampling)
-          inds.target = ncol(data)
-          #sub.train.data = data[, c(inds.feat.subsample, inds.target)]
-          sub.test.data = #### Hier müssen die daten aus Prediction rein.
-
-          subsetTask(task, subset = c(inds.feat.subsample, inds.target))
-          #sub.task = makeOneClassTask(data = sub.train.data, target = task$task.desc$target, positive = task$task.desc$positive, negative = task$task.desc$negative)
-          sub.lrn = makeLearner(model$learner$id, predict.type = model$learner$predict.type,
-            predict.threshold = model$learner$predict.threshold, par.vals = mod_svm_resp$learner$par.vals)
-          sub.mod = train(sub.lrn, sub.task)
-
-          sub.pred = predict(sub.mod, newdata = sub.test.data)
-
-          amv.k[i] = performance(pred, measureAMV, task, model)
-        }
-        amv = mean(amv.k)
-      # Return area under mass-volume curve
-      as.numeric(amv)
-    },
-    name = name,
-    note = note
-  )
-}
