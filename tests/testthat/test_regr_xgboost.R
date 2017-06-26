@@ -31,9 +31,9 @@ test_that("regr_xgboost", {
 })
 
 test_that("xgboost works with different 'missing' arg vals", {
-  lrn = makeLearner("classif.xgboost", missing = NA_real_)
-  lrn = makeLearner("classif.xgboost", missing = NA)
-  lrn = makeLearner("classif.xgboost", missing = NULL)
+  lrn = makeLearner("regr.xgboost", missing = NA_real_)
+  lrn = makeLearner("regr.xgboost", missing = NA)
+  lrn = makeLearner("regr.xgboost", missing = NULL)
 })
 
 

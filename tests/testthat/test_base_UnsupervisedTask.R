@@ -25,4 +25,11 @@ test_that("UnsupervisedTask", {
   expect_true(getTaskDesc(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
   expect_true(getTaskDesc(ct2)$has.blocking)
+
+  # check 'fixup data' works
+
+  expect_warning(makeClusterTask("cluster", iris[1:10, ], fixup.data = "warn"), "Empty factor levels")
+
+  expect_warning(makeClusterTask("cluster", iris[1:10, ], fixup.data = "quiet"), NA)
+
 })
