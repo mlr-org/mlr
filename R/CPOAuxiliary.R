@@ -720,7 +720,8 @@ inverter.default = function(data) {
 #' @export
 `inverter<-.default` = function(data, value) {
   if (!is.null(value)) {
-    assertClass(value, "CPOInverter")
+    assertClass(value, "CPORetrafo")
+    assert("inverter" %in% getCPOKind(value))
   }
   if (!any(c("data.frame", "Task") %in% class(data))) {
     warningf("argument is neither a Task nor data.frame.\n%s\n%s",
@@ -1530,6 +1531,56 @@ listCPO = function() {
 
 
 # TO-DO:
+
+# cpoScale: so lassen
+#  - cpoUnitLength: mit waehlbarer L-norm
+#  - cpoScaleRange
+# colApplyCPO
+
+# impact encoding: level -> probability fuer jede klasse
+# 'cat_B' ('bayesian' logit) x_catB = logit(P[y==target|x]) - logit(P[y==target]
+# 'cat_P' class prevalence
+# 'interaction'
+# 'formula'
+# QR
+# spacialSign
+
+# kernelPCA (kernlab) kpca
+# ICA
+
+# converting features to nums:
+#  - 'as.numeric'
+#  -
+
+# ordered -> factor
+# ordered -> as.numeric
+# contr.poly, etc.
+# knn impute
+
+
+# binning -> to ordereds, to numbers
+
+# cpoDummyEncode: referenzlevel waehlen ; 'ref.cat'
+# cpoNAIndicators
+# cpoRecodeNums (mit konstante, mit maximum, ...)
+# cpoMergeSmallLevels
+# listCPO() nicer print
+
+
+# cpoDropConst
+
+# rename attachCPO --> makeCPOWrapper
+# unwrapCPOLearner
+
+
+# properties.data nicht an den user geben
+
+# cpo crossval
+
+# sources:
+#  https://topepo.github.io/recipes/reference/index.html
+#  https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/
+
 #- exporting / fixing / hiding hyperparameters
 #- cpoCbind: prevent copies
 #- check shapeinfo when reattaching retrafos
@@ -1542,3 +1593,6 @@ listCPO = function() {
 # convertNamesToItems, ItemsToNames
 # on.par.out.of.bounds setting
 # task types checked
+
+
+

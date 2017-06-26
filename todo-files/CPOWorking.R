@@ -1,7 +1,7 @@
 
 library("roxygen2")
 
-roxygenise("..")
+roxygenise("../../ParamHelpers")
 
 
 devtools::load_all("..")
@@ -15,6 +15,21 @@ library("testthat")
 devtools::test(pkg = "..")
 
 devtools::test(pkg = "..", filter = "cpo")
+
+
+makeDiscreteVectorLearnerParam("test",
+  default = list("a", "b"), values = c("a", "b", "c"), len = NA)
+makeDiscreteVectorLearnerParam("test",
+  default = list(), values = c("a", "b", "c"), len = NA)
+x
+makeDiscreteVectorLearnerParam("test",
+  values = c("a", "b", "c"), len = NA)
+
+devtools::load_all("../../ParamHelpers")
+devtools::test(pkg = "../../ParamHelpers")
+
+makeLogicalVectorLearnerParam("test",
+  default = c(T, T, F))
 
 
 devtools::test(pkg = "..", filter = "cpo_basic")

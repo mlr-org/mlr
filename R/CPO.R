@@ -305,6 +305,7 @@ makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
   # --- only in pure "inverter" kind
   inverter$indatatd = getTaskDesc(data)
   inverter$truth = prepareRetrafoData(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)$target
+  inverter
 }
 
 makeCPOS3Retrafo = function(cpo, state, prev.retrafo, shapeinfo.input, shapeinfo.output) {
