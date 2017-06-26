@@ -56,6 +56,12 @@ test_that("SupervisedTask dropping of levels works", {
     "Empty factor levels")
   e = getTaskData(task)
   expect_true(setequal(levels(e$Species), levs1))
+
+  expect_warning(makeMultilabelTask("multilabel", multilabel.df[1:10, ], target = c("y1", "y2"), fixup.data = "warn"),
+    "Empty factor levels")
+
+  expect_warning(makeMultilabelTask("multilabel", multilabel.df[1:10, ], target = c("y1", "y2"), fixup.data = "quiet"), NA)
+
 })
 
 test_that("SupervisedTask does not drop positive class", {

@@ -266,7 +266,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
     seq = lintr::seq_linter,
     unneeded.concatenation = lintr::unneeded_concatenation_linter,
     trailing.whitespace = lintr::trailing_whitespace_linter,
-    todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive
+    #todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive
     spaces.inside = lintr::spaces_inside_linter,
     infix.spaces = infix.spaces.linter,
     object.naming = object.naming.linter)
