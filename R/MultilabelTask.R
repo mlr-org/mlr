@@ -8,7 +8,7 @@ makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weig
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
-  task = makeSupervisedTask("multilabel", data, target, weights, blocking)
+  task = makeSupervisedTask("multilabel", data, target, weights, blocking, fixup.data, check.data)
   # currently we dont do any fixup here
   if (check.data) {
     for (cn in target)
