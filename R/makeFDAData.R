@@ -76,10 +76,11 @@ if(FALSE) {
 }
 
 
-# FIXME_1: Do we want this to work? Some learners do not allow factors, how is this done there?
+# FIXME_1: Do we want the following to work? Some learners do not allow factors, how is this done there?
 # Suggestion: Allow it to be treated as numeric, but add a warning?
-lrn = makeLearner("classif.rpart")
-mod = train(lrn, tsk1)
+
+#  lrn = makeLearner("classif.rpart")
+#  mod = train(lrn, tsk1)
 
 # FIXME_2: Specify for each learner if it can deal with functional, much like we have "ordered" and so on.
 # This has to be done for the former "fdalearners" only.
