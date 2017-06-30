@@ -1,23 +1,16 @@
-# add dataframe extra attributes and append new class attribute
-makeFDAData = function(df, fd.features, fd.grids) {
-  attr(df,"fd.features") = fd.features
-  attr(df,"fd.grids") = fd.grids
-  addClasses(df, "fda.data.frame")
-}
-
-#' Create a functional feature from a data.frame
+#' Create a functional feature from a numeric matrix
+#'
 #' @param m [\code{matrix}] \cr Numeric matrix.
 #' @param fname [\code{character}] \cr Name of the functional feature
 #' @param fd.grids [\code{numeric}] \cr fd.grids
-makeFunctionalFeature = function(m, fname = NULL, fd.grids = NULL) {
+#' @return [\code{matrix}] of class c("functional", "matrix") containing the functional values
+#' @export
+makeFunctionalFeature = function(m, fname = deparse(substitute(m)), fd.grids = NULL) {
   assertMatrix(m, mode = "numeric", any.missing = FALSE)
   if(is.null(fd.grids))
     fd.grids = seq_len(ncol(m))
-  assertNumeric(fd.grids, len = ncol(m))
-  if(is.null(fname))
-    # FIXME: Maybe reconstruct call and take "name" of m
-    fname = "fd1"
   assertCharacter(fname, len = 1L)
+  assertNumeric(fd.grids, len = ncol(m))
   attr(m, "fd.grids") = fd.grids
   attr(m, "fname") = fname
   addClasses(m, "functional")
@@ -37,16 +30,29 @@ if (FALSE) {
   tsk = makeClassifTask(data = df, target = "x2")
 
 }
-# Way 2: And add a constructor that adds it to a task / data.frame
-addFunctional = function(obj, fname = NULL, fd) {
+
+#' Add a functional feature to a data.frame or a task
+#'
+#' Adds a functional feature to an existing data.frame or task.
+#' @param obj [\code{data.frame}] | [\code{Task}] \cr
+#'   Object the functional feature should be added to.
+#' @param fd [\code{functional}] | [\code{matrix}] \cr
+#'   Functional feature matrix obtained from
+#'   \code{\link{makeFunctionalFeature}}.
+#' @param fname [\code{character}] \cr Name of the functional feature
+#' @return [\code{data.frame}] | [\code{Task}]  of class c("functional", "matrix")
+#' @export
+addFunctionalFeature = function(obj, fname = deparse(substitute(m)), fd) {
+  # FIXME: We can make this an S3 Method.
+  # FIXME: Maybe get a list of fd's and add all of them?
   assertClass(fd, "functional")
-  if (!is.null(fname))
-    attr(fd, "fname") = fname
   if("Task" %in% class(obj)) {
     df = getTaskData(obj)
+    assertMatrix(fd, nrows = nrow(df))
     df[, attr(fd, "fname")] = fd
     obj = mlr:::changeData(obj, df)
   } else if (class(obj) == "data.frame") {
+    assertMatrix(fd, nrows = nrow(df))
     obj[, attr(fd, "fname")] = fd
   }
   return(obj)
@@ -70,7 +76,7 @@ if(FALSE) {
 }
 
 
-# FIXME_1: Do we want this to work? Some learners only allow numerics, how is this done there?
+# FIXME_1: Do we want this to work? Some learners do not allow factors, how is this done there?
 # Suggestion: Allow it to be treated as numeric, but add a warning?
 lrn = makeLearner("classif.rpart")
 mod = train(lrn, tsk1)
@@ -86,4 +92,10 @@ mod = train(lrn, tsk1)
 #          when creating the task.
 
 
-
+# FIXME: Remove, old.
+# # add dataframe extra attributes and append new class attribute
+# makeFDAData = function(df, fd.features, fd.grids) {
+#   attr(df,"fd.features") = fd.features
+#   attr(df,"fd.grids") = fd.grids
+#   addClasses(df, "fda.data.frame")
+# }
