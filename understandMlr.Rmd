@@ -1,0 +1,521 @@
+# makeS3Obj is simply returning a list of all the parameters in ... ellipsis and assign the class of the list to be "classes"
+makeS3Obj = function (classes, ...)
+{
+    assertCharacter(classes, min.len = 1L, any.missing = FALSE)
+    setClasses(list(...), classes = classes)
+}
+<bytecode: 0x1af7260>
+<environment: namespace:BBmisc>
+
+
+
+
+setClasses = function (x, classes)
+{
+    class(x) = classes
+    x
+}
+<bytecode: 0x180bb78>
+<environment: namespace:BBmisc>
+
+
+
+
+makeLearner = function (cl, id = cl, predict.type = "response", predict.threshold = NULL,
+    fix.factors.prediction = FALSE, ..., par.vals = list(), config = list())
+{
+    assertString(cl)
+    assertFlag(fix.factors.prediction)
+    assertList(config, names = "named")
+    if ("show.info" %in% names(config))
+        stop("'show.info' cannot be set in 'makeLearner', please use 'configureMlr' instead.")
+    assertSubset(names(config), choices = names(getMlrOptions()))
+    constructor = try(getS3method("makeRLearner", class = cl),
+        silent = TRUE)
+    if (inherits(constructor, "try-error")) {
+        possibles = getNameProposals(cl, possible.inputs = suppressWarnings(listLearners()$class))
+        stopf("Couldn't find learner '%s'\nDid you mean one of these learners instead: %s",
+            cl, stri_flatten(possibles, collapse = " "))
+    }
+    wl = do.call(constructor, list())
+    wl$config = config
+    if (!missing(id)) {
+        assertString(id)
+        wl$id = id
+    }
+    assertList(par.vals, names = "unique")
+    if (stri_isempty(cl))
+        stop("Cannot create learner from empty string!")
+    if (!inherits(wl, "RLearner"))
+        stop("Learner must be a basic RLearner!")
+    wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
+    wl = setPredictType(learner = wl, predict.type = predict.type)
+    if (!is.null(predict.threshold))
+        wl = setPredictThreshold(wl, predict.threshold)
+    wl$fix.factors.prediction = fix.factors.prediction
+    return(wl)
+}
+<bytecode: 0x6382ef8>
+<environment: namespace:mlr>
+
+
+## getS3method(f, class) from "utility" f is the method name , class is the class name
+     require(stats)
+     exists("predict.ppr") # false
+     getS3method("predict", "ppr")
+
+
+# The following function is inside the S3 method and is common to all the regression learners
+' @export
+#' @rdname RLearner
+makeRLearnerRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
+  addClasses(
+    makeRLearnerInternal(cl, "regr", package, par.set, par.vals, properties, name, short.name, note, callees),
+    c(cl, "RLearnerRegr")
+  )
+}
+
+
+makeRLearnerInternal = function (id, type, package, par.set, par.vals, properties, name = id,
+    short.name = id, note = "", callees)
+{
+    assertCharacter(package, any.missing = FALSE)
+    requirePackages(package, why = stri_paste("learner", id,
+        sep = " "), default.method = "load")
+    assertString(id)
+    assertChoice(type, choices = c("classif", "regr", "multilabel",
+        "surv", "cluster", "costsens"))
+    assertSubset(properties, listLearnerProperties(type))
+    assertClass(par.set, classes = "ParamSet")
+    checkListElementClass(par.set$pars, "LearnerParam")
+    assertList(par.vals)
+    if (!isProperlyNamed(par.vals))
+        stop("Argument par.vals must be a properly named list!")
+    assertString(name)
+    assertString(short.name)
+    assertString(note)
+    assertCharacter(callees, any.missing = FALSE)
+    learner = makeLearnerBaseConstructor("RLearner", id = id,
+        type = type, package = package, properties = unique(properties),
+        par.set = par.set, par.vals = par.vals, predict.type = "response")
+    learner$name = name
+    learner$short.name = short.name
+    learner$note = note
+    learner$callees = callees
+    learner$help.list = makeParamHelpList(callees, package, par.set)
+    return(learner)
+}
+<bytecode: 0x46000c8>
+<environment: namespace:mlr>
+
+makeLearnerBaseConstructor = function (classes, id, type, package, properties, par.set, par.vals,
+    predict.type)
+{
+    if (length(par.vals) == 0L)
+        names(par.vals) = character(0L)
+    learner = makeS3Obj(c(classes, "Learner"), id = id, type = type,
+        package = package, properties = unique(properties), par.set = par.set,
+        par.vals = par.vals, predict.type = predict.type)
+    return(learner)
+}
+<bytecode: 0x6a05d58>
+environment: namespace:mlr>
+
+lrn = makeLearner("regr.lm")
+class(lrn)
+[1] "regr.lm"      "RLearnerRegr" "RLearner"     "Learner"
+
+train = function (learner, task, subset, weights = NULL)
+{
+    learner = checkLearner(learner)
+    assertClass(task, classes = "Task")
+    if (missing(subset) || is.null(subset)) {
+        subset = seq_len(getTaskSize(task))
+    }
+    else {
+        if (is.logical(subset))
+            subset = which(subset)
+        else subset = asInteger(subset)
+    }
+    requireLearnerPackages(learner)
+    tn = getTaskTargetNames(task)
+    pars = list(.learner = learner, .task = task, .subset = subset)
+    if (!is.null(weights)) {
+        assertNumeric(weights, len = length(subset), any.missing = FALSE,
+            lower = 0)
+    }
+    else {
+        weights = getTaskWeights(task)
+    }
+    checkLearnerBeforeTrain(task, learner, weights)
+    pars$.weights = weights
+    pars = c(pars, getHyperPars(learner, c("train", "both")))
+    vars = getTaskFeatureNames(task)
+    if (length(vars) == 0L) {
+        learner.model = makeNoFeaturesModel(targets = task$env$data[subset,
+            tn], task.desc = getTaskDesc(task))
+        time.train = 0
+    }
+    else {
+        opts = getLearnerOptions(learner, c("show.learner.output",
+            "on.learner.error", "on.learner.warning", "on.error.dump"))
+        debug.seed = getMlrOption("debug.seed", NULL)
+        if (!is.null(debug.seed))
+            set.seed(debug.seed)
+        fun1 = if (opts$show.learner.output || inherits(learner,
+            "OptWrapper"))
+            identity
+        else capture.output
+        fun2 = if (opts$on.learner.error == "stop")
+            identity
+        else function(x) try(x, silent = TRUE)
+        fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump)
+            identity
+        else function(x) {
+            withCallingHandlers(x, error = function(c) utils::dump.frames())
+        }
+        if (opts$on.learner.warning == "quiet") {
+            old.warn.opt = getOption("warn")
+            on.exit(options(warn = old.warn.opt))
+            options(warn = -1L)
+        }
+        time.train = measureTime(fun1({
+            learner.model = fun2(fun3(do.call(trainLearner, pars)))
+        }))
+        if (is.error(learner.model) && opts$on.learner.error ==
+            "warn")
+            warningf("Could not train learner %s: %s", learner$id,
+                as.character(learner.model))
+    }
+    factor.levels = getTaskFactorLevels(task)
+    makeWrappedModel(learner, learner.model, getTaskDesc(task),
+        subset, vars, factor.levels, time.train)
+}
+<bytecode: 0x6040f80>
+<environment: namespace:mlr>
+
+trainLearner = function (.learner, .task, .subset, .weights = NULL, ...)
+{
+    UseMethod("trainLearner")
+}
+<bytecode: 0x676f920>
+<environment: namespace:mlr>
+makeWrappedModel = function (learner, learner.model, task.desc, subset, features,
+    factor.levels, time)
+{
+    UseMethod("makeWrappedModel")
+}
+<bytecode: 0x76fba00>
+<environment: namespace:mlr>
+
+methods(makeWrappedModel)
+[1] makeWrappedModel.BaseEnsemble*     makeWrappedModel.BaseWrapper*
+[3] makeWrappedModel.Learner*          makeWrappedModel.ModelMultiplexer*
+[5] makeWrappedModel.TuneWrapper*
+see '?methods' for accessing help and source code
+
+makeWrappedModel.Learner = function (learner, learner.model, task.desc, subset, features,
+    factor.levels, time)
+{
+    dump = NULL
+    if (is.error(learner.model)) {
+        learner.model = as.character(learner.model)
+        time = NA_real_
+        cl = c("FailureModel", "WrappedModel")
+        if (getLearnerOptions(learner, "on.error.dump")$on.error.dump) {
+            dump = addClasses(get("last.dump", envir = .GlobalEnv),
+                "mlr.dump")
+        }
+    }
+    else {
+        cl = "WrappedModel"
+    }
+    makeS3Obj(cl, learner = learner, learner.model = learner.model,
+        task.desc = task.desc, subset = subset, features = features,
+        factor.levels = factor.levels, time = time, dump = dump)
+}
+<bytecode: 0x8a6be40>
+<environment: namespace:mlr>
+predict = function (object, ...)
+UseMethod("predict")
+<bytecode: 0x18d4028>
+<environment: namespace:stats>
+
+methods(predict)  # predict.WrappedModel()
+ [1] predict.ar*                predict.Arima*
+ [3] predict.arima0*            predict.bs*
+ [5] predict.bSpline*           predict.coxph*
+ [7] predict.coxph.penal*       predict.glm
+ [9] predict.HoltWinters*       predict.lm
+[11] predict.loess*             predict.mlm*
+[13] predict.nbSpline*          predict.nls*
+[15] predict.npolySpline*       predict.ns*
+[17] predict.pbSpline*          predict.poly*
+[19] predict.polySpline*        predict.ppolySpline*
+[21] predict.ppr*               predict.prcomp*
+[23] predict.princomp*          predict.pspline*
+[25] predict.smooth.spline*     predict.smooth.spline.fit*
+[27] predict.StructTS*          predict.survreg*
+[29] predict.survreg.penal*     predict.WrappedModel*
+see '?methods' for accessing help and source code
+
+predict.WrappedModel = function (object, task, newdata, subset = NULL, ...)
+{
+    if (!xor(missing(task), missing(newdata)))
+        stop("Pass either a task object or a newdata data.frame to predict, but not both!")
+    assertClass(object, classes = "WrappedModel")
+    model = object
+    learner = model$learner
+    td = model$task.desc
+    if (missing(newdata)) {
+        assertClass(task, classes = "Task")
+        size = getTaskSize(task)
+    }
+    else {
+        assertDataFrame(newdata, min.rows = 1L)
+        if (class(newdata)[1] != "data.frame") {
+            warningf("Provided data for prediction is not a pure data.frame but from class %s, hence it will be converted.",
+                class(newdata)[1])
+            newdata = as.data.frame(newdata)
+        }
+        size = nrow(newdata)
+    }
+    subset = checkTaskSubset(subset, size)
+    if (missing(newdata)) {
+        newdata = getTaskData(task, subset)
+    }
+    else {
+        newdata = newdata[subset, , drop = FALSE]
+    }
+    requireLearnerPackages(learner)
+    t.col = match(td$target, colnames(newdata))
+    if (!all(is.na(t.col))) {
+        if (length(t.col) > 1L && anyMissing(t.col))
+            stop("Some but not all target columns found in data")
+        truth = newdata[, t.col, drop = TRUE]
+        if (is.list(truth))
+            truth = data.frame(truth)
+        newdata = newdata[, -t.col, drop = FALSE]
+    }
+    else {
+        truth = NULL
+    }
+    error = NA_character_
+    dump = NULL
+    if (isFailureModel(model)) {
+        p = predictFailureModel(model, newdata)
+        time.predict = NA_real_
+        dump = getFailureModelDump(model)
+    }
+    else {
+        pars = list(.learner = learner, .model = model, .newdata = newdata)
+        pars = c(pars, getHyperPars(learner, c("predict", "both")))
+        debug.seed = getMlrOption("debug.seed", NULL)
+        if (!is.null(debug.seed))
+            set.seed(debug.seed)
+        opts = getLearnerOptions(learner, c("show.learner.output",
+            "on.learner.error", "on.learner.warning", "on.error.dump"))
+        fun1 = if (opts$show.learner.output)
+            identity
+        else capture.output
+        fun2 = if (opts$on.learner.error == "stop")
+            identity
+        else function(x) try(x, silent = TRUE)
+        fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump)
+            identity
+        else function(x) {
+            withCallingHandlers(x, error = function(c) utils::dump.frames())
+        }
+        if (opts$on.learner.warning == "quiet") {
+            old.warn.opt = getOption("warn")
+            on.exit(options(warn = old.warn.opt))
+            options(warn = -1L)
+        }
+        time.predict = measureTime(fun1({
+            p = fun2(fun3(do.call(predictLearner2, pars)))
+        }))
+        if (is.error(p)) {
+            if (opts$on.learner.error == "warn")
+                warningf("Could not predict with learner %s: %s",
+                  learner$id, as.character(p))
+            error = as.character(p)
+            p = predictFailureModel(model, newdata)
+            time.predict = NA_real_
+            if (opts$on.error.dump) {
+                dump = addClasses(get("last.dump", envir = .GlobalEnv),
+                  "mlr.dump")
+            }
+        }
+    }
+    if (missing(task))
+        ids = NULL
+    else ids = subset
+    makePrediction(task.desc = td, row.names = rownames(newdata),
+        id = ids, truth = truth, predict.type = learner$predict.type,
+        predict.threshold = learner$predict.threshold, y = p,
+        time = time.predict, error = error, dump = dump)
+}
+<bytecode: 0x8846b60>
+<environment: namespace:mlr>
+##
+
+predictLearner2 = function (.learner, .model, .newdata, ...)
+{
+    if (.learner$fix.factors.prediction) {
+        fls = .model$factor.levels
+        ns = names(fls)
+        ns = intersect(colnames(.newdata), ns)
+        fls = fls[ns]
+        if (length(ns) > 0L)
+            .newdata[ns] = mapply(factor, x = .newdata[ns], levels = fls,
+                SIMPLIFY = FALSE)
+    }
+    p = predictLearner(.learner, .model, .newdata, ...)
+    p = checkPredictLearnerOutput(.learner, .model, p)
+    return(p)
+}
+<bytecode: 0x7733f30>
+<environment: namespace:mlr>
+####
+makeClassifTask = function (id = deparse(substitute(data)), data, target, weights = NULL,
+    blocking = NULL, positive = NA_character_, fixup.data = "warn",
+    check.data = TRUE)
+{
+    assertString(id)
+    assertDataFrame(data)
+    assertString(target)
+    if (isScalarNumeric(positive))
+        positive = as.character(positive)
+    assertString(positive, na.ok = TRUE)
+    assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
+    assertFlag(check.data)
+    if (fixup.data != "no") {
+        x = data[[target]]
+        if (is.character(x) || is.logical(x) || is.integer(x)) {
+            data[[target]] = as.factor(x)
+        }
+        else if (is.factor(x) && fixup.data == "warn" && hasEmptyLevels(x)) {
+            warningf("Target column '%s' contains empty factor levels",
+                target)
+            data[[target]] = droplevels(x)
+        }
+    }
+    task = makeSupervisedTask("classif", data, target, weights,
+        blocking, fixup.data = fixup.data, check.data = check.data)
+    if (check.data) {
+        assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE,
+            .var.name = target)
+    }
+    task$task.desc = makeClassifTaskDesc(id, data, target, weights,
+        blocking, positive)
+    addClasses(task, "ClassifTask")
+}
+<bytecode: 0x706cdd0>
+<environment: namespace:mlr>
+
+##
+makeSupervisedTask = function (type, data, target, weights = NULL, blocking = NULL,
+    fixup.data = "warn", check.data = TRUE)
+{
+    task = makeTask(type = type, data = data, weights = weights,
+        blocking = blocking, fixup.data = fixup.data, check.data = check.data)
+    if (check.data) {
+        w = which.first(target %nin% colnames(data))
+        if (length(w) > 0L)
+            stopf("Column names of data doesn't contain target var: %s",
+                target[w])
+        checkTaskData(task$env$data, cols = setdiff(colnames(data),
+            target))
+    }
+    addClasses(task, "SupervisedTask")
+}
+<bytecode: 0x705f188>
+<environment: namespace:mlr>
+##
+
+makeTask = function (type, data, weights = NULL, blocking = NULL, fixup.data = "warn",
+    check.data = TRUE)
+{
+    if (fixup.data != "no") {
+        if (fixup.data == "quiet") {
+            data = droplevels(data)
+        }
+        else if (fixup.data == "warn") {
+            dropped = logical(ncol(data))
+            for (i in seq_col(data)) {
+                x = data[[i]]
+                if (is.factor(x) && hasEmptyLevels(x)) {
+                  dropped[i] = TRUE
+                  data[[i]] = droplevels(x)
+                }
+            }
+            if (any(dropped))
+                warningf("Empty factor levels were dropped for columns: %s",
+                  collapse(colnames(data)[dropped]))
+        }
+    }
+    if (check.data) {
+        assertDataFrame(data, col.names = "strict")
+        if (class(data)[1] != "data.frame") {
+            warningf("Provided data is not a pure data.frame but from class %s, hence it will be converted.",
+                class(data)[1])
+            data = as.data.frame(data)
+        }
+        if (!is.null(weights))
+            assertNumeric(weights, len = nrow(data), any.missing = FALSE,
+                lower = 0)
+        if (!is.null(blocking)) {
+            assertFactor(blocking, len = nrow(data), any.missing = FALSE)
+            if (length(blocking) && length(blocking) != nrow(data))
+                stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+        }
+    }
+    env = new.env(parent = emptyenv())
+    env$data = data
+    makeS3Obj("Task", type = type, env = env, weights = weights,
+        blocking = blocking, task.desc = NA)
+}
+<bytecode: 0x705b3f8>
+<environment: namespace:mlr>
+##
+
+makeClassifTaskDesc = function (id, data, target, weights, blocking, positive)
+{
+    levs = levels(data[[target]])
+    m = length(levs)
+    if (is.na(positive)) {
+        if (m <= 2L)
+            positive = levs[1L]
+    }
+    else {
+        if (m > 2L)
+            stop("Cannot set a positive class for a multiclass problem!")
+        assertChoice(positive, choices = levs)
+    }
+    td = makeTaskDescInternal("classif", id, data, target, weights,
+        blocking)
+    td$class.levels = levs
+    td$positive = positive
+    td$negative = NA_character_
+    if (length(td$class.levels) == 1L)
+        td$negative = stri_paste("not_", positive)
+    else if (length(td$class.levels) == 2L)
+        td$negative = setdiff(td$class.levels, positive)
+    return(addClasses(td, c("ClassifTaskDesc", "SupervisedTaskDesc")))
+}
+<bytecode: 0x7051930>
+<environment: namespace:mlr>
+##
+makeTaskDescInternal = function (type, id, data, target, weights, blocking)
+{
+    cl = vcapply(data, function(x) class(x)[1L])
+    cl = table(dropNamed(cl, target))
+    n.feat = c(numerics = sum(cl[c("integer", "numeric")], na.rm = TRUE),
+        factors = sum(cl["factor"], na.rm = TRUE), ordered = sum(cl["ordered"],
+            na.rm = TRUE))
+    makeS3Obj("TaskDesc", id = id, type = type, target = target,
+        size = nrow(data), n.feat = n.feat, has.missings = anyMissing(data),
+        has.weights = !is.null(weights), has.blocking = !is.null(blocking))
+}
+<bytecode: 0x7046bf8>
+<environment: namespace:mlr>
