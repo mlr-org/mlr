@@ -3,10 +3,12 @@
 #' @param m [\code{matrix}] \cr Numeric matrix.
 #' @param fname [\code{character}] \cr Name of the functional feature
 #' @param fd.grids [\code{numeric}] \cr fd.grids
-#' @return [\code{matrix}] of class c("functional", "matrix") containing the functional values
+#' @return [\code{matrix}] \cr Matrix of class c("functional", "matrix") containing the functional values
 #' @export
 makeFunctionalFeature = function(m, fname = deparse(substitute(m)), fd.grids = NULL) {
-  assertMatrix(m, mode = "numeric", any.missing = FALSE)
+  if (is.data.frame(m))
+    m = as.matrix(m)
+  assertMatrix(m, mode = "numeric")
   if(is.null(fd.grids))
     fd.grids = seq_len(ncol(m))
   assertCharacter(fname, len = 1L)

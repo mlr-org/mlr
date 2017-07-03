@@ -1,5 +1,5 @@
-makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data) {
-  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data)
+makeSupervisedTask = function(type, data, target, weights, blocking, fd.features, fd.grids, fixup.data, check.data) {
+  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fd.features, fd.grids, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     # costsens does not have a target col...

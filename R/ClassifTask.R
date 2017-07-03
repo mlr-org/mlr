@@ -1,6 +1,6 @@
 #' @export
 #' @rdname Task
-makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fd.features = NULL, fd.grids = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
   assertString(target)
@@ -20,7 +20,7 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
       data[[target]] = droplevels(x)
     }
   }
-  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("classif", data, target, weights, blocking, fd.features, fd.grids, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
