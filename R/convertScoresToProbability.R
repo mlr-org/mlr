@@ -93,14 +93,15 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       t =  prob.outlier(p, f)
 
       # minimizing negative likelihood with glm
+      # choose quasibinimial as target is not binary 0/1
       df = data.frame(t, f)
-      mod = glm(t ~ f, family = binomial(link = "logit"), data = df)
+      mod = glm(t ~ f, family = quasibinomial(link = "logit"), data = df)
 
       p = coef(mod)
 
       # check if pnew is converging
       diff = abs(p - pold)
-      if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
+      if (diff[1] < 1e-4 && diff[2] < 1e-4) {
         list$p = p
         list$probability = prob.outlier(p, f)
         break

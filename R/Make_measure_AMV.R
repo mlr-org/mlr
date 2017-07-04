@@ -13,9 +13,10 @@
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
 #' @param alphas [\code{numeric}] \cr
-#'   Numeric vector of alphas from 0 to 1, representing the computed quantiles.
-#'   Default: 0.9 to 0.99 by 0.01 steps as we are interested in the performance
-#'   of the scoring function in the the low density regions.
+#'   Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
+#'   Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.
+#' @param n.alpha [\code{numeric}] \cr
+#'   Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.
 #' @param n.sim [\code{numeric(1)}] \cr
 #'   Number of Monte-Carlo Samples, Default: 10^4.
 #' @return [\code{numeric(1)}]
@@ -27,7 +28,7 @@
 #' @export
 #' @family performance.
 #'
-makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, to = 0.99, by = 0.01), n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
 
   assertString(id)
   assertFlag(minimize)
@@ -37,27 +38,31 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
   assertString(note)
 
   makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, n.sim),
-    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob"),
+    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
 
       n.feat = getTaskNFeats(task)
-      data = getTaskData(task)
+      data = getTaskData(task, target.extra = TRUE)
 
       if (n.feat > 8) {
         warningf("Dimension might be too high for volume estimation. Apply feature resampling")
       }
 
+      alpha.seq = c()
+      for(j in seq_len(n.alpha-1)) {
+        alpha.seq[j] = alphas[1] + j * (alphas[2]-alphas[1])/(n.alpha-1)
+      }
         # vector of offsets for different alphas
         # type = 8: The resulting quantile estimates are approximately median-unbiased
         # regardless of the distribution of x.
         prob = getPredictionProbabilities(pred)[1]
-        offsets = quantile(as.matrix(prob), 1 - alphas, type = 8)
+        offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
 
         ### Monte Carlo (MC) Integration for lambda
 
-        # Compute hypercube where data lies
-        bounds = sapply(data[, 1:n.feat], FUN = function(x) c(min(x), max(x)))
+        # Compute hypercube where test data lies
+        bounds = sapply(feats, FUN = function(x) c(min(x), max(x))) #falsche Daten, die müssen aus der prediction sein
         # Volume of the hypercube enclosing the data.
         volume = prod(bounds[2, ] - bounds[1,])
 
@@ -76,7 +81,7 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
 
         # Trapezoidal Integration for AMV
         sum.vol = vol[-length(vol)] * 2 + diff(vol)
-        amv = ((diff(alphas)) %*% (sum.vol) / 2)
+        amv = ((diff(alpha.seq)) %*% (sum.vol) / 2)
       # Return area under mass-volume curve
       as.numeric(amv)
     },
