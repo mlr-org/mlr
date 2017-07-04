@@ -57,7 +57,8 @@ be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
 down to the inner learner.
 }
 \seealso{
-Other wrapper: \code{\link{makeClassificationViaRegressionWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

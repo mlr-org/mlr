@@ -1,32 +1,20 @@
-#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for Dimension greater than eight by using feature subsampling
+#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for high dimensional data
 #'
 #' @description
-#' Creates a measure for oneclass classification for dimension greater than eight. The measure will make B feature subsamples, and in every subsample it computes the
-#' Area under the Mass-Volume Curve via Monte-Carlo approximation
-#' of the diagonal. It uses the trapezoidal rule as implemented in
-#' package \code{caTools} for integration. The implementation is based on the
-#' python implementation of the inner loop: \link{https://github.com/albertcthomas/anomaly_tuning}.
-#' Differences are the type of quantile used, as the python default is not
-#' available in R.
+#' Creates a measure for oneclass classification on high dimensional data
+#' (recommend for dimension greater than 8) called AMVhd, which is based on the
+#' Area under the Mass-Volume Curve (AMV) (see \code{makeAMVMeasure}).
+#' The basic idea is to do several feature sub-samplings (of dimension less than 8)
+#' to reduce the dimension of the data, therefore AMV can be applied on each
+#' subsamples, yielding partial scores AMV_k. The mean of the partial scores is
+#' the new performancecriteria AMVhd.
 #'
-#' @param id [\code{character(1)}]\cr
-#'   Name of measure.
-#'   Default is \dQuote{costs}.
-#' @param alphas [\code{numeric}] \cr
-#'   Numeric vector of alphas from 0 to 1, representing the computed quantiles.
-#'   Default: 0.9 to 0.99 by 0.01 steps as we are interested in the performance
-#'   of the scoring function in the the low density regions.
-#' @param n.sim [\code{numeric(1)}] \cr
-#'   Number of Monte-Carlo Samples, Default: 10^4.
-#' @param n.feat.subsampling [\code{numeric(1)}] \cr
-#'   Number of features in the subsamples, Default: 3.
-#' @param n.draw.feat.subsampling [\code{numeric(1)}] \cr
-#'   Number of feature subsamples B, Default: 3.
 #' @return [\code{numeric(1)}]
-#'   Area under Mass-Volume Curve (AMV).
-#' @references Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
-#' ICML Anomaly Detection Workshop 2016
+#'   Area under Mass-Volume Curve (AMV) for high dimensional data.
+#' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
+#' arXiv preprint arXiv:1607.01152
 #' @inheritParams makeMeasure
+#' @inheritParams makeAMVMeasure
 #' @template ret_measure
 #' @export
 #' @family performance.

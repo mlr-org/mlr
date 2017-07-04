@@ -5,7 +5,7 @@
 \title{Convert anomaly scores to probability estimates.}
 \usage{
 convertingScoresToProbability(anomaly.score, parainit = NULL,
-  max.iter = 100)
+  max.iter = 100, optim.method = "glm")
 }
 \arguments{
 \item{anomaly.score}{a numeric vector of anomaly scores.}

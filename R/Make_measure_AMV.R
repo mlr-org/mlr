@@ -1,10 +1,12 @@
-#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass)
+#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for data dimension less than 8
 #'
 #' @description
 #' Creates a measure for oneclass classification. The measure computes the
 #' Area under the Mass-Volume Curve via Monte-Carlo approximation
 #' of the diagonal. It uses the trapezoidal rule as implemented in
-#' package \code{caTools} for integration. The implementation is based on the
+#' package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
+#' the curse of dimensionality applies for data with dimension greater than eight.
+#' The implementation is based on the
 #' python implementation: \link{https://github.com/albertcthomas/anomaly_tuning}.
 #' Differences are the type of quantile used, as the python default is not
 #' available in R.

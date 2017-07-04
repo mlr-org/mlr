@@ -31,7 +31,8 @@ mod = train(lrn, sonar.task, subset = 1:140)
 predictions = predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60])
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

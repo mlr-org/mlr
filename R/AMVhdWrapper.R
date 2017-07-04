@@ -1,43 +1,41 @@
-#' @title Fuse learner with the bagging technique.
+#' @title Preprocessing for using the anomaly detecion performance measure
+#' Area under the Mass Volume Curve for high dimensional data (AMVhd).
 #'
 #' @description
-#' Fuses a learner with the bagging method
-#' (i.e., similar to what a \code{randomForest} does).
-#' Creates a learner object, which can be
-#' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' For prediction on data with dimension higher than eight the AMV should not be
+#' used directly as performance measure (see \code{makeAMVMeasure}).
+#' The basic idea is that the wrapper does several feature sub-samplings
+#' (of dimension less than 8) to reduce the dimension of the subsets and applying
+#' the model and the prediction on each subsample.
+#' Afterwards AMV can be applied on each subsamples, yielding partial scores AMV_k.
+#' The mean of the partial scores is the new performancecriteria AMVhd (see \code{makeAMVhdMeasure}).
 #'
-#' Bagging is implemented as follows:
-#' For each iteration a random data subset is sampled (with or without replacement)
-#' and potentially the number of features is also restricted to
-#' a random subset. Note that this is usually handled in a slightly different way
-#' in the random forest where features are sampled at each tree split).
+#' Training is implemented as follows:
+#' For each iteration a data subset with random feature subsample is drawn
+#' (without replacement)). On each subset the model is trained with the base learner.
+#' Addtionally the model on the full data set is also trained. The training with
+#' the wrapper returns a list of all models. The first element of the list contrains
+#' the model on the full data set.
 #'
 #' Prediction works as follows:
-#' For classification we do majority voting to create a discrete label and
-#' probabilities are predicted by considering the proportions of all predicted labels.
-#' For regression the mean value and the standard deviations across predictions is computed.
+#' For every model from the training with the wrapper the prediction is calculated
+#' on the test set with the corresponding feature sample. The prediction object
+#' returns the prediction of the model, which is trained on the full data set and
+#' additionally returns an attribute 'AMVhdSubpredict' which contains the prediction
+#' of all subsamples. In \code{makeAMVhdMeasure} AMV is calculated for each subsample
+#' and aggregated to AMVhd.
 #'
-#' Note that the passed base learner must always have \code{predict.type = 'response'},
-#' while the BaggingWrapper can estimate probabilities and standard errors, so it can
-#' be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
-#' \code{\link{setPredictType}}, the type is only set for the BaggingWrapper, not passed
-#' down to the inner learner.
+#' Note that the passed base learner must always have \code{predict.type = 'prob'}.
 #'
 #' @template arg_learner
-#' @param bw.iters [\code{integer(1)}]\cr
-#'   Iterations = number of fitted models in bagging.
+#' @param amv.iters [\code{integer(1)}]\cr
+#'   Iterations = number of fitted sub models.
 #'   Default is 10.
-#' @param bw.replace [\code{logical(1)}]\cr
-#'   Sample bags with replacement (bootstrapping)?
-#'   Default is TRUE.
-#' @param bw.size [\code{numeric(1)}]\cr
-#'   Percentage size of sampled bags.
-#'   Default is 1 for bootstrapping and 0.632 for subsampling.
-#' @param bw.feats [\code{numeric(1)}]\cr
-#'   Percentage size of randomly selected features in bags.
-#'   Default is 1.
-#'   At least one feature will always be selected.
+#' @param amv.feats [\code{numeric(1)}]\cr
+#'   Size of randomly selected features for the sub models.
+#'   Default is 3.
+ #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
+#' arXiv preprint arXiv:1607.01152
 #' @template ret_learner
 #' @family wrapper
 #' @export
@@ -79,7 +77,6 @@ trainLearner.AMVhdWrapper = function(.learner, .task, .subset = NULL, .weights =
   d = getTaskNFeats(.task)
 
   fullmodel = train(.learner$next.learner, .task)
-
   args = list(d = d, dsub = amv.feats,  task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, show.info = FALSE)
   #??exportMlrOptions(level = "mlr.ensemble")
