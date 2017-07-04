@@ -112,16 +112,16 @@ predictLearner.AMVhdWrapper = function(.learner, .model, .newdata, .subset = NUL
   })
   p = pred[[1]]
   attr(p, "pred.sub") = pred[-1]
-  addClasses(p, "AMVhdpredict")
+  addClasses(p, "PredictionAMVhd")
 }
 
-
 #' @export
-print.AMVhdpredict = function(x, ...) {
+print.PredictionAMVhd = function(x, ...) {
   catf("Prediction: %i observations", nrow(x$data))
   catf("predict.type: %s", x$predict.type)
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
   catf("time: %.2f", x$time)
+  catf("tttteeeessst", x$time)
   if (!is.na(x$error)) catf("errors: %s", x$error)
   printHead(as.data.frame(x), ...)
 }
