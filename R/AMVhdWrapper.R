@@ -49,7 +49,7 @@ makeAMVhdWrapper = function(learner, amv.iters = 10L, amv.feats = 3) {
     pv$amv.iters = amv.iters
   }
   if (!missing(amv.feats)) {
-    assertNumber(amv.feats, lower = 0, upper = 1)
+    assertNumber(amv.feats, lower = 0L, upper = 7L)
     pv$amv.feats = amv.feats
   }
   if (learner$predict.type != "prob")
@@ -58,7 +58,7 @@ makeAMVhdWrapper = function(learner, amv.iters = 10L, amv.feats = 3) {
   packs = learner$package
   ps = makeParamSet(
     makeIntegerLearnerParam(id = "amv.iters", lower = 1L, default = 10L),
-    makeNumericLearnerParam(id = "amv.feats", lower = 2, upper = 7, default = 3)
+    makeNumericLearnerParam(id = "amv.feats", lower = 2L, upper = 7L, default = 3L)
   )
   makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "AMVhdWrapper", model.subclass = "AMVhdModel")
@@ -77,16 +77,14 @@ trainLearner.AMVhdWrapper = function(.learner, .task, .subset = NULL, .weights =
   amv.iters = 10, amv.feats = 3, ...) {
   .task = subsetTask(.task, subset = .subset)
   d = getTaskNFeats(.task)
-  # number of observations to sample
-  ###m = round(n * bw.size)
-  # number of features to sample
-  ###k = max(round(bw.feats * getTaskNFeats(.task)), 1)
+
   fullmodel = train(.learner$next.learner, .task)
+
   args = list(d = d, dsub = amv.feats,  task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, show.info = FALSE)
   #??exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(doAMVTrainIteration, i = seq_len(amv.iters), more.args = args)
-  models[[amv.iters+1]] =  fullmodel
+  models[[amv.iters + 1]] =  fullmodel
   models = rev(models)
   makeHomChainModel(.learner, models)
 }
@@ -102,31 +100,18 @@ predictLearner.AMVhdWrapper = function(.learner, .model, .newdata, .subset = NUL
   models = getLearnerModel(.model, more.unwrap = FALSE)
   if(.learner$predict.type != "prob")
     stop("Predict type for AMVhd learner must be 'prob'.")
-  #g = if (.learner$type == "classif") as.character else identity
   pred = lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
     p.tmp = predict(m, newdata = nd, subset = .subset, ...)$data[ ,1:2] #take prob column
     #p.tmp = predict(models[[1]], newdata = .newdata[, models[[1]]$features, drop = FALSE], subset = .subset)$data[ ,1:2]
     colnames(p.tmp) = .model$task.desc$class.levels
-    as.matrix(p.tmp)
+    p.tmp = as.matrix(p.tmp)
+    attr(p.tmp, "n.subfeat") = length(m$features)
+    p.tmp
   })
-  p = pred[[1]]
-  attr(p, "pred.sub") = pred[-1]
-  addClasses(p, "PredictionAMVhd")
+  addClasses(pred, "PredictionAMVhd")
 }
 
-#' @export
-print.PredictionAMVhd = function(x, ...) {
-  catf("Prediction: %i observations", nrow(x$data))
-  catf("predict.type: %s", x$predict.type)
-  catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
-  catf("time: %.2f", x$time)
-  catf("tttteeeessst", x$time)
-  if (!is.na(x$error)) catf("errors: %s", x$error)
-  printHead(as.data.frame(x), ...)
-}
-# we need to override here. while the predtype of the encapsulated learner must always
-# be response, we can estimates probs and se on the outside
 #' @export
 setPredictType.AMVhdWrapper = function(learner, predict.type) {
   setPredictType.Learner(learner, predict.type)

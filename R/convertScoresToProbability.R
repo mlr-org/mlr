@@ -19,7 +19,7 @@
 #'
 convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "glm"){
 
-  assertChoice(optim.method, c("trust region", "BFGS", "glm", "Newton"))
+  assertChoice(optim.method, c("glm", "trust region", "BFGS", "Newton"))
   f = anomaly.score
   p = parainit
   loop = TRUE
@@ -40,28 +40,21 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
     1 / (1 + exp(-p[2] * f - p[1]))
   }
 
-  if (optim.method == "trust region") {
+  if (optim.method == "glm") {
     repeat {
       pold = p
       t =  prob.outlier(p, f)
-      # LL negative log likelihood
-      LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
-        + sum.help %*% log(1 + exp(-p[2] * f - p[1])) }
-      # first derivative for A and B
-      gA = function(p) { t(f) %*% ( (1-t) - (exp(-p[2] * f - p[1]) / (1 + exp(-p[2] * f - p[1])))) }
-      gB = function(p) { sum.help %*% ((1-t) - (exp(-p[2] * f - p[1]) / (1 + exp(-p[2]*f - p[1])))) }
-      g = function(p) {
-        c(gA(p), gB(p))
-      }
 
-      optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS",
-        control = list(report.level = 0, maxit = max.iter))
+      # minimizing negative likelihood with glm
+      # choose quasibinimial as target is not binary 0/1
+      df = data.frame(t, f)
+      mod = glm(t ~ f, family = quasibinomial(link = "logit"), data = df)
 
-      p = optim$solution
+      p = coef(mod)
 
-      # check if p is converging
+      # check if pnew is converging
       diff = abs(p - pold)
-      if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
+      if (diff[1] < 1e-4 && diff[2] < 1e-4) {
         list$p = p
         list$probability = prob.outlier(p, f)
         break
@@ -87,21 +80,28 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
         break
       }
     }
-  } else if (optim.method == "glm") {
+  } else if (optim.method == "trust region") {
     repeat {
       pold = p
       t =  prob.outlier(p, f)
+      # LL negative log likelihood
+      LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
+        + sum.help %*% log(1 + exp(-p[2] * f - p[1])) }
+      # first derivative for A and B
+      gA = function(p) { t(f) %*% ( (1-t) - (exp(-p[2] * f - p[1]) / (1 + exp(-p[2] * f - p[1])))) }
+      gB = function(p) { sum.help %*% ((1-t) - (exp(-p[2] * f - p[1]) / (1 + exp(-p[2]*f - p[1])))) }
+      g = function(p) {
+        c(gA(p), gB(p))
+      }
 
-      # minimizing negative likelihood with glm
-      # choose quasibinimial as target is not binary 0/1
-      df = data.frame(t, f)
-      mod = glm(t ~ f, family = quasibinomial(link = "logit"), data = df)
+      optim = trustOptim::trust.optim(p, fn = LL, gr = g,  method = "BFGS",
+        control = list(report.level = 0, maxit = max.iter))
 
-      p = coef(mod)
+      p = optim$solution
 
-      # check if pnew is converging
+      # check if p is converging
       diff = abs(p - pold)
-      if (diff[1] < 1e-4 && diff[2] < 1e-4) {
+      if ( diff[1] < 1e-4 && diff[2] < 1e-4) {
         list$p = p
         list$probability = prob.outlier(p, f)
         break

@@ -180,7 +180,19 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 #' @export
 makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
   # we simply inherit from PredictionClassif, as structure is the same
-  p = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth, predict.type, predict.threshold, y, time, error, dump)
+  if (any(class(y) %in% "PredictionAMVhd")) {
+    plist = lapply(y, function(ylist) {
+      makeSubPred = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth,
+        predict.type, predict.threshold, ylist, time, error, dump)
+      makeSubPred$n.subfeat = attr(ylist, "n.subfeat")
+      addClasses(makeSubPred, "PredictionAMVhd")
+    })
+    p = plist[[1]]
+    attr(p, "AMVhdSubpredict") = plist[-1]
+  } else {
+    p = makePrediction.ClassifTaskDesc(task.desc, row.names, id,
+      truth, predict.type, predict.threshold, y, time, error, dump)
+  }
   addClasses(p, "PredictionOneClass")
 
   # if we want to set predict.threshold different than classiftask, than shoudl not inherit from ClassifTaskDesc
@@ -224,3 +236,8 @@ print.Prediction = function(x, ...) {
   printHead(as.data.frame(x), ...)
 }
 
+# maybe return number of features in the general print.Prediction function
+print.PredictionAMVhd = function(x, ...){
+catf("Feature subsample: %i features", x$n.subfeat)
+  print.Prediction(x,...)
+}
