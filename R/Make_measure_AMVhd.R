@@ -18,9 +18,52 @@
 #' @template ret_measure
 #' @export
 #' @family performance.
+#' @example
+#' # creates anomaly data with feature size nine
+#' sigma = matrix(0, 9, 9)
+#' diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
+#' normal = mvrnorm(n = 1000, rep(0, 9), sigma)
+#' colnames(normal) = paste0("V", 1:9)
+#' normal = as.data.frame(normal)
+#' normal$normal = TRUE
 #'
-makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+#' anomaly = matrix(sample(size = 50 * 9, x = 20:100, replace = TRUE), 50, 9)
+#' colnames(anomaly) = paste0("V", 1:9)
+#' anomaly = as.data.frame(anomaly)
+#' anomaly$normal = FALSE
+#' data = rbind(normal, anomaly)
+#' data = na.omit(data)
+#'
+#' # create train and test sets
+#' inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+#' train.inds = inds.split[[1]]
+#' test.inds = inds.split[[2]]
+#'
+#' # creates an AMVhd measure which calculates the area under the curve between 0.8 and 0.99
+#' # with 50 steps for high dimensional data.
+#' AMVhd = makeAMVhdMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
+#' n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
+#'
+#' task = makeOneClassTask(data = data, target = "normal", positive = "TRUE", negative = "FALSE")
+#' # base learner
+#' lrn = makeLearner("oneclass.svm", predict.type = "prob")
+#'
+#' # for applying AMVhd we need to use the AMVhdWrapper
+#' # wrapped learner, with 3 feature subsample for each of the 10 iteration
+#' lrn_amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
+#' # wrapped model
+#' mod_amww = train(lrn_amww, task, subset = train.inds)
+#' # list all submodels, first list element is the full model
+#' submod = getLearnerModel(mod_amww, more.unwrap = FALSE)
+#' # wrapped prediction
+#' pred_amww = predict(mod_amww, task, subset = test.inds)
+#' # t contains the prediction with subsampled features
+#' t = attr(pred_amww, "AMVhdSubpredict")
+#'
+#' calculate AMVhd performance
+#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, feats = data[test.inds, 1:9])
 
+makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertNumeric(alphas, lower = 0, upper = 1)
@@ -29,26 +72,25 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99)
   assertString(name)
   assertString(note)
 
-  measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
-
-  makeMeasure(id = id, minimize = minimize, extra.args = list(measureAMV),
-    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob", "req.feats"),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, n.sim),
+    properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
-      n.feat = getTaskNFeats(task)
-      feats = getTaskData(task, target.extra = TRUE)$data
-      measureAMV = extra.args[[1]]
+      measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       # get the prediction of submodels, which has sampled features
       subpred = attr(pred, "AMVhdSubpredict")
-
+      submod = getLearnerModel(model, more.unwrap = FALSE)
+      #delete full model before calculating the amv on each submodel
+      submod = submod[-1]
       # calculate amv for each submodel
-      amv.k = lapply(subpred, function(sub.pred) {
-        performance(sub.pred, measures = list(measureAMV), task, model, feats)
-      })
-
-      # Return area under mass-volume curve
-      amv = mean(unlist(amv.k))
+      amv.k = c()
+      for(i in seq_len(length(submod))) {
+        amv.k[i] = performance(pred = subpred[[i]], measures = list(measureAMV),
+          model = submod[[i]], feats = feats[, submod[[i]]$features])
+      }
+      # Return area under the mass-volume curve
+      amv = mean(amv.k)
     },
     name = name,
     note = note
