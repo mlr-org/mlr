@@ -40,7 +40,7 @@ generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nsel
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
-  check.task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
+  check.task = sapply(filter, function(x) !inherits(fuelsubset.task, x$supported.tasks))
   if (any(check.task))
     stopf("Filter(s) %s not compatible with task of type '%s'",
           stri_paste("'", method[check.task], "'", collapse = ", "), td$type)
