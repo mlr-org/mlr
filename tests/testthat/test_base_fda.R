@@ -89,7 +89,7 @@ test_that("FDA classif Task will generate an error in case of extreme input", {
 
 
 test_that("subsetTask works for FDATask", {
-  task = subsetTask(fda.binary.fs.task, features = 1:200)
+  task = subsetTask(fuelsubset.task, features = 1:200)
   expect_equal(length(task$task.desc$fd.features$NIR), 66L)
   expect_equal(length(task$task.desc$fd.features$UVVIS), 134L)
   expect_equal(length(task$task.desc$fd.grids$NIR), 66L)
@@ -97,5 +97,9 @@ test_that("subsetTask works for FDATask", {
   task = subsetTask(fda.binary.gp.task, features = 1:10)
   expect_equal(length(task$task.desc$fd.features$fd1), 10L)
   expect_equal(length(task$task.desc$fd.grids$fd1), 10L)
+  task = subsetTask(fda.binary.gp.task, features = 1:33, subset = 1:40)
+  expect_equal(length(task$task.desc$fd.features$fd1), 33L)
+  expect_equal(length(task$task.desc$fd.grids$fd1), 33L)
+  expect_equal(nrow(getTaskData(task)), 40L)
 })
 
