@@ -29,7 +29,7 @@ makeFDAClassifTask = function(id = deparse(substitute(data)), data, target,
   convertTaskToFDATask(task, "fdaclassif", fd.features, fd.grids, "FDAClassifTask", "FDAClassifTaskDesc")
 }
 
-makeFDAClassifTaskDesc = function(id, data, target, positive, fd.features, fd.grids, weights, blocking) {
+makeFDAClassifTaskDesc = function(id, data, target, weights, blocking, positive, fd.features, fd.grids) {
   td = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
   td$type = "fdaclassif"
   # we cannot call getTaskFeatureNames here, task is not fully constructed

@@ -26,7 +26,7 @@ makeFDARegrTask = function(id = deparse(substitute(data)), data, target, weights
   convertTaskToFDATask(task, "fdaregr", fd.features, fd.grids, "FDARegrTask", "FDARegrTaskDesc")
 }
 
-makeFDARegrTaskDesc = function(id, data, target, fd.features, fd.grids, weights, blocking) {
+makeFDARegrTaskDesc = function(id, data, target, weights, blocking, fd.features, fd.grids) {
   td = makeRegrTaskDesc(id, data, target, weights, blocking)
   td$type = "fdaregr"
   # we cannot call getTaskFeatureNames here, task is not fully constructed
