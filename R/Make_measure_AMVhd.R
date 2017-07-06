@@ -35,6 +35,7 @@
 #' data = na.omit(data)
 #'
 #' # create train and test sets
+#' library(BBmisc)
 #' inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
 #' train.inds = inds.split[[1]]
 #' test.inds = inds.split[[2]]

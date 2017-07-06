@@ -185,6 +185,7 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
       makeSubPred = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth,
         predict.type, predict.threshold, ylist, time, error, dump)
       makeSubPred$n.subfeat = attr(ylist, "n.subfeat")
+      makeSubPred$subfeat = attr(ylist, "subfeat")
       addClasses(makeSubPred, "PredictionAMVhd")
     })
     p = plist[[1]]
@@ -238,5 +239,6 @@ print.Prediction = function(x, ...) {
 # maybe return number of features in the general print.Prediction function
 print.PredictionAMVhd = function(x, ...){
 catf("Feature subsample: %i features", x$n.subfeat)
+catf("Feature subsample: %s", collapse(x$subfeat))
   print.Prediction(x,...)
 }

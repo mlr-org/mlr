@@ -106,6 +106,7 @@ predictLearner.AMVhdWrapper = function(.learner, .model, .newdata, .subset = NUL
     colnames(p.tmp) = .model$task.desc$class.levels
     p.tmp = as.matrix(p.tmp)
     attr(p.tmp, "n.subfeat") = length(m$features)
+    attr(p.tmp, "subfeat") = m$features
     p.tmp
   })
   addClasses(pred, "PredictionAMVhd")
