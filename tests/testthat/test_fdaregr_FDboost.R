@@ -6,7 +6,7 @@ context("FDA_regr_FDboost")
 
 test_that("FDA_regr_FDboost", {
     options(mlr.debug.seed = 123L)
-    requirePackages("FDboost")
+    requirePackagesOrSkip("FDboost", default.method = "load")
     lrn = makeLearner("fdaregr.FDboost", knots = 40L, df = 4L, mstop = 100L)
     mod1f = train(learner = lrn, task = fuelsubset.task)
     mdata = getTaskData(fuelsubset.task, target.extra = TRUE)
