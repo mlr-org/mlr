@@ -72,7 +72,7 @@ generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", grou
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
 
   for (x in obj)
-    checkPrediction(obj, task.type = c("classif", "fdaclassif"), predict.type = "prob")
+    checkPrediction(x, task.type = c("classif", "fdaclassif"), predict.type = "prob")
   generateCalibrationData.list(obj, breaks, groups, task.id)
 }
 #' @export
