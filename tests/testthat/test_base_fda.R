@@ -97,5 +97,9 @@ test_that("subsetTask works for FDATask", {
   task = subsetTask(fda.binary.gp.task, features = 1:10)
   expect_equal(length(task$task.desc$fd.features$fd1), 10L)
   expect_equal(length(task$task.desc$fd.grids$fd1), 10L)
+  task = subsetTask(fda.binary.gp.task, features = 1:33, subset = 1:40)
+  expect_equal(length(task$task.desc$fd.features$fd1), 33L)
+  expect_equal(length(task$task.desc$fd.grids$fd1), 33L)
+  expect_equal(nrow(getTaskData(task)), 40L)
 })
 

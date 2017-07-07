@@ -53,3 +53,25 @@ test_that("TaskDesc", {
   expect_equal(td$type, "regr")
   expect_true(is.null(td$class.levels))
 })
+
+test_that("SubsetTaskDesc", {
+  rtwt = runif(nrow(regr.df))
+  rt = makeRegrTask(target = "medv", regr.df, id = "mytask4", weights = rtwt)
+  srt = subsetTask(rt, subset = 1:50)
+  td = getTaskDesc(srt)
+  expect_equal(td$id, "mytask4")
+  expect_true(is.null(td$positive))
+  expect_true(is.null(td$negative))
+  expect_true(all(getTaskWeights(srt) == rtwt[1:50]))
+
+  subset.multiclass.task = subsetTask(multiclass.task, subset = 1:130)
+  td = getTaskDesc(subset.multiclass.task)
+  expect_equal(td$size, 130)
+  expect_equal(sum(td$n.feat), 4)
+  expect_equal(td$n.feat[["numerics"]], 4)
+  expect_equal(td$n.feat[["factors"]], 0)
+  expect_equal(td$has.missings, FALSE)
+  expect_equal(td$type, "classif")
+  expect_equal(td$class.levels, c("setosa", "versicolor", "virginica"))
+
+})
