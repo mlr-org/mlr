@@ -343,7 +343,7 @@ makeFilter(
   name = "information.gain",
   desc = "Entropy-based information gain between feature and target",
   pkg  = "FSelector",
-  supported.tasks = c("ClassifTask", "RegrTask"),
+  supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::information.gain(getTaskFormula(task), data = getTaskData(task))
