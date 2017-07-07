@@ -41,3 +41,7 @@ mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv",
   "cluster", "costsens", "fdaregr", "fdaclassif", "fdaclassif.multi",
   "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
+
+.TaskType2ClassHash = new.env()
+.TaskType2ClassHash[["classif"]] = "ClassifTask"
+.TaskType2ClassHash[["regr"]] = "RegrTask"
