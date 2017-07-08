@@ -46,7 +46,7 @@
 #'
 #' # calculate performance for prediction object, pass data of features used for
 #' # prediction as feats in performance
-#' performance(pred, measures = list(AMV), mod, feats = data[test.inds, 1:2])
+#' performance(pred = pred, measures = list(AMV), model = mod, task = task)#, feats = data[test.inds, 1:2])
 
 
 makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
@@ -62,10 +62,19 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
+      if (is.null(feats)) {
+        if (!is.null(task)){
+          subset.inds = model$subset
+          data = getTaskData(task, target.extra = TRUE)$data
+          if (length(subset.inds) != nrow(data)) {
+            feats = data[subset.inds, ]
+          }
+        }
+      }
+
       if (ncol(feats) > 8) {
         warningf("Dimension might be too high for volume estimation with AMV. Use AMVhd.")
       }
-
       alpha.seq = c()
       for(j in seq_len(n.alpha-1)) {
         alpha.seq[j] = alphas[1] + j * (alphas[2]-alphas[1])/(n.alpha-1)

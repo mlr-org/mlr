@@ -61,8 +61,9 @@
 #' # t contains the prediction with subsampled features
 #' t = attr(pred_amww, "AMVhdSubpredict")
 #'
-#' calculate AMVhd performance
-#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, feats = data[test.inds, 1:9])
+#' # calculate AMVhd performance
+#' set.seed(123)
+#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, task = task, feats = data[test.inds, 1:9])
 
 makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
@@ -79,6 +80,13 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99)
     fun = function(task, model, pred, feats, extra.args) {
       measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
+      subset.inds = model$subset
+      data = getTaskData(task, target.extra = TRUE)$data
+      if (is.null(feats)) {
+        if (length(subset.inds) != nrow(data)) {
+          feats = data[subset.inds, ]
+        } else ("feats is null, pass either task or feats")
+      }
       # get the prediction of submodels, which has sampled features
       subpred = attr(pred, "AMVhdSubpredict")
       submod = getLearnerModel(model, more.unwrap = FALSE)

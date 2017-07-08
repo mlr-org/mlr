@@ -112,6 +112,7 @@ doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weight
 
 #' @export
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+  models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]

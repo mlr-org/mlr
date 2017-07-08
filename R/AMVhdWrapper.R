@@ -82,13 +82,13 @@ trainLearner.AMVhdWrapper = function(.learner, .task, .subset = NULL, .weights =
   args = list(d = d, dsub = amv.feats,  task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, show.info = FALSE)
   # exportMlrOptions(level = "mlr.ensemble")
-  models = parallelMap(doAMVTrainIteration, i = seq_len(amv.iters), more.args = args)#, level = "mlr.ensemble")
+  models = parallelMap(doAMVhdTrainIteration, i = seq_len(amv.iters), more.args = args)#, level = "mlr.ensemble")
   models[[amv.iters + 1]] =  fullmodel
   models = rev(models)
   makeHomChainModel(.learner, models)
 }
 
-doAMVTrainIteration = function(i, d, dsub, task, learner, weights) {
+doAMVhdTrainIteration = function(i, d, dsub, task, learner, weights) {
   setSlaveOptions()
   task = subsetTask(task, features = sample(getTaskFeatureNames(task), dsub, replace = FALSE))
   train(learner$next.learner, task, weights = weights)
