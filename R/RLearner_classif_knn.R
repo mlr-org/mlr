@@ -14,7 +14,7 @@ makeRLearner.classif.knn = function() {
     properties = c("twoclass", "multiclass", "numerics"),
     name = "k-Nearest Neighbor",
     short.name = "knn",
-    note = ""
+    callees = "knn"
   )
 }
 

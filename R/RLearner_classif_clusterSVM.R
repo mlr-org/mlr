@@ -5,6 +5,7 @@ makeRLearner.classif.clusterSVM = function() {
     package = c("SwarmSVM", "LiblineaR"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "centers", default = 2, lower = 1),
+      # FIXME default for centers of clusterSVM is NULL
       makeUntypedLearnerParam(id = "cluster.object", default = NULL, requires = quote(is.null(centers))),
       makeNumericLearnerParam(id = "lambda", default = 1, lower = 0),
       makeLogicalLearnerParam(id = "sparse", default = TRUE),
@@ -27,15 +28,15 @@ makeRLearner.classif.clusterSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Clustered Support Vector Machines",
     short.name = "clusterSVM",
-    note = "`centers` set to 2 by default"
+    note = "`centers` set to `2` by default.",
+    callees = "clusterSVM"
   )
 }
 
 #' @export
 trainLearner.classif.clusterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  pars = list(...)
-    SwarmSVM::clusterSVM(x = d$data, y = d$target, ...)
+  SwarmSVM::clusterSVM(x = d$data, y = d$target, ...)
 }
 
 #' @export

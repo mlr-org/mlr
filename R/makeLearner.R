@@ -6,6 +6,8 @@
 #' value selects the label. The threshold used to assign the label can later be changed using the
 #' \code{\link{setThreshold}} function.
 #'
+#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+#'
 #' @template arg_lrncl
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.
@@ -14,7 +16,8 @@
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
-#'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
+#'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities),
+#'   Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
 #'   Default is \dQuote{response}.
 #' @template arg_predictthreshold
 #' @param fix.factors.prediction [\code{logical(1)}]\cr
@@ -41,7 +44,6 @@
 #' @family learner
 #' @export
 #' @aliases Learner
-#' @seealso [\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]
 #' @examples
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")
@@ -52,17 +54,27 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
 
   assertString(cl)
   assertFlag(fix.factors.prediction)
-  constructor = getS3method("makeRLearner", class = cl)
+  assertList(config, names = "named")
+  if ("show.info" %in% names(config))
+    stop("'show.info' cannot be set in 'makeLearner', please use 'configureMlr' instead.")
+  assertSubset(names(config), choices = names(getMlrOptions()))
+  constructor = try(getS3method("makeRLearner", class = cl), silent = TRUE)
+  if (inherits(constructor, "try-error")) {
+    possibles = getNameProposals(cl, possible.inputs = suppressWarnings(listLearners()$class))
+    stopf("Couldn't find learner '%s'\nDid you mean one of these learners instead: %s",
+      cl, stri_flatten(possibles, collapse = " "))
+  }
   wl = do.call(constructor, list())
+  wl$config = config
 
   if (!missing(id)) {
     assertString(id)
     wl$id = id
   }
+
   # predict.threshold is checked in setter below
-  assertList(par.vals)
-  assertList(config, names = "named")
-  if (!nzchar(cl))
+  assertList(par.vals, names = "unique")
+  if (stri_isempty(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
     stop("Learner must be a basic RLearner!")
@@ -71,7 +83,6 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   if (!is.null(predict.threshold))
     wl = setPredictThreshold(wl, predict.threshold)
   wl$fix.factors.prediction = fix.factors.prediction
-  wl$config = config
   return(wl)
 }
 

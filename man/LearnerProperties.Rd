@@ -4,7 +4,9 @@
 \alias{LearnerProperties}
 \alias{getLearnerProperties}
 \alias{hasLearnerProperties}
-\title{Set, add, remove or query properties of learners}
+\alias{getLearnerProperties}
+\alias{hasLearnerProperties}
+\title{Query properties of learners.}
 \usage{
 getLearnerProperties(learner)
 
@@ -16,7 +18,7 @@ The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{props}{[\code{character}]\cr
-Vector of properties to set, add, remove or query.}
+Vector of properties to query.}
 }
 \value{
 \code{getLearnerProperties} returns a character vector with learner properties.
@@ -25,13 +27,35 @@ Vector of properties to set, add, remove or query.}
 \description{
 Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
 character vector.
+
+The learner properties are defined as follows:
+\describe{
+  \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
+  \item{missings}{Can missing values in features be handled?}
+  \item{weights}{Can observations be weighted during fitting?}
+  \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
+  \item{class.weights}{Only for classif: Can class weights be handled?}
+  \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
+  \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
+  \item{se}{Only for regr: Can standard errors be predicted?}
+  \item{oobpreds}{Only for classif, regr and surv: Can out of bag predictions be extracted from the trained model?}
+  \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
+}
 }
 \seealso{
 Other learner: \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
+  \code{\link{getHyperPars}}, \code{\link{getLearnerId}},
+  \code{\link{getLearnerPackages}},
+  \code{\link{getLearnerParVals}},
+  \code{\link{getLearnerParamSet}},
+  \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
+  \code{\link{getLearnerType}}, \code{\link{getParamSet}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
   \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
+  \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-

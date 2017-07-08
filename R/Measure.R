@@ -36,6 +36,7 @@
 #'     \item{multilabel}{Is the measure applicable for multilabel classification?}
 #'     \item{regr}{Is the measure applicable for regression?}
 #'     \item{surv}{Is the measure applicable for survival?}
+#'     \item{cluster}{Is the measure applicable for cluster?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
 #'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
 #'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
@@ -46,7 +47,20 @@
 #'   }
 #'   Default is \code{character(0)}.
 #' @param fun [\code{function(task, model, pred, feats, extra.args)}]\cr
-#'   Calculates performance value.
+#'   Calculates the performance value. Usually you will only need the prediction
+#'   object \code{pred}.
+#'   \describe{
+#'     \item{\code{task} [\code{\link{Task}}]}{
+#'       The task.}
+#'     \item{\code{model} [\code{\link{WrappedModel}}]}{
+#'       The fitted model.}
+#'     \item{\code{pred} [\code{\link{Prediction}}]}{
+#'       Prediction object.}
+#'     \item{\code{feats} [\code{data.frame}]}{
+#'       The features.}
+#'     \item{\code{extra.args} [\code{list}]}{
+#'       See below.}
+#'   }
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
 #'   Default is empty list.
@@ -114,11 +128,11 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    cluster     \tab db\cr
 #'    surv        \tab cindex\cr
 #'    costsens    \tab mcp\cr
-#'    multilabel  \tab hamloss\cr
+#'    multilabel  \tab multilabel.hamloss\cr
 #' }
 #'
 #' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
-#'  Task type, task, task description or a learner.
+#'  Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
 #' @return [\code{\link{Measure}}].
 #' @export
 getDefaultMeasure = function(x) {
@@ -128,13 +142,17 @@ getDefaultMeasure = function(x) {
     x$task.desc$type
   else if (inherits(x, "Learner"))
     x$type
+  else if (x %in% listLearners()$class)
+    stri_split_fixed(x, ".", simplify = TRUE)[1]
+  else
+    x
   switch(type,
     classif = mmce,
     cluster = db,
     regr = mse,
     surv = cindex,
     costsens = mcp,
-    multilabel = hamloss
+    multilabel = multilabel.hamloss
   )
 }
 
@@ -144,7 +162,8 @@ getDefaultMeasure = function(x) {
 #' Set how this measure will be aggregated after resampling.
 #' To see possible aggregation functions: \code{\link{aggregations}}.
 #'
-#' @template arg_measure
+#' @param measure [\code{\link{Measure}}]\cr
+#'   Performance measure.
 #' @template arg_aggr
 #' @return [\code{\link{Measure}}] with changed aggregation behaviour.
 #' @export

@@ -20,7 +20,7 @@ makeRLearner.classif.extraTrees = function() {
     properties = c("numerics", "weights", "twoclass", "multiclass", "prob"),
     name = "Extremely Randomized Trees",
     short.name = "extraTrees",
-    note = ""
+    callees = "extraTrees"
   )
 }
 

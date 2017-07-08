@@ -1,7 +1,7 @@
 context("checkData")
 
 test_that("checkData", {
-  expect_error(makeClassifTask(data=binaryclass.df, target= "foo"), "doesn't contain target var: foo")
+  expect_error(makeClassifTask(data = binaryclass.df, target = "foo"), "doesn't contain target var: foo")
 
   # y contains missings
   df = multiclass.df
@@ -27,12 +27,12 @@ test_that("checkData", {
   # check conversion of target
   df = binaryclass.df
   df[, binaryclass.target] = as.character(df[, binaryclass.target])
-  task = makeClassifTask(data = df, target=binaryclass.target)
+  task = makeClassifTask(data = df, target = binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 
   df = binaryclass.df
-  df[, binaryclass.target] = as.logical(as.integer(binaryclass.df[, binaryclass.target])-1)
-  task = makeClassifTask(data = df, target=binaryclass.target)
+  df[, binaryclass.target] = as.logical(as.integer(binaryclass.df[, binaryclass.target]) - 1)
+  task = makeClassifTask(data = df, target = binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 
   df = regr.df
@@ -42,7 +42,7 @@ test_that("checkData", {
 
   # check unsupported columns
   df = multiclass.df
-  df[, 1] = as.logical(df[,1])
+  df[, 1] = as.logical(df[, 1])
   colnames(df)[1] = "aaa"
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 })

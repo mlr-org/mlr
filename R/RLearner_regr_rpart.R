@@ -13,13 +13,14 @@ makeRLearner.regr.rpart = function() {
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L),
-      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L)
+      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
     par.vals = list(xval = 0L),
-    properties = c("missings", "numerics", "factors", "ordered", "weights"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "featimp"),
     name = "Decision Tree",
     short.name = "rpart",
-    note = "`xval` has been set to 0 by default for speed."
+    note = "`xval` has been set to `0` by default for speed.",
+    callees = c("rpart", "rpart.control")
   )
 }
 
@@ -39,3 +40,9 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
 predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, ...)
 }
+
+#' @export
+getFeatureImportanceLearner.regr.rpart = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.rpart(.learner, .model, ...)
+}
+

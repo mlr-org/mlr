@@ -1,13 +1,13 @@
-context("WeightedClassesWrapper")
+context("weightedclasses")
 
 test_that("WeightedClassesWrapper, binary",  {
-  pos = getTaskDescription(binaryclass.task)$positive
+  pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
     p = predict(m, binaryclass.task)
-    cm = getConfMatrix(p)
+    cm = calculateConfusionMatrix(p)$result
   }
 
   learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
@@ -32,7 +32,7 @@ test_that("WeightedClassesWrapper, multiclass",  {
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, multiclass.task)
     p = predict(m, multiclass.task)
-    cm = getConfMatrix(p)
+    cm = calculateConfusionMatrix(p)$result
   }
 
   learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",

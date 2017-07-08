@@ -27,27 +27,28 @@ retrieve required information via the \code{getBMR*} getter functions.
 You can also convert the object using \code{\link[base]{as.data.frame}}.
 }
 \seealso{
-Other benchmark: \code{\link{benchmark}},
+Other benchmark: \code{\link{batchmark}},
+  \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
-  \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCritDifferencesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getBMRAggrPerformances}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
-  \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotRankMatrixAsBar}}
+  \code{\link{reduceBatchmarkResults}}
 }
-

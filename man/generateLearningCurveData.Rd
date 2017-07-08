@@ -2,7 +2,8 @@
 % Please edit documentation in R/generateLearningCurve.R
 \name{generateLearningCurveData}
 \alias{generateLearningCurveData}
-\title{Generates a learning curve}
+\alias{LearningCurveData}
+\title{Generates a learning curve.}
 \usage{
 generateLearningCurveData(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE,
@@ -37,7 +38,18 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-An object of class \code{\link{LearningCurveData}}.
+[\code{LearningCurveData}]. A \code{list} containing:
+  \item{task}{[\code{\link{Task}}]\cr
+    The task.}
+  \item{measures}{[(list of) \code{\link{Measure}}]\cr
+    Performance measures.}
+  \item{data}{[\code{data.frame}] with columns:
+    \itemize{
+      \item \code{learner} Names of learners.
+      \item \code{percentage} Percentages drawn from the training split.
+      \item One column for each
+    \code{\link{Measure}} passed to \code{\link{generateLearningCurveData}}.
+   }}
 }
 \description{
 Observe how the performance changes with an increasing number of observations.
@@ -50,17 +62,16 @@ show.info = FALSE)
 plotLearningCurve(r)
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCalibrationData}},
+Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generatePartialPredictionData}},
-  \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
+  \code{\link{generateFunctionalANOVAData}},
+  \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 
 Other learning_curve: \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}}
 }
-

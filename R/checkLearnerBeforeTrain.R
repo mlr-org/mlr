@@ -5,7 +5,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
     clipString(collapse(colnames(.data)[has.it], ", "), 50L)
   }
 
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   if (td$type != learner$type) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)
@@ -41,7 +41,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
 
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) {
-      if(!hasLearnerProperties(learner, "oneclass"))
+      if (!hasLearnerProperties(learner, "oneclass"))
         stopf("Task '%s' is a one-class-problem, but learner '%s' does not support that!", td$id, learner$id)
     } else if (length(td$class.levels) == 2L) {
       if (!hasLearnerProperties(learner, "twoclass"))

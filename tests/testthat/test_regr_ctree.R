@@ -1,7 +1,8 @@
 context("regr_ctree")
 
 test_that("regr_ctree", {
-  requirePackages("party", default.method = "load")
+  requirePackagesOrSkip("party", default.method = "load")
+
   parset.list = list(
     list(),
     list(minsplit = 10, mincriterion = 0.005),
@@ -12,7 +13,7 @@ test_that("regr_ctree", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     ctrl = do.call(party::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))

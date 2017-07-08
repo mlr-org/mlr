@@ -7,7 +7,6 @@ makeRLearner.regr.rvm = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "kernel", default = "rbfdot",
         values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot", "stringdot")),
-      makeNumericLearnerParam(id = "tau", lower = 0, default = 0.01),
       makeNumericLearnerParam(id = "sigma",
         lower = 0, requires = quote(kernel %in% c("rbfdot", "anovadot", "besseldot", "laplacedot"))),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L,
@@ -26,15 +25,14 @@ makeRLearner.regr.rvm = function() {
       makeNumericLearnerParam(id = "minmaxdiff", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "verbosity", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fit", default = TRUE),
-      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L)
+      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE)
     ),
     par.vals = list(fit = FALSE),
     properties = c("numerics", "factors"),
     name = "Relevance Vector Machine",
     short.name = "rvm",
-    note = "Kernel parameters have to be passed directly and not by using the kpar list in rvm.
-
- Note that `fit` has been set to `FALSE` by default for speed."
+    note = "Kernel parameters have to be passed directly and not by using the `kpar` list in `rvm`. Note that `fit` has been set to `FALSE` by default for speed.",
+    callees = "rvm"
   )
 }
 

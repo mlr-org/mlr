@@ -21,7 +21,7 @@ makeRLearner.regr.extraTrees = function() {
     properties = c("numerics", "weights"),
     name = "Extremely Randomized Trees",
     short.name = "extraTrees",
-    note = ""
+    callees = "extraTrees"
   )
 }
 

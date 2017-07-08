@@ -16,14 +16,13 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
     if (is.data.frame(costs))
       costs = as.matrix(costs)
     if (is.null(colnames(costs)))
-      colnames(costs) = paste0("y", seq_col(costs))
+      colnames(costs) = stri_paste("y", seq_col(costs))
   }
   task = makeSupervisedTask("costsens", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
-  task$env$costs = costs
 
   if (check.data) {
-    assertNumeric(costs, any.missing = FALSE, lower = 0)
-    checkColumnNames(costs)
+    assertMatrix(costs, any.missing = FALSE, col.names = "strict")
+    assertNumeric(costs, lower = 0)
     if (nrow(costs) != nrow(data))
       stopf("Number of rows in cost matrix (%s) should equal the number of observations (%s).", nrow(costs), nrow(data))
     # we use ..y.. later in the models as a name for temp labels
@@ -31,14 +30,15 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
       stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
   }
 
-  task$task.desc = makeTaskDesc.CostSensTask(task, id, target)
+  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking, costs)
   addClasses(task, "CostSensTask")
 }
 
-makeTaskDesc.CostSensTask = function(task, id, target) {
-  td = makeTaskDescInternal(task, "costsens", id, target)
-  td$class.levels = colnames(task$env$costs)
-  return(addClasses(td, c("TaskDescCostSens", "TaskDescSupervised")))
+makeCostSensTaskDesc = function(id, data, target, blocking, costs) {
+  td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking)
+  td$class.levels = colnames(costs)
+  td$costs = costs
+  return(addClasses(td, c("CostSensTaskDesc", "SupervisedTaskDesc")))
 }
 
 #' @export

@@ -14,4 +14,3 @@ getHomogeneousEnsembleModels(model, learner.models = FALSE)
 \description{
 Deprecated, use \code{getLearnerModel} instead.
 }
-

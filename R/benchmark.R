@@ -7,8 +7,9 @@
 #' Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
 #' learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 #'
-#' @param learners [(list of) \code{\link{Learner}}]\cr
-#'   Learning algorithms which should be compared.
+#' @param learners [(list of) \code{\link{Learner}} | \code{character}]\cr
+#'   Learning algorithms which should be compared, can also be a single learner.
+#'   If you pass strings the learners will be created via \code{\link{makeLearner}}.
 #' @param tasks [(list of) \code{\link{Task}}]\cr
 #'   Tasks that learners should be run on.
 #' @param resamplings [(list of) \code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
@@ -19,38 +20,40 @@
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_keep_pred
+#' @template arg_models
 #' @template arg_showinfo
 #' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
 #' @export
-benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, show.info = getMlrOption("show.info")) {
-  learners = ensureVector(learners, 1L, "Learner")
-  assertList(learners, min.len = 1L)
-  checkListElementClass(learners, "Learner")
+#' @examples
+#' lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
+#' tasks = list(iris.task, sonar.task)
+#' rdesc = makeResampleDesc("CV", iters = 2L)
+#' meas = list(acc, ber)
+#' bmr = benchmark(lrns, tasks, rdesc, measures = meas)
+#' rmat = convertBMRToRankMatrix(bmr)
+#' print(rmat)
+#' plotBMRSummary(bmr)
+#' plotBMRBoxplots(bmr, ber, style = "violin")
+#' plotBMRRanksAsBarChart(bmr, pos = "stack")
+#' friedmanTestBMR(bmr)
+#' friedmanPostHocTestBMR(bmr, p.value = 0.05)
+benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
+
+
+  learners = ensureBenchmarkLearners(learners)
   learner.ids = extractSubList(learners, "id")
   if (anyDuplicated(learner.ids))
     stop("Learners need unique ids!")
   names(learners) = learner.ids
 
-  # check tasks
-  tasks = ensureVector(tasks, 1L, "Task")
-  assertList(tasks, min.len = 1L)
-  checkListElementClass(tasks, "Task")
+  tasks = ensureBenchmarkTasks(tasks)
   task.ids = extractSubList(tasks, c("task.desc", "id"))
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
   names(tasks) = task.ids
 
-  # check resamplings
-  if (missing(resamplings)) {
-     resamplings = replicate(length(tasks), makeResampleDesc("CV", iters = 10L), simplify = FALSE)
-  } else if (inherits(resamplings, "ResampleInstance") || inherits(resamplings, "ResampleDesc")) {
-    resamplings = replicate(length(tasks), resamplings, simplify = FALSE)
-  } else {
-    assertList(resamplings)
-    if (length(resamplings) != length(tasks))
-      stop("Number of resampling strategies and number of tasks differ!")
-  }
+  resamplings = ensureBenchmarkResamplings(resamplings, tasks)
   resamplings = Map(function(res, tt) {
     if (inherits(res, "ResampleInstance"))
       return(res)
@@ -60,30 +63,26 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, s
   }, resamplings, tasks)
   names(resamplings) = task.ids
 
-  # check measures
-  if (missing(measures)) {
-    measures = list(getDefaultMeasure(tasks[[1L]]))
-  } else {
-    measures = ensureVector(measures, 1L, "Measure")
-    assertList(measures)
-    checkListElementClass(measures, "Measure")
-  }
+  measures = ensureBenchmarkMeasures(measures, tasks)
 
-  inds = expand.grid(task = task.ids, learner = learner.ids, stringsAsFactors = FALSE)
+  assertFlag(models)
+  assertFlag(keep.pred)
 
+  grid = expand.grid(task = task.ids, learner = learner.ids, stringsAsFactors = FALSE)
   plevel = "mlr.benchmark"
   parallelLibrary("mlr", master = FALSE, level = plevel, show.info = FALSE)
   exportMlrOptions(level = "mlr.benchmark")
   results = parallelMap(
     benchmarkParallel,
-    split(as.matrix(inds), f = seq_row(inds)),
+    task = grid$task,
+    learner = grid$learner,
     more.args = list(learners = learners, tasks = tasks, resamplings = resamplings,
-      measures = measures, show.info = show.info),
+      measures = measures, keep.pred = keep.pred, models = models, show.info = show.info),
     level = plevel
   )
-  results.by.task = split(results, unlist(inds$task))
+  results.by.task = split(results, unlist(grid$task))
   for (taskname in names(results.by.task)) {
-    names(results.by.task[[taskname]]) = inds$learner[inds$task == taskname]
+    names(results.by.task[[taskname]]) = grid$learner[grid$task == taskname]
   }
   addClasses(results.by.task, "BenchmarkResult")
   makeS3Obj("BenchmarkResult",
@@ -122,30 +121,19 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, s
 #' @family benchmark
 NULL
 
-benchmarkParallel = function(index, learners, tasks, resamplings, measures, keep.pred = TRUE, show.info) {
+
+benchmarkParallel = function(task, learner, learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info) {
   setSlaveOptions()
-  ind.task = index[[1L]]
-  ind.learner = index[[2L]]
   if (show.info)
-    messagef("Task: %s, Learner: %s", ind.task, ind.learner)
-  cl = class(learners[[ind.learner]])
-  if("FeatSelWrapper" %in% cl) {
-    extract.this = getFeatSelResult
-  } else if("TuneWrapper" %in% cl) {
-    extract.this = getTuneResult
-  } else if("FilterWrapper" %in% cl) {
-    extract.this = getFilteredFeatures
-  } else {
-    extract.this = function(model) { NULL }
-  }
-  lrn = learners[[ind.learner]]
-  r = resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
-    measures = measures, models = TRUE, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
+    messagef("Task: %s, Learner: %s", task, learner)
+  lrn = learners[[learner]]
+  extract.this = getExtractor(lrn)
+  r = resample(lrn, tasks[[task]], resamplings[[task]],
+    measures = measures, models = models, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
   # store used learner in result
   r$learner = lrn
   return(r)
 }
-
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
@@ -156,4 +144,3 @@ print.BenchmarkResult = function(x, ...) {
 as.data.frame.BenchmarkResult = function(x, ...) {
   getBMRPerformances(x, as.df = TRUE)
 }
-

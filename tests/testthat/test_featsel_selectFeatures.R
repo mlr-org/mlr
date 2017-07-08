@@ -83,5 +83,3 @@ test_that("selectFeatures", {
   expect_true(setequal(colnames(df), c("b1", "b2", "mmce.test.mean", "dob", "eol", "exec.time", "error.message")))
   expect_equal(nrow(df), 15 + 5 * 6)
 })
-
-

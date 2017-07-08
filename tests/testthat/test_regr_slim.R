@@ -1,7 +1,8 @@
 context("regr_slim")
 
 test_that("regr_slim", {
-  requirePackages("flare", default.method = "load")
+  requirePackagesOrSkip("flare", default.method = "load")
+
   parset.list = list(
     list(),
     list(method = "dantzig"),
@@ -13,7 +14,7 @@ test_that("regr_slim", {
   X = regr.num.train[, ind]
   y = regr.num.train[, regr.num.target]
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     pars = list(X = as.matrix(X), Y = y)
     pars = c(pars, parset.list[[i]])
     if ("lambda.idx" %in%  names(pars)) {
@@ -24,7 +25,7 @@ test_that("regr_slim", {
     }
     capture.output({
       m = do.call(flare::slim, pars)
-      p = predict(m, newdata = as.matrix(regr.num.test[, ind]), lambda.idx = idx)[[1L]][,1L]
+      p = predict(m, newdata = as.matrix(regr.num.test[, ind]), lambda.idx = idx)[[1L]][, 1L]
     })
     old.predicts.list[[i]] = p
   }

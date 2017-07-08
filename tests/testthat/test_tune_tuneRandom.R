@@ -31,7 +31,7 @@ test_that("tuneRandom works with dependent params", {
 
 test_that("tuneRandom works with trafo", {
   lrn = makeLearner("classif.ksvm")
-  ps = makeParamSet(makeNumericParam("sigma", lower=-10, upper = -1, trafo = function(x) 2^x))
+  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x))
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom(maxit = 3)
   tr = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
@@ -44,11 +44,11 @@ test_that("tuneRandom uses budget", {
   ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x))
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom(maxit = 3)
-  ctrl2 = makeTuneControlRandom(budget = 3, maxit = NULL)
+  ctrl2 = makeTuneControlRandom(budget = 3)
   ctrl3 = makeTuneControlRandom(budget = 3, maxit = 3)
   expect_identical(ctrl, ctrl2)
   expect_identical(ctrl, ctrl3)
-  expect_error(makeTuneControlRandom(budget = 3))
+  expect_error(makeTuneControlRandom(budget = 3, maxit = 4))
 
   tr = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
   expect_equal(getOptPathLength(tr$opt.path), 3)

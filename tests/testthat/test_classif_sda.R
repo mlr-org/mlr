@@ -1,7 +1,8 @@
 context("classif_sda")
 
 test_that("classif_sda", {
-  requirePackages("sda", default.method = "load")
+  requirePackagesOrSkip("sda", default.method = "load")
+
   capture.output({
     set.seed(getOption("mlr.debug.seed"))
     m = sda::sda(as.matrix(dropNamed(multiclass.train, multiclass.target)), multiclass.train[, multiclass.target])
@@ -10,5 +11,5 @@ test_that("classif_sda", {
   })
 
   testSimple("classif.sda", multiclass.df, multiclass.target, multiclass.train.inds, p$class)
-  testProb  ("classif.sda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
+  testProb("classif.sda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
 })

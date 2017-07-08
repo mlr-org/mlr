@@ -46,9 +46,6 @@ makeResampleInstance = function(desc, task, size, ...) {
     desc = makeResampleDesc(desc, ...)
   if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
-  } else {
-    if (inherits(desc, "DPSDesc") && missing(task))
-      stop("'size' not supported for DPSDesc objects, please use 'task'")
   }
   if (!missing(task)) {
     assertClass(task, classes = "Task")
@@ -57,8 +54,6 @@ makeResampleInstance = function(desc, task, size, ...) {
   } else {
     task = NULL
     blocking = factor()
-    #if (inherits(desc, "DPSDesc"))
-    #  stop("task must be supplied")
   }
   if (!missing(size))
     size = asCount(size)
@@ -82,7 +77,7 @@ makeResampleInstance = function(desc, task, size, ...) {
     if (is.null(task))
       stop("Stratification always needs the task!")
     if (desc$stratify) {
-      td = getTaskDescription(task)
+      td = getTaskDesc(task)
       stratify.cols = switch(td$type,
         "classif" = getTaskTargetNames(task),
         "surv" = getTaskTargetNames(task)[2L],
@@ -123,7 +118,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   return(inst)
 }
 
-makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group = factor(c())) {
+makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group = factor()) {
   if (missing(test.inds) && !missing(train.inds)) {
     # shuffle data set and remove inds
     test.inds = sample(size)
@@ -134,7 +129,7 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
     train.inds = sample(size)
     train.inds = lapply(test.inds, function(x) setdiff(train.inds, x))
   }
-  inst = makeS3Obj("ResampleInstance",
+  makeS3Obj("ResampleInstance",
     desc = desc,
     size = size,
     train.inds = train.inds,

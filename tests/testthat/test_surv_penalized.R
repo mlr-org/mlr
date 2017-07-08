@@ -4,23 +4,23 @@ test_that("surv_penalized", {
   requirePackages("survival", default.method = "load")
   requirePackages("penalized", default.method = "load")
   parset.list = list(
-    list()
+    list(maxiter = 100),
+    list(lambda1 = 2, lambda2 = 1),
+    list(lambda1 = 1, lambda2 = 1),
+    list(fusedl = TRUE, lambda1 = 2, lambda2 = 1, maxiter = 5L),
+    list(fusedl = TRUE, lambda1 = 1, lambda2 = 1, maxiter = 10L)
   )
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
-    pars = c(list(response = surv.formula, data = surv.train[, -7], model = "cox", trace = FALSE), parset.list[[i]])
+  for (i in seq_along(parset.list)) {
+    pars = c(list(response = surv.formula, data = surv.train,
+      model = "cox"), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(penalized::penalized, pars)
-
-    # contr = contr.none(3)
-    # colnames(contr) = levels(surv.test[, "Species"])
-    # contrasts(surv.test[, "Species"], how.many = 3) = contr
-    p = penalized::survival(penalized::predict(m, penalized = model.matrix(surv.formula, surv.test[, -7])[, -1]), Inf)
+    p = penalized::survival(penalized::predict(m, data = surv.test), Inf)
     old.predicts.list[[i]] = p
   }
-
-  # FIXME: does not work yet:
-  testSimpleParsets("surv.penalized", surv.df[, -7], surv.target, surv.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("surv.penalized", surv.df, surv.target,
+    surv.train.inds, old.predicts.list, parset.list)
 })

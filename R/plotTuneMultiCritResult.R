@@ -18,12 +18,14 @@
 #' @param pointsize [\code{numeric(1)}]\cr
 #'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 #'   Default is 2.
+#' @param pretty.names [\code{logical{1}}]\cr
+#'   Whether to use the ID of the measures instead of their name in labels. Defaults to \code{TRUE}.
 #' @template ret_gg2
 #' @family tune_multicrit
 #' @export
 #' @examples
 #' # see tuneParamsMultiCrit
-plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, pointsize = 2) {
+plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, pointsize = 2, pretty.names = TRUE) {
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
   op1 = res$opt.path
@@ -33,7 +35,8 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
   if (!is.null(shape))
     assertChoice(shape, colnames(op2))
 
-  names.y = colnames(res$y)
+  names.y = colnames(res$y)[1:2]
+
   map = aes_string(x = names.y[1L], y = names.y[2L], col = col, shape = shape)
   i.front = res$ind
   if (path) {
@@ -41,13 +44,17 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
   } else {
     i.data = i.front
   }
-  data = op2[i.data,, drop = FALSE]
-  front = op2[i.front,, drop = FALSE]
+  data = op2[i.data, , drop = FALSE]
+  front = op2[i.front, , drop = FALSE]
 
   p = ggplot(data, mapping = map)
   p = p + geom_point(size = pointsize)
   if (path)
     p = p + geom_point(data = front, size = pointsize * 1.5)
+  if (pretty.names) {
+    names.y = sapply(res$measures, function(x) x$id)
+    p = p + labs(x = names.y[1L], y = names.y[2L])
+  }
   return(p)
 }
 #' @title Plots multi-criteria results after tuning using ggvis.
@@ -68,19 +75,20 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #' @examples
 #' # see tuneParamsMultiCrit
 plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
+  requirePackages("_ggvis")
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
-  plt_data = as.data.frame(res$opt.path)
-  plt_data$location = factor(row.names(plt_data) %in% res$ind, levels = c(TRUE, FALSE),
+  plt.data = as.data.frame(res$opt.path)
+  plt.data$location = factor(row.names(plt.data) %in% res$ind, levels = c(TRUE, FALSE),
                              labels = c("frontier", "interior"))
 
   if (path) {
-    plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
+    plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
                        ggvis::prop("y", as.name(colnames(res$y)[2L])))
     plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
   } else {
-    plt_data = plt_data[plt_data$location == "frontier", , drop = FALSE]
-    plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
+    plt.data = plt.data[plt.data$location == "frontier", , drop = FALSE]
+    plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
                        ggvis::prop("y", as.name(colnames(res$y)[2L])))
     plt = ggvis::layer_points(plt)
   }

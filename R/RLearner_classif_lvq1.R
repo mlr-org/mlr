@@ -8,7 +8,7 @@ makeRLearner.classif.lvq1 = function() {
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Learning Vector Quantization",
     short.name = "lvq1",
-    note = ""
+    callees = c("lvq1", "lvqinit", "lvqtest")
   )
 }
 

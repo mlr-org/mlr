@@ -22,8 +22,8 @@
 #' The description object contains these slots
 #' \describe{
 #'   \item{target [\code{character}]}{See argument.}
-#'   \item{features [\code{character}]}{Feature names, these are the column names of \code{data},
-#'     excluding \code{target}.}
+#'   \item{features [\code{character}]}{Feature names (column names of \code{data}).},
+#'   \item{classes [\code{character}]}{Feature classes (storage type of \code{data}).}
 #'   \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
 #'     including newly created ones during imputation.}
 #'   \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
@@ -32,8 +32,7 @@
 #'   \item{recode.factor.levels [\code{logical(1)}]}{See argument.}
 #' }
 #'
-#' @param data [\code{data.frame}]\cr
-#'   Input data.
+#' @template arg_taskdf
 #' @param target [\code{character}]\cr
 #'   Name of the column(s) specifying the response.
 #'   Default is \code{character(0)}.
@@ -78,30 +77,34 @@
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 #' print(imputed$data)
-#' reimpute(data.frame(x = NA), imputed$desc)
-impute = function(data, target = character(0L), classes = list(), cols = list(),
+#' reimpute(data.frame(x = NA_real_), imputed$desc)
+impute = function(obj, target = character(0L), classes = list(), cols = list(),
+  dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
+  force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+  assertList(cols)
+  checkTargetPreproc(obj, target, names(cols))
+  UseMethod("impute")
+}
+
+#' @export
+impute.data.frame = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
+  data = obj
   allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
-  assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE)
-  if (length(target)) {
-    not.ok = which.first(target %nin% names(data))
-    if (length(not.ok))
-      stopf("Target column '%s' must be present in data", target[not.ok])
-    not.ok = which.first(target %in% names(cols))
-    if (length(not.ok))
-      stopf("Imputation of target column '%s' not possible", target[not.ok])
+
+  # check that we dont request dummy col to be created for the target
+  if (length(target) != 0L) {
     not.ok = which.first(target %in% names(dummy.cols))
-    if (length(not.ok))
+    if (length(not.ok) != 0L)
       stopf("Dummy creation of target column '%s' not possible", target[not.ok])
   }
   assertList(classes)
   not.ok = which.first(names(classes) %nin% allowed.classes)
   if (length(not.ok))
     stopf("Column class '%s' for imputation not recognized", names(classes)[not.ok])
-  assertList(cols)
   not.ok = which.first(names(cols) %nin% names(data))
   if (length(not.ok))
     stopf("Column for imputation not present in data: %s", names(cols)[not.ok])
@@ -164,12 +167,28 @@ impute = function(data, target = character(0L), classes = list(), cols = list(),
   # store factor levels (this might include new levels created during imputation)
   ind = names(which(feature.classes == "factor"))
   desc$lvls = lapply(data[ind], levels)
+  desc$classes = feature.classes
 
   # set variables for consecutive imputes
   desc$recode.factor.levels = recode.factor.levels
   desc$impute.new.levels = impute.new.levels
 
   list(data = data, desc = desc)
+}
+
+#' @export
+impute.Task = function(obj, target = character(0L), classes = list(), cols = list(),
+  dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
+  force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+
+  target = getTaskTargetNames(obj)
+  d = getTaskData(obj)
+  imputed = impute.data.frame(d, target = target, classes = classes, cols = cols,
+    dummy.classes = dummy.classes, dummy.cols = dummy.cols, dummy.type = dummy.type,
+    force.dummies = force.dummies, impute.new.levels = impute.new.levels,
+    recode.factor.levels = recode.factor.levels)
+  task = changeData(obj, data = imputed$data)
+  list(task = task, desc = imputed$desc)
 }
 
 #' @export
@@ -184,7 +203,7 @@ print.ImputationDesc = function(x, ...) {
 
 #' Re-impute a data set
 #'
-#' This function accepts a data frame and a imputation description
+#' This function accepts a data frame or a task and an imputation description
 #' as returned by \code{\link{impute}} to perform the following actions:
 #' \enumerate{
 #'   \item Restore dropped columns, setting them to \code{NA}
@@ -195,31 +214,33 @@ print.ImputationDesc = function(x, ...) {
 #'   \item Impute missing values using previously collected data
 #' }
 #'
-#' @param x [\code{data.frame}]\cr
-#'   Object to reimpute. Currently only data frames are supported.
+#' @template arg_taskdf
 #' @param desc [\code{ImputationDesc}]\cr
 #'   Imputation description as returned by \code{\link{impute}}.
-#' @return Imputated \code{x}.
+#' @return Imputated \code{data.frame} or task with imputed data.
 #' @family impute
 #' @export
-reimpute = function(x, desc) {
+reimpute = function(obj, desc) {
   UseMethod("reimpute")
 }
 
 #' @export
-reimpute.list = function(x, desc) {
-  reimpute.data.frame(as.data.frame(x), desc)
-}
-
-#' @export
-reimpute.data.frame = function(x, desc) {
+reimpute.data.frame = function(obj, desc) {
   assertClass(desc, classes = "ImputationDesc")
-  x = as.list(x)
+  x = as.list(obj)
 
   # check for new columns
   new.cols = names(which(names(x) %nin% desc$cols))
   if (length(new.cols))
     stop("New columns (%s) found in data. Unable to impute.", collapse(new.cols))
+
+  # check for same storage type
+  classes = vcapply(x, function(x) class(x)[1L])
+  i = intersect(names(classes), names(desc$classes))
+  i = which.first(classes[i] != desc$classes[i])
+  if (length(i) > 0L) {
+    stopf("Some column types have changed, e.g. for column '%s' (expected '%s', got '%s')", names(classes[i]), desc$classes[i], classes[i])
+  }
 
   # restore dropped columns
   x[setdiff(desc$features, names(x))] = NA
@@ -262,4 +283,13 @@ reimpute.data.frame = function(x, desc) {
 
   x[names(dummy.cols)] = dummy.cols
   data.frame(x, stringsAsFactors = FALSE)
+}
+
+
+#' @export
+reimpute.Task = function(obj, desc) {
+  df = getTaskData(obj)
+  imputed = reimpute.data.frame(df, desc)
+  x = changeData(obj, data = imputed)
+  x
 }

@@ -1,4 +1,4 @@
-context("Stacking")
+context("stack")
 
 checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   base = lapply(base, makeLearner, predict.type = bms.pt)
@@ -15,7 +15,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   pr = predict(tr, task)
 
   if (sm.pt == "prob") {
-    expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
+    expect_equal(ncol(pr$data[, grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
   }
 
   if (method %nin% c("stack.cv", "hill.climb")) {
@@ -29,7 +29,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
 test_that("Stacking works", {
   tasks = list(binaryclass.task, multiclass.task, regr.task)
   for (task in tasks) {
-    td = getTaskDescription(task)
+    td = getTaskDesc(task)
     if (inherits(task, "ClassifTask")) {
       pts = c("response", "prob")
       base = c("classif.rpart", "classif.lda", "classif.svm")
@@ -53,6 +53,14 @@ test_that("Stacking works", {
   }
 })
 
+test_that("Stacking works with wrapped learners (#687)", {
+  base = "classif.rpart"
+  lrns = lapply(base, makeLearner)
+  lrns = lapply(lrns, setPredictType, "prob")
+  lrns[[1]] = makeFilterWrapper(lrns[[1]], fw.abs = 2)
+  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb")
+})
+
 test_that("Parameters for hill climb works", {
   tsk = binaryclass.task
   base = c("classif.rpart", "classif.lda", "classif.svm")
@@ -64,18 +72,18 @@ test_that("Parameters for hill climb works", {
   res = predict(tmp, tsk)
 
   expect_equal(sum(tmp$learner.model$weights), 1)
-  
+
   metric = function(pred, true) {
     pred = colnames(pred)[max.col(pred)]
     tb = table(pred, true)
-    return( 1- sum(diag(tb))/sum(tb) )
+    return(1 - sum(diag(tb)) / sum(tb))
   }
 
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",
     parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
+
   expect_equal(sum(tmp$learner.model$weights), 1)
 
 })
@@ -89,8 +97,8 @@ test_that("Parameters for compress model", {
                          parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
-  
+
+
   tsk = regr.task
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
@@ -100,4 +108,3 @@ test_that("Parameters for compress model", {
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 })
-

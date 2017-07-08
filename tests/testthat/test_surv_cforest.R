@@ -1,7 +1,8 @@
 context("surv_cforest")
 
 test_that("surv_cforest", {
-  requirePackages(c("party", "!survival"), default.method = "load")
+  requirePackagesOrSkip(c("party", "!survival"), default.method = "load")
+
   parset.list = list(
     list(),
     list(control = party::cforest_unbiased(mtry = 2)),
@@ -15,7 +16,7 @@ test_that("surv_cforest", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(surv.formula, data = surv.train)
     pars = c(pars, parset)
@@ -26,4 +27,11 @@ test_that("surv_cforest", {
 
   testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds,
     old.predicts.list, parset.list2)
+
+  # issue 556
+  parset.list3 = list(
+    list(replace = FALSE)
+  )
+  testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds,
+    old.predicts.list, parset.list3)
 })

@@ -14,7 +14,6 @@ test_that("tuneIrace", {
   expect_true(!is.na(tr1$y))
 
   # with trafo
-  res = makeResampleDesc("Holdout")
   ps2 = makeParamSet(
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x)
@@ -34,7 +33,7 @@ test_that("tuneIrace works with dependent params", {
   )
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlIrace(maxExperiments = 40 ,nbIterations = 2L, minNbSurvival = 1)
+  ctrl = makeTuneControlIrace(maxExperiments = 40, nbIterations = 2L, minNbSurvival = 1)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) >= 20 && getOptPathLength(tr$opt.path) <= 100)
   expect_true(!is.na(tr$y))
@@ -57,7 +56,8 @@ test_that("tuneIrace works with dependent params", {
 # we had a bug here
 test_that("tuneIrace works with logical params", {
   ps = makeParamSet(
-    makeLogicalParam("scaled")
+    makeLogicalParam("scaled"),
+    makeLogicalParam("shrinking")
   )
   lrn = makeLearner("classif.ksvm", kernel = "vanilladot")
   rdesc = makeResampleDesc("Holdout", split = 0.3, stratify = TRUE)
@@ -91,7 +91,7 @@ test_that("tuneIrace uses digits", {
   lrn.tune = makeTuneWrapper("classif.gbm", resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   res = resample(lrn.tune, task = multiclass.task, rdesc)
-  
+
   lrn = makeLearner("classif.rpart")
   ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L,
     digits = 5L)
@@ -99,19 +99,19 @@ test_that("tuneIrace uses digits", {
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   res = resample(lrn.tune, task = multiclass.task, rdesc)
-  
+
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = 4L)
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
-  
+
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = "a")
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
-  
+
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = c(6L, 7L))
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
@@ -142,3 +142,26 @@ test_that("Error in hyperparameter tuning with scientific notation for lower/upp
   set.seed(123)
   res = resample(lrn.tune, task = sonar.task, rdesc)
 })
+
+# we had a bug here, see issue #627
+test_that("irace works with unnamed discrete values", {
+  lrn = makeLearner("classif.rpart")
+  ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L)
+  ps = makeParamSet(
+    makeDiscreteParam("minsplit", c(2L, 7L))
+  )
+  res = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl)
+})
+
+# there was a bug when the column of an opt-path was NA all the way
+test_that("irace handles parameters with unsatisfiable requirement gracefully", {
+  lrn = makeLearner("classif.J48")
+  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival = 1L)
+
+  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3, requires = quote(R != R)), makeLogicalParam("R"))  # C never feasible
+  res = tuneParams(lrn, pid.task, hout, par.set = ps, control = ctrl)
+
+  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3), makeLogicalParam("R", requires = quote(C > 1)))  # R never feasible
+  res = tuneParams(lrn, sonar.task, hout, par.set = ps, control = ctrl)
+})
+

@@ -2,7 +2,7 @@
 makeRLearner.regr.bst = function() {
   makeRLearnerRegr(
     cl = "regr.bst",
-    package = "bst",
+    package = c("bst", "rpart"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "cost", default = 0.5, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "mstop", default = 50L, lower = 1L, when = "both"),
@@ -20,16 +20,19 @@ makeRLearner.regr.bst = function() {
       makeIntegerLearnerParam(id = "maxcompete", default = 4L, lower = 0L),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 5L, lower = 0L),
       makeDiscreteLearnerParam(id = "usesurrogate", default = 2L, values = 0:2),
-      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L),
+      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE),
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       makeIntegerLearnerParam(id = "maxdepth", default = 1L, lower = 1L, upper = 30L),
       makeDiscreteLearnerParam(id = "Learner", default = "ls", values = c("ls", "sm", "tree"))
+      # FIXME bst() seems to have no default for Learner. But if "ls" is correct, it is not needed in par.vals
     ),
-    par.vals = list(maxdepth = 1L, Learner = "ls"),
-    properties = c("numerics"),
+    par.vals = list(Learner = "ls", maxdepth = 1L, xval = 0L),
+    # FIXME par.vals default for maxdepth is the same as the default of LearnerParam and the function
+    properties = "numerics",
     name = "Gradient Boosting",
     short.name = "bst",
-    note = "The argument `learner` has been renamed to `Learner` due to a name conflict with `setHyerPars`"
+    note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.',
+    callees = c("bst", "bst_control", "rpart.control")
   )
 }
 

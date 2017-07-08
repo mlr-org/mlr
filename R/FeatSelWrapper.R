@@ -44,7 +44,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   }
   assertClass(control, classes = "FeatSelControl")
   assertFlag(show.info)
-  id = paste(learner$id, "featsel", sep = ".")
+  id = stri_paste(learner$id, "featsel", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, makeParamSet(), bit.names,
     bits.to.features, control, show.info, "FeatSelWrapper", "FeatSelModel")
   # checkVarselParset(learner, par.set, bit.names, control)
@@ -52,7 +52,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
 }
 
 #' @export
-trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
+trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL,  ...) {
   task = subsetTask(.task, .subset)
   if (length(.learner$bit.names) == 0)
     #FIXME: really look at bitnames / bits.to.features stuff and test it.
@@ -63,7 +63,7 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
     or = selectFeatures(.learner$next.learner, task, .learner$resampling,
       measures = .learner$measures,
       bit.names = .learner$bit.names, bits.to.features = .learner$bits.to.features,
-      control = .learner$control, show.info =.learner$show.info)
+      control = .learner$control, show.info = .learner$show.info)
   task = subsetTask(task, features = or$x)
   m = train(.learner$next.learner, task)
   x = makeChainModel(next.model = m, cl = "FeatSelModel")

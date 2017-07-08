@@ -57,20 +57,27 @@ be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
 down to the inner learner.
 }
 \seealso{
-Other wrapper: \code{\link{makeCostSensClassifWrapper}},
+Other wrapper: \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
+  \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-

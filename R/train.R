@@ -5,20 +5,17 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param subset [\code{integer} | \code{integer}]\cr
-#'   An index vector specifying the training cases to be used for fitting.
-#'   By default the complete data set is used.
-#'   Logical vectors will be transformed to integer with \code{\link[base]{which}}.
+#' @template arg_subset
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{Task}}]).
+#'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 #'   Weights from the task will be overwritten.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
-#' training.set = sample(1:nrow(iris), nrow(iris) / 2)
+#' training.set = sample(seq_len(nrow(iris)), nrow(iris) / 2)
 #'
 #' ## use linear discriminant analysis to classify iris data
 #' task = makeClassifTask(data = iris, target = "Species")
@@ -34,7 +31,7 @@
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (missing(subset)) {
+  if (missing(subset) || is.null(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
     if (is.logical(subset))
@@ -68,10 +65,10 @@ train = function(learner, task, subset, weights = NULL) {
   # no vars? then use no vars model
 
   if (length(vars) == 0L) {
-    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDescription(task))
+    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDesc(task))
     time.train = 0
   } else {
-    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning"))
+    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
     # set the seed
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
@@ -80,17 +77,19 @@ train = function(learner, task, subset, weights = NULL) {
     # FIXME: is case really ok for optwrapper? can we supppress then too?
     fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
+    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
+        withCallingHandlers(x, error = function(c) utils::dump.frames())
+      }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    st = system.time(fun1(learner.model <- fun2(do.call(trainLearner, pars))), gcFirst = FALSE)
+    time.train = measureTime(fun1({learner.model = fun2(fun3(do.call(trainLearner, pars)))}))
     # was there an error during training? maybe warn then
     if (is.error(learner.model) && opts$on.learner.error == "warn")
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
-    time.train = as.numeric(st[3L])
   }
   factor.levels = getTaskFactorLevels(task)
-  makeWrappedModel(learner, learner.model, getTaskDescription(task), subset, vars, factor.levels, time.train)
+  makeWrappedModel(learner, learner.model, getTaskDesc(task), subset, vars, factor.levels, time.train)
 }

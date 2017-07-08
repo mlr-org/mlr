@@ -1,8 +1,55 @@
+getLearnerTable = function() {
+  ids = as.character(methods("makeRLearner"))
+  ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
+  ids = stri_replace_first_fixed(ids, "makeRLearner.", "")
+  slots = c("cl", "name", "short.name", "package", "properties", "note")
+  ee = asNamespace("mlr")
+  tab = rbindlist(lapply(ids, function(id) {
+    fun = getS3method("makeRLearner", id)
+    row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
+    data.table(
+      id = row$cl,
+      name = row$name,
+      short.name = row$short.name,
+      package = list(stri_replace_first_regex(row$package, "^[!_]", "")),
+      properties = list(row$properties),
+      note = row$note %??% ""
+    )
+  }))
+
+  # set learner type (classif, regr, surv, ...)
+  tab$type = vcapply(stri_split_fixed(tab$id, ".", n = 2L), head, 1L)
+
+  # check if all requirements are installed
+  pkgs = unique(unlist(tab$package))
+  pkgs = pkgs[vlapply(pkgs, function(x) length(find.package(x, quiet = TRUE)) > 0L)]
+  tab$installed = vlapply(tab$package, function(x) all(x %in% pkgs))
+
+  return(tab)
+}
+
+filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), properties = character(0L), check.packages = TRUE) {
+  contains = function(lhs, rhs) all(lhs %in% rhs)
+
+  if (check.packages)
+    tab = tab[tab$installed]
+
+  if (length(types) > 0L && !isScalarNA(types))
+    tab = tab[tab$type %in% types]
+
+  if (length(properties) > 0L) {
+    i = vlapply(tab$properties, contains, lhs = properties)
+    tab = tab[i]
+  }
+
+  return(tab)
+}
+
 #' @title Find matching learning algorithms.
 #'
 #' @description
-#' Returns the class names of learning algorithms which have specific characteristics, e.g.
-#' whether they supports missing values, case weights, etc.
+#' Returns learning algorithms which have specific characteristics, e.g.
+#' whether they support missing values, case weights, etc.
 #'
 #' Note that the packages of all learners are loaded during the search if you create them.
 #' This can be a lot. If you do not create them we only inspect properties of the S3 classes.
@@ -11,6 +58,7 @@
 #' Note that for general cost-sensitive learning, mlr currently supports mainly
 #' \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 #' which are not listed, as they are not basic R learning algorithms.
+#' The same applies for many multilabel methods, see, e.g., \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
 #'
 #' @template arg_task_or_type
 #' @param properties [\code{character}]\cr
@@ -24,16 +72,20 @@
 #'   should a warning be shown?
 #'   Default is \code{TRUE}.
 #' @param check.packages [\code{logical(1)}]\cr
-#'   Check if required packages are installed. Calls
-#'   \code{installed.packages()}. If \code{create} is \code{TRUE},
-#'   this is done implicitly and the value of this parameter is ignored.
-#'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
-#'   actually be constructed because of missing packages may be returned.
-#' @param create [\code{logical(1)}]\cr
-#'   Instantiate objects (or return strings)?
+#'   Check if required packages are installed. Calls \code{find.package()}.
+#'   If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only
+#'   contains learners whose dependencies are installed.
+#'   If \code{check.packages} set to \code{FALSE}, learners that cannot actually be constructed because
+#'   of missing packages may be returned.
 #'   Default is \code{FALSE}.
-#' @return [\code{character} | \code{list} of \code{\link{Learner}}].
-#'   The latter is named by ids of listed learners.
+#' @param create [\code{logical(1)}]\cr
+#'   Instantiate objects (or return info table)?
+#'   Packages are loaded if and only if this option is \code{TRUE}.
+#'   Default is \code{FALSE}.
+#' @return [\code{data.frame} | \code{list} of \code{\link{Learner}}].
+#'   Either a descriptive data.frame that allows access to all properties of the learners
+#'   or a list of created learner objects (named by ids of listed learners).
 #' @examples
 #' \dontrun{
 #' listLearners("classif", properties = c("multiclass", "prob"))
@@ -43,12 +95,12 @@
 #' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
-  if (!missing(obj))
-    assert(checkCharacter(obj), checkClass(obj, "Task"))
-  assertSubset(properties, getSupportedLearnerProperties())
+  assertSubset(properties, listLearnerProperties())
+  assertFlag(quiet)
   assertFlag(warn.missing.packages)
+  assertFlag(check.packages)
   assertFlag(create)
   UseMethod("listLearners")
 }
@@ -56,7 +108,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.default  = function(obj, properties = character(0L),
+listLearners.default  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
@@ -64,76 +116,35 @@ listLearners.default  = function(obj, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.character  = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  if (!isScalarNA(obj))
+    assertSubset(obj, listTaskTypes())
+  tab = getLearnerTable()
 
-  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", "multilabel", NA_character_))
-  assertSubset(properties, getSupportedLearnerProperties(obj))
+  if (warn.missing.packages && !all(tab$installed))
+    warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(tab[!tab$installed]$id))
 
-  type = obj
-  meths = as.character(methods("makeRLearner"))
-  # make really sure we filter out our own mock learners here, they have a very unique name
-  meths = meths[!grepl("__mlrmocklearners__", meths)]
-  res = err = vector("list", length(meths))
-  learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
-  if (!create && check.packages) {
-    installed.packs = rownames(installed.packages())
-  }
-  for (i in seq_along(meths)) {
-    cl = learner.classes[[i]]
-    lrn.type = strsplit(cl, "\\.")[[1L]][1L]
-    m = meths[[i]]
-    mb = functionBody(m)
-    if (!create && check.packages) {
-      depsInstalled = all(sapply(eval(mb[[2L]]$package), function(x) {
-        char = substr(x, 1L, 1L)
-        pack = substr(x, 1L + (char == "!" | char == "_"), nchar(x))
-        pack %in% installed.packs
-      }))
-    }
-    if (create || !check.packages || depsInstalled) {
-      lrn.properties = eval(mb[[2L]]$properties)
-      lrn = cl
-    } else {
-      err[[i]] = learner.classes[[i]]
-    }
+  tab = filterLearnerTable(tab, types = obj, properties = properties, check.packages = check.packages && !create)
 
-    # check if we have correct type and props
-    if (is.null(err[[i]]) && (is.na(type) || type == lrn.type) && all(properties %in% lrn.properties)) {
-      if (create) {
-        if (quiet) {
-          suppressAll(lrn <- try(makeLearner(lrn), silent = TRUE))
-        } else {
-          lrn = try(makeLearner(lrn))
-        }
-        if (is.error(lrn)) {
-          err[[i]] = cl
-        }
-      }
-      if (is.null(err[[i]])) {
-        res[[i]] = lrn
-      }
-    }
-  }
-
-  res = filterNull(res)
   if (create)
-    names(res) = extractSubList(res, "id")
-  else
-    res = unlist(res)
-  err = filterNull(err)
-  if (warn.missing.packages && length(err))
-    warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))
-  return(res)
+    return(lapply(tab$id[tab$installed], makeLearner))
+
+  tab$package = vcapply(tab$package, collapse)
+  properties = listLearnerProperties()
+  tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
+  tab$properties = NULL
+  setnames(tab, "id", "class")
+  setDF(tab)
+  addClasses(tab, "ListLearners")
 }
 
 #' @export
 #' @rdname listLearners
-listLearners.Task = function(obj, properties = character(0L),
+listLearners.Task = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   task = obj
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   props = character(0L)
   if (td$n.feat["numerics"] > 0L) props = c(props, "numerics")
@@ -147,4 +158,9 @@ listLearners.Task = function(obj, properties = character(0L),
   }
 
   listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, check.packages, create)
+}
+
+#' @export
+print.ListLearners = function(x, ...) {
+  printHead(as.data.frame(dropNamed(x, drop = "note")), ...)
 }

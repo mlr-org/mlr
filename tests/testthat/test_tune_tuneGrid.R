@@ -25,7 +25,7 @@ test_that("tuneGrid", {
   ctrl = makeTuneControlGrid(resolution = reso)
   tr2 = tuneParams(lrn, multiclass.task, rin, par.set = ps2, control = ctrl)
   op2 = as.data.frame(trafoOptPath(tr2$opt.path))
-  op1$exec.time = op2$exec.time = op1$error.message = NULL
+  op1$exec.time = op2$exec.time = NULL
   expect_equal(sortByCol(op1, c("C", "sigma")), sortByCol(op2, c("C", "sigma")))
 
 })

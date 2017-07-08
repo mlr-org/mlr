@@ -4,7 +4,7 @@
 \alias{getFilterValues}
 \title{Calculates feature filter values.}
 \usage{
-getFilterValues(task, method = "rf.importance",
+getFilterValues(task, method = "randomForestSRC.rfsrc",
   nselect = getTaskNFeats(task), ...)
 }
 \arguments{
@@ -13,7 +13,7 @@ The task.}
 
 \item{method}{[\code{character(1)}]\cr
 Filter method, see above.
-Default is \dQuote{rf.importance}.}
+Default is \dQuote{randomForestSRC.rfsrc}.}
 
 \item{nselect}{[\code{integer(1)}]\cr
 Number of scores to request. Scores are getting calculated for all features per default.}
@@ -32,30 +32,27 @@ For a list of features, use \code{\link{listFilterMethods}}.
 \code{getFilterValues} is deprecated in favor of \code{\link{generateFilterValuesData}}.
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
-  \code{\link{generateFilterValuesData}},
-  \code{\link{getFilteredFeatures}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
-
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCalibrationData}},
+Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialPredictionData}},
-  \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
-  \code{\link{generateThreshVsPerfData}}
-}
+  \code{\link{generatePartialDependenceData}},
+  \code{\link{generateThreshVsPerfData}},
+  \code{\link{plotFilterValues}}
 
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotFilterValues}}
+}

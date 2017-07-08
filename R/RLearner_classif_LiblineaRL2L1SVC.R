@@ -15,7 +15,7 @@ makeRLearner.classif.LiblineaRL2L1SVC = function() {
     class.weights.param = "wi",
     name = "L2-Regularized L1-Loss Support Vector Classification",
     short.name = "liblinl2l1svc",
-    note = ""
+    callees = "LiblineaR"
   )
 }
 

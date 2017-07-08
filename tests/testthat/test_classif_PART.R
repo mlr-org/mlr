@@ -1,7 +1,8 @@
 context("classif_PART")
 
 test_that("classif_PART", {
-  requirePackages("RWeka", default.method = "load")
+  requirePackagesOrSkip("RWeka", default.method = "load")
+
   parset.list = list(
     list(),
     list(M = 10),
@@ -12,7 +13,7 @@ test_that("classif_PART", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     parset$Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))
@@ -28,12 +29,12 @@ test_that("classif_PART", {
 
   testSimpleParsets("classif.PART", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets  ("classif.PART", multiclass.df, multiclass.target, multiclass.train.inds,
+  testProbParsets("classif.PART", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list)
 
-  tt = function (formula, data, subset, ...) {
+  tt = function(formula, data, subset, ...) {
     set.seed(getOption("mlr.debug.seed"))
-    RWeka::PART(formula, data = data[subset,], control = RWeka::Weka_control(..., Q =
+    RWeka::PART(formula, data = data[subset, ], control = RWeka::Weka_control(..., Q =
         as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
   }
 

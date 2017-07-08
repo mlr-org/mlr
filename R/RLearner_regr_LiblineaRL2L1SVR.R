@@ -13,10 +13,11 @@ makeRLearner.regr.LiblineaRL2L1SVR = function() {
     ),
     #provide default to get rid of warning message during training
     par.vals = list(svr_eps = 0.1),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "L2-Regularized L1-Loss Support Vector Regression",
     short.name = "liblinl2l1svr",
-    note = ""
+    note = "Parameter `svr_eps` has been set to `0.1` by default.",
+    callees = "LiblineaR"
   )
 }
 

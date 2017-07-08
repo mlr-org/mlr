@@ -15,33 +15,40 @@
 #' multiple binary ones and aggregates by voting.
 #'
 #' @template arg_learner_classif
-#' @return [\code{\link[mlr]{Learner}}].
+#' @return [\code{\link{Learner}}].
 #' @export
+#' @references
+#' Lin, HT.:
+#' Reduction from Cost-sensitive Multiclass Classification to
+#' One-versus-one Binary Classification.
+#' In: Proceedings of the Sixth Asian Conference on Machine Learning.
+#' JMLR Workshop and Conference Proceedings, vol 39, pp. 371-386. JMLR W&CP (2014).
+#' \url{http://www.jmlr.org/proceedings/papers/v39/lin14.pdf}
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
-  learner = checkLearnerClassif(learner, weights = TRUE)
+  learner = checkLearner(learner, "classif", props = "weights")
   learner = setPredictType(learner, "response")
-  id = paste("costsens", learner$id, sep = ".")
+  id = stri_paste("costsens", learner$id, sep = ".")
   makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
     learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
 }
 
 #' @export
-trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, ...) {
+trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset = NULL, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = getTaskCosts(.task)
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   classes = td$class.levels
   k = length(classes)
   feats = getTaskData(.task)
   models = vector("list", length = k * (k - 1) / 2)
 
   counter = 1
-  for (i in 1:(k-1)) {
+  for (i in 1:(k - 1)) {
     a1 = classes[i]
-    for (j in (i+1):k) {
+    for (j in (i + 1):k) {
       a2 = classes[j]
       y = ifelse(costs[, a1] < costs[, a2], a1, a2)
       # if on the sample one alg is always better, always predict it
@@ -57,7 +64,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
       counter = counter + 1L
     }
   }
-  m = makeHomChainModel(.learner, models)
+  makeHomChainModel(.learner, models)
 }
 
 
@@ -72,4 +79,3 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }
-

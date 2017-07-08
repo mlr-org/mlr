@@ -18,26 +18,26 @@ Gets the IDs of the learners used in a benchmark experiment.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
-  \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCritDifferencesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getBMRAggrPerformances}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
-  \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotRankMatrixAsBar}}
+  \code{\link{reduceBatchmarkResults}}
 }
-

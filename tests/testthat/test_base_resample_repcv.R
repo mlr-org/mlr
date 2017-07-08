@@ -1,17 +1,17 @@
-context("resample: repcv")
+context("resample_repcv")
 
 test_that("repcv instance works", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3), task = multiclass.task)
 
   iters = rin$desc$iters
-  expect_equal(iters, 10*3)
+  expect_equal(iters, 10 * 3)
   reps = rin$desc$reps
   expect_equal(reps, 3)
 
   for (j in 1:3) {
-    bag = c()
+    bag = NULL
     for (i in 1:10) {
-      k = as.integer((j-1)*10L + i)
+      k = as.integer((j - 1) * 10L + i)
       i1 = rin$train.inds[[i]]
       i2 = rin$test.inds[[i]]
       expect_equal(length(unique(i1)), 135)
@@ -32,14 +32,14 @@ test_that("repcv instance is stochastic", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3), task = multiclass.task)
 
   iters = rin$desc$iters
-  expect_equal(iters, 10*3)
+  expect_equal(iters, 10 * 3)
   reps = rin$desc$reps
   expect_equal(reps, 3)
 
   for (j in 1:3) {
-    bag = c()
+    bag = NULL
     for (i in 1:10) {
-      k = as.integer((j-1)*10L + i)
+      k = as.integer((j - 1) * 10L + i)
       i1 = rin$train.inds[[i]]
       i2 = rin$test.inds[[i]]
       expect_equal(length(unique(i1)), 135)
@@ -62,4 +62,8 @@ test_that("test.join works somehow", {
   res = resample(learner = lrn, task = task, resampling = rin, measures = measures)
   expect_equal(res$measures.test[, 2L], res$measures.test[, 3L])
   expect_true(diff(res$aggr) > 0)
+
+  lrn = setPredictType(lrn, predict.type = "prob")
+  res.prob = resample(learner = lrn, task = task, resampling = rin, measures = measures)
+  expect_equal(res.prob$measures.test[, 2L], res.prob$measures.test[, 3L])
 })

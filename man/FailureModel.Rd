@@ -9,6 +9,11 @@ A subclass of \code{\link{WrappedModel}}. It is created
 when a model internally crashed during training.
 The model always predicts NAs.
 
+The if mlr option \code{on.error.dump} is \code{TRUE}, the
+\code{FailureModel} contains the debug trace of the error.
+It can be accessed with \code{getFailureModelDump} and
+inspected with \code{debugger}.
+
 Its encapsulated \code{learner.model} is simply a string:
 The error message that was generated when the model crashed.
 The following code shows how to access the message.
@@ -26,4 +31,7 @@ print(p)
 print(performance(p))
 configureMlr(on.learner.error = "stop")
 }
-
+\seealso{
+Other debug: \code{\link{ResampleResult}},
+  \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
+}

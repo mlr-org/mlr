@@ -38,7 +38,7 @@
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
-#'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from 
+#'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
 #'   hill climbing algorithm and
 #'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 #'   while speeding up the predictions and reducing the size of the model.
@@ -57,7 +57,7 @@
 #'   \item{\code{init}}{Number of best models being included before the selection algorithm.}
 #'   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
 #'   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true}, 
+#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
 #'   the smaller the score the better.}
 #' }
 #' the parameters for \code{compress} method, including
@@ -73,17 +73,17 @@
 #'   base = c("classif.rpart", "classif.lda", "classif.svm")
 #'   lrns = lapply(base, makeLearner)
 #'   lrns = lapply(lrns, setPredictType, "prob")
-#'   m = makeStackedLearner(base.learners = lrns, 
+#'   m = makeStackedLearner(base.learners = lrns,
 #'     predict.type = "prob", method = "hill.climb")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
-#'   
+#'
 #'   # Regression
 #'   data(BostonHousing, package = "mlbench")
 #'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
 #'   base = c("regr.rpart", "regr.svm")
 #'   lrns = lapply(base, makeLearner)
-#'   m = makeStackedLearner(base.learners = lrns, 
+#'   m = makeStackedLearner(base.learners = lrns,
 #'     predict.type = "response", method = "compress")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
@@ -93,37 +93,37 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
-    super.learner = makeLearner(paste0(base.learners[[1]]$type,'.nnet'))
+    super.learner = makeLearner(stri_paste(base.learners[[1]]$type, ".nnet"))
   }
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
     if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
   }
 
-  baseType = unique(extractSubList(base.learners, "type"))
+  base.type = unique(extractSubList(base.learners, "type"))
   if (!is.null(resampling) & method != "stack.cv") {
     stop("No resampling needed for this method")
   }
   if (is.null(resampling)) {
-    resampling = makeResampleDesc("CV", iters= 5L,
-      stratify = ifelse(baseType == "classif", TRUE, FALSE))
+    resampling = makeResampleDesc("CV", iters = 5L,
+      stratify = ifelse(base.type == "classif", TRUE, FALSE))
   }
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
-  if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") |
+  if ("se" %in% pts || (!is.null(predict.type) && predict.type == "se") ||
         (!is.null(super.learner) && super.learner$predict.type == "se"))
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
-  if ((method == "average" | method == "hill.climb") & (!is.null(super.learner) | is.null(predict.type)) )
+  if ((method == "average" || method == "hill.climb") & (!is.null(super.learner) || is.null(predict.type)))
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
   if (method != "average" & method != "hill.climb" & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
   #if (method != "average" & !is.null(predict.type))
   #  stop("Predict type has to be specified within the super learner.")
-  if ((method == "average" | method == "hill.climb") & use.feat)
+  if ((method == "average" || method == "hill.climb") & use.feat)
     stop("The original features can not be used for this method")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
@@ -179,7 +179,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average","hill.climb"), TRUE, FALSE))
+      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average", "hill.climb"), TRUE, FALSE))
     }
 
     names(probs) = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
@@ -189,13 +189,8 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
 
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
-  bls = .learner$base.learners
-  ids = names(bls)
   # reduce to subset we want to train ensemble on
   .task = subsetTask(.task, subset = .subset)
-  # init prob result matrix, where base learners store predictions
-  probs = makeDataFrame(getTaskSize(.task), ncol = length(bls), col.types = "numeric",
-    col.names = ids)
   switch(.learner$method,
     average = averageBaseLearners(.learner, .task),
     stack.nocv = stackNoCV(.learner, .task),
@@ -221,7 +216,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   # get task information (classif)
   td = .model$task.desc
-  levs = td$class.levels
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
@@ -236,12 +230,12 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     if (.learner$method == "hill.climb") {
       model.weight = .model$learner.model$weights
     } else {
-      model.weight = rep(1/length(probs), length(probs))
+      model.weight = rep(1 / length(probs), length(probs))
     }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
-      for (i in 1:length(probs))
-        probs[[i]] = probs[[i]]*model.weight[i]
+      for (i in seq_along(probs))
+        probs[[i]] = probs[[i]] * model.weight[i]
       prob = Reduce("+", probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
@@ -259,7 +253,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
           # if super learner predictions should be probabilities, iter over rows to get proportions
           # FIXME: this is very slow + CUMBERSOME. we also do it in more places
           # we need a bbmisc fun for counting proportions in rows or cols
-          #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
+          #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels))/length(x)))
           #return(setColNames(t(probs), td$class.levels))
           probs = rowiseRatio(probs, td$class.levels, model.weight)
           return(probs)
@@ -288,12 +282,12 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     feat = .newdata[, colnames(.newdata) %nin% td$target, drop = FALSE]
 
     if (use.feat) {
-      predData = cbind(probs, feat)
+      pred.data = cbind(probs, feat)
     } else {
-      predData = probs
+      pred.data = probs
     }
 
-    pred = predict(sm, newdata = predData)
+    pred = predict(sm, newdata = pred.data)
     if (sm.pt == "prob") {
       return(as.matrix(getPredictionProbabilities(pred, cl = td$class.levels)))
     } else {
@@ -307,7 +301,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 setPredictType.StackedLearner = function(learner, predict.type) {
   lrn = setPredictType.Learner(learner, predict.type)
   lrn$predict.type = predict.type
-  if ("super.learner"%in%names(lrn)) lrn$super.learner$predict.type = predict.type
+  if ("super.learner" %in% names(lrn)) lrn$super.learner$predict.type = predict.type
   return(lrn)
 }
 
@@ -332,7 +326,7 @@ averageBaseLearners = function(learner, task) {
 
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
@@ -349,10 +343,10 @@ stackNoCV = function(learner, task) {
 
   pred.train = probs
 
-  if (type == "regr" | type == "classif") {
+  if (type == "regr" || type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) #X[, -ncol(X)]))
   }
 
   # now fit the super learner for predicted_probs --> target
@@ -374,7 +368,7 @@ stackNoCV = function(learner, task) {
 
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task) {
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
@@ -391,10 +385,10 @@ stackCV = function(learner, task) {
   }
   names(probs) = names(bls)
 
-  if (type == "regr" | type == "classif") {
+  if (type == "regr" || type == "classif") {
     probs = as.data.frame(probs)
   } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+    probs = as.data.frame(lapply(probs, function(X) X)) #X[, -ncol(X)]))
   }
 
   # add true target column IN CORRECT ORDER
@@ -410,9 +404,9 @@ stackCV = function(learner, task) {
   if (use.feat) {
     # add data with normal features IN CORRECT ORDER
     feat = getTaskData(task)#[test.inds, ]
-    feat = feat[, !colnames(feat)%in%tn, drop = FALSE]
-    predData = cbind(probs, feat)
-    super.task = makeSuperLearnerTask(learner, data = predData, target = tn)
+    feat = feat[, !colnames(feat) %in% tn, drop = FALSE]
+    pred.data = cbind(probs, feat)
+    super.task = makeSuperLearnerTask(learner, data = pred.data, target = tn)
   } else {
     super.task = makeSuperLearnerTask(learner, data = probs, target = tn)
   }
@@ -421,38 +415,37 @@ stackCV = function(learner, task) {
        super.model = super.model, pred.train = pred.train)
 }
 
-hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1, 
+hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1,
   metric = NULL, ...) {
 
   assertFlag(replace)
   assertInt(init, lower = 0)
   assertNumber(bagprob, lower = 0, upper = 1)
   assertInt(bagtime, lower = 1)
-  
-  td = getTaskDescription(task)
+
+  td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
-  if (testNull(metric)) {
+  if (is.null(metric)) {
     if (type == "regr") {
-      metric = function(pred, true) mean((pred-true)^2)
+      metric = function(pred, true) mean((pred - true)^2)
     } else {
       metric = function(pred, true) {
         pred = colnames(pred)[max.col(pred)]
         tb = table(pred, true)
-        return( 1- sum(diag(tb))/sum(tb) )
+        return(1 - sum(diag(tb)) / sum(tb))
       }
     }
   }
   assertFunction(metric)
-  
+
   bls = learner$base.learners
   if (type != "regr") {
-    for (i in 1:length(bls)) {
+    for (i in seq_along(bls)) {
       if (bls[[i]]$predict.type == "response")
         stop("Hill climbing algorithm only takes probability predict type for classification.")
     }
   }
-  use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
   base.models = probs = vector("list", length(bls))
   rin = makeResampleInstance(learner$resampling, task = task)
@@ -469,11 +462,11 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     base.models[[i]] = train(bl, task)
   }
   names(probs) = names(bls)
-  
+
   # add true target column IN CORRECT ORDER
   tn = getTaskTargetNames(task)
   test.inds = unlist(rin$test.inds)
-  
+
   # now start the hill climbing
   probs = lapply(probs, function(x) x[order(test.inds), , drop = FALSE])
   probs[[tn]] = getTaskTargets(task)[test.inds]
@@ -484,13 +477,13 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   flag = TRUE
   for (bagind in 1:bagtime) {
     # bagging of models
-    bagsize = ceiling(m*bagprob)
+    bagsize = ceiling(m * bagprob)
     bagmodel = sample(1:m, bagsize)
     weight = rep(0, bagsize)
-    
+
     # Initial selection of strongest learners
     inds = NULL
-    if (init>0) {
+    if (init > 0) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
         score[i] = metric(probs[[i]], probs[[tn]])
@@ -498,22 +491,22 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       inds = order(score)[1:init]
       weight[inds] = 1
     }
-    
+
     selection.size = init
     selection.ind = inds
     # current.prob = rep(0, nrow(probs))
     current.prob = matrix(0, nrow(probs[[1]]), ncol(probs[[1]]))
     old.score = Inf
-    if (selection.size>0) {
-      current.prob = Reduce('+', probs[selection.ind])
-      old.score = metric(current.prob/selection.size, probs[[tn]])
+    if (selection.size > 0) {
+      current.prob = Reduce("+", probs[selection.ind])
+      old.score = metric(current.prob / selection.size, probs[[tn]])
     }
     flag = TRUE
-    
+
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric( (probs[[i]]+current.prob)/(selection.size+1), probs[[tn]] )
+        score[i] = metric((probs[[i]] + current.prob) / (selection.size + 1), probs[[tn]])
       }
       inds = order(score)
       if (!replace) {
@@ -521,21 +514,21 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       } else {
         ind = inds[1]
       }
-      
+
       new.score = score[ind]
-      if (old.score-new.score<1e-8) {
+      if (old.score - new.score < 1e-8) {
         flag = FALSE
       } else {
-        current.prob = current.prob+probs[[ind]]
-        weights[ind] = weights[ind]+1
+        current.prob = current.prob + probs[[ind]]
+        weights[ind] = weights[ind] + 1
         selection.ind = c(selection.ind, ind)
-        selection.size = selection.size+1
+        selection.size = selection.size + 1
         old.score = new.score
       }
     }
     weights[bagmodel] = weights[bagmodel] + weight
   }
-  weights = weights/sum(weights)
+  weights = weights / sum(weights)
 
   list(method = "hill.climb", base.models = base.models, super.model = NULL,
        pred.train = probs, weights = weights)
@@ -545,30 +538,28 @@ compressBaseLearners = function(learner, task, parset = list()) {
   lrn = learner
   lrn$method = "hill.climb"
   ensemble.model = train(lrn, task)
-  
+
   data = getTaskData(task, target.extra = TRUE)
-  target = data[[2]]
   data = data[[1]]
-   
+
   pseudo.data = do.call(getPseudoData, c(list(data), parset))
   pseudo.target = predict(ensemble.model, newdata = pseudo.data)
   pseudo.data = data.frame(pseudo.data, target = pseudo.target$data$response)
 
   td = ensemble.model$task.desc
-  levs = td$class.levels
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
-  
+
   if (type == "regr") {
     new.task = makeRegrTask(data = pseudo.data, target = "target")
-    if (testNull(learner$super.learner)) {
-      m = makeLearner("regr.nnet", predict.type = )
+    if (is.null(learner$super.learner)) {
+      m = makeLearner("regr.nnet", predict.type = )  # nolint
     } else {
       m = learner$super.learner
     }
   } else {
     new.task = makeClassifTask(data = pseudo.data, target = "target")
-    if (testNull(learner$super.learner)) {
+    if (is.null(learner$super.learner)) {
       m = makeLearner("classif.nnet", predict.type = "")
     } else {
       m = learner$super.learner
@@ -576,7 +567,7 @@ compressBaseLearners = function(learner, task, parset = list()) {
   }
 
   super.model = train(m, new.task)
-  
+
   list(method = "compress", base.learners = lrn$base.learners, super.model = super.model,
        pred.train = pseudo.data)
 }
@@ -590,9 +581,9 @@ getResponse = function(pred, full.matrix = TRUE) {
     if (full.matrix) {
       # return matrix of probabilities
       td = pred$task.desc
-      predReturn = pred$data[, paste("prob", td$class.levels, sep = ".")]
-      colnames(predReturn) = td$class.levels
-      return(predReturn)
+      pred.return = pred$data[, stri_paste("prob", td$class.levels, sep = ".")]
+      colnames(pred.return) = td$class.levels
+      return(pred.return)
     } else {
       # return only vector of probabilities for binary classification
       return(getPredictionProbabilities(pred))
@@ -616,15 +607,15 @@ makeSuperLearnerTask = function(learner, data, target) {
 rowiseRatio = function(probs, levels, model.weight = NULL) {
   m = length(levels)
   p = ncol(probs)
-  if (testNull(model.weight)) {
-    model.weight = rep(1/p, p)
+  if (is.null(model.weight)) {
+    model.weight = rep(1 / p, p)
   }
-  mat = matrix(0,nrow(probs),m)
+  mat = matrix(0, nrow(probs), m)
   for (i in 1:m) {
-    ids = matrix(probs==levels[i], nrow(probs), p)
+    ids = matrix(probs == levels[i], nrow(probs), p)
     for (j in 1:p)
-      ids[,j] = ids[,j]*model.weight[j]
-    mat[,i] = rowSums(ids)
+      ids[, j] = ids[, j] * model.weight[j]
+    mat[, i] = rowSums(ids)
   }
   colnames(mat) = levels
   return(mat)
@@ -636,96 +627,96 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   ori.names = names(.data)
   feat.class = sapply(.data, class)
   ind2 = which(feat.class == "factor")
-  ind1 = setdiff(1:ncol(.data), ind2)
-  if (length(ind2)>0)
+  ind1 = setdiff(seq_len(ncol(.data)), ind2)
+  if (length(ind2) > 0)
     ori.labels = lapply(.data[[ind2]], levels)
   .data = lapply(.data, as.numeric)
-  .data = as.data.frame(.data) 
+  .data = as.data.frame(.data)
   # Normalization
   mn = rep(0, ncol(.data))
   mx = rep(0, ncol(.data))
   for (i in ind1) {
-    mn[i] = min(.data[,i])
-    mx[i] = max(.data[,i])
-    .data[, i] = (.data[, i]-mn[i])/(mx[i]-mn[i])
+    mn[i] = min(.data[, i])
+    mx[i] = max(.data[, i])
+    .data[, i] = (.data[, i] - mn[i]) / (mx[i] - mn[i])
   }
-  if (testNull(s)) {
+  if (is.null(s)) {
     s = rep(0, ncol(.data))
     for (i in ind1) {
-      s[i] = sd(.data[,i])
+      s[i] = sd(.data[, i])
     }
   }
   testNumeric(s, len = ncol(.data), lower = 0)
-  
+
   # Func to calc dist
   hamming = function(mat) {
     n = nrow(mat)
     m = ncol(mat)
-    res = matrix(0,n,n)
+    res = matrix(0, n, n)
     for (j in 1:m) {
-      unq = unique(mat[,j])
+      unq = unique(mat[, j])
       p = length(unq)
       for (i in 1:p) {
-        ind = which(mat[,j] == unq[i])
-        res[ind, -ind] = res[ind, -ind]+1
+        ind = which(mat[, j] == unq[i])
+        res[ind, -ind] = res[ind, -ind] + 1
       }
     }
     return(res)
   }
-  
+
   one.nn = function(mat, ind1, ind2) {
     n = nrow(mat)
-    dist.mat.1 = matrix(0,n,n)
-    dist.mat.2 = matrix(0,n,n)
-    if (length(ind1)>0) {
-      dist.mat.1 = as.matrix(stats::dist(mat[,ind1, drop = FALSE]))
+    dist.mat.1 = matrix(0, n, n)
+    dist.mat.2 = matrix(0, n, n)
+    if (length(ind1) > 0) {
+      dist.mat.1 = as.matrix(stats::dist(mat[, ind1, drop = FALSE]))
     }
-    if (length(ind2)>0) {
-      dist.mat.2 = hamming(mat[,ind2, drop = FALSE])
+    if (length(ind2) > 0) {
+      dist.mat.2 = hamming(mat[, ind2, drop = FALSE])
     }
-    dist.mat = dist.mat.1+dist.mat.2
-    neighbour = max.col( -dist.mat - diag(Inf, n))
+    dist.mat = dist.mat.1 + dist.mat.2
+    neighbour = max.col(-dist.mat - diag(Inf, n))
     return(neighbour)
   }
-  
-  # Get the neighbour 
+
+  # Get the neighbour
   neighbour = one.nn(.data, ind1, ind2)
-  
+
   # Start the loop
   p = ncol(.data)
   for (loop in 1:k) {
     data = .data
-    prob.mat = matrix(sample(c(0,1), n*p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
+    prob.mat = matrix(sample(c(0, 1), n * p, replace = TRUE, prob = c(prob, 1 - prob)), n, p)
     prob.mat = prob.mat == 0
     for (i in 1:n) {
       e = as.numeric(data[i, ])
       ee = as.numeric(data[neighbour[i], ])
-      
+
       # continuous
       for (j in ind1) {
-        if (prob.mat[i,j]) {
-          current.sd = abs(e[j]-ee[j])/s[j]
-          tmp1 = rnorm(1,ee[j], current.sd)
-          tmp2 = rnorm(1,e[j], current.sd)
+        if (prob.mat[i, j]) {
+          current.sd = abs(e[j] - ee[j]) / s[j]
+          tmp1 = rnorm(1, ee[j], current.sd)
+          tmp2 = rnorm(1, e[j], current.sd)
           e[j] = tmp1
           ee[j] = tmp2
         }
       }
       for (j in ind2) {
-        if (prob.mat[i,j]) {
+        if (prob.mat[i, j]) {
           tmp = e[j]
           e[j] = ee[j]
           ee[j] = tmp
         }
       }
-      
-      data[i,] = ee
-      data[neighbour[i],] = e
+
+      data[i, ] = ee
+      data[neighbour[i], ] = e
     }
     res = rbind(res, data)
   }
   for (i in ind1)
-    res[,i] = res[,i]*(mx[i]-mn[i])+mn[i]
+    res[, i] = res[, i] * (mx[i] - mn[i]) + mn[i]
   res = data.frame(res)
   names(res) = ori.names
   for (i in ind2)
@@ -733,7 +724,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   return(res)
 }
 
-# TODOs:
+# FIXMEs:
 # - document + test + export
 # - benchmark stuff on openml
 # - allow base.learners to be character of learners (not only list of learners)

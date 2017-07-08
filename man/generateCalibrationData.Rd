@@ -2,6 +2,7 @@
 % Please edit documentation in R/generateCalibration.R
 \name{generateCalibrationData}
 \alias{generateCalibrationData}
+\alias{CalibrationData}
 \title{Generate classifier calibration data.}
 \usage{
 generateCalibrationData(obj, breaks = "Sturges", groups = NULL,
@@ -14,7 +15,7 @@ In case of a list probably produced by different learners you want to compare, t
 name the list with the names you want to see in the plots, probably
 learner shortnames or ids.}
 
-\item{breaks}{[\code{character(1)}] or [\code{numeric}]\cr
+\item{breaks}{[\code{character(1)} | \code{numeric}]\cr
 If \code{character(1)}, the algorithm to use in generating probability bins.
 See \code{\link{hist}} for details.
 If \code{numeric}, the cut points for the bins.
@@ -29,6 +30,28 @@ Default is \code{NULL}.}
 Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 Default is first task.}
 }
+\value{
+[CalibrationData]. A \code{list} containing:
+  \item{proportion}{[\code{data.frame}] with columns:
+    \itemize{
+      \item \code{Learner} Name of learner.
+      \item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
+      \item \code{Class} Class labels (for binary classification only the positive class).
+      \item \code{Proportion} Proportion of observations from class \code{Class} among all
+        observations with posterior probabilities of class \code{Class} within the
+        interval given in \code{bin}.
+    }}
+  \item{data}{[\code{data.frame}] with columns:
+    \itemize{
+      \item \code{Learner} Name of learner.
+      \item \code{truth} True class label.
+      \item \code{Class} Class labels (for binary classification only the positive class).
+      \item \code{Probability} Predicted posterior probability of \code{Class}.
+      \item \code{bin} Bin corresponding to \code{Probability}.
+    }}
+  \item{task}{[\code{\link{TaskDesc}}]\cr
+    Task description.}
+}
 \description{
 A calibrated classifier is one where the predicted probability of a class closely matches the
 rate at which that class occurs, e.g. for data points which are assigned a predicted probability
@@ -41,16 +64,15 @@ predicted probability bins.
 Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
 }
 \seealso{
-Other calibration: \code{\link{plotCalibration}}
-
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCritDifferencesData}},
+Other generate_plot_data: \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialPredictionData}},
-  \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
+  \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
-  \code{\link{getFilterValues}}
-}
+  \code{\link{getFilterValues}},
+  \code{\link{plotFilterValues}}
 
+Other calibration: \code{\link{plotCalibration}}
+}

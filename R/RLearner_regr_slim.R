@@ -16,12 +16,14 @@ makeRLearner.regr.slim = function() {
       makeIntegerLearnerParam(id = "max.ite", default = 1e5L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "lambda.idx", default = 3L, when = "predict")
+      # FIXME the default for lambda.id in predict.slim is c(1:3)
     ),
     par.vals = list(lambda.idx = 3L),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "Sparse Linear Regression using Nonsmooth Loss Functions and L1 Regularization",
     short.name = "slim",
-    note = "lambda.idx has been set to 3 by default"
+    note = "`lambda.idx` has been set to `3` by default.",
+    callees = c("slim", "predict.slim")
   )
 }
 
@@ -33,5 +35,5 @@ trainLearner.regr.slim = function(.learner, .task, .subset, .weights = NULL, ...
 
 #' @export
 predictLearner.regr.slim = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = as.matrix(.newdata), ...)[[1]][,1L]
+  predict(.model$learner.model, newdata = as.matrix(.newdata), ...)[[1]][, 1L]
 }

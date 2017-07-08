@@ -16,7 +16,7 @@ test_that("costsens", {
   expect_true(!is.na(r$aggr))
 
   # check case where all costs are totally equal
-  costs[,] = 1
+  costs[, ] = 1
   task = makeCostSensTask(data = costsens.feat, costs = costs)
   r = resample(lrn, task, rdesc)
   expect_true(!is.na(r$aggr))
@@ -35,4 +35,3 @@ test_that("costsens", {
   r = resample(lrn, costsens.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
-

@@ -9,7 +9,8 @@ makeRLearner.classif.rotationForest = function() {
     ),
     properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
     name = "Rotation Forest",
-    short.name = "rotationForest"
+    short.name = "rotationForest",
+    callees = "rotationForest"
     )
 }
 
@@ -26,9 +27,9 @@ trainLearner.classif.rotationForest = function(.learner, .task, .subset, .weight
 predictLearner.classif.rotationForest = function(.learner, .model, .newdata, ...) {
   features = .newdata[, names(.newdata) == .model$features]
   p = predict(.model$learner.model, newdata = features, all = FALSE, ...)
-  if(.learner$predict.type == "prob"){
-    levs = c(.model$task.desc$positive, .model$task.desc$negative)  
-    propVectorToMatrix(1-p, levs)
+  if (.learner$predict.type == "prob"){
+    levs = c(.model$task.desc$positive, .model$task.desc$negative)
+    propVectorToMatrix(1 - p, levs)
   }else{
     as.factor(ifelse(p > 0.5, .model$task.desc$positive, .model$task.desc$negative))
   }

@@ -1,23 +1,26 @@
 requireLearnerPackages = function(learner) {
-  requirePackages(learner$package, why = paste("learner", learner$id), default.method = "load")
+  requirePackages(learner$package, why = stri_paste("learner", learner$id, sep = " "), default.method = "load")
 }
 
 cleanupPackageNames = function(pkgs) {
-  gsub("^[!_]", "", pkgs)
+  stri_replace_all(pkgs, "", regex = "^[!_]")
 }
 
 # paste together measure and aggregation ids
 measureAggrName = function(measure) {
-  paste(measure$id, measure$aggr$id, sep = ".")
+  stri_paste(measure$id, measure$aggr$id, sep = ".")
 }
 
 # paste together measure and aggregation names
 measureAggrPrettyName = function(measure) {
-  paste(measure$name, measure$aggr$name, sep = ": ")
+  stri_paste(measure$name, measure$aggr$name, sep = ": ")
 }
 
-perfsToString = function(y) {
-  paste(paste(names(y), "=", formatC(y, digits = 3L), sep = ""), collapse = ",")
+# convert a named numvec of perf values (think 'aggr' from resample) into flat string
+# ala <name><sep><value>,...,<name><sep><value>
+perfsToString = function(y, sep = "=") {
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = 3L), sep = ""),
+             collapse = ",", sep = " ")
 }
 
 removeFromDots = function(ns, ...) {
@@ -34,10 +37,6 @@ getTrainingInfo = function(x) {
   attr(x, "mlr.train.info") %??% attr(x$learner.model, "mlr.train.info")
 }
 
-"%??%" = function(lhs, rhs) {
-  if (missing(lhs) || is.null(lhs)) rhs else lhs
-}
-
 getLearnerOptions = function(lrn, opts) {
   lrn.opts = getLeafLearner(lrn)$config
   setNames(lapply(opts, function(x) lrn.opts[[x]] %??% getMlrOption(x)), opts)
@@ -49,23 +48,26 @@ propVectorToMatrix = function(p, levs) {
   y = matrix(0, ncol = 2L, nrow = length(p))
   colnames(y) = levs
   y[, 2L] = p
-  y[, 1L] = 1-p
+  y[, 1L] = 1 - p
   y
 }
 
-getSupportedLearnerProperties = function(type = NA_character_) {
-  p = list(
-    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights"),
-    multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "multilabel", "oneclass", "twoclass", "multiclass"),
-    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se"),
-    cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "rcens"),
-    costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
-  )
-  if (is.na(type))
-    unique(unlist(p))
-  else
-    p[[type]]
+#' @title List the supported task types in mlr
+#'
+#' @description
+#' Returns a character vector with each of the supported task types in mlr.
+#'
+#' @return [\code{character}].
+#' @export
+listTaskTypes = function() {
+  c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+}
+
+# Maybe move to BBmisc at some point
+measureTime = function(expr, ee = parent.frame()) {
+  before = proc.time()[[3L]]
+  force(expr)
+  proc.time()[[3L]] - before
 }
 
 # find duplicate measure names or ids and paste together those
@@ -82,4 +84,17 @@ replaceDupeMeasureNames = function(measures, x = "id") {
     new.names = sapply(measures[dupes], function(x) measureAggrPrettyName(x))
   meas.names[dupes] = new.names
   unlist(meas.names)
+}
+
+# suppresses a warning iff the warning message contains the
+# substring `str`.
+suppressWarning = function(expr, str) {
+  withCallingHandlers(expr, warning = function(w) {
+    if (stri_detect_fixed(stri_flatten(w$message), str))
+      invokeRestart("muffleWarning")
+  })
+}
+
+hasEmptyLevels = function(x) {
+  !all(levels(x) %chin% as.character(unique(x)))
 }

@@ -4,26 +4,30 @@
 \alias{subsetTask}
 \title{Subset data in task.}
 \usage{
-subsetTask(task, subset, features)
+subsetTask(task, subset = NULL, features)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer} | \code{logical(n)}]\cr
-Selected cases.
-Default is all cases.}
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
 
-\item{features}{[\code{character}]\cr
-Selected inputs. Note that target feature is always included in the
+\item{features}{[\code{character} | \code{integer} | \code{logical}]\cr
+Vector of selected inputs. You can either pass a character vector with the
+feature names, a vector of indices, or a logical vector.\cr
+In case of an index vector each element denotes the position of the feature
+name returned by \code{\link{getTaskFeatureNames}}.\cr
+Note that the target feature is always included in the
 resulting task, you should not pass it here.
-Default is all features.}
+Default is to use all features.}
 }
 \value{
 [\code{\link{Task}}]. Task with subsetted data.
 }
 \description{
-Subset data in task.
+See title.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
@@ -32,11 +36,10 @@ subsetTask(task, subset = 1:100)
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskDescription}},
+  \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}}
 }
-

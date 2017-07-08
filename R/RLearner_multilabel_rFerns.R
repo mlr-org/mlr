@@ -10,7 +10,7 @@ makeRLearner.multilabel.rFerns = function() {
     properties = c("numerics", "factors", "ordered"),
     name = "Random ferns",
     short.name = "rFerns",
-    note = ""
+    callees = "rFerns"
   )
 }
 

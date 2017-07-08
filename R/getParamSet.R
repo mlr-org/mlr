@@ -1,24 +1,21 @@
-#' Get a description of all possible parameter settings for a learner.
+#' @title Get a description of all possible parameter settings for a learner.
 #'
-#' @template arg_learner
+#' @description
+#' Returns the \code{\link[ParamHelpers]{ParamSet}} from a \code{\link{Learner}}.
+#'
 #' @template ret_ps
 #' @family learner
+#' @name getParamSet
+#' @rdname getParamSet
+NULL
+
 #' @export
-getParamSet = function(learner) {
-  checkLearner(learner)
-  UseMethod("getParamSet")
+getParamSet.Learner = function(x) {
+  x$par.set
 }
 
-#'@export
-getParamSet.Learner = function(learner) {
-  assertClass(learner, classes = "Learner")
-  learner$par.set
+#' @export
+getParamSet.character = function(x) {
+  x = checkLearner(x)
+  getParamSet(x)
 }
-
-#'@export
-getParamSet.character = function(learner) {
-  learner = checkLearner(learner)
-  getParamSet(learner)
-}
-
-

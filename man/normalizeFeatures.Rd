@@ -2,14 +2,23 @@
 % Please edit documentation in R/normalizeFeatures.R
 \name{normalizeFeatures}
 \alias{normalizeFeatures}
-\title{Normalize features}
+\title{Normalize features.}
 \usage{
-normalizeFeatures(task, method = "standardize", exclude = character(0L),
-  range = c(0, 1), on.constant = "quiet")
+normalizeFeatures(obj, target = character(0L), method = "standardize",
+  cols = NULL, range = c(0, 1), on.constant = "quiet")
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+Input data.}
+
+\item{target}{[\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
+Name(s) of the target variable(s).
+Only used when \code{obj} is a data.frame, otherwise ignored.
+If survival analysis is applicable, these are the names of the survival time and event columns,
+so it has length 2.
+For multilabel classification these are the names of logical columns that indicate whether
+a class label is present and the number of target variables corresponds to the number of
+classes.}
 
 \item{method}{[\code{character(1)}]\cr
 Normalizing method. Available are:\cr
@@ -18,10 +27,8 @@ Normalizing method. Available are:\cr
 \dQuote{standardize}: Center and scale.\cr
 \dQuote{range}: Scale to a given range.\cr}
 
-\item{exclude}{[\code{character}]\cr
-Names of the columns to exclude.
-The target does not have to be included here.
-Default is none.}
+\item{cols}{[\code{character}]\cr
+Columns to normalize. Default is to use all numeric columns.}
 
 \item{range}{[\code{numeric(2)}]\cr
 Range for method \dQuote{range}.
@@ -39,10 +46,10 @@ since this methods does not fail for constant vectors. Possible actions are:\cr
 \dQuote{stop}: Stop with an error.\cr}
 }
 \value{
-[\code{\link{Task}}].
+[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 }
 \description{
-Normalize features by different methods. 
+Normalize features by different methods.
 Internally \code{\link[BBmisc]{normalize}} is used for every feature column.
 Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.
@@ -57,4 +64,3 @@ Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{removeConstantFeatures}},
   \code{\link{summarizeColumns}}
 }
-

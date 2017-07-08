@@ -26,8 +26,20 @@
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
+#' @param resample.fun [\code{closure}]\cr
+#'   The function to use for resampling. Defaults to \code{\link{resample}}. If a user-given function
+#'   is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
+#'   \dQuote{measures}, and \dQuote{show.info}; see \code{\link{resample}}. Within this function,
+#'   it is easiest to call \code{\link{resample}} and possibly modify the result.
+#'   However, it is possible to return a list with only the following essential slots:
+#'   the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
+#'   (see \code{\link{TuneControl}}), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+#'   This parameter must be the default when \code{mbo} tuning is performed.
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
+#' @note If you would like to include results from the training data set, make
+#' sure to appropriately adjust the resampling strategy and the aggregation for
+#' the measure. See example code below.
 #' @export
 #' @examples
 #' # a grid search for an SVM (with a tiny number of points...)
@@ -40,8 +52,12 @@
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
-#' print(as.data.frame(res$opt.path))
-#' print(as.data.frame(trafoOptPath(res$opt.path)))
+#' # access data for all evaluated points
+#' print(head(as.data.frame(res$opt.path)))
+#' print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+#' # access data for all evaluated points - alternative
+#' print(head(generateHyperParsEffectData(res)))
+#' print(head(generateHyperParsEffectData(res, trafo = TRUE)))
 #'
 #' \dontrun{
 #' # we optimize the SVM over 3 kernels simultanously
@@ -55,20 +71,27 @@
 #'     requires = quote(kernel == "polydot"))
 #' )
 #' print(ps)
-#' ctrl = makeTuneControlIrace(maxExperiments = 200L)
+#' ctrl = makeTuneControlIrace(maxExperiments = 5, nbIterations = 1, minNbSurvival = 1)
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
+#'
+#' # include the training set performance as well
+#' rdesc = makeResampleDesc("Holdout", predict = "both")
+#' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
+#'   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
+#' print(res)
+#' print(head(as.data.frame(res$opt.path)))
 #' }
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
+#' @seealso \code{\link{generateHyperParsEffectData}}
+tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
-  # FIXME: must be removed later, see PH issue #52
-  checkParamSet(par.set)
   assertClass(control, classes = "TuneControl")
+  assertFunction(resample.fun)
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
@@ -88,19 +111,16 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     TuneControlIrace = tuneIrace,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
-  if (cl == "TuneControlMBO" && control$mbo.control$multifid) {
-    par.set2 = c(par.set, makeParamSet(makeIntegerParam(".multifid.lvl", lower = 0, upper = length(control$mbo.control$multifid.lvls))))
-  } else {
-    par.set2 = par.set
-  }
-  opt.path = makeOptPathDFFromMeasures(par.set2, measures, include.extra = (control$tune.threshold))
+
+  need.extra = control$tune.threshold || getMlrOption("on.error.dump")
+  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
-    messagef(printToChar(par.set))
+    message(printToChar(par.set))  # using message() since this can go over the char limit of messagef(), see issue #1528
     messagef("With control class: %s", cl)
     messagef("Imputation value: %g", control$impute.val)
   }
-  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info)
+  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)

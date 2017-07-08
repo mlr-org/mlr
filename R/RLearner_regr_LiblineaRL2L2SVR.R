@@ -4,7 +4,8 @@ makeRLearner.regr.LiblineaRL2L2SVR = function() {
     cl = "regr.LiblineaRL2L2SVR",
     package = "LiblineaR",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "type", values = c(11L, 12L)),
+      makeDiscreteLearnerParam(id = "type", default = 11L, values = c(11L, 12L)),
+      # FIXME default of type in LiblieaR() is 0
       makeNumericLearnerParam(id = "cost", default = 1, lower = 0),
       # FIXME: Add default value when parameter dependent defaults are implemented:
       ## if type = 11: eps default = 0.01, if type = 12: eps default = 0.1
@@ -16,10 +17,11 @@ makeRLearner.regr.LiblineaRL2L2SVR = function() {
     ),
     #provide default to get rid of warning message during training
     par.vals = list(svr_eps = 0.1, type = 11L),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "L2-Regularized L2-Loss Support Vector Regression",
     short.name = "liblinl2l2svr",
-    note = "type 11 is primal and 12 is dual problem"
+    note = "`type = 11` (the default) is primal and `type = 12` is dual problem. Parameter `svr_eps` has been set to `0.1` by default.",
+    callees = "LiblineaR"
   )
 }
 

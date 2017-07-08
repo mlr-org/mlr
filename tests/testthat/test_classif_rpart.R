@@ -1,7 +1,8 @@
 context("classif_rpart")
 
 test_that("classif_rpart", {
-  requirePackages("rpart", default.method = "load")
+  requirePackagesOrSkip("rpart", default.method = "load")
+
   parset.list = list(
     list(),
     list(minsplit = 10, cp = 0.005),
@@ -13,7 +14,7 @@ test_that("classif_rpart", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
@@ -26,7 +27,7 @@ test_that("classif_rpart", {
   }
 
   testSimpleParsets("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets  ("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
+  testProbParsets("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata, type = "class")
@@ -34,4 +35,3 @@ test_that("classif_rpart", {
   testCVParsets("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 
 })
-

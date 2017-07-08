@@ -1,5 +1,5 @@
 #' @export
-as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
+as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
   x$data
 }
 
@@ -49,17 +49,30 @@ getPredictionProbabilities = function(pred, cl) {
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
   if (ttype %in% c("classif", "multilabel")) {
-    cl2 = paste("prob", cl, sep = ".")
+    cl2 = stri_paste("prob", cl, sep = ".")
     if (!all(cl2 %in% cns))
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
     y = pred$data[, cl2]
     if (length(cl) > 1L)
       colnames(y) = cl
   } else if (ttype == "cluster") {
-    y = pred$data[, grepl("prob\\.", cns)]
+    y = pred$data[, stri_detect_regex(cns, "prob\\.")]
     colnames(y) = seq_col(y)
   }
   return(y)
+}
+
+#' @title Get summarizing task description from prediction.
+#'
+#' @description See title.
+#'
+#' @template arg_pred
+#' @return ret_taskdesc
+#' @export
+#' @family predict
+getPredictionTaskDesc = function(pred) {
+  assertClass(pred, "Prediction")
+  pred$task.desc
 }
 
 #' Deprecated, use \code{getPredictionProbabilities} instead.
@@ -72,13 +85,13 @@ getProbabilities = function(pred, cl) {
 }
 
 #c.Prediction = function(...) {
-#	preds = list(...)
-#	id = Reduce(c, lapply(preds, function(x) x@id))
-#	response = Reduce(c, lapply(preds, function(x) x@response))
-#	target = Reduce(c, lapply(preds, function(x) x@target))
-#	weights = Reduce(c, lapply(preds, function(x) x@weights))
-#	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
-#	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
+#  preds = list(...)
+#  id = Reduce(c, lapply(preds, function(x) x@id))
+#  response = Reduce(c, lapply(preds, function(x) x@response))
+#  target = Reduce(c, lapply(preds, function(x) x@target))
+#  weights = Reduce(c, lapply(preds, function(x) x@weights))
+#  prob = Reduce(rbind, lapply(preds, function(x) x@prob))
+#  return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}
 
 
@@ -106,12 +119,12 @@ getPredictionResponse = function(pred) {
 #' @export
 getPredictionResponse.default = function(pred) {
   # this should work for classif, regr and cluster and surv
-  pred$data[, "response", drop = TRUE]
+  pred$data[["response"]]
 }
 
 #' @export
 getPredictionResponse.PredictionMultilabel = function(pred) {
-  i = grepl("^response\\.", colnames(pred$data))
+  i = stri_detect_regex(colnames(pred$data), "^response\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
@@ -124,7 +137,7 @@ getPredictionSE = function(pred) {
 
 #' @export
 getPredictionSE.default = function(pred) {
-  pred$data[, "se", drop = TRUE]
+  pred$data[["se"]]
 }
 
 #' @rdname getPredictionResponse
@@ -135,7 +148,7 @@ getPredictionTruth = function(pred) {
 
 #' @export
 getPredictionTruth.default = function(pred) {
-  pred$data[, "truth", drop = TRUE]
+  pred$data[["truth"]]
 }
 
 #' @export
@@ -151,7 +164,22 @@ getPredictionTruth.PredictionSurv = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionMultilabel = function(pred) {
-  i = grepl("^truth\\.", colnames(pred$data))
+  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
+}
+
+#' @title Return the error dump of a failed Prediction.
+#'
+#' @description
+#' Returns the error dump that can be used with \code{debugger()} to evaluate errors.
+#' If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE} or if the
+#' prediction did not fail, this returns \code{NULL}.
+#'
+#' @template arg_pred
+#' @return [\code{last.dump}].
+#' @family debug
+#' @export
+getPredictionDump = function(pred) {
+  pred$dump
 }

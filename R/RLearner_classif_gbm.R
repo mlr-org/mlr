@@ -4,7 +4,7 @@ makeRLearner.classif.gbm = function() {
     cl = "classif.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "gaussian", "laplace", "huberized", "multinomial", "poisson", "pairwise")),
+      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "huberized", "multinomial")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
@@ -15,26 +15,29 @@ makeRLearner.classif.gbm = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights", "featimp"),
+    par.vals = list(keep.data = FALSE),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = ""
+    note = "`keep.data` is set to FALSE to reduce memory requirements. Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for
+      multiclass problems. The latter is the only setting that works for > 2 classes.",
+    callees = "gbm"
   )
 }
 
 #' @export
 trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  td = getTaskDescription(.task)
+  td = getTaskDesc(.task)
   if (length(td$class.levels) == 2L)
     d = getTaskData(.task, .subset, recode.target = "01")
   else
     d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, ...)
+    gbm::gbm(f, data = d, ...)
   } else  {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = d, weights = .weights, ...)
   }
 }
 
@@ -48,7 +51,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
     if (.learner$predict.type == "prob") {
       y = matrix(0, ncol = 2, nrow = nrow(.newdata))
       colnames(y) = levs
-      y[, 1L] = 1-p
+      y[, 1L] = 1 - p
       y[, 2L] = p
       return(y)
     } else {
@@ -57,7 +60,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(p)
     }
   } else {
-    p = p[,,1L]
+    p = p[, , 1L]
     if (.learner$predict.type == "prob") {
       return(p)
     } else {
@@ -66,4 +69,10 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(factor(cns[ind], levels = cns))
     }
   }
+}
+
+#' @export
+getFeatureImportanceLearner.classif.gbm = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  gbm::relative.influence(mod, mod$n.trees, ...)
 }

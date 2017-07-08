@@ -5,7 +5,7 @@
 \title{Extract the test performance values from a benchmark result.}
 \usage{
 getBMRPerformances(bmr, task.ids = NULL, learner.ids = NULL,
-  as.df = FALSE)
+  as.df = FALSE, drop = FALSE)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -21,7 +21,22 @@ Default is all.}
 
 \item{as.df}{[\code{character(1)}]\cr
 Return one data.frame as result - or a list of lists of objects?.
-Default is \code{FALSE}}
+Default is \code{FALSE}.}
+
+\item{drop}{[\code{logical(1)}]\cr
+If drop is \code{FALSE} (the default), a nested list with
+the following structure is returned:\cr
+\code{res[task.ids][learner.ids]}.\cr
+If drop is set to \code{TRUE}, it is checked if the list
+structure can be simplified.\cr
+If only one learner was passed, a list with entries
+for each task is returned.\cr
+If only one task was passed, the entries are named after
+the corresponding learner.\cr
+For an experiment with both one task and learner,
+the whole list structure is removed.\cr
+Note that the name of the
+task/learner will be dropped from the return object.}
 }
 \value{
 [\code{list} | \code{data.frame}]. See above.
@@ -33,26 +48,26 @@ Either a list of lists of \dQuote{measure.test} data.frames, as returned by
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
-  \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCritDifferencesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getBMRAggrPerformances}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
-  \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotRankMatrixAsBar}}
+  \code{\link{reduceBatchmarkResults}}
 }
-

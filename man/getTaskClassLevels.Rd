@@ -14,12 +14,12 @@ Task or its description object.}
 [\code{character}].
 }
 \description{
-Get the class levels for classification and multilabel tasks.
+NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+actually return the same thing.
 }
 \seealso{
 Other task: \code{\link{getTaskCosts}},
-  \code{\link{getTaskData}},
-  \code{\link{getTaskDescription}},
+  \code{\link{getTaskData}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
@@ -27,4 +27,3 @@ Other task: \code{\link{getTaskCosts}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-

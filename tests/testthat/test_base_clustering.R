@@ -1,4 +1,4 @@
-context("clustering base")
+context("clustering")
 
 test_that("clustering predict",  {
   lrn = makeLearner("cluster.cmeans", predict.type = "prob")
@@ -29,11 +29,11 @@ test_that("clustering performance with missing clusters",  {
   pred = predict(model, task = noclass.task)
   pred$data$response = sample(c(1, 3, 4), length(pred$data$response), replace = TRUE)
 
-  expect_that(performance(pred, task = noclass.task, measures = db), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = dunn), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = G1), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = G2), not(gives_warning()))
-  expect_that(performance(pred, task = noclass.task, measures = silhouette), not(gives_warning()))
+  expect_warning(performance(pred, task = noclass.task, measures = db), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = dunn), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = G1), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = G2), NA)
+  expect_warning(performance(pred, task = noclass.task, measures = silhouette), NA)
 })
 
 test_that("clustering resample",  {
@@ -46,9 +46,9 @@ test_that("clustering resample",  {
 })
 
 test_that("clustering benchmark", {
-  task.names = c("noclass")
+  task.names = "noclass"
   tasks = list(noclass.task)
-  learner.names = c("cluster.SimpleKMeans")
+  learner.names = "cluster.SimpleKMeans"
   learners = lapply(learner.names, makeLearner)
   rin = makeResampleDesc("CV", iters = 2L)
 
@@ -57,7 +57,7 @@ test_that("clustering benchmark", {
 })
 
 test_that("clustering downsample", {
-  down.tsk = downsample(noclass.task, perc = 1/3)
+  down.tsk = downsample(noclass.task, perc = 1 / 3)
   expect_equal(getTaskSize(down.tsk), 50L)
 })
 

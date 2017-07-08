@@ -9,4 +9,3 @@ test_that("aggregations", {
   expect_equal(length(a), length(ms))
   expect_true(!any(is.na(as.logical(a))))
 })
-

@@ -1,8 +1,10 @@
 context("regr_btgpllm")
 
 test_that("regr_btgpllm", {
-  requirePackages("tgp", default.method = "load")
+  requirePackagesOrSkip("tgp", default.method = "load")
+
   parset.list = list(
+    list(),
     list(meanfn = "linear", bprior = "bflat", corr = "expsep")
   )
 
@@ -20,7 +22,7 @@ test_that("regr_btgpllm", {
   y = regr.df[inds, regr.target]
 
   old.predicts.list = list()
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(X = train, Z = y, verb = 0, basemax = n.num, pred.n = FALSE)
     pars = c(pars, parset)
@@ -30,5 +32,3 @@ test_that("regr_btgpllm", {
   }
   testSimpleParsets("regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds, old.predicts.list, parset.list)
 })
-
-

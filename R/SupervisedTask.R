@@ -1,4 +1,4 @@
-makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data) {
   task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
@@ -20,6 +20,8 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
   catf("Type: %s", td$type)
   if (print.target)
     catf("Target: %s", collapse(td$target))
+  if (inherits(x, "SurvTask"))
+    catf("Events: %i", sum(getTaskTargets(x)[, 2L]))
   catf("Observations: %i", td$size)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse = "\n"))

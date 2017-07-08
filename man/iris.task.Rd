@@ -3,7 +3,7 @@
 \docType{data}
 \name{iris.task}
 \alias{iris.task}
-\title{Iris classification task}
+\title{Iris classification task.}
 \description{
 Contains the task (\code{iris.task}).
 }
@@ -11,4 +11,3 @@ Contains the task (\code{iris.task}).
 See \code{\link[datasets]{iris}}.
 }
 \keyword{data}
-

@@ -22,7 +22,7 @@ number of classes.}
 Weight for each class.
 Must be a vector of the same number of elements as classes are in task,
 and must also be in the same order as the class levels are in
-\code{getTaskDescription(task)$class.levels}.
+\code{getTaskDesc(task)$class.levels}.
 For convenience, one must pass a single number in case of binary classification, which
 is then taken as the weight of the positive class, while the negative class receives a weight
 of 1.
@@ -57,12 +57,12 @@ something like a new \dQuote{class.weights} parameter for the learner via observ
 # using the direct parameter of the SVM (which is already defined in the learner)
 lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 res = holdout(lrn, sonar.task)
-print(getConfMatrix(res$pred))
+print(calculateConfusionMatrix(res$pred))
 
 # using the observation weights of logreg
 lrn = makeWeightedClassesWrapper("classif.logreg", wcw.weight = 0.01)
 res = holdout(lrn, sonar.task)
-print(getConfMatrix(res$pred))
+print(calculateConfusionMatrix(res$pred))
 
 # tuning the imbalancy param and the SVM param in one go
 lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights")
@@ -79,19 +79,26 @@ print(res$opt.path)
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}}
 }
-

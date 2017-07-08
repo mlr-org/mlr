@@ -16,7 +16,7 @@ makeRLearner.regr.cubist = function() {
     properties = c("missings", "numerics", "factors"),
     name = "Cubist",
     short.name = "cubist",
-    note = ""
+    callees = c("cubist", "cubistControl", "predict.cubist")
   )
 }
 

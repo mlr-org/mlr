@@ -5,7 +5,7 @@
 \title{Hyperparameter tuning.}
 \usage{
 tuneParams(learner, task, resampling, measures, par.set, control,
-  show.info = getMlrOption("show.info"))
+  show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -37,6 +37,16 @@ Control object for search method. Also selects the optimization algorithm for tu
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
+
+\item{resample.fun}{[\code{closure}]\cr
+The function to use for resampling. Defaults to \code{\link{resample}}. If a user-given function
+is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
+\dQuote{measures}, and \dQuote{show.info}; see \code{\link{resample}}. Within this function,
+it is easiest to call \code{\link{resample}} and possibly modify the result.
+However, it is possible to return a list with only the following essential slots:
+the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
+(see \code{\link{TuneControl}}), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+This parameter must be the default when \code{mbo} tuning is performed.}
 }
 \value{
 [\code{\link{TuneResult}}].
@@ -50,6 +60,11 @@ by passing a corresponding control object. For a complete list of implemented al
 
 Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
 }
+\note{
+If you would like to include results from the training data set, make
+sure to appropriately adjust the resampling strategy and the aggregation for
+the measure. See example code below.
+}
 \examples{
 # a grid search for an SVM (with a tiny number of points...)
 # note how easily we can optimize on a log-scale
@@ -61,8 +76,12 @@ ctrl = makeTuneControlGrid(resolution = 2L)
 rdesc = makeResampleDesc("CV", iters = 2L)
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
-print(as.data.frame(res$opt.path))
-print(as.data.frame(trafoOptPath(res$opt.path)))
+# access data for all evaluated points
+print(head(as.data.frame(res$opt.path)))
+print(head(as.data.frame(res$opt.path, trafo = TRUE)))
+# access data for all evaluated points - alternative
+print(head(generateHyperParsEffectData(res)))
+print(head(generateHyperParsEffectData(res, trafo = TRUE)))
 
 \dontrun{
 # we optimize the SVM over 3 kernels simultanously
@@ -76,21 +95,36 @@ ps = makeParamSet(
     requires = quote(kernel == "polydot"))
 )
 print(ps)
-ctrl = makeTuneControlIrace(maxExperiments = 200L)
+ctrl = makeTuneControlIrace(maxExperiments = 5, nbIterations = 1, minNbSurvival = 1)
 rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
+print(res)
+print(head(as.data.frame(res$opt.path)))
+
+# include the training set performance as well
+rdesc = makeResampleDesc("Holdout", predict = "both")
+res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps,
+  control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
 print(res)
 print(head(as.data.frame(res$opt.path)))
 }
 }
 \seealso{
+\code{\link{generateHyperParsEffectData}}
+
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}},
   \code{\link{tuneThreshold}}
 }
-
