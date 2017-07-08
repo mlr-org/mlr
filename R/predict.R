@@ -114,6 +114,19 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     }
     time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
 
+    # remove NAs in p (occurs if model inherits "lm" and misses factor levels in train)
+    if (any(is.na(p))) {
+      index_na <- which(p %in% NA)
+      assign("p", p, envir = .GlobalEnv)
+      if (is.factor(p)) {
+        p <- p[-index_na]
+      } else {
+        p <- p[-index_na, ]
+      }
+      truth <- truth[-index_na]
+      newdata <- newdata[-index_na, ]
+    }
+
     # was there an error during prediction?
     if (is.error(p)) {
       if (opts$on.learner.error == "warn")
