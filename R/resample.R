@@ -160,12 +160,19 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
-    pred.test = predict(m, task, subset = test.i)
-    if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
-    ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
-    names(ms.test) = vcapply(measures, measureAggrName)
-    err.dumps$predict.test = getPredictionDump(pred.test)
-  } else { # "both"
+    # set factor levels, present in test but missing in train, to NA
+    if (any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
+      test.i <- m$learner.model$data[test.i, ]
+      newdata <- remove_missing_levels(m, test.i)
+      pred.test = predict(m, newdata = newdata)
+    } else {
+      pred.test = predict(m, task, subset = test.i)
+    }
+      if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
+      ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
+      names(ms.test) = vcapply(measures, measureAggrName)
+      err.dumps$predict.test = getPredictionDump(pred.test)
+  } else { #"both"
     lm = getLearnerModel(m)
     if ("BaseWrapper" %in% class(learner) && !is.null(lm$train.task)) {
       # the learner was wrapped in a sampling wrapper
@@ -178,7 +185,14 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
 
-    pred.test = predict(m, task, subset = test.i)
+    # set factor levels, present in test but missing in train, to NA
+    if (any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
+      test.i <- m$learner.model$data[test.i, ]
+      newdata <- remove_missing_levels(m, test.i)
+      pred.test = predict(m, newdata = newdata)
+    } else {
+      pred.test = predict(m, task, subset = test.i)
+    }
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
