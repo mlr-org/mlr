@@ -65,7 +65,7 @@
 #' set.seed(123)
 #' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, task = task, feats = data[test.inds, 1:9])
 
-makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.feats = 3, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertNumeric(alphas, lower = 0, upper = 1)
@@ -78,18 +78,30 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99)
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
+
+      data = getTaskData(task, target.extra = TRUE)$data
+      train.inds = model$subset
+      test.inds = setdiff(1:nrow(data), train.inds)
+      if (length(test.inds) == 0) stop("Pass argument subset in the train model.")
+
+      if(model$learner$id %nin% listLearners(task)$class) {
+        lrn.id = gsub("^([^.]*.[^.]*)..*$", "\\1", model$learner$id)
+        } else {
+          lrn.id = model$learner$id
+          }
+
+      lrn_amv = makeLearner(lrn.id, predict.type = "prob")
+      lrn_amvw = makeAMVhdWrapper(lrn_amv, amv.iters = amv.iters, amv.feats = amv.feats)
+      # wrapped model
+      mod_amvw = train(lrn_amvw, task, subset = train.inds)
+      # wrapped prediction
+      pred_amvw = predict(mod_amvw, task, subset = test.inds)
+
       measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
-      subset.inds = model$subset
-      data = getTaskData(task, target.extra = TRUE)$data
-      if (is.null(feats)) {
-        if (length(subset.inds) != nrow(data)) {
-          feats = data[subset.inds, ]
-        } else ("feats is null, pass either task or feats")
-      }
       # get the prediction of submodels, which has sampled features
-      subpred = attr(pred, "AMVhdSubpredict")
-      submod = getLearnerModel(model, more.unwrap = FALSE)
+      subpred = attr(pred_amvw, "AMVhdSubpredict")
+      submod = getLearnerModel(mod_amvw, more.unwrap = FALSE)
       #delete full model before calculating the amv on each submodel
       submod = submod[-1]
       # calculate amv for each submodel
