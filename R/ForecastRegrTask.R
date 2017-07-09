@@ -24,10 +24,11 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   if (check.data) {
     assertNumeric(data[[target]], any.missing = FALSE, finite = TRUE, .var.name = target)
     if (any(duplicated(dates)))
-      stop(catf("Multiple observations for %s. Dates must be unique.", dates[any(duplicated(dates)), ]))
+      stop(catf("Multiple observations for %s. Dates must be unique.", dates[any(duplicated(dates))]))
     if (!is.POSIXt(dates[, 1]))
-      stop(catf("Dates are of type %s, but must be in a POSIXt format", class(dates[, 1])))
+      stop(catf("Dates are of type %s, but must be in a POSIXt format", class(dates[1])))
   }
+
   if (fixup.data != "no") {
     if (is.integer(data[[target]]))
       data[[target]] = as.double(data[[target]])
@@ -39,7 +40,7 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
       dates = dates[date.order, , drop = FALSE]
     }
   }
-  # Remove the date column and add it as the rownames
+  # Remove the date column
   data = data[, date.col != colnames(data), drop = FALSE]
 
   task = makeSupervisedTask("fcregr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
