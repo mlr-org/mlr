@@ -31,18 +31,27 @@ mlr$learner.properties = list(
   surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds"),
   costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass"),
   fdaclassif = c("numerics", "factors", "ordered", "missings", "weights", "prob",
-    "twoclass", "multiclass", "class.weights", "featimp", "oobpreds"),
+                 "twoclass", "multiclass", "class.weights", "featimp", "oobpreds"),
   fdaregr    = c("numerics", "factors", "ordered", "missings", "weights", "se",
-    "featimp", "oobpreds")
+                 "featimp", "oobpreds")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 
 ### Measure properties
 mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv",
-  "cluster", "costsens", "fdaregr", "fdaclassif", "fdaclassif.multi",
-  "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
+                           "cluster", "costsens", "fdaregr", "fdaclassif", "fdaclassif.multi",
+                           "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
 
 .TaskType2ClassHash = new.env()  # nolint
 .TaskType2ClassHash[["classif"]] = "ClassifTask"  # nolint
 .TaskType2ClassHash[["regr"]] = "RegrTask"  # nolint
 
+
+# Get basic type from a task.type
+getBasicTaskType = function(task.type) {
+  if (task.type %in% c("fdaregr", "fdaclassif"))
+    task.type = switch(task.type,
+                       "fdaregr" = "regr",
+                       "fdaclassif" = "classif")
+  return(task.type)
+}
