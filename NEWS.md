@@ -1,5 +1,9 @@
 # mlr 2.12:
 
+## general
+* relaxed the way wrappers can be nested -- the only explicitly forbidden
+  combination is to wrap a tuning wrapper around another optimization wrapper
+
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
