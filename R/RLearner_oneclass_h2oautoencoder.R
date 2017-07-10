@@ -139,7 +139,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     par.set = makeParamSet(
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
-        "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
+        "TanhWithDropout", "RectifierWithDropout", "MaxoutWithDropout"), default = "Rectifier"), #"Maxout",  not for autoencoder
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
         len = NA_integer_, lower = 1L),
