@@ -9,6 +9,7 @@ getTaskDesc = function(x) {
   UseMethod("getTaskDesc")
 }
 
+
 #' @export
 getTaskDesc.default = function(x) {
   # FIXME: would be much cleaner to specialize here
@@ -438,11 +439,7 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  if (is.null(weights))
-    task["weights"] = list(NULL)
-  else
-    task$weights = weights
-
+  task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
 
   #  browser()

@@ -1,5 +1,9 @@
 # mlr 2.12:
 
+## general
+* relaxed the way wrappers can be nested -- the only explicitly forbidden
+  combination is to wrap a tuning wrapper around another optimization wrapper
+
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
@@ -10,12 +14,16 @@
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 
+## measures - general
+* measure "arsq" now has ID "arsq"
+
+## measures - new
+* measureBER, measureRMSLE, measureF1
+
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
-* classif.mxnet now supports probabilities
 
 ## learners - new
-* classif.mxff
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues

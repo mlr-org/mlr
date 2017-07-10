@@ -42,9 +42,9 @@ mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "su
                            "cluster", "costsens", "fdaregr", "fdaclassif", "fdaclassif.multi",
                            "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
 
-.TaskType2ClassHash = new.env()
-.TaskType2ClassHash[["classif"]] = "ClassifTask"
-.TaskType2ClassHash[["regr"]] = "RegrTask"
+.TaskType2ClassHash = new.env()  # nolint
+.TaskType2ClassHash[["classif"]] = "ClassifTask"  # nolint
+.TaskType2ClassHash[["regr"]] = "RegrTask"  # nolint
 
 
 # Get basic type from a task.type
