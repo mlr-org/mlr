@@ -90,7 +90,7 @@
 #' }
 NULL
 
-makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, spatial = FALSE) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -124,6 +124,20 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
     }
   }
 
+  if (spatial == FALSE) {
+    x.loc = NULL
+    y.loc = NULL
+  } else {
+    # check if coords are named 'x' and 'y'
+    if (!any(colnames(data) == "x" | colnames(data) == "y")) {
+      stop("Please rename coordinate columns to 'x' and 'y'.")
+    }
+    x.loc = data[["x"]]
+    y.loc = data[["y"]]
+    data[["x"]] = NULL
+    data[["y"]] = NULL
+  }
+
   env = new.env(parent = emptyenv())
   env$data = data
   makeS3Obj("Task",
@@ -131,7 +145,9 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
     env = env,
     weights = weights,
     blocking = blocking,
-    task.desc = NA
+    task.desc = NA,
+    x.loc = x.loc,
+    y.loc = y.loc
   )
 }
 

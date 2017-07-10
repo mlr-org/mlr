@@ -1,6 +1,6 @@
 #' @export
 #' @rdname Task
-makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE, spatial = FALSE) {
   assertString(id)
   assertDataFrame(data)
   assertString(target)
@@ -20,17 +20,17 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
       data[[target]] = droplevels(x)
     }
   }
-  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data, spatial = spatial)
 
   if (check.data) {
     assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
   }
 
-  task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive)
+  task$task.desc = makeClassifTaskDesc(id, data, target, weights, blocking, positive, spatial)
   addClasses(task, "ClassifTask")
 }
 
-makeClassifTaskDesc = function(id, data, target, weights, blocking, positive) {
+makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, spatial) {
   levs = levels(data[[target]])
   m = length(levs)
   if (is.na(positive)) {
@@ -45,6 +45,7 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive) {
   td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
+  td$spatial = spatial
   if (length(td$class.levels) == 1L)
     td$negative = stri_paste("not_", positive)
   else if (length(td$class.levels) == 2L)
