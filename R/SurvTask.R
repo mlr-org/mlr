@@ -5,7 +5,7 @@
 #'  the \dQuote{interval2} format.
 #'  See \code{\link[survival]{Surv}} for details.
 #' @export
-makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring = "rcens", weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring = "rcens", weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE, len = 2L)
@@ -47,7 +47,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring 
     }
   }
 
-  task = makeSupervisedTask("regr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("regr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     if (censoring %in% c("lcens", "rcens")) {
@@ -63,12 +63,12 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring 
     }
   }
 
-  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking, censoring)
+  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking, spatial, censoring)
   addClasses(task, "SurvTask")
 }
 
-makeSurvTaskDesc = function(id, data, target, weights, blocking, censoring) {
-  td = makeTaskDescInternal("surv", id, data, target, weights, blocking)
+makeSurvTaskDesc = function(id, data, target, weights, blocking, censoring, spatial) {
+  td = makeTaskDescInternal("surv", id, data, target, weights, blocking, spatial)
   td$censoring = censoring
   addClasses(td, c("SurvTaskDesc", "SupervisedTaskDesc"))
 }

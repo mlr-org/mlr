@@ -321,6 +321,10 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     if (recode.target %nin% c("no", "surv")) {
       res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
+    if (task$task.desc$spatial == TRUE) {
+      res$x = NULL
+      res$y = NULL
+    }
   }
   res
 }
@@ -443,12 +447,12 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$spatial),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$spatial),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$spatial),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring, td$spatial),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$spatial),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$spatial)
   )
 
   return(task)
