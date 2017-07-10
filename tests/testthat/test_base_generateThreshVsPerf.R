@@ -117,11 +117,13 @@ test_that("generateThreshVsPerfData", {
   q = plotThreshVsPerf(pvs, facet.wrap.ncol = 2L)
   testFacetting(q, ncol = 2L)
 
+})
 
+test_that("generateThreshVsPerfData for FDA Tasks", {
   ## single prediction on fda task
   lrn = makeLearner("fdaclassif.knn", predict.type = "prob")
-  mod = train(lrn, fda.binary.gp.task)
-  pred = predict(mod, binaryclass.task)
+  mod = train(lrn, fda.binary.gp.task.small)
+  pred = predict(mod, fda.binary.gp.task.small)
   pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
   plotThreshVsPerf(pvs)
   dir = tempdir()

@@ -109,6 +109,7 @@ costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
 
 fda.binary.gp.task = gunpoint.task
+fda.binary.gp.task.small = makeFDAClassifTask(data = getTaskData(gunpoint.task)[1:50,], target = "X1")
 fda.regr.fs.task = fuelsubset.task
 
 # nonsense fda multiclass task
