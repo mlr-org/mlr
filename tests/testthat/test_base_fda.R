@@ -16,7 +16,7 @@ test_that("FDARegrTask", {
 })
 
 test_that("FDAClassifTask", {
-  gunpoint = getTaskData(gunpoint.task, target.extra = FALSE)
+  gunpoint = getTaskData(fda.binary.gp.task.small, target.extra = FALSE)
   task2 = makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 2:3))
   expect_class(task2, "FDAClassifTask")
   expect_equal(task2$type, "fdaclassif")
@@ -82,7 +82,7 @@ test_that("FDA regr Task will generate an error in case of faulty input", {
 })
 
 test_that("FDA classif Task will generate an error in case of extreme input", {
-  gunpoint = getTaskData(gunpoint.task, target.extra = FALSE)
+  gunpoint = getTaskData(fda.binary.gp.task.small, target.extra = FALSE)
   expect_error(makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 1:3)))
   expect_error(makeFDAClassifTask(data = gunpoint, target = "X1", fd.features = list(fd = 2:3), fd.grids = list(fd = 1:3)))
 })

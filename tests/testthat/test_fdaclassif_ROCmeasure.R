@@ -2,7 +2,7 @@ context("fdaclassif_ROCmeasure")
 
 test_that("ROC measure works for fdaclassif task", {
   rdesc = makeResampleDesc("CV", iters = 3)
-  pred = resample(makeLearner("fdaclassif.knn"), gunpoint.task, rdesc)
+  pred = resample(makeLearner("fdaclassif.knn"), fda.binary.gp.task.small, rdesc)
   r = calculateROCMeasures(pred$pred)
 
   expect_list(r$measures, types = "double", any.missing = FALSE, len = 12)
