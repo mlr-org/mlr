@@ -30,7 +30,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     }
   }
 
-  task = makeSupervisedTask("regr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("regr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     time = data[[target[1L]]]
@@ -38,7 +38,6 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     assertNumeric(time, lower = 0, finite = TRUE, any.missing = FALSE, .var.name = "target column time")
     assertLogical(event, any.missing = FALSE, .var.name = "target column event")
   }
-
   task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking)
   addClasses(task, "SurvTask")
 }

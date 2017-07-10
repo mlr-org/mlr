@@ -90,7 +90,7 @@
 #' }
 NULL
 
-makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, spatial = FALSE) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -121,6 +121,13 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       assertFactor(blocking, len = nrow(data), any.missing = FALSE)
       if (length(blocking) && length(blocking) != nrow(data))
         stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+    }
+  }
+
+  if (spatial == TRUE) {
+    # check if coords are named 'x' and 'y'
+    if (!any(colnames(data) == "x" | colnames(data) == "y")) {
+      stop("Please rename coordinate columns to 'x' and 'y'.")
     }
   }
 
