@@ -34,3 +34,17 @@ test_that("FDA_classif_knn behaves like original api", {
   expect_equal(as.character(cp), as.character(p1))
 
 })
+
+
+test_that("predicttype prob for fda.usc", {
+  requirePackagesOrSkip("fda.usc", default.method = "load")
+
+  lrn = makeLearner("fdaclassif.knn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
+  task = makeFDAClassifTask(data = ph, target = "label")
+  set.seed(getOption("mlr.debug.seed"))
+  m = train(lrn, task)
+  cp = predict(m, newdata = as.data.frame(mtest$data))
+  expect_equal(class(cp)[1],  "PredictionClassif")
+
+})
+
