@@ -40,10 +40,10 @@ test_that("predicttype prob for fda.usc", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
 
   lrn = makeLearner("fdaclassif.knn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
-  task = makeFDAClassifTask(data = ph, target = "label")
+
   set.seed(getOption("mlr.debug.seed"))
-  m = train(lrn, task)
-  cp = predict(m, newdata = as.data.frame(mtest$data))
+  m = train(lrn, fda.binary.gp.task)
+  cp = predict(m, newdata = getTaskData(fda.binary.gp.task, target.extra = TRUE)$data)
   expect_equal(class(cp)[1],  "PredictionClassif")
 
 })
