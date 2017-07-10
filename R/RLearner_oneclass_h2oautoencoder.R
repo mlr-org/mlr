@@ -165,7 +165,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
       makeDiscreteLearnerParam("loss", values = c("Automatic", "Quadratic",
-        "Absolute", "Huber", "CrossEntropy","Quantile")),
+        "Absolute", "Huber", "Quantile")),#"CrossEntropy" not for autoencoder
       makeDiscreteLearnerParam("distribution", values = c("AUTO", "gaussian",
         "bernoulli", "multinomial", "poisson", "gamma", "tweedie", "laplace",
         "huber", "quantile"), default = "AUTO"),
