@@ -1,14 +1,14 @@
 #' @export
 #' @rdname Task
 makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+  blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertCharacter(target, any.missing = FALSE, min.len = 2L)
   assertDataFrame(data)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
-  task = makeSupervisedTask("multilabel", data, target, weights, blocking)
+  task = makeSupervisedTask("multilabel", data, target, weights, blocking, fixup.data, check.data)
   # currently we dont do any fixup here
   if (check.data) {
     for (cn in target)

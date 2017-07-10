@@ -1,4 +1,4 @@
-makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeUnsupervisedTask = function(type, data, weights, blocking, fixup.data, check.data) {
   task = makeTask(type, data, weights, blocking, fixup.data = fixup.data, check.data = check.data)
   # we can't use getTaskData to access the tasks's data here because we then
   # want to access the description object which is not existing yet
