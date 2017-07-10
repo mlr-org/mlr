@@ -6,8 +6,8 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
 
   td = getTaskDesc(task)
-
-  if (td$type != learner$type) {
+  # fda: this seems a bit bad style, allow that normal learners also work for FDA
+  if (td$type != learner$type && !(td$type == "fdaclassif" && learner$type == "classif") && !(td$type == "fdaregr" && learner$type == "regr")) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)
   }
 

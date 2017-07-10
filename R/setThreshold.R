@@ -35,7 +35,7 @@
 setThreshold = function(pred, threshold) {
   # dont check for NAs in response, this will get overwritten anyway.
   # and object might not be constructed in full when we call this in Prediction
-  checkPrediction(pred, task.type = c("classif", "multilabel"), predict.type = "prob", no.na = FALSE)
+  checkPrediction(pred, task.type = c("classif", "multilabel", "fdaclassif"), predict.type = "prob", no.na = FALSE)
   assertNumeric(threshold, any.missing = FALSE)
   td = pred$task.desc
   ttype = td$type
@@ -49,7 +49,7 @@ setThreshold = function(pred, threshold) {
   p = getPredictionProbabilities(pred, cl = levs)
   # resort so we have same order in threshold and p
   threshold = threshold[levs]
-  if (ttype == "classif") {
+  if (ttype == "classif" || ttype == "fdaclassif") {
     # divide all rows by threshold then get max el
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "/", threshold)
     # 0 / 0 can produce NaNs. For a 0 threshold we always want Inf weight for that class

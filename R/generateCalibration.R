@@ -53,13 +53,13 @@ generateCalibrationData = function(obj, breaks = "Sturges", groups = NULL, task.
   UseMethod("generateCalibrationData")
 #' @export
 generateCalibrationData.Prediction = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
-  checkPrediction(obj, task.type = "classif", predict.type = "prob")
+  checkPrediction(obj, task.type = c("classif", "fdaclassif"), predict.type = "prob")
   generateCalibrationData.list(namedList("prediction", obj), breaks, groups, task.id)
 }
 #' @export
 generateCalibrationData.ResampleResult = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL) {
   obj = getRRPredictions(obj)
-  checkPrediction(obj, task.type = "classif", predict.type = "prob")
+  checkPrediction(obj, task.type = c("classif", "fdaclassif"), predict.type = "prob")
   generateCalibrationData.Prediction(obj, breaks, groups, task.id)
 }
 #' @export
@@ -72,7 +72,7 @@ generateCalibrationData.BenchmarkResult = function(obj, breaks = "Sturges", grou
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
 
   for (x in obj)
-    checkPrediction(x, task.type = "classif", predict.type = "prob")
+    checkPrediction(x, task.type = c("classif", "fdaclassif"), predict.type = "prob")
   generateCalibrationData.list(obj, breaks, groups, task.id)
 }
 #' @export

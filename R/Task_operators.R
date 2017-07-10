@@ -441,15 +441,27 @@ changeData = function(task, data, costs, weights) {
   task$env$data = data
   task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
-  # FIXME: this is bad style but I see no other way right now
-  task$task.desc = switch(td$type,
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
-  )
+
+  #  browser()
+  #  # FIXME: this is bad style but I see no other way right now
+  #   task$task.desc = switch(td$type,
+  #     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
+  #     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+  #     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
+  #     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+  #     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
+  #     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+  #     "fdaclassif" = makeFDAClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$fd.features, td$fd.grids),
+  #     "fdaregr" = makeFDARegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$fd.features, td$fd.grids)
+  # )
+
+ # Depending on the class of the Task.Desc we want to construct a new one with the new properties
+  constructor = get(paste0("make", class(td)[1]))
+  args = insert(formals(constructor), td, names(formals(constructor)))
+  # Insert weights and blocking if required
+  args = insert(args, task, intersect(c("weights", "blocking"), names(args)))
+  args$data = data
+  task$task.desc = do.call(constructor, args)
 
   return(task)
 }
