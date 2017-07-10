@@ -24,7 +24,8 @@ test_that("oneclass_h2oautoencoder", {
       autoencoder = TRUE))
     #set.seed(getOption("mlr.debug.seed"))
     m = do.call(h2o.deeplearning, parset)
-    p  = h2o.anomaly(m, test.hex, per_feature=FALSE)
+    p  = h2o.anomaly(m, test.hex, per_feature = FALSE)
+    ##### !!  convertScoresinProb is ne liste -> rest anpassen old.probs.list[[i]] = convertingScoresToProbability(as.vector(p))
     old.probs.list[[i]] = as.vector(p)
   }
 
