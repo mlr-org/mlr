@@ -36,6 +36,10 @@ predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
   # transform the data into fda.usc:fdata class type.
   nd = fda.usc::fdata(mdata = .newdata)
   type = ifelse(.learner$predict.type == "prob", "probs", "class")
-  predict(.model$learner.model, nd, type = type)$prob.group
+  if (type == "probs") {
+    predict(.model$learner.model, nd, type = type)$prob.group
+  } else {
+    predict(.model$learner.model, nd, type = type)
+  }
 
 }
