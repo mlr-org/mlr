@@ -53,36 +53,33 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   }
 
   if (ttype == "multilabel" || k > 2L) {
-    # requirePackages("Rsolnp", why = "tuneThreshold", default.method = "load")
-    start = rep(1/k, k)
-
-    # ui = rbind(diag(k), -diag(k), rep(1, k), rep(-1, k))
-    # ci = c(rep(c(0, -1), each = k), 0.999, -1.001)
-    ui = rbind(diag(k), -diag(k))
-    ci = c(rep(c(0, -1), each = k))
-    s = start
-    or = constrOptim(s, fitn, method = "Nelder-Mead", ui = ui, ci = ci)
-    # possible alternative with equalities and unequalities - minimises by default
-    # or = solnp(start, #starting values
-    #   fitn, #function to optimise
-    #   eqfun = sum, #equality function
-    #   eqB = 1,   #the equality constraint
-    #   ineqLB = rep(0, k), #lower bound for parameters i.e. greater than zero
-    #   ineqUB = rep(1, k)) #upper bound for parameters
-    if (is.null(control$max_restarts))
-      max_restarts = 20L
+    if (is.null(control$restarts))
+      restarts = 1L
     else
-      max_restarts = control$max_restarts
+      restarts = control$restarts
+    # requirePackages("cmaes", why = "tuneThreshold", default.method = "load")
+    start = rep(1 / k, k)
 
-    for (i in 1:max_restarts) {
-      restart = runif(k)
-      restart = restart / sum(restart)
-      # for (i in 1:max_restarts) {
-      rs = constrOptim(restart, fitn, method = "Nelder-Mead", ui = ui, ci = ci)
-      if (rs$val < or$val)
-        or = rs
+    #create restart points
+    for (i in 1:restarts) {
+      u = runif(k)
+      start = rbind(start, u / sum(u))
     }
-    xx <<- or
+    #create constraint matrix
+    or = list()
+    ui = rbind(diag(k), -diag(k), rep(1, k), rep(-1, k))
+    ci = c(rep(c(0, -1), each = k), 0.999, -1.001)
+    for (i in 1:(restarts + 1)) {
+      s = start[i, ]
+      or[[i]] = constrOptim(s, fitn, method = "Nelder-Mead", ui = ui, ci = ci)
+    }
+    #take best result
+    sl = extractSubList(or, "value")
+    if (measure$minimize == TRUE)
+      opt = which(sl == min(sl))
+    else
+      opt = which(sl == max(sl))
+    or = or[[opt[1]]]
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val
