@@ -53,7 +53,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   }
 
   if (ttype == "multilabel" || k > 2L) {
-    requirePackages("Rsolnp", why = "tuneThreshold", default.method = "load")
+    # requirePackages("Rsolnp", why = "tuneThreshold", default.method = "load")
     start = rep(1/k, k)
 
     # ui = rbind(diag(k), -diag(k), rep(1, k), rep(-1, k))
@@ -70,7 +70,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     #   ineqLB = rep(0, k), #lower bound for parameters i.e. greater than zero
     #   ineqUB = rep(1, k)) #upper bound for parameters
     if (is.null(control$max_restarts))
-      max_restarts = 50L
+      max_restarts = 20L
     else
       max_restarts = control$max_restarts
 
@@ -83,7 +83,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
         or = rs
     }
     xx <<- or
-    th = or$par
+    th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val
   } else {# classif with k = 2
