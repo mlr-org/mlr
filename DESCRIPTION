@@ -111,6 +111,7 @@ Suggests:
     mboost,
     mco,
     mda,
+    mgcv,
     mlbench,
     mldr,
     mlrMBO,
