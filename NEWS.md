@@ -30,6 +30,7 @@
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 
 ## learners - new
+* classif.gam
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
