@@ -41,14 +41,14 @@ fdFeatsToColumnIndex = function(df, fd.features = list()) {
 # them as numerics.
 functionalToNormalData = function(df) {
   if (hasFunctionalFeatures(df))
-    df = do.call(data.frame(as.list(d)))
+    df = do.call(data.frame, as.list(df))
   return(df)
 }
 
 # Check if the data.frame has functional features
 hasFunctionalFeatures = function(df) {
   bool = FALSE
-  if (any(sapply(df, class) %in% "matrix"))
+  if (any(unlist(sapply(df, class)) %in% "matrix"))
     bool = TRUE
   return(bool)
 }
