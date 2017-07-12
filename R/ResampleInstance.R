@@ -51,9 +51,6 @@ makeResampleInstance = function(desc, task, size, ...) {
     assertClass(task, classes = "Task")
     size = getTaskSize(task)
     blocking = task$blocking
-    x.loc = task$x.loc
-    y.loc = task$y.loc
-
   } else {
     task = NULL
     blocking = factor()
