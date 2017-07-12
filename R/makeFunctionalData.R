@@ -8,6 +8,13 @@
 #' @return [\code{data.frame}] \cr containing all features in a functional form, i.e. functional
 #'   features as a matrix.
 #' @export
+#' @examples
+#' # data.frame where columns 1:6 and 8:10 belong to a functional feature
+#' df = data.frame(matrix(rnorm(100), nrow = 10), "target" = seq_len(10))
+#' # Transform to functional data
+#' fdf = makeFunctionalData(df, fd.features = list("fd1" = 1:6, "fd2" = 8:10))
+#' # Create a regression task
+#' makeRegrTask(data = fdf, target = "target")
 makeFunctionalData = function(df, fd.features = list()) {
   assertDataFrame(df)
   assertList(fd.features)
