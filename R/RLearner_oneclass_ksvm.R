@@ -48,7 +48,7 @@ predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NUL
   p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   td = getTaskDesc(.model)
   if (.learner$predict.type == "response") {
-    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+    p = factor(p, levels = c("FALSE", "TRUE"), labels = c(td$positive, td$negative))
   }
   return(p)
 }
