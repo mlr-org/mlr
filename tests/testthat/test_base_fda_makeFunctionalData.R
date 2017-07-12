@@ -156,12 +156,16 @@ test_that("getTaskData for functionals", {
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 5:10, "fd3" = c("X2", "X3", "X4")))
 
   clt = makeClassifTask(data = fdf, target = "tcl")
-  tdata2 = getTaskData(clt, functionals = FALSE)
+  tdata1 = getTaskData(clt, functionals = FALSE)
   expect_true(!("matrix" %in% sapply(tdata, class)))
+  tdata2 = getTaskData(clt, functionals = TRUE)
+  expect_true("matrix" %in% unlist(sapply(tdata2, class)))
 
   clustt = makeClusterTask(data = fdf)
-  tdata2 = getTaskData(clustt, functionals = FALSE)
-  expect_true(!("matrix" %in% sapply(tdata2, class)))
+  tdata3 = getTaskData(clustt, functionals = FALSE)
+  expect_true(!("matrix" %in% sapply(tdata3, class)))
+  tdata4 = getTaskData(clustt, functionals = TRUE)
+  expect_true("matrix" %in% unlist(sapply(tdata4, class)))
 
 })
 
