@@ -152,7 +152,7 @@ applyGraph = function(graph, data, is.trafo, args) {
         datas = lapply(seq_along(datas), function(i) {
           df = data.frame(datas[[i]])
           prefix = curgi$content[i]
-          if (!is.null(prefix) && prefix != "") {
+          if (!is.null(prefix) && prefix != "" && length(df)) {
             names(df) = paste(prefix, names(df), sep = ".")
           }
           df

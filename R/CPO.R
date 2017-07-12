@@ -389,8 +389,7 @@ callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.
   } else {
     result = do.call(cpo$trafo, insert(getBareHyperPars(cpo), tin$indata))
 
-    trafoenv = environment(cpo$trafo)$.ENV
-    assign(".ENV", NULL, envir = environment(cpo$trafo))
+    trafoenv = .ENV
   }
   assertChoice(cpo$type, c("functional", "object"))
   if (cpo$type == "functional") {

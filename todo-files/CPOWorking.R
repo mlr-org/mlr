@@ -29,7 +29,7 @@ devtools::load_all("../../ParamHelpers")
 devtools::test(pkg = "../../ParamHelpers")
 
 makeLogicalVectorLearnerParam("test",
-  default = c(T, T, F))
+  default = c(TRUE, TRUE, FALSE))
 
 
 devtools::test(pkg = "..", filter = "cpo_basic")

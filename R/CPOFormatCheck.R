@@ -343,7 +343,7 @@ compositeProperties = function(prop1, prop2, name1, name2) {
 # give error when shape is different than dictated by shapeinfo.
 # wasresult: whether we are checking the result of retrafo
 assertShapeConform = function(df, shapeinfo, checkordered, name) {
-  if (!identical(names(df), shapeinfo$colnames)) {
+  if (!identical(names2(df), shapeinfo$colnames)) {
     stopf("Error in CPO %s: column name mismatch between training and test data.\nWas %s during training, is %s now.",
           name, collapse(shapeinfo$colnames, sep = ", "), collapse(names(df), sep = ", "))
   }

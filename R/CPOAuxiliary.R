@@ -1482,7 +1482,7 @@ makeFunction = function(expr, required.arglist, env = parent.frame()) {
 
 # capture the environment of the call to 'fun'
 captureEnvWrapper = function(fun) {
-  envcapture = quote({ assign(".ENV", environment(), envir = environment(sys.function())) ; 0 })
+  envcapture = quote({ assign(".ENV", environment(), envir = parent.frame()) ; 0 })
   envcapture[[3]] = body(fun)
   body(fun) = envcapture
   environment(fun) = new.env(parent = environment(fun))
