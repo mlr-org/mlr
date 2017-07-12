@@ -112,7 +112,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    if (td$spatial == TRUE) {
+    if (td$is.spatial == TRUE) {
       pars$.newdata$x = NULL
       pars$.newdata$y = NULL
     }
