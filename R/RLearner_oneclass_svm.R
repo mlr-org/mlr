@@ -37,6 +37,6 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, ...)
   td = getTaskDesc(.model)
   if (.learner$predict.type == "response")
-    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$positive, td$negative))
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = c(td$negative, td$positive))
   return(p)
 }

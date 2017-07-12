@@ -3,11 +3,11 @@ context("oneclass")
 test_that("oneclass task", {
   oc = oneclass.task
   expect_equal(getTaskTargetNames(oc), "normal")
-  expect_equal(getTaskClassLevels(oc), c("TRUE", "FALSE"))
+  expect_equal(getTaskClassLevels(oc), c("FALSE", "TRUE"))
   y = getTaskTargets(oc)
   expect_true(is.factor(y))
   expect_true(length(levels(y)) == 2)
-  expect_set_equal(levels(y), c("TRUE", "FALSE"))
+  expect_set_equal(levels(y), c("FALSE", "TRUE"))
 })
 
 test_that("oneclass learning", {
