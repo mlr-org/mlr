@@ -41,25 +41,64 @@ test_that("makeFunctionalData subsetting works", {
   expect_class(fdf3, "data.frame")
 })
 
+test_that("makeFunctionalData works for different inputs", {
 
-test_that("Code from Bernd", {
-  d = list(x1 = matrix(123, 3, 2), x2 = matrix(1:6, 3, 2), x3 = 1:3)
-  class(d) = "data.frame"
-  names(d) = c("x1", "x2", "x3")
-  rownames(d) = 1:3
-  print(str(d))
-  sapply(d, class)
+  df = data.frame(matrix(rnorm(50), nrow = 5))
+  # for 1-D matricies
+  fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2:10))
+  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(dim(fdf), c(5, 2))
+  expect_class(fdf, "data.frame")
 
-  x1 = matrix(123, 3, 2)
-  x1 = BBmisc::addClasses(x1, "functional")
-  x2 = matrix(1:6, 3, 2)
-  x2 = BBmisc::addClasses(x2, "functional")
-  d = list(x1 = x1, x2 = x2, x3 = 1:3)
-  class(d) = "data.frame"
-  names(d) = c("x1", "x2", "x3")
-  rownames(d) = 1:3
-  print(str(d))
-  sapply(d, class)
-  d = d[1:2, , drop = FALSE]
-  sapply(d, class)
+  # for column name inputs
+  fdf = makeFunctionalData(df, fd.features = list("fd1" = "X1", "fd2" = paste0("X", 2:10)))
+  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(dim(fdf), c(5, 2))
+  expect_class(fdf, "data.frame")
+
+  # for empty lists
+  fdf = makeFunctionalData(df, fd.features = list())
+  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(dim(fdf), c(5, 1))
+  expect_class(fdf, "data.frame")
+
+  # default
+  fdf = makeFunctionalData(df)
+  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(dim(fdf), c(5, 1))
+  expect_class(fdf, "data.frame")
+
+  # data.frame already has matrix
+  df2 = df[, 1:2]
+  df2$fd1 = as.matrix(df[, 3:10])
+
+  fdf = makeFunctionalData(df2)
+  expect_equal(lapply(fdf, class)[[3]], c("functional", "matrix"))
+  expect_equal(dim(fdf), c(5, 3))
+  expect_class(fdf, "data.frame")
 })
+
+
+# test_that("Code from Bernd", {
+  # d = list(x1 = matrix(123, 3, 2), x2 = matrix(1:6, 3, 2), x3 = 1:3)
+  # class(d) = "data.frame"
+  # names(d) = c("x1", "x2", "x3")
+  # rownames(d) = 1:3
+  # print(str(d))
+  # sapply(d, class)
+  #
+  # x1 = matrix(123, 3, 2)
+  # x1 = BBmisc::addClasses(x1, "functional")
+  # x2 = matrix(1:6, 3, 2)
+  # x2 = BBmisc::addClasses(x2, "functional")
+  # d = list(x1 = x1, x2 = x2, x3 = 1:3)
+  # class(d) = "data.frame"
+  # names(d) = c("x1", "x2", "x3")
+  # rownames(d) = 1:3
+  # print(str(d))
+  # sapply(d, class)
+  # d = d[1:2, , drop = FALSE]
+  # sapply(d, class)
+# })
