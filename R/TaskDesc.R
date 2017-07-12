@@ -45,7 +45,8 @@ makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   n.feat = c(
     numerics = sum(cl[c("integer", "numeric")], na.rm = TRUE),
     factors = sum(cl["factor"], na.rm = TRUE),
-    ordered = sum(cl["ordered"], na.rm = TRUE)
+    ordered = sum(cl["ordered"], na.rm = TRUE),
+    functionals = sum(cl["functional"], na.rm = TRUE)
   )
 
   makeS3Obj("TaskDesc",
