@@ -30,5 +30,5 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
   if (print.target)
-    catf("Is spatial: %s", td$spatial)
+    catf("Is spatial: %s", td$is.spatial)
 }

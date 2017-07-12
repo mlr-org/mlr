@@ -172,7 +172,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
-    if (task$task.desc$spatial == TRUE) {
+    if (task$task.desc$is.spatial == TRUE) {
       newdata = task$env$data[test.i, ]
       pred.test = predict(m, newdata = newdata)
     } else {
