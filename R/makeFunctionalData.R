@@ -11,6 +11,7 @@
 makeFunctionalData = function(df, fd.features = list()) {
   assertDataFrame(df)
   assertList(fd.features)
+
   # Convert fd.features to column indices
   fd.features = fdFeatsToColumnIndex(df, fd.features)
   # Create a list of functional feature matricies

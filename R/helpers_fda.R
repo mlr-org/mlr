@@ -1,16 +1,17 @@
 #' Create a functional feature from a numeric matrix
 #'
-#' @param m [\code{matrix|data.frame}] \cr
+#' @param mat [\code{matrix|data.frame}] \cr
 #'  Numeric matrix or data.frame that contains the functional features.
 #' @return [\code{matrix}] \cr
 #'   Matrix of class c("functional", "matrix") containing the functional values
 #' @export
-makeFunctionalFeature = function(m) {
-  if (is.data.frame(m))
-    m = as.matrix(m)
-  assertMatrix(m, mode = "numeric")
-  addClasses(m, "functional")
+makeFunctionalFeature = function(mat) {
+  if (is.data.frame(mat))
+    mat = as.matrix(mat)
+  assertMatrix(mat, mode = "numeric")
+  addClasses(mat, "functional")
 }
+
 
 # Convert fd.features list to list of column indices
 fdFeatsToColumnIndex = function(df, fd.features = list()) {
@@ -19,7 +20,7 @@ fdFeatsToColumnIndex = function(df, fd.features = list()) {
   # If the data.frame already contains matricies, keep them
   if (hasFunctionalFeatures(df)) {
     ids = which(sapply(df, class) == "matrix")
-    fd.features[names(ids)] = ids
+    fd.features = c(fd.features, ids)
   }
 
   # If fd.features is an empty list, all numerics are a functional feature

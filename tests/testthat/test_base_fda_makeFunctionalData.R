@@ -71,12 +71,13 @@ test_that("makeFunctionalData works for different inputs", {
   expect_class(fdf, "data.frame")
 
   # data.frame already has matrix
-  df2 = df[, 1:2]
-  df2$fd1 = as.matrix(df[, 3:10])
-
+  # FIXME: The colnames in prints are ugly.
+  df2 = df[, 1, drop = FALSE]
+  df2$fd1 = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2)
-  expect_equal(lapply(fdf, class)[[3]], c("functional", "matrix"))
-  expect_equal(dim(fdf), c(5, 3))
+  expect_equal(lapply(fdf, class)[[1]], c("numeric"))
+  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 })
 
