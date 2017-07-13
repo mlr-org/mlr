@@ -37,7 +37,6 @@ trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
 
-
   # transform the data into fda.usc:fdata class type.
   fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
   nd = fda.usc::fdata(mdata = setClasses(fd, "matrix"))

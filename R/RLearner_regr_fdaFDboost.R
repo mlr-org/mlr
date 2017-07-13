@@ -19,7 +19,7 @@ makeRLearner.regr.fdaFDboost = function() {
       makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
       makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
       ),
-    properties = "numerics",
+    properties = c("numerics", "functionals"),
     name = "Functional linear array regression boosting",
     short.name = "FDboost",
     note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates"
@@ -42,7 +42,7 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
     custom.family = custom.family.definition
   )
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
-  d = getTaskData(.task, subset = .subset)
+  d = getTaskData(.task, subset = .subset, keep.functionals = TRUE)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDesc(.task)
   fdf = tdesc$fd.features

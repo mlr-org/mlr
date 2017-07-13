@@ -5,7 +5,7 @@ context("FDA_regr_FDboost")
 # not equal distance in wavelegnths.
 
 test_that("FDA_regr_FDboost", {
-  requirePackagesOrSkip()
+  requirePackagesOrSkip("FDboost", default.method = "load")
   options(mlr.debug.seed = 123L)
   requirePackages("FDboost")
   lrn = makeLearner("fdaregr.FDboost", knots = 40L, df = 4L, mstop = 100L)
