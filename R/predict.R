@@ -61,7 +61,11 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   subset = checkTaskSubset(subset, size)
 
   if (missing(newdata)) {
-    newdata = getTaskData(task, subset)
+    if ("functionals" %in% object$learner$properties) {
+      newdata = getTaskData(task, subset, keep.functionals = TRUE)
+    } else {
+      newdata = getTaskData(task, subset)
+    }
   } else {
     newdata = newdata[subset, , drop = FALSE]
   }
