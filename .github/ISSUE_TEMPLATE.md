@@ -1,0 +1,20 @@
+For bug reports please respect the following guidelines and check the boxes accordingly.
+
+For questions of the type: "How can this be done?": Please consider asking them on stackoverflow.
+
+For everything else ignore this template.
+
+## Bug report
+
+- [ ] Start a new R session
+- [ ] Install the latest version of caret: `update.packages(oldPkgs="mlr", ask=FALSE)`
+- [ ] If you use a GitHub install of mlr: `devtools::install_github(c("BBmisc", "ParamHelpers", "mlr"))
+- [ ] [Write a minimal reproducible example](http://stackoverflow.com/a/5963610)
+- [ ] run `sessionInfo()`
+
+### Minimal reproducible example:
+
+```r
+lrn = makeLearner("classif.lda")
+resample(learner = lrn, task = iris.task, resampling = cv10)
+```
