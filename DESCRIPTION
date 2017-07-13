@@ -84,6 +84,8 @@ Suggests:
     emoa,
     evtree,
     extraTrees,
+    fda.usc,
+    FDboost,
     flare,
     fields,
     FNN,

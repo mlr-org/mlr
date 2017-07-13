@@ -5,6 +5,7 @@ test_that("FDA_classif_knn behaves like original api", {
 
   data(phoneme, package = "fda.usc")
   mlearn = phoneme[["learn"]]
+
   # Use only 10 obs. for 5 classes, as knn training is really slow
   index = c(1:10, 50:60, 100:110, 150:160, 200:210)
   mlearn$data = mlearn$data[index, ]
@@ -20,11 +21,16 @@ test_that("FDA_classif_knn behaves like original api", {
   ph = as.data.frame(mlearn$data)
   ph[, "label"] = glearn
 
-  lrn = makeLearner("fdaclassif.knn", par.vals = list(knn = 1L, trim = 0.5))
-  task = makeFDAClassifTask(data = ph, target = "label")
+  phtst = as.data.frame(mtest$data)
+  phtst[, "label"] = gtest
+
+  lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5))
+  fdata = makeFunctionalData(ph, fd.features = list(), target = "label")
+  ftest = makeFunctionalData(phtst, fd.features = list(), target = "label")
+  task = makeClassifTask(data = fdata, target = "label")
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
-  cp = predict(m, newdata = as.data.frame(mtest$data))
+  cp = predict(m, newdata = ftest)
   cp = unlist(cp$data, use.names = FALSE)
 
   cp2 = predict(m, newdata = as.data.frame(mlearn$data))

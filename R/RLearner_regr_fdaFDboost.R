@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.fdaregr.FDboost = function() {
+makeRLearner.regr.fdaFDboost = function() {
   makeRLearnerRegr(
-    cl = "fdaregr.FDboost",
+    cl = "regr.fdaFDboost",
     package = c("FDboost", "mboost"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
@@ -30,6 +30,7 @@ makeRLearner.fdaregr.FDboost = function() {
 trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
  knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
+
   family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),

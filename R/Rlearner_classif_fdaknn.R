@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.fdaclassif.knn = function() {
+makeRLearner.classif.fdaknn = function() {
   makeRLearnerClassif(
-    cl = "fdaclassif.knn",
+    cl = "classif.fdaknn",
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
@@ -21,19 +21,20 @@ makeRLearner.fdaclassif.knn = function() {
 }
 
 #' @export
-trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
-  z = getTaskData(.task, subset = .subset, target.extra = TRUE)
+trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
+  fd = d$data[, which(sapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
   # transform the data into fda.usc:fdata class type.
-  data.fdclass = fda.usc::fdata(mdata = z$data)
+  data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
   par.cv = learnerArgsToControl(list, trim, draw)
   fda.usc::classif.knn(group = z$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
-}
+ }
 
 #' @export
-predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
-  m = .model$learner.model
+predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
+  browser()
   # transform the data into fda.usc:fdata class type.
-  nd = fda.usc::fdata(mdata = .newdata)
-  predict(m, nd, ...)
+  nd = fda.usc::fdata(mdata = setClasses(.newdata, "matrix"))
+  predict(.model$learner.model, nd, ...)
 }

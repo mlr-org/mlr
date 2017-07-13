@@ -15,12 +15,12 @@
 #' fdf = makeFunctionalData(df, fd.features = list("fd1" = 1:6, "fd2" = 8:10))
 #' # Create a regression task
 #' makeRegrTask(data = fdf, target = "target")
-makeFunctionalData = function(df, fd.features = list()) {
+makeFunctionalData = function(df, fd.features = list(), target = NULL) {
   assertDataFrame(df)
   assertList(fd.features)
 
   # Convert fd.features to column indices
-  fd.features = fdFeatsToColumnIndex(df, fd.features)
+  fd.features = fdFeatsToColumnIndex(df, fd.features, target)
   # Create a list of functional feature matricies
   ffeats = lapply(fd.features, function(x) {makeFunctionalFeature(df[, x, drop = FALSE])})
   # Drop original numeric data
