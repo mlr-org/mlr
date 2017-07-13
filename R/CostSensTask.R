@@ -18,7 +18,10 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
     if (is.null(colnames(costs)))
       colnames(costs) = stri_paste("y", seq_col(costs))
   }
-  task = makeSupervisedTask("costsens", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("costsens", data = data, target = target,
+                            weights = weights, blocking = blocking,
+                            spatial = spatial, fixup.data = fixup.data,
+                            check.data = check.data)
 
   if (check.data) {
     assertMatrix(costs, any.missing = FALSE, col.names = "strict")
@@ -30,11 +33,11 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
       stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
   }
 
-  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking, spatial, costs)
+  task$task.desc = makeCostSensTaskDesc(id , data, target, blocking, costs, spatial)
   addClasses(task, "CostSensTask")
 }
 
-makeCostSensTaskDesc = function(id, data, target, blocking, spatial, costs) {
+makeCostSensTaskDesc = function(id, data, target, blocking, costs, spatial) {
   td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking, spatial)
   td$class.levels = colnames(costs)
   td$costs = costs
