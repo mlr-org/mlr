@@ -116,15 +116,14 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
 
     # remove NAs in p (occurs if model inherits "lm" and misses factor levels in train)
     if (any(is.na(p))) {
-      index_na <- which(p %in% NA)
-      assign("p", p, envir = .GlobalEnv)
+      index_na = which(p %in% NA)
       if (is.factor(p)) {
-        p <- p[-index_na]
+        p = p[-index_na]
       } else {
-        p <- p[-index_na, ]
+        p = p[-index_na, ]
       }
-      truth <- truth[-index_na]
-      newdata <- newdata[-index_na, ]
+      truth = truth[-index_na]
+      newdata = newdata[-index_na, ]
     }
 
     # was there an error during prediction?
