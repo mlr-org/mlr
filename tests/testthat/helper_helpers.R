@@ -54,7 +54,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     classif = makeClassifTask(data = df, target = target),
     surv = makeSurvTask(data = df, target = target),
     multilabel = makeMultilabelTask(data = df, target = target),
-    oneclass = makeOneClassTask(data = df, target = target, positive = "FALSE", negative = "TRUE"))
+    oneclass = makeOneClassTask(data = df, target = target, positive = oneclass.positive, negative = oneclass.negative))
 
   if (is.null(task))
     stop("Should not happen!")

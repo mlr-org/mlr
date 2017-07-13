@@ -62,12 +62,12 @@ sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
 normal = MASS::mvrnorm(n = 1000, rep(0, 2), sigma)
 colnames(normal) = paste0("V", 1:2)
 normal = as.data.frame(normal)
-normal$normal = TRUE
+normal$normal = "normal"
 
 anomaly = matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2)
 colnames(anomaly) = paste0("V", 1:2)
 anomaly = as.data.frame(anomaly)
-anomaly$normal = FALSE
+anomaly$normal = "anomaly"
 data = rbind(normal, anomaly)
 data = na.omit(data)
 data$normal = factor(data$normal)
@@ -81,8 +81,8 @@ oneclass.train.inds = c(1:500)
 oneclass.test.inds  = setdiff(seq_len(nrow(oneclass.df)), oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]
-oneclass.positive = "FALSE"
-oneclass.negative = "TRUE"
+oneclass.positive = "anomaly"
+oneclass.negative = "normal"
 oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = oneclass.target, positive = oneclass.positive, negative = oneclass.negative)
 
 data(BostonHousing, package = "mlbench", envir = environment())

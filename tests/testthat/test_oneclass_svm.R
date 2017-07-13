@@ -22,7 +22,8 @@ test_that("oneclass_svm", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m1 = do.call(e1071::svm, pars)
-    old.predicts.list[[i]] = predict(m1, newdata = oneclass.test[, -oneclass.col])
+    pred = predict(m1, newdata = oneclass.test[, -oneclass.col])
+    old.predicts.list[[i]] = factor(pred, levels = c("FALSE", "TRUE"), labels = c(oneclass.positive, oneclass.negative))
   }
 
    testSimpleParsets("oneclass.svm", oneclass.df, oneclass.target,
