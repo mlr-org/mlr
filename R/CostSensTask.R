@@ -33,7 +33,7 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
       stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
   }
 
-  task$task.desc = makeCostSensTaskDesc(id , data, target, blocking, costs, spatial)
+  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking, costs, spatial)
   addClasses(task, "CostSensTask")
 }
 
