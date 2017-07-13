@@ -53,6 +53,6 @@ makeTaskDescInternal = function(type, id, data, target, weights, blocking, spati
     has.missings = anyMissing(data),
     has.weights = !is.null(weights),
     has.blocking = !is.null(blocking),
-    is.spatial = !is.null(spatial)
+    is.spatial = spatial
   )
 }
