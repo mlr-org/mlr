@@ -14,7 +14,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(return.score = FALSE),
-    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
     short.name = "coxboost",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer.",
@@ -24,7 +24,7 @@ makeRLearner.surv.CoxBoost = function() {
 
 #' @export
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, unpen.index = NULL, ...) {
-  data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+  data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
   info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   data$data = as.matrix(fixDataForLearner(data$data, info))
 
