@@ -1,8 +1,7 @@
 makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals = list(), learner.subclass, model.subclass) {
-
-  if (inherits(next.learner, "OptWrapper"))
-    stop("Cannot wrap an optimization wrapper with something else!")
+  if (inherits(next.learner, "OptWrapper") && is.element("TuneWrapper", learner.subclass))
+    stop("Cannot wrap a tuning wrapper around another optimization wrapper!")
   ns = intersect(names(par.set$pars), names(next.learner$par.set$pars))
   if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
