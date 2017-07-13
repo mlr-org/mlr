@@ -427,7 +427,9 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
+  # In this step we keep all functionals, because they are converted anyway when passing
+  # them on to the learner and the learner does not support them.
+  task = changeData(task, getTaskData(task, subset, features, keep.functionals = TRUE), getTaskCosts(task, subset), task$weights)
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
