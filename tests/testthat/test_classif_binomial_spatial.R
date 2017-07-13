@@ -16,21 +16,20 @@ test_that("classif_binomial_spatial", {
 
   old.predicts.list = list()
   old.probs.list = list()
-  nof = 1:55 # remove feats
 
   for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     set.seed(getOption("mlr.debug.seed"))
-    m = glm(formula = binaryclass.spatial.formula, data = binaryclass.spatial.train[, -nof], family = parset$family)
-    p  = predict(m, newdata = binaryclass.spatial.test[, -nof], type = "response")
+    m = glm(formula = binaryclass.spatial.formula, data = binaryclass.spatial.train, family = parset$family)
+    p  = predict(m, newdata = binaryclass.spatial.test, type = "response")
     p = 1 - p
     p.class = as.factor(binaryclass.spatial.class.levs[ifelse(p > 0.5, 1, 2)])
     old.predicts.list[[i]] = p.class
     old.probs.list[[i]] = p
   }
 
-  testSimpleParsets("classif.binomial", binaryclass.spatial.df[, -nof], binaryclass.spatial.target, binaryclass.spatial.train.inds,
+  testSimpleParsets("classif.binomial", binaryclass.spatial.df, binaryclass.spatial.target, binaryclass.spatial.train.inds,
                     old.predicts.list, parset.list2)
-  testProbParsets("classif.binomial", binaryclass.spatial.df[, -nof], binaryclass.spatial.target, binaryclass.spatial.train.inds,
+  testProbParsets("classif.binomial", binaryclass.spatial.df, binaryclass.spatial.target, binaryclass.spatial.train.inds,
                   old.probs.list, parset.list2)
 })
