@@ -13,7 +13,7 @@ makeRLearner.classif.fdaknn = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "weights", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "weights", "prob", "functionals"),
     name = "fdaknn",
     short.name = "fdaknn",
     note = "Argument draw=FALSE is used as default."
@@ -36,6 +36,7 @@ trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
+
 
   # transform the data into fda.usc:fdata class type.
   fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
