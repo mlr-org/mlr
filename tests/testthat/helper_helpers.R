@@ -118,9 +118,8 @@ testProb = function(t.name, df, target, positive, negative, train.inds, old.prob
     else
       old.probs = as.matrix(old.probs)
 
-    p = getPredictionProbabilities(cp)
-    if (is.data.frame(p))
-      p = as.matrix(p)
+    p = getPredictionProbabilities(cp)[,1]
+    p = as.matrix(p)
     # we change names a bit so dont check them
     colnames(p) = colnames(old.probs) = NULL
     rownames(p) = rownames(old.probs) = NULL
