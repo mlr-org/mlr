@@ -54,5 +54,6 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }

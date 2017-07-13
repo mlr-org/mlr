@@ -13,15 +13,18 @@
 * getPredictionTaskDesc
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
+* setMeasurePars
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
 
 ## measures - new
 * measureBER, measureRMSLE, measureF1
+* cindex.uno, iauc.uno
 
 ## learners - general
-* unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
+* unified {classif,regr}.penalized{ridge,lasso,fusedlasso} into {classif,regr}.penalized
+* fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 
 ## learners - new
 
@@ -29,6 +32,7 @@
 * {classif,regr}.bdk: broke our API, stability issues
 * {classif,regr}.xyf: broke our API, stability issues
 * classif.hdrda: package removed from CRAN
+* surv.penalized: stability issues
 
 # mlr 2.11:
 
