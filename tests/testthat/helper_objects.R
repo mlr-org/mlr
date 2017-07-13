@@ -77,7 +77,7 @@ oneclass.df = data
 oneclass.target = "normal"
 
 oneclass.col = 3
-oneclass.train.inds = c(1:500)
+oneclass.train.inds = c(1:1000)
 oneclass.test.inds  = setdiff(seq_len(nrow(oneclass.df)), oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]
