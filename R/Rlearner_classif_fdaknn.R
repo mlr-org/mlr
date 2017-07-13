@@ -30,7 +30,7 @@ trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL
 
   data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
   par.cv = learnerArgsToControl(list, trim, draw)
-  fda.usc::classif.knn(group = z$target, fdataobj = data.fdclass, par.CV = par.cv,
+  fda.usc::classif.knn(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
  }
 

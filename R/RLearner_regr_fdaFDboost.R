@@ -27,7 +27,7 @@ makeRLearner.regr.fdaFDboost = function() {
 }
 
 #' @export
-trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
+trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
  knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
 
@@ -80,7 +80,7 @@ trainLearner.fdaregr.FDboost = function(.learner, .task, .subset, .weights = NUL
 }
 
 #' @export
-predictLearner.fdaregr.FDboost = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.fdaFDboost = function(.learner, .model, .newdata, ...) {
   tdesc = getTaskDesc(.model)
   nd = convertFDAData2ListOfMatrices(.newdata, tdesc)
   predict(object = .model$learner.model, newdata = nd)
