@@ -42,13 +42,14 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
     custom.family = custom.family.definition
   )
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
-  d = getTaskData(.task, subset = .subset, keep.functionals = TRUE)
+  d = getFunctionalData(.task, .subset)
   tn = getTaskTargetNames(.task)
-  tdesc = getTaskDesc(.task)
-  fdf = tdesc$fd.features
 
+
+  # FIXME: I have no idea how to set this up, maybe Xudong can help?
+  flen = sapply(d, ncol)
   # later on, the grid elements in mat.list should have suffix ".grid"
-  fdg = setNames(tdesc$fd.grids, stri_paste(names(tdesc$fd.grids), ".grid"))
+  fdg = setNames(tdesc$fd.grids, seq_len(flen), ".grid")
   fdns = names(fdf)
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
