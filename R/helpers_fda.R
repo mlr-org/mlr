@@ -56,17 +56,16 @@ hasFunctionalFeatures = function(df) {
 }
 
 # Get only functional features from a task.
-getFunctionalData = function(object, subset = NULL, features, target.extra = FALSE,
-  recode.target = "no"){
+getFunctionalData = function(object, subset = NULL, features, recode.target = "no"){
 
   # Either get data from task or take data.frame directly
-  if (inherits(task, "Task")) {
-    df = getTaskData(task, subset, features, target.extra = FALSE, recode.target, keep.functionals = TRUE)
+  if (inherits(object, "Task")) {
+    d = getTaskData(object, subset, features, target.extra = TRUE, recode.target, keep.functionals = TRUE)$data
   } else {
-    df = object
+    d = object
   }
 
-    # Which features are functional?
-  finds = which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))
-  df[, finds]
+  # Which features are functional?
+  fids = which(lapply(d, function(x) class(x)[1]) %in% c("functional" , "matrix"))
+  d[, fids]
 }
