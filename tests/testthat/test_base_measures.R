@@ -192,7 +192,7 @@ test_that("check measure calculations", {
   tar.oneclass = c(TRUE, TRUE, TRUE, TRUE)
   pred.art.oneclass =  c(FALSE, TRUE, TRUE, TRUE)
   data.oneclass = data.frame(var1, var2, tar.oneclass)
-  task.oneclass = makeOneClassTask(data = data.oneclass, target = "tar.oneclass", positive = "TRUE", negative = "FALSE")
+  task.oneclass = makeOneClassTask(data = data.oneclass, target = "tar.oneclass", positive = "FALSE", negative = "TRUE")
   lrn.oneclass = makeLearner("oneclass.svm")
   mod.oneclass = train(lrn.oneclass, task.oneclass)
   pred.oneclass = predict(mod.oneclass, task.oneclass)

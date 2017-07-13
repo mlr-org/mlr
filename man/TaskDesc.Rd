@@ -24,8 +24,8 @@ Object members:
   classes.
   For \dQuote{oneclass} there is always a defined target column, so this is also \code{character(1)}
   (so supervised evaluation is possible for test sets).
-  The denoted column is of type factor with two levels (\code{positive} (normal class) and
-  \code{negative} (anomaly class)). The target column will be ignored during training.}
+  The denoted column is of type factor with two levels (\code{positive} (anomaly class) and
+  \code{negative} (normal class)). The target column will be ignored during training.}
 \item{size [\code{integer(1)}]}{Number of cases in data set.}
 \item{n.feat [\code{integer(2)}]}{Number of features, named vector with entries:
   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}.}
