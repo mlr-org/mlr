@@ -239,10 +239,10 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
     # per default assume 5% anomalies
       indices.threshold = order(p.df)[round(length(p.df)*0.95)]  #mse reconstruction error in [0,inf[
       predict.threshold = p.df[indices.threshold]
-      p = p.df <= predict.threshold
-      p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
+      p = p.df >= predict.threshold
+      p = factor(p, levels = c("FALSE", "TRUE"), labels = label)
   } else {
-    p = convertingScoresToProbability(p.df, parainit = c(1, 0))
+    p = convertingScoresToProbability(p.df, parainit = c(1, 0))$probability
     p = cbind(p, 1-p)
     colnames(p) = label
   }
