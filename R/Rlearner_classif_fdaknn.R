@@ -23,7 +23,7 @@ makeRLearner.classif.fdaknn = function() {
 #' @export
 trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
-  fd = d$data[, which(sapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
+  fd = d$data[, which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
   par.cv = learnerArgsToControl(list, trim, draw)
@@ -33,8 +33,8 @@ trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
-  browser()
   # transform the data into fda.usc:fdata class type.
-  nd = fda.usc::fdata(mdata = setClasses(.newdata, "matrix"))
+  fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
+  nd = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
   predict(.model$learner.model, nd, ...)
 }

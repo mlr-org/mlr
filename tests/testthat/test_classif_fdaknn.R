@@ -31,10 +31,10 @@ test_that("FDA_classif_knn behaves like original api", {
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
   cp = predict(m, newdata = ftest)
-  cp = unlist(cp$data, use.names = FALSE)
+  cp = unlist(cp$data$response, use.names = FALSE)
 
-  cp2 = predict(m, newdata = as.data.frame(mlearn$data))
-  cp2 = unlist(cp2$data, use.names = FALSE)
+  cp2 = predict(m, newdata = fdata)
+  cp2 = unlist(cp2$data$response, use.names = FALSE)
   # check if the output from the original API matches the mlr learner's output
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
