@@ -13,7 +13,7 @@ makeRLearner.classif.fdaknn = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "weights"),
+    properties = c("twoclass", "multiclass", "numerics", "weights", "prob"),
     name = "fdaknn",
     short.name = "fdaknn",
     note = "Argument draw=FALSE is used as default."
@@ -22,9 +22,12 @@ makeRLearner.classif.fdaknn = function() {
 
 #' @export
 trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+
+  # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
   fd = d$data[, which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
   # transform the data into fda.usc:fdata class type.
+
   data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
   par.cv = learnerArgsToControl(list, trim, draw)
   fda.usc::classif.knn(group = z$target, fdataobj = data.fdclass, par.CV = par.cv,
@@ -33,8 +36,16 @@ trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
+
   # transform the data into fda.usc:fdata class type.
   fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
   nd = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
-  predict(.model$learner.model, nd, ...)
+
+  # predict according to predict.type
+  type = ifelse(.learner$predict.type == "prob", "probs", "class")
+  if (type == "probs") {
+    predict(.model$learner.model, nd, type = type)$prob.group
+  } else {
+    predict(.model$learner.model, nd, type = type)
+  }
 }
