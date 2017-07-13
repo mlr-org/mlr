@@ -155,17 +155,35 @@ test_that("getTaskData for functionals", {
   df$treg = 1:5
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 5:10, "fd3" = c("X2", "X3", "X4")))
 
+  # For a classification task
   clt = makeClassifTask(data = fdf, target = "tcl")
-  tdata1 = getTaskData(clt, functionals = FALSE)
-  expect_true(!("matrix" %in% sapply(tdata, class)))
-  tdata2 = getTaskData(clt, functionals = TRUE)
-  expect_true("matrix" %in% unlist(sapply(tdata2, class)))
+  expect_message(tdata1 <- getTaskData(clt, keep.functionals = FALSE),
+    "have been converted to numerics") #nolint
+  expect_true(!("matrix" %in% sapply(tdata1, class)))
+  expect_equal(tdata1[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
+  tdata2 = getTaskData(clt, keep.functionals = TRUE)
+  expect_true("matrix" %in% unlist(sapply(tdata2, class)))
+  expect_equal(tdata2[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
+
+
+  tdata3 = getTaskData(clt, keep.functionals = TRUE, target.extra = TRUE)
+  expect_equal(tdata3$target, as.factor(letters[1:5]))
+  expect_true("matrix" %in% unlist(sapply(tdata3$data, class)))
+
+  expect_message(tdata4 <- getTaskData(clt, keep.functionals = FALSE, target.extra = TRUE)) #nolint
+  expect_true(!("matrix" %in% sapply(tdata4$data, class)))
+  expect_equal(tdata4$target, as.factor(letters[1:5]))
+
+
+  # For clustering task
   clustt = makeClusterTask(data = fdf)
-  tdata3 = getTaskData(clustt, functionals = FALSE)
-  expect_true(!("matrix" %in% sapply(tdata3, class)))
-  tdata4 = getTaskData(clustt, functionals = TRUE)
-  expect_true("matrix" %in% unlist(sapply(tdata4, class)))
+  expect_message(tdatacl1 <- getTaskData(clustt, keep.functionals = FALSE),
+    "have been converted to numerics") #nolint
+  expect_true(!("matrix" %in% sapply(tdatacl1, class)))
+  tdatacl2 = getTaskData(clustt, keep.functionals = TRUE)
+  expect_true("matrix" %in% unlist(sapply(tdatacl2, class)))
+
 
 })
 

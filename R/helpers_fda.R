@@ -40,8 +40,10 @@ fdFeatsToColumnIndex = function(df, fd.features = list()) {
 # Convert a data.frame containing functional features to a data.frame containing
 # them as numerics.
 functionalToNormalData = function(df) {
-  if (hasFunctionalFeatures(df))
+  if (hasFunctionalFeatures(df)) {
     df = do.call(data.frame, as.list(df))
+    message("Functional features have been converted to numerics")
+  }
   return(df)
 }
 

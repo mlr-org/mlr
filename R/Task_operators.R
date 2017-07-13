@@ -277,11 +277,11 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no",
-  functionals = FALSE) {
+  keep.functionals = FALSE) {
   checkTask(task, "Task")
   checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
-  assertLogical(functionals, len = 1L)
+  assertLogical(keep.functionals, len = 1L)
 
   task.features = getTaskFeatureNames(task)
 
@@ -299,15 +299,15 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
 
   tn = task$task.desc$target
 
-  indexHelper = function(df, i, j, drop = TRUE, functionals) {
-    switch(2L * is.null(i) + is.null(j) + 1L,
+  indexHelper = function(df, i, j, drop = TRUE, keep.functionals) {
+    df = switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
       df[i, , drop = drop],
       df[, j, drop = drop],
       df
     )
-
-    if (!functionals & hasFunctionalFeatures(df)) {
+    # If we don't keep functionals and functionals are present, convert to numerics
+    if (!keep.functionals & hasFunctionalFeatures(df)) {
       df = functionalToNormalData(df)
     }
     return(df)
@@ -317,8 +317,8 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     if (missing(features))
       features = task.features
     res = list(
-      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, functionals),
-      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, task$task.desc)
+      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, keep.functionals),
+      target = recodeY(indexHelper(task$env$data, subset, tn, keep.functionals = TRUE), type = recode.target, task$task.desc)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -326,7 +326,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     else
       features = union(features, tn)
 
-    res = indexHelper(task$env$data, subset, features, drop = FALSE, functionals)
+    res = indexHelper(task$env$data, subset, features, drop = FALSE, keep.functionals)
     if (recode.target %nin% c("no", "surv")) {
       res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
