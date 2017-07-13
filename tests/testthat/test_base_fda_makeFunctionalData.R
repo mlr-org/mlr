@@ -157,8 +157,7 @@ test_that("getTaskData for functionals", {
 
   # For a classification
   clt = makeClassifTask(data = fdf, target = "tcl")
-  expect_message(tdata1 <- getTaskData(clt, keep.functionals = FALSE),
-    "have been converted to numerics") # nolint
+  expect_message(tdata1 <- getTaskData(clt, keep.functionals = FALSE), "have been converted to numerics") # nolint
   expect_true(!("matrix" %in% sapply(tdata1, class)))
   expect_equal(tdata1[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
@@ -178,8 +177,7 @@ test_that("getTaskData for functionals", {
 
   # For clustering task
   clustt = makeClusterTask(data = fdf)
-  expect_message(tdatacl1 <- getTaskData(clustt, keep.functionals = FALSE),
-    "have been converted to numerics") # nolint
+  expect_message(tdatacl1 <- getTaskData(clustt, keep.functionals = FALSE), "have been converted to numerics") # nolint
   expect_true(!("matrix" %in% sapply(tdatacl1, class)))
   tdatacl2 = getTaskData(clustt, keep.functionals = TRUE)
   expect_true("matrix" %in% unlist(sapply(tdatacl2, class)))
