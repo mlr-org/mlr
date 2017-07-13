@@ -75,7 +75,7 @@ test_that("makeFunctionalData works for different inputs", {
   df2 = df[, 1, drop = FALSE]
   df2$fd1 = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2)
-  expect_equal(lapply(fdf, class)[[1]], c("numeric"))
+  expect_equal(lapply(fdf, class)[[1]], "numeric")
   expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
@@ -116,7 +116,7 @@ test_that("makeFunctionalData works for different inputs", {
   df2 = df[, 1, drop = FALSE]
   df2$fd1 = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2)
-  expect_equal(lapply(fdf, class)[[1]], c("numeric"))
+  expect_equal(lapply(fdf, class)[[1]], "numeric")
   expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
@@ -158,7 +158,7 @@ test_that("getTaskData for functionals", {
   # For a classification
   clt = makeClassifTask(data = fdf, target = "tcl")
   expect_message(tdata1 <- getTaskData(clt, keep.functionals = FALSE),
-    "have been converted to numerics") #nolint
+    "have been converted to numerics") # nolint
   expect_true(!("matrix" %in% sapply(tdata1, class)))
   expect_equal(tdata1[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
@@ -171,7 +171,7 @@ test_that("getTaskData for functionals", {
   expect_equal(tdata3$target, as.factor(letters[1:5]))
   expect_true("matrix" %in% unlist(sapply(tdata3$data, class)))
 
-  expect_message(tdata4 <- getTaskData(clt, keep.functionals = FALSE, target.extra = TRUE)) #nolint
+  expect_message(tdata4 <- getTaskData(clt, keep.functionals = FALSE, target.extra = TRUE)) # nolint
   expect_true(!("matrix" %in% sapply(tdata4$data, class)))
   expect_equal(tdata4$target, as.factor(letters[1:5]))
 
@@ -179,7 +179,7 @@ test_that("getTaskData for functionals", {
   # For clustering task
   clustt = makeClusterTask(data = fdf)
   expect_message(tdatacl1 <- getTaskData(clustt, keep.functionals = FALSE),
-    "have been converted to numerics") #nolint
+    "have been converted to numerics") # nolint
   expect_true(!("matrix" %in% sapply(tdatacl1, class)))
   tdatacl2 = getTaskData(clustt, keep.functionals = TRUE)
   expect_true("matrix" %in% unlist(sapply(tdatacl2, class)))

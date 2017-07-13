@@ -106,7 +106,7 @@ rm(getSurvData)
 
 fda.binary.gp.task = gunpoint.task
 gp = getTaskData(gunpoint.task, keep.functionals = FALSE)
-gpFdf = makeFunctionalData(gp[,1:51], fd.features = list("fd" = 2:51))
+gpFdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
 fda.binary.gp.task.small = makeClassifTask(data = gpFdf, target = "X1")
 fda.regr.fs.task = fuelsubset.task
 
