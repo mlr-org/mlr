@@ -155,7 +155,7 @@ test_that("getTaskData for functionals", {
   df$treg = 1:5
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 5:10, "fd3" = c("X2", "X3", "X4")))
 
-  # For a classification task
+  # For a classification
   clt = makeClassifTask(data = fdf, target = "tcl")
   expect_message(tdata1 <- getTaskData(clt, keep.functionals = FALSE),
     "have been converted to numerics") #nolint

@@ -1,12 +1,12 @@
-#' Create a functional feature from a numeric matrix
+#' Create a data.frame containing functional features from a normal data.frame
 #'
 #' @param df [\code{data.frame}] \cr
 #' @param fd.features [\code{list}] \cr
-#'   Named list containing \code{Integer} column indices or \code{character} column names which
+#'   Named list containing \code{integer} column indices or \code{character} column names which
 #'   indicate functional features.
 #'   If the list is empty, all numeric features are considered functional.
-#' @return [\code{data.frame}] \cr containing all features in a functional form, i.e. functional
-#'   features as a matrix.
+#' @return [\code{data.frame}] \cr Contains all features specified in \code{fd.features}
+#'   in a functional form, i.e. functional features as a matrix.
 #' @export
 #' @examples
 #' # data.frame where columns 1:6 and 8:10 belong to a functional feature
