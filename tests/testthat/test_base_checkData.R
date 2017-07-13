@@ -47,9 +47,9 @@ test_that("checkData", {
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 
   # check missing target column
-  expect_error(makeOneClassTask(data = oneclass.df, positive = "TRUE", negative = "FALSE"), "argument \"target\" is missing, with no default")
-  expect_error(makeOneClassTask(data = oneclass.df, target = "Anomaly", positive = "TRUE", negative = "FALSE"), "Assertion on 'Anomaly' failed: Must be of type 'factor', not 'NULL'.")
-  expect_error(makeOneClassTask(data = oneclass.df, target = "V2", positive = "TRUE", negative = "FALSE"), "Assertion on 'V2' failed: Must be of type 'factor', not 'double'.")
+  expect_error(makeOneClassTask(data = oneclass.df, positive = "FALSE", negative = "TRUE"), "argument \"target\" is missing, with no default")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "Anomaly", positive = "FALSE", negative = "TRUE"), "Assertion on 'Anomaly' failed: Must be of type 'factor', not 'NULL'.")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "V2", positive = "FALSE", negative = "TRUE"), "Assertion on 'V2' failed: Must be of type 'factor', not 'double'.")
 
   # if target column has two class levels: check if missing positive/negative input will return error
   expect_error(makeOneClassTask(data = oneclass.df, target = "normal", negative = "FALSE"), "argument \"positive\" is missing, with no default")
@@ -57,7 +57,7 @@ test_that("checkData", {
   expect_error(makeOneClassTask(data = oneclass.df, target = "normal"), "argument \"positive\" is missing, with no default")
 
   # if target column has two class levels and positive or negative are wrongly named
-  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly", negative = "FALSE"), "'positive' or 'negative' not equal to class levels")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "normal", positive = "Anomaly", negative = "TRUE"), "'positive' or 'negative' not equal to class levels")
 
   # data with target with one class level
   oneclass.df.true = oneclass.df[oneclass.df$normal == "TRUE", , drop = TRUE]

@@ -37,7 +37,7 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
 
   # probability for outlier given the scores
   prob.outlier = function(p, score) {
-    1 / (1 + exp(-p[2] * f - p[1]))
+    1 / (1 + exp(-p[2] * score - p[1]))
   }
 
   if (optim.method == "trust region") {
