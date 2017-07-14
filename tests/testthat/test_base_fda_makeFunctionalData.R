@@ -123,28 +123,72 @@ test_that("makeFunctionalData works for different inputs", {
 })
 
 
-test_that("makeFunctionalData works Tasks work", {
+test_that("makeFunctionalData Tasks work", {
 
   df = data.frame(matrix(rnorm(50), nrow = 5))
   df$tcl = as.factor(letters[1:5])
   df$treg = 1:5
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 5:10, "fd3" = c("X2", "X3", "X4")))
 
+
   clt = makeClassifTask(data = fdf, target = "tcl")
   expect_class(clt, c("ClassifTask", "SupervisedTask", "Task"))
   expect_equal(clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
+
+  # FIXME: Functional class gets dropped because of subsetting rows
+  subs.clt = subsetTask(clt, subset = c(2, 5))
+  expect_class(subs.clt, c("ClassifTask", "SupervisedTask", "Task"))
+  # expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
+  expect_equal(subs.clt$task.desc$n.feat["factors"], c("factors" = 0L))
+  expect_equal(subs.clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
+  expect_equal(subs.clt$task.desc$n.feat["ordered"], c("ordered" = 0L))
+  expect_equal(subs.clt$task.desc$size, 2L)
+
+  subs.clt2 = subsetTask(clt, features = c(1, 3))
+  expect_class(subs.clt2, c("ClassifTask", "SupervisedTask", "Task"))
+  expect_equal(subs.clt2$task.desc$n.feat["functionals"], c("functionals" = 1L))
+  expect_equal(subs.clt2$task.desc$n.feat["factors"], c("factors" = 0L))
+  expect_equal(subs.clt2$task.desc$n.feat["numerics"], c("numerics" = 1L))
+  expect_equal(subs.clt2$task.desc$n.feat["ordered"], c("ordered" = 0L))
+  expect_equal(subs.clt2$task.desc$size, 5L)
+
 
   regt = makeRegrTask(data = fdf, target = "treg")
   expect_class(regt, c("RegrTask", "SupervisedTask", "Task"))
   expect_equal(regt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(regt$task.desc$n.feat["factors"], c("factors" = 1L))
 
+  subs.regt = subsetTask(regt, features = 1:2)
+  expect_class(subs.regt, c("RegrTask", "SupervisedTask", "Task"))
+  expect_equal(subs.regt$task.desc$n.feat["factors"], c("factors" = 1L))
+  expect_equal(subs.regt$task.desc$n.feat["numerics"], c("numerics" = 0L))
+  expect_equal(subs.regt$task.desc$n.feat["ordered"], c("ordered" = 0L))
+  expect_equal(subs.regt$task.desc$n.feat["functionals"], c("functionals" = 1L))
+  expect_equal(subs.regt$task.desc$size, 5L)
+
   clustt = makeClusterTask(data = fdf)
   expect_class(clustt, c("ClusterTask", "UnsupervisedTask", "Task"))
   expect_equal(clustt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(clustt$task.desc$n.feat["factors"], c("factors" = 1L))
   expect_equal(clustt$task.desc$n.feat["numerics"], c("numerics" = 1L))
+
+  # FIXME: Functional class gets dropped because of subsetting rows
+  subs.clust1 = subsetTask(clustt, subset = 2:4)
+  expect_class(subs.clust1, c("ClusterTask", "UnsupervisedTask", "Task"))
+  # expect_equal(subs.clust1$task.desc$n.feat["functionals"], c("functionals" = 3L))
+  expect_equal(subs.clust1$task.desc$n.feat["factors"], c("factors" = 1L))
+  expect_equal(subs.clust1$task.desc$n.feat["numerics"], c("numerics" = 1L))
+  expect_equal(subs.clust1$task.desc$n.feat["ordered"], c("ordered" = 0L))
+  expect_equal(subs.clust1$task.desc$size, 3L)
+
+  subs.clust2 = subsetTask(clustt, features = 2:4)
+  expect_class(subs.clust2, c("ClusterTask", "UnsupervisedTask", "Task"))
+  expect_equal(subs.clust2$task.desc$n.feat["functionals"], c("functionals" = 2L))
+  expect_equal(subs.clust2$task.desc$n.feat["factors"], c("factors" = 0L))
+  expect_equal(subs.clust2$task.desc$n.feat["numerics"], c("numerics" = 1L))
+  expect_equal(subs.clust2$task.desc$n.feat["ordered"], c("ordered" = 0L))
+  expect_equal(subs.clust2$task.desc$size, 5L)
 })
 
 
@@ -157,7 +201,7 @@ test_that("getTaskData for functionals", {
 
   # For a classification
   clt = makeClassifTask(data = fdf, target = "tcl")
-  expect_message(tdata1 <- getTaskData(clt, keep.functionals = FALSE), "have been converted to numerics") # nolint
+  expect_message({tdata1 = getTaskData(clt, keep.functionals = FALSE)}, "have been converted to numerics")
   expect_true(!("matrix" %in% sapply(tdata1, class)))
   expect_equal(tdata1[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
@@ -170,19 +214,39 @@ test_that("getTaskData for functionals", {
   expect_equal(tdata3$target, as.factor(letters[1:5]))
   expect_true("matrix" %in% unlist(sapply(tdata3$data, class)))
 
-  expect_message(tdata4 <- getTaskData(clt, keep.functionals = FALSE, target.extra = TRUE)) # nolint
+  expect_message({tdata4 = getTaskData(clt, keep.functionals = FALSE, target.extra = TRUE)})
   expect_true(!("matrix" %in% sapply(tdata4$data, class)))
   expect_equal(tdata4$target, as.factor(letters[1:5]))
 
 
   # For clustering task
   clustt = makeClusterTask(data = fdf)
-  expect_message(tdatacl1 <- getTaskData(clustt, keep.functionals = FALSE), "have been converted to numerics") # nolint
+  expect_message({tdatacl1 = getTaskData(clustt, keep.functionals = FALSE)}, "have been converted to numerics")
   expect_true(!("matrix" %in% sapply(tdatacl1, class)))
   tdatacl2 = getTaskData(clustt, keep.functionals = TRUE)
   expect_true("matrix" %in% unlist(sapply(tdatacl2, class)))
+})
 
+test_that("changeData for functionals", {
 
+  df = data.frame(matrix(rnorm(50), nrow = 5))
+  df$tcl = as.factor(letters[1:5])
+  df$treg = 1:5
+  fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 5:10, "fd3" = c("X2", "X3", "X4")))
+
+  # After changeData, task stays the same
+  clt = makeClassifTask(data = fdf, target = "tcl")
+  tdata = getTaskData(clt, keep.functionals = TRUE)
+  expect_equal(changeData(clt, tdata), clt)
+
+  # FIXME: functional class is dropped in changeData
+  subs.clt = changeData(clt, tdata[1:3, 1:2])
+  expect_class(subs.clt, c("ClassifTask", "SupervisedTask", "Task"))
+  # expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 1L))
+  expect_equal(subs.clt$task.desc$n.feat["factors"], c("factors" = 0L))
+  expect_equal(subs.clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
+  expect_equal(subs.clt$task.desc$n.feat["ordered"], c("ordered" = 0L))
+  expect_equal(subs.clt$task.desc$size, 3L)
 })
 
 
