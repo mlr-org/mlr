@@ -4,10 +4,13 @@
 * relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
 * added logical task attribute 'is.spatial'
+* refactored the resample progress messages to give a better overview and
+  distinguish between train and test measures better
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
+* batchmark: allow resample instances and reduction of partial results
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
