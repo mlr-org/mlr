@@ -1415,6 +1415,28 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
   extra.args = list(max.time = NULL, resolution = 1000)
 )
 
+#' @export ibs
+#' @rdname measures
+#' @format none
+ibs = makeMeasure(
+  id = "ibs",
+  name = "Integrated brier score using inverse probability of censoring weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
+  properties = c("surv", "req.pred", "req.truth", "req.prob"),
+  minimize = FALSE, best = 1, worst = 0,
+  fun = function(task, model, pred, feats, extra.args) {
+    measureIBS = function(truth, probabilities, max.time) {
+      max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
+      # biggest time value has to be adapted as it does not provide results otherwise
+      pec_probs = pec::pec(probabilities, Surv(time, status) ~ 1, data = data[test,], exact = F, exactness = 99L, maxtime = max.time)
+      crps(pec_probs,times=max.time)[2,]
+    }
+    requirePackages(c("pec"))
+    measureIBS(getPredictionTruth(pred), getPredictionProbabilities(pred), max.time = extra.args$max.time)
+  },
+  extra.args = list(max.time = NULL)
+)
+
 ###############################################################################
 ### cost-sensitive ###
 ###############################################################################
