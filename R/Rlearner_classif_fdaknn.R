@@ -13,7 +13,7 @@ makeRLearner.classif.fdaknn = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "weights", "prob", "functionals"),
+    properties = c("twoclass", "multiclass", "weights", "prob", "functionals"),
     name = "fdaknn",
     short.name = "fdaknn",
     note = "Argument draw=FALSE is used as default."
@@ -39,6 +39,8 @@ predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
 
   # transform the data into fda.usc:fdata class type.
   fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
+  if (ncol(fd) == 0)
+    stop("No functional features in the data")
   nd = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
 
   # predict according to predict.type

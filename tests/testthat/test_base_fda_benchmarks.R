@@ -17,5 +17,4 @@ test_that("benchmarking on fda tasks works", {
   # expect_class(bmr2, "BenchmarkResult")
   # expect_equal(names(bmr2$results$fsFdf), c("regr.fdaFDboost", "regr.rpart"))
   # expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
-
 })

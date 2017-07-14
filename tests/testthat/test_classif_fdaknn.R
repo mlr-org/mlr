@@ -25,8 +25,8 @@ test_that("FDA_classif_knn behaves like original api", {
   phtst[, "label"] = gtest
 
   lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5))
-  fdata = makeFunctionalData(ph, fd.features = list(), target = "label")
-  ftest = makeFunctionalData(phtst, fd.features = list(), target = "label")
+  fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
+  ftest = makeFunctionalData(phtst, fd.features = list(), exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)

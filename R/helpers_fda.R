@@ -8,13 +8,15 @@
 makeFunctionalFeature = function(mat) {
   if (is.data.frame(mat))
     mat = as.matrix(mat)
+  if (any(dim(mat) %in% 0))
+    stop("Matrix dimensions need to be > 0.")
   assertMatrix(mat, mode = "numeric")
   addClasses(mat, "functional")
 }
 
 
 # Convert fd.features list to list of column indices
-fdFeatsToColumnIndex = function(df, fd.features = list(), target = NULL) {
+fdFeatsToColumnIndex = function(df, fd.features = list(), exclude.cols = NULL) {
   assertList(fd.features)
 
   # If the data.frame already contains matricies, keep them
@@ -23,16 +25,25 @@ fdFeatsToColumnIndex = function(df, fd.features = list(), target = NULL) {
     fd.features = c(fd.features, ids)
   }
 
+  # If a target column is provided we exclude it from any functional feature
+  # Target can either be a colum name, column index or NULL.
+  if (class(exclude.cols) == "character") {
+    exclude.cols = which(colnames(df) %in% exclude.cols)
+  } else {
+    assertSubset(exclude.cols, c(seq_len(nrow(df)), NULL))
+  }
+
   # If fd.features is an empty list, all numerics are a functional feature
   if (length(fd.features) == 0)
-    fd.features = list("fd1" = setdiff(which(sapply(df, is.numeric)), which(colnames(df) == target)))
+    fd.features = list("fd1" = setdiff(which(sapply(df, is.numeric)), exclude.cols))
 
   lapply(fd.features, function(fdfeature) {
     if (is.character(fdfeature)) {
-      assertSubset(fdfeature, colnames(df))
-      fd.features = which(colnames(df) %in% fdfeature)
+      assertSubset(fdfeature, colnames(df), empty.ok = FALSE)
+      setdiff(which(colnames(df) %in% fdfeature), exclude.cols)
     } else {
       assertSubset(fdfeature, seq_len(ncol(df)))
+      setdiff(fdfeature, exclude.cols)
     }
   })
 }

@@ -249,6 +249,55 @@ test_that("changeData for functionals", {
   expect_equal(subs.clt$task.desc$size, 3L)
 })
 
+test_that("makeFunctionalData produces valid error messages", {
+
+  df = data.frame("x" = 1:3, "y" = 2:4, "z" = letters[1:3])
+  expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1:4)), "Must be a subset of")
+  expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1:3)), "Must store numerics")
+
+  # Technically we allow functional features of length >= 1
+  fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2))
+  expect_class(fdf$fd1, c("functional", "matrix"))
+  expect_class(fdf$fd2, c("functional", "matrix"))
+  expect_class(fdf$z, c("factor"))
+  fdf2 = makeFunctionalData(df, fd.features = list("fd1" = "x", "fd2" = "y"))
+  expect_class(fdf2$fd1, c("functional", "matrix"))
+  expect_class(fdf2$fd2, c("functional", "matrix"))
+  expect_class(fdf2$z, c("factor"))
+  expect_equal(fdf, fdf2)
+
+  # Exclude.cols works
+  expect_class(makeFunctionalData(df, fd.features = list(), exclude.cols = "z"), "data.frame")
+
+  # Exclude.cols works for character
+  fdf3 = makeFunctionalData(df, fd.features = list(), exclude.cols = c("z", "y"))
+  expect_equal(sapply(fdf3, class)$z, "factor")
+  expect_equal(sapply(fdf3, class)$fd1, c("functional", "matrix"))
+  expect_equal(sapply(fdf3, class)$y, "integer")
+  expect_equal(dim(fdf3$fd1), c(3, 1))
+
+  # Exclude.cols works for integer
+  fdf4 = makeFunctionalData(df, fd.features = list(), exclude.cols = c(3, 2))
+  expect_equal(sapply(fdf4, class)$z, "factor")
+  expect_equal(sapply(fdf4, class)$fd1, c("functional", "matrix"))
+  expect_equal(sapply(fdf4, class)$y, "integer")
+  expect_equal(dim(fdf4$fd1), c(3, 1))
+
+
+  expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2), exclude.cols = "x"),
+    "Matrix dimensions need to be")
+
+  # Check if exclude.cols overwrites fd.features
+  fdf5 = makeFunctionalData(df, fd.features = list("fd1" = 1:2), exclude.cols = "x")
+  expect_equal(sapply(fdf5, class)$x, "integer")
+  expect_equal(sapply(fdf5, class)$fd1, c("functional", "matrix"))
+  expect_equal(sapply(fdf5, class)$z, "factor")
+  expect_equal(dim(fdf5$fd1), c(3, 1))
+
+  expect_error(makeFunctionalData(data.frame(matrix(letters[1:9], nrow = 3)),
+    fd.features = list("fd1" = 1:3)), "Must store numerics")
+
+  })
 
 # test_that("Code from Bernd", {
   # d = list(x1 = matrix(123, 3, 2), x2 = matrix(1:6, 3, 2), x3 = 1:3)

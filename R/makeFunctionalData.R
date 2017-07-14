@@ -5,6 +5,10 @@
 #'   Named list containing \code{integer} column indices or \code{character} column names which
 #'   indicate functional features.
 #'   If the list is empty, all numeric features are considered functional.
+#' @param exclude.cols [\code{character|integer}\cr
+#'   Column names or indices to exclude from conversion to functionals.
+#'   This setting overrides fd.features.
+#'   The specified columns are always excluded.
 #' @return [\code{data.frame}] \cr Contains all features specified in \code{fd.features}
 #'   in a functional form, i.e. functional features as a matrix.
 #' @export
@@ -15,12 +19,12 @@
 #' fdf = makeFunctionalData(df, fd.features = list("fd1" = 1:6, "fd2" = 8:10))
 #' # Create a regression task
 #' makeRegrTask(data = fdf, target = "target")
-makeFunctionalData = function(df, fd.features = list(), target = NULL) {
+makeFunctionalData = function(df, fd.features = list(), exclude.cols = NULL) {
   assertDataFrame(df)
   assertList(fd.features)
 
   # Convert fd.features to column indices
-  fd.features = fdFeatsToColumnIndex(df, fd.features, target)
+  fd.features = fdFeatsToColumnIndex(df, fd.features, exclude.cols)
   # Create a list of functional feature matricies
   ffeats = lapply(fd.features, function(x) {makeFunctionalFeature(df[, x, drop = FALSE])})
   # Drop original numeric data
