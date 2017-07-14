@@ -49,7 +49,7 @@ anomaly$normal = FALSE
 data = rbind(normal, anomaly)
 data = na.omit(data)
 
-oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data[, -4], target = "normal", positive = "FALSE", negative = "TRUE")
+oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "normal", positive = "FALSE", negative = "TRUE")
 save(oneclass2d.task, file = file.path(dn, "oneclass2d.task.RData"))
 
 # regression
