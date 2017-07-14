@@ -39,8 +39,8 @@
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
-  
-  
+
+
   learners = ensureBenchmarkLearners(learners)
   learner.ids = extractSubList(learners, "id")
   if (anyDuplicated(learner.ids))
@@ -62,9 +62,9 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
     stop("All objects in 'resamplings' must be of class 'ResampleDesc' or 'ResampleInstance'")
   }, resamplings, tasks)
   names(resamplings) = task.ids
-  
+
   measures = ensureBenchmarkMeasures(measures, tasks)
-  
+
   assertFlag(models)
   assertFlag(keep.pred)
 

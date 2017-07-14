@@ -164,9 +164,9 @@ makeRLearner.regr.h2o.deeplearning = function() {
         default = "Rectifier"),
       # FIXME: hidden can also be a list of integer vectors for grid search
       makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
-        len = NA_integer_, lower = 1L), 
+        len = NA_integer_, lower = 1L),
       makeNumericLearnerParam("epochs", default = 10L, lower = 1), # doc says can be fractional
-      makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
+      makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2),
       makeIntegerLearnerParam("seed", tunable = FALSE),
       makeLogicalLearnerParam("adaptive_rate", default = TRUE),
       makeNumericLearnerParam("rho", default = 0.99, lower = 0), # is there a upper limit for this?
@@ -229,7 +229,8 @@ makeRLearner.regr.h2o.deeplearning = function() {
     ),
     properties = c("numerics", "factors", "weights"),
     name = "h2o.deeplearning",
-    short.name = "h2o.dl"
+    short.name = "h2o.dl",
+    callees = "h2o.deeplearning"
   )
 }
 
@@ -239,7 +240,7 @@ trainLearner.regr.h2o.deeplearning = function(.learner, .task, .subset, .weights
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }   
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)
@@ -258,6 +259,6 @@ predictLearner.regr.h2o.deeplearning = function(.learner, .model, .newdata, ...)
   h2of = h2o::as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
-  return(p.df$predict) 
+  return(p.df$predict)
 }
 

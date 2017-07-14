@@ -29,18 +29,10 @@
 #'   Only present for \dQuote{classif}, NA for multiclass.}
 #' \item{negative [\code{character(1)}]}{Negative class label for binary classification.
 #'   Only present for \dQuote{classif}, NA for multiclass.}
-#' \item{censoring [\code{character(1)}]}{Censoring type for survival analysis.
-#'   Only present for \dQuote{surv}, one of \dQuote{rcens} for right censored data,
-#'   \dQuote{lcens} for left censored data, and \dQuote{icens} for interval censored
-#'   data.}
 #' }
 #' @name TaskDesc
 #' @rdname TaskDesc
 NULL
-
-makeTaskDesc = function(task, id, ...) {
-  UseMethod("makeTaskDesc")
-}
 
 makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   # get classes of feature cols

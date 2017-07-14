@@ -24,7 +24,8 @@ makeRLearner.classif.h2o.glm = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'binomial' to get a binary classifier."
+    note = "'family' is always set to 'binomial' to get a binary classifier.",
+    callees = "h2o.glm"
   )
 }
 
@@ -56,11 +57,9 @@ predictLearner.classif.h2o.glm = function(.learner, .model, .newdata, ...) {
 
   # check if class names are integers. if yes, colnames of p.df need to be adapted
   int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
-  if (any(int)) {
-    pcol = stri_detect_regex("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol))
-      colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
-  }
+  pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
+  if (any(int) && any(pcol))
+    colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
 
   if (.learner$predict.type == "response") {
     return(p.df$predict)

@@ -5,7 +5,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
     clipString(collapse(colnames(.data)[has.it], ", "), 50L)
   }
 
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   if (td$type != learner$type) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)
@@ -50,11 +50,6 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
       if (!hasLearnerProperties(learner, "multiclass"))
         stopf("Task '%s' is a multiclass-problem, but learner '%s' does not support that!", td$id, learner$id)
     }
-  } else if (td$type == "surv") {
-    if (!hasLearnerProperties(learner, td$censoring))
-      stopf("Task '%s' is %s censored, but learner '%s' does not support that!", td$id, td$censoring, learner$id)
   }
   invisible(NULL)
 }
-
-

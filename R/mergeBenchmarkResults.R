@@ -58,8 +58,8 @@ mergeBenchmarkResults = function(bmrs) {
   # get all unique measures used in the bmr objects and recompute missing measures in RR
   measures.merged = peelList(lapply(bmrs, getBMRMeasures))
   measures.merged = unique(measures.merged) # measures.merged[!duplicated(measures.merged)]
-  for(i in 1:length(res.merged)) {
-    for(j in 1:length(res.merged[[i]])) {
+  for (i in seq_along(res.merged)) {
+    for (j in seq_along(res.merged[[i]])) {
       res.merged[[i]][[j]] = addRRMeasure(res.merged[[i]][[j]], measures.merged)
     }
   }

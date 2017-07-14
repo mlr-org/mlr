@@ -27,7 +27,7 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   convertYForTuner(res$y, measures, ctrl)
 }
 
-tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas) {
+tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun) {
   force(learner)
   force(task)
   force(resampling)
@@ -38,13 +38,14 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   force(show.info)
   force(convertx)
   force(remove.nas)
+  force(resample.fun)
   # remove trafos for mbo, we do this in tunerFitnFun
   ps2 = par.set
   for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
   smoof::makeSingleObjectiveFunction(
     fn = function(x) {
-      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun)
   }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
 }
 
@@ -71,7 +72,7 @@ convertYForTuner = function(y, measures, ctrl) {
     if (is.na(z) || is.nan(z) || is.infinite(z))
       z = ctrl$impute.val[[j]]
     # we now negate values for maximization
-    y[[j]] = z * ifelse(measures[[j]]$minimize, 1 , -1)
+    y[[j]] = z * ifelse(measures[[j]]$minimize, 1, -1)
   }
   # for multicrit, return vector (without names), otherwise just scalar y
   if (inherits(ctrl, "TuneMultiCritControl"))

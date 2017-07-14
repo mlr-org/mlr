@@ -13,7 +13,7 @@ test_that("regr_randomForest", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(formula = regr.formula, data = regr.train)
     pars = c(pars, parset)
@@ -59,21 +59,22 @@ test_that("different se.methods work", {
     }
     learner = makeLearner("regr.randomForest", predict.type = "se", par.vals = par.vals)
     set.seed(getOption("mlr.debug.seed"))
-    model = train(learner, task = regr.task, subset = regr.train.inds)
+    model = train(learner, task = bh.task, subset = 1:500)
 
     set.seed(getOption("mlr.debug.seed"))
-    preds[[se.method]] = predict(model, task = regr.task, subset = regr.test.inds)
+    preds[[se.method]] = predict(model, task = bh.task)
     expect_true(is.numeric(preds[[se.method]]$data$se))
     expect_true(all(preds[[se.method]]$data$se >= 0))
 
     # test if it works with one row
-    pred.one = predict(model, task = regr.task, subset = 1)
+    pred.one = predict(model, task = bh.task, subset = 501)
     expect_true(is.numeric(pred.one$data$se))
     expect_true(all(pred.one$data$se >= 0))
   }
   # mean prediction should be unaffected from the se.method
   expect_equal(preds$bootstrap$data$response, preds$sd$data$response)
   expect_equal(preds$sd$data$response, preds$jackknife$data$response)
+
 })
 
 
@@ -82,7 +83,7 @@ test_that("dplyr data.frames work", {
   mpg$model = NULL
   for (cname in colnames(mpg)[sapply(mpg, is.character)])
     mpg[[cname]] = as.factor(mpg[[cname]])
-  expect_warning((task_mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
+  expect_warning((task.mpg = makeRegrTask(data = mpg, target = "cty")), "Provided data is not a pure data.frame but from class")
   lrn = makeLearner("regr.randomForest", ntree = 2)
-  train(lrn, task_mpg)
+  train(lrn, task.mpg)
 })

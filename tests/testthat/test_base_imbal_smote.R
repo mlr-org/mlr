@@ -29,11 +29,11 @@ test_that("smote works with rate 1 (no new examples)",  {
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"])
 
-  taskAlt = smote(binaryclass.task, rate = 1, alt.logic = TRUE)
-  dfAlt = getTaskData(taskAlt)
-  tab2Alt = table(dfAlt[, binaryclass.target])
-  expect_equal(tab2Alt["M"], tab1["M"])
-  expect_equal(tab2Alt["R"], tab1["R"])
+  task.alt = smote(binaryclass.task, rate = 1, alt.logic = TRUE)
+  df.alt = getTaskData(task.alt)
+  tab2alt = table(df.alt[, binaryclass.target])
+  expect_equal(tab2alt["M"], tab1["M"])
+  expect_equal(tab2alt["R"], tab1["R"])
 })
 
 test_that("smote works with only factor features",  {
@@ -41,7 +41,7 @@ test_that("smote works with only factor features",  {
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
     x2 = sample(c("a", "b"), n, replace = TRUE),
-    y = c(rep("a",2),rep("b",8))
+    y = c(rep("a", 2), rep("b", 8))
   )
   task = makeClassifTask(data = d, target = "y")
   task2 = smote(task, rate = 1.4, nn = 2L)
@@ -73,7 +73,7 @@ test_that("smote wrapper",  {
 test_that("smote works with only integer features", {
   dat = getTaskData(pid.task)
   i = sapply(dat, is.numeric)
-  dat[,i] = lapply(dat[,i], as.integer)
+  dat[, i] = lapply(dat[, i], as.integer)
   tsk = makeClassifTask(data = dat, target = "diabetes")
   task2 = smote(tsk, 2)
   expect_equal(getTaskSize(task2), 1036)

@@ -61,7 +61,7 @@
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.
-#'   Possible coices are:
+#'   Possible choices are:
 #'   \dQuote{no} = Don't do it.
 #'   \dQuote{warn} = Do it but warn about it.
 #'   \dQuote{quiet} = Do it but keep silent.
@@ -98,9 +98,10 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       # the next lines look a bit complicated, we calculate the warning info message
       dropped = logical(ncol(data))
       for (i in seq_col(data)) {
-        if (is.factor(data[[i]]) && any(table(data[[i]]) == 0L)) {
+        x = data[[i]]
+        if (is.factor(x) && hasEmptyLevels(x)) {
           dropped[i] = TRUE
-          data[[i]] = droplevels(data[[i]])
+          data[[i]] = droplevels(x)
         }
       }
       if (any(dropped))
@@ -142,7 +143,7 @@ checkTaskData = function(data, cols = names(data)) {
       if (anyNaN(x))
         stopf("Column '%s' contains NaN values.", cn)
     } else if (is.factor(x)) {
-      if (any(table(x) == 0L))
+      if (hasEmptyLevels(x))
         stopf("Column '%s' contains empty factor levels.", cn)
     } else {
       stopf("Unsupported feature type (%s) in column '%s'.", class(x)[1L], cn)

@@ -38,24 +38,13 @@ test_that("tuneParams with resample.fun", {
   ctrl = makeTuneControlGenSA(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
   expect_true(all(getOptPathY(tr$opt.path) == 0.5))
-})
 
-test_that("tuneParamsMBO does not accept resample.fun", {
-  # tuneMBO does currently not implement resample.fun; FIXME change here as soon as it does.
-  skip_on_cran() # FIXME remove if mbo is on cran
-  skip_if_not_installed("mlrMBO")
-  attachNamespace("mlrMBO")
-  lrn = makeLearner("classif.rpart")
-  rdesc = makeResampleDesc("Holdout")
-  ps = makeParamSet(
-    makeNumericParam("cp", lower = 0.001, upper = 1),
-    makeIntegerParam("minsplit", lower = 1, upper = 10)
-  )
- 
-  mbo.ctrl = makeMBOControl(save.on.disk.at = integer(0L))
-  mbo.ctrl = setMBOControlTermination(mbo.ctrl, iters = 2)
-  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl)
-  expect_error(tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample))
+  ctrl = suppressWarnings({
+    # this currently is a warning because printHead is in mlr and BBmisc
+     makeTuneControlMBO(budget = 10, learner = "regr.lm")
+  })
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, resample.fun = constant05Resample)
+  expect_true(all(getOptPathY(tr$opt.path) == 0.5))
 })
 
 test_that("tuneParams output works as documented", {
@@ -64,17 +53,17 @@ test_that("tuneParams output works as documented", {
   ps = makeParamSet(
     makeNumericParam("C", lower = 0.001, upper = 1)
   )
-  ctrl_default = makeTuneControlRandom(maxit = 2)
-  ctrl_memory = makeTuneControlRandom(maxit = 2, log.fun = "memory")
-  ctrl_user = makeTuneControlRandom(maxit = 2, log.fun = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage, prev.stage) message("Hi"))
+  ctrl.default = makeTuneControlRandom(maxit = 2)
+  ctrl.memory = makeTuneControlRandom(maxit = 2, log.fun = "memory")
+  ctrl.user = makeTuneControlRandom(maxit = 2, log.fun = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage, prev.stage) message("Hi"))
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl_default, show.info = TRUE),
+  expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.default, show.info = TRUE),
     "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+$")
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl_memory, show.info = TRUE),
+  expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.memory, show.info = TRUE),
     "\\[Tune-y\\] \\d+: [^;]+; time:[^;]+; memory:[^;]+$")
 
-  expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl_user, show.info = TRUE),
+  expect_message(tuneParams(lrn, multiclass.task, rdesc, measures = list(foo = acc), par.set = ps, control = ctrl.user, show.info = TRUE),
     "^Hi")
 })
 

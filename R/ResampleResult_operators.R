@@ -15,7 +15,7 @@ getRRPredictions = function(res) {
     res$pred
 }
 
-#' @title Get task description from resample results.
+#' @title Get task description from resample results (DEPRECATED).
 #'
 #' @description
 #' Get a summarizing task description.
@@ -26,6 +26,21 @@ getRRPredictions = function(res) {
 #' @export
 #' @family resample
 getRRTaskDescription = function(res) {
+  .Deprecated("getRRTaskDesc")
+  getRRTaskDesc(res)
+}
+
+#' @title Get task description from resample results (DEPRECATED).
+#'
+#' @description
+#' Get a summarizing task description.
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [\code{TaskDesc}].
+#' @export
+#' @family resample
+getRRTaskDesc = function(res) {
   res$task.desc
 }
 
@@ -53,7 +68,7 @@ getRRPredictionList = function(res, ...) {
   pred = getRRPredictions(res)
   predict.type = pred$predict.type
   time = pred$time
-  task.desc = getRRTaskDescription(res)
+  task.desc = getRRTaskDesc(res)
 
   # split by train and test set
   set = levels(pred$data$set)
@@ -61,10 +76,10 @@ getRRPredictionList = function(res, ...) {
   # get prediction objects for train and test set
   prediction = lapply(set, function(s) {
     # split by resample iterations
-    p.split = pred$data[pred$data$set == s,, drop = FALSE]
+    p.split = pred$data[pred$data$set == s, , drop = FALSE]
     p.split = split(p.split, as.factor(p.split$iter))
     # create prediction object for each resample iteration
-    p.split = lapply(p.split, function (p) {
+    p.split = lapply(p.split, function(p) {
       # get predictions based on predict.type
       if (predict.type == "prob") {
         y = p[, stri_startswith_fixed(colnames(p), "prob."), drop = FALSE]
@@ -79,7 +94,7 @@ getRRPredictionList = function(res, ...) {
         predict.type = predict.type, time = NA_real_, ...)
     })
     # add time info afterwards
-    for(i in seq_along(p.split))
+    for (i in seq_along(p.split))
       p.split[[i]]$time = time[i]
     return(p.split)
   })

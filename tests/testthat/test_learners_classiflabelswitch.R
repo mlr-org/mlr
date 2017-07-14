@@ -2,23 +2,23 @@ context("learners_classiflabelswitch")
 
 n = 50L
 p = 2L
-mydata1 = matrix(runif(2*n*p), nrow = 2*n, ncol = p)
+mydata1 = matrix(runif(2 * n * p), nrow = 2 * n, ncol = p)
 mydata1 = as.data.frame(mydata1)
-mydata1[1:n,]  = mydata1[1:n,] + 10L
-mydata1[(n+1):(2*n),]  = mydata1[(n+1):(2*n),] - 10L
+mydata1[1:n, ]  = mydata1[1:n, ] + 10L
+mydata1[(n + 1):(2 * n), ]  = mydata1[(n + 1):(2 * n), ] - 10L
 mydata1$y = factor(rep(c("a", "b"), each = c(n)))
 mydata2 = mydata1
 mydata2$y = factor(rep(c("a", "b"), each = c(n)), levels = c("b", "a"))
 
-mydata3 = matrix(runif(3*n*p), nrow = 3*n, ncol = p)
+mydata3 = matrix(runif(3 * n * p), nrow = 3 * n, ncol = p)
 mydata3 = as.data.frame(mydata3)
-mydata3[1:n,]  = mydata3[1:n,] + 10L
-mydata3[(n+1):(2*n),]  = mydata3[(n+1):(2*n),] - 10L
+mydata3[1:n, ]  = mydata3[1:n, ] + 10L
+mydata3[(n + 1):(2 * n), ]  = mydata3[(n + 1):(2 * n), ] - 10L
 mydata3$y = factor(rep(c("a", "b", "c"), each = c(n)))
 mydata4 = mydata3
 mydata4$y = factor(rep(c("a", "b", "c"), each = c(n)), levels = c("c", "b", "a"))
 
-mytask1a = makeClassifTask(id = "t1a" , data = mydata1, target = "y", positive = "a")
+mytask1a = makeClassifTask(id = "t1a", data = mydata1, target = "y", positive = "a")
 mytask1b = makeClassifTask(id = "t1b", data = mydata1, target = "y", positive = "b")
 mytask2a = makeClassifTask(id = "t2a", data = mydata2, target = "y", positive = "a")
 mytask2b = makeClassifTask(id = "t2b", data = mydata2, target = "y", positive = "b")
@@ -65,12 +65,12 @@ test_that("no labels are switched", {
       tmp = holdout(lrn, task, split = 0.5, stratify = TRUE)
       #print(as.data.frame(getRRPredictions(tmp)))
       err = tmp$aggr[[1L]]
-      expect_true(!is.na(err) & err <= 1/3, info = paste(getTaskDescription(task)$id, id, err, sep = ", "))
+      expect_true(!is.na(err) & err <= 1 / 3, info = paste(getTaskDesc(task)$id, id, err, sep = ", "))
       err
     })
   }
   # FIXME: only check prob for now for timimg reasons
-  for (predtype in c("prob")) {
+  for (predtype in "prob") {
     checkErrsForTask(mytask1a, predtype)
     checkErrsForTask(mytask1b, predtype)
     checkErrsForTask(mytask2a, predtype)

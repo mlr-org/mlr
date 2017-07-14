@@ -66,7 +66,7 @@ test_that("performance is NA if 'on.measure.not.applicable' is not 'stop'", {
     } else if (i == "warn") {
       expect_warning(expect_equal(unname(performance(pred, auc)), NA_real_))
       # does this also work with benchmark?
-      expect_warning(b <- benchmark(lrn, binaryclass.task, measures = list(acc, auc)))
+      expect_warning({b = benchmark(lrn, binaryclass.task, measures = list(acc, auc))})
       expect_true(any(is.na(as.data.frame(b)$auc)))
       expect_false(any(is.na(as.data.frame(b)$acc)))
     } else {

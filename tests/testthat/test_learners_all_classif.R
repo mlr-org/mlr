@@ -50,7 +50,7 @@ test_that("learners work: classif ", {
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
-  
+
   # classif with oobpreds
   lrns = mylist("classif", properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
@@ -66,7 +66,7 @@ test_that("learners work: classif ", {
 
 
 test_that("weightedClassWrapper on all binary learners",  {
-  pos = getTaskDescription(binaryclass.task)$positive
+  pos = getTaskDesc(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
