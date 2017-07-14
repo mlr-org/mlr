@@ -5,6 +5,7 @@
   combination is to wrap a tuning wrapper around another optimization wrapper
 * refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
+* added logical task attribute 'is.spatial'
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
@@ -17,6 +18,7 @@
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 * setMeasurePars
+* partition options 'SpCV' and 'RepSpCV' (spatial cross-validation, based on kmeans clustering)
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
