@@ -9,7 +9,7 @@ makeRLearner.classif.fdakernel = function() {
     cl = "classif.fdakernel",
     package = "fda.usc",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "h"),
+      makeIntegerVectorLearnerParam(id = "h", default = NULL, special.vals = list(NULL)),
       makeDiscreteLearnerParam(id = "Ker", default = "AKer.norm", values = list("AKer.norm", "AKer.cos", "AKer.epa", "AKer.tri", "AKer.quar", "AKer.unif")),
       makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = c("metric.lp", "metric.kl",
         "metric.hausdorff", "metric.dist")),
@@ -27,7 +27,7 @@ makeRLearner.classif.fdakernel = function() {
 }
 
 #' @export
-trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
   fd = d$data[, which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]

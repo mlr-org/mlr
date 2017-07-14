@@ -15,7 +15,7 @@ test_that("classif_fdakernel behaves like original api", {
   mtest = phoneme[["test"]]
   gtest = phoneme[["classtest"]]
   set.seed(getOption("mlr.debug.seed"))
-  a1 = fda.usc::classif.knn(glearn, mlearn, par.CV = list(trim = 0.5))
+  a1 = fda.usc::classif.kernel(glearn, mlearn)
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
 
@@ -25,7 +25,7 @@ test_that("classif_fdakernel behaves like original api", {
   phtst = as.data.frame(mtest$data)
   phtst[, "label"] = gtest
 
-  lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5))
+  lrn = makeLearner("classif.fdakernel")
   fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
   ftest = makeFunctionalData(phtst, fd.features = list(), exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
