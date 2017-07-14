@@ -19,24 +19,28 @@
 multilabel task.}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, positive = NA_character_,
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, spatial = FALSE,
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 
 makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 
 makeCostSensTask(id = deparse(substitute(data)), data, costs,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, fixup.data = "warn",
+  weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn",
   check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 
-makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+makeSurvTask(id = deparse(substitute(data)), data, target,
+  censoring = "rcens", weights = NULL, blocking = NULL, spatial = FALSE,
+  fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -64,6 +68,10 @@ Observations with the same blocking level \dQuote{belong together}.
 Specifically, they are either put all in the training or the test set
 during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
+
+\item{spatial}{[\code{logical(1)}]\cr
+Is the task spatial? I.e. does it contain coordinates ("x" and "y) which
+shall be used for spatial partitioning?}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary classification (otherwise ignored and set to NA).
