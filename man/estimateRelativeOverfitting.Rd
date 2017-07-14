@@ -3,8 +3,12 @@
 \name{estimateRelativeOverfitting}
 \alias{estimateRelativeOverfitting}
 \title{Estimate relative overfitting.}
+\usage{
+estimateRelativeOverfitting(predish, measures, task, learner = NULL,
+  pred.train = NULL, iter = 1)
+}
 \arguments{
-\item{obj}{[\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
+\item{predish}{[\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
 Resampling strategy or resampling prediction or test predictions.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
