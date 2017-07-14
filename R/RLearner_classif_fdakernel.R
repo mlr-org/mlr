@@ -28,17 +28,31 @@ makeRLearner.classif.fdakernel = function() {
 
 #' @export
 trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = NULL, ...) {
-  z = getTaskData(.task, subset = .subset, target.extra = TRUE)
-  data.fdclass = fda.usc::fdata(mdata = z$data)
-  glearn = z$target
-  learned.model = fda.usc::classif.kernel(group = glearn, fdataobj = data.fdclass,...)
-  return(learned.model)
+  # Get and transform functional data
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
+  fd = d$data[, which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
+  # transform the data into fda.usc:fdata class type.
+
+  data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
+  par.cv = learnerArgsToControl(list, trim, draw)
+  fda.usc::classif.knn(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
+    par.S = list(w = .weights), ...)
 }
 
 #' @export
 predictLearner.classif.fdakernel = function(.learner, .model, .newdata, ...) {
-  m = .model$learner.model
-  nd.fdclass = fda.usc::fdata(mdata = .newdata)
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd.fdclass, ...)
-  return(class.pred)
+
+  # transform the data into fda.usc:fdata class type.
+  fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
+  if (ncol(fd) == 0)
+    stop("No functional features in the data")
+  nd = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
+
+  # predict according to predict.type
+  type = ifelse(.learner$predict.type == "prob", "probs", "class")
+  if (type == "probs") {
+    predict(.model$learner.model, nd, type = type)$prob.group
+  } else {
+    predict(.model$learner.model, nd, type = type)
+  }
 }
