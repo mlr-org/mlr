@@ -40,9 +40,5 @@ Object members:
 \item{negative [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
   Negative class label for binary classification, NA for multiclass,
   anomaly class for oneclass.}
-\item{censoring [\code{character(1)}]}{Censoring type for survival analysis.
-  Only present for \dQuote{surv}, one of \dQuote{rcens} for right censored data,
-  \dQuote{lcens} for left censored data, and \dQuote{icens} for interval censored
-  data.}
 }
 }

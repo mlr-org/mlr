@@ -125,6 +125,13 @@ getSurvData = function(n = 100, p = 10) {
   cens.time = rexp(n, rate = 1 / 10)
   status = ifelse(real.time <= cens.time, TRUE, FALSE)
   obs.time = ifelse(real.time <= cens.time, real.time, cens.time) + 1
+
+  # mark large outliers in survival as censored
+  q = quantile(obs.time, .90)
+  i = which(obs.time > q)
+  obs.time[i] = q
+  cens.time[i] = FALSE
+
   return(cbind(data.frame(time = obs.time, status = status), x))
 }
 surv.df = getSurvData()
