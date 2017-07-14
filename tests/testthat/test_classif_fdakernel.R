@@ -1,6 +1,7 @@
-context("Rlearner_classif_fdaknn")
-
-test_that("classif_fdaknn behaves like original api", {
+context("RLearner_classif_fdakernel")
+# FIXME: This is a copy of knn to be used for kernel, because no unittest
+# for kernel exists.
+test_that("classif_fdakernel behaves like original api", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
 
   data(phoneme, package = "fda.usc")
