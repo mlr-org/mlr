@@ -80,7 +80,7 @@ print.OneClassTask = function(x, ...) {
   print.SupervisedTask(x)
   catf("Classes: %i", m)
   catf(collapse(di, "\n"))
-  catf("Positive/Normal class: %s", x$task.desc$positive)
-  catf("Negative/Anomaly class: %s", x$task.desc$negative)
+  catf("Positive/Anomaly class: %s", x$task.desc$positive)
+  catf("Negative/Normal class: %s", x$task.desc$negative)
 }
 

@@ -28,7 +28,8 @@ test_that("oneclass_ksvm", {
 
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kernlab::ksvm, pars)
-    old.predicts.list[[i]] =  kernlab::predict(m, oneclass.test[, -oneclass.col], type = "response")
+    pred =  kernlab::predict(m, oneclass.test[, -oneclass.col], type = "response")
+    old.predicts.list[[i]] = factor(pred, levels = c("FALSE", "TRUE"), labels = c(oneclass.positive, oneclass.negative))
   }
 
   testSimpleParsets("oneclass.ksvm", oneclass.df, oneclass.target,
