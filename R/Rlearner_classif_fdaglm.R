@@ -14,7 +14,7 @@ makeRLearner.classif.fdaglm = function() {
       makeUntypedLearnerParam(id = "basis.b"),
       makeLogicalLearnerParam(id = "CV", default = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "functionals"),
+    properties = c("twoclass", "multiclass", "probs", "functionals"),
     name = "Generalized Linear Models classification on FDA",
     short.name = "fdaglm"
   )

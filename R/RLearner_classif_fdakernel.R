@@ -19,7 +19,7 @@ makeRLearner.classif.fdakernel = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "functionals"),
+    properties = c("twoclass", "multiclass", "probs", "functionals"),
     name = "Kernel classification on FDA",
     short.name = "fdakernel",
     note = "Argument draw=FALSE is used as default."
@@ -35,7 +35,7 @@ trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = N
 
   data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
   par.cv = learnerArgsToControl(list, trim, draw)
-  fda.usc::classif.knn(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
+  fda.usc::classif.kernel(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
 }
 

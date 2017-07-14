@@ -55,7 +55,7 @@ test_that("predicttype prob for fda.usc", {
 
 test_that("resampling fdaknn", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
-  lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
+  lrn = makeLearner("classif.fdakernel", par.vals = list(trim = 0.5), predict.type = "prob")
 
   set.seed(getOption("mlr.debug.seed"))
   r = resample(lrn, fda.binary.gp.task.small, cv2)

@@ -18,7 +18,7 @@ makeRLearner.classif.fdanp = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "functionals"),
+    properties = c("twoclass", "multiclass", "probs", "functionals"),
     name = "Nonparametric classification on FDA",
     short.name = "fdanp",
     note = "Argument draw=FALSE is used as default."
