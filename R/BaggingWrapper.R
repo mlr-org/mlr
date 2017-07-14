@@ -68,7 +68,7 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeIntegerLearnerParam(id = "bw.iters", lower = 1L, default = 10L),
     makeLogicalLearnerParam(id = "bw.replace", default = TRUE),
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
-    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
+    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2 / 3)
   )
   makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "BaggingWrapper", model.subclass = "BaggingModel")
@@ -83,7 +83,7 @@ print.BaggingModel = function(x, ...) {
 }
 
 #' @export
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.BaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   bw.iters = 10, bw.replace = TRUE, bw.size, bw.feats = 1, ...) {
 
   if (missing(bw.size))
@@ -111,12 +111,12 @@ doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weight
 }
 
 #' @export
-predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.BaggingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    g(predict(m, newdata = nd, ...)$data$response)
+    g(predict(m, newdata = nd, subset = .subset, ...)$data$response)
   }))
   if (.learner$predict.type == "response") {
     if (.learner$type == "classif")
@@ -124,7 +124,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
     else
       rowMeans(p)
   } else {
-    if (.learner$type == 'classif') {
+    if (.learner$type == "classif") {
       levs = .model$task.desc$class.levels
       p = apply(p, 1L, function(x) {
         x = factor(x, levels = levs) # we need all level for the table and we need them in consistent order!

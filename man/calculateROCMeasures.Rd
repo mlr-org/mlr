@@ -26,8 +26,8 @@ Number of digits the measures are rounded to.}
 Currently not used.}
 }
 \value{
-[\code{ROCMeasures}]. 
-   A list containing two elements \code{confusion.matrix} which is 
+[\code{ROCMeasures}].
+   A list containing two elements \code{confusion.matrix} which is
    the 2 times 2 confusion matrix of relative frequencies and \code{measures}, a list of the above mentioned measures.
 }
 \description{
@@ -77,5 +77,6 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }

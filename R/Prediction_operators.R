@@ -1,5 +1,5 @@
 #' @export
-as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
+as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) {
   x$data
 }
 
@@ -62,6 +62,19 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
+#' @title Get summarizing task description from prediction.
+#'
+#' @description See title.
+#'
+#' @template arg_pred
+#' @return ret_taskdesc
+#' @export
+#' @family predict
+getPredictionTaskDesc = function(pred) {
+  assertClass(pred, "Prediction")
+  pred$task.desc
+}
+
 #' Deprecated, use \code{getPredictionProbabilities} instead.
 #' @param pred Deprecated.
 #' @param cl Deprecated.
@@ -72,13 +85,13 @@ getProbabilities = function(pred, cl) {
 }
 
 #c.Prediction = function(...) {
-#	preds = list(...)
-#	id = Reduce(c, lapply(preds, function(x) x@id))
-#	response = Reduce(c, lapply(preds, function(x) x@response))
-#	target = Reduce(c, lapply(preds, function(x) x@target))
-#	weights = Reduce(c, lapply(preds, function(x) x@weights))
-#	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
-#	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
+#  preds = list(...)
+#  id = Reduce(c, lapply(preds, function(x) x@id))
+#  response = Reduce(c, lapply(preds, function(x) x@response))
+#  target = Reduce(c, lapply(preds, function(x) x@target))
+#  weights = Reduce(c, lapply(preds, function(x) x@weights))
+#  prob = Reduce(rbind, lapply(preds, function(x) x@prob))
+#  return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}
 
 
@@ -145,8 +158,7 @@ getPredictionTruth.PredictionCluster = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionSurv = function(pred) {
-  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-  Surv(pred$data$truth.time, pred$data$truth.event, type = lookup[pred$task.desc$censoring])
+  Surv(pred$data$truth.time, pred$data$truth.event, type = "right")
 }
 
 #' @export

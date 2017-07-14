@@ -13,7 +13,8 @@ makeRLearner.classif.rFerns = function() {
     ),
     properties = c("numerics", "twoclass", "multiclass", "factors", "ordered", "oobpreds"),
     name = "Random ferns",
-    short.name = "rFerns"
+    short.name = "rFerns",
+    callees = "rFerns"
   )
 }
 

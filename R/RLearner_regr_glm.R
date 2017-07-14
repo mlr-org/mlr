@@ -13,7 +13,7 @@ makeRLearner.regr.glm = function() {
       makeDiscreteLearnerParam(id = "poisson.link", default = "log",
         values = c("log", "identity", "sqrt"), requires = quote(family == "poisson")),
       makeDiscreteLearnerParam(id = "inverse.gaussian.link", default = "1/mu^2",
-        values = c("1/mu^2", "inverse", "identity", "log"), requires = quote (family == "inverse.gaussian")),
+        values = c("1/mu^2", "inverse", "identity", "log"), requires = quote(family == "inverse.gaussian")),
       # FIXME: default for start, mustart and etastart is family and link dependet (see family$initialize)
       # FIXME: length is data dependent (length = number of predictors + 1)
       makeNumericVectorLearnerParam(id = "start"),
@@ -36,7 +36,8 @@ makeRLearner.regr.glm = function() {
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
     short.name = "glm",
-    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory."
+    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory.",
+    callees = c("glm", "glm.control", "gaussian", "poisson", "Gamma", "inverse.gaussian")
   )
 }
 
@@ -52,12 +53,12 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
     gaussian = stats::gaussian(link = make.link(gaussian.link)),
     poisson = stats::poisson(link = make.link(poisson.link)),
     Gamma = stats::Gamma(link = make.link(Gamma.link)),
-    inverse.gaussian = inverse.gaussian(link = make.link(inverse.gaussian.link))
+    inverse.gaussian = stats::inverse.gaussian(link = make.link(inverse.gaussian.link))
   )
   if (is.null(.weights))
-    m = stats::glm(f, data = d, control = ctrl, family = family, ... )
+    m = stats::glm(f, data = d, control = ctrl, family = family, ...)
   else
-    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ... )
+    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ...)
   return(m)
 }
 

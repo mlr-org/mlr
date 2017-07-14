@@ -32,13 +32,13 @@ test_that("SupervisedTask", {
 
   # check missing accessors
   df = multiclass.df
-  df[1,1:3] = NA
-  df[2,1:3] = NA
+  df[1, 1:3] = NA
+  df[2, 1:3] = NA
   ct = makeClassifTask(data = df, target = multiclass.target)
   expect_true(getTaskDesc(ct)$has.missings)
 
   # check that blocking is still there after subsetting
-  ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target, blocking = as.factor(1:nrow(multiclass.df)))
+  ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target, blocking = as.factor(seq_len(nrow(multiclass.df))))
   expect_true(getTaskDesc(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
   expect_true(getTaskDesc(ct2)$has.blocking)
@@ -56,6 +56,12 @@ test_that("SupervisedTask dropping of levels works", {
     "Empty factor levels")
   e = getTaskData(task)
   expect_true(setequal(levels(e$Species), levs1))
+
+  expect_warning(makeMultilabelTask("multilabel", multilabel.df[1:10, ], target = c("y1", "y2"), fixup.data = "warn"),
+    "Empty factor levels")
+
+  expect_warning(makeMultilabelTask("multilabel", multilabel.df[1:10, ], target = c("y1", "y2"), fixup.data = "quiet"), NA)
+
 })
 
 test_that("SupervisedTask does not drop positive class", {

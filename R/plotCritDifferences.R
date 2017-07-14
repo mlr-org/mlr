@@ -100,7 +100,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   if (test == "nemenyi") {
     sub = sort(df$mean.rank)
     # Compute a matrix of all possible bars
-    mat = apply(t(outer(sub, sub, `-`)), c(1,2),
+    mat = apply(t(outer(sub, sub, `-`)), c(1, 2),
       FUN = function(x) ifelse(x > 0 && x < cd.info$cd, x, 0))
     # Get start and end point of all possible bars
     xstart = round(apply(mat + sub, 1, min), 3)

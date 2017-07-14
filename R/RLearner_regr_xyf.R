@@ -2,7 +2,7 @@
 makeRLearner.regr.xyf = function() {
   makeRLearnerRegr(
     cl = "regr.xyf",
-    package = "kohonen",
+    package = c("kohonen", "class"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "xdim", default = 8L, lower = 1L),
       makeIntegerLearnerParam(id = "ydim", default = 6L, lower = 1L),
@@ -14,9 +14,10 @@ makeRLearner.regr.xyf = function() {
       makeDiscreteLearnerParam(id = "neighbourhood.fct", values = c("bubble", "gaussian"), default = "bubble"),
       makeDiscreteLearnerParam(id = "dist.fcts", values = c("sumofsquares", "euclidean", "manhattan", "tanimoto"), default = "sumofsquares")
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "X-Y fused self-organising maps",
-    short.name = "xyf"
+    short.name = "xyf",
+    callees = c("xyf", "somgrid")
   )
 }
 

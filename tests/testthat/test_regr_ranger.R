@@ -1,5 +1,5 @@
 context("regr_ranger")
- 
+
 test_that("regr_ranger", {
   requirePackagesOrSkip("ranger", default.method = "load")
 
@@ -11,7 +11,7 @@ test_that("regr_ranger", {
   )
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset, list(data = regr.train, formula = regr.formula, write.forest = TRUE, respect.unordered.factors = TRUE))
     set.seed(getOption("mlr.debug.seed"))

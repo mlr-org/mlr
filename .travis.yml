@@ -31,6 +31,7 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
+  - jimhester/lintr
 
 before_install:
   # we want to see libpaths and installed packages from cache
@@ -49,6 +50,12 @@ before_install:
 before_script:
   - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
   - R --no-save <<< 'library("devtools"); document()'
+
+script:
+  - |
+    R CMD build .
+    travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+  - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
 
 after_success:
   - git checkout master
@@ -72,7 +79,6 @@ notifications:
   email:
     recipients:
       - bernd_bischl@gmx.net
-      - larsko@cs.ubc.ca
       - schiffner@math.uni-duesseldorf.de
       - erich.studerus@gmail.com
   slack: mlr-org:DYNA3KIwcG9F4sQoeyTnPBhF#buildnotifications

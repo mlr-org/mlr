@@ -81,18 +81,18 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   opdf = getNestedTuneResultsOptPathDf(r)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 4)
-  
+
   # check trafo arg
-  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2, 
+  ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2,
     trafo = function(x) 2^x))
-  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2, 
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2,
     control = makeTuneControlGrid())
-  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, 
+  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce,
     extract = getTuneResult)
   opdf = getNestedTuneResultsOptPathDf(r, trafo = TRUE)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 20)
-  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))                   
+  expect_equal(opdf$C, rep(2^seq(-2, 2, length.out = 10), 2))
 })
 
 
@@ -100,7 +100,7 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   ps = makeParamSet(
-    makeDiscreteParam("C", 2^(-1))
+    makeDiscreteParam("C", 2^ (-1))
   )
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),
@@ -108,3 +108,14 @@ test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issu
   r = resample(lrn2, iris.task, rdesc, measures = mmce)
   expect_identical(sort(names(r$pred$threshold)), c("setosa", "versicolor", "virginica"))
 })
+
+test_that("TuneWrapper with glmnet (#958)", {
+  lrn = makeLearner("classif.glmnet", predict.type = "response")
+  lrn2 = makeTuneWrapper(lrn, resampling = makeResampleDesc("Holdout"),
+    par.set = makeParamSet(makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1)),
+    control = makeTuneControlRandom())
+  mod = train(lrn2, multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_error(pred, NA)
+})
+

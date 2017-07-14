@@ -4,7 +4,7 @@
 #' This function is a very parallel version of \code{\link{benchmark}} using \pkg{batchtools}.
 #' Experiments are created in the provided registry for each combination of
 #' learners, tasks and resamplings. The experiments are then stored in a registry and the
-#' runs can be started via \code{\link[batchtools]{submitJobs}]}. A job is one train/test split
+#' runs can be started via \code{\link[batchtools]{submitJobs}}. A job is one train/test split
 #' of the outer resampling. In case of nested resampling (e.g. with \code{\link{makeTuneWrapper}}),
 #' each job is a full run of inner resampling, which can be parallelized in a second step
 #' with \pkg{ParallelMap}. For details on the usage and support backends have

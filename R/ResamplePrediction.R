@@ -33,8 +33,8 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
     p1 = preds.train[[1L]]
     pall = preds.train
   }
-  
-  
+
+
   makeS3Obj(c("ResamplePrediction", class(p1)),
     instance = instance,
     predict.type = p1$predict.type,

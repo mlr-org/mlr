@@ -20,7 +20,8 @@ makeRLearner.classif.LiblineaRL2SVC = function() {
     class.weights.param = "wi",
     name = "L2-Regularized L2-Loss Support Vector Classification",
     short.name = "liblinl2svc",
-    note = "`type = 2` (the default) is primal and `type = 1` is dual problem."
+    note = "`type = 2` (the default) is primal and `type = 1` is dual problem.",
+    callees = "LiblineaR"
   )
 }
 

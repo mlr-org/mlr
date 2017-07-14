@@ -30,7 +30,7 @@ makeConstantClassWrapper = function(learner, frac = 0) {
 }
 
 #' @export
-trainLearner.ConstantClassWrapper = function(.learner, .task, .subset, .weights = NULL, frac = 0, ...) {
+trainLearner.ConstantClassWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, frac = 0, ...) {
   labels.distribution = sort(prop.table(table(getTaskTargets(subsetTask(.task, .subset)))), decreasing = TRUE)
   most.frequent = labels.distribution[1L]
   if (most.frequent >= (1 - frac)) {
@@ -54,7 +54,7 @@ predictLearner.ConstantClassWrapper = function(.learner, .model, .newdata, ...) 
       response = rep.int(mod$label, nrow(.newdata)),
       prob = matrix(as.numeric(mod$levels == mod$label),
           ncol = length(mod$levels), nrow = nrow(.newdata),
-          byrow = TRUE, dimnames = list(c(), mod$levels))
+          byrow = TRUE, dimnames = list(NULL, mod$levels))
     )
   } else {
     NextMethod()

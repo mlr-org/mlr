@@ -16,7 +16,7 @@ test_that("classif_xyf", {
 
   old.probs.list = old.predicts.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     pars = parset.list1[[i]]
     pars$data = list()
     pars$data$X = as.matrix(binaryclass.train[, -binaryclass.class.col])
