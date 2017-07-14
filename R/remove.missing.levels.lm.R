@@ -41,7 +41,7 @@ remove.missing.levels.lm = function(fit, test.data) {
     # Obtain factor predictors in the model and their levels
     factors = stri_replace_all_regex(names(unlist(fit$learner.model$xlevels)),
                                      "[-^0-9]|as.factor|\\(|\\)", "")
-    # do nothing if no factors are present
+
     if (length(factors) == 0) {
       return(test.data)
     }
@@ -56,9 +56,9 @@ remove.missing.levels.lm = function(fit, test.data) {
   # For each factor predictor in your data, if the level is not in the model,
   # set the value to NA
 
-  for (i in seq_length(predictors)) {
+  for (i in seq_len(length(predictors))) {
     found = test.data[, predictors[i]] %in% model.factors[
-      model.factors$factors == predictors[i], ]$factor_levels
+      model.factors$factors == predictors[i], ]$factor.levels
     if (any(!found)) {
       # track which variable
       var = predictors[i]
