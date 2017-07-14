@@ -28,6 +28,7 @@ test_that("AMV", {
 
 test_that("AMVhd", {
   # creates anomaly data with feature size nine
+  set.seed(123)
   sigma = matrix(0, 9, 9)
   diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
   normal = mvrnorm(n = 1000, rep(0, 9), sigma)
@@ -69,7 +70,7 @@ test_that("AMVhd", {
 
 
   # calculate AMVhd performance
-  perf = performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, feats = data[test.inds, 1:9])
+  perf = performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, task = task, feats = data[test.inds, 1:9])
   expect_numeric(perf)
   expect_equal(names(perf), "AMV")
   expect_true(perf >= 0)
