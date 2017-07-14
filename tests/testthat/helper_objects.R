@@ -105,9 +105,9 @@ surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 rm(getSurvData)
 
 fda.binary.gp.task = gunpoint.task
-suppressMessages(gp <- getTaskData(gunpoint.task, keep.functionals = FALSE)) # nolint
-gpFdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
-fda.binary.gp.task.small = makeClassifTask(data = gpFdf, target = "X1")
+suppressMessages({gp = getTaskData(gunpoint.task, keep.functionals = FALSE)})
+gp.fdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
+fda.binary.gp.task.small = makeClassifTask(data = gp.fdf, target = "X1")
 fda.regr.fs.task = fuelsubset.task
 
 # nonsense fda multiclass task
@@ -119,8 +119,8 @@ fda.multiclass.test.inds  = setdiff(1:150, multiclass.train.inds)
 fda.multiclass.train = multiclass.df[multiclass.train.inds, ]
 fda.multiclass.test  = multiclass.df[multiclass.test.inds, ]
 fda.multiclass.class.col = 5
-mcFdf = makeFunctionalData(fda.multiclass.df, fd.features = list("fd1" = 1:2, "fd2" = 3:4))
-fda.multiclass.task = makeClassifTask("multiclass", data = mcFdf, target = multiclass.target)
+mc.fdf = makeFunctionalData(fda.multiclass.df, fd.features = list("fd1" = 1:2, "fd2" = 3:4))
+fda.multiclass.task = makeClassifTask("multiclass", data = mc.fdf, target = multiclass.target)
 
 costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
