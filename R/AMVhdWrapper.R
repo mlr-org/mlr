@@ -81,7 +81,7 @@ trainLearner.AMVhdWrapper = function(.learner, .task, .subset = NULL, .weights =
   fullmodel = train(.learner$next.learner, .task)
   args = list(d = d, dsub = amv.feats,  task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, show.info = FALSE)
-  # exportMlrOptions(level = "mlr.ensemble")
+  exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(doAMVhdTrainIteration, i = seq_len(amv.iters), more.args = args)#, level = "mlr.ensemble")
   models[[amv.iters + 1]] =  fullmodel
   models = rev(models)
