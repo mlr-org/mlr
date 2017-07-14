@@ -60,7 +60,7 @@ functionalToNormalData = function(df) {
 
 
 hasFunctionalFeatures = function(obj) {
- UseMethod("hasFunctionalFeatures")
+  UseMethod("hasFunctionalFeatures")
 }
 
 hasFunctionalFeatures.data.frame = function(obj) {
@@ -70,7 +70,7 @@ hasFunctionalFeatures.data.frame = function(obj) {
 
 hasFunctionalFeatures.Task = function(obj) {
   # Pass on the task.desc
- hasFunctionalFeatures(obj$task.desc)
+  hasFunctionalFeatures(obj$task.desc)
 }
 
 hasFunctionalFeatures.TaskDesc = function(obj) {
@@ -87,7 +87,7 @@ getFunctionalFeatures = function(object, subset = NULL, features, recode.target 
 
 getFunctionalFeatures.Task = function(object, subset = NULL, features, recode.target = "no"){
   # Get data and pass on to data.frame method
-  df = getTaskData(object, subset, features, target.extra = TRUE, recode.target, keep.functionals = TRUE)
+  df = getTaskData(object, subset, features, target.extra = TRUE, recode.target, functionals.as = "matrix")
   getFunctionalFeatures(df$data)
 }
 

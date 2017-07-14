@@ -5,7 +5,7 @@ test_that("setThreshold for fdaclassif", {
   mod = train(lrn, fda.binary.gp.task.small)
 
   # predict probabilities and compute performance
-  pred = predict(mod, newdata = getTaskData(fda.binary.gp.task.small, keep.functionals = TRUE))
+  pred = predict(mod, newdata = getTaskData(fda.binary.gp.task.small, functionals.as = "matrix"))
   p = performance(pred, measures = mmce)
   expect_identical(p[["mmce"]], 0.025)
 

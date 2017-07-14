@@ -201,29 +201,29 @@ test_that("getTaskData for functionals", {
 
   # For a classification
   clt = makeClassifTask(data = fdf, target = "tcl")
-  expect_message({tdata1 = getTaskData(clt, keep.functionals = FALSE)}, "have been converted to numerics")
+  expect_message({tdata1 = getTaskData(clt, functionals.as = "dfCols")}, "have been converted to numerics")
   expect_true(!("matrix" %in% sapply(tdata1, class)))
   expect_equal(tdata1[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
-  tdata2 = getTaskData(clt, keep.functionals = TRUE)
+  tdata2 = getTaskData(clt, functionals.as = "matrix")
   expect_true("matrix" %in% unlist(sapply(tdata2, class)))
   expect_equal(tdata2[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
 
-  tdata3 = getTaskData(clt, keep.functionals = TRUE, target.extra = TRUE)
+  tdata3 = getTaskData(clt, functionals.as = "matrix", target.extra = TRUE)
   expect_equal(tdata3$target, as.factor(letters[1:5]))
   expect_true("matrix" %in% unlist(sapply(tdata3$data, class)))
 
-  expect_message({tdata4 = getTaskData(clt, keep.functionals = FALSE, target.extra = TRUE)})
+  expect_message({tdata4 = getTaskData(clt, functionals.as = "dfCols", target.extra = TRUE)})
   expect_true(!("matrix" %in% sapply(tdata4$data, class)))
   expect_equal(tdata4$target, as.factor(letters[1:5]))
 
 
   # For clustering task
   clustt = makeClusterTask(data = fdf)
-  expect_message({tdatacl1 = getTaskData(clustt, keep.functionals = FALSE)}, "have been converted to numerics")
+  expect_message({tdatacl1 = getTaskData(clustt, functionals.as = "dfCols")}, "have been converted to numerics")
   expect_true(!("matrix" %in% sapply(tdatacl1, class)))
-  tdatacl2 = getTaskData(clustt, keep.functionals = TRUE)
+  tdatacl2 = getTaskData(clustt, functionals.as = "matrix")
   expect_true("matrix" %in% unlist(sapply(tdatacl2, class)))
 })
 
@@ -236,7 +236,7 @@ test_that("changeData for functionals", {
 
   # After changeData, task stays the same
   clt = makeClassifTask(data = fdf, target = "tcl")
-  tdata = getTaskData(clt, keep.functionals = TRUE)
+  tdata = getTaskData(clt, functionals.as = "matrix")
   expect_equal(changeData(clt, tdata), clt)
 
   # FIXME: functional class is dropped in changeData
