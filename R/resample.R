@@ -161,7 +161,8 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
     # set factor levels, present in test but missing in train, to NA
-    if (any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
+    if (m$learner$fix.factors.prediction == TRUE &&
+        any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
       test.i = task$env$data[test.i, ]
 
       # cheap error catching here
@@ -170,7 +171,7 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
         test.i = m$learner.model$data[test.i, ]
       }
 
-      newdata = remove_missing_levels(m, test.i)
+      newdata = remove.missing.levels.lm(m, test.i)
       pred.test = predict(m, newdata = newdata)
     } else {
       pred.test = predict(m, task, subset = test.i)
