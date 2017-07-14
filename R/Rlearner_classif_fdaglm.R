@@ -41,9 +41,8 @@ trainLearner.classif.fdaglm = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.classif.fdaglm = function(.learner, .model, .newdata, ...) {
   # transform the data into fda.usc:fdata class type.
-  browser()
   fd = getFunctionalFeatures(.newdata)
-  nd = list(x = fda.usc::fdata(mdata = fda.usc::fdata(mdata = as.matrix(fd))))
+  nd = list(x = fda.usc::fdata(mdata = fd))
   # predict according to predict.type
   type = ifelse(.learner$predict.type == "prob", "probs", "class")
   if (type == "probs") {
