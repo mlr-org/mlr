@@ -1,10 +1,9 @@
-context("remove_missing_levels.R")
+context("remove.missing.levels.lm.R")
 
-test_that("remove_missing_levels.R", {
+test_that("remove.missing.levels.lm.R", {
   data("basque")
 
-  task = makeClassifTask(id = "pathogen_data", data = basque,
-                         target = "diplo01", positive = "1")
+  data("bc.task.spatial")
 
   rdesc = makeResampleDesc("RepCV", folds = 10, reps = 2)
 
