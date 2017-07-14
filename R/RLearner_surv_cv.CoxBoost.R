@@ -17,7 +17,7 @@ makeRLearner.surv.cv.CoxBoost = function() {
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "weights", "rcens"),
+    properties = c("numerics", "factors", "weights"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, tuned for the optimal number of boosting steps",
     short.name = "cv.CoxBoost",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer.",
@@ -27,7 +27,7 @@ makeRLearner.surv.cv.CoxBoost = function() {
 
 #' @export
 trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, unpen.index = NULL, ...) {
-  data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+  data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
   info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
 
   if (is.null(penalty))

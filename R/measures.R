@@ -17,6 +17,9 @@
 #' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 #' starting with 1. If this is not the case, some of the measures will generate warnings.
 #'
+#' Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
+#' overwritten using \code{\link{setMeasurePars}}.
+#'
 #' @param truth [\code{factor}]\cr
 #'   Vector of the true class.
 #' @param response [\code{factor}]\cr
@@ -1353,17 +1356,63 @@ measureMultilabelTPR = function(truth, response) {
 #' @format none
 cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth"),
-  name = "Concordance index",
+  name = "Harrell's Concordance index",
   note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("Hmisc", default.method = "load")
-    resp = pred$data$response
-    if (anyMissing(resp))
+    requirePackages("_Hmisc")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
       return(NA_real_)
-    # FIXME: we need to convert to he correct survival type
-    s = Surv(pred$data$truth.time, pred$data$truth.event)
-    Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
+    s = getPredictionTruth(pred)
+    Hmisc::rcorr.cens(-1 * y, s)[["C Index"]]
   }
+)
+
+#' @export cindex.uno
+#' @rdname measures
+#' @format none
+#' @references
+#' H. Uno et al.
+#' \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
+#' Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
+cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model"),
+  name = "Uno's Concordance index",
+  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno. Implemented in survAUC::UnoC.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    survAUC::UnoC(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), time = max.time, lpnew = y)
+  },
+  extra.args = list(max.time = NULL)
+)
+
+#' @export iauc.uno
+#' @rdname measures
+#' @format none
+#' @references
+#' H. Uno et al.
+#' \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
+#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
+iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
+  name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task). Implemented in survAUC::AUC.uno.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    times = seq(from = 0, to = max.time, length.out = extra.args$resolution)
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    survAUC::AUC.uno(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), times = times, lpnew = y)$iauc
+  },
+  extra.args = list(max.time = NULL, resolution = 1000)
 )
 
 ###############################################################################
