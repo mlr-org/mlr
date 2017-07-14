@@ -27,8 +27,8 @@ perfsToString = function(y, sep = "=", digits = options()$digits) {
 # Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line
 # If y is numeric we trim to desired digit with
 # if not it's a character and we only need to take care that the col has desired width
-# Example output (prefix = "[Resample] iter 1:"):    
-# [Resample] iter 1:    0.0000000    0.0370370    0.9629630    
+# Example output (prefix = "[Resample] iter 1:"):
+# [Resample] iter 1:    0.0000000    0.0370370    0.9629630
 printResampleFormatLine = function(prefix, y, digits = options()$digits) {
   # get desired width for each col (if measure ids are short --> digits)
   # +3L to obtain spaces between cols
@@ -40,7 +40,7 @@ printResampleFormatLine = function(prefix, y, digits = options()$digits) {
     y = formatC(y, digits = digits, flag = "0", format = "f")
   # Extend witdh of prefix and y. width = 22 is the ideal size for
   # the prefix column. Change value here when iter.message was
-  # modified in resample.R 
+  # modified in resample.R
   prefix = formatC(prefix, width = 22, flag = "-")
   str = stri_flatten(formatC(y, width = tab.width, flag = "-"))
 
