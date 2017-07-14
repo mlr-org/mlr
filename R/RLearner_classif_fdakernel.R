@@ -4,26 +4,30 @@
 #' Learner for kernel Classification.
 #'
 #' @export
-makeRLearner.fdaclassif.kernel = function() {
+makeRLearner.classif.fdakernel = function() {
   makeRLearnerClassif(
-    cl = "fdaclassif.kernel",
+    cl = "classif.fdakernel",
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "h"),
       makeDiscreteLearnerParam(id = "Ker", default = "AKer.norm", values = list("AKer.norm", "AKer.cos", "AKer.epa", "AKer.tri", "AKer.quar", "AKer.unif")),
-      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = list("metric.lp", "metric.kl", "metric.hausdorff", "metric.dist")),
-      makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = list("GCV.S", "CV.S", "GCCV.S")),
-      makeUntypedLearnerParam(id = "par.CV"),
-      makeUntypedLearnerParam(id = "par.S")
+      makeDiscreteLearnerParam(id = "metric", default = "metric.lp", values = c("metric.lp", "metric.kl",
+        "metric.hausdorff", "metric.dist")),
+      makeDiscreteLearnerParam(id = "type.CV", default = "GCV.S", values = c("GCV.S", "CV.S", "GCCV.S")),
+      # trim and draw (= plot!) are the par.CV parameters
+      makeNumericLearnerParam(id = "trim", lower = 0L, upper = 1L, default = 0L),
+      makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics"),
+    par.vals = list(draw = FALSE),
+    properties = c("twoclass", "multiclass", "functionals"),
     name = "Kernel classification on FDA",
-    short.name = "kernelFDA"
+    short.name = "fdakernel",
+    note = "Argument draw=FALSE is used as default."
   )
 }
 
 #' @export
-trainLearner.fdaclassif.kernel = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = NULL, ...) {
   z = getTaskData(.task, subset = .subset, target.extra = TRUE)
   data.fdclass = fda.usc::fdata(mdata = z$data)
   glearn = z$target
@@ -32,7 +36,7 @@ trainLearner.fdaclassif.kernel = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.fdaclassif.kernel = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.fdakernel = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd.fdclass = fda.usc::fdata(mdata = .newdata)
   class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd.fdclass, ...)
