@@ -70,6 +70,9 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
+#' @param spatial [\code{logical(1)}]\cr
+#'   Is the task spatial? I.e. does it contain coordinates ("x" and "y) which
+#'   shall be used for spatial partitioning?
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
