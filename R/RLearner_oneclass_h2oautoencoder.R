@@ -242,7 +242,7 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
       p = p.df >= predict.threshold
       p = factor(p, levels = c("FALSE", "TRUE"), labels = label)
   } else {
-    p = convertingScoresToProbability(p.df, parainit = c(1, 0))$probability
+    p = convertingScoresToProbability(p.df)$probability
     p = cbind(p, 1-p)
     colnames(p) = label
   }

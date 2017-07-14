@@ -3,7 +3,7 @@ context("learners_all_oneclass")
 test_that("learners work: oneclass ", {
 
   # settings to make learners faster and deal with small data size
-  hyperpars = list()
+  hyperpars = list(nu = 0.05)
 
   # oneclass
   lrns = mylist("oneclass", create = TRUE)
@@ -16,9 +16,9 @@ test_that("learners work: oneclass ", {
 
 
   # oneclass with prob
-  # lrns = mylist("oneclass", properties = "prob", create = TRUE)
-  # lapply(lrns, testBasicLearnerProperties, task = oneclass.task,
-  #   hyperpars = hyperpars, pred.type = "prob")
+  lrns = mylist("oneclass", properties = "prob", create = TRUE)
+  lapply(lrns, testBasicLearnerProperties, task = oneclass.task,
+    hyperpars = hyperpars, pred.type = "prob")
 
   # oneclass with weights
   # lrns = mylist("oneclass", properties = "weights", create = TRUE)

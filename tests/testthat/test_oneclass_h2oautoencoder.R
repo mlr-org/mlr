@@ -27,7 +27,7 @@ test_that("oneclass_h2oautoencoder", {
     p  = h2o.anomaly(m, test.hex, per_feature = FALSE)
     ##### !!  convertScoresinProb is ne liste -> rest anpassen old.probs.list[[i]] = convertingScoresToProbability(as.vector(p))
     old.probs.list[[i]] = convertingScoresToProbability(as.matrix(p),
-      parainit = c(1, 0))$probability[,1]
+      parainit = c(0, 1))$probability[,1]
   }
 
   testProbParsets("oneclass.h2o.autoencoder", oneclass.df,
