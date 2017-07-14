@@ -67,7 +67,7 @@ remove.missing.levels.lm = function(fit, test.data) {
       # drop empty factor levels in test data
       test.data = droplevels(test.data)
       # issue warning to console
-      catf("\nSetting missing levels in '%s', only present in test data but missing in train data, to 'NA'.",
+      catf("Setting missing levels in '%s', only present in test data but missing in train data, to 'NA'.",
                       var)
       catf("This affected %s of %s total observations in test data.",
            table(is.na(test.data))[[2]], nrow(test.data))
