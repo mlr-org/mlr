@@ -162,7 +162,14 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
   } else if (pp == "test") {
     # set factor levels, present in test but missing in train, to NA
     if (any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
-      test.i = m$learner.model$data[test.i, ]
+      test.i = task$env$data[test.i, ]
+
+      # cheap error catching here
+      # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
+      if (is.null(test.i)) {
+        test.i = m$learner.model$data[test.i, ]
+      }
+
       newdata = remove_missing_levels(m, test.i)
       pred.test = predict(m, newdata = newdata)
     } else {
