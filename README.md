@@ -1,12 +1,12 @@
-![mlr](http://mlr-org.github.io/mlr-tutorial/images/mlrLogo_blue_141x64.png): Machine Learning in R
+![mlr](http://mlr-org.github.io/mlr-tutorial/img/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![Build Status tutorial](https://travis-ci.org/mlr-org/mlr-tutorial.svg?branch=gh-pages)](https://travis-ci.org/mlr-org/mlr-tutorial)
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/web/packages/mlr)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
-* [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
+* [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
 * Detailed Tutorial:
     * [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/) ([online](https://mlr-org.github.io/mlr-tutorial/release/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip))
     * [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/) ([online](https://mlr-org.github.io/mlr-tutorial/devel/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip))
@@ -19,46 +19,27 @@
     ```
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
-* [We are on Slack](https://mlr-org.slack.com/)
+* [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
 * [We have a blog on mlr](https://mlr-org.github.io/)
-* We are on rank 21 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
+* A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/List-of-Possible-Enhancements-to-mlr) - contributors welcome!
+* We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
 * **If you like the package, please "star" it on Github.**
 
 mlr - How to Cite and Citing Publications
 =========================================
 
-If you use the package, please cite it. To get a citation, type in R:
+Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](http://www.jmlr.org/papers/v17/15-066.bib)].
 
-`citation("mlr")`
-
-Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones and Giuseppe Casalicchio (2016). mlr: Machine Learning in R. R package version 2.9. https://CRAN.R-project.org/package=mlr
-
-A BibTeX entry for LaTeX users is
-
-```
-@Manual{
-title = {mlr: Machine Learning in R},
-author = {Bernd Bischl and Michel Lang and Lars Kotthoff and Julia Schiffner and Jakob Richter and Zachary Jones and Giuseppe Casalicchio},
-year = {2016},
-note = {R package version 2.9},
-url = {https://CRAN.R-project.org/package=mlr},
-}
-```
-
-Some parts of the package were created as part of other publications. 
+Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately:
 
+* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://dx.doi.org/10.1080/00949655.2014.929131).
+* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://dx.doi.org/10.1007/978-3-319-28697-6_6).
+* Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
+* Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/abs/1703.08991)
+* OpenML: [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://arxiv.org/abs/1701.01293)
 
-**Tuning with Iterated F-Racing**
-
-Lang, Michel, Helena Kotthaus, Peter Marwedel, Claus Weihs, Jörg Rahnenführer, and Bernd Bischl. "Automatic model selection for high-dimensional survival analysis." Journal of Statistical Computation and Simulation 85, no. 1 (2015): 62-76.
-
-**Class Imbalance Correction Algorithms**
-
-Bischl, Bernd, Tobias Kühn, and Gero Szepannek. "On Class Imbalance Correction for Classification Algorithms in Credit Scoring." In Operations Research Proceedings 2014, pp. 37-43. Springer International Publishing, 2016.
-
-
-**A list of publications that cite mlr can be found in the wiki [here](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).**
+A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).
 
 
 Introduction
@@ -79,7 +60,8 @@ classification, regression and survival analysis along with their corresponding
 evaluation and optimization methods, as well as unsupervised methods like clustering. It
 is written in a way that you can extend it yourself or deviate from the
 implemented convenience methods and construct your own complex experiments or
-algorithms.
+algorithms. 
+Furthermore, the package is nicely connected to the [**OpenML**](https://github.com/openml/openml-r) R package and its [online platform](https://www.openml.org/), which aims at supporting collaborative machine learning online and allows to easily share datasets as well as machine learning tasks, algorithms and experiments in order to support reproducible research.
 
 Features
 ========
@@ -113,12 +95,27 @@ Features
 
 News
 ====
-Most NEWS regarding extensions and changes of the packages can be accessed here for the
-[release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
-[devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
+Changes of the packages can be accessed in the [NEWS file](https://github.com/mlr-org/mlr/blob/master/NEWS.md) shipped with the package.
 
-* 2016-08-24: 
-  * We have a (still smallish) blog on thing related to mlr. See link above.
+* OpenML has been accepted as a tutorial at useR2017! Blog post is
+  [here](http://mlr-org.github.io/OpenML-tutorial-at-useR/).
+* 2017-03-15: mlr 2.11 released to CRAN. About 1000 smaller fixes and convenience extensions and
+  functions. Larger new features are: Bayesian Optimization with
+  [mlrMBO](https://github.com/mlr-org/mlrMBO), learner API now supports extracting OOB predictions.
+* Our Bayesian Optimization framework [mlrMBO](https://github.com/mlr-org/mlrMBO) has FINALLY been released to CRAN.
+  Have a look at our paper [here](https://arxiv.org/abs/1703.03373).
+* 2017-03-06: We had a week-long very productive mlr workshop at the LMU in Munich.
+  Blog post is [here](http://mlr-org.github.io/mlr-workshop/). Many thanks to our sponsors that made
+  it possible that we could invite our American and Canadian friends.
+* 2017-02-07: mlr 2.10 released to CRAN. About 1000 smaller fixes and convenience extensions and
+  functions. Larger new features are: parallel irace tuning, learner API now supports feature
+  importance extractions, better tables for confusion matrix and ROC tables, dummy learners with
+  random or constant output for baseline comparisons and fuzzy matching to propose learner names
+  when you mistyped a string.
+* 2016-10-20:
+  * The JMLR paper on mlr is finally published! See "How to cite" section above.
+* 2016-08-24:
+  * We have a (still smallish) [blog](https://mlr-org.github.io/) on things related to mlr.
 * 2016-08-06:
   * We are hosting the first mlr workshop! It is in Palermo, and more like a sprint, as 11 core developers meet to get stuff done. Thanks to Giuseppe for organizing this! We are thinking about hosting the 2017 one in Munich and possibly opening this up more for the public. If you are interested in potentially joining, email Bernd.
 * 2016-08-06:
@@ -160,7 +157,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 Talks and Videos
 ================
 * [Video](https://www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
-* [Video](https://www.youtube.com/watch?v=d1PnFiN6nOQ) of Zach's International Methods Colloquim talk 2015 "Data Mining as Exploratory Data Analysis"
+* [Video](https://www.youtube.com/watch?v=d1PnFiN6nOQ) of Zach's International Methods Colloquium talk 2015 "Data Mining as Exploratory Data Analysis"
 
 
 Get in Touch
@@ -176,5 +173,5 @@ Please don't forget that all of us work in academia and put a lot of work into t
 We also welcome pull requests or new developers.
 Just make sure that you have a glance at our [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines) before.
 
-For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
+For everything else the maintainer Bernd Bischl can be reached via [mail](mailto:bernd_bischl@gmx.net).
 He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)

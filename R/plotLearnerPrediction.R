@@ -74,7 +74,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     checkClass(task, "RegrTask"),
     checkClass(task, "ClusterTask")
   )
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   # features and dimensionality
   fns = getTaskFeatureNames(task)
@@ -162,11 +162,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   if (td$type == "classif") {
     data$.err = if (err.mark == "train")
-      (y != yhat)
+      y != yhat
     else if (err.mark == "cv")
       y != pred.cv$data[order(pred.cv$data$id), "response"]
-    else
-      NULL
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (hasLearnerProperties(learner, "prob") && prob.alpha) {
@@ -234,9 +232,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   # set title
   if (pretty.names) {
-    lrn.str = learner$short.name
+    lrn.str = getLearnerShortName(learner)
   } else {
-    lrn.str = learner$id
+    lrn.str = getLearnerId(learner)
   }
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))

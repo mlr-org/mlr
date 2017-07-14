@@ -71,7 +71,7 @@ makeFilterWrapper = function(learner, fw.method = "randomForestSRC.rfsrc", fw.pe
 }
 
 #' @export
-trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.FilterWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   fw.method = "randomForestSRC.rfsrc", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
@@ -95,5 +95,19 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {
+  UseMethod("getFilteredFeatures")
+}
+
+#' @export
+getFilteredFeatures.default = function(model) {
+  if (is.null(model$learner.model$next.model)) {
+    NULL
+  } else {
+    getFilteredFeatures(model$learner.model$next.model)
+  }
+}
+
+#' @export
+getFilteredFeatures.FilterModel = function(model) {
   model$learner.model$next.model$features
 }

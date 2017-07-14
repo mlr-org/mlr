@@ -9,7 +9,7 @@ test_that("classif_lda", {
   p = predict(m, newdata = multiclass.test)
 
   testSimple("classif.lda", multiclass.df, multiclass.target, multiclass.train.inds, p$class)
-  testProb  ("classif.lda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
+  testProb("classif.lda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
 
   tt = MASS::lda
   tp = function(model, newdata) predict(model, newdata)$class

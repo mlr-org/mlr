@@ -49,7 +49,7 @@ since this methods does not fail for constant vectors. Possible actions are:\cr
 [\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 }
 \description{
-Normalize features by different methods. 
+Normalize features by different methods.
 Internally \code{\link[BBmisc]{normalize}} is used for every feature column.
 Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.
@@ -64,4 +64,3 @@ Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{removeConstantFeatures}},
   \code{\link{summarizeColumns}}
 }
-

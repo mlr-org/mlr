@@ -26,6 +26,15 @@
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
+#' @param resample.fun [\code{closure}]\cr
+#'   The function to use for resampling. Defaults to \code{\link{resample}}. If a user-given function
+#'   is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
+#'   \dQuote{measures}, and \dQuote{show.info}; see \code{\link{resample}}. Within this function,
+#'   it is easiest to call \code{\link{resample}} and possibly modify the result.
+#'   However, it is possible to return a list with only the following essential slots:
+#'   the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
+#'   (see \code{\link{TuneControl}}), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+#'   This parameter must be the default when \code{mbo} tuning is performed.
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
 #' @note If you would like to include results from the training data set, make
@@ -76,12 +85,13 @@
 #' print(head(as.data.frame(res$opt.path)))
 #' }
 #' @seealso \code{\link{generateHyperParsEffectData}}
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
+tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
+  assertFunction(resample.fun)
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
@@ -101,14 +111,16 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     TuneControlIrace = tuneIrace,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
-  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = (control$tune.threshold))
+
+  need.extra = control$tune.threshold || getMlrOption("on.error.dump")
+  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
-    messagef(printToChar(par.set))
+    message(printToChar(par.set))  # using message() since this can go over the char limit of messagef(), see issue #1528
     messagef("With control class: %s", cl)
     messagef("Imputation value: %g", control$impute.val)
   }
-  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info)
+  or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)

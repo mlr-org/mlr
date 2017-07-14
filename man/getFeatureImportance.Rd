@@ -11,7 +11,7 @@ getFeatureImportance(object, ...)
 Wrapped model, result of \code{\link{train}}.}
 
 \item{...}{[any]\cr
-Additional parameters, which are passed to the underlying importance value 
+Additional parameters, which are passed to the underlying importance value
 generating function.}
 }
 \value{
@@ -25,16 +25,16 @@ See below for a list of supported learners.
 
 \itemize{
    \item{boosting} \cr
-   {Measure which accounts the gain of Gini index given by a feature 
+   {Measure which accounts the gain of Gini index given by a feature
    in a tree and the weight of that tree.}
    \item{cforest} \cr
    {Permutation principle of the 'mean decrease in accuracy' principle
    in randomForest. If \code{auc=TRUE} (only for binary classification),
    area under the curve is used as measure.  The algorithm used for the survival
    learner is 'extremely slow and experimental; use at your own risk'.
-   See \link[party:varimp]{varimp} for details and further parameters.}  
+   See \link[party:varimp]{varimp} for details and further parameters.}
    \item{gbm} \cr
-   {Estimation of relative influence for each feature. See 
+   {Estimation of relative influence for each feature. See
    \link[gbm:relative.influence]{relative.influence}
    for details and further parameters.}
    \item{randomForest} \cr
@@ -55,14 +55,13 @@ See below for a list of supported learners.
    {Supports both measures mentioned above for the randomForest
    learner. Note, that you need to specifically set the learners parameter
    \code{importance}, to be able to compute feature importance measures.
-   See \link[ranger:importance]{importance} and 
+   See \link[ranger:importance]{importance} and
    \link[ranger:ranger]{ranger} for details.}
    \item{rpart} \cr
    {Sum of decrease in impurity for each of the surrogate variables at each node.}
    \item{xgboost} \cr
-   {The value implies the relative contribution of the corresponding feature to the model 
-   calculated by taking each feature's contribution for each tree in the model. The exact 
+   {The value implies the relative contribution of the corresponding feature to the model
+   calculated by taking each feature's contribution for each tree in the model. The exact
    computation of the importance in xgboost is undocumented.}
  }
 }
-

@@ -58,4 +58,3 @@ Other imbalancy: \code{\link{makeOverBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{oversample}}
 }
-

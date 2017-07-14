@@ -1,14 +1,15 @@
-
 #' @title Perform a posthoc Friedman-Nemenyi test.
 #'
 #' @description
 #' Performs a \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for a
 #' \code{\link{BenchmarkResult}} and a selected measure.
-#' This means \code{all pairwise comparisons} of \code{learners} are performed.
+#' This means \emph{all pairwise comparisons} of \code{learners} are performed.
 #' The null hypothesis of the post hoc test is that each pair of learners is equal.
 #' If the null hypothesis of the included ad hoc \code{\link[stats]{friedman.test}}
-#' can be rejected a \code{pairwise.htest} is returned. If not, the function returns the
-#' corresponding \link[stats]{friedman.test}
+#' can be rejected an object of class \code{pairwise.htest} is returned. If not, the function returns the
+#' corresponding \link[stats]{friedman.test}.
+#' Note that benchmark results for at least two learners on at least two tasks
+#' are required.
 #'
 #' @template arg_bmr
 #' @template arg_measure
@@ -30,13 +31,15 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
   requirePackages("PMCMR")
   assertClass(bmr, "BenchmarkResult")
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
-  assertChoice(aggregation, c('default', 'mean'))
+  assertChoice(aggregation, c("default", "mean"))
   measure = checkBMRMeasure(measure, bmr)
   n.learners = length(bmr$learners)
   if (n.learners < 2)
-    message("Only one Learner to compare")
+    stop("Benchmark results for at least two learners are required")
   n.tasks = length(bmr$results)
-  
+  if (n.tasks < 2)
+    stop("Benchmark results for at least two tasks are required")
+
   # aggregate over iterations
   if (aggregation == "mean") {
     df = as.data.frame(bmr)
@@ -57,15 +60,15 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
              returning overall Friedman test.")
   } else {
     f.rejnull = FALSE
-    warning("P-value not computable. Learner performances might be exactly equal.") 
+    warning("P-value not computable. Learner performances might be exactly equal.")
   }
-  
+
   # calculate critical difference(s)
   q.nemenyi = qtukey(1 - p.value, n.learners, 1e+06) / sqrt(2L)
   cd.nemenyi = q.nemenyi * sqrt(n.learners * (n.learners + 1L) / (6L * n.tasks))
   q.bd = qtukey(1L - (p.value / (n.learners - 1L)), 2L, 1e+06) / sqrt(2L)
   cd.bd = q.bd * sqrt(n.learners * (n.learners + 1L) / (6L * n.tasks))
-  
+
   if (f.rejnull) {
     form = as.formula(stri_paste(aggr.meas, " ~ learner.id | task.id", sep = ""))
     nem.test = PMCMR::posthoc.friedman.nemenyi.test(form, data = df)

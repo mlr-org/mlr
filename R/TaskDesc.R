@@ -7,7 +7,7 @@
 #' \describe{
 #' \item{id [\code{character(1)}]}{Id string of task.}
 #' \item{type [\code{character(1)}]}{Type of task, \dQuote{classif} for classification,
-#'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for 
+#'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for
 #'   cluster analysis, \dQuote{costsens} for cost-sensitive classification, and
 #'   \dQuote{multilabel} for multilabel classification.}
 #' \item{target [\code{character(0)} | \code{character(1)} | \code{character(2)} | \code{character(n.classes)}]}{
@@ -29,29 +29,21 @@
 #'   Only present for \dQuote{classif}, NA for multiclass.}
 #' \item{negative [\code{character(1)}]}{Negative class label for binary classification.
 #'   Only present for \dQuote{classif}, NA for multiclass.}
-#' \item{censoring [\code{character(1)}]}{Censoring type for survival analysis.
-#'   Only present for \dQuote{surv}, one of \dQuote{rcens} for right censored data,
-#'   \dQuote{lcens} for left censored data, and \dQuote{icens} for interval censored
-#'   data.}
 #' }
 #' @name TaskDesc
 #' @rdname TaskDesc
 NULL
 
-makeTaskDesc = function(task, id, ...) {
-  UseMethod("makeTaskDesc")
-}
-
-makeTaskDescInternal = function(task, type, id, target, ...) {
-  data = task$env$data
+makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   # get classes of feature cols
-  cl = vapply(data, function(x) head(class(x), 1L), character(1L))
-  cl = dropNamed(cl, target)
+  cl = vcapply(data, function(x) class(x)[1L])
+  cl = table(dropNamed(cl, target))
   n.feat = c(
-    numerics = sum(cl %in% c("integer", "numeric")),
-    factors = sum(cl == "factor"),
-    ordered = sum(cl == "ordered")
+    numerics = sum(cl[c("integer", "numeric")], na.rm = TRUE),
+    factors = sum(cl["factor"], na.rm = TRUE),
+    ordered = sum(cl["ordered"], na.rm = TRUE)
   )
+
   makeS3Obj("TaskDesc",
     id = id,
     type = type,
@@ -59,9 +51,7 @@ makeTaskDescInternal = function(task, type, id, target, ...) {
     size = nrow(data),
     n.feat = n.feat,
     has.missings = anyMissing(data),
-    has.weights = !is.null(getTaskWeights(task)),
-    has.blocking = !is.null(task$blocking)
+    has.weights = !is.null(weights),
+    has.blocking = !is.null(blocking)
   )
 }
-
-

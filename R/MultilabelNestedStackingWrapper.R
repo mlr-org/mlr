@@ -37,7 +37,7 @@ makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds =
 }
 
 #' @export
-trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
   if (is.null(.learner$order)) {
     order = sample(getTaskTargetNames(.task)) #random order
   } else {
@@ -53,7 +53,7 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
   for (i in seq_along(targets)) {
     tn = order[i]
     if (i >= 2) {
-      tnprevious = order[i-1]
+      tnprevious = order[i - 1]
       data2 = data.frame(data.nst, data[tnprevious]) #for inner resampling to produce predicted labels
       innertask = makeClassifTask(id = tnprevious, data = data2, target = tnprevious)
       rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
@@ -72,17 +72,17 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
 }
 
 #' @export
-predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   predmatrix = matrix(ncol = length(models), nrow = nrow(.newdata), dimnames = list(NULL, names(models)))
   if (.learner$predict.type == "response") {
     for (tn in names(models)) {
-      predmatrix[, tn] = as.logical(getPredictionResponse(predict(models[[tn]], newdata = .newdata, ...)))
+      predmatrix[, tn] = as.logical(getPredictionResponse(predict(models[[tn]], newdata = .newdata, subset = .subset, ...)))
       .newdata[tn] = as.numeric(predmatrix[, tn])
     }
   } else {
     for (tn in names(models)) {
-      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = .newdata, ...), cl = "TRUE")
+      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = .newdata, subset = .subset, ...), cl = "TRUE")
       .newdata[tn] = predmatrix[, tn]
     }
   }

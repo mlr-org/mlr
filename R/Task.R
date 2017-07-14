@@ -61,7 +61,7 @@
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.
-#'   Possible coices are:
+#'   Possible choices are:
 #'   \dQuote{no} = Don't do it.
 #'   \dQuote{warn} = Do it but warn about it.
 #'   \dQuote{quiet} = Do it but keep silent.
@@ -75,17 +75,19 @@
 #' @rdname Task
 #' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
 #' @examples
-#' library(mlbench)
-#' data(BostonHousing)
-#' data(Ionosphere)
+#' if (requireNamespace("mlbench")) {
+#'   library(mlbench)
+#'   data(BostonHousing)
+#'   data(Ionosphere)
 #'
-#' makeClassifTask(data = iris, target = "Species")
-#' makeRegrTask(data = BostonHousing, target = "medv")
-#' # an example of a classification task with more than those standard arguments:
-#' blocking = factor(c(rep(1, 51), rep(2, 300)))
-#' makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
-#'   positive = "good", blocking = blocking)
-#' makeClusterTask(data = iris[, -5L])
+#'   makeClassifTask(data = iris, target = "Species")
+#'   makeRegrTask(data = BostonHousing, target = "medv")
+#'   # an example of a classification task with more than those standard arguments:
+#'   blocking = factor(c(rep(1, 51), rep(2, 300)))
+#'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
+#'     positive = "good", blocking = blocking)
+#'   makeClusterTask(data = iris[, -5L])
+#' }
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
@@ -96,9 +98,10 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       # the next lines look a bit complicated, we calculate the warning info message
       dropped = logical(ncol(data))
       for (i in seq_col(data)) {
-        if (is.factor(data[[i]]) && any(table(data[[i]]) == 0L)) {
+        x = data[[i]]
+        if (is.factor(x) && hasEmptyLevels(x)) {
           dropped[i] = TRUE
-          data[[i]] = droplevels(data[[i]])
+          data[[i]] = droplevels(x)
         }
       }
       if (any(dropped))
@@ -140,7 +143,7 @@ checkTaskData = function(data, cols = names(data)) {
       if (anyNaN(x))
         stopf("Column '%s' contains NaN values.", cn)
     } else if (is.factor(x)) {
-      if (any(table(x) == 0L))
+      if (hasEmptyLevels(x))
         stopf("Column '%s' contains empty factor levels.", cn)
     } else {
       stopf("Unsupported feature type (%s) in column '%s'.", class(x)[1L], cn)

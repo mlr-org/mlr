@@ -50,10 +50,10 @@ estimateRelativeOverfitting.ResamplePrediction = function(predish, measures, tas
 
   iterations = unique(predish$data$iter)
   rbindlist(lapply(iterations, function(i) {
-    data = predish$data[predish$data$iter == i & predish$data$set == "test",]
+    data = predish$data[predish$data$iter == i & predish$data$set == "test", ]
     pred.test = makePrediction(task$task.desc, row.names(data), data$id, data$truth, predish$predict.type, predish$predict.threshold, data$response, predish$time[i])
 
-    data = predish$data[predish$data$iter != i & predish$data$set == "test",]
+    data = predish$data[predish$data$iter != i & predish$data$set == "test", ]
     pred.train = makePrediction(task$task.desc, row.names(data), data$id, data$truth, predish$predict.type, predish$predict.threshold, data$response, predish$time[i])
 
     estimateRelativeOverfitting(pred.test, measures, task, pred.train = pred.train, iter = i)

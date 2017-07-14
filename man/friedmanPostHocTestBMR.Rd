@@ -33,18 +33,20 @@ Additionally two components are added to the list:
 \description{
 Performs a \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for a
 \code{\link{BenchmarkResult}} and a selected measure.
-This means \code{all pairwise comparisons} of \code{learners} are performed.
+This means \emph{all pairwise comparisons} of \code{learners} are performed.
 The null hypothesis of the post hoc test is that each pair of learners is equal.
 If the null hypothesis of the included ad hoc \code{\link[stats]{friedman.test}}
-can be rejected a \code{pairwise.htest} is returned. If not, the function returns the
-corresponding \link[stats]{friedman.test}
+can be rejected an object of class \code{pairwise.htest} is returned. If not, the function returns the
+corresponding \link[stats]{friedman.test}.
+Note that benchmark results for at least two learners on at least two tasks
+are required.
 }
 \examples{
 # see benchmark
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanTestBMR}},
   \code{\link{generateCritDifferencesData}},
@@ -58,11 +60,12 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
-

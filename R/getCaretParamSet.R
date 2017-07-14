@@ -11,7 +11,7 @@
 #'
 #' @param learner [\code{character(1)}]\cr
 #'   The name of the learner from \code{caret}
-#'   (cf. \url{http://topepo.github.io/caret/modelList.html}). Note that the
+#'   (cf. \url{https://topepo.github.io/caret/available-models.html}). Note that the
 #'   names in \code{caret} often differ from the ones in \code{mlr}.
 #' @param length [\code{integer(1)}]\cr
 #'   A length / precision parameter which is used by \code{caret} for
@@ -31,17 +31,19 @@
 #' }
 #' @export
 #' @examples
-#' library(caret)
-#' classifTask = makeClassifTask(data = iris, target = "Species")
+#' if (requireNamespace("caret") && requireNamespace("mlbench")) {
+#'   library(caret)
+#'   classifTask = makeClassifTask(data = iris, target = "Species")
 #'
-#' # (1) classification (random forest) with discretized parameters
-#' getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
+#'   # (1) classification (random forest) with discretized parameters
+#'   getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
 #'
-#' # (2) regression (gradient boosting machine) without discretized parameters
-#' library(mlbench)
-#' data(BostonHousing)
-#' regrTask = makeRegrTask(data = BostonHousing, target = "medv")
-#' getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
+#'   # (2) regression (gradient boosting machine) without discretized parameters
+#'   library(mlbench)
+#'   data(BostonHousing)
+#'   regrTask = makeRegrTask(data = BostonHousing, target = "medv")
+#'   getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
+#' }
 getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
   td = getTaskData(task, target.extra = TRUE)
   caret.grid = caret::getModelInfo(learner)[[learner]]$grid(
@@ -49,7 +51,7 @@ getCaretParamSet = function(learner, length = 3L, task, discretize = TRUE){
 
   # transfer caret parameters into mlr parameters
   params = lapply(colnames(caret.grid), function(i) {
-    par.vals = sort(unique(caret.grid[,i]))
+    par.vals = sort(unique(caret.grid[, i]))
     cl = class(par.vals)
     if (cl == "factor") {
       if (all(levels(par.vals) %in% c("TRUE", "FALSE"))) {

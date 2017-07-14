@@ -1,8 +1,10 @@
-# this is an INTERNAL abtract base constructor, that should be called at the end,
+# this is an INTERNAL attract base constructor, that should be called at the end,
 # when a learner object is constructed.
 # in contains a minimal number of member vars, that every Learner object should have
-# derived constructers can of course add more member vars
+# derived constructors can of course add more member vars
 makeLearnerBaseConstructor = function(classes, id, type, package, properties, par.set, par.vals, predict.type) {
+  if (length(par.vals) == 0L)
+    names(par.vals) = character(0L)
 
   learner = makeS3Obj(c(classes, "Learner"),
     id = id,
@@ -17,7 +19,6 @@ makeLearnerBaseConstructor = function(classes, id, type, package, properties, pa
 }
 
 
-
 #' @export
 print.Learner = function(x, ...) {
   cat(
@@ -28,6 +29,6 @@ print.Learner = function(x, ...) {
     "Properties: ", collapse(getLearnerProperties(x)), "\n",
     "Predict-Type: ", x$predict.type, "\n",
     "Hyperparameters: ", getHyperParsString(x, show.missing.values = TRUE), "\n\n",
-    sep =""
+    sep = ""
   )
 }

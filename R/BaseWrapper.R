@@ -1,8 +1,7 @@
 makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals = list(), learner.subclass, model.subclass) {
-
-  if (inherits(next.learner, "OptWrapper"))
-    stop("Cannot wrap an optimization wrapper with something else!")
+  if (inherits(next.learner, "OptWrapper") && is.element("TuneWrapper", learner.subclass))
+    stop("Cannot wrap a tuning wrapper around another optimization wrapper!")
   ns = intersect(names(par.set$pars), names(next.learner$par.set$pars))
   if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
@@ -57,7 +56,7 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset = NULL, features, factor.levels, time) {
   x = NextMethod()
   addClasses(x, c(learner$model.subclass, "BaseWrapperModel"))
 }
@@ -75,8 +74,13 @@ getFailureModelMsg.BaseWrapperModel = function(model) {
 }
 
 #' @export
+getFailureModelDump.BaseWrapperModel = function(model) {
+  return(getFailureModelDump(model$learner.model$next.model))
+}
+
+#' @export
 getLearnerProperties.BaseWrapper = function(learner) {
   # set properties by default to what the resulting type is allowed and what the base learner can do
-  intersect(getSupportedLearnerProperties(learner$type), getLearnerProperties(learner$next.learner))
+  intersect(listLearnerProperties(learner$type), getLearnerProperties(learner$next.learner))
 }
 

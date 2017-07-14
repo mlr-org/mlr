@@ -33,9 +33,9 @@ The following types are returned, depending on task type:
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
+  \code{\link{getPredictionTaskDesc}},
   \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-

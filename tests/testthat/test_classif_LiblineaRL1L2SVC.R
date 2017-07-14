@@ -4,6 +4,7 @@ test_that("classif_LiblineaRL1L2SVC", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(cost = 5L, epsilon = 0.1),
     list(cost = 5L, epsilon = 0.5),
     list(cost = 2L, epsilon = 0.1),
@@ -13,7 +14,7 @@ test_that("classif_LiblineaRL1L2SVC", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1L:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(data = binaryclass.train[, -binaryclass.class.col],
       target = binaryclass.train[, binaryclass.target], type = 5L)

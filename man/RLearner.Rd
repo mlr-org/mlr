@@ -9,33 +9,38 @@
 \alias{RLearnerSurv}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
-\alias{makeRLearnerCluster}
-\alias{makeRLearnerCostSens}
 \alias{makeRLearnerMultilabel}
 \alias{makeRLearnerRegr}
 \alias{makeRLearnerSurv}
+\alias{makeRLearnerCluster}
+\alias{makeRLearnerCostSens}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
-  class.weights.param = NULL)
+  class.weights.param = NULL, callees = character(0L))
 
 makeRLearnerMultilabel(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerCluster(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
@@ -80,6 +85,11 @@ Default is \dQuote{}.}
 
 \item{class.weights.param}{[\code{character(1)}]\cr
 Name of the parameter, which can be used for providing class weights.}
+
+\item{callees}{[\code{character}]\cr
+Character vector naming all functions of the learner's package being called which
+have a relevant R help page.
+Default is \code{character(0)}.}
 }
 \value{
 [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
@@ -99,4 +109,3 @@ section in the online tutorial:
 
 To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
 }
-

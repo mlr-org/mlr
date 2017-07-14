@@ -6,13 +6,14 @@ test_that("cluster_kmeans", {
   centers = matrix(c(1, 2, 3, 4, 2, 3, 4, 5), ncol = 4)
   parset.list = list(
     list(centers = centers),
-    list(centers = 2L)
+    list()
   )
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
+    if (is.null(parset$centers)) parset$centers = 2L
     set.seed(getOption("mlr.debug.seed"))
     m = stats::kmeans(noclass.train, centers = centers)
     p = as.integer(clue::cl_predict(m, newdata = noclass.test, type = "class_ids"))
@@ -32,7 +33,7 @@ test_that("cluster_kmeans", {
   m = train(lrn, task = makeClusterTask(data = noclass.train))
   pp = as.matrix(predict(m, newdata = noclass.test)$data)
 
-  expect_equal(getMaxIndexOfRows(p), pp[,1], check.attributes = FALSE)
-  expect_equal(p[,1], pp[,2], check.attributes = FALSE)
-  expect_equal(p[,2], pp[,3], check.attributes = FALSE)
+  expect_equal(getMaxIndexOfRows(p), pp[, 1], check.attributes = FALSE)
+  expect_equal(p[, 1], pp[, 2], check.attributes = FALSE)
+  expect_equal(p[, 2], pp[, 3], check.attributes = FALSE)
 })

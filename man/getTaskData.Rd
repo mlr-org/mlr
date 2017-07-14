@@ -4,7 +4,7 @@
 \alias{getTaskData}
 \title{Extract data in task.}
 \usage{
-getTaskData(task, subset, features, target.extra = FALSE,
+getTaskData(task, subset = NULL, features, target.extra = FALSE,
   recode.target = "no")
 }
 \arguments{
@@ -61,8 +61,7 @@ head(getTaskData(task, subset = 1:100, recode.target = "01"))
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskCosts}},
-  \code{\link{getTaskDescription}},
+  \code{\link{getTaskCosts}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
@@ -70,4 +69,3 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-

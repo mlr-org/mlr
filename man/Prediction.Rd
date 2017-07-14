@@ -6,7 +6,7 @@
 \title{Prediction object.}
 \usage{
 makePrediction(task.desc, row.names, id, truth, predict.type,
-  predict.threshold = NULL, y, time, error = NA_character_)
+  predict.threshold = NULL, y, time, error = NA_character_, dump = NULL)
 }
 \description{
 Result from \code{\link{predict.WrappedModel}}.
@@ -35,4 +35,3 @@ Object members:
 Internal, do not use!
 }
 \keyword{internal}
-

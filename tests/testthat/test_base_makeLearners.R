@@ -6,7 +6,7 @@ test_that("makeLearners", {
   lrns1 = setNames(lapply(cls1, makeLearner), cls1)
   ids = c("a", "b")
   lrns1 = setNames(lapply(cls1, makeLearner), cls1)
-  lrns2 = setNames(mapply(setId, lrns1, ids, SIMPLIFY = FALSE), ids)
+  lrns2 = setNames(mapply(setLearnerId, lrns1, ids, SIMPLIFY = FALSE), ids)
   lrns3 = lapply(lrns1, setPredictType, predict.type = "prob")
 
   res = makeLearners(cls1)

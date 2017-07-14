@@ -31,4 +31,3 @@ Other multilabel: \code{\link{makeMultilabelBinaryRelevanceWrapper}},
   \code{\link{makeMultilabelNestedStackingWrapper}},
   \code{\link{makeMultilabelStackingWrapper}}
 }
-

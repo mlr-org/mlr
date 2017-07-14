@@ -35,4 +35,3 @@ Your implementation must adhere to the following:
 The model must be fitted on the subset of \code{.task} given by \code{.subset}. All parameters
 in \code{...} must be passed to the underlying training function.
 }
-

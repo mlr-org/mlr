@@ -22,7 +22,7 @@ number of classes.}
 Weight for each class.
 Must be a vector of the same number of elements as classes are in task,
 and must also be in the same order as the class levels are in
-\code{getTaskDescription(task)$class.levels}.
+\code{getTaskDesc(task)$class.levels}.
 For convenience, one must pass a single number in case of binary classification, which
 is then taken as the weight of the positive class, while the negative class receives a weight
 of 1.
@@ -79,10 +79,12 @@ print(res$opt.path)
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
+  \code{\link{makeDummyFeaturesWrapper}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeImputeWrapper}},
@@ -100,4 +102,3 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}}
 }
-

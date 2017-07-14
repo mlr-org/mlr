@@ -49,3 +49,15 @@ test_that("cv instance works is stochastic", {
   rin2 = makeResampleInstance(makeResampleDesc("CV", iters = 2L), size = 500)
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
+
+
+test_that("test.join works somehow", {
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+
+  # check if test.join computes acc correctly
+  mm = setAggregation(acc, test.join)
+  r = resample(lrn, sonar.task, cv2, measures = mm)
+  rpred = getRRPredictions(r)
+  expect_equal(as.numeric(r$aggr),
+    mean(getPredictionTruth(rpred) == getPredictionResponse(rpred)))
+})

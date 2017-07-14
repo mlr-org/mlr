@@ -41,10 +41,11 @@ makeRLearner.classif.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered", "prob", "twoclass", "multiclass", "weights", "featimp"),
+    properties = c("missings", "numerics", "factors", "ordered", "prob", "twoclass", "multiclass", "weights", "oobpreds", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.',
+    callees = "rfsrc"
   )
 }
 
@@ -61,6 +62,16 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
     return(p$predicted)
   } else {
     return(p$class)
+  }
+}
+
+#' @export
+getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
+  preds = .model$learner.model$predicted.oob
+  if (.learner$predict.type == "response") {
+    factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
+  } else {
+    preds
   }
 }
 

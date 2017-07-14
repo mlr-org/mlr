@@ -52,8 +52,6 @@ plotCalibration(out)
 }
 }
 \seealso{
-Other calibration: \code{\link{generateCalibrationData}}
-
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
@@ -63,8 +61,9 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
-  \code{\link{plotROCCurves}},
+  \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
-}
 
+Other calibration: \code{\link{generateCalibrationData}}
+}

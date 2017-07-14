@@ -5,7 +5,6 @@ test_that("generateFunctionalANOVAData", {
 
   fr = train("regr.rpart", regr.task)
   dr1 = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 1L, mean, gridsize = gridsize)
-  
   plotPartialDependence(dr1)
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -60,13 +59,15 @@ test_that("generatePartialDependenceData", {
   expect_that(max(dr$data$lstat), equals(40.))
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat))
+  expect_true(all(dr$data$medv >= min(regr.df$medv) | dr$data$medv <= max(regr.df$medv)))
+
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
   path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfacet * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize))
   # plotPartialDependenceGGVIS(dr, interact = "chas")
 
   # check that if the input is a data.frame things work
@@ -81,12 +82,12 @@ test_that("generatePartialDependenceData", {
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat * n))
 
-  plotPartialDependence(dr, facet = "chas", data = regr.df, p = .25)
+  plotPartialDependence(dr, facet = "chas", data = regr.df, p = 1)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  # black.xpath counts points which are omitted when individual = TRUE
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfacet * gridsize * n))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  # black.circle.xpath counts points which are omitted when individual = TRUE
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize * n + n))
   # plotPartialDependenceGGVIS(dr, interact = "chas")
 
   # check that multiple features w/o interaction work with a label outputting classifier with
@@ -100,10 +101,10 @@ test_that("generatePartialDependenceData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   # minus one because the of the legend
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
-  # expect_that(length(XML::getNodeSet(doc, red.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
-  # expect_that(length(XML::getNodeSet(doc, blue.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
-  # expect_that(length(XML::getNodeSet(doc, green.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, red.circle.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, blue.circle.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, green.circle.xpath, ns.svg)) - 1, equals(nfeat * gridsize))
   # plotPartialDependenceGGVIS(dc)
 
   # test that an inappropriate function for a classification task throws an error
@@ -131,8 +132,8 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(ds, data = surv.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(gridsize * nfeat))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(gridsize * nfeat))
   # plotPartialDependenceGGVIS(ds)
 
   # issue 1180 test
@@ -150,8 +151,8 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(db, facet = "chas", data = regr.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfacet * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfacet * gridsize + n))
   # plotPartialDependenceGGVIS(db, interact = "chas")
 
   # check derivative and factor feature failure
@@ -170,21 +171,28 @@ test_that("generatePartialDependenceData", {
   plotPartialDependence(db2, data = regr.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
-  # expect_that(length(XML::getNodeSet(doc, black.xpath, ns.svg)), equals(nfeat * gridsize))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, black.circle.xpath, ns.svg)), equals(nfeat * gridsize + n * nfacet))
   # plotPartialDependenceGGVIS(db2)
 
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
   bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
     individual = TRUE, gridsize = gridsize)
+  # test for issue 1536
+  bc.center1 = generatePartialDependenceData(fcpb, input = binaryclass.task, features = "V11",
+    individual = TRUE, gridsize = gridsize,
+    center = list("V11" = min(binaryclass.df$V11)))
+  bc.center2 = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
+    individual = TRUE, gridsize = gridsize,
+    center = list("V11" = min(binaryclass.df$V11), "V12" = min(binaryclass.df$V12)))
   nfeat = length(bc$features)
   n = getTaskSize(binaryclass.task)
   plotPartialDependence(bc, data = binaryclass.df)
   ggsave(path)
   doc = XML::xmlParse(path)
-  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
+  expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfeat))
   # again, omission of points for individual = TRUE
-  # expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)) - 1, equals(nfeat * n))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(nfeat * n))
   # plotPartialDependenceGGVIS(bc)
 
   # check that derivative estimation works for ICE and pd for classification and regression
@@ -221,25 +229,87 @@ test_that("generatePartialDependenceData", {
   q = plotPartialDependence(dr, facet = "chas", facet.wrap.ncol = 2L,
     data = regr.df)
   testFacetting(q, ncol = 2L)
+
+  # with the joint distribution as the weight function generatePartialDependenceData
+  # should return NA for regions with zero probability
+  x = runif(50L)
+  y = 2 * x
+  idx = which(x > .5)
+  x[idx] = NA
+  test.task = makeRegrTask(data = data.frame(x = x[-idx], y = y[-idx]), target = "y")
+  fit = train("regr.rpart", test.task)
+
+  fun = function(x, newdata) {
+    w = ifelse(newdata$x > .5, 0, 1)
+    if (sum(w) == 0) {
+      NA
+    } else {
+      weighted.mean(x, w)
+    }
+  }
+
+  pd = generatePartialDependenceData(fit, test.task, fun = fun,
+    fmin = list("x" = 0), fmax = list("x" = 1), gridsize = gridsize)
+  expect_that(all(is.na(pd$data[pd$data$x > .5, "y"])), is_true())
+
+  # issue 55 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
+
+  # subsequent bug found in pr #1206
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    individual = TRUE,
+    center = list("Petal.Width" = min(multiclass.df$Petal.Width)), gridsize = gridsize)
+
+  # issue 63 in the tutorial
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    individual = TRUE, derivative = TRUE, gridsize = gridsize)
+
+  # test rng as paratmeter
+  petal.width = c(seq(0.1, 0.6, 0.1), seq(1, 2.5, 0.1))
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width", range = petal.width)
+  expect_that(length(pd$data$Petal.Width), equals(length(unique(pd$data$Class)) * length(petal.width)))
 })
 
 test_that("generateFeatureGrid", {
   data = data.frame(
-    w = seq(0, 1, length.out = 3),
-    x = factor(letters[1:3]),
-    y = ordered(1:3),
-    z = 1:3
+    w = seq(0, 1, length.out = 5),
+    x = factor(letters[1:5]),
+    y = ordered(1:5),
+    z = 1:5
   )
+  gridsize = 3
   features = colnames(data)
   fmin = sapply(features, function(x)
-    ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+    ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   fmax = sapply(features, function(x)
-    ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
-  out = generateFeatureGrid(features, data, "none", gridsize = 3, fmin, fmax)
+    ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+      max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
 
+  out = generateFeatureGrid(features, data, "none", gridsize = gridsize, fmin, fmax)
+  expect_true(all(sapply(out, length) == gridsize))
   expect_that(out$w, is_a("numeric"))
+  expect_that(range(out$w), equals(range(data$w)))
+  expect_that(length(out$w), equals(gridsize))
   expect_that(out$x, is_a("factor"))
-  expect_that(levels(out$x), equals(letters[1:3]))
+  expect_that(length(out$x), equals(gridsize))
+  expect_that(levels(out$x), equals(levels(data$x)))
   expect_that(out$y, is_a("ordered"))
+  expect_that(levels(out$y), equals(levels(data$y)))
+  expect_that(range(out$y), equals(range(data$y)))
   expect_that(out$z, is_a("integer"))
+  expect_that(range(out$z), equals(range(data$z)))
+
+  out.sub = generateFeatureGrid(features, data, "subsample",
+    gridsize = gridsize, fmin, fmax)
+  expect_true(all(sapply(out.sub, length) == gridsize))
+  expect_that(out.sub$w, is_a("numeric"))
+  expect_that(length(out.sub$w), equals(gridsize))
+  expect_that(out.sub$x, is_a("factor"))
+  expect_that(length(out.sub$x), equals(gridsize))
+  expect_that(levels(out.sub$x), equals(levels(data$x)))
+  expect_that(out.sub$y, is_a("ordered"))
+  expect_that(levels(out.sub$y), equals(levels(data$y)))
+  expect_that(out.sub$z, is_a("integer"))
 })

@@ -60,6 +60,7 @@ a single test set. This probably mainly makes sense when cross-validation is use
 \itemize{
 \item \code{print}: 
 }}
+
 \examples{
 # get confusion matrix after simple manual prediction
 allinds = 1:150
@@ -82,6 +83,6 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
-

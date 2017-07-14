@@ -24,15 +24,17 @@ for details on \dQuote{default}.}
 \description{
 Performs a \code{\link[stats]{friedman.test}} for a selected measure.
 The null hypothesis is that apart from an effect of the different
-[\code{\link{Task}}], the location parameter (aggregated performance-measure)
+[\code{\link{Task}}], the location parameter (aggregated performance measure)
 is the same for each \code{\link{Learner}}.
+Note that benchmark results for at least two learners on at least two tasks
+are required.
 }
 \examples{
 # see benchmark
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
-  \code{\link{benchmark}},
+  \code{\link{batchmark}}, \code{\link{benchmark}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{generateCritDifferencesData}},
@@ -46,11 +48,12 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRPredictions}},
+  \code{\link{getBMRTaskDescs}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
   \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
-  \code{\link{plotCritDifferences}}
+  \code{\link{plotCritDifferences}},
+  \code{\link{reduceBatchmarkResults}}
 }
-

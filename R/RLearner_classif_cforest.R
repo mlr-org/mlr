@@ -7,7 +7,8 @@ makeRLearner.classif.cforest = function() {
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L),
       makeLogicalLearnerParam(id = "replace", default = FALSE),
-      makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632),
+      makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632,
+        requires = quote(replace == FALSE)),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = "quad"),
       makeDiscreteLearnerParam(id = "testtype",
@@ -26,7 +27,8 @@ makeRLearner.classif.cforest = function() {
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness.",
+    callees = c("cforest", "cforest_control", "ctree_control")
   )
 }
 

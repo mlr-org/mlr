@@ -4,17 +4,17 @@ makeRLearner.regr.btgp = function() {
     cl = "regr.btgp",
     package = "tgp",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "meanfn", default = "linear", 
-        values = c("constant", "linear")), 
-      makeDiscreteLearnerParam(id = "bprior", default = "bflat", 
+      makeDiscreteLearnerParam(id = "meanfn", default = "linear",
+        values = c("constant", "linear")),
+      makeDiscreteLearnerParam(id = "bprior", default = "bflat",
         values = c("b0", "b0not", "bflat", "bmle", "bmznot", "bmzt")),
-      makeDiscreteLearnerParam(id = "corr", default = "expsep", 
+      makeDiscreteLearnerParam(id = "corr", default = "expsep",
         values = c("exp", "expsep", "matern", "sim")),
-      makeNumericVectorLearnerParam(id = "tree", len = 2, default = c(0.5, 2), 
+      makeNumericVectorLearnerParam(id = "tree", len = 2, default = c(0.5, 2),
         lower = c(0, 0), upper = c(1, Inf)),
-      makeIntegerVectorLearnerParam(id = "BTE", len = 3, 
-        default = c(2000, 7000, 2), lower = 0), 
-      makeIntegerLearnerParam(id = "R", default = 1, lower = 1), 
+      makeIntegerVectorLearnerParam(id = "BTE", len = 3,
+        default = c(2000, 7000, 2), lower = 0),
+      makeIntegerLearnerParam(id = "R", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "m0r1", default = TRUE),
       makeLogicalLearnerParam(id = "linburn", default = FALSE),
       makeUntypedLearnerParam(id = "itemps", default = NULL),
@@ -29,7 +29,8 @@ makeRLearner.regr.btgp = function() {
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Gaussian Process",
-    short.name = "btgp"
+    short.name = "btgp",
+    callees = "btgp"
   )
 }
 
@@ -71,4 +72,4 @@ predictLearner.regr.btgp = function(.learner, .model, .newdata, ...) {
   } else {
     return(cbind(p$ZZ.km, sqrt(p$ZZ.ks2)))
   }
-}  
+}

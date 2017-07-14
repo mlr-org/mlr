@@ -23,4 +23,3 @@ Object members:
 \item{measures [(list of) \code{\link{Measure}}]}{Performance measures.}
 }
 }
-

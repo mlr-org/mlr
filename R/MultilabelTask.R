@@ -1,20 +1,20 @@
 #' @export
 #' @rdname Task
-makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL, 
-  blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertCharacter(target, any.missing = FALSE, min.len = 2L)
   assertDataFrame(data)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
-  task = makeSupervisedTask("multilabel", data, target, weights, blocking)
+  task = makeSupervisedTask("multilabel", data, target, weights, blocking, fixup.data, check.data)
   # currently we dont do any fixup here
   if (check.data) {
     for (cn in target)
       assertLogical(task$env$data[[cn]], any.missing = FALSE, .var.name = cn)
   }
-  task$task.desc = makeTaskDesc.MultilabelTask(task, id, target)
+  task$task.desc = makeMultilabelTaskDesc(id, data, target, weights, blocking)
   addClasses(task, "MultilabelTask")
 }
 
@@ -27,9 +27,9 @@ print.MultilabelTask = function(x, ...) {
   print(sums)
 }
 
-makeTaskDesc.MultilabelTask = function(task, id, target) {
+makeMultilabelTaskDesc = function(id, data, target, weights, blocking) {
   levs = target
-  td = makeTaskDescInternal(task, "multilabel", id, target)
+  td = makeTaskDescInternal("multilabel", id, data, target, weights, blocking)
   td$class.levels = levs
-  return(addClasses(td, c("TaskDescMultilabel", "TaskDescSupervised")))
+  return(addClasses(td, c("MultilabelTaskDesc", "SupervisedTaskDesc")))
 }

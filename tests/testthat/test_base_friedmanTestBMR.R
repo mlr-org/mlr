@@ -1,4 +1,4 @@
-context("test_friedmantTestBMR")
+context("test_friedmanTestBMR")
 
 test_that("test_friedmanTestBMR", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -15,10 +15,9 @@ test_that("test_friedmanTestBMR", {
 
   # For friedmanPostHocTest
   # Case: Do not reject null
-  expect_warning(r3 <- friedmanPostHocTestBMR(res, acc, p.value = 10^(-10)))
+  expect_warning({r3 = friedmanPostHocTestBMR(res, acc, p.value = 10^ (-10))})
   expect_is(r3, "htest")
   expect_false(r3$f.rejnull)
-
 
   # Case: Reject null
   # Make sure nnet is always worse then rpart. (add error)
@@ -31,4 +30,21 @@ test_that("test_friedmanTestBMR", {
   }
   expect_is(r4$crit.difference[[1]], "numeric")
   expect_gt(r4$crit.difference[[1]], 0L)
+})
+
+
+test_that("Friedman test on one learner / one task", {
+  lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
+  tasks = list(multiclass.task, binaryclass.task)
+  rdesc = makeResampleDesc("Holdout")
+
+  res = benchmark(lrns, tasks[[1]], rdesc)
+  expect_error(friedmanTestBMR(res), "at least two tasks")
+  expect_error(friedmanPostHocTestBMR(res), "at least two tasks")
+  expect_error(generateCritDifferencesData(res), "at least two tasks")
+
+  res = benchmark(lrns[[1]], tasks, rdesc)
+  expect_error(friedmanTestBMR(res), "at least two learners")
+  expect_error(friedmanPostHocTestBMR(res), "at least two learners")
+  expect_error(generateCritDifferencesData(res), "at least two learners")
 })

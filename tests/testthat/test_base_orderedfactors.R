@@ -7,7 +7,7 @@ test_that("ordered factors", {
   df$Id = NULL
   task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 
-  expect_equal(getTaskDescription(task)$n.feat, c(numerics = 0L, factors = 4L, ordered = 5L))
+  expect_equal(getTaskDesc(task)$n.feat, c(numerics = 0L, factors = 4L, ordered = 5L))
   expect_equal(getTaskNFeats(task), 9L)
 
   expect_error(train("classif.lda", task), "has ordered factor")

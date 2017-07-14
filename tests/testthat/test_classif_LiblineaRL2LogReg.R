@@ -4,6 +4,7 @@ test_that("classif_LiblineaRL2LogReg", {
   requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
+    list(),
     list(type = 0),
     list(type = 7),
     list(type = 0, cost = 5L),
@@ -13,7 +14,7 @@ test_that("classif_LiblineaRL2LogReg", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1L:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(data = binaryclass.train[, -binaryclass.class.col],
       target = binaryclass.train[, binaryclass.target])
@@ -26,16 +27,16 @@ test_that("classif_LiblineaRL2LogReg", {
     old.probs.list[[i]] = p$probabilities[, 2L]
   }
 
-  parset.list = list(
-    list(),
-    list(type = 7),
-    list(cost = 5L),
-    list(type = 7, cost = 5L)
-  )
+  # parset.list = list(
+  #   list(),
+  #   list(type = 7),
+  #   list(cost = 5L),
+  #   list(type = 7, cost = 5L)
+  # )
 
   testSimpleParsets("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
+  testProbParsets("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
 
 })

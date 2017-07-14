@@ -1,23 +1,23 @@
 #' @title Calculates feature importance values for trained models.
 #'
-#' @description 
+#' @description
 #' For some learners it is possible to calculate a feature importance measure.
 #' \code{getFeatureImportance} extracts those values from trained models.
 #' See below for a list of supported learners.
-#' 
-#' 
+#'
+#'
 #' \itemize{
 #'    \item{boosting} \cr
-#'    {Measure which accounts the gain of Gini index given by a feature 
+#'    {Measure which accounts the gain of Gini index given by a feature
 #'    in a tree and the weight of that tree.}
 #'    \item{cforest} \cr
 #'    {Permutation principle of the 'mean decrease in accuracy' principle
 #'    in randomForest. If \code{auc=TRUE} (only for binary classification),
 #'    area under the curve is used as measure.  The algorithm used for the survival
 #'    learner is 'extremely slow and experimental; use at your own risk'.
-#'    See \link[party:varimp]{varimp} for details and further parameters.}  
+#'    See \link[party:varimp]{varimp} for details and further parameters.}
 #'    \item{gbm} \cr
-#'    {Estimation of relative influence for each feature. See 
+#'    {Estimation of relative influence for each feature. See
 #'    \link[gbm:relative.influence]{relative.influence}
 #'    for details and further parameters.}
 #'    \item{randomForest} \cr
@@ -38,44 +38,44 @@
 #'    {Supports both measures mentioned above for the randomForest
 #'    learner. Note, that you need to specifically set the learners parameter
 #'    \code{importance}, to be able to compute feature importance measures.
-#'    See \link[ranger:importance]{importance} and 
+#'    See \link[ranger:importance]{importance} and
 #'    \link[ranger:ranger]{ranger} for details.}
 #'    \item{rpart} \cr
 #'    {Sum of decrease in impurity for each of the surrogate variables at each node.}
 #'    \item{xgboost} \cr
-#'    {The value implies the relative contribution of the corresponding feature to the model 
-#'    calculated by taking each feature's contribution for each tree in the model. The exact 
+#'    {The value implies the relative contribution of the corresponding feature to the model
+#'    calculated by taking each feature's contribution for each tree in the model. The exact
 #'    computation of the importance in xgboost is undocumented.}
 #'  }
-#' 
+#'
 #' @param object [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model, result of \code{\link{train}}.
 #' @param ... [any]\cr
-#'   Additional parameters, which are passed to the underlying importance value 
+#'   Additional parameters, which are passed to the underlying importance value
 #'   generating function.
 #' @return [\code{FeatureImportance}] An object containing a \code{data.frame} of the variable importances and further information.
 #' @export
 getFeatureImportance = function(object, ...) {
-  
+
   assertClass(object, classes = "WrappedModel")
   lrn = checkLearner(object$learner, props = "featimp")
   imp = getFeatureImportanceLearner(lrn, object, ...)
-  
-  if (!check_numeric(imp, names = "unique") && !check_subset(names(imp), object$features)) 
+
+  if (!check_numeric(imp, names = "unique") && !check_subset(names(imp), object$features))
     stop("getFeatureImportanceLearner did not return a named vector with names of the task features.")
-  
+
   #We need to add missing pars with zero and order them
   imp[setdiff(object$features, names(imp))] = 0
   imp = imp[object$features]
-  
+
   #convert named vector to data.frame with columns and set NA to 0
   imp[is.na(imp)] = 0L
   imp = as.data.frame(t(imp))
   rownames(imp) = NULL
-  
+
   makeS3Obj("FeatureImportance",
     res = imp,
-    task.desc = getTaskDescription(object),
+    task.desc = getTaskDesc(object),
     learner = lrn,
     measure = NA,
     contrast = NA,
@@ -86,11 +86,11 @@ getFeatureImportance = function(object, ...) {
 }
 
 #' @title Calculates feature importance values for a given learner.
-#' 
-#' @description 
-#' 
+#'
+#' @description
+#'
 #' This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.
-#' 
+#'
 #' The return value is a named numeric vector. There does not need to be one value for each feature in the dataset.
 #' In \code{\link{getFeatureImportance}} missing features will get an importance of zero and if the vector contains \code{NA}
 #' they will also be replaced with zero.
@@ -100,11 +100,11 @@ getFeatureImportance = function(object, ...) {
 #' @param .model [\code{\link{WrappedModel}}]\cr
 #'  The model.
 #' @param ... [any]\cr
-#' Additional parameters, which are passed to the underlying importance value 
+#' Additional parameters, which are passed to the underlying importance value
 #' generating function.
 #' @return [\code{numeric}] A named vector of variable importance.
 #' @export
 #' @keywords internal
 getFeatureImportanceLearner = function(.learner, .model, ...) {
-	UseMethod("getFeatureImportanceLearner")
+  UseMethod("getFeatureImportanceLearner")
 }

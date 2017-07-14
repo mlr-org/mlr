@@ -4,6 +4,7 @@ test_that("regr_bcart", {
   requirePackagesOrSkip("tgp", default.method = "load")
 
   parset.list = list(
+    list(),
     list(bprior = "bflat"),
     list(bprior = "b0", tree = c(0.5, 3)),
     list(bprior = "bmle", tree = c(0.1, 2))
@@ -23,7 +24,7 @@ test_that("regr_bcart", {
   test  = df[regr.test.inds, ]
 
   old.predicts.list = list()
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(X = train, Z = y, verb = 0, basemax = n.num, pred.n = FALSE)
     pars = c(pars, parset)

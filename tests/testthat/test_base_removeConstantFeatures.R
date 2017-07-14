@@ -13,7 +13,7 @@ test_that("removeConstantFeatures", {
     m = as.double(c(NA, NA)), # only missings are supported?
     target = as.factor(1:2)
   )
-  data = data[c(rep(1, 9), 2),]
+  data = data[c(rep(1, 9), 2), ]
   data$safe = seq_row(data)
   task = makeClassifTask("test", data = data, target = "target")
 

@@ -15,8 +15,7 @@
 #' @param learner.model [any]\cr
 #'   Underlying model.
 #' @template arg_taskdesc
-#' @param subset [\code{integer}]\cr
-#'   Subset used for training.
+#' @template arg_subset
 #' @param features [\code{character}]\cr
 #'   Features used for training.
 #' @param factor.levels [named \code{list} of \code{character}]\cr
@@ -33,10 +32,14 @@ makeWrappedModel = function(learner, learner.model, task.desc, subset, features,
 
 #' @export
 makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+  dump = NULL
   if (is.error(learner.model)) {
     learner.model = as.character(learner.model)
     time = NA_real_
     cl = c("FailureModel", "WrappedModel")
+    if (getLearnerOptions(learner, "on.error.dump")$on.error.dump) {
+      dump = addClasses(get("last.dump", envir = .GlobalEnv), "mlr.dump")
+    }
   } else {
     cl = "WrappedModel"
   }
@@ -47,7 +50,8 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
     subset = subset,
     features = features,
     factor.levels = factor.levels,
-    time = time
+    time = time,
+    dump = dump
   )
 }
 
@@ -128,6 +132,24 @@ getFailureModelMsg.WrappedModel = function(model) {
   return(NA_character_)
 }
 
+#' @title Return the error dump of FailureModel.
+#'
+#' @description
+#' Returns the error dump that can be used with \code{debugger()} to evaluate errors.
+#' If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE}, this returns
+#' \code{NULL}.
+#'
+#' @template arg_wrappedmod
+#' @return [\code{last.dump}].
+#' @export
+getFailureModelDump = function(model) {
+  UseMethod("getFailureModelDump")
+}
+
+#' @export
+getFailureModelDump.WrappedModel = function(model) {
+  return(NULL)
+}
 
 
 

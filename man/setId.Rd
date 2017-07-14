@@ -28,11 +28,12 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerParVals}},
   \code{\link{getLearnerParamSet}},
   \code{\link{getLearnerPredictType}},
+  \code{\link{getLearnerShortName}},
   \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{makeLearners}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-

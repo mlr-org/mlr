@@ -62,7 +62,7 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
     pv$osw.cl = osw.cl
   }
   id = stri_paste(learner$id, "oversampled", sep = ".")
-  ps = makeParamSet (
+  ps = makeParamSet(
     makeNumericLearnerParam(id = "osw.rate", lower = 1),
     makeUntypedLearnerParam(id = "osw.cl", default = NULL, tunable = FALSE)
   )
@@ -71,18 +71,20 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
 }
 
 #' @export
-trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights = NULL, usw.rate = 1, usw.cl = NULL, ...) {
+trainLearner.UndersampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, usw.rate = 1, usw.cl = NULL, ...) {
   .task = subsetTask(.task, .subset)
   .task = undersample(.task, rate = usw.rate, cl = usw.cl)
   m = train(.learner$next.learner, .task, weights = .weights)
+  m$train.task = .task
   makeChainModel(next.model = m, cl = "UndersampleModel")
 }
 
 #' @export
-trainLearner.OversampleWrapper = function(.learner, .task, .subset, .weights = NULL, osw.rate = 1, osw.cl = NULL, ...) {
+trainLearner.OversampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, osw.rate = 1, osw.cl = NULL, ...) {
   .task = subsetTask(.task, .subset)
   .task = oversample(.task, rate = osw.rate, cl = osw.cl)
   m = train(.learner$next.learner, .task, weights = .weights)
+  m$train.task = .task
   makeChainModel(next.model = m, cl = "OversampleModel")
 }
 

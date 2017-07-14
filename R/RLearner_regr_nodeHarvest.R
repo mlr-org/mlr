@@ -6,7 +6,7 @@ makeRLearner.regr.nodeHarvest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "nodesize", default = 10L, lower = 1L),
       makeIntegerLearnerParam(id = "nodes", default = 1000L, lower = 1L),
-      makeIntegerLearnerParam(id = "maxinter", default = 1L, lower = 1L),
+      makeIntegerLearnerParam(id = "maxinter", default = 2L, lower = 1L),
       makeDiscreteLearnerParam(id = "mode", default = "mean", values = c("mean", "outbag")),
       makeNumericLearnerParam(id = "lambda"),
       makeUntypedLearnerParam(id = "addto", default = NULL),
@@ -16,7 +16,8 @@ makeRLearner.regr.nodeHarvest = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Node Harvest",
-    short.name = "nodeHarvest"
+    short.name = "nodeHarvest",
+    callees = "nodeHarvest"
   )
 }
 

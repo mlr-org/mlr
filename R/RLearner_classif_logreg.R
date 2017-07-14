@@ -3,18 +3,24 @@ makeRLearner.classif.logreg = function() {
   makeRLearnerClassif(
     cl = "classif.logreg",
     package = "stats",
-    par.set = makeParamSet(),
+    par.set = makeParamSet(
+      makeLogicalLearnerParam("model", default = TRUE, tunable = FALSE)
+    ),
+    par.vals = list(
+      model = FALSE
+    ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Logistic Regression",
     short.name = "logreg",
-    note = 'Delegates to `glm` with `family = binomial(link = "logit")`.'
+    note = "Delegates to `glm` with `family = binomial(link = 'logit')`. We set 'model' to FALSE by default to save memory.",
+    callees = "glm"
   )
 }
 
 #' @export
 trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  stats::glm(f, data = getTaskData(.task, .subset), model = FALSE, family = "binomial", weights = .weights, ...)
+  stats::glm(f, data = getTaskData(.task, .subset), family = "binomial", weights = .weights, ...)
 }
 
 #' @export

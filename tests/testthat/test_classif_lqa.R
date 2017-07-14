@@ -5,8 +5,8 @@ test_that("classif_lqa", {
 
   parset.list = list(
     list(),
-    list(penalty = 'lasso', lambda = 0.01),
-    list(penalty = 'fused.lasso', lambda1 = 0.001, lambda2 = 0.01)
+    list(penalty = "lasso", lambda = 0.01),
+    list(penalty = "fused.lasso", lambda1 = 0.001, lambda2 = 0.01)
   )
   parset.list.lqa = list(
     list(family = binomial(), penalty = lqa::lasso(0.1)),
@@ -37,7 +37,7 @@ test_that("classif_lqa", {
 
   testSimpleParsets("classif.lqa", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets ("classif.lqa", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.lqa", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)
 
 })
