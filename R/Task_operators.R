@@ -261,8 +261,8 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
-#' @param functionals [\code{logical(1)}]\cr
-#'   Should functionals be returned as functionals or as numerics?
+#' @param keep.functionals [\code{logical(1)}]\cr
+#'   Should functionals be returned as functionals (matrix) or be converted to numeric data.frame columns?
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export
