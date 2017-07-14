@@ -196,7 +196,7 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
     # set factor levels, present in test but missing in train, to NA
     if (any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
       test.i = m$learner.model$data[test.i, ]
-      newdata = remove_missing_levels(m, test.i)
+      newdata = remove.missing.levels.lm(m, test.i)
       pred.test = predict(m, newdata = newdata)
     } else {
       pred.test = predict(m, task, subset = test.i)
