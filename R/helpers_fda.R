@@ -11,7 +11,7 @@ makeFunctionalFeature = function(mat) {
   if (any(dim(mat) %in% 0))
     stop("Matrix dimensions need to be > 0.")
   assertMatrix(mat, mode = "numeric")
-  addClasses(mat, "functional")
+  return(mat)
 }
 
 
@@ -21,7 +21,7 @@ fdFeatsToColumnIndex = function(df, fd.features = list(), exclude.cols = NULL) {
 
   # If the data.frame already contains matricies, keep them
   if (hasFunctionalFeatures(df)) {
-    ids = which(sapply(df, class) == "matrix")
+    ids = which(vcapply(df, class) == "matrix")
     fd.features = c(fd.features, ids)
   }
 
@@ -35,7 +35,7 @@ fdFeatsToColumnIndex = function(df, fd.features = list(), exclude.cols = NULL) {
 
   # If fd.features is an empty list, all numerics are a functional feature
   if (length(fd.features) == 0)
-    fd.features = list("fd1" = setdiff(which(sapply(df, is.numeric)), exclude.cols))
+    fd.features = list("fd1" = setdiff(which(vlapply(df, is.numeric)), exclude.cols))
 
   lapply(fd.features, function(fdfeature) {
     if (is.character(fdfeature)) {
@@ -58,25 +58,45 @@ functionalToNormalData = function(df) {
   return(df)
 }
 
-# Check if the data.frame has functional features
-hasFunctionalFeatures = function(df) {
-  bool = FALSE
-  if (any(unlist(sapply(df, class)) %in% "matrix"))
-    bool = TRUE
-  return(bool)
+
+hasFunctionalFeatures = function(obj) {
+ UseMethod("hasFunctionalFeatures")
 }
 
+hasFunctionalFeatures.data.frame = function(obj) {
+  # Check if the data.frame contains matricies
+  ifelse(any(vcapply(obj, class) %in% "matrix"), TRUE, FALSE)
+}
+
+hasFunctionalFeatures.Task = function(obj) {
+  # Pass on the task.desc
+ hasFunctionalFeatures(obj$task.desc)
+}
+
+hasFunctionalFeatures.TaskDesc = function(obj) {
+  # Check if the task.desc has functionals
+  obj$n.feat["functionals"] > 0L
+}
+
+
+# FIXME: Not sure if this is needed
 # Get only functional features from a task.
-getFunctionalData = function(object, subset = NULL, features, recode.target = "no"){
-
-  # Either get data from task or take data.frame directly
-  if (inherits(object, "Task")) {
-    d = getTaskData(object, subset, features, target.extra = TRUE, recode.target, keep.functionals = TRUE)$data
-  } else {
-    d = object
-  }
-
-  # Which features are functional?
-  fids = which(lapply(d, function(x) class(x)[1]) %in% c("functional" , "matrix"))
-  d[, fids]
+getFunctionalFeatures = function(object, subset = NULL, features, recode.target = "no"){
+  UseMethod("getFunctionalFeatures")
 }
+
+getFunctionalFeatures.Task = function(object, subset = NULL, features, recode.target = "no"){
+  # Get data and pass on to data.frame method
+  df = getTaskData(object, subset, features, target.extra = TRUE, recode.target, keep.functionals = TRUE)
+  getFunctionalFeatures(df$data)
+}
+
+getFunctionalFeatures.data.frame = function(object, subset = NULL, features, recode.target = "no"){
+  # Keep only columns with class matrix
+  funct.cols = which(vcapply(object, class) == "matrix")
+  if (length(funct.cols) == 0)
+    stop("No functional features in the data")
+  object[, funct.cols, drop = FALSE]
+}
+
+

@@ -19,7 +19,7 @@ makeRLearner.classif.fdakernel = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "probs", "functionals"),
+    properties = c("twoclass", "multiclass", "prob", "functionals"),
     name = "Kernel classification on FDA",
     short.name = "fdakernel",
     note = "Argument draw=FALSE is used as default."
@@ -29,11 +29,11 @@ makeRLearner.classif.fdakernel = function() {
 #' @export
 trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
   # Get and transform functional data
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
-  fd = d$data[, which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
-  # transform the data into fda.usc:fdata class type.
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
+  fd = getFunctionalFeatures(d$data)
 
-  data.fdclass = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
+  # transform the data into fda.usc:fdata class type.
+  data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
   par.cv = learnerArgsToControl(list, trim, draw)
   fda.usc::classif.kernel(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), ...)
@@ -43,10 +43,8 @@ trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = N
 predictLearner.classif.fdakernel = function(.learner, .model, .newdata, ...) {
 
   # transform the data into fda.usc:fdata class type.
-  fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
-  if (ncol(fd) == 0)
-    stop("No functional features in the data")
-  nd = fda.usc::fdata(mdata = setClasses(fd, "matrix"))
+  fd = getFunctionalFeatures(.newdata)
+  nd = fda.usc::fdata(mdata = as.matrix(fd))
 
   # predict according to predict.type
   type = ifelse(.learner$predict.type == "prob", "probs", "class")

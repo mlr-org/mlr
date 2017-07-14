@@ -27,14 +27,13 @@ test_that("classif_fdaglm behaves like original api", {
   phtst = as.data.frame(mtest$data)
   phtst[, "label"] = gtest
 
-  lrn = makeLearner("classif.fdanp")
+  lrn = makeLearner("classif.fdaglm")
   fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
   ftest = makeFunctionalData(phtst, fd.features = list(), exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
 
+
   set.seed(getOption("mlr.debug.seed"))
-  lrn = makeLearner("classif.fdaglm")
-  task = makeClassifTask(data = fdata, target = "label")
   # glm sometimes does not converge, we dont want to see that
   m = suppressWarnings(train(lrn, task))
   cp = predict(m, newdata = ftest)

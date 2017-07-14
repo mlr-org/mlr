@@ -14,20 +14,24 @@ makeRLearner.classif.fdaglm = function() {
       makeUntypedLearnerParam(id = "basis.b"),
       makeLogicalLearnerParam(id = "CV", default = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "probs", "functionals"),
+    properties = c("twoclass", "multiclass", "prob", "functionals"),
     name = "Generalized Linear Models classification on FDA",
-    short.name = "fdaglm"
+    short.name = "fdaglm",
+    note = "model$C[[1]] is set to quote(classif.glm)"
   )
 }
 
 #' @export
 trainLearner.classif.fdaglm = function(.learner, .task, .subset, .weights = NULL, ...) {
 
-  # Get data and transform to functional data
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE, keep.functionals = TRUE)
-  fd = d$data[, which(lapply(d$data, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
+  # Get and transform functional data
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
+  fd = getFunctionalFeatures(d$data)
+  # transform the data into fda.usc:fdata class type.
+  data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
   # transform the data into fda.usc:fdata class type and save in a list
-  dat = list(df = data.frame(d$target), x = fda.usc::fdata(mdata = setClasses(fd, "matrix")))
+  dat = list(df = data.frame(d$target), x = data.fdclass)
+
   model = fda.usc::classif.glm(d.target ~ x, data = dat)
   # Fix bug in package
   model$C[[1]] = quote(classif.glm)
@@ -37,11 +41,9 @@ trainLearner.classif.fdaglm = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.classif.fdaglm = function(.learner, .model, .newdata, ...) {
   # transform the data into fda.usc:fdata class type.
-  fd = .newdata[, which(lapply(.newdata, function(x) class(x)[1]) %in% c("functional" , "matrix"))]
-  if (ncol(fd) == 0)
-    stop("No functional features in the data")
-  nd = list(x = fda.usc::fdata(mdata = setClasses(fd, "matrix")))
-
+  browser()
+  fd = getFunctionalFeatures(.newdata)
+  nd = list(x = fda.usc::fdata(mdata = fda.usc::fdata(mdata = as.matrix(fd))))
   # predict according to predict.type
   type = ifelse(.learner$predict.type == "prob", "probs", "class")
   if (type == "probs") {

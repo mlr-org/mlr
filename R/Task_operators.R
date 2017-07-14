@@ -261,8 +261,8 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
-#' @param keep.functionals [\code{logical(1)}]\cr
-#'   Should functionals be returned as functionals (matrix) or be converted to numeric data.frame columns?
+#' @param functionals.as [\code{character(1)}]\cr
+#'   Should functionals be kept as \code{matricies} be converted to numeric data.frame columns \code{dfCols}?
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export
@@ -277,11 +277,11 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no",
-  keep.functionals = FALSE) {
+  functionals.as = "dfCols") {
   checkTask(task, "Task")
   checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
-  assertLogical(keep.functionals, len = 1L)
+  assertChoice(functionals.as, choices = c("matrix", "dfCols"))
 
   task.features = getTaskFeatureNames(task)
 
@@ -299,7 +299,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
 
   tn = task$task.desc$target
 
-  indexHelper = function(df, i, j, drop = TRUE, keep.functionals) {
+  indexHelper = function(df, i, j, drop = TRUE, functionals.as) {
     df = switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
       df[i, , drop = drop],
@@ -307,7 +307,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
       df
     )
     # If we don't keep functionals and functionals are present, convert to numerics
-    if (!keep.functionals & hasFunctionalFeatures(df)) {
+    if (functionals.as == "dfCols" && hasFunctionalFeatures(task)) {
       df = functionalToNormalData(df)
     }
     return(df)
@@ -317,8 +317,8 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     if (missing(features))
       features = task.features
     res = list(
-      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, keep.functionals),
-      target = recodeY(indexHelper(task$env$data, subset, tn, keep.functionals = TRUE), type = recode.target, task$task.desc)
+      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, functionals.as),
+      target = recodeY(indexHelper(task$env$data, subset, tn, functionals.as = "matrix"), type = recode.target, task$task.desc)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -326,7 +326,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     else
       features = union(features, tn)
 
-    res = indexHelper(task$env$data, subset, features, drop = FALSE, keep.functionals)
+    res = indexHelper(task$env$data, subset, features, drop = FALSE, functionals.as)
     if (recode.target %nin% c("no", "surv")) {
       res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
@@ -429,7 +429,7 @@ subsetTask = function(task, subset = NULL, features) {
   # FIXME: maybe we want this independent of changeData?
   # In this step we keep all functionals, because they are converted anyway when passing
   # them on to the learner and the learner does not support them.
-  task = changeData(task, getTaskData(task, subset, features, keep.functionals = TRUE), getTaskCosts(task, subset), task$weights)
+  task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]

@@ -48,12 +48,12 @@ test_that("predicttype prob for fda.usc", {
 
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, fda.binary.gp.task)
-  cp = predict(m, newdata = getTaskData(fda.binary.gp.task, target.extra = TRUE, keep.functionals = TRUE)$data)
+  cp = predict(m, newdata = getTaskData(fda.binary.gp.task, target.extra = TRUE, functionals.as = "matrix")$data)
   expect_equal(class(cp)[1],  "PredictionClassif")
 
 })
 
-test_that("resampling fdaknn", {
+test_that("resampling fdakernel", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
   lrn = makeLearner("classif.fdakernel", par.vals = list(trim = 0.5), predict.type = "prob")
 
