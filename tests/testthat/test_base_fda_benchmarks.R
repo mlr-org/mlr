@@ -18,3 +18,21 @@ test_that("benchmarking on fda tasks works", {
   # expect_equal(names(bmr2$results$fsFdf), c("regr.fdaFDboost", "regr.rpart"))
   # expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
 })
+
+
+test_that("benchmarking on fda tasks works", {
+  expect_error(train(makeLearner("classif.fdaknn"), iris.task), "numeric inputs")
+})
+
+
+# FIXME: Discuss how filtering should work on FDA Tasks
+# test_that("filtering on fda tasks works", {
+# filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
+# filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
+# filter.list.classif = setdiff(filter.list.classif, c(
+#   "univariate.model.score", "permutation.importance",
+#   "univariate", "rf.importance", "rf.min.depth"))
+# for (filter in filter.list.classif) {
+#   filterFeatures(task = fda.binary.gp.task.small, method = filter, perc = 0.5)
+# }
+# })

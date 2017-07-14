@@ -1,6 +1,13 @@
 #' Create a data.frame containing functional features from a normal data.frame
 #'
+#' To work with functional features, those need to be stored as a \code{matrix}
+#' colmun in the data.frame so \code{mlr} can automatically  recognize them as functional
+#' features. This function allows for the creation of a data.frame that satisfies this
+#' requirement from a data.frame containing the functional features as numerics.
+#'
+#'
 #' @param df [\code{data.frame}] \cr
+#'   A data.frame that contains the functional features as numerics.
 #' @param fd.features [\code{list}] \cr
 #'   Named list containing \code{integer} column indices or \code{character} column names which
 #'   indicate functional features.
