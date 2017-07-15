@@ -29,7 +29,6 @@
 #'   every covariable. Multiple functions for a  single covariable are not allowed.
 #'   Specifying \code{feat.methods} = "all" applies the \code{extratFDAFeatures} method to each
 #'   functional feature.
-#' @template arg_fdatask_pars
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object.}
@@ -148,7 +147,6 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' as returned by \code{\link{extractFDAFeatures}} to extract features
 #' from previously unseen data.
 #'
-#' @template arg_taskdf
 #' @param desc [\code{extractFDAFeatDesc}]\cr
 #'   FDAFeature extraction description as returned by \code{\link{extractFDAFeatures}}
 #' @return \code{data.frame} or \code{task} containing the extracted Features
