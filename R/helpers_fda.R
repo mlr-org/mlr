@@ -70,7 +70,7 @@ hasFunctionalFeatures.data.frame = function(obj) {
 
 hasFunctionalFeatures.Task = function(obj) {
   # Pass on the task.desc
-  hasFunctionalFeatures(obj$task.desc)
+  hasFunctionalFeatures.TaskDesc(obj$task.desc)
 }
 
 hasFunctionalFeatures.TaskDesc = function(obj) {
@@ -88,7 +88,7 @@ getFunctionalFeatures = function(object, subset = NULL, features, recode.target 
 getFunctionalFeatures.Task = function(object, subset = NULL, features, recode.target = "no"){
   # Get data and pass on to data.frame method
   df = getTaskData(object, subset, features, target.extra = TRUE, recode.target, functionals.as = "matrix")
-  getFunctionalFeatures(df$data)
+  getFunctionalFeatures.data.frame(df$data)
 }
 
 getFunctionalFeatures.data.frame = function(object, subset = NULL, features, recode.target = "no"){
