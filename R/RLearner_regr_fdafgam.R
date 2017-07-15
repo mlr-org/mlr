@@ -20,7 +20,7 @@ makeRLearner.regr.fdafgam = function() {
     properties = c("functionals"),
     name = "functional general additive model",
     short.name = "FGAM",
-    note = "skipped presmooth.opts, Xrange for now"
+    note = "Skipped presmooth.opts, Xrange for now"
   )
 }
 
@@ -33,12 +33,11 @@ makeRLearner.regr.fdafgam = function() {
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
-  d = getTaskData(.task, subset = .subset)
-  tn = getTaskTargetNames(.task)
-  tdesc = getTaskDesc(.task)
-  fdf = tdesc$fd.features
-  fdg = tdesc$fd.grids
+trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE,
+  mgcv.s.k = -1L, bs = "tp", ...) {
+  df = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
+  fdf = getFunctionalFeatures(df$data)
+
   # later on, the grid elements in mat.list should have suffix ".grid"
   names(fdg) = paste0(names(fdg), ".grid")
   fdns = names(fdf)
