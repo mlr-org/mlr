@@ -8,8 +8,8 @@ test_that("makeFunctionalData works", {
   expect_equal(sapply(fdf, class)[[1]], "numeric")
   expect_equal(sapply(fdf, class)[[2]], "factor")
   expect_equal(sapply(fdf, class)[[3]], c("ordered", "factor"))
-  expect_equal(sapply(fdf, class)[[4]], c("functional", "matrix"))
-  expect_equal(sapply(fdf, class)[[5]], c("functional", "matrix"))
+  expect_equal(sapply(fdf, class)[[4]], "matrix")
+  expect_equal(sapply(fdf, class)[[5]], "matrix")
   expect_equal(dim(fdf), c(10, 5))
   expect_class(fdf, "data.frame")
 })
@@ -26,8 +26,8 @@ test_that("makeFunctionalData subsetting works", {
   expect_equal(sapply(fdf2, class)[[2]], "factor")
   expect_equal(sapply(fdf2, class)[[3]], c("ordered", "factor"))
   # FAILS:
-  # expect_equal(sapply(fdf2, class)[[4]], c("functional", "matrix"))
-  # expect_equal(sapply(fdf2, class)[[5]], c("functional", "matrix"))
+  # expect_equal(sapply(fdf2, class)[[4]], "matrix")
+  # expect_equal(sapply(fdf2, class)[[5]], "matrix")
   expect_equal(dim(fdf2), c(5, 5))
   expect_class(fdf2, "data.frame")
 
@@ -36,7 +36,7 @@ test_that("makeFunctionalData subsetting works", {
   expect_equal(sapply(fdf3, class)[[1]], "factor")
   expect_equal(sapply(fdf3, class)[[2]], c("ordered", "factor"))
   # FAILS:
-  # expect_equal(sapply(fdf3, class)[[3]], c("functional", "matrix"))
+  # expect_equal(sapply(fdf3, class)[[3]], "matrix")
   expect_equal(dim(fdf3), c(10, 3))
   expect_class(fdf3, "data.frame")
 })
@@ -46,27 +46,27 @@ test_that("makeFunctionalData works for different inputs", {
   df = data.frame(matrix(rnorm(50), nrow = 5))
   # for 1-D matricies
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2:10))
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
-  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
+  expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
   # for column name inputs
   fdf = makeFunctionalData(df, fd.features = list("fd1" = "X1", "fd2" = paste0("X", 2:10)))
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
-  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
+  expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
   # for empty lists
   fdf = makeFunctionalData(df, fd.features = list())
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
 
   # default
   fdf = makeFunctionalData(df)
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
 
@@ -76,7 +76,7 @@ test_that("makeFunctionalData works for different inputs", {
   df2$fd1 = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2)
   expect_equal(lapply(fdf, class)[[1]], "numeric")
-  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 })
@@ -87,27 +87,27 @@ test_that("makeFunctionalData works for different inputs", {
   df = data.frame(matrix(rnorm(50), nrow = 5))
   # for 1-D matricies
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2:10))
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
-  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
+  expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
   # for column name inputs
   fdf = makeFunctionalData(df, fd.features = list("fd1" = "X1", "fd2" = paste0("X", 2:10)))
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
-  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
+  expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
   # for empty lists
   fdf = makeFunctionalData(df, fd.features = list())
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
 
   # default
   fdf = makeFunctionalData(df)
-  expect_equal(lapply(fdf, class)[[1]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
 
@@ -117,7 +117,7 @@ test_that("makeFunctionalData works for different inputs", {
   df2$fd1 = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2)
   expect_equal(lapply(fdf, class)[[1]], "numeric")
-  expect_equal(lapply(fdf, class)[[2]], c("functional", "matrix"))
+  expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 })
@@ -257,12 +257,12 @@ test_that("makeFunctionalData produces valid error messages", {
 
   # Technically we allow functional features of length >= 1
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2))
-  expect_class(fdf$fd1, c("functional", "matrix"))
-  expect_class(fdf$fd2, c("functional", "matrix"))
+  expect_class(fdf$fd1, "matrix")
+  expect_class(fdf$fd2, "matrix")
   expect_class(fdf$z, c("factor"))
   fdf2 = makeFunctionalData(df, fd.features = list("fd1" = "x", "fd2" = "y"))
-  expect_class(fdf2$fd1, c("functional", "matrix"))
-  expect_class(fdf2$fd2, c("functional", "matrix"))
+  expect_class(fdf2$fd1, "matrix")
+  expect_class(fdf2$fd2, "matrix")
   expect_class(fdf2$z, c("factor"))
   expect_equal(fdf, fdf2)
 
@@ -272,14 +272,14 @@ test_that("makeFunctionalData produces valid error messages", {
   # Exclude.cols works for character
   fdf3 = makeFunctionalData(df, fd.features = list(), exclude.cols = c("z", "y"))
   expect_equal(sapply(fdf3, class)$z, "factor")
-  expect_equal(sapply(fdf3, class)$fd1, c("functional", "matrix"))
+  expect_equal(sapply(fdf3, class)$fd1, "matrix")
   expect_equal(sapply(fdf3, class)$y, "integer")
   expect_equal(dim(fdf3$fd1), c(3, 1))
 
   # Exclude.cols works for integer
   fdf4 = makeFunctionalData(df, fd.features = list(), exclude.cols = c(3, 2))
   expect_equal(sapply(fdf4, class)$z, "factor")
-  expect_equal(sapply(fdf4, class)$fd1, c("functional", "matrix"))
+  expect_equal(sapply(fdf4, class)$fd1, "matrix")
   expect_equal(sapply(fdf4, class)$y, "integer")
   expect_equal(dim(fdf4$fd1), c(3, 1))
 
@@ -290,7 +290,7 @@ test_that("makeFunctionalData produces valid error messages", {
   # Check if exclude.cols overwrites fd.features
   fdf5 = makeFunctionalData(df, fd.features = list("fd1" = 1:2), exclude.cols = "x")
   expect_equal(sapply(fdf5, class)$x, "integer")
-  expect_equal(sapply(fdf5, class)$fd1, c("functional", "matrix"))
+  expect_equal(sapply(fdf5, class)$fd1, "matrix")
   expect_equal(sapply(fdf5, class)$z, "factor")
   expect_equal(dim(fdf5$fd1), c(3, 1))
 

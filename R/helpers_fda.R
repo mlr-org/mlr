@@ -3,7 +3,7 @@
 #' @param mat [\code{matrix|data.frame}] \cr
 #'  Numeric matrix or data.frame that contains the functional features.
 #' @return [\code{matrix}] \cr
-#'   Matrix of class c("functional", "matrix") containing the functional values
+#'   Matrix of class "matrix" containing the functional values
 #' @export
 makeFunctionalFeature = function(mat) {
   if (is.data.frame(mat))
@@ -21,7 +21,7 @@ fdFeatsToColumnIndex = function(df, fd.features = list(), exclude.cols = NULL) {
 
   # If the data.frame already contains matricies, keep them
   if (hasFunctionalFeatures(df)) {
-    ids = which(vcapply(df, class) == "matrix")
+    ids = which(vcapply(df, function(x) class(x)[1L]) == "matrix")
     fd.features = c(fd.features, ids)
   }
 
@@ -65,7 +65,7 @@ hasFunctionalFeatures = function(obj) {
 
 hasFunctionalFeatures.data.frame = function(obj) {
   # Check if the data.frame contains matricies
-  ifelse(any(vcapply(obj, class) == "matrix"), TRUE, FALSE)
+  ifelse(any(vcapply(obj, function(x) class[1L]) == "matrix"), TRUE, FALSE)
 }
 
 hasFunctionalFeatures.Task = function(obj) {
@@ -93,7 +93,7 @@ getFunctionalFeatures.Task = function(object, subset = NULL, features, recode.ta
 
 getFunctionalFeatures.data.frame = function(object, subset = NULL, features, recode.target = "no"){
   # Keep only columns with class matrix
-  funct.cols = which(vcapply(object, class) == "matrix")
+  funct.cols = which(vcapply(object, function(x) class(x)[1L]) == "matrix")
   if (length(funct.cols) == 0)
     stop("No functional features in the data")
   object[, funct.cols, drop = FALSE]
