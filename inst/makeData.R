@@ -87,13 +87,14 @@ save(yeast.task, file = file.path(dn, "yeast.task.RData"), compress = "xz")
 # FDA classification
 set.seed(DATASEED)
 gunpoint = load2("../thirdparty/gunpoint.RData")
-gpFdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
-gunpoint.task = makeClassifTask(data = gpFdf, target = "X1", positive = "1")
+gp.fdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
+gunpoint.task = makeClassifTask(data = gp.fdf, target = "X1", positive = "1")
 save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
 
 # FDA regression
 set.seed(DATASEED)
 data(fuelSubset, package = "FDboost")
+# Center / Scale Variables
 fuelSubset$UVVIS = scale(fuelSubset$UVVIS, scale = FALSE)
 fuelSubset$NIR = scale(fuelSubset$NIR, scale = FALSE)
 fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) / (max(uvvis.lambda) - min(uvvis.lambda)))
@@ -104,6 +105,10 @@ fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
 
 fs = data.frame("UVVIS" = fuelSubset$UVVIS, "NIR" = fuelSubset$NIR,
   "heatan" = fuelSubset$heatan,  "h20" = fuelSubset$h2o)
-fsFdf = makeFunctionalData(fs, fd.features = fdf)
-fuelsubset.task = makeRegrTask(data = fsFdf, target = "heatan")
-save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")
+fs.fdf = makeFunctionalData(fs, fd.features = fdf)
+fuelsubset.task = makeRegrTask(data = fs.fdf, target = "heatan")
+save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")set.seed(DATASEED)
+gunpoint = load2("../thirdparty/gunpoint.RData")
+gpFdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
+gunpoint.task = makeClassifTask(data = gpFdf, target = "X1", positive = "1")
+save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
