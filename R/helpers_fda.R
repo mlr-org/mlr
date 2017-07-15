@@ -65,7 +65,7 @@ hasFunctionalFeatures = function(obj) {
 
 hasFunctionalFeatures.data.frame = function(obj) {
   # Check if the data.frame contains matricies
-  ifelse(any(vcapply(obj, function(x) class[1L]) == "matrix"), TRUE, FALSE)
+  ifelse(any(vcapply(obj, function(x) class(x)[1L]) == "matrix"), TRUE, FALSE)
 }
 
 hasFunctionalFeatures.Task = function(obj) {

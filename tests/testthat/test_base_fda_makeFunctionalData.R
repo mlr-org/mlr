@@ -25,9 +25,8 @@ test_that("makeFunctionalData subsetting works", {
   expect_equal(sapply(fdf2, class)[[1]], "numeric")
   expect_equal(sapply(fdf2, class)[[2]], "factor")
   expect_equal(sapply(fdf2, class)[[3]], c("ordered", "factor"))
-  # FAILS:
-  # expect_equal(sapply(fdf2, class)[[4]], "matrix")
-  # expect_equal(sapply(fdf2, class)[[5]], "matrix")
+  expect_equal(sapply(fdf2, class)[[4]], "matrix")
+  expect_equal(sapply(fdf2, class)[[5]], "matrix")
   expect_equal(dim(fdf2), c(5, 5))
   expect_class(fdf2, "data.frame")
 
@@ -35,8 +34,7 @@ test_that("makeFunctionalData subsetting works", {
   fdf3 = fdf[, 2:4, drop = FALSE]
   expect_equal(sapply(fdf3, class)[[1]], "factor")
   expect_equal(sapply(fdf3, class)[[2]], c("ordered", "factor"))
-  # FAILS:
-  # expect_equal(sapply(fdf3, class)[[3]], "matrix")
+  expect_equal(sapply(fdf3, class)[[3]], "matrix")
   expect_equal(dim(fdf3), c(10, 3))
   expect_class(fdf3, "data.frame")
 })
@@ -136,10 +134,9 @@ test_that("makeFunctionalData Tasks work", {
   expect_equal(clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
 
-  # FIXME: Functional class gets dropped because of subsetting rows
   subs.clt = subsetTask(clt, subset = c(2, 5))
   expect_class(subs.clt, c("ClassifTask", "SupervisedTask", "Task"))
-  # expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
+  expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(subs.clt$task.desc$n.feat["factors"], c("factors" = 0L))
   expect_equal(subs.clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
   expect_equal(subs.clt$task.desc$n.feat["ordered"], c("ordered" = 0L))
@@ -239,10 +236,9 @@ test_that("changeData for functionals", {
   tdata = getTaskData(clt, functionals.as = "matrix")
   expect_equal(changeData(clt, tdata), clt)
 
-  # FIXME: functional class is dropped in changeData
-  subs.clt = changeData(clt, tdata[1:3, 1:2])
+  subs.clt = changeData(clt, tdata[1:3, 1:3])
   expect_class(subs.clt, c("ClassifTask", "SupervisedTask", "Task"))
-  # expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 1L))
+  expect_equal(subs.clt$task.desc$n.feat["functionals"], c("functionals" = 1L))
   expect_equal(subs.clt$task.desc$n.feat["factors"], c("factors" = 0L))
   expect_equal(subs.clt$task.desc$n.feat["numerics"], c("numerics" = 1L))
   expect_equal(subs.clt$task.desc$n.feat["ordered"], c("ordered" = 0L))
@@ -271,16 +267,16 @@ test_that("makeFunctionalData produces valid error messages", {
 
   # Exclude.cols works for character
   fdf3 = makeFunctionalData(df, fd.features = list(), exclude.cols = c("z", "y"))
-  expect_equal(sapply(fdf3, class)$z, "factor")
-  expect_equal(sapply(fdf3, class)$fd1, "matrix")
-  expect_equal(sapply(fdf3, class)$y, "integer")
+  expect_equal(sapply(fdf3, class)[["z"]], "factor")
+  expect_equal(sapply(fdf3, class)[["fd1"]], "matrix")
+  expect_equal(sapply(fdf3, class)[["y"]], "integer")
   expect_equal(dim(fdf3$fd1), c(3, 1))
 
   # Exclude.cols works for integer
   fdf4 = makeFunctionalData(df, fd.features = list(), exclude.cols = c(3, 2))
-  expect_equal(sapply(fdf4, class)$z, "factor")
-  expect_equal(sapply(fdf4, class)$fd1, "matrix")
-  expect_equal(sapply(fdf4, class)$y, "integer")
+  expect_equal(sapply(fdf4, class)[["z"]], "factor")
+  expect_equal(sapply(fdf4, class)[["fd1"]], "matrix")
+  expect_equal(sapply(fdf4, class)[["y"]], "integer")
   expect_equal(dim(fdf4$fd1), c(3, 1))
 
 
@@ -289,9 +285,9 @@ test_that("makeFunctionalData produces valid error messages", {
 
   # Check if exclude.cols overwrites fd.features
   fdf5 = makeFunctionalData(df, fd.features = list("fd1" = 1:2), exclude.cols = "x")
-  expect_equal(sapply(fdf5, class)$x, "integer")
-  expect_equal(sapply(fdf5, class)$fd1, "matrix")
-  expect_equal(sapply(fdf5, class)$z, "factor")
+  expect_equal(sapply(fdf5, class)[["z"]], "factor")
+  expect_equal(sapply(fdf5, class)[["fd1"]], "matrix")
+  expect_equal(sapply(fdf5, class)[["x"]], "integer")
   expect_equal(dim(fdf5$fd1), c(3, 1))
 
   expect_error(makeFunctionalData(data.frame(matrix(letters[1:9], nrow = 3)),
