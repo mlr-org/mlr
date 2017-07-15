@@ -66,16 +66,18 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
     coln = colnames(obj),
+    fd.cols = names(which(vcapply(obj, function(x) class(x)[1L]) == "matrix")),
     colclasses = vcapply(obj, function(x) class(x)[1L]),
-    extractFDAFeat = namedList(names(feat.methods), feat.methods)
+    extractFDAFeat = namedList(names(feat.methods))
   )
 
+  desc$extractFDAFeat[names(feat.methods)] = feat.methods
   # cleanup the empty list
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
   # Subset fd.features accordingly
   desc$fd.features = desc$fd.features[names(desc$extractFDAFeat)]
   # Assert that all functional features to be transformed are numeric
-  assert(unique(vcapply(obj[, unlist(desc$fd.features)], function(x) class(x)[1L])) == "numeric")
+  assert(unique(vcapply(obj[, desc$fd.cols], function(x) class(x)[1L])) == "matrix")
 
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
@@ -86,7 +88,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
       args = x$args, # Args passed to x$reextract
       reextract = x$reextract  # pass on reextraction learner for extraction in prediction
     )
-  }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$coln)
+  }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.cols)
 
   # Append Info relevant for reextraction to desc
   desc$extractFDAFeat = lapply(extracts, function(x) {c(x["args"], x["reextract"])})
@@ -105,8 +107,8 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
 
   # Reappend target and non-functional features
-  keep.cols = setdiff(desc$coln, unlist(fd.features[names(fd.features)]))
-  data = cbind(df, obj[keep.cols])
+  keep.cols = setdiff(desc$coln, desc$fd.cols)
+  data = cbind(df, obj[, keep.cols, drop = FALSE])
   list(data = data, desc = desc)
 }
 
@@ -114,7 +116,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = list()) {
 
   assertList(feat.methods)
-  assertTrue(hasFunctionalFeatures(obj))
+  stopifnot((hasFunctionalFeatures(obj)))
 
   data = getTaskData(obj, functionals.as = "matrix")
   target = getTaskTargetNames(obj)
@@ -132,7 +134,8 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 print.extractFDAFeatDesc = function(x, ...) {
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
-  catf("Functional Features: %i; Extracted features: %i", length(x$fd.features),
+  # FIXME: This could be missunderstood
+  catf("Functional Features: %i; Extracted features: %i", length(x$fd.cols),
     length(x$extractFDAFeat))
 }
 
