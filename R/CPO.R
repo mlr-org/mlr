@@ -116,7 +116,8 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE, .stateless = .stateless, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
-    .predict.type = NULL, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
+    .predict.type = NULL, .packages = .packages,
+    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
 }
 
 #' @export
