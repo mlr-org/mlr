@@ -7,7 +7,7 @@ test_that("extractFDAFeatures", {
   expect_is(df, "data.frame")
   expect_integer(nrow(df), lower = 129, upper = 129)
   expect_integer(ncol(df), lower = 5, upper = 5)
-  expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "h2o", "heatan"))
+  expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "heatan", "h20"))
 })
 
 test_that("extractFDAFeatures colnames work", {
