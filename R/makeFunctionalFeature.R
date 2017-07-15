@@ -1,9 +1,9 @@
-#' Create a functional feature from a numeric matrix
+#' Create a functional feature from a numeric matrix.
 #'
 #' @param mat [\code{matrix|data.frame}] \cr
 #'   Numeric matrix or data.frame that contains the functional features.
 #' @return [\code{matrix}] \cr
-#'   Matrix containing the functional values
+#'   Matrix containing the functional values.
 #' @export
 makeFunctionalFeature = function(mat) {
   if (is.data.frame(mat))
