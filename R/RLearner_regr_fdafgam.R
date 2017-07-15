@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.fdaregr.fgam = function() {
+makeRLearner.regr.fdafgam = function() {
   makeRLearnerRegr(
-    cl = "fdaregr.fgam",
+    cl = "regr.fdafgam",
     package = "refund",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
@@ -12,13 +12,15 @@ makeRLearner.fdaregr.fgam = function() {
       # skipped argvals
       makeDiscreteLearnerParam(id = "basistype", values = c("te", "t2", "s"), default = "te"),
       makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
-      makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
+      makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline",
+        "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
       # skipped presmooth.opts, Xrange
       makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     ),
-    properties = c("numerics"),
+    properties = c("functionals"),
     name = "functional general additive model",
-    short.name = "FGAM"
+    short.name = "FGAM",
+    note = "skipped presmooth.opts, Xrange for now"
   )
 }
 
@@ -31,7 +33,7 @@ makeRLearner.fdaregr.fgam = function() {
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.fdaregr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
+trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
   d = getTaskData(.task, subset = .subset)
   tn = getTaskTargetNames(.task)
   tdesc = getTaskDesc(.task)
@@ -74,7 +76,7 @@ reformat2list4mat2 = function(.data, tdesc){
 }
 
 #' @export
-predictLearner.fdaregr.fgam = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.fdafgam = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDesc(.model)
   list4mat = reformat2list4mat2(.newdata, tdesc)
