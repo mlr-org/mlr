@@ -99,6 +99,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                    .properties.adding = character(0), .properties.needed = character(0),
                    .properties.target = c("cluster", "classif", "multilabel", "regr", "surv",
                      "oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens"),
+                   .packages = character(0),
                     cpo.trafo, cpo.retrafo) {
   # dotted parameter names are necessary to avoid problems with partial argument matching.
   # The reason cpo.trafo and cpo.retrafo are not dotted is that they always need to be given.
@@ -121,7 +122,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 #' @export
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
                           .datasplit, .fix.factors, .data.dependent, .stateless, .properties, .properties.adding, .properties.needed,
-                          .properties.target, .type.from, .type.to, .predict.type, cpo.trafo, cpo.retrafo, ...) {
+                          .properties.target, .type.from, .type.to, .predict.type, .packages, cpo.trafo, cpo.retrafo, ...) {
   .cpotype = match.arg(.cpotype)
   assertFlag(.data.dependent)
   assertString(.cpo.name)
@@ -275,6 +276,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       predict.type = .predict.type,
       # --- CPOS3Primitive part
       id = NULL,
+      packages = .packages,
       affect.args = affect.args,
       bare.par.set = .par.set,
       datasplit = .datasplit,
@@ -356,6 +358,9 @@ callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.
 
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
+
+  requireCPOPackages(cpo)
+
   checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   if (is.nullcpo(prev.retrafo)) {
     prev.retrafo = NULL
@@ -472,8 +477,11 @@ callCPO.CPOS3Tree = function(cpo, data, build.retrafo, prev.retrafo, build.inver
 
 # receiver.properties are the properties of the next layer
 applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
+
   assertClass(retrafo, "CPOS3Retrafo")
   cpo = retrafo$cpo
+
+  requireCPOPackages(cpo)
   if (!"retrafo" %in% retrafo$kind) {
     stop("Object %s is an inverter, not a retrafo.", cpo$bare.name)
   }

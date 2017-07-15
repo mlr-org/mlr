@@ -1529,6 +1529,11 @@ listCPO = function() {
   df
 }
 
+requireCPOPackages = function(cpo) {
+  requirePackages(cpo$packages, why = stri_paste("CPO", cpo$bare.name, sep = " "), default.method = "load")
+}
+
+
 
 # TO-DO:
 

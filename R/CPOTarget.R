@@ -32,6 +32,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                            .type = c("cluster", "classif", "multilabel", "regr", "surv"),
                            .type.out = .type,
                            .predict.type = c(response = "response"),
+                           .packages = character(0),
                            cpo.trafo, cpo.retrafo) {
 
   .type = match.arg(.type)
@@ -106,7 +107,8 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     .datasplit = .datasplit, .fix.factors = FALSE, .data.dependent = .data.dependent, .stateless = .stateless, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.data, .type.from = .type, .type.to = .type.out,
-    .predict.type = .predict.type, cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
+    .predict.type = .predict.type, .packages = .packages,
+    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
 }
 
 
