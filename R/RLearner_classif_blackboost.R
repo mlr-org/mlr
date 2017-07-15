@@ -59,9 +59,11 @@ trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = 
     #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
   if (!is.null(.weights))
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
+    args = list(formula = f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
   else
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+    args = list(formula = f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+  args = dropNamed(args, names(formals(party::ctree_control)))
+  do.call(mboost::blackboost, args)
 }
 
 #' @export
