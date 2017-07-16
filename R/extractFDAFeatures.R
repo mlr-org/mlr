@@ -5,33 +5,35 @@
 #' The function \code{extractFDAFeatures} performs the extraction for all functional features
 #' and respective methods specified in \code{feat.methods}. \cr
 #' Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
-#' which can contains \code{learned} coefficients and other helpful data for
+#' which contains \code{learned} coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
 #' \code{\link{reExtractFDAFeatures}} in order to extract features during the prediction phase. \cr
 #' As \code{feat.methods}, either a method created using \code{\link{makeExtractFDAFeatMethod}},
-#' use a built-in method listed or one of the buit-in methods listed in
+#' a built-in method listed or one of the buit-in methods listed in
 #' \code{\link{extractFDAFeatMethods}} can be supplied.
 #'
 #' @details
 #' The description object contains these slots
 #' \describe{
 #'   \item{target [\code{character}]}{See argument.}
-#'   \item{cols [\code{character}]}{colum names of data}
-#'   \item{fd.features [\code{character}]}{Feature names (column names of
-#'   \code{data}) for each functional feature.}
+#'   \item{coln [\code{character}]}{colum names of data.}
+#'   \item{fd.cols [\code{character}]}{Functional feature names.}
+#'   \item{colclasses [\code{character}]}{Classes of the features.}
+#'   \item{extractFDAFeat [\code{list}]}{Contains \code{feature.methods} and relevant
+#'   parameters for reExtraction}.
 #' }
 #'
 #' @param target [\code{character}]\cr
-#' Task target column. Not always neccessary, default: \code{character(0)}.
+#' Task target column. Only neccessary for data.frames, default: \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
 #'   for each functional feature. A signature for the desired function can be provided for
 #'   every covariable. Multiple functions for a  single covariable are not allowed.
 #'   Specifying \code{feat.methods} = "all" applies the \code{extratFDAFeatures} method to each
-#'   functional feature.
+#'   functional feature. Names of \code{feat.methods} must match column names of functional features.
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame}]}{Extracted features.}
-#'   \item{desc [\code{extracFDAFeatDesc}]}{Description object.}
+#'   \item{desc [\code{extracFDAFeatDesc}]}{Description object. See description for details.}
 #' @family extractFDAFeatures
 #' @export
 #' @examples
@@ -43,8 +45,7 @@
 #' print(extracted$task)
 #' reExtractFDAFeatures(t, extracted$desc)
 
-extractFDAFeatures = function(obj, target = character(0L), feat.methods = list(),
-  fd.features = list()) {
+extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
   assertList(feat.methods)
   UseMethod("extractFDAFeatures")
 }
@@ -53,9 +54,8 @@ extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()
 #' @export
 extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list()) {
 
-  assertList(feat.methods)
-
   fdf = getFunctionalFeatures(obj)
+  assertDataFrame(fdf, min.cols = 1L)
 
   # If the same transform should be applied to all features, rep method and name accordingly
   # "all" needs to be first list name.
@@ -73,10 +73,8 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   desc$extractFDAFeat[names(feat.methods)] = feat.methods
   # cleanup the empty list
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
-  # Subset fd.features accordingly
-  desc$fd.features = desc$fd.features[names(desc$extractFDAFeat)]
-  # Assert that all functional features to be transformed are numeric
-  assert(unique(vcapply(obj[, desc$fd.cols], function(x) class(x)[1L])) == "matrix")
+  # Subset fd.cols accordingly
+  desc$fd.cols = names(desc$extractFDAFeat)
 
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
@@ -114,7 +112,6 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 #' @export
 extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = list()) {
 
-  assertList(feat.methods)
   stopifnot((hasFunctionalFeatures(obj)))
 
   data = getTaskData(obj, functionals.as = "matrix")
@@ -171,13 +168,13 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
     function(xn, x, fd.cols) {
       do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
     },
-    xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.features)
+    xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.cols)
 
   # cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(reextract, setDT)))
 
   # Reappend target and non-functional features
-  keep.cols = setdiff(colnames(obj), unlist(desc$fd.features[names(desc$fd.features)]))
+  keep.cols = setdiff(colnames(obj), desc$fd.cols)
   data = cbind(df, obj[keep.cols])
   data
 }
@@ -186,12 +183,8 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
 #' @export
 reExtractFDAFeatures.Task = function(obj, desc) {
   # get data and pass to extractor
-  df = getTaskData(obj)
+  df = getTaskData(obj, functionals.as = "matrix")
   extracted = reExtractFDAFeatures.data.frame(df, desc)
-
-  # Change Task type and other interals to reflect a normal task
-  obj = changeFDATaskToNormalTask(obj)
-  # And change data so it only contains non-functional features
-  df = getTaskData(obj)
+  # Change data of task and return task
   changeData(obj, extracted)
 }

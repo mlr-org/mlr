@@ -15,7 +15,7 @@ test_that("extractFDAFeatures colnames work", {
   t = subsetTask(fuelsubset.task, subset = 1:30)
   t2 = extractFDAFeatures(t, feat.methods = methods)
   cn = getTaskFeatureNames(t2$task)
-  expect_match(setdiff(cn, "h2o"), regexp = "[NIR]")
+  expect_match(setdiff(cn, "h2o"), regexp = "[NIR.phase]", all = TRUE)
 })
 
 
@@ -47,11 +47,12 @@ test_that("Wrong methods yield errors", {
 
 test_that("extractFDAFeatures colnames work", {
   methods = list("NIR" = extractFDAFourier())
-  t = subsetTask(fuelsubset.task, subset = 1:30)
+  t = subsetTask(fuelsubset.task, subset = 1)
   t2 = extractFDAFeatures(t, feat.methods = methods)
   cn = getTaskFeatureNames(t2$task)
-  expect_match(setdiff(cn, "h2o"), regexp = "[NIR]")
+  expect_match(setdiff(cn, "h2o"), regexp = "[NIR.phase]", all = TRUE)
 })
+
 test_that("extractFDAFeaturesDesc", {
   methods = list("UVVIS" = extractFDAMean(), "NIR" = extractFDAMinMax())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -60,10 +61,7 @@ test_that("extractFDAFeaturesDesc", {
   expect_subset(t$desc$coln, c(getTaskFeatureNames(fuelsubset.task),
     getTaskTargetNames(fuelsubset.task)))
   expect_subset(t$desc$target, getTaskTargetNames(fuelsubset.task))
-  expect_character(unique(t$desc$colclasses), pattern = "numeric")
-  expect_subset(unlist(t$desc$fd.features),
-    unlist(getTaskDesc(fuelsubset.task)$fd.features))
-  expect_subset(unlist(t$desc$fd.grids), unlist(getTaskDesc(fuelsubset.task)$fd.grids))
+  expect_subset(unique(t$desc$colclasses), choices = c("numeric", "matrix"))
   expect_list(t$desc$extractFDAFeat)
   expect_list(t$desc$extractFDAFeat$UVVIS$args)
   expect_function(t$desc$extractFDAFeat$UVVIS$reextract)
@@ -73,25 +71,22 @@ test_that("extractFDAFeaturesDesc", {
 
 test_that("extractFDAFeatures task equal data.frame", {
   # check data.frame output equal to task's data output
-  gp.subset = subsetTask(gunpoint.task, features = c(1:10))
-  fm = list("fd1" = extractFDAFourier(trafo.coeff = "amplitude"))
+  gp.subset = subsetTask(gunpoint.task, features = 1L)
+  fm = list("fd" = extractFDAFourier(trafo.coeff = "amplitude"))
   t2 = extractFDAFeatures(gp.subset, feat.methods = fm)
   gp.desc = getTaskDesc(gp.subset)
-  gp.grids = gp.desc$fd.grids
-  gp.feats = gp.desc$fd.features
-  t3 = extractFDAFeatures(getTaskData(gp.subset), target = "X1", feat.methods = fm,
-    fd.features =  gp.feats, fd.grids = gp.grids)
+  t3 = extractFDAFeatures(getTaskData(gp.subset, functionals.as = "matrix"), target = "X1", feat.methods = fm)
   expect_identical(getTaskData(t2$task), t3$data)
   expect_equal(t2$desc, t3$desc)
-  expect_equal(t2$desc$extractFDAFeat$fd1$arg$trafo.coeff, "amplitude")
+  expect_equal(t2$desc$extractFDAFeat$fd$arg$trafo.coeff, "amplitude")
 
-  expect_error(extractFDAFeatures(gp.subset, feat.methods = list("fd1" = extractFDAFourier(),
-    "fd2" = extractFDAMean())), regexp = "Must be a subset of")
+  expect_error(extractFDAFeatures(gp.subset, feat.methods = list("fd" = extractFDAFourier(),
+    "fd2" = extractFDAMean())), regexp = "undefined columns selected")
 })
 
 test_that("reExtractFDAFeatures", {
-  gp.subset = subsetTask(gunpoint.task, features = c(1:10))
-  fm = list("fd1" = extractFDAFourier(trafo.coeff = "amplitude"))
+  gp.subset = subsetTask(gunpoint.task, features = 1L)
+  fm = list("fd" = extractFDAFourier(trafo.coeff = "amplitude"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reExtractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
@@ -109,8 +104,8 @@ test_that("extract reExtract feat.methods all", {
 })
 
 test_that("extract and reExtract Wavelets", {
-  gp.subset = subsetTask(gunpoint.task, features = c(1:10))
-  fm = list("fd1" = extractFDAWavelets(filter = "haar", boundary = "reflection"))
+  gp.subset = subsetTask(gunpoint.task, features = 1L)
+  fm = list("fd" = extractFDAWavelets(filter = "haar", boundary = "reflection"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
   t4 = reExtractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
