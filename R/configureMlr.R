@@ -53,12 +53,15 @@
 #'   is \dQuote{warn} or \dQuote{quiet}. If it is \code{TRUE}, the dump can be accessed using
 #'   \code{\link{getFailureModelDump}} on the \code{\link{FailureModel}}, \code{\link{getPredictionDump}} on the failed prediction, and \code{\link{getRRDump}} on resample predictions.
 #'   Default is \code{FALSE}.
+#' @param defer.package.load [\code{logical(1)}]\cr
+#'   When set to \code{TRUE}, packages are not loaded when a learner is constructed.
+#'   Instead it is loaded during train / predict. Default is \code{FALSE}.
 #' @template ret_inv_null
 #' @family configure
 #' @export
 configureMlr = function(show.info, on.learner.error, on.learner.warning,
   on.par.without.desc, on.par.out.of.bounds, on.measure.not.applicable,
-  show.learner.output, on.error.dump) {
+  show.learner.output, on.error.dump, defer.package.load) {
 
   defaults = list(
     show.info = TRUE,
@@ -110,6 +113,11 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
   if (!missing(on.error.dump)) {
     assertFlag(on.error.dump)
     setMlrOption("on.error.dump", on.error.dump)
+    any.change = TRUE
+  }
+  if (!missing(defer.package.load)) {
+    assertFlag(defer.package.load)
+    setMlrOption("defer.package.load", defer.package.load)
     any.change = TRUE
   }
 
