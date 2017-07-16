@@ -1,3 +1,5 @@
+# To be added when Shapeletlib hits CRAN
+
 #' @title Shapelet Model Learner.
 #'
 #' @description
