@@ -100,3 +100,13 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   )
 }
 
+#' @export
+#' @inheritParams extractFpcaFeatures
+#' @rdname extractFDAFeatMethods
+extractFDAFpca = function(pve = 0.99, npc = NULL) {
+  lrn = function(data, target, cols, vals, pve, npc) {
+    extractFpcaFeatures(data = data, target = NULL, cols = cols, pve = pve, npc = npc)
+  }
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc))
+}
+
