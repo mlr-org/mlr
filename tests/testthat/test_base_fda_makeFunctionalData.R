@@ -187,8 +187,6 @@ test_that("makeFunctionalData Tasks work", {
   expect_equal(subs.clust2$task.desc$n.feat["ordered"], c("ordered" = 0L))
   expect_equal(subs.clust2$task.desc$size, 5L)
 
-  # Bug encountered while importing extractFDAFeatures
-  t = subsetTask(fuelsubset.task, features = 1)
 })
 
 

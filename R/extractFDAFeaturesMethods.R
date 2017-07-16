@@ -51,7 +51,8 @@ extractFDAMedian = function() {
 #' @export
 #' @rdname extractFDAFeatMethods
 extractFDAMean = function() {
-  lrn = function(data, target, cols) {data.frame("mean" = apply(data[, cols, drop = FALSE], 1, mean, na.rm = TRUE))}
+  lrn = function(data, target, cols) {data.frame("mean" = apply(data[, cols, drop = FALSE],
+    1, mean, na.rm = TRUE))}
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn

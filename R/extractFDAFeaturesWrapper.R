@@ -12,8 +12,7 @@
 #' @family extractFDAFeatures
 #' @family wrapper
 #' @template ret_learner
-makeExtractFDAFeatsWrapper = function(learner, feat.methods = list(),
-  fd.features = list(), fd.grids = list()) {
+makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
   # FIXME:
   # This is stupid, we can not handle multiple tasks for a single wrapper this way.
@@ -21,7 +20,7 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list(),
   # One solution would be to be able to specify "all" features (regexp would be overkill?).
 
   learner = checkLearner(learner)
-  args = list(feat.methods = feat.methods, fd.features = fd.features, fd.grids = fd.grids)
+  args = list(feat.methods = feat.methods)
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
@@ -37,4 +36,9 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list(),
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
   lrn$id = stri_replace(lrn$id, replacement = ".extracted", regex = "[.]preproc$")
   addClasses(lrn, "extractFDAFeatsWrapper")
+}
+
+#' @export
+getLearnerProperties.extractFDAFeatsWrapper = function(learner) {
+  union(getLearnerProperties(learner$next.learner), "functionals")
 }
