@@ -1,6 +1,7 @@
 language: r
 sudo: false
 cache: packages
+dist: precise
 r:
   - release
 
