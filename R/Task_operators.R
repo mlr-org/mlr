@@ -421,7 +421,7 @@ changeData = function(task, data, costs, weights) {
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$is.spatial),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$is.spatial),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring, td$is.spatial),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$is.spatial),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial)
   )

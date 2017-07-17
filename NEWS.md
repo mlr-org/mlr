@@ -3,6 +3,7 @@
 ## general
 * relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
+* added logical task attribute 'is.spatial'
 * refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * added logical task attribute 'is.spatial'
