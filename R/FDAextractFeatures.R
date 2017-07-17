@@ -71,8 +71,9 @@ extractFDAFeatures = function(data, target, method, args) {
 extractMultiFDAFeatures = function(data, target, fd.features, method, args) {
   fdns = names(fd.features)
   res = namedList(fdns)
-  for (fdn in fdns)
-    arg = ifelse(is.null(args[[fdn]]), args, args[[fdn]])  # if there are args for each channel
-    res[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]], drop = FALSE], target, method, arg)
+  #FIXME: Currently only support equal parameter to each channel
+  for (fdn in fdns) {
+    res[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]], drop = FALSE], target, method, args)
+  }
   do.call(cbind, res)
 }

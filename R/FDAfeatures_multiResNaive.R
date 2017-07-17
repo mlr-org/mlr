@@ -29,10 +29,11 @@
 # the function below will be called in convertTask.R
 getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.level = 3L, shift = 0.5, curve.lens = NULL) {
   # FIXME: Currently this just wraps up to make the API consistent, but the args target and include.target does not make sense at all
-  if(is.null(curve.lens)) {
-    return(getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift))
-  }
-  getUniFDAMultiResFeaturesCustomSeg(data = data, curve.lens =curve.lens, res.level = res.level, shift = shift)
+  #if(is.null(curve.lens)) {
+  #  return(getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift))
+  #}
+  if(is.null(curve.lens)) curve.lens = c(ncol(data)) # could not move up further
+  getUniFDAMultiResFeaturesCustomSeg(data = data, curve.lens = curve.lens, res.level = res.level, shift = shift)
 }
 
 
