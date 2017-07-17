@@ -50,9 +50,6 @@ before_script:
   - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
   - R --no-save <<< 'library("devtools"); document()'
 
-install:
-  - R -e 'devtools::install_deps(dep = T)'
-
 script:
   - |
     R CMD build .
