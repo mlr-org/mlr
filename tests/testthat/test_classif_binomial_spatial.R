@@ -1,4 +1,4 @@
-context("classif_binomial")
+context("classif_binomial_spatial")
 
 test_that("classif_binomial_spatial", {
 
