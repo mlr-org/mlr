@@ -15,29 +15,34 @@ makeRLearner.classif.gam = function() {
       makeDiscreteLearnerParam(id = "family", default = "binomial",
                                values = c("binomial","quasibinomial",
                                           "Tweedie", "negbin",
-                                          "multinom")),
+                                          "multinom"),
+                               tunable = FALSE),
       makeDiscreteLearnerParam(id = "binomial.link", default = "logit",
-                               values = c("logit", "probit", "cauchit", "log", "cloglog"), requires = quote(family == "binomial")),
+                               values = c("logit", "probit", "cauchit", "log", "cloglog"), requires = quote(family == "binomial"),
+                               tunable = FALSE),
       makeDiscreteLearnerParam(id = "quasibinomial.link", default = "logit",
-                               values = c("logit", "probit", "identity", "inverse", "log", "1/mu^2", "sqrt"), requires = quote(family == "quasibinomial")),
-      makeDiscreteLearnerParam(id = "Tweedie.link", default = "logit",
-                               values = c("log", "identity", "inverse", "sqrt"), requires = quote(family == "Tweedie")),
+                               values = c("logit", "probit", "identity", "inverse", "log", "1/mu^2", "sqrt"), requires = quote(family == "quasibinomial"),
+                               tunable = FALSE),
+      makeDiscreteLearnerParam(id = "Tweedie.link", default = BBmisc::asQuoted('power(0)'),
+                               values = c("log", "identity", "inverse", "sqrt"), requires = quote(family == "Tweedie"), special.vals = list(power0 = BBmisc::asQuoted('power(0)')),
+                               tunable = FALSE),
       makeDiscreteLearnerParam(id = "negbin.link", default = "log",
-                               values = c("log", "identity", "sqrt"), requires = quote(family == "negbin")),
-      makeNumericLearnerParam(id = "gamma", default = 1, lower = 0),
+                               values = c("log", "identity", "sqrt"), requires = quote(family == "negbin"),
+                               tunable = FALSE),
       makeNumericLearnerParam(id = "scale", default = 0),
       makeLogicalLearnerParam(id = "select", default = FALSE),
-      #makeNumericVectorLearnerParam(id = "knots"),
+      makeUntypedLearnerParam(id = "knots", default = NULL, tunable = FALSE),
       #makeNumericVectorLearnerParam(id = "sp"),
       #makeNumericLearnerParam(id = "min.sp"),
-      #makeNumericLearnerParam(id = "H"),
+      makeNumericLearnerParam(id = "H"),
+      makeNumericLearnerParam(id = "gamma", default = 1, lower = 0),
       #makeNumericLearnerParam(id = "in.out"),
       makeLogicalLearnerParam(id = "fit", default = TRUE),
       # "optional list specifying any penalties to be applied to parametric model terms. gam.models explains more."
       # how to specify such a Param?
       # makeDiscreteLearnerParam(id = "paraPen", default = NULL, values = list()),
-      makeLogicalLearnerParam(id = "drop.unused.levels", default = TRUE),
-      makeLogicalLearnerParam(id = "drop.intercept", default = FALSE)
+      makeLogicalLearnerParam(id = "drop.unused.levels", default = TRUE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "drop.intercept", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(
       family = "gaussian",
@@ -51,10 +56,12 @@ makeRLearner.classif.gam = function() {
 }
 
 #' @export
-trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, family = "gaussian", link = "logit", K = 1,
+trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula, family = "binomial", binomial.link = "logit",
+                                    quasibinomial.link = "logit", Tweedie.link = BBmisc::asQuoted('power(0)'),
+                                    negbin.link = "log", K = 1,
                                     theta = stop("'theta' must be specified"), p = 1, optimizer = c("outer", "newton"),
-                                    method = "GCV.Cp", scale = 0, select = FALSE, drop.unused.levels = TRUE,
-                                    drop.intercept = FALSE, formula, ...) {
+                                    method = "GCV.Cp", scale = 0, select = FALSE, knots = NULL, H = NULL, gamma = 1, drop.unused.levels = TRUE,
+                                    drop.intercept = FALSE, ...) {
 
   ctrl = learnerArgsToControl(mgcv::gam.control)
   if (is.null(formula)) {
@@ -70,7 +77,8 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
                   Tweedie = mgcv::Tweedie(p = p, link = make.link(Tweedie.link))
   )
   mgcv::gam(f, data = getTaskData(.task, .subset), control = ctrl, family = family,
-            optimizer = optimizer, method = method, ...)
+            optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
+            drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept, ...)
 }
 
 #' @export
