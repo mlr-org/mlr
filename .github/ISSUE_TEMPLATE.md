@@ -7,9 +7,8 @@ For everything else ignore this template.
 ## Bug report
 
 - [ ] Start a new R session
-- [ ] Install the latest version of mlr: `update.packages(oldPkgs="mlr", ask=FALSE)`
-- [ ] If you use a GitHub install of mlr: `devtools::install_github(c("BBmisc", "ParamHelpers", "mlr"))
-- [ ] [Give a minimal reproducible example](http://stackoverflow.com/a/5963610)
+- [ ] Install the latest version of mlr: `update.packages(oldPkgs="mlr", ask=FALSE)` or if you use a GitHub install of mlr: `devtools::install_github(c("BBmisc", "ParamHelpers", "mlr"))`
+- [ ] Give a minimal reproducible example
 - [ ] run `sessionInfo()`
 
 ### Minimal reproducible example:
