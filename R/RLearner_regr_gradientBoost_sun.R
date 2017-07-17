@@ -36,7 +36,7 @@ devl2loss = function(yhat, y) {
 }
 
 initModelL2Pred = function(X, y) {
-  return mean(y)
+  mean(y)
 }
 
 trainBaseLearner = function() {

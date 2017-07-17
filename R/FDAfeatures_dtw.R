@@ -1,3 +1,4 @@
+#' @export
 getMultiChDtwFeatures = function(data, fd.features, ref) {
   ref = data[1, ]
   feat.list = namedList(names = names(fd.features))
@@ -7,7 +8,19 @@ getMultiChDtwFeatures = function(data, fd.features, ref) {
   as.data.frame(Reduce(cbind, x = feat.list))
 }
 
-getUniDTWFeatures = function (row, ref){
-  a = dtw(t,r, step.pattern = asymmetric, keep =TRUE)
-  a$distance
+getDtwDist = function(row, refs)
+{
+  requirePackages("dtw", default.method = "load")
+  list.dist = lapply(refs, function(x) {
+    res = dtw(row, x, step.pattern = asymmetric, keep =TRUE)
+    res$distance  
+  })
+  unlist(list.dist)
+}
+
+#' @export
+getUniDTWFeatures = function (data, refs = NULL){
+  if(is.null(refs)) refs = c(data[1, ], data[2, ]) 
+  m = apply(data, 1, function(x) getDtwDist(x, refs))
+  t(as.matrix(m))
 }
