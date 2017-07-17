@@ -1,6 +1,7 @@
 language: r
 sudo: false
 cache: packages
+dist: trusty
 r:
   - release
 
@@ -39,7 +40,7 @@ before_install:
   - Rscript -e 'message("INSTALLED PACKS:"); installed.packages()[,1:3]'  # we need a very fresh version of survival for Hmisc, needs be done early in the script
   # we need a very fresh version of survival for Hmisc, needs be done early in the script
   - Rscript -e 'install.packages("survival")'
-  - mkdir $HOME/bin
+  # - mkdir $HOME/bin
   - ln -s $(which gcc-4.9) $HOME/bin/gcc
   - ln -s $(which g++-4.9) $HOME/bin/g++
   - ln -s $(which gfortran-4.9) $HOME/bin/gfortran
