@@ -156,7 +156,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost (>= 0.6-2),
+    xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
 Version: 2.12

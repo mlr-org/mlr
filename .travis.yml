@@ -46,10 +46,12 @@ before_install:
   - export PATH=$HOME/bin:$PATH
   - echo $LD_LIBRARY_PATH
   - echo $LIBRARY_PATH
-
 before_script:
   - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
   - R --no-save <<< 'library("devtools"); document()'
+
+install:
+  - R -e 'devtools::install_deps(dep = T)'
 
 script:
   - |
@@ -84,4 +86,3 @@ notifications:
   slack: mlr-org:DYNA3KIwcG9F4sQoeyTnPBhF#buildnotifications
 on_success: change
 on_failure: always
-
