@@ -52,3 +52,8 @@ test_that("FDA_multiResNaive6_task", {
   task = trafoFDATaskToClassifTask(fuelsubset.task, method = "multiRes", pars = list(res.level = 5, shift = 0.3, curve.lens = c(100,101)))
   expect_true(getTaskSize(task) == getTaskSize(fuelsubset.task))
 })
+
+test_that("FDA_multiResNaive7_task", {
+  task = trafoFDATaskToClassifTask(fuelsubset.task, method = "multiRes", pars = list(res.level = 5, shift = 0.3, list(NIR = list(curve.lens = c(100,101)), UVVIS = list(curve.lens = c(100,101)) )))
+  expect_true(getTaskSize(task) == getTaskSize(fuelsubset.task))
+})
