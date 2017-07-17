@@ -1,0 +1,42 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+# Info: 'bc.task' data is not suitable since it contains ordered factors
+data(basque, package = "sperrorest")
+basque$geometry = NULL
+basque$lithology <- NULL
+basque$soil <- NULL
+basque$fus01 <- NULL
+basque$x <- NULL
+basque$y <- NULL
+basque$hail <- NULL
+task <- makeClassifTask(id = "pathogen_data", data = basque, 
+                        target = "diplo01", positive = "1")
+
+rdesc_ec <- makeResampleDesc("CV", iters = 5)
+
+rdesc_ec_rep <- makeResampleDesc("RepCV", fold = 5, reps = 2)
+
+lrn_ec <- makeLearner("classif.gam", 
+                      family = "binomial",
+                      binomial.link = "logit",
+                      predict.type = "prob",
+                      optimizer = "perf",
+                      method = "REML",
+                      par.vals = list(formula = "diplo01 ~ s(slope) + s(ph) + hail_new + s(age) + year + s(p_sum) + s(r_sum)"))
+```
+
+```{r}
+filterParams(getParamSet(lrn_ec), tunable = TRUE)
+```
+
+
+```{r}
+resa_ec <- resample(learner = lrn_ec, task = task, models = TRUE, extract = getLearnerModel,
+                    resampling = rdesc_ec_rep, measures = list(auc))
+```
