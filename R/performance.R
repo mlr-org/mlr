@@ -75,9 +75,10 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
       stopf("You need to pass either task or features for measure %s!", m$id)
-    else if (is.null(feats))
-      #feats = getTaskData(task, target.extra = TRUE)$data
-      feats = task$env$data[pred$data$id, , drop = FALSE]
+    else if (is.null(feats)) {
+      feats = getTaskData(task, target.extra = TRUE)$data[pred$data$id, , drop = FALSE]
+      #feats = task$env$data[pred$data$id, , drop = FALSE]
+    }
     else
       assertClass(feats, "data.frame")
   }
