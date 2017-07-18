@@ -129,7 +129,8 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
 
     # remove NAs in p (occurs if model inherits "lm" and misses factor levels in train)
-    if (any(is.na(p))) {
+    if (model$learner$fix.factors.prediction == TRUE &&
+        any(is.na(p))) {
       index.na = which(p %in% NA)
       if (is.factor(p)) {
         p = p[-index.na]
