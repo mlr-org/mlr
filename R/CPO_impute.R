@@ -140,6 +140,10 @@ declareImputeFunction = function(name, method, additional.params, types = NULL) 
     .properties.needed = "factors",
     .properties.adding = "missings",
     cpo.trafo = function(data, target, make.dummy.cols, force.dummies, impute.new.levels, recode.factor.levels, ...) {
+      if (ncol(data) == 0) {
+        control = "NOCOL"
+        return(data)
+      }
       imputer = method(...)
       impresult = impute(data, cols = lapply(data, function(dummy) imputer),
         dummy.cols = if (make.dummy.cols) names(data) else character(0),
@@ -148,6 +152,9 @@ declareImputeFunction = function(name, method, additional.params, types = NULL) 
       control = impresult[[2]]
       impresult[[1]]
     }, cpo.retrafo = function(data, control, ...) {
+      if (identical(control, "NOCOL")) {
+        return(data)
+      }
       reimpute(data, control)
     })
 }
