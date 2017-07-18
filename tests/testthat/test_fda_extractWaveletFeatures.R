@@ -1,4 +1,4 @@
-context("FDA_FeatWavelets")
+context("fda_extractFeatWavelets")
 
 test_that("FDA_FeatWavelets", {
   requirePackagesOrSkip("wavelets", default.method = "load")

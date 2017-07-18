@@ -1,3 +1,4 @@
+context("fda_benchmarking_and_mixed_learners")
 test_that("benchmarking on fda tasks works", {
 
   lrns = list(makeLearner("classif.fdaknn"), makeLearner("classif.rpart"))

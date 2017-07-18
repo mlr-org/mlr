@@ -1,4 +1,4 @@
-context("extractFpcaFeatures")
+context("fda_extractFpcaFeatures")
 
 test_that("extractFpcaFeatures works", {
   set.seed(getOption("mlr.debug.seed"))

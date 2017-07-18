@@ -42,8 +42,8 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
     custom.family = custom.family.definition
   )
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
-  # d = getFunctionalData(.task, .subset)
-  d = getTaskData(.task, functionals.as = "dfCols")
+
+  suppressMessages({d = getTaskData(.task, functionals.as = "dfCols")})
   m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
 
@@ -57,7 +57,7 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
   # also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
   #formula.terms = setNames(character(length = fdns))
-  formula.terms = vector()
+  formula.terms = namedList(fdns)
   # for each functional covariate
   for (fdn in fdns) {
     # ... create a corresponding grid name
@@ -78,12 +78,12 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
   mat.list = c(mat.list, fdg)
   # add target names
   mat.list[[tn]] = d[, tn]
-  form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+")))
+  form = as.formula(sprintf("%s ~ %s", tn, collapse(unlist(formula.terms), "+")))
   FDboost::FDboost(formula = form, timeformula = ~bols(1), data = mat.list, control = ctrl, family = family)
 }
 
 #' @export
 predictLearner.regr.fdaFDboost = function(.learner, .model, .newdata, ...) {
-  listOfMatrices = .newdata
-  predict(object = .model$learner.model, newdata = listOfMatrices)
+  nl = as.list(.newdata)
+  prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
 }

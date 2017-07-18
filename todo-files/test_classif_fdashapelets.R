@@ -1,6 +1,6 @@
-context("FDA_classif_shapelets")
+context("fda_classif_shapelets")
 
-test_that("FDA_classif_shapelets", {
+test_that("fda_classif_shapelets", {
   requirePackagesOrSkip("shapeletLib", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))

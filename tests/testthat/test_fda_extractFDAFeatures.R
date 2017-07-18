@@ -1,4 +1,5 @@
-context("FDA_extactFeatures")
+context("extactFDAFeatures")
+
 test_that("extractFDAFeatures", {
   methods = list("UVVIS" = extractFDAMean(), "NIR" = extractFDAMinMax())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
