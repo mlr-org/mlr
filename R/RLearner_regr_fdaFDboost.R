@@ -42,15 +42,17 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
     custom.family = custom.family.definition
   )
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
-  d = getFunctionalData(.task, .subset)
+  # d = getFunctionalData(.task, .subset)
+  d = getTaskData(.task, functionals.as = "dfCols")
+  m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
 
-
-  # FIXME: I have no idea how to set this up, maybe Xudong can help?
-  flen = sapply(d, ncol)
+  fdns = colnames(getFunctionalFeatures(.task))
   # later on, the grid elements in mat.list should have suffix ".grid"
-  fdg = setNames(tdesc$fd.grids, seq_len(flen), ".grid")
-  fdns = names(fdf)
+  fdg = namedList(fdns)
+  fd.grids = lapply(fdns, function(name) seq_len(ncol(m[, name])))
+  names(fd.grids) = fdns
+  fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
   # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
   # also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
@@ -61,13 +63,13 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
     # ... create a corresponding grid name
     gn = stri_paste(fdn, ".grid")
     # ... extract the corresponding original data into a list of matrices
-    mat.list[[fdn]] = as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
+    mat.list[[fdn]] = m[, fdn]
     # ... create a formula item
     formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
       fdn, gn, knots, df, degree, differences, bsignal.check.ident)
   }
   # add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
-  for (fsn in names(tdesc$fd.scalars)) {
+  for (fsn in setdiff(colnames(m), c(fdns, tn))) {
     mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
       fsn, knots, df, degree, differences)
@@ -82,7 +84,6 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.regr.fdaFDboost = function(.learner, .model, .newdata, ...) {
-  tdesc = getTaskDesc(.model)
-  nd = convertFDAData2ListOfMatrices(.newdata, tdesc)
-  predict(object = .model$learner.model, newdata = nd)
+  listOfMatrices = .newdata
+  predict(object = .model$learner.model, newdata = listOfMatrices)
 }
