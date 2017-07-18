@@ -3,6 +3,9 @@
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
+* makeFunctionalData: Allows for the reformating of a data.frame with numeric columns to matrix columns 
+  which can be handled with functional data (fda-) learners. Data.frame's obtained from makeFunctionalData()
+  can be used with make{Classif,Regr}Task.
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -18,8 +21,14 @@
 
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
+* fda learners: Added new learners {classif,regr}.fda{...} that can handle functional data.
 
 ## learners - new
+* classif.fdaknn
+* classif.fdakernel
+* classif.fdanp
+* classif.fdaglm
+* regr.fdaFDboost
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
