@@ -21,10 +21,15 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
-#' Notes:
+#' @details
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
+#'
+#' For spatial data, 'x' and 'y' are only used for spatial partitioning of the
+#' data if 'SpCV' or 'SpRepCV' is chosen as resampling method. They will not be
+#' used as features during modeling. However, you can set `spatial = FALSE` and ignore
+#' all warnings if you insist on using them.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
@@ -72,7 +77,7 @@
 #'   Default is \code{TRUE}.
 #' @param spatial [\code{logical(1)}]\cr
 #'   Is the task spatial? I.e. does it contain coordinates ("x" and "y) which
-#'   shall be used for spatial partitioning using [kmeans] clustering?
+#'   shall be used for spatial partitioning using [kmeans] clustering? See details.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
@@ -132,6 +137,10 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
     if (!any(colnames(data) == "x" | colnames(data) == "y")) {
       stop("Please rename coordinate columns to 'x' and 'y'.")
     }
+  }
+  # check if setting 'spatial = TRUE' was forgotten by accident
+  if (spatial == FALSE && any(colnames(data) == "x" & any(colnames(data) == "y"))) {
+    warningf("We detected that you have columns named 'x' and 'y' in your data. If you have spatial data, please set 'spatial = TRUE' during task creation.")
   }
 
   env = new.env(parent = emptyenv())

@@ -71,7 +71,7 @@ Default is \code{NULL} which means no blocking.}
 
 \item{spatial}{[\code{logical(1)}]\cr
 Is the task spatial? I.e. does it contain coordinates ("x" and "y) which
-shall be used for spatial partitioning using [kmeans] clustering?}
+shall be used for spatial partitioning using [kmeans] clustering? See details.}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary classification (otherwise ignored and set to NA).
@@ -122,11 +122,16 @@ Object members:
 \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
-
-Notes:
+}
+\details{
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
+
+For spatial data, 'x' and 'y' are only used for spatial partitioning of the
+data if 'SpCV' or 'SpRepCV' is chosen as resampling method. They will not be
+used as features during modeling. However, you can set `spatial = FALSE` and ignore
+all warnings if you insist on using them.
 }
 \examples{
 if (requireNamespace("mlbench")) {

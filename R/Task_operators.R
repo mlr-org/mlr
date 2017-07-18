@@ -334,6 +334,13 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
       res$x = NULL
       res$y = NULL
     }
+    # issue warning a second time (first time while creating the task)
+    #
+    if (spatial == FALSE && any(colnames(data) == "x" & any(colnames(data) == "y"))) {
+      warningf(paste0("We detected that you have columns named 'x' and 'y' in your data. ",
+                      "If you have spatial data, please set 'spatial = TRUE' during task creation. ",
+                      "If not, ignore this warning and possibly rename your column names to prevent this warning in the future.", collapse = ""))
+    }
   }
   res
 }
