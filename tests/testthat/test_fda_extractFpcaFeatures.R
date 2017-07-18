@@ -11,7 +11,7 @@ test_that("extractFpcaFeatures works", {
   set.seed(getOption("mlr.debug.seed"))
   fpca.df2 = data.frame(refund::fpca.sc(Y = as.matrix(gp$data$fd))$scores)
   expect_true((nrow(gp$data) == nrow(fpca.df2)))
-  expect_true((ncol(fpca.df2) == 7L))
+  expect_true((ncol(fpca.df2) == 6L))
   expect_equivalent(fpca.df, fpca.df2)
 
   set.seed(getOption("mlr.debug.seed"))

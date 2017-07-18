@@ -122,5 +122,15 @@ test_that("extract and reExtract Fpca", {
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
   expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 10L))
+})
 
+test_that("extract and reExtract MultiRes", {
+  gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
+  fm = list("fd" = extractFDAMultiResFeatures(3L, 0.4))
+  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 12L))
 })

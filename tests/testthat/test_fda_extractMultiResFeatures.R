@@ -32,10 +32,15 @@ test_that("get...FDAMultiResFeatures works on data.frame", {
   expect_true(nrow(df) == nrow(dfn2))
   expect_true(ncol(dfn2) == 9L)
 
-  expect_true(dfn != dfn2)
+  expect_true(!all(dfn == dfn2))
 
   dfn = extractMultiResFeatures(df, col = "NIR", res.level = 3L, shift = 0.5,
     curve.lens = c(100L, 131L))
+  expect_true(nrow(df) == nrow(dfn))
+  expect_true(ncol(dfn) == 19L)
+
+  dfn = extractMultiResFeatures(df, col = "NIR", res.level = 3L, shift = 0.5,
+    curve.lens = c(231L))
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 9L)
 })

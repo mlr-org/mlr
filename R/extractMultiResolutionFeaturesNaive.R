@@ -56,7 +56,7 @@ extractMultiResFeatures = function(data, target, cols, res.level = 3L, shift = 0
 #'   multi-resolution features.
 getUniFDAMultiResFeatures = function(data, res.level, shift) {
   feat.list = apply(data, 1, getCurveFeatures, res.level = res.level, shift = shift)
-  t(feat.list)
+  data.frame(t(feat.list))
 }
 
 #' @title Multiresolution feature extraction.
@@ -89,7 +89,7 @@ getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, curve.lens)
     # And return as vector
     unlist(subfeats)
   })
-  t(feat.list)
+  data.frame(t(feat.list))
 }
 
 
