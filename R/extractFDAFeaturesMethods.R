@@ -113,11 +113,10 @@ extractFDAFpca = function(pve = 0.99, npc = NULL) {
 #' @export
 #' @inheritParams extractFpcaFeatures
 #' @rdname extractFDAFeatMethods
-extractFDAMultiResFeatures = function(curve.lens, res.level = 3L, shift = 0.5) {
-  lrn = function(data, target, cols, vals, curve.lens, res.level = 3L, shift = 0.5) {
-    c_get_multires_curve_features()
+extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
+  lrn = function(data, target, cols, vals, res.level = 3L, shift = 0.5, curve.lens = NULL) {
+    extractMultiResFeatures(data, target, cols, res.level, shift, curve.lens)
   }
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc))
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
+    args = list(res.level = res.level, shift = shift, curve.lens = curve.lens))
 }
-c_get_multires_curve_features
-
