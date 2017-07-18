@@ -112,3 +112,12 @@ gunpoint = load2("../thirdparty/gunpoint.RData")
 gpFdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
 gunpoint.task = makeClassifTask(data = gpFdf, target = "X1", positive = "1")
 save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
+
+# Multiclass fda classification
+set.seed(DATASEED)
+data(phoneme, package = "fda.usc")
+ph = as.data.frame(phoneme[["learn"]]$data)
+ph[, "classlearn"] = phoneme[["classlearn"]]
+fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
+phoneme.task = makeClassifTask(data = fdata, target = "classlearn")
+save(phoneme.task, file = file.path(dn, "phoneme.task.RData"), compress = "xz")
