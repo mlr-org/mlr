@@ -39,11 +39,10 @@ registerCPO(cpoPca, "data", "numeric data preprocessing", "Perform Principal Com
 #' @export
 cpoScale = makeCPO("scale", center = TRUE: logical, scale = TRUE: logical, .datasplit = "numeric", cpo.trafo = {  # nolint
   result = scale(as.matrix(data), center = center, scale = scale)
-  data[] = result
   control = list(center = coalesce(attr(result, "scaled:center"), FALSE), scale = coalesce(attr(result, "scaled:scale"), FALSE))
-  data
+  result
 }, cpo.retrafo = {
-  as.data.frame(scale(as.matrix(data), center = control$center, scale = control$scale))
+  scale(as.matrix(data), center = control$center, scale = control$scale)
 })
 registerCPO(cpoScale, "data", "numeric data preprocessing", "Center and / or scale the data using base::scale.")
 
