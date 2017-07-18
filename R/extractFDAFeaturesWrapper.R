@@ -40,5 +40,5 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
 #' @export
 getLearnerProperties.extractFDAFeatsWrapper = function(learner) {
-  union(getLearnerProperties(learner$next.learner), "functionals")
+  union(getLearnerProperties(learner$next.learner), c("functionals", "single.functional"))
 }

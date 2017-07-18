@@ -19,7 +19,7 @@ makeRLearner.classif.fdakernel = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "prob", "functionals"),
+    properties = c("twoclass", "multiclass", "prob", "single.functional"),
     name = "Kernel classification on FDA",
     short.name = "fdakernel",
     note = "Argument draw=FALSE is used as default."

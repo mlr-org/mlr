@@ -13,7 +13,7 @@ makeRLearner.classif.fdaknn = function() {
       makeLogicalLearnerParam(id = "draw", default = TRUE, tunable = FALSE)
     ),
     par.vals = list(draw = FALSE),
-    properties = c("twoclass", "multiclass", "weights", "prob", "functionals"),
+    properties = c("twoclass", "multiclass", "weights", "prob", "single.functional"),
     name = "fdaknn",
     short.name = "fdaknn",
     note = "Argument draw=FALSE is used as default."
