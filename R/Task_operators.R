@@ -325,7 +325,9 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     # second condition checks which function called 'getTaskData' if call was not
     # from the GlobalEnv. If cond2 is FALSE, 'getTaskData' was called from
     # 'subsetTask' in a nested resampling call. In this case we remove x and y
-    # later as we still need it for partitioning
+    # later (later = we arrive in 'getTaskData'  twice in a 'resample' call) as
+    # we still need it for partitioning in upcoming function calls and only need
+    # to remove `x` and `y` before we proceed to the training step.
     if (!identical(parent.frame(n = 1), globalenv()) &&
         !sys.call(-2) == "subsetTask(.task, .subset)" &&
         task$task.desc$is.spatial == TRUE) {

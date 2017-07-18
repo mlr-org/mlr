@@ -71,7 +71,7 @@ Default is \code{NULL} which means no blocking.}
 
 \item{spatial}{[\code{logical(1)}]\cr
 Is the task spatial? I.e. does it contain coordinates ("x" and "y) which
-shall be used for spatial partitioning?}
+shall be used for spatial partitioning using [kmeans] clustering?}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary classification (otherwise ignored and set to NA).
