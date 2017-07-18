@@ -20,7 +20,7 @@ makeRLearner.regr.fdafgam = function() {
     properties = c("functionals"),
     name = "functional general additive model",
     short.name = "FGAM",
-    note = "Skipped presmooth.opts, Xrange for now"
+    note = "Skipped parameters presmooth.opts, Xrange for now"
   )
 }
 
@@ -33,26 +33,38 @@ makeRLearner.regr.fdafgam = function() {
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE,
-  mgcv.s.k = -1L, bs = "tp", ...) {
-  df = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
-  fdf = getFunctionalFeatures(df$data)
+trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL,
+  Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
+
+  df = getTaskData(.task, subset = .subset, target.extra = TRUE,
+    functionals.as = "matrix")
+
+  # Set up fdg = functional feature grids
+  fdns = colnames(getFunctionalFeatures(df))
+  # later on, the grid elements in mat.list should have suffix ".grid"
+  fdg = namedList(fdns)
+  fd.grids = lapply(fdns, function(name) seq_len(ncol(m[, name])))
+  names(fd.grids) = fdns
+  fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
+
+
 
   # later on, the grid elements in mat.list should have suffix ".grid"
   names(fdg) = paste0(names(fdg), ".grid")
   fdns = names(fdf)
-  # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
-  # also setup charvec of formula terms for func covars
+  # setup mat.list: for each func covar we add its data matrix and its grid
+  # and once the target col also setup charvec of formula terms for func covars
   mat.list = namedList(fdns)
   formula.terms = namedList(fdns)
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
     mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
-    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k=%s, bs=%s)", fdn, Qtransform, deparse(mgcv.s.k), bs)
+    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k = %s, bs = %s)",     fdn, Qtransform, deparse(mgcv.s.k), bs)
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
-  form = as.formula(sprintf("%s ~ %s", tn, collapse(formula.terms, "+")))
+  form = as.formula(sprintf("%s ~ %s", getTaskTargetNames(.task),
+    collapse(formula.terms, "+")))
   refund::pfr(formula = form, data = mat.list)
 }
 

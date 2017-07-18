@@ -47,7 +47,7 @@ trainLearner.regr.fdaFDboost = function(.learner, .task, .subset, .weights = NUL
   m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
 
-  fdns = colnames(getFunctionalFeatures(.task))
+  fdns = colnames(getFunctionalFeatures(m))
   # later on, the grid elements in mat.list should have suffix ".grid"
   fdg = namedList(fdns)
   fd.grids = lapply(fdns, function(name) seq_len(ncol(m[, name])))
