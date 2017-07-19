@@ -153,6 +153,7 @@ Suggests:
     smoof,
     sparseLDA,
     stepPlr,
+    survAUC,
     SwarmSVM,
     svglite,
     testthat,

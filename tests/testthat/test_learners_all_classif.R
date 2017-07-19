@@ -28,11 +28,11 @@ test_that("learners work: classif ", {
   lapply(lrns, testBasicLearnerProperties, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
-  lrns = mylist("classif", properties = "factors", create = TRUE)
+  lrns = mylist(task, properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with ordered factors
-  lrns = mylist("classif", properties = "ordered", create = TRUE)
+  lrns = mylist(task, properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with prob
@@ -41,26 +41,27 @@ test_that("learners work: classif ", {
     hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
-  lrns = mylist("classif", properties = "weights", create = TRUE)
+  lrns = mylist(binaryclass.task, properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = binaryclass.task, train.inds = binaryclass.train.inds, test.inds = binaryclass.test.inds,
     weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
   # classif with missing
-  lrns = mylist("classif", properties = "missings", create = TRUE)
+  lrns = mylist(task, properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
 
   # classif with oobpreds
-  lrns = mylist("classif", properties = "oobpreds", create = TRUE)
+  lrns = mylist(task, properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
+
   # classif with oobpreds and probability
-  lrns = mylist("classif", properties = c("oobpreds", "prob"), create = TRUE)
+  lrns = mylist(task, properties = c("oobpreds", "prob"), create = TRUE)
   lrns = lapply(lrns, setPredictType, predict.type = "prob")
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
 
   # classif with variable importance
-  lrns = mylist("classif", properties = "featimp", create = TRUE)
+  lrns = mylist(task, properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 })
 

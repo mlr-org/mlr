@@ -6,12 +6,16 @@ test_that("classif_lqa", {
   parset.list = list(
     list(),
     list(penalty = "lasso", lambda = 0.01),
-    list(penalty = "fused.lasso", lambda1 = 0.001, lambda2 = 0.01)
+    list(penalty = "fused.lasso", lambda1 = 0.001, lambda2 = 0.01),
+    list(penalty = "oscar", lambda = 0.01, oscar.c = 1),
+    list(penalty = "genet", lambda = 0.01, gamma = 2, alpha = 0.5)
   )
   parset.list.lqa = list(
     list(family = binomial(), penalty = lqa::lasso(0.1)),
     list(family = binomial(), penalty = lqa::lasso(0.01)),
-    list(family = binomial(), penalty = lqa::fused.lasso(c(0.001, 0.01)))
+    list(family = binomial(), penalty = lqa::fused.lasso(c(0.001, 0.01))),
+    list(family = binomial(), penalty = lqa::oscar(c(0.01, 1))),
+    list(family = binomial(), penalty = lqa::genet(c(0.01, 0.5, 2)))
   )
 
   old.predicts.list = list()

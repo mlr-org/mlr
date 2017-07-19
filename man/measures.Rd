@@ -119,6 +119,8 @@
 \alias{multilabel.tpr}
 \alias{measureMultilabelTPR}
 \alias{cindex}
+\alias{cindex.uno}
+\alias{iauc.uno}
 \alias{meancosts}
 \alias{mcp}
 \alias{db}
@@ -361,6 +363,10 @@ measureMultilabelTPR(truth, response)
 
 cindex
 
+cindex.uno
+
+iauc.uno
+
 meancosts
 
 mcp
@@ -408,11 +414,22 @@ Most measures can directly be accessed via the function named after the scheme m
 
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
+
+Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
+overwritten using \code{\link{setMeasurePars}}.
 }
 \references{
 He, H. & Garcia, E. A. (2009)
 \emph{Learning from Imbalanced Data.}
 IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
+
+H. Uno et al.
+\emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
+Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
+
+H. Uno et al.
+\emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
+Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
 }
 \seealso{
 Other performance: \code{\link{ConfusionMatrix}},
@@ -421,6 +438,8 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
-  \code{\link{makeMeasure}}, \code{\link{performance}}
+  \code{\link{makeMeasure}}, \code{\link{performance}},
+  \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }
 \keyword{datasets}
