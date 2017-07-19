@@ -24,9 +24,6 @@ env:
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
-r_packages:
-  - roxygen2
-
 r_github_packages:
   - berndbischl/BBmisc
   - berndbischl/parallelMap
@@ -34,6 +31,7 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
   - jimhester/covr
+  - klutometis/roxygen
 
 before_install:
   # we want to see libpaths and installed packages from cache
