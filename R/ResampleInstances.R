@@ -1,21 +1,25 @@
-instantiateResampleInstance = function(desc, size, task) {
+instantiateResampleInstance = function(desc, size, task, coords) {
   UseMethod("instantiateResampleInstance")
 }
 
-instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL, coords) {
   inds = sample(size, size * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
-instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.CVDesc = function(desc, size, task = NULL, coords) {
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
   test.inds = chunk(seq_len(size), shuffle = TRUE, n.chunks = desc$iters)
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
-  coords = data.frame(task$env$data$x, task$env$data$y)
+instantiateResampleInstance.SpCVDesc = function(desc, task = NULL, size, coords = NULL) {
+  if (is.null(coords)) {
+    coords = data.frame(task$env$data$x, task$env$data$y)
+  } else {
+    coords = coords
+  }
   # perform kmeans clustering
   inds = kmeans(coords, centers = desc$iters)
   inds = factor(inds$cluster)
@@ -29,22 +33,22 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.LOODesc = function(desc, size, task = NULL, coords) {
   desc$iters = size
   makeResampleInstanceInternal(desc, size, test.inds = as.list(seq_len(size)))
 }
 
-instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL, coords) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL, coords) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size, replace = TRUE))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL, coords) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("CV", iters = folds)
   i = replicate(desc$reps, makeResampleInstance(d, size = size), simplify = FALSE)
@@ -54,10 +58,10 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
 
-instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL, coords = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("SpCV", iters = folds)
-  i = replicate(desc$reps, makeResampleInstance(d, task = task, coords = NULL), simplify = FALSE)
+  i = replicate(desc$reps, makeResampleInstance(d, task = task, coords = coords), simplify = FALSE)
   train.inds = Reduce(c, lapply(i, function(j) j$train.inds))
   test.inds = Reduce(c, lapply(i, function(j) j$test.inds))
   g = as.factor(rep(seq_len(desc$reps), each = folds))
