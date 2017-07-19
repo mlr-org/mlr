@@ -256,12 +256,14 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 #'   \dQuote{drop.levels} will remove empty factor levels in the target column.
 #'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
-#'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
+#'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or
+#'   \dQuote{interval2} censored times
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
 #' @param functionals.as [\code{character(1)}]\cr
-#'   Should functionals be kept as \code{matricies} be converted to numeric data.frame columns \code{dfCols}?
+#'   Should functionals be kept as \code{matricies} be converted to numeric
+#'   data.frame columns \code{dfCols}?
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export
