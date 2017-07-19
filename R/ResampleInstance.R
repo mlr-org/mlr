@@ -24,6 +24,9 @@
 #' @param size [\code{\link{integer}}]\cr
 #'   Size of the data set to resample.
 #'   Can be used instead of \code{task}.
+#' @param coords [\code{\link{data.frame}}]\cr
+#'   Data.frame with two columns named 'x' and 'y' representing spatial coordinates.
+#'   Used only if `desc = 'SpCV'` or `desc = 'SpRepCV'`.
 #' @param ... [any]\cr
 #'   Passed down to \code{\link{makeResampleDesc}} in case
 #'   you passed a string in \code{desc}.
