@@ -8,7 +8,7 @@
 generatePartialDependenceData(obj, input, features, interaction = FALSE,
   derivative = FALSE, individual = FALSE, center = NULL, fun = mean,
   bounds = c(qnorm(0.025), qnorm(0.975)), resample = "none", fmin, fmax,
-  gridsize = 10L, ...)
+  gridsize = 10L, range = NULL, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -103,6 +103,9 @@ The length of the prediction grid created for each feature.
 If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
 length of the evenly spaced grid created.}
+
+\item{range}{[\code{list}]\cr
+The range of values of the feature you would want the partial plots on - passed as a numeric list}
 
 \item{...}{additional arguments to be passed to \code{\link{predict}}.}
 }

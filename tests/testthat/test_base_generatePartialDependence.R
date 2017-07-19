@@ -264,6 +264,11 @@ test_that("generatePartialDependenceData", {
   # issue 63 in the tutorial
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
     individual = TRUE, derivative = TRUE, gridsize = gridsize)
+
+  # test rng as paratmeter
+  petal.width = c(seq(0.1, 0.6, 0.1), seq(1, 2.5, 0.1))
+  pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width", range = petal.width)
+  expect_that(length(pd$data$Petal.Width), equals(length(unique(pd$data$Class)) * length(petal.width)))
 })
 
 test_that("generateFeatureGrid", {
@@ -296,15 +301,15 @@ test_that("generateFeatureGrid", {
   expect_that(out$z, is_a("integer"))
   expect_that(range(out$z), equals(range(data$z)))
 
-  out_sub = generateFeatureGrid(features, data, "subsample",
+  out.sub = generateFeatureGrid(features, data, "subsample",
     gridsize = gridsize, fmin, fmax)
-  expect_true(all(sapply(out_sub, length) == gridsize))
-  expect_that(out_sub$w, is_a("numeric"))
-  expect_that(length(out_sub$w), equals(gridsize))
-  expect_that(out_sub$x, is_a("factor"))
-  expect_that(length(out_sub$x), equals(gridsize))
-  expect_that(levels(out_sub$x), equals(levels(data$x)))
-  expect_that(out_sub$y, is_a("ordered"))
-  expect_that(levels(out_sub$y), equals(levels(data$y)))
-  expect_that(out_sub$z, is_a("integer"))
+  expect_true(all(sapply(out.sub, length) == gridsize))
+  expect_that(out.sub$w, is_a("numeric"))
+  expect_that(length(out.sub$w), equals(gridsize))
+  expect_that(out.sub$x, is_a("factor"))
+  expect_that(length(out.sub$x), equals(gridsize))
+  expect_that(levels(out.sub$x), equals(levels(data$x)))
+  expect_that(out.sub$y, is_a("ordered"))
+  expect_that(levels(out.sub$y), equals(levels(data$y)))
+  expect_that(out.sub$z, is_a("integer"))
 })

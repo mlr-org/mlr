@@ -12,13 +12,13 @@ makeRLearner.classif.multinom = function() {
       makeNumericLearnerParam(id = "rang", default = 0.7),
       makeNumericLearnerParam(id = "decay", default = 0),
       makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE),
-      ## FIXME_PK: Why are abstol and reltol written with 2 "l"?
-      makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
-      makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
+      makeNumericLearnerParam(id = "abstol", default = 1.0e-4),
+      makeNumericLearnerParam(id = "reltol", default = 1.0e-8)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Multinomial Regression",
-    short.name = "multinom"
+    short.name = "multinom",
+    callees = c("multinom", "nnet")
   )
 }
 
@@ -35,11 +35,11 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.classif.multinom = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type=="response", "class", "probs")
+  type = ifelse(.learner$predict.type == "response", "class", "probs")
   levs = .model$task.desc$class.levels
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
-  if (type == "probs" && length(levs)==2L) {
-    p = matrix(c(1-p, p), ncol = 2L, byrow = FALSE)
+  if (type == "probs" && length(levs) == 2L) {
+    p = matrix(c(1 - p, p), ncol = 2L, byrow = FALSE)
     colnames(p) = levs
   }
   return(p)

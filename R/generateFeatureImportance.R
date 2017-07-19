@@ -78,6 +78,8 @@
 #' fit = train(lrn, iris.task)
 #' imp = generateFeatureImportanceData(iris.task, "permutation.importance",
 #'   lrn, "Petal.Width", nmc = 10L, local = TRUE)
+#'
+#' @references Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Annals of Statistics, Vol. 29, No. 5 (Oct., 2001), pp. 1189-1232.
 #' @export
 generateFeatureImportanceData = function(task, method = "permutation.importance",
   learner, features = getTaskFeatureNames(task), interaction = FALSE, measure,
@@ -110,7 +112,7 @@ generateFeatureImportanceData = function(task, method = "permutation.importance"
   makeS3Obj(
     "FeatureImportance",
     res = out,
-    task.desc = getTaskDescription(task),
+    task.desc = getTaskDesc(task),
     interaction = interaction,
     learner = learner,
     measure = measure,
@@ -153,7 +155,7 @@ doPermutationImportance = function(task, learner, features, interaction, measure
         sp = permutations(n - 1L)
         p = nrow(sp)
         A = matrix(nrow = n, ncol = n * p)
-        for(i in 1:n){
+        for (i in 1:n){
           A[, (i - 1) * p + 1:p] = rbind(i, sp + (sp >= i))
         }
         return(A)

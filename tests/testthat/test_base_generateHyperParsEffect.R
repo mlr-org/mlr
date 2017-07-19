@@ -9,7 +9,7 @@ test_that("generate data", {
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
     resampling = rdesc, par.set = ps,
-    show.info = F)
+    show.info = FALSE)
   res = resample(lrn, task = pid.task, resampling = cv2,
     extract = getTuneResult)
   orig = getNestedTuneResultsOptPathDf(res)
@@ -29,7 +29,7 @@ test_that("generate data", {
 
 test_that("1 numeric hyperparam", {
   # generate data
-  ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)))
+  ps = makeParamSet(makeDiscreteParam("C", values = 2^ (-2:2)))
   ctrl = makeTuneControlGrid()
   rdesc = makeResampleDesc("Holdout")
   res = tuneParams("classif.ksvm", task = pid.task, resampling = rdesc,
@@ -128,7 +128,7 @@ test_that("1 numeric hyperparam with nested cv", {
   rdesc = makeResampleDesc("Holdout")
   lrn = makeTuneWrapper("classif.ksvm", control = ctrl,
     resampling = rdesc, par.set = ps,
-    show.info = F)
+    show.info = FALSE)
   res = resample(lrn, task = pid.task, resampling = cv2,
     extract = getTuneResult)
   orig = getNestedTuneResultsOptPathDf(res)
@@ -158,7 +158,7 @@ test_that("2 hyperparams", {
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "rbfdot"))
   res = tuneParams(learn, task = pid.task, control = ctrl, measures = acc,
-    resampling = rdesc, par.set = ps, show.info = F)
+    resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res)
 
   # test line creation
@@ -196,7 +196,7 @@ test_that("2 hyperparams", {
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "rbfdot"))
   res = tuneParams(learn, task = pid.task, control = ctrl, measures = acc,
-    resampling = rdesc, par.set = ps, show.info = F)
+    resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res)
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
     plot.type = "heatmap", interpolate = "regr.earth")
@@ -222,7 +222,7 @@ test_that("2 hyperparams nested", {
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "rbfdot"))
   lrn = makeTuneWrapper(learn, control = ctrl,
     measures = list(acc, mmce), resampling = rdesc,
-    par.set = ps, show.info = F)
+    par.set = ps, show.info = FALSE)
   res = resample(lrn, task = pid.task, resampling = cv2,
     extract = getTuneResult)
   data = generateHyperParsEffectData(res)
@@ -262,7 +262,7 @@ test_that("2 hyperparams nested", {
     makeDiscreteParam("sigma", values = c(-1, 0.5, 1.5)))
   lrn = makeTuneWrapper(learn, control = ctrl,
     measures = list(acc, mmce), resampling = rdesc,
-    par.set = ps, show.info = F)
+    par.set = ps, show.info = FALSE)
   res = resample(lrn, task = pid.task, resampling = cv2,
     extract = getTuneResult)
   data = generateHyperParsEffectData(res)
@@ -291,8 +291,8 @@ test_that("2+ hyperparams", {
   rdesc = makeResampleDesc("Holdout", predict = "both")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
   res = tuneParams(learn, task = pid.task, control = ctrl,
-    measures = list(acc,setAggregation(acc, train.mean)), resampling = rdesc,
-    par.set = ps, show.info = F)
+    measures = list(acc, setAggregation(acc, train.mean)), resampling = rdesc,
+    par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
 
   # test single hyperparam creation
@@ -314,7 +314,7 @@ test_that("2+ hyperparams", {
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
   ggsave(path)
-  expect_equal(class(plt$layers[[1]]$geom)[1], c("GeomTile"))
+  expect_equal(class(plt$layers[[1]]$geom)[1], "GeomTile")
   expect_equal(plt$labels$x, "C")
   expect_equal(plt$labels$y, "sigma")
   expect_equal(plt$labels$fill, "acc.test.mean")
@@ -329,7 +329,7 @@ test_that("2+ hyperparams", {
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
   lrn = makeTuneWrapper(learn, control = ctrl,
     measures = list(acc, mmce), resampling = rdesc, par.set = ps,
-    show.info = F)
+    show.info = FALSE)
   res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
@@ -351,7 +351,7 @@ test_that("2+ hyperparams", {
   rdesc = makeResampleDesc("Holdout")
   learn = makeLearner("classif.ksvm", par.vals = list(kernel = "besseldot"))
   res = tuneParams(learn, task = pid.task, control = ctrl, measures = acc,
-    resampling = rdesc, par.set = ps, show.info = F)
+    resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
     plot.type = "line", partial.dep.learn = "regr.randomForest")

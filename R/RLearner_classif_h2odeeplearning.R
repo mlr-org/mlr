@@ -221,7 +221,8 @@ makeRLearner.classif.h2o.deeplearning = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "h2o.deeplearning",
-    short.name = "h2o.dl"
+    short.name = "h2o.dl",
+    callees = "h2o.deeplearning"
   )
 }
 
@@ -253,11 +254,9 @@ predictLearner.classif.h2o.deeplearning = function(.learner, .model, .newdata, .
 
   # check if class names are integers. if yes, colnames of p.df need to be adapted
   int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
-  if (any(int)) {
-    pcol = stri_detect_regex("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol))
-      colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
-  }
+  pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
+  if (any(int) && any(pcol))
+    colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
 
   if (.learner$predict.type == "response") {
     return(p.df$predict)

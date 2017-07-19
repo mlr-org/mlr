@@ -4,8 +4,8 @@
 #' Feature selection method used by \code{\link{selectFeatures}}.\cr
 #' The methods used here follow a wrapper approach, described in
 #' Kohavi and John (1997) (see references).
-#' 
-#' The following optimization algorithms are available: 
+#'
+#' The following optimization algorithms are available:
 #'  \describe{
 #'    \item{FeatSelControlExhaustive}{Exhaustive search. All feature sets (up to a certain number
 #'      of features \code{max.features}) are searched.}

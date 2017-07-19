@@ -1,5 +1,49 @@
+# mlr 2.12:
+
+## general
+* relaxed the way wrappers can be nested -- the only explicitly forbidden
+  combination is to wrap a tuning wrapper around another optimization wrapper
+* refactored the resample progress messages to give a better overview and
+  distinguish between train and test measures better
+
+## functions - general
+* generatePartialDependenceData: added parameter "range" to allow to specify the
+  range of values for the partial dependencies
+* batchmark: allow resample instances and reduction of partial results
+
+## functions - new
+* makeClassificationViaRegressionWrapper
+* getPredictionTaskDesc
+* helpLearner, helpLearnerParam: open the help for a learner or get a
+  description of its parameters
+* setMeasurePars
+
+## measures - general
+* measure "arsq" now has ID "arsq"
+
+## measures - new
+* measureBER, measureRMSLE, measureF1
+* cindex.uno, iauc.uno
+
+## learners - general
+* unified {classif,regr}.penalized{ridge,lasso,fusedlasso} into {classif,regr}.penalized
+* fixed a bug where surv.cforest gave wrong risk predictions (#1833)
+
+## learners - new
+
+## learners - removed
+* {classif,regr}.bdk: broke our API, stability issues
+* {classif,regr}.xyf: broke our API, stability issues
+* classif.hdrda: package removed from CRAN
+* surv.penalized: stability issues
+
 # mlr 2.11:
+
+## general
 * The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.
+* New option on.error.dump to include dumps that can be inspected with the
+  debugger with errors
+* mlr now supports tuning with Bayesian optimization with mlrMBO
 
 ## functions - general
 * tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets
@@ -10,6 +54,9 @@
   performance reasons (can be restored by using a control object with "log.fun"
   = "memory")
 * listLearners: change check.packages default to FALSE
+* tuneParams and tuneParamsMultiCrit: new parameter `resample.fun` to specify a custom resampling function to use.
+* Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription.
+  New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.
 
 ## functions - new
 * getOOBPreds: get out-of-bag predictions from trained models for learners that store them -- these learners have the new "oobpreds" property
@@ -18,9 +65,12 @@
 * makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator
 * simplifyMeasureNames: shorten measure names to the actual measure, e.g.
   mmce.test.mean -> mmce
+* getFailureModelDump, getPredictionDump, getRRDump: get error dumps
+* batchmark: Function to run benchmarks with the batchtools package on high performance computing clusters
+* makeTuneControlMBO: allows Bayesian optimization
 
 ## measures - new
-* tau, rho
+* kendalltau, spearmanrho
 
 ## learners - general
 * classif.plsdaCaret: added parameter "method".

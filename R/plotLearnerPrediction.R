@@ -74,7 +74,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     checkClass(task, "RegrTask"),
     checkClass(task, "ClusterTask")
   )
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
 
   # features and dimensionality
   fns = getTaskFeatureNames(task)
@@ -162,11 +162,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   if (td$type == "classif") {
     data$.err = if (err.mark == "train")
-      (y != yhat)
+      y != yhat
     else if (err.mark == "cv")
       y != pred.cv$data[order(pred.cv$data$id), "response"]
-    else
-      NULL
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (hasLearnerProperties(learner, "prob") && prob.alpha) {

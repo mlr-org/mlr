@@ -64,7 +64,8 @@ selectFeatures = function(learner, task, resampling, measures,
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))
   par.set = do.call(makeParamSet, par.set)
   #checkVarselParset(learner, par.set, bit.names, control)
-  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = control$tune.threshold)
+  need.extra = control$tune.threshold || getMlrOption("on.error.dump")
+  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = need.extra)
   control = setDefaultImputeVal(control, measures)
 
   cl = as.character(class(control))[1]

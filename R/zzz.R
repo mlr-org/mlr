@@ -3,7 +3,6 @@
 #' @importFrom graphics hist
 #' @importFrom utils browseURL capture.output combn data getFromNamespace getS3method head tail methods
 #' @import BBmisc
-#' @import backports
 #' @import checkmate
 #' @import parallelMap
 #' @import ParamHelpers
@@ -12,9 +11,13 @@
 #' @import stringi
 #' @import data.table
 
+.onLoad = function(libname, pkgname) {
+  backports::import(pkgname)
+}
+
 .onAttach = function(libname, pkgname) {
   configureMlr()
-  parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams"))
+  parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
 }
 
 mlr = new.env(parent = emptyenv())
@@ -25,10 +28,10 @@ mlr$learner.properties = list(
   multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
   regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds"),
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds"),
+  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "featimp", "oobpreds"),
   costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 
 ### Measure properties
-mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster" ,"costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")
+mlr$measure.properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "cluster", "costsens", "req.pred", "req.truth", "req.task", "req.feats", "req.model", "req.prob")

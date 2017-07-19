@@ -57,3 +57,11 @@ generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
       }
   }, simplify = FALSE)
 }
+
+# shorter way of printing debug dumps
+#' @export
+print.mlr.dump = function(x, ...) {
+  cat("<debug dump>\n")
+  invisible(NULL)
+}
+

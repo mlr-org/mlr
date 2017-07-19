@@ -18,9 +18,33 @@ measureAggrPrettyName = function(measure) {
 
 # convert a named numvec of perf values (think 'aggr' from resample) into flat string
 # ala <name><sep><value>,...,<name><sep><value>
-perfsToString = function(y, sep = "=") {
-  stri_paste(stri_paste(names(y), "=", formatC(y, digits = 3L), sep = ""),
-             collapse = ",", sep = " ")
+perfsToString = function(y, sep = "=", digits = options()$digits) {
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = digits,
+    flag = "0", format = "f"), sep = ""), collapse = ",", sep = " ")
+}
+
+# Used for the resample output logging lines:
+# Formats and joins the string 'prefix' and the vector 'y' to obtain an aligned output line
+# If y is numeric we trim to desired digit with
+# if not it's a character and we only need to take care that the col has desired width
+# Example output (prefix = "[Resample] iter 1:"):
+# [Resample] iter 1:    0.0000000    0.0370370    0.9629630
+printResampleFormatLine = function(prefix, y, digits = options()$digits) {
+  # get desired width for each col (if measure ids are short --> digits)
+  # +3L to obtain spaces between cols
+  if (is.null(names(y)))
+    names(y) = y
+  tab.width = max(stri_width(names(y)), digits) + 3L
+  # if we get perf vals format decimals and add trailing zeros where needed
+  if (is.numeric(y))
+    y = formatC(y, digits = digits, flag = "0", format = "f")
+  # Extend witdh of prefix and y. width = 22 is the ideal size for
+  # the prefix column. Change value here when iter.message was
+  # modified in resample.R
+  prefix = formatC(prefix, width = 22, flag = "-")
+  str = stri_flatten(formatC(y, width = tab.width, flag = "-"))
+
+  message(stri_paste(prefix, str, collapse = " "))
 }
 
 removeFromDots = function(ns, ...) {
@@ -48,7 +72,7 @@ propVectorToMatrix = function(p, levs) {
   y = matrix(0, ncol = 2L, nrow = length(p))
   colnames(y) = levs
   y[, 2L] = p
-  y[, 1L] = 1-p
+  y[, 1L] = 1 - p
   y
 }
 
@@ -86,3 +110,15 @@ replaceDupeMeasureNames = function(measures, x = "id") {
   unlist(meas.names)
 }
 
+# suppresses a warning iff the warning message contains the
+# substring `str`.
+suppressWarning = function(expr, str) {
+  withCallingHandlers(expr, warning = function(w) {
+    if (stri_detect_fixed(stri_flatten(w$message), str))
+      invokeRestart("muffleWarning")
+  })
+}
+
+hasEmptyLevels = function(x) {
+  !all(levels(x) %chin% as.character(unique(x)))
+}

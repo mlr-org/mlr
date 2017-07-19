@@ -1,41 +1,54 @@
-#' Get a summarizing task description.
+#' @title Get a summarizing task description.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
-#' @return [\code{\link{TaskDesc}}].
+#' @return ret_taskdesc
 #' @export
 #' @family task
-getTaskDescription = function(x) {
-  UseMethod("getTaskDescription")
+getTaskDesc = function(x) {
+  UseMethod("getTaskDesc")
 }
 
+
 #' @export
-getTaskDescription.default = function(x) {
+getTaskDesc.default = function(x) {
+  # FIXME: would be much cleaner to specialize here
   x$task.desc
 }
 
 #' @export
-getTaskDescription.TaskDesc = function(x) {
+getTaskDesc.TaskDesc = function(x) {
   x
 }
 
-#' Get the type of the task.
+#' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' @inheritParams getTaskDesc
+#' @export
+getTaskDescription = function(x) {
+  .Deprecated("getTaskDesc")
+  getTaskDesc(x)
+}
+
+#' @title Get the type of the task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
 getTaskType = function(x) {
-  getTaskDescription(x)$type
+  getTaskDesc(x)$type
 }
 
-#' Get the id of the task.
+#' @title Get the id of the task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
 getTaskId = function(x) {
-  getTaskDescription(x)$id
+  getTaskDesc(x)$id
 }
 
 #' @title Get the name(s) of the target column(s).
@@ -54,7 +67,7 @@ getTaskTargetNames = function(x) {
 
 #' @export
 getTaskTargetNames.Task = function(x) {
-  getTaskTargetNames(getTaskDescription(x))
+  getTaskTargetNames(getTaskDesc(x))
 }
 
 #' @export
@@ -83,18 +96,23 @@ getTaskClassLevels = function(x) {
 }
 
 #' @export
-getTaskClassLevels.Task = function(x) {
-  getTaskClassLevels(getTaskDescription(x))
+getTaskClassLevels.ClassifTask = function(x) {
+  getTaskClassLevels(getTaskDesc(x))
+}
+
+#' @export
+getTaskClassLevels.MultilabelTask = function(x) {
+  getTaskClassLevels(getTaskDesc(x))
 }
 
 #' @export
 getTaskClassLevels.ClassifTaskDesc = function(x) {
-  getTaskDescription(x)$class.levels
+  getTaskDesc(x)$class.levels
 }
 
 #' @export
 getTaskClassLevels.MultilabelTaskDesc = function(x) {
-  getTaskDescription(x)$class.levels
+  getTaskDesc(x)$class.levels
 }
 
 #' Get feature names of task.
@@ -106,27 +124,34 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  setdiff(names(task$env$data), getTaskDescription(task)$target)
+  UseMethod("getTaskFeatureNames")
 }
 
-#' Get number of features in task.
+#' @export
+getTaskFeatureNames.Task = function(task) {
+  setdiff(names(task$env$data), getTaskDesc(task)$target)
+}
+
+#' @title Get number of features in task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
 getTaskNFeats = function(x) {
-  sum(getTaskDescription(x)$n.feat)
+  sum(getTaskDesc(x)$n.feat)
 }
 
-#' Get number of observations in task.
+#' @title Get number of observations in task.
 #'
+#' @description See title.
 #' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
 getTaskSize = function(x) {
-  getTaskDescription(x)$size
+  getTaskDesc(x)$size
 }
 
 #' @title Get formula of a task.
@@ -149,11 +174,13 @@ getTaskSize = function(x) {
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
-  td = getTaskDescription(x)
+  assertCharacter(target, any.missing = FALSE)
+  assertFlag(explicit.features)
+  assertEnvironment(env)
+  td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
-    lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-    target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
+    target = sprintf("Surv(%s, %s, type = \"right\")", target[1L], target[2L])
   } else if (type == "multilabel") {
     target = collapse(target, "+")
   } else if (type == "costsens") {
@@ -180,12 +207,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' Get target data of task.
 #'
 #' @template arg_task
-#' @param recode.target [\code{character(1)}] \cr
-#'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
-#'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as +1 and the negative class either as 0 or -1.
-#'   Default is \dQuote{no}.
+#' @inheritParams getTaskData
 #' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
 #'   of logical columns for multilabel.
 #' @family task
@@ -214,8 +236,9 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 }
 
 
-#' Extract data in task.
+#' @title Extract data in task.
 #'
+#' @description
 #' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
 #' @template arg_task
@@ -274,8 +297,8 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
   indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
-      df[i,  , drop = drop],
-      df[ , j, drop = drop],
+      df[i, , drop = drop],
+      df[, j, drop = drop],
       df
     )
   }
@@ -310,70 +333,42 @@ recodeY = function(y, type, td) {
     return(as.numeric(y == td$positive))
   if (type == "-1+1")
     return(as.numeric(2L * (y == td$positive) - 1L))
-  if (type %in% c("lcens", "rcens", "icens"))
-    return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "surv")
+    return(Surv(y[, 1L], y[, 2L], type = "right"))
   if (type == "multilabel.factor")
     return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
 }
 
-recodeSurvivalTimes = function(y, from, to) {
-  is.neg.infinite = function(x) is.infinite(x) & x < 0
-  is.pos.infinite = function(x) is.infinite(x) & x > 0
-  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-
-  if (from == to)
-    return(Surv(y[, 1L], y[, 2L], type = lookup[to]))
-  if (setequal(c(from, to), c("lcens", "rcens")))
-    stop("Converting left censored to right censored data (or vice versa) is not possible")
-
-  switch(from,
-    rcens = {
-      time1 = y[, 1L]
-      time2 = ifelse(y[, 2L], y[, 1L], Inf)
-    },
-    lcens = {
-      time1 = ifelse(y[, 2L], y[, 1L], -Inf)
-      time2 = y[, 1L]
-    },
-    icens = {
-      if (to == "lcens") {
-        if (!all(is.neg.infinite(y[, 1L] | y[, 1L] == y[, 2L])))
-          stop("Could not convert interval2 survival data to left censored data")
-        time1 = y[, 2L]
-        time2 = is.infinite(y[, 1L])
-      } else {
-        if (!all(is.pos.infinite(y[, 2L] | y[, 2L] == y[, 1L])))
-          stop("Could not convert interval2 survival data to right censored data")
-        time1 = y[, 1L]
-        time2 = is.infinite(y[, 2L])
-      }
-    }
-  )
-  Surv(time1, time2, type = lookup[to])
-}
-
-#' Extract costs in task.
+#' @title Extract costs in task.
 #'
-#' Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
+#' @description
+#' Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task [\code{\link{CostSensTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task.
 #' @template arg_subset
 #' @return [\code{matrix} | \code{NULL}].
 #' @family task
 #' @export
 getTaskCosts = function(task, subset = NULL) {
-  if (task$task.desc$type != "costsens")
-    return(NULL)
-  subset = checkTaskSubset(subset, size = task$task.desc$size)
-  d = task$env$costs[subset, , drop = FALSE]
-  return(d)
+  UseMethod("getTaskCosts")
+}
+
+#' @export
+getTaskCosts.Task = function(task, subset = NULL) {
+  NULL
+}
+
+getTaskCosts.CostSensTask = function(task, subset = NULL) {
+  subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
+  getTaskDesc(task)$costs[subset, , drop = FALSE]
 }
 
 
-#' Subset data in task.
+#' @title Subset data in task.
 #'
+#' @description See title.
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
@@ -407,22 +402,16 @@ changeData = function(task, data, costs, weights) {
     weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  # FIXME: I hate R, this is all bad
-  if (!is.null(costs))
-    task$env$costs = costs
-  if (is.null(weights))
-    task["weights"] = list(NULL)
-  else
-    task$weights = weights
+  task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, td$weights, task$blocking)
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
   )
 
   return(task)

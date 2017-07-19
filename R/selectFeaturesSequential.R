@@ -18,7 +18,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     better = compare(state, best, control, measures[[1]], thresh)
     # if backward step and we have too many vars we do always go to the next best state with one less var.
     if ((forward && better) || (!forward && (better || (!is.na(control$max.features) && sum(unlist(state$x)) > control$max.features)))) {
-      setOptPathElEOL(opt.path, best.i, dob+1)
+      setOptPathElEOL(opt.path, best.i, dob + 1)
       return(best)
     } else {
       return(NULL)
@@ -31,7 +31,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       if (x[i] == 0) {
         y = x
         y[i] = 1
-        xs[[length(xs)+1L]] = y
+        xs[[length(xs) + 1L]] = y
       }
     xs
   }
@@ -42,7 +42,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       if (x[i] == 1) {
         y = x
         y[i] = 0
-        xs[[length(xs)+1L]] = y
+        xs[[length(xs) + 1L]] = y
       }
     xs
   }
@@ -66,7 +66,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     sfbs = gen.new.states.sbs,
     stop(stri_paste("Unknown method:", method, sep = " "))
   )
-  res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
+  res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE, resample)
   # add stuff to opt.path
   state = list(x = x, y = res$y)
   extra = getTuneThresholdExtra(control, res)
@@ -104,6 +104,6 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
   last = max(opt.path$env$dob)
 
   if (all(opt.path$env$eol[opt.path$env$dob == last] == last))
-    last = last-1
+    last = last - 1
   makeFeatSelResultFromOptPath(learner, measures, control, opt.path, dob = last, ties = "first")
 }

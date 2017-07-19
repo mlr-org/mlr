@@ -15,7 +15,7 @@ getRRPredictions = function(res) {
     res$pred
 }
 
-#' @title Get task description from resample results.
+#' @title Get task description from resample results (DEPRECATED).
 #'
 #' @description
 #' Get a summarizing task description.
@@ -26,6 +26,21 @@ getRRPredictions = function(res) {
 #' @export
 #' @family resample
 getRRTaskDescription = function(res) {
+  .Deprecated("getRRTaskDesc")
+  getRRTaskDesc(res)
+}
+
+#' @title Get task description from resample results (DEPRECATED).
+#'
+#' @description
+#' Get a summarizing task description.
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [\code{TaskDesc}].
+#' @export
+#' @family resample
+getRRTaskDesc = function(res) {
   res$task.desc
 }
 
@@ -53,7 +68,7 @@ getRRPredictionList = function(res, ...) {
   pred = getRRPredictions(res)
   predict.type = pred$predict.type
   time = pred$time
-  task.desc = getRRTaskDescription(res)
+  task.desc = getRRTaskDesc(res)
 
   # split by train and test set
   set = levels(pred$data$set)
@@ -61,10 +76,10 @@ getRRPredictionList = function(res, ...) {
   # get prediction objects for train and test set
   prediction = lapply(set, function(s) {
     # split by resample iterations
-    p.split = pred$data[pred$data$set == s,, drop = FALSE]
+    p.split = pred$data[pred$data$set == s, , drop = FALSE]
     p.split = split(p.split, as.factor(p.split$iter))
     # create prediction object for each resample iteration
-    p.split = lapply(p.split, function (p) {
+    p.split = lapply(p.split, function(p) {
       # get predictions based on predict.type
       if (predict.type == "prob") {
         y = p[, stri_startswith_fixed(colnames(p), "prob."), drop = FALSE]
@@ -79,7 +94,7 @@ getRRPredictionList = function(res, ...) {
         predict.type = predict.type, time = NA_real_, ...)
     })
     # add time info afterwards
-    for(i in seq_along(p.split))
+    for (i in seq_along(p.split))
       p.split[[i]]$time = time[i]
     return(p.split)
   })
@@ -140,4 +155,25 @@ addRRMeasure = function(res, measures) {
     res$aggr = c(res$aggr, aggr)
   }
   return(res)
+}
+
+#' @title Return the error dump of ResampleResult.
+#'
+#' @description
+#' Returns the error dumps generated during resampling, which can be used with \code{debugger()}
+#' to debug errors. These dumps are saved if \code{\link{configureMlr}} configuration \code{on.error.dump},
+#' or the corresponding learner \code{config}, is \code{TRUE}.
+#'
+#' The returned object is a list with as many entries as the resampling being used has folds. Each of these
+#' entries can have a subset of the following slots, depending on which step in the resampling iteration failed:
+#' \dQuote{train} (error during training step), \dQuote{predict.train} (prediction on training subset),
+#' \dQuote{predict.test} (prediction on test subset).
+#'
+#' @param res [\code{ResampleResult}]\cr
+#'   The result of \code{\link{resample}}.
+#' @return [list].
+#' @family debug
+#' @export
+getRRDump = function(res) {
+  return(res$err.dumps)
 }
