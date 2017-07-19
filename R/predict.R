@@ -155,8 +155,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   }
   if (missing(task)) {
     ids = NULL
-  }
-  else {
+  } else {
     if (model$learner$fix.factors.prediction == TRUE) {
       ids = newdata
     } else {
