@@ -1,4 +1,6 @@
 # mlr 2.12:
+## general
+* Support for functional data using matrix columns has been added.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
