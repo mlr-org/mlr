@@ -20,12 +20,8 @@ test_that("listLearnerProperties", {
     "oneclass", "twoclass", "multiclass", "class.weights", "featimp", "oobpreds",
     "functionals", "single.functional")
   expect_equal(listLearnerProperties("classif"), classif)
-<<<<<<< HEAD
   surv = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens",
     "rcens", "icens", "featimp", "oobpreds", "functionals", "single.functional")
-=======
-  surv = c("numerics", "factors", "ordered", "missings", "weights", "prob", "featimp", "oobpreds")
->>>>>>> fix_mylist_learner_unittests
   expect_equal(listLearnerProperties("surv"), surv)
   cluster = c("numerics", "factors", "ordered", "missings", "weights", "prob",
     "functionals", "single.functional")
