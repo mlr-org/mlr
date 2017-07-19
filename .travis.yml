@@ -1,7 +1,7 @@
 language: r
-sudo: false
+sudo: required
 cache: packages
-dist: precise
+dist: trusty
 r:
   - release
 
@@ -33,7 +33,6 @@ r_github_packages:
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
-  - jimhester/covr
 
 before_install:
   # we want to see libpaths and installed packages from cache
@@ -41,7 +40,6 @@ before_install:
   - Rscript -e 'message("INSTALLED PACKS:"); installed.packages()[,1:3]'  # we need a very fresh version of survival for Hmisc, needs be done early in the script
   # we need a very fresh version of survival for Hmisc, needs be done early in the script
   - Rscript -e 'install.packages("survival")'
-  - mkdir $HOME/bin
   - ln -s $(which gcc-4.9) $HOME/bin/gcc
   - ln -s $(which g++-4.9) $HOME/bin/g++
   - ln -s $(which gfortran-4.9) $HOME/bin/gfortran
@@ -73,9 +71,6 @@ after_success:
   - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
   - git push
   - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-
-after_script:
-  - travis_wait 100 Rscript -e 'library(BBmisc);covr::coveralls()'
 
 after_failure:
   - ./travis-tool.sh dump_logs
