@@ -130,7 +130,7 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
     # shuffle data set and remove inds
     # for spatial data we need to get size from test.inds
     if (attributes(desc)$class[1] == "SpCVDesc" | attributes(desc)$class[1] == "RepSpCVDesc") {
-      size = sum(sapply(test.inds, function(x) length(x)))
+      size = sum(viapply(test.inds, function(x) length(x)))
     }
     train.inds = sample(size)
     train.inds = lapply(test.inds, function(x) setdiff(train.inds, x))
