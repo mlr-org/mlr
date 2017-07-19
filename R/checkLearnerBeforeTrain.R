@@ -38,7 +38,8 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
 
   if (td$n.feat["functionals"] == 0 &&
-      (hasLearnerProperties(learner, "functionals") || hasLearnerProperties(learner, "single.functional"))) {
+      (hasLearnerProperties(learner, "functionals") || hasLearnerProperties(learner, "single.functional")) &&
+      !hasLearnerProperties(learner, c("numerics", "factors", "ordered"))) {
     stopf("Task '%s' has no functional inputs but learner '%s' requires functionals!", td$id, learner$id)
   }
 
