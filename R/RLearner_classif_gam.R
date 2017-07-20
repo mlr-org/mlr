@@ -44,10 +44,10 @@ makeRLearner.classif.gam = function() {
       makeLogicalLearnerParam(id = "drop.unused.levels", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "drop.intercept", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(
-      family = "gaussian",
-      model = FALSE
-    ),
+    # par.vals = list(
+    #   family = "gaussian",
+    #   model = FALSE
+    # ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Generalized Additive Models for Classification",
     short.name = "gam",
@@ -65,7 +65,7 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
 
   ctrl = learnerArgsToControl(mgcv::gam.control)
   if (is.null(formula)) {
-    f = getTaskFormula(.task, explicit.features = TRUE)
+    f = BBmisc::asQuoted(getTaskFormula(.task, explicit.features = TRUE))
   } else {
     f = BBmisc::asQuoted(formula)
   }
