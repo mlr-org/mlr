@@ -1,3 +1,4 @@
+library(e1071)
 data = readRDS("R/anomaly.data.5percent.rds")
 
 # data = readRDS("banana.rds")
