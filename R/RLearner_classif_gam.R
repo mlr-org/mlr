@@ -48,7 +48,7 @@ makeRLearner.classif.gam = function() {
     #   family = "gaussian",
     #   model = FALSE
     # ),
-    properties = c("twoclass", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass","multiclass", "numerics", "factors", "prob", "weights"),
     name = "Generalized Additive Models for Classification",
     short.name = "gam",
     note = "Uses mgcv::gam for classification using GAMs"
