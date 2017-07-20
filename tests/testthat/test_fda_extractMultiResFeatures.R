@@ -1,21 +1,21 @@
 context("extractFDAFeatures_multiResNaive")
 
 test_that("extractMultiResFeatures works on data.frame", {
-  I = 100 # number of instances
-  TL  = 200 # length of each time serie instance
-  Ts = replicate(I, rnorm(TL))
-  gp = t(as.data.frame(Ts))
-  ngp = extractMultiResFeatures (data = gp, curve.lens = c(100, 100), res.level = 3, shift = 0.5)
+  i = 100 # number of instances
+  tl  = 200 # length of each time serie instance
+  ts = replicate(i, rnorm(tl))
+  gp = t(as.data.frame(ts))
+  ngp = extractMultiResFeatures(data = gp, curve.lens = c(100, 100), res.level = 3, shift = 0.5)
   expect_true(nrow(ngp) == nrow(gp))
   expect_true(ncol(ngp) == 20L)
 })
 
 
 test_that("getUniFDAMultiResFeatures works on data.frame", {
-  I = 100  # number of instances
-  TL  = 200 # length of each time serie instance
-  Ts = replicate(I, rnorm(TL))
-  gp = t(as.data.frame(Ts))
+  i = 100 # number of instances
+  tl  = 200 # length of each time serie instance
+  ts = replicate(i, rnorm(tl))
+  gp = t(as.data.frame(ts))
   ngp = getUniFDAMultiResFeatures(data = gp, res.level = 3, shift = 0.5)
   expect_true(nrow(ngp) == nrow(gp))
   expect_true(ncol(ngp) == 11L)
@@ -39,8 +39,7 @@ test_that("get...FDAMultiResFeatures works on data.frame", {
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 19L)
 
-  dfn = extractMultiResFeatures(df, col = "NIR", res.level = 3L, shift = 0.5,
-    curve.lens = c(231L))
+  dfn = extractMultiResFeatures(df, col = "NIR", res.level = 3L, shift = 0.5, curve.lens = 231L)
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 9L)
 })

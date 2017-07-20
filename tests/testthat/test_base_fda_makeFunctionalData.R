@@ -256,11 +256,11 @@ test_that("makeFunctionalData produces valid error messages", {
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2))
   expect_class(fdf$fd1, "matrix")
   expect_class(fdf$fd2, "matrix")
-  expect_class(fdf$z, c("factor"))
+  expect_class(fdf$z, "factor")
   fdf2 = makeFunctionalData(df, fd.features = list("fd1" = "x", "fd2" = "y"))
   expect_class(fdf2$fd1, "matrix")
   expect_class(fdf2$fd2, "matrix")
-  expect_class(fdf2$z, c("factor"))
+  expect_class(fdf2$z, "factor")
   expect_equal(fdf, fdf2)
 
   # Exclude.cols works

@@ -13,14 +13,14 @@ test_that("classif_fdaglm behaves like original api", {
   gtest = phoneme[["classtest"]]
 
   dataf = data.frame(glearn)
-  dat = list("df" = dataf,"x" = mlearn)
+  dat = list("df" = dataf, "x" = mlearn)
   # glm sometimes does not converge, we dont want to see that
   a1 = suppressWarnings(fda.usc::classif.glm(glearn ~ x, data = dat))
 
   # FIXME: code looks strange here? the quote?
   a1$C[[1]] = quote(classif.glm)
-  p1 = predict(a1, list("x"=mtest))
-  p2 = predict(a1, list("x"=mlearn))
+  p1 = predict(a1, list("x" = mtest))
+  p2 = predict(a1, list("x" = mlearn))
 
   ph = as.data.frame(mlearn$data)
   ph[, "label"] = glearn

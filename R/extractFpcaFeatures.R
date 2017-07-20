@@ -32,8 +32,8 @@ extractFpcaFeatures = function(data, target, cols, pve = 0.99, npc = NULL) {
   # Fixme: Add other fpca. options, maybe via function args ?
   rst = refund::fpca.sc(Y = data, pve = pve, npc = npc)
   # Order the columns by score
-  features_fpca = rst$scores[, order(rst$evalues,  decreasing = TRUE)]
-  d_fpca = as.data.frame(features_fpca)
-  names(d_fpca) = paste0("Fpca", seq_len(ncol(d_fpca)))
-  return(d_fpca)
+  features.fpca = rst$scores[, order(rst$evalues,  decreasing = TRUE)]
+  df.fpca = as.data.frame(features.fpca)
+  names(df.fpca) = paste0("Fpca", seq_len(ncol(df.fpca)))
+  return(d.fpca)
 }

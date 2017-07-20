@@ -22,7 +22,7 @@ test_that("classif_fdanp behaves like original api", {
   p2 = predict(a1, mlearn)
 
   ph = as.data.frame(mlearn$data)
-  ph[,"label"] = glearn
+  ph[, "label"] = glearn
   phtst = as.data.frame(mtest$data)
   phtst[, "label"] = gtest
 
