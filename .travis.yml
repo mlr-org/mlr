@@ -1,6 +1,7 @@
 language: r
 sudo: false
 cache: packages
+dist: precise
 r:
   - release
 
@@ -23,15 +24,15 @@ env:
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
-r_packages:
-  - roxygen2
-
 r_github_packages:
   - berndbischl/BBmisc
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
+  - jimhester/covr
+  - klutometis/roxygen
+
 
 before_install:
   # we want to see libpaths and installed packages from cache
@@ -71,6 +72,11 @@ after_success:
   - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
   - git push
   - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+
+after_script:
+  - gcov --version
+  - gcc --version
+  - Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
 
 after_failure:
   - ./travis-tool.sh dump_logs
