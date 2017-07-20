@@ -33,6 +33,7 @@ r_github_packages:
   - jimhester/covr
   - klutometis/roxygen
 
+
 before_install:
   # we want to see libpaths and installed packages from cache
   - Rscript -e 'message("LIBPATHS:"); .libPaths()'
