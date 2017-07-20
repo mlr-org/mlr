@@ -2,7 +2,7 @@
 #'
 #' @description
 #' The function extracts the functional principal components from a data.frame
-#' containing functional features
+#' containing functional features.
 #'
 #' @param data [\code{data.frame}]\cr
 #'   Data.frame containing matricies with one row per observation of a single functional
