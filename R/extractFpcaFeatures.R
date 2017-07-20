@@ -12,6 +12,11 @@
 #'   set to be consistent with the API.
 #' @param cols [\code{character} | \code{numeric}]\cr
 #'   Column names or indices, the extraction should be performed on.
+#' @param pve [\code{numeric}]\cr
+#'   Fraction of variance explained for the functional principal components.
+#' @param npc [\code{integer}]\cr
+#'   Number of principal components to extract. Overrides \code{pve} param.
+#'
 #' @return Returns a \code{data.frame}.
 #' @export
 extractFpcaFeatures = function(data, target, cols, pve = 0.99, npc = NULL) {

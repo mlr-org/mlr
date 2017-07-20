@@ -58,7 +58,12 @@ functionalToNormalData = function(df) {
   return(df)
 }
 
-
+#' Check whether the object has functional features.
+#'
+#' @param obj [\code{Task|TaskDesc|data.frame}]\cr
+#'   Object to check.
+#' @return [\code{logical(1)}]
+#' @export
 hasFunctionalFeatures = function(obj) {
   UseMethod("hasFunctionalFeatures")
 }
@@ -79,7 +84,6 @@ hasFunctionalFeatures.TaskDesc = function(obj) {
 }
 
 
-# FIXME: Not sure if this is needed
 # Get only functional features from a task.
 getFunctionalFeatures = function(object, subset = NULL, features, recode.target = "no"){
   UseMethod("getFunctionalFeatures")

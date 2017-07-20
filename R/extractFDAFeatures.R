@@ -23,8 +23,11 @@
 #'   parameters for reExtraction}.
 #' }
 #'
+#' @param obj [\code{Task|data.frame}]\cr
+#'   Task or data.frame to extract functional features from. Must contain functional features
+#'   as matrix columns.
 #' @param target [\code{character}]\cr
-#' Task target column. Only neccessary for data.frames, default: \code{character(0)}.
+#'   Task target column. Only neccessary for data.frames, default: \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
 #'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
 #'   for each functional feature. A signature for the desired function can be provided for
@@ -143,7 +146,9 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' (a FDA feature extraction description)
 #' as returned by \code{\link{extractFDAFeatures}} to extract features
 #' from previously unseen data.
-#'
+#' @param obj [\code{Task|data.frame}]\cr
+#'   Task or data.frame to extract functional features from. Must contain functional features
+#'   as matrix columns.
 #' @param desc [\code{extractFDAFeatDesc}]\cr
 #'   FDAFeature extraction description as returned by \code{\link{extractFDAFeatures}}
 #' @return \code{data.frame} or \code{task} containing the extracted Features

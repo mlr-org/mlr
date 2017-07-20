@@ -13,12 +13,14 @@
 #'   set to be consistent with the API.
 #' @param cols [\code{character} | \code{numeric}]\cr
 #'   Column names or indices, the extraction should be performed on.
-#' @param res.level [\code{integer}]\cr
+#' @param res.level [\code{integer(1)}]\cr
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift [\code{numeric}]\cr
+#' @param shift [\code{numeric(1)}]\cr
 #'   The overlapping proportion when slide the window for one step.
-#' @return Returns a [\code{matrix}] object with each row containing the
-#'   multi-resolution features.
+#' @param curve.lens [\code{integer}]\cr
+#'   Curve subsequence lengths. Needs to sum up to the length of the functional.
+#' @return [\code{matrix}]\cr
+#'   Object with each row containing the extracted multi-resolution features.
 #' @export
 extractMultiResFeatures = function(data, target, cols, res.level = 3L, shift = 0.5, curve.lens = NULL) {
 
@@ -46,14 +48,9 @@ extractMultiResFeatures = function(data, target, cols, res.level = 3L, shift = 0
 #' as non-functional features. The segments length are set in a hierachy, so the
 #' features cover different resolution levels.
 #'
-#' @param data [\code{data.frame}]\cr
-#'   Numeric input matrix containing a single functional covariate.
-#' @param res.level [\code{integer}]\cr
-#'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift [\code{numeric}]\cr
-#'   The overlapping proportion when slide the window for one step.
-#' @return Returns a [\code{matrix}] object with each row containing the
-#'   multi-resolution features.
+#' @inheritParams extractMultiResFeatures
+#' @return [\code{matrix}]\cr
+#'   Object with each row containing the extracted multi-resolution features.
 getUniFDAMultiResFeatures = function(data, res.level, shift) {
   feat.list = apply(data, 1, getCurveFeatures, res.level = res.level, shift = shift)
   data.frame(t(feat.list))
@@ -66,16 +63,9 @@ getUniFDAMultiResFeatures = function(data, res.level, shift) {
 #' as features. The segments length are set in a hierachy way so the features
 #' cover different resolution levels.
 #'
-#' @param data [\code{dataframe}]\cr
-#'   The input matrix.
-#' @param curve.lens [\code{vector}]\cr
-#'   The subcurve length vector, suggest to sum up to the length of the curve.
-#' @param res.level [\code{integer}]\cr
-#'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift [\code{numeric}]\cr
-#'   The overlapping proportion when slide the window for one step.
-#' @return Returns a [\code{matrix}] object with each row containing the
-#'   multi-resolution features.
+#' @inheritParams extractMultiResFeatures
+#' @return [\code{matrix}]\cr
+#'   Object with each row containing the extracted multi-resolution features.
 getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, curve.lens) {
   # Assert that curve.lens sums up to ncol(data)
   stopifnot(sum(curve.lens) == ncol(data))
@@ -94,20 +84,20 @@ getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, curve.lens)
 
 
 # @param x [\code{numeric(n)}]\cr
-# The input curve
+# The input curve.
 getSegmentFeatures = function(x) {
   mean(x)
 }
 
 #'  Get Features from a single (sub-)curve
 #'
-#' @param x[\code{numeric(n)}]\cr
-#' The input curve
+#' @param x [\code{numeric(n)}]\cr
+#' The input curve.
 #' @param res.level [\code{integer}]\cr
-#' The number of hierachy of resolutions
+#' The number of hierachy of resolutions.
 #' @param shift [\code{numeric}]\cr
 #' The overlapping proportion when slide the window for one step
-#' subroutine for extractFDAMultiResFeatures
+#' subroutine for extractFDAMultiResFeatures.
 getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   m = length(x)
   start = 1L
