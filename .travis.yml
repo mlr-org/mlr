@@ -23,6 +23,16 @@ env:
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
+r_packages:
+  - roxygen2
+
+r_github_packages:
+  - berndbischl/BBmisc
+  - berndbischl/parallelMap
+  - berndbischl/ParamHelpers
+  - RevolutionAnalytics/quickcheck/pkg
+  - jimhester/lintr
+
 before_install:
   # we want to see libpaths and installed packages from cache
   - Rscript -e 'message("LIBPATHS:"); .libPaths()'
