@@ -157,13 +157,6 @@ Suggests:
     tgp,
     TH.data,
     xgboost (>= 0.6-2),
-Remotes: 
-    berndbischl/BBmisc,
-    berndbischl/parallelMap,
-    berndbischl/ParamHelpers,
-    RevolutionAnalytics/quickcheck/pkg,
-    jimhester/lintr,
-    klutometis/roxygen
 LazyData: yes
 ByteCompile: yes
 Version: 2.12
