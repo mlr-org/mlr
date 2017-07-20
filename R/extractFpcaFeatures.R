@@ -40,5 +40,5 @@ extractFpcaFeatures = function(data, target, cols, pve = 0.99, npc = NULL) {
   features.fpca = rst$scores[, order(rst$evalues,  decreasing = TRUE)]
   df.fpca = as.data.frame(features.fpca)
   names(df.fpca) = paste0("Fpca", seq_len(ncol(df.fpca)))
-  return(d.fpca)
+  return(df.fpca)
 }

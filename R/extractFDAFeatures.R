@@ -3,7 +3,7 @@
 #' @description
 #' Extract non-functional features from functional features using various methods. \cr
 #' The function \code{extractFDAFeatures} performs the extraction for all functional features
-#' and respective methods specified in \code{feat.methods}. \cr
+#' and respective methods specified in \code{feat.methods}.\cr
 #' Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
 #' which contains \code{learned} coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
