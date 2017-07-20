@@ -111,7 +111,7 @@ extractFDAFpca = function(pve = 0.99, npc = NULL) {
 }
 
 #' @export
-#' @inheritParams extractFpcaFeatures
+#' @inheritParams extractMultiResFeatures
 #' @rdname extractFDAFeatMethods
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
   lrn = function(data, target, cols, vals, res.level = 3L, shift = 0.5, curve.lens = NULL) {
