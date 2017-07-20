@@ -17,7 +17,7 @@
 #' prob = convertingScoresToProbability(dv, parainit = c(0, 1))
 #' plot(1:length(prob), prob, ylim = c(0, 1))
 #'
-convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "trust region"){
+convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "glm"){
 
   assertChoice(optim.method, c("trust region", "BFGS", "glm", "Newton"))
   f = anomaly.score
