@@ -13,7 +13,6 @@ addons:
       - gcc-4.9
       - g++-4.9
       - gfortran-4.9
-      - ggcov-4.9
       - libgmp-dev
       - libgsl0-dev
 env:
@@ -44,6 +43,7 @@ before_install:
   - mkdir $HOME/bin
   - ln -s $(which gcc-4.9) $HOME/bin/gcc
   - ln -s $(which g++-4.9) $HOME/bin/g++
+  - ln -s $(which gcov-4.9) $HOME/bin/gcov
   - ln -s $(which gfortran-4.9) $HOME/bin/gfortran
   - export PATH=$HOME/bin:$PATH
   - echo $LD_LIBRARY_PATH
