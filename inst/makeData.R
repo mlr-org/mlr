@@ -110,8 +110,8 @@ save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = 
 
 # FDA Classification
 gunpoint = load2("../thirdparty/gunpoint.RData")
-gpFdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
-gunpoint.task = makeClassifTask(data = gpFdf, target = "X1", positive = "1")
+gp.fdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
+gunpoint.task = makeClassifTask(data = gp.fdf, target = "X1", positive = "1")
 save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
 
 # FDA Multiclass Classification
