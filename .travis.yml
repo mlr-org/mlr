@@ -49,6 +49,7 @@ before_install:
   - echo $LIBRARY_PATH
 
 
+
 before_script:
   - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
   - R --no-save <<< 'library("devtools"); document()'
