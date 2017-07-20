@@ -69,8 +69,12 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
 
   # set factor levels, present in test but missing in train, to NA
   if (model$learner$fix.factors.prediction == TRUE &&
+      any(vcapply(newdata, function(x) class(x)) == "factor") &&
       any(class(model$learner.model) == "lm" | class(model$learner.model) == "glmmPQL")) {
-    subset = task$env$data[subset, ]
+    # sometimes we have no task here, e.g. in test_tune_tuneMBO@34
+    if (!missing(task)) {
+      subset = task$env$data[subset, ]
+    }
 
     # cheap error catching here
     # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
