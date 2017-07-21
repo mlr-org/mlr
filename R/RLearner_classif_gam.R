@@ -16,7 +16,6 @@ makeRLearner.classif.gam = function() {
       makeDiscreteLearnerParam(id = "family", default = "binomial",
                                values = c("binomial","quasibinomial", "negbin"),
                                tunable = FALSE),
-      makeNumericLearnerParam(id = "weights", default = 1, lower = 0, tunable = FALSE),
       makeDiscreteLearnerParam(id = "binomial.link", default = "logit",
                                values = c("logit", "probit", "cauchit", "log", "cloglog"), requires = quote(family == "binomial"),
                                tunable = FALSE),
@@ -26,7 +25,7 @@ makeRLearner.classif.gam = function() {
       makeDiscreteLearnerParam(id = "nb.link", default = "log",
                                values = c("log", "identity", "sqrt"), requires = quote(family == "negbin"),
                                tunable = FALSE),
-      makeIntegerLearnerParam(id = "theta", default = NULL, requires = quote(family == "negbin"),
+      makeIntegerLearnerParam(id = "theta", requires = quote(family == "negbin"),
                               tunable = TRUE),
       makeNumericLearnerParam(id = "scale", default = 0),
       makeLogicalLearnerParam(id = "select", default = FALSE),
@@ -55,7 +54,7 @@ makeRLearner.classif.gam = function() {
 }
 
 #' @export
-trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula, family = "binomial", binomial.link = "logit",
+trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula = NULL, family = "binomial", binomial.link = "logit",
                                     quasibinomial.link = "logit", Tweedie.link = BBmisc::asQuoted('power(0)'),
                                     negbin.link = "log", K = 1, in.out = NULL,
                                     theta = NULL, p = 1, optimizer = c("outer", "newton"),
@@ -64,7 +63,7 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
 
   ctrl = learnerArgsToControl(mgcv::gam.control)
   if (is.null(formula)) {
-    f = BBmisc::asQuoted(getTaskFormula(.task, explicit.features = TRUE))
+    f = getTaskFormula(.task, explicit.features = TRUE)
   } else {
     f = BBmisc::asQuoted(formula)
   }
@@ -73,7 +72,7 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
                   quasibinomial = stats::quasibinomial(link = make.link(quasibinomial.link)),
                   negbin = mgcv::nb(theta = theta, link = make.link(nb.link)),
   )
-  mgcv::gam(f, data = getTaskData(.task, .subset), weights = weights, control = ctrl, family = family,
+  mgcv::gam(formula = f, data = getTaskData(.task, .subset), weights = .weights, control = ctrl, family = family,
             optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
             drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
             in.out = in.out, ...)
