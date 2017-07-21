@@ -174,7 +174,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     }))
 
     df = as.data.frame(wtdata)
-    colnames(df) = stri_paste("wav", filter, boundary, seq_len(ncol(wtdata)), sep = ".")
+    colnames(df) = stri_paste("wav", filter, seq_len(ncol(wtdata)), sep = ".")
     df
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
