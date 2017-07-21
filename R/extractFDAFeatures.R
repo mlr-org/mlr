@@ -7,7 +7,7 @@
 #' Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
 #' which contains \code{learned} coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
-#' \code{\link{reExtractFDAFeatures}} in order to extract features during the prediction phase. \cr
+#' \code{\link{reextractFDAFeatures}} in order to extract features during the prediction phase. \cr
 #' As \code{feat.methods}, either a method created using \code{\link{makeExtractFDAFeatMethod}},
 #' a built-in method listed or one of the buit-in methods listed in
 #' \code{\link{extractFDAFeatMethods}} can be supplied.
@@ -20,7 +20,7 @@
 #'   \item{fd.cols [\code{character}]}{Functional feature names.}
 #'   \item{colclasses [\code{character}]}{Classes of the features.}
 #'   \item{extractFDAFeat [\code{list}]}{Contains \code{feature.methods} and relevant
-#'   parameters for reExtraction}.
+#'   parameters for reextraction}.
 #' }
 #'
 #' @param obj [\code{Task|data.frame}]\cr
@@ -42,11 +42,11 @@
 #' @examples
 #' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
 #' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
-#' t = makeClassifTask(data = fdf, target = "y")
-#' extracted = extractFDAFeatures(t,
+#' task = makeClassifTask(data = fdf, target = "y")
+#' extracted = extractFDAFeatures(task,
 #' feat.methods = list("x1" = extractFDAMean(), "x2" = extractFDAMinMax()))
 #' print(extracted$task)
-#' reExtractFDAFeatures(t, extracted$desc)
+#' reextractFDAFeatures(t, extracted$desc)
 
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
   assertList(feat.methods)
@@ -154,12 +154,12 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @return \code{data.frame} or \code{task} containing the extracted Features
 #' @family extractFDAFeatures
 #' @export
-reExtractFDAFeatures = function(obj, desc) {
-  UseMethod("reExtractFDAFeatures")
+reextractFDAFeatures = function(obj, desc) {
+  UseMethod("reextractFDAFeatures")
 }
 
 #' @export
-reExtractFDAFeatures.data.frame = function(obj, desc) {
+reextractFDAFeatures.data.frame = function(obj, desc) {
   assertClass(desc, classes = "extractFDAFeatDesc")
 
   # check for new columns
@@ -168,7 +168,7 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
     stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
 
 
-  # reExtract features using reExtractDescription and return
+  # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.cols) {
       do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
@@ -186,10 +186,10 @@ reExtractFDAFeatures.data.frame = function(obj, desc) {
 
 
 #' @export
-reExtractFDAFeatures.Task = function(obj, desc) {
+reextractFDAFeatures.Task = function(obj, desc) {
   # get data and pass to extractor
   df = getTaskData(obj, functionals.as = "matrix")
-  extracted = reExtractFDAFeatures.data.frame(df, desc)
+  extracted = reextractFDAFeatures.data.frame(df, desc)
   # Change data of task and return task
   changeData(obj, extracted)
 }
