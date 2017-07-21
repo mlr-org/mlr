@@ -320,6 +320,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
       features = task.features
     res = list(
       data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, functionals.as),
+      # in the next line we should not rtouch functionals anyway (just Y), so let us keep them as matrix
       target = recodeY(indexHelper(task$env$data, subset, tn, functionals.as = "matrix"), type = recode.target, task$task.desc)
     )
   } else {
@@ -393,8 +394,7 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  # In this step we keep all functionals, because they are converted anyway when passing
-  # them on to the learner and the learner does not support them.
+  # Keep functionals here as they are (matrix)
   task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
