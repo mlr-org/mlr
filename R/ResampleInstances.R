@@ -14,7 +14,7 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL, coords) {
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-instantiateResampleInstance.SpCVDesc = function(desc, task = NULL, size, coords = NULL) {
+instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL, coords = NULL) {
   if (is.null(coords)) {
     coords = data.frame(task$env$data$x, task$env$data$y)
   } else {
