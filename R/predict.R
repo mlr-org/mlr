@@ -61,11 +61,12 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   subset = checkTaskSubset(subset, size)
 
   if (missing(newdata)) {
+    # if learner does not support functional, we convert to df cols
     if (hasLearnerProperties(object$learner, "functionals") ||
-        hasLearnerProperties(object$learner, "single.functional")) {
+      hasLearnerProperties(object$learner, "single.functional")) {
       newdata = getTaskData(task, subset, functionals.as = "matrix")
     } else {
-      newdata = getTaskData(task, subset)
+      newdata = getTaskData(task, subset, functionals.as = "dfcols")
     }
   } else {
     newdata = newdata[subset, , drop = FALSE]
