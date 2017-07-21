@@ -114,16 +114,7 @@ test_that("extract and reExtract Wavelets", {
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
 })
 
-test_that("extract and reExtract Fpca", {
-  gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
-  fm = list("fd" = extractFDAFpca(pve = .9, npc = 10))
-  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
-  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
-  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
-  expect_equal(t3$desc$target, getTaskTargetNames(t4))
-  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
-  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 10L))
-})
+
 
 test_that("extract and reExtract MultiRes", {
   gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
@@ -134,4 +125,40 @@ test_that("extract and reExtract MultiRes", {
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
   expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 12L))
+})
+
+
+test_that("extractFpcaFeatures is equivalent to package", {
+  set.seed(getOption("mlr.debug.seed"))
+  lrn = extractFDAFpca()$learn
+  gp = getTaskData(gunpoint.task, subse = 1:20, target.extra = TRUE, functionals.as = "matrix")
+  fpca.df = lrn(data = gp$data, target = "X1", cols = "fd")
+  expect_true((nrow(gp$data) == nrow(fpca.df)))
+  expect_true((ncol(fpca.df) == 6L))
+  expect_match(names(fpca.df), regexp = "[Fpca]")
+
+  # Is it equivalent to the mlr version?
+  set.seed(getOption("mlr.debug.seed"))
+  fpca.df2 = data.frame(refund::fpca.sc(Y = as.matrix(gp$data$fd))$scores)
+  expect_true((nrow(gp$data) == nrow(fpca.df2)))
+  expect_true((ncol(fpca.df2) == 6L))
+  expect_equivalent(fpca.df, fpca.df2)
+
+  set.seed(getOption("mlr.debug.seed"))
+  gp = getTaskData(gunpoint.task, subset = 1:20, target.extra = TRUE, functionals.as = "matrix")
+  fpca.df = lrn(data = gp$data, target = "X1", cols = "fd", npc = 12L)
+  expect_true((nrow(gp$data) == nrow(fpca.df)))
+  expect_true((ncol(fpca.df) == 12L))
+  expect_match(names(fpca.df), regexp = "[Fpca]")
+})
+
+test_that("extract and reExtract Fpca", {
+  gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
+  fm = list("fd" = extractFDAFpca(pve = .9, npc = 10))
+  t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
+  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
+  expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
+  expect_equal(t3$desc$target, getTaskTargetNames(t4))
+  expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
+  expect_equal(t3$task$task.desc$n.feat["numerics"], c(numerics = 10L))
 })

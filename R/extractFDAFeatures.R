@@ -47,7 +47,7 @@
 #' extracted = extractFDAFeatures(task,
 #' feat.methods = list("x1" = extractFDAMean(), "x2" = extractFDAMinMax()))
 #' print(extracted$task)
-#' reextractFDAFeatures(t, extracted$desc)
+#' reextractFDAFeatures(task, extracted$desc)
 
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
   assertList(feat.methods)
@@ -140,7 +140,7 @@ print.extractFDAFeatDesc = function(x, ...) {
 }
 
 
-#' Re-ExtractFDAFeatures a data set
+#' Re-extract features from a data set
 #'
 #' @description
 #' This function accepts a data frame or a task and an extractFDAFeatDesc
