@@ -22,11 +22,10 @@ test_that("surv_cforest", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::cforest, pars)
-    old.predicts.list[[i]] = predict(m, newdata = surv.test)
+    old.predicts.list[[i]] = -1 * predict(m, newdata = surv.test)
   }
 
-  testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds,
-    old.predicts.list, parset.list2)
+  testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list2)
 
   # issue 556
   parset.list3 = list(

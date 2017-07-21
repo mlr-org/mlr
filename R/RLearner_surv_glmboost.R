@@ -20,7 +20,7 @@ makeRLearner.surv.glmboost = function() {
       family = "CoxPH",
       use.formula = TRUE
     ),
-    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
     note = "`family` has been set to `CoxPH()` by default.",
@@ -42,12 +42,12 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   if (use.formula) {
     f = getTaskFormula(.task)
     model = if (is.null(.weights)) {
-      mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, family = family, ...)
+      mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "surv"), control = ctrl, family = family, ...)
     } else  {
-      mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
+      mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "surv"), control = ctrl, weights = .weights, family = family, ...)
     }
   } else {
-    data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+    data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
     info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
     data$data = as.matrix(fixDataForLearner(data$data, info))
     model = if (is.null(.weights)) {
@@ -66,8 +66,5 @@ predictLearner.surv.glmboost = function(.learner, .model, .newdata, use.formula,
     info = getTrainingInfo(.model)
     .newdata = as.matrix(fixDataForLearner(.newdata, info))
   }
-  if (.learner$predict.type == "response")
-    predict(.model$learner.model, newdata = .newdata, type = "link")
-  else
-    stop("Unknown predict type")
+  predict(.model$learner.model, newdata = .newdata, type = "link")
 }
