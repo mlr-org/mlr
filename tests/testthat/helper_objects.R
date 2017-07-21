@@ -112,7 +112,8 @@ surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 rm(getSurvData)
 
 fda.binary.gp.task = gunpoint.task
-suppressMessages({gp = getTaskData(gunpoint.task, subset = seq_len(100), functionals.as = "dfCols")})
+suppressMessages({gp = getTaskData(gunpoint.task, subset = seq_len(100),
+  functionals.as = "dfcols")})
 gp.fdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
 fda.binary.gp.task.small = makeClassifTask(data = gp.fdf, target = "X1")
 fda.regr.fs.task = fuelsubset.task
