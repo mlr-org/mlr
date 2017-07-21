@@ -5,6 +5,7 @@ makeRLearner.classif.gam = function() {
     package = "mgcv",
     par.set = makeParamSet(
       makeUntypedLearnerParam(id = "formula", default = NULL, tunable = FALSE),
+      makeUntypedLearnerParam(id = "sp", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "in.out", default = NULL, tunable = FALSE),
       makeDiscreteLearnerParam(id = "method", default = "GCV.Cp",
                                values = c("GACV.Cp", "GCV.Cp", "REML", "P-REML", "ML", "P-ML")),
@@ -54,10 +55,9 @@ makeRLearner.classif.gam = function() {
 }
 
 #' @export
-trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula = NULL, family = "binomial", binomial.link = "logit",
-                                    quasibinomial.link = "logit", Tweedie.link = BBmisc::asQuoted('power(0)'),
-                                    negbin.link = "log", K = 1, in.out = NULL,
-                                    theta = NULL, p = 1, optimizer = c("outer", "newton"),
+trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula = NULL, family = "binomial",
+                                    binomial.link = "logit", quasibinomial.link = "logit", negbin.link = "log", K = 1, in.out = NULL,
+                                    theta = NULL, p = 1, optimizer = c("outer", "newton"), sp = NULL,
                                     method = "GCV.Cp", scale = 0, select = FALSE, knots = NULL, H = NULL, gamma = 1, drop.unused.levels = TRUE,
                                     drop.intercept = FALSE, ...) {
 
@@ -70,12 +70,19 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
   family = switch(family,
                   binomial = stats::binomial(link = make.link(binomial.link)),
                   quasibinomial = stats::quasibinomial(link = make.link(quasibinomial.link)),
-                  negbin = mgcv::nb(theta = theta, link = make.link(nb.link)),
+                  negbin = mgcv::nb(theta = theta, link = make.link(nb.link))
   )
-  mgcv::gam(formula = f, data = getTaskData(.task, .subset), weights = .weights, control = ctrl, family = family,
-            optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
-            drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
-            in.out = in.out, ...)
+  if (is.null(.weights)) {
+    mgcv::gam(formula = f, data = getTaskData(.task, .subset), control = ctrl, family = family,
+              optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
+              drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
+              in.out = in.out, sp = sp, ...)
+  } else {
+    mgcv::gam(formula = f, data = getTaskData(.task, .subset), weights = .weights, control = ctrl, family = family,
+              optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
+              drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
+              in.out = in.out, sp = sp, ...)
+  }
 }
 
 #' @export
