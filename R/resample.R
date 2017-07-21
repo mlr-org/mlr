@@ -135,13 +135,13 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   setSlaveOptions()
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
-  calculateResampleIterationResult(learner = learner, task = task, train.i = train.i, test.i = test.i, measures = measures,
+  calculateResampleIterationResult(learner = learner, task = task, i = i, train.i = train.i, test.i = test.i, measures = measures,
     weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
 }
 
 
 #Evaluate one train/test split of the resample function and get one or more performance values
-calculateResampleIterationResult = function(learner, task, train.i, test.i, measures,
+calculateResampleIterationResult = function(learner, task, i, train.i, test.i, measures,
   weights, rdesc, model, extract, show.info) {
 
   err.msgs = c(NA_character_, NA_character_)
