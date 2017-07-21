@@ -4,7 +4,7 @@
 #' Fuses a base learner with an extractFDAFeatures method. Creates a learner object, which can be
 #' used like any other learner object.
 #' Internally uses \code{\link{extractFDAFeatures}} before training the learner and
-#' \code{\link{reExtractFDAFeatures}} before predicting.
+#' \code{\link{reextractFDAFeatures}} before predicting.
 #'
 #' @template arg_learner
 #' @inheritParams extractFDAFeatures
@@ -30,7 +30,7 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
   }
 
   predictfun = function(data, target, args, control) {
-    reExtractFDAFeatures(data, control)
+    reextractFDAFeatures(data, control)
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)

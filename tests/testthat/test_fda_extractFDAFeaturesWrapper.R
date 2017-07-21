@@ -1,4 +1,4 @@
-context("FDA_extactFeatures")
+context("extactFeaturesWrapper")
 test_that("extractFDAFeaturesWrapper", {
   methods = list("UVVIS" = extractFDAMean(), "NIR" = extractFDAMedian())
   lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = methods)
