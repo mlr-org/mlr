@@ -1,4 +1,5 @@
-context("makeFunctionalData")
+context("fda")
+
 
 test_that("makeFunctionalData works", {
   df = data.frame(matrix(rnorm(10^2), nrow = 10))
@@ -13,6 +14,24 @@ test_that("makeFunctionalData works", {
   expect_equal(dim(fdf), c(10, 5))
   expect_class(fdf, "data.frame")
 })
+
+test_that("FDA properties work", {
+  df = data.frame(matrix(rnorm(100), nrow = 10), "target" = sample(letters[1:2], 10, replace = TRUE))
+  # Transform to functional data (fd.features indicate column names or indices)
+  fdf = makeFunctionalData(df, fd.features = list("fd1" = 1:6, "fd2" = 8:10))
+  # Create a classification task
+  tsk = makeClassifTask(data = fdf, target = "target")
+  lrn = makeLearner("classif.fdaknn")
+  # Error for multiple functional inputs
+  expect_error(resample(lrn, subsetTask(tsk, features = 2:3), cv2), "more than one functional inputs")
+  # Error for numeric inputs
+  expect_error(train(lrn, subsetTask(tsk, features = 1:3)), "numeric inputs")
+  expect_error(train(lrn, subsetTask(tsk, features = 1)), "numeric inputs")
+  # No error for single functional
+  expect_silent(train(lrn, subsetTask(tsk, features = 2)))
+  expect_silent(train(lrn, subsetTask(tsk, features = 3)))
+})
+
 
 test_that("makeFunctionalData subsetting works", {
   df = data.frame(matrix(rnorm(10^2), nrow = 10))
@@ -294,27 +313,78 @@ test_that("makeFunctionalData produces valid error messages", {
   expect_error(makeFunctionalData(data.frame(matrix(letters[1:9], nrow = 3)),
     fd.features = list("fd1" = 1:3)), "Must store numerics")
 
-  })
+})
 
-# test_that("Code from Bernd", {
-  # d = list(x1 = matrix(123, 3, 2), x2 = matrix(1:6, 3, 2), x3 = 1:3)
-  # class(d) = "data.frame"
-  # names(d) = c("x1", "x2", "x3")
-  # rownames(d) = 1:3
-  # print(str(d))
-  # lapply(d, class)
-  #
-  # x1 = matrix(123, 3, 2)
-  # x1 = BBmisc::addClasses(x1, "functional")
-  # x2 = matrix(1:6, 3, 2)
-  # x2 = BBmisc::addClasses(x2, "functional")
-  # d = list(x1 = x1, x2 = x2, x3 = 1:3)
-  # class(d) = "data.frame"
-  # names(d) = c("x1", "x2", "x3")
-  # rownames(d) = 1:3
-  # print(str(d))
-  # lapply(d, class)
-  # d = d[1:2, , drop = FALSE]
-  # lapply(d, class)
-# })
+
+test_that("hasFunctionals works", {
+  expect_false(hasFunctionalFeatures(iris.task))
+  expect_false(hasFunctionalFeatures(iris.task$task.desc))
+  expect_false(hasFunctionalFeatures(getTaskData(iris.task)))
+
+  expect_true(hasFunctionalFeatures(fda.binary.gp.task))
+  expect_true(hasFunctionalFeatures(fda.binary.gp.task$task.desc))
+  expect_true(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, functionals.as = "matrix")))
+})
+
+test_that("getTaskData for functional tasks", {
+
+  expect_true(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, functionals.as = "matrix")))
+  expect_message({df = getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "dfCols")})
+  expect_false(hasFunctionalFeatures(df))
+
+  # Subset rows
+  expect_true(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "matrix")))
+  expect_message({df = getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "dfCols")})
+  expect_false(hasFunctionalFeatures(df))
+
+  # We can not really subset cols for this task.
+  expect_false(hasFunctionalFeatures(getTaskData(fda.regr.fs.task, features = 1, functionals.as = "matrix")))
+  expect_true(hasFunctionalFeatures(getTaskData(fda.regr.fs.task, features = 2, functionals.as = "matrix")))
+  expect_true(hasFunctionalFeatures(getTaskData(fda.regr.fs.task, features = 3, functionals.as = "matrix")))
+  expect_silent({df = getTaskData(fda.regr.fs.task, features = 1, functionals.as = "dfCols")})
+  expect_false(hasFunctionalFeatures(df))
+  expect_message({df = getTaskData(fda.regr.fs.task, features = c(2, 3), functionals.as = "dfCols")})
+  expect_false(hasFunctionalFeatures(df))
+
+
+  expect_error(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, features = 2, functionals.as = "matrix")))
+  expect_error(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, features = 2, functionals.as = "dfCols")))
+
+  expect_false(hasFunctionalFeatures(getTaskData(iris.task, functionals.as = "matrix")))
+  expect_silent({df = getTaskData(iris.task, subset = 1:50, functionals.as = "matrix")})
+  expect_false(hasFunctionalFeatures(df))
+  expect_false(hasFunctionalFeatures(getTaskData(iris.task, functionals.as = "dfCols")))
+  expect_silent({df = getTaskData(iris.task, subset = 1:50, functionals.as = "dfCols")})
+  expect_false(hasFunctionalFeatures(df))
+
+})
+
+
+test_that("benchmarking on fda tasks works", {
+
+  lrns = list(makeLearner("classif.fdaknn"), makeLearner("classif.rpart"))
+  expect_equal(vcapply(lrns, function(x) class(x)[1]), c("classif.fdaknn", "classif.rpart"))
+  expect_equal(vcapply(lrns, function(x) class(x)[2]), c("RLearnerClassif", "RLearnerClassif"))
+  expect_message({bmr = benchmark(lrns, fda.binary.gp.task.small, cv2)},  "Functional features have been")
+  expect_class(bmr, "BenchmarkResult")
+  expect_equal(names(bmr$results$gp.fdf), c("classif.fdaknn", "classif.rpart"))
+  expect_numeric(as.data.frame(bmr)$mmce, lower = 0L, upper = 1L)
+
+
+  # FIXME: Should work when Xudong finished FDboost learner
+  lrns2 = list(makeLearner("regr.fdaFDboost"), makeLearner("regr.rpart"))
+  expect_equal(vcapply(lrns2, function(x) class(x)[1]), c("regr.fdaFDboost", "regr.rpart"))
+  expect_equal(vcapply(lrns2, function(x) class(x)[2]), c("RLearnerRegr", "RLearnerRegr"))
+  # expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},  "Functional features have been")
+  # expect_class(bmr2, "BenchmarkResult")
+  # expect_equal(names(bmr2$results$fsFdf), c("regr.fdaFDboost", "regr.rpart"))
+  # expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
+})
+
+
+test_that("benchmarking on fda tasks works", {
+  expect_error(train(makeLearner("classif.fdaknn"), iris.task), "numeric inputs")
+})
+
+
 
