@@ -16,6 +16,7 @@ test_that("measures", {
   mod = train(lrn, task = ct, subset = binaryclass.train.inds)
   pred = predict(mod, task = ct, subset = binaryclass.test.inds)
   perf = performance(pred, measures = ms)
+  expect_numeric(perf, any.missing = FALSE, len = length(ms))
 
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
@@ -32,7 +33,7 @@ test_that("measures", {
   mod = train(lrn, task = regr.task, subset = regr.train.inds)
   pred = predict(mod, task = regr.task, subset = regr.test.inds)
   perf = performance(pred, measures = ms, model = mod)
-  expect_is(perf, "numeric")
+  expect_numeric(perf, any.missing = FALSE, len = length(ms))
 
   # Test multiclass auc
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
@@ -40,15 +41,32 @@ test_that("measures", {
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
   perf = performance(pred, measures = list(multiclass.aunu, multiclass.aunp,
     multiclass.au1u, multiclass.au1p))
-  expect_is(perf, "numeric")
+  expect_numeric(perf, any.missing = FALSE)
 
   # test survival measure
-  ms = list(cindex)
-  lrn = makeLearner("surv.coxph")
-  mod = train(lrn, task = surv.task, subset = surv.train.inds)
-  pred = predict(mod, task = surv.task, subset = surv.test.inds)
-  perf = performance(pred, measures = ms)
-  expect_is(perf, "numeric")
+  ms = list(cindex, cindex.uno, iauc.uno)
+  learners = c("surv.rpart", "surv.coxph")
+
+  for (lrn in learners) {
+    mod = suppressWarnings(train(lrn, task = surv.task, subset = surv.train.inds))
+    pred = predict(mod, task = surv.task, subset = surv.test.inds)
+    perf = performance(pred, model = mod, task = surv.task, measures = ms)
+    Map(function(measure, perf) {
+      r = range(measure$worst, measure$best)
+      expect_number(perf, lower = r[1], upper = r[2], label = measure$id)
+    }, measure = ms, perf = perf)
+  }
+
+  task = lung.task
+  rin = makeResampleInstance("Holdout", task = task)
+  for (lrn in learners) {
+    res = resample(lrn, task, resampling = rin, measures = ms)$aggr
+    expect_numeric(res, any.missing = FALSE)
+    Map(function(measure) {
+      r = range(measure$worst, measure$best)
+      expect_number(res[[sprintf("%s.test.mean", measure$id)]], lower = r[1], upper = r[2], label = measure$id)
+    }, measure = ms)
+  }
 })
 
 test_that("classif measures do not produce integer overflow", {
@@ -1009,4 +1027,26 @@ test_that("measures ppv denominator 0", {
 test_that("measures MCC denominator 0 (#1736)", {
   res = measureMCC(c(TRUE, TRUE, TRUE), c(TRUE, TRUE, TRUE), TRUE, FALSE)
   expect_equal(res, 0)
+})
+
+test_that("setMeasurePars", {
+  mm = mmce
+  expect_list(mm$extra.args, len = 0L, names = "named")
+  mm = setMeasurePars(mm, foo = 1, bar = 2)
+  expect_list(mm$extra.args, len = 2L, names = "named")
+  expect_equal(mm$extra.args, list(foo = 1, bar = 2))
+  expect_list(mmce$extra.args, len = 0L, names = "named") # mmce is untouched?
+
+  mm = setMeasurePars(mmce, foo = 1, bar = 2, par.vals = list(foobar = 99))
+  expect_equal(mm$extra.args, list(foobar = 99, foo = 1, bar = 2))
+
+  # re-setting parameters to NULL
+  mm = setMeasurePars(mmce, foo = 1, bar = 2)
+  expect_list(mm$extra.args, len = 2L, names = "named")
+  mm = setMeasurePars(mm, foo = NULL, bar = 2)
+  expect_equal(mm$extra.args, list(foo = NULL, bar = 2))
+
+  # precedence of ... over par.vals
+  mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
+  expect_equal(mm$extra.args, list(foo = 1))
 })

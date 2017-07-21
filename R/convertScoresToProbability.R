@@ -39,38 +39,15 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
   prob.outlier = function(p, score) {
     1 / (1 + exp(-p[2] * score - p[1]))
   }
-
   if (optim.method == "glm") {
     repeat {
       pold = p
       t =  prob.outlier(p, f)
-
       # minimizing negative likelihood with glm
-      # choose quasibinimial as target is not binary 0/1
       df = data.frame(t, f)
       mod = glm(t ~ f, family = quasibinomial(link = "logit"), data = df)
 
       p = coef(mod)
-
-      # check if pnew is converging
-      diff = abs(p - pold)
-      if (diff[1] < 1e-4 && diff[2] < 1e-4) {
-        list$p = p
-        list$probability = prob.outlier(p, f)
-        break
-      }
-    }
-  } else if (optim.method == "BFGS") {
-    repeat {
-      pold = p
-      t =  prob.outlier(p, f)
-      # negative Log likelihood
-      LL = function(p) { t((1-t)) %*% (p[2] * f + p[1])
-        + sum.help %*% log(1 + exp(-p[2] * f - p[1])) }
-
-      # unconstraint optimization
-      optim = optim(par = p, fn = LL, method = "BFGS")
-      p = optim$par
 
       # check if pnew is converging
       diff = abs(p - pold)

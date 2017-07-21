@@ -189,8 +189,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
-    lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-    target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
+    target = sprintf("Surv(%s, %s, type = \"right\")", target[1L], target[2L])
   } else if (type == "multilabel") {
     target = collapse(target, "+")
   } else if (type == "costsens") {
@@ -343,47 +342,11 @@ recodeY = function(y, type, td) {
     return(as.numeric(y == td$positive))
   if (type == "-1+1")
     return(as.numeric(2L * (y == td$positive) - 1L))
-  if (type %in% c("lcens", "rcens", "icens"))
-    return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "surv")
+    return(Surv(y[, 1L], y[, 2L], type = "right"))
   if (type == "multilabel.factor")
     return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
-}
-
-recodeSurvivalTimes = function(y, from, to) {
-  is.neg.infinite = function(x) is.infinite(x) & x < 0
-  is.pos.infinite = function(x) is.infinite(x) & x > 0
-  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-
-  if (from == to)
-    return(Surv(y[, 1L], y[, 2L], type = lookup[to]))
-  if (setequal(c(from, to), c("lcens", "rcens")))
-    stop("Converting left censored to right censored data (or vice versa) is not possible")
-
-  switch(from,
-    rcens = {
-      time1 = y[, 1L]
-      time2 = ifelse(y[, 2L], y[, 1L], Inf)
-    },
-    lcens = {
-      time1 = ifelse(y[, 2L], y[, 1L], -Inf)
-      time2 = y[, 1L]
-    },
-    icens = {
-      if (to == "lcens") {
-        if (!all(is.neg.infinite(y[, 1L] | y[, 1L] == y[, 2L])))
-          stop("Could not convert interval2 survival data to left censored data")
-        time1 = y[, 2L]
-        time2 = is.infinite(y[, 1L])
-      } else {
-        if (!all(is.pos.infinite(y[, 2L] | y[, 2L] == y[, 1L])))
-          stop("Could not convert interval2 survival data to right censored data")
-        time1 = y[, 1L]
-        time2 = is.infinite(y[, 2L])
-      }
-    }
-  )
-  Surv(time1, time2, type = lookup[to])
 }
 
 #' @title Extract costs in task.
@@ -456,7 +419,7 @@ changeData = function(task, data, costs, weights) {
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
   )
