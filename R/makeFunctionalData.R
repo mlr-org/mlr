@@ -34,7 +34,7 @@ makeFunctionalData = function(data, fd.features = NULL, exclude.cols = integer(0
   # Convert fd.features to column indices
   fd.features = fdFeatsToColumnIndex(data, fd.features, exclude.cols)
   # Create a list of functional feature matricies
-  ffeats = lapply(fd.features, function(x) {makeFunctionalFeature(data[, x, drop = FALSE])})
+  ffeats = lapply(fd.features, function(x) {as.matrix(data[, x, drop = FALSE])})
   # Drop original numeric data
   d = data[, - unlist(fd.features), drop = FALSE]
   # Add functional feature matricies
