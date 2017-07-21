@@ -25,6 +25,7 @@ makeTuneControlGrid = function(same.resampling.instance = TRUE, impute.val = NUL
   log.fun = "default", final.dw.perc = NULL, budget = NULL) {
   assert(checkIntegerish(resolution, lower = 1, any.missing = FALSE, names = "unique"),
     checkIntegerish(resolution, lower = 1, any.missing = FALSE, len = 1))
+  resolution = asInteger(resolution)
   makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
     start = NULL, resolution = resolution,
     tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
