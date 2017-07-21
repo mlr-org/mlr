@@ -4,9 +4,9 @@
 #' Learner for Nonparametric Supervised Classification.
 #'
 #' @export
-makeRLearner.classif.fdanp = function() {
+makeRLearner.classif.fdausc.np = function() {
   makeRLearnerClassif(
-    cl = "classif.fdanp",
+    cl = "classif.fdausc.np",
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "h", default = NULL, special.vals = list(NULL)),
@@ -20,13 +20,13 @@ makeRLearner.classif.fdanp = function() {
     par.vals = list(draw = FALSE),
     properties = c("twoclass", "multiclass", "prob", "single.functional"),
     name = "Nonparametric classification on FDA",
-    short.name = "fdanp",
+    short.name = "fdausc.np",
     note = "Argument draw=FALSE is used as default. Additionally, mod$C[[1]] is set to quote(classif.np)"
   )
 }
 
 #' @export
-trainLearner.classif.fdanp = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
 
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
@@ -43,7 +43,7 @@ trainLearner.classif.fdanp = function(.learner, .task, .subset, .weights = NULL,
 }
 
 #' @export
-predictLearner.classif.fdanp = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.fdausc.np = function(.learner, .model, .newdata, ...) {
 
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)

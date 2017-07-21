@@ -1,6 +1,7 @@
-context("Rlearner_classif_fdaknn")
-
-test_that("classif_fdaknn behaves like original api", {
+context("RLearner_classif_fdausc.kernel")
+# FIXME: This is a copy of knn to be used for kernel, because no unittest
+# for kernel exists.
+test_that("classif_fdausc.kernel behaves like original api", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
 
   data(phoneme, package = "fda.usc")
@@ -14,7 +15,7 @@ test_that("classif_fdaknn behaves like original api", {
   mtest = phoneme[["test"]]
   gtest = phoneme[["classtest"]]
   set.seed(getOption("mlr.debug.seed"))
-  a1 = fda.usc::classif.knn(glearn, mlearn, par.CV = list(trim = 0.5))
+  a1 = fda.usc::classif.kernel(glearn, mlearn)
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
 
@@ -24,7 +25,7 @@ test_that("classif_fdaknn behaves like original api", {
   phtst = as.data.frame(mtest$data)
   phtst[, "label"] = gtest
 
-  lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5))
+  lrn = makeLearner("classif.fdausc.kernel")
   fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
   ftest = makeFunctionalData(phtst, fd.features = list(), exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
@@ -43,7 +44,7 @@ test_that("classif_fdaknn behaves like original api", {
 
 test_that("predicttype prob for fda.usc", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
-  lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
+  lrn = makeLearner("classif.fdakernel", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
 
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, fda.binary.gp.task)
@@ -52,9 +53,9 @@ test_that("predicttype prob for fda.usc", {
 
 })
 
-test_that("resampling fdaknn", {
+test_that("resampling fdausc.kernel", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
-  lrn = makeLearner("classif.fdaknn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
+  lrn = makeLearner("classif.fdausc.kernel", par.vals = list(trim = 0.5), predict.type = "prob")
 
   set.seed(getOption("mlr.debug.seed"))
   r = resample(lrn, fda.binary.gp.task.small, cv2)

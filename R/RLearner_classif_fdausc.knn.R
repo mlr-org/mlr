@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.classif.fdaknn = function() {
+makeRLearner.classif.fdausc.knn = function() {
   makeRLearnerClassif(
-    cl = "classif.fdaknn",
+    cl = "classif.fdausc.knn",
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "knn", lower = 1L, default = NULL, special.vals = list(NULL)),
@@ -14,14 +14,14 @@ makeRLearner.classif.fdaknn = function() {
     ),
     par.vals = list(draw = FALSE),
     properties = c("twoclass", "multiclass", "weights", "prob", "single.functional"),
-    name = "fdaknn",
-    short.name = "fdaknn",
+    name = "fdausc.knn",
+    short.name = "fdausc.knn",
     note = "Argument draw=FALSE is used as default."
   )
 }
 
 #' @export
-trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
 
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
@@ -35,7 +35,7 @@ trainLearner.classif.fdaknn = function(.learner, .task, .subset, .weights = NULL
  }
 
 #' @export
-predictLearner.classif.fdaknn = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.fdausc.knn = function(.learner, .model, .newdata, ...) {
 
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)

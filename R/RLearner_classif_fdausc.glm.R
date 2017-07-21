@@ -4,9 +4,9 @@
 #' Learner for classification using Generalized Linear Models.
 #'
 #' @export
-makeRLearner.classif.fdaglm = function() {
+makeRLearner.classif.fdausc.glm = function() {
   makeRLearnerClassif(
-    cl = "classif.fdaglm",
+    cl = "classif.fdausc.glm",
     package = "fda.usc",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "binomial()", values = list("binomial()", "gaussian()", "Gamma()", "inverse.gaussian()", "poisson()")),
@@ -16,13 +16,13 @@ makeRLearner.classif.fdaglm = function() {
     ),
     properties = c("twoclass", "multiclass", "prob", "functionals"),
     name = "Generalized Linear Models classification on FDA",
-    short.name = "fdaglm",
+    short.name = "fdausc.glm",
     note = "model$C[[1]] is set to quote(classif.glm)"
   )
 }
 
 #' @export
-trainLearner.classif.fdaglm = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.fdausc.glm = function(.learner, .task, .subset, .weights = NULL, ...) {
 
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
@@ -39,7 +39,7 @@ trainLearner.classif.fdaglm = function(.learner, .task, .subset, .weights = NULL
 }
 
 #' @export
-predictLearner.classif.fdaglm = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.fdausc.glm = function(.learner, .model, .newdata, ...) {
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)
   nd = list(x = fda.usc::fdata(mdata = fd))
