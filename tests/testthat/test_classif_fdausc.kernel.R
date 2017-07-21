@@ -44,7 +44,8 @@ test_that("classif_fdausc.kernel behaves like original api", {
 
 test_that("predicttype prob for fda.usc", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
-  lrn = makeLearner("classif.fdakernel", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
+  lrn = makeLearner("classif.fdausc.kernel", par.vals = list(knn = 1L, trim = 0.5),
+    predict.type = "prob")
 
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, fda.binary.gp.task)
