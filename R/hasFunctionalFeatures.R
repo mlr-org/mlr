@@ -9,7 +9,7 @@ hasFunctionalFeatures = function(obj) {
 }
 
 hasFunctionalFeatures.data.frame = function(obj) {
-  any(vcapply(obj, is.matrix))
+  any(vlapply(obj, is.matrix))
 }
 
 hasFunctionalFeatures.Task = function(obj) {
