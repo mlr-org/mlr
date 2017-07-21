@@ -40,49 +40,5 @@ functionalToNormalData = function(df) {
   return(df)
 }
 
-#' Check whether the object has functional features.
-#'
-#' @param obj [\code{Task|TaskDesc|data.frame}]\cr
-#'   Object to check.
-#' @return [\code{logical(1)}]
-#' @export
-hasFunctionalFeatures = function(obj) {
-  UseMethod("hasFunctionalFeatures")
-}
-
-hasFunctionalFeatures.data.frame = function(obj) {
-  # Check if the data.frame contains matricies
-  ifelse(any(vcapply(obj, function(x) class(x)[1L]) == "matrix"), TRUE, FALSE)
-}
-
-hasFunctionalFeatures.Task = function(obj) {
-  # Pass on the task.desc
-  hasFunctionalFeatures.TaskDesc(obj$task.desc)
-}
-
-hasFunctionalFeatures.TaskDesc = function(obj) {
-  # Check if the task.desc has functionals
-  obj$n.feat["functionals"] > 0L
-}
-
-
-# Get only functional features from a task.
-getFunctionalFeatures = function(object, subset = NULL, features, recode.target = "no"){
-  UseMethod("getFunctionalFeatures")
-}
-
-getFunctionalFeatures.Task = function(object, subset = NULL, features, recode.target = "no"){
-  # Get data and pass on to data.frame method
-  df = getTaskData(object, subset, features, target.extra = TRUE, recode.target, functionals.as = "matrix")
-  getFunctionalFeatures.data.frame(df$data)
-}
-
-getFunctionalFeatures.data.frame = function(object, subset = NULL, features, recode.target = "no"){
-  # Keep only columns with class matrix
-  funct.cols = which(vcapply(object, function(x) class(x)[1L]) == "matrix")
-  if (length(funct.cols) == 0)
-    stop("No functional features in the data")
-  object[, funct.cols, drop = FALSE]
-}
 
 
