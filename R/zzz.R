@@ -29,7 +29,7 @@ mlr$learner.properties = list(
   multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
   regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds"),
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds"),
+  surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "featimp", "oobpreds"),
   costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))

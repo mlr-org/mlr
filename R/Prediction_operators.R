@@ -160,8 +160,7 @@ getPredictionTruth.PredictionCluster = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionSurv = function(pred) {
-  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-  Surv(pred$data$truth.time, pred$data$truth.event, type = lookup[pred$task.desc$censoring])
+  Surv(pred$data$truth.time, pred$data$truth.event, type = "right")
 }
 
 #' @export

@@ -44,7 +44,7 @@
 #'     \item{req.task}{Is task object required in calculation? Usually not the case}
 #'     \item{req.model}{Is model object required in calculation? Usually not the case.}
 #'     \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-#'     \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
+#'     \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
 #'   }
 #'   Default is \code{character(0)}.
 #' @param fun [\code{function(task, model, pred, feats, extra.args)}]\cr
@@ -64,6 +64,7 @@
 #'   }
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
+#'   Can be changed after construction via \code{\link{setMeasurePars}}<`3`>.
 #'   Default is empty list.
 #' @param aggr [\code{\link{Aggregation}}]\cr
 #'   Aggregation funtion, which is used to aggregate the values measured
@@ -159,24 +160,6 @@ getDefaultMeasure = function(x) {
   )
 }
 
-
-#' Set aggregation function of measure.
-#'
-#' Set how this measure will be aggregated after resampling.
-#' To see possible aggregation functions: \code{\link{aggregations}}.
-#'
-#' @param measure [\code{\link{Measure}}]\cr
-#'   Performance measure.
-#' @template arg_aggr
-#' @return [\code{\link{Measure}}] with changed aggregation behaviour.
-#' @export
-setAggregation = function(measure, aggr) {
-  assertClass(measure, classes = "Measure")
-  assertClass(aggr, classes = "Aggregation")
-  measure$aggr = aggr
-  return(measure)
-}
-
 #' @export
 print.Measure = function(x, ...) {
   catf("Name: %s", x$name)
@@ -185,5 +168,6 @@ print.Measure = function(x, ...) {
   catf("Minimize: %s", x$minimize)
   catf("Best: %g; Worst: %g", x$best, x$worst)
   catf("Aggregated by: %s", x$aggr$id)
+  catf("Arguments: %s", listToShortString(x$extra.args))
   catf("Note: %s", x$note)
 }
