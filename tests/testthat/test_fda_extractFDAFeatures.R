@@ -85,20 +85,20 @@ test_that("extractFDAFeatures task equal data.frame", {
     "fd2" = extractFDAMean())), regexp = "undefined columns selected")
 })
 
-test_that("reExtractFDAFeatures", {
+test_that("reextractFDAFeatures", {
   gp.subset = subsetTask(gunpoint.task, features = 1L)
   fm = list("fd" = extractFDAFourier(trafo.coeff = "amplitude"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
-  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
+  t4 = reextractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
 })
 
-test_that("extract reExtract feat.methods all", {
+test_that("extract reextract feat.methods all", {
   fm2 = list("all" = extractFDAFourier(trafo.coeff = "amplitude"))
   t3 = extractFDAFeatures(fuelsubset.task, feat.methods = fm2)
-  t4 = reExtractFDAFeatures(fuelsubset.task, t3$desc)
+  t4 = reextractFDAFeatures(fuelsubset.task, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
@@ -130,12 +130,12 @@ test_that("Wavelet method are equal to package", {
   expect_error(extractWaveletFeatures(data = gp, filter = "d10"))
 })
 
-test_that("extract and reExtract Wavelets", {
+test_that("extract and reextract Wavelets", {
   requirePackagesOrSkip("wavelets", default.method = "load")
   gp.subset = subsetTask(gunpoint.task, features = 1L)
   fm = list("fd" = extractFDAWavelets(filter = "haar", boundary = "reflection"))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
-  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
+  t4 = reextractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
@@ -179,11 +179,11 @@ test_that("get...FDAMultiResFeatures works on data.frame", {
   expect_true(ncol(dfn) == 9L)
 })
 
-test_that("extract and reExtract MultiRes", {
+test_that("extract and reextract MultiRes", {
   gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
   fm = list("fd" = extractFDAMultiResFeatures(3L, 0.4))
   t3 = extractFDAFeatures(gp.subset, feat.methods = fm)
-  t4 = reExtractFDAFeatures(gp.subset, t3$desc)
+  t4 = reextractFDAFeatures(gp.subset, t3$desc)
   expect_equal(getTaskFeatureNames(t3$task), getTaskFeatureNames(t4))
   expect_equal(t3$desc$target, getTaskTargetNames(t4))
   expect_equal(dim(getTaskData(t3$task)), dim(getTaskData(t4)))
@@ -217,7 +217,7 @@ test_that("extractFpcaFeatures is equivalent to package", {
   expect_match(names(fpca.df), regexp = "[Fpca]")
 })
 
-test_that("extract and reExtract Fpca", {
+test_that("extract and reextract Fpca", {
   requirePackagesOrSkip(c("mboost", "refund"), default.method = "load")
   gp.subset = subsetTask(gunpoint.task, subset = 1:20, features = 1L)
   fm = list("fd" = extractFDAFpca(pve = .9, npc = 10))
