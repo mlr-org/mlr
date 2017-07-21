@@ -231,6 +231,8 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
 predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
+  # usually low scores are indicator for anomaly
+  # here: low scores = low mse reconstruction error = indicator for normal data
   p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
   p.df = as.matrix(p)
   td = getTaskDesc(.model)
@@ -240,9 +242,13 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
       indices.threshold = order(p.df)[round(length(p.df)*0.95)]  #mse reconstruction error in [0,inf[
       predict.threshold = p.df[indices.threshold]
       p = p.df >= predict.threshold
-      p = factor(p, levels = c("FALSE", "TRUE"), labels = label)
+      p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
   } else {
-    p = convertingScoresToProbability(p.df)$probability
+    # usually low scores are indicator for anomaly
+    # here: low scores = low mse reconstruction error = indicator for normal data
+    # therefore make the scores negative before converting
+    # low prob = anomaly
+    p = convertingScoresToProbability(-p.df)$probability
     p = cbind(p, 1-p)
     colnames(p) = label
   }
