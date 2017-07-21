@@ -83,8 +83,8 @@ test_that("makeFunctionalData works for different inputs", {
 
   # for fd.features is an empy list
   fdf = makeFunctionalData(df, fd.features = list())
-  expect_equal(lapply(fdf, class)[[1]], "matrix")
-  expect_equal(dim(fdf), c(5, 1))
+  expect_equal(lapply(fdf, class)[[1]], "numeric")
+  expect_equal(dim(fdf), c(5, 10))
   expect_class(fdf, "data.frame")
 
   # default
@@ -122,8 +122,8 @@ test_that("makeFunctionalData works for different inputs", {
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
 
-  # for empty lists
-  fdf = makeFunctionalData(df, fd.features = list())
+  # for NULL
+  fdf = makeFunctionalData(df, fd.features = NULL)
   expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")
@@ -137,9 +137,9 @@ test_that("makeFunctionalData works for different inputs", {
   # data.frame already has matrix
   # FIXME: The colnames in prints are ugly.
   df2 = df[, 1, drop = FALSE]
-  df2$fd1 = as.matrix(df[, 2:10])
+  df2$fd = as.matrix(df[, 2:10])
   fdf = makeFunctionalData(df2)
-  expect_equal(lapply(fdf, class)[[1]], "numeric")
+  expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
   expect_class(fdf, "data.frame")
@@ -273,7 +273,7 @@ test_that("makeFunctionalData produces valid error messages", {
 
   df = data.frame("x" = 1:3, "y" = 2:4, "z" = letters[1:3])
   expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1:4)), "Must be a subset of")
-  expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1:3)), "Must store numerics")
+  expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1:3)), "contains non-integer")
 
   # Technically we allow functional features of length >= 1
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2))

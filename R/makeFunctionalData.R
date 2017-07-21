@@ -30,17 +30,18 @@
 #' makeRegrTask(data = d2, target = "target")
 makeFunctionalData = function(data, fd.features = NULL, exclude.cols = integer(0L)) {
   assertDataFrame(data)
-  assertList(fd.features, null.ok = TRUE)
+  assertList(fd.features, null.ok = TRUE, names = "unique")
+
+  if (is.list(fd.features) && length(fd.features) == 0L)
+    return(data)
 
   # Convert fd.features to column indices
   fd.features = fdFeatsToColumnIndex(data, fd.features, exclude.cols)
 
   # All fd.features must refer to numeric or integer columns
-  stopifnot(unique(vcapply(data[, unlist(fd.features), drop = FALSE], class)) %in%
-      c("numeric", "integers"))
-  # If an empty list is provided, return the original data.
-  if (length(fd.features) == 0L)
-    return(data)
+  if (any(unique(vcapply(data[, unlist(fd.features), drop = FALSE], class)) %nin% c("numeric", "integers")))
+    stop("fd.features contains non-integer/numeric columns")
+
 
   # Create a list of functional feature matricies
   ffeats = lapply(fd.features, function(x) {as.matrix(data[, x, drop = FALSE])})
