@@ -37,12 +37,6 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
       but learner '%s' does not support that!", td$id, learner$id)
   }
 
-  if (td$n.feat["functionals"] == 0 &&
-      (hasLearnerProperties(learner, "functionals") || hasLearnerProperties(learner, "single.functional")) &&
-      !hasLearnerProperties(learner, c("numerics", "factors", "ordered"))) {
-    stopf("Task '%s' has no functional inputs but learner '%s' requires functionals!", td$id, learner$id)
-  }
-
   if (!(missing(weights) || is.null(weights)) && !hasLearnerProperties(learner, "weights")) {
     stopf("Weights vector passed to train, but learner '%s' does not support that!", learner$id)
   }
