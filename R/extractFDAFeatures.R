@@ -35,7 +35,8 @@
 #'   Specifying \code{feat.methods} = "all" applies the \code{extratFDAFeatures} method to each
 #'   functional feature. Names of \code{feat.methods} must match column names of functional features.
 #' @return [\code{list}]
-#'   \item{data [\code{data.frame}]}{Extracted features.}
+#'   \item{data [\code{data.frame}|\code{Task}]}{Extracted features, returns a data.frame when
+#'   given a data.frame and a Task when given a Task.}
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object. See description for details.}
 #' @family extractFDAFeatures
 #' @export
