@@ -218,7 +218,7 @@ test_that("getTaskData for functionals", {
 
   # For a classification
   clt = makeClassifTask(data = fdf, target = "tcl")
-  expect_message({tdata1 = getTaskData(clt, functionals.as = "dfCols")}, "have been converted to numerics")
+  expect_message({tdata1 = getTaskData(clt, functionals.as = "dfcols")}, "have been converted to numerics")
   expect_true(!("matrix" %in% lapply(tdata1, class)))
   expect_equal(tdata1[, getTaskTargetNames(clt)], as.factor(letters[1:5]))
 
@@ -231,14 +231,14 @@ test_that("getTaskData for functionals", {
   expect_equal(tdata3$target, as.factor(letters[1:5]))
   expect_true("matrix" %in% unlist(lapply(tdata3$data, class)))
 
-  expect_message({tdata4 = getTaskData(clt, functionals.as = "dfCols", target.extra = TRUE)})
+  expect_message({tdata4 = getTaskData(clt, functionals.as = "dfcols", target.extra = TRUE)})
   expect_true(!("matrix" %in% lapply(tdata4$data, class)))
   expect_equal(tdata4$target, as.factor(letters[1:5]))
 
 
   # For clustering task
   clustt = makeClusterTask(data = fdf)
-  expect_message({tdatacl1 = getTaskData(clustt, functionals.as = "dfCols")}, "have been converted to numerics")
+  expect_message({tdatacl1 = getTaskData(clustt, functionals.as = "dfcols")}, "have been converted to numerics")
   expect_true(!("matrix" %in% lapply(tdatacl1, class)))
   tdatacl2 = getTaskData(clustt, functionals.as = "matrix")
   expect_true("matrix" %in% unlist(lapply(tdatacl2, class)))
@@ -329,32 +329,32 @@ test_that("hasFunctionals works", {
 test_that("getTaskData for functional tasks", {
 
   expect_true(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, functionals.as = "matrix")))
-  expect_message({df = getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "dfCols")})
+  expect_message({df = getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "dfcols")})
   expect_false(hasFunctionalFeatures(df))
 
   # Subset rows
   expect_true(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "matrix")))
-  expect_message({df = getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "dfCols")})
+  expect_message({df = getTaskData(fda.binary.gp.task, subset = 1:50, functionals.as = "dfcols")})
   expect_false(hasFunctionalFeatures(df))
 
   # We can not really subset cols for this task.
   expect_false(hasFunctionalFeatures(getTaskData(fda.regr.fs.task, features = 1, functionals.as = "matrix")))
   expect_true(hasFunctionalFeatures(getTaskData(fda.regr.fs.task, features = 2, functionals.as = "matrix")))
   expect_true(hasFunctionalFeatures(getTaskData(fda.regr.fs.task, features = 3, functionals.as = "matrix")))
-  expect_silent({df = getTaskData(fda.regr.fs.task, features = 1, functionals.as = "dfCols")})
+  expect_silent({df = getTaskData(fda.regr.fs.task, features = 1, functionals.as = "dfcols")})
   expect_false(hasFunctionalFeatures(df))
-  expect_message({df = getTaskData(fda.regr.fs.task, features = c(2, 3), functionals.as = "dfCols")})
+  expect_message({df = getTaskData(fda.regr.fs.task, features = c(2, 3), functionals.as = "dfcols")})
   expect_false(hasFunctionalFeatures(df))
 
 
   expect_error(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, features = 2, functionals.as = "matrix")))
-  expect_error(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, features = 2, functionals.as = "dfCols")))
+  expect_error(hasFunctionalFeatures(getTaskData(fda.binary.gp.task, features = 2, functionals.as = "dfcols")))
 
   expect_false(hasFunctionalFeatures(getTaskData(iris.task, functionals.as = "matrix")))
   expect_silent({df = getTaskData(iris.task, subset = 1:50, functionals.as = "matrix")})
   expect_false(hasFunctionalFeatures(df))
-  expect_false(hasFunctionalFeatures(getTaskData(iris.task, functionals.as = "dfCols")))
-  expect_silent({df = getTaskData(iris.task, subset = 1:50, functionals.as = "dfCols")})
+  expect_false(hasFunctionalFeatures(getTaskData(iris.task, functionals.as = "dfcols")))
+  expect_silent({df = getTaskData(iris.task, subset = 1:50, functionals.as = "dfcols")})
   expect_false(hasFunctionalFeatures(df))
 
 })
