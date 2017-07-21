@@ -4,7 +4,7 @@ fdFeatsToColumnIndex = function(df, fd.features = NULL, exclude.cols = NULL) {
   # If the data.frame already contains matricies, keep them
   if (hasFunctionalFeatures(df)) {
     ids = which(vcapply(df, function(x) class(x)[1L]) == "matrix")
-    fd.features = c(fd.features, ids)
+    exclude.cols = c(exclude.cols, ids)
   }
 
   # If a target column is provided we exclude it from any functional feature
@@ -15,7 +15,7 @@ fdFeatsToColumnIndex = function(df, fd.features = NULL, exclude.cols = NULL) {
     assertSubset(exclude.cols, c(seq_len(nrow(df)), NULL))
   }
 
-  # If fd.features is an empty list, all numerics are a functional feature
+  # If fd.features is NULL, all numerics are a functional feature
   if (is.null(fd.features))
     fd.features = list("fd1" = setdiff(which(vlapply(df, is.numeric)), exclude.cols))
 
