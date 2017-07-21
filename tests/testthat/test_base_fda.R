@@ -21,7 +21,7 @@ test_that("FDA properties work", {
   fdf = makeFunctionalData(df, fd.features = list("fd1" = 1:6, "fd2" = 8:10))
   # Create a classification task
   tsk = makeClassifTask(data = fdf, target = "target")
-  lrn = makeLearner("classif.fdaknn")
+  lrn = makeLearner("classif.fdausc.knn")
   # Error for multiple functional inputs
   expect_error(resample(lrn, subsetTask(tsk, features = 2:3), cv2), "more than one functional inputs")
   # Error for numeric inputs
@@ -189,10 +189,8 @@ test_that("makeFunctionalData Tasks work", {
   expect_equal(clustt$task.desc$n.feat["factors"], c("factors" = 1L))
   expect_equal(clustt$task.desc$n.feat["numerics"], c("numerics" = 1L))
 
-  # FIXME: Functional class gets dropped because of subsetting rows
   subs.clust1 = subsetTask(clustt, subset = 2:4)
   expect_class(subs.clust1, c("ClusterTask", "UnsupervisedTask", "Task"))
-  # expect_equal(subs.clust1$task.desc$n.feat["functionals"], c("functionals" = 3L))
   expect_equal(subs.clust1$task.desc$n.feat["factors"], c("factors" = 1L))
   expect_equal(subs.clust1$task.desc$n.feat["numerics"], c("numerics" = 1L))
   expect_equal(subs.clust1$task.desc$n.feat["ordered"], c("ordered" = 0L))
@@ -362,28 +360,29 @@ test_that("getTaskData for functional tasks", {
 
 test_that("benchmarking on fda tasks works", {
 
-  lrns = list(makeLearner("classif.fdaknn"), makeLearner("classif.rpart"))
-  expect_equal(vcapply(lrns, function(x) class(x)[1]), c("classif.fdaknn", "classif.rpart"))
+  lrns = list(makeLearner("classif.fdausc.knn"), makeLearner("classif.rpart"))
+  expect_equal(vcapply(lrns, function(x) class(x)[1]), c("classif.fdausc.knn", "classif.rpart"))
   expect_equal(vcapply(lrns, function(x) class(x)[2]), c("RLearnerClassif", "RLearnerClassif"))
   expect_message({bmr = benchmark(lrns, fda.binary.gp.task.small, cv2)},  "Functional features have been")
   expect_class(bmr, "BenchmarkResult")
-  expect_equal(names(bmr$results$gp.fdf), c("classif.fdaknn", "classif.rpart"))
+  expect_equal(names(bmr$results$gp.fdf), c("classif.fdausc.knn", "classif.rpart"))
   expect_numeric(as.data.frame(bmr)$mmce, lower = 0L, upper = 1L)
 
 
-  # FIXME: Should work when Xudong finished FDboost learner
-  lrns2 = list(makeLearner("regr.fdaFDboost"), makeLearner("regr.rpart"))
-  expect_equal(vcapply(lrns2, function(x) class(x)[1]), c("regr.fdaFDboost", "regr.rpart"))
+  # Test benchmark mixed learners regression
+  lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"))
+  expect_equal(vcapply(lrns2, function(x) class(x)[1]), c("regr.FDboost", "regr.rpart"))
   expect_equal(vcapply(lrns2, function(x) class(x)[2]), c("RLearnerRegr", "RLearnerRegr"))
-  # expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},  "Functional features have been")
-  # expect_class(bmr2, "BenchmarkResult")
-  # expect_equal(names(bmr2$results$fsFdf), c("regr.fdaFDboost", "regr.rpart"))
-  # expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
+  expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},
+     "Functional features have been")
+  expect_class(bmr2, "BenchmarkResult")
+  expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart"))
+  expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
 })
 
 
 test_that("benchmarking on fda tasks works", {
-  expect_error(train(makeLearner("classif.fdaknn"), iris.task), "numeric inputs")
+  expect_error(train(makeLearner("classif.fdausc.knn"), iris.task), "numeric inputs")
 })
 
 

@@ -4,9 +4,9 @@
 #' Learner for kernel Classification.
 #'
 #' @export
-makeRLearner.classif.fdakernel = function() {
+makeRLearner.classif.fdausc.kernel = function() {
   makeRLearnerClassif(
-    cl = "classif.fdakernel",
+    cl = "classif.fdausc.kernel",
     package = "fda.usc",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "h", default = NULL, special.vals = list(NULL)),
@@ -21,13 +21,13 @@ makeRLearner.classif.fdakernel = function() {
     par.vals = list(draw = FALSE),
     properties = c("twoclass", "multiclass", "prob", "single.functional"),
     name = "Kernel classification on FDA",
-    short.name = "fdakernel",
+    short.name = "fdausc.kernel",
     note = "Argument draw=FALSE is used as default."
   )
 }
 
 #' @export
-trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
@@ -40,7 +40,7 @@ trainLearner.classif.fdakernel = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.classif.fdakernel = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.fdausc.kernel = function(.learner, .model, .newdata, ...) {
 
   # transform the data into fda.usc:fdata class type.
   fd = getFunctionalFeatures(.newdata)

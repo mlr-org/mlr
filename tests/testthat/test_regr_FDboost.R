@@ -4,9 +4,9 @@ context("FDA_regr_FDboost")
 # spectrum(NIR), measured at 2307 wavelengths(lambda = 1/f$). The distance for both data are
 # not equal distance in wavelegnths.
 
-test_that("regr_fdaFDboost is equal to reference", {
+test_that("regr_FDboost is equal to reference", {
   requirePackagesOrSkip("FDboost", default.method = "load")
-  lrn = makeLearner("regr.fdaFDboost", knots = 40L, df = 4L, mstop = 100L)
+  lrn = makeLearner("regr.FDboost", knots = 40L, df = 4L, mstop = 100L)
   set.seed(getOption("mlr.debug.seed"))
   mlr.mod = train(lrn, fda.regr.fs.task)
 

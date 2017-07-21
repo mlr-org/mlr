@@ -1,6 +1,6 @@
-context("RLearner_classif_fdaglm")
+context("RLearner_classif_fdausc.glm")
 
-test_that("classif_fdaglm behaves like original api", {
+test_that("classif_fdausc.glm behaves like original api", {
   requirePackagesOrSkip("fda.usc", default.method = "load")
 
   data(phoneme, package = "fda.usc")
@@ -27,7 +27,7 @@ test_that("classif_fdaglm behaves like original api", {
   phtst = as.data.frame(mtest$data)
   phtst[, "label"] = gtest
 
-  lrn = makeLearner("classif.fdaglm")
+  lrn = makeLearner("classif.fdausc.glm")
   fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
   ftest = makeFunctionalData(phtst, fd.features = list(), exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
