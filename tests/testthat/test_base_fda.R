@@ -76,7 +76,7 @@ test_that("makeFunctionalData works for different inputs", {
   expect_class(fdf, "data.frame")
 
   # for empty lists
-  fdf = makeFunctionalData(df, fd.features = list())
+  fdf = makeFunctionalData(df, fd.features = NULL)
   expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(dim(fdf), c(5, 1))
   expect_class(fdf, "data.frame")

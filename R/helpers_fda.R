@@ -1,6 +1,5 @@
 # Convert fd.features list to list of column indices
-fdFeatsToColumnIndex = function(df, fd.features = list(), exclude.cols = NULL) {
-  assertList(fd.features)
+fdFeatsToColumnIndex = function(df, fd.features = NULL, exclude.cols = NULL) {
 
   # If the data.frame already contains matricies, keep them
   if (hasFunctionalFeatures(df)) {
@@ -17,7 +16,7 @@ fdFeatsToColumnIndex = function(df, fd.features = list(), exclude.cols = NULL) {
   }
 
   # If fd.features is an empty list, all numerics are a functional feature
-  if (length(fd.features) == 0)
+  if (is.null(fd.features))
     fd.features = list("fd1" = setdiff(which(vlapply(df, is.numeric)), exclude.cols))
 
   lapply(fd.features, function(fdfeature) {

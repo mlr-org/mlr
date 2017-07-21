@@ -13,7 +13,8 @@
 #'   Each element defines a functional feature, in the given order of the indices or column names.
 #'   The name of the list element defines the name of the functional feature.
 #'   All selected columns have to correspond to numeric data.frame entries.
-#'   If the list is empty, all numeric features are considered functional.
+#'   The default is \code{NuLL}, which means all numeric features are considered
+#'   to be a single functional \dQuote{fd1}.
 #' @param exclude.cols [\code{character} | \code{integer}]\cr
 #'   Column names or indices to exclude from conversion to functionals, even if they
 #'   are in included in \code{fd.features}.
@@ -29,10 +30,13 @@
 #' makeRegrTask(data = d2, target = "target")
 makeFunctionalData = function(data, fd.features = NULL, exclude.cols = integer(0L)) {
   assertDataFrame(data)
-  assertList(fd.features)
+  assertList(fd.features, null.ok = TRUE)
 
   # Convert fd.features to column indices
   fd.features = fdFeatsToColumnIndex(data, fd.features, exclude.cols)
+  # All fd.features must refer to numeric or integer columns
+  stopifnot(unique(vcapply(data[, unlist(fd.features), drop = FALSE], class)) %in%
+      c("numeric", "integers"))
   # Create a list of functional feature matricies
   ffeats = lapply(fd.features, function(x) {as.matrix(data[, x, drop = FALSE])})
   # Drop original numeric data
