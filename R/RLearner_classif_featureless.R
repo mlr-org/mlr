@@ -32,7 +32,7 @@ makeRLearner.classif.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "majority", values = c("majority", "sample-prior"))
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "missings", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "missings", "prob", "functionals"),
     name = "Featureless classifier",
     short.name = "featureless"
   )

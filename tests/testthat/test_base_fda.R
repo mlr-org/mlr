@@ -353,29 +353,51 @@ test_that("getTaskData for functional tasks", {
 
 test_that("benchmarking on fda tasks works", {
 
-  lrns = list(makeLearner("classif.fdausc.knn"), makeLearner("classif.rpart"))
-  expect_equal(vcapply(lrns, function(x) class(x)[1]), c("classif.fdausc.knn", "classif.rpart"))
-  expect_equal(vcapply(lrns, function(x) class(x)[2]), c("RLearnerClassif", "RLearnerClassif"))
+  lrns = list(makeLearner("classif.fdausc.knn"), makeLearner("classif.rpart"), makeLearner("classif.featureless"))
   expect_message({bmr = benchmark(lrns, fda.binary.gp.task.small, cv2)},  "Functional features have been")
   expect_class(bmr, "BenchmarkResult")
-  expect_equal(names(bmr$results$gp.fdf), c("classif.fdausc.knn", "classif.rpart"))
+  expect_equal(names(bmr$results$gp.fdf), c("classif.fdausc.knn", "classif.rpart", "classif.featureless"))
   expect_numeric(as.data.frame(bmr)$mmce, lower = 0L, upper = 1L)
 
 
   # Test benchmark mixed learners regression
-  lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"))
-  expect_equal(vcapply(lrns2, function(x) class(x)[1]), c("regr.FDboost", "regr.rpart"))
-  expect_equal(vcapply(lrns2, function(x) class(x)[2]), c("RLearnerRegr", "RLearnerRegr"))
+  lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
   expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},
                  "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")
-  expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart"))
+  expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart", "regr.featureless"))
   expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
+  expect_error(train(makeLearner("classif.fdausc.knn"), iris.task), "numeric inputs")
 })
 
+test_that("makeFunctionalData for matricies contained in data.frame", {
+  df = getTaskData(fuelsubset.task, functionals.as = "matrix")
+  df2 = makeFunctionalData(df, fd.features = list ("UVVIS" = "UVVIS", "NIR" = "NIR"),
+                     exclude.cols = c("heatan", "h20"))
+  expect_equivalent(df, df2)
 
-test_that("benchmarking on fda tasks works", {
-  expect_error(train(makeLearner("classif.fdausc.knn"), iris.task), "numeric inputs")
+  df = data.frame(matrix(rnorm(100), ncol = 10L))
+  df$fd1 = matrix(rnorm(100), ncol = 10L)
+  fdf = makeFunctionalData(df, fd.features = list("fd2" = 1:10))
+  expect_data_frame(fdf, nrows = 10L, ncols = 2L)
+  expect_true(all(colnames(fdf) == c("fd1", "fd2")))
+})
+
+test_that("Self-created data.frame's", {
+  df = data.frame(matrix(rnorm(100), ncol = 10L))
+  df$fd1 = matrix(rnorm(100), ncol = 10L)
+  task = makeRegrTask(data = df, target = "X1")
+  expect_class(task, "Task")
+  expect_true(task$task.desc$n.feat["functionals"] == 1L)
+
+  # Throws error for character / factor etc.
+  df2 = data.frame(matrix(rnorm(100), ncol = 10L))
+  df2$fd1 = matrix(rep("a", 100L), ncol = 10L)
+  expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
+
+  df2 = data.frame(matrix(rnorm(100), ncol = 10L))
+  df2$fd1 = matrix(as.factor(rep("a", 100L)), ncol = 10L)
+  expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
 })
 
 
