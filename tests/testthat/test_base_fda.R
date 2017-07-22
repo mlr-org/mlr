@@ -115,8 +115,20 @@ test_that("getFunctionalFeatures works for different inputs", {
   expect_class(fdf3[[1]], "matrix")
   expect_data_frame(fdf3, ncols = 1L, nrows = 200L)
 
- expect_error(getFunctionalFeatures(matrix("blub")))
- expect_error(getFunctionalFeatures(data.frame("blub")), "No functional features in the data")
+  # Throws errors
+  expect_error(getFunctionalFeatures(matrix("blub")))
+  expect_error(getFunctionalFeatures(data.frame("blub")), "No functional features in the data")
+
+  # Works for multiple functionals
+  fdf4 = getFunctionalFeatures(fuelsubset.task)
+  expect_class(fdf4[[1]], "matrix")
+  expect_class(fdf4[[2]], "matrix")
+  expect_data_frame(fdf4, ncols = 2L, nrows = 129L)
+
+  # Params for task method work
+  fdf = getFunctionalFeatures(fuelsubset.task, subset = 1:100, features = 1:2)
+  expect_class(fdf[[1]], "matrix")
+  expect_data_frame(fdf, ncols = 1L, nrows = 100L)
 })
 
 
@@ -280,7 +292,7 @@ test_that("makeFunctionalData produces valid error messages", {
 
 
   expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2), exclude.cols = "x"),
-    "Matrix dimensions need to be")
+               "Matrix dimensions need to be")
 
   # Check if exclude.cols overwrites fd.features
   fdf5 = makeFunctionalData(df, fd.features = list("fd1" = 1:2), exclude.cols = "x")
@@ -290,7 +302,7 @@ test_that("makeFunctionalData produces valid error messages", {
   expect_equal(dim(fdf5$fd1), c(3, 1))
 
   expect_error(makeFunctionalData(data.frame(matrix(letters[1:9], nrow = 3)),
-    fd.features = list("fd1" = 1:3)), "Must store numerics")
+                                  fd.features = list("fd1" = 1:3)), "Must store numerics")
 
 })
 
@@ -355,7 +367,7 @@ test_that("benchmarking on fda tasks works", {
   expect_equal(vcapply(lrns2, function(x) class(x)[1]), c("regr.FDboost", "regr.rpart"))
   expect_equal(vcapply(lrns2, function(x) class(x)[2]), c("RLearnerRegr", "RLearnerRegr"))
   expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},
-     "Functional features have been")
+                 "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")
   expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart"))
   expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
