@@ -91,6 +91,7 @@ extractFDAMinMax = function() {
 #'   of \dQuote{amplitude} or \dQuote{phase}. Default: \dQuote{amplitude}.
 #' @return [\code{data.frame}] containing the fourier coefficients.
 #' @export
+#' @rdname extractFDAFeatMethods
 extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
@@ -157,6 +158,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   See \code{\link[wavelets]{dwt}} for more information.
 #' @return \code{data.frame} object containing the wavelet coefficients.
 #' @export
+#' @rdname extractFDAFeatMethods
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 
   lrn = function(data, target = NULL, cols, filter, boundary) {
@@ -203,6 +205,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'
 #' @return Returns a \code{data.frame}.
 #' @export
+#' @rdname extractFDAFeatMethods
 extractFDAFpca = function(pve = 0.99, npc = NULL) {
 
   lrn = function(data, target, cols, vals, pve, npc) {
@@ -256,6 +259,7 @@ extractFDAFpca = function(pve = 0.99, npc = NULL) {
 #' @return [\code{matrix}]\cr
 #'   Object with each row containing the extracted multi-resolution features.
 #' @export
+#' @rdname extractFDAFeatMethods
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
 
   # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.

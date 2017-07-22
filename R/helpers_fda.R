@@ -1,31 +1,22 @@
-# Convert fd.features list to list of column indices
+# Convert fd.features list to list of column indices and check for consitency.
 fdFeatsToColumnIndex = function(df, fd.features = NULL, exclude.cols = NULL) {
 
   # If the data.frame already contains matricies, keep them
-  if (hasFunctionalFeatures(df)) {
-    ids = which(vcapply(df, function(x) class(x)[1L]) == "matrix")
-    exclude.cols = c(exclude.cols, ids)
-  }
+  fd.mats = which(vcapply(df, function(x) class(x)[1L]) == "matrix")
 
-  # If a target column is provided we exclude it from any functional feature
-  # Target can either be a colum name, column index or NULL.
-  if (class(exclude.cols) == "character") {
-    exclude.cols = which(colnames(df) %in% exclude.cols)
-  } else {
-    assertSubset(exclude.cols, c(seq_len(nrow(df)), NULL))
-  }
-
-  # If fd.features is NULL, all numerics are a functional feature
+  # If fd.features is NULL, all numerics are a single functional feature
+  # Already existing matricies are not converted
   if (is.null(fd.features))
-    fd.features = list("fd1" = setdiff(which(vlapply(df, is.numeric)), exclude.cols))
+    fd.features = list("fd1" = setdiff(which(vlapply(df, is.numeric)), c(exclude.cols, fd.mats)))
 
-  lapply(fd.features, function(fdfeature) {
-    if (is.character(fdfeature)) {
-      assertSubset(fdfeature, colnames(df), empty.ok = FALSE)
-      setdiff(which(colnames(df) %in% fdfeature), exclude.cols)
+  # Return the column index and check if indices/names refer to columns
+  lapply(fd.features, function(fd.feature) {
+    if (is.character(fd.feature)) {
+      assertSubset(fd.feature, colnames(df), empty.ok = FALSE)
+      setdiff(which(colnames(df) %in% fd.feature), exclude.cols)
     } else {
-      assertSubset(fdfeature, seq_len(ncol(df)))
-      setdiff(fdfeature, exclude.cols)
+      assertSubset(fd.feature, seq_len(ncol(df)))
+      setdiff(fd.feature, exclude.cols)
     }
   })
 }
