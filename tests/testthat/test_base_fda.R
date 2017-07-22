@@ -105,45 +105,20 @@ test_that("makeFunctionalData works for different inputs", {
 })
 
 
-test_that("makeFunctionalData works for different inputs", {
+test_that("getFunctionalFeatures works for different inputs", {
+  fdf = getFunctionalFeatures(gunpoint.task)
+  expect_class(fdf[[1]], "matrix")
+  expect_data_frame(fdf, ncols = 1L, nrows = 200L)
 
-  df = data.frame(matrix(rnorm(50), nrow = 5))
-  # for 1-D matricies
-  fdf = makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2:10))
-  expect_equal(lapply(fdf, class)[[1]], "matrix")
-  expect_equal(lapply(fdf, class)[[2]], "matrix")
-  expect_equal(dim(fdf), c(5, 2))
-  expect_class(fdf, "data.frame")
+  fdf2 = getTaskData(gunpoint.task, functionals.as = "matrix")
+  fdf3 = getFunctionalFeatures(fdf2)
+  expect_class(fdf3[[1]], "matrix")
+  expect_data_frame(fdf3, ncols = 1L, nrows = 200L)
 
-  # for column name inputs
-  fdf = makeFunctionalData(df, fd.features = list("fd1" = "X1", "fd2" = paste0("X", 2:10)))
-  expect_equal(lapply(fdf, class)[[1]], "matrix")
-  expect_equal(lapply(fdf, class)[[2]], "matrix")
-  expect_equal(dim(fdf), c(5, 2))
-  expect_class(fdf, "data.frame")
-
-  # for NULL
-  fdf = makeFunctionalData(df, fd.features = NULL)
-  expect_equal(lapply(fdf, class)[[1]], "matrix")
-  expect_equal(dim(fdf), c(5, 1))
-  expect_class(fdf, "data.frame")
-
-  # default
-  fdf = makeFunctionalData(df)
-  expect_equal(lapply(fdf, class)[[1]], "matrix")
-  expect_equal(dim(fdf), c(5, 1))
-  expect_class(fdf, "data.frame")
-
-  # data.frame already has matrix
-  # FIXME: The colnames in prints are ugly.
-  df2 = df[, 1, drop = FALSE]
-  df2$fd = as.matrix(df[, 2:10])
-  fdf = makeFunctionalData(df2)
-  expect_equal(lapply(fdf, class)[[1]], "matrix")
-  expect_equal(lapply(fdf, class)[[2]], "matrix")
-  expect_equal(dim(fdf), c(5, 2))
-  expect_class(fdf, "data.frame")
+ expect_error(getFunctionalFeatures(matrix("blub")))
+ expect_error(getFunctionalFeatures(data.frame("blub")), "No functional features in the data")
 })
+
 
 
 test_that("makeFunctionalData Tasks work", {

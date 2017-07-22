@@ -19,7 +19,7 @@ getFunctionalFeatures.Task = function(object, subset = NULL, features, recode.ta
 getFunctionalFeatures.data.frame = function(object, subset = NULL, features, recode.target = "no"){
   # Keep only columns with class matrix
   funct.cols = which(vcapply(object, function(x) class(x)[1L]) == "matrix")
-  if (length(funct.cols) == 0)
+  if (length(funct.cols) == 0L)
     stop("No functional features in the data")
   object[, funct.cols, drop = FALSE]
 }
