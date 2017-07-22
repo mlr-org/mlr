@@ -277,22 +277,19 @@ test_that("makeFunctionalData produces valid error messages", {
   expect_class(makeFunctionalData(df, fd.features = list(), exclude.cols = "z"), "data.frame")
 
   # Exclude.cols works for character
-  fdf3 = makeFunctionalData(df, fd.features = list(), exclude.cols = c("z", "y"))
-  expect_equal(lapply(fdf3, class)[["z"]], "factor")
-  expect_equal(lapply(fdf3, class)[["fd1"]], "matrix")
-  expect_equal(lapply(fdf3, class)[["y"]], "integer")
+  fdf3 = makeFunctionalData(df, fd.features = NULL, exclude.cols = c("z", "y"))
+  cls = lapply(fdf3, class)
+  expect_equal(cls[["z"]], "factor")
+  expect_equal(cls[["fd1"]], "matrix")
+  expect_equal(cls[["y"]], "integer")
   expect_equal(dim(fdf3$fd1), c(3, 1))
 
   # Exclude.cols works for integer
-  fdf4 = makeFunctionalData(df, fd.features = list(), exclude.cols = c(3, 2))
+  fdf4 = makeFunctionalData(df, fd.features = NULL, exclude.cols = c(3, 2))
   expect_equal(lapply(fdf4, class)[["z"]], "factor")
   expect_equal(lapply(fdf4, class)[["fd1"]], "matrix")
   expect_equal(lapply(fdf4, class)[["y"]], "integer")
   expect_equal(dim(fdf4$fd1), c(3, 1))
-
-
-  expect_error(makeFunctionalData(df, fd.features = list("fd1" = 1, "fd2" = 2), exclude.cols = "x"),
-               "Matrix dimensions need to be")
 
   # Check if exclude.cols overwrites fd.features
   fdf5 = makeFunctionalData(df, fd.features = list("fd1" = 1:2), exclude.cols = "x")
@@ -302,7 +299,7 @@ test_that("makeFunctionalData produces valid error messages", {
   expect_equal(dim(fdf5$fd1), c(3, 1))
 
   expect_error(makeFunctionalData(data.frame(matrix(letters[1:9], nrow = 3)),
-                                  fd.features = list("fd1" = 1:3)), "Must store numerics")
+                                  fd.features = list("fd1" = 1:3)), "fd.features contains non-integer")
 
 })
 

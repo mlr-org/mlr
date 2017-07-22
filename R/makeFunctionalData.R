@@ -34,8 +34,10 @@
 makeFunctionalData = function(data, fd.features = NULL, exclude.cols = NULL) {
   assertDataFrame(data)
   assertList(fd.features, null.ok = TRUE, names = "unique")
+  # Assert that exclude.cols refers to valid columns and convert to index
   if (is.character(exclude.cols)) {
     assertSubset(exclude.cols, colnames(data))
+    exclude.cols = which(colnames(data) %in% exclude.cols)
   } else {
     assertSubset(exclude.cols, seq_len(ncol(data)))
   }
@@ -48,7 +50,7 @@ makeFunctionalData = function(data, fd.features = NULL, exclude.cols = NULL) {
   fd.features = fdFeatsToColumnIndex(data, fd.features, exclude.cols)
 
   # All fd.features must refer to numeric columns
-  if (!any(vlapply(data[, unlist(fd.features), drop = FALSE], is.numeric)))
+  if (!all(vlapply(data[, unlist(fd.features), drop = FALSE], is.numeric)))
     stop("fd.features contains non-integer/numeric columns")
 
   # Create a list of functional feature matricies

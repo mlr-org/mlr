@@ -27,8 +27,8 @@ test_that("classif_fdausc.np behaves like original api", {
   phtst[, "label"] = gtest
 
   lrn = makeLearner("classif.fdausc.np")
-  fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
-  ftest = makeFunctionalData(phtst, fd.features = list(), exclude.cols = "label")
+  fdata = makeFunctionalData(ph, fd.features = NULL, exclude.cols = "label")
+  ftest = makeFunctionalData(phtst, fd.features = NULL, exclude.cols = "label")
   task = makeClassifTask(data = fdata, target = "label")
   set.seed(getOption("mlr.debug.seed"))
   m = train(lrn, task)
