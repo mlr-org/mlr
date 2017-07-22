@@ -74,6 +74,8 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     # sometimes we have no task here, e.g. in test_tune_tuneMBO@34
     if (!missing(task)) {
       subset = task$env$data[subset, ]
+    } else {
+      subset = newdata
     }
 
     # cheap error catching here
