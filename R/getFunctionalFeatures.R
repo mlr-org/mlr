@@ -1,6 +1,10 @@
-# Get only functional features from a task or data.frame.
+#' @title Get only functional features from a task or a data.frame.
+#'
+#' @description
+#' The parameters \dQuote{subset}, \dQuote{features}, and \dQuote{recode.target}
+#' are ignored for the data.frame method.
 #' @inheritParams getTaskData
-#' @return Returns a [\code{data.frame}] containing only functional features.
+#' @return Returns a [\code{data.frame}] containing only the functional features.
 #' @export
 getFunctionalFeatures = function(object, subset = NULL, features, recode.target = "no") {
   UseMethod("getFunctionalFeatures")
