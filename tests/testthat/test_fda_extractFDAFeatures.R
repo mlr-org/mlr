@@ -11,6 +11,30 @@ test_that("extractFDAFeatures", {
   expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "heatan", "h20"))
 })
 
+test_that("extractFeatures multiple times", {
+  methods = list("UVVIS" = extractFDAMean(), "UVVIS" = extractFDAMinMax(),
+                 "NIR" = extractFDAMean())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
+  # check output data
+  df = getTaskData(t$task)
+  expect_is(df, "data.frame")
+  expect_true(nrow(df) == 129L)
+  expect_true(ncol(df) == 6L)
+  expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
+                                "h20", "NIR.mean"))
+
+  methods = list("all" = extractFDAMean(), "all" = extractFDAMinMax())
+  t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
+  # check output data
+  df = getTaskData(t$task)
+  expect_is(df, "data.frame")
+  expect_true(nrow(df) == 129L)
+  expect_true(ncol(df) == 8L)
+  expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
+                                "h20", "NIR.mean", "NIR.min", "NIR.max"))
+})
+
+
 test_that("extractFDAFeatures colnames work", {
   methods = list("NIR" = extractFDAFourier())
   t = subsetTask(fuelsubset.task, subset = 1:30)
@@ -82,7 +106,7 @@ test_that("extractFDAFeatures task equal data.frame", {
   expect_equal(t2$desc$extractFDAFeat$fd$arg$trafo.coeff, "amplitude")
 
   expect_error(extractFDAFeatures(gp.subset, feat.methods = list("fd" = extractFDAFourier(),
-    "fd2" = extractFDAMean())), regexp = "undefined columns selected")
+    "fd2" = extractFDAMean())), regexp = "Must be a subset of")
 })
 
 test_that("reextractFDAFeatures", {

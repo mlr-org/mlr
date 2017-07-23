@@ -18,7 +18,6 @@
 #'   \item{target [\code{character}]}{See argument.}
 #'   \item{coln [\code{character}]}{colum names of data.}
 #'   \item{fd.cols [\code{character}]}{Functional feature names.}
-#'   \item{colclasses [\code{character}]}{Classes of the features.}
 #'   \item{extractFDAFeat [\code{list}]}{Contains \code{feature.methods} and relevant
 #'   parameters for reextraction}.
 #' }
@@ -60,36 +59,41 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   fdf = getFunctionalFeatures(obj)
   assertDataFrame(fdf, min.cols = 1L)
+  assertSubset(unique(names(feat.methods)), choices = c(names(fdf),  "all"))
+  assertCharacter(target)
 
   # If the same transform should be applied to all features, rep method and name accordingly
   # "all" needs to be first list name.
-  if (names(feat.methods)[1] == "all")
-    feat.methods = setNames(rep(feat.methods, ncol(fdf)), names(fdf))
+  all.fds = which(names(feat.methods) == "all")
+  if (length(all.fds) > 0L) {
+    methods = setNames(rep(feat.methods[all.fds], ncol(fdf)), rep(names(fdf), each = length(feat.methods[all.fds])))
+    feat.methods[all.fds] = NULL
+    feat.methods = c(feat.methods, methods)
+  }
 
   desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
     target = target,
     coln = colnames(obj),
-    fd.cols = names(which(vcapply(obj, function(x) class(x)[1L]) == "matrix")),
-    colclasses = vcapply(obj, function(x) class(x)[1L]),
+    fd.cols = NULL,
     extractFDAFeat = namedList(names(feat.methods))
   )
 
-  desc$extractFDAFeat[names(feat.methods)] = feat.methods
-  # cleanup the empty list
+  desc$extractFDAFeat = feat.methods
+  # cleanup empty list items
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
   # Subset fd.cols accordingly
   desc$fd.cols = names(desc$extractFDAFeat)
 
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
-  extracts = Map(function(xn, x, fd.cols) {
+  extracts = Map(function(x, fd.cols) {
     list(
       # feats are the extracted features
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols))),
       args = x$args, # Args passed to x$reextract
       reextract = x$reextract  # pass on reextraction learner for extraction in prediction
     )
-  }, xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.cols)
+  }, x = desc$extractFDAFeat, fd.cols = desc$fd.cols)
 
   # Append Info relevant for reextraction to desc
   desc$extractFDAFeat = lapply(extracts, function(x) {c(x["args"], x["reextract"])})
@@ -97,7 +101,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   # Extract feats for every functional feature and cbind to data.frame
   vals = extractSubList(extracts, "feats", simplify = FALSE)
 
-  if (!any(vlapply(vals, is.data.frame))) {
+  if (!all(vlapply(vals, is.data.frame))) {
     stop("feat.method needs to return a data.frame with one row
       per observation in the original data.")
   } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))) {
@@ -136,7 +140,7 @@ print.extractFDAFeatDesc = function(x, ...) {
   catf("Target: %s", collapse(x$target))
   # FIXME: This could be missunderstood
   catf("Functional Features: %i; Extracted features: %i", length(x$fd.cols),
-    length(x$extractFDAFeat))
+       length(x$extractFDAFeat))
 }
 
 
