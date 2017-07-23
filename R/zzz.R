@@ -32,7 +32,7 @@ mlr$learner.properties = list(
     "single.functional"),
   surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds", "functionals", "single.functional"),
   costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass", "functionals", "single.functional"),
-  fcregr     = c("numerics", "quantile", "weights")
+  fcregr     = c("numerics", "quantile")
 )
 mlr$learner.properties$any = unique(unlist(mlr$learner.properties))
 
