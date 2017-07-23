@@ -6,8 +6,8 @@ test_that("classif_gam_binomial", {
   fo = "Class ~ s(V57) + s(V58) + s(V59) + s(V60)"
 
   m = mgcv::gam(formula = BBmisc::asQuoted(fo), explicit.features = TRUE,
-                data = binaryclass.train[, 57:61], control = learnerArgsToControl(mgcv::gam.control),
-                family = binomial)
+    data = binaryclass.train[, 57:61], control = learnerArgsToControl(mgcv::gam.control),
+    family = binomial)
   p = predict(m, newdata = binaryclass.test, type = "response")
   p.prob = 1 - p
   p.class = as.factor(binaryclass.class.levs[ifelse(p > 0.5, 2, 1)])
