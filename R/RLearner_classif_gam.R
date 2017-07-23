@@ -10,7 +10,6 @@ makeRLearner.classif.gam = function() {
       makeUntypedLearnerParam(id = "paraPen", default = NULL),
       makeDiscreteLearnerParam(id = "method", default = "GCV.Cp",
         values = c("GACV.Cp", "GCV.Cp", "REML", "P-REML", "ML", "P-ML")),
-      # wrong! check how to supply vectors as parameters
       makeDiscreteLearnerParam(id = "optimizer", default = c("outer", "newton"),
         values = list(newton = c("outer", "newton"), perf = "perf", efs = "efs",
         bfgs = c("outer", "bfgs"), optim = c("outer", "optim"),
