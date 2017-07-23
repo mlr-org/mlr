@@ -29,7 +29,7 @@ test_that("classif_gam_binomial", {
     list(family = quasibinomial(link = "logit")),
     list(family = quasibinomial(link = "probit")),
     list(family = quasibinomial(link = "identity")),
-    list(family = quasibinomial(link = "inverse")),
+    #list(family = quasibinomial(link = "inverse")),
     #list(family = quasibinomial(link = "sqrt"))
     list(family = quasibinomial(link = "1/mu^2"))
     #list(family = nb(link = "log"))
