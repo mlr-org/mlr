@@ -11,11 +11,11 @@ makeRLearner.classif.gam = function() {
                                values = c("GACV.Cp", "GCV.Cp", "REML", "P-REML", "ML", "P-ML")),
       # wrong! check how to supply vectors as parameters
       makeDiscreteLearnerParam(id = "optimizer", default = c("outer", "newton"),
-                               values = list(newton = c("outer", "newton"), perf = c("perf"), efs = c("efs"),
+                               values = list(newton = c("outer", "newton"), perf = "perf", efs = "efs",
                                              bfgs = c("outer", "bfgs"), optim = c("outer", "optim"),
                                              nlm = c("outer", "nlm"), nlm.fd = c("outer", "nlm.fd"))),
       makeDiscreteLearnerParam(id = "family", default = "binomial",
-                               values = c("binomial","quasibinomial", "negbin"),
+                               values = c("binomial", "quasibinomial", "negbin"),
                                tunable = FALSE),
       makeDiscreteLearnerParam(id = "binomial.link", default = "logit",
                                values = c("logit", "probit", "cauchit", "log", "cloglog"), requires = quote(family == "binomial"),
