@@ -7,6 +7,7 @@ makeRLearner.classif.gam = function() {
       makeUntypedLearnerParam(id = "formula", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "sp", default = NULL, tunable = FALSE),
       makeUntypedLearnerParam(id = "in.out", default = NULL, tunable = FALSE),
+      makeUntypedLearnerParam(id = "paraPen", default = NULL, tunable = FALSE),
       makeDiscreteLearnerParam(id = "method", default = "GCV.Cp",
                                values = c("GACV.Cp", "GCV.Cp", "REML", "P-REML", "ML", "P-ML")),
       # wrong! check how to supply vectors as parameters
@@ -31,33 +32,23 @@ makeRLearner.classif.gam = function() {
       makeNumericLearnerParam(id = "scale", default = 0),
       makeLogicalLearnerParam(id = "select", default = FALSE),
       makeUntypedLearnerParam(id = "knots", default = NULL, tunable = FALSE),
-      #makeNumericVectorLearnerParam(id = "sp"),
-      #makeNumericLearnerParam(id = "min.sp"),
       makeNumericLearnerParam(id = "H"),
       makeNumericLearnerParam(id = "gamma", default = 1, lower = 0),
-      #makeNumericLearnerParam(id = "in.out"),
       makeLogicalLearnerParam(id = "fit", default = TRUE),
-      # "optional list specifying any penalties to be applied to parametric model terms. gam.models explains more."
-      # how to specify such a Param?
-      # makeDiscreteLearnerParam(id = "paraPen", default = NULL, values = list()),
       makeLogicalLearnerParam(id = "drop.unused.levels", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "drop.intercept", default = FALSE, tunable = FALSE)
     ),
-    # par.vals = list(
-    #   family = "gaussian",
-    #   model = FALSE
-    # ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Generalized Additive Models for Classification",
     short.name = "gam",
-    note = "Uses mgcv::gam for classification using GAMs"
+    note = "Uses mgcv::gam for classification using GAMs. Please specify smooth terms using the formula argument. If missing, all predictors are assumed to be linear."
   )
 }
 
 #' @export
 trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula = NULL, family = "binomial",
-                                    binomial.link = "logit", quasibinomial.link = "logit", negbin.link = "log", K = 1, in.out = NULL,
-                                    theta = NULL, p = 1, optimizer = c("outer", "newton"), sp = NULL,
+                                    binomial.link = "logit", quasibinomial.link = "logit", nb.link = "log", K = 1, in.out = NULL,
+                                    theta = NULL, p = 1, optimizer = c("outer", "newton"), sp = NULL, paraPen = NULL,
                                     method = "GCV.Cp", scale = 0, select = FALSE, knots = NULL, H = NULL, gamma = 1, drop.unused.levels = TRUE,
                                     drop.intercept = FALSE, ...) {
 
@@ -76,12 +67,12 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
     mgcv::gam(formula = f, data = getTaskData(.task, .subset), control = ctrl, family = family,
               optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
               drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
-              in.out = in.out, sp = sp, ...)
+              in.out = in.out, sp = sp, paraPen = paraPen, ...)
   } else {
     mgcv::gam(formula = f, data = getTaskData(.task, .subset), weights = .weights, control = ctrl, family = family,
               optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
               drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
-              in.out = in.out, sp = sp, ...)
+              in.out = in.out, sp = sp, paraPen = paraPen, ...)
   }
 }
 
