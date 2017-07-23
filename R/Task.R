@@ -90,7 +90,7 @@
 #' }
 NULL
 
-makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeTask = function(type, data, weights = NULL, blocking = NULL, fd.features = NULL, fd.grids = NULL, fixup.data = "warn", check.data = TRUE) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -121,6 +121,34 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       assertFactor(blocking, len = nrow(data), any.missing = FALSE)
       if (length(blocking) && length(blocking) != nrow(data))
         stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+    }
+
+    # If  no fd.features are provided we assume there are no functional covariates
+    if (!is.null(fd.features)) {
+      assertList(fd.features)
+      fdfns = names(fd.features)
+      lapply(fd.features, function(fdc) {
+        # Can be either column name or index
+        assertClass(fdc, classes = c("numeric", "character"))
+        if (is.character(fdc))
+          fdc = which(colnames(data) %in% fdc)
+      })
+
+      # if the user doesn't specify the fd.grids, we assume grids to be a list of 1,...,k
+      if (is.null(fd.grids)) {
+        fd.grids = setNames(lapply(X = names(fd.features), FUN = function(name) {
+          fd.grids = lapply(fdfns, function(name) seq_along(fd.features[[name]]))
+          seq_len(length(fd.features[[name]]))
+        }), names(fd.features))
+      }
+      # Make functionalFeatures
+      fdf = lapply(fdfns, function(fn) {
+        makeFunctionalFeature(data[, fd.features[[fn]], drop = FALSE], fn, fd.grids[[fn]])
+      })
+
+      # Add the functional features to data and get rid of original columns
+      data = data[, - do.call("c", fd.features), drop = FALSE]
+      data[, fdfns] = fdf
     }
   }
 
