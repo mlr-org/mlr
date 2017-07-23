@@ -56,7 +56,7 @@ test_that("classif_gam_binomial", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  binaryclass.formula = paste0("Class ~ ", paste(sprintf("s(V%d) + ", 57:60), collapse = ''), collapse = '')
+  binaryclass.formula = paste0("Class ~ ", paste(sprintf("s(V%d) + ", 57:60), collapse = ""), collapse = "")
   binaryclass.formula = BBmisc::asQuoted(substr(binaryclass.formula, 1, nchar(binaryclass.formula) - 3))
 
   # throws warnings due to gam behaviour + dataset.
