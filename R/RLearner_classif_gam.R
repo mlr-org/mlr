@@ -4,39 +4,34 @@ makeRLearner.classif.gam = function() {
     cl = "classif.gam",
     package = "mgcv",
     par.set = makeParamSet(
-      makeUntypedLearnerParam(id = "formula", default = NULL, tunable = FALSE),
-      makeUntypedLearnerParam(id = "sp", default = NULL, tunable = FALSE),
-      makeUntypedLearnerParam(id = "in.out", default = NULL, tunable = FALSE),
-      makeUntypedLearnerParam(id = "paraPen", default = NULL, tunable = FALSE),
+      makeUntypedLearnerParam(id = "formula", default = NULL),
+      makeUntypedLearnerParam(id = "sp", default = NULL),
+      makeUntypedLearnerParam(id = "in.out", default = NULL),
+      makeUntypedLearnerParam(id = "paraPen", default = NULL),
       makeDiscreteLearnerParam(id = "method", default = "GCV.Cp",
-                               values = c("GACV.Cp", "GCV.Cp", "REML", "P-REML", "ML", "P-ML")),
+        values = c("GACV.Cp", "GCV.Cp", "REML", "P-REML", "ML", "P-ML")),
       # wrong! check how to supply vectors as parameters
       makeDiscreteLearnerParam(id = "optimizer", default = c("outer", "newton"),
-                               values = list(newton = c("outer", "newton"), perf = "perf", efs = "efs",
-                                             bfgs = c("outer", "bfgs"), optim = c("outer", "optim"),
-                                             nlm = c("outer", "nlm"), nlm.fd = c("outer", "nlm.fd"))),
+        values = list(newton = c("outer", "newton"), perf = "perf", efs = "efs",
+        bfgs = c("outer", "bfgs"), optim = c("outer", "optim"),
+        nlm = c("outer", "nlm"), nlm.fd = c("outer", "nlm.fd"))),
       makeDiscreteLearnerParam(id = "family", default = "binomial",
-                               values = c("binomial", "quasibinomial", "negbin"),
-                               tunable = FALSE),
+        values = c("binomial", "quasibinomial", "negbin")),
       makeDiscreteLearnerParam(id = "binomial.link", default = "logit",
-                               values = c("logit", "probit", "cauchit", "log", "cloglog"), requires = quote(family == "binomial"),
-                               tunable = FALSE),
+        values = c("logit", "probit", "cauchit", "log", "cloglog"), requires = quote(family == "binomial")),
       makeDiscreteLearnerParam(id = "quasibinomial.link", default = "logit",
-                               values = c("logit", "probit", "identity", "inverse", "log", "1/mu^2", "sqrt"), requires = quote(family == "quasibinomial"),
-                               tunable = FALSE),
+        values = c("logit", "probit", "identity", "inverse", "log", "1/mu^2", "sqrt"), requires = quote(family == "quasibinomial")),
       makeDiscreteLearnerParam(id = "nb.link", default = "log",
-                               values = c("log", "identity", "sqrt"), requires = quote(family == "negbin"),
-                               tunable = FALSE),
-      makeIntegerLearnerParam(id = "theta", requires = quote(family == "negbin"),
-                              tunable = TRUE),
+        values = c("log", "identity", "sqrt"), requires = quote(family == "negbin")),
+      makeIntegerLearnerParam(id = "theta", requires = quote(family == "negbin")),
       makeNumericLearnerParam(id = "scale", default = 0),
       makeLogicalLearnerParam(id = "select", default = FALSE),
-      makeUntypedLearnerParam(id = "knots", default = NULL, tunable = FALSE),
+      makeUntypedLearnerParam(id = "knots", default = NULL),
       makeNumericLearnerParam(id = "H"),
       makeNumericLearnerParam(id = "gamma", default = 1, lower = 0),
       makeLogicalLearnerParam(id = "fit", default = TRUE),
-      makeLogicalLearnerParam(id = "drop.unused.levels", default = TRUE, tunable = FALSE),
-      makeLogicalLearnerParam(id = "drop.intercept", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "drop.unused.levels", default = TRUE),
+      makeLogicalLearnerParam(id = "drop.intercept", default = FALSE)
     ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Generalized Additive Models for Classification",
@@ -47,10 +42,10 @@ makeRLearner.classif.gam = function() {
 
 #' @export
 trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, formula = NULL, family = "binomial",
-                                    binomial.link = "logit", quasibinomial.link = "logit", nb.link = "log", K = 1, in.out = NULL,
-                                    theta = NULL, p = 1, optimizer = c("outer", "newton"), sp = NULL, paraPen = NULL,
-                                    method = "GCV.Cp", scale = 0, select = FALSE, knots = NULL, H = NULL, gamma = 1, drop.unused.levels = TRUE,
-                                    drop.intercept = FALSE, ...) {
+  binomial.link = "logit", quasibinomial.link = "logit", nb.link = "log", K = 1, in.out = NULL,
+  theta = NULL, p = 1, optimizer = c("outer", "newton"), sp = NULL, paraPen = NULL,
+  method = "GCV.Cp", scale = 0, select = FALSE, knots = NULL, H = NULL, gamma = 1, drop.unused.levels = TRUE,
+  drop.intercept = FALSE, ...) {
 
   ctrl = learnerArgsToControl(mgcv::gam.control)
   if (is.null(formula)) {
@@ -59,20 +54,20 @@ trainLearner.classif.gam = function(.learner, .task, .subset, .weights = NULL, f
     f = BBmisc::asQuoted(formula)
   }
   family = switch(family,
-                  binomial = stats::binomial(link = make.link(binomial.link)),
-                  quasibinomial = stats::quasibinomial(link = make.link(quasibinomial.link)),
-                  negbin = mgcv::nb(theta = theta, link = make.link(nb.link))
+    binomial = stats::binomial(link = make.link(binomial.link)),
+    quasibinomial = stats::quasibinomial(link = make.link(quasibinomial.link)),
+    negbin = mgcv::nb(theta = theta, link = make.link(nb.link))
   )
   if (is.null(.weights)) {
     mgcv::gam(formula = f, data = getTaskData(.task, .subset), control = ctrl, family = family,
-              optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
-              drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
-              in.out = in.out, sp = sp, paraPen = paraPen, ...)
+      optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
+      drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
+      in.out = in.out, sp = sp, paraPen = paraPen, ...)
   } else {
     mgcv::gam(formula = f, data = getTaskData(.task, .subset), weights = .weights, control = ctrl, family = family,
-              optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
-              drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
-              in.out = in.out, sp = sp, paraPen = paraPen, ...)
+      optimizer = optimizer, method = method, knots = knots, H = H, gamma = gamma,
+      drop.unused.levels = drop.unused.levels, drop.intercept = drop.intercept,
+      in.out = in.out, sp = sp, paraPen = paraPen, ...)
   }
 }
 
