@@ -1,8 +1,7 @@
 # mlr 2.12:
-## general
-* Support for functional data using matrix columns has been added.
 
 ## general
+* Support for functional data (fda) using matrix columns has been added.
 * relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
 * refactored the resample progress messages to give a better overview and
@@ -11,9 +10,6 @@
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
-* makeFunctionalData: Allows for the reformating of a data.frame with numeric columns to matrix columns 
-  which can be handled with functional data (fda-) learners. Data.frame's obtained from makeFunctionalData()
-  can be used with make{Classif,Regr}Task.
 * batchmark: allow resample instances and reduction of partial results
 
 ## functions - new
@@ -22,6 +18,13 @@
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 * setMeasurePars
+* makeFunctionalData
+* hasFunctionalFeatures
+* extractFDAFeatures, reextractFDAFeatures
+* extractFDAFourier, extractFDAFpca, extractFDAMean, extractFDAMedian,
+  extractFDAMinMax, extractFDAMultiResFeatures, extractFDAWavelets
+* makeExtractFDAFeatMethod
+* makeExtractFDAFeatsWrapper
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -32,7 +35,6 @@
 
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
-* fda learners: Added new learners {classif,regr}.fda{...} that can handle functional data.
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 
 ## learners - new
