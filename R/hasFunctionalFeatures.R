@@ -1,5 +1,8 @@
 #' @title Check whether the object conatins functional features.
 #'
+#' @description
+#' See title.
+#'
 #' @param obj [\code{Task} | \code{TaskDesc} | \code{data.frame}]\cr
 #'   Object to check.
 #' @return [\code{logical(1)}]

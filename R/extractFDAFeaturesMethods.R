@@ -1,5 +1,4 @@
-#' @title
-#' Create a custom feature extraction method for functional data.
+#' @title Create a custom feature extraction method for functional data.
 #'
 #' @description
 #' This is a constructor to create your own imputation methods.
@@ -9,65 +8,35 @@
 #'   out of data frame \code{data}. Argument \code{target} specifies
 #'   the target column of the learning task.
 #'   The function has to return a named list of values.
+#'   Arguments are:
+#'   \item data [\code{data.frame}]\cr
+#'     Data.frame with one row per observation of a single functional feature
+#'     or time series and one column per measurement time point.
+#'     All entries need to be numeric.
+#' @param data [\code{data.frame}]\cr
+#'   Data.frame containing matricies with one row per observation of a single functional
+#'   or time series and one column per measurement time point. All entries need to be numeric.
+#'   \item target [\code{character}]\cr
+#'   Name of the target variable. Default: \dQuote{NULL}.
+#'   The variable is only set to be consistent with the API.
+#'   \item cols [\code{character} | \code{numeric}]\cr
+#'     column names or indices, the extraction should be performed on.
+#' @family fda
+#' @export
+#' name extractFDAFeatMethod
+
+
 #' @param reextract [\code{function(data, target, cols, ...)}]\cr
 #'   Function used for reextracting data in predict phase. Can be equal to \code{learn}.
 #' @param args [\code{list}]\cr
 #'   Named list of arguments to pass to \code{learn} via \code{...}.
-#' @family extractFDAFeatures
 #' @export
+#' @family fda
 makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
   assertFunction(learn, args = c("data", "target", "cols"))
   assertFunction(reextract, args = c("data", "target", "cols"))
   assertList(args, names = "named")
   setClasses(list(learn = learn, reextract = reextract, args = args), "extractFDAFeatMethod")
-}
-
-#' Built-in imputation methods.
-#'
-#' The built-ins are:
-#' \itemize{
-#'   \item \code{extractFDAMedian()} for extracting the median from a curve.
-#'   \item \code{extractFDAMean()} for extracting the mean from a curve.
-#'   \item \code{extractFDAMinMax()} for extracting the min and max from a curve.
-#'   \item \code{extractFDAFourier(trafo.coeff)} for extracting fourier coefficients from a curve.
-#'   \item \code{extractFDAWavelets(filter, boundary)} for extracting wavelets from a curve.
-#'  }
-#' @name extractFDAFeatMethods
-#' @rdname extractFDAFeatMethods
-#' @family extractFDAFeatures
-NULL
-
-
-#' @export
-#' @rdname extractFDAFeatMethods
-extractFDAMedian = function() {
-  lrn = function(data, target, cols) {data.frame("median" = apply(data[, cols, drop = FALSE], 1, median, na.rm = TRUE))}
-  makeExtractFDAFeatMethod(
-    learn = lrn,
-    reextract = lrn
-  )
-}
-
-#' @export
-#' @rdname extractFDAFeatMethods
-extractFDAMean = function() {
-  lrn = function(data, target, cols) {data.frame("mean" = apply(data[, cols, drop = FALSE],
-                                                                1, mean, na.rm = TRUE))}
-  makeExtractFDAFeatMethod(
-    learn = lrn,
-    reextract = lrn
-  )
-}
-
-#' @export
-#' @rdname extractFDAFeatMethods
-extractFDAMinMax = function() {
-  # Used for quick testing with >1 columns per return
-  lrn = function(data, target, cols) {
-    data.frame("min" = apply(data[, cols, drop = FALSE], 1, min, na.rm = TRUE),
-               "max" = apply(data[, cols], 1, max, na.rm = TRUE))
-  }
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
 }
 
 
@@ -77,14 +46,6 @@ extractFDAMinMax = function() {
 #' The function extracts features from functional data based on the fast fourier
 #' transform. For more details refer to \code{\link[stats]{fft}}.
 #'
-#' @param data [\code{data.frame}]\cr
-#'   Data.frame with one row per observation of a single functional feature or time series and
-#'   one column per measurement time point. All entries need to be numeric.
-#' @param target [\code{character}]\cr
-#'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
-#'   set to be consistent with the API.
-#' @param cols [\code{character} | \code{numeric}]\cr
-#'   The column names or indices, the extraction should be performed on.
 #' @param trafo.coeff [\code{character}]\cr
 #'   Specifies which transformation of the complex frequency domain
 #'   representation should be calculated as a feature representation. Must be one
@@ -95,9 +56,6 @@ extractFDAMinMax = function() {
 extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
-  lrn = function(data, target, cols, vals, trafo.coeff) {
-    extractFourierFeatures(data = data, target = NULL, cols = cols, trafo.coeff = trafo.coeff)
-  }
 
   lrn = function(data, target = NULL, cols, trafo.coeff) {
 
@@ -139,12 +97,6 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' The function extracts discrete wavelet transform coefficients from the raw
 #' functional data.
 #'
-#' @param data [\code{data.frame}]\cr
-#'   Data.frame with one row per observation of a single functional or time series and
-#'   one column per measurement time point. All entries need to be numeric.
-#' @param target [\code{character}]\cr
-#'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
-#'   set to be consistent with the API.
 #' @param cols [\code{character} | \code{numeric}]\cr
 #'   Column names or indices, the extraction should be performed on.
 #' @param filter [\code{character}]\cr
@@ -158,7 +110,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   See \code{\link[wavelets]{dwt}} for more information.
 #' @return \code{data.frame} object containing the wavelet coefficients.
 #' @export
-#' @rdname extractFDAFeatMethods
+#' @family fda
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 
   lrn = function(data, target = NULL, cols, filter, boundary) {
@@ -190,23 +142,14 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' The function extracts the functional principal components from a data.frame
 #' containing functional features.
 #'
-#' @param data [\code{data.frame}]\cr
-#'   Data.frame containing matricies with one row per observation of a single functional
-#'   or time series and one column per measurement time point. All entries need to be numeric.
-#' @param target [\code{character}]\cr
-#'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
-#'   set to be consistent with the API.
-#' @param cols [\code{character} | \code{numeric}]\cr
-#'   Column names or indices, the extraction should be performed on.
 #' @param pve [\code{numeric}]\cr
 #'   Fraction of variance explained for the functional principal components.
 #' @param npc [\code{integer}]\cr
 #'   Number of principal components to extract. Overrides \code{pve} param.
-#'
 #' @return Returns a \code{data.frame}.
 #' @export
-#' @rdname extractFDAFeatMethods
-extractFDAFpca = function(pve = 0.99, npc = NULL) {
+#' @family fda
+extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 
   lrn = function(data, target, cols, vals, pve, npc) {
     requirePackages("mboost", default.method = "load")
@@ -242,14 +185,6 @@ extractFDAFpca = function(pve = 0.99, npc = NULL) {
 #' as features. The segments length are set in a hierachy way so the features
 #' cover different resolution levels.
 #'
-#' @param data [\code{data.frame}]\cr
-#'   Data.frame containing matricies with one row per observation of a single functional
-#'   or time series and one column per measurement time point. All entries need to be numeric.
-#' @param target [\code{character}]\cr
-#'   Name of the target variable. Default: \dQuote{NULL}. The variable is only
-#'   set to be consistent with the API.
-#' @param cols [\code{character} | \code{numeric}]\cr
-#'   Column names or indices, the extraction should be performed on.
 #' @param res.level [\code{integer(1)}]\cr
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
 #' @param shift [\code{numeric(1)}]\cr
@@ -259,7 +194,7 @@ extractFDAFpca = function(pve = 0.99, npc = NULL) {
 #' @return [\code{matrix}]\cr
 #'   Object with each row containing the extracted multi-resolution features.
 #' @export
-#' @rdname extractFDAFeatMethods
+#' @family fda
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
 
   # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.

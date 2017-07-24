@@ -44,7 +44,7 @@
 #' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
 #' task = makeClassifTask(data = fdf, target = "y")
 #' extracted = extractFDAFeatures(task,
-#' feat.methods = list("x1" = extractFDAMean(), "x2" = extractFDAMinMax()))
+#' feat.methods = list("x1" = extractFDAFouries, "x2" = extractFDAWavelets()))
 #' print(extracted$task)
 #' reextractFDAFeatures(task, extracted$desc)
 

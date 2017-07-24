@@ -21,8 +21,7 @@
 * makeFunctionalData
 * hasFunctionalFeatures
 * extractFDAFeatures, reextractFDAFeatures
-* extractFDAFourier, extractFDAFpca, extractFDAMean, extractFDAMedian,
-  extractFDAMinMax, extractFDAMultiResFeatures, extractFDAWavelets
+* extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
 
