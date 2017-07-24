@@ -84,4 +84,41 @@ yeast.task = makeMultilabelTask("yeast-example", data = d, target = paste0("labe
 save(yeast.task, file = file.path(dn, "yeast.task.RData"), compress = "xz")
 
 
+# FDA classification
+set.seed(DATASEED)
+gunpoint = load2("../thirdparty/gunpoint.RData")
+gp.fdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
+gunpoint.task = makeClassifTask(data = gp.fdf, target = "X1", positive = "1")
+save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
 
+# FDA regression
+set.seed(DATASEED)
+data(fuelSubset, package = "FDboost")
+# Center / Scale Variables
+fuelSubset$UVVIS = scale(fuelSubset$UVVIS, scale = FALSE)
+fuelSubset$NIR = scale(fuelSubset$NIR, scale = FALSE)
+fuelSubset$uvvis.lambda = with(fuelSubset, (uvvis.lambda - min(uvvis.lambda)) / (max(uvvis.lambda) - min(uvvis.lambda)))
+fuelSubset$nir.lambda = with(fuelSubset, (nir.lambda - min(nir.lambda)) / (max(nir.lambda) - min(nir.lambda)))
+len1 = length(fuelSubset$uvvis.lambda)
+len2 = length(fuelSubset$nir.lambda)
+fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
+fs = data.frame("UVVIS" = fuelSubset$UVVIS, "NIR" = fuelSubset$NIR,
+  "heatan" = fuelSubset$heatan,  "h20" = fuelSubset$h2o)
+fs.fdf = makeFunctionalData(fs, fd.features = fdf)
+fuelsubset.task = makeRegrTask(data = fs.fdf, target = "heatan")
+save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")
+
+# FDA Classification
+gunpoint = load2("../thirdparty/gunpoint.RData")
+gp.fdf = makeFunctionalData(gunpoint, fd.features = list("fd" = 2:151))
+gunpoint.task = makeClassifTask(data = gp.fdf, target = "X1", positive = "1")
+save(gunpoint.task, file = file.path(dn, "gunpoint.task.RData"), compress = "xz")
+
+# FDA Multiclass Classification
+set.seed(DATASEED)
+data(phoneme, package = "fda.usc")
+ph = as.data.frame(phoneme[["learn"]]$data)
+ph[, "classlearn"] = phoneme[["classlearn"]]
+fdata = makeFunctionalData(ph, fd.features = list(), exclude.cols = "label")
+phoneme.task = makeClassifTask(data = fdata, target = "classlearn")
+save(phoneme.task, file = file.path(dn, "phoneme.task.RData"), compress = "xz")
