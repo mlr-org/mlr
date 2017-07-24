@@ -180,10 +180,11 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' The function extracts the mean of multiple segments of each curve and extracts them
 #' as features. This is done by sequentially dividing the
 #' functional up into smaller sub-curves of length l/2.
-#' In each iteration, the means of the sub-curves obtained from shifting the interval through
-#' the curve are obtained.
+#' In each iteration, the means of the sub-curves obtained from shifting a sliding window of length
+#' \code{sub_curve_length} multiplied by the \code{shift} parameter through
+#' the curve are extracted as new features.
 #' The resulting segments are  hierarchical, so the features
-#' cover different resolution levels.
+#' cover different resolution levels of the curve.
 #'
 #' @param res.level [\code{integer(1)}]\cr
 #'   The resolution depth, each length is divided by a factor of 2.
