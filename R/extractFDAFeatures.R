@@ -86,14 +86,14 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
-  extracts = Map(function(x, fd.cols) {
+  extracts = Map(function(x, fd.col) {
     list(
       # feats are the extracted features
-      feats = do.call(x$learn, c(x$args, list(data = obj, target = target, cols = fd.cols))),
+      feats = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col))),
       args = x$args, # Args passed to x$reextract
       reextract = x$reextract  # pass on reextraction learner for extraction in prediction
     )
-  }, x = desc$extractFDAFeat, fd.cols = desc$fd.cols)
+  }, x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
   # Append Info relevant for reextraction to desc
   desc$extractFDAFeat = lapply(extracts, function(x) {c(x["args"], x["reextract"])})
@@ -102,11 +102,9 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   vals = extractSubList(extracts, "feats", simplify = FALSE)
 
   if (!all(vlapply(vals, is.data.frame))) {
-    stop("feat.method needs to return a data.frame with one row
-      per observation in the original data.")
+    stop("feat.method needs to return a data.frame with one row per observation in the original data.")
   } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))) {
-    stop("feat.method needs to return a data.frame with one row
-      per observation in the original data and equal nrow per column.")
+    stop("feat.method needs to return a data.frame with one row per observation in the original data and equal nrow per column.")
   }
   # cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
@@ -139,8 +137,7 @@ print.extractFDAFeatDesc = function(x, ...) {
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
   # FIXME: This could be missunderstood
-  catf("Functional Features: %i; Extracted features: %i", length(x$fd.cols),
-       length(x$extractFDAFeat))
+  catf("Functional Features: %i; Extracted features: %i", length(x$fd.cols), length(x$extractFDAFeat))
 }
 
 
@@ -175,10 +172,10 @@ reextractFDAFeatures.data.frame = function(obj, desc) {
 
   # reextract features using reextractDescription and return
   reextract = Map(
-    function(xn, x, fd.cols) {
-      do.call(x$reextract, c(list(data = obj, target = desc$target, cols = fd.cols), x$args))
+    function(xn, x, fd.col) {
+      do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col), x$args))
     },
-    xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.cols = desc$fd.cols)
+    xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
   # cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(reextract, setDT)))

@@ -47,7 +47,7 @@ test_that("Wrong methods yield errors", {
   t = subsetTask(fuelsubset.task, subset = 1:2)
 
   wrng1 = function() {
-    lrn = function(data, target, cols, vals = NULL) {1}
+    lrn = function(data, target, col, vals = NULL) {1}
     makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
@@ -62,7 +62,7 @@ test_that("Wrong methods yield errors", {
     "Must have formal arguments")
 
   wrng3 = function() {
-    lrn = function(data, target, cols, vals = NULL) {data.frame(1)}
+    lrn = function(data, target, col, vals = NULL) {data.frame(1)}
     makeExtractFDAFeatMethod(z = lrn, rz = lrn)
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng3())),
@@ -135,7 +135,7 @@ test_that("Wavelet method are equal to package", {
   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
   # Method
   set.seed(getOption("mlr.debug.seed"))
-  wavelets.gp = lrn(data = gp$data, target = "X1", cols = "fd", filter = "haar", boundary = "reflection")
+  wavelets.gp = lrn(data = gp$data, target = "X1", col = "fd", filter = "haar", boundary = "reflection")
 
   # Reference
   df = BBmisc::convertRowsToList(gp$data[, "fd", drop = FALSE])
@@ -183,11 +183,11 @@ test_that("get...FDAMultiResFeatures works on data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
 
   lrn = extractFDAMultiResFeatures()$learn
-  dfn = lrn(df, cols = "UVVIS", res.level = 3L, shift = 0.5, curve.lens = NULL)
+  dfn = lrn(df, col = "UVVIS", res.level = 3L, shift = 0.5, curve.lens = NULL)
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 9L)
 
-  dfn2 = lrn(df, cols = "NIR", res.level = 3L, shift = 0.5, curve.lens = NULL)
+  dfn2 = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, curve.lens = NULL)
   expect_true(nrow(df) == nrow(dfn2))
   expect_true(ncol(dfn2) == 9L)
 
@@ -220,7 +220,7 @@ test_that("extractFPCAFeatures is equivalent to package", {
   set.seed(getOption("mlr.debug.seed"))
   lrn = extractFDAFPCA()$learn
   gp = getTaskData(gunpoint.task, subset = 1:10, target.extra = TRUE, functionals.as = "matrix")
-  fpca.df = lrn(data = gp$data, target = "X1", cols = "fd", pve = 0.99, npc = NULL)
+  fpca.df = lrn(data = gp$data, target = "X1", col = "fd", pve = 0.99, npc = NULL)
   expect_true((nrow(gp$data) == nrow(fpca.df)))
   expect_true((ncol(fpca.df) == 5L))
   expect_match(names(fpca.df), regexp = "[FPCA]")
@@ -234,7 +234,7 @@ test_that("extractFPCAFeatures is equivalent to package", {
 
   set.seed(getOption("mlr.debug.seed"))
   gp = getTaskData(gunpoint.task, subset = 1:20, target.extra = TRUE, functionals.as = "matrix")
-  fpca.df = lrn(data = gp$data, target = "X1", cols = "fd", npc = 12L)
+  fpca.df = lrn(data = gp$data, target = "X1", col = "fd", npc = 12L)
   expect_true((nrow(gp$data) == nrow(fpca.df)))
   expect_true((ncol(fpca.df) == 12L))
   expect_match(names(fpca.df), regexp = "[FPCA]")

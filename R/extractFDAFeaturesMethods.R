@@ -1,44 +1,39 @@
-#' @title Create a custom feature extraction method for functional data.
+#' @title Constructor for FDA feature extraction methods.
 #'
 #' @description
-#' This is a constructor to create your own imputation methods.
-#' All built-in methods are listed below.
-#' @param learn [\code{function(data, target, cols, ...)}]\cr
-#'   Function to learn and extract information on column \code{cols}
-#'   out of data frame \code{data}. Argument \code{target} specifies
-#'   the target column of the learning task.
-#'   The function has to return a named list of values.
+#' This can be used to implement custom feature FDA extraction.
+#'
+#' @param learn [\code{function(data, target, col, ...)}]\cr
+#'   Function to learn and extract information on functional column \code{col}.
 #'   Arguments are:
+#'   \itemize{
 #'   \item data [\code{data.frame}]\cr
 #'     Data.frame with one row per observation of a single functional feature
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#' @param data [\code{data.frame}]\cr
-#'   Data.frame containing matricies with one row per observation of a single functional
-#'   or time series and one column per measurement time point. All entries need to be numeric.
+#'   \item data [\code{data.frame}]\cr
+#'     Data.frame containing matricies with one row per observation of a single functional
+#'     or time series and one column per measurement time point. All entries need to be numeric.
 #'   \item target [\code{character}]\cr
-#'   Name of the target variable. Default: \dQuote{NULL}.
-#'   The variable is only set to be consistent with the API.
-#'   \item cols [\code{character} | \code{numeric}]\cr
+#'     Name of the target variable. Default: \dQuote{NULL}.
+#'     The variable is only set to be consistent with the API.
+#'   \item col [\code{character} | \code{numeric}]\cr
 #'     column names or indices, the extraction should be performed on.
-#' @family fda
-#' @export
-#' name extractFDAFeatMethod
-
-
-#' @param reextract [\code{function(data, target, cols, ...)}]\cr
-#'   Function used for reextracting data in predict phase. Can be equal to \code{learn}.
+#'     The function has to return a named list of values.
+#'   }
+#' @param reextract [\code{function(data, target, col, ...)}]\cr
+#'   Function used for reextracting data in predict phase.
+#'   Can be equal to \code{learn}.
 #' @param args [\code{list}]\cr
 #'   Named list of arguments to pass to \code{learn} via \code{...}.
 #' @export
 #' @family fda
 makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
-  assertFunction(learn, args = c("data", "target", "cols"))
-  assertFunction(reextract, args = c("data", "target", "cols"))
+  assertFunction(learn, args = c("data", "target", "col"))
+  assertFunction(reextract, args = c("data", "target", "col"))
   assertList(args, names = "named")
   setClasses(list(learn = learn, reextract = reextract, args = args), "extractFDAFeatMethod")
 }
-
 
 #' @title Fast Fourier transform features.
 #'
@@ -58,13 +53,13 @@ extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
 
-  lrn = function(data, target = NULL, cols, trafo.coeff) {
+  lrn = function(data, target = NULL, col, trafo.coeff) {
 
     assertClass(data, "data.frame")
     assertChoice(trafo.coeff, choices = c("amplitude", "phase"))
 
     # Transform data to matrix for stats::fft
-    data = as.matrix(data[, cols, drop = FALSE])
+    data = as.matrix(data[, col, drop = FALSE])
     assertNumeric(data)
 
     # Calculate fourier coefficients (row wise) which are complex numbers
@@ -114,13 +109,13 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertCharacter(filter)
   assertChoice(boundary, c("periodic", "reflection"))
 
-  lrn = function(data, target = NULL, cols, filter, boundary) {
+  lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
 
     assertClass(data, "data.frame")
-    assertNumeric(as.matrix(data[, cols]))
+    assertNumeric(as.matrix(data[, col]))
 
-    df = convertRowsToList(data[, cols, drop = FALSE])
+    df = convertRowsToList(data[, col, drop = FALSE])
     wtdata = t(dapply(df, fun = function(x) {
       wt = wavelets::dwt(as.numeric(x), filter = filter, boundary = boundary)
       unlist(c(wt@W, wt@V[[wt@level]]))
@@ -152,7 +147,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
   assertNumber(pve, lower = 0, upper = 1)
   assertCount(npc, null.ok = TRUE)
 
-  lrn = function(data, target, cols, vals, pve, npc) {
+  lrn = function(data, target, col, vals, pve, npc) {
     requirePackages("mboost", default.method = "load")
     requirePackages("refund", default.method = "load")
     assert(
@@ -160,7 +155,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
       checkClass(data, "matrix")
     )
 
-    data = data[, cols, drop = FALSE]
+    data = data[, col, drop = FALSE]
 
     # transform dataframe into matrix
     if (inherits(data, "data.frame"))
@@ -250,9 +245,9 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     mean(x)
   }
 
-  lrn = function(data, target, cols, res.level, shift, curve.lens) {
+  lrn = function(data, target, col, res.level, shift, curve.lens) {
 
-    data = data[, cols, drop = FALSE]
+    data = data[, col, drop = FALSE]
     if (is.data.frame(data))
       data = as.matrix(data)
     assertMatrix(data, mode = "numeric")
