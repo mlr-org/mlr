@@ -108,7 +108,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
 #' @return [\code{data.frame}].
 #' @export
-#' @family fda
+#' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertCharacter(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
@@ -127,11 +127,11 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     wtdata = t(dapply(rowlst, fun = function(x) {
       args$X = as.numeric(x)
       wt = do.call(wavelets::dwt, args)
+      # Extract wavelet coefficients W and level scaling coeffictients V
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
-
     df = as.data.frame(wtdata)
-    colnames(df) = stri_paste("wav", filter, seq_len(ncol(wtdata)), sep = ".")
+    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
