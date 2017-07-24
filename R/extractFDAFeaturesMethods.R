@@ -110,7 +110,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
-  assertCharacter(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
+  assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
   # FIXME: Add n.levels parameter. Has no default, do not know how to handle it right now.
 
@@ -118,7 +118,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     requirePackages("wavelets", default.method = "load")
 
     assertDataFrame(data)
-    assertCharacter(col, len = 1L)
+    assertChoice(col, choices = colnames(data))
     # Convert to list in order to catch params that do not have defaults (n.levels)
     args = learnerArgsToControl(list, filter = filter, boundary = boundary)
 
