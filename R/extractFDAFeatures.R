@@ -1,16 +1,14 @@
 #' @title Extract features from functional data.
 #'
 #' @description
-#' Extract non-functional features from functional features using various methods. \cr
+#' Extract non-functional features from functional features using various methods.
 #' The function \code{extractFDAFeatures} performs the extraction for all functional features
-#' and respective methods specified in \code{feat.methods}.\cr
+#' via the methods specified in \code{feat.methods} and transforms all mentioned functional
+#' matrix features into regular data.frame columns.
 #' Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
-#' which contains \code{learned} coefficients and other helpful data for
+#' which contains learned coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
-#' \code{\link{reextractFDAFeatures}} in order to extract features during the prediction phase. \cr
-#' As \code{feat.methods}, either a method created using \code{\link{makeExtractFDAFeatMethod}},
-#' a built-in method listed or one of the buit-in methods listed in
-#' \code{\link{extractFDAFeatMethods}} can be supplied.
+#' \code{\link{reextractFDAFeatures}} in order to extract features during the prediction phase.
 #'
 #' @details
 #' The description object contains these slots
@@ -22,19 +20,21 @@
 #'   parameters for reextraction}.
 #' }
 #'
-#' @param obj [\code{Task|data.frame}]\cr
-#'   Task or data.frame to extract functional features from. Must contain functional features
-#'   as matrix columns.
+#' @param obj [\code{Task} | \code{data.frame}]\cr
+#'   Task or data.frame to extract functional features from.
+#'   Must contain functional features as matrix columns.
 #' @param target [\code{character}]\cr
-#'   Task target column. Only neccessary for data.frames, default: \code{character(0)}.
+#'   Task target column. Only neccessary for data.frames
+#'   Default is \code{character(0)}.
 #' @param feat.methods [\code{named list}]\cr
-#'   List of functional features along with the desired \code{\link{extractFDAFeatures}} methods
-#'   for each functional feature. A signature for the desired function can be provided for
-#'   every covariable. Multiple functions for a  single covariable are not allowed.
-#'   Specifying \code{feat.methods} = "all" applies the \code{extratFDAFeatures} method to each
-#'   functional feature. Names of \code{feat.methods} must match column names of functional features.
+#'   List of functional features along with the desired methods for each functional feature.
+#'   \dQuote{all} applies the \code{extratFDAFeatures} method to each
+#'   functional feature.
+#'   Names of \code{feat.methods} must match column names of functional features.
+#'   Available feature extraction methods are available under family \code{fda_featextractor}.
+#'   Default is \code{list()} which does nothing.
 #' @return [\code{list}]
-#'   \item{data [\code{data.frame}|\code{Task}]}{Extracted features, returns a data.frame when
+#'   \item{data [\code{data.frame} | \code{Task}]}{Extracted features, returns a data.frame when
 #'   given a data.frame and a Task when given a Task.}
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object. See description for details.}
 #' @family extractFDAFeatures
@@ -44,7 +44,7 @@
 #' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
 #' task = makeClassifTask(data = fdf, target = "y")
 #' extracted = extractFDAFeatures(task,
-#' feat.methods = list("x1" = extractFDAFouries, "x2" = extractFDAWavelets()))
+#' feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets()))
 #' print(extracted$task)
 #' reextractFDAFeatures(task, extracted$desc)
 
@@ -71,7 +71,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
     feat.methods = c(feat.methods, methods)
   }
 
-  desc = BBmisc::makeS3Obj("extractFDAFeatDesc",
+  desc = makeS3Obj("extractFDAFeatDesc",
     target = target,
     coln = colnames(obj),
     fd.cols = NULL,
@@ -83,7 +83,6 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
   # Subset fd.cols accordingly
   desc$fd.cols = names(desc$extractFDAFeat)
-
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
   extracts = Map(function(x, fd.col) {

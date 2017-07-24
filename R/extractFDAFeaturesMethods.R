@@ -48,7 +48,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'   Default is \dQuote{phase}.
 #' @return [\code{data.frame}].
 #' @export
-#' @family fda
+#' @family fda_featextractor
 extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
@@ -104,7 +104,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   Default is \dQuote{periodic}.
 #' @return [\code{data.frame}].
 #' @export
-#' @family fda
+#' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertCharacter(filter)
   assertChoice(boundary, c("periodic", "reflection"))
@@ -142,7 +142,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'   Default is \code{NULL}
 #' @return [\code{data.frame}].
 #' @export
-#' @family fda
+#' @family fda_featextractor
 extractFDAFPCA = function(pve = 0.99, npc = NULL) {
   assertNumber(pve, lower = 0, upper = 1)
   assertCount(npc, null.ok = TRUE)
@@ -189,7 +189,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
 #' @return [\code{data.frame}].
 #' @export
-#' @family fda
+#' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
 
   # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.
