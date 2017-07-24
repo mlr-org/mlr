@@ -37,11 +37,12 @@
 #'   \item{data [\code{data.frame} | \code{Task}]}{Extracted features, returns a data.frame when
 #'   given a data.frame and a Task when given a Task.}
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object. See description for details.}
-#' @family extractFDAFeatures
+#' @family fda
 #' @export
-#' @examples
+
 
 # FIXME: this does not run because of a problem in extractFDAWavelets
+# @examples
 # df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
 # fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
 # task = makeClassifTask(data = fdf, target = "y")

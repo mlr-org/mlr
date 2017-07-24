@@ -9,7 +9,7 @@
 #' @template arg_learner
 #' @inheritParams extractFDAFeatures
 #' @export
-#' @family extractFDAFeatures
+#' @family fda
 #' @family wrapper
 #' @template ret_learner
 makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
