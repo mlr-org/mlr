@@ -48,11 +48,12 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'
 #' @param trafo.coeff [\code{character}]\cr
 #'   Specifies which transformation of the complex frequency domain
-#'   representation should be calculated as a feature representation. Must be one
-#'   of \dQuote{amplitude} or \dQuote{phase}. Default: \dQuote{amplitude}.
-#' @return [\code{data.frame}] containing the fourier coefficients.
+#'   representation should be calculated as a feature representation.
+#'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
+#'   Default is \dQuote{phase}.
+#' @return [\code{data.frame}].
 #' @export
-#' @rdname extractFDAFeatMethods
+#' @family fda
 extractFDAFourier = function(trafo.coeff = "phase") {
   # create a function that calls extractFDAFeatFourier
   assertChoice(trafo.coeff, choices = c("phase", "amplitude"))
@@ -70,8 +71,8 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     fft.trafo = t(apply(data, 1, fft))
     # Extract amplitude or phase of fourier coefficients which are real numbers
     fft.pa = switch(trafo.coeff,
-                    amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
-                    phase = apply(fft.trafo, 2, function(x) atan(Im(x) / Re(x)))
+      amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
+      phase = apply(fft.trafo, 2, function(x) atan(Im(x) / Re(x)))
     )
 
     # If there is only one row in data, fft returns an array
@@ -96,47 +97,43 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @description
 #' The function extracts discrete wavelet transform coefficients from the raw
 #' functional data.
+#' See \code{\link[wavelets]{dwt}} for more information.
 #'
-#' @param cols [\code{character} | \code{numeric}]\cr
-#'   Column names or indices, the extraction should be performed on.
 #' @param filter [\code{character}]\cr
 #'   Specifies which filter should be used.
-#'   Default: \code{filter} = \dQuote{la8}.
-#'   See \code{\link[wavelets]{dwt}} for more information.
+#'   Default is \dQuote{la8}.
 #' @param boundary [\code{character}]\cr
 #'   Boundary to be used.
-#'   The default, \code{boundary} = \dQuote{periodic} assumes circular time series.
-#'   For \code{boundary} = \dQuote{reflection} the series is extended to twice its length.
-#'   See \code{\link[wavelets]{dwt}} for more information.
-#' @return \code{data.frame} object containing the wavelet coefficients.
+#'   \dQuote{periodic} assumes circular time series,
+#'   for \dQuote{reflection} the series is extended to twice its length.
+#'   Default is \dQuote{periodic}.
+#' @return [\code{data.frame}].
 #' @export
 #' @family fda
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
+  assertCharacter(filter)
+  assertChoice(boundary, c("periodic", "reflection"))
 
   lrn = function(data, target = NULL, cols, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
 
     assertClass(data, "data.frame")
     assertNumeric(as.matrix(data[, cols]))
-    assertCharacter(filter)
-    assertChoice(boundary, c("periodic", "reflection"))
 
-    df = BBmisc::convertRowsToList(data[, cols, drop = FALSE])
-    wtdata = t(BBmisc::dapply(df, fun = function(x) {
+    df = convertRowsToList(data[, cols, drop = FALSE])
+    wtdata = t(dapply(df, fun = function(x) {
       wt = wavelets::dwt(as.numeric(x), filter = filter, boundary = boundary)
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
 
     df = as.data.frame(wtdata)
     colnames(df) = stri_paste("wav", filter, seq_len(ncol(wtdata)), sep = ".")
-    df
+    return(df)
   }
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
-                           args = list(filter = filter, boundary = boundary)
-  )
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
 }
 
-#' @title Extract Functional Principal Component Analysis Features.
+#' @title Extract functional principal component analysis features.
 #'
 #' @description
 #' The function extracts the functional principal components from a data.frame
@@ -144,12 +141,16 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #'
 #' @param pve [\code{numeric}]\cr
 #'   Fraction of variance explained for the functional principal components.
+#'   Default is 0.99.
 #' @param npc [\code{integer}]\cr
 #'   Number of principal components to extract. Overrides \code{pve} param.
-#' @return Returns a \code{data.frame}.
+#'   Default is \code{NULL}
+#' @return [\code{data.frame}].
 #' @export
 #' @family fda
 extractFDAFPCA = function(pve = 0.99, npc = NULL) {
+  assertNumber(pve, lower = 0, upper = 1)
+  assertCount(npc, null.ok = TRUE)
 
   lrn = function(data, target, cols, vals, pve, npc) {
     requirePackages("mboost", default.method = "load")
@@ -181,7 +182,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' @title Multiresolution feature extraction.
 #'
 #' @description
-#' The function extract the mean of a small segments of the curve and stack them
+#' The function extracts currently the mean of multiple segments of each curve and stacks them
 #' as features. The segments length are set in a hierachy way so the features
 #' cover different resolution levels.
 #'
@@ -191,8 +192,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #'   The overlapping proportion when slide the window for one step.
 #' @param curve.lens [\code{integer}]\cr
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
-#' @return [\code{matrix}]\cr
-#'   Object with each row containing the extracted multi-resolution features.
+#' @return [\code{data.frame}].
 #' @export
 #' @family fda
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
@@ -265,7 +265,6 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
       getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
     }
   }
-
 
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
     args = list(res.level = res.level, shift = shift, curve.lens = curve.lens))
