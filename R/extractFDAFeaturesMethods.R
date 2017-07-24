@@ -221,7 +221,6 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     data.frame(t(feat.list))
   }
 
-
   #  Get Features from a single (sub-)curve
   getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
     m = length(x)
@@ -255,9 +254,7 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
   lrn = function(data, target, col, res.level, shift, curve.lens) {
 
     assertChoice(col, choices = colnames(data))
-    data = data[, col, drop = FALSE]
-    if (is.data.frame(data))
-      data = as.matrix(data)
+    data = as.matrix(data[, col, drop = FALSE])
     assertMatrix(data, mode = "numeric")
 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
