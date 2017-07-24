@@ -114,11 +114,11 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertChoice(boundary, c("periodic", "reflection"))
   # FIXME: Add n.levels parameter. Has no default, do not know how to handle it right now.
 
-  lrn = function(data, target = NULL, cols, filter, boundary) {
+  lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
 
     assertDataFrame(data)
-    assertCharacter("cols", len = 1L)
+    assertCharacter("col", len = 1L)
     args = learnerArgsToControl(list, filter = filter, boundary = boundary)
 
     # Convert to list of rows and extract wavelets from each time-series.
@@ -133,7 +133,6 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     colnames(df) = stri_paste("wav", filter, seq_len(ncol(wtdata)), sep = ".")
     return(df)
   }
-
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
 }
 
