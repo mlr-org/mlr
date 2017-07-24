@@ -25,7 +25,7 @@ makeRLearner.regr.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "mean", values = c("mean", "median"))
     ),
-    properties = c("numerics", "factors", "ordered", "missings"),
+    properties = c("numerics", "factors", "ordered", "missings", "functionals"),
     name = "Featureless regression",
     short.name = "featureless"
   )
