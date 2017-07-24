@@ -54,6 +54,21 @@ Imports:
     survival,
     utils,
     XML
+Suggests:
+    RWeka,
+    sda,
+    shiny,
+    smoof,
+    sparseLDA,
+    stepPlr,
+    survAUC,
+    SwarmSVM,
+    svglite,
+    testthat,
+    tgp,
+    TH.data,
+    wavelets,
+    xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
 Version: 2.12
