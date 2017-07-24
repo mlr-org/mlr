@@ -177,20 +177,27 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' @title Multiresolution feature extraction.
 #'
 #' @description
-#' The function extracts currently the mean of multiple segments of each curve and stacks them
-#' as features. The segments length are set in a hierachy way so the features
-#' cover different resolution levels.
+#' The function extracts the mean of multiple segments of each curve and extracts them
+#' as features. The segments length are set in a hierachy, so the features
+#' cover different resolution levels. This is done by sequentially dividing the
+#' functional up into smaller sub-curves of length l/2 and computing the mean of the
+#' sub-curves for a sliding window.
 #'
 #' @param res.level [\code{integer(1)}]\cr
-#'   The number of resolution hierachy, each length is divided by a factor of 2.
+#'   The resolution depth, each length is divided by a factor of 2.
 #' @param shift [\code{numeric(1)}]\cr
 #'   The overlapping proportion when slide the window for one step.
 #' @param curve.lens [\code{integer}]\cr
-#'   Curve subsequence lengths. Needs to sum up to the length of the functional.
+#'   Instead of splitting the curves in half from the top, a vector of sub-curves can be
+#'   can be specified. Specifies the curve subsequence's lengths.
+#'   Needs to sum up to the length of the functional.
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
+  assertInteger(res.level, len = 1L)
+  assertNumeric(shift, lower = 0L, upper = 1L, len = 1)
+  assertInteger(curve.lens, null.ok = TRUE)
 
   # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.
   getUniFDAMultiResFeatures = function(data, res.level, shift) {
@@ -247,20 +254,22 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
 
   lrn = function(data, target, col, res.level, shift, curve.lens) {
 
+    assertChoice(col, choices = colnames(data))
     data = data[, col, drop = FALSE]
     if (is.data.frame(data))
       data = as.matrix(data)
     assertMatrix(data, mode = "numeric")
 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
-    # subcurves from which the features are extracted
+    # subcurves from which the features are extracted.
     if (is.null(curve.lens)) {
       getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
     } else {
       getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
     }
+    names(df) = paste0("multires", seq_len(ncol(df)))
+    return(df)
   }
-
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
     args = list(res.level = res.level, shift = shift, curve.lens = curve.lens))
 }
