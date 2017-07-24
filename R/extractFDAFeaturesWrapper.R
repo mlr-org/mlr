@@ -14,7 +14,7 @@
 #' @template ret_learner
 makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
-  assertList(feat.methods)
+  assertList(feat.methods, names = "named")
   learner = checkLearner(learner)
   args = list(feat.methods = feat.methods)
   rm(list = names(args))
