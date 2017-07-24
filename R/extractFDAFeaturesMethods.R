@@ -118,7 +118,8 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     requirePackages("wavelets", default.method = "load")
 
     assertDataFrame(data)
-    assertCharacter("col", len = 1L)
+    assertCharacter(col, len = 1L)
+    # Convert to list in order to catch params that do not have defaults (n.levels)
     args = learnerArgsToControl(list, filter = filter, boundary = boundary)
 
     # Convert to list of rows and extract wavelets from each time-series.
