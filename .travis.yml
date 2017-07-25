@@ -2,12 +2,7 @@ language: r
 sudo: false
 cache: packages
 dist: trusty
-
-addons:
-  apt:
-    packages:
-      - libgmp-dev
-      - libgsl0-dev
+latex: false
 
 env:
   global:
@@ -30,11 +25,16 @@ jobs:
   include:
     - stage: warmup
       env:
-        - WARMUPPKGS='devtools mlr'
+        - WARMUPPKGS='devtools mlr mlbench mldr'
       install:
         - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs, repos = "https://cloud.r-project.org")'
       script: true
     - stage: check
+      addons:
+        apt:
+          packages:
+            - libgmp-dev
+            - libgsl0-dev
       before_script:
         - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
         - R --no-save <<< 'library("devtools"); document()'
