@@ -25,7 +25,7 @@ jobs:
   include:
     - stage: warmup
       install:
-        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); install.packages(pkgs[!pkgs %in% installed.packages()]); update.packages()'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(); update.packages()'
       script: true
     - stage: check
       addons:
