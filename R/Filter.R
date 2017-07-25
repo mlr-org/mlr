@@ -571,7 +571,7 @@ makeFilter(
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = "numerics",
-  fun = function(task, nselect, na.rm = FALSE, ...) {
+  fun = function(task, nselect, na.rm = TRUE, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
       var(data[[feat.name]], na.rm = na.rm)
