@@ -1,7 +1,6 @@
 language: r
 sudo: false
 dist: trusty
-latex: false
 cache: packages
 
 env:
@@ -9,7 +8,7 @@ env:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='devtools mlr mlbench mldr RWekajars'
+    - WARMUPPKGS='devtools mlr mlbench mldr RWekajars knitr'
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
@@ -26,7 +25,7 @@ jobs:
   include:
     - stage: warmup
       install:
-        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs, repos = "https://cloud.r-project.org")'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); install.packages(pkgs[!pkgs %in% installed.packages()]); update.packages()'
       script: true
     - stage: check
       addons:
