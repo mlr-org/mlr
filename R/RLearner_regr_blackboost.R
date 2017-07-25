@@ -59,9 +59,11 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NUL
   )
   f = getTaskFormula(.task)
   if (!is.null(.weights))
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
+    args = list(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
   else
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+    args = list(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+  args = dropNamed(args, names(formals(party::ctree_control)))
+  do.call(mboost::blackboost, args)
 }
 
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {
