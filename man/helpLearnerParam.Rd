@@ -38,3 +38,5 @@ Other learner: \code{\link{LearnerProperties}},
 
 Other help: \code{\link{helpLearner}}
 }
+\concept{help}
+\concept{learner}

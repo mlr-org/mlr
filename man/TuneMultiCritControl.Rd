@@ -155,3 +155,4 @@ Other tune_multicrit: \code{\link{plotTuneMultiCritResultGGVIS}},
   \code{\link{plotTuneMultiCritResult}},
   \code{\link{tuneParamsMultiCrit}}
 }
+\concept{tune_multicrit}

@@ -30,3 +30,4 @@ Other fda_featextractor: \code{\link{extractFDAFPCA}},
   \code{\link{extractFDAFourier}},
   \code{\link{extractFDAMultiResFeatures}}
 }
+\concept{fda_featextractor}

@@ -53,9 +53,10 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 }
+\concept{filter}
+\concept{generate_plot_data}

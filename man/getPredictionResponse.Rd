@@ -39,3 +39,4 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
+\concept{predict}

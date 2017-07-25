@@ -150,3 +150,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleDesc}},
   \code{\link{makeResampleInstance}}
 }
+\concept{resample}

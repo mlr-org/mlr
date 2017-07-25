@@ -51,3 +51,4 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{plot}

@@ -50,7 +50,6 @@ For a list of features, use \code{\link{listFilterMethods}}.
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
@@ -66,3 +65,5 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 }
+\concept{filter}
+\concept{generate_plot_data}

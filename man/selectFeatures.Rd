@@ -69,3 +69,4 @@ Other featsel: \code{\link{FeatSelControl}},
   \code{\link{getFeatSelResult}},
   \code{\link{makeFeatSelWrapper}}
 }
+\concept{featsel}
