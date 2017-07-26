@@ -44,8 +44,9 @@ convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.ite
       pold = p
       t =  prob.outlier(p, f)
       # minimizing negative likelihood with glm
-      df = data.frame(t, f)
-      mod = glm(t ~ f, family = quasibinomial(link = "logit"), data = df)
+      df = data.frame(t,f)
+      colnames(df) = c("y","x")
+      mod = glm(y ~ x, family = quasibinomial(link = "logit"), data = df)
 
       p = coef(mod)
 
