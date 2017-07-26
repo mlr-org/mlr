@@ -24,6 +24,50 @@ cpoPca = makeCPO("pca", center = TRUE: logical, scale = FALSE: logical, .dataspl
 })
 registerCPO(cpoPca, "data", "numeric data preprocessing", "Perform Principal Component Analysis (PCA) using stats::prcomp.")
 
+#' @title Apply a Function Column-wise or Element-wise
+#'
+#' @template cpo_description
+#'
+#' @param fun [\code{function}]\cr
+#'   The function to apply. Must take one argument. If
+#'   \code{col.wise} is \code{TRUE}, the argument is the
+#'   whole column, and the return value must have the same
+#'   length. Otherwise, the function gets called once for
+#'   every data item, and both the function argument and
+#'   the return value must have length 1.
+#' @param col.wise [\code{logical(1)}]\cr
+#'   Whether to call \code{fun} once for each column, or
+#'   once for each element. If \code{fun} vectorizes,
+#'   it is recommended to have this set to \code{TRUE}
+#'   for better performance. Default is \code{TRUE}.
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoApplyFun = makeCPO("fun.apply",  # nolint
+  .par.set = makeParamSet(
+      makeFunctionLearnerParam("fun"),
+      makeLogicalLearnerParam("col.wise", default = TRUE)),
+  .datasplit = "target", cpo.trafo = {
+    if (col.wise) {
+      fun2 = fun
+    } else {
+      fun2 = function(col) {
+        sapply(col, function(x) {
+          ret = fun(x)
+          if (length(ret) != 1) {
+            stop("cpoApplyFun 'fun' did not return a result with length 1")
+          }
+        })
+      }
+    }
+    cpo.retrafo = function(data) {
+      as.data.frame(lapply(data, fun2))
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
+registerCPO(cpoPca, "data", "general data preprocessing", "Apply an arbitrary function column-wise.")
+
+
 #' @title Construct a CPO for scaling / centering
 #'
 #' @template cpo_description
