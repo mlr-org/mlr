@@ -2,7 +2,6 @@ language: r
 sudo: false
 dist: trusty
 cache: packages
-latex: false
 
 env:
   global:
