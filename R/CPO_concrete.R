@@ -26,6 +26,16 @@ registerCPO(cpoPca, "data", "numeric data preprocessing", "Perform Principal Com
 
 #' @title Apply a Function Element-Wise
 #'
+#' @description
+#' The function must either vectorize over the given data,
+#' or will be applied to each data element on its own.
+#'
+#' It must not change the type of the data, i.e. numeric
+#' data must remain numeric etc.
+#'
+#' If the function can only handle a subset of the given columns,
+#' e.g. only a certain type, use \code{affect.*} arguments.
+#'
 #' @template cpo_description
 #'
 #' @param fun [\code{function}]\cr
@@ -100,7 +110,6 @@ cpoRangeScale = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: nu
       a = -rng[1] * b + lower
       c(a, b)
     })
-
     cpo.retrafo = function(data) {
       for (i in seq_along(data)) {
         trafo = ranges[[i]]
@@ -111,6 +120,66 @@ cpoRangeScale = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: nu
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
 registerCPO(cpoPca, "data", "numeric data preprocessing", "Scale numeric columns to lie in a given range.")
+
+
+#' @title Probability Encoding
+#'
+#' @description
+#' TODO: what is this actually called?
+#'
+#' Converts factor columns into columns giving the probability
+#' for each target class to have this target, given the column value
+#'
+#'
+#'
+#' @template cpo_description
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoProbEncode = makeCPO("prob.encode",
+  .datasplit = "factor",
+  .properties.adding = c("factors", "ordered"),
+  .properties.needed = "numerics",
+  .properties.target = c("twoclass", "multiclass", "classif"),
+  .fix.factors = TRUE,
+  cpo.trafo = {
+    probs = lapply(data, function(col)
+      sapply(levels(target[[1]]), function(tl)
+        sapply(levels(col), function(cl)
+          mean(target[[1]][col == cl] == tl))))
+    cpo.retrafo = function(data) {
+      ret = do.call(cbind, lapply(seq_along(data), function(idx) {
+        dummyenc = sapply(levels(data[[idx]]), function(lvl) as.integer(data[[idx]] == lvl))
+        dummyenc %*% probs[[idx]]
+      }))
+      as.data.frame(ret)
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
+registerCPO(cpoProbEncode, "data", "feature conversion", "Convert factorial columns to numeric columns by probability encoding them")
+
+
+#' @title Impact Encoding
+#'
+#' @description
+#' Impact encoding as done by vtreat
+#'
+#' @template cpo_description
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoImpactEncode = makeCPO("impact.encode",
+  .datasplit = "factor",
+  .properties.adding = c("factors", "ordered"),
+  .properties.needed = "numerics",
+  .properties.target = c("twoclass", "multiclass", "classif", "regr"),  # TODO: multiclass?
+  cpo.trafo = {
+
+
+  }, cpo.retrafo = NULL)
+
 
 
 #' @title Construct a CPO for scaling / centering
