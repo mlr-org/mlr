@@ -1426,7 +1426,7 @@ ibs = makeMeasure(
   minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages(c("pec"))
-    measureIBS(getPredictionTruth(pred), getPredictionProbabilities(pred), max.time = extra.args$max.time)
+    measureIBS(task, getPredictionTruth(pred), getPredictionProbabilities(pred), max.time = extra.args$max.time)
   },
   extra.args = list(max.time = NULL)
 )
@@ -1434,10 +1434,13 @@ ibs = makeMeasure(
 #' @export measureIBS
 #' @rdname measures
 #' @format none
-measureIBS = function(truth, probabilities, max.time) {
+measureIBS = function(task, truth, probabilities, max.time) {
   max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
   # biggest time value has to be adapted as it does not provide results otherwise
-  pec_probs = pec::pec(probabilities, Surv(time, status) ~ 1, data = data[test,], exact = F, exactness = 99L, maxtime = max.time)
+  targets = getTaskTargetNames(task)
+  formel = as.formula(paste0("Surv(", targets[1], ", ", targets[2], ") ~ 1"))
+  data = getTaskData(task)
+  pec_probs = pec::pec(probabilities, formel, data = data, exact = F, exactness = 99L, maxtime = max.time)
   crps(pec_probs,times=max.time)[2,]
 }
 
