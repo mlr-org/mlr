@@ -4,9 +4,9 @@ library(methods)
 library(BBmisc)
 library(devtools)
 load_all("..")
-
 dn = "../data"
 stopifnot(isDirectory(dn))
+
 DATASEED = 7761  # nolint
 
 # classification
@@ -40,16 +40,16 @@ sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
 normal = mvrnorm(n = 1000, rep(0, 2), sigma)
 colnames(normal) = paste0("V", 1:2)
 normal = as.data.frame(normal)
-normal$normal = TRUE
+normal$Target = "Normal"
 
 anomaly = matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2)
 colnames(anomaly) = paste0("V", 1:2)
 anomaly = as.data.frame(anomaly)
-anomaly$normal = FALSE
+anomaly$Target = "Anomaly"
 data = rbind(normal, anomaly)
 data = na.omit(data)
 
-oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "normal", positive = "FALSE", negative = "TRUE")
+oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "Target", positive = "Anomaly", negative = "Normal")
 save(oneclass2d.task, file = file.path(dn, "oneclass2d.task.RData"))
 
 # regression
