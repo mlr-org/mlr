@@ -2,6 +2,7 @@ language: r
 sudo: false
 dist: trusty
 cache: packages
+latex: false
 
 env:
   global:
@@ -9,6 +10,12 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
     - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWekajars knitr dplyr ggplot2 h2o ranger randomForest Rfast rjson rmarkdown shiny svglite xgboost xml2'
+
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+      - libgsl0-dev
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
@@ -26,14 +33,9 @@ jobs:
       install:
         - Rscript -e 'if (!nzchar(find.package("devtools"))) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps()'
-        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs); update.packages()'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs); update.packages(ask = FALSE)'
       script: true
     - stage: check
-      addons:
-        apt:
-          packages:
-            - libgmp-dev
-            - libgsl0-dev
       before_script:
         - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
         - R --no-save <<< 'library("devtools"); document()'
