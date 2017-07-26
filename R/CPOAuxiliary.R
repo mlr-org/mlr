@@ -1537,11 +1537,6 @@ requireCPOPackages = function(cpo) {
 
 # TO-DO:
 
-# cpoScale: so lassen
-#  - cpoUnitLength: mit waehlbarer L-norm
-#  - cpoScaleRange
-# colApplyCPO
-
 # impact encoding: level -> probability fuer jede klasse
 # 'cat_B' ('bayesian' logit) x_catB = logit(P[y==target|x]) - logit(P[y==target]
 # 'cat_P' class prevalence
@@ -1599,5 +1594,6 @@ requireCPOPackages = function(cpo) {
 # on.par.out.of.bounds setting
 # task types checked
 
-
-
+# news
+# colApplyCPO
+# cpoRangeScale
