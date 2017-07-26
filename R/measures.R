@@ -1425,17 +1425,21 @@ ibs = makeMeasure(
   properties = c("surv", "req.pred", "req.truth", "req.prob"),
   minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
-    measureIBS = function(truth, probabilities, max.time) {
-      max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
-      # biggest time value has to be adapted as it does not provide results otherwise
-      pec_probs = pec::pec(probabilities, Surv(time, status) ~ 1, data = data[test,], exact = F, exactness = 99L, maxtime = max.time)
-      crps(pec_probs,times=max.time)[2,]
-    }
     requirePackages(c("pec"))
     measureIBS(getPredictionTruth(pred), getPredictionProbabilities(pred), max.time = extra.args$max.time)
   },
   extra.args = list(max.time = NULL)
 )
+
+#' @export measureIBS
+#' @rdname measures
+#' @format none
+measureIBS = function(truth, probabilities, max.time) {
+  max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
+  # biggest time value has to be adapted as it does not provide results otherwise
+  pec_probs = pec::pec(probabilities, Surv(time, status) ~ 1, data = data[test,], exact = F, exactness = 99L, maxtime = max.time)
+  crps(pec_probs,times=max.time)[2,]
+}
 
 ###############################################################################
 ### cost-sensitive ###
