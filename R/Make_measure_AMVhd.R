@@ -78,6 +78,8 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
+      alphas = extra.args[[1]]
+      n.sim = extra.args[[2]]
 
       data = getTaskData(task, target.extra = TRUE)$data
       train.inds = model$subset

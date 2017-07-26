@@ -62,6 +62,8 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
+      alphas = extra.args[[1]]
+      n.sim = extra.args[[2]]
       if (is.null(feats)) {
         if (!is.null(task)){
           subset.inds = model$subset
