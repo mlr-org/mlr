@@ -81,6 +81,8 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
       alphas = extra.args[[1]]
       n.sim = extra.args[[2]]
 
+      measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
+
       data = getTaskData(task, target.extra = TRUE)$data
       train.inds = model$subset
       test.inds = setdiff(1:nrow(data), train.inds)
