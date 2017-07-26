@@ -78,6 +78,9 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99)
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
+      alphas = extra.args[[1]]
+      n.sim = extra.args[[2]]
+
       measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       subset.inds = model$subset
