@@ -26,7 +26,7 @@ jobs:
       install:
         - Rscript -e 'if (!nzchar(find.package("devtools"))) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps()'
-        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(); update.packages()'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs); update.packages()'
       script: true
     - stage: check
       addons:
