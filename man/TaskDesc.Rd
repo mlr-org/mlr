@@ -34,18 +34,11 @@ Object members:
 \item{has.blocking [\code{logical(1)}]}{Is a blocking factor for cases available in the task?}
 \item{class.levels [\code{character}]}{All possible classes.
   Only present for \dQuote{classif}, \dQuote{costsens}, and \dQuote{multilabel}.}
-<<<<<<< HEAD
-\item{positive [\code{character(1)}]}{Positive class label for binary classification.
-  Only present for \dQuote{classif}, NA for multiclass, normal class label for oneclass.}
-\item{negative [\code{character(1)}]}{Negative class label for binary classification.
-  Only present for \dQuote{classif}, NA for multiclass,anomaly class for oneclass.}
-=======
 \item{positive [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
  Positive class label for binary classification, NA for multiclass,
  normal class label for oneclass.}
 \item{negative [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
   Negative class label for binary classification, NA for multiclass,
   anomaly class for oneclass.}
->>>>>>> oneclass_base
 }
 }
