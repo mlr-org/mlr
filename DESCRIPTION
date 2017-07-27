@@ -55,7 +55,7 @@ Imports:
     utils,
     XML
 Suggests:
-   ada,
+    ada,
     adabag,
     bartMachine,
     batchtools,
