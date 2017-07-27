@@ -22,7 +22,7 @@ makeRLearner.surv.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
-    properties = c("factors", "numerics", "ordered", "weights", "rcens", "missings", "featimp"),
+    properties = c("factors", "numerics", "ordered", "weights", "missings", "featimp"),
     par.vals = list(),
     name = "Random Forest based on Conditional Inference Trees",
     short.name = "crf",
@@ -53,7 +53,8 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
 
 #' @export
 predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, ...)
+  # cforest returns median survival times; multiply by -1 so that high values correspond to high risk
+  -1 * predict(.model$learner.model, newdata = .newdata, type = "response", ...)
 }
 
 #' @export
