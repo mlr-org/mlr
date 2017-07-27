@@ -5,33 +5,39 @@ test_that("oneclass_h2oautoencoder", {
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
 
-  parset.list = list(
-    list(),
-    list(activation = "Tanh"),
-    list(l1 = 1),
-    list(hidden = c(5, 2, 5))
+  # in mlr different defaults were set for hidden
+  parset.list.h2o = list(
+    list(hidden = c(200)),
+    list(hidden = c(200), epochs = 50),
+    list(hidden = c(20, 10))
   )
 
- parset.list = lapply(parset.list, function(x) c(x, reproducible = TRUE, seed = 1234))
+  parset.list.mlr = list(
+    list(),
+    list(epochs = 50),
+    list(layers = 2, nodes1 = 20, nodes2 = 10)
+  )
+
+
+ parset.list.h2o = lapply(parset.list.h2o, function(x) c(x, activation = "Tanh", reproducible = TRUE, seed = 1234, l1 = 1e-4, sparse = TRUE))
+ parset.list.mlr = lapply(parset.list.mlr, function(x) c(x, activation = "Tanh", reproducible = TRUE, seed = 1234, l1 = 1e-4, sparse = TRUE))
+
   old.probs.list = list()
 
   train.hex = h2o::as.h2o(oneclass.train[, -oneclass.col], destination_frame = "train.hex")
   test.hex = h2o::as.h2o(oneclass.test[, -oneclass.col], destination_frame = "test.hex")
 
-  for (i in seq_along(parset.list)) {
-    parset = parset.list[[i]]
+  for (i in seq_along(parset.list.h2o)) {
+    parset = parset.list.h2o[[i]]
     parset = c(parset, list(x = colnames(train.hex), training_frame = train.hex,
       autoencoder = TRUE))
-    set.seed(getOption("mlr.debug.seed"))
     m = do.call(h2o.deeplearning, parset)
     p  = h2o.anomaly(m, test.hex, per_feature = FALSE)
-    ##### !!  convertScoresinProb is ne liste -> rest anpassen old.probs.list[[i]] = convertingScoresToProbability(as.vector(p))
-    old.probs.list[[i]] = convertingScoresToProbability(as.matrix(p),
-      parainit = c(0, 1))$probability[,1]
+    old.probs.list[[i]] = convertingScoresToProbability(-as.matrix(p))$probability[,1]
   }
 
   testProbParsets("oneclass.h2o.autoencoder", oneclass.df,
-    oneclass.target, oneclass.positive, oneclass.negative, oneclass.train.inds, old.probs.list, parset.list)
+    oneclass.target, oneclass.positive, oneclass.negative, oneclass.train.inds, old.probs.list, parset.list.mlr)
 })
 
 test_that("class names are integers and response predicted", {
