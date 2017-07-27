@@ -52,7 +52,6 @@
 #' # prediction as feats in performance
 #' performance(pred = pred, measures = list(rprecision, precisionat5, avgprecision), model = mod, task = task)
 
-
 makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, worst = 0, name = id, note = "", type = c("avgprecision", "rprecision", "precisionatp"), p = NULL, adjusted = TRUE) {
 
   assertString(id)
@@ -87,7 +86,7 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
         precision = sum(rank[ind.true] <= n.anomaly) / n.anomaly
       } else if (type == "avgprecision") {
         p = 1:n.anomaly
-        precision = sum(sum(rank[ind.true] <= p) / p) / n.anomaly
+        precision = mean(sum(rank[ind.true] <= p) / p)
       }
 
       if (adjusted == TRUE) {

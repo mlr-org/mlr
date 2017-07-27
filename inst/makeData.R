@@ -8,6 +8,7 @@ load_all("..")
 dn = "../data"
 stopifnot(isDirectory(dn))
 DATASEED = 7761  # nolint
+dn = "/Users/Minh/Documents/AnomalyDetectionMLR/data"
 
 # classification
 set.seed(DATASEED)
