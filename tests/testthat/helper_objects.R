@@ -62,19 +62,19 @@ sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
 normal = MASS::mvrnorm(n = 1000, rep(0, 2), sigma)
 colnames(normal) = paste0("V", 1:2)
 normal = as.data.frame(normal)
-normal$normal = "normal"
+normal$Target = "normal"
 
 anomaly = matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2)
 colnames(anomaly) = paste0("V", 1:2)
 anomaly = as.data.frame(anomaly)
-anomaly$normal = "anomaly"
+anomaly$Target = "anomaly"
 data = rbind(normal, anomaly)
 data = na.omit(data)
-data$normal = factor(data$normal)
+data$Target = factor(data$Target)
 
-oneclass.truth = data$normal
+oneclass.truth = data$Target
 oneclass.df = data
-oneclass.target = "normal"
+oneclass.target = "Target"
 
 oneclass.col = 3
 oneclass.train.inds = c(1:1000)
