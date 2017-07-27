@@ -128,9 +128,7 @@ registerCPO(cpoPca, "data", "numeric data preprocessing", "Scale numeric columns
 #' TODO: what is this actually called?
 #'
 #' Converts factor columns into columns giving the probability
-#' for each target class to have this target, given the column value
-#'
-#'
+#' for each target class to have this target, given the column value.
 #'
 #' @template cpo_description
 #'
@@ -146,18 +144,69 @@ cpoProbEncode = makeCPO("prob.encode",
   cpo.trafo = {
     probs = lapply(data, function(col)
       sapply(levels(target[[1]]), function(tl)
-        sapply(levels(col), function(cl)
-          mean(target[[1]][col == cl] == tl))))
+        sapply(c(levels(col), NA), function(cl)
+          mean(target[[1]][is.na(cl) | col == cl] == tl))))
+
     cpo.retrafo = function(data) {
       ret = do.call(cbind, lapply(seq_along(data), function(idx) {
-        dummyenc = sapply(levels(data[[idx]]), function(lvl) as.integer(data[[idx]] == lvl))
+        curdat = data[[idx]]
+        levels(curdat) = c(levels(curdat), ".TEMP.MISSING")
+        curdat[is.na(curdat)] = ".TEMP.MISSING"
+        dummyenc = sapply(levels(curdat), function(lvl) as.integer(curdat == lvl))
         dummyenc %*% probs[[idx]]
       }))
       as.data.frame(ret)
     }
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
-registerCPO(cpoProbEncode, "data", "feature conversion", "Convert factorial columns to numeric columns by probability encoding them")
+registerCPO(cpoProbEncode, "data", "feature conversion", "Convert factorial columns in classification tasks to numeric columns by probability encoding them")
+
+#' @title Impact Encoding
+#'
+#' @description
+#' Impact encoding as done by vtreat
+#'
+#' @template cpo_description
+#'
+#' @param smoothing [\code{numeric(1)}]\cr
+#'   A finite positive value used for smoothing.
+#'   Default is \code{1e-4}.
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoImpactEncodeClassif = makeCPO("impact.encode.classif",
+  smoothing = 1e-4: numeric[~0, ~.],
+  .datasplit = "factor",
+  .properties.adding = c("factors", "ordered"),
+  .properties.needed = "numerics",
+  .properties.target = c("twoclass", "multiclass", "classif"),
+  .fix.factors = TRUE,
+  cpo.trafo = {
+    probs = lapply(data, function(col)
+      sapply(levels(target[[1]]), function(tl) {
+        tprop = mean(target[[1]] == tl)
+        tplogit = log(tprop / (1 - tprop))
+        sapply(c(levels(col), NA), function(cl) {
+          condprob = (sum(target[[1]][is.na(cl) | col == cl] == tl) + smoothing) / (sum(is.na(cl) | col == cl) + 2 * smoothing)
+          cplogit = log(condprob / (1 - condprob))
+          cplogit - tplogit
+        })
+      }))
+
+    cpo.retrafo = function(data) {
+      ret = do.call(cbind, lapply(seq_along(data), function(idx) {
+        curdat = data[[idx]]
+        levels(curdat) = c(levels(curdat), ".TEMP.MISSING")
+        curdat[is.na(curdat)] = ".TEMP.MISSING"
+        dummyenc = sapply(levels(curdat), function(lvl) as.integer(curdat == lvl))
+        dummyenc %*% probs[[idx]]
+      }))
+      as.data.frame(ret)
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
+registerCPO(cpoImpactEncodeClassif, "data", "feature conversion", "Convert factorial columns in classification tasks to numeric columns by impact encoding them")
 
 
 #' @title Impact Encoding
@@ -167,19 +216,40 @@ registerCPO(cpoProbEncode, "data", "feature conversion", "Convert factorial colu
 #'
 #' @template cpo_description
 #'
+#' @param smoothing [\code{numeric(1)}]\cr
+#'   A finite positive value used for smoothing.
+#'   Default is \code{1e-4}.
+#'
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoImpactEncode = makeCPO("impact.encode",
+cpoImpactEncodeRegr = makeCPO("impact.encode.regr",
+  smoothing = 1e-4: numeric[~0, ~.],
   .datasplit = "factor",
   .properties.adding = c("factors", "ordered"),
   .properties.needed = "numerics",
-  .properties.target = c("twoclass", "multiclass", "classif", "regr"),  # TODO: multiclass?
+  .properties.target = "regr",  # TODO: multiclass?
+  .fix.factors = TRUE,
   cpo.trafo = {
-
-
+    meanimp = mean(target[[1]])
+    impact = lapply(data, function(col)
+      c(sapply(levels(col), function(lvl) {
+        (sum(target[[1]][col == lvl]) + smoothing * meanimp) / (sum(col == lvl) + smoothing) - meanimp
+      }), .TEMP.MISSING = meanimp))
+    cpo.retrafo = function(data) {
+      ret = do.call(cbind, lapply(seq_along(data), function(idx) {
+        curdat = data[[idx]]
+        levels(curdat) = c(levels(curdat), ".TEMP.MISSING")
+        curdat[is.na(curdat)] = ".TEMP.MISSING"
+        impact[[idx]][curdat]
+      }))
+      colnames(ret) = colnames(data)
+      rownames(ret) = rownames(data)
+      as.data.frame(ret)
+    }
+    cpo.retrafo(data)
   }, cpo.retrafo = NULL)
-
+registerCPO(cpoImpactEncodeRegr, "data", "feature conversion", "Convert factorial columns in regression tasks to numeric columns by impact encoding them")
 
 
 #' @title Construct a CPO for scaling / centering
