@@ -42,9 +42,8 @@ makeOneClassTask(id = deparse(substitute(data)), data, target,
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id = deparse(substitute(data)), data, target,
-  censoring = "rcens", weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE)
+makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -75,7 +74,7 @@ Default is \code{NULL} which means no blocking.}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary and oneclass classification (otherwise ignored and set to NA).
-For oneclass this is the name of the \dQuote{normal} class and there is no default.
+For oneclass this is the name of the \dQuote{anomaly} class and there is no default.
 Default is the first factor level of the target attribute).}
 
 \item{fixup.data}{[\code{character(1)}]\cr
@@ -103,13 +102,7 @@ for observation i.}
 
 \item{negative}{[\code{character(1)}]\cr
 Negative class name, currently only used in oneclass, here it encodes the name
-of the \dQuote{anomaly} class.}
-
-\item{censoring}{[\code{character(1)}]\cr
-Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
-\dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
-the \dQuote{interval2} format.
-See \code{\link[survival]{Surv}} for details.}
+of the \dQuote{normal} class.}
 }
 \value{
 [\code{\link{Task}}].
@@ -143,8 +136,8 @@ Note one oneclass:
 Oneclass classification problem is an unsupervised learning problem, but we still require
 to define a target column, in order to allow supervised evalaution if labels are available.
 This class columns should be a factor, where the levels are the strings denoted by
-\code{positive} and \code{negative}, where the former denotes the name of the normal class
-and the latter the name of the anomaly class.
+\code{positive} and \code{negative}, where the former denotes the name of the anomaly class
+and the latter the name of the normal class.
 }
 \examples{
 if (requireNamespace("mlbench")) {

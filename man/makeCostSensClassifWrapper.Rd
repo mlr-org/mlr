@@ -31,7 +31,8 @@ Other costsens: \code{\link{makeClassifTask}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

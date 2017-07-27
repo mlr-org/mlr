@@ -1,21 +1,25 @@
-#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass)
+#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for data dimension less than 8
 #'
 #' @description
 #' Creates a measure for oneclass classification. The measure computes the
 #' Area under the Mass-Volume Curve via Monte-Carlo approximation
 #' of the diagonal. It uses the trapezoidal rule as implemented in
-#' package \code{caTools} for integration. The implementation is based on the
-#' python implementation: \link{https://github.com/albertcthomas/anomaly_tuning}.
+#' package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
+#' the curse of dimensionality applies for data with dimension greater than eight.
+#' The implementation is based on the python implementation:
+#' \link{https://github.com/albertcthomas/anomaly_tuning}.
 #' Differences are the type of quantile used, as the python default is not
 #' available in R.
+#' Note: prediction object must have \code{pred.type = 'prob'}
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
 #' @param alphas [\code{numeric}] \cr
-#'   Numeric vector of alphas from 0 to 1, representing the computed quantiles.
-#'   Default: 0.9 to 0.99 by 0.01 steps as we are interested in the performance
-#'   of the scoring function in the the low density regions.
+#'   Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
+#'   Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.
+#' @param n.alpha [\code{numeric}] \cr
+#'   Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.
 #' @param n.sim [\code{numeric(1)}] \cr
 #'   Number of Monte-Carlo Samples, Default: 10^4.
 #' @return [\code{numeric(1)}]
@@ -26,8 +30,26 @@
 #' @template ret_measure
 #' @export
 #' @family performance.
+#' @examples
+#' # creates an AMV measure which calculates the area under the curve between 0.8 and 0.99
+#' # with 50 steps.
+#' AMV = makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
+#' n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
 #'
-makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, to = 0.99, by = 0.01), n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+#' data = getTaskData(oneclass2d.task)
+#' inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+#' train.inds = inds.split[[1]]
+#' test.inds = inds.split[[2]]
+#' lrn = makeLearner("oneclass.svm", predict.type = "prob")
+#' mod = train(lrn, oneclass2d.task, subset = train.inds)
+#' pred = predict(mod, oneclass2d.task, subset = test.inds)
+#'
+#' # calculate performance for prediction object, pass data of features used for
+#' # prediction as feats in performance
+#' performance(pred = pred, measures = list(AMV), model = mod, task = task)#, feats = data[test.inds, 1:2])
+
+
+makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
 
   assertString(id)
   assertFlag(minimize)
@@ -37,35 +59,47 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
   assertString(note)
 
   makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, n.sim),
-    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob"),
+    properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
+      alphas = extra.args[[1]]
+      n.sim = extra.args[[2]]
 
-      n.feat =   getTaskNFeats(task)
-      data = getTaskData(task)
-
-      if (n.feat > 8) {
-        warningf("Dimension might be too high for volume estimation. Apply feature resampling")
+      if (is.null(feats)) {
+        if (!is.null(task)){
+          subset.inds = model$subset
+          data = getTaskData(task, target.extra = TRUE)$data
+          if (length(subset.inds) != nrow(data)) {
+            feats = data[subset.inds, ]
+          }
+        }
       }
 
+      if (ncol(feats) > 8) {
+        warningf("Dimension might be too high for volume estimation with AMV. Use AMVhd.")
+      }
+      alpha.seq = c()
+      for(j in seq_len(n.alpha-1)) {
+        alpha.seq[j] = alphas[1] + j * (alphas[2]-alphas[1])/(n.alpha-1)
+      }
         # vector of offsets for different alphas
         # type = 8: The resulting quantile estimates are approximately median-unbiased
         # regardless of the distribution of x.
         prob = getPredictionProbabilities(pred)[1]
-        offsets = quantile(as.matrix(prob), 1 - alphas, type = 8)
+        offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
 
         ### Monte Carlo (MC) Integration for lambda
 
-        # Compute hypercube where data lies
-        bounds = sapply(data[, 1:n.feat], FUN = function(x) c(min(x), max(x)))
-        # Volume of the hypercube enclosing the data.
+        # Compute hypercube where test data lies
+        bounds = sapply(feats, FUN = function(x) c(min(x), max(x))) #falsche Daten, die müssen aus der prediction sein
+        # Volume of the hypercube enclosing the test data.
         volume = prod(bounds[2, ] - bounds[1,])
 
         # Sample nsim points from the hypercube (MCMC Samples)
         dfu = data.frame(Map(runif, n = n.sim, min = bounds[1, ], max = bounds[2, ]))
         colnames(dfu) = colnames(bounds)
 
-        # get scores for sampled data from the hypercube
+        # get scores for sampled test data from the hypercube
         su = predict(model, newdata = dfu)
         su = getPredictionProbabilities(su)[,1]
 
@@ -76,7 +110,7 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
 
         # Trapezoidal Integration for AMV
         sum.vol = vol[-length(vol)] * 2 + diff(vol)
-        amv = ((diff(alphas)) %*% (sum.vol) / 2)
+        amv = ((diff(alpha.seq)) %*% (sum.vol) / 2)
       # Return area under mass-volume curve
       as.numeric(amv)
     },
@@ -85,62 +119,3 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = seq(from = 0.9, 
   )
 }
 
-
-makeSubSamplingAMVMeasure = function(id = "SubSamplingAMV", minimize = TRUE, alphas = seq(from = 0.9, to = 0.99, by = 0.01), n.sim = 10e4, n.feat.subsampling = 2, n.draw.feat.subsampling = 50, best = 0, worst = NULL, name = id, note = "") {
-
-  assertString(id)
-  assertFlag(minimize)
-  assertNumeric(alphas, lower = 0, upper = 1)
-  assertCount(n.sim)
-  # Curse of dimensionality for more than 5 features
-  assertNumeric(n.feat.subsampling, lower = 0, upper = 5, null.ok = TRUE)
-  assertNumeric(n.draw.feat.subsampling, lower = 0, null.ok = TRUE)
-  assertString(name)
-  assertString(note)
-
-  measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.sim = n.sim, best = best, worst = worst, name = id)
-
-  if(!is.null(n.feat.subsampling) && n.feat.subsampling >= 5) {
-    warningf("Dimension might be too high for volume estimation. Choose a smaller feature subsampling size.")
-  }
-
-  makeMeasure(id = id, minimize = minimize, extra.args = list(n.feat.subsampling, n.draw.feat.subsampling, measureAMV),
-    properties = c("oneclass", "req.task", "req.model", "req.pred", "predtype.prob"),
-    best = best, worst = worst,
-    fun = function(task, model, pred, feats, extra.args) {
-
-      n.feat =   getTaskNFeats(task)
-      data = getTaskData(task)
-
-      n.feat.subsampling = extra.args[[1]]
-      n.draw.feat.subsampling = extra.args[[2]]
-      measureAMV = extra.args[[3]]
-
-      if (n.feat.subsampling >= n.feat) {
-        stopf("Cannot take a sample of (%i) of size (%i)", n.feat.subsampling, n.feat)
-      }
-
-        amv.k = c()
-        for (k in 1:n.draw.feat.subsampling) {
-          inds.feat.subsample = sample(n.feat, n.feat.subsampling)
-          inds.target = ncol(data)
-          #sub.train.data = data[, c(inds.feat.subsample, inds.target)]
-          sub.test.data = pred$data[, inds.feat.subsample]
-
-          subsetTask(task, subset = c(inds.feat.subsample, inds.target))
-          #sub.task = makeOneClassTask(data = sub.train.data, target = task$task.desc$target, positive = task$task.desc$positive, negative = task$task.desc$negative)
-          sub.lrn = makeLearner(model$learner$id, predict.type = model$learner$predict.type, predict.threshold = model$learner$predict.threshold)
-          sub.mod = train(sub.lrn, sub.task)
-
-          sub.pred = predict(sub.mod, newdata = sub.test.data)
-
-          amv.k[i] = performance(pred, measureAMV, task, model)
-        }
-        amv = mean(amv.k)
-      # Return area under mass-volume curve
-      as.numeric(amv)
-    },
-    name = name,
-    note = note
-  )
-}

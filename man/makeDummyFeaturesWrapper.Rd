@@ -30,7 +30,8 @@ Fuses a base learner with the dummy feature creator (see \code{\link{createDummy
 Returns a learner which can be used like any other learner.
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},

@@ -19,11 +19,11 @@
 #'   classes.
 #'   For \dQuote{oneclass} there is always a defined target column, so this is also \code{character(1)}
 #'   (so supervised evaluation is possible for test sets).
-#'   The denoted column is of type factor with two levels (\code{positive} (normal class) and
-#'   \code{negative} (anomaly class)). The target column will be ignored during training.}
+#'   The denoted column is of type factor with two levels (\code{positive} (anomaly class) and
+#'   \code{negative} (normal class)). The target column will be ignored during training.}
 #' \item{size [\code{integer(1)}]}{Number of cases in data set.}
 #' \item{n.feat [\code{integer(2)}]}{Number of features, named vector with entries:
-#'   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}.}
+#'   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}, \dQuote{functionals}.}
 #' \item{has.missings [\code{logical(1)}]}{Are missing values present?}
 #' \item{has.weights [\code{logical(1)}]}{Are weights specified for each observation?}
 #' \item{has.blocking [\code{logical(1)}]}{Is a blocking factor for cases available in the task?}
@@ -35,11 +35,7 @@
 #' \item{negative [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
 #'   Negative class label for binary classification, NA for multiclass,
 #'   anomaly class for oneclass.}
-#' \item{censoring [\code{character(1)}]}{Censoring type for survival analysis.
-#'   Only present for \dQuote{surv}, one of \dQuote{rcens} for right censored data,
-#'   \dQuote{lcens} for left censored data, and \dQuote{icens} for interval censored
-#'   data.}
-#' }
+#'}
 #' @name TaskDesc
 #' @rdname TaskDesc
 NULL
@@ -51,7 +47,8 @@ makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   n.feat = c(
     numerics = sum(cl[c("integer", "numeric")], na.rm = TRUE),
     factors = sum(cl["factor"], na.rm = TRUE),
-    ordered = sum(cl["ordered"], na.rm = TRUE)
+    ordered = sum(cl["ordered"], na.rm = TRUE),
+    functionals = sum(cl["matrix"], na.rm = TRUE)
   )
 
   makeS3Obj("TaskDesc",

@@ -137,12 +137,16 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     cl = "oneclass.h2o.autoencoder",
     package = "h2o",
     par.set = makeParamSet(
+      # FIXME: hidden can also be a list of integer vectors for grid search
+      # instead of makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L), len = NA_integer_, lower = 1L) parametrise hidden
+      makeIntegerLearnerParam(id = "layers", lower = 1L, upper = 3L, default = 1L),
+      makeIntegerLearnerParam(id = "nodes1", lower = 1L, default = 1L),
+      makeIntegerLearnerParam(id = "nodes2", lower = 1L, requires = quote(layers > 1)),
+      makeIntegerLearnerParam(id = "nodes3", lower = 1L, requires = quote(layers > 2)),
+
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
-        "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
-      # FIXME: hidden can also be a list of integer vectors for grid search
-      makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L),
-        len = NA_integer_, lower = 1L),
+        "TanhWithDropout", "RectifierWithDropout", "MaxoutWithDropout"), default = "Rectifier"), #"Maxout",  not for autoencoder
       makeNumericLearnerParam("epochs", default = 10L, lower = 1), # doc says can be fractional
       makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2),
       makeIntegerLearnerParam("seed", tunable = FALSE),
@@ -164,8 +168,8 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeDiscreteLearnerParam("initial_weight_distribution",
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
-      makeDiscreteLearnerParam("loss", values = c("Automatic", "MeanSquare",
-        "Absolute", "Huber")),
+      makeDiscreteLearnerParam("loss", values = c("Automatic", "Quadratic",
+        "Absolute", "Huber", "Quantile")),#"CrossEntropy" not for autoencoder
       makeDiscreteLearnerParam("distribution", values = c("AUTO", "gaussian",
         "bernoulli", "multinomial", "poisson", "gamma", "tweedie", "laplace",
         "huber", "quantile"), default = "AUTO"),
@@ -210,7 +214,9 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
 }
 
 #' @export
-trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weights = NULL,
+  layers = 1L, nodes1 = 200L, nodes2 = NULL, nodes3 = NULL, nodes.out = NULL, ...) {
+  hidden = c(nodes1, nodes2, nodes3)[1:layers]
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -224,13 +230,15 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
     wcol = ".mlr.weights"
   }
   h2of = h2o::as.h2o(d)
-  h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol, autoencoder = TRUE, ...)
+  h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol, autoencoder = TRUE, hidden = hidden, ...)
 }
 
 #' @export
 predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   h2of = h2o::as.h2o(.newdata)
+  # usually low scores are indicator for anomaly
+  # here: low scores = low mse reconstruction error = indicator for normal data
   p = h2o::h2o.anomaly(m, data = h2of, per_feature = FALSE)
   p.df = as.matrix(p)
   td = getTaskDesc(.model)
@@ -239,10 +247,14 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
     # per default assume 5% anomalies
       indices.threshold = order(p.df)[round(length(p.df)*0.95)]  #mse reconstruction error in [0,inf[
       predict.threshold = p.df[indices.threshold]
-      p = p.df <= predict.threshold
+      p = p.df >= predict.threshold
       p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
   } else {
-    p = convertingScoresToProbability(p.df, parainit = c(1, 0))$p
+    # usually low scores are indicator for anomaly
+    # here: low scores = low mse reconstruction error = indicator for normal data
+    # therefore make the scores negative before converting
+    # low prob = anomaly
+    p = convertingScoresToProbability(-p.df)$probability
     p = cbind(p, 1-p)
     colnames(p) = label
   }

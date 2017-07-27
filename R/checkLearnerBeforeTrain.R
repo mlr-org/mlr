@@ -1,6 +1,6 @@
 checkLearnerBeforeTrain = function(task, learner, weights) {
   getColNames =  function(task, property){
-    .data = getTaskData(task)
+    .data = getTaskData(task, functionals.as = "matrix")
     has.it = vlapply(.data, function(x) any(property(x)))
     clipString(collapse(colnames(.data)[has.it], ", "), 50L)
   }
@@ -31,6 +31,12 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
     stopf("Task '%s' has ordered factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
 
+  if (td$n.feat["functionals"] > 1 && hasLearnerProperties(learner, "single.functional") &&
+      !hasLearnerProperties(learner, "functionals")) {
+    stopf("Task '%s' has more than one functional inputs,
+      but learner '%s' does not support that!", td$id, learner$id)
+  }
+
   if (!(missing(weights) || is.null(weights)) && !hasLearnerProperties(learner, "weights")) {
     stopf("Weights vector passed to train, but learner '%s' does not support that!", learner$id)
   }
@@ -50,11 +56,6 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
       if (!hasLearnerProperties(learner, "multiclass"))
         stopf("Task '%s' is a multiclass-problem, but learner '%s' does not support that!", td$id, learner$id)
     }
-  } else if (td$type == "surv") {
-    if (!hasLearnerProperties(learner, td$censoring))
-      stopf("Task '%s' is %s censored, but learner '%s' does not support that!", td$id, td$censoring, learner$id)
   }
   invisible(NULL)
 }
-
-

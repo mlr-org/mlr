@@ -26,7 +26,8 @@ Fuses a learner with preprocessing methods provided by \code{\link[caret]{prePro
  After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.medianImpute} is set to \code{TRUE}.
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},

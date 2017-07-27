@@ -52,7 +52,8 @@ Tsoumakas, G., & Katakis, I. (2006)
 Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},

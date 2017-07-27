@@ -68,7 +68,8 @@ Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeMethod}},
   \code{\link{reimpute}}
 
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},

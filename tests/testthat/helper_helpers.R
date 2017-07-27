@@ -54,7 +54,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     classif = makeClassifTask(data = df, target = target),
     surv = makeSurvTask(data = df, target = target),
     multilabel = makeMultilabelTask(data = df, target = target),
-    oneclass = makeOneClassTask(data = df, target = target, positive = "TRUE", negative = "FALSE"))
+    oneclass = makeOneClassTask(data = df, target = target, positive = oneclass.positive, negative = oneclass.negative))
 
   if (is.null(task))
     stop("Should not happen!")
@@ -118,12 +118,8 @@ testProb = function(t.name, df, target, positive, negative, train.inds, old.prob
     else
       old.probs = as.matrix(old.probs)
 
-    p = getPredictionProbabilities(cp)
-    if (is.data.frame(p))
-      p = as.matrix(p)
-    # we change names a bit so dont check them
-    colnames(p) = colnames(old.probs) = NULL
-    rownames(p) = rownames(old.probs) = NULL
+    p = getPredictionProbabilities(cp)[,1]
+
     class(old.probs) = NULL
     expect_equal(p, old.probs)
   }
@@ -218,7 +214,7 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
-    ids = extractSubList(lrns, "id")
+    ids = BBmisc::extractSubList(lrns, "id")
     return(lrns[!grepl("mock", ids)])
   } else {
     ids = lrns$class

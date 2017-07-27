@@ -9,7 +9,7 @@ test_that("oneclass_h2oautoencoder", {
     list(),
     list(activation = "Tanh"),
     list(l1 = 1),
-    list(hidden = c(5,2,5))
+    list(hidden = c(5, 2, 5))
   )
 
  parset.list = lapply(parset.list, function(x) c(x, reproducible = TRUE, seed = 1234))
@@ -22,10 +22,12 @@ test_that("oneclass_h2oautoencoder", {
     parset = parset.list[[i]]
     parset = c(parset, list(x = colnames(train.hex), training_frame = train.hex,
       autoencoder = TRUE))
-    #set.seed(getOption("mlr.debug.seed"))
+    set.seed(getOption("mlr.debug.seed"))
     m = do.call(h2o.deeplearning, parset)
-    p  = h2o.anomaly(m, test.hex, per_feature=FALSE)
-    old.probs.list[[i]] = as.vector(p)
+    p  = h2o.anomaly(m, test.hex, per_feature = FALSE)
+    ##### !!  convertScoresinProb is ne liste -> rest anpassen old.probs.list[[i]] = convertingScoresToProbability(as.vector(p))
+    old.probs.list[[i]] = convertingScoresToProbability(as.matrix(p),
+      parainit = c(0, 1))$probability[,1]
   }
 
   testProbParsets("oneclass.h2o.autoencoder", oneclass.df,

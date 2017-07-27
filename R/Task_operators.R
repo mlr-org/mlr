@@ -189,8 +189,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   td = getTaskDesc(x)
   type = td$type
   if (type == "surv") {
-    lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-    target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
+    target = sprintf("Surv(%s, %s, type = \"right\")", target[1L], target[2L])
   } else if (type == "multilabel") {
     target = collapse(target, "+")
   } else if (type == "costsens") {
@@ -270,6 +269,11 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See \code{\link[survival]{Surv}} for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
+#' @param functionals.as [\code{character(1)}]\cr
+#'   How to represents functional features?
+#'   Option \dQuote{matrix}: Keep them as matrix columns in the data.frame.
+#'   Option \dQuote{dfcols}: Convert them to individual numeric data.frame columns.
+#'   Default is \dQuote{dfcols}.
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export
@@ -283,10 +287,12 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no") {
+getTaskData = function(task, subset = NULL, features, target.extra = FALSE, recode.target = "no",
+  functionals.as = "dfcols") {
   checkTask(task, "Task")
   checkTaskSubset(subset, size = task$task.desc$size)
   assertLogical(target.extra)
+  assertChoice(functionals.as, choices = c("matrix", "dfcols"))
 
   task.features = getTaskFeatureNames(task)
 
@@ -304,21 +310,27 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
 
   tn = task$task.desc$target
 
-  indexHelper = function(df, i, j, drop = TRUE) {
-    switch(2L * is.null(i) + is.null(j) + 1L,
+  indexHelper = function(df, i, j, drop = TRUE, functionals.as) {
+    df = switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop = drop],
       df[i, , drop = drop],
       df[, j, drop = drop],
       df
     )
+    # If we don't keep functionals and functionals are present, convert to numerics
+    if (functionals.as == "dfcols" && hasFunctionalFeatures(task)) {
+      df = functionalToNormalData(df)
+    }
+    return(df)
   }
 
   if (target.extra) {
     if (missing(features))
       features = task.features
     res = list(
-      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE),
-      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, task$task.desc)
+      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE, functionals.as),
+      # in the next line we should not rtouch functionals anyway (just Y), so let us keep them as matrix
+      target = recodeY(indexHelper(task$env$data, subset, tn, functionals.as = "matrix"), type = recode.target, task$task.desc)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -326,7 +338,7 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     else
       features = union(features, tn)
 
-    res = indexHelper(task$env$data, subset, features, drop = FALSE)
+    res = indexHelper(task$env$data, subset, features, drop = FALSE, functionals.as)
     if (recode.target %nin% c("no", "surv")) {
       res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
@@ -343,47 +355,11 @@ recodeY = function(y, type, td) {
     return(as.numeric(y == td$positive))
   if (type == "-1+1")
     return(as.numeric(2L * (y == td$positive) - 1L))
-  if (type %in% c("lcens", "rcens", "icens"))
-    return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  if (type == "surv")
+    return(Surv(y[, 1L], y[, 2L], type = "right"))
   if (type == "multilabel.factor")
     return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
-}
-
-recodeSurvivalTimes = function(y, from, to) {
-  is.neg.infinite = function(x) is.infinite(x) & x < 0
-  is.pos.infinite = function(x) is.infinite(x) & x > 0
-  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
-
-  if (from == to)
-    return(Surv(y[, 1L], y[, 2L], type = lookup[to]))
-  if (setequal(c(from, to), c("lcens", "rcens")))
-    stop("Converting left censored to right censored data (or vice versa) is not possible")
-
-  switch(from,
-    rcens = {
-      time1 = y[, 1L]
-      time2 = ifelse(y[, 2L], y[, 1L], Inf)
-    },
-    lcens = {
-      time1 = ifelse(y[, 2L], y[, 1L], -Inf)
-      time2 = y[, 1L]
-    },
-    icens = {
-      if (to == "lcens") {
-        if (!all(is.neg.infinite(y[, 1L] | y[, 1L] == y[, 2L])))
-          stop("Could not convert interval2 survival data to left censored data")
-        time1 = y[, 2L]
-        time2 = is.infinite(y[, 1L])
-      } else {
-        if (!all(is.pos.infinite(y[, 2L] | y[, 2L] == y[, 1L])))
-          stop("Could not convert interval2 survival data to right censored data")
-        time1 = y[, 1L]
-        time2 = is.infinite(y[, 2L])
-      }
-    }
-  )
-  Surv(time1, time2, type = lookup[to])
 }
 
 #' @title Extract costs in task.
@@ -427,7 +403,8 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
+  # Keep functionals here as they are (matrix)
+  task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
@@ -456,7 +433,7 @@ changeData = function(task, data, costs, weights) {
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$censoring),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
   )

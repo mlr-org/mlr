@@ -23,7 +23,8 @@ If the training data contains only a single class (or almost only a single class
 Probabilities can be predicted and will be 1 or 0 depending on whether the label matches the majority class or not.
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

@@ -71,7 +71,8 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},

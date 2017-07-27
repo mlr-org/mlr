@@ -90,7 +90,8 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneControlRandom}},
   \code{\link{tuneParams}}, \code{\link{tuneThreshold}}
 
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
