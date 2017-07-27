@@ -227,6 +227,17 @@ testgroup.mean = makeAggregation(
 
 #' @export
 #' @rdname aggregations
+testgroup.sd = makeAggregation(
+  id = "testgroup.sd",
+  name = "Test group sd",
+  properties = "req.test",
+  fun = function(task, perf.test, perf.train, measure, group, pred) {
+    sd(BBmisc::vnapply(split(perf.test, group), mean))
+  }
+)
+
+#' @export
+#' @rdname aggregations
 test.join = makeAggregation(
   id = "test.join",
   name = "Test join",
