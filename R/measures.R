@@ -1422,11 +1422,14 @@ ibs = makeMeasure(
   id = "ibs",
   name = "Integrated brier score using inverse probability of censoring weighting",
   note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
-  properties = c("surv", "req.pred", "req.truth", "req.prob"),
+  properties = c("surv", "req.pred", "req.truth", "req.prob", "req.model", "req.task", "req.newdata"),
   minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages(c("pec"))
-    measureIBS(task, getPredictionTruth(pred), getPredictionProbabilities(pred), max.time = extra.args$max.time)
+    data = getTaskData(task)
+    targets = getPredictionTaskDesc(pred)$target
+    truth = cbind(pred$data$truth.time, pred$data$truth.event)
+    measureIBS(data, truth, probs, max.time = extra.args$max.time)
   },
   extra.args = list(max.time = NULL)
 )
@@ -1434,15 +1437,15 @@ ibs = makeMeasure(
 #' @export measureIBS
 #' @rdname measures
 #' @format none
-measureIBS = function(task, truth, probabilities, max.time) {
+measureIBS = function(data, truth, probabilities, max.time) {
   max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
   # biggest time value has to be adapted as it does not provide results otherwise
-  targets = getTaskTargetNames(task)
   formel = as.formula(paste0("Surv(", targets[1], ", ", targets[2], ") ~ 1"))
-  data = getTaskData(task)
-  pec_probs = pec::pec(probabilities, formel, data = data, exact = F, exactness = 99L, maxtime = max.time)
+  pec_probs = pec::pec(probabilities, formel, data = truth, exact = F, exactness = 99L, maxtime = max.time)
   crps(pec_probs,times=max.time)[2,]
 }
+#
+
 
 ###############################################################################
 ### cost-sensitive ###
