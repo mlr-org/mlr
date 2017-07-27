@@ -1,6 +1,7 @@
 # mlr 2.12:
 
 ## general
+* Support for functional data (fda) using matrix columns has been added.
 * relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
 * refactored the resample progress messages to give a better overview and
@@ -17,6 +18,12 @@
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 * setMeasurePars
+* makeFunctionalData
+* hasFunctionalFeatures
+* extractFDAFeatures, reextractFDAFeatures
+* extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
+* makeExtractFDAFeatMethod
+* makeExtractFDAFeatsWrapper
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -26,10 +33,15 @@
 * cindex.uno, iauc.uno
 
 ## learners - general
-* unified {classif,regr}.penalized{ridge,lasso,fusedlasso} into {classif,regr}.penalized
+* unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 
 ## learners - new
+* classif.fdaknn
+* classif.fdakernel
+* classif.fdanp
+* classif.fdaglm
+* regr.fdaFDboost
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues

@@ -33,6 +33,9 @@
 #' \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
 #' and the latter the name of the normal class.
 #'
+#' Functional data can be added to a task via matrix columns. For more information refer to
+#' \code{\link{makeFunctionalData}}.
+#'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
 #'   Default is the name of the R variable passed to \code{data}.
