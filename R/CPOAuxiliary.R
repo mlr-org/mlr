@@ -1537,8 +1537,6 @@ requireCPOPackages = function(cpo) {
 
 # TO-DO:
 
-# impact encoding: level -> probability fuer jede klasse
-# 'cat_B' ('bayesian' logit) x_catB = logit(P[y==target|x]) - logit(P[y==target]
 # 'cat_P' class prevalence
 # 'interaction'
 # 'formula'
@@ -1597,3 +1595,5 @@ requireCPOPackages = function(cpo) {
 # news
 # colApplyCPO
 # cpoRangeScale
+# impact encoding: level -> probability fuer jede klasse
+# 'cat_B' ('bayesian' logit) x_catB = logit(P[y==target|x]) - logit(P[y==target]

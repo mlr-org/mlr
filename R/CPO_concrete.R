@@ -251,6 +251,80 @@ cpoImpactEncodeRegr = makeCPO("impact.encode.regr",
   }, cpo.retrafo = NULL)
 registerCPO(cpoImpactEncodeRegr, "data", "feature conversion", "Convert factorial columns in regression tasks to numeric columns by impact encoding them")
 
+#' @title Compine Rare Factors
+#'
+#' @template cpo_description
+#'
+#' @param max.collapsed.class.prevalence [\code{numeric(1)]\cr
+#'   Maximum prevalence of newly created collapsed factor level.
+#'   Default is \code{0.1}.
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoCollapseFact = makeCPO("collapse.fact",
+  max.collapsed.class.prevalence = 0.1: numeric[0, ~1],
+  .datasplit = "factor",
+  cpo.trafo = {
+    newlevels = sapply(data, function(d) {
+      if (all(is.na(d))) {
+        return(levels(d))
+      }
+      fractions = cumsum(sort(table(d))) / sum(!is.na(d))
+      collapse = names(fractions)[fractions < max.collapsed.class.prevalence]
+      if (length(collapse) > 1) {
+        nocollapse = setdiff(levels(d), collapse)
+        lvls = list(collapsed = collapse)
+        insert(lvls, stats::setNames(as.list(nocollapse), nocollapse))
+      } else {
+        levels(d)
+      }
+    }, simplify = FALSE)
+    cpo.retrafo = function(data) {
+      for (n in names(data)) {
+        levels(data[[n]]) = newlevels[[n]]
+      }
+      data
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
+registerCPO(cpoCollapseFact, "data", "factor data preprocessing", "Combine rare factors.")
+
+#' @title Split Numeric Features into Quantile Bins
+#'
+#' @template cpo_description
+#'
+#' @param num.bins [\code{numeric(1)}]\cr
+#'   Number of bins to create. Default is \code{2}.
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoQuantileBinNumerics = makeCPO("bin.numerics", numsplits = 2: integer[2, ],
+  .properties.needed = "ordered", .properties.adding = "numerics",
+  .datasplit = "numeric", cpo.trafo = {
+    breaks = lapply(data, function(d)
+      unique(c(-Inf, quantile(d, (1:(numsplits - 1)) / numsplits, na.rm = TRUE), Inf)))
+    cpo.retrafo = function(data) {
+      as.data.frame(mapply(function(d, b) ordered(cut(d, breaks = b)), d = data, b = breaks, SIMPLIFY = FALSE),
+        row.names = rownames(data))
+    }
+    cpo.retrafo(data)
+  }, cpo.retrafo = NULL)
+registerCPO(cpoCollapseFact, "data", "feature conversion", "Convert Numerics to Ordered by binning.")
+
+#' @title Convert All Features to Numerics
+#'
+#' @template cpo_description
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoAsNumeric = makeCPO("as.numeric", .properties.adding = c("factors", "ordered"), .properties.needed = "numerics",
+  .stateless = TRUE, .datasplit = "factor", cpo.trafo = function(data, target) {
+    as.data.frame(lapply(data, as.numeric), row.names = rownames(data)) }, cpo.retrafo = function(data) {
+      as.data.frame(lapply(data, as.numeric), row.names = rownames(data)) })
+registerCPO(cpoCollapseFact, "data", "feature conversion", "Convert all Features to Numerics using as.numeric.")
 
 #' @title Construct a CPO for scaling / centering
 #'
