@@ -50,10 +50,11 @@ before_script:
   - R --no-save <<< 'library("devtools"); document()'
 
 script:
-  - |
-    R CMD build .
-    travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-  - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+  #  - |
+  #  R CMD build .
+  #  travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+  #- grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+  echo "BLAAAAAAAAAAAAAAAAAAa"
 
 after_success:
   - git checkout master
