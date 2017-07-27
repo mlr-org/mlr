@@ -138,6 +138,9 @@ to define a target column, in order to allow supervised evalaution if labels are
 This class columns should be a factor, where the levels are the strings denoted by
 \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
 and the latter the name of the normal class.
+
+Functional data can be added to a task via matrix columns. For more information refer to
+\code{\link{makeFunctionalData}}.
 }
 \examples{
 if (requireNamespace("mlbench")) {

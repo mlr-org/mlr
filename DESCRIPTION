@@ -55,6 +55,7 @@ Imports:
     utils,
     XML
 Suggests:
+    knitr,
     mlbench,
     mldr,
     mlrMBO
