@@ -28,24 +28,17 @@ Object members:
   \code{negative} (normal class)). The target column will be ignored during training.}
 \item{size [\code{integer(1)}]}{Number of cases in data set.}
 \item{n.feat [\code{integer(2)}]}{Number of features, named vector with entries:
-  \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}.}
+  \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}, \dQuote{functionals}.}
 \item{has.missings [\code{logical(1)}]}{Are missing values present?}
 \item{has.weights [\code{logical(1)}]}{Are weights specified for each observation?}
 \item{has.blocking [\code{logical(1)}]}{Is a blocking factor for cases available in the task?}
 \item{class.levels [\code{character}]}{All possible classes.
   Only present for \dQuote{classif}, \dQuote{costsens}, and \dQuote{multilabel}.}
-<<<<<<< HEAD
-\item{positive [\code{character(1)}]}{Positive class label for binary classification.
-  Only present for \dQuote{classif}, NA for multiclass, normal class label for oneclass.}
-\item{negative [\code{character(1)}]}{Negative class label for binary classification.
-  Only present for \dQuote{classif}, NA for multiclass,anomaly class for oneclass.}
-=======
 \item{positive [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
  Positive class label for binary classification, NA for multiclass,
  normal class label for oneclass.}
 \item{negative [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
   Negative class label for binary classification, NA for multiclass,
   anomaly class for oneclass.}
->>>>>>> oneclass_base
 }
 }
