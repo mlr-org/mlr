@@ -5,18 +5,22 @@
 #' @param anomaly.score a numeric vector of anomaly scores.
 #' @param parainit a vector of starting values for the optimizer
 #' @param max.iter Maximum number of iterations. Defaults to 100
+#' @param optim.method which optim method to used "trust region", "BFGS", "glm", "Newton"
 #' @return [\code{vector}] with probabilities as entries.
 #' @export
 #' @references Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
 #' @examples
 #'
-#' Data = iris[, 1:4] # find better dataset later
-#' svm.model <- e1071::svm(Data, y = NULL, type = 'one-classification', kernel = "radial", nu = 0.05)
-#  svm.pred <- predict(svm.model, Data)
+#' Data = oneclass2d.task$env$data # getTaskData(oneclass2d.task)
+#' svm.model <- e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
+#' kernel = "radial", nu = 0.05)
+#  svm.pred <- predict(svm.model, Data[,1:2])
 #' dv = svm.model$decision.values
-#' prob = convertingScoresToProbability(dv, parainit = c(0, 1))
-#' plot(1:length(prob), prob, ylim = c(0, 1))
-#'
+#' prob = convertingScoresToProbability(dv, parainit = c(0, 1))$probability
+#' o = order(prob)
+#' col = factor(Data$Target, levels = c("Normal", "Anomaly"), labels =  c("black", "red"))
+#' plot(1:length(prob), prob[o], col = col[o])
+
 convertingScoresToProbability = function(anomaly.score, parainit = NULL, max.iter = 100, optim.method = "glm"){
 
   assertChoice(optim.method, c("trust region", "BFGS", "glm", "Newton"))

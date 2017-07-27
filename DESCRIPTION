@@ -155,8 +155,6 @@ Suggests:
     stepPlr,
     survAUC,
     sparsediscrim,
-    sparseLDA,
-    stepPlr,
     SwarmSVM,
     svglite,
     testthat,
