@@ -10,17 +10,18 @@
 #' Precision at p (P@p): Measures the relativ number of true predicted anomalies
 #' in the top p ranks of the test set to the number of considered ranks p, in other
 #' words it measures the proportion of correct results in the top p ranks.
-#' If p equals the number of anomalies in the data the P@p is called the R-Precision .
+#' If p equals the number of anomalies in the data the P@p is called the R-Precision.
 #'
 #' Avergae Precision (AP): Averages over P@p with $p \in \{1,2,..., number of anomalies\}$
 #'
-#' If the performance is 0, that means within the top ranks, no anomalies where detected.
+#' If the performance is 0, that means within the top ranks, no anomalies were detected.
+#' If the performance is NA, that means within no anomalies are in the data set.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Name of measure.
 #'   Default is \dQuote{Precision}.
 #' @param p [\code{numeric}] \cr
-#'   top p rank, with p element of \{0,1,.. number of anomalies in data\}
+#'   top p rank, with p element of \{1, 2, ..., number of anomalies in data\}
 #' @param type [\code{character(1)}] \cr
 #'   Set a measure type: rprecision, precisionatp, averageprecision
 #'   Default is \dQuite{averageprecision}
@@ -40,8 +41,8 @@
 #' # creates an P@5 measure which calculates the precision for the top 5 (=p) ranks
 #' precisionat5 = makePrecisionMeasure(id = "Precisionat5", minimize = FALSE, best = 0, worst = NULL, p = 5, type = "precisionatp", adjusted = FALSE)
 #'
-#' # creates an average precision measure which calculates the average precision for all ranks of possible choices of p in \{0,1, ..., number of anomalies\}.
-#' avgprecision = makePrecisionMeasure(id = "AvgPrecision", minimize = FALSE, best = 0, worst = NULL, type = "avgprecision", adjusted = TRUE)
+#' # creates an average precision measure which calculates the average precision for all ranks of possible choices of p in \{1, 2, ..., number of anomalies\}.
+#' avgprecision = makePrecisionMeasure(id = "AvgPrecision", minimize = FALSE, best = 0, worst = NULL, type = "avgprecision", adjusted = FALSE)
 #'
 #' lrn = makeLearner("oneclass.svm", predict.type = "prob", nu = 0.05)
 #' mod = train(lrn, oneclass2d.task)
@@ -75,18 +76,18 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
       scores = pred$data[,3]
       rank = order(scores)
       ind.true = which(pred$data$truth == pred$task.desc$positive)
-
+browser()
       if (length(ind.true) == 0) {
         warning("There are no anomalies in the data set. Measure is NA.")
         precision = NA
       } else if (type == "precisionatp") {
-        if (p > n.anomaly) stopf("p has to be in the intervall [0, number of anomalies in data]")
+        if (p > n.anomaly) stopf("p has to be in the intervall [1, number of anomalies in data]")
         precision = sum(rank[ind.true] <= p) / p
       } else if (type == "rprecision") {
         precision = sum(rank[ind.true] <= n.anomaly) / n.anomaly
       } else if (type == "avgprecision") {
         p = 1:n.anomaly
-        precision = mean(sum(rank[ind.true] <= p)/p)
+        precision = sum(sum(rank[ind.true] <= p) / p) / n.anomaly
       }
 
       if (adjusted == TRUE) {
