@@ -19,6 +19,9 @@
 #'   \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
 #'     to resampling method. The mean for every group is calculated, then the mean of those means.
 #'     Mainly used for repeated CV.}
+#'   \item{\bold{testgroup.sd}}{\cr Similar to \bold{testgroup.sd} - after
+#'     the mean for every group is calculated, the sd of those means is obtained.
+#'     Mainly used for repeated CV.}
 #'   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
 #'     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
 #'     on the aggregation, especially for cross-validation test.join might make sense now.
