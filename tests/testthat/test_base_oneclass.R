@@ -2,7 +2,7 @@ context("oneclass")
 
 test_that("oneclass task", {
   oc = oneclass.task
-  expect_equal(getTaskTargetNames(oc), "normal")
+  expect_equal(getTaskTargetNames(oc), "Target")
   expect_equal(getTaskClassLevels(oc), c("anomaly", "normal"))
   y = getTaskTargets(oc)
   expect_true(is.factor(y))

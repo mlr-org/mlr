@@ -207,10 +207,10 @@ test_that("check measure calculations", {
   pred.cluster = predict(mod.cluster, task.cluster)
   pred.cluster$data$response = pred.art.cluster
   #for oneclass
-  tar.oneclass = c(TRUE, TRUE, TRUE, TRUE)
-  pred.art.oneclass =  c(FALSE, TRUE, TRUE, TRUE)
+  tar.oneclass = c("normal", "normal", "normal", "normal")
+  pred.art.oneclass =  c("anomaly", "normal", "normal", "normal")
   data.oneclass = data.frame(var1, var2, tar.oneclass)
-  task.oneclass = makeOneClassTask(data = data.oneclass, target = "tar.oneclass", positive = "FALSE", negative = "TRUE")
+  task.oneclass = makeOneClassTask(data = data.oneclass, target = "tar.oneclass", positive = "anomaly", negative = "normal")
   lrn.oneclass = makeLearner("oneclass.svm")
   mod.oneclass = train(lrn.oneclass, task.oneclass)
   pred.oneclass = predict(mod.oneclass, task.oneclass)
@@ -850,57 +850,57 @@ test_that("check measure calculations", {
 
   # test one class (same measurement for binary classif)
   #tp
-  tp.test = sum(tar.oneclass == pred.art.oneclass & pred.art.oneclass == "TRUE")
+  tp.test = sum(tar.oneclass == pred.art.oneclass & pred.art.oneclass == "anomaly")
   tp.perf = performance(pred.oneclass, measures = tp, model = mod.oneclass)
   expect_equal(tp.test, tp$fun(pred = pred.oneclass))
   expect_equal(tp.test, as.numeric(tp.perf))
   #tn
-  tn.test = sum(tar.oneclass == pred.art.oneclass & pred.art.oneclass == "FALSE")
+  tn.test = sum(tar.oneclass == pred.art.oneclass & pred.art.oneclass == "normal")
   tn.perf = performance(pred.oneclass, measures = tn, model = mod.oneclass)
   expect_equal(tn.test, tn$fun(pred = pred.oneclass))
   expect_equal(tn.test, as.numeric(tn.perf))
   #fp
-  fp.test = sum(tar.oneclass != pred.art.oneclass & pred.art.oneclass == "TRUE")
+  fp.test = sum(tar.oneclass != pred.art.oneclass & pred.art.oneclass == "anomaly")
   fp.perf = performance(pred.oneclass, measures = fp, model = mod.oneclass)
   expect_equal(fp.test, fp$fun(pred = pred.oneclass))
   expect_equal(fp.test, as.numeric(fp.perf))
   #fn
-  fn.test = sum(tar.oneclass != pred.art.oneclass & pred.art.oneclass == "FALSE")
+  fn.test = sum(tar.oneclass != pred.art.oneclass & pred.art.oneclass == "normal")
   fn.perf = performance(pred.oneclass, measures = fn, model = mod.oneclass)
   expect_equal(fn.test, fn$fun(pred = pred.oneclass))
   expect_equal(fn.test, as.numeric(fn.perf))
   #tpr
-  tpr.test = tp.test / sum(tar.oneclass == "TRUE")
+  tpr.test = tp.test / sum(tar.oneclass == "anomaly")
   tpr.perf = performance(pred.oneclass, measures = tpr, model = mod.oneclass)
   expect_equal(tpr.test, tpr$fun(pred = pred.oneclass))
   expect_equal(tpr.test, as.numeric(tpr.perf))
   #tnr #NaN as TRUE in target
-  tnr.test = tn.test / sum(tar.oneclass == "FALSE")
+  tnr.test = tn.test / sum(tar.oneclass == "normal")
   tnr.perf = performance(pred.oneclass, measures = tnr, model = mod.oneclass)
   expect_equal(tnr.test, tnr$fun(pred = pred.oneclass))
   expect_equal(tnr.test, as.numeric(tnr.perf))
   #fpr #NaN as TRUE in target
-  fpr.test = fp.test / sum(tar.oneclass != "TRUE")
+  fpr.test = fp.test / sum(tar.oneclass != "anomaly")
   fpr.perf = performance(pred.oneclass, measures = fpr, model = mod.oneclass)
   expect_equal(fpr.test, fpr$fun(pred = pred.oneclass))
   expect_equal(fpr.test, as.numeric(fpr.perf))
   #fnr
-  fnr.test = fn.test / sum(tar.oneclass != "FALSE")
+  fnr.test = fn.test / sum(tar.oneclass != "normal")
   fnr.perf = performance(pred.oneclass, measures = fnr, model = mod.oneclass)
   expect_equal(fnr.test, fnr$fun(pred = pred.oneclass))
   expect_equal(fnr.test, as.numeric(fnr.perf))
   #ppv
-  ppv.test = tp.test / sum(pred.art.oneclass == "TRUE")
+  ppv.test = tp.test / sum(pred.art.oneclass == "anomaly")
   ppv.perf = performance(pred.oneclass, measures = ppv, model = mod.oneclass)
   expect_equal(ppv.test, ppv$fun(pred = pred.oneclass))
   expect_equal(ppv.test, as.numeric(ppv.perf))
   #npv
-  npv.test = tn.test / sum(pred.art.oneclass == "FALSE")
+  npv.test = tn.test / sum(pred.art.oneclass == "normal")
   npv.perf = performance(pred.oneclass, measures = npv, model = mod.oneclass)
   expect_equal(npv.test, npv$fun(pred = pred.oneclass))
   expect_equal(npv.test, as.numeric(npv.perf))
   #fdr
-  fdr.test = fp.test / sum(pred.art.oneclass == "TRUE")
+  fdr.test = fp.test / sum(pred.art.oneclass == "anomaly")
   fdr.perf = performance(pred.oneclass, measures = fdr, model = mod.oneclass)
   expect_equal(fdr.test, fdr$fun(pred = pred.oneclass))
   expect_equal(fdr.test, as.numeric(fdr.perf))
@@ -927,7 +927,7 @@ test_that("check measure calculations", {
   expect_equal(mcc.test, mcc$fun(pred = pred.oneclass))
   expect_equal(mcc.test, as.numeric(mcc.perf))
   #f1
-  f1.test = 2 * tp.test / (sum(tar.oneclass == "TRUE") + sum(pred.art.oneclass == "TRUE"))
+  f1.test = 2 * tp.test / (sum(tar.oneclass == "TRUE") + sum(pred.art.oneclass == "anomaly"))
   f1.perf = performance(pred.oneclass, measures = f1, model = mod.oneclass)
   expect_equal(f1.test, f1$fun(pred = pred.oneclass))
   expect_equal(f1.test, as.numeric(f1.perf))
