@@ -58,7 +58,6 @@ Suggests:
     mlbench,
     mldr,
     mlrMBO
->>>>>>> oneclass_RLearner_ksvm
 LazyData: yes
 ByteCompile: yes
 Version: 2.12
