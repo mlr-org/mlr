@@ -9,7 +9,7 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 h2o ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
+    - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
 
 addons:
   apt:
@@ -31,7 +31,7 @@ jobs:
   include:
     - stage: warmup-1
       install:
-        - Rscript -e 'if (!nzchar(find.package("devtools"))) install.packages("devtools")'
+        - Rscript -e 'if (!nzchar(find.package("devtools", quiet = TRUE))) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps()'
         - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
       script: true
