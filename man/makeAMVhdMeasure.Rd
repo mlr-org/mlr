@@ -16,6 +16,9 @@ Name of measure.}
 Should the measure be minimized?
 Default is \code{TRUE}.}
 
+\item{amv.feats}{[\code{numeric}] \cr
+Number of features to be drawn in the feature subsamples}
+
 \item{alphas}{[\code{numeric}] \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
 Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.}
@@ -39,6 +42,9 @@ Name of the measure. Default is \code{id}.}
 
 \item{note}{[\code{character}] \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
+
+\item{avm.iters}{[\code{numeric}] \cr
+Number of subsamples}
 }
 \value{
 [\code{numeric(1)}]
@@ -50,7 +56,7 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 Creates a measure for oneclass classification on high dimensional data
 (recommend for dimension greater than 8) called AMVhd, which is based on the
 Area under the Mass-Volume Curve (AMV) (see \code{makeAMVMeasure}).
-The basic idea is to do several feature sub-samplings (of dimension less than 8)
+The basic idea is to do several feature subsamplings (of dimension less than 8)
 to reduce the dimension of the data, therefore AMV can be applied on each
 subsamples, yielding partial scores AMV_k. The mean of the partial scores is
 the new performancecriteria AMVhd.
