@@ -49,6 +49,9 @@ and aggregated to AMVhd.
 
 Note that the passed base learner must always have \code{predict.type = 'prob'}.
 }
+\note{
+see example of \code{makeAMVhdMeasure}
+}
 \references{
 Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
 arXiv preprint arXiv:1607.01152
@@ -61,6 +64,7 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
   \code{\link{makeDummyFeaturesWrapper}},
+  \code{\link{makeExtractFDAFeatsWrapper}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeImputeWrapper}},

@@ -53,10 +53,29 @@ Area under the Mass-Volume Curve via Monte-Carlo approximation
 of the diagonal. It uses the trapezoidal rule as implemented in
 package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
 the curse of dimensionality applies for data with dimension greater than eight.
-The implementation is based on the
-python implementation: \link{https://github.com/albertcthomas/anomaly_tuning}.
+The implementation is based on the python implementation:
+https://github.com/albertcthomas/anomaly_tuning.
 Differences are the type of quantile used, as the python default is not
 available in R.
+Note: prediction object must have \code{pred.type = 'prob'}
+}
+\examples{
+# creates an AMV measure which calculates the area under the curve between 0.8 and 0.99
+# with 50 steps.
+AMV = makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
+n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
+
+data = getTaskData(oneclass2d.task)
+inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+train.inds = inds.split[[1]]
+test.inds = inds.split[[2]]
+lrn = makeLearner("oneclass.svm", predict.type = "prob")
+mod = train(lrn, oneclass2d.task, subset = train.inds)
+pred = predict(mod, oneclass2d.task, subset = test.inds)
+
+# calculate performance for prediction object, pass data of features used for
+# prediction as feats in performance
+performance(pred = pred, measures = list(AMV), model = mod, task = task)
 }
 \references{
 Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
