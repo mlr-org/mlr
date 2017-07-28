@@ -93,8 +93,8 @@
 #' @export
 makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                    .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
+                   .retrafo.format = c("separate", "combined", "stateless"),
                    .fix.factors = FALSE,
-                   .stateless = FALSE,
                    .properties = c("numerics", "factors", "ordered", "missings"),
                    .properties.adding = character(0), .properties.needed = character(0),
                    .properties.target = c("cluster", "classif", "multilabel", "regr", "surv",
@@ -106,6 +106,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   # If that changes, they would also neede to be dotted.
 
   .datasplit = match.arg(.datasplit)
+  .retrafo.format = match.arg(.retrafo.format)
 
   assertSubset(.properties, cpo.dataproperties)
   assertSubset(.properties.target, c(cpo.tasktypes, cpo.targetproperties))
@@ -113,7 +114,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "databound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE, .stateless = .stateless, .properties = .properties,
+    .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE, .retrafo.format = .retrafo.format, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
     .predict.type = NULL, .packages = .packages,
@@ -122,13 +123,15 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
 #' @export
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
-                          .datasplit, .fix.factors, .data.dependent, .stateless, .properties, .properties.adding, .properties.needed,
+                          .datasplit, .fix.factors, .data.dependent, .retrafo.format, .properties, .properties.adding, .properties.needed,
                           .properties.target, .type.from, .type.to, .predict.type, .packages, cpo.trafo, cpo.retrafo, ...) {
+
   .cpotype = match.arg(.cpotype)
   assertFlag(.data.dependent)
   assertString(.cpo.name)
   assertList(.par.vals, names = "unique")
   assertFlag(.stateless)
+  .stateless = .retrafo.format == "stateless"
 
   if (is.null(.par.set)) {
     .par.set = paramSetSugar(..., .pss.env = parent.frame())
@@ -208,12 +211,22 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     }
     cpo.trafo = NULL
   }
+  if (.retrafo.format == "combined") {
+    retrafo.gen = cpo.trafo
+    cpo.trafo = function(data, target, ...) {
+      cpo.retrafo = retrafo.gen(data, target, ...)
+      if (!isTRUE(checkFunction(cpo.retrafo, nargs = 1))) {
+        stopf("CPO %s cpo.trafo did not generate a retrafo function with one argument.", .cpo.name)
+      }
+      cpo.retrafo(data)
+    }
+  }
   cpo.trafo = captureEnvWrapper(cpo.trafo)
 
   retrafo.expr = substitute(cpo.retrafo)
   if ((is.recursive(retrafo.expr) && identical(retrafo.expr[[1]], quote(`{`))) || !is.null(cpo.retrafo)) {
-    if (.stateless && .cpotype == "databound") {
-      stop("Stateless databound CPO must have cpo.retrafo = NULL")
+    if (.retrafo.format == "combined") {
+      stop("Combined retrafo must have cpo.retrafo = NULL")
     }
     required.arglist.retrafo = funargs
     if (.cpotype == "targetbound") {
@@ -226,8 +239,11 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       required.arglist.retrafo$control = substitute()
     }
     cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame())
-  } else if (.stateless && .cpotype != "databound") {
-    stop("Cannot have a functional stateless (targetbound) CPO.")
+    if (is.null(cpo.trafo) && .stateless) {
+      cpo.trafo = cpo.retrafo
+    }
+  } else if (.stateless) {
+    stop("Stateless CPO must provide cpo.retrafo.")
   }
 
   funargs = insert(funargs, list(id = NULL, affect.type = NULL, affect.index = integer(0),

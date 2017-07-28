@@ -25,7 +25,7 @@
 #' @export
 makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                            .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
-                           .data.dependent = TRUE, .stateless = FALSE,
+                           .data.dependent = TRUE, .retrafo.format = c("separate", "combined", "stateless"),
                            .properties = character(0),
                            .properties.adding = character(0), .properties.needed = character(0),
                            .properties.data = c("numerics", "factors", "ordered", "missings"),
@@ -36,6 +36,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                            cpo.trafo, cpo.retrafo) {
 
   .type = match.arg(.type)
+  .retrafo.format = match.arg(.retrafo.format)
   .type.out = match.arg(.type.out, choices = c("cluster", "classif", "multilabel", "regr", "surv"))
 
   possible.properties = list(multilabel = character(0), regr = character(0), cluster = character(0),
@@ -104,7 +105,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "targetbound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .fix.factors = FALSE, .data.dependent = .data.dependent, .stateless = .stateless, .properties = .properties,
+    .datasplit = .datasplit, .fix.factors = FALSE, .data.dependent = .data.dependent, .retrafo.format = .retrafo.format, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.data, .type.from = .type, .type.to = .type.out,
     .predict.type = .predict.type, .packages = .packages,
