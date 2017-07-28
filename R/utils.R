@@ -13,13 +13,6 @@ getColEls = function(mat, inds) {
   getRowEls(t(mat), inds)
 }
 
-# prints more meaningful 'head' output indicating that there is more output
-printHead = function(x, n = 6L, ...) {
-  print(head(x, n = n, ...))
-  if (nrow(x) > n)
-    catf("... (%i rows, %i cols)\n", nrow(x), ncol(x))
-}
-
 # Do fuzzy string matching between input and a set of valid inputs
 # and return the most similar valid inputs.
 getNameProposals = function(input, possible.inputs, nproposals = 3L) {
