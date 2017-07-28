@@ -607,3 +607,28 @@ makeFilter(
     return(imp)
   }
 )
+
+
+#' Simple filter based on the variance of the features indepentent of each other.
+#' Features with higher variance are considered more important than features with
+#' low importance.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "permutation.importance",
+  desc = "Aggregated difference between feature permuted and unpermuted predictions",
+  pkg = character(0L),
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
+                 aggregation = mean, nmc = 50L, replace = FALSE, nselect) {
+    imp = generateFeatureImportanceData(task, "permutation.importance",
+      imp.learner, interaction = FALSE, measure = measure,
+      contrast = contrast, aggregation = aggregation,
+      nmc = nmc, replace = replace, local = FALSE)
+    imp = as.numeric(imp$res)
+    names(imp) = getTaskFeatureNames(task)
+    return(imp)
+  }
+)
