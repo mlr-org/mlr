@@ -18,7 +18,7 @@
 #' @template ret_measure
 #' @export
 #' @family performance.
-#' @example
+#' @examples
 #' # creates anomaly data with feature size nine
 #' sigma = matrix(0, 9, 9)
 #' diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
@@ -63,7 +63,8 @@
 #'
 #' # calculate AMVhd performance
 #' set.seed(123)
-#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, task = task, feats = data[test.inds, 1:9])
+#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
+#' task = task, feats = data[test.inds, 1:9])
 
 makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)

@@ -1,4 +1,4 @@
-context("oneclass_AMV_AMVhd")
+context("oneclass_measures_AMV_AMVhd")
 
 test_that("AMV", {
   # creates an AMV measure which calculates the area under the curve between 0.8 and 0.99
@@ -55,7 +55,7 @@ test_that("AMVhd", {
 
   expect_equal(AMVhd$id, "AMV")
   expect_equal(AMVhd$extra.args[[1]], c(0.8, 0.99))
-  expect_equal(AMV$extra.args[[2]], 10e4)
+  expect_equal(AMVhd$extra.args[[2]], 10e4)
 
   task = makeOneClassTask(data = data, target = "normal", positive = "TRUE", negative = "FALSE")
   # base learner
