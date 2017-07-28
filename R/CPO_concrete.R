@@ -97,7 +97,7 @@ registerCPO(cpoPca, "data", "general data preprocessing", "Apply an arbitrary fu
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoRangeScale = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: numeric[~., ~.],
+cpoScaleRange = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: numeric[~., ~.],
   .datasplit = "numeric",
   cpo.trafo = {
     ranges = lapply(data, function(x) {
@@ -119,7 +119,7 @@ cpoRangeScale = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: nu
     }
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
-registerCPO(cpoPca, "data", "numeric data preprocessing", "Scale numeric columns to lie in a given range.")
+registerCPO(cpoScaleRange, "data", "numeric data preprocessing", "Scale numeric columns to lie in a given range.")
 
 
 #' @title Probability Encoding
