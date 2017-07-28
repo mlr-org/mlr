@@ -212,6 +212,9 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 
   retrafo.expr = substitute(cpo.retrafo)
   if ((is.recursive(retrafo.expr) && identical(retrafo.expr[[1]], quote(`{`))) || !is.null(cpo.retrafo)) {
+    if (.stateless && .cpotype == "databound") {
+      stop("Stateless databound CPO must have cpo.retrafo = NULL")
+    }
     required.arglist.retrafo = funargs
     if (.cpotype == "targetbound") {
       required.arglist.retrafo$target = substitute()
@@ -223,8 +226,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       required.arglist.retrafo$control = substitute()
     }
     cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame())
-  } else if (.stateless) {
-    stop("Cannot have a functional stateless CPO.")
+  } else if (.stateless && .cpotype != "databound") {
+    stop("Cannot have a functional stateless (targetbound) CPO.")
   }
 
   funargs = insert(funargs, list(id = NULL, affect.type = NULL, affect.index = integer(0),
