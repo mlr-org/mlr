@@ -152,7 +152,7 @@ makeResampleDescFixedCV = function(horizon = 1L, initial.window = .5, skip = hor
   assertNumeric(initial.window, lower = 0, upper = 1)
   skip = asInteger(skip, lower = 0L, upper = Inf)
   makeResampleDescInternal("Fixed", iters = NA_integer_,  horizon = horizon,
-    initial.window = initial.window, skip = skip)
+    initial.window = initial.window, skip = skip, stratify = FALSE)
 }
 
 makeResampleDescGrowingCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
@@ -160,7 +160,7 @@ makeResampleDescGrowingCV = function(horizon = 1L, initial.window = .5, skip = h
   assertNumeric(initial.window, lower = 0, upper = 1)
   skip = asInteger(skip, lower = 0L, upper = Inf)
   makeResampleDescInternal("Growing", iters = NA_integer_, horizon = horizon,
-    initial.window = initial.window, skip = skip)
+    initial.window = initial.window, skip = skip, stratify = FALSE)
 }
 
 

@@ -11,7 +11,10 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   assertString(id)
   assertClass(data, "data.frame")
   assertString(target)
-  assertString(date.col)
+  assert(
+    checkClass(date.col, "character"),
+    checkClass(date.col, "data.frame")
+  )
   frequency = asCount(frequency)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
@@ -20,7 +23,15 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   # 1. Exist
   # 2. Are unique
   # 3. Follow POSIXct convention
-  dates = data[, date.col, drop = FALSE]
+  if (is(date.col, "character")) {
+    dates = data[, date.col, drop = FALSE]
+  } else {
+    dates = date.col
+    if (ncol(dates) > 1) {
+      stop("date.col must be either a character value which points to the column with dates
+        in the data or a data frame with only one column")
+    }
+  }
   if (check.data) {
     assertNumeric(data[[target]], any.missing = FALSE, finite = TRUE, .var.name = target)
     if (any(duplicated(dates)))
@@ -63,7 +74,9 @@ print.ForecastRegrTask = function(x, print.weights = TRUE, ...) {
   catf("Type: %s", td$type)
   catf("Target: %s", td$target)
   catf("Observations: %i", td$size)
-  catf("Dates:\n Start: %s \n End:   %s", td$dates[1], td$dates[length(td$dates)])
+  catf("Dates:\n Start: %s \n End:   %s",
+    strftime(td$dates[1, ], format = "%Y-%m-%d %H:%M:%S %Z"),
+    strftime(td$dates[nrow(td$dates), ], format = "%Y-%m-%d %H:%M:%S %Z"))
   catf("Frequency: %i", td$frequency)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse = "\n"))
