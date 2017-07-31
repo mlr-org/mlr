@@ -258,8 +258,9 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   # construct validation data
   if (is.null(eval.data) & !is.null(validation.ratio)) {
     eval.data = list()
-    n = dim(x)[1]
-    val.ind = sample(n, floor(n * validation.ratio))
+    rdesc = makeResampleDesc("Holdout", split = 1 - validation.ratio, stratify = TRUE)
+    rinst = makeResampleInstance(rdesc, subsetTask(.task, subset = .subset))
+    val.ind = rinst$test.inds[[1]]
     eval.data$label = y[val.ind]
     y = y[-val.ind]
     eval.data$data = x[val.ind,]
