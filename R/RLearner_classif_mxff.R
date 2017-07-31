@@ -125,7 +125,14 @@ makeRLearner.classif.mxff = function() {
       makeNumericLearnerParam(id = "validation.ratio"),
       makeIntegerLearnerParam(id = "early.stop.badsteps", lower = 1),
       makeLogicalLearnerParam(id = "early.stop.maximize", default = TRUE),
-      makeNumericVectorLearnerParam(id = "dropout", lower = 0, upper = 1 - 1e-7),
+      makeLogicalLearnerParam(id = "dropout.global", default = TRUE),
+      makeNumericLearnerParam(id = "dropout.input", lower = 0, upper = 1 - 1e-7),
+      makeNumericLearnerParam(id = "dropout.layer1", lower = 0, upper = 1 - 1e-7,
+        requires = quote(dropout.global == FALSE)),
+      makeNumericLearnerParam(id = "dropout.layer2", lower = 0, upper = 1 - 1e-7,
+        requires = quote(dropout.global == FALSE)),
+      makeNumericLearnerParam(id = "dropout.layer3", lower = 0, upper = 1 - 1e-7,
+        requires = quote(dropout.global == FALSE)),
       makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -175,11 +182,10 @@ makeRLearner.classif.mxff = function() {
     ignoring other architectural specifications. Default of `initializer` is set to NULL, which
     results in the default mxnet initializer being called when training a model. Number of output
     nodes is detected automatically. The upper bound for dropout is set to `1 - 1e-7` as in `mx.mlp`
-    in the `mxnet` package. Dropout should be a numeric vector of length `1`, `2`, or `layers + 1`.
-    If `length(dropout)` is `1`, the same dropout rate will be applied to the inputs and all the
-    hidden layers. If `length(dropout)` is `2`, the first rate will be applied to the inputs, the
-    second to all the hidden layers. If `length(dropout)` is `layers + 1` then the input and every
-    hidden layers will be assigned an individual dropout rate.
+    in the `mxnet` package. If `dropout.global` is `TRUE`, the same dropout rate `dropout.input`
+    will be applied to the inputs and all the hidden layers. If `dropout.global` is `FALSE`,
+    `dropout.input` will be applied to the inputs, and the different `dropout.layer` parameters to
+    their respective layers.
     If `conv.layer1` is `FALSE`, the first layer is a `FullyConnected` layer and `num.layer1` gives
     the number of neurons. If `conv.layer1` is `TRUE`, then `num.layer1` gives the number of
     filters. In this case, `act1` is applied as an `Activation` layer afterwards (as is the case
@@ -239,8 +245,11 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   pool.pad11 = NULL, pool.pad21 = NULL, pool.pad31 = NULL,
   pool.pad12 = NULL, pool.pad22 = NULL, pool.pad32 = NULL,
   pool.type1 = "max", pool.type2 = "max", pool.type3 = "max",
-  dropout = NULL, symbol = NULL, validation.ratio = NULL, eval.data = NULL, early.stop.badsteps = NULL,
-  epoch.end.callback = NULL, early.stop.maximize = TRUE, array.layout = "rowmajor", ...) {
+  dropout.global = TRUE, dropout.input = NULL,
+  dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
+  symbol = NULL, validation.ratio = NULL, eval.data = NULL,
+  early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
+  array.layout = "rowmajor", ...) {
   # transform data in correct format
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   y = as.numeric(d$target) - 1
@@ -319,17 +328,19 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     pool.types = list(pool.type1, pool.type2, pool.type3)[1:layers]
 
     # add dropout if specified
-    if (!is.null(dropout)) {
-      # construct a vector of dropout rates
-      if (length(dropout) == 1) {
-        dropout = rep(dropout, times = layers + 1)
-      } else if (length(dropout) == 2) {
-        dropout = c(dropout[1], rep(dropout[2], times = layers))
-      } else if (length(dropout) != (layers + 1)) {
-        stop("Length of dropout should be 1, 2 or number of layers + 1!")
+    if (dropout.global == TRUE) {
+      # construct a list of dropout rates
+      if (is.null(dropout.input)) {
+        dropout = NULL
+      } else {
+        dropout = as.list(rep(dropout.input, times = layers + 1))
       }
+    } else {
+      dropout = list(dropout.input, dropout.layer1, dropout.layer2, dropout.layer3)
+    }
 
-      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[1])
+    if (!is.null(dropout[[1]])) {
+      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]])
     }
 
     # construct hidden layers using symbols
@@ -354,8 +365,8 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
         sym = mxnet::mx.symbol.Activation(sym, act_type = act[i])
       }
       # add dropout if specified
-      if (!is.null(dropout)) {
-        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[i + 1])
+      if (!is.null(dropout[[i + 1]])) {
+        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]])
       }
     }
 
