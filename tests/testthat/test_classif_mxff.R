@@ -26,57 +26,6 @@ test_that("classif_mxff", {
     )
   )
 
-  # mxnet has its own internal random number generators so setting seeds in R does not work
-  # therefore we need to change the testProbParsets function to account for some
-  # tolerated difference in the probablities
-  testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list, parset.list,
-    tol = 1e-04) {
-    inds = train.inds
-    train = df[inds, ]
-    test = df[-inds, ]
-
-    for (i in seq_along(parset.list)) {
-      parset = parset.list[[i]]
-      old.probs = old.probs.list[[i]]
-      testProbWithTol(t.name, df, target, train.inds, old.probs, parset, tol = tol)
-    }
-  }
-
-  testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = list(),
-    tol = 1e-04) {
-    inds = train.inds
-    train = df[inds, ]
-    test = df[-inds, ]
-
-    if (length(target) == 1) {
-      task = makeClassifTask(data = df, target = target)
-    } else {
-      task = makeMultilabelTask(data = df, target = target)
-    }
-    lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
-    m = try(train(lrn, task, subset = inds))
-
-    if (inherits(m, "FailureModel")) {
-      expect_is(old.predicts, "try-error")
-    } else{
-      cp = predict(m, newdata = test)
-      # dont need names for num vector, 2 classes
-      if (is.numeric(old.probs))
-        names(old.probs) = NULL
-      else
-        old.probs = as.matrix(old.probs)
-
-      p = getPredictionProbabilities(cp)
-      if (is.data.frame(p))
-        p = as.matrix(p)
-      # we change names a bit so dont check them
-      colnames(p) = colnames(old.probs) = NULL
-      rownames(p) = rownames(old.probs) = NULL
-      class(old.probs) = NULL
-      expect_equal(p, old.probs, tolerance = tol)
-    }
-  }
-
   # binaryclass tests
   old.predicts.list = list()
   old.probs.list = list()
