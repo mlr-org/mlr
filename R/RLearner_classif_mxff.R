@@ -269,7 +269,6 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
 
   # if convolution is used, prepare the data dimensionality
   if (conv.layer1) {
-    
     l = length(.learner$par.vals$conv.data.shape)
     dims = switch(l,
       # for one-dimensional data
@@ -299,7 +298,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   }
 
   # early stopping
-  if (is.null(epoch.end.callback) & is.numeric(early.stop.badsteps)) {
+  if (is.null(epoch.end.callback) & !is.null(early.stop.badsteps)) {
     epoch.end.callback = mxnet::mx.callback.early.stop(bad.steps = early.stop.badsteps,
       maximize = early.stop.maximize)
   }
