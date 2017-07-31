@@ -22,7 +22,7 @@ test_that("classif_mxff", {
     list(num.filter = 1, kernel = c(1, 1), pool.type = "max", learning.rate = 0.1)
   )
   parset.list.mlr.conv = list(
-    list(layers = 1, conv.layer1 = TRUE, num.layer1 = 1, conv.data.shape = c(2,2),
+    list(layers = 1, conv.layer1 = TRUE, num.layer1 = 1, conv.data.shape = c(2, 2),
       conv.kernel11 = 1, conv.kernel12 = 1, pool.kernel11 = 1, pool.kernel12 = 1, pool.type1 = "max"
     )
   )
@@ -113,7 +113,7 @@ test_that("classif_mxff", {
   probs = t(predict(m, x.test))
   colnames(probs) = levs
   conv.probs.list[[1]] = probs
-  
+
   set.seed(getOption("mlr.debug.seed"))
   testProbParsetsWithTol("classif.mxff", multiclass.df, multiclass.target, multiclass.train.inds,
     conv.probs.list, parset.list.mlr.conv, tol = 1e-03)

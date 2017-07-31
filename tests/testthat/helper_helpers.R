@@ -135,7 +135,7 @@ testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = l
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
-  
+
   if (length(target) == 1) {
     task = makeClassifTask(data = df, target = target)
   } else {
@@ -143,7 +143,7 @@ testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = l
   }
   lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
   m = try(train(lrn, task, subset = inds))
-  
+
   if (inherits(m, "FailureModel")) {
     expect_is(old.predicts, "try-error")
   } else{
@@ -153,7 +153,7 @@ testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = l
       names(old.probs) = NULL
     else
       old.probs = as.matrix(old.probs)
-    
+
     p = getPredictionProbabilities(cp)
     if (is.data.frame(p))
       p = as.matrix(p)
@@ -184,7 +184,7 @@ testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
-  
+
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]

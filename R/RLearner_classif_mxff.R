@@ -263,8 +263,8 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     val.ind = rinst$test.inds[[1]]
     eval.data$label = y[val.ind]
     y = y[-val.ind]
-    eval.data$data = x[val.ind,]
-    x = x[-val.ind,]
+    eval.data$data = x[val.ind, ]
+    x = x[-val.ind, ]
   }
 
   # if convolution is used, prepare the data dimensionality
@@ -427,7 +427,7 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
   }
   p = predict(.model$learner.model, X = x, array.layout = array.layout)
   if (.learner$predict.type == "response") {
-    # in very rare cases, the mxnet FeedForward algorithm does not converge and returns useless / 
+    # in very rare cases, the mxnet FeedForward algorithm does not converge and returns useless /
     # error output in the probability matrix. In this case, which.max returns integer(0).
     # To avoid errors, return NA instead.
     p = apply(p, 2, function(i) {
