@@ -269,11 +269,16 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
 
   # if convolution is used, prepare the data dimensionality
   if (conv.layer1) {
+    
     l = length(.learner$par.vals$conv.data.shape)
     dims = switch(l,
+      # for one-dimensional data
       c(.learner$par.vals$conv.data.shape, 1, 1, nrow(x)),
+      # for two-dimensional data (e.g. MNIST)
       c(.learner$par.vals$conv.data.shape, 1, nrow(x)),
+      # for three-dimensional data (e.g. images with color levels)
       c(.learner$par.vals$conv.data.shape, nrow(x)),
+      # dimensionality of the data completely defined by user
       .learner$par.vals$conv.data.shape)
     x = array(aperm(x), dim = dims)
     # adapt array.layout for mx.model.FeedForward.create
@@ -281,9 +286,13 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     # adapt validation data if necessary
     if (!is.null(validation.ratio)) {
       dims = switch(l,
+        # for one-dimensional data
         c(.learner$par.vals$conv.data.shape, 1, 1, nrow(eval.data$data)),
+        # for two-dimensional data (e.g. MNIST)
         c(.learner$par.vals$conv.data.shape, 1, nrow(eval.data$data)),
+        # for three-dimensional data (e.g. images with color levels)
         c(.learner$par.vals$conv.data.shape, nrow(eval.data$data)),
+        # dimensionality of the data completely defined by user
         .learner$par.vals$conv.data.shape)
       eval.data$data = array(aperm(eval.data$data), dim = dims)
     }
