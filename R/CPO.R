@@ -375,15 +375,15 @@ makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
     data = makeClusterTask("CPO Generated", data, check.data = FALSE)
   }
 
-  inverter = makeCPOS3RetrafoBasic(cpo, state, prev.inverter, "inverter")
+  inverter = makeCPORetrafoBasic(cpo, state, prev.inverter, "inverter")
   # --- only in pure "inverter" kind
   inverter$indatatd = getTaskDesc(data)
   inverter$truth = prepareRetrafoData(data, cpo$datasplit, cpo$properties$properties, shapeinfo, cpo$bare.name)$target
   inverter
 }
 
-makeCPOS3Retrafo = function(cpo, state, prev.retrafo, shapeinfo.input, shapeinfo.output) {
-  retrafo = makeCPOS3RetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (cpo$hybrid.inverter) "inverter"))
+makeCPORetrafo = function(cpo, state, prev.retrafo, shapeinfo.input, shapeinfo.output) {
+  retrafo = makeCPORetrafoBasic(cpo, state, prev.retrafo, c("retrafo", if (cpo$hybrid.inverter) "inverter"))
   # --- only in "retrafo" kind
   retrafo$shapeinfo.input = shapeinfo.input
   retrafo$shapeinfo.output = shapeinfo.output
@@ -392,8 +392,8 @@ makeCPOS3Retrafo = function(cpo, state, prev.retrafo, shapeinfo.input, shapeinfo
 }
 
 
-makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
-  retrafo = makeS3Obj(c("CPORetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
+makeCPORetrafoBasic = function(cpo, state, prev.retrafo, kind) {
+  retrafo = makeS3Obj(c("CPORetrafoPrimitive", "CPORetrafo"),
     cpo = setCPOId(cpo, NULL),
     state = state,
     prev.retrafo = NULL,
@@ -413,8 +413,8 @@ makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
 ##################################
 
 # CPOS3 is a tree datastructure. CPOPrimitive are
-# the leaves, CPOS3Tree the nodes.
-# CPOS3Retrafo is a linked list, which gets automatically
+# the leaves, CPOTree the nodes.
+# CPORetrafo is a linked list, which gets automatically
 # constructed in 'callCPO'.
 callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
   UseMethod("callCPO")
@@ -504,7 +504,7 @@ callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.in
 
 
 
-  retrafo = if (build.retrafo) makeCPOS3Retrafo(cpo, state, prev.retrafo, tin$shapeinfo, tout$shapeinfo) else prev.retrafo
+  retrafo = if (build.retrafo) makeCPORetrafo(cpo, state, prev.retrafo, tin$shapeinfo, tout$shapeinfo) else prev.retrafo
 
   inverter = if (build.inverter && cpo$bound == "targetbound") makeCPOS3Inverter(cpo, state, prev.inverter, data, tin$shapeinfo) else prev.inverter
 
@@ -515,9 +515,9 @@ callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.in
 #
 # A CPOS3 tree looks like this:
 #
-#                 CPOS3Tree
+#                  CPOTree
 #               /[first]    \[second]
-#      CPOS3Tree             CPOS3Tree
+#       CPOTree               CPOTree
 #     /[first]  \[second]   /[first]  \[second]
 # CPOS3Prim1 CPOS3Prim2 CPOS3Prim3 CPOS3Prim4
 #
@@ -529,7 +529,7 @@ callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.in
 #
 # retr.1 <-- retr.2 <-- retr.3 <-- retr.4
 #
-callCPO.CPOS3Tree = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
+callCPO.CPOTree = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
   checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   first = cpo$first
   second = cpo$second
@@ -551,7 +551,7 @@ callCPO.CPOS3Tree = function(cpo, data, build.retrafo, prev.retrafo, build.inver
 # receiver.properties are the properties of the next layer
 applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
 
-  assertClass(retrafo, "CPOS3Retrafo")
+  assertClass(retrafo, "CPORetrafo")
   cpo = retrafo$cpo
 
   if (!"retrafo" %in% retrafo$kind) {
@@ -560,7 +560,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
 
   if (!is.null(retrafo$prev.retrafo)) {
     assertSubset(retrafo$prev.retrafo$properties.needed, cpo$properties$properties)  # this is already tested during composition
-    assertClass(retrafo$prev.retrafo, "CPOS3Retrafo")
+    assertClass(retrafo$prev.retrafo, "CPORetrafo")
     upper.result = applyCPORetrafoEx(retrafo$prev.retrafo, data, build.inverter, prev.inverter)
     data = upper.result$data
     prev.inverter = upper.result$inverter
@@ -594,7 +594,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
 }
 
 #' @export
-applyCPO.CPOS3Retrafo = function(cpo, data) {
+applyCPO.CPORetrafo = function(cpo, data) {
   retrafo = cpo
   build.inverter = hasTagInvert(data)
   prev.inverter = inverter(data)
@@ -607,7 +607,7 @@ applyCPO.CPOS3Retrafo = function(cpo, data) {
     stop("Data had 'inverter' attribute set, but not the 'keep.inverter' tag.")
   }
   if (!is.null(prev.inverter)) {
-    assertClass(prev.inverter, "CPOS3Retrafo")
+    assertClass(prev.inverter, "CPORetrafo")
   }
 
   prev.retrafo = retrafo(data)
@@ -637,7 +637,7 @@ composeCPO.CPOS3 = function(cpo1, cpo2) {
   newprops = compositeProperties(cpo1$properties, cpo2$properties, cpo1$name, cpo2$name)
   newpt = chainPredictType(cpo1$predict.type, cpo2$predict.type, cpo1$name, cpo2$name)
 
-  makeS3Obj(c("CPOS3Tree", "CPOS3", "CPO"),
+  makeS3Obj(c("CPOTree", "CPOS3", "CPO"),
     # --- CPOS3 Part
     bare.name = paste(cpo2$bare.name, cpo1$bare.name, sep = "."),
     name = paste(cpo1$name, cpo2$name, sep = " >> "),
@@ -646,7 +646,7 @@ composeCPO.CPOS3 = function(cpo1, cpo2) {
     properties = newprops,
     bound = unique(cpo1$bound, cpo2$bound),
     predict.type = newpt,
-    # --- CPOS3Tree part
+    # --- CPOTree part
     first = cpo1,
     second = cpo2)
 }
@@ -660,7 +660,7 @@ as.list.CPOPrimitive = function(x, ...) {
 }
 
 #' @export
-as.list.CPOS3Tree = function(x, ...) {
+as.list.CPOTree = function(x, ...) {
   first = x$first
   second = x$second
   first$par.vals = subsetParams(x$par.vals, first$par.set)
@@ -785,7 +785,7 @@ applyCPO.CPOS3 = function(cpo, task) {
     stop("Data had 'inverter' attribute set, but not the 'keep.inverter' tag.")
   }
   if (!is.null(prev.inverter)) {
-    assertClass(prev.inverter, "CPOS3Retrafo")
+    assertClass(prev.inverter, "CPORetrafo")
   }
   prev.retrafo = retrafo(task)
 
@@ -927,8 +927,8 @@ singleModelRetrafo.CPOS3Model = function(model, prev) {
 # RETRAFO %>>% RETRAFO
 
 #' @export
-composeCPO.CPOS3Retrafo = function(cpo1, cpo2) {
-  assertClass(cpo2, "CPOS3Retrafo")
+composeCPO.CPORetrafo = function(cpo1, cpo2) {
+  assertClass(cpo2, "CPORetrafo")
   is.prim = "CPORetrafoPrimitive" %in% class(cpo2)
   assert(is.prim == is.null(cpo2$prev.retrafo))
   newkind = intersect(cpo1$kind, cpo2$kind)
@@ -989,7 +989,7 @@ chainPredictType = function(pt1, pt2, name1, name2) {
 # RETRAFO splitting
 
 #' @export
-as.list.CPOS3Retrafo = function(x, ...) {
+as.list.CPORetrafo = function(x, ...) {
   assert(length(list(...)) == 0)
   prev = if (!is.null(x$prev.retrafo)) as.list(x$prev.retrafo)
   x$prev.retrafo = NULL
@@ -1066,7 +1066,7 @@ makeRetrafoFromState.CPOConstructor = function(constructor, state) {
     assertSubset(names(bare$par.vals), names(bare$bare.par.set$pars))
   }
 
-  makeCPOS3Retrafo(bare, newstate, NULL, data$shapeinfo.input, data$shapeinfo.output)
+  makeCPORetrafo(bare, newstate, NULL, data$shapeinfo.input, data$shapeinfo.output)
 }
 
 # Param Sets
@@ -1082,7 +1082,7 @@ getHyperPars.CPORetrafoPrimitive = function(learner, for.fun = c("train", "predi
 }
 
 #' @export
-getCPOProperties.CPOS3Retrafo = function(cpo, only.data = FALSE) {
+getCPOProperties.CPORetrafo = function(cpo, only.data = FALSE) {
   if (!is.null(cpo$prev.retrafo)) {
     props = compositeProperties(getCPOProperties(cpo$prev.retrafo), cpo$cpo$properties, "[PREVIOUS RETRAFO CHAIN]", cpo$cpo$bare.name)
   } else {
@@ -1101,17 +1101,17 @@ getCPOName.CPORetrafoPrimitive = function(cpo) {
 }
 
 #' @export
-getCPOBound.CPOS3Retrafo = function(cpo) {
+getCPOBound.CPORetrafo = function(cpo) {
   cpo$bound
 }
 
 #' @export
-getCPOKind.CPOS3Retrafo = function(cpo) {
+getCPOKind.CPORetrafo = function(cpo) {
   cpo$kind
 }
 
 #' @export
-getCPOPredictType.CPOS3Retrafo = function(cpo) {
+getCPOPredictType.CPORetrafo = function(cpo) {
   names(cpo$predict.type)
 }
 
