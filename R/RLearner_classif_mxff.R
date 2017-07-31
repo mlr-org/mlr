@@ -427,11 +427,14 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
   }
   p = predict(.model$learner.model, X = x, array.layout = array.layout)
   if (.learner$predict.type == "response") {
+    # in very rare cases, the mxnet FeedForward algorithm does not converge and returns useless / 
+    # error output in the probability matrix. In this case, which.max returns integer(0).
+    # To avoid errors, return NA instead.
     p = apply(p, 2, function(i) {
       w = which.max(i)
-      return(ifelse(length(w > 0), w, NaN))
+      return(ifelse(length(w > 0), w, NA))
     })
-    p = factor(p, exclude = NaN)
+    p = factor(p, exclude = NA)
     levels(p) = .model$task.desc$class.levels
     return(p)
   }
