@@ -39,7 +39,7 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
 }
 
 #' @export
-trainLearner.DownsampleWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.DownsampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   dw.perc = 1, dw.stratify = FALSE, ...) {
   .task$weights = .weights
   .task = subsetTask(.task, .subset)

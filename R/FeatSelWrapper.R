@@ -52,7 +52,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
 }
 
 #' @export
-trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
+trainLearner.FeatSelWrapper = function(.learner, .task, .subset = NULL,  ...) {
   task = subsetTask(.task, .subset)
   if (length(.learner$bit.names) == 0)
     #FIXME: really look at bitnames / bits.to.features stuff and test it.

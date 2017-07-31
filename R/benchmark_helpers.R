@@ -4,7 +4,7 @@ ensureBenchmarkLearners = function(learners) {
   learner.ids = vcapply(learners, getLearnerId)
   if (anyDuplicated(learner.ids))
     stop("Learners need unique ids!")
-  learners
+  setNames(learners, learner.ids)
 }
 
 ensureBenchmarkTasks = function(tasks) {
@@ -14,7 +14,7 @@ ensureBenchmarkTasks = function(tasks) {
   task.ids = vcapply(tasks, getTaskId)
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
-  tasks
+  setNames(tasks, task.ids)
 }
 
 ensureBenchmarkResamplings = function(resamplings, tasks) {
@@ -27,7 +27,14 @@ ensureBenchmarkResamplings = function(resamplings, tasks) {
     if (length(resamplings) != length(tasks))
       stop("Number of resampling strategies and number of tasks differ!")
   }
-  resamplings
+  resamplings = Map(function(res, tt) {
+    if (inherits(res, "ResampleInstance"))
+      return(res)
+    if (inherits(res, "ResampleDesc"))
+      return(makeResampleInstance(res, task = tt))
+    stop("All objects in 'resamplings' must be of class 'ResampleDesc' or 'ResampleInstance'")
+  }, resamplings, tasks)
+  setNames(resamplings, names(tasks))
 }
 
 ensureBenchmarkMeasures = function(measures, tasks) {

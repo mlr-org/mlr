@@ -83,7 +83,7 @@ print.BaggingModel = function(x, ...) {
 }
 
 #' @export
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.BaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   bw.iters = 10, bw.replace = TRUE, bw.size, bw.feats = 1, ...) {
 
   if (missing(bw.size))
@@ -111,12 +111,12 @@ doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weight
 }
 
 #' @export
-predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.BaggingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    g(predict(m, newdata = nd, ...)$data$response)
+    g(predict(m, newdata = nd, subset = .subset, ...)$data$response)
   }))
   if (.learner$predict.type == "response") {
     if (.learner$type == "classif")

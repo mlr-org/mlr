@@ -30,7 +30,7 @@ makeConstantClassWrapper = function(learner, frac = 0) {
 }
 
 #' @export
-trainLearner.ConstantClassWrapper = function(.learner, .task, .subset, .weights = NULL, frac = 0, ...) {
+trainLearner.ConstantClassWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, frac = 0, ...) {
   labels.distribution = sort(prop.table(table(getTaskTargets(subsetTask(.task, .subset)))), decreasing = TRUE)
   most.frequent = labels.distribution[1L]
   if (most.frequent >= (1 - frac)) {

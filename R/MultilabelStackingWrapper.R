@@ -31,7 +31,7 @@ makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
 }
 
 #' @export
-trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
@@ -57,14 +57,14 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset, .wei
 }
 
 #' @export
-predictLearner.MultilabelStackingWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelStackingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
   models.lvl1 = models[seq_along(.model$task.desc$target)]
   f = if (.learner$predict.type == "response") {
-    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
   } else {
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
   }
   if (.learner$predict.type == "response") {
     pred.lvl1 = sapply(data.frame(asMatrixCols(lapply(models.lvl1, f))), as.numeric)
@@ -76,9 +76,9 @@ predictLearner.MultilabelStackingWrapper = function(.learner, .model, .newdata, 
   models.meta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
   nd = data.frame(.newdata, pred.lvl1)
   g = if (.learner$predict.type == "response") {
-    function(m) as.logical(getPredictionResponse(predict(m, newdata = nd, ...)))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = nd, subset = .subset, ...)))
   } else {
-    function(m) getPredictionProbabilities(predict(m, newdata = nd, ...), cl = "TRUE")
+    function(m) getPredictionProbabilities(predict(m, newdata = nd, subset = .subset, ...), cl = "TRUE")
   }
   asMatrixCols(lapply(models.meta, g), col.names = .model$task.desc$target)
 }
