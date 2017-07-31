@@ -38,7 +38,7 @@
 #' @rdname TaskDesc
 NULL
 
-makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
+makeTaskDescInternal = function(type, id, data, target, weights, blocking, formula = NULL) {
   # get classes of feature cols
   cl = vcapply(data, function(x) class(x)[1L])
   cl = table(dropNamed(cl, target))
