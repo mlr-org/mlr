@@ -1002,12 +1002,6 @@ removeHyperPars.CPOLearner = function(learner, ids) {
 }
 
 #' @export
-as.list.CPOPrimitive = function(x, ...) {
-  assert(length(list(...)) == 0)
-  list(x)
-}
-
-#' @export
 predict.CPORetrafo = function(object, data, ...) {
   assert(length(list(...)) == 0)
   applyCPO(object, data)

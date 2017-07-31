@@ -331,7 +331,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     par.set$pars = par.set$pars[export]
     par.vals = par.vals[export]
 
-    cpo = makeS3Obj(c("CPOS3Primitive", "CPOPrimitive", "CPOS3", "CPO"),
+    cpo = makeS3Obj(c("CPOPrimitive", "CPOS3", "CPO"),
       # --- CPOS3 part
       bare.name = .cpo.name,
       name = .cpo.name,
@@ -343,7 +343,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
         properties.needed = .properties.needed),
       bound = .cpotype,
       predict.type = .predict.type,
-      # --- CPOS3Primitive part
+      # --- CPOPrimitive part
       id = NULL,
       packages = .packages,
       affect.args = affect.args,
@@ -412,7 +412,7 @@ makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
 ### Primary Operations         ###
 ##################################
 
-# CPOS3 is a tree datastructure. CPOS3Primitive are
+# CPOS3 is a tree datastructure. CPOPrimitive are
 # the leaves, CPOS3Tree the nodes.
 # CPOS3Retrafo is a linked list, which gets automatically
 # constructed in 'callCPO'.
@@ -429,7 +429,7 @@ callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.
 # - returns list(data, retrafo = [CPORetrafo object])
 
 # attaches prev.retrafo to the returned retrafo object, if present.
-callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
+callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
 
   cpo$par.vals = c(cpo$par.vals, cpo$unexported.args)
   cpo$par.set$pars = c(cpo$par.set$pars, cpo$unexported.pars)
@@ -652,6 +652,13 @@ composeCPO.CPOS3 = function(cpo1, cpo2) {
 }
 
 # CPO splitting
+
+#' @export
+as.list.CPOPrimitive = function(x, ...) {
+  assert(length(list(...)) == 0)
+  list(x)
+}
+
 #' @export
 as.list.CPOS3Tree = function(x, ...) {
   first = x$first
@@ -818,7 +825,7 @@ setHyperPars2.CPOS3 = function(learner, par.vals = list()) {
 
 # get par.vals with bare par.set names
 getBareHyperPars = function(cpo) {
-  assertClass(cpo, "CPOS3Primitive")
+  assertClass(cpo, "CPOPrimitive")
   args = cpo$par.vals
   namestranslation = setNames(names(cpo$bare.par.set$pars),
     names(cpo$par.set$pars))
@@ -845,7 +852,7 @@ getCPOName.CPOS3 = function(cpo) {
 }
 
 #' @export
-setCPOId.CPOS3Primitive = function(cpo, id) {
+setCPOId.CPOPrimitive = function(cpo, id) {
   cpo$id = id
   cpo$name = collapse(c(cpo$bare.name, id), sep = ".")
   cpo$par.vals = getBareHyperPars(cpo)
@@ -878,7 +885,7 @@ getCPOKind.CPOS3 = function(cpo) {
 }
 
 #' @export
-getCPOAffect.CPOS3Primitive = function(cpo, drop.defaults = TRUE) {
+getCPOAffect.CPOPrimitive = function(cpo, drop.defaults = TRUE) {
   affect.args = cpo$affect.args
   if (!drop.defaults) {
     if (!length(getCPOAffect(cpo))) {
@@ -1114,6 +1121,6 @@ getCPOName.CPOS3Constructor = function(cpo) {
 }
 
 #' @export
-getCPOId.CPOS3Primitive = function(cpo) {
+getCPOId.CPOPrimitive = function(cpo) {
   cpo$id
 }
