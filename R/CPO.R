@@ -367,7 +367,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     requireCPOPackages(cpo)
     setCPOId(cpo, id)  # this also adjusts par.set and par.vals
   })
-  addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
+  addClasses(eval(call("function", as.pairlist(funargs), funbody)), "CPOConstructor")
 }
 
 makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
@@ -1034,7 +1034,7 @@ getRetrafoState.CPOS3RetrafoPrimitive = function(retrafo.object) {
 }
 
 #' @export
-makeRetrafoFromState.CPOS3Constructor = function(constructor, state) {
+makeRetrafoFromState.CPOConstructor = function(constructor, state) {
   assertList(state, names = "unique")
   bare = constructor()
 
@@ -1116,7 +1116,7 @@ getCPOPredictType.CPOS3Retrafo = function(cpo) {
 }
 
 #' @export
-getCPOName.CPOS3Constructor = function(cpo) {
+getCPOName.CPOConstructor = function(cpo) {
   environment(cpo)$.cpo.name
 }
 
