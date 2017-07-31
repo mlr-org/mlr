@@ -6,7 +6,7 @@
 
 # one x
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
-  opt.path, show.info, convertx, remove.nas, resample.fun) {
+  opt.path, show.info, convertx, remove.nas, resample.fun, always.minimize = TRUE) {
 
   x = convertx(x, par.set)
   # transform parameters
@@ -24,10 +24,13 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   }
   addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,
     exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
-  convertYForTuner(res$y, measures, ctrl)
+  convertYForTuner(res$y, measures, ctrl, always.minimize)
 }
 
 tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun) {
+
+  measures = ensureVector(measures, n = 1L, cl = "Measure")
+
   force(learner)
   force(task)
   force(resampling)
@@ -45,8 +48,8 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
     ps2$pars[[i]]$trafo = NULL
   smoof::makeSingleObjectiveFunction(
     fn = function(x) {
-      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun)
-  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun, always.minimize = FALSE)
+  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE, minimize = measures[[1]]$minimize)
 }
 
 # multiple xs in parallel
@@ -63,7 +66,7 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
 }
 
 # short helper that imputes illegal values and also negates for maximization problems
-convertYForTuner = function(y, measures, ctrl) {
+convertYForTuner = function(y, measures, ctrl, always.minimize = TRUE) {
   is.multicrit = inherits(ctrl, "TuneMultiCritControl")
   k = ifelse(is.multicrit, length(y), 1L)
   for (j in seq_len(k)) {
@@ -72,7 +75,7 @@ convertYForTuner = function(y, measures, ctrl) {
     if (is.na(z) || is.nan(z) || is.infinite(z))
       z = ctrl$impute.val[[j]]
     # we now negate values for maximization
-    y[[j]] = z * ifelse(measures[[j]]$minimize, 1, -1)
+    y[[j]] = if (always.minimize && !measures[[j]]$minimize) -1 * z else z
   }
   # for multicrit, return vector (without names), otherwise just scalar y
   if (inherits(ctrl, "TuneMultiCritControl"))
