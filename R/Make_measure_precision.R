@@ -4,7 +4,7 @@
 #' Creates a measure for anomaly detection with external ground truth (known labels).
 #'
 #' R-precision/Top-p Accuracy:  Measures the relativ number of true predicted anomalies
-#' in the top p ranks of the test set (=t) to the number of anomalies (=p) on
+#' in the top p ranks of the test set (= t) to the number of anomalies (=p) on
 #' the entire test set: t/p.
 #'
 #' Precision at p (P@p): Measures the relativ number of true predicted anomalies
@@ -14,8 +14,9 @@
 #'
 #' Avergae Precision (AP): Averages over P@p with $p \in \{1,2,..., number of anomalies\}$
 #'
+#' p usually lies in \{1,2,..., number of anomalies\}, but p can also be greater than the number of anomalies.
 #' If the performance is 0, that means within the top ranks, no anomalies were detected.
-#' If the performance is NA, that means within no anomalies are in the data set.
+#' If the performance is NA, that means no anomalies are in the data set.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Name of measure.
@@ -27,8 +28,9 @@
 #'   Default is \dQuite{averageprecision}
 #' @param adjusted [\code{logical}] \cr
 #'   adjusted for chances. Recommend to compare different data sets. Default TRUE.
+#'   (index - expected index) / (1- expected index)
 #' @return [\code{numeric(1)}]
-#'  Return one numeric value of Top-p Accuracy, R-Precision, Precision at p (P@p),  Average Precision (AP)
+#'  Return a numeric value of Top-p Accuracy, R-Precision, Precision at p (P@p),  Average Precision (AP)
 #' @references Campos, Guilherme O., et al. "On the evaluation of unsupervised outlier detection: measures, datasets, and an empirical study." Data Mining and Knowledge Discovery 30.4 (2016): 891-927.
 #' @inheritParams makeMeasure
 #' @template ret_measure
@@ -36,20 +38,23 @@
 #' @family performance.
 #' @examples
 #' # creates an R-precision measure which calculates the precision for the top 5 (=p) ranks
-#' rprecision = makePrecisionMeasure(id = "RPrecision", minimize = FALSE, best = 0, worst = NULL, type = "rprecision", adjusted = FALSE)
+#' rprecision = makePrecisionMeasure(id = "RPrecision", minimize = FALSE,
+#' best = 0, worst = NULL, type = "rprecision", adjusted = FALSE)
 #'
 #' # creates an P@5 measure which calculates the precision for the top 5 (=p) ranks
-#' precisionat5 = makePrecisionMeasure(id = "Precisionat5", minimize = FALSE, best = 0, worst = NULL, p = 5, type = "precisionatp", adjusted = FALSE)
+#' precisionat5 = makePrecisionMeasure(id = "Precisionat5", minimize = FALSE,
+#' best = 0, worst = NULL, p = 5, type = "precisionatp", adjusted = FALSE)
 #'
-#' # creates an average precision measure which calculates the average precision for all ranks of possible choices of p in \{1, 2, ..., number of anomalies\}.
-#' avgprecision = makePrecisionMeasure(id = "AvgPrecision", minimize = FALSE, best = 0, worst = NULL, type = "avgprecision", adjusted = FALSE)
+#' # creates an average precision measure which calculates the average precision
+#' # for all ranks of possible choices of p in \{1, 2, ..., number of anomalies\}.
+#' avgprecision = makePrecisionMeasure(id = "AvgPrecision", minimize = FALSE,
+#' best = 0, worst = NULL, type = "avgprecision", adjusted = FALSE)
 #'
 #' lrn = makeLearner("oneclass.svm", predict.type = "prob", nu = 0.05)
 #' mod = train(lrn, oneclass2d.task)
 #' pred = predict(mod, task = oneclass2d.task)
 #'
-#' # calculate performance for prediction object, pass data of features used for
-#' # prediction as feats in performance
+#' # calculate performance for prediction object
 #' performance(pred = pred, measures = list(rprecision, precisionat5, avgprecision), model = mod, task = task)
 
 makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, worst = 0, name = id, note = "", type = c("avgprecision", "rprecision", "precisionatp"), p = NULL, adjusted = TRUE) {
@@ -80,7 +85,8 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
         warning("There are no anomalies in the data set. Measure is NA.")
         precision = NA
       } else if (type == "precisionatp") {
-        if (p > n.anomaly) stopf("p has to be in the intervall [1, number of anomalies in data]")
+        if (p > n.anomaly | p < 1)
+          warning("p should lie in {1, 2, ..., number of anomalies}")
         precision = sum(rank[ind.true] <= p) / p
       } else if (type == "rprecision") {
         precision = sum(rank[ind.true] <= n.anomaly) / n.anomaly
