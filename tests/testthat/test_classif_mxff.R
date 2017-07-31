@@ -13,7 +13,8 @@ test_that("classif_mxff", {
     list(layers = 2, num.layer1 = 10, num.layer2 = 6, act1 = "sigmoid",
       act2 = "relu", learning.rate = 0.2),
     list(layers = 2, num.layer1 = 10, num.layer2 = 6, act1 = "sigmoid",
-      act2 = "relu", learning.rate = 0.2, dropout = 0.5)
+      act2 = "relu", learning.rate = 0.2, dropout.global = FALSE, dropout.layer1 = 0.5,
+      dropout.layer2 = 0.5)
   )
 
   # test for Convolution
@@ -115,5 +116,5 @@ test_that("classif_mxff", {
   
   set.seed(getOption("mlr.debug.seed"))
   testProbParsetsWithTol("classif.mxff", multiclass.df, multiclass.target, multiclass.train.inds,
-    conv.probs.list, parset.list.mlr.conv, tol = 2e-04)
+    conv.probs.list, parset.list.mlr.conv, tol = 1e-03)
 })
