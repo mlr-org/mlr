@@ -9,7 +9,8 @@
 #' Create a CPO constructor.
 #'
 #' @param .cpo.name [\code{character(1)}]\cr
-#'   The name of the resulting CPO constructor / CPO. This is used for identification in output.
+#'   The name of the resulting CPO constructor / CPO. This is used for identification in output,
+#'   and as the default \code{id}.
 #' @param ...
 #'   Parameters of the CPO, in the format of \code{\link{paramSetSugar}}.
 #' @param .par.set [\code{ParamSet}]\cr
@@ -20,35 +21,73 @@
 #'   parameter default values in \dQuote{...} and \code{.par.set}. It is preferred to use
 #'   these default values, and not \code{.par.vals}. Default is \code{list()}.
 #' @param .datasplit [\code{character(1)}]\cr
-#'   Indicate what format the data should be as seen by \dQuote{cpo.trafo}. Possibilities are:
+#'   Indicate what format the data should be as seen by \dQuote{cpo.trafo} and \dQuote{cpo.retrafo}. Possibilities are:
 #'   \itemize{
-#'     \item target the \dQuote{data} variable contains the data in a data.frame without
-#'       the target column(s), the \dQuote{target} variable contains the target column(s) in
+#'     \item{target} the \dQuote{data} variable contains the data as a data.frame without
+#'       the target column(s), the \dQuote{target} variable contains the target column(s) as
 #'       a data.frame.
-#'     \item most the \dQuote{data} is a list containing three data.frames: \dQuote{numeric}
+#'     \item{no} the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
+#'       variable is a \code{character} indicating the names of the target columns.
+#'     \item{task} the \dQuote{data} variable contains the data as a \dQuote{\link{Task}}.
+#'     \item{most} the \dQuote{data} is a named list containing three data.frames: \dQuote{numeric}
 #'       the numeric columns, \dQuote{factor} the factorial columns (ordered and unordered),
 #'       \dQuote{other} the columns that are neither numeric nor factors. The \dQuote{target}
-#'       variable contains the target column(s) in a data.frame.
-#'     \item all similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
+#'       variable contains the target column(s) as a data.frame.
+#'     \item{all} similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
 #'       (unordered factors) and \dQuote{ordered}.
-#'     \item no the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
-#'       variable is a \code{character} indicating the names of the target columns.
-#'     \item task the \dQuote{data} variable contains the data as a \dQuote{\link{Task}}.
-#'     \item factor similar to \dQuote{target}, but \dQuote{data} will only contain the features
-#'       whtat are either of type \dQuote{factor} or \dQuote{ordered}.
-#'     \item onlyfactor similar to \dQuote{target} but \dQuote{data} will only contain the features
-#'       whtat are of type \dQuote{factor}.
-#'     \item ordered similar to \dQuote{target} but \dQuote{data} will only contain the features
-#'       whtat are of type \dQuote{ordered}.
-#'     \item numeric similar to \dQuote{target} but \dQuote{data} will only contain the features
-#'       whtat are of type \dQuote{numeric}.
+#'     \item{factor} similar to \dQuote{target}, but \dQuote{data} will only contain the features
+#'       that are either of type \dQuote{factor} or \dQuote{ordered}.
+#'     \item{onlyfactor} similar to \dQuote{target} but \dQuote{data} will only contain the features
+#'       that are of type \dQuote{factor}.
+#'     \item{ordered} similar to \dQuote{target} but \dQuote{data} will only contain the features
+#'       that are of type \dQuote{ordered}.
+#'     \item{numeric} similar to \dQuote{target} but \dQuote{data} will only contain the features
+#'       that are of type \dQuote{numeric}.
 #'   }
-#'   The returned data must always be in the same format as the one requested and it is an error to
-#'   change the target column(s) in the \dQuote{no} and \dQuote{task}. If \dQuote{.datasplit} is
-#'   \dQuote{most} or \dQuote{all}, the \dQuote{$numeric} slot of the returned object may also be a
-#'   \code{matrix}. If \dQuote{.datasplit} is \dQuote{numeric}, the returned object may also be a
-#'   matrix.
+#'
+#'   If the CPO is a Target Operation CPO, the return value of both \dQuote{cpo.trafo} and \dQuote{cpo.retrafo}
+#'   must be either a task if \code{.datasplit} is \dQuote{task}, the complete (modified) data.frame
+#'   if \code{.datasplit} is \dQuote{no}, and a data.frame containing only the target column(s) otherwise.
 #'   Default is \dQuote{target}.
+#'
+#'   If the CPO is a Feature Operation CPO, then the return value must be in the same format as the one requested.
+#'   E.g. if \code{.datasplit} is \dQuote{most}, the return value must be a named list with entries \dQuote{numeric},
+#'   \dQuote{factor}, and \dQuote{other}. The types of the returned data may be arbitrary: In the given example,
+#'   the \dQuote{factor} slot of the returned list may contain numeric data. (Note however that if data is returned
+#'   that has a type not already present in the data, \dQuote{.properties.needed} must specify this.)
+#'
+#'   If \code{.datasplit} is either \dQuote{no} or \dQuote{task}, the
+#'   target column(s) in the returned value must be identical with the target column(s) given as input.
+#'
+#'   If \dQuote{.datasplit} is \dQuote{most} or \dQuote{all}, the \dQuote{$numeric} slot of the returned
+#'   object may also be a \code{matrix}. If \dQuote{.datasplit} is \dQuote{numeric}, the returned object may also be a
+#'   matrix.
+#' @param .retrafo.format [\code{character(1)}]\cr
+#'   Indicates what API is used for \code{cpo.trafo} and \code{cpo.retrafo}, and how state information is transferred
+#'   between them. Possibilities are:
+#'   \itemize{
+#'     \item{separate} \code{cpo.trafo} must be specified and is called with the training data and the CPO parameters.
+#'       It must return the modified data, and within its namespace must either specify a \dQuote{control} variable ("Object-Based CPO"),
+#'       if \code{cpo.retrafo} is given, or a \dQuote{cpo.retrafo} variable, if (the makeCPO parameter) \code{cpo.retrafo}
+#'       is \code{NULL} ("Functional CPO"). For Object-Based CPO, \code{cpo.retrafo} is called with the \code{control} object
+#'       created in \code{cpo.trafo}, additionally with the new data, and the CPO parameters. For Functional CPO, \code{cpo.retrafo} is
+#'       constructed inside the \code{cpo.trafo} call and is used for transformation of new data. It must take a single argument and
+#'       return the transformed data.
+#'     \item{combined} \code{cpo.trafo} must be specified and is called with the training data and the CPO parameters. It must return
+#'       a \code{cpo.retrafo} function that takes the data to be transformed as a single argument, and returns the transformed data.
+#'       If \code{.retrafo.format} is \dQuote{combined}, \code{pco.retrafo} must be \code{NULL}.
+#'     \item{stateless} Specification of \code{cpo.trafo} is optional and may be \code{NULL}. If it is not given, \code{cpo.retrafo} is used on both
+#'       training and new data; otherwise, \code{cpo.trafo} is applied to training data, \code{cpo.retrafo} is used on predict data. There
+#'       is no transfer of information from trafo to retrafo. If \code{cpo.trafo} is not given, \code{.datasplit} must not be \dQuote{task} or \dQuote{no}.
+#'   }
+#' @param .export.params [\code{logical(1)} | \code{character}]\cr
+#'   Indicates which CPO parameters are exported by default. Exported parameters can be changed after construction using \code{\link{setHyperPars}},
+#'   but exporting too many parameters may lead to messy parameter sets if many CPOs are combined. This can be overridden on construction.
+#'   If this is a \code{logical(1)}, \code{TRUE} exports all parameters, \code{FALSE} to exports no parameters. It may also be a \code{character},
+#'   indicating the names of parameters to be exported. Default is \code{TRUE}.
+#' @param .fix.factors [\code{logical(1)}]\cr
+#'   Whether to constrain factor levels of new data to the levels of training data, for each factorial or ordered column. If new data contains
+#'   factors that were not present in training data, the values are set to \code{NA}. Default is \code{FALSE}.
 #' @param .properties [\code{character}]\cr
 #'   The kind if data that the CPO will be able to handle. This can be one or many of: \dQuote{numerics},
 #'   \dQuote{factors}, \dQuote{ordered}, \dQuote{missings}.
@@ -59,44 +98,142 @@
 #'   there are missings in the numeric columns (since missings in factorial features are not a problem).
 #'   Defaults to the maximal set.
 #' @param .properties.adding [\code{character}]\cr
-#'   Can be one or many of the same values as \dQuote{.properties}. These properties get added to
-#'   a Learner (or CPO) coming after / behind this CPO. When a CPO imputes missing values, for example,
-#'   this should be \dQuote{missings}. This must be a subset of \dQuote{.properties}. Default is
+#'   Can be one or many of the same values as \dQuote{.properties} for Feature Operation CPOs, and one or many of the same values as \dQuote{.properties.target}
+#'   for Target Operation CPOs. These properties get added to a Learner (or CPO) coming after / behind this CPO. When a CPO imputes missing values, for example,
+#'   this should be \dQuote{missings}. This must be a subset of \dQuote{.properties} or \dQuote{.properties.target}. Default is
 #'   \code{character(0)}.
 #' @param .properties.needed [\code{character}]\cr
-#'   Can be one or many of the same values as \dQuote{.properties}. These properties are required
+#'   Can be one or many of the same values as \dQuote{.properties} for Feature Operation CPOs,
+#'   and one or many of the same values as \dQuote{.properties.target}. These properties are required
 #'   from a Learner (or CPO) coming after / behind this CPO. E.g., when a CPO converts factors to
 #'   numerics, this should be \dQuote{numerics} (and \dQuote{.properties.adding} should be \dQuote{factors}).
 #'   Default is \code{character(0)}.
-#' @param cpo.trafo [\code{language} | \code{function}]\cr
-#'   This can either be a function, just the expressions to perform wrapped in curly braces.
+#' @param .properties.target [\code{character}]\cr
+#'   For Feature Operation CPOs, this can be one or many of \dQuote{cluster}, \dQuote{classif}, \dQuote{multilabel}, \dQuote{regr}, \dQuote{surv},
+#'   \dQuote{oneclass}, \dQuote{twoclass}, \dQuote{multiclass}. Just as \code{.properties}, it
+#'   indicates what kind of data a CPO can work with. Data given as data.frame needs the \dQuote{cluster} property. Default is the maximal set.
+#'
+#'   For Target Operation CPOs, this should only be given if the CPO operates on classification tasks. It must then be a subset of \dQuote{oneclass},
+#'   \dQuote{twoclass}, or \dQuote{multiclass}. Otherwise, it should be \code{character(0)}. Default is \code{character(0)}.
+#' @param .type [\code{character(1)}]\cr
+#'   For Target Operation CPOs, the type of task that it operates on. Must be one of \dQuote{cluster}, \dQuote{classif}, \dQuote{multilabel}, \dQuote{regr},
+#'   or \dQuote{surv}. If input data is a data.frame, it will be treated as a cluster task. Default is \dQuote{cluster}.
+#' @param .type.out [\code{character(1)}]\cr
+#'   For Target Operation CPOs, the type of task that will be generated by this CPO. If this is the same as \code{.type}, no conversion takes place.
+#'   Possible values are the same as for \code{.type}. Default is \code{.type}.
+#' @param .predict.type [\code{character} | \code{list}]\cr
+#'   Must be a named \code{character}, or named \code{list} of \code{character(1)}, indicating
+#'   what \code{predict.type} (see \link{Prediction}) a prediction must have if the output prediction
+#'   is to be of some type. E.g. if a CPO converts a \dQuote{regr} \code{Task} into a
+#'   \dQuote{classif} \code{Task}, and if for \dQuote{se} prediction it needs a classification
+#'   learner to give \dQuote{prob} type predictions, while for \dQuote{response} prediction it
+#'   also needs \dQuote{response} predictions, this would be \code{c(response = "response",
+#'   se = "prob")}. The names are the prediction types that are requested from this CPO, the
+#'   values are types that this CPO will request from an underlying learner. If a name is not
+#'   present, the \code{predict.type} is assumed not supported. Default is \code{c(response = "response")}.
+#' @param .packages [\code{character}]\cr
+#'   Package(s) that should be loaded when the CPO is constructed. This gives the user an early error if
+#'   a package required for the CPO is not available on his system, or can not be loaded. Default is \code{character(0)}.
+#' @param cpo.trafo [\code{language} | \code{function} | \code{NULL}]\cr
+#'   This can either be a function, or just the function body wrapped in curly braces.
 #'   If this is a function, it must have the parameters \dQuote{data} and \dQuote{target},
 #'   as well as the parameters specified in \dQuote{...} or \dQuote{.par.set}. (Alternatively,
-#'   the function may have a dotdotdot argument). It must return a \dQuote{data.frame}, a \dQuote{task},
-#'   a dQuote{matrix}, or a \dQuote{list} of \dQuote{data.frame} and \dQuote{matrix} objects, depending
-#'   on the parameter \dQuote{.datasplit}. If \dQuote{cpo.retrafo} is given, it must create a \dQuote{control}
+#'   the function may have a dotdotdot argument). Depending on the values of \code{.retrafo.format} and
+#'   \code{.datasplit} -- see there --, it must return a \dQuote{data.frame}, a \dQuote{task},
+#'   a dQuote{matrix}, \dQuote{list} of \dQuote{data.frame} and \dQuote{matrix} objects, or a retrafo function.
+#'
+#'   If \dQuote{cpo.retrafo} is given and \code{.retrafo.format} is \dQuote{separate}, it must create a \dQuote{control}
 #'   variable in its namespace, which will be passed on to \dQuote{cpo.retrafo}. If \dQuote{cpo.retrafo} is
-#'   not given, it must create a \dQuote{cpo.retrafo} function within its namespace, which will be called
-#'   for re-transformation. This function must have a \dQuote{data} and \dQuote{target} argument.\cr
-#'   If \dQuote{cpo.trafo} is a list of expressions (preferred), it is turned into a function
-#'   by mlr, with the above mentioned criteria.
+#'   not given and \code{.retrafo.format} is \dQuote{separate}, it must create a \dQuote{cpo.retrafo} function within its namespace, which will be called
+#'   for re-transformation.
+#'
+#'   If \code{.retrafo.format} is \dQuote{combined}, this function must return a \dQuote{cpo.retrafo} function.
+#'
+#'   If \code{.retrafo.format} is
+#'   \dQuote{stateless}, this argument may be \code{NULL}, or a function which just returns the transformed data.
+#'
+#'   If \dQuote{cpo.trafo} is a list of expressions (preferred), it is turned into a function by mlr, with the correct function arguments.
 #' @param cpo.retrafo [\code{language} | \code{function}]\cr
-#'   Similarly to \dQuote{cpo.trafo}, this is either a function or a sequence of expressions
-#'   in curly braces (preferred), or \code{NULL}. This function must have the same arguments, except that
-#'   instead of a \dQuote{target} argument, it has a \dQuote{control} argument, which will be
+#'   Similarly to \dQuote{cpo.trafo}, this is either a function, the function body in curly braces (preferred), or \code{NULL}.
+#'   If this is not \code{NULL}, this function must have the same arguments as \code{cpo.trafo}, with the exception that
+#'   the \dQuote{target} argument is replaced by a \dQuote{control} argument, which will be
 #'   the value created in the \dQuote{cpo.trafo} run. It gets its input data in the same format as
 #'   \dQuote{cpo.trafo}, with the exception that if \dQuote{.datasplit} is \dQuote{task}, it gets a
 #'   \dQuote{data.frame} as if \dQuote{.datasplit} were \dQuote{no}. This function must similarly return an
 #'   object in the same format as it received as input.
-#' @family CPO
 #'
+#' @family CPO
 #' @export
+#'
+#' @examples
+#' # an example 'pca' CPO
+#' # demonstrates the (object based) "separate" CPO API
+#' pca = makeCPO("pca",  # name
+#'   center = TRUE: logical,  # one logical parameter 'center'
+#'   .datasplit= "numeric",  # only handle numeric columns
+#'   .retrafo.format = "separate",  # default, can be omitted
+#'   # cpo.trafo is given as a function body. The function head is added
+#'   # automatically, containing 'data', 'target', and 'center'
+#'   # (since a 'center' parameter was defined)
+#'   cpo.trafo = {
+#'     pcr = prcomp(as.matrix(data), center = center)
+#'     # The following line creates a 'control' object, which will be given
+#'     # to retrafo.
+#'     control = list(rotation = pcr$rotation, center = pcr$center)
+#'     pcr$x  # returning a matrix is ok
+#'   # Just like cpo.trafo, cpo.retrafo is a function body, with implicit
+#'   # arguments 'data', 'control', and 'center'.
+#'   }, cpo.retrafo = {
+#'     scale(as.matrix(data), center = control$center, scale = FALSE) %*%
+#'       control$rotation
+#'   })
+#'
+#' # an example 'scale' CPO
+#' # demonstrates the (functional) "separate" CPO API
+#' scale = makeCPO("scale",
+#'   .datasplit = "numeric",
+#'   # .retrafo.format = "separate" is implicit
+#'   cpo.trafo = function(data, target) {
+#'     result = scale(as.matrix(data), center = center, scale = scale)
+#'     cpo.retrafo = function(data) {
+#'       # here we can use the 'result' object generated in cpo.trafo
+#'       scale(as.matrix(data), attr(result, "scaled:center"),
+#'         attr(result, "scaled:scale"))
+#'     }
+#'     result
+#'   })
+#'
+#' # an example constant feature remover CPO
+#' # demonstrates the "combined" CPO API
+#' constFeatRem = makeCPO("constFeatRem",
+#'   .datasplit = "target",
+#'   .retrafo.format = "combined",
+#'   cpo.trafo = function(data, target) {
+#'     cols.keep = names(Filter(function(x) {
+#'         length(unique(x)) > 1
+#'       }, data))
+#'     # the following function will do both the trafo and retrafo
+#'     result = function(data) {
+#'       data[cols.keep]
+#'     }
+#'     result
+#'   })
+#'
+#' # an example 'square' CPO
+#' # demonstrates the "stateless" CPO API
+#' square = makeCPO("scale",
+#'   .datasplit = "numeric",
+#'   .retrafo.format = "stateless",
+#'   cpo.trafo = NULL, # optional, we don't need it since trafo & retrafo same
+#'   cpo.retrafo = function(data) {
+#'     as.matrix(data) * 2
+#'   })
+#'
 makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                    .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
                    .retrafo.format = c("separate", "combined", "stateless"),
-                   .export.params = FALSE,  # FALSE, TRUE, names of parameters to export
-                   .fix.factors = FALSE,
-                   .properties = c("numerics", "factors", "ordered", "missings"),
+                   .export.params = TRUE,  # FALSE, TRUE, names of parameters to export
+                   .fix.factors = FALSE, .properties = c("numerics", "factors", "ordered", "missings"),
                    .properties.adding = character(0), .properties.needed = character(0),
                    .properties.target = c("cluster", "classif", "multilabel", "regr", "surv",
                      "oneclass", "twoclass", "multiclass", "lcens", "rcens", "icens"),
@@ -113,17 +250,16 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   assertSubset(.properties.target, c(cpo.tasktypes, cpo.targetproperties))
   assertSubset(.properties.needed, cpo.dataproperties)
 
-  eval.parent(substitute(makeCPOGeneral(.cpotype = "databound",
+  makeCPOGeneral(.cpotype = "databound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
     .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE,
     .retrafo.format = .retrafo.format, .export.params = .export.params, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
     .predict.type = NULL, .packages = .packages,
-    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)))
+    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)
 }
 
-#' @export
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
                           .datasplit, .fix.factors, .data.dependent, .retrafo.format, .export.params,
                           .properties, .properties.adding, .properties.needed,
@@ -137,7 +273,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 
 
   if (is.null(.par.set)) {
-    .par.set = paramSetSugar(..., .pss.env = parent.frame())
+    .par.set = paramSetSugar(..., .pss.env = parent.frame(2))
   }
 
   assertCharacter(.properties, unique = TRUE)
@@ -215,11 +351,11 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   required.arglist.trafo$target = substitute()
   trafo.expr = substitute(cpo.trafo)
   if (!.stateless || (is.recursive(trafo.expr) && identical(trafo.expr[[1]], quote(`{`))) || !is.null(cpo.trafo)) {
-    cpo.trafo = makeFunction(trafo.expr, required.arglist.trafo, env = parent.frame())
+    cpo.trafo = makeFunction(trafo.expr, required.arglist.trafo, env = parent.frame(2))
   } else if (.cpotype == "targetbound") {
     stop("A target-bound CPO must have a cpo.trafo function, even if stateless.")
-  } else if (.datasplit == "task") {
-    stop("A stateless CPO without cpo.trafo cannot have .datasplit 'task'.")
+  } else if (.datasplit %in% c("task", "no")) {
+    stop("A stateless CPO without cpo.trafo cannot have .datasplit 'task' or 'no'.")
   } else {
     if (.datasplit == "no") {
       .datasplit = "target"
@@ -253,7 +389,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     if (!.stateless) {
       required.arglist.retrafo$control = substitute()
     }
-    cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame())
+    cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame(2))
     if (is.null(cpo.trafo) && .stateless) {
       cpo.trafo = cpo.retrafo
     }
@@ -261,7 +397,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     stop("Stateless CPO must provide cpo.retrafo.")
   }
 
-  funargs = insert(funargs, list(id = NULL, export = "export.default",
+  funargs = insert(funargs, list(id = .cpo.name, export = "export.default",
     affect.type = NULL, affect.index = integer(0),
     affect.names = character(0), affect.pattern = NULL, affect.invert = FALSE,
     affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE))

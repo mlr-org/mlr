@@ -3,33 +3,17 @@
 ### Creator                    ###
 ##################################
 
-#' @title Create a custom target-bound CPO constructor
+#' @title Create a custom Target Operation CPO Constructor
 #'
-#' @description
-#' Create a CPO constructor.
-#'
-#' Most of the parameters are as in \link{makeCPO}.
-#'
-#' @param .predict.type [\code{character} | \code{list}]\cr
-#'   Must be a named \code{character}, or named \code{list} of \code{character(1)}, indicating
-#'   what \code{predict.type} (see \link{Prediction}) a prediction must have if the out put prediction
-#'   is to be of some type. E.g. if a CPO converts a \dQuote{regr} \code{Task} into a
-#'   \dQuote{classif} \code{Task}, and if for \dQuote{se} prediction it needs a classification
-#'   learner to give \dQuote{prob} type predictions, while for \dQuote{response} prediction it
-#'   also needs \dQuote{response} predictions, this would be \code{c(response = "response",
-#'   se = "prob")}. The names are the prediction types that are requested from this CPO, the
-#'   values are types that this CPO will request from an underlying learner. If a name is not
-#'   present, the \code{predict.type} is assumed not supported. Default is \code{c(response = "response")}.
-#'
-#' @family CPO
+#' @rdname makeCPO
 #' @export
 makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                            .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
                            .data.dependent = TRUE, .retrafo.format = c("separate", "combined", "stateless"),
-                           .export.params = FALSE,
-                           .properties = character(0),
-                           .properties.adding = character(0), .properties.needed = character(0),
+                           .export.params = TRUE,
                            .properties.data = c("numerics", "factors", "ordered", "missings"),
+                           .properties.adding = character(0), .properties.needed = character(0),
+                           .properties.target = character(0),
                            .type = c("cluster", "classif", "multilabel", "regr", "surv"),
                            .type.out = .type,
                            .predict.type = c(response = "response"),
@@ -41,7 +25,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   .type.out = match.arg(.type.out, choices = c("cluster", "classif", "multilabel", "regr", "surv"))
 
   possible.properties = list(multilabel = character(0), regr = character(0), cluster = character(0),
-      classif = c("oneclass", "twoclass", "multiclass"), surv = c("lcens", "rcens", "icens"))
+      classif = c("oneclass", "twoclass", "multiclass"))
 
   .datasplit = match.arg(.datasplit)
 
@@ -51,24 +35,21 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     if (.datasplit %in% c("no", "task")) {
       stop("When .data.dependent is FALSE, .datasplit must not be 'no' or 'task'")
     }
-    if (!setequal(.properties.data, c("numerics", "factors", "ordered", "missings"))) {
-      stop("When .data.dependent is FALSE, .properties.data must have the default value.")
+    if (!setequal(.properties, c("numerics", "factors", "ordered", "missings"))) {
+      stop("When .data.dependent is FALSE, .properties must have the default value.")
     }
   }
 
   if (length(possible.properties[[.type]])) {
-    assertSubset(.properties, possible.properties[[.type]])
-    if (.type.out != .type && length(setdiff(.properties, .properties.adding))) {
+    assertSubset(.properties.target, possible.properties[[.type]])
+    if (.type.out != .type && length(setdiff(.properties.target, .properties.adding))) {
       stopf("For conversion away from %s, .properties.adding must equal .properties.", .type)
     }
-  } else if (length(.properties)) {
+  } else if (length(.properties.target)) {
     stopf("CPO handling type %s must have empty properties.", .type)
   }
 
   if (length(possible.properties[[.type.out]])) {
-    if (.type.out == "surv" && .type != "surv" && length(.properties.needed) != 1) {
-      stop("For conversion to 'surv', there must be exactly one '.properties.needed' argument given.")
-    }
     assertSubset(.properties.needed, possible.properties[[.type.out]])
   } else if (length(.properties.needed)) {
     stopf("Output type is %s, so .properties.needed must be empty.", .type.out)
@@ -102,16 +83,16 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
   }
 
   .properties.adding = c(.properties.adding, setdiff(names(.predict.type), c("response", unname(.predict.type))))
-  .properties = c(.properties, setdiff(names(.predict.type), "response"))
+  .properties.target = c(.properties.target, setdiff(names(.predict.type), "response"))
 
-  eval.parent(substitute(makeCPOGeneral(.cpotype = "targetbound",
+  makeCPOGeneral(.cpotype = "targetbound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
     .datasplit = .datasplit, .fix.factors = FALSE, .data.dependent = .data.dependent,
-    .retrafo.format = .retrafo.format, .export.params = .export.params, .properties = .properties,
+    .retrafo.format = .retrafo.format, .export.params = .export.params, .properties = .properties.target,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
-    .properties.target = .properties.data, .type.from = .type, .type.to = .type.out,
+    .properties.target = .properties, .type.from = .type, .type.to = .type.out,
     .predict.type = .predict.type, .packages = .packages,
-    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)))
+    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)
 }
 
 
