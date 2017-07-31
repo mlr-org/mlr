@@ -356,16 +356,24 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     for (i in seq_len(layers)) {
       if (convs[i]) {
         # construct convolutional layer with pooling
+        # prepare convolution inputs
         conv.inputs = list(data = sym, kernel = conv.kernels[[i]], stride = conv.strides[[i]],
           dilate = conv.dilates[[i]], pad = conv.pads[[i]], num_filter = nums[i])
+        # construct convolutional layer with do.call to omit null values
         sym = do.call(mxnet::mx.symbol.Convolution, conv.inputs[!sapply(conv.inputs, is.null)])
+        # add activation
         sym = mxnet::mx.symbol.Activation(sym, act_type = act[i])
+        # prepare pooling inputs
         pool.inputs = list(data = sym, kernel = pool.kernels[[i]], pool.type = pool.types[[i]],
           stride = pool.strides[[i]], pad = pool.pads[[i]])
+        # construct pooling layer with do.call to omit null values
         sym = do.call(mxnet::mx.symbol.Pooling, pool.inputs[!sapply(pool.inputs, is.null)])
       } else {
         # construct fully connected layer
+        # if there has been a preceeding convolutional layer, the symbol shape needs to be adapted
+        # check if this is the first layer
         if (i > 1) {
+          # check if there has been a conlolutional layer
           if (convs[i - 1]) {
             sym = mxnet::mx.symbol.flatten(sym)
           }
