@@ -121,7 +121,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 # - does superficial test whether the input format is compatible with what to expect for the task type
 # - applies the re-transformation
 # - check result for plausibility
-invertCPO.CPOS3Retrafo = function(inverter, prediction, predict.type) {
+invertCPO.CPORetrafo = function(inverter, prediction, predict.type) {
   assertString(predict.type)
   cpo = inverter$cpo
   if ("inverter" %in% inverter$kind) {

@@ -679,9 +679,9 @@ attachCPO.CPO = function(cpo, learner) {
   }
 
   parameterClashAssert(cpo, learner, cpo$name, getLearnerName(learner))
-  if (!"CPOS3Learner" %in% class(learner)) {
+  if (!"CPOLearner" %in% class(learner)) {
     learner = makeBaseWrapper(learner$id, learner$type, learner,
-      learner.subclass = c("CPOS3Learner", "CPOLearner"), model.subclass = c("CPOS3Model", "CPOModel"))
+      learner.subclass = "CPOLearner", model.subclass = "CPOModel")
     learner$predict.type = learner$next.learner$predict.type
   } else {
     cpo = composeCPO(cpo, learner$cpo)
@@ -717,7 +717,7 @@ compositeCPOLearnerProps = function(cpo, learner) {
 }
 
 #' @export
-trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
+trainLearner.CPOLearner = function(.learner, .task, .subset = NULL, ...) {
   if (!is.null(.subset)) {
     .task = subsetTask(.task, .subset)
   }
@@ -732,13 +732,13 @@ trainLearner.CPOS3Learner = function(.learner, .task, .subset = NULL, ...) {
   .task = tagInvert(.task, FALSE)
   transformed = callCPO(cpo, .task, TRUE, NULL, FALSE, NULL)
 
-  model = makeChainModel(train(.learner$next.learner, transformed$data), "CPOS3WrappedModel")
+  model = makeChainModel(train(.learner$next.learner, transformed$data), "CPOWrappedModel")
   model$retrafo = transformed$retrafo
   model
 }
 
 #' @export
-predictLearner.CPOS3Learner = function(.learner, .model, .newdata, ...) {
+predictLearner.CPOLearner = function(.learner, .model, .newdata, ...) {
   retrafod = applyCPORetrafoEx(.model$learner.model$retrafo, .newdata, TRUE, NULL)
   prediction = NextMethod(.newdata = retrafod$data)
   if (!is.null(retrafod$inverter)) {
@@ -749,14 +749,14 @@ predictLearner.CPOS3Learner = function(.learner, .model, .newdata, ...) {
 }
 
 # get CPO from learner
-singleLearnerCPO.CPOS3Learner = function(learner) {
+singleLearnerCPO.CPOLearner = function(learner) {
   cpo = learner$cpo
   cpo$par.vals = subsetParams(learner$par.vals, cpo$par.set)
   cpo
 }
 
 #' @export
-setPredictType.CPOS3Learner = function(learner, predict.type) {
+setPredictType.CPOLearner = function(learner, predict.type) {
   assertChoice(predict.type, c("response", "prob", "se"))
   ptconvert = learner$cpo$predict.type
   supported.below = c(intersect(getLearnerProperties(learner$next.learner), c("prob", "se")), "response")
@@ -916,7 +916,7 @@ getCPOAffect.CPOPrimitive = function(cpo, drop.defaults = TRUE) {
 
 # get RETRAFO from learner
 # 'prevfun' is not a function for CPO!
-singleModelRetrafo.CPOS3Model = function(model, prev) {
+singleModelRetrafo.CPOModel = function(model, prev) {
   retrafo = model$learner.model$retrafo
   if (!is.null(prev)) {
     retrafo = composeCPO(prev, retrafo)
