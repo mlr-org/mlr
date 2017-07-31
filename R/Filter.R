@@ -607,3 +607,27 @@ makeFilter(
     return(imp)
   }
 )
+
+#' Filter \dQuote{auc} determines for each feature, how well the target
+#' variable can be predicted only based on this feature. More precisely, the
+#' prediction rule is: class 1 if the feature exceeds a threshold and class 0
+#' otherwise. The performance of this classification rule is measured by the
+#' AUC and the resulting filter score is |0.5 - AUC|.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "auc",
+  desc = "AUC filter for binary classification tasks",
+  pkg  = "ROCR",
+  supported.tasks = "classif",
+  supported.features = "numerics",
+  fun = function(task, nselect, ...) {
+    data = getTaskData(task, target.extra = TRUE)
+    score = vnapply(data$data, function(x, y) {
+      pred = ROCR::prediction(predictions = x, labels = y)
+      ROCR::performance(pred, "auc")@y.values[[1L]]
+    }, y = data$target)
+    abs(0.5 - score)
+  }
+)
