@@ -122,7 +122,7 @@ makeRLearner.classif.mxff = function() {
         values = c("max", "avg", "sum"),
         requires = quote(conv.layer3 == TRUE)),
       # other hyperparameters
-      makeNumericLearnerParam(id = "validation.set"),
+      makeNumericLearnerParam(id = "validation.ratio"),
       makeIntegerLearnerParam(id = "early.stop.badsteps", lower = 1),
       makeLogicalLearnerParam(id = "early.stop.maximize", default = TRUE),
       makeNumericVectorLearnerParam(id = "dropout", lower = 0, upper = 1 - 1e-7),
@@ -202,19 +202,19 @@ makeRLearner.classif.mxff = function() {
     To allow for flexibility, `conv.data.shape` can have length `1` to `4`, the dimensions are
     taken in ascending order. For common cases, giving an `conv.data.shape` of length `2` is
     sufficient.
-    `validation.set` gives the ratio of training data that will not
+    `validation.ratio` gives the ratio of training data that will not
     be used for training but as validation data similar to the data provided in `eval.data`.
-    If `eval.data` is specified, `validation.set` will be ignored. Note that `eval.data` is passed
+    If `eval.data` is specified, `validation.ratio` will be ignored. Note that `eval.data` is passed
     to `mx.model.FeedForward.create` unchanged to provide unconstrained usability of the underlying
     learner. In particular, this implies that `array.layout` is not adapted when using convolution,
     so `eval.data` needs to be provided in the right format.
-    If `validation.set` is specified, it is sampled randomly using `R`'s `sample`.
+    If `validation.ratio` is specified, it is sampled randomly using `R`'s `sample`.
     If `early.stop.badsteps` is specified and `epoch.end.callback` is not specified,
     early stopping will be used using `mx.callback.early.stop` as `epoch.end.callback` with the
     learner's `eval.metric`. In this case, `early.stop.badsteps` gives the number of `bad.steps` in
     `mx.callback.early.stop` and `early.stop.maximize` gives the `maximize` parameter in
     `mx.callback.early.stop`. Please note that when using `early.stop.badsteps`, `eval.metric` and
-    either `eval.data` or `validation.set` should be specified.
+    either `eval.data` or `validation.ratio` should be specified.
     "
   )
 }
@@ -239,7 +239,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   pool.pad11 = NULL, pool.pad21 = NULL, pool.pad31 = NULL,
   pool.pad12 = NULL, pool.pad22 = NULL, pool.pad32 = NULL,
   pool.type1 = "max", pool.type2 = "max", pool.type3 = "max",
-  dropout = NULL, symbol = NULL, validation.set = NULL, eval.data = NULL, early.stop.badsteps = NULL,
+  dropout = NULL, symbol = NULL, validation.ratio = NULL, eval.data = NULL, early.stop.badsteps = NULL,
   epoch.end.callback = NULL, early.stop.maximize = TRUE, array.layout = "rowmajor", ...) {
   # transform data in correct format
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
@@ -247,10 +247,10 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   x = data.matrix(d$data)
 
   # construct validation data
-  if (is.null(eval.data) & !is.null(validation.set)) {
+  if (is.null(eval.data) & !is.null(validation.ratio)) {
     eval.data = list()
     n = dim(x)[1]
-    val.ind = sample(n, floor(n * validation.set))
+    val.ind = sample(n, floor(n * validation.ratio))
     eval.data$label = y[val.ind]
     y = y[-val.ind]
     eval.data$data = x[val.ind,]
@@ -269,7 +269,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     # adapt array.layout for mx.model.FeedForward.create
     array.layout = "colmajor"
     # adapt validation data if necessary
-    if (!is.null(validation.set)) {
+    if (!is.null(validation.ratio)) {
       dims = switch(l,
         c(.learner$par.vals$conv.data.shape, 1, 1, nrow(eval.data$data)),
         c(.learner$par.vals$conv.data.shape, 1, nrow(eval.data$data)),
