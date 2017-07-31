@@ -393,7 +393,7 @@ makeCPOS3Retrafo = function(cpo, state, prev.retrafo, shapeinfo.input, shapeinfo
 
 
 makeCPOS3RetrafoBasic = function(cpo, state, prev.retrafo, kind) {
-  retrafo = makeS3Obj(c("CPOS3RetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
+  retrafo = makeS3Obj(c("CPORetrafoPrimitive", "CPOS3Retrafo", "CPORetrafo"),
     cpo = setCPOId(cpo, NULL),
     state = state,
     prev.retrafo = NULL,
@@ -929,7 +929,7 @@ singleModelRetrafo.CPOS3Model = function(model, prev) {
 #' @export
 composeCPO.CPOS3Retrafo = function(cpo1, cpo2) {
   assertClass(cpo2, "CPOS3Retrafo")
-  is.prim = "CPOS3RetrafoPrimitive" %in% class(cpo2)
+  is.prim = "CPORetrafoPrimitive" %in% class(cpo2)
   assert(is.prim == is.null(cpo2$prev.retrafo))
   newkind = intersect(cpo1$kind, cpo2$kind)
   if (!length(newkind)) {
@@ -939,7 +939,7 @@ composeCPO.CPOS3Retrafo = function(cpo1, cpo2) {
   if (!is.prim) {
     cpo1 = composeCPO(cpo1, cpo2$prev.retrafo)
   }
-  class(cpo2) = setdiff(class(cpo2), "CPOS3RetrafoPrimitive")
+  class(cpo2) = setdiff(class(cpo2), "CPORetrafoPrimitive")
 
   # check for properties match
   if ("retrafo" %in% newkind) {
@@ -1003,14 +1003,14 @@ as.list.CPOS3Retrafo = function(x, ...) {
       x$kind = c("retrafo", "inverter")
     }
   }
-  class(x) = unique(c("CPOS3RetrafoPrimitive", class(x)))
+  class(x) = unique(c("CPORetrafoPrimitive", class(x)))
   c(prev, list(x))
 }
 
 # RETRAFO State
 
 #' @export
-getRetrafoState.CPOS3RetrafoPrimitive = function(retrafo.object) {
+getRetrafoState.CPORetrafoPrimitive = function(retrafo.object) {
   cpo = retrafo.object$cpo
   if (!"retrafo" %in% retrafo.object$kind) {
     stop("Cannot get state of inverter")
@@ -1072,12 +1072,12 @@ makeRetrafoFromState.CPOConstructor = function(constructor, state) {
 # Param Sets
 
 #' @export
-getParamSet.CPOS3RetrafoPrimitive = function(x) {
+getParamSet.CPORetrafoPrimitive = function(x) {
   x$cpo$par.set
 }
 
 #' @export
-getHyperPars.CPOS3RetrafoPrimitive = function(learner, for.fun = c("train", "predict", "both")) {
+getHyperPars.CPORetrafoPrimitive = function(learner, for.fun = c("train", "predict", "both")) {
   learner$cpo$par.vals
 }
 
@@ -1096,7 +1096,7 @@ getCPOProperties.CPOS3Retrafo = function(cpo, only.data = FALSE) {
 }
 
 #' @export
-getCPOName.CPOS3RetrafoPrimitive = function(cpo) {
+getCPOName.CPORetrafoPrimitive = function(cpo) {
   cpo$cpo$bare.name
 }
 
