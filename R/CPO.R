@@ -94,6 +94,7 @@
 makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
                    .datasplit = c("target", "most", "all", "no", "task", "factor", "onlyfactor", "ordered", "numeric"),
                    .retrafo.format = c("separate", "combined", "stateless"),
+                   .export.params = FALSE,  # FALSE, TRUE, names of parameters to export
                    .fix.factors = FALSE,
                    .properties = c("numerics", "factors", "ordered", "missings"),
                    .properties.adding = character(0), .properties.needed = character(0),
@@ -114,7 +115,8 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
   eval.parent(substitute(makeCPOGeneral(.cpotype = "databound",
     .cpo.name = .cpo.name, .par.set = .par.set, .par.vals = .par.vals,
-    .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE, .retrafo.format = .retrafo.format, .properties = .properties,
+    .datasplit = .datasplit, .fix.factors = .fix.factors, .data.dependent = TRUE,
+    .retrafo.format = .retrafo.format, .export.params = .export.params, .properties = .properties,
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
     .predict.type = NULL, .packages = .packages,
@@ -123,7 +125,8 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
 
 #' @export
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
-                          .datasplit, .fix.factors, .data.dependent, .retrafo.format, .properties, .properties.adding, .properties.needed,
+                          .datasplit, .fix.factors, .data.dependent, .retrafo.format, .export.params,
+                          .properties, .properties.adding, .properties.needed,
                           .properties.target, .type.from, .type.to, .predict.type, .packages, cpo.trafo, cpo.retrafo, ...) {
 
   .cpotype = match.arg(.cpotype)
@@ -172,15 +175,27 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   }
 
   # these parameters are either special parameters given to the constructor function (id, affect.*),
+  # the possible special values of 'export' that should not clash with param names,
   # special parameters given to the cpo.trafo function (data, target), special parameters given to the
   # cpo.retrafo function (predict.type, control),
 
   affect.params = c("affect.type", "affect.index", "affect.names", "affect.pattern", "affect.invert", "affect.pattern.ignore.case",
     "affect.pattern.perl", "affect.pattern.fixed")
-  reserved.params = c("data", "target", "predict.type", "control", "id", affect.params)
+  export.possibilities = c("export.default", "export.set", "export.default.set", "export.unset", "export.default.unset",
+    "export.all", "export.none", "export.all.plus")
+  reserved.params = c("data", "target", "predict.type", "control", "id", "export", affect.params, export.possibilities)
   if (any(names(.par.set$pars) %in% reserved.params)) {
     stopf("Parameters %s are reserved", collapse(reserved.params, ", "))
   }
+
+  if (isTRUE(.export.params)) {
+    .export.params = names2(.par.set$pars)
+  } else if (isFALSE(.export.params)) {
+    .export.params = character(0)
+  } else {
+    assertSubset(.export.params, names2(.par.set$pars))
+  }
+
 
   .par.vals = insert(getParamSetDefaults(.par.set), .par.vals)
 
@@ -246,7 +261,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     stop("Stateless CPO must provide cpo.retrafo.")
   }
 
-  funargs = insert(funargs, list(id = NULL, affect.type = NULL, affect.index = integer(0),
+  funargs = insert(funargs, list(id = NULL, export = "export.default",
+    affect.type = NULL, affect.index = integer(0),
     affect.names = character(0), affect.pattern = NULL, affect.invert = FALSE,
     affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE))
 
@@ -282,6 +298,37 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
 
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(.par.set$pars)])
     checkParamsFeasible(.par.set, present.pars)
+
+    if (length(export) == 1 && export %in% export.possibilities) {
+      export = switch(export,
+        export.default = .export.params,
+        export.set = names2(present.pars),
+        export.default.set = intersect(.export.params, names2(present.pars)),
+        export.unset = setdiff(names2(.par.set$pars), names2(present.pars)),
+        export.default.unset = intersect(.export.params, setdiff(names2(.par.set$pars), names2(present.pars))),
+        export.all = names2(.par.set$pars),
+        export.none = character(0),
+        export.all.plus = stop('"export" setting "export.all.plus" not yet supported.'))
+    }
+    if (length(.par.set$pars) == 0) {
+      assert(identical(export, character(0)))
+    } else {
+      assertSubset(export, names2(.par.set$pars))
+    }
+    needed = setdiff(names2(Filter(function(x) is.null(x$requires), .par.set$pars)), names2(present.pars))
+    missing = setdiff(needed, export)
+    if (length(missing)) {
+      singular = length(missing) == 1
+      are = ifelse(singular, "is", "are")
+      stop("Paramter%s '%s' %s no default, %s not exported, and %s not given on construction.",
+        ifelse(singular, "", "s"), collapse(missing, sep = "', '"), ifelse(singular, "has", "have"), are, are)
+    }
+
+    unexported.args = dropNamed(par.vals, export)
+    unexported.pars = dropNamed(par.set$pars, export)
+    par.set$pars = par.set$pars[export]
+    par.vals = par.vals[export]
+
     cpo = makeS3Obj(c("CPOS3Primitive", "CPOPrimitive", "CPOS3", "CPO"),
       # --- CPOS3 part
       bare.name = .cpo.name,
@@ -298,6 +345,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       id = NULL,
       packages = .packages,
       affect.args = affect.args,
+      unexported.args = unexported.args,
+      unexported.pars = unexported.pars,
       bare.par.set = .par.set,
       datasplit = .datasplit,
       stateless = .stateless,
@@ -313,6 +362,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       # data is subset, so the overall 'properties' is the maximal set
       cpo$properties$properties = union(cpo$properties$properties,  c("numerics", "factors", "ordered", "missings"))
     }
+    requireCPOPackages(cpo)
     setCPOId(cpo, id)  # this also adjusts par.set and par.vals
   })
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), c("CPOS3Constructor", "CPOConstructor"))
@@ -379,7 +429,8 @@ callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOS3Primitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
 
-  requireCPOPackages(cpo)
+  cpo$par.vals = c(cpo$par.vals, cpo$unexported.args)
+  cpo$par.set$pars = c(cpo$par.set$pars, cpo$unexported.pars)
 
   checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   if (is.nullcpo(prev.retrafo)) {
@@ -501,7 +552,6 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
   assertClass(retrafo, "CPOS3Retrafo")
   cpo = retrafo$cpo
 
-  requireCPOPackages(cpo)
   if (!"retrafo" %in% retrafo$kind) {
     stop("Object %s is an inverter, not a retrafo.", cpo$bare.name)
   }
