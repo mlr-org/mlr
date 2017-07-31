@@ -133,8 +133,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   assertFlag(.data.dependent)
   assertString(.cpo.name)
   assertList(.par.vals, names = "unique")
-  assertFlag(.stateless)
   .stateless = .retrafo.format == "stateless"
+
 
   if (is.null(.par.set)) {
     .par.set = paramSetSugar(..., .pss.env = parent.frame())
@@ -277,6 +277,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     args = insert(funargs, args)
     id = args$id
     args$id = NULL
+    export = args$export
+    args$export = NULL
     if (!is.null(id)) {
       assertString(id)
     }
@@ -320,7 +322,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     if (length(missing)) {
       singular = length(missing) == 1
       are = ifelse(singular, "is", "are")
-      stop("Paramter%s '%s' %s no default, %s not exported, and %s not given on construction.",
+      stopf("Paramter%s '%s' %s no default, %s not exported, and %s not given on construction.",
         ifelse(singular, "", "s"), collapse(missing, sep = "', '"), ifelse(singular, "has", "have"), are, are)
     }
 
