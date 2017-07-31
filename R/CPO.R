@@ -331,8 +331,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     par.set$pars = par.set$pars[export]
     par.vals = par.vals[export]
 
-    cpo = makeS3Obj(c("CPOPrimitive", "CPOS3", "CPO"),
-      # --- CPOS3 part
+    cpo = makeS3Obj(c("CPOPrimitive", "CPO"),
+      # --- CPO part
       bare.name = .cpo.name,
       name = .cpo.name,
       par.set = .par.set,
@@ -370,7 +370,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   addClasses(eval(call("function", as.pairlist(funargs), funbody)), "CPOConstructor")
 }
 
-makeCPOS3Inverter = function(cpo, state, prev.inverter, data, shapeinfo) {
+makeCPOInverter = function(cpo, state, prev.inverter, data, shapeinfo) {
   if (!"Task" %in% class(data)) {
     data = makeClusterTask("CPO Generated", data, check.data = FALSE)
   }
@@ -412,7 +412,7 @@ makeCPORetrafoBasic = function(cpo, state, prev.retrafo, kind) {
 ### Primary Operations         ###
 ##################################
 
-# CPOS3 is a tree datastructure. CPOPrimitive are
+# CPO is a tree datastructure. CPOPrimitive are
 # the leaves, CPOTree the nodes.
 # CPORetrafo is a linked list, which gets automatically
 # constructed in 'callCPO'.
@@ -506,20 +506,20 @@ callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.in
 
   retrafo = if (build.retrafo) makeCPORetrafo(cpo, state, prev.retrafo, tin$shapeinfo, tout$shapeinfo) else prev.retrafo
 
-  inverter = if (build.inverter && cpo$bound == "targetbound") makeCPOS3Inverter(cpo, state, prev.inverter, data, tin$shapeinfo) else prev.inverter
+  inverter = if (build.inverter && cpo$bound == "targetbound") makeCPOInverter(cpo, state, prev.inverter, data, tin$shapeinfo) else prev.inverter
 
   list(data = tout$outdata, retrafo = retrafo, inverter = inverter)
 }
 
 # call cpo$first, then cpo$second, and chain the retrafos.
 #
-# A CPOS3 tree looks like this:
+# A CPO tree looks like this:
 #
 #                  CPOTree
 #               /[first]    \[second]
 #       CPOTree               CPOTree
 #     /[first]  \[second]   /[first]  \[second]
-# CPOS3Prim1 CPOS3Prim2 CPOS3Prim3 CPOS3Prim4
+# CPOPrim1    CPOPrim2  CPOPrim3    CPOPrim4
 #
 # callCPO calls go as:
 #
@@ -631,14 +631,14 @@ applyCPO.CPORetrafo = function(cpo, data) {
 # CPO %>>% CPO
 
 #' @export
-composeCPO.CPOS3 = function(cpo1, cpo2) {
-  assertClass(cpo2, "CPOS3")
+composeCPO.CPO = function(cpo1, cpo2) {
+  assertClass(cpo2, "CPO")
   parameterClashAssert(cpo1, cpo2, cpo1$name, cpo2$name)
   newprops = compositeProperties(cpo1$properties, cpo2$properties, cpo1$name, cpo2$name)
   newpt = chainPredictType(cpo1$predict.type, cpo2$predict.type, cpo1$name, cpo2$name)
 
-  makeS3Obj(c("CPOTree", "CPOS3", "CPO"),
-    # --- CPOS3 Part
+  makeS3Obj(c("CPOTree", "CPO"),
+    # --- CPO Part
     bare.name = paste(cpo2$bare.name, cpo1$bare.name, sep = "."),
     name = paste(cpo1$name, cpo2$name, sep = " >> "),
     par.set = c(cpo1$par.set, cpo2$par.set),
@@ -671,7 +671,7 @@ as.list.CPOTree = function(x, ...) {
 # CPO %>>% Learner
 
 #' @export
-attachCPO.CPOS3 = function(cpo, learner) {
+attachCPO.CPO = function(cpo, learner) {
   learner = checkLearner(learner)
   if (!learner$type %in% union(cpo$properties$properties.needed, setdiff(cpo$properties$properties, cpo$properties$properties.adding))) {
     stopf("Cannot combine CPO that outputs type %s with learner of type %s.",
@@ -772,7 +772,7 @@ setPredictType.CPOS3Learner = function(learner, predict.type) {
 
 # DATA %>>% CPO
 #' @export
-applyCPO.CPOS3 = function(cpo, task) {
+applyCPO.CPO = function(cpo, task) {
   if ("Task" %in% class(task) && !is.null(getTaskWeights(task))) {
     stop("CPO can not handle tasks with weights!")
   }
@@ -802,17 +802,17 @@ applyCPO.CPOS3 = function(cpo, task) {
 
 # Param Sets
 #' @export
-getParamSet.CPOS3 = function(x) {
+getParamSet.CPO = function(x) {
   x$par.set
 }
 
 #' @export
-getHyperPars.CPOS3 = function(learner, for.fun = c("train", "predict", "both")) {
+getHyperPars.CPO = function(learner, for.fun = c("train", "predict", "both")) {
   learner$par.vals
 }
 
 #' @export
-setHyperPars2.CPOS3 = function(learner, par.vals = list()) {
+setHyperPars2.CPO = function(learner, par.vals = list()) {
   badpars = setdiff(names(par.vals), names(learner$par.set$pars))
   if (length(badpars)) {
     stopf("CPO %s does not have parameter%s %s", getLearnerName(learner),
@@ -835,7 +835,7 @@ getBareHyperPars = function(cpo) {
 # Properties
 
 #' @export
-getCPOProperties.CPOS3 = function(cpo, only.data = FALSE) {
+getCPOProperties.CPO = function(cpo, only.data = FALSE) {
   if (only.data) {
     lapply(cpo$properties, intersect, y = cpo.dataproperties)
   } else {
@@ -847,7 +847,7 @@ getCPOProperties.CPOS3 = function(cpo, only.data = FALSE) {
 # CPO ID, NAME
 
 #' @export
-getCPOName.CPOS3 = function(cpo) {
+getCPOName.CPO = function(cpo) {
   cpo$name
 }
 
@@ -875,12 +875,12 @@ setCPOId.CPOPrimitive = function(cpo, id) {
 }
 
 #' @export
-getCPOBound.CPOS3 = function(cpo) {
+getCPOBound.CPO = function(cpo) {
   cpo$bound
 }
 
 #' @export
-getCPOKind.CPOS3 = function(cpo) {
+getCPOKind.CPO = function(cpo) {
   "trafo"
 }
 
@@ -915,7 +915,7 @@ getCPOAffect.CPOPrimitive = function(cpo, drop.defaults = TRUE) {
 ##################################
 
 # get RETRAFO from learner
-# 'prevfun' is not a function for CPOS3!
+# 'prevfun' is not a function for CPO!
 singleModelRetrafo.CPOS3Model = function(model, prev) {
   retrafo = model$learner.model$retrafo
   if (!is.null(prev)) {
