@@ -94,10 +94,14 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' functional data.
 #' See \code{\link[wavelets]{dwt}} for more information.
 #'
-#' @param filter [\code{character}]\cr
+#' @param filter [\code{character(1)}]\cr
 #'   Specifies which filter should be used.
-#'   Default is \dQuote{la8}.
-#' @param boundary [\code{character}]\cr
+#'   Must be one of \code{d}|\code{la}|\code{bl}|\code{c} followed by an even
+#'   number for the level of the filter.
+#'   The level of the filter needs to be smaller or equal then the time-series length.
+#'   For more information and acceptable filters see \code{help(wt.filter)}.
+#'   Defaults to \dQuote{la8}.
+#' @param boundary [\code{character(1)}]\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
@@ -106,23 +110,32 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
-  assertCharacter(filter)
+  assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
+
+  # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
+  # to handle it right now.
+  # @param n.levels [\code{integer(1)}]\cr
+  #   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
 
   lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
+    assertDataFrame(data)
+    assertChoice(col, choices = colnames(data))
 
-    assertClass(data, "data.frame")
-    assertNumeric(as.matrix(data[, col]))
+    # Convert parameters list in order to catch params that do not have defaults (n.levels)
+    args = learnerArgsToControl(list, filter = filter, boundary = boundary)
 
-    df = convertRowsToList(data[, col, drop = FALSE])
-    wtdata = t(dapply(df, fun = function(x) {
-      wt = wavelets::dwt(as.numeric(x), filter = filter, boundary = boundary)
+    # Convert to list of rows and extract wavelets from each time-series.
+    rowlst = convertRowsToList(data[, col, drop = FALSE])
+    wtdata = t(dapply(rowlst, fun = function(x) {
+      args$X = as.numeric(x)
+      wt = do.call(wavelets::dwt, args)
+      # Extract wavelet coefficients W and level scaling coeffictients V
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
-
     df = as.data.frame(wtdata)
-    colnames(df) = stri_paste("wav", filter, seq_len(ncol(wtdata)), sep = ".")
+    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
