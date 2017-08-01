@@ -219,10 +219,10 @@ mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
     ids = BBmisc::extractSubList(lrns, "id")
-    return(lrns[!grepl("mock", ids)])
+    return(lrns[!grepl("mock", ids) & !grepl("^(classif|regr).h2o", ids)])
   } else {
     ids = lrns$class
-    return(lrns[!grepl("mock", ids), ])
+    return(lrns[!grepl("mock", ids) & !grepl("^(classif|regr).h2o", ids), ])
   }
 }
 
