@@ -97,7 +97,7 @@ test_that("makeFunctionalData works for different inputs", {
   # FIXME: The colnames in prints are ugly.
   df2 = df[, 1, drop = FALSE]
   df2$fd1 = as.matrix(df[, 2:10])
-  fdf = makeFunctionalData(df2, fd.features = list("fd2"= "X1"))
+  fdf = makeFunctionalData(df2, fd.features = list("fd2" = "X1"))
   expect_equal(lapply(fdf, class)[[1]], "matrix")
   expect_equal(lapply(fdf, class)[[2]], "matrix")
   expect_equal(dim(fdf), c(5, 2))
@@ -369,7 +369,7 @@ test_that("benchmarking on fda tasks works", {
 
 test_that("makeFunctionalData for matricies contained in data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
-  df2 = makeFunctionalData(df, fd.features = list ("UVVIS" = "UVVIS", "NIR" = "NIR"),
+  df2 = makeFunctionalData(df, fd.features = list("UVVIS" = "UVVIS", "NIR" = "NIR"),
                      exclude.cols = c("heatan", "h20"))
   expect_equivalent(df, df2)
 
@@ -396,6 +396,3 @@ test_that("Self-created data.frame's", {
   df2$fd1 = matrix(as.factor(rep("a", 100L)), ncol = 10L)
   expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
 })
-
-
-

@@ -160,9 +160,9 @@ Suggests:
     tgp,
     TH.data,
     wavelets,
-    xgboost (>= 0.6-2),
+    xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
 Version: 2.12
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
