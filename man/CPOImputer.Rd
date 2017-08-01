@@ -14,7 +14,63 @@
 \alias{cpoImputeLearner}
 \title{Impute and re-impute data}
 \usage{
-cpoImputeConstant(const, make.dummy.cols = TRUE, force.dummies = FALSE,
+cpoImputeConstant(const, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+
+cpoImputeMedian(impute.new.levels = TRUE, recode.factor.levels = TRUE,
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
+
+cpoImputeMean(impute.new.levels = TRUE, recode.factor.levels = TRUE,
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
+
+cpoImputeMode(impute.new.levels = TRUE, recode.factor.levels = TRUE,
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
+
+cpoImputeMin(multiplier = 1, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+
+cpoImputeMax(multiplier = 1, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+
+cpoImputeUniform(min = NA_real_, max = NA_real_, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+
+cpoImputeNormal(mu = NA_real_, sd = NA_real_, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+
+cpoImputeHist(breaks = "Sturges", use.mids = TRUE,
   impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
   export = "export.default", affect.type = NULL,
   affect.index = integer(0), affect.names = character(0),
@@ -22,72 +78,7 @@ cpoImputeConstant(const, make.dummy.cols = TRUE, force.dummies = FALSE,
   affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
   affect.pattern.fixed = FALSE)
 
-cpoImputeMedian(make.dummy.cols = TRUE, force.dummies = FALSE,
-  impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
-  export = "export.default", affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
-
-cpoImputeMean(make.dummy.cols = TRUE, force.dummies = FALSE,
-  impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
-  export = "export.default", affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
-
-cpoImputeMode(make.dummy.cols = TRUE, force.dummies = FALSE,
-  impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
-  export = "export.default", affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
-
-cpoImputeMin(multiplier = 1, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, export = "export.default",
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
-
-cpoImputeMax(multiplier = 1, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, export = "export.default",
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
-
-cpoImputeUniform(min = NA_real_, max = NA_real_, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, export = "export.default",
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
-
-cpoImputeNormal(mu = NA_real_, sd = NA_real_, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, export = "export.default",
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
-
-cpoImputeHist(breaks = "Sturges", use.mids = TRUE, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, export = "export.default",
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
-
-cpoImputeLearner(learner, features = NULL, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
+cpoImputeLearner(learner, features = NULL, impute.new.levels = TRUE,
   recode.factor.levels = TRUE, id = NULL, export = "export.default",
   affect.type = NULL, affect.index = integer(0),
   affect.names = character(0), affect.pattern = NULL,
@@ -97,16 +88,6 @@ cpoImputeLearner(learner, features = NULL, make.dummy.cols = TRUE,
 \arguments{
 \item{const}{[any]\cr
 Constant valued use for imputation.}
-
-\item{make.dummy.cols}{[\code{logical(1)}]\cr
-Whether to create the dummy columns.}
-
-\item{force.dummies}{[\code{logical(1)}]\cr
-Force dummy creation even if the respective data column does not
-contain any NAs. Note that (a) most learners will complain about
-constant columns created this way but (b) your feature set might
-be stochastic if you turn this off.
-Default is \code{FALSE}.}
 
 \item{impute.new.levels}{[\code{logical(1)}]\cr
 If new, unencountered factor level occur during reimputation,

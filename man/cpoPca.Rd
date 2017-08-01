@@ -4,23 +4,13 @@
 \alias{cpoPca}
 \title{Construct a CPO for PCA preprocessing}
 \usage{
-cpoPca(center = TRUE, scale = FALSE, id = NULL,
-  export = "export.default", affect.type = NULL,
+cpoPca(id = NULL, export = "export.default", affect.type = NULL,
   affect.index = integer(0), affect.names = character(0),
   affect.pattern = NULL, affect.invert = FALSE,
   affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
   affect.pattern.fixed = FALSE)
 }
 \arguments{
-\item{center}{[\code{logical(1)}]\cr
-Whether to center the data before performing PCA.
-Default is \code{TRUE}.}
-
-\item{scale}{[\code{logical(1)}]\cr
-Whether to scale the data before performing PCA. The centering / scaling algorithm
-of R's dQuote{scale} is used.
-Default is \code{TRUE}.}
-
 \item{id}{[\code{character(1)}]\cr
 id to use as prefix for the CPO's hyperparameters. this
 must be used to avoid name clashes when composing two
@@ -40,6 +30,10 @@ and \code{\link{getParamSet}} similarly work as one expects.
 If the \dQuote{id} parameter is given, the hyperparameters
 will have this id as aprefix; this will, however, not change
 the parameters of the creator function.
+
+Note that data is neither scaled nor centered. Often
+this needs to be done for PCA, in which case, \code{\link{cpoScale}}
+should be used in addition (and before) \code{cpoPca}.
 }
 \seealso{
 Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},

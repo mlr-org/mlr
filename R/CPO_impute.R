@@ -131,24 +131,22 @@ registerCPO(cpoImputeAll, "imputation", "general", "General imputation CPO that 
 declareImputeFunction = function(name, method, additional.params, types = NULL) {
   makeCPO(paste0("impute.", name),
     .par.set = c(additional.params,
-      paramSetSugar(make.dummy.cols = TRUE: logical,
-        force.dummies = FALSE: logical,
+      paramSetSugar(
         impute.new.levels = TRUE: logical,
         recode.factor.levels = TRUE: logical)),
     .datasplit = "target",
     .properties = c("missings", if (is.null(types)) c("numerics", "factors", "ordered") else types),
-    .properties.needed = "factors",
     .properties.adding = "missings",
-    cpo.trafo = function(data, target, make.dummy.cols, force.dummies, impute.new.levels, recode.factor.levels, ...) {
+    cpo.trafo = function(data, target, impute.new.levels, recode.factor.levels, ...) {
       if (ncol(data) == 0) {
         control = "NOCOL"
         return(data)
       }
       imputer = method(...)
       impresult = impute(data, cols = lapply(data, function(dummy) imputer),
-        dummy.cols = if (make.dummy.cols) names(data) else character(0),
-        force.dummies = force.dummies, impute.new.levels = impute.new.levels,
-        recode.factor.levels = recode.factor.levels, dummy.type = "factor")
+        dummy.cols = character(0),
+        force.dummies = FALSE, impute.new.levels = impute.new.levels,
+        recode.factor.levels = recode.factor.levels)
       control = impresult[[2]]
       impresult[[1]]
     }, cpo.retrafo = function(data, control, ...) {
@@ -185,14 +183,6 @@ declareImputeFunction = function(name, method, additional.params, types = NULL) 
 #'
 #' @template cpo_description
 #'
-#' @param make.dummy.cols [\code{logical(1)}]\cr
-#'   Whether to create the dummy columns.
-#' @param force.dummies [\code{logical(1)}]\cr
-#'   Force dummy creation even if the respective data column does not
-#'   contain any NAs. Note that (a) most learners will complain about
-#'   constant columns created this way but (b) your feature set might
-#'   be stochastic if you turn this off.
-#'   Default is \code{FALSE}.
 #' @param impute.new.levels [\code{logical(1)}]\cr
 #'   If new, unencountered factor level occur during reimputation,
 #'   should these be handled as NAs and then be imputed the same way?

@@ -6,7 +6,9 @@
 #' @title Create a custom CPO constructor
 #'
 #' @description
-#' Create a CPO constructor.
+#' \code{makeCPO} creates a Feature Operation CPO constructor, i.e. a constructor for a CPO that will
+#' operate on feature columns. \code{makeCPOTargetOp} creates a Target Operation CPO constructor, which
+#' creates CPOs that operate on the target column.
 #'
 #' @param .cpo.name [\code{character(1)}]\cr
 #'   The name of the resulting CPO constructor / CPO. This is used for identification in output,
@@ -23,25 +25,25 @@
 #' @param .datasplit [\code{character(1)}]\cr
 #'   Indicate what format the data should be as seen by \dQuote{cpo.trafo} and \dQuote{cpo.retrafo}. Possibilities are:
 #'   \itemize{
-#'     \item{target} the \dQuote{data} variable contains the data as a data.frame without
+#'     \item{\bold{target}} the \dQuote{data} variable contains the data as a data.frame without
 #'       the target column(s), the \dQuote{target} variable contains the target column(s) as
 #'       a data.frame.
-#'     \item{no} the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
+#'     \item{\bold{no}} the \dQuote{data} variable contains a data.frame with all data, the \dQuote{target}
 #'       variable is a \code{character} indicating the names of the target columns.
-#'     \item{task} the \dQuote{data} variable contains the data as a \dQuote{\link{Task}}.
-#'     \item{most} the \dQuote{data} is a named list containing three data.frames: \dQuote{numeric}
+#'     \item{\bold{task}} the \dQuote{data} variable contains the data as a \dQuote{\link{Task}}.
+#'     \item{\bold{most}} the \dQuote{data} is a named list containing three data.frames: \dQuote{numeric}
 #'       the numeric columns, \dQuote{factor} the factorial columns (ordered and unordered),
 #'       \dQuote{other} the columns that are neither numeric nor factors. The \dQuote{target}
 #'       variable contains the target column(s) as a data.frame.
-#'     \item{all} similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
+#'     \item{\bold{all}} similarly to \dQuote{most}, but factors are additionally split up into \dQuote{factor}
 #'       (unordered factors) and \dQuote{ordered}.
-#'     \item{factor} similar to \dQuote{target}, but \dQuote{data} will only contain the features
+#'     \item{\bold{factor}} similar to \dQuote{target}, but \dQuote{data} will only contain the features
 #'       that are either of type \dQuote{factor} or \dQuote{ordered}.
-#'     \item{onlyfactor} similar to \dQuote{target} but \dQuote{data} will only contain the features
+#'     \item{\bold{onlyfactor}} similar to \dQuote{target} but \dQuote{data} will only contain the features
 #'       that are of type \dQuote{factor}.
-#'     \item{ordered} similar to \dQuote{target} but \dQuote{data} will only contain the features
+#'     \item{\bold{ordered}} similar to \dQuote{target} but \dQuote{data} will only contain the features
 #'       that are of type \dQuote{ordered}.
-#'     \item{numeric} similar to \dQuote{target} but \dQuote{data} will only contain the features
+#'     \item{\bold{numeric}} similar to \dQuote{target} but \dQuote{data} will only contain the features
 #'       that are of type \dQuote{numeric}.
 #'   }
 #'
@@ -372,7 +374,6 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
       cpo.retrafo(data)
     }
   }
-  cpo.trafo = captureEnvWrapper(cpo.trafo)
 
   retrafo.expr = cpo.retrafo
   if ((is.recursive(retrafo.expr) && identical(retrafo.expr[[1]], quote(`{`))) || !is.null(eval(cpo.retrafo, env = parent.frame(2)))) {
@@ -391,13 +392,15 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     }
     cpo.retrafo = makeFunction(retrafo.expr, required.arglist.retrafo, env = parent.frame(2))
     if (is.null(cpo.trafo) && .stateless) {
-      cpo.trafo = cpo.retrafo
+      cpo.trafo = function(target, ...) cpo.retrafo(...)
     }
   } else if (.stateless) {
     stop("Stateless CPO must provide cpo.retrafo.")
   } else {
     cpo.retrafo = NULL
   }
+
+  cpo.trafo = captureEnvWrapper(cpo.trafo)
 
   funargs = insert(funargs, list(id = NULL, export = "export.default",
     affect.type = NULL, affect.index = integer(0),

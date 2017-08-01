@@ -4,23 +4,21 @@
 #'
 #' @template cpo_description
 #'
-#' @param center [\code{logical(1)}]\cr
-#'   Whether to center the data before performing PCA.
-#'   Default is \code{TRUE}.
-#' @param scale [\code{logical(1)}]\cr
-#'   Whether to scale the data before performing PCA. The centering / scaling algorithm
-#'   of R's dQuote{scale} is used.
-#'   Default is \code{TRUE}.
+#' @description
+#' Note that data is neither scaled nor centered. Often
+#' this needs to be done for PCA, in which case, \code{\link{cpoScale}}
+#' should be used in addition (and before) \code{cpoPca}.
+#'
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoPca = makeCPO("pca", center = TRUE: logical, scale = FALSE: logical, .datasplit = "numeric", cpo.trafo = {  # nolint
-  pcr = prcomp(as.matrix(data), center = center, scale. = scale)
+cpoPca = makeCPO("pca", .datasplit = "numeric", cpo.trafo = {  # nolint
+  pcr = prcomp(as.matrix(data), center = FALSE, scale. = FALSE)
   data = as.data.frame(pcr$x)
-  control = list(rotation = pcr$rotation, center = pcr$center, scale = pcr$scale)
+  control = list(rotation = pcr$rotation)
   data
 }, cpo.retrafo = {
-  as.data.frame(scale(as.matrix(data), center = control$center, scale = control$scale) %*% control$rotation)
+  as.data.frame(as.matrix(data) %*% control$rotation)
 })
 registerCPO(cpoPca, "data", "numeric data preprocessing", "Perform Principal Component Analysis (PCA) using stats::prcomp.")
 
@@ -85,6 +83,7 @@ registerCPO(cpoPca, "data", "general data preprocessing", "Apply an arbitrary fu
 #' between \code{lower} and \code{upper}. If
 #' \code{lower} is greater than \code{upper},
 #' this will reverse the ordering of input data.
+#' \code{NA}, \code{Inf} are ignored.
 #'
 #' @template cpo_description
 #'
@@ -101,7 +100,7 @@ cpoScaleRange = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: nu
   .datasplit = "numeric",
   cpo.trafo = {
     ranges = lapply(data, function(x) {
-      rng = range(x)
+      rng = range(x, na.rm = TRUE, finite = TRUE)
       # linear transformation to get minimum to 'lower' and maximum to 'upper:
       # x' = a + x * b
       # where b is (upper - lower) / (max(x) - min(x))
@@ -120,6 +119,39 @@ cpoScaleRange = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: nu
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
 registerCPO(cpoScaleRange, "data", "numeric data preprocessing", "Scale numeric columns to lie in a given range.")
+
+#' @title Max Abs Scaling CPO
+#'
+#' @description
+#' Scale the numeric data columns so their maximum absolute value
+#' is \code{maxabs}, if possible. \code{NA}, \code{Inf} are ignored, and features that are constant 0
+#'   are not scaled.
+#'
+#' @template cpo_description
+#'
+#' @param maxabs [\code{numeric(1)}]\cr
+#'   The maximum absolute value for each column after transformation.
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoScaleMaxAbs = makeCPO("maxabs.scale", maxabs = 1: numeric[0, ~.],
+  .datasplit = "numeric", .retrafo.format = "combined",
+  cpo.trafo = {
+    scaling = lapply(data, function(x) {
+      s = max(abs(range(x, na.rm = TRUE, finite = TRUE)))
+      if (s == 0) {
+        s = 1
+      }
+      s
+    })
+    function(data) {
+      for (i in seq_along(data)) {
+        data[[i]] = data[[i]] / scaling[[i]] * maxabs
+      }
+      data
+    }
+  }, cpo.retrafo = NULL)
+registerCPO(cpoScaleMaxAbs, "data", "numeric data preprocessing", "Scale numeric columns to get a specific maximum absolute value.")
 
 
 #' @title Probability Encoding
@@ -563,6 +595,8 @@ registerCPO(cpoFixFactors, "data", "cleanup", "Clean up Factorial Features.")
 #'
 #' This is most useful in combination with \code{\link{cpoCbind}}.
 #'
+#' @template cpo_description
+#'
 #' @param force.dummies [\code{logical(1)}]\cr
 #'   Whether to create dummy columns even for data that is not missing.
 #'   This can be useful if missing data is expected during test in columns
@@ -587,4 +621,27 @@ cpoMissingIndicators = makeCPO("missingindicators", force.dummies = FALSE: logic
     cpo.retrafo(data)
   }, cpo.retrafo = NULL)
 registerCPO(cpoMissingIndicators, "tools", "imputation", "Generate factorial columns indicating whether data was NA.")
+
+#' @title Create a "model matrix" from the data given a formula
+#'
+#' This uses the \dQuote{stats} function \code{model.matrix} to create
+#' (numerical) data from the given data, using the provided formula.
+#'
+#' @template cpo_description
+#'
+#' @param formula [\code{formula}]\cr
+#'   Formula to use. Higher order interactions can be created using constructs
+#'   like \code{~. ^ 2}.
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoModelMatrix = makeCPO("model.matrix", .fix.factors = TRUE, .retrafo.format = "stateless",
+  .par.set = makeParamSet(makeUntypedLearnerParam("formula")), .datasplit = "target",
+  .properties.adding = c("factors", "ordered"), .properties.needed = "numerics",
+  cpo.trafo = NULL, cpo.retrafo = {
+    as.data.frame(model.matrix(formula, data = data))
+  })
+registerCPO(cpoSelect, "data", "general", ".")
+
 

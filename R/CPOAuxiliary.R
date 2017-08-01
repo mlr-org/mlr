@@ -1582,7 +1582,7 @@ requireCPOPackages = function(cpo) {
 #  https://topepo.github.io/recipes/reference/index.html
 #  https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/
 
-#- exporting / fixing / hiding hyperparameters
+#- exporting / fixing / hiding hyperparameters needs to handle requirements.
 #- cpoCbind: prevent copies
 #- check shapeinfo when reattaching retrafos
 #- meta-CPOs: difficulties with 'properties.needed', 'properties.adding:
