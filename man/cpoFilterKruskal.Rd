@@ -10,10 +10,11 @@ case, i.e., the null hypothesis cannot be rejected, there is little evidence
 that the corresponding feature is suitable for classification.}
 \usage{
 cpoFilterKruskal(perc = NULL, abs = NULL, threshold = NULL, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 Filter \dQuote{kruskal.test} applies a Kruskal-Wallis rank sum test of the

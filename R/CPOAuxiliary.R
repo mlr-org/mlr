@@ -1155,11 +1155,15 @@ print.CPOConstructor = function(x, ...) {
 
 #' @export
 print.CPO = function(x, ...) {
-  pv = getHyperPars(x)
+  isprim = "CPOPrimitive" %in% class(x)
+  pv = if (isprim) getBareHyperPars(x) else getHyperPars(x)
   argstring = paste(names(pv), sapply(pv, convertToShortString), sep = " = ", collapse = ", ")
   template = ifelse("CPOPrimitive" %in% class(x), "%s(%s)", "(%s)(%s)")
   catf(template, getCPOName(x), argstring, newline = FALSE)
-  if (("CPOPrimitive" %in% class(x)) && length({affect = getCPOAffect(x)})) {
+  if (isprim && length({unexport = x$unexported.args})) {
+      catf("[not exp'd: %s]", paste(names(unexport), sapply(unexport, convertToShortString), sep = " = ", collapse = ", "), newline = FALSE)
+  }
+  if (isprim && length({affect = getCPOAffect(x)})) {
     catf(" [%s]", paste(names(affect), sapply(affect, convertToShortString), sep = " = ", collapse = ", "))
   } else {
     cat("\n")

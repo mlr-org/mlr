@@ -14,11 +14,11 @@ permuted is sampled with or without replacement.}
 cpoFilterPermutationImportance(perc = NULL, abs = NULL, threshold = NULL,
   imp.learner, measure = NULL, contrast = function (x, y)  x - y,
   aggregation = function (x, ...)  UseMethod("mean"), nmc = 50,
-  replace = FALSE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  replace = FALSE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 }
 \description{
 Filter \dQuote{permutation.importance} computes a loss function between predictions made by a

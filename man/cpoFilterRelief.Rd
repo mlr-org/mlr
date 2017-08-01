@@ -10,10 +10,11 @@ with zeros. Then for each instance \code{sample.size} instances are sampled,
 and the weight vector for each feature is updated based on these values.}
 \usage{
 cpoFilterRelief(perc = NULL, abs = NULL, threshold = NULL, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 Filter \dQuote{relief} is based on the feature selection algorithm \dQuote{ReliefF}

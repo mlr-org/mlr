@@ -9,10 +9,11 @@ the total error. The lower the error value the more important the correspoding
 feature.}
 \usage{
 cpoFilterOneR(perc = NULL, abs = NULL, threshold = NULL, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 Filter \dQuote{oneR} makes use of a simple \dQuote{One-Rule} (OneR) learner to

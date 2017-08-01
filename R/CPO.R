@@ -257,7 +257,7 @@ makeCPO = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties.target, .type.from = NULL, .type.to = NULL,
     .predict.type = NULL, .packages = .packages,
-    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo, ...)
+    cpo.trafo = substitute(cpo.trafo), cpo.retrafo = substitute(cpo.retrafo), ...)
 }
 
 makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .par.set, .par.vals,
@@ -349,8 +349,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     required.arglist.trafo$data = substitute()
   }
   required.arglist.trafo$target = substitute()
-  trafo.expr = substitute(cpo.trafo)
-  if (!.stateless || (is.recursive(trafo.expr) && identical(trafo.expr[[1]], quote(`{`))) || !is.null(cpo.trafo)) {
+  trafo.expr = cpo.trafo
+  if (!.stateless || (is.recursive(trafo.expr) && identical(trafo.expr[[1]], quote(`{`))) || !is.null(eval(cpo.trafo, env = parent.frame(2)))) {
     cpo.trafo = makeFunction(trafo.expr, required.arglist.trafo, env = parent.frame(2))
   } else if (.cpotype == "targetbound") {
     stop("A target-bound CPO must have a cpo.trafo function, even if stateless.")
@@ -374,8 +374,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
   }
   cpo.trafo = captureEnvWrapper(cpo.trafo)
 
-  retrafo.expr = substitute(cpo.retrafo)
-  if ((is.recursive(retrafo.expr) && identical(retrafo.expr[[1]], quote(`{`))) || !is.null(cpo.retrafo)) {
+  retrafo.expr = cpo.retrafo
+  if ((is.recursive(retrafo.expr) && identical(retrafo.expr[[1]], quote(`{`))) || !is.null(eval(cpo.retrafo, env = parent.frame(2)))) {
     if (.retrafo.format == "combined") {
       stop("Combined retrafo must have cpo.retrafo = NULL")
     }
@@ -395,6 +395,8 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     }
   } else if (.stateless) {
     stop("Stateless CPO must provide cpo.retrafo.")
+  } else {
+    cpo.retrafo = NULL
   }
 
   funargs = insert(funargs, list(id = NULL, export = "export.default",
@@ -410,6 +412,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     base::rm(list = base::setdiff(base::ls(), "args"))  # delete all arguments to avoid name clashes
     args[[1]] = quote(list)
     args = eval(args, envir = parent.frame())
+    nondefault.args = args
     args = insert(funargs, args)
     id = args$id
     args$id = NULL
@@ -437,16 +440,19 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     present.pars = Filter(function(x) !identical(x, substitute()), args[names(.par.set$pars)])
     checkParamsFeasible(.par.set, present.pars)
 
+    nondefault.args = nondefault.args[intersect(names2(nondefault.args), names2(present.pars))]
+
     if (length(export) == 1 && export %in% export.possibilities) {
       export = switch(export,
         export.default = .export.params,
-        export.set = names2(present.pars),
-        export.default.set = intersect(.export.params, names2(present.pars)),
-        export.unset = setdiff(names2(.par.set$pars), names2(present.pars)),
-        export.default.unset = intersect(.export.params, setdiff(names2(.par.set$pars), names2(present.pars))),
+        export.set = names2(nondefault.args),
+        export.default.set = intersect(.export.params, names2(nondefault.args)),
+        export.unset = setdiff(names2(.par.set$pars), names2(nondefault.args)),
+        export.default.unset = intersect(.export.params, setdiff(names2(.par.set$pars), names2(nondefault.args))),
         export.all = names2(.par.set$pars),
         export.none = character(0),
-        export.all.plus = stop('"export" setting "export.all.plus" not yet supported.'))
+        export.all.plus = stop('"export" setting "export.all.plus" not yet supported.'),
+        stopf('Unknown "export" setting "%s".', export))
     }
     if (length(.par.set$pars) == 0) {
       assert(identical(export, character(0)))
@@ -462,10 +468,10 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
         ifelse(singular, "", "s"), collapse(missing, sep = "', '"), ifelse(singular, "has", "have"), are, are)
     }
 
-    unexported.args = dropNamed(par.vals, export)
-    unexported.pars = dropNamed(par.set$pars, export)
-    par.set$pars = par.set$pars[export]
-    par.vals = par.vals[export]
+    unexported.args = dropNamed(present.pars, export)
+    unexported.pars = dropNamed(.par.set$pars, export)
+    .par.set$pars = .par.set$pars[export]
+    present.pars = present.pars[intersect(names2(present.pars), export)]
 
     cpo = makeS3Obj(c("CPOPrimitive", "CPO"),
       # --- CPO part
@@ -994,7 +1000,7 @@ setCPOId.CPOPrimitive = function(cpo, id) {
     id = cpo$bare.name
   }
   cpo$id = id
-  cpo$name = if (id == cpo$bare.name) cpo$bare.name else sprintf("%s<%s>", cpo$id, cpo.bare.name)
+  cpo$name = if (id == cpo$bare.name) cpo$bare.name else sprintf("%s<%s>", cpo$id, cpo$bare.name)
   cpo$par.vals = getBareHyperPars(cpo)
   cpo$par.set = cpo$bare.par.set
   pars = cpo$par.set$pars

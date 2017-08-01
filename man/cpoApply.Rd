@@ -4,10 +4,11 @@
 \alias{cpoApply}
 \title{CPO Applicator}
 \usage{
-cpoApply(cpo, id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+cpoApply(cpo, id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -43,20 +44,29 @@ the parameters of the creator function.
 Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
   \code{\link{NULLCPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoDropConstants}},
+  \code{\link{chainCPO}}, \code{\link{cpoApplyFun}},
+  \code{\link{cpoAsNumeric}},
+  \code{\link{cpoCollapseFact}},
+  \code{\link{cpoDropConstants}},
   \code{\link{cpoDummyEncode}},
   \code{\link{cpoFilterFeatures}},
-  \code{\link{cpoFixFactors}}, \code{\link{cpoImpute}},
+  \code{\link{cpoFixFactors}},
+  \code{\link{cpoImpactEncodeClassif}},
+  \code{\link{cpoImpactEncodeRegr}},
+  \code{\link{cpoImpute}},
   \code{\link{cpoMissingIndicators}},
   \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{cpoSelect}},
-  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{cpoProbEncode}},
+  \code{\link{cpoQuantileBinNumerics}},
+  \code{\link{cpoScaleRange}}, \code{\link{cpoScale}},
+  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOId}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
-  \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
-  \code{\link{makeCPO}},
+  \code{\link{inverter}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
+  \code{\link{setCPOId}}, \code{\link{setHyperPars}},
+  \code{\link{tagInvert}}
 }

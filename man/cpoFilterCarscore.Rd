@@ -7,11 +7,11 @@ scores} (short CAR scores). The CAR scores for a set of features are defined as 
 correlations between the target and the decorrelated features.}
 \usage{
 cpoFilterCarscore(perc = NULL, abs = NULL, threshold = NULL,
-  diagonal = FALSE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  diagonal = FALSE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 }
 \description{
 Filter \dQuote{carscore} determines the \dQuote{Correlation-Adjusted (marginal) coRelation

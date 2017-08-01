@@ -5,10 +5,11 @@
 \title{Clean up Factorial Features.}
 \usage{
 cpoFixFactors(drop.unused.levels = TRUE, fix.factors.prediction = TRUE,
-  id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{drop.unused.levels}{Factor levels of data that have no instances in the data are dropped. If
@@ -46,20 +47,28 @@ the parameters of the creator function.
 Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
   \code{\link{NULLCPO}}, \code{\link{\%>>\%}},
   \code{\link{applyCPO}}, \code{\link{attachCPO}},
-  \code{\link{chainCPO}}, \code{\link{cpoApply}},
+  \code{\link{chainCPO}}, \code{\link{cpoApplyFun}},
+  \code{\link{cpoApply}}, \code{\link{cpoAsNumeric}},
+  \code{\link{cpoCollapseFact}},
   \code{\link{cpoDropConstants}},
   \code{\link{cpoDummyEncode}},
-  \code{\link{cpoFilterFeatures}}, \code{\link{cpoImpute}},
+  \code{\link{cpoFilterFeatures}},
+  \code{\link{cpoImpactEncodeClassif}},
+  \code{\link{cpoImpactEncodeRegr}},
+  \code{\link{cpoImpute}},
   \code{\link{cpoMissingIndicators}},
   \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{cpoSelect}},
-  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{cpoProbEncode}},
+  \code{\link{cpoQuantileBinNumerics}},
+  \code{\link{cpoScaleRange}}, \code{\link{cpoScale}},
+  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOId}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
-  \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
-  \code{\link{makeCPO}},
+  \code{\link{inverter}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
+  \code{\link{setCPOId}}, \code{\link{setHyperPars}},
+  \code{\link{tagInvert}}
 }

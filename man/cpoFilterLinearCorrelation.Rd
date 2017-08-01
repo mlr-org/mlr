@@ -6,10 +6,11 @@
 of feature importance. Rows with NA values are not taken into consideration.}
 \usage{
 cpoFilterLinearCorrelation(perc = NULL, abs = NULL, threshold = NULL,
-  id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 The Pearson correlation between each feature and the target is used as an indicator

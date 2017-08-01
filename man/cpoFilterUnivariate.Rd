@@ -10,10 +10,11 @@ the performance measure \code{perf.measure}.}
 \usage{
 cpoFilterUnivariate(perc = NULL, abs = NULL, threshold = NULL,
   perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL,
-  id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 The \dQuote{univariate.model.score} feature filter resamples an \pkg{mlr}

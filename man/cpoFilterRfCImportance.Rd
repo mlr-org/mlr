@@ -8,10 +8,11 @@ by the \pkg{randomForest} package (see description of \dQuote{randomForest.impor
 filter.}
 \usage{
 cpoFilterRfCImportance(perc = NULL, abs = NULL, threshold = NULL,
-  mtry = 5, id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  mtry = 5, id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 Permutation importance of random forests fitted in package \pkg{party}.

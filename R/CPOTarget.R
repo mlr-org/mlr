@@ -92,7 +92,7 @@ makeCPOTargetOp = function(.cpo.name, ..., .par.set = NULL, .par.vals = list(),
     .properties.adding = .properties.adding, .properties.needed = .properties.needed,
     .properties.target = .properties, .type.from = .type, .type.to = .type.out,
     .predict.type = .predict.type, .packages = .packages,
-    cpo.trafo = cpo.trafo, cpo.retrafo = cpo.retrafo)
+    cpo.trafo = substitute(cpo.trafo), cpo.retrafo = substitute(cpo.retrafo), ...)
 }
 
 

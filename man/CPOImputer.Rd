@@ -16,79 +16,83 @@
 \usage{
 cpoImputeConstant(const, make.dummy.cols = TRUE, force.dummies = FALSE,
   impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 
 cpoImputeMedian(make.dummy.cols = TRUE, force.dummies = FALSE,
   impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 
 cpoImputeMean(make.dummy.cols = TRUE, force.dummies = FALSE,
   impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 
 cpoImputeMode(make.dummy.cols = TRUE, force.dummies = FALSE,
   impute.new.levels = TRUE, recode.factor.levels = TRUE, id = NULL,
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
+
+cpoImputeMin(multiplier = 1, make.dummy.cols = TRUE,
+  force.dummies = FALSE, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
   affect.type = NULL, affect.index = integer(0),
   affect.names = character(0), affect.pattern = NULL,
   affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
   affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 
-cpoImputeMin(multiplier = 1, make.dummy.cols = TRUE,
-  force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
-
 cpoImputeMax(multiplier = 1, make.dummy.cols = TRUE,
   force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 
 cpoImputeUniform(min = NA_real_, max = NA_real_, make.dummy.cols = TRUE,
   force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 
 cpoImputeNormal(mu = NA_real_, sd = NA_real_, make.dummy.cols = TRUE,
   force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 
 cpoImputeHist(breaks = "Sturges", use.mids = TRUE, make.dummy.cols = TRUE,
   force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 
 cpoImputeLearner(learner, features = NULL, make.dummy.cols = TRUE,
   force.dummies = FALSE, impute.new.levels = TRUE,
-  recode.factor.levels = TRUE, id = NULL, affect.type = NULL,
-  affect.index = integer(0), affect.names = character(0),
-  affect.pattern = NULL, affect.invert = FALSE,
-  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
-  affect.pattern.fixed = FALSE)
+  recode.factor.levels = TRUE, id = NULL, export = "export.default",
+  affect.type = NULL, affect.index = integer(0),
+  affect.names = character(0), affect.pattern = NULL,
+  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
+  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
 }
 \arguments{
 \item{const}{[any]\cr
@@ -199,20 +203,29 @@ Other impute: \code{\link{cpoImpute}},
 Other CPO: \code{\link{CPO}}, \code{\link{NULLCPO}},
   \code{\link{\%>>\%}}, \code{\link{applyCPO}},
   \code{\link{attachCPO}}, \code{\link{chainCPO}},
-  \code{\link{cpoApply}}, \code{\link{cpoDropConstants}},
+  \code{\link{cpoApplyFun}}, \code{\link{cpoApply}},
+  \code{\link{cpoAsNumeric}},
+  \code{\link{cpoCollapseFact}},
+  \code{\link{cpoDropConstants}},
   \code{\link{cpoDummyEncode}},
   \code{\link{cpoFilterFeatures}},
-  \code{\link{cpoFixFactors}}, \code{\link{cpoImpute}},
+  \code{\link{cpoFixFactors}},
+  \code{\link{cpoImpactEncodeClassif}},
+  \code{\link{cpoImpactEncodeRegr}},
+  \code{\link{cpoImpute}},
   \code{\link{cpoMissingIndicators}},
   \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoScale}}, \code{\link{cpoSelect}},
-  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
-  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
+  \code{\link{cpoProbEncode}},
+  \code{\link{cpoQuantileBinNumerics}},
+  \code{\link{cpoScaleRange}}, \code{\link{cpoScale}},
+  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
+  \code{\link{getCPOId}}, \code{\link{getCPOName}},
+  \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
-  \code{\link{inverter}}, \code{\link{makeCPOTargetOp}},
-  \code{\link{makeCPO}},
+  \code{\link{inverter}}, \code{\link{makeCPO}},
   \code{\link{makeRetrafoFromState}},
   \code{\link{retrafo<-}}, \code{\link{retrafo}},
-  \code{\link{setHyperPars}}, \code{\link{tagInvert}}
+  \code{\link{setCPOId}}, \code{\link{setHyperPars}},
+  \code{\link{tagInvert}}
 }

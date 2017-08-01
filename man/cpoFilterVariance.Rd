@@ -7,10 +7,11 @@ Features with higher variance are considered more important than features with
 low importance.}
 \usage{
 cpoFilterVariance(perc = NULL, abs = NULL, threshold = NULL, id = NULL,
-  affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 Simple filter based on the variance of the features indepentent of each other.

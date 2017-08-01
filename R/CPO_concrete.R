@@ -255,7 +255,7 @@ registerCPO(cpoImpactEncodeRegr, "data", "feature conversion", "Convert factoria
 #'
 #' @template cpo_description
 #'
-#' @param max.collapsed.class.prevalence [\code{numeric(1)]\cr
+#' @param max.collapsed.class.prevalence [\code{numeric(1)}]\cr
 #'   Maximum prevalence of newly created collapsed factor level.
 #'   Default is \code{0.1}.
 #'
@@ -321,7 +321,7 @@ registerCPO(cpoCollapseFact, "data", "feature conversion", "Convert Numerics to 
 #' @family CPO
 #' @export
 cpoAsNumeric = makeCPO("as.numeric", .properties.adding = c("factors", "ordered"), .properties.needed = "numerics",
-  .stateless = TRUE, .datasplit = "factor", cpo.trafo = function(data, target) {
+  .retrafo.format = "stateless", .datasplit = "factor", cpo.trafo = function(data, target) {
     as.data.frame(lapply(data, as.numeric), row.names = rownames(data)) }, cpo.retrafo = function(data) {
       as.data.frame(lapply(data, as.numeric), row.names = rownames(data)) })
 registerCPO(cpoCollapseFact, "data", "feature conversion", "Convert all Features to Numerics using as.numeric.")

@@ -10,10 +10,11 @@ variable. Low values of the test statistic indicate a poor relationship. High
 values, i.e., high dependency identifies a feature as more important.}
 \usage{
 cpoFilterChiSquared(perc = NULL, abs = NULL, threshold = NULL,
-  id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 The chi-square test is a statistical test of independence to determine whether

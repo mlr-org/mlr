@@ -8,10 +8,11 @@ variable hunting approach (\code{method = "vh"} or \code{method = "vh.vimp"}).
 The minimal depth measure is the default.}
 \usage{
 cpoFilterRfSRCMinDepth(perc = NULL, abs = NULL, threshold = NULL,
-  id = NULL, affect.type = NULL, affect.index = integer(0),
-  affect.names = character(0), affect.pattern = NULL,
-  affect.invert = FALSE, affect.pattern.ignore.case = FALSE,
-  affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE)
+  id = NULL, export = "export.default", affect.type = NULL,
+  affect.index = integer(0), affect.names = character(0),
+  affect.pattern = NULL, affect.invert = FALSE,
+  affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE,
+  affect.pattern.fixed = FALSE)
 }
 \description{
 Filter \dQuote{randomForestSRC.var.select} uses the minimal depth variable
