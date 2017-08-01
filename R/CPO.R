@@ -397,7 +397,7 @@ makeCPOGeneral = function(.cpotype = c("databound", "targetbound"), .cpo.name, .
     stop("Stateless CPO must provide cpo.retrafo.")
   }
 
-  funargs = insert(funargs, list(id = .cpo.name, export = "export.default",
+  funargs = insert(funargs, list(id = NULL, export = "export.default",
     affect.type = NULL, affect.index = integer(0),
     affect.names = character(0), affect.pattern = NULL, affect.invert = FALSE,
     affect.pattern.ignore.case = FALSE, affect.pattern.perl = FALSE, affect.pattern.fixed = FALSE))
@@ -567,8 +567,9 @@ callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
 
+  cpo$bare.par.set$pars = c(cpo$bare.par.set$pars, cpo$unexported.pars)
+  cpo = setCPOId(cpo, cpo$id)
   cpo$par.vals = c(cpo$par.vals, cpo$unexported.args)
-  cpo$par.set$pars = c(cpo$par.set$pars, cpo$unexported.pars)
 
   checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   if (is.nullcpo(prev.retrafo)) {
@@ -989,12 +990,15 @@ getCPOName.CPO = function(cpo) {
 
 #' @export
 setCPOId.CPOPrimitive = function(cpo, id) {
+  if (is.null(id)) {
+    id = cpo$bare.name
+  }
   cpo$id = id
-  cpo$name = collapse(c(cpo$bare.name, id), sep = ".")
+  cpo$name = if (id == cpo$bare.name) cpo$bare.name else sprintf("%s<%s>", cpo$id, cpo.bare.name)
   cpo$par.vals = getBareHyperPars(cpo)
   cpo$par.set = cpo$bare.par.set
   pars = cpo$par.set$pars
-  if (!is.null(id) && length(pars)) {
+  if (length(pars)) {
     trans = setNames(paste(id, names(pars), sep = "."), names(pars))
     names(pars) = trans
     pars = lapply(pars, function(x) {

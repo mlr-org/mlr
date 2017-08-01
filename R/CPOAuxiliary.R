@@ -397,13 +397,18 @@ makeRetrafoFromState = function(constructor, state) {
 }
 
 
-#' @title the ID of a CPO object.
+#' @title Set the ID of a CPO object.
 #'
 #' @description
 #' Setting the ID of a CPO to a value will prefix all its
 #' parameter names with this ID. This makes it possible to
 #' compose CPOs that have clashing parameter names.
 #'
+#' @param id [\code{character(1)} | \code{NULL}]\cr
+#'   The ID. If this is \code{NULL}, the ID is set to the
+#'   default for the CPO at hand.
+#'
+#' @family CPO
 #' @export
 setCPOId = function(cpo, id) {
   if (!is.null(id)) {
