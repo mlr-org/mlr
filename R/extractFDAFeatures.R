@@ -41,14 +41,14 @@
 #'   \item{desc [\code{extracFDAFeatDesc}]}{Description object. See description for details.}
 #' @family fda
 #' @export
-# @examples
-# df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
-# fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2 = 5:8), exclude.cols = "y")
-# task = makeClassifTask(data = fdf, target = "y")
-# extracted = extractFDAFeatures(task,
-# feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
-# print(extracted$task)
-# reextractFDAFeatures(task, extracted$desc)
+#' @examples
+#' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
+#' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2 = 5:8), exclude.cols = "y")
+#' task = makeClassifTask(data = fdf, target = "y")
+#' extracted = extractFDAFeatures(task,
+#' feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
+#' print(extracted$task)
+#' reextractFDAFeatures(task, extracted$desc)
 
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
   assertList(feat.methods)
