@@ -192,7 +192,7 @@
 #'
 #' # an example 'scale' CPO
 #' # demonstrates the (functional) "separate" CPO API
-#' scale = makeCPO("scale",
+#' scaleCPO = makeCPO("scale",
 #'   .datasplit = "numeric",
 #'   # .retrafo.format = "separate" is implicit
 #'   cpo.trafo = function(data, target) {
@@ -203,7 +203,7 @@
 #'         attr(result, "scaled:scale"))
 #'     }
 #'     result
-#'   })
+#'   }, cpo.retrafo = NULL)  # don't forget to set it cpo.retrafo to NULL
 #'
 #' # an example constant feature remover CPO
 #' # demonstrates the "combined" CPO API
@@ -219,7 +219,7 @@
 #'       data[cols.keep]
 #'     }
 #'     result
-#'   })
+#'   }, cpo.retrafo = NULL)
 #'
 #' # an example 'square' CPO
 #' # demonstrates the "stateless" CPO API
@@ -576,9 +576,11 @@ callCPO = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.
 # attaches prev.retrafo to the returned retrafo object, if present.
 callCPO.CPOPrimitive = function(cpo, data, build.retrafo, prev.retrafo, build.inverter, prev.inverter) {
 
-  cpo$bare.par.set$pars = c(cpo$bare.par.set$pars, cpo$unexported.pars)
-  cpo = setCPOId(cpo, cpo$id)
-  cpo$par.vals = c(cpo$par.vals, cpo$unexported.args)
+  if (!"CPOCbind" %in% class(cpo)) {
+    cpo$bare.par.set$pars = c(cpo$bare.par.set$pars, cpo$unexported.pars)
+    cpo = setCPOId(cpo, cpo$id)
+    cpo$par.vals = c(cpo$par.vals, cpo$unexported.args)
+  }
 
   checkAllParams(cpo$par.vals, cpo$par.set, cpo$name)
   if (is.nullcpo(prev.retrafo)) {
@@ -973,7 +975,7 @@ setHyperPars2.CPO = function(learner, par.vals = list()) {
 getBareHyperPars = function(cpo) {
   assertClass(cpo, "CPOPrimitive")
   args = cpo$par.vals
-  namestranslation = setNames(names(cpo$bare.par.set$pars),
+  namestranslation = setNames(names2(cpo$bare.par.set$pars),
     names(cpo$par.set$pars))
   setNames(args, namestranslation[names(args)])
 }
