@@ -263,9 +263,9 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
     # subcurves from which the features are extracted.
     if (is.null(curve.lens)) {
-      getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
+      df = getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
     } else {
-      getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
+      df = getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
     }
     names(df) = paste0("multires", seq_len(ncol(df)))
     return(df)
