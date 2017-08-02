@@ -82,5 +82,7 @@ Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
 ICML Anomaly Detection Workshop 2016
 }
 \seealso{
-Other performance.: \code{\link{makeAMVhdMeasure}}
+Other performance.: \code{\link{makeAMVhdMeasure}},
+  \code{\link{makePrecisionMeasure}},
+  \code{\link{makeWACMeasure}}
 }

@@ -19,7 +19,8 @@
 #' @export
 #' @family performance.
 #' @examples
-#' # creates an WAC measure which calculates weightes accuracy with weights = 0.6 for the positive (anomaly) class
+#' # creates an WAC measure which calculates weightes accuracy with
+#' # weights = 0.6 for the positive (anomaly) class
 #' wac = makeWACMeasure(id = "wac", minimize = FALSE, best = 0, worst = NULL, w = 0.6)
 #'
 #' data = getTaskData(oneclass2d.task)
