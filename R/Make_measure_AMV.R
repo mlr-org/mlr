@@ -101,7 +101,7 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
 
         # get scores for sampled test data from the hypercube
         su = predict(model, newdata = dfu)
-        su = getPredictionProbabilities(su)[,1]
+        su = getPredictionProbabilities(su)
 
         # calculate volume via monte carlo (share of scores higher as the offset in relation to the whole volume of the hypercube)
         vol = sapply(offsets, function(offset) {mean(su >= offset)}) * volume
