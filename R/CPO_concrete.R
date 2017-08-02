@@ -96,7 +96,7 @@ registerCPO(cpoPca, "data", "general data preprocessing", "Apply an arbitrary fu
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoScaleRange = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: numeric[~., ~.],
+cpoScaleRange = makeCPO("range.scale", lower = 0: numeric[~., ~.], upper = 1: numeric[~., ~.],  # nolint
   .datasplit = "numeric",
   cpo.trafo = {
     ranges = lapply(data, function(x) {
@@ -130,11 +130,11 @@ registerCPO(cpoScaleRange, "data", "numeric data preprocessing", "Scale numeric 
 #' @template cpo_description
 #'
 #' @param maxabs [\code{numeric(1)}]\cr
-#'   The maximum absolute value for each column after transformation.
+#'   The maximum absolute value for each column after transformation. Default is 1.
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoScaleMaxAbs = makeCPO("maxabs.scale", maxabs = 1: numeric[0, ~.],
+cpoScaleMaxAbs = makeCPO("maxabs.scale", maxabs = 1: numeric[0, ~.],  # nolint
   .datasplit = "numeric", .retrafo.format = "combined",
   cpo.trafo = {
     scaling = lapply(data, function(x) {
@@ -153,6 +153,33 @@ cpoScaleMaxAbs = makeCPO("maxabs.scale", maxabs = 1: numeric[0, ~.],
   }, cpo.retrafo = NULL)
 registerCPO(cpoScaleMaxAbs, "data", "numeric data preprocessing", "Scale numeric columns to get a specific maximum absolute value.")
 
+#' @title Scale Rows to Unit Length
+#'
+#' @description
+#' Normalizes the data row-wise. This is a natural
+#' generalization of the "sign" function to higher
+#' dimensions.
+#'
+#' @template cpo_description
+#'
+#' @param length [\code{numeric(1)}]\cr
+#'   Length to scale rows to. Default is 1.
+#'
+#' @template arg_cpo_id
+#' @family CPO
+#' @export
+cpoSpatialSign = makeCPO("spatial.sign", length = 1: numeric[0, ~.], .datasplit = "numeric", .retrafo.format = "stateless",  # nolint
+  .properties = c("numerics", "factors", "ordered"),  # no missings
+  cpo.trafo = NULL, cpo.retrafo = {
+    t(apply(as.matrix(data), 1, function(x) {
+      len = sqrt(sum(x ^ 2))
+      if (!identical(len, 0)) {
+        x = x / len * length
+      }
+      x
+    }))
+  })
+registerCPO(cpoSpatialSign, "data", "numeric data preprocessing", "Scale numeric rows to given length.")
 
 #' @title Probability Encoding
 #'
@@ -167,7 +194,7 @@ registerCPO(cpoScaleMaxAbs, "data", "numeric data preprocessing", "Scale numeric
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoProbEncode = makeCPO("prob.encode",
+cpoProbEncode = makeCPO("prob.encode",  # nolint
   .datasplit = "factor",
   .properties.adding = c("factors", "ordered"),
   .properties.needed = "numerics",
@@ -207,7 +234,7 @@ registerCPO(cpoProbEncode, "data", "feature conversion", "Convert factorial colu
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoImpactEncodeClassif = makeCPO("impact.encode.classif",
+cpoImpactEncodeClassif = makeCPO("impact.encode.classif",  # nolint
   smoothing = 1e-4: numeric[~0, ~.],
   .datasplit = "factor",
   .properties.adding = c("factors", "ordered"),
@@ -255,7 +282,7 @@ registerCPO(cpoImpactEncodeClassif, "data", "feature conversion", "Convert facto
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoImpactEncodeRegr = makeCPO("impact.encode.regr",
+cpoImpactEncodeRegr = makeCPO("impact.encode.regr",  # nolint
   smoothing = 1e-4: numeric[~0, ~.],
   .datasplit = "factor",
   .properties.adding = c("factors", "ordered"),
@@ -294,7 +321,7 @@ registerCPO(cpoImpactEncodeRegr, "data", "feature conversion", "Convert factoria
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoCollapseFact = makeCPO("collapse.fact",
+cpoCollapseFact = makeCPO("collapse.fact",  # nolint
   max.collapsed.class.prevalence = 0.1: numeric[0, ~1],
   .datasplit = "factor",
   cpo.trafo = {
@@ -332,7 +359,7 @@ registerCPO(cpoCollapseFact, "data", "factor data preprocessing", "Combine rare 
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoQuantileBinNumerics = makeCPO("bin.numerics", numsplits = 2: integer[2, ],
+cpoQuantileBinNumerics = makeCPO("bin.numerics", numsplits = 2: integer[2, ],  # nolint
   .properties.needed = "ordered", .properties.adding = "numerics",
   .datasplit = "numeric", cpo.trafo = {
     breaks = lapply(data, function(d)
@@ -352,7 +379,7 @@ registerCPO(cpoCollapseFact, "data", "feature conversion", "Convert Numerics to 
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoAsNumeric = makeCPO("as.numeric", .properties.adding = c("factors", "ordered"), .properties.needed = "numerics",
+cpoAsNumeric = makeCPO("as.numeric", .properties.adding = c("factors", "ordered"), .properties.needed = "numerics",  # nolint
   .retrafo.format = "stateless", .datasplit = "factor", cpo.trafo = function(data, target) {
     as.data.frame(lapply(data, as.numeric), row.names = rownames(data)) }, cpo.retrafo = function(data) {
       as.data.frame(lapply(data, as.numeric), row.names = rownames(data)) })
@@ -636,7 +663,7 @@ registerCPO(cpoMissingIndicators, "tools", "imputation", "Generate factorial col
 #' @template arg_cpo_id
 #' @family CPO
 #' @export
-cpoModelMatrix = makeCPO("model.matrix", .fix.factors = TRUE, .retrafo.format = "stateless",
+cpoModelMatrix = makeCPO("model.matrix", .fix.factors = TRUE, .retrafo.format = "stateless",  # nolint
   .par.set = makeParamSet(makeUntypedLearnerParam("formula")), .datasplit = "target",
   .properties.adding = c("factors", "ordered"), .properties.needed = "numerics",
   cpo.trafo = NULL, cpo.retrafo = {
