@@ -44,7 +44,7 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.OCHoldoutDesc = function(desc, size, task) {
   label = getTaskTargets(task)
-  normal.inds = which(label == task$task.desc$positive) #index of only normal class
+  normal.inds = which(label == task$task.desc$negative) #index of only normal class
   size.normal = length(normal.inds)
   inds = sample(normal.inds, size.normal * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
@@ -58,7 +58,7 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
   test.inds = chunk(seq_len(size), shuffle = TRUE, n.chunks = desc$iters)
 
   label = getTaskTargets(task)
-  normal.inds = which(label == task$task.desc$positive) #index of only normal class
+  normal.inds = which(label == task$task.desc$negative) #index of only normal class
 
   # only allow normal obs in training and shuffle data set of normal observation
   # basically drop anomaly in training
@@ -71,7 +71,7 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
 
 instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task) {
   label = getTaskTargets(task)
-  normal.inds = which(label == task$task.desc$positive) #only normal class
+  normal.inds = which(label == task$task.desc$negative) #only normal class
   size.normal = length(normal.inds)
   # sample without replacement only from the normal data to create train set
   # all anomaly are going to be in the test set
@@ -82,7 +82,7 @@ instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task) {
 instantiateResampleInstance.OCBootstrapDesc = function(desc, size, task) {
 
   label = getTaskTargets(task)
-  normal.inds = which(label == task$task.desc$positive) #only normal class
+  normal.inds = which(label == task$task.desc$negative) #only normal class
   size.normal = length(normal.inds)
   # sample with replacement only from the normal data to create train set
   # all anomaly are going to be in the test set
