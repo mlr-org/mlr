@@ -31,17 +31,6 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
 
   measures = ensureVector(measures, n = 1L, cl = "Measure")
 
-  force(learner)
-  force(task)
-  force(resampling)
-  force(measures)
-  force(par.set)
-  force(ctrl)
-  force(opt.path)
-  force(show.info)
-  force(convertx)
-  force(remove.nas)
-  force(resample.fun)
   # remove trafos for mbo, we do this in tunerFitnFun
   ps2 = par.set
   for (i in seq_along(ps2$pars))

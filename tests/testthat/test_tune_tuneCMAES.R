@@ -9,6 +9,7 @@ test_that("tuneCMAES", {
   ctrl1 = makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
+  expect_number(tr1$y, lower = 0, upper = 0.2)
 
   ps2 = makeParamSet(
     makeNumericVectorParam("cutoff", lower = 0.0001, upper = 1, len = 3,
