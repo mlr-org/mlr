@@ -229,7 +229,7 @@ trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weig
     d$.mlr.weights = .weights
     wcol = ".mlr.weights"
   }
-  h2of = h2o::as.h2o(d)
+  h2of = h2o::as.h2o(d, destination_frame = "train.hex")
   h2o::h2o.deeplearning(x = x, training_frame = h2of, weights_column = wcol, autoencoder = TRUE, hidden = hidden, ...)
 }
 
