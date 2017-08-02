@@ -8,7 +8,7 @@ test_that("repcv instance works", {
   reps = rin$desc$reps
   expect_equal(reps, 3)
 
-  normal.inds = which(oneclass.task$env$data$normal == oneclass.task$task.desc$positive)
+  normal.inds = which(oneclass.task$env$data$Target == oneclass.task$task.desc$negative)
 
   for (j in 1:3) {
     bag = NULL
@@ -55,7 +55,7 @@ test_that("repcv instance is stochastic", {
 })
 
 test_that("test.join works somehow", {
-  df = data.frame(t = factor(rep(c("a", "b"), each = 4)), x = 1:8)
+  df = data.frame(t = factor(rep(c("a", "b"), each = 4)), x = 9:6)
   task = makeOneClassTask(data = df, target = "t", positive = "a", negative = "b")
   lrn = makeLearner("oneclass.svm")
   measures = list(fn, setAggregation(fn, test.join))

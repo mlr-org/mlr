@@ -7,8 +7,8 @@ test_that("OCsubsampling instance works", {
 
   label = getTaskTargets(oneclass.task)
   size = length(label)
-  anomaly.inds = which(label == oneclass.task$task.desc$negative)
-  normal.inds = which(label == oneclass.task$task.desc$positive)
+  anomaly.inds = which(label == oneclass.task$task.desc$positive)
+  normal.inds = which(label == oneclass.task$task.desc$negative)
   normal.size = length(normal.inds)
 
   for (i in 1:iters) {
