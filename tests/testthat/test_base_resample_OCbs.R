@@ -8,9 +8,9 @@ test_that("ocbs instance works", {
 
   label = getTaskTargets(oneclass.task)
   size = length(label)
-  normal.inds = which(label == oneclass.task$task.desc$positive)
+  normal.inds = which(label == oneclass.task$task.desc$negative)
   normal.size = length(normal.inds)
-  anomaly.inds = which(label == oneclass.task$task.desc$negative)
+  anomaly.inds = which(label == oneclass.task$task.desc$positive)
   anomaly.size = length(anomaly.inds)
 
   for (i in 1:iters) {
