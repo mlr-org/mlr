@@ -1,25 +1,21 @@
 language: r
 sudo: false
-cache: packages
 dist: trusty
-r:
-  - release
+cache: packages
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.9
-      - g++-4.9
-      - gfortran-4.9
-      - libgmp-dev
-      - libgsl0-dev
 env:
   global:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
+    - _R_CHECK_TESTS_NLINES_=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
+    - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
+
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+      - libgsl0-dev
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
@@ -30,49 +26,42 @@ r_github_packages:
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
-  - klutometis/roxygen
 
-before_install:
-  # we want to see libpaths and installed packages from cache
-  - Rscript -e 'message("LIBPATHS:"); .libPaths()'
-  - Rscript -e 'message("INSTALLED PACKS:"); installed.packages()[,1:3]'  # we need a very fresh version of survival for Hmisc, needs be done early in the script
-  # we need a very fresh version of survival for Hmisc, needs be done early in the script
-  - Rscript -e 'install.packages("survival")'
-  - ln -s $(which gcc-4.9) $HOME/bin/gcc
-  - ln -s $(which g++-4.9) $HOME/bin/g++
-  - ln -s $(which gfortran-4.9) $HOME/bin/gfortran
-  - export PATH=$HOME/bin:$PATH
-  - echo $LD_LIBRARY_PATH
-  - echo $LIBRARY_PATH
-
-before_script:
-  - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-  - R --no-save <<< 'library("devtools"); document()'
-
-script:
-  #  - |
-  #  R CMD build .
-  #  travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-  #- grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-  echo "BLAAAAAAAAAAAAAAAAAAa"
-
-after_success:
-  - git checkout master
-  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-  - R --no-save <<< 'library("devtools"); document()'
-  - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-  - git config user.name $GN
-  - git config user.email $GM
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://$GT:@github.com" >> .git/credentials
-  - git config push.default matching
-  - git add --force man/*
-  - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
-  - git push
-  - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-
-after_failure:
-  - ./travis-tool.sh dump_logs
+jobs:
+  include:
+    - stage: warmup-1
+      install:
+        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'devtools::install_deps()'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
+      script: true
+    - stage: warmup-2
+      install:
+        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
+      script: true
+    - stage: check
+      before_script:
+        - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+        - R --no-save <<< 'library("devtools"); document()'
+      script:
+        - |
+          R CMD build .
+          travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+      after_success:
+        - git checkout master
+        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+        - R --no-save <<< 'library("devtools"); document()'
+        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+        - git config user.name $GN
+        - git config user.email $GM
+        - git config credential.helper "store --file=.git/credentials"
+        - echo "https://$GT:@github.com" >> .git/credentials
+        - git config push.default matching
+        - git add --force man/*
+        - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
+        - git push
+        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
 
 notifications:
   email:
@@ -83,4 +72,3 @@ notifications:
   slack: mlr-org:DYNA3KIwcG9F4sQoeyTnPBhF#buildnotifications
 on_success: change
 on_failure: always
-

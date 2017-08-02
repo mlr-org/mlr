@@ -27,10 +27,11 @@ test_that("listLearners", {
 
 test_that("listLearners printer (#1336)", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
+  width = getOption("width")
   options(width = 1000)
   out = capture.output(print(x1), file = NULL)
   expect_equal(length(stri_match_all(out, regex = "\n")), 8)
   out = capture.output(print(x1, n = 10), file = NULL)
   expect_equal(length(stri_match_all(out, regex = "\n")), 12)
-  options(width = 80)
+  options(width = width)
 })
