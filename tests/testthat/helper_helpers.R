@@ -118,7 +118,7 @@ testProb = function(t.name, df, target, positive, negative, train.inds, old.prob
     else
       old.probs = as.matrix(old.probs)
 
-    p = getPredictionProbabilities(cp)[,1]
+    p = getPredictionProbabilities(cp)
 
     class(old.probs) = NULL
     expect_equal(p, old.probs)
