@@ -10,6 +10,9 @@
 \item{debug}{predictFailureModel, getPredictionDump, getRRDump, print.ResampleResult}
 \item{downsample}{downsample}
 \item{eda_and_preprocess}{capLargeValues, createDummyFeatures, dropFeatures, mergeSmallFactorLevels, normalizeFeatures, removeConstantFeatures, summarizeColumns, summarizeLevels}
+\item{extractFDAFeatures}{reextractFDAFeatures}
+\item{fda_featextractor}{extractFDAFourier, extractFDAWavelets, extractFDAFPCA, extractFDAMultiResFeatures}
+\item{fda}{makeExtractFDAFeatMethod, extractFDAFeatures}
 \item{featsel}{analyzeFeatSelResult, makeFeatSelControl, getFeatSelResult, selectFeatures}
 \item{filter}{filterFeatures, getFilteredFeatures, generateFilterValuesData, getFilterValues, plotFilterValuesGGVIS}
 \item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData, generateFunctionalANOVAData}
@@ -27,5 +30,5 @@
 \item{thresh_vs_perf}{generateThreshVsPerfData, plotThreshVsPerf, plotThreshVsPerfGGVIS, plotROCCurves}
 \item{tune}{getNestedTuneResultsX, getNestedTuneResultsOptPathDf, getTuneResult, makeModelMultiplexerParamSet, makeModelMultiplexer, makeTuneControlCMAES, makeTuneControlDesign, makeTuneControlGenSA, makeTuneControlGrid, makeTuneControlIrace, makeTuneControlMBO, makeTuneControl, makeTuneControlRandom, tuneParams, tuneThreshold}
 \item{tune_multicrit}{plotTuneMultiCritResult, plotTuneMultiCritResultGGVIS, makeTuneMultiCritControl, tuneParamsMultiCrit}
-\item{wrapper}{makeBaggingWrapper, makeClassificationViaRegressionWrapper, makeConstantClassWrapper, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeDownsampleWrapper, makeDummyFeaturesWrapper, makeFeatSelWrapper, makeFilterWrapper, makeImputeWrapper, makeMulticlassWrapper, makeOverBaggingWrapper, makeUndersampleWrapper, makePreprocWrapperCaret, makePreprocWrapper, makeRemoveConstantFeaturesWrapper, makeSMOTEWrapper, makeTuneWrapper, makeWeightedClassesWrapper}
+\item{wrapper}{makeBaggingWrapper, makeClassificationViaRegressionWrapper, makeConstantClassWrapper, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeDownsampleWrapper, makeDummyFeaturesWrapper, makeExtractFDAFeatsWrapper, makeFeatSelWrapper, makeFilterWrapper, makeImputeWrapper, makeMulticlassWrapper, makeOverBaggingWrapper, makeUndersampleWrapper, makePreprocWrapperCaret, makePreprocWrapper, makeRemoveConstantFeaturesWrapper, makeSMOTEWrapper, makeTuneWrapper, makeWeightedClassesWrapper}
 }
