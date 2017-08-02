@@ -55,7 +55,8 @@
 #' pred = predict(mod, task = oneclass2d.task)
 #'
 #' # calculate performance for prediction object
-#' performance(pred = pred, measures = list(rprecision, precisionat5, avgprecision), model = mod, task = task)
+#' performance(pred = pred, measures = list(rprecision, precisionat5,
+#' avgprecision), model = mod, task = task)
 
 makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, worst = 0, name = id, note = "", type = c("avgprecision", "rprecision", "precisionatp"), p = NULL, adjusted = TRUE) {
 

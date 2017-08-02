@@ -10,7 +10,7 @@
 #' the new performancecriteria AMVhd.
 #' @param amv.feats [\code{numeric}] \cr
 #' Number of features to be drawn in the feature subsamples
-#' @param avm.iters [\code{numeric}] \cr
+#' @param amv.iters [\code{numeric}] \cr
 #' Number of subsamples
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV) for high dimensional data.
