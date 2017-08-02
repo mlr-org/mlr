@@ -31,14 +31,12 @@ getPredictionProbabilities = function(pred, cl) {
   if (ttype %nin% c("oneclass", "classif", "cluster", "multilabel"))
     stop("Prediction was not generated from a ClassifTask, MultilabelTask, ClusterTask or OneclassTask!")
   if (missing(cl)) {
-    if (ttype == "classif") {
+    if (ttype %in% c("oneclass","classif")) {
       if (length(pred$task.desc$class.levels) == 2L)
         cl = pred$task.desc$positive
       else
         cl = pred$task.desc$class.levels
     } else if (ttype == "multilabel") {
-      cl = pred$task.desc$class.levels
-    } else if (ttype == "oneclass") {
       cl = pred$task.desc$class.levels
     }
   } else {
