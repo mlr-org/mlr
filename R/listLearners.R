@@ -103,7 +103,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
+                         quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
   assertSubset(properties, listLearnerProperties())
   assertFlag(quiet)
@@ -117,7 +117,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 #' @export
 #' @rdname listLearners
 listLearners.default  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+                                 quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
 }
@@ -149,7 +149,7 @@ listLearners.character  = function(obj = NA_character_, properties = character(0
 #' @export
 #' @rdname listLearners
 listLearners.Task = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+                             quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   task = obj
   td = getTaskDesc(task)
