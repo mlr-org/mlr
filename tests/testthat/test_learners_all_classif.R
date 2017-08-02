@@ -1,6 +1,6 @@
 context("learners_all_classif")
 
-test_that("learners work: classif ", {
+test_that("learners work: classif", {
 
   # settings to make learners faster and deal with small data size
   hyperpars = list(
