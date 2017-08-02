@@ -20,12 +20,12 @@ test_that("tuneGrid", {
 
   ps1.2 = makeParamSet(
     makeDiscreteParam("C", values = c.seq),
-    makeDiscreteParam("sigma", values = sigma.seq * 2)
+    makeDiscreteParam("sigma", values = sigma.seq.2)
   )
   tr1.2 = tuneParams(lrn, multiclass.task, rin, par.set = ps1.2, control = ctrl)
   op1.2 = as.data.frame(tr1.2$opt.path)
-  op1.2$C = as.numeric(as.character(op1$C))
-  op1.2$sigma = as.numeric(as.character(op1$sigma))
+  op1.2$C = as.numeric(as.character(op1.2$C))
+  op1.2$sigma = as.numeric(as.character(op1.2$sigma))
 
   # normal param set
   ps2 = makeParamSet(

@@ -47,7 +47,6 @@ void c_get_curve_features(double* x, unsigned int nrow_x, unsigned int ncol_x,
     sstart = x_read_col; // start at beggining of curve
     soffset = ceil(shift * ssize); // offset we shift window to right
     Rprintf("reslev=%i, ssize=%i; soffset=%i\n", rl, ssize, soffset);
-    unsigned int rstart = res_write_col; // index to write to resmat entry
     while (sstart + ssize <= x_read_col + x_read_len) {
       Rprintf("start=%i; len=%i; offset=%i\n", sstart, ssize, soffset);
       c_get_segment_features(x, nrow_x, ncol_x, x_read_row, sstart, ssize, // get features from segment: (sstart, ssize)
