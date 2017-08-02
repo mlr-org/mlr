@@ -12,7 +12,7 @@
 #' words it measures the proportion of correct results in the top p ranks.
 #' If p equals the number of anomalies in the data the P@p is called the R-Precision.
 #'
-#' Avergae Precision (AP): Averages over P@p with $p \in \{1,2,..., number of anomalies\}$
+#' Avergae Precision (AP): Averages over P@p with $p$ in $\{1,2,..., number of anomalies\}$
 #'
 #' p usually lies in \{1,2,..., number of anomalies\}, but p can also be greater than the number of anomalies.
 #' If the performance is 0, that means within the top ranks, no anomalies were detected.
@@ -25,7 +25,7 @@
 #'   top p rank, with p element of \{1, 2, ..., number of anomalies in data\}
 #' @param type [\code{character(1)}] \cr
 #'   Set a measure type: rprecision, precisionatp, averageprecision
-#'   Default is \dQuite{averageprecision}
+#'   Default is \dQuote{averageprecision}
 #' @param adjusted [\code{logical}] \cr
 #'   adjusted for chances. Recommend to compare different data sets. Default TRUE.
 #'   (index - expected index) / (1- expected index)
