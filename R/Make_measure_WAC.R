@@ -24,7 +24,7 @@
 #' wac = makeWACMeasure(id = "wac", minimize = FALSE, best = 0, worst = NULL, w = 0.6)
 #'
 #' data = getTaskData(oneclass2d.task)
-#' inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+#' inds.split = BBmisc::chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
 #' train.inds = inds.split[[1]]
 #' test.inds = inds.split[[2]]
 #' lrn = makeLearner("oneclass.svm", predict.type = "prob")
