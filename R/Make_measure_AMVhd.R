@@ -4,11 +4,14 @@
 #' Creates a measure for oneclass classification on high dimensional data
 #' (recommend for dimension greater than 8) called AMVhd, which is based on the
 #' Area under the Mass-Volume Curve (AMV) (see \code{makeAMVMeasure}).
-#' The basic idea is to do several feature sub-samplings (of dimension less than 8)
+#' The basic idea is to do several feature subsamplings (of dimension less than 8)
 #' to reduce the dimension of the data, therefore AMV can be applied on each
 #' subsamples, yielding partial scores AMV_k. The mean of the partial scores is
 #' the new performancecriteria AMVhd.
-#'
+#' @param amv.feats [\code{numeric}] \cr
+#' Number of features to be drawn in the feature subsamples
+#' @param avm.iters [\code{numeric}] \cr
+#' Number of subsamples
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
@@ -18,7 +21,7 @@
 #' @template ret_measure
 #' @export
 #' @family performance.
-#' @example
+#' @examples
 #' # creates anomaly data with feature size nine
 #' sigma = matrix(0, 9, 9)
 #' diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
@@ -63,7 +66,8 @@
 #'
 #' # calculate AMVhd performance
 #' set.seed(123)
-#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww, task = task, feats = data[test.inds, 1:9])
+#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
+#' task = task, feats = data[test.inds, 1:9])
 
 makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.feats = 3, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
@@ -101,7 +105,8 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
       # wrapped prediction
       pred_amvw = predict(mod_amvw, task, subset = test.inds)
 
-      measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
+      measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas,
+        n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       # get the prediction of submodels, which has sampled features
       subpred = attr(pred_amvw, "AMVhdSubpredict")

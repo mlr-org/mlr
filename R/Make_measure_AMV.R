@@ -7,7 +7,7 @@
 #' package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
 #' the curse of dimensionality applies for data with dimension greater than eight.
 #' The implementation is based on the python implementation:
-#' \link{https://github.com/albertcthomas/anomaly_tuning}.
+#' https://github.com/albertcthomas/anomaly_tuning.
 #' Differences are the type of quantile used, as the python default is not
 #' available in R.
 #' Note: prediction object must have \code{pred.type = 'prob'}
@@ -46,7 +46,7 @@
 #'
 #' # calculate performance for prediction object, pass data of features used for
 #' # prediction as feats in performance
-#' performance(pred = pred, measures = list(AMV), model = mod, task = task)#, feats = data[test.inds, 1:2])
+#' performance(pred = pred, measures = list(AMV), model = mod, task = task)
 
 
 makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {

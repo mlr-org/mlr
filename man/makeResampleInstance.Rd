@@ -13,7 +13,7 @@ Resampling description object or name of resampling strategy.
 In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.}
 
 \item{task}{[\code{\link{Task}}]\cr
-Data of task to resample from.
+Data of task to resample from. Must be supplied for methods with prefix \dQuote{OC}.
 Prefer to pass this instead of \code{size}.}
 
 \item{size}{[\code{\link{integer}}]\cr

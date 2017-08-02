@@ -32,7 +32,8 @@
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout.
+#'   subsampling, \dQuote{Holdout} for holdout. Methods with prefix \dQuote{OC} are resampling exspecially for the oneclass
+#'   classification case, where only normal observations (non-anomaly) are used for training.
 #' @param predict [\code{character(1)}]\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
@@ -54,7 +55,7 @@
 #'   individually and the resulting index sets are joined to make sure that the proportion of
 #'   observations in each training set is as in the original data set. Useful for imbalanced class sizes.
 #'   For survival tasks stratification is done on the events, resulting in training sets with comparable
-#'   censoring rates.
+#'   censoring rates. Stratification is not working for methods with prefix \dQuote{OC}
 #' @param stratify.cols [\code{character}]\cr
 #'   Stratify on specific columns referenced by name. All columns have to be factors.
 #'   Note that you have to ensure yourself that stratification is possible, i.e.
@@ -76,11 +77,13 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "OCHoldout", "OCCV", "OCRepCV", "OCSubsample", "OCBootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
+  if (stratify && grepl("OC", method))
+    stop("Stratification cannot be done for resampling for oneclass!")
   if (stratify && ! is.null(stratify.cols))
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
   d = do.call(stri_paste("makeResampleDesc", method), list(...))
@@ -139,6 +142,37 @@ makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
   makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps)
+
+}
+
+##############################################################################################
+# resampling for oneclass-classification, which only have oneclass in train data
+makeResampleDescOCHoldout = function(iters, split = 2 / 3) {
+  assertNumber(split, lower = 0, upper = 1)
+  makeResampleDescInternal("holdout for oneclass-classification", iters = 1L, split = split)
+}
+
+makeResampleDescOCCV = function(iters = 10L) {
+  iters = asInt(iters, lower = 2L)
+  makeResampleDescInternal("cross-validation for oneclass-classification", iters = iters)
+}
+
+
+makeResampleDescOCSubsample = function(iters = 30L, split = 2 / 3) {
+  iters = asCount(iters, positive = TRUE)
+  assertNumber(split, lower = 0, upper = 1)
+  makeResampleDescInternal("subsampling for oneclass-classification", iters = iters, split = split)
+}
+
+makeResampleDescOCBootstrap = function(iters = 30L) {
+  iters = asCount(iters, positive = TRUE)
+  makeResampleDescInternal("OOB bootstrapping for oneclass-classification", iters = iters)
+}
+
+makeResampleDescOCRepCV = function(reps = 10L, folds = 10L) {
+  reps = asInt(reps, lower = 2L)
+  folds = asInt(folds, lower = 2L)
+  makeResampleDescInternal("repeated cross-validation for oneclass-classification", iters = folds * reps, folds = folds, reps = reps)
 }
 
 ##############################################################################################
@@ -165,6 +199,34 @@ print.RepCVDesc = function(x, ...) {
     x$id, x$iters, x$iters / x$reps, x$reps)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
+}
+
+
+#' @export
+print.OCHoldoutDesc = function(x, ...) {
+  catf("Resample description: %s with %.2f split rate.",
+    x$id, x$split)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+  catf("Oneclass Holdout only allows normal observation in training")
+}
+
+#' @export
+print.OCSubsampleDesc = function(x, ...) {
+  catf("Resample description: %s with %i iterations and %.2f split rate.",
+    x$id, x$iters, x$split)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+  catf("Oneclass Holdout only allows normal observation in training")
+}
+
+#' @export
+print.OCRepCVDesc = function(x, ...) {
+  catf("Resample description: %s with %i iterations: %i folds and %i reps.",
+    x$id, x$iters, x$iters / x$reps, x$reps)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+  catf("Oneclass Holdout only allows normal observation in training")
 }
 
 ##############################################################################################

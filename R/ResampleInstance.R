@@ -19,7 +19,7 @@
 #'   Resampling description object or name of resampling strategy.
 #'   In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.
 #' @param task [\code{\link{Task}}]\cr
-#'   Data of task to resample from.
+#'   Data of task to resample from. Must be supplied for methods with prefix \dQuote{OC}.
 #'   Prefer to pass this instead of \code{size}.
 #' @param size [\code{\link{integer}}]\cr
 #'   Size of the data set to resample.
@@ -44,7 +44,9 @@ makeResampleInstance = function(desc, task, size, ...) {
   assert(checkClass(desc, "ResampleDesc"), checkString(desc))
   if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
-  if (!xor(missing(task), missing(size))) {
+  if (grepl("oneclass", desc$id)) {
+    if (missing(task)) stop("For resampling for oneclass-classification 'task' must be supplied")
+  } else if (!xor(missing(task), missing(size))) {
     stop("One of 'size' or 'task' must be supplied")
   }
   if (!missing(task)) {
@@ -94,6 +96,8 @@ makeResampleInstance = function(desc, task, size, ...) {
     index = getTaskData(task, features = stratify.cols, target.extra = FALSE)[stratify.cols]
     if (any(vlapply(index, is.numeric)))
       stop("Stratification on numeric variables not possible")
+
+    # make list with each list element is a class
     grp = tapply(seq_row(index), index, simplify = FALSE)
     grp = unname(split(seq_row(index), grp))
 
@@ -130,6 +134,7 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
     train.inds = sample(size)
     train.inds = lapply(test.inds, function(x) setdiff(train.inds, x))
   }
+
   makeS3Obj("ResampleInstance",
     desc = desc,
     size = size,

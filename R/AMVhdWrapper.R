@@ -36,11 +36,11 @@
 #'   Default is 3.
  #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
 #' arXiv preprint arXiv:1607.01152
+#' @note see example of \code{makeAMVhdMeasure}
 #' @template ret_learner
 #' @family wrapper
 #' @export
-#' @example
-#' see example of \codre{makeAMVhdMeasure}
+
 makeAMVhdWrapper = function(learner, amv.iters = 10L, amv.feats = 3) {
   learner = checkLearner(learner, type = c("oneclass"))
   pv = list()
