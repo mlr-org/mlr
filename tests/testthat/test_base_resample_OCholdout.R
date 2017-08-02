@@ -14,7 +14,7 @@ test_that("OCholdout instance works", {
   expect_equal(length(rin$test.inds), 1)
   label = getTaskTargets(oneclass.task)
   size = length(label)
-  normal.inds = which(label == oneclass.task$task.desc$positive)
+  normal.inds = which(label == oneclass.task$task.desc$negative)
   normal.size = length(normal.inds)
   expect_equal(length(rin$train.inds[[1]]), 0.25*normal.size)
   expect_equal(length(rin$test.inds[[1]]), size - 0.25*normal.size)

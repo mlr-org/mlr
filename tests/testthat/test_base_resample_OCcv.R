@@ -11,7 +11,7 @@ test_that("occv instance works", {
 
   folds = rin$desc$iters
   expect_equal(folds, 3)
-  normal.inds = which(oneclass.task$env$data$normal == oneclass.task$task.desc$positive)
+  normal.inds = which(oneclass.task$env$data$Target == oneclass.task$task.desc$negative)
 
   for (i in 1:folds) {
     i1 = rin$train.inds[[i]]
