@@ -723,7 +723,7 @@ applyCPORetrafoEx = function(retrafo, data, build.inverter, prev.inverter) {
   if (cpo$type == "functional") {
     result = retrafo$state(tin$indata)
   } else {  # cpo$type == "object"
-    args = cpo$par.vals
+    args = getBareHyperPars(cpo)
     args$data = tin$indata
     if (!cpo$stateless) {
       args$control = retrafo$state
