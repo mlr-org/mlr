@@ -11,11 +11,11 @@
 #' @examples
 #'
 #' Data = oneclass2d.task$env$data # getTaskData(oneclass2d.task)
-#' svm.model <- e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
+#' svm.model = e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
 #' kernel = "radial", nu = 0.05)
-#  svm.pred <- predict(svm.model, Data[,1:2])
+#  svm.pred = predict(svm.model, Data[,1:2])
 #' dv = svm.model$decision.values
-#' prob = convertingScoresToProbability(dv, parainit = c(0, 1))$probability
+#' prob = convertingScoresToProbability(dv, param = c(0, 1))$probability
 #' o = order(prob)
 #' col = factor(Data$Target, levels = c("Normal", "Anomaly"), labels =  c("black", "red"))
 #' plot(1:length(prob), prob[o], col = col[o])
