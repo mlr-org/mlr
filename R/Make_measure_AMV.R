@@ -46,7 +46,7 @@
 #'
 #' # calculate performance for prediction object, pass data of features used for
 #' # prediction as feats in performance
-#' performance(pred = pred, measures = list(AMV), model = mod, task = task)
+#' performance(pred = pred, measures = list(AMV), model = mod, task = oneclass2d.task)
 
 
 makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
