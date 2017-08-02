@@ -227,7 +227,7 @@ pca = makeCPO("pca",  # name
 
 # an example 'scale' CPO
 # demonstrates the (functional) "separate" CPO API
-scale = makeCPO("scale",
+scaleCPO = makeCPO("scale",
   .datasplit = "numeric",
   # .retrafo.format = "separate" is implicit
   cpo.trafo = function(data, target) {
@@ -238,7 +238,7 @@ scale = makeCPO("scale",
         attr(result, "scaled:scale"))
     }
     result
-  })
+  }, cpo.retrafo = NULL)  # don't forget to set it cpo.retrafo to NULL
 
 # an example constant feature remover CPO
 # demonstrates the "combined" CPO API
@@ -254,7 +254,7 @@ constFeatRem = makeCPO("constFeatRem",
       data[cols.keep]
     }
     result
-  })
+  }, cpo.retrafo = NULL)
 
 # an example 'square' CPO
 # demonstrates the "stateless" CPO API
@@ -282,13 +282,14 @@ Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
   \code{\link{cpoImpactEncodeRegr}},
   \code{\link{cpoImpute}},
   \code{\link{cpoMissingIndicators}},
-  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
-  \code{\link{cpoProbEncode}},
+  \code{\link{cpoModelMatrix}}, \code{\link{cpoMultiplex}},
+  \code{\link{cpoPca}}, \code{\link{cpoProbEncode}},
   \code{\link{cpoQuantileBinNumerics}},
+  \code{\link{cpoScaleMaxAbs}},
   \code{\link{cpoScaleRange}}, \code{\link{cpoScale}},
-  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
-  \code{\link{getCPOId}}, \code{\link{getCPOName}},
-  \code{\link{getHyperPars}},
+  \code{\link{cpoSelect}}, \code{\link{cpoSpatialSign}},
+  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}},

@@ -28,6 +28,19 @@ Convert a data.frame into a data.frame with the same column names,
 but with columns of factors indicating whether data was missing or not.
 
 This is most useful in combination with \code{\link{cpoCbind}}.
+
+This function creates a CPO object, which can be applied to
+\code{\link{Task}}s, \code{data.frame}s, \code{link{Learner}}s
+and other CPO objects using the \code{\link{\%>>\%}} operator.
+
+The parameters of this object can be changed after creation
+using the function \code{\link{setHyperPars}}. The other
+hyper-parameter manipulating functins, \code{\link{getHyperPars}}
+and \code{\link{getParamSet}} similarly work as one expects.
+
+If the \dQuote{id} parameter is given, the hyperparameters
+will have this id as aprefix; this will, however, not change
+the parameters of the creator function.
 }
 \seealso{
 Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
@@ -42,13 +55,15 @@ Other CPO: \code{\link{CPOImputer}}, \code{\link{CPO}},
   \code{\link{cpoFixFactors}},
   \code{\link{cpoImpactEncodeClassif}},
   \code{\link{cpoImpactEncodeRegr}},
-  \code{\link{cpoImpute}}, \code{\link{cpoMultiplex}},
-  \code{\link{cpoPca}}, \code{\link{cpoProbEncode}},
+  \code{\link{cpoImpute}}, \code{\link{cpoModelMatrix}},
+  \code{\link{cpoMultiplex}}, \code{\link{cpoPca}},
+  \code{\link{cpoProbEncode}},
   \code{\link{cpoQuantileBinNumerics}},
+  \code{\link{cpoScaleMaxAbs}},
   \code{\link{cpoScaleRange}}, \code{\link{cpoScale}},
-  \code{\link{cpoSelect}}, \code{\link{getCPOAffect}},
-  \code{\link{getCPOId}}, \code{\link{getCPOName}},
-  \code{\link{getHyperPars}},
+  \code{\link{cpoSelect}}, \code{\link{cpoSpatialSign}},
+  \code{\link{getCPOAffect}}, \code{\link{getCPOId}},
+  \code{\link{getCPOName}}, \code{\link{getHyperPars}},
   \code{\link{getRetrafoState}},
   \code{\link{hasTagInvert}}, \code{\link{inverter<-}},
   \code{\link{inverter}}, \code{\link{makeCPO}},
