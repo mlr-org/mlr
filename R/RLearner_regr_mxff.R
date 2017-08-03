@@ -91,6 +91,7 @@ makeRLearner.regr.mxff = function() {
         requires = quote(dropout.global == FALSE)),
       makeNumericLearnerParam(id = "dropout.layer3", lower = 0, upper = 1 - 1e-7,
         requires = quote(dropout.global == FALSE)),
+      makeDiscreteLearnerParam(id = "dropout.mode", default = "training", values = c("training", "always")),
       makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -131,7 +132,7 @@ makeRLearner.regr.mxff = function() {
         requires = quote(optimizer == "rmsprop")),
       makeNumericLearnerParam(id = "momentum", default = 0, requires = quote(optimizer == "sgd"))
     ),
-    properties = c("numerics"),
+    properties = c("numerics", "se"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
     name = "Feedforward Neural Network",
     short.name = "mxff",
@@ -143,7 +144,8 @@ makeRLearner.regr.mxff = function() {
     in the `mxnet` package. If `dropout.global` is `TRUE`, the same dropout rate `dropout.input`
     will be applied to the inputs and all the hidden layers. If `dropout.global` is `FALSE`,
     `dropout.input` will be applied to the inputs, and the different `dropout.layer` parameters to
-    their respective layers.
+    their respective layers. `dropout.mode` specifies if dropout should only be used in training or
+    also for predictions.
     If `conv.layer1` is `FALSE`, the first layer is a `FullyConnected` layer and `num.layer1` gives
     the number of neurons. If `conv.layer1` is `TRUE`, then `num.layer1` gives the number of
     filters. In this case, `act1` is applied as an `Activation` layer afterwards (as is the case
@@ -198,7 +200,11 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
   dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
   symbol = NULL, validation.ratio = NULL, eval.data = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
-  array.layout = "rowmajor", ...) {
+  array.layout = "rowmajor", dropout.mode = "training", ...) {
+
+  if(.learner$predict.type == "se" & dropout.mode != "always")
+    stop("dropout.mode needs to be equal to 'always' for se prediction.")
+
   # transform data in correct format
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   y = as.numeric(d$target) - 1
@@ -282,7 +288,7 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
     }
 
     if (!is.null(dropout[[1]])) {
-      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]])
+      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]], mode='always')
     }
 
     # construct hidden layers using symbols
@@ -316,7 +322,7 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
       }
       # add dropout if specified
       if (!is.null(dropout[[i + 1]])) {
-        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]])
+        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]], mode='always')
       }
     }
 
@@ -353,7 +359,13 @@ predictLearner.regr.mxff = function(.learner, .model, .newdata, ...) {
     x = array(aperm(x), dim = dims)
     array.layout = "colmajor"
   }
+  if (.learner$predict.type == "se") {
+    #FIXME: Magic number, add as parameter instead
+    p = replicate(20, predict(.model$learner.model, X = x, array.layout = array.layout)[1,])
+    cbind(rowMeans(p), apply(p, 1, sd))
+  } else {
+    predict(.model$learner.model, X = x, array.layout = array.layout)[1,]
+  }
 
-  predict(.model$learner.model, X = x, array.layout = array.layout)[1,]
 }
 
