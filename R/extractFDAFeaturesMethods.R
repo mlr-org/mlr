@@ -177,13 +177,15 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' @title Multiresolution feature extraction.
 #'
 #' @description
-#' The function extracts the mean of multiple segments of each curve and extracts them
-#' as features. This is done by sequentially dividing the
-#' functional up into smaller sub-curves of length l/2.
-#' In each iteration, the means of the sub-curves obtained from shifting a sliding window of length
-#' \code{sub_curve_length} multiplied by the \code{shift} parameter through
-#' the curve are extracted as new features.
-#' The resulting segments are  hierarchical, so the features
+#' The function extracts the mean of multiple segments of each curve
+#' as non-functional features. This is done by sequentially dividing the
+#' functional feature up into smaller sub-curves of length \code{l/2}.
+#'  \code{l} is the length of the curve in the previous iteration.
+#' In each iteration, a sliding window of length \code{sub_curve_length} is shifted by
+#' \code{sub_curve_length} times \code{shift} data points.
+#' The means of each sliding window are the new features.
+#' Because the extraction happens in a hierarchical manner
+#' (that is, in each iteration smaller segments are considered), the features
 #' cover different resolution levels of the curve.
 #'
 #' @param res.level [\code{integer(1)}]\cr
