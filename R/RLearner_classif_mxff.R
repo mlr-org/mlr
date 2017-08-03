@@ -28,89 +28,47 @@ makeRLearner.classif.mxff = function() {
         requires = quote(layers > 2 && conv.layer2 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.data.shape",
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.kernel11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.kernel1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.kernel12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.kernel21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.kernel2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.kernel22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.kernel31", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.kernel3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.kernel32", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.stride11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.stride1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.stride12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.stride21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.stride2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.stride22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.stride31", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.stride3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.stride32", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.dilate11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.dilate1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.dilate12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.dilate21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.dilate2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.dilate22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.dilate31", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.dilate3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.dilate32", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.pad11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.pad1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.pad12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.pad21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.pad2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.pad22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.pad31", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "conv.pad3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "conv.pad32", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.kernel11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.kernel1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.kernel12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.kernel21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.kernel2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.kernel22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.kernel31", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.kernel3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.kernel32", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.stride11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.stride1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.stride12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.stride21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.stride2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.stride22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.stride31", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.stride3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.stride32", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.pad11", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.pad1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.pad12", lower = 1L,
-        requires = quote(conv.layer1 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.pad21", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.pad2", lower = 1L, len = 2,
         requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.pad22", lower = 1L,
-        requires = quote(conv.layer2 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.pad31", lower = 1L,
-        requires = quote(conv.layer3 == TRUE)),
-      makeIntegerLearnerParam(id = "pool.pad32", lower = 1L,
+      makeIntegerVectorLearnerParam(id = "pool.pad3", lower = 1L, len = 2,
         requires = quote(conv.layer3 == TRUE)),
       makeDiscreteLearnerParam(id = "pool.type1", default = "max",
         values = c("max", "avg", "sum"),
@@ -192,21 +150,19 @@ makeRLearner.classif.mxff = function() {
     with a `FullyConnected` layer).
     This is the same for `conv.layer2` and `conv.layer3`. A `Convolution`
     layer cannot follow a `FullyConnected` layer. To stick with the example of the first layer,
-    `c(conv.kernel11, conv.kernel12)`, `c(conv.stride11, conv.stride12)`,
-    `c(conv.dilate11, conv.dilate12)` and `c(conv.pad11, conv.pad12)` correspond to the parameters
+    `conv.kernel1`, `conv.stride1`,
+    `conv.dilate1` and `conv.pad1` correspond to the parameters
     of `mx.symbol.Convolution`. When a `Convolution` layer is constructed, a `Pooling` layer is
     constructed with it automatically. Again sticking to the example of the first layer,
-    `c(pool.kernel11, pool.kernel12)`, `c(pool.stride11, pool.stride12)`, `c(pool.pad11, pool.pad12)`
-    and `c(pool.type11, pool.type12)` correspond to the parameters in `mx.symbol.Pooling`.
-    If only the first parameter of a pair is defined, the second parameter is set to the same value,
-    e.g. if `conv.kernel11` is defined and `conv.kernel12` is undefined, `conv.kernel12` is set to
-    the value of `conv.kernel11`.
+    `pool.kernel1`, `pool.stride1`, `pool.pad1`
+    and `pool.type1` correspond to the parameters in `mx.symbol.Pooling`.
     When convolution is used, `conv.data.shape` needs to be specified, which is a vector giving the
-    dimensionality of the data (e.g. for MNIST `c(28, 28)`). Furthermore, `array.layout` is set to
-    `colmajor` if convolution is used, to enable compatability with `mxnet`. When using convolution,
+    dimensionality of the data (e.g. for MNIST `c(28, 28)` or `c(28, 28, 1) and for CIFAR10
+    `c(28, 28, 3)`). Furthermore, `array.layout` is set to `colmajor` if convolution is used, to
+    enable compatability with `mxnet`. When using convolution,
     `mx.model.FeedForward.create` expects the array containing the data to have `4` dimensions.
     To allow for flexibility, `conv.data.shape` can have length `1` to `4`, the dimensions are
-    taken in ascending order. For common cases, giving an `conv.data.shape` of length `2` is
+    taken in ascending order. For common cases, giving an `conv.data.shape` of length `2` or `3`is
     sufficient.
     `validation.ratio` gives the ratio of training data that will not
     be used for training but as validation data similar to the data provided in `eval.data`.
@@ -230,20 +186,13 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   layers = 1L, num.layer1 = 1L, num.layer2 = 1L, num.layer3 = 1L,
   act1 = "tanh", act2 = "tanh", act3 = "tanh", act.out = "softmax",
   conv.data.shape = NULL, conv.layer1 = FALSE, conv.layer2 = FALSE, conv.layer3 = FALSE,
-  conv.kernel11 = NULL, conv.kernel21 = NULL, conv.kernel31 = NULL,
-  conv.kernel12 = NULL, conv.kernel22 = NULL, conv.kernel32 = NULL,
-  conv.stride11 = NULL, conv.stride21 = NULL, conv.stride31 = NULL,
-  conv.stride12 = NULL, conv.stride22 = NULL, conv.stride32 = NULL,
-  conv.dilate11 = NULL, conv.dilate21 = NULL, conv.dilate31 = NULL,
-  conv.dilate12 = NULL, conv.dilate22 = NULL, conv.dilate32 = NULL,
-  conv.pad11 = NULL, conv.pad21 = NULL, conv.pad31 = NULL,
-  conv.pad12 = NULL, conv.pad22 = NULL, conv.pad32 = NULL,
-  pool.kernel11 = NULL, pool.kernel21 = NULL, pool.kernel31 = NULL,
-  pool.kernel12 = NULL, pool.kernel22 = NULL, pool.kernel32 = NULL,
-  pool.stride11 = NULL, pool.stride21 = NULL, pool.stride31 = NULL,
-  pool.stride12 = NULL, pool.stride22 = NULL, pool.stride32 = NULL,
-  pool.pad11 = NULL, pool.pad21 = NULL, pool.pad31 = NULL,
-  pool.pad12 = NULL, pool.pad22 = NULL, pool.pad32 = NULL,
+  conv.kernel1 = NULL, conv.kernel2 = NULL, conv.kernel3 = NULL,
+  conv.stride1 = NULL, conv.stride2 = NULL, conv.stride3 = NULL,
+  conv.dilate1 = NULL, conv.dilate2 = NULL, conv.dilate3 = NULL,
+  conv.pad1 = NULL, conv.pad2 = NULL, conv.pad3 = NULL,
+  pool.kernel1 = NULL, pool.kernel2 = NULL, pool.kernel3 = NULL,
+  pool.stride1 = NULL, pool.stride2 = NULL, pool.stride3 = NULL,
+  pool.pad1 = NULL, pool.pad2 = NULL, pool.pad3 = NULL,
   pool.type1 = "max", pool.type2 = "max", pool.type3 = "max",
   dropout.global = TRUE, dropout.input = NULL,
   dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
@@ -310,30 +259,14 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     sym = mxnet::mx.symbol.Variable("data")
     act = c(act1, act2, act3)[1:layers]
     nums = c(num.layer1, num.layer2, num.layer3)[1:layers]
-    convs = c(conv.layer1, conv.layer2, conv.layer3, FALSE)[1:layers]
-    # define function to set e.g. conv.kernel12 = conv.kernel11 if conv.kernel12 == NULL
-    fillVec = function(vec) {
-      if (length(vec) == 1) {
-        return(rep(vec, 2))
-      } else {
-        return(vec)
-      }
-    }
-    # if layers is bigger than 3, NULL values are appended to the lists automatically
-    conv.kernels = lapply(list(c(conv.kernel11, conv.kernel12), c(conv.kernel21, conv.kernel22),
-      c(conv.kernel31, conv.kernel32))[1:layers], fillVec)
-    conv.strides = lapply(list(c(conv.stride11, conv.stride12), c(conv.stride21, conv.stride22),
-      c(conv.stride31, conv.stride32))[1:layers], fillVec)
-    conv.dilates = lapply(list(c(conv.dilate11, conv.dilate12), c(conv.dilate21, conv.dilate22),
-      c(conv.dilate31, conv.dilate32))[1:layers], fillVec)
-    conv.pads = lapply(list(c(conv.pad11, conv.pad12), c(conv.pad21, conv.pad22),
-      c(conv.pad31, conv.pad32))[1:layers], fillVec)
-    pool.kernels = lapply(list(c(pool.kernel11, pool.kernel12), c(pool.kernel21, pool.kernel22),
-      c(pool.kernel31, pool.kernel32))[1:layers], fillVec)
-    pool.strides = lapply(list(c(pool.stride11, pool.stride12), c(pool.stride21, pool.stride22),
-      c(pool.stride31, pool.stride32))[1:layers], fillVec)
-    pool.pads = lapply(list(c(pool.pad11, pool.pad12), c(pool.pad21, pool.pad22),
-      c(pool.pad31, pool.pad32))[1:layers], fillVec)
+    convs = c(conv.layer1, conv.layer2, conv.layer3)[1:layers]
+    conv.kernels = list(conv.kernel1, conv.kernel2, conv.kernel3)[1:layers]
+    conv.strides = list(conv.stride1, conv.stride2, conv.stride3)[1:layers]
+    conv.dilates = list(conv.dilate1, conv.dilate2, conv.dilate3)[1:layers]
+    conv.pads = list(conv.pad1, conv.pad2, conv.pad3)[1:layers]
+    pool.kernels = list(pool.kernel1, pool.kernel2, pool.kernel3)[1:layers]
+    pool.strides = list(pool.stride1, pool.stride2, pool.stride3)[1:layers]
+    pool.pads = list(pool.pad1, pool.pad2, pool.pad3)[1:layers]
     pool.types = list(pool.type1, pool.type2, pool.type3)[1:layers]
 
     # add dropout if specified

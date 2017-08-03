@@ -23,7 +23,7 @@ test_that("classif_mxff", {
   )
   parset.list.mlr.conv = list(
     list(layers = 1, conv.layer1 = TRUE, num.layer1 = 1, conv.data.shape = c(2, 2),
-      conv.kernel11 = 1, conv.kernel12 = 1, pool.kernel11 = 1, pool.kernel12 = 1, pool.type1 = "max"
+      conv.kernel1 = c(1, 1), pool.kernel1 = c(1, 1), pool.type1 = "max"
     )
   )
 
