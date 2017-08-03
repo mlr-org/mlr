@@ -1,6 +1,12 @@
 context("TuneWrapper")
 
 test_that("TuneWrapper", {
+
+  install.packages(GenSA)
+  library(GenSA) # just for travis checking
+
+
+
   # FIXME check opt. parameter is same with tune and tune.wrapper
   outer = makeResampleDesc("Holdout")
   inner = makeResampleDesc("CV", iters = 2)
