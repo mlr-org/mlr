@@ -3,7 +3,8 @@
 # - eval states (maybe in parallel)
 # - add evals to opt path
 # - return y scalar (vector for vectorized version below), always minimized
-
+# @param always.minimize [logical(1)]
+#   If TRUE, y will be tranformed based on the measure to always make sure that the desired optimum is the minimum.
 # one x
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas, resample.fun, always.minimize = TRUE) {
@@ -37,6 +38,7 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
     ps2$pars[[i]]$trafo = NULL
   smoof::makeSingleObjectiveFunction(
     fn = function(x) {
+      # tell smoof the optimization direction, don't transform y later
       tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun, always.minimize = FALSE)
   }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE, minimize = measures[[1]]$minimize)
 }
