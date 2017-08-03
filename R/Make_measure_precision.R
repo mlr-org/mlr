@@ -81,8 +81,7 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
       scores = pred$data[,3]
       rank = order(scores)
       ind.true = which(pred$data$truth == pred$task.desc$positive)
-
-      if (length(ind.true) == 0) {
+      if (n.anomaly == 0) {
         warning("There are no anomalies in the data set. Measure is NA.")
         precision = NA
       } else if (type == "precisionatp") {
