@@ -203,7 +203,8 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeLogicalLearnerParam("average_activation", tunable = FALSE),
       makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
-      makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)#,
+      makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam("mini_batch_size", default = 1, tunable = TRUE)
     ),
     properties = c("oneclass", "numerics", "factors", "weights", "prob"),
     note = "'autoencoder' is set to 'TRUE'",
