@@ -27,6 +27,7 @@ r_github_packages:
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
+  - jimhester/covr
 
 jobs:
   include:
@@ -45,8 +46,9 @@ jobs:
         - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
         - R --no-save <<< 'library("devtools"); document()'
       script:
-        - R CMD build .
-        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+        - |
+          R CMD build .
+          travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_success:
         - travis_wait 100 Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
