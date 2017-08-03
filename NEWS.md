@@ -10,8 +10,6 @@
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
-* lm* models: factor levels which are only present in test but not in train can
-  now be handled via the `fix.factor.predictions` flag 
 * batchmark: allow resample instances and reduction of partial results
 
 ## functions - new
