@@ -2,17 +2,14 @@
 % Please edit documentation in R/relativeOverfitting.R
 \name{estimateRelativeOverfitting}
 \alias{estimateRelativeOverfitting}
-\alias{estimateRelativeOverfitting.ResampleDesc}
 \title{Estimate relative overfitting.}
 \usage{
-estimateRelativeOverfitting(rdesc, measures, task, learner)
-
-\method{estimateRelativeOverfitting}{ResampleDesc}(rdesc, measures, task,
-  learner)
+estimateRelativeOverfitting(predish, measures, task, learner = NULL,
+  pred.train = NULL, iter = 1)
 }
 \arguments{
-\item{rdesc}{[\code{\link{ResampleDesc}}]\cr
-Resampling strategy.}
+\item{predish}{[\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
+Resampling strategy or resampling prediction or test predictions.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
 Performance measure(s) to evaluate.
@@ -24,6 +21,12 @@ The task.}
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+
+\item{pred.train}{[\code{\link{Prediction}}]\cr
+Training predictions. Only needed if test predictions are passed.}
+
+\item{iter}{[\code{\link{integer}}]\cr
+Iteration number. Default 1, usually you don't need to specify this. Only needed if test predictions are passed.}
 }
 \value{
 [\code{data.frame}]. Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
@@ -40,6 +43,8 @@ task = makeClassifTask(data = iris, target = "Species")
 rdesc = makeResampleDesc("CV", iters = 2)
 estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.knn"))
 estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.lda"))
+rpred = resample("classif.knn", task, rdesc)$pred
+estimateRelativeOverfitting(rpred, acc, task)
 }
 \references{
 Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.
@@ -51,5 +56,6 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},
-  \code{\link{performance}}
+  \code{\link{performance}}, \code{\link{setAggregation}},
+  \code{\link{setMeasurePars}}
 }

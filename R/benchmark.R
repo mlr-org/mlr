@@ -39,36 +39,14 @@
 #' friedmanTestBMR(bmr)
 #' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
-
-
   learners = ensureBenchmarkLearners(learners)
-  learner.ids = extractSubList(learners, "id")
-  if (anyDuplicated(learner.ids))
-    stop("Learners need unique ids!")
-  names(learners) = learner.ids
-
   tasks = ensureBenchmarkTasks(tasks)
-  task.ids = extractSubList(tasks, c("task.desc", "id"))
-  if (anyDuplicated(task.ids))
-    stop("Tasks need unique ids!")
-  names(tasks) = task.ids
-
   resamplings = ensureBenchmarkResamplings(resamplings, tasks)
-  resamplings = Map(function(res, tt) {
-    if (inherits(res, "ResampleInstance"))
-      return(res)
-    if (inherits(res, "ResampleDesc"))
-      return(makeResampleInstance(res, task = tt))
-    stop("All objects in 'resamplings' must be of class 'ResampleDesc' or 'ResampleInstance'")
-  }, resamplings, tasks)
-  names(resamplings) = task.ids
-
   measures = ensureBenchmarkMeasures(measures, tasks)
-
-  assertFlag(models)
   assertFlag(keep.pred)
+  assertFlag(models)
 
-  grid = expand.grid(task = task.ids, learner = learner.ids, stringsAsFactors = FALSE)
+  grid = expand.grid(task = names(tasks), learner = names(learners), stringsAsFactors = FALSE)
   plevel = "mlr.benchmark"
   parallelLibrary("mlr", master = FALSE, level = plevel, show.info = FALSE)
   exportMlrOptions(level = "mlr.benchmark")
