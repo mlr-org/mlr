@@ -1,23 +1,10 @@
 library(devtools)
 load_all()
 
-configureMlr(show.info = TRUE)
-
-mm =  makeMeasure("tpr_ppv", minimize = FALSE, properties = c("classif"),
-  fun = function(task, model, pred, feats, extra.args) {
-    ppv.val = ppv$fun(pred = pred)
-    tpr.val = tpr$fun(pred = pred)
-    ifelse(ppv.val > 0.8, tpr.val, ppv.val - 1)
-  }
-)
+lrn = makeLearner("regr.mxff", layers = 2, num.layer1 = 10, num.layer2 = 6,
+  act1 = "sigmoid", act2 = "relu", learning.rate = 0.2, dropout.input = 0.5,
+  predict.type = "prob")
 
 
-task = sonar.task
-lrn = makeLearner("classif.randomForest", predict.type = "prob")
-ps = makeParamSet(
-  makeIntegerParam("mtry", lower = 2, upper = 10)
-)
-ctrl = makeTuneControlRandom(maxit = 3, tune.threshold = TRUE)
-tr = tuneParams(lrn, task, hout, measures = list(mm, mmce, ppv, tpr), par.set = ps, control = ctrl)
-print(tr)
-op = as.data.frame(tr$opt.path)
+mod = train(lrn, iris.task)
+predict(mod, newdata = getTaskData(iris.task))
