@@ -20,6 +20,7 @@ addons:
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
+
 r_github_packages:
   - berndbischl/BBmisc
   - berndbischl/parallelMap
