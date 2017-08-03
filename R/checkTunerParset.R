@@ -29,7 +29,7 @@ checkTunerParset = function(learner, par.set, measures, control) {
     }
   }
 
-  if (control$tune.threshold && (learner$type != "classif" || learner$predict.type != "prob"))
+  if (control$tune.threshold && (learner$type %nin% c("oneclass", "classif") || learner$predict.type != "prob"))
     stop("Using 'tune.threshold' requires a classif learner with predict.type = 'prob'!")
 
   # check special conditions for some tuners
