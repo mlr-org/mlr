@@ -202,7 +202,7 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
   array.layout = "rowmajor", dropout.mode = "training", ...) {
 
-  if(.learner$predict.type == "se" & dropout.mode != "always")
+  if (.learner$predict.type == "se" & dropout.mode != "always")
     stop("dropout.mode needs to be equal to 'always' for se prediction.")
 
   # transform data in correct format
@@ -288,7 +288,7 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
     }
 
     if (!is.null(dropout[[1]])) {
-      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]], mode='always')
+      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]], dropout.mode = "always")
     }
 
     # construct hidden layers using symbols
@@ -322,7 +322,7 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
       }
       # add dropout if specified
       if (!is.null(dropout[[i + 1]])) {
-        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]], mode='always')
+        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]], dropout.mode = "always")
       }
     }
 
@@ -361,10 +361,10 @@ predictLearner.regr.mxff = function(.learner, .model, .newdata, ...) {
   }
   if (.learner$predict.type == "se") {
     #FIXME: Magic number, add as parameter instead
-    p = replicate(20, predict(.model$learner.model, X = x, array.layout = array.layout)[1,])
+    p = replicate(20, predict(.model$learner.model, X = x, array.layout = array.layout)[1, ])
     cbind(rowMeans(p), apply(p, 1, sd))
   } else {
-    predict(.model$learner.model, X = x, array.layout = array.layout)[1,]
+    predict(.model$learner.model, X = x, array.layout = array.layout)[1, ]
   }
 
 }
