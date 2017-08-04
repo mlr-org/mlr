@@ -201,7 +201,7 @@ trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
   dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
   symbol = NULL, validation.ratio = NULL, eval.data = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
-  array.layout = "rowmajor", dropout.mode = "training", dropout.predict.repls = 20,...) {
+  array.layout = "rowmajor", dropout.mode = "training", dropout.predict.repls = 20, ...) {
 
   if (.learner$predict.type == "se" & dropout.mode != "always")
     stop("dropout.mode needs to be equal to 'always' for se prediction.")
