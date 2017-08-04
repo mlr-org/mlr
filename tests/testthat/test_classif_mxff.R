@@ -5,9 +5,9 @@ test_that("classif_mxff", {
   # tests for FeedForward networks with only FullyConnected layers using mx.mlp
   parset.list.mxnet = list(
     list(hidden_node = c(10, 6), activation = c("sigmoid", "relu"),
-      learning.rate = 0.2),
+      learning.rate = 0.2, array.layout = "rowmajor"),
     list(hidden_node = c(10, 6), activation = c("sigmoid", "relu"),
-      learning.rate = 0.2, dropout = 0.5)
+      learning.rate = 0.2, dropout = 0.5, array.layout = "rowmajor")
   )
   parset.list.mlr = list(
     list(layers = 2, num.layer1 = 10, num.layer2 = 6, act1 = "sigmoid",
@@ -37,7 +37,7 @@ test_that("classif_mxff", {
     y = as.numeric(binaryclass.train[, ncol(binaryclass.train)]) - 1
     pars = c(parset.list.mxnet[[i]], list(data = x, label = y), out_node = 2)
     m = do.call(mxnet::mx.mlp, pars)
-    probs = predict(m, data.matrix(binaryclass.test[, -ncol(binaryclass.test)]))
+    probs = predict(m, data.matrix(binaryclass.test[, -ncol(binaryclass.test)]), array.layout = "rowmajor")
     p = apply(probs, 2, function(i) {
       w = which.max(i)
       return(ifelse(length(w > 0), w, NaN))
@@ -70,7 +70,7 @@ test_that("classif_mxff", {
     levs = levels(multiclass.df[[multiclass.class.col]])
     pars = c(parset.list.mxnet[[i]], list(data = x, label = y), out_node = length(levs))
     m = do.call(mxnet::mx.mlp, pars)
-    probs = predict(m, data.matrix(multiclass.test[, -ncol(multiclass.test)]))
+    probs = predict(m, data.matrix(multiclass.test[, -ncol(multiclass.test)]), array.layout = "rowmajor")
     p = apply(probs, 2, function(i) {
       w = which.max(i)
       return(ifelse(length(w > 0), w, NaN))
