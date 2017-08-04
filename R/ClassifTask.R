@@ -1,6 +1,7 @@
 #' @export
 #' @rdname Task
-makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE, formula = NULL) {
+makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE, formula = NULL) {
   assertString(id)
   assertDataFrame(data)
   assertString(target)
