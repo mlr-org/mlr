@@ -97,7 +97,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
-    measures = measures, model = models, extract = extract, show.info = show.info)
+    measures = measures, models = models, extract = extract, show.info = show.info)
   if (!is.null(weights)) {
     more.args$weights = weights
   } else if (!is.null(getTaskWeights(task))) {
@@ -131,18 +131,18 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
 
 # this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
-doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
+doResampleIteration = function(learner, task, rin, i, measures, weights, models, extract, show.info) {
   setSlaveOptions()
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
   calculateResampleIterationResult(learner = learner, task = task, i = i, train.i = train.i, test.i = test.i, measures = measures,
-    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
+    weights = weights, rdesc = rin$desc, models = models, extract = extract, show.info = show.info)
 }
 
 
 #Evaluate one train/test split of the resample function and get one or more performance values
 calculateResampleIterationResult = function(learner, task, i, train.i, test.i, measures,
-  weights, rdesc, model, extract, show.info) {
+  weights, rdesc, models, extract, show.info) {
 
   err.msgs = c(NA_character_, NA_character_)
   err.dumps = list()
@@ -234,7 +234,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
   list(
     measures.test = ms.test,
     measures.train = ms.train,
-    model = if (model) m else NULL,
+    model = if (models) m else NULL,
     pred.test = pred.test,
     pred.train = pred.train,
     err.msgs = err.msgs,
