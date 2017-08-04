@@ -1176,7 +1176,7 @@ getRetrafoState.CPORetrafoPrimitive = function(retrafo.object) {
         cpo$name, "the environment of the retrafo function is not identical to the retrafo function.")
     }
   } else {  # cpo$type == "object
-    res = cpo$par.vals
+    res = getBareHyperPars(cpo)
     res$control = retrafo.object$state
   }
   # c() to drop the retrafo.object's class
@@ -1215,6 +1215,9 @@ makeRetrafoFromState.CPOConstructor = function(constructor, state) {
     state$control = NULL
     bare$par.vals = state
     assertSubset(names(bare$par.vals), names(bare$bare.par.set$pars))
+    if (length(state)) {
+      names(bare$par.vals) = paste(bare$id, names2(bare$par.vals), sep = ".")
+    }
   }
 
   makeCPORetrafo(bare, newstate, NULL, data$shapeinfo.input, data$shapeinfo.output)
