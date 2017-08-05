@@ -50,7 +50,6 @@ jobs:
         - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_success:
-        - travis_wait 100 Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
         - R --no-save <<< 'library("devtools"); document()'
@@ -64,6 +63,13 @@ jobs:
         - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+    - stage: covr
+      before_script:
+        - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+        - R --no-save <<< 'library("devtools"); document()'
+      script:
+        - R CMD build .
+        - travis_wait 100 Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
 
 notifications:
   email:
