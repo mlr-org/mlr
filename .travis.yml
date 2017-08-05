@@ -5,6 +5,7 @@ cache: packages
 
 env:
   global:
+    - R_MAX_NUM_DLLS=500
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999

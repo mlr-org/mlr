@@ -1,6 +1,4 @@
 tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
-rq = requireNamespace("GenSA")
-if (!rq) stop("couldn't load gensa")
   requirePackages("GenSA", why = "tuneGenSA", default.method = "load")
 
   low = getLower(par.set)
