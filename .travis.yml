@@ -68,7 +68,7 @@ jobs:
         - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
         - R --no-save <<< 'library("devtools"); document()'
       script:
-        - R CMD build .
+        - export NO_RLINT=TRUE
         - travis_wait 100 Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
 
 notifications:
