@@ -69,7 +69,7 @@ jobs:
         - R --no-save <<< 'library("devtools"); document()'
       script:
         - export NO_RLINT=TRUE
-        - Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
+        - travis_wait 100 Rscript -e 'library(BBmisc);covr::coveralls(quiet=FALSE)'
 
 notifications:
   email:
