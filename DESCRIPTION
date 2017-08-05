@@ -127,7 +127,6 @@ Suggests:
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
-    pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.6.0),
