@@ -296,6 +296,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   list(
     learner.id = learner.id,
+    task = task,
     task.id = getTaskId(task),
     task.desc = getTaskDesc(task),
     measures.train = ms.train,
