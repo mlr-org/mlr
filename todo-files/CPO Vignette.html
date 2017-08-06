@@ -11781,11 +11781,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span><span class="s">&quot;mlr&quot;</span><span class="p">)</span>
-devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s">&quot;..&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11802,7 +11801,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>Loading mlr
+<pre>Loading required package: ParamHelpers
 </pre>
 </div>
 </div>
@@ -11813,7 +11812,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>a <span class="o">=</span> <span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span> b <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span> <span class="o">*</span> <span class="m">10</span><span class="p">)</span>
@@ -11851,7 +11850,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">print</span><span class="p">(</span>cpoPca<span class="p">)</span>  <span class="c1"># example CPOConstructor</span>
@@ -11882,7 +11881,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">class</span><span class="p">(</span>cpoPca<span class="p">)</span>
@@ -11932,7 +11931,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">names</span><span class="p">(</span><span class="kp">formals</span><span class="p">(</span>cpoPca<span class="p">))</span>
@@ -11984,7 +11983,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>cpo <span class="o">=</span> cpoScale<span class="p">())</span> <span class="c1"># construct CPO with default Hyperparameter values</span>
@@ -12017,7 +12016,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">class</span><span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"># CPOs that are not compound are &quot;CPOPrimitive&quot;</span>
@@ -12053,7 +12052,7 @@ devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">summary</span><span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"># detailed printing</span>
@@ -12091,7 +12090,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Functions that work on CPOs:</span>
@@ -12127,7 +12126,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getHyperPars<span class="p">(</span>cpo<span class="p">)</span>
@@ -12165,7 +12164,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>setHyperPars<span class="p">(</span>cpo<span class="p">,</span> scale.center <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
@@ -12198,7 +12197,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOId<span class="p">(</span>cpo<span class="p">)</span>
@@ -12230,7 +12229,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>setCPOId<span class="p">(</span>cpo<span class="p">,</span> <span class="s">&quot;MYID&quot;</span><span class="p">)</span>
@@ -12263,7 +12262,7 @@ scale.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOName<span class="p">(</span>cpo<span class="p">)</span>
@@ -12308,7 +12307,7 @@ getCPOName<span class="p">(</span>setCPOId<span class="p">(</span>cpo<span class
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOAffect<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"># empty, since no affect set</span>
@@ -12355,7 +12354,7 @@ getCPOAffect<span class="p">(</span>cpoPca<span class="p">(</span>affect.pattern
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOProperties<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"># see properties explanation below</span>
@@ -12435,7 +12434,7 @@ getCPOAffect<span class="p">(</span>cpoPca<span class="p">(</span>affect.pattern
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># these are internals</span>
@@ -12490,7 +12489,7 @@ getCPOBound<span class="p">(</span>cpo<span class="p">)</span>  <span class="c1"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>sc <span class="o">=</span> cpoScale<span class="p">())</span>
@@ -12629,7 +12628,7 @@ scale.center logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
@@ -12686,7 +12685,7 @@ scale.center logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>scale1 <span class="o">=</span> cpoScale<span class="p">()</span>
@@ -12723,7 +12722,7 @@ composeCPO<span class="p">(</span>setCPOId<span class="p">(</span>scale1<span cl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">class</span><span class="p">(</span>compound<span class="p">)</span>
@@ -12759,7 +12758,7 @@ composeCPO<span class="p">(</span>setCPOId<span class="p">(</span>scale1<span cl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">summary</span><span class="p">(</span>compound<span class="p">)</span>
@@ -12803,7 +12802,7 @@ scale2.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOName<span class="p">(</span>compound<span class="p">)</span>
@@ -12835,11 +12834,11 @@ scale2.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>getCPOId<span class="p">(</span>compound<span class="p">)</span>  <span class="c1"># error: no ID for compound CPOs</span>
-getCPOAffect<span class="p">(</span>compound<span class="p">)</span>  <span class="c1"># error: no affect for compound CPOs</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kp">as.character</span><span class="p">(</span><span class="kp">try</span><span class="p">(</span>getCPOId<span class="p">(</span>compound<span class="p">)))</span>  <span class="c1"># error: no ID for compound CPOs</span>
+<span class="kp">as.character</span><span class="p">(</span><span class="kp">try</span><span class="p">(</span>getCPOAffect<span class="p">(</span>compound<span class="p">)))</span>  <span class="c1"># error: no affect for compound CPOs</span>
 </pre></div>
 
 </div>
@@ -12855,15 +12854,23 @@ getCPOAffect<span class="p">(</span>compound<span class="p">)</span>  <span clas
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_text output_error">
-<pre>
-Error in getCPOId.CPO(compound): Compound CPOs have no IDs.
-Traceback:
 
-1. getCPOId(compound)
-2. getCPOId.CPO(compound)   # at line 432 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R
-3. stop(&#34;Compound CPOs have no IDs.&#34;)   # at line 437 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R</pre>
+<div class="output_html rendered_html output_subarea ">
+'Error in getCPOId.CPO(compound) : Compound CPOs have no IDs.\n'
 </div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<span style=white-space:pre-wrap>'Error in getCPOAffect.CPO(compound) : \n  Compound CPOs have no affect arguments.\n'</span>
+</div>
+
 </div>
 
 </div>
@@ -12872,7 +12879,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getParamSet<span class="p">(</span>compound<span class="p">)</span>
@@ -12909,7 +12916,7 @@ scale2.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getHyperPars<span class="p">(</span>compound<span class="p">)</span>
@@ -12951,7 +12958,7 @@ scale2.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>setHyperPars<span class="p">(</span>compound<span class="p">,</span> scale1.center <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> scale2.center <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
@@ -12992,7 +12999,7 @@ scale2.scale  logical   - TRUE      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">as.list</span><span class="p">(</span>compound<span class="p">)</span>
@@ -13030,7 +13037,7 @@ scale2&lt;scale&gt;(center = TRUE, scale = TRUE)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>chainCPO<span class="p">(</span><span class="kp">as.list</span><span class="p">(</span>compound<span class="p">))</span>  <span class="c1"># chainCPO: list CPO -&gt; CPO</span>
@@ -13071,7 +13078,7 @@ scale2&lt;scale&gt;(center = TRUE, scale = TRUE)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>lrn <span class="o">=</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.logreg&quot;</span><span class="p">)</span>
@@ -13084,7 +13091,7 @@ scale2&lt;scale&gt;(center = TRUE, scale = TRUE)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>cpolrn <span class="o">=</span> cpo <span class="o">%&gt;&gt;%</span> lrn<span class="p">)</span>  <span class="c1"># the new learner has the CPO hyperparameters</span>
@@ -13124,7 +13131,7 @@ Hyperparameters: model=FALSE,scale.center=TRUE,scale.scale=TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>attachCPO<span class="p">(</span>compound<span class="p">,</span> lrn<span class="p">)</span>  <span class="c1"># attaching compound CPO</span>
@@ -13164,7 +13171,7 @@ Hyperparameters: model=FALSE,scale1.center=TRUE,scale1.scale=TRUE,scale2.center=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># CPO learner decomposition</span>
@@ -13229,7 +13236,7 @@ Hyperparameters: model=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>transformed <span class="o">=</span> iris <span class="o">%&gt;&gt;%</span> cpo
@@ -13273,7 +13280,7 @@ Hyperparameters: model=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>retrafo<span class="p">(</span>transformed<span class="p">)</span>
@@ -13307,7 +13314,7 @@ Hyperparameters: model=FALSE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># retrafos are stored as attributes</span>
@@ -13371,7 +13378,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>state <span class="o">=</span> getRetrafoState<span class="p">(</span>retrafo<span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">())))</span>
@@ -13393,10 +13400,10 @@ CPO Retrafo chain
 
 
 <div class="output_text output_subarea ">
-<pre>$scale.center
+<pre>$center
 [1] TRUE
 
-$scale.scale
+$scale
 [1] TRUE
 
 $control
@@ -13433,7 +13440,7 @@ other:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>state<span class="o">$</span>control<span class="o">$</span>center<span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="o">=</span> <span class="m">1000</span>  <span class="c1"># will now subtract 1000 from the first column</span>
@@ -13454,17 +13461,22 @@ new.retrafo <span class="o">=</span> makeRetrafoFromState<span class="p">(</span
 <div class="prompt"></div>
 
 
-<div class="output_subarea output_text output_error">
-<pre>
-Error in IRkernel::main(): Assertion on &#39;names(bare$par.vals)&#39; failed: Must be a subset of {&#39;center&#39;,&#39;scale&#39;}.
-Traceback:
 
-1. makeRetrafoFromState(cpoScale, state)
-2. makeRetrafoFromState.CPOConstructor(cpoScale, state)   # at line 356 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R
-3. assertSubset(names(bare$par.vals), names(bare$bare.par.set$pars))   # at line 1217 of file /home/mb706/lmu/master/mlr/R/CPO.R
-4. makeAssertion(x, res, .var.name, add)
-5. mstop(&#34;Assertion on &#39;%s&#39; failed: %s.&#34;, var.name, res)</pre>
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th><th scope=col>Petal.Width</th><th scope=col>Species</th></tr></thead>
+<tbody>
+	<tr><td>-1201.474  </td><td> 1.01560199</td><td>-1.335752  </td><td>-1.311052  </td><td>setosa     </td></tr>
+	<tr><td>-1201.716  </td><td>-0.13153881</td><td>-1.335752  </td><td>-1.311052  </td><td>setosa     </td></tr>
+	<tr><td>-1201.957  </td><td> 0.32731751</td><td>-1.392399  </td><td>-1.311052  </td><td>setosa     </td></tr>
+	<tr><td>-1202.078  </td><td> 0.09788935</td><td>-1.279104  </td><td>-1.311052  </td><td>setosa     </td></tr>
+	<tr><td>-1201.595  </td><td> 1.24503015</td><td>-1.335752  </td><td>-1.311052  </td><td>setosa     </td></tr>
+	<tr><td>-1201.112  </td><td> 1.93331463</td><td>-1.165809  </td><td>-1.048667  </td><td>setosa     </td></tr>
+</tbody>
+</table>
+
 </div>
+
 </div>
 
 </div>
@@ -13481,7 +13493,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> retrafo<span class="p">(</span>transformed<span class="p">)</span>
@@ -13536,7 +13548,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>cpomodel <span class="o">=</span> train<span class="p">(</span>cpolrn<span class="p">,</span> pid.task<span class="p">)</span>
@@ -13549,7 +13561,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>retrafo<span class="p">(</span>cpomodel<span class="p">)</span>
@@ -13583,7 +13595,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>pid.task <span class="o">%&gt;&gt;%</span> retrafo<span class="p">(</span>cpomodel<span class="p">)))</span>
@@ -13636,7 +13648,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>data <span class="o">=</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> pca
@@ -13662,10 +13674,10 @@ Error in &#34;NULLCPO&#34; %in% class(cpo): object &#39;pca&#39; not found
 Traceback:
 
 1. head(iris) %&gt;&gt;% pca
-2. `%&gt;&gt;%.data.frame`(head(iris), pca)   # at line 63 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R
-3. `%&gt;&gt;%.Task`(cpo1, cpo2)   # at line 81 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R
-4. is.nullcpo(cpo2)   # at line 86-100 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R
-5. &#34;NULLCPO&#34; %in% class(cpo)   # at line 1118 of file /home/mb706/lmu/master/mlr/R/CPOAuxiliary.R</pre>
+2. `%&gt;&gt;%.data.frame`(head(iris), pca)
+3. `%&gt;&gt;%.Task`(cpo1, cpo2)
+4. is.nullcpo(cpo2)
+5. &#34;NULLCPO&#34; %in% class(cpo)</pre>
 </div>
 </div>
 
@@ -13675,7 +13687,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>data2 <span class="o">=</span> data <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">()</span>
@@ -13711,7 +13723,7 @@ retrafo<span class="p">(</span>data2<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># to interrupt this chain, set retrafo to NULL</span>
@@ -13756,7 +13768,7 @@ retrafo<span class="p">(</span>data2<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>compound.retrafo <span class="o">=</span> retrafo<span class="p">(</span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> compound<span class="p">)</span>
@@ -13791,7 +13803,7 @@ compound.retrafo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="p">(</span>retrafolist <span class="o">=</span> <span class="kp">as.list</span><span class="p">(</span>compound.retrafo<span class="p">))</span>
@@ -13831,7 +13843,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>retrafolist<span class="p">[[</span><span class="m">1</span><span class="p">]]</span> <span class="o">%&gt;&gt;%</span> retrafolist<span class="p">[[</span><span class="m">2</span><span class="p">]]</span>
@@ -13865,7 +13877,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>chainCPO<span class="p">(</span>retrafolist<span class="p">)</span>
@@ -13909,7 +13921,7 @@ CPO Retrafo chain
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># there is currently no example targetbound cpo</span>
@@ -13925,10 +13937,39 @@ logtransform <span class="o">=</span> makeCPOTargetOp<span class="p">(</span><sp
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+Error in setequal(.properties, c(&#34;numerics&#34;, &#34;factors&#34;, &#34;ordered&#34;, &#34;missings&#34;)): object &#39;.properties&#39; not found
+Traceback:
+
+1. makeCPOTargetOp(&#34;logtransform&#34;, .data.dependent = FALSE, .stateless = TRUE, 
+ .     .type = &#34;regr&#34;, cpo.trafo = {
+ .         target[[1]] = log(target[[1]])
+ .         target
+ .     }, cpo.retrafo = {
+ .         print(match.call())
+ .     })
+2. setequal(.properties, c(&#34;numerics&#34;, &#34;factors&#34;, &#34;ordered&#34;, &#34;missings&#34;))
+3. as.vector(x)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>log.retrafo <span class="o">=</span> retrafo<span class="p">(</span>bh.task <span class="o">%&gt;&gt;%</span> logtransform<span class="p">())</span>  <span class="c1"># get a target-bound retrafo</span>
@@ -13949,27 +13990,17 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 <div class="prompt"></div>
 
 
+<div class="output_subarea output_text output_error">
+<pre>
+Error in logtransform(): could not find function &#34;logtransform&#34;
+Traceback:
 
-<div class="output_html rendered_html output_subarea ">
-<ol class=list-inline>
-	<li>'retrafo'</li>
-	<li>'inverter'</li>
-</ol>
-
+1. retrafo(bh.task %&gt;&gt;% logtransform())
+2. bh.task %&gt;&gt;% logtransform()
+3. `%&gt;&gt;%.Task`(bh.task, logtransform())
+4. is.nullcpo(cpo2)
+5. &#34;NULLCPO&#34; %in% class(cpo)</pre>
 </div>
-
-</div>
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-'targetbound'
-</div>
-
 </div>
 
 </div>
@@ -13978,7 +14009,7 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>inverter<span class="p">(</span>bh.task <span class="o">%&gt;&gt;%</span> log.retrafo<span class="p">)</span>
@@ -13997,12 +14028,17 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 <div class="prompt"></div>
 
 
+<div class="output_subarea output_text output_error">
+<pre>
+Error in &#34;NULLCPO&#34; %in% class(cpo): object &#39;log.retrafo&#39; not found
+Traceback:
 
-
-<div class="output_text output_subarea ">
-<pre>NULLCPO</pre>
+1. inverter(bh.task %&gt;&gt;% log.retrafo)
+2. bh.task %&gt;&gt;% log.retrafo
+3. `%&gt;&gt;%.Task`(bh.task, log.retrafo)
+4. is.nullcpo(cpo2)
+5. &#34;NULLCPO&#34; %in% class(cpo)</pre>
 </div>
-
 </div>
 
 </div>
@@ -14011,7 +14047,7 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">#inverter(tagInvert(bh.task) %&gt;&gt;% log.retrafo)</span>
@@ -14034,7 +14070,7 @@ getCPOBound<span class="p">(</span>log.retrafo<span class="p">)</span>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>log.bh <span class="o">=</span> bh.task <span class="o">%&gt;&gt;%</span> logtransform<span class="p">()</span>
@@ -14045,10 +14081,34 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+Error in logtransform(): could not find function &#34;logtransform&#34;
+Traceback:
+
+1. bh.task %&gt;&gt;% logtransform()
+2. `%&gt;&gt;%.Task`(bh.task, logtransform())
+3. is.nullcpo(cpo2)
+4. &#34;NULLCPO&#34; %in% class(cpo)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># invert(retrafo(log.bh), log.prediction)  # not implemented :-/</span>
@@ -14071,7 +14131,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getCPOProperties<span class="p">(</span>cpoDummyEncode<span class="p">())</span>
@@ -14155,7 +14215,7 @@ log.prediction <span class="o">=</span> predict<span class="p">(</span>train<spa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>train<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">,</span> bc.task<span class="p">)</span>  <span class="c1"># gives an error</span>
@@ -14180,9 +14240,9 @@ Error in checkLearnerBeforeTrain(task, learner, weights): Task &#39;BreastCancer
 Traceback:
 
 1. train(&#34;classif.geoDA&#34;, bc.task)
-2. checkLearnerBeforeTrain(task, learner, weights)   # at line 58 of file /home/mb706/lmu/master/mlr/R/train.R
+2. checkLearnerBeforeTrain(task, learner, weights)
 3. stopf(&#34;Task &#39;%s&#39; has factor inputs in &#39;%s&#39;, but learner &#39;%s&#39; does not support that!&#34;, 
- .     td$id, wrong.cols, learner$id)   # at line 26 of file /home/mb706/lmu/master/mlr/R/checkLearnerBeforeTrain.R</pre>
+ .     td$id, wrong.cols, learner$id)</pre>
 </div>
 </div>
 
@@ -14192,7 +14252,7 @@ Traceback:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>train<span class="p">(</span>cpoDummyEncode<span class="p">(</span>reference.cat <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">),</span> bc.task<span class="p">)</span>
@@ -14202,32 +14262,10 @@ Traceback:
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>Model for learner.id=classif.geoDA.dummyencode; learner.class=CPOLearner
-Trained on: task.id = BreastCancer-example; obs = 683; features = 9
-Hyperparameters: validation=NULL,dummyencode.reference.cat=TRUE</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getLearnerProperties<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">)</span>
@@ -14237,34 +14275,10 @@ Hyperparameters: validation=NULL,dummyencode.reference.cat=TRUE</pre>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<ol class=list-inline>
-	<li>'twoclass'</li>
-	<li>'multiclass'</li>
-	<li>'numerics'</li>
-</ol>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getLearnerProperties<span class="p">(</span>cpoDummyEncode<span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.geoDA&quot;</span><span class="p">))</span>
@@ -14320,7 +14334,7 @@ Hyperparameters: validation=NULL,dummyencode.reference.cat=TRUE</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>NULLCPO
@@ -14353,7 +14367,7 @@ Hyperparameters: validation=NULL,dummyencode.reference.cat=TRUE</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>is.nullcpo<span class="p">(</span>NULLCPO<span class="p">)</span>
@@ -14385,7 +14399,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>NULLCPO <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">()</span>
@@ -14418,7 +14432,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>NULLCPO <span class="o">%&gt;&gt;%</span> NULLCPO
@@ -14451,7 +14465,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">print</span><span class="p">(</span><span class="kp">as.list</span><span class="p">(</span>NULLCPO<span class="p">))</span>
@@ -14482,7 +14496,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>chainCPO<span class="p">(</span><span class="kt">list</span><span class="p">())</span>
@@ -14524,7 +14538,7 @@ TRUE
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>cpa <span class="o">=</span> cpoApply<span class="p">()</span>
@@ -14562,7 +14576,7 @@ apply.cpo untyped   -   -      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpa<span class="p">,</span> apply.cpo <span class="o">=</span> cpoScale<span class="p">()))</span>
@@ -14605,7 +14619,7 @@ apply.cpo untyped   -   -      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpa<span class="p">,</span> apply.cpo <span class="o">=</span> cpoPca<span class="p">()))</span>
@@ -14648,7 +14662,7 @@ apply.cpo untyped   -   -      -   -    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># attaching the cpo applicator to a learner gives this learner a &quot;cpo&quot; hyperparameter</span>
@@ -14694,7 +14708,7 @@ model     logical   - TRUE      -   -   FALSE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>cpm <span class="o">=</span> cpoMultiplex<span class="p">(</span><span class="kt">list</span><span class="p">(</span>cpoScale<span class="p">,</span> cpoPca<span class="p">))</span>
@@ -14734,7 +14748,7 @@ multiplex.scale.scale   logical   -  TRUE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpm<span class="p">,</span> multiplex.selected.cpo <span class="o">=</span> <span class="s">&quot;scale&quot;</span><span class="p">))</span>
@@ -14777,7 +14791,7 @@ multiplex.scale.scale   logical   -  TRUE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># every CPO&#39;s Hyperparameters are exported</span>
@@ -14821,7 +14835,7 @@ multiplex.scale.scale   logical   -  TRUE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> setHyperPars<span class="p">(</span>cpm<span class="p">,</span> multiplex.selected.cpo <span class="o">=</span> <span class="s">&quot;pca&quot;</span><span class="p">))</span>
@@ -14873,7 +14887,7 @@ multiplex.scale.scale   logical   -  TRUE         -   Y    TRUE     -</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>s.and.p <span class="o">=</span> cpoMeta<span class="p">(</span>logical.param<span class="o">:</span> <span class="kt">logical</span><span class="p">,</span>
@@ -14895,7 +14909,7 @@ cpo.build <span class="o">=</span> <span class="kr">function</span><span class="
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[103]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">summary</span><span class="p">(</span>s.and.p<span class="p">())</span>
@@ -14953,7 +14967,7 @@ The all CPOs listed in <code>.export</code> are passed to the <code>cpo.build</c
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>scale <span class="o">=</span> cpoScale<span class="p">(</span>id <span class="o">=</span> <span class="s">&quot;scale&quot;</span><span class="p">)</span>
@@ -14968,7 +14982,7 @@ cbinder <span class="o">=</span> cpoCbind<span class="p">(</span>scaled <span cl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[106]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># cpoCbind recognises that &quot;scale.scale&quot; happens before &quot;pca.pca&quot; but is also fed to the</span>
@@ -15000,7 +15014,7 @@ cbinder <span class="o">=</span> cpoCbind<span class="p">(</span>scaled <span cl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cbinder<span class="p">)</span>
@@ -15043,7 +15057,7 @@ cbinder <span class="o">=</span> cpoCbind<span class="p">(</span>scaled <span cl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># the unnecessary copies of &quot;Species&quot; are unfortunate. Remove them with cpoSelect:</span>
@@ -15100,7 +15114,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[109]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># alternatively, we apply the cbinder only to numerical data</span>
@@ -15161,7 +15175,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>listCPO<span class="p">()</span>
@@ -15260,7 +15274,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">()</span>
@@ -15300,7 +15314,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[112]:</div>
+<div class="prompt input_prompt">In&nbsp;[91]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoScale<span class="p">(</span>scale <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>  <span class="c1"># center = TRUE</span>
@@ -15349,7 +15363,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[113]:</div>
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
@@ -15389,7 +15403,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[115]:</div>
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>df <span class="o">%&gt;&gt;%</span> cpoPca<span class="p">()</span>
@@ -15438,7 +15452,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[116]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoDummyEncode<span class="p">())</span>
@@ -15481,7 +15495,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoDummyEncode<span class="p">(</span>reference.cat <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span>
@@ -15533,7 +15547,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[118]:</div>
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoSelect<span class="p">(</span>pattern <span class="o">=</span> <span class="s">&quot;Width&quot;</span><span class="p">))</span>
@@ -15576,7 +15590,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[119]:</div>
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># selection is additive</span>
@@ -15629,7 +15643,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[120]:</div>
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoDropConstants<span class="p">()</span>  <span class="c1"># drops &#39;species&#39;</span>
@@ -15705,7 +15719,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[121]:</div>
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">levels</span><span class="p">(</span>iris<span class="o">$</span>Species<span class="p">)</span>
@@ -15742,7 +15756,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[122]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>irisfix <span class="o">=</span> <span class="kp">head</span><span class="p">(</span>iris<span class="p">)</span> <span class="o">%&gt;&gt;%</span> cpoFixFactors<span class="p">()</span>  <span class="c1"># Species only has level &#39;setosa&#39; in train</span>
@@ -15775,7 +15789,7 @@ cbinder.select
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[123]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>rf <span class="o">=</span> retrafo<span class="p">(</span>irisfix<span class="p">)</span>
@@ -15846,7 +15860,7 @@ iris<span class="p">[</span><span class="kt">c</span><span class="p">(</span><sp
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[124]:</div>
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">=</span> df
@@ -15888,7 +15902,7 @@ impdata
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[125]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoMissingIndicators<span class="p">()</span>
@@ -15958,7 +15972,7 @@ impdata <span class="o">%&gt;&gt;%</span> cpoCbind<span class="p">(</span>NULLCP
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoApplyFun<span class="p">(</span><span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="kp">sqrt</span><span class="p">(</span>x<span class="p">)</span> <span class="o">-</span> <span class="m">10</span><span class="p">,</span> affect.type <span class="o">=</span> <span class="s">&quot;numeric&quot;</span><span class="p">))</span>
@@ -16010,7 +16024,7 @@ impdata <span class="o">%&gt;&gt;%</span> cpoCbind<span class="p">(</span>NULLCP
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[166]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris<span class="p">[</span><span class="kp">sample</span><span class="p">(</span><span class="kp">nrow</span><span class="p">(</span>iris<span class="p">),</span> <span class="m">10</span><span class="p">),</span> <span class="p">]</span> <span class="o">%&gt;&gt;%</span> cpoAsNumeric<span class="p">())</span>
@@ -16034,12 +16048,12 @@ impdata <span class="o">%&gt;&gt;%</span> cpoCbind<span class="p">(</span>NULLCP
 <table>
 <thead><tr><th></th><th scope=col>Sepal.Length</th><th scope=col>Sepal.Width</th><th scope=col>Petal.Length</th><th scope=col>Petal.Width</th><th scope=col>Species</th></tr></thead>
 <tbody>
-	<tr><th scope=row>44</th><td>5.0</td><td>3.5</td><td>1.6</td><td>0.6</td><td>1  </td></tr>
-	<tr><th scope=row>118</th><td>7.7</td><td>3.8</td><td>6.7</td><td>2.2</td><td>3  </td></tr>
-	<tr><th scope=row>61</th><td>5.0</td><td>2.0</td><td>3.5</td><td>1.0</td><td>2  </td></tr>
-	<tr><th scope=row>130</th><td>7.2</td><td>3.0</td><td>5.8</td><td>1.6</td><td>3  </td></tr>
-	<tr><th scope=row>138</th><td>6.4</td><td>3.1</td><td>5.5</td><td>1.8</td><td>3  </td></tr>
+	<tr><th scope=row>62</th><td>5.9</td><td>3.0</td><td>4.2</td><td>1.5</td><td>2  </td></tr>
+	<tr><th scope=row>132</th><td>7.9</td><td>3.8</td><td>6.4</td><td>2.0</td><td>3  </td></tr>
+	<tr><th scope=row>140</th><td>6.9</td><td>3.1</td><td>5.4</td><td>2.1</td><td>3  </td></tr>
 	<tr><th scope=row>7</th><td>4.6</td><td>3.4</td><td>1.4</td><td>0.3</td><td>1  </td></tr>
+	<tr><th scope=row>78</th><td>6.7</td><td>3.0</td><td>5.0</td><td>1.7</td><td>2  </td></tr>
+	<tr><th scope=row>130</th><td>7.2</td><td>3.0</td><td>5.8</td><td>1.6</td><td>3  </td></tr>
 </tbody>
 </table>
 
@@ -16062,7 +16076,7 @@ impdata <span class="o">%&gt;&gt;%</span> cpoCbind<span class="p">(</span>NULLCP
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[180]:</div>
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>iris2 <span class="o">=</span> iris
@@ -16149,7 +16163,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[185]:</div>
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoModelMatrix<span class="p">(</span><span class="o">~</span><span class="m">0</span> <span class="o">+</span> Species<span class="o">:</span>Petal.Width<span class="p">))</span>
@@ -16226,7 +16240,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[187]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoScaleRange<span class="p">(</span><span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
@@ -16278,7 +16292,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[191]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoScaleMaxAbs<span class="p">(</span><span class="m">0.1</span><span class="p">))</span>
@@ -16330,7 +16344,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[192]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>iris <span class="o">%&gt;&gt;%</span> cpoSpatialSign<span class="p">())</span>
@@ -16404,7 +16418,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[126]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>a <span class="o">=</span> imputeMedian<span class="p">()))</span>
@@ -16444,7 +16458,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[127]:</div>
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImpute<span class="p">(</span>cols <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>b <span class="o">=</span> imputeMedian<span class="p">()))</span>  <span class="c1"># NAs remain</span>
@@ -16485,7 +16499,7 @@ iris2<span class="o">$</span>Species <span class="o">=</span> <span class="kp">f
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[128]:</div>
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>missing.task <span class="o">=</span> makeRegrTask<span class="p">(</span><span class="s">&quot;missing.task&quot;</span><span class="p">,</span> impdata<span class="p">,</span> target <span class="o">=</span> <span class="s">&quot;b&quot;</span><span class="p">)</span>
@@ -16534,7 +16548,7 @@ Hyperparameters: impute.target.cols=character(0),impute.classes=,impute.cols=a=&
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[129]:</div>
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>impdata <span class="o">%&gt;&gt;%</span> cpoImputeConstant<span class="p">(</span><span class="m">10</span><span class="p">)</span>
@@ -16574,7 +16588,7 @@ Hyperparameters: impute.target.cols=character(0),impute.classes=,impute.cols=a=&
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[131]:</div>
+<div class="prompt input_prompt">In&nbsp;[115]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span>getTaskData<span class="p">(</span>missing.task <span class="o">%&gt;&gt;%</span> cpoImputeMedian<span class="p">())</span>
@@ -16614,7 +16628,7 @@ Hyperparameters: impute.target.cols=character(0),impute.classes=,impute.cols=a=&
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[132]:</div>
+<div class="prompt input_prompt">In&nbsp;[116]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised impute CPOs are:</span>
@@ -16678,7 +16692,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[133]:</div>
+<div class="prompt input_prompt">In&nbsp;[117]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterFeatures<span class="p">(</span>method <span class="o">=</span> <span class="s">&quot;variance&quot;</span><span class="p">,</span> perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
@@ -16721,7 +16735,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[134]:</div>
+<div class="prompt input_prompt">In&nbsp;[118]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">head</span><span class="p">(</span>getTaskData<span class="p">(</span>iris.task <span class="o">%&gt;&gt;%</span> cpoFilterVariance<span class="p">(</span>perc <span class="o">=</span> <span class="m">0.5</span><span class="p">)))</span>
@@ -16764,7 +16778,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[135]:</div>
+<div class="prompt input_prompt">In&nbsp;[119]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># The specialised filter CPOs are:</span>
@@ -16830,7 +16844,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[155]:</div>
+<div class="prompt input_prompt">In&nbsp;[120]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kp">names</span><span class="p">(</span><span class="kp">formals</span><span class="p">(</span>makeCPO<span class="p">))</span>  <span class="c1"># see help(makeCPO) for explanation of arguments</span>
@@ -16879,7 +16893,7 @@ listCPO<span class="p">()[</span>listCPO<span class="p">()</span><span class="o"
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[142]:</div>
+<div class="prompt input_prompt">In&nbsp;[121]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># an example &#39;pca&#39; CPO</span>
@@ -16943,7 +16957,7 @@ pca <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&quo
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="prompt input_prompt">In&nbsp;[122]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># an example &#39;scale&#39; CPO</span>
@@ -16956,7 +16970,7 @@ scaleC <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
     cpo.retrafo <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>data<span class="p">)</span> <span class="p">{</span>
       <span class="c1"># here we can use the &#39;result&#39; object generated in cpo.trafo</span>
       <span class="kp">scale</span><span class="p">(</span><span class="kp">as.matrix</span><span class="p">(</span>data<span class="p">),</span> <span class="kp">attr</span><span class="p">(</span>result<span class="p">,</span> <span class="s">&quot;scaled:center&quot;</span><span class="p">),</span>
-	<span class="kp">attr</span><span class="p">(</span>result<span class="p">,</span> <span class="s">&quot;scaled:scale&quot;</span><span class="p">))</span>
+    <span class="kp">attr</span><span class="p">(</span>result<span class="p">,</span> <span class="s">&quot;scaled:scale&quot;</span><span class="p">))</span>
     <span class="p">}</span>
     result
   <span class="p">},</span> cpo.retrafo <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
@@ -17000,7 +17014,7 @@ scaleC <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[147]:</div>
+<div class="prompt input_prompt">In&nbsp;[123]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># an example constant feature remover CPO</span>
@@ -17010,7 +17024,7 @@ constFeatRem <span class="o">=</span> makeCPO<span class="p">(</span><span class
   <span class="m">.</span>retrafo.format <span class="o">=</span> <span class="s">&quot;combined&quot;</span><span class="p">,</span>
   cpo.trafo <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>data<span class="p">,</span> target<span class="p">)</span> <span class="p">{</span>
     cols.keep <span class="o">=</span> <span class="kp">names</span><span class="p">(</span><span class="kp">Filter</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="p">{</span>
-	<span class="kp">length</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>x<span class="p">))</span> <span class="o">&gt;</span> <span class="m">1</span>
+    <span class="kp">length</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>x<span class="p">))</span> <span class="o">&gt;</span> <span class="m">1</span>
       <span class="p">},</span> data<span class="p">))</span>
     <span class="c1"># the following function will do both the trafo and retrafo</span>
     result <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>data<span class="p">)</span> <span class="p">{</span>
@@ -17058,7 +17072,7 @@ constFeatRem <span class="o">=</span> makeCPO<span class="p">(</span><span class
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="prompt input_prompt">In&nbsp;[124]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># an example &#39;square&#39; CPO</span>
@@ -17108,12 +17122,80 @@ square <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Tuning-CPO">Tuning CPO<a class="anchor-link" href="#Tuning-CPO">&#182;</a></h1><p>CPOs export their parameters when attached to a learner. Tuning of CPO-Learners works exactly as tuning for ordinary Learners.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[128]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>
+<div class=" highlight hl-r"><pre><span></span><span class="p">(</span>clrn <span class="o">=</span> cpoModelMatrix<span class="p">()</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.logreg&quot;</span><span class="p">))</span>
+getParamSet<span class="p">(</span>clrn<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Learner classif.logreg.model.matrix from package stats
+Type: classif
+Name: ; Short name: 
+Class: CPOLearner
+Properties: numerics,factors,ordered,prob,twoclass
+Predict-Type: response
+Hyperparameters: model=FALSE
+</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>                        Type len  Def Constr Req Tunable Trafo
+model.matrix.formula untyped   -    -      -   -    TRUE     -
+model                logical   - TRUE      -   -   FALSE     -</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[136]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>ps <span class="o">=</span> makeParamSet<span class="p">(</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;model.matrix.formula&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>first <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="p">,</span> second <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="o">^</span><span class="m">2</span><span class="p">,</span> third <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="o">^</span><span class="m">3</span><span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -17123,13 +17205,163 @@ square <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[137]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>
+<div class=" highlight hl-r"><pre><span></span>tuneParams<span class="p">(</span>clrn<span class="p">,</span> pid.task<span class="p">,</span> cv5<span class="p">,</span> par.set <span class="o">=</span> ps<span class="p">,</span>
+           control <span class="o">=</span> makeTuneControlGrid<span class="p">(),</span>
+           show.info<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>[Tune] Started tuning learner classif.logreg.model.matrix for parameter set:
+                         Type len Def             Constr Req Tunable Trafo
+model.matrix.formula discrete   -   - first,second,third   -    TRUE     -
+With control class: TuneControlGrid
+Imputation value: 1
+[Tune-x] 1: model.matrix.formula=first
+Resampling: cross-validation
+Measures:             mmce      
+[Tune-y] 1: mmce.test.mean=0.2227145; time: 0.1 min
+[Tune-x] 2: model.matrix.formula=second
+Resampling: cross-validation
+Measures:             mmce      
+[Tune-y] 2: mmce.test.mean=0.2448943; time: 0.0 min
+[Tune-x] 3: model.matrix.formula=third
+Resampling: cross-validation
+Measures:             mmce      
+Warning message:
+“glm.fit: fitted probabilities numerically 0 or 1 occurred”Warning message:
+“glm.fit: fitted probabilities numerically 0 or 1 occurred”[Tune-y] 3: mmce.test.mean=0.2708683; time: 0.0 min
+[Tune] Result: model.matrix.formula=first : mmce.test.mean=0.2227145
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Tune result:
+Op. pars: model.matrix.formula=first
+mmce.test.mean=0.2227145</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Tuning of CPOs and tuning of Learners can happen at the same time.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[147]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>tlrn <span class="o">=</span> cpoModelMatrix<span class="p">()</span> <span class="o">%&gt;&gt;%</span>
+       cpoApply<span class="p">()</span> <span class="o">%&gt;&gt;%</span>
+       cpoFilterGainRatio<span class="p">()</span> <span class="o">%&gt;&gt;%</span>
+       makeLearner<span class="p">(</span><span class="s">&quot;classif.ctree&quot;</span><span class="p">)</span>
+<span class="kp">sprintf</span><span class="p">(</span><span class="s">&quot;Parameters: %s&quot;</span><span class="p">,</span> <span class="kp">paste</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>getParamSet<span class="p">(</span>tlrn<span class="p">)</span><span class="o">$</span>pars<span class="p">),</span> collapse<span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">))</span>
+ps2 <span class="o">=</span> makeParamSet<span class="p">(</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;model.matrix.formula&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>first <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="p">,</span> second <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="o">^</span><span class="m">2</span><span class="p">)),</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;apply.cpo&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>nopca <span class="o">=</span> NULLCPO<span class="p">,</span>
+                      onlypca <span class="o">=</span> cpoPca<span class="p">(),</span>
+                      addpca <span class="o">=</span> cpoCbind<span class="p">(</span>NULLCPO<span class="p">,</span> cpoPca<span class="p">()))),</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;gain.ratio.perc&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span><span class="m">0.333</span><span class="p">,</span> <span class="m">0.667</span><span class="p">,</span> <span class="m">1.0</span><span class="p">)),</span>
+    makeDiscreteParam<span class="p">(</span><span class="s">&quot;teststat&quot;</span><span class="p">,</span> values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;quad&quot;</span><span class="p">,</span> <span class="s">&quot;max&quot;</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+'Parameters: model.matrix.formula, apply.cpo, gain.ratio.perc, gain.ratio.abs, gain.ratio.threshold, teststat, testtype, mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth'
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[153]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># commit a70edb1f makes output unbearably ugly, so suppress it here</span>
+<span class="kp">suppressMessages</span><span class="p">(</span><span class="kp">suppressWarnings</span><span class="p">(</span>tuneParams<span class="p">(</span>tlrn<span class="p">,</span> pid.task<span class="p">,</span> cv5<span class="p">,</span> par.set <span class="o">=</span> ps2<span class="p">,</span>
+           control <span class="o">=</span> makeTuneControlGrid<span class="p">(),</span>
+           show.info<span class="o">=</span><span class="kc">FALSE</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>Tune result:
+Op. pars: model.matrix.formula=first; apply.cpo=addpca; gain.ratio.perc=1; teststat=max
+mmce.test.mean=0.2421272</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 

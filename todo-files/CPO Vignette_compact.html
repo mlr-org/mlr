@@ -11785,7 +11785,6 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span><span class="s">&quot;mlr&quot;</span><span class="p">)</span>
-devtools<span class="o">::</span>load_all<span class="p">(</span><span class="s">&quot;..&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12179,8 +12178,8 @@ composeCPO<span class="p">(</span>setCPOId<span class="p">(</span>scale1<span cl
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>getCPOId<span class="p">(</span>compound<span class="p">)</span>  <span class="c1"># error: no ID for compound CPOs</span>
-getCPOAffect<span class="p">(</span>compound<span class="p">)</span>  <span class="c1"># error: no affect for compound CPOs</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kp">as.character</span><span class="p">(</span><span class="kp">try</span><span class="p">(</span>getCPOId<span class="p">(</span>compound<span class="p">)))</span>  <span class="c1"># error: no ID for compound CPOs</span>
+<span class="kp">as.character</span><span class="p">(</span><span class="kp">try</span><span class="p">(</span>getCPOAffect<span class="p">(</span>compound<span class="p">)))</span>  <span class="c1"># error: no affect for compound CPOs</span>
 </pre></div>
 
 </div>
@@ -13836,7 +13835,7 @@ scaleC <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
     cpo.retrafo <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>data<span class="p">)</span> <span class="p">{</span>
       <span class="c1"># here we can use the &#39;result&#39; object generated in cpo.trafo</span>
       <span class="kp">scale</span><span class="p">(</span><span class="kp">as.matrix</span><span class="p">(</span>data<span class="p">),</span> <span class="kp">attr</span><span class="p">(</span>result<span class="p">,</span> <span class="s">&quot;scaled:center&quot;</span><span class="p">),</span>
-	<span class="kp">attr</span><span class="p">(</span>result<span class="p">,</span> <span class="s">&quot;scaled:scale&quot;</span><span class="p">))</span>
+    <span class="kp">attr</span><span class="p">(</span>result<span class="p">,</span> <span class="s">&quot;scaled:scale&quot;</span><span class="p">))</span>
     <span class="p">}</span>
     result
   <span class="p">},</span> cpo.retrafo <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
@@ -13860,7 +13859,7 @@ constFeatRem <span class="o">=</span> makeCPO<span class="p">(</span><span class
   <span class="m">.</span>retrafo.format <span class="o">=</span> <span class="s">&quot;combined&quot;</span><span class="p">,</span>
   cpo.trafo <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>data<span class="p">,</span> target<span class="p">)</span> <span class="p">{</span>
     cols.keep <span class="o">=</span> <span class="kp">names</span><span class="p">(</span><span class="kp">Filter</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> <span class="p">{</span>
-	<span class="kp">length</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>x<span class="p">))</span> <span class="o">&gt;</span> <span class="m">1</span>
+    <span class="kp">length</span><span class="p">(</span><span class="kp">unique</span><span class="p">(</span>x<span class="p">))</span> <span class="o">&gt;</span> <span class="m">1</span>
       <span class="p">},</span> data<span class="p">))</span>
     <span class="c1"># the following function will do both the trafo and retrafo</span>
     result <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>data<span class="p">)</span> <span class="p">{</span>
@@ -13898,12 +13897,22 @@ square <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Tuning-CPO">Tuning CPO<a class="anchor-link" href="#Tuning-CPO">&#182;</a></h1><p>CPOs export their parameters when attached to a learner. Tuning of CPO-Learners works exactly as tuning for ordinary Learners.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>
+<div class=" highlight hl-r"><pre><span></span><span class="p">(</span>clrn <span class="o">=</span> cpoModelMatrix<span class="p">()</span> <span class="o">%&gt;&gt;%</span> makeLearner<span class="p">(</span><span class="s">&quot;classif.logreg&quot;</span><span class="p">))</span>
+getParamSet<span class="p">(</span>clrn<span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13916,7 +13925,80 @@ square <span class="o">=</span> makeCPO<span class="p">(</span><span class="s">&
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>
+<div class=" highlight hl-r"><pre><span></span>ps <span class="o">=</span> makeParamSet<span class="p">(</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;model.matrix.formula&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>first <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="p">,</span> second <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="o">^</span><span class="m">2</span><span class="p">,</span> third <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="o">^</span><span class="m">3</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>tuneParams<span class="p">(</span>clrn<span class="p">,</span> pid.task<span class="p">,</span> cv5<span class="p">,</span> par.set <span class="o">=</span> ps<span class="p">,</span>
+           control <span class="o">=</span> makeTuneControlGrid<span class="p">(),</span>
+           show.info<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Tuning of CPOs and tuning of Learners can happen at the same time.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>tlrn <span class="o">=</span> cpoModelMatrix<span class="p">()</span> <span class="o">%&gt;&gt;%</span>
+       cpoApply<span class="p">()</span> <span class="o">%&gt;&gt;%</span>
+       cpoFilterGainRatio<span class="p">()</span> <span class="o">%&gt;&gt;%</span>
+       makeLearner<span class="p">(</span><span class="s">&quot;classif.ctree&quot;</span><span class="p">)</span>
+<span class="kp">sprintf</span><span class="p">(</span><span class="s">&quot;Parameters: %s&quot;</span><span class="p">,</span> <span class="kp">paste</span><span class="p">(</span><span class="kp">names</span><span class="p">(</span>getParamSet<span class="p">(</span>tlrn<span class="p">)</span><span class="o">$</span>pars<span class="p">),</span> collapse<span class="o">=</span><span class="s">&quot;, &quot;</span><span class="p">))</span>
+ps2 <span class="o">=</span> makeParamSet<span class="p">(</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;model.matrix.formula&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>first <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="p">,</span> second <span class="o">=</span> <span class="o">~</span><span class="m">0</span> <span class="o">+</span> <span class="m">.</span><span class="o">^</span><span class="m">2</span><span class="p">)),</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;apply.cpo&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span>nopca <span class="o">=</span> NULLCPO<span class="p">,</span>
+                      onlypca <span class="o">=</span> cpoPca<span class="p">(),</span>
+                      addpca <span class="o">=</span> cpoCbind<span class="p">(</span>NULLCPO<span class="p">,</span> cpoPca<span class="p">()))),</span>
+    makeDiscreteParam<span class="p">(</span>
+        <span class="s">&quot;gain.ratio.perc&quot;</span><span class="p">,</span>
+        values <span class="o">=</span> <span class="kt">list</span><span class="p">(</span><span class="m">0.333</span><span class="p">,</span> <span class="m">0.667</span><span class="p">,</span> <span class="m">1.0</span><span class="p">)),</span>
+    makeDiscreteParam<span class="p">(</span><span class="s">&quot;teststat&quot;</span><span class="p">,</span> values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;quad&quot;</span><span class="p">,</span> <span class="s">&quot;max&quot;</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># commit a70edb1f makes output unbearably ugly, so suppress it here</span>
+<span class="kp">suppressMessages</span><span class="p">(</span><span class="kp">suppressWarnings</span><span class="p">(</span>tuneParams<span class="p">(</span>tlrn<span class="p">,</span> pid.task<span class="p">,</span> cv5<span class="p">,</span> par.set <span class="o">=</span> ps2<span class="p">,</span>
+           control <span class="o">=</span> makeTuneControlGrid<span class="p">(),</span>
+           show.info<span class="o">=</span><span class="kc">FALSE</span><span class="p">)))</span>
 </pre></div>
 
 </div>
