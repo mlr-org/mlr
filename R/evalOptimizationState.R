@@ -41,7 +41,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   if (set.pars.ok) {
     measures.name = c()
     for (i in seq_along(measures)) {
-      measures.name[[i]] = measures[[i]]$id
+      measures.name[i] = measures[[i]]$id
     }
     # in resampling() fitted models should be returned for amv measures
     models = any(grepl("AMV", measures.name))
@@ -64,13 +64,27 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       # each part was the test set of a resample iters.
       if (AMV == TRUE) {
         model = r$models[[1]]
-        # oder
-
       }
 
       # we need to eval 1 final time here, as tuneThreshold only works with 1 measure,
       # but we need yvec for all measures
       y = performance(setThreshold(r$pred, threshold = threshold), measures = measures, model = model, task = task)
+
+
+      ### oder statt 65-71
+      # if (AMV == TRUE) {
+      #   y.tmp = matrix(NA, length(r$models), length(measures))
+      #  for( i in seq_along(r$models)) {
+      #    pred.tmp = setThreshold(r$pred, threshold = threshold)
+      #    pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
+      #    y.tmp[i,] = performance(pred.tmp, measures = measures, model = r$models[[i]], task = task)
+      #  }
+      #   colnames(y.tmp) = measures.name
+      #   y = colMeans(y.tmp)
+      # } else {
+      #   y = performance(setThreshold(r$pred, threshold = threshold), measures = measures, model = model, task = task)
+      # }
+
       # names from resample are slightly different, set them correctly here
       names(y) = names(r$aggr)
     } else {

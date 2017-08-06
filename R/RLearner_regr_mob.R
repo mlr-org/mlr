@@ -1,5 +1,4 @@
-#' @export
-makeRLearner.regr.mob = function() {
+#' @exportmakeRLearner.regr.mob = function() {
   makeRLearnerRegr(
     cl = "regr.mob",
     package = c("party", "modeltools"),
