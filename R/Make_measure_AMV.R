@@ -13,8 +13,8 @@
 #' Note: prediction object must have \code{pred.type = 'prob'}
 #'
 #' @param id [\code{character(1)}]\cr
-#'   Name of measure.
-#'   Default is \dQuote{amv}.
+#'   Name of measure. Note: need to keep the string "AVM" in the ID if doing nested resampling with threshold tuning.
+#'   Default is \dQuote{AMV}.
 #' @param alphas [\code{numeric}] \cr
 #'   Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
 #'   Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.
