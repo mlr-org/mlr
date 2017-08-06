@@ -18,7 +18,7 @@
 #'   only when required for the performance measure.
 #' @param nsub [\code{integer(1)}]\cr
 #'   Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.
-#'   Default is 20.
+#'   Default is 20. For AMV performance measur it is always 1 due to computational constraints.
 #' @param control [\code{list}]\cr
 #'   Control object for \code{\link[cmaes]{cma_es}} when used.
 #'   Default is empty list.
@@ -33,8 +33,12 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   measure = checkMeasures(measure, td)[[1L]]
   if (!missing(task))
     assertClass(task, classes = "SupervisedTask")
-  if (!missing(model))
+  if (!missing(model) && !is.list(model))
     assertClass(model, classes = "WrappedModel")
+  if (!missing(model) && any(class(pred) %in% "ResamplePrediction")) {
+    assertClass(model, classes = "list")
+    for(i in model) assertClass(i, classes = "WrappedModel")
+  }
   assertList(control)
 
   probs = getPredictionProbabilities(pred)
@@ -49,7 +53,10 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   fitn = function(x) {
     if (ttype == "multilabel" || k > 2)
       names(x) = cls
-    performance(setThreshold(pred, x), measure, task, model)
+    #if (any(class(pred) %in% "ResamplePrediction")) {
+
+    #}
+    performance(setThreshold(pred, x), measure, task, model[[1]])
   }
 
   if (ttype == "multilabel" || k > 2L) {
@@ -60,6 +67,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     names(th) = cls
     perf = or$val
   } else { # classif with k = 2
+    if (grepl("AMV", measure$id)) nsub = 1
     or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
     th = or[[1]]
     perf = or$objective
