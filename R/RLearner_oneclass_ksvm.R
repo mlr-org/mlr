@@ -52,7 +52,7 @@ predictLearner.oneclass.ksvm = function(.learner, .model, .newdata, .truth = NUL
   } else {
     p = kernlab::predict(.model$learner.model, newdata = .newdata, type = "decision", ...)
     p = convertingScoresToProbability(p, param = c(0, 1))$probability
-    p = cbind(p, 1-p)
+    p = cbind(1-p, p)
     colnames(p) = label
   }
   return(p)
