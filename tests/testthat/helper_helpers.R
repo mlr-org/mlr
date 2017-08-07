@@ -137,7 +137,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
-    testProb(t.name, df, target, positive, negative, train.inds, old.probs, parset)
+    testProb(t.name, df, target, train.inds, old.probs, parset, positive, negative)
   }
 }
 
