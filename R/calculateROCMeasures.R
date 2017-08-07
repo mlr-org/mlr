@@ -41,9 +41,6 @@
 #'
 calculateROCMeasures = function(pred) {
   checkPrediction(pred, task.type = c("oneclass", "classif"), check.truth = TRUE, no.na = TRUE, binary = TRUE)
-
-
-  checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE, binary = TRUE)
   tab = calculateConfusionMatrix(pred, relative = FALSE)$result[1:2, 1:2]
   response = getPredictionResponse(pred)
   truth = getPredictionTruth(pred)
