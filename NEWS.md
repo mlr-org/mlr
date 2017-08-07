@@ -2,10 +2,11 @@
 
 ## general
 * Support for functional data (fda) using matrix columns has been added.
-* relaxed the way wrappers can be nested -- the only explicitly forbidden
+* Relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
-* refactored the resample progress messages to give a better overview and
+* Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
+* calculateROCMeasures now returns absolute instead of relative values
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
@@ -48,6 +49,9 @@
 * {classif,regr}.xyf: broke our API, stability issues
 * classif.hdrda: package removed from CRAN
 * surv.penalized: stability issues
+
+## aggregations - new
+* testgroup.sd
 
 # mlr 2.11:
 
