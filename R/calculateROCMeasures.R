@@ -1,7 +1,7 @@
 #' @title Calculate receiver operator measures.
 #'
 #' @description
-#' Calculate the relative number of correct/incorrect classifications and the following evaluation measures:
+#' Calculate the absolute number of correct/incorrect classifications and the following evaluation measures:
 #'
 #'
 #' \itemize{
@@ -29,7 +29,7 @@
 #'
 #' @return [\code{ROCMeasures}].
 #'    A list containing two elements \code{confusion.matrix} which is
-#'    the 2 times 2 confusion matrix of relative frequencies and \code{measures}, a list of the above mentioned measures.
+#'    the 2 times 2 confusion matrix of absolute frequencies and \code{measures}, a list of the above mentioned measures.
 #' @export
 #' @family roc
 #' @family performance
@@ -42,7 +42,9 @@
 calculateROCMeasures = function(pred) {
   checkPrediction(pred, task.type = c("oneclass", "classif"), check.truth = TRUE, no.na = TRUE, binary = TRUE)
 
-  tab = calculateConfusionMatrix(pred, relative = TRUE)$relative.row[1:2, 1:2]
+
+  checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE, binary = TRUE)
+  tab = calculateConfusionMatrix(pred, relative = FALSE)$result[1:2, 1:2]
   response = getPredictionResponse(pred)
   truth = getPredictionTruth(pred)
   positive = pred$task.desc$positive
