@@ -7,6 +7,8 @@
 #' The learner properties are defined as follows:
 #' \describe{
 #'   \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
+#'   \item{functionals}{Can an arbitrary number of functional features be handled?}
+#'   \item{single.functional}{Can exactly one functional feature be handled?}
 #'   \item{missings}{Can missing values in features be handled?}
 #'   \item{weights}{Can observations be weighted during fitting?}
 #'   \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}

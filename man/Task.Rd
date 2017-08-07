@@ -29,15 +29,14 @@ makeCostSensTask(id = deparse(substitute(data)), data, costs,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, positive = NA_character_,
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, fixup.data = "warn",
+  check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id = deparse(substitute(data)), data, target,
-  censoring = "rcens", weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE)
+makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -92,12 +91,6 @@ The columns correspond to classes and their names are the class labels
 (if unnamed we use y1 to yk as labels).
 Each entry (i,j) of the matrix specifies the cost of predicting class j
 for observation i.}
-
-\item{censoring}{[\code{character(1)}]\cr
-Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
-\dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
-the \dQuote{interval2} format.
-See \code{\link[survival]{Surv}} for details.}
 }
 \value{
 [\code{\link{Task}}].
@@ -126,6 +119,9 @@ Notes:
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
+
+Functional data can be added to a task via matrix columns. For more information refer to
+\code{\link{makeFunctionalData}}.
 }
 \examples{
 if (requireNamespace("mlbench")) {

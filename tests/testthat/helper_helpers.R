@@ -218,11 +218,11 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
-    ids = extractSubList(lrns, "id")
-    return(lrns[!grepl("mock", ids)])
+    ids = BBmisc::extractSubList(lrns, "id")
+    return(lrns[!grepl("mock", ids) & !grepl("^(classif|regr).h2o", ids)])
   } else {
     ids = lrns$class
-    return(lrns[!grepl("mock", ids), ])
+    return(lrns[!grepl("mock", ids) & !grepl("^(classif|regr).h2o", ids), ])
   }
 }
 

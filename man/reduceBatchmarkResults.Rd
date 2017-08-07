@@ -13,7 +13,7 @@ reduceBatchmarkResults(ids = NULL, keep.pred = TRUE,
 A \code{\link[base]{data.frame}} (or \code{\link[data.table]{data.table}})
 with a column named \dQuote{job.id}.
 Alternatively, you may also pass a vector of integerish job ids.
-If not set, defaults to all jobs.}
+If not set, defaults to all successfully terminated jobs (return value of \code{\link[batchtools]{findDone}}.}
 
 \item{keep.pred}{[\code{logical(1)}]\cr
 Keep the prediction data in the \code{pred} slot of the result object.

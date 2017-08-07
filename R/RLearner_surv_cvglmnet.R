@@ -32,7 +32,7 @@ makeRLearner.surv.cvglmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1),
       makeLogicalLearnerParam(id = "factory", default = FALSE)
     ),
-    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights"),
     name = "GLM with Regularization (Cross Validated Lambda)",
     short.name = "cvglmnet",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer.",
@@ -42,7 +42,7 @@ makeRLearner.surv.cvglmnet = function() {
 
 #' @export
 trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+  d = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "surv")
   info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "cox", parallel = FALSE), list(...))
   rm(d)
