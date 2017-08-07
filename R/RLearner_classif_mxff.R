@@ -91,6 +91,9 @@ makeRLearner.classif.mxff = function() {
         requires = quote(dropout.global == FALSE)),
       makeNumericLearnerParam(id = "dropout.layer3", lower = 0, upper = 1 - 1e-7,
         requires = quote(dropout.global == FALSE)),
+      makeLogicalLearnerParam(id = "batch.normalization1", default = FALSE),
+      makeLogicalLearnerParam(id = "batch.normalization2", default = FALSE),
+      makeLogicalLearnerParam(id = "batch.normalization3", default = FALSE),
       makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -144,6 +147,8 @@ makeRLearner.classif.mxff = function() {
     will be applied to the inputs and all the hidden layers. If `dropout.global` is `FALSE`,
     `dropout.input` will be applied to the inputs, and the different `dropout.layer` parameters to
     their respective layers.
+    `batch.normalization1` specifies whether batch normalization should be used in the first hidden layer,
+    `batch.normalization2` and `batch.normalization3` are defined accordingly.
     If `conv.layer1` is `FALSE`, the first layer is a `FullyConnected` layer and `num.layer1` gives
     the number of neurons. If `conv.layer1` is `TRUE`, then `num.layer1` gives the number of
     filters. In this case, `act1` is applied as an `Activation` layer afterwards (as is the case
@@ -196,6 +201,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   pool.type1 = "max", pool.type2 = "max", pool.type3 = "max",
   dropout.global = TRUE, dropout.input = NULL,
   dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
+  batch.normalization1 = FALSE, batch.normalization2 = FALSE, batch.normalization3 = FALSE,
   symbol = NULL, validation.ratio = NULL, eval.data = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
   array.layout = "rowmajor", ...) {
@@ -268,7 +274,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     pool.strides = list(pool.stride1, pool.stride2, pool.stride3)[1:layers]
     pool.pads = list(pool.pad1, pool.pad2, pool.pad3)[1:layers]
     pool.types = list(pool.type1, pool.type2, pool.type3)[1:layers]
-
+    batch.normalization = c(batch.normalization1, batch.normalization2, batch.normalization3)
     # add dropout if specified
     if (dropout.global == TRUE) {
       # construct a list of dropout rates
@@ -294,6 +300,10 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
           dilate = conv.dilates[[i]], pad = conv.pads[[i]], num_filter = nums[i])
         # construct convolutional layer with do.call to omit null values
         sym = do.call(mxnet::mx.symbol.Convolution, conv.inputs[!sapply(conv.inputs, is.null)])
+        # add batch normalization if specified
+        if (batch.normalization[i]) {
+          sym = mxnet::mx.symbol.BatchNorm(sym)
+        }
         # add activation
         sym = mxnet::mx.symbol.Activation(sym, act_type = act[i])
         # prepare pooling inputs
@@ -312,6 +322,10 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
           }
         }
         sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = nums[i])
+        # add batch normalization if specified
+        if (batch.normalization[i]) {
+          sym = mxnet::mx.symbol.BatchNorm(sym)
+        }
         sym = mxnet::mx.symbol.Activation(sym, act_type = act[i])
       }
       # add dropout if specified
