@@ -91,7 +91,7 @@ testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, 
 }
 
 
-testProb = function(t.name, df, target, positive, negative, train.inds, old.probs, parset = list()) {
+testProb = function(t.name, df, target, train.inds, old.probs, parset = list(), positive = NULL, negative = NULL) {
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
