@@ -28,8 +28,4 @@ test_that("oneclass_svm", {
 
    testSimpleParsets("oneclass.svm", oneclass.df, oneclass.target,
      oneclass.train.inds, old.predicts.list,  parset.list)
-
-  tt = function(formula, data, subset=1:150, ...) {
-    e1071::svm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5, type = "one-classification")
-  }
 })
