@@ -39,9 +39,9 @@ predictLearner.oneclass.svm = function(.learner, .model, .newdata, ...) {
     p = factor(p, levels = c("FALSE", "TRUE"), labels = label)
   } else {
     p = predict(.model$learner.model, newdata = .newdata, decision.values = TRUE, ...)
-    p = attr(p, "decision.values")
+    p = attr(p, "decision.values") # low scores = anomaly
     p = convertingScoresToProbability(p, param = c(0, 1))$probability
-    p = cbind(p, 1-p)
+    p = cbind(1-p, p) # we want high prob to indicating anomalies, therefore 1-p
     colnames(p) = label
   }
   return(p)
