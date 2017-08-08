@@ -66,9 +66,8 @@ makeWACMeasure = function(id = "WAC", minimize = FALSE, best = 1, worst = 0, nam
       summand.negative = ifelse(denom.negative == 0, 0,  weight.negative * measureTN(truth, response, negative) / denom.negative)
 
       sum(c(summand.positive, summand.negative))
-      },
+    },
     name = name,
     note = note
   )
 }
-
