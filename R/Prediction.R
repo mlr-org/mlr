@@ -182,18 +182,6 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
   # we simply inherit from PredictionClassif, as structure is the same
   p = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth, predict.type, predict.threshold, y, time, error, dump)
   addClasses(p, "PredictionOneClass")
-
-  # if we want to set predict.threshold different than classiftask, than shoudl not inherit from ClassifTaskDesc
-  # example to set theshold as the 5% quantile
-  # would like to make it possible to set a quantile instead of a absolut threshold
-  # if (predict.type == "prob") {
-  #   # set default threshold to the 5% quantile
-  #   if (is.null(predict.threshold)) {
-  #     predict.threshold = quantile(y, probs = 0.05)
-  #     names(predict.threshold) = task.desc$positive
-  #   }
-  #   p = setThreshold(p, predict.threshold)
-  # }
 }
 
 

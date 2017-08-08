@@ -56,7 +56,7 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
     fls = fls[ns]
     if (length(ns) > 0L)
       .newdata[ns] = mapply(factor, x = .newdata[ns],
-         levels = fls, SIMPLIFY = FALSE)
+        levels = fls, SIMPLIFY = FALSE)
   }
   p = predictLearner(.learner, .model, .newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
@@ -90,7 +90,7 @@ checkPredictLearnerOutput = function(learner, model, p) {
     if (learner$predict.type == "response") {
       if (cl != "numeric")
         stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
-     } else if (learner$predict.type == "se") {
+    } else if (learner$predict.type == "se") {
       if (!is.matrix(p))
         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
       if (ncol(p) != 2L)
@@ -113,10 +113,31 @@ checkPredictLearnerOutput = function(learner, model, p) {
     if (learner$predict.type == "response") {
       if (!(is.matrix(p) && typeof(p) == "logical"))
         stopf("predictLearner for %s has returned a class %s instead of a logical matrix!", learner$id, cl)
-     } else if (learner$predict.type == "prob") {
+    } else if (learner$predict.type == "prob") {
       if (!(is.matrix(p) && typeof(p) == "double"))
         stopf("predictLearner for %s has returned a class %s instead of a numerical matrix!", learner$id, cl)
     }
-   }
+  }  else if (learner$type == "oneclass") {
+    levs = model$task.desc$class.levels
+    if (learner$predict.type == "response") {
+      # the levels of the predicted classes might not be complete....
+      # be sure to add the levels at the end, otherwise data gets changed!!!
+      if (!is.factor(p))
+        stopf("predictLearner for %s has returned a class %s instead of a factor!", learner$id, cl)
+      levs2 = levels(p)
+      if (length(levs2) != length(levs) || any(levs != levs2))
+        p = factor(p, levels = levs2)
+    } else if (learner$predict.type == "prob") {
+      if (!is.matrix(p))
+        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+      cns = colnames(p)
+      if (is.null(cns) || length(cns) == 0L)
+        stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
+          learner$id)
+      if (!(cns %in% levs))
+        stopf("predictLearner for %s has returned not the class levels as column names: %s",
+          learner$id, collapse(colnames(p)))
+    }
+  }
   return(p)
 }
