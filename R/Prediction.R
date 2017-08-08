@@ -182,11 +182,11 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
   # we simply inherit from PredictionClassif, as structure is the same
   if (any(class(y) %in% "PredictionAMVhd")) {
     plist = lapply(y, function(ylist) {
-      makeSubPred = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth,
+      make.sub.pred = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth,
         predict.type, predict.threshold, ylist, time, error, dump)
-      makeSubPred$n.subfeat = attr(ylist, "n.subfeat")
-      makeSubPred$subfeat = attr(ylist, "subfeat")
-      addClasses(makeSubPred, "PredictionAMVhd")
+      make.sub.pred$n.subfeat = attr(ylist, "n.subfeat")
+      make.sub.pred$subfeat = attr(ylist, "subfeat")
+      addClasses(make.sub.pred, "PredictionAMVhd")
     })
     p = plist[[1]]
     attr(p, "AMVhdSubpredict") = plist[-1]

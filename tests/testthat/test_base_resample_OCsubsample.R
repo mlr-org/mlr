@@ -14,8 +14,8 @@ test_that("OCsubsampling instance works", {
   for (i in 1:iters) {
     i1 = rin$train.inds[[i]]
     i2 = rin$test.inds[[i]]
-    expect_equal(length(i1), 0.25*normal.size)
-    expect_equal(length(i2), size - 0.25*normal.size)
+    expect_equal(length(i1), 0.25 * normal.size)
+    expect_equal(length(i2), size - 0.25 * normal.size)
 
     expect_true(min(i1) >= 1)
     #sample without replacement, train data can't have more observations than the number of normal observation
