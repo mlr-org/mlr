@@ -3,7 +3,7 @@
 
 makeOneClassTask = function(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, fixup.data = "warn", positive, negative,
-    check.data = TRUE) {
+  check.data = TRUE) {
   assertString(id)
 
   # positive needs to be a string, if it's a number convert it into string
