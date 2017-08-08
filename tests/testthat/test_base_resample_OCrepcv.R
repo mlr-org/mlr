@@ -1,5 +1,21 @@
 context("resample_ocrepcv")
 
+test_that("test.join works somehow", {
+  df = data.frame(t = factor(rep(c("a", "b"), each = 4)), x = 9:6)
+  task = makeOneClassTask(data = df, target = "t", positive = "a", negative = "b")
+  lrn = makeLearner("oneclass.svm")
+  measures = list(fn, setAggregation(fn, test.join))
+  rin = makeResampleInstance(makeResampleDesc("OCRepCV", reps = 5, folds = 3), task = task)
+  res = resample(learner = lrn, task = task, resampling = rin,
+    measures = measures, models = FALSE, weights = NULL, keep.pred = TRUE)
+  expect_equal(res$measures.test[, 2L], res$measures.test[, 3L])
+  expect_true(diff(res$aggr) > 0)
+
+  lrn = setPredictType(lrn, predict.type = "prob")
+  res.prob = resample(learner = lrn, task = task, resampling = rin, measures = measures)
+  expect_equal(res.prob$measures.test[, 2L], res.prob$measures.test[, 3L])
+})
+
 test_that("repcv instance works", {
   rin = makeResampleInstance(makeResampleDesc("OCRepCV", folds = 10, reps = 3), task = oneclass.task)
 
@@ -54,18 +70,3 @@ test_that("repcv instance is stochastic", {
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
 
-test_that("test.join works somehow", {
-  df = data.frame(t = factor(rep(c("a", "b"), each = 4)), x = 9:6)
-  task = makeOneClassTask(data = df, target = "t", positive = "a", negative = "b")
-  lrn = makeLearner("oneclass.svm")
-  measures = list(fn, setAggregation(fn, test.join))
-  rin = makeResampleInstance(makeResampleDesc("OCRepCV", reps = 5, folds = 3), task = task)
-  res = resample(learner = lrn, task = task, resampling = rin,
-    measures = measures, models = FALSE, weights = NULL, keep.pred = TRUE)
-  expect_equal(res$measures.test[, 2L], res$measures.test[, 3L])
-  expect_true(diff(res$aggr) > 0)
-
-  lrn = setPredictType(lrn, predict.type = "prob")
-  res.prob = resample(learner = lrn, task = task, resampling = rin, measures = measures)
-  expect_equal(res.prob$measures.test[, 2L], res.prob$measures.test[, 3L])
-})
