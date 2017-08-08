@@ -94,5 +94,3 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   }
   invisible(NULL)
 }
-
-
