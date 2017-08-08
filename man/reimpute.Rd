@@ -29,8 +29,7 @@ as returned by \code{\link{impute}} to perform the following actions:
 }
 }
 \seealso{
-Other impute: \code{\link{CPOImputer}},
-  \code{\link{cpoImpute}}, \code{\link{imputations}},
+Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}
 }

@@ -41,8 +41,7 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 
-Other filter: \code{\link{cpoFilterFeatures}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},

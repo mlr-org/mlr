@@ -64,8 +64,7 @@ Internally uses \code{\link{impute}} before training the learner and \code{\link
 before predicting.
 }
 \seealso{
-Other impute: \code{\link{CPOImputer}},
-  \code{\link{cpoImpute}}, \code{\link{imputations}},
+Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeMethod}},
   \code{\link{reimpute}}
 

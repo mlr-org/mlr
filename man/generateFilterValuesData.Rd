@@ -57,8 +57,7 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
-Other filter: \code{\link{cpoFilterFeatures}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},

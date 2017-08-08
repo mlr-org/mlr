@@ -93,8 +93,7 @@ The built-ins are:
 }
 }
 \seealso{
-Other impute: \code{\link{CPOImputer}},
-  \code{\link{cpoImpute}}, \code{\link{impute}},
+Other impute: \code{\link{impute}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }

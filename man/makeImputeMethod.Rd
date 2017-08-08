@@ -26,8 +26,7 @@ Named list of arguments to pass to \code{learn} via \code{...}.}
 This is a constructor to create your own imputation methods.
 }
 \seealso{
-Other impute: \code{\link{CPOImputer}},
-  \code{\link{cpoImpute}}, \code{\link{imputations}},
+Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeWrapper}},
   \code{\link{reimpute}}
 }
