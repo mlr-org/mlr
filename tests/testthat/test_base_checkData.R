@@ -69,4 +69,4 @@ test_that("checkData", {
 
   # if target column has one class level and positive and negative are wrongly named
   expect_error(makeOneClassTask(data = oneclass.df.true, target = "Target", positive = "NORMAL", negative = "ANOMALY"), "Neither 'positive' nor 'negative' are subset of class levels")
-  })
+})
