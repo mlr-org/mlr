@@ -107,7 +107,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y,
       remove.nas, stage = 2L, prev.stage = prev.stage)
   list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold,
-      err.dumps = err.dumps)
+    err.dumps = err.dumps)
 }
 
 # evaluates a list of states by calling evalOptimizationState
