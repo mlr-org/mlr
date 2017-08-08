@@ -54,18 +54,24 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   fitn = function(x) {
     if (ttype == "multilabel" || k > 2)
       names(x) = cls
+
+    # If setthreshold is applied on a Resampleprediction object, the variable models
+    # has as many models as resample iters, amv-performance need a model to evaluate the pred
+    # pred has the prediction of the whole data set, it consist of iters parts (= #iters of resample)
+    # each part was the test set of a resample iters.
     if (any(class(pred) %in% "ResamplePrediction" && grepl("AMV", measure$id))) {
-      y.tmp = matrix(NA, length(model), length(measures))
+      y.tmp = vector()
       for( i in seq_along(model)) {
         pred.tmp = setThreshold(pred, threshold = x)
         pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
-        y.tmp[i,] = performance(pred.tmp, measure = measure, model = model[[i]], task = task)
+        y.tmp[i] = performance(pred.tmp, measure = measure, model = model[[i]], task = task)
       }
-      colnames(y.tmp) = measure$id
-      colMeans(y.tmp)
+      y = mean(y.tmp)
+      names(y) = measure$id
     } else {
-    performance(setThreshold(pred, x), measure, task, model)
+      y = performance(setThreshold(pred, x), measure, task, model)
     }
+    return(y)
   }
 
   if (ttype == "multilabel" || k > 2L) {
