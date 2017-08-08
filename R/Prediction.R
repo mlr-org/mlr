@@ -195,18 +195,6 @@ makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, pred
       truth, predict.type, predict.threshold, y, time, error, dump)
   }
   addClasses(p, "PredictionOneClass")
-
-  # if we want to set predict.threshold different than classiftask, than shoudl not inherit from ClassifTaskDesc
-  # example to set theshold as the 5% quantile
-  # would like to make it possible to set a quantile instead of a absolut threshold
-  # if (predict.type == "prob") {
-  #   # set default threshold to the 5% quantile
-  #   if (is.null(predict.threshold)) {
-  #     predict.threshold = quantile(y, probs = 0.05)
-  #     names(predict.threshold) = task.desc$positive
-  #   }
-  #   p = setThreshold(p, predict.threshold)
-  # }
 }
 
 #' @export
@@ -238,7 +226,7 @@ print.Prediction = function(x, ...) {
 
 # maybe return number of features in the general print.Prediction function
 print.PredictionAMVhd = function(x, ...){
-catf("Feature subsample: %i features", x$n.subfeat)
-catf("Feature subsample: %s", collapse(x$subfeat))
-  print.Prediction(x,...)
+  catf("Feature subsample: %i features", x$n.subfeat)
+  catf("Feature subsample: %s", collapse(x$subfeat))
+  print.Prediction(x, ...)
 }

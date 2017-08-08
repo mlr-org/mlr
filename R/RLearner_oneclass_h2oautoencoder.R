@@ -169,7 +169,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
       makeDiscreteLearnerParam("loss", values = c("Automatic", "Quadratic",
-        "Absolute", "Huber", "Quantile")),#"CrossEntropy" not for autoencoder
+        "Absolute", "Huber", "Quantile")), # "CrossEntropy" not for autoencoder
       makeDiscreteLearnerParam("distribution", values = c("AUTO", "gaussian",
         "bernoulli", "multinomial", "poisson", "gamma", "tweedie", "laplace",
         "huber", "quantile"), default = "AUTO"),
@@ -179,7 +179,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeIntegerLearnerParam("score_training_samples", default = 10000),
       makeIntegerLearnerParam("score_validation_samples", default = 0),
       makeNumericLearnerParam("score_duty_cycle", default = 0.1),
-        makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
+      makeIntegerLearnerParam("stopping_rounds", default = 5L, lower = 0L),
       makeDiscreteLearnerParam("stopping_metric", values = c("AUTO", "deviance", "logloss",
         "MSE", "AUC", "r2", "misclassification"), default = "AUTO",
         requires = quote(stopping_rounds > 0L)),
@@ -246,17 +246,17 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
   label = c(td$positive, td$negative)
   if (.learner$predict.type == "response"){
     # per default assume 5% anomalies
-      indices.threshold = order(p.df)[round(length(p.df) * 0.95)]  #mse reconstruction error in [0,inf[
-      predict.threshold = p.df[indices.threshold]
-      p = p.df >= predict.threshold
-      p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
+    indices.threshold = order(p.df)[round(length(p.df) * 0.95)]  # mse reconstruction error in [0,inf[
+    predict.threshold = p.df[indices.threshold]
+    p = p.df >= predict.threshold
+    p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
   } else {
     # usually low scores are indicator for anomaly
     # here: low scores = low mse reconstruction error = indicator for normal data
     # therefore make the scores negative before converting
     # low prob = anomaly
     p = convertingScoresToProbability(p.df)$probability
-    p = cbind(p, 1-p) # p.df = mse.reconstruction error = high = anomaly (same for prob)
+    p = cbind(p, 1 - p) # p.df = mse.reconstruction error = high = anomaly (same for prob)
     colnames(p) = label
   }
   return(p)

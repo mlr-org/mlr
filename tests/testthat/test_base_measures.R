@@ -338,7 +338,7 @@ test_that("check measure calculations", {
   expect_silent(measureMAPE(c(1, 1, 1, 1), c(2, 2, 2, 2)))
   # msle
   msle.test = ((log(4 + 1) - log(5 + 1))^2 + (log(11 + 1) - log(10 + 1))^2 +
-(log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
+      (log(0 + 1) - log(0 + 1))^2 + (log(4 + 1) - log(5 + 1))^2) / 4
   msle.perf = performance(pred.regr, measures = msle, model = mod.regr)
   expect_equal(msle.test, msle$fun(pred = pred.regr))
   expect_equal(msle.test, as.numeric(msle.perf))
@@ -419,12 +419,12 @@ test_that("check measure calculations", {
     colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
     colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
     colauc.width = -diff(colauc.omspec) # = diff(rev(colauc.omspec))
-  if (sum(colauc.height * colauc.width) < 0.5) {
-    colauc2[i, 1] = 1 - sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
-  } else {
-    colauc2[i, 1] = sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+    if (sum(colauc.height * colauc.width) < 0.5) {
+      colauc2[i, 1] = 1 - sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+    } else {
+      colauc2[i, 1] = sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+    }
   }
-}
   expect_equal(colauc2[, 1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[, 1]))
   # multiclass.auc
   expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
@@ -591,7 +591,7 @@ test_that("check measure calculations", {
   expect_equal(fdr.test, as.numeric(fdr.perf))
   #bac
   bac.test = 0.5 * (tpr.test / (tpr.test + fnr.test) + tnr.test /
-(tnr.test + fpr.test))
+      (tnr.test + fpr.test))
   bac.perf = performance(pred.bin, measures = bac, model = mod.bin)
   expect_equal(bac.test, bac$fun(pred = pred.bin))
   expect_equal(bac.test, as.numeric(bac.perf))
@@ -608,8 +608,8 @@ test_that("check measure calculations", {
   #mcc
   mcc.test = (tp.test * tn.test - fp.test * fn.test) /
     sqrt((tp.test + fp.test) * (tp.test + fn.test) *
-(tn.test + fp.test) * (tn.test + fn.test))
-   mcc.perf = performance(pred.bin, measures = mcc, model = mod.bin)
+        (tn.test + fp.test) * (tn.test + fn.test))
+  mcc.perf = performance(pred.bin, measures = mcc, model = mod.bin)
   expect_equal(mcc.test, mcc$fun(pred = pred.bin))
   expect_equal(mcc.test, as.numeric(mcc.perf))
   #f1
@@ -762,7 +762,7 @@ test_that("check measure calculations", {
   #meancosts
   meancosts.test = (0 + 0 + 0 + 1) / 4L
   meancosts.perf = performance(pred.costsens, measures = meancosts,
-   model = mod.costsens, task = task.costsens)
+    model = mod.costsens, task = task.costsens)
   expect_equal(meancosts.test,
     meancosts$fun(pred = pred.costsens, task = task.costsens))
   expect_equal(meancosts.test, as.numeric(meancosts.perf))
@@ -779,13 +779,13 @@ test_that("check measure calculations", {
   c2 = c(3, 1)
   c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
   s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
-    sum((data.cluster[4, ] - c1)^2)) / 3L)
+      sum((data.cluster[4, ] - c1)^2)) / 3L)
   M = sqrt(sum((c2 - c1)^2))
   db.test = s1 / M
   db.perf = performance(pred.cluster, measures = db,
     model = mod.cluster, feats = data.cluster)
   expect_equal(db.test, db$fun(task = task.cluster,
-   pred = pred.cluster, feats = data.cluster))
+    pred = pred.cluster, feats = data.cluster))
   expect_equal(db.test, as.numeric(db.perf))
 
   #dunn
@@ -816,10 +816,10 @@ test_that("check measure calculations", {
   c1.dists = unique(as.vector(dists [-3L, -3L]))
   c1.dists = c1.dists[c1.dists != 0L]
   con.pairs = vapply(c1.dists, function(x) x < c2.dists,
-   logical(length = length(c2.dists)))
+    logical(length = length(c2.dists)))
   con.pairs = sum(rowSums(con.pairs))
   dis.pairs = vapply(c2.dists, function(x) x < c1.dists,
-   logical(length = length(c1.dists)))
+    logical(length = length(c1.dists)))
   dis.pairs = sum(rowSums(dis.pairs))
   g2.test = (con.pairs - dis.pairs) / (con.pairs + dis.pairs)
   g2.perf = performance(pred.cluster, measures = G2,
@@ -970,7 +970,7 @@ test_that("measure properties", {
     function(m) {
       res = hasMeasureProperties(m, m$properties)
       all(res) & length(res) > 0
-      })))
+    })))
   props = listMeasureProperties()
   #all props exist in mlr$measure.properties
   expect_true(all(vlapply(listMeasures(create = TRUE),
