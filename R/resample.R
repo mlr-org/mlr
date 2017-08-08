@@ -106,18 +106,20 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")
 
-  messagef("Resampling: %s", rin$desc$id)
+  if (show.info) {
+    messagef("Resampling: %s", rin$desc$id)
 
-  measure.lognames = extractSubList(measures, "id")
-  # when predict on both some measure might be in there twice,
-  # depending on aggregation fun, then we need to print each measure twice
-  if (rin$desc$predict == "both") {
-    id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
-    id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
-    measure.lognames = c(stri_paste(measure.lognames[id.train], "train", sep = "."),
-      stri_paste(measure.lognames[id.test], "test", sep = "."))
+    measure.lognames = extractSubList(measures, "id")
+    # when predict on both some measure might be in there twice,
+    # depending on aggregation fun, then we need to print each measure twice
+    if (rin$desc$predict == "both") {
+      id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
+      id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
+      measure.lognames = c(stri_paste(measure.lognames[id.train], "train", sep = "."),
+        stri_paste(measure.lognames[id.test], "test", sep = "."))
+    }
+    printResampleFormatLine("Measures:", measure.lognames)
   }
-  printResampleFormatLine("Measures:", measure.lognames)
 
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
