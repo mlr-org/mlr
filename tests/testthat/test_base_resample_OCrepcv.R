@@ -60,7 +60,8 @@ test_that("test.join works somehow", {
   lrn = makeLearner("oneclass.svm")
   measures = list(fn, setAggregation(fn, test.join))
   rin = makeResampleInstance(makeResampleDesc("OCRepCV", reps = 5, folds = 3), task = task)
-  res = resample(learner = lrn, task = task, resampling = rin, measures = measures)
+  res = resample(learner = lrn, task = task, resampling = rin,
+    measures = measures, models = FALSE, weights = NULL, keep.pred = TRUE)
   expect_equal(res$measures.test[, 2L], res$measures.test[, 3L])
   expect_true(diff(res$aggr) > 0)
 
