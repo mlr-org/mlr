@@ -1,3 +1,10 @@
+#' Only exported for internal use.
+#' @param next.model [\code{WrappedModel}]\cr
+#'   The next model.
+#' @param cl [\code{character}]\cr
+#'   Subclass to assign to the resulting model.
+#'
+#' @export
 makeChainModel = function(next.model, cl) {
   setClasses(list(next.model = next.model), c(cl, "ChainModel", "WrappedModel"))
 }

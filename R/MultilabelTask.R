@@ -27,6 +27,8 @@ print.MultilabelTask = function(x, ...) {
   print(sums)
 }
 
+#' @export
+#' @rdname makeTaskDesc
 makeMultilabelTaskDesc = function(id, data, target, weights, blocking) {
   levs = target
   td = makeTaskDescInternal("multilabel", id, data, target, weights, blocking)

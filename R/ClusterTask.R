@@ -11,6 +11,8 @@ makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL,
   addClasses(task, "ClusterTask")
 }
 
+#' @export
+#' @rdname makeTaskDesc
 makeClusterTaskDesc = function(id, data, weights, blocking) {
   target = character(0L)
   td = makeTaskDescInternal("cluster", id, data, target, weights, blocking)

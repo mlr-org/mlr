@@ -30,6 +30,8 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
   addClasses(task, "ClassifTask")
 }
 
+#' @export
+#' @rdname makeTaskDesc
 makeClassifTaskDesc = function(id, data, target, weights, blocking, positive) {
   levs = levels(data[[target]])
   m = length(levs)
