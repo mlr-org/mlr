@@ -79,7 +79,7 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
 
       # proportion of correct results in the top n ranks
       n.anomaly = sum(pred$data$truth == pred$task.desc$positive)
-      scores = pred$data[,3]
+      scores = pred$data[, 3]
       rank = order(scores, decreasing = TRUE)
       ind.true = which(pred$data$truth == pred$task.desc$positive)
       if (n.anomaly == 0) {

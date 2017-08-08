@@ -64,10 +64,10 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       # each part was the test set of a resample iters.
       if (amv == TRUE) {
         y.tmp = matrix(NA, length(r$models), length(measures))
-        for( i in seq_along(r$models)) {
+        for (i in seq_along(r$models)) {
           pred.tmp = setThreshold(r$pred, threshold = threshold)
           pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
-          y.tmp[i,] = performance(pred.tmp, measures = measures, model = r$models[[i]], task = task)
+          y.tmp[i, ] = performance(pred.tmp, measures = measures, model = r$models[[i]], task = task)
         }
         colnames(y.tmp) = measures.name
         y = colMeans(y.tmp)
