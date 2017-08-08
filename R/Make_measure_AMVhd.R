@@ -25,7 +25,7 @@
 #' # creates anomaly data with feature size nine
 #' sigma = matrix(0, 9, 9)
 #' diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
-#' normal = mvrnorm(n = 1000, rep(0, 9), sigma)
+#' normal = MASS::mvrnorm(n = 1000, rep(0, 9), sigma)
 #' colnames(normal) = paste0("V", 1:9)
 #' normal = as.data.frame(normal)
 #' normal$normal = TRUE
