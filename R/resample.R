@@ -175,11 +175,11 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
-   if( !is.null(pred.test$subfeat)) {
-     feats = getTaskData(task, target.extra = TRUE)$data[test.i, pred.test$subfeat]
-   } else {
-     feats = getTaskData(task, target.extra = TRUE)$data[test.i, ]
-   }
+    if( !is.null(pred.test$subfeat)) {
+      feats = getTaskData(task, target.extra = TRUE)$data[test.i, pred.test$subfeat]
+    } else {
+      feats = getTaskData(task, target.extra = TRUE)$data[test.i, ]
+    }
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures,
       feats = feats)
     names(ms.test) = vcapply(measures, measureAggrName)
