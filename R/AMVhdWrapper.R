@@ -101,7 +101,7 @@ predictLearner.AMVhdWrapper = function(.learner, .model, .newdata, .subset = NUL
     stop("Predict type for AMVhd learner must be 'prob'.")
   pred = lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    p.tmp = predict(m, newdata = nd, subset = .subset, ...)$data[ , 1:2] #take prob column
+    p.tmp = predict(m, newdata = nd, subset = .subset, ...)$data[, 1:2] # take prob column
     colnames(p.tmp) = .model$task.desc$class.levels
     p.tmp = as.matrix(p.tmp)
     attr(p.tmp, "n.subfeat") = length(m$features)
