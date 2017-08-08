@@ -119,7 +119,11 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list(), 
       old.probs = as.matrix(old.probs)
 
     p = getPredictionProbabilities(cp)
-
+    if (is.data.frame(p))
+      p = as.matrix(p)
+    # we change names a bit so dont check them
+    colnames(p) = colnames(old.probs) = NULL
+    rownames(p) = rownames(old.probs) = NULL
     class(old.probs) = NULL
     expect_equal(p, old.probs)
   }
