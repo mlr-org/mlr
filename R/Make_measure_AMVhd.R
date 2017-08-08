@@ -89,28 +89,28 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
 
       data = getTaskData(task, target.extra = TRUE)$data
       train.inds = model$subset
-      test.inds = setdiff(1:nrow(data), train.inds)
+      test.inds = setdiff(seq_row(data), train.inds)
       if (length(test.inds) == 0) stop("Pass argument subset in the train model.")
 
-      if(model$learner$id %nin% listLearners(task)$class) {
+      if (model$learner$id %nin% listLearners(task)$class) {
         lrn.id = gsub("^([^.]*.[^.]*)..*$", "\\1", model$learner$id)
       } else {
         lrn.id = model$learner$id
       }
 
-      lrn_amv = makeLearner(lrn.id, predict.type = "prob")
-      lrn_amvw = makeAMVhdWrapper(lrn_amv, amv.iters = amv.iters, amv.feats = amv.feats)
+      lrn.amv = makeLearner(lrn.id, predict.type = "prob")
+      lrn.amvw = makeAMVhdWrapper(lrn.amv, amv.iters = amv.iters, amv.feats = amv.feats)
       # wrapped model
-      mod_amvw = train(lrn_amvw, task, subset = train.inds)
+      mod.amvw = train(lrn.amvw, task, subset = train.inds)
       # wrapped prediction
-      pred_amvw = predict(mod_amvw, task, subset = test.inds)
+      pred.amvw = predict(mod.amvw, task, subset = test.inds)
 
       measure.amv = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas,
         n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       # get the prediction of submodels, which has sampled features
-      subpred = attr(pred_amvw, "AMVhdSubpredict")
-      submod = getLearnerModel(mod_amvw, more.unwrap = FALSE)
+      subpred = attr(pred.amvw, "AMVhdSubpredict")
+      submod = getLearnerModel(mod.amvw, more.unwrap = FALSE)
       #delete full model before calculating the amv on each submodel
       submod = submod[-1]
       # calculate amv for each submodel
