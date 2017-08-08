@@ -306,3 +306,10 @@ parseSingleParameter = function(name, thispar, is.learner, pss.env) {
   do.call(getConstructor(ptype, is.learner, is.vector), constructor.params, quote = TRUE)
 }
 
+# deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
+# Note that this is a heuristic for user messages only, the result can not be
+# parsed again!
+deparseJoin = function(what, sep = " ") {
+  collapse(deparse(what, 500), sep = sep)
+}
+
