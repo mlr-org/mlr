@@ -7,8 +7,8 @@ test_that("oneclass_h2oautoencoder", {
 
   # in mlr different defaults were set for hidden
   parset.list.h2o = list(
-    list(hidden = c(200)),
-    list(hidden = c(200), epochs = 50),
+    list(hidden = 200),
+    list(hidden = 200, epochs = 50),
     list(hidden = c(20, 10))
   )
 
@@ -33,7 +33,7 @@ test_that("oneclass_h2oautoencoder", {
       autoencoder = TRUE))
     m = do.call(h2o.deeplearning, parset)
     p  = h2o.anomaly(m, test.hex, per_feature = FALSE)
-    old.probs.list[[i]] = convertingScoresToProbability(as.matrix(p))$probability[,1]
+    old.probs.list[[i]] = convertingScoresToProbability(as.matrix(p))$probability[, 1]
   }
 
   testProbParsets("oneclass.h2o.autoencoder", oneclass.df,
