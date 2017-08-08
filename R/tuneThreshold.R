@@ -37,7 +37,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     assertClass(model, classes = "WrappedModel")
   if (!missing(model) && any(class(pred) %in% "ResamplePrediction")) {
     assertClass(model, classes = "list")
-    for(i in model) assertClass(i, classes = "WrappedModel")
+    for (i in model) assertClass(i, classes = "WrappedModel")
   }
   assertList(control)
 
@@ -50,13 +50,22 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
 
   cls = pred$task.desc$class.levels
   k = length(cls)
+
   fitn = function(x) {
     if (ttype == "multilabel" || k > 2)
       names(x) = cls
-    #if (any(class(pred) %in% "ResamplePrediction")) {
-
-    #}
-    performance(setThreshold(pred, x), measure, task, model[[1]])
+    if (any(class(pred) %in% "ResamplePrediction" && grepl("AMV", measure$id))) {
+      y.tmp = matrix(NA, length(model), length(measures))
+      for( i in seq_along(model)) {
+        pred.tmp = setThreshold(pred, threshold = x)
+        pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
+        y.tmp[i,] = performance(pred.tmp, measure = measure, model = model[[i]], task = task)
+      }
+      colnames(y.tmp) = measure$id
+      colMeans(y.tmp)
+    } else {
+    performance(setThreshold(pred, x), measure, task, model)
+    }
   }
 
   if (ttype == "multilabel" || k > 2L) {

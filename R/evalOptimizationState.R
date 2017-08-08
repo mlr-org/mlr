@@ -39,13 +39,13 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     prev.stage = log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob,
       state, NA_real_, remove.nas, stage = 1L)
   if (set.pars.ok) {
-    measures.name = c()
+    measures.name = vector()
     for (i in seq_along(measures)) {
       measures.name[i] = measures[[i]]$id
     }
     # in resampling() fitted models should be returned for amv measures
     models = any(grepl("AMV", measures.name))
-    AMV = models
+    amv = models
     exec.time = measureTime({
       r = resample.fun(learner2, task, resampling, measures = measures, show.info = FALSE, models = models)
     })
@@ -60,30 +60,22 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       threshold = tune.th.res$th
 
       # r$models has as many models as resample iters, amv-performance need a model to evaluate the pred
-      # r$pred has the prediction of the whole data set, it consist of 3 parts (= # iters of resample)
+      # r$pred has the prediction of the whole data set, it consist of iters parts (= #iters of resample)
       # each part was the test set of a resample iters.
-      if (AMV == TRUE) {
-        model = r$models[[1]]
+      if (amv == TRUE) {
+        y.tmp = matrix(NA, length(r$models), length(measures))
+        for( i in seq_along(r$models)) {
+          pred.tmp = setThreshold(r$pred, threshold = threshold)
+          pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
+          y.tmp[i,] = performance(pred.tmp, measures = measures, model = r$models[[i]], task = task)
+        }
+        colnames(y.tmp) = measures.name
+        y = colMeans(y.tmp)
+      } else {
+        # we need to eval 1 final time here, as tuneThreshold only works with 1 measure,
+        # but we need yvec for all measures
+        y = performance(setThreshold(r$pred, threshold = threshold), measures = measures, model = model, task = task)
       }
-
-      # we need to eval 1 final time here, as tuneThreshold only works with 1 measure,
-      # but we need yvec for all measures
-      y = performance(setThreshold(r$pred, threshold = threshold), measures = measures, model = model, task = task)
-
-
-      ### oder statt 65-71
-      # if (AMV == TRUE) {
-      #   y.tmp = matrix(NA, length(r$models), length(measures))
-      #  for( i in seq_along(r$models)) {
-      #    pred.tmp = setThreshold(r$pred, threshold = threshold)
-      #    pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
-      #    y.tmp[i,] = performance(pred.tmp, measures = measures, model = r$models[[i]], task = task)
-      #  }
-      #   colnames(y.tmp) = measures.name
-      #   y = colMeans(y.tmp)
-      # } else {
-      #   y = performance(setThreshold(r$pred, threshold = threshold), measures = measures, model = model, task = task)
-      # }
 
       # names from resample are slightly different, set them correctly here
       names(y) = names(r$aggr)
