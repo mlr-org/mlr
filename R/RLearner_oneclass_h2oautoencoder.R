@@ -246,7 +246,7 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
   label = c(td$positive, td$negative)
   if (.learner$predict.type == "response"){
     # per default assume 5% anomalies
-    indices.threshold = order(p.df)[round(length(p.df) * 0.95)]  #mse reconstruction error in [0,inf[
+    indices.threshold = order(p.df)[round(length(p.df) * 0.95)]  # mse reconstruction error in [0,inf[
     predict.threshold = p.df[indices.threshold]
     p = p.df >= predict.threshold
     p = factor(p, levels = c("TRUE", "FALSE"), labels = label)

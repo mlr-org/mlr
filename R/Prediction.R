@@ -226,7 +226,7 @@ print.Prediction = function(x, ...) {
 
 # maybe return number of features in the general print.Prediction function
 print.PredictionAMVhd = function(x, ...){
-catf("Feature subsample: %i features", x$n.subfeat)
-catf("Feature subsample: %s", collapse(x$subfeat))
-  print.Prediction(x,...)
+  catf("Feature subsample: %i features", x$n.subfeat)
+  catf("Feature subsample: %s", collapse(x$subfeat))
+  print.Prediction(x, ...)
 }

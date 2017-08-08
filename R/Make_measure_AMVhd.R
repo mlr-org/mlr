@@ -25,7 +25,7 @@
 #' # creates anomaly data with feature size nine
 #' sigma = matrix(0, 9, 9)
 #' diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
-#' normal = mvrnorm(n = 1000, rep(0, 9), sigma)
+#' normal = MASS::mvrnorm(n = 1000, rep(0, 9), sigma)
 #' colnames(normal) = paste0("V", 1:9)
 #' normal = as.data.frame(normal)
 #' normal$normal = TRUE
@@ -85,7 +85,7 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
       alphas = extra.args[[1]]
       n.sim = extra.args[[2]]
 
-      measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
+      measure.amv = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       data = getTaskData(task, target.extra = TRUE)$data
       train.inds = model$subset
@@ -94,9 +94,9 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
 
       if(model$learner$id %nin% listLearners(task)$class) {
         lrn.id = gsub("^([^.]*.[^.]*)..*$", "\\1", model$learner$id)
-        } else {
-          lrn.id = model$learner$id
-          }
+      } else {
+        lrn.id = model$learner$id
+      }
 
       lrn_amv = makeLearner(lrn.id, predict.type = "prob")
       lrn_amvw = makeAMVhdWrapper(lrn_amv, amv.iters = amv.iters, amv.feats = amv.feats)
@@ -105,7 +105,7 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
       # wrapped prediction
       pred_amvw = predict(mod_amvw, task, subset = test.inds)
 
-      measureAMV = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas,
+      measure.amv = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas,
         n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       # get the prediction of submodels, which has sampled features
@@ -114,9 +114,9 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
       #delete full model before calculating the amv on each submodel
       submod = submod[-1]
       # calculate amv for each submodel
-      amv.k = c()
-      for(i in seq_len(length(submod))) {
-        amv.k[i] = performance(pred = subpred[[i]], measures = list(measureAMV),
+      amv.k = vector()
+      for (i in seq_len(length(submod))) {
+        amv.k[i] = performance(pred = subpred[[i]], measures = list(measure.amv),
           model = submod[[i]], feats = feats[, submod[[i]]$features])
       }
       # Return area under the mass-volume curve
