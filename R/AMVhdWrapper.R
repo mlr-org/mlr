@@ -34,7 +34,7 @@
 #' @param amv.feats [\code{numeric(1)}]\cr
 #'   Size of randomly selected features for the sub models.
 #'   Default is 3.
- #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
+#' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
 #' arXiv preprint arXiv:1607.01152
 #' @note see example of \code{makeAMVhdMeasure}
 #' @template ret_learner
@@ -42,7 +42,7 @@
 #' @export
 
 makeAMVhdWrapper = function(learner, amv.iters = 10L, amv.feats = 3) {
-  learner = checkLearner(learner, type = c("oneclass"))
+  learner = checkLearner(learner, type = "oneclass")
   pv = list()
   if (!missing(amv.iters)) {
     amv.iters = asInt(amv.iters, lower = 1L)
@@ -97,11 +97,11 @@ doAMVhdTrainIteration = function(i, d, dsub, task, learner, weights) {
 #' @export
 predictLearner.AMVhdWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
-  if(.learner$predict.type != "prob")
+  if (.learner$predict.type != "prob")
     stop("Predict type for AMVhd learner must be 'prob'.")
   pred = lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    p.tmp = predict(m, newdata = nd, subset = .subset, ...)$data[ ,1:2] #take prob column
+    p.tmp = predict(m, newdata = nd, subset = .subset, ...)$data[ , 1:2] #take prob column
     colnames(p.tmp) = .model$task.desc$class.levels
     p.tmp = as.matrix(p.tmp)
     attr(p.tmp, "n.subfeat") = length(m$features)
@@ -118,7 +118,7 @@ setPredictType.AMVhdWrapper = function(learner, predict.type) {
 
 #' @export
 getLearnerProperties.AMVhdWrapper = function(learner) {
-    switch(learner$type,
+  switch(learner$type,
     "oneclass" = union(getLearnerProperties(learner$next.learner), "prob")
   )
 }

@@ -28,7 +28,7 @@ test_that("oneclass learning", {
   r = holdout(lrn, oneclass.task)
   expect_true(!is.na(r$aggr))
 
-   # Learner with Impute-Preprocessing
+  # Learner with Impute-Preprocessing
   lrn = makeImputeWrapper(lrn, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
   oneclass.df2 = oneclass.df
   oneclass.df2[c(2, 10, 14), c(1, 2)] = NA
