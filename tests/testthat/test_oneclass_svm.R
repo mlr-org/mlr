@@ -26,8 +26,8 @@ test_that("oneclass_svm", {
     old.predicts.list[[i]] = factor(pred, levels = c("FALSE", "TRUE"), labels = c(oneclass.positive, oneclass.negative))
   }
 
-   testSimpleParsets("oneclass.svm", oneclass.df, oneclass.target,
-     oneclass.train.inds, old.predicts.list,  parset.list)
+  testSimpleParsets("oneclass.svm", oneclass.df, oneclass.target,
+    oneclass.train.inds, old.predicts.list,  parset.list)
 
   tt = function(formula, data, subset=1:150, ...) {
     e1071::svm(formula, data = data[subset, ], kernel = "polynomial", degree = 3, coef0 = 2, gamma = 1.5, type = "one-classification")
