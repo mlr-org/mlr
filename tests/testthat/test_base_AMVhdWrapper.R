@@ -28,39 +28,39 @@ test_that("AMVhdWrapper", {
 
 
   # wrapped learner, with 3 feature subsample for each of the 10 iteration
-  lrn_amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
+  lrn.amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
 
   # wrapped model
-  mod_amww = train(lrn_amww, task, subset = train.inds)
-  expect_is(mod_amww, "AMVhdModel")
-  expect_is(mod_amww, "HomogeneousEnsembleModel")
-  expect_is(mod_amww, "BaseWrapperModel")
-  expect_is(mod_amww, "WrappedModel")
-  expect_true(!inherits(mod_amww, "FailureModel"))
+  mod.amww = train(lrn.amww, task, subset = train.inds)
+  expect_is(mod.amww, "AMVhdModel")
+  expect_is(mod.amww, "HomogeneousEnsembleModel")
+  expect_is(mod.amww, "BaseWrapperModel")
+  expect_is(mod.amww, "WrappedModel")
+  expect_true(!inherits(mod.amww, "FailureModel"))
 
 
   # list all submodels, first list element is the full model
-  submod = getLearnerModel(mod_amww, more.unwrap = FALSE)
-  expect_true(is.list(submod) && length(submod) == (lrn_amww$par.vals$amv.iters + 1))
+  submod = getLearnerModel(mod.amww, more.unwrap = FALSE)
+  expect_true(is.list(submod) && length(submod) == (lrn.amww$par.vals$amv.iters + 1))
   expect_true(inherits(submod[[1L]], "WrappedModel"))
-  expect_true(length(submod[[1L]]$features) == (ncol(data)-1))
+  expect_true(length(submod[[1L]]$features) == (ncol(data) - 1))
   expect_true(length(submod[[2L]]$features) == 3)
   expect_equal(unique(sapply(extractSubList(submod, "subset", simplify = FALSE), length)), 630L)
-  expect_equal(unique(sapply(extractSubList(submod, "features", simplify = FALSE), length)), c(9L,3L))
+  expect_equal(unique(sapply(extractSubList(submod, "features", simplify = FALSE), length)), c(9L, 3L))
 
-  submod.unwrap = getLearnerModel(mod_amww, more.unwrap = TRUE)
-  expect_true(is.list(submod.unwrap) && length(submod.unwrap) == (lrn_amww$par.vals$amv.iters +1))
+  submod.unwrap = getLearnerModel(mod.amww, more.unwrap = TRUE)
+  expect_true(is.list(submod.unwrap) && length(submod.unwrap) == (lrn.amww$par.vals$amv.iters + 1))
   expect_true(inherits(submod.unwrap[[1L]], "svm"))
 
   # wrapped prediction
-  pred_amww = predict(mod_amww, task, subset = test.inds)
+  pred.amww = predict(mod.amww, task, subset = test.inds)
   # t contains the prediction with subsampled features
-  t = attr(pred_amww, "AMVhdSubpredict")
+  t = attr(pred.amww, "AMVhdSubpredict")
 
-  expect_is(pred_amww, "PredictionAMVhd")
-  expect_equal(names(attributes(pred_amww)), c("names", "class", "AMVhdSubpredict"))
+  expect_is(pred.amww, "PredictionAMVhd")
+  expect_equal(names(attributes(pred.amww)), c("names", "class", "AMVhdSubpredict"))
   expect_equal(length(t), 10)
-  expect_equal(pred_amww$n.subfeat, 9)
+  expect_equal(pred.amww$n.subfeat, 9)
   expect_equal(t[[1]]$n.subfeat, 3)
 })
 

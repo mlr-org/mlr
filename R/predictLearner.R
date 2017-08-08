@@ -68,17 +68,17 @@ checkPredictLearnerOutput = function(learner, model, p) {
   if (learner$type %in% c("oneclass", "classif")) {
     levs = model$task.desc$class.levels
     if (cl == "PredictionAMVhd") {
-lapply(p, function(psub) {
-  if (!is.matrix(psub))
-    stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
-  cns = colnames(psub)
-  if (is.null(cns) || length(cns) == 0L)
-    stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
-      learner$id)
-  if (!setequal(cns, levs))
-    stopf("predictLearner for %s has returned not the class levels as column names: %s",
-      learner$id, collapse(colnames(psub)))
-})
+      lapply(p, function(psub) {
+        if (!is.matrix(psub))
+          stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+        cns = colnames(psub)
+        if (is.null(cns) || length(cns) == 0L)
+          stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
+            learner$id)
+        if (!setequal(cns, levs))
+          stopf("predictLearner for %s has returned not the class levels as column names: %s",
+            learner$id, collapse(colnames(psub)))
+      })
     } else if (learner$predict.type == "response") {
       # the levels of the predicted classes might not be complete....
       # be sure to add the levels at the end, otherwise data gets changed!!!

@@ -78,39 +78,39 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
       if (ncol(feats) > 8) {
         warningf("Dimension might be too high for volume estimation with AMV. Use AMVhd.")
       }
-      alpha.seq = c()
-      for(j in seq_len(n.alpha-1)) {
-        alpha.seq[j] = alphas[1] + j * (alphas[2]-alphas[1])/(n.alpha-1)
+      alpha.seq = vector()
+      for (j in seq_len(n.alpha - 1)) {
+        alpha.seq[j] = alphas[1] + j * (alphas[2] - alphas[1]) / (n.alpha - 1)
       }
-        # vector of offsets for different alphas
-        # type = 8: The resulting quantile estimates are approximately median-unbiased
-        # regardless of the distribution of x.
-        prob = getPredictionProbabilities(pred)[1]
-        offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
+      # vector of offsets for different alphas
+      # type = 8: The resulting quantile estimates are approximately median-unbiased
+      # regardless of the distribution of x.
+      prob = getPredictionProbabilities(pred)[1]
+      offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
 
-        ### Monte Carlo (MC) Integration for lambda
+      ### Monte Carlo (MC) Integration for lambda
 
-        # Compute hypercube where test data lies
-        bounds = sapply(feats, FUN = function(x) c(min(x), max(x))) #falsche Daten, die müssen aus der prediction sein
-        # Volume of the hypercube enclosing the test data.
-        volume = prod(bounds[2, ] - bounds[1,])
+      # Compute hypercube where test data lies
+      bounds = sapply(feats, FUN = function(x) c(min(x), max(x))) #falsche Daten, die müssen aus der prediction sein
+      # Volume of the hypercube enclosing the test data.
+      volume = prod(bounds[2, ] - bounds[1, ])
 
-        # Sample nsim points from the hypercube (MCMC Samples)
-        dfu = data.frame(Map(runif, n = n.sim, min = bounds[1, ], max = bounds[2, ]))
-        colnames(dfu) = colnames(bounds)
+      # Sample nsim points from the hypercube (MCMC Samples)
+      dfu = data.frame(Map(runif, n = n.sim, min = bounds[1, ], max = bounds[2, ]))
+      colnames(dfu) = colnames(bounds)
 
-        # get scores for sampled test data from the hypercube
-        su = predict(model, newdata = dfu)
-        su = getPredictionProbabilities(su)
+      # get scores for sampled test data from the hypercube
+      su = predict(model, newdata = dfu)
+      su = getPredictionProbabilities(su)
 
-        # calculate volume via monte carlo (share of scores higher as the offset in relation to the whole volume of the hypercube)
-        vol = sapply(offsets, function(offset) {mean(su >= offset)}) * volume
+      # calculate volume via monte carlo (share of scores higher as the offset in relation to the whole volume of the hypercube)
+      vol = sapply(offsets, function(offset) {mean(su >= offset)}) * volume
 
-        ### MC end
+      ### MC end
 
-        # Trapezoidal Integration for AMV
-        sum.vol = vol[-length(vol)] * 2 + diff(vol)
-        amv = ((diff(alpha.seq)) %*% (sum.vol) / 2)
+      # Trapezoidal Integration for AMV
+      sum.vol = vol[-length(vol)] * 2 + diff(vol)
+      amv = ((diff(alpha.seq)) %*% (sum.vol) / 2)
       # Return area under mass-volume curve
       as.numeric(amv)
     },
