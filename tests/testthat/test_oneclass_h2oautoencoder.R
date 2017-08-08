@@ -19,8 +19,8 @@ test_that("oneclass_h2oautoencoder", {
   )
 
 
- parset.list.h2o = lapply(parset.list.h2o, function(x) c(x, activation = "Tanh", reproducible = TRUE, seed = 1234, l1 = 1e-4, sparse = TRUE))
- parset.list.mlr = lapply(parset.list.mlr, function(x) c(x, activation = "Tanh", reproducible = TRUE, seed = 1234, l1 = 1e-4, sparse = TRUE))
+  parset.list.h2o = lapply(parset.list.h2o, function(x) c(x, activation = "Tanh", reproducible = TRUE, seed = 1234, l1 = 1e-4, sparse = TRUE))
+  parset.list.mlr = lapply(parset.list.mlr, function(x) c(x, activation = "Tanh", reproducible = TRUE, seed = 1234, l1 = 1e-4, sparse = TRUE))
 
   old.probs.list = list()
 
