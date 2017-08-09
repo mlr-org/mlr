@@ -37,7 +37,7 @@ test_that("oneclass_h2oautoencoder", {
   }
 
   testProbParsets("oneclass.h2o.autoencoder", oneclass.df,
-    oneclass.target, oneclass.positive, oneclass.negative, oneclass.train.inds, old.probs.list, parset.list.mlr)
+    oneclass.target, oneclass.train.inds, old.probs.list, parset.list.mlr, oneclass.positive, oneclass.negative)
 })
 
 test_that("class names are integers and response predicted", {
