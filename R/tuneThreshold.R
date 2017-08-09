@@ -18,7 +18,7 @@
 #'   only when required for the performance measure.
 #' @param nsub [\code{integer(1)}]\cr
 #'   Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.
-#'   Default is 20. For AMV performance measur it is always 1 due to computational constraints.
+#'   Default is 20. For AMV performance measure it is always 1 due to computational constraints.
 #' @param control [\code{list}]\cr
 #'   Control object for \code{\link[cmaes]{cma_es}} when used.
 #'   Default is empty list.
