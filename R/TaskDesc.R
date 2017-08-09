@@ -9,7 +9,7 @@
 #' \item{type [\code{character(1)}]}{Type of task, \dQuote{classif} for classification,
 #'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for
 #'   cluster analysis, \dQuote{costsens} for cost-sensitive classification,
-#'   \dQuote{multilabel} for multilabel classification and \dQuote{oneclass} for one-classification (anomaly detection).}
+#'   \dQuote{multilabel} for multilabel classification and \dQuote{oneclass} for one-class classification (anomaly detection).}
 #' \item{target [\code{character(0)} | \code{character(1)} | \code{character(2)} | \code{character(n.classes)}]}{
 #'   Name(s) of the target variable(s).
 #'   For \dQuote{surv} these are the names of the survival time and event columns, so it has length 2.
@@ -31,10 +31,10 @@
 #'   Only present for \dQuote{classif}, \dQuote{costsens}, and \dQuote{multilabel}.}
 #' \item{positive [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
 #'  Positive class label for binary classification, NA for multiclass,
-#'  normal class label for oneclass.}
+#'  normal class label for one-class classification.}
 #' \item{negative [\code{character(1)}]}{Only present for \dQuote{classif}, \dQuote{oneclass}.
 #'   Negative class label for binary classification, NA for multiclass,
-#'   anomaly class for oneclass.}
+#'   anomaly class for one-class classification.}
 #'}
 #' @name TaskDesc
 #' @rdname TaskDesc

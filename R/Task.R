@@ -1,5 +1,5 @@
 #' @title Create a classification, regression, survival, cluster, cost-sensitive classification,
-#' multilabel task or one-classification (anomaly detection).
+#' multilabel task or one-class classification.
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
@@ -26,8 +26,8 @@
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
 #'
-#' Note one oneclass:
-#' Oneclass classification problem is an unsupervised learning problem, but we still require
+#' Note on one-class classification:
+#' One-class classification problem is an unsupervised learning problem, but we still require
 #' to define a target column, in order to allow supervised evalaution if labels are available.
 #' This class columns should be a factor, where the levels are the strings denoted by
 #' \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
@@ -66,11 +66,11 @@
 #'   during a resampling iteration.
 #'   Default is \code{NULL} which means no blocking.
 #' @param positive [\code{character(1)}]\cr
-#'   Positive class for binary and oneclass classification (otherwise ignored and set to NA).
-#'   For oneclass this is the name of the \dQuote{anomaly} class and there is no default.
+#'   Positive class for binary and one-class classification (otherwise ignored and set to NA).
+#'   For one-class classification this is the name of the \dQuote{anomaly} class and there is no default.
 #'   Default is the first factor level of the target attribute).
 #' @param negative [\code{character(1)}]\cr
-#'   Negative class name, currently only used in oneclass, here it encodes the name
+#'   Negative class name, currently only used in one-class classification, here it encodes the name
 #'   of the \dQuote{normal} class.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
