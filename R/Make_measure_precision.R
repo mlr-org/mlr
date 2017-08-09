@@ -1,4 +1,4 @@
-#' @title Creates a precision  measure either: R-Precision, Precision at p (P@p),  Average Precision (AP)
+#' @title Creates a precision  measure either: R-Precision, Precision at p (P@p), Average Precision (AP)
 #'
 #' @description
 #' Creates a measure for anomaly detection with external ground truth (known labels).
@@ -30,7 +30,7 @@
 #'   adjusted for chances. Recommend to compare different data sets. Default TRUE.
 #'   (index - expected index) / (1- expected index)
 #' @return [\code{numeric(1)}]
-#'  Return a numeric value of Top-p Accuracy, R-Precision, Precision at p (P@p),  Average Precision (AP)
+#'  Return a numeric value of R-Precision, Precision at p (P@p) or Average Precision (AP)
 #' @references Campos, Guilherme O., et al. "On the evaluation of unsupervised outlier detection: measures, datasets, and an empirical study." Data Mining and Knowledge Discovery 30.4 (2016): 891-927.
 #' @inheritParams makeMeasure
 #' @template ret_measure
@@ -77,7 +77,6 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
       p = extra.args[[2]]
       adjusted = extra.args[[3]]
 
-      # proportion of correct results in the top n ranks
       n.anomaly = sum(pred$data$truth == pred$task.desc$positive)
       scores = pred$data[, 3]
       rank = order(scores, decreasing = TRUE)
@@ -93,7 +92,7 @@ makePrecisionMeasure = function(id = "Precision", minimize = FALSE, best = 1, wo
         precision = sum(rank[ind.true] <= n.anomaly) / n.anomaly
       } else if (type == "avgprecision") {
         p = 1:n.anomaly
-        precision = mean(sum(rank[ind.true] <= p) / p)
+        precision = mean(unlist(lapply(p, FUN = function(x) {sum(rank[ind.true] <= x) / x})))
       }
 
       if (adjusted == TRUE) {
