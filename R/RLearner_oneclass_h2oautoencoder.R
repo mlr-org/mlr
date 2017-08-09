@@ -207,7 +207,10 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
       makeIntegerLearnerParam("mini_batch_size", default = 1)
     ),
     properties = c("oneclass", "numerics", "factors", "weights", "prob"),
-    note = "'autoencoder' is set to 'TRUE'",
+    note = "Input variable 'autoencoder' is set to 'TRUE'. And input variable
+    'hidden' is parameterise by 'layers', 'nodes1', 'nodes2', 'nodes3'.
+    'layers' is the number of layer and the 'nodes' variable are indicating the
+    number of nodes in each layer. For now maximal three layers are possible",
     name = "h2o.autoencoder",
     short.name = "h2o.ae",
     callees = c("h2o.deeplearning", "h2o.predict", "h2o.anomaly")
