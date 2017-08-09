@@ -101,18 +101,22 @@
 #'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
 #'     positive = "good", blocking = blocking)
 #'   makeClusterTask(data = iris[, -5L])
+#'}
 #'
-#'   # for anomaly create example data
-#'   oneclass.iris.data = iris
-#'   names(oneclass.iris.data)[5] = "normal"
-#'   oneclass.iris.data$normal = "TRUE"
-#'   oneclass.iris.data$normal[1:5] = "FALSE"
-#'   oneclass.iris.data[1:5 ,1:4] = matrix(sample(20:100,
-#'   prod(dim(oneclass.iris.data[1:5 ,1:4])), replace = TRUE), 5, 4)
+#' # for anomaly create example data
+#' set.seed(DATASEED)
+#' sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
+#' normal = as.data.frame(mvrnorm(n = 1000, rep(0, 2), sigma))
+#' normal$Target = "Normal"
 #'
-#'   makeOneClassTask(data = oneclass.iris.data,
-#'   target = "normal", positive = "TRUE", negative = "FALSE")
-#' }
+#' anomaly = as.data.frame(matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2))
+#' anomaly$Target = "Anomaly"
+#' data = rbind(normal, anomaly)
+#' data = na.omit(data)
+#'
+#' oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data,
+#' target = "Target", positive = "Anomaly", negative = "Normal")
+#'
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
