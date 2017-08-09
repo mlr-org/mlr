@@ -1,5 +1,5 @@
 #' @title Create a classification, regression, survival, cluster, cost-sensitive classification,
-#' multilabel task or one-classification (anomaly detection).
+#' multilabel task or one-class classification.
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
@@ -26,8 +26,8 @@
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
 #'
-#' Note one oneclass:
-#' Oneclass classification problem is an unsupervised learning problem, but we still require
+#' Note on one-class classification:
+#' One-class classification problem is an unsupervised learning problem, but we still require
 #' to define a target column, in order to allow supervised evalaution if labels are available.
 #' This class columns should be a factor, where the levels are the strings denoted by
 #' \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
@@ -66,11 +66,11 @@
 #'   during a resampling iteration.
 #'   Default is \code{NULL} which means no blocking.
 #' @param positive [\code{character(1)}]\cr
-#'   Positive class for binary and oneclass classification (otherwise ignored and set to NA).
-#'   For oneclass this is the name of the \dQuote{anomaly} class and there is no default.
+#'   Positive class for binary and one-class classification (otherwise ignored and set to NA).
+#'   For one-class classification this is the name of the \dQuote{anomaly} class and there is no default.
 #'   Default is the first factor level of the target attribute).
 #' @param negative [\code{character(1)}]\cr
-#'   Negative class name, currently only used in oneclass, here it encodes the name
+#'   Negative class name, currently only used in one-class classification, here it encodes the name
 #'   of the \dQuote{normal} class.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
@@ -101,18 +101,24 @@
 #'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
 #'     positive = "good", blocking = blocking)
 #'   makeClusterTask(data = iris[, -5L])
+#'}
 #'
-#'   # for anomaly create example data
-#'   oneclass.iris.data = iris
-#'   names(oneclass.iris.data)[5] = "normal"
-#'   oneclass.iris.data$normal = "TRUE"
-#'   oneclass.iris.data$normal[1:5] = "FALSE"
-#'   oneclass.iris.data[1:5 ,1:4] = matrix(sample(20:100,
-#'   prod(dim(oneclass.iris.data[1:5 ,1:4])), replace = TRUE), 5, 4)
+#' # for anomaly create example data with 5% anomalies
+#' set.seed(123)
+#' sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
+#' normal = as.data.frame(mvrnorm(n = 1000, rep(0, 2), sigma))
+#' normal$Target = "Normal"
 #'
-#'   makeOneClassTask(data = oneclass.iris.data,
-#'   target = "normal", positive = "TRUE", negative = "FALSE")
-#' }
+#' anomaly = as.data.frame(matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2))
+#' anomaly$Target = "Anomaly"
+#' data = rbind(normal, anomaly)
+#' data = na.omit(data)
+#'
+#' # create tasks, it is required to set the positive class (anomaly class) and
+#' the negative class (normal class) as well as the name of the target column
+#' oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data,
+#' target = "Target", positive = "Anomaly", negative = "Normal")
+#'
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
