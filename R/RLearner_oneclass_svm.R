@@ -14,7 +14,7 @@ makeRLearner.oneclass.svm = function() {
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
-      makeLogicalVectorLearnerParam(id = "scale", default = TRUE, tunable = TRUE)
+      makeLogicalVectorLearnerParam(id = "scale", default = TRUE)
     ),
     properties =  c("oneclass", "numerics", "factors", "prob"),
     note = "'type' is set to 'one-classification'",
