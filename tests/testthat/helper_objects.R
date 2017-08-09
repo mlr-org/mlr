@@ -59,12 +59,12 @@ noclass.task = makeClusterTask("noclass", data = noclass.df)
 # one-classification (anomaly detection)
 set.seed(123)
 sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
-normal = MASS::mvrnorm(n = 1000, rep(0, 2), sigma)
+normal = MASS::mvrnorm(n = 100, rep(0, 2), sigma)
 colnames(normal) = paste0("V", 1:2)
 normal = as.data.frame(normal)
 normal$Target = "normal"
 
-anomaly = matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2)
+anomaly = matrix(sample(size = 5 * 2, x = 20:100, replace = TRUE), 5, 2)
 colnames(anomaly) = paste0("V", 1:2)
 anomaly = as.data.frame(anomaly)
 anomaly$Target = "anomaly"
@@ -77,7 +77,7 @@ oneclass.df = data
 oneclass.target = "Target"
 
 oneclass.col = 3
-oneclass.train.inds = c(1:1000)
+oneclass.train.inds = c(1:100)
 oneclass.test.inds  = setdiff(seq_len(nrow(oneclass.df)), oneclass.train.inds)
 oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]

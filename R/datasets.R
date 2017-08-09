@@ -8,7 +8,7 @@
 #' @docType data
 NULL
 
-#' Artificial oneclass toy task.
+#' Artificial One-class classification toy task.
 #'
 #' Contains the task (\code{oneclass2d.task}).
 #'
