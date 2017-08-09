@@ -61,7 +61,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     # each part was the test set of a resample iters.
     if (any(class(pred) %in% "ResamplePrediction" && grepl("AMV", measure$id))) {
       y.tmp = vector()
-      for( i in seq_along(model)) {
+      for (i in seq_along(model)) {
         pred.tmp = setThreshold(pred, threshold = x)
         pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
         y.tmp[i] = performance(pred.tmp, measure = measure, model = model[[i]], task = task)
