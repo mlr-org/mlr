@@ -21,7 +21,7 @@
 #' @param n.alpha [\code{numeric}] \cr
 #'   Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.
 #' @param n.sim [\code{numeric(1)}] \cr
-#'   Number of Monte-Carlo Samples, Default: 10^4.
+#'   Number of Monte-Carlo Samples, Default is \dQuote{10^4}.
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV).
 #' @references Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
@@ -85,13 +85,17 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
       # vector of offsets for different alphas
       # type = 8: The resulting quantile estimates are approximately median-unbiased
       # regardless of the distribution of x.
-      prob = getPredictionProbabilities(pred)[1]
+
+      # use prob of the normal class, as here high prob are indication for normal observation
+      # to stay consistent with the theory in the reference paper.
+      prob = getPredictionProbabilities(pred, cl = task$task.desc$negative)
       offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
 
       ### Monte Carlo (MC) Integration for lambda
 
       # Compute hypercube where test data lies
-      bounds = sapply(feats, FUN = function(x) c(min(x), max(x))) #falsche Daten, die müssen aus der prediction sein
+      bounds = sapply(feats, FUN = function(x) c(min(x), max(x)))
+
       # Volume of the hypercube enclosing the test data.
       volume = prod(bounds[2, ] - bounds[1, ])
 
@@ -101,9 +105,10 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
 
       # get scores for sampled test data from the hypercube
       su = predict(model, newdata = dfu)
-      su = getPredictionProbabilities(su)
+      su = getPredictionProbabilities(su, cl = task$task.desc$negative)
 
-      # calculate volume via monte carlo (share of scores higher as the offset in relation to the whole volume of the hypercube)
+      # calculate volume via monte carlo
+      # (share of scores higher as the offset in relation to the whole volume of the hypercube)
       vol = sapply(offsets, function(offset) {mean(su >= offset)}) * volume
 
       ### MC end
