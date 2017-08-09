@@ -224,6 +224,7 @@ print.Prediction = function(x, ...) {
   printHead(as.data.frame(x), ...)
 }
 
+#' @export
 # maybe return number of features in the general print.Prediction function
 print.PredictionAMVhd = function(x, ...){
   catf("Feature subsample: %i features", x$n.subfeat)
