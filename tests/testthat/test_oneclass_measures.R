@@ -75,27 +75,31 @@ test_that("wac measures", {
 
   var1 = c(1, 2, 3, 4)
   var2 = c(3, 4, 1, 2)
-  tar.bin = factor(c(1L, 0L, 0L, 1L))
-  pred.art.bin = factor(c(1L, 1L, 0L, 0L))
-  data.bin = data.frame(var1, var2, tar.bin)
-  task.bin = makeOneClassTask(data = data.bin, target = "tar.bin", positive = 1, negative = 0)
-  lrn.bin = makeLearner("oneclass.svm")
-  mod.bin = train(lrn.bin, task.bin)
-  pred.bin = predict(mod.bin, task.bin)
+  tar.oneclass = c("normal", "normal", "normal", "anomaly")
+  pred.art.oneclass =  c("anomaly", "normal", "normal", "anomaly")
+  data.oneclass = data.frame(var1, var2, tar.oneclass)
+  task.oneclass = makeOneClassTask(data = data.oneclass, target = "tar.oneclass", positive = "anomaly", negative = "normal")
+  lrn.oneclass = makeLearner("oneclass.svm")
+  mod.oneclass = train(lrn.oneclass, task.oneclass)
+  pred.oneclass = predict(mod.oneclass, task.oneclass)
+  pred.oneclass$data$response = pred.art.oneclass
 
-  tnr = measureTNR(tar.bin, pred.art.bin, negative = 0)
-  tpr = measureTPR(tar.bin, pred.art.bin, positive = 1)
-  fnr = measureFNR(tar.bin, pred.art.bin, positive = 1, negative = 0)
-  fpr = measureFPR(tar.bin, pred.art.bin, positive = 1, negative = 0)
+
+  denom.positive = sum(tar.oneclass == "anomaly")
+  denom.negative = sum(tar.oneclass == "normal")
+
+  tn = measureTN(tar.oneclass, pred.art.oneclass, negative = "normal")
+  tp = measureTP(tar.oneclass, pred.art.oneclass, positive = "anomaly")
 
   # weight
   w = 0.6
   # wac by hand
-  wac.test = w * (tpr / (tpr + fnr) + (1-w) * tnr / (tnr + fpr))
+  wac.test = w * (tp / denom.positive) + (1-w) * (tn / denom.negative)
 
   # wac with performance
   wac = makeWACMeasure(id = "wac", minimize = FALSE, best = 0, worst = NULL, w = w)
-  wac.perf = performance(pred.bin, measures = wac, model = mod.bin)
+  wac.perf = performance(pred.oneclass, measures = wac, model = mod.oneclass)
+
   expect_equal(wac.test, as.numeric(wac.perf))
 })
 
