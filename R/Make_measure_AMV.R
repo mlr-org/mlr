@@ -21,7 +21,7 @@
 #' @param n.alpha [\code{numeric}] \cr
 #'   Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.
 #' @param n.sim [\code{numeric(1)}] \cr
-#'   Number of Monte-Carlo Samples, Default is \dQuote{10^4}.
+#'   Number of Monte-Carlo Samples, Default is 10^4.
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV).
 #' @references Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
