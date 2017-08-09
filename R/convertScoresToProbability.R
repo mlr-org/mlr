@@ -1,6 +1,6 @@
 #' @title Convert anomaly scores to probability estimates.
 #'
-#' @description Convert anomaly scores to probability estimates with the sigmoid function (calibration function) 1 / (1 + exp(-(A + B * score))). The higher the probability estimate the more likely the observation belongs to the normal class.
+#' @description Convert anomaly scores to probability estimates with the sigmoid function (calibration function) 1 / (1 + exp(-(A + B * score))). The higher the probability estimate the more likely the observation belongs to the anomaly class.
 #'
 #' @param anomaly.score a numeric vector of anomaly scores.
 #' @param param a vector of values for the parameter A and B of the sigmoid function.
@@ -20,16 +20,11 @@
 #' col = factor(Data$Target, levels = c("Normal", "Anomaly"), labels =  c("black", "red"))
 #' plot(1:length(prob), prob[o], col = col[o])
 
-convertingScoresToProbability = function(anomaly.score, param = NULL){
+convertingScoresToProbability = function(anomaly.score, param = c(0, 1)){
 
   f = anomaly.score
   list = list()
 
-  if (is.null(param)) {
-    param = c(B = 0, A = 1)
-    messagef("Starting parameter values are missing.
-      For calibration using sigmoid function the default is: \n A = 1, B = 0")
-  }
   if (length(param) != 2) {
     stop("Too little/many starting parameters for optimization.")
   }
