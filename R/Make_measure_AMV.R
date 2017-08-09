@@ -88,7 +88,7 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
 
       # use prob of the normal class, as here high prob are indication for normal observation
       # to stay consistent with the theory in the reference paper.
-      prob = getPredictionProbabilities(pred, cl = task$task.desc$negative)
+      prob = getPredictionProbabilities(pred, cl = model$task.desc$negative)
       offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
 
       ### Monte Carlo (MC) Integration for lambda
@@ -105,7 +105,7 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
 
       # get scores for sampled test data from the hypercube
       su = predict(model, newdata = dfu)
-      su = getPredictionProbabilities(su, cl = task$task.desc$negative)
+      su = getPredictionProbabilities(su, cl = model$task.desc$negative)
 
       # calculate volume via monte carlo
       # (share of scores higher as the offset in relation to the whole volume of the hypercube)
