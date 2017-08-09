@@ -3,7 +3,7 @@
 #' @description
 #' Creates a measure for imbalanced data. The measure wac is similar to the balanced accuracy rate (bac).
 #' Bac is defined as the mean of true positive rate and true negative rate and wac just ads weights to each rates.
-#' For weights $w = 0.5$ the wac is resulted in the bac.  The main purpose is to be able to give the true
+#' For weights $w = 0.5$ the wac is resulted in the bac. The main purpose is to be able to give the true
 #' positive weight (tpr) a greater meaning than the true negative rate (tnr), as in anomaly detection the
 #' detection of anomaly (positive class) is more of an interests than the detection of the normal class (negative class).
 #'
@@ -11,7 +11,7 @@
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
 #' @param w [\code{numeric}] \cr
-#'   Weight for the positive class. The weight of the negativ class is 1-w.
+#'   Weight for the positive class. The weight of the negative class is 1-w.
 #' @return [\code{numeric(1)}]
 #'  Weighted accuracy (wac)
 #' @inheritParams makeMeasure
