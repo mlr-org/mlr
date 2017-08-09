@@ -31,8 +31,7 @@ makeRLearner.oneclass.ksvm = function() {
 trainLearner.oneclass.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
 
-  x = getTaskFeatureNames(.task)
-  d = getTaskData(.task, .subset)[, x]
+  d = getTaskData(.task, .subset, target.extra = TRUE)$data
   # ksvm only support prob.model for C-svc, nu-svc and  C-bsvc not for one class
   if (base::length(kpar) > 0L){
     kernlab::ksvm(x = as.matrix(d), y = NULL, kpar = kpar, type = "one-svc", ...)
