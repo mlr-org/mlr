@@ -3,8 +3,6 @@ Please include your source code using tripple backticks ` like this:
 
 ```
 ```r
-
-```
 ```
 
 
