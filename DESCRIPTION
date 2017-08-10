@@ -150,7 +150,6 @@ Suggests:
     sda,
     shiny,
     smoof,
-    sparsediscrim,
     sparseLDA,
     stepPlr,
     survAUC,
