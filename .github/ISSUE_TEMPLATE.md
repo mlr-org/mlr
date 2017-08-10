@@ -1,9 +1,12 @@
 For bug reports, please respect the following guidelines and check the boxes accordingly.
-Please include your source code using the ticks ` like this:
+Please include your source code using tripple backticks ` like this:
 
+```
 ```r
 
 ```
+```
+
 
 For questions of the type: "How can this be done?", please consider posting them on Stackoverflow.
 
