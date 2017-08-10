@@ -30,3 +30,13 @@ Write a clear and unique summary for the bug. “Running a model on data set wit
 Include, in the description, the steps to reproduce the bug mentioned above.
 Focus most on the facts of what happened, but if course helps if you can already give us (informed!) guesses where the bug comes from.
 
+## Minimal reproducible example
+
+A minimal reproducible example consists of the following items:
+
+a minimal dataset, necessary to reproduce the error
+the minimal runnable code necessary to reproduce the error, which can be run on the given dataset.
+the necessary information on the used packages, R version and system it is run on.
+in the case of random processes, a seed (set by set.seed()) for reproducibility
+
+If you want to learn more, read (this)[https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example]
