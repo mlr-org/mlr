@@ -366,7 +366,7 @@ test_that("check measure calculations", {
   #test multiclass measures
 
   #mmce
-  mmce.test = mean(c(1L != 1L, 2L != 0L, 0L != 0L, 1L != 2L))
+  mmce.test = mean(c(1L != 1L, 2L != 1L, 0L != 0L, 1L != 2L))
   mmce.perf = performance(pred.classif, measures = mmce, model = mod.classif)
   expect_equal(mmce.test, mmce$fun(pred = pred.classif))
   expect_equal(mmce.test, as.numeric(mmce.perf))
