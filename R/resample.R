@@ -97,7 +97,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
-    measures = measures, model = model, extract = extract, show.info = show.info)
+    measures = measures, model = models, extract = extract, show.info = show.info)
   if (!is.null(weights)) {
     more.args$weights = weights
   } else if (!is.null(getTaskWeights(task))) {
@@ -138,7 +138,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
   calculateResampleIterationResult(learner = learner, task = task, i = i, train.i = train.i, test.i = test.i, measures = measures,
-    weights = weights, rdesc = rin$desc, model = models, extract = extract, show.info = show.info)
+    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
 }
 
 
