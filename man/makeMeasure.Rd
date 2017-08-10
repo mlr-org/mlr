@@ -27,7 +27,7 @@ Set of measure properties. Some standard property names include:
   \item{surv}{Is the measure applicable for survival?}
   \item{cluster}{Is the measure applicable for cluster?}
   \item{costsens}{Is the measure applicable for cost-sensitive learning?}
-  \item{oneclass}{Is the measure applicable for one-classification (anomaly detection) learning?}
+  \item{oneclass}{Is the measure applicable for one-class classification learning?}
   \item{req.pred}{Is prediction object required in calculation? Usually the case.}
   \item{req.truth}{Is truth column required in calculation? Usually the case.}
   \item{req.task}{Is task object required in calculation? Usually not the case}
