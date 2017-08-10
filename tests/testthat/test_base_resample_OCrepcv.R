@@ -37,7 +37,7 @@ test_that("repcv instance works", {
       # does training only have normal data?
       expect_false(any(i1 %nin% normal.inds))
     }
-    expect_equal(sort(unique(bag)), 1:1050)
+    expect_equal(sort(unique(bag)), 1:105)
   }
 })
 
@@ -63,7 +63,7 @@ test_that("repcv instance is stochastic", {
       i2 = rin$test.inds[[i]]
       bag = c(bag, i2)
     }
-    expect_equal(sort(unique(bag)), 1:1050)
+    expect_equal(sort(unique(bag)), 1:105)
   }
   rin1 = makeResampleInstance(makeResampleDesc("OCRepCV", folds = 2, reps = 2), oneclass.task)
   rin2 = makeResampleInstance(makeResampleDesc("OCRepCV", folds = 2, reps = 2), oneclass.task)
