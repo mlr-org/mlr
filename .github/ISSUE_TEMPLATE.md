@@ -39,4 +39,5 @@ the minimal runnable code necessary to reproduce the error, which can be run on 
 the necessary information on the used packages, R version and system it is run on.
 in the case of random processes, a seed (set by set.seed()) for reproducibility
 
-If you want to learn more, read (this)[https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example]
+If you want to learn more, read
+https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example]
