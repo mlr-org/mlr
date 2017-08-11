@@ -5,8 +5,16 @@ getLearnerTable = function() {
   slots = c("cl", "name", "short.name", "package", "properties", "note")
   ee = asNamespace("mlr")
   tab = rbindlist(lapply(ids, function(id) {
+    makefuns = c("makeRLearnerClassif",
+                 "makeRLearnerCluster", "makeRLearnerCostSens",
+                 "makeRLearnerMultilabel", "makeRLearnerRegr",
+                 "makeRLearnerSurv")  # I hope I didn't forget any...
     fun = getS3method("makeRLearner", id)
-    row = lapply(as.list(functionBody(fun)[[2L]])[slots], eval, envir = ee)
+    environment(fun) = new.env(parent = environment(fun))
+    for (mf in makefuns) {
+      environment(fun)[[mf]] = list
+    }
+    row = fun()
     data.table(
       id = row$cl,
       name = row$name,
