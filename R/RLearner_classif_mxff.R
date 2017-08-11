@@ -91,11 +91,13 @@ makeRLearner.classif.mxff = function() {
         requires = quote(dropout.global == FALSE)),
       makeNumericLearnerParam(id = "dropout.layer3", lower = 0, upper = 1 - 1e-7,
         requires = quote(dropout.global == FALSE)),
-      makeLogicalLearnerParam(id = "batch.normalization1", default = FALSE),
+      makeLogicalLearnerParam(id = "batch.normalization", default = FALSE),
+      makeLogicalLearnerParam(id = "batch.normalization1", default = FALSE,
+        requires = quote(batch.normalization == FALSE)),
       makeLogicalLearnerParam(id = "batch.normalization2", default = FALSE,
-        requires = quote(layers > 1)),
+        requires = quote(layers > 1 && batch.normalization == FALSE)),
       makeLogicalLearnerParam(id = "batch.normalization3", default = FALSE,
-        requires = quote(layers > 2)),
+        requires = quote(layers > 2 && batch.normalization == FALSE)),
       makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -149,7 +151,9 @@ makeRLearner.classif.mxff = function() {
     will be applied to the inputs and all the hidden layers. If `dropout.global` is `FALSE`,
     `dropout.input` will be applied to the inputs, and the different `dropout.layer` parameters to
     their respective layers.
-    `batch.normalization1` specifies whether batch normalization should be used in the first hidden layer,
+    `batch.normalization` specifies whether batch normalization should be used in all hidden layers.
+    If `batch.normalization` is set to `FALSE`, `batch.normalization1` specifies whether batch
+    normalization should be used in the first hidden layer,
     `batch.normalization2` and `batch.normalization3` are defined accordingly.
     If `conv.layer1` is `FALSE`, the first layer is a `FullyConnected` layer and `num.layer1` gives
     the number of neurons. If `conv.layer1` is `TRUE`, then `num.layer1` gives the number of
@@ -203,7 +207,8 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   pool.type1 = "max", pool.type2 = "max", pool.type3 = "max",
   dropout.global = TRUE, dropout.input = NULL,
   dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
-  batch.normalization1 = FALSE, batch.normalization2 = FALSE, batch.normalization3 = FALSE,
+  batch.normalization = FALSE, batch.normalization1 = FALSE,
+  batch.normalization2 = FALSE, batch.normalization3 = FALSE,
   symbol = NULL, validation.ratio = NULL, eval.data = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
   array.layout = "rowmajor", ...) {
@@ -276,7 +281,11 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     pool.strides = list(pool.stride1, pool.stride2, pool.stride3)[1:layers]
     pool.pads = list(pool.pad1, pool.pad2, pool.pad3)[1:layers]
     pool.types = list(pool.type1, pool.type2, pool.type3)[1:layers]
-    batch.normalization = c(batch.normalization1, batch.normalization2, batch.normalization3)
+    if (batch.normalization) {
+      batch.normalization = c(TRUE, TRUE, TRUE)
+    } else {
+      batch.normalization = c(batch.normalization1, batch.normalization2, batch.normalization3)
+    }
     # add dropout if specified
     if (dropout.global == TRUE) {
       # construct a list of dropout rates
