@@ -160,7 +160,7 @@ if (requireNamespace("mlbench")) {
 # for anomaly create example data with 5\% anomalies
 set.seed(123)
 sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
-normal = as.data.frame(mvrnorm(n = 1000, rep(0, 2), sigma))
+normal = as.data.frame(MASS::mvrnorm(n = 1000, rep(0, 2), sigma))
 normal$Target = "Normal"
 
 anomaly = as.data.frame(matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2))
