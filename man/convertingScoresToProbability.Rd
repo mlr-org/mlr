@@ -4,34 +4,36 @@
 \alias{convertingScoresToProbability}
 \title{Convert anomaly scores to probability estimates.}
 \usage{
-convertingScoresToProbability(anomaly.score, parainit = NULL,
-  max.iter = 100, optim.method = "glm")
+convertingScoresToProbability(anomaly.score, param = c(0, 1))
 }
 \arguments{
 \item{anomaly.score}{a numeric vector of anomaly scores.}
 
-\item{parainit}{a vector of starting values for the optimizer}
-
-\item{max.iter}{Maximum number of iterations. Defaults to 100}
-
-\item{optim.method}{which optim method to used "trust region", "BFGS", "glm", "Newton"}
+\item{param}{a vector of values for the parameter A and B of the sigmoid function.
+Default ist A = 0 and B = 1}
 }
 \value{
 [\code{vector}] with probabilities as entries.
 }
 \description{
-Convert anomaly scores to probability estimates with the sigmoid function (calibration function). The higher the probability estimate the more likely the observation belongs to the normal class.
+Convert anomaly scores to probability estimates with the sigmoid function
+(calibration function) 1 / (1 + exp(-(0 + 1 * score))). The higher the probability
+estimate the more likely the observation belongs to the anomaly class.
+For more information see \code{\link{oneclassProbability}}.
 }
 \examples{
-
 Data = oneclass2d.task$env$data # getTaskData(oneclass2d.task)
-svm.model <- e1071::svm(Data[,1:2], y = NULL, type = 'one-classification', kernel = "radial", nu = 0.05)
+svm.model = e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
+kernel = "radial", nu = 0.05)
 dv = svm.model$decision.values
-prob = convertingScoresToProbability(dv, parainit = c(0, 1))$probability
+prob = convertingScoresToProbability(dv, param = c(0, 1))$probability
 o = order(prob)
 col = factor(Data$Target, levels = c("Normal", "Anomaly"), labels =  c("black", "red"))
 plot(1:length(prob), prob[o], col = col[o])
 }
 \references{
 Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
+}
+\seealso{
+\code{\link{oneclassProbability}}
 }
