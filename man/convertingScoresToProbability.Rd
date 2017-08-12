@@ -4,6 +4,7 @@
 \alias{convertingScoresToProbability}
 \title{Convert anomaly scores to probability estimates.}
 \usage{
+
 convertingScoresToProbability(anomaly.score, param = c(0, 1))
 }
 \arguments{
@@ -16,10 +17,12 @@ Default ist A = 0 and B = 1}
 [\code{vector}] with probabilities as entries.
 }
 \description{
-Convert anomaly scores to probability estimates with the sigmoid function (calibration function) 1 / (1 + exp(-(A + B * score))). The higher the probability estimate the more likely the observation belongs to the normal class.
+Convert anomaly scores to probability estimates with the sigmoid function
+(calibration function) 1 / (1 + exp(-(0 + 1 * score))). The higher the probability
+estimate the more likely the observation belongs to the anomaly class.
+For more information see \code{\link{oneclassProbability}}.
 }
 \examples{
-
 Data = oneclass2d.task$env$data # getTaskData(oneclass2d.task)
 svm.model = e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
 kernel = "radial", nu = 0.05)
@@ -31,4 +34,7 @@ plot(1:length(prob), prob[o], col = col[o])
 }
 \references{
 Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
+}
+\seealso{
+\code{\link{oneclassProbability}}
 }
