@@ -32,7 +32,7 @@ Authors@R: c(
     person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb"),
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
-    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb“),
+    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
     person("Minh-Anh", "Le", email = "minh-anh.le@cdtm.de", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
