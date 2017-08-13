@@ -94,7 +94,7 @@ test_that("wac measures", {
   # weight
   w = 0.6
   # wac by hand
-  wac.test = w * (tp / denom.positive) + (1-w) * (tn / denom.negative)
+  wac.test = w * (tp / denom.positive) + (1 - w) * (tn / denom.negative)
 
   # wac with performance
   wac = makeWACMeasure(id = "wac", minimize = FALSE, best = 0, worst = NULL, w = w)
