@@ -79,17 +79,17 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       any(class(model$learner.model) == "lm")) {
     # sometimes we have no task here, e.g. in test_tune_tuneMBO@34
     if (!missing(task)) {
-      subset = task$env$data[subset, ]
+      newdata = task$env$data[subset, ]
     } else {
-      subset = newdata
+      newdata = newdata
     }
 
     # cheap error catching here
     # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
     if (is.null(subset)) {
-      subset = model$learner.model$data[subset, ]
+      newdata = model$learner.model$data[subset, ]
     }
-    newdata = missingLevelsTrain(model, subset)
+    newdata = missingLevelsTrain(model, newdata)
   }
 
   # if we saved a model and loaded it later just for prediction this is necessary
