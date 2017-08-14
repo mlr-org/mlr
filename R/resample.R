@@ -174,7 +174,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
   } else if (pp == "test") {
     # set factor levels, present in test but missing in train, to NA
     if (m$learner$fix.factors.prediction == TRUE &&
-        any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
+      any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
       test.i = task$env$data[test.i, ]
 
       # cheap error catching here
