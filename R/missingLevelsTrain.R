@@ -1,4 +1,4 @@
-#' @title remove.missing.levels.lm
+#' @title missingLevelsTrain
 #' @description Accounts for missing factor levels only present in test data
 #' but not in train data by setting levels to NA
 #'
@@ -14,7 +14,7 @@
 #' @keywords internal
 #'
 #' @export
-remove.missing.levels.lm = function(fit, test.data) {
+missingLevelsTrain = function(fit, test.data) {
 
   # https://stackoverflow.com/a/39495480/4185785
 

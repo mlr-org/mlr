@@ -89,7 +89,7 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     if (is.null(subset)) {
       subset = model$learner.model$data[subset, ]
     }
-    newdata = remove.missing.levels.lm(model, subset)
+    newdata = missingLevelsTrain(model, subset)
   }
 
   # if we saved a model and loaded it later just for prediction this is necessary

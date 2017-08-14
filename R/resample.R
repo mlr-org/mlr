@@ -183,7 +183,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
         test.i = m$learner.model$data[test.i, ]
       }
 
-      newdata = remove.missing.levels.lm(m, test.i)
+      newdata = missingLevelsTrain(m, test.i)
       pred.test = predict(m, newdata = newdata)
     } else {
       pred.test = predict(m, task, subset = test.i)
@@ -209,7 +209,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     if (m$learner$fix.factors.prediction == TRUE &&
         any(class(m$learner.model) == "lm" | class(m$learner.model) == "glmmPQL")) {
       test.i = m$learner.model$data[test.i, ]
-      newdata = remove.missing.levels.lm(m, test.i)
+      newdata = missingLevelsTrain(m, test.i)
       pred.test = predict(m, newdata = newdata)
     } else {
       pred.test = predict(m, task, subset = test.i)

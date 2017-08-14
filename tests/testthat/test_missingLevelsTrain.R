@@ -1,6 +1,6 @@
-context("remove.missing.levels.lm.R")
+context("missingLevelsTrain.R")
 
-test_that("remove.missing.levels.lm.R", {
+test_that("missingLevelsTrain.R", {
 
   data("bc.task.spatial")
   task = bc.task.spatial
@@ -17,7 +17,7 @@ test_that("remove.missing.levels.lm.R", {
   expect_length(resa, 12)
 })
 
-test_that("remove.missing.levels.lm.R", {
+test_that("missingLevelsTrain.R", {
 
   data("bc.task.spatial")
   task = bc.task.spatial
