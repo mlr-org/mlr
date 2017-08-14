@@ -1,18 +1,17 @@
 #' @title missingLevelsTrain
-#' @description Accounts for missing factor levels only present in test data
+#' @description
+#' Accounts for missing factor levels only present in test data
 #' but not in train data by setting levels to NA
-#'
-#' @importFrom stringi stri_split stri_replace_all
-#' @importFrom BBmisc warningf
-#'
-#' @param fit fitted model on training data
-#'
-#' @param test.data data to make predictions for
-#'
-#' @return data.frame with matching factor levels to fitted model
-#'
+#' @importFrom
+#' stringi stri_split stri_replace_all
+#' @importFrom
+#' BBmisc warningf
+#' @param fit \cr
+#'   fitted model on training data
+#' @param test.data [`data.frame`] \cr
+#'   data to make predictions for
+#' @return `data.frame` with matching factor levels to fitted model
 #' @keywords internal
-#'
 #' @export
 missingLevelsTrain = function(fit, test.data) {
 
