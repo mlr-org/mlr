@@ -62,9 +62,7 @@ missingLevelsTrain = function(fit, test.data) {
     if (any(!found)) {
       # track which variable
       var = predictors[i]
-      # set to NA
       test.data[!found, predictors[i]] = NA
-      # drop empty factor levels in test data
       test.data = droplevels(test.data)
       # issue warning to console
       catf("Setting missing levels in '%s', only present in test data but missing in train data, to 'NA'.",
