@@ -619,14 +619,13 @@ makeFilter(
 makeFilter(
   name = "auc",
   desc = "AUC filter for binary classification tasks",
-  pkg  = "ROCR",
+  pkg  = character(0L),
   supported.tasks = "classif",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
     data = getTaskData(task, target.extra = TRUE)
     score = vnapply(data$data, function(x, y) {
-      pred = ROCR::prediction(predictions = x, labels = y)
-      ROCR::performance(pred, "auc")@y.values[[1L]]
+      measureAUC(x, y, task$task.desc$negative, task$task.desc$positive)
     }, y = data$target)
     abs(0.5 - score)
   }
