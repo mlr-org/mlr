@@ -40,7 +40,7 @@ test.mean = makeAggregation(
   id = "test.mean",
   name = "Test mean",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) mean(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred, na.rm) mean(perf.test, na.rm = na.rm)
 )
 
 #' @export
@@ -49,7 +49,7 @@ test.sd = makeAggregation(
   id = "test.sd",
   name = "Test sd",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sd(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred, na.rm) sd(perf.test, na.rm = na.rm)
 )
 
 #' @export
@@ -58,7 +58,7 @@ test.median = makeAggregation(
   id = "test.median",
   name = "Test median",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) median(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred) median(perf.test, na.rm = na.rm)
 )
 
 #' @export
@@ -67,7 +67,7 @@ test.min = makeAggregation(
   id = "test.min",
   name = "Test minimum",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) min(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred) min(perf.test, na.rm = na.rm)
 )
 
 #' @export
@@ -76,7 +76,7 @@ test.max = makeAggregation(
   id = "test.max",
   name = "Test maximum",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) max(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred) max(perf.test, na.rm = na.rm)
 )
 
 #' @export
@@ -85,7 +85,7 @@ test.sum = makeAggregation(
   id = "test.sum",
   name = "Test sum",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.test)
+  fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.test, na.rm = na.rm)
 )
 
 #' @export
@@ -94,7 +94,7 @@ test.range = makeAggregation(
   id = "test.range",
   name = "Test range",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.test))
+  fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.test, na.rm = na.rm))
 )
 
 #' @export
@@ -103,7 +103,7 @@ test.rmse = makeAggregation(
   id = "test.rmse",
   name = "Test RMSE",
   properties = "req.test",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test^2))
+  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test^2, na.rm = na.rm))
 )
 
 #' @export
@@ -112,7 +112,7 @@ train.mean = makeAggregation(
   id = "train.mean",
   name = "Training mean",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) mean(perf.train)
+  fun = function(task, perf.test, perf.train, measure, group, pred) mean(perf.train, na.rm = na.rm)
 )
 
 #' @export
@@ -121,7 +121,7 @@ train.sd = makeAggregation(
   id = "train.sd",
   name = "Training sd",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sd(perf.train)
+  fun = function(task, perf.test, perf.train, measure, group, pred) sd(perf.train, na.rm = na.rm)
 )
 
 #' @export
@@ -130,7 +130,7 @@ train.median = makeAggregation(
   id = "train.median",
   name = "Training median",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) median(perf.train)
+  fun = function(task, perf.test, perf.train, measure, group, pred) median(perf.train, na.rm = na.rm)
 )
 
 #' @export
@@ -139,7 +139,7 @@ train.min = makeAggregation(
   id = "train.min",
   name = "Training min",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) min(perf.train)
+  fun = function(task, perf.test, perf.train, measure, group, pred) min(perf.train, na.rm = na.rm)
 )
 
 #' @export
@@ -148,7 +148,7 @@ train.max = makeAggregation(
   id = "train.max",
   name = "Training max",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) max(perf.train)
+  fun = function(task, perf.test, perf.train, measure, group, pred) max(perf.train, na.rm = na.rm)
 )
 
 #' @export
@@ -157,7 +157,7 @@ train.sum = makeAggregation(
   id = "train.sum",
   name = "Training sum",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.train)
+  fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.train, na.rm = na.rm)
 )
 
 #' @export
@@ -166,7 +166,7 @@ train.range = makeAggregation(
   id = "train.range",
   name = "Training range",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.train))
+  fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.train, na.rm = na.rm))
 )
 
 #' @export
@@ -175,7 +175,7 @@ train.rmse = makeAggregation(
   id = "train.rmse",
   name = "Training RMSE",
   properties = "req.train",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.train^2))
+  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.train^2, na.rm = na.rm))
 )
 
 #' @export
@@ -206,8 +206,8 @@ b632plus = makeAggregation(
       y2 = df2$response
       grid = expand.grid(y1, y2, KEEP.OUT.ATTRS = FALSE)
       pred2 = makePrediction(task.desc = pred$task.desc, row.names = rownames(grid),
-        id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
-        time = NA_real_)
+                             id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
+                             time = NA_real_)
       gamma = performance(pred2, measures = measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368 * R)
