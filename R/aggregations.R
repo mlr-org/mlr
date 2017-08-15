@@ -206,8 +206,8 @@ b632plus = makeAggregation(
       y2 = df2$response
       grid = expand.grid(y1, y2, KEEP.OUT.ATTRS = FALSE)
       pred2 = makePrediction(task.desc = pred$task.desc, row.names = rownames(grid),
-                             id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
-                             time = NA_real_)
+        id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
+        time = NA_real_)
       gamma = performance(pred2, measures = measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368 * R)
