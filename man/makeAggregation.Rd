@@ -4,7 +4,7 @@
 \alias{makeAggregation}
 \title{Specify your own aggregation of measures.}
 \usage{
-makeAggregation(id, name = id, properties, fun)
+makeAggregation(id, name = id, properties, fun, na.rm)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -37,6 +37,9 @@ Calculates the aggregated performance. In most cases you will only need the perf
   \item{\code{pred} [\code{\link{Prediction}}]}{
     Prediction object.}
 }}
+
+\item{na.rm}{[\code{logical(1)}]\cr
+Should `NA` values be removed?}
 }
 \value{
 [\code{\link{Aggregation}}].
