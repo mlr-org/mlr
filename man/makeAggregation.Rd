@@ -39,7 +39,7 @@ Calculates the aggregated performance. In most cases you will only need the perf
 }}
 
 \item{na.rm}{[\code{logical(1)}]\cr
-Should `NA` values be removed?}
+Should `NA` values be removed? Default `FALSE`.}
 }
 \value{
 [\code{\link{Aggregation}}].

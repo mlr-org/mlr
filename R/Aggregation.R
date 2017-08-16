@@ -55,7 +55,7 @@ NULL
 #'       Prediction object.}
 #'   }
 #' @param na.rm [\code{logical(1)}]\cr
-#'   Should `NA` values be removed?
+#'   Should `NA` values be removed? Default `FALSE`.
 #' @seealso \code{\link{aggregations}}, \code{\link{setAggregation}}
 #' @return [\code{\link{Aggregation}}].
 #' @examples
