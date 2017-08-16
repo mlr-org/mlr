@@ -4,7 +4,7 @@
 \alias{makeAggregation}
 \title{Specify your own aggregation of measures.}
 \usage{
-makeAggregation(id, name = id, properties, fun, na.rm)
+makeAggregation(id, name = id, properties, fun, na.rm = FALSE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr

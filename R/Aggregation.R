@@ -64,7 +64,7 @@ NULL
 #'   properties = "req.test",
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
-makeAggregation = function(id, name = id, properties, fun, na.rm) {
+makeAggregation = function(id, name = id, properties, fun, na.rm = FALSE) {
   assertString(id)
   assertString(name)
   makeS3Obj("Aggregation", id = id, name = name, fun = fun, properties = properties)
