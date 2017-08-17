@@ -180,3 +180,16 @@ test_that("resample is extended by an additional measure", {
   res = resample(lrn, binaryclass.task, cv3, mmce, keep.pred = FALSE)
   expect_error(addRRMeasure(res, auc), "keep.pred")
 })
+
+test_that("resample printer respects show.info", {
+  show.info.saved = getMlrOptions()$show.info
+  lrn = makeLearner("regr.lm")
+
+  configureMlr(show.info = TRUE)
+  expect_message(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+
+  configureMlr(show.info = FALSE)
+  expect_silent(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+
+  configureMlr(show.info = show.info.saved)
+})
