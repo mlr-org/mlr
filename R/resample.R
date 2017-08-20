@@ -45,7 +45,8 @@
 #'   Default is to extract nothing.
 #' @template arg_keep_pred
 #' @param na.rm [\code{logical(1)}]\cr
-#'   Should `NA` values be removed during aggregation of resample results? Default `FALSE`.
+#'   Should `NA` values be removed during aggregation of results from `resample`? Default `FALSE`.
+#'   This applies to all selected measures.
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
 #' @template arg_showinfo

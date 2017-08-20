@@ -12,6 +12,9 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
 #'   are extracted from it.
+#' @param na.rm [\code{logical(1)}]\cr
+#'   Should `NA` values be removed? Default `FALSE`.
+#'   This applies to all selected measures.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
