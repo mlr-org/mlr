@@ -2,10 +2,11 @@ context("missingLevelsTrain.R")
 
 test_that("missingLevelsTrain.R", {
 
-  data("bc.task.spatial")
-  task = bc.task.spatial
+  task = sonar.task
+  # introduce factor level with only one observation
+  task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task1$env$data$V1) - 4))))
 
-  rdesc = makeResampleDesc("RepCV", folds = 10, reps = 2)
+  rdesc = makeResampleDesc("RepCV", folds = 5, reps = 2)
 
   lrn = makeLearner("classif.binomial",
                     link = "logit",
@@ -21,6 +22,9 @@ test_that("missingLevelsTrain.R", {
 
   data("bc.task.spatial")
   task = bc.task.spatial
+  task = sonar.task
+  # introduce factor level with only one observation
+  task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task1$env$data$V1) - 4))))
 
   n = getTaskSize(task)
   train.set = seq(1, n, by = 2)
