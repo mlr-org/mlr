@@ -125,6 +125,7 @@ NULL
 #' @docType data
 NULL
 
+
 #' Gunpoint functional data classification task.
 #'
 #' Contains the task (\code{gunpoint.task}).

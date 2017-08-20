@@ -20,8 +20,6 @@ test_that("missingLevelsTrain.R", {
 
 test_that("missingLevelsTrain.R", {
 
-  data("bc.task.spatial")
-  task = bc.task.spatial
   task = sonar.task
   # introduce factor level with only one observation
   task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task1$env$data$V1) - 4))))

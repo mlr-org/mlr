@@ -2,10 +2,6 @@
 #' @description
 #' Accounts for missing factor levels only present in test data
 #' but not in train data by setting levels to NA
-#' @importFrom
-#' stringi stri_split stri_replace_all
-#' @importFrom
-#' BBmisc warningf
 #' @param fit \cr
 #'   fitted model on training data
 #' @param test.data [`data.frame`] \cr
