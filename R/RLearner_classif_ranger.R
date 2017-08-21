@@ -50,7 +50,7 @@ trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL
     }
   }
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-                 probability = (.learner$predict.type == "prob"), case.weights = .weights, mtry = mtry, ...)
+                 probability = (.learner$predict.type == "prob"), case.weights = .weights, mtry = mtry, min.node.size = min.node.size, ...)
 }
 
 #' @export
