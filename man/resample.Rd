@@ -12,7 +12,7 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, keep.pred = TRUE, ...,
+  models = FALSE, extract, keep.pred = TRUE, na.rm = FALSE, ...,
   show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
@@ -81,6 +81,10 @@ If you do many experiments (on larger data sets) these objects might unnecessari
 object size / mem usage, if you do not really need them.
 In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
+
+\item{na.rm}{[\code{logical(1)}]\cr
+Should `NA` values be removed during aggregation of results from `resample`? Default `FALSE`.
+This applies to all selected measures.}
 
 \item{...}{[any]\cr
 Further hyperparameters passed to \code{learner}.}
