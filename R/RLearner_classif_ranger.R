@@ -73,4 +73,4 @@ getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
   }
   mod = getLearnerModel(.model)
   ranger::importance(mod)
-  }
+}
