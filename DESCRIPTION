@@ -129,7 +129,7 @@ Suggests:
     PMCMR (>= 4.1),
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.6.0),
+    ranger (>= 0.8.0),
     RCurl,
     refund,
     rex,
