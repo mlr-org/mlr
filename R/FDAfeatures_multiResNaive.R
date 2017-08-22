@@ -22,18 +22,18 @@
 
 
 # @description
-# getUniFDAMultiResFeaturesCustomSeg differs from getUniFDAMultiResFeatures that it accept customary segment
+# getMultiResFeatObsCustomSeg differs from getMultiResFeatObs that it accept customary segment
 # input, if the user does not provide this parameter then by default it extract on the whole curve
-# note that curve.lens is just some user defined segments in one channel! multiple channel are handled by 
+# note that curve.lens is just some user defined segments in one channel! multiple channel are handled by
 # the mlrFDA framework and is not considered here!
 # the function below will be called in convertTask.R
 getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.level = 3L, shift = 0.5, curve.lens = NULL) {
   # FIXME: Currently this just wraps up to make the API consistent, but the args target and include.target does not make sense at all
   #if(is.null(curve.lens)) {
-  #  return(getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift))
+  #  return(getMultiResFeatObs(data = data, res.level = res.level, shift = shift))
   #}
   if(is.null(curve.lens)) curve.lens = c(ncol(data)) # could not move up further
-  getUniFDAMultiResFeaturesCustomSeg(data = data, curve.lens = curve.lens, res.level = res.level, shift = shift)
+  getMultiResFeatObsCustomSeg(data = data, curve.lens = curve.lens, res.level = res.level, shift = shift)
 }
 
 
@@ -59,7 +59,7 @@ getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.leve
 getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift = 0.5) {
   feat.list = namedList(names = names(fd.features))
   for(fdn in names(fd.features)){
-    feat.list[[fdn]] = getUniFDAMultiResFeatures(data[, fd.features[[fdn]]], res.level = res.level, shift = shift)
+    feat.list[[fdn]] = getMultiResFeatObs(data[, fd.features[[fdn]]], res.level = res.level, shift = shift)
   }
   as.data.frame(Reduce(cbind, x = feat.list))
 }
@@ -80,7 +80,7 @@ getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift 
 #' @return Returns a [\code{matrix}] object with each row containing the
 #'   multi-resolution features.
 #' @export
-getUniFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5) {
+getMultiResFeatObs = function(data, res.level = 3L, shift = 0.5) {
   data = as.matrix(data)
   n.obs = nrow(data)
   feat.list = vector("list", n.obs)
@@ -110,7 +110,7 @@ getUniFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5) {
 #' @return Returns a [\code{matrix}] object with each row containing the
 #'   multi-resolution features.
 #' @export
-getUniFDAMultiResFeaturesCustomSeg = function(data, curve.lens, res.level = 3L, shift = 0.5) {
+getMultiResFeatObsCustomSeg = function(data, curve.lens, res.level = 3L, shift = 0.5) {
   #checkmate::assert_matrix(data)
   data = as.matrix(data)
   n.obs = nrow(data)
@@ -163,7 +163,7 @@ getSegmentFeaturesMore = function(x) {
 # The number of hierachy of resolutions
 # @param shift [\code{numeric}]\cr
 # The overlapping proportion when slide the window for one step
-# subroutine for getUniFDAMultiResFeaturesCustomSeg
+# subroutine for getMultiResFeatObsCustomSeg
 getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   m = length(x)
   start = 1L
