@@ -1,6 +1,6 @@
 # models$model$meta contains 3 entry, the resolution level, the start and end position of the segment
 #
-additivePredict = function(m, n, betas, intercept, models, X) {
+additivePredict = function(m, betas, intercept, models, X) {
   n = nrow(X)
   if (m == 0) return(rep(intercept, n)) # if we had 0 models in the past, just return intercept, otherwise predict first m model, multiply with beta, add intercept f_0
   p = sapply(1:m, function(i) {
@@ -31,7 +31,6 @@ lineSearch = function(y, yhat, rhat) {
 }
 
 multiResBoost = function(X, y, M = 10, res.level = 3L, shift = 0.5) {
-  n = length(y)
   # for L2 loss we take the mean as constant model f_0
   intercept = mean(y)
   # here store the M models and associated beta weights
@@ -40,7 +39,7 @@ multiResBoost = function(X, y, M = 10, res.level = 3L, shift = 0.5) {
   for (j in 1:M) {
     messagef("Iteration: %i", j)
     # get predictions of our additive model
-    yhat = additivePredict(m = j - 1L, n = n, betas = betas, intercept = intercept, models = models, X = X)
+    yhat = additivePredict(m = j - 1L, betas = betas, intercept = intercept, models = models, X = X)
     # now get pseudo-residuals / negative gradient
     r = dloss(y, yhat)
     # fit model to pseudo residuals
@@ -51,7 +50,7 @@ multiResBoost = function(X, y, M = 10, res.level = 3L, shift = 0.5) {
     #beta = lineSearch(y = y, yhat = yhat, rhat = rhat)
     betas[[j]] = beta
   }
-  return(list(models = models, betas = betas, intercept = intercept))
+  return(list(models = models, betas = betas, intercept = intercept, n_rounds = M))
 }
 
 getAggBestModelObs = function(X, y, res.level = 3L, shift = 0.5) {

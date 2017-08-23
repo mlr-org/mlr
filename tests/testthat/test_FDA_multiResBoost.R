@@ -7,3 +7,10 @@ test_that("FDA_multiResBoost", {
   # y = sample(c(-1, 1), replace = TRUE, n)
 })
 
+test_that("FDA_multiResBoostLearner", {
+  lrn = makeLearner("fdaregr.multiResBoost", max_iter = 10,  res.level = 3L, shift = 0.5)
+  mod1f = train(learner = lrn, task = fuelsubset.task)
+  mdata = getTaskData(fuelsubset.task, target.extra = TRUE)
+  mod1f = predict(object = mod1f, newdata = mdata$data)
+})
+
