@@ -87,7 +87,7 @@ getMultiResFeatObs = function(data, res.level = 3L, shift = 0.5) {
   j = 1L
   for (i in 1:n.obs) {  # traverse the number of observations
     f = getCurveFeatures(data[i, ], res.level = res.level, shift = shift)
-    feat.list[[i]] = f  # put features from the ith instance into the list ith position
+    feat.list[[i]] = f$feats  # put features from the ith instance into the list ith position
   }
   do.call(rbind, feat.list)  # creat a matrix by combining the row
 }
@@ -126,7 +126,7 @@ getMultiResFeatObsCustomSeg = function(data, curve.lens, res.level = 3L, shift =
       #messagef("curve start, end: %i, %i", sstart, send)
       f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
       # print(f)
-      featvec = c(featvec, f)
+      featvec = c(featvec, f$feats)
     }
     feat.list[[i]] = featvec  # put features from the ith instance into the list ith position
   }
@@ -168,16 +168,24 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   m = length(x)
   start = 1L
   feats = numeric(0L)
+  posh = list()
   ssize = m  # initialize segment size to be the length of the curve
+  j = 1
+  posg = list()
   for (rl in 1:res.level) {  # ssize is divided by 2 at the end of the loop
     soffset = ceiling(shift * ssize)  # overlap distance
     # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
-    sstart = 1L
+    sstart = 1L  # another initialization, sstart changes in the while loop below
     send = sstart + ssize - 1L  # end position
+    posh[[rl]] = list()
+    i = 1
     while (send <= m) {  # until the segment reach the end
-      # messagef("start, end: %i, %i", sstart, send)
+      messagef("start, end: %i, %i", sstart, send)
       f = getSegmentFeatures(x[sstart:send])
-      # print(f)
+      posh[[rl]][[i]] = c(rl, sstart, send)
+      posg[[j]] = c(rl, sstart, send) # now only suppose there is one feature extracted from one segment.
+      j = j + 1
+      i = i + 1
       feats = c(feats, f)  # append the feats from the last resolution hierachy
       sstart = sstart + soffset
       send = send + soffset
@@ -186,7 +194,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
     if (ssize < 1L)  # if the the divide by 2 is too much
       break
   }
-  return(feats)
+  return(list(feats = feats, pos = posg))
 }
 
 
