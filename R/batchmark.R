@@ -34,7 +34,7 @@
 #' @return [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
 #' @export
 #' @family benchmark
-batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
+batchmark = function(learners, tasks, resamplings, measures, models = TRUE, na.rm = FALSE, reg = batchtools::getDefaultRegistry()) {
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   learners = ensureBenchmarkLearners(learners)
   tasks = ensureBenchmarkTasks(tasks)
@@ -53,7 +53,7 @@ batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg 
 
   # generate algos
   ades = Map(function(id, learner) {
-    apply.fun = getAlgoFun(learner, measures, models)
+    apply.fun = getAlgoFun(learner, measures, models, na.rm)
     batchtools::addAlgorithm(id, apply.fun, reg = reg)
     data.table()
   }, id = names(learners), learner = learners)
@@ -66,14 +66,14 @@ resample.fun = function(job, data, i) {
   list(train = data$rin$train.inds[[i]], test = data$rin$test.inds[[i]], weights = data$rin$weights[[i]], rdesc = data$rin$desc)
 }
 
-getAlgoFun = function(lrn, measures, models) {
+getAlgoFun = function(lrn, measures, models, na.rm) {
   force(lrn)
   force(measures)
   force(models)
   function(job, data, instance) {
     extract.this = getExtractor(lrn)
     calculateResampleIterationResult(learner = lrn, task = data$task, train.i = instance$train, test.i = instance$test,
-      measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE)
+      measures = measures, weights = instance$weights, rdesc = instance$rdesc, model = models, extract = extract.this, show.info = FALSE, na.rm = na.rm)
   }
 }
 
