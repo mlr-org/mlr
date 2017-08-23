@@ -129,7 +129,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
       list(perf.train = perf.train, perf.test = perf.test)
     }
     perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
-    measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
+    measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred, measure$aggr$na.rm)
   } else {
     measure$fun(task, model, pred, feats, m$extra.args)
   }
