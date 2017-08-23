@@ -88,6 +88,9 @@ getAlgoFun = function(lrn, measures, models, na.rm) {
 #'   with a column named \dQuote{job.id}.
 #'   Alternatively, you may also pass a vector of integerish job ids.
 #'   If not set, defaults to all successfully terminated jobs (return value of \code{\link[batchtools]{findDone}}.
+#' @param na.rm [\code{logical(1)}]\cr
+#'   Should `NA` values be removed during aggregation of results from `resample`? Default `FALSE`.
+#'   This applies to all selected measures.
 #' @template arg_keep_pred
 #' @template arg_showinfo
 #' @param reg [\code{\link[batchtools]{ExperimentRegistry}}]\cr
@@ -96,7 +99,7 @@ getAlgoFun = function(lrn, measures, models, na.rm) {
 #' @return [\code{\link{BenchmarkResult}}].
 #' @export
 #' @family benchmark
-reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
+reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), na.rm = FALSE, reg = batchtools::getDefaultRegistry()) {
   # registry and ids are asserted later
   requirePackages("batchtools", why = "batchmark", default.method = "load")
   assertFlag(keep.pred)
@@ -123,7 +126,7 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
       lrn = data$learner[[algo]]
       extract.this = getExtractor(lrn)
       rs = mergeResampleResult(learner.id = algo, task = data$task, iter.results = res, measures = data$measures,
-        rin = data$rin, keep.pred = keep.pred, models = models, show.info = show.info, runtime = NA, extract = extract.this)
+        rin = data$rin, keep.pred = keep.pred, models = models, show.info = show.info, na.rm = na.rm, runtime = NA, extract = extract.this)
       rs$learner = lrn
       result[[prob]][[algo]] = addClasses(rs, "ResampleResult")
     }

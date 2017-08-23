@@ -130,7 +130,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   time2 = Sys.time()
   runtime = as.numeric(difftime(time2, time1, units = "secs"))
   addClasses(
-    mergeResampleResult(learner$id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
+    mergeResampleResult(learner$id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, na.rm, runtime),
     "ResampleResult"
   )
 }
@@ -242,7 +242,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
 
 
 #Merge a list of train/test splits created by calculateResampleIterationResult to one resample result
-mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
+mergeResampleResult = function(learner.id, task, iter.results, measures, rin, models, extract, keep.pred, show.info, na.rm, runtime) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -258,7 +258,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
   # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   aggr = vnapply(seq_along(measures), function(i) {
     m = measures[[i]]
-    m$aggr$fun(task, ms.test[, i], ms.train[, i], m, rin$group, pred, m$aggr$na.rm)
+    m$aggr$fun(task, ms.test[, i], ms.train[, i], m, rin$group, pred, na.rm)
   })
   names(aggr) = vcapply(measures, measureAggrName)
 
