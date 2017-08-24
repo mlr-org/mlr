@@ -137,7 +137,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   imp = xgboost::xgb.importance(feature_names = .model$features,
     model = mod, ...)
 
