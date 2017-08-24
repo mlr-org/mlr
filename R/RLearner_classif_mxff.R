@@ -144,9 +144,12 @@ makeRLearner.classif.mxff = function() {
     short.name = "mxff",
     note = "Default of `learning.rate` set to `0.1`. Default of `array.layout` set to `'rowmajor'`.
     Default of `verbose` is set to `FALSE`. If `symbol` is specified, it will be passed to mxnet
-    ignoring other architectural specifications. Default of `initializer` is set to NULL, which
-    results in the default mxnet initializer being called when training a model. Number of output
-    nodes is detected automatically. The upper bound for dropout is set to `1 - 1e-7` as in `mx.mlp`
+    ignoring almost all other architectural specifications, the exception being that when convolution
+    is used in the symbol, `conv.layer1` has to be set to `TRUE` and `conv.data.shape` has to
+    be specified.
+    Default of `initializer` is set to NULL, which results in the default mxnet initializer being called when
+    training a model. Number of output nodes is detected automatically.
+    The upper bound for dropout is set to `1 - 1e-7` as in `mx.mlp`
     in the `mxnet` package. If `dropout.global` is `TRUE`, the same dropout rate `dropout.input`
     will be applied to the inputs and all the hidden layers. If `dropout.global` is `FALSE`,
     `dropout.input` will be applied to the inputs, and the different `dropout.layer` parameters to
