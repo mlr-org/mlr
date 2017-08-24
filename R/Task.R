@@ -26,10 +26,12 @@
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
 #'
-#' For spatial data, 'x' and 'y' are only used for spatial partitioning of the
+#' If `spatial = TRUE`, 'x' and 'y' are only used for spatial partitioning of the
 #' data if 'SpCV' or 'SpRepCV' is chosen as resampling method. They will not be
-#' used as features during modeling. However, you can set `spatial = FALSE` and ignore
-#' all warnings if you insist on using them.
+#' used as features during modeling.
+#'
+#' Functional data can be added to a task via matrix columns. For more information refer to
+#' \code{\link{makeFunctionalData}}.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.

@@ -84,6 +84,8 @@ Suggests:
     emoa,
     evtree,
     extraTrees,
+    fda.usc,
+    FDboost,
     flare,
     fields,
     FNN,
@@ -125,11 +127,11 @@ Suggests:
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
-    pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.6.0),
+    ranger (>= 0.8.0),
     RCurl,
+    refund,
     rex,
     Rfast,
     rFerns,
@@ -156,9 +158,10 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost (>= 0.6-2),
+    wavelets,
+    xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
 Version: 2.12
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000

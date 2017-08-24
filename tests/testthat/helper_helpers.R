@@ -63,7 +63,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
 
-  if (inherits(m, "FailureModel")){
+  if (inherits(m, "FailureModel")) {
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
@@ -74,7 +74,11 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     } else {
     # to avoid issues with dropped levels in the class factor we only check the elements as chars
     if (is.numeric(cp$data$response) && is.numeric(old.predicts))
-      expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      if (lrn$predict.type == "se") {
+        expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tol = 1e-5)
+      } else {
+        expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      }
     else
       expect_equal(as.character(cp$data$response), as.character(old.predicts))
     }
@@ -218,11 +222,11 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
-    ids = extractSubList(lrns, "id")
-    return(lrns[!grepl("mock", ids)])
+    ids = BBmisc::extractSubList(lrns, "id")
+    return(lrns[!grepl("mock", ids) & !grepl("^(classif|regr).h2o", ids)])
   } else {
     ids = lrns$class
-    return(lrns[!grepl("mock", ids), ])
+    return(lrns[!grepl("mock", ids) & !grepl("^(classif|regr).h2o", ids), ])
   }
 }
 

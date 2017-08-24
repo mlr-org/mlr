@@ -1,17 +1,18 @@
 # mlr 2.12:
 
 ## general
-* relaxed the way wrappers can be nested -- the only explicitly forbidden
+* Support for functional data (fda) using matrix columns has been added.
+* Relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
-* added logical task attribute 'is.spatial'
-* refactored the resample progress messages to give a better overview and
+* Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
-* added logical task attribute 'is.spatial'
+* calculateROCMeasures now returns absolute instead of relative values
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
 * batchmark: allow resample instances and reduction of partial results
+* resample, performance: new flag "na.rm" to remove NAs during aggregation
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -19,7 +20,12 @@
 * helpLearner, helpLearnerParam: open the help for a learner or get a
   description of its parameters
 * setMeasurePars
-* partition options 'SpCV' and 'RepSpCV' (spatial cross-validation, based on kmeans clustering)
+* makeFunctionalData
+* hasFunctionalFeatures
+* extractFDAFeatures, reextractFDAFeatures
+* extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
+* makeExtractFDAFeatMethod
+* makeExtractFDAFeatsWrapper
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -29,16 +35,28 @@
 * cindex.uno, iauc.uno
 
 ## learners - general
-* unified {classif,regr}.penalized{ridge,lasso,fusedlasso} into {classif,regr}.penalized
+* unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 
 ## learners - new
+* classif.fdaknn
+* classif.fdakernel
+* classif.fdanp
+* classif.fdaglm
+* regr.fdaFDboost
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
 * {classif,regr}.xyf: broke our API, stability issues
 * classif.hdrda: package removed from CRAN
 * surv.penalized: stability issues
+
+## aggregations - new
+* testgroup.sd
+
+## filter - new
+
+* auc
 
 # mlr 2.11:
 
