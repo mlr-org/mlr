@@ -82,13 +82,6 @@ object size / mem usage, if you do not really need them.
 In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
-<<<<<<< HEAD
-\item{na.rm}{[\code{logical(1)}]\cr
-Should `NA` values be removed during aggregation of results from `resample`? Default `FALSE`.
-This applies to all selected measures.}
-
-=======
->>>>>>> parent of 71f700f... Add na.rm flag to remove NAs during resample aggregration (#1980)
 \item{...}{[any]\cr
 Further hyperparameters passed to \code{learner}.}
 
