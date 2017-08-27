@@ -21,7 +21,7 @@
 #' @return Either [\code{\link{ClassifTask}}] based on the transformed data or the
 #'   learned shapelet model.
 #' @export
-convertFDATaskToNormalTask = function(task, method, pars = NULL) {
+convertFDATaskToNormalTask = function(task, method, pars = NULL, positive) {
   # check if task
   assertClass(task, classes = c("Task", "FDAClassifTask"))
   assertChoice(method, choices = c("wavelets", "fourier", "shapelets"))
@@ -106,7 +106,7 @@ trafoFDATaskToClassifTask = function(task, method, pars = NULL) {
   # make sure that the feature column names are unique
   colnames(newdata) = c(target, paste0('V', 1:(ncol(newdata) - 1) ))
   newdata[, target] = as.factor(newdata[, target]) # difference between regression and classification
-  newtask = makeClassifTask(data = newdata, target = target)
+  newtask = makeClassifTask(data = newdata, target = target, positive = task$task.desc$positive)
   return(newtask)
 }
 
