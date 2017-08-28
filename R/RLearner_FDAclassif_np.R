@@ -17,7 +17,7 @@ makeRLearner.fdaclassif.np = function() {
       makeDiscreteLearnerParam(id = "type.S", default = "S.NW", values = list("S.NW", "S.LLR", "S.KNN")),
       makeUntypedLearnerParam(id = "par.S")
     ),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Nonparametric classification on FDA",
     short.name = "npFDA"
   )
@@ -35,8 +35,11 @@ trainLearner.fdaclassif.np = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.fdaclassif.np = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  nd.fdclass = fda.usc::fdata(mdata = .newdata)
+  nd = fda.usc::fdata(mdata = .newdata)
   m$C[[1]] = quote(classif.np)
-  class.pred = predict(m, nd.fdclass, ...)
-  return(class.pred)
+  if (type == "probs") {
+    predict(.model$learner.model, nd, type = type)$prob.group
+  } else {
+    predict(.model$learner.model, nd, type = type)
+  }
 }

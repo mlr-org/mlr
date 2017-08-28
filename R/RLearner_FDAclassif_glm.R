@@ -14,7 +14,7 @@ makeRLearner.fdaclassif.glm = function() {
       makeUntypedLearnerParam(id = "basis.b"),
       makeLogicalLearnerParam(id = "CV", default = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Generalized Linear Models classification on FDA",
     short.name = "glmFDA"
   )
@@ -35,8 +35,11 @@ predictLearner.fdaclassif.glm = function(.learner, .model, .newdata, ...) {
   # restructure internal function call (language-object)
   m$C[[1]] = quote(classif.glm)
   # create formulate structure in data
-  nd.fdclass = fda.usc::fdata(mdata = .newdata)
-  nd.fdclass = list(x = nd.fdclass)
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobj = nd.fdclass, ...)
-  return(class.pred)
+  nd = fda.usc::fdata(mdata = .newdata)
+  nd = list(x = nd.fdclass)
+  if (type == "probs") {
+    fda.usc::predict.classif(object = .model$learner.model, new.fdataobj = nd, type = type)$prob.group
+  } else {
+    fda.usc::predict.classif(object = .model$learner.model, new.fdataobj = nd, type = type)
+  }
 }

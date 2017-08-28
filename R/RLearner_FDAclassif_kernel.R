@@ -16,7 +16,7 @@ makeRLearner.fdaclassif.kernel = function() {
       makeUntypedLearnerParam(id = "par.CV"),
       makeUntypedLearnerParam(id = "par.S")
     ),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Kernel classification on FDA",
     short.name = "kernelFDA"
   )
@@ -34,7 +34,10 @@ trainLearner.fdaclassif.kernel = function(.learner, .task, .subset, .weights = N
 #' @export
 predictLearner.fdaclassif.kernel = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  nd.fdclass = fda.usc::fdata(mdata = .newdata)
-  class.pred = fda.usc::predict.classif(object = m, new.fdataobf = nd.fdclass, ...)
-  return(class.pred)
+  nd = fda.usc::fdata(mdata = .newdata)
+  if (type == "probs") {
+    predict(.model$learner.model, nd, type = type)$prob.group
+  } else {
+    predict(.model$learner.model, nd, type = type)
+  }
 }
