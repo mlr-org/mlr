@@ -71,10 +71,14 @@ extractFDAFeatures = function(data, target, method, args) {
 #' @export
 extractMultiFDAFeatures = function(data, target, fd.features, method, args) {
   fdns = names(fd.features)
-  res = namedList(fdns)
+  res_ft = namedList(fdns)
+  res_meta = namedList(fdns)
   #FIXME: Currently only support equal parameter to each channel
   for (fdn in fdns) {
-    res[[fdn]] = extractFDAFeatures(data[, fd.features[[fdn]], drop = FALSE], target, method, args)
+    res = extractFDAFeatures(data[, fd.features[[fdn]], drop = FALSE], target, method, args)
+    res_ft[[fdn]] = res$feat
+    res_meta[[fdn]] = res$meta
   }
-  do.call(cbind, res)
+  ft = do.call(cbind, res_ft)
+  return(list(feat = ft, meta.list = res_meta))
 }
