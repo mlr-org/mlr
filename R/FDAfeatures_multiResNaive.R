@@ -33,7 +33,8 @@ getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.leve
   #  return(getMultiResFeatObs(data = data, res.level = res.level, shift = shift))
   #}
   if(is.null(curve.lens)) curve.lens = c(ncol(data)) # could not move up further
-  getMultiResFeatObsCustomSeg(data = data, curve.lens = curve.lens, res.level = res.level, shift = shift)
+  res = getMultiResFeatObsCustomSeg(data = data, curve.lens = curve.lens, res.level = res.level, shift = shift)
+  return(list(feat = res$feat, meta = res$meta))
 }
 
 
@@ -56,7 +57,7 @@ getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.leve
 #'   multi-resolution features.
 #' @export
 #  Depreciated, will not be used alone, only for test
-getMultiFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift = 0.5) {
+getMultiChannelFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift = 0.5) {
   feat.list = namedList(names = names(fd.features))
   for(fdn in names(fd.features)){
     feat.list[[fdn]] = getMultiResFeatObs(data[, fd.features[[fdn]]], res.level = res.level, shift = shift)
@@ -116,6 +117,7 @@ getMultiResFeatObsCustomSeg = function(data, curve.lens, res.level = 3L, shift =
   n.obs = nrow(data)
   n.curves = length(curve.lens)
   feat.list = vector("list", n.obs)  # class(feat.list) = "list", vector(mode = "logical", length = 0)
+  pos = getCurveFeatures(data[1, ], res.level = res.level, shift = shift)$pos
   for (i in 1:n.obs) {  # traverse the number of observations
     # print(i)
     featvec = numeric(0L)
@@ -126,11 +128,13 @@ getMultiResFeatObsCustomSeg = function(data, curve.lens, res.level = 3L, shift =
       #messagef("curve start, end: %i, %i", sstart, send)
       f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
       # print(f)
-      featvec = c(featvec, f$feats)
+      featvec = c(featvec, f$feats)  # only feature here, no position
     }
     feat.list[[i]] = featvec  # put features from the ith instance into the list ith position
   }
-  do.call(rbind, feat.list)  # creat a matrix by combining the row
+  feat = do.call(rbind, feat.list)  # creat a matrix by combining the row
+  meta = list(pos = pos)
+  return(list(feat = feat, meta = meta))
 }
 
 # FIXME: I have commented out this block so as to pass the rcheck() command, will uncomment once the bug is fixed
@@ -180,7 +184,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
     posh[[rl]] = list()
     i = 1
     while (send <= m) {  # until the segment reach the end
-      messagef("start, end: %i, %i", sstart, send)
+      #messagef("start, end: %i, %i", sstart, send)
       f = getSegmentFeatures(x[sstart:send])
       posh[[rl]][[i]] = c(rl, sstart, send)
       posg[[j]] = c(rl, sstart, send) # now only suppose there is one feature extracted from one segment.

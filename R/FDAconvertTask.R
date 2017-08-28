@@ -35,11 +35,12 @@ convertFDATaskToNormalTask = function(task, method, pars = NULL, positive) {
     return(modelSh)
   }
 
-  tsf = extractFDAFeatures(data = z$data, target = target, method = method, args = pars)
-
+  res = extractFDAFeatures(data = z$data, target = target, method = method, args = pars)
+  tsf = res$feat
   newdata = cbind(as.factor(z$target), tsf)
   colnames(newdata)[1] = target  # rename target column
   newtask = makeClassifTask(data = newdata, target = target, positive = task$task.desc$positive)
+  newtask$task.desc$meta = res$meta
   return(newtask)
 }
 
@@ -98,7 +99,8 @@ trafoFDATaskToClassifTask = function(task, method, pars = NULL) {
   z = getTaskData(task, target.extra = TRUE)
   # FIXME: extractMultiFDAFeatures should return "clean" names. potentially we would
   # like to recognize the "block" from the name? so like V1_1?
-  tsf = extractMultiFDAFeatures(data = z$data, target = target, fd.features = fdf, method = method, args = pars)
+  res = extractMultiFDAFeatures(data = z$data, target = target, fd.features = fdf, method = method, args = pars)
+  tsf = res$feat
   newdata = as.data.frame(cbind((z$target), tsf))
   # FIXME: we have a problem if the target is called Vi!
   # FIXME: maybe make the extracted feature names a bit "stranger"?
@@ -107,6 +109,7 @@ trafoFDATaskToClassifTask = function(task, method, pars = NULL) {
   colnames(newdata) = c(target, paste0('V', 1:(ncol(newdata) - 1) ))
   newdata[, target] = as.factor(newdata[, target]) # difference between regression and classification
   newtask = makeClassifTask(data = newdata, target = target, positive = task$task.desc$positive)
+  newtask$task.desc$meta = res$meta
   return(newtask)
 }
 

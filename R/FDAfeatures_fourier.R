@@ -59,7 +59,7 @@ getFDAFourierFeatures = function(data, target, include.target = FALSE, fft.coeff
   if (include.target)
     fftPA[, target] = y
 
-  return(fftPA)
+  return(list(feat = fftPA, meta = NULL))
 }
 
 ###

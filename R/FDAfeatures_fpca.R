@@ -42,5 +42,5 @@ getFDAFPCAFeatures = function(data, target, have.target = TRUE, include.target =
   names(d_fpca) = paste0("V",1:ncol(d_fpca))
   if (include.target)
     d_fpca[, target] = y
-  return(d_fpca)
+  return(list(feat = d_fpca, meta = NULL))
 }

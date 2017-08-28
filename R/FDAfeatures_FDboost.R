@@ -49,5 +49,5 @@ getFDAFDboostFeatures = function(data, target, have.target = TRUE, include.targe
   d_fdboost = as.data.frame(features_bsignal)
   if (include.target)
     d_fdboost[, target] = y
-  return(d_fdboost)
+  return(list(feat = d_fdboost, meta = NULL))
 }

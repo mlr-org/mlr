@@ -58,5 +58,5 @@ getFDAWaveletFeatures = function(data, target, include.target = FALSE, filter = 
   if (include.target)
     wtdata[, target] = y
 
-  return(wtdata)
+  return(list(feat = wtdata, meta = NULL))
 }

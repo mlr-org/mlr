@@ -25,7 +25,7 @@ test_that("FDA_multiResNaive3", {
   df = getTaskData(fuelsubset.task)
   rdesc = getTaskDesc(fuelsubset.task)
   fdf = rdesc$fd.features
-  dfn = getMultiFDAMultiResFeatures(data= df, fd.features = fdf)
+  dfn = getMultiChannelFDAMultiResFeatures(data= df, fd.features = fdf)
   expect_true(nrow(df) == nrow(dfn))
 })
 
@@ -49,11 +49,11 @@ test_that("FDA_multiResNaive5_singleChannel", {
 })
 
 test_that("FDA_multiResNaive6_task", {
-  task = trafoFDATaskToClassifTask(fuelsubset.task, method = "multiRes", pars = list(res.level = 5, shift = 0.3, curve.lens = c(100,34)))  # the sum must be smaller than single channel
+  task = trafoFDATaskToRegrTask(fuelsubset.task, method = "multiRes", pars = list(res.level = 5, shift = 0.3, curve.lens = c(100,34)))  # the sum must be smaller than single channel
   expect_true(getTaskSize(task) == getTaskSize(fuelsubset.task))
 })
 
 test_that("FDA_multiResNaive7_task", {
-  task = trafoFDATaskToClassifTask(fuelsubset.task, method = "multiRes", pars = list(res.level = 5, shift = 0.3, list(NIR = list(curve.lens = c(100,101)), UVVIS = list(curve.lens = c(100,101)) )))
+  task = trafoFDATaskToRegrTask(fuelsubset.task, method = "multiRes", pars = list(res.level = 5, shift = 0.3, list(NIR = list(curve.lens = c(100,101)), UVVIS = list(curve.lens = c(100,101)) )))
   expect_true(getTaskSize(task) == getTaskSize(fuelsubset.task))
 })

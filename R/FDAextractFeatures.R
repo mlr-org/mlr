@@ -39,7 +39,8 @@ extractFDAFeatures = function(data, target, method, args) {
     multiRes = getFDAMultiResFeatures,
     fpca = getFDAFPCAFeatures
   )
-  do.call(fun, args)
+  res = do.call(fun, args)
+  return(list(feat = res$feat, meta = res$meta))
 }
 
 #FIXME: i dont like a) the name of this function b) that we need it
