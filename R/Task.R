@@ -26,9 +26,11 @@
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
 #'
-#' If `spatial = TRUE`, 'x' and 'y' are only used for spatial partitioning of the
-#' data if 'SpCV' or 'SpRepCV' is chosen as resampling method. They will not be
-#' used as features during modeling.
+#' If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
+#' resampling method, variables named \code{x} and \code{y} will be used for spatial
+#' partitioning of the data (kmeans clustering). They will not be
+#' used as predictors during modeling. Be aware: If coordinates are not named
+#' \code{x} and \code{y} they will be treated as normal predictors!
 #'
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' \code{\link{makeFunctionalData}}.
@@ -78,8 +80,8 @@
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
 #' @param spatial [\code{logical(1)}]\cr
-#'   Is the task spatial? I.e. does it contain coordinates ("x" and "y) which
-#'   shall be used for spatial partitioning using [kmeans] clustering? See details.
+#'   Does the task contain a spatial reference (coordinates) which should be used for
+#'   spatial partioning of the data? See details.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
