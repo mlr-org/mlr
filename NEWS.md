@@ -54,6 +54,10 @@
 ## aggregations - new
 * testgroup.sd
 
+## filter - new
+
+* auc
+
 # mlr 2.11:
 
 ## general
