@@ -133,6 +133,7 @@ NULL
 #' @references Iturritxa, E., Mesanza, N., & Brenning, A. (2014). Spatial
 #' analysis of the risk of major forest diseases in Monterey pine plantations.
 #' Plant Pathology, 64(4), 880-889. doi:10.1111/ppa.12328
+NULL
 
 #' Gunpoint functional data classification task.
 #'

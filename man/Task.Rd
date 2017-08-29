@@ -128,6 +128,10 @@ For multilabel classification we assume that the presence of labels is encoded v
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
 
+If `spatial = TRUE`, 'x' and 'y' are only used for spatial partitioning of the
+data if 'SpCV' or 'SpRepCV' is chosen as resampling method. They will not be
+used as features during modeling.
+
 Functional data can be added to a task via matrix columns. For more information refer to
 \code{\link{makeFunctionalData}}.
 }
