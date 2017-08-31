@@ -26,7 +26,7 @@ makeRLearner.classif.mxff = function() {
         requires = quote(layers > 1 && conv.layer1 == TRUE)),
       makeLogicalLearnerParam(id = "conv.layer3", default = FALSE,
         requires = quote(layers > 2 && conv.layer2 == TRUE)),
-      makeIntegerVectorLearnerParam(id = "conv.data.shape",
+      makeIntegerVectorLearnerParam(id = "conv.data.shape", tunable = FALSE,
         requires = quote(conv.layer1 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.kernel1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
