@@ -60,38 +60,11 @@ getFDAMultiResFeatures = function(data, target, include.target = FALSE, res.leve
 getMultiChannelFDAMultiResFeatures = function(data, fd.features, res.level = 3L, shift = 0.5) {
   feat.list = namedList(names = names(fd.features))
   for(fdn in names(fd.features)){
-    feat.list[[fdn]] = getMultiResFeatObs(data[, fd.features[[fdn]]], res.level = res.level, shift = shift)
+    feat.list[[fdn]] = getMultiResFeatObsCustomSeg(data[, fd.features[[fdn]]], res.level = res.level, shift = shift)$feat
   }
   as.data.frame(Reduce(cbind, x = feat.list))
 }
 
-#' @title Multiresolution feature extraction on one functional covariate.
-#'
-#' @description
-#' The function extract the mean of a small segments of the curve and stack them
-#' as features. The segments length are set in a hierachy way so the features
-#' cover different resolution levels.
-#'
-#' @param data [\code{dataframe}]\cr
-#'   The input matrix.
-#' @param res.level [\code{integer}]\cr
-#'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift [\code{numeric}]\cr
-#'   The overlapping proportion when slide the window for one step.
-#' @return Returns a [\code{matrix}] object with each row containing the
-#'   multi-resolution features.
-#' @export
-getMultiResFeatObs = function(data, res.level = 3L, shift = 0.5) {
-  data = as.matrix(data)
-  n.obs = nrow(data)
-  feat.list = vector("list", n.obs)
-  j = 1L
-  for (i in 1:n.obs) {  # traverse the number of observations
-    f = getCurveFeatures(data[i, ], res.level = res.level, shift = shift)
-    feat.list[[i]] = f$feats  # put features from the ith instance into the list ith position
-  }
-  do.call(rbind, feat.list)  # creat a matrix by combining the row
-}
 
 #' @title Multiresolution feature extraction.
 #'
@@ -111,15 +84,16 @@ getMultiResFeatObs = function(data, res.level = 3L, shift = 0.5) {
 #' @return Returns a [\code{matrix}] object with each row containing the
 #'   multi-resolution features.
 #' @export
-getMultiResFeatObsCustomSeg = function(data, curve.lens, res.level = 3L, shift = 0.5) {
+getMultiResFeatObsCustomSeg = function(data, curve.lens = NULL, res.level = 3L, shift = 0.5) {
   #checkmate::assert_matrix(data)
   data = as.matrix(data)
   n.obs = nrow(data)
+  if (is.null(curve.lens)) curve.lens = ncol(data)
   n.curves = length(curve.lens)
   feat.list = vector("list", n.obs)  # class(feat.list) = "list", vector(mode = "logical", length = 0)
-  pos = getCurveFeatures(data[1, ], res.level = res.level, shift = shift)$pos
+  posflush = numeric(0L)  # this is repeatedly computed, but will not affect performance
   for (i in 1:n.obs) {  # traverse the number of observations
-    # print(i)
+    posflush = numeric(0L)
     featvec = numeric(0L)
     for (j in 1:n.curves) {
       clen = curve.lens[j]  # the subcurve length
@@ -129,11 +103,12 @@ getMultiResFeatObsCustomSeg = function(data, curve.lens, res.level = 3L, shift =
       f = getCurveFeatures(data[i, sstart:send], res.level = res.level, shift = shift)
       # print(f)
       featvec = c(featvec, f$feats)  # only feature here, no position
+      posflush =c(posflush, f$pos)
     }
     feat.list[[i]] = featvec  # put features from the ith instance into the list ith position
   }
   feat = do.call(rbind, feat.list)  # creat a matrix by combining the row
-  meta = list(pos = pos)
+  meta = list(pos = posflush)
   return(list(feat = feat, meta = meta))
 }
 
@@ -174,7 +149,7 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
   feats = numeric(0L)
   posh = list()
   ssize = m  # initialize segment size to be the length of the curve
-  j = 1
+  j_global = 1
   posg = list()
   for (rl in 1:res.level) {  # ssize is divided by 2 at the end of the loop
     soffset = ceiling(shift * ssize)  # overlap distance
@@ -182,14 +157,14 @@ getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
     sstart = 1L  # another initialization, sstart changes in the while loop below
     send = sstart + ssize - 1L  # end position
     posh[[rl]] = list()
-    i = 1
-    while (send <= m) {  # until the segment reach the end
+    i_local = 1
+    while (send <= m) {  # until the segment reach the end, this while loop is only 1 resolution level
       #messagef("start, end: %i, %i", sstart, send)
       f = getSegmentFeatures(x[sstart:send])
-      posh[[rl]][[i]] = c(rl, sstart, send)
-      posg[[j]] = c(rl, sstart, send) # now only suppose there is one feature extracted from one segment.
-      j = j + 1
-      i = i + 1
+      posh[[rl]][[i_local]] = c(rl, sstart, send) # rl is the level
+      posg[[j_global]] = c(rl, sstart, send) # now only suppose there is one feature extracted from one segment.
+      j_global = j_global + 1
+      i_local = i_local + 1
       feats = c(feats, f)  # append the feats from the last resolution hierachy
       sstart = sstart + soffset
       send = send + soffset
