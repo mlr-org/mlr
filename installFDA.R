@@ -1,4 +1,5 @@
 library("roxygen2")
 roxygenize()
+#system("rm -rf /home/hpc/pr74ze/di36tij/R/x86_64-unknown-linux-gnu-library/3.2/00LOCK-mlr")
 devtools::install()
 install.packages("mlrMBO")
