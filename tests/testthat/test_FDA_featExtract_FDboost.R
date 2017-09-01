@@ -10,6 +10,6 @@ test_that("FDA_extractFeat_FDboost", {
 
   f_df = getFDAFDboostFeatures(data = refData$data, target = "X1", have.target = TRUE,
     include.target = FALSE, bsignal.knots = 10L, bsignal.df = 3L)
-  expect_true((nrow(f_df) == nrow(gp) ))
+  expect_true((nrow(f_df$feat) == nrow(gp) ))
 
 })

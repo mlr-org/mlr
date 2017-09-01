@@ -5,13 +5,13 @@ test_that("FDA_FeatExtraction", {
   d = extractFDAFeatures(data = gp$data, target = getTaskTargetNames(gunpoint.task), method = "fourier", args = list())
   gp = getTaskData(gunpoint.task, target.extra = TRUE)
   d = extractFDAFeatures(data = gp$data, target = getTaskTargetNames(gunpoint.task), method = "wavelets", args = list( filter = "d4", boundary = "reflection"))
-  expect_true(dim(d)[1] == dim(gp$data)[1])
+  expect_true(dim(d$feat)[1] == dim(gp$data)[1])
   d = extractFDAFeatures(data = gp$data, target = getTaskTargetNames(gunpoint.task), method = "multiRes", args = list())
-  expect_true(dim(d)[1] == dim(gp$data)[1])
+  expect_true(dim(d$feat)[1] == dim(gp$data)[1])
   d = extractFDAFeatures(data = gp$data, target = getTaskTargetNames(gunpoint.task), method = "bsignal", args = list())
-  expect_true(dim(d)[1] == dim(gp$data)[1])
+  expect_true(dim(d$feat)[1] == dim(gp$data)[1])
   d = extractFDAFeatures(data = gp$data, target = getTaskTargetNames(gunpoint.task), method = "fpca", args = list())
-  expect_true(dim(d)[1] == dim(gp$data)[1])
+  expect_true(dim(d$feat)[1] == dim(gp$data)[1])
 })
 
 

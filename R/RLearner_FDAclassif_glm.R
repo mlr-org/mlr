@@ -36,7 +36,7 @@ predictLearner.fdaclassif.glm = function(.learner, .model, .newdata, ...) {
   m$C[[1]] = quote(classif.glm)
   # create formulate structure in data
   nd = fda.usc::fdata(mdata = .newdata)
-  nd = list(x = nd.fdclass)
+  #nd = list(x = nd.fdclass)
   if (type == "probs") {
     fda.usc::predict.classif(object = .model$learner.model, new.fdataobj = nd, type = type)$prob.group
   } else {
