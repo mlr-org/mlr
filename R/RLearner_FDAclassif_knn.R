@@ -36,10 +36,11 @@ trainLearner.fdaclassif.knn = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.fdaclassif.knn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  nd.fdclass = fda.usc::fdata(mdata = .newdata)# transform the data into fda.usc:fdata class type.
+  nd.fdclass = fda.usc::fdata(mdata = .newdata) # transform the data into fda.usc:fdata class type.
+  type = ifelse(.learner$predict.type == "prob", "prob", "class")
   if (type == "probs") {
-    predict(.model$learner.model, nd, type = type)$prob.group
+    predict(.model$learner.model, nd.fdclass, type = type)$prob.group
   } else {
-    predict(.model$learner.model, nd, type = type)
+    predict(.model$learner.model, nd.fdclass, type = type)
   }
 }

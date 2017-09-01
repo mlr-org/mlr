@@ -37,6 +37,7 @@ predictLearner.fdaclassif.np = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   nd = fda.usc::fdata(mdata = .newdata)
   m$C[[1]] = quote(classif.np)
+  type = ifelse(.learner$predict.type == "prob","prob", "class")
   if (type == "probs") {
     predict(.model$learner.model, nd, type = type)$prob.group
   } else {
