@@ -1412,7 +1412,34 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
       return(NA_real_)
     survAUC::AUC.uno(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), times = times, lpnew = y)$iauc
   },
-  extra.args = list(max.time = NULL, resolution = 1000)
+  extra.args = list(max.time = NULL, resolution = 1000L)
+)
+
+#' @export ibrier
+#' @rdname measures
+#' @format none
+ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.truth", "req.model", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages(c("survival", "pec"))
+    targets = getTaskTargets(task)
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    newdata = getTaskData(task)[model$subset, ]
+    max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
+    grid = seq(0, max.time, length.out = extra.args$resolution)
+
+    probs = predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    perror = pec(probs, f, data = newdata[, tn], times = grid, exact = F, exactness = 99L,
+      maxtime = max.time, verbose = FALSE)
+
+    # FIXME: what is the difference between reference and matrix?
+    # FIXME: this might be the wrong number!
+    crps(perror, times = max.time)[1L, ]
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
 )
 
 ###############################################################################
