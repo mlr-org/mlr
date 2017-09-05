@@ -1,6 +1,6 @@
 #' @export
 makeRLearner.classif.FDboost = function() {
-  makeRLearnerRegr(
+  makeRLearnerClassif(
     cl = "classif.FDboost",
     package = c("FDboost", "mboost"),
     par.set = makeParamSet(
@@ -19,7 +19,7 @@ makeRLearner.classif.FDboost = function() {
       makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
     ),
     par.vals = list(family = "Binomial"),
-    properties = c("functionals", "numerics"),
+    properties = c("functionals", "numerics", "twoclass"),
     name = "Functional linear array classification boosting",
     short.name = "FDboost",
     note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates"
@@ -27,8 +27,8 @@ makeRLearner.classif.FDboost = function() {
 }
 
 #' @export
-trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
-  knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
+trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
+  knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, Binomial.link = "logit",
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
 
   family = switch(family,
@@ -93,7 +93,24 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
 }
 
 #' @export
-predictLearner.regr.FDboost = function(.learner, .model, .newdata, ...) {
-  nl = as.list(.newdata)
-  prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
+predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
+  type = ifelse(.learner$predict.type == "response", "class", "response")
+  p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
+  if (.learner$predict.type  == "prob") {
+    if (!is.matrix(p) && is.na(p)){
+      stopf("The selected family %s does not support probabilities", getHyperPars(.learner)$family)
+    } else {
+      td = .model$task.desc
+      # one observation prediction + family PropOdds returns a numeric vector instead of matrix
+      # FIXME: add/change the outcommented line below to enable predicting one obs
+      # (caution: check whether the right class is assigned)
+      # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2)
+      p = p[, 1L]
+      levs = c(td$negative, td$positive)
+      return(propVectorToMatrix(p, levs))
+    }
+  } else {
+    return(p)
+  }
+  #prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
 }
