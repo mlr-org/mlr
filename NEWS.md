@@ -37,6 +37,7 @@
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
+* fixed bug where classif.xgboost returned NA predictions with multi:softmax
 
 ## learners - new
 * classif.fdaknn

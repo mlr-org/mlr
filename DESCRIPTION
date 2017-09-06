@@ -12,7 +12,7 @@ Description: Interface to a large number of classification and regression
 Authors@R: c(
     person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre")),
     person("Michel", "Lang", email = "michellang@gmail.com", role = "aut"),
-    person("Lars", "Kotthoff", email = "larsko@cs.ubc.ca", role = "aut"),
+    person("Lars", "Kotthoff", email = "larsko@uwyo.edu", role = "aut"),
     person("Julia", "Schiffner", email = "schiffner@math.uni-duesseldorf.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
