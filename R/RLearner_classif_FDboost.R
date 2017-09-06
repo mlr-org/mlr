@@ -94,7 +94,7 @@ trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
-  type = ifelse(.learner$predict.type == "response", "class", "response")
+  type = ifelse(.learner$predict.type == "response", "class", "response")  # additional parameters passed to mboost::predict(), in mboost, "response" returns probabilities and "class" returns the predicted class
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
   if (.learner$predict.type  == "prob") {
     if (!is.matrix(p) && is.na(p)){
@@ -112,5 +112,4 @@ predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
   } else {
     return(p)
   }
-  #prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
 }
