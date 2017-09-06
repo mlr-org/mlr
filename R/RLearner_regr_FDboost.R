@@ -97,6 +97,7 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.regr.FDboost = function(.learner, .model, .newdata, ...) {
+  assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
   prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
 }
