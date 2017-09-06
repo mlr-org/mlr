@@ -10,6 +10,7 @@ test_that("FDA_regr_fgam", {
   df = data.frame(as.list(DTI[, c("pasat", "cca")]))
   df = df[!is.na(df$pasat),]
   df = impute(df, classes = list(numeric = imputeMedian()))$data
+  # impute those na values
   fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94))
   lrn = makeLearner("regr.fdafgam", mgcv.s.k = -1L )
   task = makeRegrTask(data = fdf, target = "pasat")
