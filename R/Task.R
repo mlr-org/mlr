@@ -139,12 +139,12 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
   if (spatial == TRUE) {
     # check if coords are named 'x' and 'y'
     if (!any(colnames(data) == "x" | colnames(data) == "y")) {
-      stop("Please rename coordinate columns to 'x' and 'y'.")
+      stop("Please rename coordinates in data to 'x' and 'y'.")
     }
   }
   # check if setting 'spatial = TRUE' was forgotten by accident
   if (spatial == FALSE && any(colnames(data) == "x" & any(colnames(data) == "y"))) {
-    warningf("We detected that you have columns named 'x' and 'y' in your data. If you have spatial data, please set 'spatial = TRUE' during task creation.")
+    warningf("We detected that you have columns named 'x' and 'y' in your data.\nIf you have spatial data and want to use spatial cross-validation as resampling method, please set 'spatial = TRUE' during task creation (default = FALSE).\nIf not, you can safely ignore this warning.")
   }
 
   env = new.env(parent = emptyenv())
