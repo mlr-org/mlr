@@ -54,6 +54,8 @@ NULL
 #'     \item{\code{pred} [\code{\link{Prediction}}]}{
 #'       Prediction object.}
 #'   }
+#' @param na.rm [\code{logical(1)}]\cr
+#'   Should `NA` values be removed? Default `FALSE`.
 #' @seealso \code{\link{aggregations}}, \code{\link{setAggregation}}
 #' @return [\code{\link{Aggregation}}].
 #' @examples
@@ -62,7 +64,7 @@ NULL
 #'   properties = "req.test",
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
-makeAggregation = function(id, name = id, properties, fun) {
+makeAggregation = function(id, name = id, properties, fun, na.rm = FALSE) {
   assertString(id)
   assertString(name)
   makeS3Obj("Aggregation", id = id, name = name, fun = fun, properties = properties)
