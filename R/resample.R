@@ -78,7 +78,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   n = getTaskSize(task)
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
-    resampling = makeResampleInstance(resampling, task = task, coords = NULL)
+    resampling = makeResampleInstance(resampling, task = task)
   assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task, na.rm = na.rm)
   if (!is.null(weights)) {

@@ -14,19 +14,6 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
-  coords = data.frame(task$x.loc, task$y.loc)
-  # perform kmeans clustering
-  inds = kmeans(coords, centers = desc$iters)
-  inds = factor(inds$cluster)
-
-  # get row indices of test set from clustering
-  test.inds = lapply(levels(inds), function(x, spl)
-    which(spl == x), spl = inds)
-
-  makeResampleInstanceInternal(desc, size, test.inds = test.inds)
-}
-
 instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
   desc$iters = size
   makeResampleInstanceInternal(desc, size, test.inds = as.list(seq_len(size)))
@@ -46,16 +33,6 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("CV", iters = folds)
   i = replicate(desc$reps, makeResampleInstance(d, size = size), simplify = FALSE)
-  train.inds = Reduce(c, lapply(i, function(j) j$train.inds))
-  test.inds = Reduce(c, lapply(i, function(j) j$test.inds))
-  g = as.factor(rep(seq_len(desc$reps), each = folds))
-  makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
-}
-
-instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
-  folds = desc$iters / desc$reps
-  d = makeResampleDesc("SpCV", iters = folds)
-  i = replicate(desc$reps, makeResampleInstance(d, task = task, coords = NULL), simplify = FALSE)
   train.inds = Reduce(c, lapply(i, function(j) j$train.inds))
   test.inds = Reduce(c, lapply(i, function(j) j$test.inds))
   g = as.factor(rep(seq_len(desc$reps), each = folds))
