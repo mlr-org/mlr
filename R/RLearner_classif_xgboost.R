@@ -120,7 +120,9 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
     }
   } else { #multiclass
     if (.learner$par.vals$objective  == "multi:softmax") {
-      return(factor(p, levels = cls)) #special handling for multi:softmax which directly predicts class levels
+      p = as.factor(p) #special handling for multi:softmax which directly predicts class levels
+      levels(p) = cls
+      return(p)
     } else {
       p = matrix(p, nrow = length(p) / nc, ncol = nc, byrow = TRUE)
       colnames(p) = cls

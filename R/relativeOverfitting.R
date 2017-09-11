@@ -5,11 +5,15 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @param rdesc [\code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy.
+#' @param predish [\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
+#'   Resampling strategy or resampling prediction or test predictions.
 #' @template arg_measures
 #' @template arg_task
 #' @template arg_learner
+#' @param pred.train [\code{\link{Prediction}}]\cr
+#'   Training predictions. Only needed if test predictions are passed.
+#' @param iter [\code{\link{integer}}]\cr
+#'   Iteration number. Default 1, usually you don't need to specify this. Only needed if test predictions are passed.
 #' @return [\code{data.frame}]. Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
 #' @export
 #' @family performance
@@ -19,37 +23,60 @@
 #' rdesc = makeResampleDesc("CV", iters = 2)
 #' estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.knn"))
 #' estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.lda"))
-estimateRelativeOverfitting = function(rdesc, measures, task, learner) {
-  assertClass(rdesc, classes = "ResampleDesc")
+#' rpred = resample("classif.knn", task, rdesc)$pred
+#' estimateRelativeOverfitting(rpred, acc, task)
+#' @name estimateRelativeOverfitting
+#' @rdname estimateRelativeOverfitting
+estimateRelativeOverfitting = function(predish, measures, task, learner = NULL, pred.train = NULL, iter = 1) {
   assertClass(task, classes = "Task")
-  assertClass(learner, classes = "Learner")
-
   UseMethod("estimateRelativeOverfitting")
 }
 
 #' @export
-#' @rdname estimateRelativeOverfitting
-estimateRelativeOverfitting.ResampleDesc = function(rdesc, measures, task, learner) {
+estimateRelativeOverfitting.ResampleDesc = function(predish, measures, task, learner, ...) {
+  assertClass(learner, classes = "Learner")
   measures = checkMeasures(measures, task)
 
-  rdesc$predict = "both"
-  r = resample(learner, task, rdesc, measures, show.info = FALSE)
+  predish$predict = "both"
+  r = resample(learner, task, predish, measures, show.info = FALSE)
+
+  estimateRelativeOverfitting(r$pred, measures, task)
+}
+
+#' @export
+estimateRelativeOverfitting.ResamplePrediction = function(predish, measures, task, ...) {
+  measures = checkMeasures(measures, task)
   mids = vcapply(measures, function(m) m$id)
 
-  iterations = nrow(r$measures.test)
-  do.call(rbind, lapply(1:iterations, function(i) {
-    perf.test = r$measures.test[i, mids, drop = FALSE]
-    perf.train = r$measures.train[i, mids, drop = FALSE]
+  iterations = unique(predish$data$iter)
+  rbindlist(lapply(iterations, function(i) {
+    data = predish$data[predish$data$iter == i & predish$data$set == "test", ]
+    pred.test = makePrediction(task$task.desc, row.names(data), data$id, data$truth, predish$predict.type, predish$predict.threshold, data$response, predish$time[i])
 
-    data = r$pred$data[r$pred$data$iter == i & r$pred$data$set == "test", ]
-    nrows = nrow(data)
-    pred.permuted = r$pred
-    pred.permuted$data = data.frame(truth = rep(data$truth, each = nrows),
-      response = rep(data$response, times = nrows))
-    perf.permuted = performance(pred.permuted, measures = measures, task = task)
+    data = predish$data[predish$data$iter != i & predish$data$set == "test", ]
+    pred.train = makePrediction(task$task.desc, row.names(data), data$id, data$truth, predish$predict.type, predish$predict.threshold, data$response, predish$time[i])
 
-    df = (perf.test - perf.train) / (perf.permuted - perf.train)
-    names(df) = stri_paste("relative.overfit", mids, sep = ".")
-    cbind(data.frame(iter = i), df)
+    estimateRelativeOverfitting(pred.test, measures, task, pred.train = pred.train, iter = i)
   }))
+}
+
+#' @export
+estimateRelativeOverfitting.Prediction = function(predish, measures, task, learner, pred.train, iter = 1) {
+  assertClass(pred.train, classes = "Prediction")
+  measures = checkMeasures(measures, task)
+  mids = vcapply(measures, function(m) m$id)
+
+  perf.test = performance(predish, measures = measures)
+  perf.train = performance(pred.train, measures = measures)
+
+  nrows = nrow(predish$data) + nrow(pred.train$data)
+  pred.permuted = predish
+  # generate all permutations of the predictions
+  pred.permuted$data = data.frame(truth = rep(c(predish$data$truth, pred.train$data$truth), each = nrows),
+    response = rep(c(predish$data$response, pred.train$data$response), times = nrows))
+  perf.permuted = performance(pred.permuted, measures = measures, task = task)
+
+  df = (perf.test - perf.train) / (perf.permuted - perf.train)
+  names(df) = paste("relative.overfit", mids, sep = ".")
+  cbind(data.frame(iter = iter), t(data.frame(df)))
 }
