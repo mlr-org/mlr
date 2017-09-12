@@ -66,11 +66,23 @@ test_that("generateThreshVsPerfData", {
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(length(unique(pvs$data$learner))))
 
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = FALSE)
+  ggplot2::ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(1))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(1))
+
   pvs = generateThreshVsPerfData(res, list(tpr, fpr), aggregate = FALSE)
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggplot2::ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(rdesc$iters * length(unique(pvs$data$learner))))
+
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = FALSE)
+  ggplot2::ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(rdesc$iters))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(rdesc$iters))
 
   ## list of resample predictions
   rs = lapply(lrns, crossval, task = binaryclass.task, iters = 2L)
@@ -89,6 +101,12 @@ test_that("generateThreshVsPerfData", {
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
   expect_that(length(XML::getNodeSet(doc, black.line.xpath2, ns.svg)), equals(length(unique(pvs$data$learner))))
+
+  plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE, facet.learner = FALSE)
+  ggplot2::ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, ns.svg)), equals(1))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, ns.svg)), equals(1))
 
   pvs = generateThreshVsPerfData(rs, list(tpr, fpr), aggregate = FALSE)
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
