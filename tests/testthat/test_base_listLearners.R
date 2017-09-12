@@ -1,8 +1,5 @@
 context("listLearners")
 
-# FIXME: try to fix travis by disabling this briefly, must be fixed
-if (FALSE) {
-
 test_that("listLearners", {
   x1 = listLearners(create = FALSE, warn.missing.packages = FALSE)
   expect_data_frame(x1, min.rows = 1L, min.cols = 10)
@@ -38,5 +35,3 @@ test_that("listLearners printer (#1336)", {
   expect_equal(length(stri_match_all(out, regex = "\n")), 12)
   options(width = width)
 })
-
-}
