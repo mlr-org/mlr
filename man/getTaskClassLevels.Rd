@@ -18,12 +18,17 @@ NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClas
 actually return the same thing.
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}},
+Other task: \code{\link{Task}}, \code{\link{getTaskCosts}},
   \code{\link{getTaskData}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
+  \code{\link{makeClassifTask}},
+  \code{\link{makeClusterTask}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeMultilabelTask}},
+  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
   \code{\link{subsetTask}}
 }

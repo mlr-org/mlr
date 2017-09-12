@@ -66,12 +66,18 @@ head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = 
 head(getTaskData(task, subset = 1:100, recode.target = "01"))
 }
 \seealso{
-Other task: \code{\link{getTaskClassLevels}},
+Other task: \code{\link{Task}},
+  \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
+  \code{\link{makeClassifTask}},
+  \code{\link{makeClusterTask}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeMultilabelTask}},
+  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
   \code{\link{subsetTask}}
 }

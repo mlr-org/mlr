@@ -1,12 +1,18 @@
 #' @title Create a cost-sensitive classification task.
 #'
 #' @description
-#' The task encapsulates the data and creates a cost sensitive classification task.
+#' The task encapsulates the data and creates a cost-sensitive classification task.
 #' It also contains a description object detailing further aspects of the data.
+#' For cost-sensitive classification the data set should only contain the feature variables.
+#' To avoid data leakage, the target variable must not be part of the data set.
 #'
 #' Useful operators are:
+#' \code{\link{getTaskType}},
 #' \code{\link{getTaskFeatureNames}},
+#' \code{\link{getTaskNFeats}},
+#' \code{\link{getTaskSize}},
 #' \code{\link{getTaskData}},
+#' \code{\link{getTaskDesc}},
 #' \code{\link{getTaskCosts}}, and
 #' \code{\link{subsetTask}}.
 #'
@@ -33,7 +39,7 @@
 #' makeCostSensTask(data = df, cost = cost)
 #' @export
 #' @family costsens
-#' @family make.task
+#' @family task
 makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

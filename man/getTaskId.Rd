@@ -17,7 +17,8 @@ Task or its description object.}
 See title.
 }
 \seealso{
-Other task: \code{\link{getTaskClassLevels}},
+Other task: \code{\link{Task}},
+  \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
   \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
@@ -25,5 +26,10 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
+  \code{\link{makeClassifTask}},
+  \code{\link{makeClusterTask}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeMultilabelTask}},
+  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
   \code{\link{subsetTask}}
 }

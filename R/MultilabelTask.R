@@ -9,8 +9,13 @@
 #' is then a char vector that points to these columns.
 #'
 #' Useful operators are: \code{\link{getTaskFormula}},
+#' \code{\link{getTaskType}},
 #' \code{\link{getTaskFeatureNames}},
+#' \code{\link{getTaskNFeats}},
+#' \code{\link{getTaskSize}},
 #' \code{\link{getTaskData}},
+#' \code{\link{getTaskDesc}},
+#' \code{\link{getTaskClassLevels}},
 #' \code{\link{getTaskTargets}}, and
 #' \code{\link{subsetTask}}.
 #'
@@ -40,7 +45,7 @@
 #' labels = colnames(yeast)[1:14]
 #' makeMultilabelTask(id = "multi", data = yeast, target = labels)
 #' @export
-#' @family make.task
+#' @family task
 makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)

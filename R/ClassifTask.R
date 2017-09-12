@@ -7,8 +7,13 @@
 #' It also contains a description object detailing further aspects of the data.
 #'
 #' Useful operators are: \code{\link{getTaskFormula}},
+#' \code{\link{getTaskType}},
 #' \code{\link{getTaskFeatureNames}},
+#' \code{\link{getTaskNFeats}},
+#' \code{\link{getTaskSize}},
 #' \code{\link{getTaskData}},
+#' \code{\link{getTaskDesc}},
+#' \code{\link{getTaskClassLevels}},
 #' \code{\link{getTaskTargets}}, and
 #' \code{\link{subsetTask}}.
 #'
@@ -43,7 +48,7 @@
 #'     positive = "good", blocking = blocking)
 #' }
 #' @export
-#' @family make.task
+#' @family task
 makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

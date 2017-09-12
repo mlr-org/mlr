@@ -34,12 +34,18 @@ task = makeClassifTask(data = iris, target = "Species")
 subsetTask(task, subset = 1:100)
 }
 \seealso{
-Other task: \code{\link{getTaskClassLevels}},
+Other task: \code{\link{Task}},
+  \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
   \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
-  \code{\link{getTaskTargets}}, \code{\link{getTaskType}}
+  \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
+  \code{\link{makeClassifTask}},
+  \code{\link{makeClusterTask}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeMultilabelTask}},
+  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}}
 }

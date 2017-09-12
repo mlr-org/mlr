@@ -16,7 +16,7 @@
 #' @name Task
 #' @rdname Task
 #' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
-#' @family make.task
+#' @family task
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {

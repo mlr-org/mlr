@@ -5,8 +5,12 @@
 #' It also contains a description object detailing further aspects of the data.
 #'
 #' Useful operators are: \code{\link{getTaskFormula}},
+#' \code{\link{getTaskType}},
 #' \code{\link{getTaskFeatureNames}},
+#' \code{\link{getTaskNFeats}},
+#' \code{\link{getTaskSize}},
 #' \code{\link{getTaskData}},
+#' \code{\link{getTaskDesc}},
 #' \code{\link{getTaskTargets}}, and
 #' \code{\link{subsetTask}}.
 #'
@@ -35,7 +39,7 @@
 #'   makeRegrTask(data = BostonHousing, target = "medv")
 #' }
 #' @export
-#' @family make.task
+#' @family task
 makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

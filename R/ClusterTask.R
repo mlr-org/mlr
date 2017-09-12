@@ -5,8 +5,12 @@
 #' It also contains a description object detailing further aspects of the data.
 #'
 #' Useful operators are:
+#' \code{\link{getTaskType}},
 #' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskData}}, and
+#' \code{\link{getTaskNFeats}},
+#' \code{\link{getTaskSize}},
+#' \code{\link{getTaskData}}
+#' \code{\link{getTaskDesc}}, and
 #' \code{\link{subsetTask}}.
 #'
 #' Object members:
@@ -28,7 +32,7 @@
 #' @examples
 #'   makeClusterTask(data = iris[, -5L])
 #' @export
-#' @family make.task
+#' @family task
 makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
