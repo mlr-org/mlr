@@ -72,8 +72,17 @@ The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.
 
-See also: \code{\link{makeClassifTask}}, \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
-\code{\link{makeClusterTask}}, \code{\link{makeCostSensTask}}, \code{\link{makeMultilabelTask}}.
+For classification see \code{\link{makeClassifTask}}.
+
+For regression see \code{\link{makeRegrTask}}.
+
+For survival analysis see \code{\link{makeSurvTask}}.
+
+For clustering see \code{\link{makeClusterTask}}.
+
+For cost sensitive classification see \code{\link{makeCostSensTask}}.
+
+For multilabel see \code{\link{makeMultilabelTask}}.
 
 Useful operators are: \code{\link{getTaskFormula}},
 \code{\link{getTaskFeatureNames}},

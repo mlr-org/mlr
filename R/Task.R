@@ -6,8 +6,17 @@
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' See also: \code{\link{makeClassifTask}}, \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
-#' \code{\link{makeClusterTask}}, \code{\link{makeCostSensTask}}, \code{\link{makeMultilabelTask}}.
+#' For classification see \code{\link{makeClassifTask}}.
+#'
+#' For regression see \code{\link{makeRegrTask}}.
+#'
+#' For survival analysis see \code{\link{makeSurvTask}}.
+#'
+#' For clustering see \code{\link{makeClusterTask}}.
+#'
+#' For cost sensitive classification see \code{\link{makeCostSensTask}}.
+#'
+#' For multilabel see \code{\link{makeMultilabelTask}}.
 #'
 #' Useful operators are: \code{\link{getTaskFormula}},
 #' \code{\link{getTaskFeatureNames}},
@@ -31,9 +40,7 @@
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' \code{\link{makeFunctionalData}}.
 #'
-#' @param id [\code{character(1)}]\cr
-#'   Id string for object.
-#'   Default is the name of the R variable passed to \code{data}.
+#' @template arg_id
 #' @param data [\code{data.frame}]\cr
 #'   A data frame containing the features and target variable(s).
 #' @param target [\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
@@ -42,39 +49,12 @@
 #'   so it has length 2. For multilabel classification it contains the names of the logical
 #'   columns that encode whether a label is present or not and its length corresponds to the
 #'   number of classes.
-#' @param costs [\code{data.frame}]\cr
-#'   A numeric matrix or data frame containing the costs of misclassification.
-#'   We assume the general case of observation specific costs.
-#'   This means we have n rows, corresponding to the observations, in the same order as \code{data}.
-#'   The columns correspond to classes and their names are the class labels
-#'   (if unnamed we use y1 to yk as labels).
-#'   Each entry (i,j) of the matrix specifies the cost of predicting class j
-#'   for observation i.
-#' @param weights [\code{numeric}]\cr
-#'   Optional, non-negative case weight vector to be used during fitting.
-#'   Cannot be set for cost-sensitive learning.
-#'   Default is \code{NULL} which means no (= equal) weights.
-#' @param blocking [\code{factor}]\cr
-#'   An optional factor of the same length as the number of observations.
-#'   Observations with the same blocking level \dQuote{belong together}.
-#'   Specifically, they are either put all in the training or the test set
-#'   during a resampling iteration.
-#'   Default is \code{NULL} which means no blocking.
-#' @param positive [\code{character(1)}]\cr
-#'   Positive class for binary classification (otherwise ignored and set to NA).
-#'   Default is the first factor level of the target attribute.
-#' @param fixup.data [\code{character(1)}]\cr
-#'   Should some basic cleaning up of data be performed?
-#'   Currently this means removing empty factor levels for the columns.
-#'   Possible choices are:
-#'   \dQuote{no} = Don't do it.
-#'   \dQuote{warn} = Do it but warn about it.
-#'   \dQuote{quiet} = Do it but keep silent.
-#'   Default is \dQuote{warn}.
-#' @param check.data [\code{logical(1)}]\cr
-#'   Should sanity of data be checked initially at task creation?
-#'   You should have good reasons to turn this off (one might be speed).
-#'   Default is \code{TRUE}.
+#' @template arg_costs
+#' @template arg_weights
+#' @template arg_blocking
+#' @template arg_positive
+#' @template arg_fixup.data
+#' @template arg_check.data
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task

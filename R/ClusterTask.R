@@ -20,32 +20,13 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
-#' @param id [\code{character(1)}]\cr
-#'   Id string for object.
-#'   Default is the name of the R variable passed to \code{data}.
+#' @template arg_id
 #' @param data [\code{data.frame}]\cr
 #'   A data frame containing the features only.
-#' @param weights [\code{numeric}]\cr
-#'   Optional, non-negative case weight vector to be used during fitting.
-#'   Default is \code{NULL} which means no (= equal) weights.
-#' @param blocking [\code{factor}]\cr
-#'   An optional factor of the same length as the number of observations.
-#'   Observations with the same blocking level \dQuote{belong together}.
-#'   Specifically, they are either put all in the training or the test set
-#'   during a resampling iteration.
-#'   Default is \code{NULL} which means no blocking.
-#' @param fixup.data [\code{character(1)}]\cr
-#'   Should some basic cleaning up of data be performed?
-#'   Currently this means removing empty factor levels for the columns.
-#'   Possible choices are:
-#'   \dQuote{no} = Don't do it.
-#'   \dQuote{warn} = Do it but warn about it.
-#'   \dQuote{quiet} = Do it but keep silent.
-#'   Default is \dQuote{warn}.
-#' @param check.data [\code{logical(1)}]\cr
-#'   Should sanity of data be checked initially at task creation?
-#'   You should have good reasons to turn this off (one might be speed).
-#'   Default is \code{TRUE}.
+#' @template arg_weights
+#' @template arg_blocking
+#' @template arg_fixup.data
+#' @template arg_check.data
 #' @return [\code{\link{Task}}].
 #' @examples
 #'   makeClusterTask(data = iris[, -5L])
