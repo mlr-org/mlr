@@ -61,7 +61,7 @@ predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getOOBPredsLearner.classif.ranger = function(.learner, .model) {
-  .model$learner.model$predictions
+  getLearnerModel(.model, more.unwrap = TRUE)$predictions
 }
 
 #' @export
@@ -71,6 +71,6 @@ getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
     stop("You must set the learners parameter value for importance to
          'impurity' or 'permutation' to compute feature importance")
   }
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   ranger::importance(mod)
 }
