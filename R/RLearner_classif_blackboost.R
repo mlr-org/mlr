@@ -39,18 +39,14 @@ makeRLearner.classif.blackboost = function() {
 }
 
 #' @export
-trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", family, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
-  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
-  # learner defaults need to be passed to ctree_control since tree_controls defaults
-  # of blackboost differ from party::ctree_control defaults
-  defaults = getDefaults(getParamSet(.learner))
-  if (missing(teststat)) teststat = defaults$teststat
-  if (missing(testtype)) testtype = defaults$testtype
-  if (missing(mincriterion)) mincriterion = defaults$mincriterion
-  if (missing(maxdepth)) maxdepth = defaults$maxdepth
-  if (missing(savesplitstats)) savesplitstats = defaults$savesplitstats
-  tc =  learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
-    maxdepth, savesplitstats, ...)
+trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", family, custom.family.definition, ...) {
+
+  ctrl = learnerArgsToControl(mboost::boost_control, ..., .restrict = TRUE)
+  # tree_controls defaults of blackboost differ from party::ctree_control defaults :(
+  tc.defaults = getDefaults(getParamSet(.learner))
+  tc.defaults = tc.defaults[c("teststat", "testtype", "mincriterion", "maxdepth", "savesplitstats")]
+  tc = learnerArgsToControl(party::ctree_control, ..., .defaults = tc.defaults, .restrict = TRUE)
+
   f = getTaskFormula(.task)
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
@@ -62,7 +58,8 @@ trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = 
     args = list(formula = f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
   else
     args = list(formula = f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
-  args = dropNamed(args, names(formals(party::ctree_control)))
+  # remove control args from mboost call arg list
+  args = dropNamed(args, c(names(formals(mboost::boost_control)), names(formals(party::ctree_control))))
   do.call(mboost::blackboost, args)
 }
 

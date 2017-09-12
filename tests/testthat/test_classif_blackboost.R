@@ -10,17 +10,15 @@ test_that("classif_blackboost", {
     list(family = mboost::Binomial(),
       control = mboost::boost_control(mstop = 10L),
       tree_controls = party::ctree_control(teststat = "max", testtype = "Teststatistic",
-        mincriterion = 0, maxdepth = 4, savesplitstats = FALSE)),
+        mincriterion = 0, maxdepth = 4, savesplitstats = FALSE, minbucket = 4)),
     list(family = mboost::Binomial(link = "probit"),
       control = mboost::boost_control(mstop = 10L, nu = 0.03))
-    list(tree_controls = party::ctree_control(minbucket = 4))
   )
 
   parset.list2 = list(
     list(),
-    list(mstop = 10L, maxdepth = 4),
-    list(Binomial.link = "probit", mstop = 10L, nu = 0.03),
-    list(minbucket = 4)
+    list(mstop = 10L, maxdepth = 4, minbucket = 4),
+    list(Binomial.link = "probit", mstop = 10L, nu = 0.03)
   )
 
   old.predicts.list = list()

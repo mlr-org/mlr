@@ -38,15 +38,13 @@ makeRLearner.regr.blackboost = function() {
 }
 
 trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
-  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
-  defaults = getDefaults(getParamSet(.learner))
-  if (missing(teststat)) teststat = defaults$teststat
-  if (missing(testtype)) testtype = defaults$testtype
-  if (missing(mincriterion)) mincriterion = defaults$mincriterion
-  if (missing(maxdepth)) maxdepth = defaults$maxdepth
-  if (missing(savesplitstats)) savesplitstats = defaults$savesplitstats
-  tc =  learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
-    maxdepth, savesplitstats, ...)
+
+  ctrl = learnerArgsToControl(mboost::boost_control, ..., .restrict = TRUE)
+  # tree_controls defaults of blackboost differ from party::ctree_control defaults :(
+  tc.defaults = getDefaults(getParamSet(.learner))
+  tc.defaults = tc.defaults[c("teststat", "testtype", "mincriterion", "maxdepth", "savesplitstats")]
+  tc = learnerArgsToControl(party::ctree_control, ..., .defaults = tc.defaults, .restrict = TRUE)
+
   family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
@@ -62,7 +60,8 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NUL
     args = list(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
   else
     args = list(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
-  args = dropNamed(args, names(formals(party::ctree_control)))
+  # remove control args from mboost call arg list
+  args = dropNamed(args, c(names(formals(mboost::boost_control)), names(formals(party::ctree_control))))
   do.call(mboost::blackboost, args)
 }
 
