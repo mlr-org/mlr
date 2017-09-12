@@ -39,7 +39,7 @@ makeRLearner.classif.blackboost = function() {
 }
 
 #' @export
-trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", family, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
+trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, Binomial.link = "logit", family, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, minbucket, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   # learner defaults need to be passed to ctree_control since tree_controls defaults
   # of blackboost differ from party::ctree_control defaults
