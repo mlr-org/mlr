@@ -25,13 +25,5 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   } else {
     or = mlrMBO::mbo(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
   }
-
-  x = trafoValue(par.set, or$x)
-  y = setNames(or$y, opt.path$y.names[1L])
-  # we take the point that mbo proposes and its estimated y
-  # FIXME: threshold
-  if (!control$mbo.keep.result)
-    or = NULL
-  res = makeTuneResult(learner, control, removeMissingValues(x), y, NULL, opt.path, mbo.result = or)
-  res
+  makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
 }

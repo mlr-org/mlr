@@ -5,6 +5,9 @@
 #' \code{\link[mlrMBO]{mbo}} from the \pkg{mlrMBO} package.
 #' Please refer to \url{https://github.com/mlr-org/mlrMBO} for further info.
 #'
+#' Please note that the \code{MBControl} option \code{final.method} is currently not supported.
+#' mbo will always pick the best element from its eval-path as the finally selected point.
+#'
 #' @inherit TuneControl
 #' @param budget [\code{integer(1)}]\cr
 #'   Maximum budget for tuning. This value restricts the number of function evaluations.
@@ -20,9 +23,6 @@
 #' @param mbo.control [\code{\link[mlrMBO]{MBOControl}} | \code{NULL}]\cr
 #'   Control object for model-based optimization tuning.
 #'   For the default, \code{NULL}, the control object will be created with all the defaults as described in \code{\link[mlrMBO]{makeMBOControl}}.
-#' @param mbo.keep.result [\code{logical(1)}] \cr
-#'    Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
-#'    Default is \code{FALSE}.
 #' @param mbo.design [\code{data.frame} | \code{NULL}]\cr
 #'   Initial design as data frame.
 #'   If the parameters have corresponding trafo functions,
@@ -35,7 +35,7 @@
 #' @export
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
   learner = NULL, mbo.control = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
+  continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.design = NULL) {
 
   if (!is.null(learner)) {
     learner = checkLearner(learner, type = "regr")
@@ -46,7 +46,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   }
   assertClass(mbo.control, "MBOControl")
   assertFlag(continue)
-  assertFlag(mbo.keep.result)
 
   if (!is.null(budget) && !is.null(mbo.design) && nrow(mbo.design) > budget)
     stopf("The size of the initial design (init.design.points = %i) exceeds the given budget (%i).",
@@ -54,6 +53,8 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   else if (!is.null(budget)) {
     mbo.control = mlrMBO::setMBOControlTermination(mbo.control, max.evals = budget)
   }
+  if (mbo.control$final.method != "best.true.y")
+    stopf("Changing option mbo option 'final.method' is currently not supported in mlr.")
 
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
     start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
@@ -61,7 +62,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   x$learner = learner
   x$mbo.control = mbo.control
   x$continue = continue
-  x$mbo.keep.result = mbo.keep.result
   x$mbo.design = mbo.design
   return(x)
 }
