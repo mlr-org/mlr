@@ -67,7 +67,7 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
 
 #' @export
 getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
-  preds = .model$learner.model$predicted.oob
+  preds = getLearnerModel(.model, more.unwrap = TRUE)$predicted.oob
   if (.learner$predict.type == "response") {
     factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
   } else {
@@ -77,6 +77,6 @@ getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
 
 #' @export
 getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   randomForestSRC::vimp(mod, ...)$importance[, "all"]
 }
