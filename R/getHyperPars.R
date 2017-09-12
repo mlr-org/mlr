@@ -3,7 +3,8 @@
 #' @description
 #' Retrieves the current hyperparameter settings of a learner.
 #'
-#' @template arg_learner
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}
 #'   the are used (see \code{\link[ParamHelpers]{LearnerParam}}).

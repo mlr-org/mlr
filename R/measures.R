@@ -974,7 +974,7 @@ measureFN = function(truth, response, negative) {
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "True positive rate",
-  note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall.",
+  note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall or sensitivity.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTPR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -1050,7 +1050,7 @@ measureFNR = function(truth, response, negative, positive) {
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
-  note = "Defined as: tp / (tp + number of fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
+  note = "Defined as: tp / (tp + fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
   fun = function(task, model, pred, feats, extra.args) {
     if (pred$predict.type == "prob") {
       prob = getPredictionProbabilities(pred)
@@ -1086,7 +1086,7 @@ measureEdgeCase = function(truth, positive, prob) {
 npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Negative predictive value",
-  note = "Defined as: (tn) / (tn + fn).",
+  note = "Defined as: tn / (tn + fn).",
   fun = function(task, model, pred, feats, extra.args) {
     measureNPV(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -1105,7 +1105,7 @@ measureNPV = function(truth, response, negative) {
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False discovery rate",
-  note = "Defined as: (fp) / (tn + fn).",
+  note = "Defined as: fp / (tp + fp).",
   fun = function(task, model, pred, feats, extra.args) {
     measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -1124,7 +1124,7 @@ measureFDR = function(truth, response, positive) {
 mcc = makeMeasure(id = "mcc", minimize = FALSE,
   properties = c("classif", "req.pred", "req.truth"), best = 1, worst = -1,
   name = "Matthews correlation coefficient",
-  note = "Defined as sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
+  note = "Defined as (tp * tn - fp * fn) / sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
   fun = function(task, model, pred, feats, extra.args) {
     measureMCC(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
@@ -1412,7 +1412,34 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
       return(NA_real_)
     survAUC::AUC.uno(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), times = times, lpnew = y)$iauc
   },
-  extra.args = list(max.time = NULL, resolution = 1000)
+  extra.args = list(max.time = NULL, resolution = 1000L)
+)
+
+#' @export ibrier
+#' @rdname measures
+#' @format none
+ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.truth", "req.model", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages(c("survival", "pec"))
+    targets = getTaskTargets(task)
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    newdata = getTaskData(task)[model$subset, ]
+    max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
+    grid = seq(0, max.time, length.out = extra.args$resolution)
+
+    probs = predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
+      maxtime = max.time, verbose = FALSE)
+
+    # FIXME: what is the difference between reference and matrix?
+    # FIXME: this might be the wrong number!
+    crps(perror, times = max.time)[1L, ]
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
 )
 
 ###############################################################################

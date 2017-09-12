@@ -22,6 +22,7 @@
 \alias{b632}
 \alias{b632plus}
 \alias{testgroup.mean}
+\alias{testgroup.sd}
 \alias{test.join}
 \title{Aggregation methods.}
 \format{None}
@@ -64,6 +65,8 @@ b632plus
 
 testgroup.mean
 
+testgroup.sd
+
 test.join
 }
 \description{
@@ -84,6 +87,9 @@ test.join
   \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
   \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
     to resampling method. The mean for every group is calculated, then the mean of those means.
+    Mainly used for repeated CV.}
+  \item{\bold{testgroup.sd}}{\cr Similar to \bold{testgroup.mean} - after
+    the mean for every group is calculated, the standard deviation of those means is obtained.
     Mainly used for repeated CV.}
   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
