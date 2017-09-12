@@ -27,7 +27,6 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
-
 jobs:
   include:
     - stage: warmup-1
