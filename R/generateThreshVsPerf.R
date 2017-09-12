@@ -348,7 +348,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #'   Default is \code{TRUE}.
 #' @param facet.learner [\code{logical(1)}]\cr
 #'   Weather to use facetting or different colors to compare multiple learners.
-#'   Default is \code{TRUE}.
+#'   Default is \code{FALSE}.
 #' @template ret_gg2
 #' @export
 #' @examples
@@ -367,7 +367,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
 #' }
-plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, facet.learner = TRUE) {
+plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, facet.learner = FALSE) {
   assertClass(obj, "ThreshVsPerfData")
 
   if (missing(measures))
@@ -392,32 +392,24 @@ plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, fa
     mlearn = FALSE
   resamp = "iter" %in% colnames(obj$data)
 
+
+  aes = list(x = names(measures)[1], y = names(measures)[2])
+
   if (!obj$aggregate & mlearn & resamp) {
     obj$data$int = interaction(obj$data$learner, obj$data$iter)
-    if (facet.learner)
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "int"))
-    else
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "int", color = "learner"))
-    p = p + geom_path(alpha = .5)
+    aes$group = "int"
   } else if (!obj$aggregate & !mlearn & resamp) {
-    p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "iter"))
-    p = p + geom_path(alpha = .5)
+    aes$group = "iter"
   } else if (obj$aggregate & mlearn & !resamp) {
-    if (facet.learner)
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "learner"))
-    else
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "learner", color = "learner"))
-    p = p + geom_path(alpha = .5)
+    aes$group = "learner"
   } else {
     obj$data = obj$data[order(obj$data$threshold), ]
-    if (facet.learner)
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2]))
-    else
-    p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], color = "learner"))
-    p = p + geom_path()
   }
 
-  p = p + labs(x = mnames[1], y = mnames[2])
+  if (mlearn & !facet.learner)
+    aes$color = "learner"
+
+  p = ggplot(obj$data, do.call(aes_string, aes)) + geom_path() + labs(x = mnames[1], y = mnames[2])
 
   if (mlearn & facet.learner)
     p = p + facet_wrap(~ learner)
