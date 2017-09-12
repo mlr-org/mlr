@@ -24,8 +24,8 @@ For each class in the task, an individual regression model is fitted for the cos
 During prediction, the class with the lowest predicted costs is selected.
 }
 \seealso{
-Other costsens: \code{\link{makeClassifTask}},
-  \code{\link{makeCostSensClassifWrapper}},
+Other costsens: \code{\link{makeCostSensClassifWrapper}},
+  \code{\link{makeCostSensTask}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},

@@ -6,6 +6,9 @@
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
 #'
+#' See also: \code{\link{makeClassifTask}}, \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
+#' \code{\link{makeClusterTask}}, \code{\link{makeCostSensTask}}, \code{\link{makeMultilabelTask}}.
+#'
 #' Useful operators are: \code{\link{getTaskFormula}},
 #' \code{\link{getTaskFeatureNames}},
 #' \code{\link{getTaskData}},
@@ -25,9 +28,6 @@
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
-#'
-#' Functional data can be added to a task via matrix columns. For more information refer to
-#' \code{\link{makeFunctionalData}}.
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
