@@ -1,14 +1,12 @@
-#' @title Create a cluster task.
+#' @title Create a clustering task.
 #'
 #' @description
-#' The task encapsulates the data and specifies - through its subclasses -
-#' the type of the task.
+#' The task encapsulates the data and creates a clustering task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' Useful operators are: \code{\link{getTaskFormula}},
+#' Useful operators are:
 #' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskData}},
-#' \code{\link{getTaskTargets}}, and
+#' \code{\link{getTaskData}}, and
 #' \code{\link{subsetTask}}.
 #'
 #' Object members:
@@ -21,8 +19,7 @@
 #' }
 #'
 #' @template arg_id
-#' @param data [\code{data.frame}]\cr
-#'   A data frame containing the features only.
+#' @template arg_data_features_only
 #' @template arg_weights
 #' @template arg_blocking
 #' @template arg_fixup.data
@@ -31,6 +28,7 @@
 #' @examples
 #'   makeClusterTask(data = iris[, -5L])
 #' @export
+#' @family make.task
 makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

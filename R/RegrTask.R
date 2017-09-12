@@ -1,8 +1,7 @@
 #' @title Create a regression task.
 #'
 #' @description
-#' The task encapsulates the data and specifies - through its subclasses -
-#' the type of the task.
+#' The task encapsulates the data and creates a regression task.
 #' It also contains a description object detailing further aspects of the data.
 #'
 #' Useful operators are: \code{\link{getTaskFormula}},
@@ -21,8 +20,7 @@
 #' }
 #'
 #' @template arg_id
-#' @param data [\code{data.frame}]\cr
-#'   A data frame containing the features and target variable(s).
+#' @template arg_data_features_and_target
 #' @param target [\code{character(1)}]\cr
 #'   Name(s) of the target variable(s).
 #' @template arg_weights
@@ -37,6 +35,7 @@
 #'   makeRegrTask(data = BostonHousing, target = "medv")
 #' }
 #' @export
+#' @family make.task
 makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)

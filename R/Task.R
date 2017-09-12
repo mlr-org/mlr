@@ -5,74 +5,18 @@
 #' The task encapsulates the data and specifies - through its subclasses -
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
-#'
-#' For classification see \code{\link{makeClassifTask}}.
-#'
-#' For regression see \code{\link{makeRegrTask}}.
-#'
-#' For survival analysis see \code{\link{makeSurvTask}}.
-#'
-#' For clustering see \code{\link{makeClusterTask}}.
-#'
-#' For cost sensitive classification see \code{\link{makeCostSensTask}}.
-#'
-#' For multilabel see \code{\link{makeMultilabelTask}}.
-#'
-#' Useful operators are: \code{\link{getTaskFormula}},
-#' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskData}},
-#' \code{\link{getTaskTargets}}, and
-#' \code{\link{subsetTask}}.
-#'
-#' Object members:
-#' \describe{
-#' \item{env [\code{environment}]}{Environment where data for the task are stored.
-#'   Use \code{\link{getTaskData}} in order to access it.}
-#' \item{weights [\code{numeric}]}{See argument. \code{NULL} if not present.}
-#' \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
-#' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
+#' \itemize{
+#'  \item{For classification see}{ \code{\link{makeClassifTask}}}
+#'  \item{For regression see}{ \code{\link{makeRegrTask}}}
+#'  \item{For survival analysis see}{ \code{\link{makeSurvTask}}}
+#'  \item{For clustering see}{ \code{\link{makeClusterTask}}}
+#'  \item{For cost sensitive classification see}{ \code{\link{makeCostSensTask}}}
+#'  \item{For multilabel classification see}{ \code{\link{makeMultilabelTask}}}
 #' }
-#'
-#' Notes:
-#' For multilabel classification we assume that the presence of labels is encoded via logical
-#' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
-#' is then a char vector that points to these columns.
-#' Functional data can be added to a task via matrix columns. For more information refer to
-#' \code{\link{makeFunctionalData}}.
-#'
-#' @template arg_id
-#' @param data [\code{data.frame}]\cr
-#'   A data frame containing the features and target variable(s).
-#' @param target [\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
-#'   Name(s) of the target variable(s).
-#'   For survival analysis these are the names of the survival time and event columns,
-#'   so it has length 2. For multilabel classification it contains the names of the logical
-#'   columns that encode whether a label is present or not and its length corresponds to the
-#'   number of classes.
-#' @template arg_costs
-#' @template arg_weights
-#' @template arg_blocking
-#' @template arg_positive
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
 #' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
-#' @examples
-#' if (requireNamespace("mlbench")) {
-#'   library(mlbench)
-#'   data(BostonHousing)
-#'   data(Ionosphere)
-#'
-#'   makeClassifTask(data = iris, target = "Species")
-#'   makeRegrTask(data = BostonHousing, target = "medv")
-#'   # an example of a classification task with more than those standard arguments:
-#'   blocking = factor(c(rep(1, 51), rep(2, 300)))
-#'   makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
-#'     positive = "good", blocking = blocking)
-#'   makeClusterTask(data = iris[, -5L])
-#' }
+#' @family make.task
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
