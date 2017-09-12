@@ -31,7 +31,7 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, na.rm) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, na.rm = FALSE) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc, na.rm = na.rm)
