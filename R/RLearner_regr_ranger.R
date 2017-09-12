@@ -63,7 +63,7 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getOOBPredsLearner.regr.ranger = function(.learner, .model) {
-  .model$learner.model$predictions
+  getLearnerModel(.model, more.unwrap = TRUE)$predictions
 }
 
 #' @export
