@@ -5,9 +5,6 @@
 #' \code{\link[mlrMBO]{mbo}} from the \pkg{mlrMBO} package.
 #' Please refer to \url{https://github.com/mlr-org/mlrMBO} for further info.
 #'
-#' Please note that the \code{MBControl} option \code{final.method} is currently not supported.
-#' mbo will always pick the best element from its eval-path as the finally selected point.
-#'
 #' @inherit TuneControl
 #' @param budget [\code{integer(1)}]\cr
 #'   Maximum budget for tuning. This value restricts the number of function evaluations.
@@ -53,8 +50,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   else if (!is.null(budget)) {
     mbo.control = mlrMBO::setMBOControlTermination(mbo.control, max.evals = budget)
   }
-  if (mbo.control$final.method != "best.true.y")
-    stopf("Changing option mbo option 'final.method' is currently not supported in mlr.")
 
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
     start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
