@@ -184,7 +184,6 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
       if (is.null(test.i)) {
         test.i = m$learner.model$data[test.i, ]
       }
-
       newdata = missingLevelsTrain(m, test.i)
       pred.test = predict(m, newdata = newdata)
     } else {
