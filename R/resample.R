@@ -177,7 +177,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     # set factor levels, present in test but missing in train, to NA
     if (m$learner$fix.factors.prediction == TRUE &&
       any(class(m$learner.model) == "lm")) {
-      test.i = task$env$data[test.i, ]
+      test.i = getTaskData(task, test.i)
 
       # cheap error catching here
       # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
