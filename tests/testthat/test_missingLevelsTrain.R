@@ -4,7 +4,7 @@ test_that("missingLevelsTrain.R", {
 
   task = sonar.task
   # introduce factor level with only one observation
-  task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task1$env$data$V1) - 4))))
+  task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task$env$data$V1) - 4))))
 
   rdesc = makeResampleDesc("RepCV", folds = 5, reps = 2)
 
@@ -22,7 +22,7 @@ test_that("missingLevelsTrain.R", {
 
   task = sonar.task
   # introduce factor level with only one observation
-  task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task1$env$data$V1) - 4))))
+  task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3), rep("3", length(task$env$data$V1) - 4))))
 
   n = getTaskSize(task)
   train.set = seq(1, n, by = 2)
