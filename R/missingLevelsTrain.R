@@ -1,11 +1,10 @@
-#' @title Set missing factor levels missing in train data to NA
+#' @title Set missing factor levels in test data to NA
 #' @description
-#' Accounts for missing factor levels only present in test data
-#' but not in train data by setting levels to NA
+#' Sets missing factor levels in test data to NA to avoid prediction error for lm models
 #' @param model \cr
-#'   fitted model on training data
+#'   A model fitted on training data.
 #' @param test.data [`data.frame`] \cr
-#'   data to make predictions for
+#'   Data set for prediction.
 #' @return `data.frame` with matching factor levels to fitted model
 missingLevelsTrain = function(model, test.data) {
 
