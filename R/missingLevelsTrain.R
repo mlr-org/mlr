@@ -15,29 +15,29 @@ missingLevelsTrain = function(model, test.data) {
 
   # 'fit' object structure of 'lm' and 'glmmPQL' is different so we need to
   # account for it
-  if (any(class(fit) == "glmmPQL")) {
+  if (any(class(model) == "glmmPQL")) {
     # Obtain factor predictors in the model and their levels
-    factors = stri_replace_all_regex(names(unlist(fit$learner.model$contrasts)),
+    factors = stri_replace_all_regex(names(unlist(model$learner.model$contrasts)),
                                      "[-^0-9]|as.factor|\\(|\\)", "")
     # do nothing if no factors are present
     if (length(factors) == 0) {
       return(test.data)
     }
 
-    factor.levels = unlist(lapply(fit$contrasts, function(x)
+    factor.levels = unlist(lapply(model$contrasts, function(x)
       outer(rownames(x), colnames(x), paste, sep = ":")))
     factor.levels = stri_split(factor.levels, ":", simplify = TRUE)[, 1]
 
     model.factors = as.data.frame(cbind(factors, factor.levels))
   } else {
     # Obtain factor predictors in the model and their levels
-    factors = stri_replace_all_regex(names(unlist(fit$learner.model$xlevels)),
+    factors = stri_replace_all_regex(names(unlist(model$learner.model$xlevels)),
                                      "[-^0-9]|as.factor|\\(|\\)", "")
 
     if (length(factors) == 0) {
       return(test.data)
     }
-    factor.levels = unname(unlist(fit$learner.model$xlevels))
+    factor.levels = unname(unlist(model$learner.model$xlevels))
     model.factors = as.data.frame(cbind(factors, factor.levels))
   }
 
