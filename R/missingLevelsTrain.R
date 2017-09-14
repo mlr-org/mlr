@@ -1,4 +1,4 @@
-#' @title missingLevelsTrain
+#' @title Set missing factor levels missing in train data to NA
 #' @description
 #' Accounts for missing factor levels only present in test data
 #' but not in train data by setting levels to NA
