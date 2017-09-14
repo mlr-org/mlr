@@ -48,9 +48,10 @@ test_that("tuneMBO works with tune.threshold", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 1)
   )
-  ctrl = makeTuneControlMBO(budget = 3L, tune.threshold = TRUE)
+  sur.lrn = makeLearner("regr.lm", predict.type = "se")
+  ctrl = makeTuneControlMBO(budget = 4L, tune.threshold = TRUE, mbo.design = generateDesign(3, par.set = ps), learner = sur.lrn)
   lrn = makeTuneWrapper(lrn, hout, par.set = ps, control = ctrl)
   mod = train(lrn, sonar.task)
-  expect_false(is.null(mod$learner.model$opt.result$threshold))
+  expect_number(mod$learner.model$opt.result$threshold, lower = 0, upper = 1)
 })
 
