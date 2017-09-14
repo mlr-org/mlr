@@ -2,14 +2,12 @@
 #' @description
 #' Accounts for missing factor levels only present in test data
 #' but not in train data by setting levels to NA
-#' @param fit \cr
+#' @param model \cr
 #'   fitted model on training data
 #' @param test.data [`data.frame`] \cr
 #'   data to make predictions for
 #' @return `data.frame` with matching factor levels to fitted model
-#' @keywords internal
-#' @export
-missingLevelsTrain = function(fit, test.data) {
+missingLevelsTrain = function(model, test.data) {
 
   # https://stackoverflow.com/a/39495480/4185785
 
