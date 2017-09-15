@@ -32,17 +32,11 @@ predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
   # set factor levels, present in test but missing in train, to NA
   if (.model$learner$fix.factors.prediction == TRUE &&
       any(vlapply(.newdata, function(x) is.factor(x)))) {
-    # sometimes we have no task here, e.g. in test_tune_tuneMBO@34
-    if (!missing(task)) {
-      .newdata = task$env$data[subset, ]
-    } else {
-      .newdata = .newdata
-    }
 
     # cheap error catching here
     # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
     if (is.null(subset)) {
-      .newdata = model$learner.model$data[subset, ]
+      .newdata = .model$learner.model$data[subset, ]
     }
     .newdata = missingLevelsTrain(.model, .newdata)
   }
