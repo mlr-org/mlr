@@ -27,6 +27,12 @@ test_that("missingLevelsTrain.R", {
   n = getTaskSize(task)
   train.set = seq(1, n, by = 2)
   test.set = seq(2, n, by = 2)
+
+  lrn = makeLearner("classif.binomial",
+                    link = "logit",
+                    predict.type = "prob",
+                    fix.factors.prediction = TRUE)
+
   mod = train(lrn, task, subset = train.set)
 
   task.pred = predict(mod, task = task, subset = test.set)
