@@ -41,6 +41,8 @@ test_that("setting measure pars works", {
   perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
   expect_string(all.equal(perf[1], perf[2]))
 
+  mod = train("surv.coxph", wpbc.task)
+  pred = predict(mod, wpbc.task)
   measures = list(setMeasurePars(ibrier, max.time = 50), ibrier)
   perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
   expect_true(perf[1] < perf[2])
