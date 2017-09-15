@@ -58,11 +58,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
 
 #' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
-  } else {
-    predictSurvProb(.model$learner.model, newdata = .newdata, times = .newdata[, .model$task.desc$target[1]])
-  }
+  predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
 }
 
 #' @export

@@ -40,6 +40,10 @@ test_that("setting measure pars works", {
   measures = list(setMeasurePars(iauc.uno, resolution = 10), iauc.uno)
   perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
   expect_string(all.equal(perf[1], perf[2]))
+
+  measures = list(setMeasurePars(ibrier, max.time = 50), ibrier)
+  perf = performance(pred = pred, task = wpbc.task, model = mod, measures = measures)
+  expect_true(perf[1] < perf[2])
 })
 
 test_that("hand constructed tests", {

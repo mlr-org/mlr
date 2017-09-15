@@ -1415,36 +1415,33 @@ iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
   extra.args = list(max.time = NULL, resolution = 1000)
 )
 
-#' @export ibs
+#' @export ibrier
 #' @rdname measures
 #' @format none
-ibs = makeMeasure(
-  id = "ibs",
-  name = "Integrated brier score using inverse probability of censoring weighting",
-  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task).",
-  properties = c("surv", "req.pred", "req.truth", "req.prob", "req.model", "req.task", "req.newdata"),
-  minimize = FALSE, best = 1, worst = 0,
+#' @references
+#' UB Mogensen et al.
+#' \emph{Evaluating Random Forests for Survival Analysis using Prediction Error Curves}
+#' Journal of statistical software. 2012;50(11):1-23. \url{https://www.jstatsoft.org/article/view/v050i11/v50i11.pdf}.
+ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.truth", "req.model", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages(c("pec"))
-    targets = getPredictionTaskDesc(pred)$target
-    truth = cbind(pred$data$truth.time, pred$data$truth.event)
-    measureIBS(data, truth, probs, max.time = extra.args$max.time, targets)
+    requirePackages(c("survival", "pec"))
+    targets = getTaskTargets(task)
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    newdata = getTaskData(task)[model$subset, ]
+    max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
+    grid = seq(0, max.time, length.out = extra.args$resolution)
+    probs = pec::predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    # this function is only suitable for coxph and randomForestSRC at the moment!
+    perror = pec::pec(probs, f, data = newdata[, tn], times = grid, exact = F, exactness = 99L,
+      maxtime = max.time, verbose = FALSE, cens.model = "marginal")
+    pec::crps(perror, times = max.time)[2L, ]
   },
-  extra.args = list(max.time = NULL)
+  extra.args = list(max.time = NULL, resolution = 1000L)
 )
-
-#' @export measureIBS
-#' @rdname measures
-#' @format none
-measureIBS = function(data, truth, probabilities, max.time, targets) {
-  max.time = assertNumber(max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L]) - sqrt(.Machine$double.eps)
-  # biggest time value has to be adapted as it does not provide results otherwise
-  formel = as.formula(paste0("Surv(", targets[1], ", ", targets[2], ") ~ 1"))
-  pec_probs = pec::pec(probabilities, formel, data = truth, exact = F, exactness = 99L, maxtime = max.time)
-  crps(pec_probs,times=max.time)[2,]
-}
-#
-
 
 ###############################################################################
 ### cost-sensitive ###
