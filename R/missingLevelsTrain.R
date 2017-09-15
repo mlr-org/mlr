@@ -6,8 +6,7 @@
 #' @param test.data [`data.frame`] \cr
 #'   Data set for prediction.
 #' @return A `data.frame` with matching factor levels of test data and fitted model
-#' @export
-missingLevelsTrain = function(.model, .test.data) {
-  lmod = getLearnerModel(.model)
+missingLevelsTrain = function(model, test.data) {
+  lmod = getLearnerModel(model)
   UseMethod("missingLevelsTrain", lmod)
 }
