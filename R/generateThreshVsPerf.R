@@ -414,7 +414,7 @@ plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, fa
   if (mlearn && facet.learner)
     p = p + facet_wrap(~ learner)
 
-  if (diagonal && all(vlapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE)) <= 1))
+  if (diagonal && all(vlapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE) <= 1)))
     p = p + geom_abline(aes(intercept = 0, slope = 1), linetype = "dashed", alpha = .5)
   p
 }
