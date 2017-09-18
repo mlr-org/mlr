@@ -1436,7 +1436,7 @@ ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
     grid = seq(0, max.time, length.out = extra.args$resolution)
     probs = pec::predictSurvProb(model$learner.model, newdata = newdata, times = grid)
     # this function is only suitable for coxph and randomForestSRC at the moment!
-    perror = pec::pec(probs, f, data = newdata[, tn], times = grid, exact = F, exactness = 99L,
+    perror = pec::pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
       maxtime = max.time, verbose = FALSE, cens.model = "marginal")
     pec::crps(perror, times = max.time)[2L, ]
   },
