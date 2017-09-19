@@ -17,18 +17,12 @@ The task.}
 Target column name is not included.
 }
 \seealso{
-Other task: \code{\link{Task}},
-  \code{\link{getTaskClassLevels}},
+Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
   \code{\link{getTaskDesc}}, \code{\link{getTaskFormula}},
   \code{\link{getTaskId}}, \code{\link{getTaskNFeats}},
   \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
-  \code{\link{makeClassifTask}},
-  \code{\link{makeClusterTask}},
-  \code{\link{makeCostSensTask}},
-  \code{\link{makeMultilabelTask}},
-  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
   \code{\link{subsetTask}}
 }

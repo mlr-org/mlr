@@ -31,8 +31,7 @@ This is usually simply \dQuote{<target> ~ .}.
 For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 }
 \seealso{
-Other task: \code{\link{Task}},
-  \code{\link{getTaskClassLevels}},
+Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
   \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
@@ -40,10 +39,5 @@ Other task: \code{\link{Task}},
   \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
-  \code{\link{makeClassifTask}},
-  \code{\link{makeClusterTask}},
-  \code{\link{makeCostSensTask}},
-  \code{\link{makeMultilabelTask}},
-  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}},
   \code{\link{subsetTask}}
 }
