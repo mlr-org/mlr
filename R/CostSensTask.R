@@ -1,29 +1,9 @@
 #' @title Create a cost-sensitive classification task.
 #'
-#' @description
-#' The task encapsulates the data and creates a cost-sensitive classification task.
-#' It also contains a description object detailing further aspects of the data.
-#' For cost-sensitive classification the data set should only contain the feature variables.
-#' To avoid data leakage, the target variable must not be part of the data set.
-#'
-#' Useful operators are:
-#' \code{\link{getTaskType}},
-#' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskNFeats}},
-#' \code{\link{getTaskSize}},
-#' \code{\link{getTaskData}},
-#' \code{\link{getTaskDesc}},
-#' \code{\link{getTaskCosts}}, and
-#' \code{\link{subsetTask}}.
-#'
-#' Object members:
-#' \describe{
-#' \item{env [\code{environment}]}{Environment where data for the task are stored.
-#'   Use \code{\link{getTaskData}} in order to access it.}
-#' \item{weights [\code{numeric}]}{See argument. \code{NULL} if not present.}
-#' \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
-#' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
-#' }
+#' @template desc_tasks
+#' @templateVar tasktype cost-sensitive classification
+#' @templateVar randomtext For cost-sensitive classification the data set should only contain the feature variables. To avoid data leakage, the target variable must not be part of the data set.
+#' @templateVar operators : \code{\link{getTaskCosts}},
 #'
 #' @template arg_id
 #' @template arg_data_features_only

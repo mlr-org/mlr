@@ -1,27 +1,9 @@
 #' @title Create a survival task.
 #'
-#' @description
-#' The task encapsulates the data and creates a task for survival analysis.
-#' It also contains a description object detailing further aspects of the data.
-#'
-#' Useful operators are: \code{\link{getTaskFormula}},
-#' \code{\link{getTaskType}},
-#' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskNFeats}},
-#' \code{\link{getTaskSize}},
-#' \code{\link{getTaskData}},
-#' \code{\link{getTaskDesc}},
-#' \code{\link{getTaskTargets}}, and
-#' \code{\link{subsetTask}}.
-#'
-#' Object members:
-#' \describe{
-#' \item{env [\code{environment}]}{Environment where data for the task are stored.
-#'   Use \code{\link{getTaskData}} in order to access it.}
-#' \item{weights [\code{numeric}]}{See argument. \code{NULL} if not present.}
-#' \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
-#' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
-#' }
+#' @template desc_tasks
+#' @templateVar tasktype survival analysis
+#' @templateVar randomtext For survival analysis, it is necessary to specify the survival time and the event as \code{target}.
+#' @templateVar operators : \code{\link{getTaskTargets}},
 #'
 #' @template arg_id
 #' @template arg_data_features_and_target
