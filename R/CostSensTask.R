@@ -1,17 +1,14 @@
 #' @title Create a cost-sensitive classification task.
 #'
 #' @template desc_tasks
-#' @templateVar tasktype cost-sensitive classification
-#' @templateVar randomtext For cost-sensitive classification the data set should only contain the feature variables. To avoid data leakage, the target variable must not be part of the data set.
-#' @templateVar operators : \code{\link{getTaskCosts}},
+#' @templateVar desc_tasks_tasktype cost-sensitive classification
+#' @templateVar desc_tasks_further_notes For cost-sensitive classification the data set should only contain the feature variables. To avoid data leakage, the target variable must not be part of the data set.
 #'
+#' @inheritParams makeTask
 #' @template arg_id
 #' @template arg_data_features_only
 #' @template arg_costs
-#' @template arg_blocking
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @return [\code{\link{Task}}].
+#' @return [\code{\link{CostSensTask}}].
 #' @examples
 #' df = iris
 #' cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]

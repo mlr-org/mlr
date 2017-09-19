@@ -1,20 +1,15 @@
 #' @title Create a classification task.
 #'
 #' @template desc_tasks
-#' @templateVar tasktype binary or multiclass classification
-#' @templateVar randomtext The target column must be a factor.
-#' @templateVar operators : \code{\link{getTaskFormula}}, \code{\link{getTaskClassLevels}}, \code{\link{getTaskTargets}},
+#' @templateVar desc_tasks_tasktype binary or multiclass classification
+#' @templateVar desc_tasks_further_notes The target column must be a factor.
 #'
+#' @inheritParams makeTask
 #' @template arg_id
-#' @template arg_data_features_and_target
 #' @param target [\code{character(1)}]\cr
 #'   Name(s) of the target variable(s).
-#' @template arg_weights
-#' @template arg_blocking
 #' @template arg_positive
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @return [\code{\link{Task}}].
+#' @return [\code{\link{ClassifTask}}].
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)

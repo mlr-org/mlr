@@ -19,6 +19,34 @@
 #' @family task
 NULL
 
+#' @inherit Task
+#'
+#' @param type [\code{character(1)}]\cr The tasktype.
+#' @param data [\code{data.frame}]\cr
+#'   A data frame containing the features and target variable(s).
+#' @param weights [\code{numeric}]\cr
+#'   Optional, non-negative case weight vector to be used during fitting.
+#'   Cannot be set for cost-sensitive learning.
+#'   Default is \code{NULL} which means no (= equal) weights.
+#' @param blocking [\code{factor}]\cr
+#'   An optional factor of the same length as the number of observations.
+#'   Observations with the same blocking level \dQuote{belong together}.
+#'   Specifically, they are either put all in the training or the test set
+#'   during a resampling iteration.
+#'   Default is \code{NULL} which means no blocking.
+#' @param fixup.data [\code{character(1)}]\cr
+#'   Should some basic cleaning up of data be performed?
+#'   Currently this means removing empty factor levels for the columns.
+#'   Possible choices are:
+#'   \dQuote{no} = Don't do it.
+#'   \dQuote{warn} = Do it but warn about it.
+#'   \dQuote{quiet} = Do it but keep silent.
+#'   Default is \dQuote{warn}.
+#' @param check.data [\code{logical(1)}]\cr
+#'   Should sanity of data be checked initially at task creation?
+#'   You should have good reasons to turn this off (one might be speed).
+#'   Default is \code{TRUE}.
+#' @keywords internal
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {

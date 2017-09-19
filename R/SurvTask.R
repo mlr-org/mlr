@@ -1,25 +1,15 @@
 #' @title Create a survival task.
 #'
 #' @template desc_tasks
-#' @templateVar tasktype survival analysis
-#' @templateVar randomtext For survival analysis, it is necessary to specify the survival time and the event as \code{target}.
-#' @templateVar operators : \code{\link{getTaskTargets}},
+#' @templateVar desc_tasks_tasktype survival analysis
+#' @templateVar desc_tasks_further_notes For survival analysis, it is necessary to specify the survival time and the event in \code{target}.
 #'
+#' @inheritParams makeTask
 #' @template arg_id
-#' @template arg_data_features_and_target
 #' @param target [\code{character(2)}]\cr
 #'   For survival analysis these are the names of the survival time and event columns,
 #'   so it has length 2.
-#' @template arg_weights
-#' @template arg_blocking
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @param censoring [\code{character(1)}]\cr
-#'  Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
-#'  \dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
-#'  the \dQuote{interval2} format.
-#'  See \code{\link[survival]{Surv}} for details.
-#' @return [\code{\link{Task}}].
+#' @return [\code{\link{SurvTask}}].
 #' @examples
 #' data(lung, package = "survival")
 #' lung$status = (lung$status == 2) # convert to logical

@@ -1,17 +1,13 @@
 #' @title Create a clustering task.
 #'
 #' @template desc_tasks
-#' @templateVar tasktype clustering
-#' @templateVar randomtext In clustering tasks, the target variable must not be part of the data set.
-#' @templateVar operators :
+#' @templateVar desc_tasks_tasktype clustering
+#' @templateVar desc_tasks_further_notes In clustering tasks, the target variable must not be part of the data set.
 #'
+#' @inheritParams makeTask
 #' @template arg_id
 #' @template arg_data_features_only
-#' @template arg_weights
-#' @template arg_blocking
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @return [\code{\link{Task}}].
+#' @return [\code{\link{ClusterTask}}].
 #' @examples
 #'   makeClusterTask(data = iris[, -5L])
 #' @export

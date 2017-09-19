@@ -1,22 +1,17 @@
 #' @title Create a multilabel classification task.
 #'
 #' @template desc_tasks
-#' @templateVar tasktype multilabel
-#' @templateVar randomtext For multilabel classification we assume that the presence of labels is encoded via logical columns in \code{data}. The name of the column specifies the name of the label. \code{target} is then a char vector that points to these columns.
-#' @templateVar operators : \code{\link{getTaskFormula}}, \code{\link{getTaskClassLevels}}, \code{\link{getTaskTargets}},
+#' @templateVar desc_tasks_tasktype multilabel
+#' @templateVar desc_tasks_further_notes For multilabel classification we assume that the presence of labels is encoded via logical columns in \code{data}. The name of the column specifies the name of the label. \code{target} is then a char vector that points to these columns.
 #'
+#' @inheritParams makeTask
 #' @template arg_id
-#' @template arg_data_features_and_target
 #' @param target [\code{character(n.classes)}]\cr
 #'   Name(s) of the target variable(s).
 #'   For multilabel classification it contains the names of the logical
 #'   columns that encode whether a label is present or not and its length corresponds to the
 #'   number of classes.
-#' @template arg_weights
-#' @template arg_blocking
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @return [\code{\link{Task}}].
+#' @return [\code{\link{MultilabelTask}}].
 #' @examples
 #' yeast = getTaskData(yeast.task)
 #' labels = colnames(yeast)[1:14]

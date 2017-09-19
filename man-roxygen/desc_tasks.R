@@ -1,16 +1,8 @@
 #' @description
-#' The task encapsulates the data and creates a <%= tasktype %> task.
+#' The task encapsulates the data and creates a <%= desc_tasks_tasktype %> task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' <%= randomtext %>
-#'
-#' Useful operators are <%= operators %>
-#' \code{\link{getTaskType}},
-#' \code{\link{getTaskFeatureNames}},
-#' \code{\link{getTaskNFeats}},
-#' \code{\link{getTaskSize}},
-#' \code{\link{getTaskData}},
-#' \code{\link{getTaskDesc}} and \code{\link{subsetTask}}.
+#' <%= desc_tasks_further_notes %>
 #'
 #' Object members:
 #' \describe{

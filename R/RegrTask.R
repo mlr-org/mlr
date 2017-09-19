@@ -1,19 +1,14 @@
 #' @title Create a regression task.
 #'
 #' @template desc_tasks
-#' @templateVar tasktype regression
-#' @templateVar randomtext The target column must be of type numeric.
-#' @templateVar operators : \code{\link{getTaskFormula}}, \code{\link{getTaskTargets}},
+#' @templateVar desc_tasks_tasktype regression
+#' @templateVar desc_tasks_further_notes The target column must be of type numeric.
 #'
+#' @inheritParams makeTask
 #' @template arg_id
-#' @template arg_data_features_and_target
 #' @param target [\code{character(1)}]\cr
 #'   Name(s) of the target variable(s).
-#' @template arg_weights
-#' @template arg_blocking
-#' @template arg_fixup.data
-#' @template arg_check.data
-#' @return [\code{\link{Task}}].
+#' @return [\code{\link{RegrTask}}].
 #' @examples
 #' if (requireNamespace("mlbench")) {
 #'   library(mlbench)
