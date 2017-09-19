@@ -49,7 +49,6 @@ jobs:
           R CMD build .
           travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-      after_script:
         - ./travis-tool.sh dump_logs
       after_success:
         - git checkout master
