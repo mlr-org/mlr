@@ -9,3 +9,7 @@ missingLevelsTrain = function(model, test.data) {
   lmod = getLearnerModel(model)
   UseMethod("missingLevelsTrain", lmod)
 }
+
+missingLevelsTrain.default = function(model, test.data) {
+  return(test.data)
+}
