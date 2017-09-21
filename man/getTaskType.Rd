@@ -19,10 +19,11 @@ See title.
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskDates}}, \code{\link{getTaskDesc}},
+  \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{subsetTask}}
 }
+\concept{task}

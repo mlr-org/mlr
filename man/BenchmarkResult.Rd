@@ -52,3 +52,4 @@ Other benchmark: \code{\link{batchmark}},
   \code{\link{plotCritDifferences}},
   \code{\link{reduceBatchmarkResults}}
 }
+\concept{benchmark}

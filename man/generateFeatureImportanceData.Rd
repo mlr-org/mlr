@@ -118,3 +118,4 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
+\concept{generate_plot_data}

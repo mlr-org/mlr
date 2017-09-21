@@ -105,3 +105,4 @@ Other impute: \code{\link{imputations}},
   \code{\link{makeImputeMethod}},
   \code{\link{makeImputeWrapper}}, \code{\link{reimpute}}
 }
+\concept{impute}

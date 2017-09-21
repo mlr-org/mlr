@@ -33,7 +33,7 @@ For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskDates}}, \code{\link{getTaskDesc}},
+  \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskId}}, \code{\link{getTaskNFeats}},
   \code{\link{getTaskSize}},
@@ -41,3 +41,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
+\concept{task}

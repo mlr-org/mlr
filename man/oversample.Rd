@@ -39,3 +39,4 @@ reduced (downsampled) by randomly sampling without replacement from this class.
 Other imbalancy: \code{\link{makeOverBaggingWrapper}},
   \code{\link{makeUndersampleWrapper}}, \code{\link{smote}}
 }
+\concept{imbalancy}

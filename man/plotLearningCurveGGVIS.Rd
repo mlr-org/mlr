@@ -46,3 +46,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
 Other learning_curve: \code{\link{generateLearningCurveData}},
   \code{\link{plotLearningCurve}}
 }
+\concept{learning_curve}
+\concept{plot}

@@ -8,7 +8,6 @@
 \alias{timepredict}
 \alias{timeboth}
 \alias{sse}
-\alias{mase}
 \alias{measureSSE}
 \alias{mse}
 \alias{measureMSE}
@@ -142,8 +141,6 @@ timepredict
 timeboth
 
 sse
-
-none
 
 measureSSE(truth, response)
 
@@ -448,4 +445,5 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
+\concept{performance}
 \keyword{datasets}

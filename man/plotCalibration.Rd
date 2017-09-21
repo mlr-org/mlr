@@ -67,3 +67,5 @@ Other plot: \code{\link{plotBMRBoxplots}},
 
 Other calibration: \code{\link{generateCalibrationData}}
 }
+\concept{calibration}
+\concept{plot}

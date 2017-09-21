@@ -99,15 +99,6 @@ The columns correspond to classes and their names are the class labels
 (if unnamed we use y1 to yk as labels).
 Each entry (i,j) of the matrix specifies the cost of predicting class j
 for observation i.}
-
-\item{frequency}{[\code{Integer(1)}]\cr
-The seasonality of the data. A frequency of 7L for daily data means a weekly seasonality,
-52L is weekly data with a yearly seasonality, 365L is daily data with a yearly seasonality, etc.
-Default is 1L for no seasonality.}
-
-\item{date.col}{[\code{character(1)}]\cr
-The column which contains the dates for your data. These dates should be unique, in a POSIXt format, and in ascending order.
-If \code{check.data} is TRUE, the first two conditions will be checked. If \code{fixup.data} is not 'no', then unorded data will be placed in ascending order.}
 }
 \value{
 [\code{\link{Task}}].
@@ -166,3 +157,4 @@ Other costsens: \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 }
+\concept{costsens}

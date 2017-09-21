@@ -106,3 +106,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
+\concept{generate_plot_data}
+\concept{partial_dependence functional_anova}

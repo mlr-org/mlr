@@ -22,8 +22,7 @@ Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
-  \code{\link{getTaskData}}, \code{\link{getTaskDates}},
-  \code{\link{getTaskDesc}},
+  \code{\link{getTaskData}}, \code{\link{getTaskDesc}},
   \code{\link{getTaskFeatureNames}},
   \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
   \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
@@ -31,3 +30,4 @@ Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
+\concept{task}

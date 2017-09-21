@@ -56,3 +56,4 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}}
 }
+\concept{tune}

@@ -45,3 +45,4 @@ Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{plotTuneMultiCritResultGGVIS}},
   \code{\link{tuneParamsMultiCrit}}
 }
+\concept{tune_multicrit}
