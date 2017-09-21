@@ -40,6 +40,9 @@ predictLearner = function(.learner, .model, .newdata, ...) {
   lmod = getLearnerModel(.model)
   if (inherits(lmod, "NoFeaturesModel")) {
     predictNofeatures(.model, .newdata)
+  } else {
+    assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
+    UseMethod("predictLearner")
   }
 }
 

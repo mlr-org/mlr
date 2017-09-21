@@ -469,14 +469,3 @@ getTaskFactorLevels = function(task) {
 getTaskWeights = function(task) {
   task$weights
 }
-
-#' @title Get the dates of the task.
-#'
-#' @description Returns the dates from a task if they exist.
-#' @template arg_task_or_desc
-#' @return [\code{character(1)}]
-#' @export
-#' @family task
-getTaskDates = function(x) {
-  getTaskDesc(x)$dates
-}

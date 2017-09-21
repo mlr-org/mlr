@@ -127,6 +127,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("The original features can not be used for this method")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
+
   # lrn$predict.type is "response" by default change it using setPredictType
   lrn =  makeBaseEnsemble(
     id = "stack",
@@ -170,7 +171,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
   bms = model$learner.model$base.models
   method = model$learner.model$method
 
-  if (is.null(newdata) || ncol(newdata) == 0) {
+  if (is.null(newdata)) {
     probs = model$learner.model$pred.train
   } else {
     # if (model == "stack.cv") warning("Crossvalidated predictions for new data is not possible for this method.")
@@ -215,7 +216,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   # get task information (classif)
   td = .model$task.desc
-  type = checkStackSupport(td)
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   # predict prob vectors with each base model
   if (.learner$method != "compress") {
@@ -325,7 +327,8 @@ averageBaseLearners = function(learner, task) {
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
   td = getTaskDesc(task)
-  type = checkStackSupport(td)
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   base.models = probs = vector("list", length(bls))
@@ -366,7 +369,8 @@ stackNoCV = function(learner, task) {
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task) {
   td = getTaskDesc(task)
-  type = checkStackSupport(td)
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
@@ -420,7 +424,8 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertInt(bagtime, lower = 1)
 
   td = getTaskDesc(task)
-  type = checkStackSupport(td)
+  type = ifelse(td$type == "regr", "regr",
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   if (is.null(metric)) {
     if (type == "regr") {
       metric = function(pred, true) mean((pred - true)^2)
@@ -542,7 +547,8 @@ compressBaseLearners = function(learner, task, parset = list()) {
   pseudo.data = data.frame(pseudo.data, target = pseudo.target$data$response)
 
   td = ensemble.model$task.desc
-  type = checkStackSupport(td)
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   if (type == "regr") {
     new.task = makeRegrTask(data = pseudo.data, target = "target")
@@ -731,16 +737,3 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
 # - DONE: super learner can also return predicted probabilites
 # - DONE: allow regression as well
 
-# check the learner type to see if it is supported
-checkStackSupport = function(td) {
-  if (td$type == "regr") {
-    type = "regr"
-  } else if (length(td$class.levels) == 2L) {
-    type = "classif"
-  } else if (length(td$class.levels) > 2L) {
-    type = "multiclassif"
-  } else {
-    stop(catf("Learners of type %s are not supported", td$type))
-  }
-  type
-}

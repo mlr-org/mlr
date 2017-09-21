@@ -101,26 +101,6 @@ sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
-#' @export mase
-#' @rdname measures
-#' @usage  none
-#' @format none
-mase = makeMeasure(
-  id = "mase",
-  minimize = TRUE,
-  name = "Mean Absolute Scaled Error",
-  properties = c("regr", "req.pred", "req.truth", "req.task", "req.model"),
-  best = 0,
-  worst = Inf,
-  fun = function(task, model, pred, feats, extra.args){
-    truth = getPredictionTruth(pred)
-    response = getPredictionResponse(pred)
-    target = getTaskTargets(task)[model$subset]
-    frequency = getTaskDesc(task)$frequency
-    measureMASE(truth, response, target, frequency)
-  }
-)
-
 #' @export measureSSE
 #' @rdname measures
 #' @format none
@@ -297,7 +277,7 @@ measureEXPVAR = function(truth, response) {
 #' @export arsq
 #' @rdname measures
 #' @format none
-arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
+arsq = makeMeasure(id = "arsq", minimize = FALSE, best = 1, worst = 0,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Adjusted coefficient of determination",
   note = "Defined as: 1 - (1 - rsq) * (p / (n - p - 1L)). Adjusted R-squared is only defined for normal linear regression.",
