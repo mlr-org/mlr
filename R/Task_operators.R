@@ -455,6 +455,7 @@ changeData = function(task, data, costs, weights) {
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$is.spatial),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial)
   )
+
   return(task)
 }
 
