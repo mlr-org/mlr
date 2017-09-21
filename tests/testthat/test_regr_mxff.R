@@ -34,8 +34,8 @@ test_that("regr_mxff", {
     out = mxnet::mx.symbol.LinearRegressionOutput(sym)
     m = mxnet::mx.model.FeedForward.create(out, X = x, y = y, learning.rate = parset.list.mxnet[[i]]$learning.rate,
       num.round = parset.list.mxnet[[i]]$num.round, array.layout = parset.list.mxnet[[i]]$array.layout)
-    y_pred = predict(m, data.matrix(regr.num.test[, -ncol(regr.num.test)]), array.layout = "rowmajor")[1,]
-    old.predicts.list[[i]] = y_pred
+    y.pred = predict(m, data.matrix(regr.num.test[, -ncol(regr.num.test)]), array.layout = "rowmajor")[1, ]
+    old.predicts.list[[i]] = y.pred
   }
 
   set.seed(getOption("mlr.debug.seed"))
