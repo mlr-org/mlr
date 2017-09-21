@@ -361,7 +361,7 @@ predictLearner.regr.mxff = function(.learner, .model, .newdata, ...) {
     array.layout = "colmajor"
   }
   if (.learner$predict.type == "se") {
-    p = replicate(dropout.predict.repls, predict(.model$learner.model, X = x, array.layout = array.layout)[1, ])
+    p = replicate(.learner$par.vals$dropout.predict.repls, predict(.model$learner.model, X = x, array.layout = array.layout)[1, ])
     cbind(rowMeans(p), apply(p, 1, sd))
   } else {
     predict(.model$learner.model, X = x, array.layout = array.layout)[1, ]
