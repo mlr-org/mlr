@@ -13,11 +13,11 @@ listLearners(obj = NA_character_, properties = character(0L),
 
 \method{listLearners}{default}(obj = NA_character_,
   properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
-  check.packages = TRUE, create = FALSE)
+  check.packages = FALSE, create = FALSE)
 
 \method{listLearners}{character}(obj = NA_character_,
   properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE,
-  check.packages = TRUE, create = FALSE)
+  check.packages = FALSE, create = FALSE)
 
 \method{listLearners}{Task}(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,

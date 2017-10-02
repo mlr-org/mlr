@@ -51,6 +51,6 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.boosting = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$importance[.model$features]
 }
