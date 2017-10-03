@@ -13,8 +13,9 @@
 #'   One can use this if control should be called on different defaults than in its signature.
 #'   The values in ... will overwrite these.
 #'   Default is empty list.
-#' @param .restrict [\code{logical(1)]\cr
-#'   Further pick out only arguments from ... which occur in the signature of \code{control}?
+#' @param .restrict [\code{logical(1)}]\cr
+#'   Restrict the elements from \code{...}, which are passed to \code{control}, only to the arg-names
+#'   that occur in the signature of \code{control}?
 #'   Default is \code{FALSE}.
 #' @return Control structure for learner.
 #' @export

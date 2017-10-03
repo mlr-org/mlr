@@ -8,16 +8,14 @@ test_that("regr_blackboost", {
     # the blackboost defaults for tree_controls needs to be passed explicitely,
     # since the defaults of party::ctree_control() differ from defaults used within blackboost
     list(family = mboost::GammaReg(), tree_controls = party::ctree_control(teststat = "max",
-      testtype = "Teststatistic", mincriterion = 0, maxdepth = 4, savesplitstats = FALSE)),
-    list(family = mboost::Laplace(), control = mboost::boost_control(nu = 0.03)),
-    list(tree_controls = party::ctree_control(minbucket = 4))
+      testtype = "Teststatistic", mincriterion = 0, maxdepth = 4, savesplitstats = FALSE, minbucket = 4)),
+    list(family = mboost::Laplace(), control = mboost::boost_control(nu = 0.03))
   )
 
   parset.list2 = list(
     list(),
-    list(family = "GammaReg", maxdepth = 4),
-    list(family = "Laplace", nu = 0.03),
-    list(minbucket = 4)
+    list(family = "GammaReg", maxdepth = 4, minbucket = 4),
+    list(family = "Laplace", nu = 0.03)
   )
 
   old.predicts.list = list()
