@@ -62,28 +62,18 @@ test_that("classif_classiFunc.knn behaves like original api", {
 
   cp.prob = predict(m.prob, newdata = ftest)
   cp2.prob = predict(m.prob, newdata = fdata)
+  expect_equal(class(cp.prob)[1],  "PredictionClassif")
 
   expect_equal(as.matrix(getPredictionProbabilities(cp2.prob)), p2.prob)
   expect_equal(as.matrix(getPredictionProbabilities(cp.prob)), p1.prob)
 
 })
 
-# test_that("predicttype prob for fda.usc", {
-#   requirePackagesOrSkip("fda.usc", default.method = "load")
-#   lrn = makeLearner("classif.fdausc.knn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
-#
-#   set.seed(getOption("mlr.debug.seed"))
-#   m = train(lrn, fda.binary.gp.task)
-#   cp = predict(m, newdata = getTaskData(fda.binary.gp.task, target.extra = TRUE, functionals.as = "matrix")$data)
-#   expect_equal(class(cp)[1],  "PredictionClassif")
-#
-# })
-#
-# test_that("resampling fdausc.knn", {
-#   requirePackagesOrSkip("fda.usc", default.method = "load")
-#   lrn = makeLearner("classif.fdausc.knn", par.vals = list(knn = 1L, trim = 0.5), predict.type = "prob")
-#
-#   set.seed(getOption("mlr.debug.seed"))
-#   r = resample(lrn, fda.binary.gp.task.small, cv2)
-#   expect_class(r, "ResampleResult")
-# })
+test_that("resampling classiFunc.knn", {
+  requirePackagesOrSkip("classiFunc", default.method = "load")
+  lrn = makeLearner("classif.classiFunc.knn", predict.type = "prob")
+
+  set.seed(getOption("mlr.debug.seed"))
+  r = resample(lrn, fda.binary.gp.task.small, cv2)
+  expect_class(r, "ResampleResult")
+})
