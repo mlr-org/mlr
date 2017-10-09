@@ -48,7 +48,9 @@
 #'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 #'   while speeding up the predictions and reducing the size of the model and
 #'   \dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
-#'   with the weights chosen Brier Score optimal.
+#'   with the weights chosen Brier Score optimal, see Fuchs, K., J. Gertheiss, and G. Tutz (2015). Nearest
+#'   neighbor ensembles for functional data with interpretable feature selection. Chemometrics and Intelligent
+#'   Laboratory Systems 146, 186-197.
 #'   Default is \dQuote{stack.nocv},
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.
@@ -106,7 +108,8 @@
 #'   res = predict(tmp, tsk)
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
-                              method = "stack.nocv", id = method, use.feat = FALSE, resampling = NULL, parset = list()) {
+                              method = "stack.nocv", id = method, use.feat = FALSE,
+                              resampling = NULL, parset = list()) {
   # Check the base learners
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
@@ -152,7 +155,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("Base learner must all have the same predict type!")
 
   if (method == "best.baseLearner") {
-    if(!is.null(predict.type)) base.learners = lapply(base.learners, setPredictType, predict.type)
+    if (!is.null(predict.type)) base.learners = lapply(base.learners, setPredictType, predict.type)
   }
 
   # check super.learner

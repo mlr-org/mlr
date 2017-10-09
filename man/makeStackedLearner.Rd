@@ -43,7 +43,9 @@ hill climbing algorithm,
 \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 while speeding up the predictions and reducing the size of the model and
 \dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
-with the weights chosen Brier Score optimal.
+with the weights chosen Brier Score optimal, see Fuchs, K., J. Gertheiss, and G. Tutz (2015). Nearest
+neighbor ensembles for functional data with interpretable feature selection. Chemometrics and Intelligent
+Laboratory Systems 146, 186-197.
 Default is \dQuote{stack.nocv},}
 
 \item{id}{[\code{character(1)}]\cr
