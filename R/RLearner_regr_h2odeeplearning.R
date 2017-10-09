@@ -227,7 +227,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "weights"),
+    properties = c("numerics", "factors", "weights", "missings"),
     name = "h2o.deeplearning",
     short.name = "h2o.dl",
     callees = "h2o.deeplearning"
