@@ -83,6 +83,7 @@ test_that("classiFunc.knn can be predicted in parallel", {
   requirePackagesOrSkip(c("classiFunc", "parallelMap"), default.method = "load")
 
   data(ArrowHead, package = "classiFunc")
+
   lrn = makeLearner("classif.classiFunc.knn")
 
   # create task
@@ -100,12 +101,12 @@ test_that("classiFunc.knn can be predicted in parallel", {
 
   # predict in parallel
   # specify parallel = TRUE and batchsize > 1L for parallelization
-  cp.parallel = predict(mod, task = task, parallel = TRUE, batches = 2L)
+  cp.parallel = predict(m, task = task, parallel = TRUE, batches = 2L)
 
   # clean up parallelization
   parallelStop()
 
   # results do not change
-  expect_equal(cp, cp.parallel)
+  expect_equal(cp$data, cp.parallel$data)
 
 })
