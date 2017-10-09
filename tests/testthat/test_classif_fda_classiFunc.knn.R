@@ -77,3 +77,35 @@ test_that("resampling classiFunc.knn", {
   r = resample(lrn, fda.binary.gp.task.small, cv2)
   expect_class(r, "ResampleResult")
 })
+
+
+test_that("classiFunc.knn can be predicted in parallel", {
+  requirePackagesOrSkip(c("classiFunc", "parallelMap"), default.method = "load")
+
+  data(ArrowHead, package = "classiFunc")
+  lrn = makeLearner("classif.classiFunc.knn")
+
+  # create task
+  fdata = makeFunctionalData(ArrowHead, exclude.cols = "target")
+  task = makeClassifTask(data = fdata, target = "target")
+
+  # train model
+  set.seed(getOption("mlr.debug.seed"))
+  m = train(lrn, task)
+  cp = predict(m, task = task)
+
+  # Parallelize across 2 CPUs
+  # set up parallelization
+  parallelStartSocket(cpus = 2L) # parallelStartMulticore(cpus = 2L) for Linux
+
+  # predict in parallel
+  # specify parallel = TRUE and batchsize > 1L for parallelization
+  cp.parallel = predict(mod, task = task, parallel = TRUE, batches = 2L)
+
+  # clean up parallelization
+  parallelStop()
+
+  # results do not change
+  expect_equal(cp, cp.parallel)
+
+})
