@@ -6,11 +6,15 @@
 #'
 #'  \describe{
 #'   \item{\code{average}}{Averaging of base learner predictions without weights.}
+#'   \item{\code{best.baseLearner}}{Selecting the best base learner according to a given
+#'   \link{measures} using cross validation.}
 #'   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
 #'   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
 #'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
 #'   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
 #'   \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
+#'   \item{\code{classif.bs.optimal}}{Weighted averaging of base learner predictions with weights
+#'   chosen Brier Score optimal.}
 #'  }
 #'
 #' @param base.learners [(list of) \code{\link{Learner}}]\cr
@@ -33,32 +37,42 @@
 #'    learner predictions to determine the final prediction.
 #'    For regression tasks, the final prediction will be the average of the base learner predictions.}
 #'   }
-#'
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
+#'   \dQuote{best.baseLearner} for choosing only the best base learner selected
+#'   by cross validation,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
 #'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
-#'   hill climbing algorithm and
+#'   hill climbing algorithm,
 #'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
-#'   while speeding up the predictions and reducing the size of the model.
+#'   while speeding up the predictions and reducing the size of the model and
+#'   \dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
+#'   with the weights chosen Brier Score optimal.
 #'   Default is \dQuote{stack.nocv},
+#' @param id [\code{character(1)}]\cr
+#'   Id string for object. Used to display object.
+#'   Default is \code{method}.
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
-#'   Not used for \code{method = 'average'}.
+#'   Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}. # meas.bs.optimal
 #'   Default is \code{FALSE}.
 #' @param resampling [\code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy for \code{method = 'stack.cv'}.
-#'   Currently only CV is allowed for resampling.
-#'   The default \code{NULL} uses 5-fold CV.
-#' @param parset the parameters for \code{hill.climb} method, including
+#'   the resampling strategy for \code{method \%in\% c('stack.cv', 'best.baseLearner'}.
+#'   Currently only CV is allowed.
+#'   The default \code{NULL} uses 5-fold CV,
+#'   the resampling strategy for \code{method = 'classif.bs.optimal'}
+#'   Currently only LOO and CV are allowed.
+#'   The default \code{NULL} uses LOO.
+#' @param parset [\code{list}]\cr
+#' the parameters for \code{hill.climb} method, including
 #' \describe{
 #'   \item{\code{replace}}{Whether a base learner can be selected more than once.}
 #'   \item{\code{init}}{Number of best models being included before the selection algorithm.}
 #'   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
 #'   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
-#'   the smaller the score the better.}
+#'   \item{\code{metric}}{The result evaluation metric function taking two parameters
+#'   \code{pred} and \code{true}, the smaller the score the better.}
 #' }
 #' the parameters for \code{compress} method, including
 #' \describe{
@@ -66,6 +80,9 @@
 #'    \item{prob}{the probability to exchange values}
 #'    \item{s}{the standard deviation of each numerical feature}
 #' }
+#' the parameter \code{measure} for \code{best.baseLearner} method which gives
+#' the measure to be used for evaluating the base learners. Defaults to the
+#' default measure for the learner.
 #' @examples
 #'   # Classification
 #'   data(iris)
@@ -89,8 +106,8 @@
 #'   res = predict(tmp, tsk)
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
-
+                              method = "stack.nocv", id = method, use.feat = FALSE, resampling = NULL, parset = list()) {
+  # Check the base learners
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
     super.learner = makeLearner(stri_paste(base.learners[[1]]$type, ".nnet"))
@@ -101,36 +118,79 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   }
 
   base.type = unique(extractSubList(base.learners, "type"))
-  if (!is.null(resampling) & method != "stack.cv") {
-    stop("No resampling needed for this method")
+
+  # Check that resampling is needed
+  if (!is.null(resampling) & !(method %in% c("best.baseLearner", "stack.cv", "classif.bs.optimal", "hill.climb"))) {
+    stop("No resampling needed for this method!")
   }
+
+  # insert default for resampling
+  # LOO for classif.bs.optimal
+  # 5 fold CV for all other learners
   if (is.null(resampling)) {
-    resampling = makeResampleDesc("CV", iters = 5L,
-      stratify = ifelse(base.type == "classif", TRUE, FALSE))
+    if (method == "classif.bs.optimal") {
+      resampling = makeResampleDesc("LOO")
+    } else {
+      resampling = makeResampleDesc("CV", iters = 5L,
+                                    stratify = ifelse(base.type == "classif", TRUE, FALSE))
+    }
   }
-  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
   assertClass(resampling, "ResampleDesc")
 
+  # currently supported methods
+  assertChoice(method, c("average", "best.baseLearner", "classif.bs.optimal",
+                         "compress", "hill.climb", "stack.nocv", "stack.cv"))
+  assertCharacter(id)
+
+  # get and check predict.type
   pts = unique(extractSubList(base.learners, "predict.type"))
+
   if ("se" %in% pts || (!is.null(predict.type) && predict.type == "se") ||
-        (!is.null(super.learner) && super.learner$predict.type == "se"))
+      (!is.null(super.learner) && super.learner$predict.type == "se"))
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
-  if ((method == "average" || method == "hill.climb") & (!is.null(super.learner) || is.null(predict.type)))
+
+  if (method == "best.baseLearner") {
+    if(!is.null(predict.type)) base.learners = lapply(base.learners, setPredictType, predict.type)
+  }
+
+  # check super.learner
+  if (method %in% c("average", "best.baseLearner", "hill.climb", "classif.bs.optimal") &
+      (!is.null(super.learner) || is.null(predict.type)))
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
-  if (method != "average" & method != "hill.climb" & is.null(super.learner))
+
+  if (method %nin% c("average", "best.baseLearner", "classif.bs.optimal", "hill.climb")
+      & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
+
   #if (method != "average" & !is.null(predict.type))
   #  stop("Predict type has to be specified within the super learner.")
-  if ((method == "average" || method == "hill.climb") & use.feat)
+
+  # check if original features can be used
+  if ((method %in% c("average", "best.baseLearner", "hill.climb", "classif.bs.optimal"))
+      & use.feat)
     stop("The original features can not be used for this method")
-  if (!inherits(resampling, "CVDesc"))
-    stop("Currently only CV is allowed for resampling!")
+
+  # check types of allowed resampling
+  if (method == "classif.bs.optimal" & !inherits(resampling, "LOODesc") &
+      !inherits(resampling, "CVDesc")) {
+    stop("Currently only LOO or CV is allowed for resampling in 'classif.bs.optimal'!")
+  }
+
+  if (method != "classif.bs.optimal" & !inherits(resampling, "CVDesc"))
+    stop(paste("Currently only CV is allowed for resampling for method =", method, "!"))
+
+  # check: classif.bs.optimal can only handle classification tasks
+  if (method == "classif.bs.optimal") {
+    if (!all(base.type == "classif")) {
+      stop("If method = 'classif.bs.optimal' all learners must be of type 'classif'.")
+    }
+  }
 
   # lrn$predict.type is "response" by default change it using setPredictType
-  lrn =  makeBaseEnsemble(
-    id = "stack",
+  lrn = makeBaseEnsemble(
+    id = id,
     base.learners = base.learners,
     cl = "StackedLearner"
   )
@@ -179,10 +239,9 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average", "hill.climb"), TRUE, FALSE))
+      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average", "hill.climb", "classif.bs.optimal"), TRUE, FALSE))
     }
-
-    names(probs) = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
+    names(probs) = sapply(bms, function(X) X$learner$id) # names(.learner$base.learners)
   }
   return(probs)
 }
@@ -192,12 +251,14 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   # reduce to subset we want to train ensemble on
   .task = subsetTask(.task, subset = .subset)
   switch(.learner$method,
-    average = averageBaseLearners(.learner, .task),
-    stack.nocv = stackNoCV(.learner, .task),
-    stack.cv = stackCV(.learner, .task),
-    # hill.climb = hillclimbBaseLearners(.learner, .task, ...)
-    hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset)),
-    compress = compressBaseLearners(.learner, .task, .learner$parset)
+         average = averageBaseLearners(.learner, .task),
+         stack.nocv = stackNoCV(.learner, .task),
+         stack.cv = stackCV(.learner, .task),
+         # hill.climb = hillclimbBaseLearners(.learner, .task, ...)
+         hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset)),
+         compress = compressBaseLearners(.learner, .task, .learner$parset),
+         classif.bs.optimal = classif.bs.optimal(.learner, .task),
+         best.baseLearner = best.baseLearner(.learner, .task)
   )
 }
 
@@ -214,10 +275,17 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   # get base learner and predict type
   bms.pt = unique(extractSubList(.model$learner$base.learners, "predict.type"))
 
+  if (.learner$method == "best.baseLearner") {
+    return(
+      predictLearner(.learner = .model$learner$base.learners[[.model$learner.model$best.bl]],
+                     .model = .model$learner.model$base.models[[.model$learner.model$best.bl]],
+                     .newdata = .newdata,
+                     predict.type = bms.pt) #not sure this is needed
+    )
+  }
   # get task information (classif)
   td = .model$task.desc
-  type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  type = getTaskType(td)
 
   # predict prob vectors with each base model
   if (.learner$method != "compress") {
@@ -226,8 +294,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     probs = .newdata
   }
 
-  if (.learner$method %in% c("average", "hill.climb")) {
-    if (.learner$method == "hill.climb") {
+  if (.learner$method %in% c("average", "hill.climb", "classif.bs.optimal")) {
+    if (.learner$method %in% c("hill.climb", "classif.bs.optimal")) {
       model.weight = .model$learner.model$weights
     } else {
       model.weight = rep(1 / length(probs), length(probs))
@@ -247,7 +315,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     } else {
       probs = as.data.frame(probs)
       # if base learner predictions are responses
-      if (type == "classif" || type == "multiclassif") {
+      if (type %in% c("classif", "multiclassif", "fdaclassif")) {
         # if base learner predictions are responses for classification
         if (sm.pt == "prob") {
           # if super learner predictions should be probabilities, iter over rows to get proportions
@@ -307,7 +375,8 @@ setPredictType.StackedLearner = function(learner, predict.type) {
 
 ### helpers to implement different ensemble types ###
 
-# super simple averaging of base-learner predictions without weights. we should beat this
+# super simple averaging of base-learner predictions without weights.
+# we should beat this
 averageBaseLearners = function(learner, task) {
   bls = learner$base.learners
   base.models = probs = vector("list", length(bls))
@@ -324,11 +393,99 @@ averageBaseLearners = function(learner, task) {
        pred.train = probs)
 }
 
+
+classif.bs.optimal = function(learner, task) {
+  bls = learner$base.learners
+  base.models = probs = vector("list", length(bls))
+
+  # adjusted code from stackCV
+  rin = makeResampleInstance(learner$resampling, task = task)
+  for (i in seq_along(bls)) {
+    bl = bls[[i]]
+    r = resample(bl, task, rin, show.info = FALSE)
+    probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
+    # also fit all base models again on the complete original data set
+    base.models[[i]] = train(bl, task)
+  }
+  names(probs) = names(bls)
+
+  # Transform the bootstrapped predicted values into the required format of the
+  # matrix P
+  P = sapply(probs, function(dat) {
+    as.vector(t(dat))
+  })
+
+  # code the response
+  z = as.vector(model.matrix( ~ . -1, data = data.frame(getTaskTargets(task))))
+
+  # From Fuchs Online Appendix
+  A = P * (-1)
+  B = z * (-1)
+
+  H = rep(0, length = ncol(A))
+  G = diag(1, nrow = ncol(A))
+
+  E = rep(1, ncol(A))
+  F = 1
+
+  ####################################
+  # taken from the limSolve::lsei function
+  # the lsei function seemed to not be stable
+  # the solve.QP seems to be more stable
+  dvec = crossprod(A, B)
+  Dmat = crossprod(A, A)
+  diag(Dmat) = diag(Dmat) + 1e-08
+  Amat = t(rbind(E, G))
+  bvec = c(F, H)
+
+  # E and F are onedimensional
+  Neq = 1
+
+  requirePackages("quadprog")
+  sol = quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq = Neq)
+  Cs = round(sol$solution, digits = 4)
+  ################################
+
+  # return the weight vector Cs from the algorithm
+  list(method = "classif.bs.optimal", base.models = base.models, super.model = NULL,
+       pred.train = probs, weights = Cs)
+}
+
+# take optimal base learner
+best.baseLearner = function(learner, task) {
+  td = getTaskDesc(task)
+  type = ifelse(td$type == "regr", "regr",
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  bls = learner$base.learners
+  base.models = probs = perf = vector("list", length(bls))
+  if (is.null(learner$par.set$measure)) {
+    measure = getDefaultMeasure(learner)
+  } else {
+    measure = learner$par.set$measure
+  }
+  rin = makeResampleInstance(learner$resampling, task = task)
+  for (i in seq_along(bls)) {
+    bl = bls[[i]]
+    r = resample(bl, task, rin, show.info = FALSE)
+    probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
+    perf[[i]] = performance(r$pred, measures = measure)
+    # also fit all base models again on the complete original data set
+    base.models[[i]] = train(bl, task)
+  }
+  names(probs) = names(bls)
+  best.bl = ifelse(measure$minimize, which.min(unlist(perf)), which.max(unlist(perf)))
+  best.bl.name = names(bls)[best.bl]
+  # return the weight vector Cs from the algorithm
+  list(method = "best.baseLearner", base.models = base.models, super.model = NULL,
+       pred.train = probs, best.bl = best.bl, best.bl.name = best.bl.name)
+}
+
+
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
   td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   base.models = probs = vector("list", length(bls))
@@ -357,7 +514,7 @@ stackNoCV = function(learner, task) {
     feat = feat[, colnames(feat) %nin% td$target, drop = FALSE]
     probs = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = probs,
-      target = td$target)
+                                      target = td$target)
   } else {
     super.task = makeSuperLearnerTask(learner, data = probs, target = td$target)
   }
@@ -370,7 +527,7 @@ stackNoCV = function(learner, task) {
 stackCV = function(learner, task) {
   td = getTaskDesc(task)
   type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
@@ -416,7 +573,7 @@ stackCV = function(learner, task) {
 }
 
 hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1,
-  metric = NULL, ...) {
+                                 metric = NULL, ...) {
 
   assertFlag(replace)
   assertInt(init, lower = 0)
@@ -428,7 +585,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
                 ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   if (is.null(metric)) {
     if (type == "regr") {
-      metric = function(pred, true) mean((pred - true)^2)
+      metric = function(pred, true) mean((pred - true) ^ 2)
     } else {
       metric = function(pred, true) {
         pred = colnames(pred)[max.col(pred)]
@@ -548,12 +705,12 @@ compressBaseLearners = function(learner, task, parset = list()) {
 
   td = ensemble.model$task.desc
   type = ifelse(td$type == "regr", "regr",
-    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   if (type == "regr") {
     new.task = makeRegrTask(data = pseudo.data, target = "target")
     if (is.null(learner$super.learner)) {
-      m = makeLearner("regr.nnet", predict.type = )  # nolint
+      m = makeLearner("regr.nnet", predict.type = )
     } else {
       m = learner$super.learner
     }
@@ -628,6 +785,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   feat.class = sapply(.data, class)
   ind2 = which(feat.class == "factor")
   ind1 = setdiff(seq_len(ncol(.data)), ind2)
+
   if (length(ind2) > 0)
     ori.labels = lapply(.data[[ind2]], levels)
   .data = lapply(.data, as.numeric)
@@ -675,7 +833,7 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
       dist.mat.2 = hamming(mat[, ind2, drop = FALSE])
     }
     dist.mat = dist.mat.1 + dist.mat.2
-    neighbour = max.col(-dist.mat - diag(Inf, n))
+    neighbour = max.col( -dist.mat - diag(Inf, n))
     return(neighbour)
   }
 
@@ -709,7 +867,6 @@ getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
           ee[j] = tmp
         }
       }
-
       data[i, ] = ee
       data[neighbour[i], ] = e
     }
