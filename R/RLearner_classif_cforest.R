@@ -67,7 +67,7 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   if (auc) {
     party::varimpAUC(mod, ...)
   } else {

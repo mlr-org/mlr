@@ -129,7 +129,7 @@ makeFilter(
   supported.features = c("numerics", "ordered"),
   fun = function(task, nselect, ...) {
     if (inherits(task, "SurvTask")) {
-      data = getTaskData(task, target.extra = TRUE, recode.target = "rcens")
+      data = getTaskData(task, target.extra = TRUE, recode.target = "surv")
       data = cbind(..surv = data$target, data$data)
       target.ind = 1L
     } else {
@@ -605,5 +605,28 @@ makeFilter(
     imp = as.numeric(imp$res)
     names(imp) = getTaskFeatureNames(task)
     return(imp)
+  }
+)
+
+#' Filter \dQuote{auc} determines for each feature, how well the target
+#' variable can be predicted only based on this feature. More precisely, the
+#' prediction rule is: class 1 if the feature exceeds a threshold and class 0
+#' otherwise. The performance of this classification rule is measured by the
+#' AUC and the resulting filter score is |0.5 - AUC|.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "auc",
+  desc = "AUC filter for binary classification tasks",
+  pkg  = character(0L),
+  supported.tasks = "classif",
+  supported.features = "numerics",
+  fun = function(task, nselect, ...) {
+    data = getTaskData(task, target.extra = TRUE)
+    score = vnapply(data$data, function(x, y) {
+      measureAUC(x, y, task$task.desc$negative, task$task.desc$positive)
+    }, y = data$target)
+    abs(0.5 - score)
   }
 )

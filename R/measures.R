@@ -17,6 +17,9 @@
 #' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 #' starting with 1. If this is not the case, some of the measures will generate warnings.
 #'
+#' Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
+#' overwritten using \code{\link{setMeasurePars}}.
+#'
 #' @param truth [\code{factor}]\cr
 #'   Vector of the true class.
 #' @param response [\code{factor}]\cr
@@ -971,7 +974,7 @@ measureFN = function(truth, response, negative) {
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "True positive rate",
-  note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall.",
+  note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall or sensitivity.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTPR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -1047,7 +1050,7 @@ measureFNR = function(truth, response, negative, positive) {
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
-  note = "Defined as: tp / (tp + number of fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
+  note = "Defined as: tp / (tp + fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
   fun = function(task, model, pred, feats, extra.args) {
     if (pred$predict.type == "prob") {
       prob = getPredictionProbabilities(pred)
@@ -1083,7 +1086,7 @@ measureEdgeCase = function(truth, positive, prob) {
 npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Negative predictive value",
-  note = "Defined as: (tn) / (tn + fn).",
+  note = "Defined as: tn / (tn + fn).",
   fun = function(task, model, pred, feats, extra.args) {
     measureNPV(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
@@ -1102,7 +1105,7 @@ measureNPV = function(truth, response, negative) {
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth"),
   name = "False discovery rate",
-  note = "Defined as: (fp) / (tn + fn).",
+  note = "Defined as: fp / (tp + fp).",
   fun = function(task, model, pred, feats, extra.args) {
     measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -1121,7 +1124,7 @@ measureFDR = function(truth, response, positive) {
 mcc = makeMeasure(id = "mcc", minimize = FALSE,
   properties = c("classif", "req.pred", "req.truth"), best = 1, worst = -1,
   name = "Matthews correlation coefficient",
-  note = "Defined as sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
+  note = "Defined as (tp * tn - fp * fn) / sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
   fun = function(task, model, pred, feats, extra.args) {
     measureMCC(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
@@ -1353,17 +1356,90 @@ measureMultilabelTPR = function(truth, response) {
 #' @format none
 cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth"),
-  name = "Concordance index",
+  name = "Harrell's Concordance index",
   note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("Hmisc", default.method = "load")
-    resp = pred$data$response
-    if (anyMissing(resp))
+    requirePackages("_Hmisc")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
       return(NA_real_)
-    # FIXME: we need to convert to he correct survival type
-    s = Surv(pred$data$truth.time, pred$data$truth.event)
-    Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
+    s = getPredictionTruth(pred)
+    Hmisc::rcorr.cens(-1 * y, s)[["C Index"]]
   }
+)
+
+#' @export cindex.uno
+#' @rdname measures
+#' @format none
+#' @references
+#' H. Uno et al.
+#' \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
+#' Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
+cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model"),
+  name = "Uno's Concordance index",
+  note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno. Implemented in survAUC::UnoC.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    survAUC::UnoC(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), time = max.time, lpnew = y)
+  },
+  extra.args = list(max.time = NULL)
+)
+
+#' @export iauc.uno
+#' @rdname measures
+#' @format none
+#' @references
+#' H. Uno et al.
+#' \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
+#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
+iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
+  name = "Uno's estimator of cumulative AUC for right censored time-to-event data",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in complete task). Implemented in survAUC::AUC.uno.",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages("_survAUC")
+    max.time = assertNumber(extra.args$max.time, null.ok = TRUE) %??% max(getTaskTargets(task)[, 1L])
+    times = seq(from = 0, to = max.time, length.out = extra.args$resolution)
+    surv.train = getTaskTargets(task, recode.target = "surv")[model$subset]
+    y = getPredictionResponse(pred)
+    if (anyMissing(y))
+      return(NA_real_)
+    survAUC::AUC.uno(Surv.rsp = surv.train, Surv.rsp.new = getPredictionTruth(pred), times = times, lpnew = y)$iauc
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
+)
+
+#' @export ibrier
+#' @rdname measures
+#' @format none
+ibrier = makeMeasure(id = "ibrier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("surv", "req.truth", "req.model", "req.task"),
+  name = "Integrated brier score using Kaplan-Meier estimator for weighting",
+  note = "To set an upper time limit, set argument max.time (defaults to max time in test data). Implemented in pec::pec",
+  fun = function(task, model, pred, feats, extra.args) {
+    requirePackages(c("survival", "pec"))
+    targets = getTaskTargets(task)
+    tn = getTaskTargetNames(task)
+    f = as.formula(sprintf("Surv(%s, %s) ~ 1", tn[1L], tn[2L]))
+    newdata = getTaskData(task)[model$subset, ]
+    max.time = extra.args$max.time %??% max(newdata[[tn[1L]]])
+    grid = seq(0, max.time, length.out = extra.args$resolution)
+
+    probs = predictSurvProb(model$learner.model, newdata = newdata, times = grid)
+    perror = pec(probs, f, data = newdata[, tn], times = grid, exact = FALSE, exactness = 99L,
+      maxtime = max.time, verbose = FALSE)
+
+    # FIXME: what is the difference between reference and matrix?
+    # FIXME: this might be the wrong number!
+    crps(perror, times = max.time)[1L, ]
+  },
+  extra.args = list(max.time = NULL, resolution = 1000L)
 )
 
 ###############################################################################
@@ -1452,7 +1528,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,  # nolint
 #' @export G2
 #' @rdname measures
 #' @format none
-G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,  # nolint
+G2 = makeMeasure(id = "G2", minimize = FALSE, best = 1, worst = 0,  # nolint
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
   note = "Defined as: (number of concordant comparisons - number of discordant comparisons) / (number of concordant comparisons + number of discordant comparisons). See `?clusterSim::index.G2`.",

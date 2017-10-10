@@ -15,8 +15,8 @@ makeRLearner.classif.lqa = function() {
           "oscar", "penalreg", "ridge", "scad"))),
       makeNumericLearnerParam(id = "gamma", lower = 1 + .Machine$double.eps,
         requires = quote(penalty %in% c("ao", "bridge", "genet", "weighted.fusion"))),
-      makeNumericLearnerParam(id = "alpha", lower = 0, requires = quote(penalty == "genet")),
-      makeNumericLearnerParam(id = "c", lower = 0, requires = quote(penalty == "oscar")),
+      makeNumericLearnerParam(id = "alpha", lower = 0, upper = 1, requires = quote(penalty == "genet")),
+      makeNumericLearnerParam(id = "oscar.c", lower = 0, requires = quote(penalty == "oscar")),
       makeNumericLearnerParam(id = "a", lower = 2 + .Machine$double.eps,
         requires = quote(penalty == "scad")),
       makeNumericLearnerParam(id = "lambda1", lower = 0,
@@ -36,7 +36,7 @@ makeRLearner.classif.lqa = function() {
     par.vals = list(penalty = "lasso", lambda = 0.1),
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
-    note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.',
+    note = "`penalty` has been set to `\"lasso\"` and `lambda` to `0.1` by default. The parameters `lambda`, `gamma`, `alpha`, `oscar.c`, `a`, `lambda1` and `lambda2` are the tuning parameters of the `penalty` function being used, and correspond to the parameters as named in the respective help files. Parameter `c` for penalty method `oscar` has been named `oscar.c`. Parameters `lambda1` and `lambda2` correspond to the parameters named 'lambda_1' and 'lambda_2' of the penalty functions `enet`, `fused.lasso`, `icb`, `licb`, as well as `weighted.fusion`.",
     callees = c("lqa", "lqa.control", "adaptive.lasso", "ao", "bridge", "enet", "fused.lasso", "genet", "icb", "lasso", "licb", "oscar", "penalreg", "ridge", "scad", "weighted.fusion")
   )
 }
@@ -53,10 +53,10 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
                            "oscar", "penalreg", "ridge", "scad")) {
     args$lambda = NULL
   }
-  is.tune.param = names(args) %in% c("lambda", "gamma", "alpha", "c", "a", "lambda1", "lambda2")
+  tune.param.order = c("lambda", "lambda1", "lambda2", "alpha", "gamma", "oscar.c", "a")
   penfun = getFromNamespace(args$penalty, "lqa")
-  args$penalty = do.call(penfun, list(lambda = unlist(args[is.tune.param])))
-  args = args[!is.tune.param]
+  args$penalty = do.call(penfun, list(lambda = unlist(args[tune.param.order])))
+  args = args[!names(args) %in% tune.param.order]
   # if (!is.null(.weights))
     # args$weights = .weights
 
