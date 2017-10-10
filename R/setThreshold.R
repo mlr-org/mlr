@@ -55,7 +55,9 @@ setThreshold = function(pred, threshold) {
     # 0 / 0 can produce NaNs. For a 0 threshold we always want Inf weight for that class
     p[is.nan(p)] = Inf
     ind = getMaxIndexOfRows(p)
-    pred$data$response = factor(ind, levels = seq_along(levs), labels = levs)
+    class(ind) = "factor"
+    attr(ind, "levels") = levs
+    pred$data$response = ind
   } else if (ttype == "multilabel") {
     # substract threshold from every entry, then check if > 0, then set response level
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "-", threshold)
