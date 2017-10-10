@@ -62,7 +62,7 @@
 # Unifrom: -value ... value, Normal: stddev
 
 # loss
-# Loss function: Automatic, CrossEntropy (for classification only), MeanSquare, Absolute (experimental) or Huber (experimental)
+# Loss function: Automatic, CrossEntropy (for classification only), Quadratic, Absolute (experimental) or Huber (experimental)
 
 # score_interval
 # Shortest time interval (in secs) between model scoring
@@ -186,7 +186,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeDiscreteLearnerParam("initial_weight_distribution",
         values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
       makeNumericLearnerParam("initial_weight_scale", default = 1),
-      makeDiscreteLearnerParam("loss", values = c("Automatic", "MeanSquare",
+      makeDiscreteLearnerParam("loss", values = c("Automatic", "Quadratic",
         "Absolute", "Huber")),
       makeDiscreteLearnerParam("distribution", values = c("AUTO", "gaussian",
         "bernoulli", "multinomial", "poisson", "gamma", "tweedie", "laplace",
