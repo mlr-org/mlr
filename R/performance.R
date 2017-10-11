@@ -28,11 +28,11 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL, simpleaggr = FALSE) {
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats, simpleaggr = simpleaggr)
   # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
   #if (inherits(pred, "ResamplePrediction")) {
   #  setNames(res, vcapply(measures, measureAggrName))
@@ -42,7 +42,7 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL, simpleaggr = simpleaggr) {
   m = measure
   props = getMeasureProperties(m)
   if ("req.pred" %in% props) {
@@ -110,6 +110,8 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   }
 
   # if it's a ResamplePrediction, aggregate
+  if (simpleaggr)
+    measure$fun(task, model, pred, feats, m$extra.args)
   if (inherits(pred, "ResamplePrediction")) {
     if (is.null(pred$data$iter)) pred$data$iter = 1L
     if (is.null(pred$data$set)) pred$data$set = "test"

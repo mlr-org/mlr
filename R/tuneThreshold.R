@@ -49,7 +49,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   fitn = function(x) {
     if (ttype == "multilabel" || k > 2)
       names(x) = cls
-    performance(setThreshold(pred, x), measure, task, model)
+    performance(setThreshold(pred, x), measure, task, model, simpleaggr = TRUE)
   }
   
   if (ttype == "multilabel" || k > 2L) {
@@ -57,7 +57,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
       restarts = 0L
     else
       restarts = control$restarts
-    max.call = 500L
+    max.call = 5000L
     
     requirePackages("GenSA", why = "tuneThreshold", default.method = "load")
     start = rep(1 / k, k)
@@ -65,7 +65,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     #create restart points
     if (restarts != 0L) {
       max.call = max.call / (1L + restarts)
-      ctrl = list(smooth = FALSE, max.call = max.call)
+      ctrl = list(smooth = FALSE, max.call = max.call, temperature = 5000L)
       for (i in 1:restarts) {
         u = runif(k)
         start = rbind(start, u / sum(u))
