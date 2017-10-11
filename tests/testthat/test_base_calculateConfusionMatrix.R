@@ -70,3 +70,15 @@ test_that("calculateConfusionMatrix", {
   expect_equal(cm$relative.error, err.rel)
   expect_equal(cm$result[3, 3], err.abs)
 })
+
+test_that("calculateConfusionMatrix with different factor levels (#2030)", {
+  lrn = makeLearner("classif.rpart")
+  m = train(lrn, iris.task)
+  nd = iris[101:150,]
+  nd$Species = factor(nd$Species)
+
+  p = predict(m, newdata = nd)
+  cm = calculateConfusionMatrix(p)
+  expect_equal(cm$result[1, 4], 0)
+  expect_equal(cm$result[4, 4], 5)
+})
