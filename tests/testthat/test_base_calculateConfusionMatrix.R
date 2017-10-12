@@ -74,7 +74,7 @@ test_that("calculateConfusionMatrix", {
 test_that("calculateConfusionMatrix with different factor levels (#2030)", {
   lrn = makeLearner("classif.rpart")
   m = train(lrn, iris.task)
-  nd = iris[101:150,]
+  nd = iris[101:150, ]
   nd$Species = factor(nd$Species)
 
   p = predict(m, newdata = nd)
