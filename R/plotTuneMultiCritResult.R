@@ -81,16 +81,28 @@ plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
   plt.data = as.data.frame(res$opt.path)
   plt.data$location = factor(row.names(plt.data) %in% res$ind, levels = c(TRUE, FALSE),
                              labels = c("frontier", "interior"))
+  plt.data$id = 1:nrow(plt.data)
+
+  info = function(x) {
+    if (is.null(x)) {
+      return(NULL)
+    }
+    n = length(res$x[[1]])
+    row = plt.data[plt.data$id == x$id, ][1:n]
+    text = paste0(names(row), ": ", format(row, zero.print = TRUE), collapse = "<br />")
+    return(text)
+  }
 
   if (path) {
     plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
-                       ggvis::prop("y", as.name(colnames(res$y)[2L])))
+                       ggvis::prop("y", as.name(colnames(res$y)[2L])), key := ~id)
     plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
   } else {
     plt.data = plt.data[plt.data$location == "frontier", , drop = FALSE]
     plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
-                       ggvis::prop("y", as.name(colnames(res$y)[2L])))
+                       ggvis::prop("y", as.name(colnames(res$y)[2L])), key := ~id)
     plt = ggvis::layer_points(plt)
   }
+  plt = ggvis::add_tooltip(plt, info, "hover")
   return(plt)
 }
