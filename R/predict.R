@@ -123,11 +123,10 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     # remove NAs in p (occurs if model inherits "lm" and misses factor levels in train)
     if (model$learner$fix.factors.prediction == TRUE &&
         any(is.na(p))) {
-      index.na = which(p %in% NA)
       if (is.factor(p)) {
-        p = p[-index.na]
+        p = p[-which(p %in% NA)]
       } else {
-        p = p[-index.na, ]
+        p = p[-which(p %in% NA), ]
       }
       truth = truth[-index.na]
       newdata = newdata[-index.na, ]
