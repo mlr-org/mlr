@@ -128,8 +128,8 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       } else {
         p = p[-which(p %in% NA), ]
       }
-      truth = truth[-index.na]
-      newdata = newdata[-index.na, ]
+      truth = truth[-which(p %in% NA)]
+      newdata = newdata[-which(p %in% NA), ]
     }
 
     # was there an error during prediction?
