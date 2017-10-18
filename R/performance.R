@@ -110,8 +110,9 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   }
 
   # if it's a ResamplePrediction, aggregate
-  if (simpleaggr)
+  if (simpleaggr) {
     measure$fun(task, model, pred, feats, m$extra.args)
+  } else {
   if (inherits(pred, "ResamplePrediction")) {
     if (is.null(pred$data$iter)) pred$data$iter = 1L
     if (is.null(pred$data$set)) pred$data$set = "test"
@@ -131,5 +132,6 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
     measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
   } else {
     measure$fun(task, model, pred, feats, m$extra.args)
+  }
   }
 }
