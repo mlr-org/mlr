@@ -83,6 +83,17 @@ regr.num.test  = regr.num.df[regr.num.test.inds, ]
 regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
+regr.na.num.df = regr.num.df[1:10,]
+regr.na.num.df[1, 1] = NA
+regr.na.num.formula = regr.num.formula
+regr.na.num.target = regr.num.target
+regr.na.num.train.inds = regr.num.train.inds
+regr.na.num.test.inds  = regr.num.test.inds
+regr.na.num.train = regr.na.num.df[regr.na.num.train.inds, ]
+regr.na.num.test  = regr.na.num.df[regr.na.num.test.inds, ]
+regr.na.num.class.col = 13
+regr.na.num.task = makeRegrTask("regrnanumdf", data = regr.na.num.df, target = regr.na.num.target)
+
 getSurvData = function(n = 100, p = 10) {
   set.seed(1)
   beta = c(rep(1, 10), rep(0, p - 10))
