@@ -28,7 +28,7 @@ getLearnerTable = function() {
   return(tab)
 }
 
-filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), properties = character(0L), check.packages = TRUE) {
+filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), properties = character(0L), check.packages = FALSE) {
   contains = function(lhs, rhs) all(lhs %in% rhs)
 
   if (check.packages)
@@ -109,14 +109,14 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 #' @export
 #' @rdname listLearners
 listLearners.default  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
 
   listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
 }
 
 #' @export
 #' @rdname listLearners
-listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+listLearners.character  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = FALSE, create = FALSE) {
   if (!isScalarNA(obj))
     assertSubset(obj, listTaskTypes())
   tab = getLearnerTable()
