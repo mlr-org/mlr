@@ -60,7 +60,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
 
-  if (inherits(m, "FailureModel")){
+  if (inherits(m, "FailureModel")) {
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
@@ -69,11 +69,15 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
       rownames(cp$data) = NULL
       expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
     } else {
-      # to avoid issues with dropped levels in the class factor we only check the elements as chars
-      if (is.numeric(cp$data$response) && is.numeric(old.predicts))
+    # to avoid issues with dropped levels in the class factor we only check the elements as chars
+    if (is.numeric(cp$data$response) && is.numeric(old.predicts))
+      if (lrn$predict.type == "se") {
+        expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tol = 1e-5)
+      } else {
         expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
-      else
-        expect_equal(as.character(cp$data$response), as.character(old.predicts))
+      }
+    else
+      expect_equal(as.character(cp$data$response), as.character(old.predicts))
     }
   }
 }

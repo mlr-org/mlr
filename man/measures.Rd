@@ -121,6 +121,7 @@
 \alias{cindex}
 \alias{cindex.uno}
 \alias{iauc.uno}
+\alias{ibrier}
 \alias{meancosts}
 \alias{mcp}
 \alias{db}
@@ -366,6 +367,8 @@ cindex
 cindex.uno
 
 iauc.uno
+
+ibrier
 
 meancosts
 
