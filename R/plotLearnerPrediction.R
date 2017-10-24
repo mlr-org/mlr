@@ -166,6 +166,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       y != yhat
     else if (err.mark == "cv")
       y != pred.cv$data[order(pred.cv$data$id), "response"]
+    else
+      TRUE
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (hasLearnerProperties(learner, "prob") && prob.alpha) {
