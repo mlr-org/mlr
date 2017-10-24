@@ -4,7 +4,7 @@ context("learners_all_oneclass")
 test_that("learners work: oneclass ", {
 
   # settings to make learners faster and deal with small data size
-  hyperpars = list(oneclass.h2o.autoencoder = list(reproducible = TRUE))
+  hyperpars = list(oneclass.h2o.autoencoder = list(reproducible = TRUE), oneclass.lofactor = list(k= 20))
 
   # oneclass
   lrns = mylist("oneclass", create = TRUE)
