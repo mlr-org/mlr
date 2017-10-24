@@ -25,12 +25,14 @@ predictLearner.oneclass.lofactor = function(.learner, .model, .newdata, ...) {
   # calculate lof, no trained model is needed
   # the lower the local density of a point -> the point is in a sparser region than its neighbors, which suggests that the point is an outlier.
   p.df = DMwR::lofactor(.newdata, k = .model$learner$par.vals$k,...)
-  p.df.old = .model$learner.model
-  threshold = min(p.df.old)
+  #p.df.old = .model$learner.model
+  #threshold = min(p.df.old)
   td = getTaskDesc(.model)
   label = c(td$positive, td$negative)
   if (.learner$predict.type == "response") {
-    p = p.df <= threshold
+    indices.threshold = order(p.df)[round(length(p.df) * 0.05)]  # mse reconstruction error in [0,inf[
+    predict.threshold = p.df[indices.threshold]
+    p = p.df <= predict.threshold
     p = factor(p, levels = c("TRUE", "FALSE"), labels = label)
   } else {
     #lof-score low = low density = sparse in comparison to neighbour = likely to be anomaly
