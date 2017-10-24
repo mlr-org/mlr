@@ -6,9 +6,8 @@ makeRLearner.classif.ranger = function() {
     package = "ranger",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "num.trees", lower = 1L, default = 500L),
-      # FIXME: Add default value when data dependent defaults are implemented: mtry=floor(sqrt(#independent vars))
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
-      # FIXME: Add default value when data dependent defaults are implemented: min.node.size = 1 for classification, 10 for probability prediction
+      makeNumericLearnerParam(id = "mtry.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
@@ -28,16 +27,30 @@ makeRLearner.classif.ranger = function() {
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered", "featimp", "weights", "oobpreds"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable.",
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable. `mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task. Default for `min.node.size` is 1 for classification and 10 for probability estimation.",
     callees = "ranger"
   )
 }
 
 #' @export
-trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.ranger = function(.learner, .task, .subset, .weights = NULL, mtry, mtry.perc, min.node.size, ...) {
   tn = getTaskTargetNames(.task)
+  if (missing(mtry)) {
+    if (missing(mtry.perc)) {
+      mtry = floor(sqrt(getTaskNFeats(.task)))
+    } else {
+      mtry = max(1, floor(mtry.perc * getTaskNFeats(.task)))
+    }
+  }
+  if (missing(min.node.size)) {
+    if (.learner$predict.type == "prob") {
+      min.node.size = 10
+    } else {
+      min.node.size = 1
+    }
+  }
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-    probability = (.learner$predict.type == "prob"), case.weights = .weights, ...)
+                 probability = (.learner$predict.type == "prob"), case.weights = .weights, mtry = mtry, min.node.size = min.node.size, ...)
 }
 
 #' @export
@@ -48,7 +61,7 @@ predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getOOBPredsLearner.classif.ranger = function(.learner, .model) {
-  .model$learner.model$predictions
+  getLearnerModel(.model, more.unwrap = TRUE)$predictions
 }
 
 #' @export
@@ -56,8 +69,8 @@ getFeatureImportanceLearner.classif.ranger = function(.learner, .model, ...) {
   has.fiv = .learner$par.vals$importance
   if (is.null(has.fiv) || has.fiv == "none") {
     stop("You must set the learners parameter value for importance to
-      'impurity' or 'permutation' to compute feature importance")
+         'impurity' or 'permutation' to compute feature importance")
   }
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   ranger::importance(mod)
 }

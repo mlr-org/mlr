@@ -8,6 +8,7 @@ env:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
+    - R_MAX_NUM_DLLS=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
     - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
 
@@ -48,6 +49,8 @@ jobs:
           R CMD build .
           travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+      after_script:
+        - ../../travis-tool.sh dump_logs
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
