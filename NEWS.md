@@ -13,6 +13,7 @@
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
 * batchmark: allow resample instances and reduction of partial results
+* resample, performance: new flag "na.rm" to remove NAs during aggregation
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -38,6 +39,7 @@
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
+* fixed bug where classif.xgboost returned NA predictions with multi:softmax
 
 ## learners - new
 * classif.fdaknn
@@ -55,6 +57,10 @@
 
 ## aggregations - new
 * testgroup.sd
+
+## filter - new
+
+* auc
 
 # mlr 2.11:
 
