@@ -67,3 +67,9 @@ test_that("xgboost works with different 'missing' arg vals", {
 test_that("xgboost objective 'multi:softmax' does not work with predict.type = 'prob'", {
   expect_error(train(makeLearner("classif.xgboost", predict.type = "prob", objective = "multi:softmax"), binaryclass.task))
 })
+
+test_that("multiclass xgboost with 'multi:softmax' does not produce NA predictions", {
+  mod = train(makeLearner("classif.xgboost", objective = "multi:softmax"), task = multiclass.task)
+  pred = predict(mod, multiclass.task)
+  expect_false(any(is.na(pred$data$response)))
+})
