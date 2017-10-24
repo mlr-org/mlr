@@ -256,8 +256,6 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
   } else {
     # usually low scores are indicator for anomaly
     # here: low scores = low mse reconstruction error = indicator for normal data
-    # therefore make the scores negative before converting
-    # low prob = anomaly
     p = convertingScoresToProbability(p.df)$probability
     p = cbind(p, 1 - p) # p.df = mse.reconstruction error = high = anomaly (same for prob)
     colnames(p) = label
