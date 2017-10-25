@@ -26,7 +26,6 @@ test_that("oneclass_lofactor", {
     oneclass.target, oneclass.train.inds, old.probs.list, parset.list, oneclass.positive, oneclass.negative)
 })
 
-
 test_that("class names are integers and response predicted", {
   df = data.frame(matrix(runif(100, 0, 1), 100, 9))
   classx = factor(sample(c(0, 1), 100, replace = TRUE))
