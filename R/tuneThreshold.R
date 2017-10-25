@@ -64,7 +64,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
       for (i in seq_along(model)) {
         pred.tmp = setThreshold(pred, threshold = x)
         pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
-        y.tmp[i] = performance(pred.tmp, measure = measure, model = model[[i]], task = task)
+        y.tmp[i] = performance(pred.tmp, measures = measure, model = model[[i]], task = task)
       }
       y = mean(y.tmp)
       names(y) = measure$id
