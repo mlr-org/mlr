@@ -7,7 +7,8 @@ makeRLearner.oneclass.lofactor = function() {
       makeIntegerLearnerParam(id = "k", default = 20L, lower = 1L, tunable = TRUE)
     ),
     properties =  c("oneclass", "numerics", "factors", "prob"),
-    note = "Rule of thumb for number of neighbours k = #features^(1/2) [Maier, M., Hein, M. and Von Luxburg, U. (no date) ‘Optimal construction of k-nearest neighbor graphs for identifying noisy clusters’].",
+    note = "Rule of thumb for number of neighbours k = 20,
+    see http://scikit-learn.org/stable/modules/outlier_detection.html.",
     name = "one-class LoF",
     short.name = "lofactor",
     callees = "lofactor"
