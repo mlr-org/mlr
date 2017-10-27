@@ -1,19 +1,18 @@
 #' @title Constructor for FDA feature extraction methods.
 #'
 #' @description
-#' This can be used to implement custom feature FDA extraction.
+#' This can be used to implement custom FDA feature extraction.
+#' Takes a \code{learn} and a \code{reextract} function along with some optional
+#' parameters to those as argument.
 #'
 #' @param learn [\code{function(data, target, col, ...)}]\cr
 #'   Function to learn and extract information on functional column \code{col}.
 #'   Arguments are:
 #'   \itemize{
 #'   \item data [\code{data.frame}]\cr
-#'     Data.frame with one row per observation of a single functional feature
+#'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item data [\code{data.frame}]\cr
-#'     Data.frame containing matricies with one row per observation of a single functional
-#'     or time series and one column per measurement time point. All entries need to be numeric.
 #'   \item target [\code{character}]\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
@@ -179,8 +178,8 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' @description
 #' The function extracts the mean of multiple segments of each curve
 #' as non-functional features. This is done by sequentially dividing the
-#' functional feature up into smaller sub-curves of length \code{l/2}.
-#'  \code{l} is the length of the curve in the previous iteration.
+#' functional feature up into smaller sub-curves of length \code{l/2},
+#' where \code{l} is the length of the curve in the previous iteration.
 #' In each iteration, a sliding window of length \code{sub_curve_length} is shifted by
 #' \code{sub_curve_length} times \code{shift} data points.
 #' The means of each sliding window are the new features.
