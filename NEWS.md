@@ -2,15 +2,17 @@
 
 ## general
 * Support for functional data (fda) using matrix columns has been added.
-* relaxed the way wrappers can be nested -- the only explicitly forbidden
+* Relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
-* refactored the resample progress messages to give a better overview and
+* Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
+* calculateROCMeasures now returns absolute instead of relative values
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
 * batchmark: allow resample instances and reduction of partial results
+* resample, performance: new flag "na.rm" to remove NAs during aggregation
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -35,6 +37,7 @@
 ## learners - general
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
+* fixed bug where classif.xgboost returned NA predictions with multi:softmax
 
 ## learners - new
 * classif.fdaknn
@@ -48,6 +51,13 @@
 * {classif,regr}.xyf: broke our API, stability issues
 * classif.hdrda: package removed from CRAN
 * surv.penalized: stability issues
+
+## aggregations - new
+* testgroup.sd
+
+## filter - new
+
+* auc
 
 # mlr 2.11:
 
