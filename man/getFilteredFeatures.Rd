@@ -20,6 +20,7 @@ Returns the filtered features.
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}

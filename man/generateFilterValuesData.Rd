@@ -60,6 +60,7 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
 Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
