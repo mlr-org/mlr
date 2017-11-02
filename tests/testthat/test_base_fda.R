@@ -369,8 +369,8 @@ test_that("benchmarking on fda tasks works", {
 
 test_that("makeFunctionalData for matricies contained in data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
-  df2 = makeFunctionalData(df, fd.features = list ("UVVIS" = "UVVIS", "NIR" = "NIR"),
-                     exclude.cols = c("heatan", "h20"))
+  df2 = makeFunctionalData(df, fd.features = list("UVVIS" = "UVVIS", "NIR" = "NIR"),
+    exclude.cols = c("heatan", "h20"))
   expect_equivalent(df, df2)
 
   df = data.frame(matrix(rnorm(100), ncol = 10L))
@@ -396,6 +396,3 @@ test_that("Self-created data.frame's", {
   df2$fd1 = matrix(as.factor(rep("a", 100L)), ncol = 10L)
   expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
 })
-
-
-

@@ -113,7 +113,6 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
   # FIXME: Add n.levels parameter. Has no default, do not know how to handle it right now.
-
   lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
 
