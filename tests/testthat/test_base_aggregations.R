@@ -9,3 +9,17 @@ test_that("aggregations", {
   expect_equal(length(a), length(ms))
   expect_true(!any(is.na(as.logical(a))))
 })
+
+test_that("testgroup.mean", {
+  perf.test = 1:4
+  group = c(1, 1, 2, 2)
+
+  expect_equal(testgroup.mean$fun(NA, perf.test, NA, mean, group, NA), mean(c(mean(1:2), mean(3:4))))
+})
+
+test_that("testgroup.sd", {
+  perf.test = 1:10
+  group = c(rep(1, 5), rep(2, 5))
+
+  expect_equal(testgroup.sd$fun(NA, perf.test, NA, mean, group, NA), sd(c(mean(1:5), mean(6:10))))
+})

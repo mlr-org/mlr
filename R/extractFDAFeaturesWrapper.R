@@ -14,6 +14,7 @@
 #' @template ret_learner
 makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
+  assertList(feat.methods, names = "named")
   # FIXME:
   # This is stupid, we can not handle multiple tasks for a single wrapper this way.
   # (Impute cant do this neither if using cols = list("X1" = ...)).

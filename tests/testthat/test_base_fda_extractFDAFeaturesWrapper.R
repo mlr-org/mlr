@@ -12,6 +12,9 @@ test_that("extractFDAFeaturesWrapper", {
   res = resample(lrn, fuelsubset.task, cv2)
   expect_class(res, "ResampleResult")
 })
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> master
