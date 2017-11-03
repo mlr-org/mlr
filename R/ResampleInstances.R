@@ -54,12 +54,17 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
 
-  # testset will have normal and anomaly observations
-  test.inds = chunk(seq_len(size), shuffle = TRUE, n.chunks = desc$iters)
 
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #index of only normal class
+  anomaly.inds = which(label == task$task.desc$positive) #index of anomaly class
 
+  # for testset first chunk normal data
+  test.inds = chunk(normal.inds, shuffle = TRUE, n.chunks = desc$iters)
+  # chunk anomaly data
+  test.anomaly.inds = chunk(anomaly.inds, shuffle = TRUE, n.chunks = desc$iters)
+  # merge anomaly and normal data for the testset
+  test.inds = mapply(c, test.inds, test.anomaly.inds, SIMPLIFY=FALSE)
   # only allow normal obs in training and shuffle data set of normal observation
   # basically drop anomaly in training
   train.inds = sample(normal.inds)
