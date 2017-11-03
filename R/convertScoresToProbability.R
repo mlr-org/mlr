@@ -2,7 +2,7 @@
 #' @description
 #' The \code{\link{convertingScoresToProbability}} function converts anomaly scores
 #' to probability estimates with the sigmoid function (calibration function)
-#' 1 / (1 + exp(-(A + B * score))) and A = 0, B = 1. The higher the probability
+#' f(score) = 1 / (1 + exp(-(A + B * score))) and A = 0, B = 1. The higher the probability
 #' estimate the more likely the observation belongs to the anomaly class.
 #' NOTE: In the referenced paper the authors suggest to use the sigmoid function
 #' for converting anomaly scores to probability and applying the EM-Algorithm to
@@ -14,6 +14,7 @@
 #' function, for now with default parameter A = 0, B = 1 with the goal to normalized
 #' the data to the intervall [0, 1] to enable the user to use all beneficial
 #' functions of mlr. This function will be updated in the future.
+#' Note: In some methods low anomaly scores are indication for an anomaly, in some other for an normal observation. Therefore after transformation either f(score) or (1-f(score)) is used for the probability column of the mlr output, to ensure a consistent interpretation of the output.
 #'
 #' \describe{
 #' \item{anomaly.score [\code{numeric(1)}]}{ A numeric vector of anomaly score}
