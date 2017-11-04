@@ -65,7 +65,7 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
     anomaly.inds = which(label == task$task.desc$positive) #index of anomaly class
     test.anomaly.inds = chunk(anomaly.inds, shuffle = TRUE, n.chunks = desc$iters)
     # merge anomaly and normal data for the testset
-    test.inds = mapply(c, test.inds, test.anomaly.inds, SIMPLIFY=FALSE)
+    test.inds = mapply(c, test.inds, test.anomaly.inds, SIMPLIFY = FALSE)
   }
   # only allow normal obs in training and shuffle data set of normal observation
   # basically drop anomaly in training
