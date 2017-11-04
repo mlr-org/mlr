@@ -88,7 +88,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
       or = GenSA(par = start, fn = fitn, lower = rep(0, k),
           upper = rep(1, k), control = ctrl)
     }
-    th = or$par #/ sum(or$par)
+    th = or$par / sum(or$par)
     names(th) = cls
     perf = or$value
   } else {# classif with k = 2
