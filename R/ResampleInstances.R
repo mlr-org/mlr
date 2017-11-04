@@ -20,7 +20,7 @@ instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
 }
 
 instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL) {
-  inds = lapply(seq_len(desc$iters), function(x) sample(size, size * desc$split))
+  inds = lapply(seq_len(desc$iters), function(x) sample(size, seq_len(desc$iters) * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
@@ -45,8 +45,7 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
 instantiateResampleInstance.OCHoldoutDesc = function(desc, size, task) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #index of only normal class
-  size.normal = length(normal.inds)
-  inds = sample(normal.inds, size.normal * desc$split)
+  inds = sample(normal.inds, size * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
@@ -58,9 +57,8 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #index of only normal class
 
-  # for testset first chunk normal data
+  # for testset first apply chunk() on normal data
   test.inds = chunk(normal.inds, shuffle = TRUE, n.chunks = desc$iters)
-  # chunk anomaly data
 
   # if anomalies are in the data, add them to the test sets
   if (length(which(label == task$task.desc$positive)) != 0) {
@@ -81,21 +79,18 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
 instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #only normal class
-  size.normal = length(normal.inds)
   # sample without replacement only from the normal data to create train set
   # all anomaly are going to be in the test set
-  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size.normal * desc$split))
+  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
 instantiateResampleInstance.OCBootstrapDesc = function(desc, size, task) {
-
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #only normal class
-  size.normal = length(normal.inds)
   # sample with replacement only from the normal data to create train set
   # all anomaly are going to be in the test set
-  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size.normal, replace = TRUE))
+  inds = lapply(seq_len(desc$iters), function(x) sample(normal.inds, size, replace = TRUE))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
