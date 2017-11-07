@@ -82,8 +82,8 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     names(th) = cls
     perf = or$val
   } else { # classif with k = 2
-    if ((pred$task.desc$type == "oneclass" ) | grepl("AMV", measure$id)) {
-      or = optimizeSubInts(f = fitn, lower = min(probs), upper = max(probs), maximum = !measure$minimize, nsub = 1)
+    if ( (pred$task.desc$type == "oneclass" & abs(diff(range(probs))) < 0.05) | grepl("AMV", measure$id)) {
+      or = optimizeSubInts(f = fitn, lower = min(probs)-0.001, upper = max(probs)+0.001, maximum = !measure$minimize, nsub = 1)
     } else {
       or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
     }
