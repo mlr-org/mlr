@@ -103,4 +103,3 @@ instantiateResampleInstance.OCRepCVDesc = function(desc, size = NULL, task) {
   g = as.factor(rep(seq_len(desc$reps), each = folds))
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
-
