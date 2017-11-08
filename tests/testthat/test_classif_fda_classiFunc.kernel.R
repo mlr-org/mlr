@@ -19,7 +19,7 @@ test_that("classif_classiFunc.kernel behaves like original api", {
 
   # classiFunc implementation
   set.seed(getOption("mlr.debug.seed"))
-  a1 = classiFunc::classiKernel(glearn, mlearn, h = 1)
+  a1 = classiFunc::classiKernel(glearn, mlearn, h = 1, nderiv = 1)
 
   p1 = predict(a1, mtest)
   p2 = predict(a1, mlearn)
@@ -28,6 +28,8 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   p1.prob = predict(a1, mtest, predict.type = "prob")
   p2.prob = predict(a1, mlearn, predict.type = "prob")
 
+  ##############################################################################
+
   # getting the data ready for mlr
   ph = as.data.frame(mlearn)
   ph[,"label"] = glearn
@@ -35,7 +37,7 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   phtst[,"label"] = gtest
 
   # mlr interface
-  lrn = makeLearner("classif.classiFunc.kernel", h = 1)
+  lrn = makeLearner("classif.classiFunc.kernel", h = 1, nderiv = 1)
 
   fdata = makeFunctionalData(ph, fd.features = NULL, exclude.cols = "label")
   ftest = makeFunctionalData(phtst, fd.features = NULL, exclude.cols = "label")
@@ -53,11 +55,12 @@ test_that("classif_classiFunc.kernel behaves like original api", {
   expect_equal(as.character(cp2), as.character(p2))
   expect_equal(as.character(cp), as.character(p1))
 
-
+  ##############################################################################
   # test that predict.type = "prob" works
   set.seed(getOption("mlr.debug.seed"))
   lrn.prob = makeLearner("classif.classiFunc.kernel",
                          h = 1,
+                         nderiv = 1,
                          predict.type = "prob")
   m.prob = train(lrn.prob, task)
 
