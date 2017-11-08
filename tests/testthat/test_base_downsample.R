@@ -53,13 +53,15 @@ test_that("downsample wrapper works with weights, we had issue #838",  {
   lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
   m = train(lrn, task)
   u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == n / 2 && all(u %in% w))
+  expect_equal(length(u), n / 2)
+  expect_subset(u, w)
 
   # weights from train
   lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
-  m = train(lrn, task, subset = 1:10, weights = 1:10)
+  m = train(lrn, task, subset = 11:20, weights = 1:10)
   u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == 5 && all(u %in% 1:10))
+  expect_equal(length(u), 5)
+  expect_subset(u, 1:10)
 })
 
 test_that("training performance works as expected (#1357)", {
