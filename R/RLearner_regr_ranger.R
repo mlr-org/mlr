@@ -22,7 +22,7 @@ makeRLearner.regr.ranger = function() {
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
       makeDiscreteLearnerParam(id = "splitrule", values = c("variance", "extratrees", "maxstat"), default = "variance"),
-      makeIntegerLearnerParam(id = "num.random.splits", lower = 1L, default = 1, requires = quote(splitrule == "extratrees")),
+      makeIntegerLearnerParam(id = "num.random.splits", lower = 1L, default = 1L, requires = quote(splitrule == "extratrees")),
       makeNumericLearnerParam(id = "alpha", lower = 0L, upper = 1L, default = 0.5, requires = quote(splitrule == "maxstat")),
       makeNumericLearnerParam(id = "minprop", lower = 0L, upper = 1L, default = 0.1, requires = quote(splitrule == "maxstat")),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
