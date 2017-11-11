@@ -71,6 +71,7 @@ anomaly$Target = "anomaly"
 data = rbind(normal, anomaly)
 data = na.omit(data)
 data$Target = factor(data$Target)
+data[, 1:2] = normalize(data[ ,1:2])
 
 oneclass.truth = data$Target
 oneclass.df = data
