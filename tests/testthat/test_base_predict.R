@@ -61,7 +61,6 @@ test_that("predict works with type = se", {
   expect_equal(colnames(p$data), c("id", "truth", "response", "se"))
 })
 
-
 test_that("predict works with strange class labels", {
   df = binaryclass.df
   levels(df[, binaryclass.target]) = c(-1, 1)
