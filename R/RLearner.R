@@ -46,10 +46,10 @@
 #'   Default is \code{character(0)}.
 #' @return [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
 #'   \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
-#'   \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}.
+#'   \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}, \code{\link{RLearnerOneClass}}.
 #' @name RLearner
 #' @rdname RLearner
-#' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv
+#' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv RLearnerOneClass
 NULL
 
 #' @export
