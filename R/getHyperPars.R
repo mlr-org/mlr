@@ -1,9 +1,10 @@
 #' @title Get current parameter settings for a learner.
 #'
 #' @description
-#' Retrieves the current hyperparameter settings of a learner or CPO.
+#' Retrieves the current hyperparameter settings of a learner.
 #'
-#' @template arg_learner_or_cpo
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}
 #'   the are used (see \code{\link[ParamHelpers]{LearnerParam}}).
@@ -11,7 +12,6 @@
 #'   Default is \code{c("train", "predict", "both")}.
 #' @return [\code{list}]. A named list of values.
 #' @family learner
-#' @family CPO
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
   assertSubset(for.fun, choices = c("train", "predict", "both"))
