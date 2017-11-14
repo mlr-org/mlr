@@ -370,7 +370,7 @@ test_that("benchmarking on fda tasks works", {
 test_that("makeFunctionalData for matricies contained in data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
   df2 = makeFunctionalData(df, fd.features = list("UVVIS" = "UVVIS", "NIR" = "NIR"),
-                     exclude.cols = c("heatan", "h20"))
+    exclude.cols = c("heatan", "h20"))
   expect_equivalent(df, df2)
 
   df = data.frame(matrix(rnorm(100), ncol = 10L))

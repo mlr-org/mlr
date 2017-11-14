@@ -32,6 +32,8 @@
 #'   functional feature.
 #'   Names of \code{feat.methods} must match column names of functional features.
 #'   Available feature extraction methods are available under family \code{fda_featextractor}.
+#'   Specifying a functional feature multiple times with different extraction methods allows
+#'   for the extraction of different features from the same functional.
 #'   Default is \code{list()} which does nothing.
 #' @return [\code{list}]
 #'   \item{data [\code{data.frame} | \code{Task}]}{Extracted features, returns a data.frame when
