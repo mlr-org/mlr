@@ -83,7 +83,7 @@ regr.num.test  = regr.num.df[regr.num.test.inds, ]
 regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
-regr.na.num.df = regr.num.df[1:10,]
+regr.na.num.df = regr.num.df[1:10, ]
 regr.na.num.df[1, 1] = NA
 regr.na.num.formula = regr.num.formula
 regr.na.num.target = regr.num.target
