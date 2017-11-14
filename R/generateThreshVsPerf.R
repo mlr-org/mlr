@@ -68,11 +68,11 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
   mids = replaceDupeMeasureNames(measures, "id")
   names(measures) = mids
   grid = data.frame(threshold = seq(0, 1, length.out = gridsize))
-  resamp = all(sapply(obj, function(x) inherits(x, "ResamplePrediction")))
+  resamp = all(vlapply(obj, function(x) inherits(x, "ResamplePrediction")))
   out = lapply(obj, function(x) {
     do.call("rbind", lapply(grid$threshold, function(th) {
       pp = setThreshold(x, threshold = th)
-      if (!aggregate & resamp) {
+      if (!aggregate && resamp) {
         iter = seq_len(pp$instance$desc$iters)
         asMatrixRows(lapply(iter, function(i) {
           pp$data = pp$data[pp$data$iter == i, ]
@@ -84,7 +84,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
     }))
   })
 
-  if (length(obj) == 1L & inherits(obj[[1L]], "Prediction")) {
+  if (length(obj) == 1L && inherits(obj[[1L]], "Prediction")) {
     out = out[[1L]]
     colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
   } else {
@@ -166,15 +166,15 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
     nlearn = 1L
   nmeas = length(unique(data$measure))
 
-  if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
+  if ((color == "learner" && nlearn == 1L) || (color == "measure" && nmeas == 1L))
     color = NULL
 
-  if ((facet == "learner" & nlearn == 1L) | (facet == "measure" & nmeas == 1L))
+  if ((facet == "learner" && nlearn == 1L) || (facet == "measure" && nmeas == 1L))
     facet = NULL
 
-  if (resamp & !obj$aggregate & is.null(color)) {
+  if (resamp && !obj$aggregate && is.null(color)) {
     group = "iter"
-  } else if (resamp & !obj$aggregate & !is.null(color)) {
+  } else if (resamp && !obj$aggregate && !is.null(color)) {
     data$int = interaction(data[["iter"]], data[[color]])
     group = "int"
   } else {
@@ -260,14 +260,14 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   else
     nlearn = 1L
 
-  if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
+  if ((color == "learner" && nlearn == 1L) || (color == "measure" && nmeas == 1L))
     color = NULL
-  if ((interaction == "learner" & nlearn == 1L) | (interaction == "measure" & nmeas == 1L))
+  if ((interaction == "learner" && nlearn == 1L) || (interaction == "measure" && nmeas == 1L))
     interaction = NULL
 
-  if (resamp & !obj$aggregate & is.null(color)) {
+  if (resamp && !obj$aggregate && is.null(color)) {
     group = "iter"
-  } else if (resamp & !obj$aggregate & !is.null(color)) {
+  } else if (resamp && !obj$aggregate && !is.null(color)) {
     group = c("iter", color)
   } else {
     group = NULL
@@ -285,7 +285,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 
     plt = ggvis::layer_paths(plt)
 
-    if (!is.na(mark.th) & is.null(interaction)) { ## cannot do vline with reactive data
+    if (!is.na(mark.th) && is.null(interaction)) { ## cannot do vline with reactive data
       vline.data = data.frame(x2 = rep(mark.th, 2), y2 = c(min(data$perf), max(data$perf)),
                               measure = obj$measures[1])
       plt = ggvis::layer_lines(plt, ggvis::prop("x", as.name("x2")),
@@ -348,7 +348,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #'   Default is \code{TRUE}.
 #' @param facet.learner [\code{logical(1)}]\cr
 #'   Weather to use facetting or different colors to compare multiple learners.
-#'   Default is \code{TRUE}.
+#'   Default is \code{FALSE}.
 #' @template ret_gg2
 #' @export
 #' @examples
@@ -367,7 +367,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
 #' }
-plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, facet.learner = TRUE) {
+plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, facet.learner = FALSE) {
   assertClass(obj, "ThreshVsPerfData")
 
   if (missing(measures))
@@ -392,37 +392,29 @@ plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE, fa
     mlearn = FALSE
   resamp = "iter" %in% colnames(obj$data)
 
-  if (!obj$aggregate & mlearn & resamp) {
+
+  aes = list(x = names(measures)[1], y = names(measures)[2])
+
+  if (!obj$aggregate && mlearn && resamp) {
     obj$data$int = interaction(obj$data$learner, obj$data$iter)
-    if (facet.learner)
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "int"))
-    else
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "int", color = "learner"))
-    p = p + geom_path(alpha = .5)
-  } else if (!obj$aggregate & !mlearn & resamp) {
-    p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "iter"))
-    p = p + geom_path(alpha = .5)
-  } else if (obj$aggregate & mlearn & !resamp) {
-    if (facet.learner)
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "learner"))
-    else
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], group = "learner", color = "learner"))
-    p = p + geom_path(alpha = .5)
+    aes$group = "int"
+  } else if (!obj$aggregate && !mlearn && resamp) {
+    aes$group = "iter"
+  } else if (obj$aggregate && mlearn && !resamp) {
+    aes$group = "learner"
   } else {
     obj$data = obj$data[order(obj$data$threshold), ]
-    if (facet.learner)
-      p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2]))
-    else
-    p = ggplot(obj$data, aes_string(names(measures)[1], names(measures)[2], color = "learner"))
-    p = p + geom_path()
   }
 
-  p = p + labs(x = mnames[1], y = mnames[2])
+  if (mlearn && !facet.learner)
+    aes$color = "learner"
 
-  if (mlearn & facet.learner)
+  p = ggplot(obj$data, do.call(aes_string, aes)) + geom_path() + labs(x = mnames[1], y = mnames[2])
+
+  if (mlearn && facet.learner)
     p = p + facet_wrap(~ learner)
 
-  if (diagonal & all(sapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE)) <= 1))
+  if (diagonal && all(vlapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE) <= 1)))
     p = p + geom_abline(aes(intercept = 0, slope = 1), linetype = "dashed", alpha = .5)
   p
 }
