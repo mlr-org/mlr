@@ -182,4 +182,14 @@ Methods and a New Algorithm. AAAI-92 Proceedings.
 Kononenko, Igor et al. Overcoming the myopia of inductive learning algorithms
 with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.
 }
+\seealso{
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilterValues}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotFilterValues}}
+}
 \keyword{datasets}
