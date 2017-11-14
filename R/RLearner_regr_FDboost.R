@@ -44,18 +44,18 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
 
   suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
-  m = getTaskData(.task, functionals.as = "matrix")
+  tdata = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
 
   formula.terms = namedList()
   mat.list = namedList(getTaskFeatureNames(.task))
 
   # Treat functional covariates
-  if (hasFunctionalFeatures(m)) {
-    fdns = colnames(getFunctionalFeatures(m))
+  if (hasFunctionalFeatures(tdata)) {
+    fdns = colnames(getFunctionalFeatures(tdata))
     # later on, the grid elements in mat.list should have suffix ".grid"
     fdg = namedList(fdns)
-    fd.grids = lapply(fdns, function(name) seq_len(ncol(m[, name])))
+    fd.grids = lapply(fdns, function(name) seq_len(ncol(tdata[, name])))
     names(fd.grids) = fdns
     fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
@@ -68,7 +68,7 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
       # ... create a corresponding grid name
       gn = stri_paste(fdn, ".grid")
       # ... extract the corresponding original data into a list of matrices
-      mat.list[[fdn]] = m[, fdn]
+      mat.list[[fdn]] = tdata[, fdn]
       # ... create a formula item
       formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
         fdn, gn, knots, df, degree, differences, bsignal.check.ident)
@@ -76,11 +76,11 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
     # add grid names
     mat.list = c(mat.list, fdg)
   } else {
-    fdns = NULL
+    fdns = NULL  # no functional features
   }
 
   # Add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
-  for (fsn in setdiff(colnames(m), c(fdns, tn))) {
+  for (fsn in setdiff(colnames(tdata), c(fdns, tn))) {
     mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
       fsn, knots, df, degree, differences)
