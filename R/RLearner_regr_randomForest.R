@@ -121,7 +121,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
 
 #' @export
 getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
-  .model$learner.model$predicted
+  getLearnerModel(.model, more.unwrap = TRUE)$predicted
 }
 
 # Computes brute force or noisy bootstrap
