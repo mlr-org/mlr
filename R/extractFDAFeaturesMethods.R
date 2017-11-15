@@ -177,20 +177,32 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' @title Multiresolution feature extraction.
 #'
 #' @description
-#' The function extracts currently the mean of multiple segments of each curve and stacks them
-#' as features. The segments length are set in a hierachy way so the features
-#' cover different resolution levels.
+#' The function extracts the mean of multiple segments of each curve
+#' as non-functional features. This is done by sequentially dividing the
+#' functional feature up into smaller sub-curves of length \code{l/2}.
+#'  \code{l} is the length of the curve in the previous iteration.
+#' In each iteration, a sliding window of length \code{sub_curve_length} is shifted by
+#' \code{sub_curve_length} times \code{shift} data points.
+#' The means of each sliding window are the new features.
+#' Because the extraction happens in a hierarchical manner
+#' (that is, in each iteration smaller segments are considered), the features
+#' cover different resolution levels of the curve.
 #'
 #' @param res.level [\code{integer(1)}]\cr
-#'   The number of resolution hierachy, each length is divided by a factor of 2.
+#'   The resolution depth, each length is divided by a factor of 2.
 #' @param shift [\code{numeric(1)}]\cr
 #'   The overlapping proportion when slide the window for one step.
 #' @param curve.lens [\code{integer}]\cr
-#'   Curve subsequence lengths. Needs to sum up to the length of the functional.
+#'   Instead of splitting the curves in half from the top, a vector of sub-curves can be
+#'   can be specified. Specifies the curve subsequence's lengths.
+#'   Needs to sum up to the length of the functional.
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
+  res.level = asCount(res.level)
+  assertNumber(shift, lower = 0L, upper = 1L)
+  assertInteger(curve.lens, null.ok = TRUE)
 
   # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.
   getUniFDAMultiResFeatures = function(data, res.level, shift) {
@@ -213,7 +225,6 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     })
     data.frame(t(feat.list))
   }
-
 
   #  Get Features from a single (sub-)curve
   getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
@@ -247,20 +258,20 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
 
   lrn = function(data, target, col, res.level, shift, curve.lens) {
 
-    data = data[, col, drop = FALSE]
-    if (is.data.frame(data))
-      data = as.matrix(data)
+    assertChoice(col, choices = colnames(data))
+    data = as.matrix(data[, col, drop = FALSE])
     assertMatrix(data, mode = "numeric")
 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
-    # subcurves from which the features are extracted
+    # subcurves from which the features are extracted.
     if (is.null(curve.lens)) {
-      getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
+      df = getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
     } else {
-      getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
+      df = getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
     }
+    names(df) = paste0("multires", seq_len(ncol(df)))
+    return(df)
   }
-
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
     args = list(res.level = res.level, shift = shift, curve.lens = curve.lens))
 }

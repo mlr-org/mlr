@@ -167,16 +167,15 @@ test_that("extract and reextract Wavelets", {
 
 
 test_that("getUniFDAMultiResFeatures works on data.frame", {
-  i = 100 # number of instances
-  tl  = 200 # length of each time serie instance
-  ts = replicate(i, rnorm(tl))
-  gp = t(as.data.frame(ts))
-  ngp = extractFDAMultiResFeatures()$learn(data = gp, res.level = 3, shift = 0.5, curve.lens = NULL)
-  expect_true(nrow(ngp) == nrow(gp))
-  expect_true(ncol(ngp) == 11L)
-  ngp = extractFDAMultiResFeatures()$learn(data = gp, curve.lens = c(100, 100), res.level = 3, shift = 0.5)
-  expect_true(nrow(ngp) == nrow(gp))
-  expect_true(ncol(ngp) == 20L)
+  gp = getTaskData(fda.binary.gp.task.small, functionals.as = "matrix")
+  ngp1 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", res.level = 3,
+    shift = 0.5, curve.lens = NULL)
+  expect_true(nrow(ngp1) == nrow(gp))
+  expect_true(ncol(ngp1) == 9L)
+  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", curve.lens = c(25, 25),
+    res.level = 3, shift = 0.5)
+  expect_true(nrow(ngp2) == nrow(gp))
+  expect_true(ncol(ngp2) == 16L)
 })
 
 test_that("get...FDAMultiResFeatures works on data.frame", {
