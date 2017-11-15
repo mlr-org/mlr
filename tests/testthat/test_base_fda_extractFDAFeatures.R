@@ -288,3 +288,7 @@ test_that("Fourier equal to package", {
   gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
   expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
 })
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
