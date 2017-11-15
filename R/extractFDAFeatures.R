@@ -184,7 +184,7 @@ reextractFDAFeatures.data.frame = function(obj, desc) {
   # Reappend target and non-functional features
   keep.cols = setdiff(colnames(obj), desc$fd.cols)
   data = cbind(df, obj[keep.cols])
-  data
+  return(data)
 }
 
 

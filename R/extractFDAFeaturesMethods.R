@@ -75,7 +75,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     }
     # Add more legible column names to the output
     df = as.data.frame(fft.pa)
-    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)), sep = ".")
+    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)))
     df
   }
   makeExtractFDAFeatMethod(
@@ -139,7 +139,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
     df = as.data.frame(wtdata)
-    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
+    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)))
     return(df)
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))

@@ -6,8 +6,9 @@ test_that("extractFDAFeatures", {
   # check output data
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
-  expect_equal(nrow(df), 129)
-  # expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "heatan", "h20"))
+  expect_equal(nrow(df), 129L)
+  expect_subset(colnames(df), c(paste0("NIR.phase", seq_len(231)),
+    paste0("UVVIS.multires", seq_len(9)), "heatan", "h20"))
 })
 
 test_that("extractFeatures multiple times", {
@@ -16,11 +17,11 @@ test_that("extractFeatures multiple times", {
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_class(df, "data.frame")
   expect_true(nrow(df) == 129L)
-  # expect_true(ncol(df) == 6L)
-  # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-    # "h20", "NIR.mean"))
+  expect_true(ncol(df) == 154L)
+  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase", seq_len(134)),
+    paste0("NIR.multires", seq_len(9)), paste0("UVVIS.multires", seq_len(9))))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -28,9 +29,11 @@ test_that("extractFeatures multiple times", {
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
   expect_true(nrow(df) == 129L)
-  # expect_true(ncol(df) == 8L)
-  # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-    # "h20", "NIR.mean", "NIR.min", "NIR.max"))
+  expect_true(ncol(df) == 385L)
+  expect_subset(colnames(df),
+    c("heatan", "h20",
+      paste0("UVVIS.multires", seq_len(9)), paste0("NIR.multires", seq_len(9)),
+      paste0("UVVIS.phase", seq_len(134)), paste0("NIR.phase", seq_len(231))))
 })
 
 
