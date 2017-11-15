@@ -94,10 +94,12 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' See \code{\link[wavelets]{dwt}} for more information.
 #'
 #' @param filter [\code{character(1)}]\cr
-#'   Specifies which filter should be used. Default is \dQuote{la8}.
+#'   Specifies which filter should be used.
 #'   Must be one of \code{d}|\code{la}|\code{bl}|\code{c} followed by an even
 #'   number for the level of the filter.
+#'   The level of the filter needs to be smaller or equal then the time-series length.
 #'   For more information and acceptable filters see \code{help(wt.filter)}.
+#'   Defaults to \dQuote{la8}.
 #' @param boundary [\code{character(1)}]\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
@@ -111,9 +113,17 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
-  # FIXME: Add n.levels parameter. Has no default, do not know how to handle it right now.
+
+  # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
+  # to handle it right now.
+  # @param n.levels [\code{integer(1)}]\cr
+  #   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
+
   lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
+    assertDataFrame(data)
+    assertChoice(col, choices = colnames(data))
+
 
     assertDataFrame(data)
     assertChoice(col, choices = colnames(data))
