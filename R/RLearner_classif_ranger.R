@@ -13,7 +13,7 @@ makeRLearner.classif.ranger = function() {
       makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
-      makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
+      makeDiscreteLearnerParam("respect.unordered.factors", values = c("ignore", "order", "partition"), default = "ignore"),
       makeDiscreteLearnerParam(id = "importance", values = c("none", "impurity", "permutation"), default = "none", tunable = FALSE),
       makeLogicalLearnerParam(id = "write.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
@@ -21,13 +21,15 @@ makeRLearner.classif.ranger = function() {
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
+      makeDiscreteLearnerParam(id = "splitrule", values = c("gini", "extratrees"), default = "gini"),
+      makeIntegerLearnerParam(id = "num.random.splits", lower = 1L, default = 1L, requires = quote(splitrule == "extratrees")),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
+    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered", "featimp", "weights", "oobpreds"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE`. All settings are changeable. `mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task. Default for `min.node.size` is 1 for classification and 10 for probability estimation.",
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable. `mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task. Default for `min.node.size` is 1 for classification and 10 for probability estimation.",
     callees = "ranger"
   )
 }

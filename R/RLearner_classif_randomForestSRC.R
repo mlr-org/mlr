@@ -34,7 +34,7 @@ makeRLearner.classif.randomForestSRC = function() {
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
       makeDiscreteLearnerParam(id = "split.depth", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
-      makeIntegerLearnerParam(id = "seed", upper = 0L, tunable = FALSE),
+      makeIntegerLearnerParam(id = "seed", lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE, when = "both"), # is currently ignored
       makeLogicalLearnerParam(id = "membership", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
