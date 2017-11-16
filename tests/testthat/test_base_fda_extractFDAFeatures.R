@@ -148,7 +148,7 @@ test_that("Wavelet method are equal to package", {
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
   df = as.data.frame(wtdata)
-  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)), sep = ".")
+  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)))
 
   expect_equal(nrow(wavelets.gp), nrow(gp$data))
   expect_equal(wavelets.gp, df)
@@ -283,7 +283,7 @@ test_that("Fourier equal to package", {
   }
   # Add more legible column names to the output
   df = as.data.frame(fft.pa)
-  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)), sep = ".")
+  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)))
 
   expect_equal(df, fourier.a.gp)
 

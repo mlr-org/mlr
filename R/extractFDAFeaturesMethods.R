@@ -105,8 +105,6 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
-#' @param n.levels [\code{integer(1)}]\cr
-#'   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
