@@ -138,7 +138,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
 
   if (spatial == TRUE) {
     # check if coords are named 'x' and 'y'
-    if (!any(colnames(data) == "x" | colnames(data) == "y")) {
+    if (!any(colnames(data) == "x" & colnames(data) == "y")) {
       stop("Please rename coordinates in data to 'x' and 'y'.")
     }
   }
