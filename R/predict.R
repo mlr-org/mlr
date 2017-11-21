@@ -120,16 +120,15 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     }
     time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
 
-    # remove NAs in p (occurs if model inherits "lm" and misses factor levels in train)
-    if (model$learner$fix.factors.prediction == TRUE &&
-        any(is.na(p))) {
+    # remove NAs in 'p', 'truth' and 'newdata' (occurs if model inherits "lm" and misses factor levels in train)
+    if (model$learner$fix.factors.prediction == TRUE && any(is.na(p))) {
+      truth = truth[-which(p %in% NA)]
+      newdata = newdata[-which(p %in% NA), ]
       if (is.factor(p)) {
         p = p[-which(p %in% NA)]
       } else {
         p = p[-which(p %in% NA), ]
       }
-      truth = truth[-which(p %in% NA)]
-      newdata = newdata[-which(p %in% NA), ]
     }
 
     # was there an error during prediction?
