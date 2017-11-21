@@ -122,3 +122,20 @@ suppressWarning = function(expr, str) {
 hasEmptyLevels = function(x) {
   !all(levels(x) %chin% as.character(unique(x)))
 }
+
+# checks factor levels, and fixes eventually occuring problems due to additional
+# levels in test data by setting these to NA
+checkFactors = function(.model, .newdata) {
+  if (.model$learner$fix.factors.prediction == TRUE &&
+      any(vlapply(.newdata, function(x) is.factor(x)))) {
+
+    # cheap error catching here
+    # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
+    if (is.null(subset)) {
+      .newdata = .model$learner.model$data[subset, ]
+    }
+    .newdata = missingLevelsTrain(.model, .newdata)
+  } else {
+    return()
+  }
+}
