@@ -27,7 +27,7 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
-  id = stri_paste("multilabel", learner$id, sep = ".")
+  id = stri_paste("multilabelBinaryRelevance", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
     learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
