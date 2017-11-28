@@ -45,7 +45,6 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   model = object
   learner = model$learner
   td = model$task.desc
-  if (anyNA(newdata) & !("missings" %in% getLearnerProperties(learner))) stop("newdata contains missings, but the learner doesn't support that")
 
   # FIXME: cleanup if cases
   if (missing(newdata)) {
@@ -72,6 +71,9 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   } else {
     newdata = newdata[subset, , drop = FALSE]
   }
+  #check if there are missings in newdata and the learner supports that
+  if (anyNA(newdata) & !("missings" %in% getLearnerProperties(learner)))
+    stop("newdata contains missings, but the learner doesn't support that")
 
   # if we saved a model and loaded it later just for prediction this is necessary
   requireLearnerPackages(learner)
