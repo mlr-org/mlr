@@ -80,10 +80,10 @@ test_that("smote works with only integer features", {
 })
 
 test_that("smote works with constant factor features", {
-  # This reproduces the bug from issue #1951  
+  # This reproduces the bug from issue #1951
   d = data.frame(
     x1 = rpois(100, 2),
-    x2 = gl(5, 20, labels=LETTERS[1:5]),
+    x2 = gl(5, 20, labels = LETTERS[1:5]),
     y = as.factor(c(rep("+", 90), rep("-", 10)))
   )
 
