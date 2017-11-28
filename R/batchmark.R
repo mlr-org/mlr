@@ -108,7 +108,7 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
     warning("Collecting results for a subset of jobs. The resulting BenchmarkResult may be misleading.")
 
   problem = algorithm = NULL # for data.table's NSE
-  tab = batchtools::getJobPars(ids, flatten = FALSE, reg = reg)[, c("job.id", "problem", "algorithm")]
+  tab = batchtools::getJobPars(ids, reg = reg)[, c("job.id", "problem", "algorithm")]
   setkeyv(tab, cols = c("problem", "algorithm"), physical = FALSE)
   result = namedList(tab[, unique(problem)])
 
