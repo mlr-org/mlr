@@ -144,3 +144,11 @@ test_that("predict works with data.table as newdata", {
   expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
 })
 
+test_that("predict throws error if newdata contains NA but learner doesn't support that", {
+  lrn.rf = makeLearner("classif.randomForest")
+  mod = train(lrn.rf, iris.task)
+  test.df = getTaskData(iris.task)
+  test.df[1L, 1L] = NA
+  expect_error(predict(mod, newdata = test.df), regexp = "newdata contains missings, but the learner doesn't support that")
+})
+
