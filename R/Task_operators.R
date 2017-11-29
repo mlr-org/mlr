@@ -391,11 +391,11 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
-subsetTask = function(task, subset = NULL, features) {
+subsetTask = function(task, subset = NULL, features, labels = NULL) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   # Keep functionals here as they are (matrix)
-  task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+  task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights, labels)
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
@@ -407,7 +407,7 @@ subsetTask = function(task, subset = NULL, features) {
 
 
 # we create a new env, so the reference is not changed
-changeData = function(task, data, costs, weights) {
+changeData = function(task, data, costs, weights, lables = NULL) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))
@@ -418,14 +418,17 @@ changeData = function(task, data, costs, weights) {
   task$env$data = data
   task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
+  if (is.null(labels)) {
+    labels = td$target
+  }
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
+    "classif" = makeClassifTaskDesc(td$id, data, labels, task$weights, task$blocking, td$positive),
+    "regr" = makeRegrTaskDesc(td$id, data, labels, task$weights, task$blocking),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
+    "surv" = makeSurvTaskDesc(td$id, data, labels, task$weights, task$blocking),
+    "costsens" = makeCostSensTaskDesc(td$id, data, labels, task$blocking, costs),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, labels, task$weights, task$blocking)
   )
 
   return(task)
