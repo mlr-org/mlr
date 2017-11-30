@@ -60,15 +60,20 @@ test_that("filterFeatures", {
 })
 
 test_that("plotFilterValues", {
-  fv = generateFilterValuesData(binaryclass.task, method = "variance")
-  plotFilterValues(fv)
-  dir = tempdir()
-  path = paste0(dir, "/test.svg")
-  ggsave(path)
-  doc = XML::xmlParse(path)
-  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
-  ## plotFilterValuesGGVIS(fv)
+  filter.methods = listFilterMethods(tasks = TRUE)
 
+  filter.classif = as.character(filter.methods[filter.methods$task.classif == TRUE, "id"])
+  filter.classif = setdiff(filter.classif, "permutation.importance") # this filter needs additional arguments
+
+  fv = generateFilterValuesData(binaryclass.task, method = filter.classif)
+  plotFilterValues(fv)
+
+  filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE & filter.methods$task.classif == FALSE, "id"])
+
+  fv = generateFilterValuesData(regr.num.task, method = filter.regr)
+  plotFilterValues(fv)
+
+  path = paste(tempdir(), "test.svg")
   fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC.rfsrc"))
   plotFilterValues(fv2)
   ggsave(path)
