@@ -34,7 +34,7 @@ test_that("PreprocessWrapperCaret supports nzv,zv and corr method with different
   mod2 = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("nzv", "zv", "corr"),
                            freqCut = 100/5, uniqeCut = 9.5, cutoff = 0.8)
   lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
-                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100/5, ppc.uniqeCut = 9.5, cutoff = 0.8)
+                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.corr = TRUE, ppc.freqCut = 100/5, ppc.uniqeCut = 9.5, cutoff = 0.8)
   m4 = train(lrn4, multiclass.task, subset = multiclass.train.inds)
   ctrl4 = m4$learner.model$control
   mod2$method = mod2$method[order(names(mod2$method))]
