@@ -28,3 +28,37 @@ test_that("PreprocWrapperCaret supports missing values", {
   lrn2 = makePreprocWrapperCaret(lrn1, ppc.knnImpute = TRUE)
   expect_true(hasLearnerProperties(lrn2, props = "missings"))
 })
+
+test_that("PreprocessWrapperCaret supports nzv,zv and corr method with different methodparams as default", {
+  lrn1 = makeLearner("classif.rpart")
+  mod2 = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("nzv", "zv", "corr"),
+                           freqCut = 100/5, uniqeCut = 9.5, cutoff = 0.8)
+  lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
+                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100/5, ppc.uniqeCut = 9.5, cutoff = 0.8)
+  m4 = train(lrn4, multiclass.task, subset = multiclass.train.inds)
+  ctrl4 = m4$learner.model$control
+  mod2$method = mod2$method[order(names(mod2$method))]
+  ctrl4$method = ctrl4$method[order(names(ctrl4$method))]
+  mod2$call = NULL
+  ctrl4$call = NULL
+  expect_equal(mod2, ctrl4)
+})
+
+test_that("PreprocessWrapperCaret creates the same output as preProcess for methods nzv, zv", {
+  lrn1 = makeLearner("classif.rpart")
+  mod2 = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("nzv", "zv"),
+                           freqCut = 100/5, uniqeCut = 9.5)
+  out2 = predict(mod2, multiclass.df[multiclass.train.inds, 1:4])
+  df2 = cbind.data.frame(out2,multiclass.df[multiclass.train.inds, 5])
+  names(df2)[ncol(df2)] = names(multiclass.df)[5]
+  carettask = makeClassifTask(id = "multiclass.iris", data = df2, target = names(df2)[ncol(df2)])
+  caretlrn = makeLearner("classif.rpart", predict.type = "response")
+  carettrain = train(caretlrn, carettask)
+  caretpredict = predict(carettrain, task = carettask)
+
+  lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
+                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100/5, ppc.uniqeCut = 9.5)
+  m4 = train(lrn4, multiclass.task, subset = multiclass.train.inds)
+  p4 = predict(m4, subsetTask(multiclass.task, subset = multiclass.train.inds))
+  expect_equal(getPredictionResponse(caretpredict), getPredictionResponse(p4))
+})
