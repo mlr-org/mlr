@@ -18,6 +18,7 @@ addons:
       - libgmp-dev
       - libgsl0-dev
 
+
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
