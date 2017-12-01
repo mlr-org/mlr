@@ -49,19 +49,15 @@ test_that("PreprocessWrapperCaret supports nzv,zv and corr method with different
 
 test_that("PreprocessWrapperCaret creates the same output as preProcess for methods nzv, zv", {
   lrn1 = makeLearner("classif.rpart")
-  mod2 = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("nzv", "zv"),
-    freqCut = 100 / 5, uniqeCut = 9.5)
-  out2 = predict(mod2, multiclass.df[multiclass.train.inds, 1:4])
-  df2 = cbind.data.frame(out2, multiclass.df[multiclass.train.inds, 5])
-  names(df2)[ncol(df2)] = names(multiclass.df)[5]
-  carettask = makeClassifTask(id = "multiclass.iris", data = df2, target = names(df2)[ncol(df2)])
-  caretlrn = makeLearner("classif.rpart", predict.type = "response")
-  carettrain = train(caretlrn, carettask)
-  caretpredict = predict(carettrain, task = carettask)
+  df = multiclass.df[multiclass.train.inds, ]
+  # Include fake column which should be removed
+  df$Fake = c(rep(1, nrow(df) - 1), 0)
+  mod2 = caret::preProcess(x = df, method = "nzv", freqCut = 100 / 5, uniqeCut = 9.5)
+  out2 = predict(mod2, df)
 
+  carettask = makeClassifTask(id = "multiclass.iris", data = df, target = "Species")
   lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
     ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100 / 5, ppc.uniqeCut = 9.5)
-  m4 = train(lrn4, multiclass.task, subset = multiclass.train.inds)
-  p4 = predict(m4, subsetTask(multiclass.task, subset = multiclass.train.inds))
-  expect_equal(getPredictionResponse(caretpredict), getPredictionResponse(p4))
+  outTransformedMLR = lrn4$train(data = df, target = "Species", args = lrn4$par.vals)$data
+  expect_equal(out2, outTransformedMLR)
 })
