@@ -418,6 +418,7 @@ subsetTask = function(task, subset = NULL, features) {
 #'   Optional: cost matrix.
 #' @param weights [\code{numeric}]\cr
 #'   Optional: weight vector.
+#' @keywords internal
 #' @export
 changeData = function(task, data, costs, weights) {
   if (missing(data))

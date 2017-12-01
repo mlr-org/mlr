@@ -4,6 +4,7 @@
 #' @param cl [\code{character}]\cr
 #'   Subclass to assign to the resulting model.
 #'
+#' @keywords internal
 #' @export
 makeChainModel = function(next.model, cl) {
   setClasses(list(next.model = next.model), c(cl, "ChainModel", "WrappedModel"))

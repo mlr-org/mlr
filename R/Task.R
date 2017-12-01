@@ -104,6 +104,7 @@ NULL
 #'   weights
 #' @param blocking [\code{numeric}\cr
 #'   task data blocking
+#' @keywords internal
 #' @name makeTaskDesc
 NULL
 

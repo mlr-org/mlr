@@ -8,6 +8,7 @@
 #'   What type of learner to require.
 #' @param props [\code{character(1)}]\cr
 #'   What properties to require.
+#' @keywords internal
 #' @export
 checkLearner = function(learner, type = NULL, props = NULL) {
   if (is.character(learner))

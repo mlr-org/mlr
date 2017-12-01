@@ -47,6 +47,7 @@ NULL
 #'   weights
 #' @param blocking [\code{numeric}\cr
 #'   task data blocking
+#' @keywords internal
 #' @export
 makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
   # get classes of feature cols

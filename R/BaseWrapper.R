@@ -15,6 +15,7 @@
 #'   Class to assign the new object.
 #' @param model.subclass [\code{character}]\cr
 #'   Class to assign learner models.
+#' @keywords internal
 #' @export
 makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals = list(), learner.subclass, model.subclass) {
