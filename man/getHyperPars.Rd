@@ -7,9 +7,8 @@
 getHyperPars(learner, for.fun = c("train", "predict", "both"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)} | \code{\link{CPO}}]\cr
-The learner, or CPO.
-If you pass a string , a learner will be created via \code{\link{makeLearner}}.}
+\item{learner}{[\code{\link{Learner}}]\cr
+The learner.}
 
 \item{for.fun}{[\code{character(1)}]\cr
 Restrict the returned settings to hyperparameters corresponding to \code{when}
@@ -21,7 +20,7 @@ Default is \code{c("train", "predict", "both")}.}
 [\code{list}]. A named list of values.
 }
 \description{
-Retrieves the current hyperparameter settings of a learner or CPO.
+Retrieves the current hyperparameter settings of a learner.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
@@ -40,6 +39,4 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
-
-Other CPO: \code{\link{setHyperPars}}
 }
