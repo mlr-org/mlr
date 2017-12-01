@@ -58,6 +58,6 @@ test_that("PreprocessWrapperCaret creates the same output as preProcess for meth
   carettask = makeClassifTask(id = "multiclass.iris", data = df, target = "Species")
   lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
     ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100 / 5, ppc.uniqeCut = 9.5)
-  outTransformedMLR = lrn4$train(data = df, target = "Species", args = lrn4$par.vals)$data
-  expect_equal(out2, outTransformedMLR)
+  out.transformed.mlr = lrn4$train(data = df, target = "Species", args = lrn4$par.vals)$data
+  expect_equal(out2, out.transformed.mlr)
 })
