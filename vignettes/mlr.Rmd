@@ -9,7 +9,12 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-# mlr: Machine Learning in R
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+```
 
 This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
