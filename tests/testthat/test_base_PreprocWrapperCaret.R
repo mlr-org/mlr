@@ -32,9 +32,9 @@ test_that("PreprocWrapperCaret supports missing values", {
 test_that("PreprocessWrapperCaret supports nzv,zv and corr method with different methodparams as default", {
   lrn1 = makeLearner("classif.rpart")
   mod2 = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("nzv", "zv", "corr"),
-                           freqCut = 100/5, uniqeCut = 9.5, cutoff = 0.8)
+                           freqCut = 100 / 5, uniqeCut = 9.5, cutoff = 0.8)
   lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
-                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.corr = TRUE, ppc.freqCut = 100/5, ppc.uniqeCut = 9.5, cutoff = 0.8)
+                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.corr = TRUE, ppc.freqCut = 100 / 5, ppc.uniqeCut = 9.5, cutoff = 0.8)
   m4 = train(lrn4, multiclass.task, subset = multiclass.train.inds)
   ctrl4 = m4$learner.model$control
   mod2$method = mod2$method[order(names(mod2$method))]
@@ -47,7 +47,7 @@ test_that("PreprocessWrapperCaret supports nzv,zv and corr method with different
 test_that("PreprocessWrapperCaret creates the same output as preProcess for methods nzv, zv", {
   lrn1 = makeLearner("classif.rpart")
   mod2 = caret::preProcess(x = multiclass.df[multiclass.train.inds, 1:4], method = c("nzv", "zv"),
-                           freqCut = 100/5, uniqeCut = 9.5)
+                           freqCut = 100 / 5, uniqeCut = 9.5)
   out2 = predict(mod2, multiclass.df[multiclass.train.inds, 1:4])
   df2 = cbind.data.frame(out2,multiclass.df[multiclass.train.inds, 5])
   names(df2)[ncol(df2)] = names(multiclass.df)[5]
@@ -57,7 +57,7 @@ test_that("PreprocessWrapperCaret creates the same output as preProcess for meth
   caretpredict = predict(carettrain, task = carettask)
 
   lrn4 = makePreprocWrapperCaret(lrn1, ppc.center = FALSE, ppc.scale = FALSE, ppc.na.remove = FALSE,
-                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100/5, ppc.uniqeCut = 9.5)
+                                 ppc.nzv = TRUE, ppc.zv = TRUE, ppc.freqCut = 100 / 5, ppc.uniqeCut = 9.5)
   m4 = train(lrn4, multiclass.task, subset = multiclass.train.inds)
   p4 = predict(m4, subsetTask(multiclass.task, subset = multiclass.train.inds))
   expect_equal(getPredictionResponse(caretpredict), getPredictionResponse(p4))
