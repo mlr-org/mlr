@@ -33,4 +33,4 @@ predictLearner.classif.adaboostM1 = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
-#ferting
+

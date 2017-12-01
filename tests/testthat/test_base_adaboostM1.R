@@ -36,4 +36,4 @@ test_that("classif_adaboostM1", {
   testCVParsets("classif.adaboostM1", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset.list = parset.list)
 
 })
-#---
+
