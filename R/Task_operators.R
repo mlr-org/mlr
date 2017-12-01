@@ -385,6 +385,7 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
+#' @param labels The target labels of the subsettask.
 #' @return [\code{\link{Task}}]. Task with subsetted data.
 #' @family task
 #' @export
@@ -407,7 +408,7 @@ subsetTask = function(task, subset = NULL, features, labels = NULL) {
 
 
 # we create a new env, so the reference is not changed
-changeData = function(task, data, costs, weights, lables = NULL) {
+changeData = function(task, data, costs, weights, labels = NULL) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))

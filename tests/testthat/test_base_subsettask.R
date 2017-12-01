@@ -8,5 +8,5 @@ test_that("test select response labels for subsettask", {
   new_labels = colnames(yeast)[1:4]
   subtask = subsetTask(yeast.task, labels = new_labels)
   subtask$target
-  expect_equal(subtask$target, new_labels)
+  expect_equal(subtask$task.desc$target, new_labels)
 })

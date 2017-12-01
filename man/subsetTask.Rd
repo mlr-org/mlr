@@ -4,7 +4,7 @@
 \alias{subsetTask}
 \title{Subset data in task.}
 \usage{
-subsetTask(task, subset = NULL, features)
+subsetTask(task, subset = NULL, features, labels = NULL)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -22,6 +22,8 @@ name returned by \code{\link{getTaskFeatureNames}}.\cr
 Note that the target feature is always included in the
 resulting task, you should not pass it here.
 Default is to use all features.}
+
+\item{labels}{The target labels of the subsettask.}
 }
 \value{
 [\code{\link{Task}}]. Task with subsetted data.
