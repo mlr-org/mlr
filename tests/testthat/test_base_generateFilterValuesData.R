@@ -61,7 +61,7 @@ test_that("filterFeatures", {
 
 test_that("plotFilterValues", {
   filter.methods = listFilterMethods(tasks = TRUE)
-  
+
   filter.classif = as.character(filter.methods[filter.methods$task.classif == TRUE, "id"])
   filter.classif = setdiff(filter.classif, "permutation.importance") # this filter needs additional arguments
 
@@ -69,7 +69,7 @@ test_that("plotFilterValues", {
   plotFilterValues(fv)
 
   filter.regr = as.character(filter.methods[filter.methods$task.regr == TRUE & filter.methods$task.classif == FALSE, "id"])
-  
+
   fv = generateFilterValuesData(regr.num.task, method = filter.regr)
   plotFilterValues(fv)
 
