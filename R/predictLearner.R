@@ -63,6 +63,23 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
   return(p)
 }
 
+#' @title Check output returned by predictLearner.
+#'
+#' @description
+#' Check the output coming from a Learner's internal
+#' \code{predictLearner} function.
+#'
+#' This function is for internal use.
+#'
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
+#' @param model [\code{\link{WrappedModel}}]]\cr
+#'   Model produced by training.
+#' @param p [any]\cr
+#'   The prediction made by \code{learner}.
+#' @return [any]. A sanitized version of \code{p}.
+#' @keywords internal
+#' @export
 checkPredictLearnerOutput = function(learner, model, p) {
   cl = class(p)[1L]
   if (learner$type == "classif") {
