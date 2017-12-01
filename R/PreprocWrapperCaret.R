@@ -43,7 +43,7 @@ makePreprocWrapperCaret = function(learner, ...) {
     makeIntegerLearnerParam("ppc.numUnique", default = 3L, lower = 1L),
     makeIntegerLearnerParam("ppc.n.comp", lower = 1L),
     makeNumericLearnerParam("ppc.cutoff", default = 0.9, lower = 0, upper = 1),
-    makeNumericLearnerParam("ppc.freqCut", default = 95/5, lower = 1),
+    makeNumericLearnerParam("ppc.freqCut", default = 95 / 5, lower = 1),
     makeNumericLearnerParam("ppc.uniqueCut", default = 10, lower = 0)
   )
   par.vals = getDefaults(par.set)
