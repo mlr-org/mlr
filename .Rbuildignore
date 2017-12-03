@@ -22,3 +22,4 @@ testinfo.RData
 ^makeR$
 .github
 ^docs$
+^_pkgdown\.yml$

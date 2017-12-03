@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mlr: Machine Learning in R • mlr</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -42,17 +42,21 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorial
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/advanced_tune.html">Advanced Tuning</a>
+<li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
+    <li>
+      <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
-      <a href="../articles/bagging.html">Generic Bagging</a>
+      <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -81,7 +85,7 @@
       <h1>mlr: Machine Learning in R</h1>
                         <h4 class="author">Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt, Tobias Kuehn, Erich Studerus, Lars Kotthoff</h4>
             
-            <h4 class="date">2017-12-01</h4>
+            <h4 class="date">2017-12-03</h4>
           </div>
 
     
@@ -154,15 +158,15 @@
 <pre><code>## Resampling: cross-validation</code></pre>
 <pre><code>## Measures:             mmce</code></pre>
 <pre><code>## [Resample] iter 1:    0.0000000</code></pre>
-<pre><code>## [Resample] iter 2:    0.0000000</code></pre>
-<pre><code>## [Resample] iter 3:    0.0000000</code></pre>
+<pre><code>## [Resample] iter 2:    0.1333333</code></pre>
+<pre><code>## [Resample] iter 3:    0.0666667</code></pre>
 <pre><code>## [Resample] iter 4:    0.0000000</code></pre>
 <pre><code>## [Resample] iter 5:    0.0000000</code></pre>
 <pre><code>## [Resample] iter 6:    0.0000000</code></pre>
 <pre><code>## [Resample] iter 7:    0.0000000</code></pre>
 <pre><code>## [Resample] iter 8:    0.0000000</code></pre>
-<pre><code>## [Resample] iter 9:    0.0666667</code></pre>
-<pre><code>## [Resample] iter 10:   0.1333333</code></pre>
+<pre><code>## [Resample] iter 9:    0.0000000</code></pre>
+<pre><code>## [Resample] iter 10:   0.0000000</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## Aggregated Result: mmce.test.mean=0.0200000</code></pre>
 <pre><code>## </code></pre>
@@ -171,7 +175,7 @@
 ## Task: tutorial
 ## Learner: classif.lda
 ## Aggr perf: mmce.test.mean=0.0200000
-## Runtime: 0.0968773</code></pre>
+## Runtime: 0.106841</code></pre>
 <pre class="sourceCode r" id="cb23"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">## Get the mean misclassification error:</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean 

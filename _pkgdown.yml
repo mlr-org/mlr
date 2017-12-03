@@ -1,0 +1,29 @@
+template:
+  params:
+    bootswatch: yeti
+
+navbar:
+  title: mlr
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Get Started
+    href: articles/mlr.html
+  - text: Reference
+    href: reference/index.html
+  - text: Tutorial
+    menu:
+    - text: Basics
+    - text: Advanced
+    - text: Advanced Tuning
+      href: articles/tutorial/advanced_tune.html
+    - text: Generic Bagging
+      href: articles/tutorial/bagging.html
+    - text: Extend
+    - text: Appendix
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/mlr-org/mlr

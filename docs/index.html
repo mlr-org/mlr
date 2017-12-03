@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Machine Learning in R • mlr</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -42,16 +42,16 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorial
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/advanced_tune.html">Advanced Tuning</a>
+      <a href="articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
-      <a href="articles/bagging.html">Generic Bagging</a>
+      <a href="articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
   </ul>
 </li>
@@ -78,7 +78,7 @@
       </header><div class="row">
   <div class="contents col-md-9">
     
-<section class="level1"><div class="page-header"><h1>
+<section id="mlr-machine-learning-in-r" class="level1"><div class="page-header"><h1>
 <img src="http://mlr-org.github.io/mlr-tutorial/img/mlrLogo_blue_141x64.png" alt="mlr">: Machine Learning in R</h1></div>
 
 <ul>
@@ -105,7 +105,7 @@
 <li>A list of possible enhancements to mlr is available on the <a href="https://github.com/mlr-org/mlr/wiki/List-of-Possible-Enhancements-to-mlr">wiki</a> - contributors welcome!</li>
 <li>We are in the top 20 of the most starred R packages on Github, as reported by <a href="http://www.r-pkg.org/starred">metacran</a>.</li>
 <li><p><strong>If you like the package, please “star” it on Github.</strong></p></li>
-</ul></section><section class="level1"><h1>mlr - How to Cite and Citing Publications</h1>
+</ul></section><section id="mlr---how-to-cite-and-citing-publications" class="level1"><h1>mlr - How to Cite and Citing Publications</h1>
 <p>Please cite our <a href="http://jmlr.org/papers/v17/15-066.html">JMLR paper</a> [<a href="http://www.jmlr.org/papers/v17/15-066.bib">bibtex</a>].</p>
 <p>Some parts of the package were created as part of other publications. If you use these parts, please cite the relevant work appropriately:</p>
 <ul>
@@ -119,9 +119,9 @@
 </li>
 </ul>
 <p>A list of publications that cite mlr can be found in the <a href="https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr">wiki</a>.</p>
-</section><section class="level1"><h1>Introduction</h1>
+</section><section id="introduction" class="level1"><h1>Introduction</h1>
 <p>R does not define a standardized interface for all its machine learning algorithms. Therefore, for any non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different algorithms and unify their respective output. Additionally you need to implement infrastructure to resample your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and compare models in a statistically meaningful way. As this becomes computationally expensive, you might want to parallelize your experiments as well. This often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert programming skills. <strong>mlr</strong> provides this infrastructure so that you can focus on your experiments! The framework provides supervised methods like classification, regression and survival analysis along with their corresponding evaluation and optimization methods, as well as unsupervised methods like clustering. It is written in a way that you can extend it yourself or deviate from the implemented convenience methods and construct your own complex experiments or algorithms. Furthermore, the package is nicely connected to the <a href="https://github.com/openml/openml-r"><strong>OpenML</strong></a> R package and its <a href="https://www.openml.org/">online platform</a>, which aims at supporting collaborative machine learning online and allows to easily share datasets as well as machine learning tasks, algorithms and experiments in order to support reproducible research.</p>
-</section><section class="level1"><h1>Features</h1>
+</section><section id="features" class="level1"><h1>Features</h1>
 <ul>
 <li>Clear S3 interface to R classification, regression, clustering and survival analysis methods</li>
 <li>Possibility to fit, predict, evaluate and resample models</li>
@@ -143,7 +143,7 @@
 <li>Parallelization is built-in</li>
 <li>Unit-testing</li>
 <li>Detailed tutorial</li>
-</ul></section><section class="level1"><h1>News</h1>
+</ul></section><section id="news" class="level1"><h1>News</h1>
 <p>Changes of the packages can be accessed in the <a href="https://github.com/mlr-org/mlr/blob/master/NEWS.md">NEWS file</a> shipped with the package.</p>
 <ul>
 <li>OpenML has been accepted as a tutorial at useR2017! Blog post is <a href="http://mlr-org.github.io/OpenML-tutorial-at-useR/">here</a>.</li>
@@ -239,13 +239,13 @@
 <li>I will talk about mlr in connection with the <a href="http://www.openml.org">OpenML</a> project next week. If you don’t know this, take a look, a very cool initiative by Joaquin Vanschoren. We are developing a connector to R in general which also covers mlr <a href="https://github.com/openml/r">here</a>.</li>
 </ul>
 </li>
-</ul></section><section class="level1"><h1>Talks and Videos</h1>
+</ul></section><section id="talks-and-videos" class="level1"><h1>Talks and Videos</h1>
 <ul>
 <li>
 <a href="https://www.youtube.com/watch?v=rzjkT1uLNi4">Video</a> of Bernd’s “mlr + OpenML” talk at OpenML workshop 2014</li>
 <li>
 <a href="https://www.youtube.com/watch?v=d1PnFiN6nOQ">Video</a> of Zach’s International Methods Colloquium talk 2015 “Data Mining as Exploratory Data Analysis”</li>
-</ul></section><section class="level1"><h1>Get in Touch</h1>
+</ul></section><section id="get-in-touch" class="level1"><h1>Get in Touch</h1>
 <p>Please use the issue tracker for problems, questions and feature requests. Don’t email in most cases, as we forget these mails.</p>
 <p>We also do not hate beginners and it is perfectly valid to mark an issue as “Question”.</p>
 <p>Please don’t forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.</p>

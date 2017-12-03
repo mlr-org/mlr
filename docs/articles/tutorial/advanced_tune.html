@@ -6,10 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Advanced Tuning • mlr</title>
-<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<script src="../../jquery.sticky-kit.min.js"></script><script src="../../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -24,39 +24,43 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">mlr</a>
+      <a class="navbar-brand" href="../../index.html">mlr</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
+  <a href="../../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/mlr.html">Get Started</a>
+  <a href="../../articles/mlr.html">Get Started</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Tutorial
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/advanced_tune.html">Advanced Tuning</a>
+<li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
+    <li>
+      <a href="../../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
-      <a href="../articles/bagging.html">Generic Bagging</a>
+      <a href="../../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../../news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -95,34 +99,34 @@
 <a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="kw">makeIntegerParam</span>(<span class="st">"degree"</span>, <span class="dt">lower =</span> 2L, <span class="dt">upper =</span> 5L,</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="dt">requires =</span> <span class="kw">quote</span>(kernel <span class="op">==</span><span class="st"> "polydot"</span>))</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">ctrl =<span class="st"> </span><span class="kw"><a href="../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">rdesc =<span class="st"> </span><span class="kw"><a href="../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">res =<span class="st"> </span><span class="kw"><a href="../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">print</span>(<span class="kw">head</span>(<span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)))</a></code></pre>
-<pre><code>##             C     kernel     sigma degree mmce.test.mean dob eol
-## 1   6.7263647 vanilladot        NA     NA           0.02   1  NA
-## 2 -10.7422571 vanilladot        NA     NA           0.72   1  NA
-## 3   1.9216368     rbfdot 0.9310694     NA           0.06   1  NA
-## 4  -0.9302961 vanilladot        NA     NA           0.04   1  NA
-## 5   8.9903255     rbfdot 3.3374794     NA           0.10   1  NA
-## 6  10.2733328    polydot        NA      3           0.08   1  NA
+<pre><code>##           C     kernel      sigma degree mmce.test.mean dob eol
+## 1  1.462150    polydot         NA      5           0.08   1  NA
+## 2  8.997644    polydot         NA      4           0.08   1  NA
+## 3 10.442762     rbfdot  -9.293947     NA           0.06   1  NA
+## 4  6.336249 vanilladot         NA     NA           0.04   1  NA
+## 5 -7.402718     rbfdot -10.404018     NA           0.70   1  NA
+## 6  9.045016     rbfdot  -9.343979     NA           0.04   1  NA
 ##   error.message exec.time
-## 1          &lt;NA&gt;     0.067
-## 2          &lt;NA&gt;     1.055
-## 3          &lt;NA&gt;     0.095
-## 4          &lt;NA&gt;     0.014
-## 5          &lt;NA&gt;     0.033
-## 6          &lt;NA&gt;     0.058</code></pre>
+## 1          &lt;NA&gt;     0.096
+## 2          &lt;NA&gt;     0.728
+## 3          &lt;NA&gt;     0.060
+## 4          &lt;NA&gt;     0.029
+## 5          &lt;NA&gt;     0.024
+## 6          &lt;NA&gt;     0.013</code></pre>
 <p>See how we made the kernel parameters like <code>sigma</code> and <code>degree</code> dependent on the <code>kernel</code> selection parameters? This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.</p>
 </section><section id="tuning-across-whole-model-spaces-with-modelmultiplexer" class="level2"><h2>Tuning across whole model spaces with ModelMultiplexer</h2>
 <p>We can now take the following example even one step further. If we use the <a href="&amp;makeModelMultiplexer">ModelMultiplexer</a> we can tune over different model classes at once, just as we did with the SVM kernels above.</p>
 <pre class="sourceCode r" id="cb3"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">base.learners =<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw"><a href="../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>),</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw"><a href="../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.ksvm"</span>),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw"><a href="../../reference/makeLearner.html">makeLearner</a></span>(<span class="st">"classif.randomForest"</span>)</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">lrn =<span class="st"> </span><span class="kw"><a href="../reference/makeModelMultiplexer.html">makeModelMultiplexer</a></span>(base.learners)</a></code></pre>
+<a class="sourceLine" id="cb3-5" data-line-number="5">lrn =<span class="st"> </span><span class="kw"><a href="../../reference/makeModelMultiplexer.html">makeModelMultiplexer</a></span>(base.learners)</a></code></pre>
 <p>Function [&amp;makeModelMultiplexerParamSet] offers a simple way to construct a parameter set for tuning: The parameter names are prefixed automatically and the <code>requires</code> element is set, too, to make all parameters subordinate to <code>selected.learner</code>.</p>
-<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ps =<span class="st"> </span><span class="kw"><a href="../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></span>(lrn,</a>
+<pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ps =<span class="st"> </span><span class="kw"><a href="../../reference/makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></span>(lrn,</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">makeIntegerParam</span>(<span class="st">"ntree"</span>, <span class="dt">lower =</span> 1L, <span class="dt">upper =</span> 500L)</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">)</a>
@@ -139,24 +143,24 @@
 ## selected.learner               -
 ## classif.ksvm.sigma             Y
 ## classif.randomForest.ntree     -</code></pre>
-<pre class="sourceCode r" id="cb6"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">res =<span class="st"> </span><span class="kw"><a href="../reference/tuneParams.html">tuneParams</a></span>(lrn, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
+<pre class="sourceCode r" id="cb6"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> 2L)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/makeTuneControlIrace.html">makeTuneControlIrace</a></span>(<span class="dt">maxExperiments =</span> 200L)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">print</span>(<span class="kw">head</span>(<span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)))</a></code></pre>
 <pre><code>##       selected.learner classif.ksvm.sigma classif.randomForest.ntree
-## 1 classif.randomForest                 NA                        354
-## 2         classif.ksvm         -10.121534                         NA
-## 3 classif.randomForest                 NA                        158
-## 4         classif.ksvm          -0.227993                         NA
-## 5         classif.ksvm           4.074219                         NA
-## 6 classif.randomForest                 NA                        454
+## 1 classif.randomForest                 NA                        289
+## 2 classif.randomForest                 NA                        147
+## 3         classif.ksvm           4.279731                         NA
+## 4         classif.ksvm           4.417122                         NA
+## 5         classif.ksvm          -6.686988                         NA
+## 6         classif.ksvm           9.010855                         NA
 ##   mmce.test.mean dob eol error.message exec.time
-## 1     0.04666667   1  NA          &lt;NA&gt;     0.627
-## 2     0.68000000   1  NA          &lt;NA&gt;     0.030
-## 3     0.04666667   1  NA          &lt;NA&gt;     0.035
-## 4     0.04666667   1  NA          &lt;NA&gt;     0.030
-## 5     0.17333333   1  NA          &lt;NA&gt;     0.033
-## 6     0.04666667   1  NA          &lt;NA&gt;     0.049</code></pre>
+## 1     0.03333333   1  NA          &lt;NA&gt;     0.436
+## 2     0.04666667   1  NA          &lt;NA&gt;     0.032
+## 3     0.18000000   1  NA          &lt;NA&gt;     0.027
+## 4     0.18666667   1  NA          &lt;NA&gt;     0.029
+## 5     0.12000000   1  NA          &lt;NA&gt;     0.027
+## 6     0.70000000   1  NA          &lt;NA&gt;     0.027</code></pre>
 </section><section id="multi-criteria-evaluation-and-optimization" class="level2"><h2>Multi-criteria evaluation and optimization</h2>
 <p>During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.</p>
 <p>In the following example we aim to minimize both, the false positive and the false negative rates (<a href="measures.md">fpr</a> and <a href="measures.md">fnr</a>). We again tune the hyperparameters of an SVM (function <a href="&amp;kernlab::ksvm">ksvm</a>) with a radial basis kernel and use the <a href="&amp;sonar.task">sonar classification task</a> for illustration. As search strategy we choose a random search.</p>
@@ -165,30 +169,30 @@
 <a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="kw">makeNumericParam</span>(<span class="st">"C"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x),</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="kw">makeNumericParam</span>(<span class="st">"sigma"</span>, <span class="dt">lower =</span> <span class="dv">-12</span>, <span class="dt">upper =</span> <span class="dv">12</span>, <span class="dt">trafo =</span> <span class="cf">function</span>(x) <span class="dv">2</span><span class="op">^</span>x)</a>
 <a class="sourceLine" id="cb8-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../reference/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a></span>(<span class="dt">maxit =</span> 30L)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">rdesc =<span class="st"> </span><span class="kw"><a href="../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">res =<span class="st"> </span><span class="kw"><a href="../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">ctrl =<span class="st"> </span><span class="kw"><a href="../../reference/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a></span>(<span class="dt">maxit =</span> 30L)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></span>(<span class="st">"classif.ksvm"</span>, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">par.set =</span> ps,</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8">  <span class="dt">measures =</span> <span class="kw">list</span>(fpr, fnr), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9">res</a></code></pre>
 <pre><code>## Tune multicrit result:
-## Points on front: 2</code></pre>
+## Points on front: 5</code></pre>
 <pre class="sourceCode r" id="cb10"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(<span class="kw">trafoOptPath</span>(res<span class="op">$</span>opt.path)))</a></code></pre>
 <pre><code>##              C        sigma fpr.test.mean fnr.test.mean dob eol
-## 1 7.091946e-01 1.270664e+00     1.0000000             0   1  NA
-## 2 2.468201e-04 1.681580e-03     1.0000000             0   2  NA
-## 3 6.625476e+01 4.436724e-02     0.3333333             0   3  NA
-## 4 8.531052e-03 1.519610e+02     1.0000000             0   4  NA
-## 5 1.110856e+01 2.312874e+03     1.0000000             0   5  NA
-## 6 1.304654e-02 6.083968e-03     1.0000000             0   6  NA
+## 1 5.226268e+01 1.142655e+00             1             0   1  NA
+## 2 4.509145e+02 2.118592e+03             1             0   2  NA
+## 3 5.604885e-02 6.162942e-04             1             0   3  NA
+## 4 5.784932e-04 7.910994e-03             1             0   4  NA
+## 5 7.754869e+00 2.653822e+03             1             0   5  NA
+## 6 7.863150e+02 5.684280e+00             1             0   6  NA
 ##   error.message exec.time
-## 1          &lt;NA&gt;     0.030
-## 2          &lt;NA&gt;     0.027
-## 3          &lt;NA&gt;     0.035
-## 4          &lt;NA&gt;     0.030
-## 5          &lt;NA&gt;     0.030
-## 6          &lt;NA&gt;     0.028</code></pre>
+## 1          &lt;NA&gt;     0.024
+## 2          &lt;NA&gt;     0.023
+## 3          &lt;NA&gt;     0.031
+## 4          &lt;NA&gt;     0.025
+## 5          &lt;NA&gt;     0.024
+## 6          &lt;NA&gt;     0.040</code></pre>
 <p>The results can be visualized with function [&amp;plotTuneMultiCritResult]. The plot shows the false positive and false negative rates for all parameter settings evaluated during tuning. Points on the Pareto front are slightly increased.</p>
-<pre class="sourceCode r" id="cb12"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</a></code></pre>
+<pre class="sourceCode r" id="cb12"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</a></code></pre>
 <p><img src="advanced_tune_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </section>
 </div>
