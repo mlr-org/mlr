@@ -106,6 +106,688 @@
     </div>
 
     <div class="contents">
+    <section id="mlr-2.12" class="level1"><h1>mlr 2.12:</h1>
+<section id="general" class="level2"><h2>general</h2>
+<ul>
+<li>Support for functional data (fda) using matrix columns has been added.</li>
+<li>Relaxed the way wrappers can be nested – the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper</li>
+<li>Refactored the resample progress messages to give a better overview and distinguish between train and test measures better</li>
+<li>calculateROCMeasures now returns absolute instead of relative values</li>
+<li>Added support for spatial data through task attribute “is.spatial” and spatial partitioning methods “SpCV” and “SpRepCV”.</li>
+</ul></section><section id="functions---general" class="level2"><h2>functions - general</h2>
+<ul>
+<li>generatePartialDependenceData: added parameter “range” to allow to specify the range of values for the partial dependencies</li>
+<li>batchmark: allow resample instances and reduction of partial results</li>
+<li>resample, performance: new flag “na.rm” to remove NAs during aggregation</li>
+</ul></section><section id="functions---new" class="level2"><h2>functions - new</h2>
+<ul>
+<li>makeClassificationViaRegressionWrapper</li>
+<li>getPredictionTaskDesc</li>
+<li>helpLearner, helpLearnerParam: open the help for a learner or get a description of its parameters</li>
+<li>setMeasurePars</li>
+<li>makeFunctionalData</li>
+<li>hasFunctionalFeatures</li>
+<li>extractFDAFeatures, reextractFDAFeatures</li>
+<li>extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets</li>
+<li>makeExtractFDAFeatMethod</li>
+<li>makeExtractFDAFeatsWrapper</li>
+</ul></section><section id="measures---general" class="level2"><h2>measures - general</h2>
+<ul>
+<li>measure “arsq” now has ID “arsq”</li>
+</ul></section><section id="measures---new" class="level2"><h2>measures - new</h2>
+<ul>
+<li>measureBER, measureRMSLE, measureF1</li>
+<li>cindex.uno, iauc.uno</li>
+</ul></section><section id="learners---general" class="level2"><h2>learners - general</h2>
+<ul>
+<li>unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized</li>
+<li>fixed a bug where surv.cforest gave wrong risk predictions (#1833)</li>
+<li>fixed bug where classif.xgboost returned NA predictions with multi:softmax</li>
+</ul></section><section id="learners---new" class="level2"><h2>learners - new</h2>
+<ul>
+<li>classif.fdaknn</li>
+<li>classif.fdakernel</li>
+<li>classif.fdanp</li>
+<li>classif.fdaglm</li>
+<li>regr.fdaFDboost</li>
+</ul></section><section id="learners---removed" class="level2"><h2>learners - removed</h2>
+<ul>
+<li>{classif,regr}.bdk: broke our API, stability issues</li>
+<li>{classif,regr}.xyf: broke our API, stability issues</li>
+<li>classif.hdrda: package removed from CRAN</li>
+<li>surv.penalized: stability issues</li>
+</ul></section><section id="aggregations---new" class="level2"><h2>aggregations - new</h2>
+<ul>
+<li>testgroup.sd</li>
+</ul></section><section id="filter---new" class="level2"><h2>filter - new</h2>
+<ul>
+<li>auc</li>
+</ul></section></section>
+    <section id="mlr-2.11" class="level1"><h1>mlr 2.11:</h1>
+<section id="general-1" class="level2"><h2>general</h2>
+<ul>
+<li>The internal class naming of the task descriptions have been changed causing probable incompatibilities with tasks generated under old versions.</li>
+<li>New option on.error.dump to include dumps that can be inspected with the debugger with errors</li>
+<li>mlr now supports tuning with Bayesian optimization with mlrMBO</li>
+</ul></section><section id="functions---general-1" class="level2"><h2>functions - general</h2>
+<ul>
+<li>tuneParams: fixed a small and obscure bug in logging for extremely large ParamSets</li>
+<li>getBMR-operators: now support “drop” argument that simplifies the resulting list</li>
+<li>configureMlr: added option “on.measure.not.applicable” to handle situations where performance cannot be calculated and one wants NA instead of an error - useful in, e.g., larger benchmarks</li>
+<li>tuneParams, selectFeatures: removed memory stats from default output for performance reasons (can be restored by using a control object with “log.fun” = “memory”)</li>
+<li>listLearners: change check.packages default to FALSE</li>
+<li>tuneParams and tuneParamsMultiCrit: new parameter <code>resample.fun</code> to specify a custom resampling function to use.</li>
+<li>Deprecated: getTaskDescription, getBMRTaskDescriptions, getRRTaskDescription. New names: getTaskDesc, getBMRTaskDescs, getRRTaskDesc.</li>
+</ul></section><section id="functions---new-1" class="level2"><h2>functions - new</h2>
+<ul>
+<li>getOOBPreds: get out-of-bag predictions from trained models for learners that store them – these learners have the new “oobpreds” property</li>
+<li>listTaskTypes, listLearnerProperties</li>
+<li>getMeasureProperties, hasMeasureProperties, listMeasureProperties</li>
+<li>makeDummyFeaturesWrapper: fuse a learner with a dummy feature creator</li>
+<li>simplifyMeasureNames: shorten measure names to the actual measure, e.g. mmce.test.mean -&gt; mmce</li>
+<li>getFailureModelDump, getPredictionDump, getRRDump: get error dumps</li>
+<li>batchmark: Function to run benchmarks with the batchtools package on high performance computing clusters</li>
+<li>makeTuneControlMBO: allows Bayesian optimization</li>
+</ul></section><section id="measures---new-1" class="level2"><h2>measures - new</h2>
+<ul>
+<li>kendalltau, spearmanrho</li>
+</ul></section><section id="learners---general-1" class="level2"><h2>learners - general</h2>
+<ul>
+<li>classif.plsdaCaret: added parameter “method”.</li>
+<li>regr.randomForest: refactored se-estimation code, improved docs and default is now se.method = “jackknife”.</li>
+<li>regr.xgboost, classif.xgboost: removed “factors” property as these learners do not handle categorical features – factors are silently converted to integers internally, which may misinterpret the structure of the data</li>
+<li>glmnet: control parameters are reset to factory settings before applying custom settings and training and set back to factory afterwards</li>
+</ul></section><section id="learners---removed-1" class="level2"><h2>learners - removed</h2>
+<ul>
+<li>{classif,regr}.avNNet: no longer necessary, mlr contains a bagging wrapper</li>
+</ul></section></section>
+    <section id="mlr-2.10" class="level1"><h1>mlr 2.10:</h1>
+<section id="functions---general-2" class="level2"><h2>functions - general</h2>
+<ul>
+<li>fixed bug in resample when using predict = “train” (issue #1284)</li>
+<li>update to irace 2.0 – there are algorithmic changes in irace that may affect performance</li>
+<li>generateFilterValuesData: fixed a bug wrt feature ordering</li>
+<li>imputeLearner: fixed a bug when data actually contained no NAs</li>
+<li>print.Learner: if a learner hyperpar was set to value “NA” this was not displayed in printer</li>
+<li>makeLearner, setHyperPars: if you mistype a learner or hyperpar name, mlr uses fuzzy matching to suggest the 3 closest names in the message</li>
+<li>tuneParams: tuning with irace is now also parallelized, i.e., different learner configs are evaluated in parallel.</li>
+<li>benchmark: mini fix, arg ‘learners’ now also accepts class strings</li>
+<li>object printers: some mlr printers show head previews of data.frames. these now also print info on the total nr of rows and cols and are less confusing</li>
+<li>aggregations: have better properties now, they know whether they require training or test set evals</li>
+<li>the filter methods have better R docs</li>
+<li>filter randomForestSRC.var.select: new arg “method”</li>
+<li>filter mrmr: fixed some smaller bugs and updated properties</li>
+<li>generateLearningCurveData: also accepts single learner, does not require a list</li>
+<li>plotThreshVsPerf: added “measures” arg</li>
+<li>plotPartialDependence: can create tile plots with joint partial dependence on two features for multiclass classification by facetting across the classes</li>
+<li>generatePartialDependenceData and generateFunctionalANOVAData: expanded “fun” argument to allow for calculation of weights</li>
+<li>new “?mlrFamilies” manual page which lists all families and the functions belonging to it</li>
+<li>we are converging on data.table as a standard internally, this should not change any API behavior on the outside, though</li>
+<li>generateHyperParsEffectData and plotHyperParsEffect now support more than 2 hyperparameters</li>
+<li>linear.correlation, rank.correlation, anova.test: use Rfast instead of FSelector/custom implementation now, performance should be much better</li>
+<li>use of our own colAUC function instead of the ROCR package for AUC calculation to improve performance</li>
+<li>we output resample performance messages for every iteration now</li>
+<li>performance improvements for the auc measure</li>
+<li>createDummyFeatures supports vectors now</li>
+<li>removed the pretty.names argument from plotHyperParsEffect – labels can be set though normal ggplot2 functions on the returned object</li>
+<li>Fixed a bad bug in resample, the slot “runtime” or a ResampleResult, when the runtime was measured not in seconds but e.g. mins. R measures then potentially in mins, but mlr claimed it would be seconds.</li>
+<li>New “dummy” learners (that disregard features completely) can be fitted now for baseline comparisons, see “featureless” learners below.</li>
+</ul></section><section id="functions---new-2" class="level2"><h2>functions - new</h2>
+<ul>
+<li>filter: randomForest.importance</li>
+<li>generateFeatureImportanceData: permutation-based feature importance and local importance</li>
+<li>getFeatureImportanceLearner: new Learner API function</li>
+<li>getFeatureImportance: top level function to extract feature importance information</li>
+<li>calculateROCMeasures</li>
+<li>calculateConfusionMatrix: new confusion-matrix like function that calculates and tables many receiver operator measures</li>
+<li>makeLearners: create multiple learners at once</li>
+<li>getLearnerId, getLearnerType, getLearnerPredictType, getLearnerPackages</li>
+<li>getLearnerParamSet, getLearnerParVals</li>
+<li>getRRPredictionList</li>
+<li>addRRMeasure</li>
+<li>plotResiduals</li>
+<li>getLearnerShortName</li>
+<li>mergeBenchmarkResults</li>
+</ul></section><section id="functions---renamed" class="level2"><h2>functions - renamed</h2>
+<ul>
+<li>Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc</li>
+<li>Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select</li>
+<li>Renamed getConfMatrix (now deprecated) to calculateConfusionMatrix</li>
+<li>Renamed setId (now deprecated) to setLearnerId</li>
+</ul></section><section id="functions---removed" class="level2"><h2>functions - removed</h2>
+<ul>
+<li>mergeBenchmarkResultLearner, mergeBenchmarkResultTask</li>
+</ul></section><section id="learners---general-2" class="level2"><h2>learners - general</h2>
+<ul>
+<li>classif.ada: fixed some param problem with rpart.control params</li>
+<li>classif.cforest, regr.cforest, surv.cforest: removed parameters “minprob”, “pvalue”, “randomsplits” as these are set internally and cannot be changed by the user</li>
+<li>regr.GPfit: some more params for correlation kernel</li>
+<li>classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing and other problems), added “colsample_bylevel” parameter</li>
+<li>adapted {classif,regr,surv}.ranger parameters for new ranger version</li>
+</ul></section><section id="learners---new-1" class="level2"><h2>learners - new</h2>
+<ul>
+<li>multilabel.cforest</li>
+<li>surv.gbm</li>
+<li>regr.cvglmnet</li>
+<li>{classif,regr,surv}.gamboost</li>
+<li>classif.earth</li>
+<li>{classif,regr}.evtree</li>
+<li>{classif,regr}.evtree</li>
+</ul></section><section id="learners---removed-2" class="level2"><h2>learners - removed</h2>
+<ul>
+<li>classif.randomForestSRCSyn, regr.randomForestSRCSyn: due to continued stability issues</li>
+</ul></section><section id="measures---new-2" class="level2"><h2>measures - new</h2>
+<ul>
+<li>ssr, qsr, lsr</li>
+<li>rrse, rae, mape</li>
+<li>kappa, wkappa</li>
+<li>msle, rmsle</li>
+</ul></section></section>
+    <section id="mlr-2.9" class="level1"><h1>mlr 2.9:</h1>
+<section id="functions---general-3" class="level2"><h2>functions - general</h2>
+<ul>
+<li>various cleanups that removed unused code</li>
+<li>subsetTask, getTaskData: arg “features” now also accepts logical and integer</li>
+<li>removeConstantFeatures now also operates on data.frames and makeRemoveConstantFeaturesWrapper can be used to augment a learner with this preprocessing step.</li>
+<li>normalizeFeatures, createDummyFeatures: arg ‘exclude’ was replaced by ‘cols’</li>
+<li>normalizeFeatures is now S3 and can be called also on data.frames</li>
+<li>SMOTEWrapper: fix a bug where “sw.nn” was not correctly passed down</li>
+<li>fixed a bug that caused hyperparameters to be not passed on correctly in the ModelMultiplexer in some cases</li>
+<li>fix bug with NoFeaturesModel and ModelMultiplexer</li>
+<li>fix small bug in DownsampleWrapper when trained with weights</li>
+<li>getNestedTuneResultsOptPathDf: added new arg “trafo”</li>
+<li>improve documentation for permutation.importance filter and perform slight argument renaming to fix potential name clashes</li>
+<li>plotPartialDependence can plot classification tasks with more than one interacted features now</li>
+<li>generateFilterValuesData: added argument ‘more.args’</li>
+<li>add pretty.names arguments to plots that show learner short names instead of IDs</li>
+<li>addition of ‘data’ argument to plotPartialDependence which adds the training data to the graph</li>
+<li>added new arguments “facet.wrap.nrow” and “facet.wrap.ncol” which enable arrangement of facets in rows and columns to plotting functions</li>
+</ul></section><section id="functions---new-3" class="level2"><h2>functions - new</h2>
+<ul>
+<li>generateHyperParsEffectData, plotHyperParsEffect</li>
+<li>makeMultilabelClassifierChainsWrapper, makeMultilabelDBRWrapper makeMultilabelNestedStackingWrapper, makeMultilabelStackingWrapper</li>
+<li>makeConstantClassWrapper</li>
+<li>generateFunctionalANOVAData</li>
+</ul></section><section id="functions---removed-1" class="level2"><h2>functions - removed</h2>
+<ul>
+<li>getParamSet generic (now in ParamHelpers package)</li>
+</ul></section><section id="functions---renamed-1" class="level2"><h2>functions - renamed</h2>
+<ul>
+<li>generatePartialPrediction to generatePartialDependence</li>
+<li>plotPartialPrediction to plotPartialDependence</li>
+<li>plotPartialPredictionGGVIS to plotPartialDependenceGGVIS</li>
+</ul></section><section id="learners---general-3" class="level2"><h2>learners - general</h2>
+<ul>
+<li>fixed weight handling and weight tag for some learners</li>
+<li>remove unnecessary linear.output parameter for classif.neuralnet</li>
+<li>remove unsupported KSVM parameter value stringdot</li>
+<li>fix some bartMachine compatibility issues</li>
+<li>classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default</li>
+<li>clean up randomForestSRC and randomForestSRCSyn learners</li>
+<li>the “penalized” learner were restructured and improved (params were added), also see below.</li>
+<li>add stability.nugget parameter for “regr.km”</li>
+<li>classif.blackboost, regr.blackboost: made sure that arg “stump” is passed on correctly</li>
+<li>fixed parameter values for WEKA learners IBk, J48, PART, EM, SimpleKMeans, XMeans</li>
+<li>classif.glmboost, regr.glmboost: add parameters stopintern and trace</li>
+</ul></section><section id="learners---new-2" class="level2"><h2>learners - new</h2>
+<ul>
+<li>classif.C50</li>
+<li>classif.gausspr</li>
+<li>classif.penalized.fusedlasso</li>
+<li>classif.penalized.lasso</li>
+<li>classif.penalized.ridge</li>
+<li>classif.h2o.deeplearning</li>
+<li>classif.h2o.gbm</li>
+<li>classif.h2o.glm</li>
+<li>classif.h2o.randomForest</li>
+<li>classif.rrf</li>
+<li>regr.penalized.fusedlasso</li>
+<li>regr.gausspr</li>
+<li>regr.glm</li>
+<li>regr.GPfit</li>
+<li>regr.h2o.deeplearning</li>
+<li>regr.h2o.gbm</li>
+<li>regr.h2o.glm</li>
+<li>regr.h2o.randomForest</li>
+<li>regr.rrf</li>
+<li>surv.cv.CoxBoost</li>
+<li>surv.penalized.fusedlasso</li>
+<li>surv.penalized.lasso</li>
+<li>surv.penalized.ridge</li>
+<li>cluster.kkmeans</li>
+<li>multilabel.randomforestSRC</li>
+</ul></section><section id="learners---removed-3" class="level2"><h2>learners - removed</h2>
+<ul>
+<li>surv.optimCoxBoostPenalty</li>
+<li>surv.penalized (split up, see new learners above)</li>
+</ul></section><section id="measures---general-1" class="level2"><h2>measures - general</h2>
+<ul>
+<li>updated gmean measure and unit test, added reference to formula of gmean</li>
+<li>makeCostMeasure: removed arg “task”, names of cost matrix are checked on measure calculation</li>
+</ul></section><section id="measures---new-3" class="level2"><h2>measures - new</h2>
+<ul>
+<li>multiclass.brier</li>
+<li>brier.scaled</li>
+<li>logloss</li>
+<li>multilabel.subset01, multilabel.f1, multilabel.acc, multilabel.ppv, multilabel.tpr</li>
+<li>multiclass.au1p, multiclass.au1u, multiclass.aunp, multiclass.aunu</li>
+</ul></section><section id="measures---renamed" class="level2"><h2>measures - renamed</h2>
+<ul>
+<li>multiclass.auc to multiclass.au1u</li>
+<li>hamloss to multilabel.hamloss</li>
+</ul></section></section>
+    <section id="mlr-2.8" class="level1"><h1>mlr 2.8:</h1>
+<ul>
+<li>Feature filter “univariate” had a bad name, was deprecated and is now called “univariate.model.score”. The new one also has better defaults.</li>
+<li>(generate/plot)PartialPrediction: added new arg “geom” for tile plots</li>
+<li>small fix for plotBMRSummary</li>
+<li>the ModelMultiplexer inherits its predict.type from the base learners now</li>
+<li>check that learners in an ensemble have the same predict.type</li>
+<li>new function getBMRModels to extract stored models from a benchmark result</li>
+<li>Fixed a bug where several learners from the LiblineaR package (“classif.LiblineaRL2LogReg”, “classif.LiblineaRL2SVC”, “regr.LiblineaRL2L2SVR”) were calling the wrong value for “type” (0) and thus training the wrong model.</li>
+<li>Fixed a bug where the resampling objects hout, cv2, cv3, cv5, cv10 were not documented in the ResampleDesc help page</li>
+<li>regr.xgboost, classif.xgboost: add feval param</li>
+<li>fixed a bug in irace tuning interface with unamed discrete values</li>
+<li>Fixed bugs in “jackknife” and “bootstrap” se estimators for regr.randomForest.</li>
+<li>Added “sd” estimator for regr.randomForest.</li>
+<li>Fixed a mini bug in ModelMultiplexer where hyperpars that are only needed in predict were not passed down correctly</li>
+<li>Fixed a bug where the function capLargeValues wasn’t working if you passed a task.</li>
+<li>capLargeValues now has a new argument “target”, to prevent from capping response values.</li>
+<li>classif.gbm, regr.gbm: Updated possible ‘distribution’ settings a bit.</li>
+<li>oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper, makeOverBaggingWrapper: Added arguments to specifically select the sampled class.</li>
+</ul>
+<section id="api-changes" class="level2"><h2>API changes</h2>
+<ul>
+<li>listLearners now returns a data frame with properties of the learners if create is false</li>
+</ul></section><section id="new-functions" class="level2"><h2>new functions</h2>
+<ul>
+<li>getBMRModels</li>
+</ul></section><section id="removed-functions" class="level2"><h2>removed functions</h2>
+<ul>
+<li>generateROCRCurvesData, plotROCRCurves, plotROCRCurvesGGVIS</li>
+</ul></section><section id="new-learners" class="level2"><h2>new learners</h2>
+<ul>
+<li>classif.randomForestSRCSyn</li>
+<li>classif.cvglmnet</li>
+<li>regr.randomForestSRCSyn</li>
+<li>cluster.dbscan</li>
+</ul></section><section id="new-measures" class="level2"><h2>new measures</h2>
+<ul>
+<li>rsq, arsq, expvar</li>
+</ul></section></section>
+    <section id="mlr-2.7" class="level1"><h1>mlr 2.7:</h1>
+<ul>
+<li>New argument “models” for function benchmark</li>
+<li>fixed a bug where ‘keep.pred’ was ignored in the benchmark function</li>
+<li>some of the very new functions for benchmark plots had to be refactored and/or renamed. these names are gone from the API: plotBenchmarkResult, generateRankMatrixAsBarData, plotRankMatrixAsBar, generateBenchmarkSummaryData, plotBenchmarkSummary, this is the new API: plotBMRSummary, plotBMRBoxplots, plotBMRRanksAsBarChart</li>
+</ul></section>
+    <section id="mlr-2.5" class="level1"><h1>mlr 2.5:</h1>
+<ul>
+<li>fixed a bug that caused performance() to return incorrect values with ResamplePredictions</li>
+<li>we have (somewhat experimental) support for multilabel classification. so we now have a task, a new baselearner (rFerns), and a generic reduction-to-binary algorithm (MultilabelWrapper)</li>
+<li>tuning: added ‘budget’ parameter in makeTuneControl* (single-objective) and makeTuneMultiCritControl* (multi-objective scenarios), allowing to define a maximum “number of evaluations” budget for tuning algorithms</li>
+<li>tuning: added ‘budget’ parameter in makeTuneMultiCritControl*, allowing to define a maximum “number of evaluations” budget for tuning algorithms in the single-objective case</li>
+<li>makeTuneControlGenSA: optimized function will be considered non-smooth per default (change via … args)</li>
+<li>classif.svm, regr.svm: added ‘scale’ param</li>
+<li>ksvm: added ‘cache’ param</li>
+<li>plotFilterValuesGGVIS: sort and n_show are interactive, interactive flag removed</li>
+<li>renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities</li>
+<li>plots now use long names for measures where possible</li>
+<li>there was a nasty bug in measure “mcc”. fixed and unit tested. and apologies.</li>
+<li>removed getTaskFormulaAsString and improved getTaskFormula so the former is not needed anymore</li>
+<li>aggregations now have a ‘name’ property, which is a long name</li>
+<li>generateLearningCurveData and generateThreshVsPerfData now append the aggregation id to the output column name if the measure ids are the same</li>
+<li>plotLearningCurve, plotLearningCurveGGVIS, plotThreshVsPerf, plotThreshVsPerfGGVIS now have an argument ‘pretty.names’ which plots the ‘name’ element of the measures instead of the ‘id’.</li>
+<li>makeCustomResampledMeasure now has arguments ‘measure.id’ and ‘aggregation.id’ instead of only ‘id’ which corresponded to the measure. Also, ‘name’ and note (corresponding to the measure) as well as ‘aggregation.name’ have been added.</li>
+<li>makeCostMeasure now has arguments ‘name’ and ‘id’.</li>
+<li>classification learner now can have a property ‘class.weights’, supported by ‘class.weights.param’. The latter indicates which of the parameters provides that class weights information to the learner.</li>
+<li>class weights integrated in the learner will be used as default for ‘wcw.param’ in ‘makeWeightedClassesWrapper’</li>
+<li>listLearners with create = FALSE does not load packages anymore and is therefore faster and more reliable; it also supports the additional parameter check.packages now that will check whether required packages are installed without loading them</li>
+<li>many new functions for statistical benchmark comparisons are added, see below</li>
+<li>rename hasProperties, getProperties to hasLearnerProperties and getLearnerProperties</li>
+<li>Learner properties are now implemented object oriented as a state of a Learner. Only RLearners have the properties stored in a slot. For each class the getter can be overwritten.</li>
+<li>The hill climbing algorithm for stacking (Caruana 04) is implemented as method ‘hill.climb’ in ‘makeStackedLearner’ to select models from base learners, which is equivalent to weighted average.</li>
+<li>The model compression algorithm for stacking (Caruana 06) is implemented as method ‘compress’ in ‘makeStackedLearner’ to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.</li>
+<li>relativeOverfitting provides a way to estimate how much a model overfits to the training data according to a measure.</li>
+<li>restructured the LiblineaR learners to a more convenient format. These old ones were removed: classif.LiblineaRBinary, classif.LiblineaRLogReg, classif.LiblineaRMultiClass. For the new ones, see below.</li>
+<li>Added some commonly used ResampleDesc description objects, to save typing in resample experiments: hout, cv2, cv3, cv5, cv10.</li>
+<li>regr.randomForest: changed default nodesize to 5 (according to randomForest defaults)</li>
+</ul>
+<section id="new-functions-1" class="level2"><h2>new functions</h2>
+<ul>
+<li>getDefaultMeasure</li>
+<li>getTaskClassLevels</li>
+<li>getPredictionTruth, getPredictionResponse, getPredictionSE</li>
+<li>convertMLBenchObjToTask</li>
+<li>getBMRLearners, getBMRMeasures, getBMRMeasureIds</li>
+<li>makeMultilabelTask, makeMultilabelWrapper, getMultilabelBinaryPerformances</li>
+<li>generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS</li>
+<li>getClassWeightParam</li>
+<li>plotBenchmarkResult, convertBMRToRankMatrix, generateRankMatrixAsBarData, plotRankMatrixAsBar, generateBenchmarkSummaryData, plotBenchmarkSummary, friedmanTestBMR, friedmanPostHocTestBMR, generateCritDifferencesData, plotCritDifferences</li>
+<li>getCaretParamSet</li>
+<li>generateCalibrationData and plotCalibration</li>
+<li>relativeOverfitting</li>
+<li>plotROCCurves</li>
+</ul></section><section id="new-measures-1" class="level2"><h2>new measures</h2>
+<ul>
+<li>hamloss</li>
+</ul></section><section id="new-learners-2" class="level2"><h2>new learners</h2>
+<ul>
+<li>multilabel.rFerns</li>
+<li>classif.avNNet</li>
+<li>classif.neuralnet</li>
+<li>regr.avNNet</li>
+<li>classif.clusterSVM</li>
+<li>classif.dcSVM</li>
+<li>classif.gaterSVM</li>
+<li>classif.mlp</li>
+<li>classif.saeDNN</li>
+<li>classif.dbnDNN</li>
+<li>classif.nnTrain</li>
+<li>classif.rknn</li>
+<li>regr.rknn</li>
+<li>classif.xgboost</li>
+<li>regr.xgboost</li>
+<li>classif.rotationForest</li>
+<li>classif.LiblineaRL1L2SVC</li>
+<li>classif.LiblineaRL1LogReg</li>
+<li>classif.LiblineaRL2L1SVC</li>
+<li>classif.LiblineaRL2LogReg</li>
+<li>classif.LiblineaRL1LMultiClassSVC</li>
+<li>regr.LiblineaRL2L1SVR</li>
+<li>regr.LiblineaRL2L2SVR</li>
+<li>classif.ranger</li>
+<li>regr.ranger</li>
+<li>surv.ranger</li>
+</ul></section><section id="new-filters" class="level2"><h2>new filters</h2>
+<ul>
+<li>permutation.importance</li>
+</ul></section><section id="removed-functions-1" class="level2"><h2>removed functions</h2>
+<ul>
+<li>setProperties, addProperties, removeProperties</li>
+</ul></section></section>
+    <section id="mlr-2.4" class="level1"><h1>mlr 2.4:</h1>
+<ul>
+<li>WrappedModel printer was slightly improved</li>
+<li>ReampleResult now stores the runtime it took to resample in a slot</li>
+<li>getTaskFormula / getTaskFormulaAsString have new argument ‘explicit.features’</li>
+<li>getTaskData now has recodeY = “drop.levels” which drops empty factor levels</li>
+<li>option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity</li>
+<li>showHyperPars was removed. getParamSet does exactly the same thing</li>
+<li>‘resample’ and ‘benchmark’ got the argument keep.pred, setting it to FALSE allows to discard the prediction objects to save memory</li>
+<li>we had to slightly change how the mem usage is reported in tuning and feature selection See TuneControl and FeatSelControl where it is documented what is done now.</li>
+<li>tuneIrace: allows to set the precision / digits within irace (using the argument ‘digits’ in makeTuneControlIrace); default is maximum precision</li>
+<li>for plotting in general we try to introduce a “data layer”, so the data can be generated independently of the plotting first, into well-defined objects; these can then be plotted with mlr or custom code; the naming scheme is always generate<foo>Data and plot<foo></foo></foo>
+</li>
+<li>getFilterValues is deprecated in favor of generateFilterValuesData</li>
+<li>plotFilterValues can now plot multiple filter methods using facetting</li>
+<li>plotROCRCurves has been rewritten to use ggplot2</li>
+<li>classif.ada: added “loss” hyperpar</li>
+<li>add missings properties to all ctree and cforest methods: regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost</li>
+<li>learner xgboost was removed, because the package is not on CRAN anymore, unfortunately</li>
+<li>reg.km: added param ‘iso’</li>
+<li>classif.mda: added param ‘start.method’ and changed its default to ‘lvq’, added params ‘sub.df’, ‘tot.df’ and ‘criterion’</li>
+<li>classif.randomForest: ‘sampsize’ can now be an int vector (instead of a scalar)</li>
+<li>plotThreshVsPerf and plotLearningCurve now have param ‘facet’</li>
+</ul>
+<section id="new-functions-2" class="level2"><h2>new functions</h2>
+<ul>
+<li>getTaskSize</li>
+<li>getNestedTuneResultsX, getNestedTuneResultsOptPathDf</li>
+<li>tuneDesign</li>
+<li>generateROCRCurvesData, generateFilterValuesData, generateLearningCurveData, plotLearningCurve, generateThreshVsPerfData, plotThreshVsPerf,</li>
+<li>generateThreshVsPerfData accepts Prediction, ResampleResult, lists of ResampleResult, and BenchmarkResult objects.</li>
+<li>experimental ggvis functions: plotROCRCurvesGGVIS, plotLearningCurveGGVIS, plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS</li>
+</ul></section><section id="new-learners-3" class="level2"><h2>new learners:</h2>
+<ul>
+<li>classif.bst</li>
+<li>classif.hdrda</li>
+<li>classif.nodeHarvest</li>
+<li>classif.pamr</li>
+<li>classif.rFerns</li>
+<li>classif.sparseLDA</li>
+<li>regr.bst</li>
+<li>regr.frbs</li>
+<li>regr.nodeHarvest</li>
+<li>regr.slim</li>
+</ul></section><section id="new-measures-2" class="level2"><h2>new measures:</h2>
+<ul>
+<li>brier</li>
+</ul></section></section>
+    <section id="mlr-2.3" class="level1"><h1>mlr 2.3:</h1>
+<ul>
+<li>resample now returns an object of class ResampleResult (downward compatible) to allow for a print method.</li>
+<li>resampling on features now supported for an arbitrary number of factor features</li>
+<li>mlr supports ViperCharts plots now</li>
+<li>ROC plot via ROCR can now be created automatically, before you had to call asROCRPrediction, then construct the plots via ROCR your self. See plotROCRCurves</li>
+<li>all mlr measures now have slots “name” and “note”</li>
+<li>exported a few very simple “getters” for tasks, see below</li>
+<li>in makeLearner a probability predict.threshold can be set for classifiers, also see setPredictThreshold</li>
+<li>in the control objects for tuning and feature selection, the user can now enable threshold tuning</li>
+<li>in the control objects for tuning and feature selection, the user can now define his own logging function</li>
+<li>default console logging for tuneParams and selectFeatures is more informative, it displays time and memory info</li>
+<li>updated some properties of some learners</li>
+<li>Default arguments of classif.bartMachine, classif.randomForestSRC, regr.randomForestSRC and sur.randomForestSRC have been changed to allow missing data support with default settings.</li>
+<li>externalized measure functions to be used on vectors.</li>
+<li>some minor bug fixes</li>
+<li>required basic learner packages are not loaded into the global namespace anymore, requireNamespace is used internally instead. this ensures less name clashes and name shadowing</li>
+<li>resample passes dot arguments to the learner hyperpars</li>
+<li>new option “on.par.out.of.bounds” to disable out-of-bound checks for model parameters</li>
+<li>measures were slightly internally changed. they expose more properties (check ?Measure) and some now unnecessary object slots were removed</li>
+<li>classif.lda and classif.qda now have hyperpar “predict.method”</li>
+<li>filterFeatures and makeFilterWrapper gain an argument for mandatory features</li>
+<li>plotLearnerPrediction has new option “err.size”</li>
+<li>classif.plsDA and cluster.DBscan for now removed because of problems with the underlying learning algorithm</li>
+<li>new aggregation test.join</li>
+<li>the following models now can handle factors and ordereds by extra dummy or int encoding: classif.glmnet, regr.glmnet, surv.glmnet, surv.cvglmnet, surv.penalized, surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost</li>
+</ul>
+<section id="new-functions-3" class="level2"><h2>new functions</h2>
+<ul>
+<li>getTaskType, getTaskId, getTaskTargetNames</li>
+<li>plotROCRCurves</li>
+<li>plotViperCharts</li>
+<li>measureSSE, measureMSE, measureRMSE, measureMEDSE, …</li>
+<li>PreprocWrapperCaret</li>
+<li>setPredictThreshold</li>
+</ul></section><section id="new-learners-4" class="level2"><h2>new learners:</h2>
+<ul>
+<li>classif.bdk</li>
+<li>classif.binomial</li>
+<li>classif.extraTrees</li>
+<li>classif.probit</li>
+<li>classif.xgboost</li>
+<li>classif.xyf</li>
+<li>regr.bartMachine</li>
+<li>regr.bcart</li>
+<li>regr.bdk</li>
+<li>regr.bgp</li>
+<li>regr.bgpllm</li>
+<li>regr.blm</li>
+<li>regr.brnn</li>
+<li>regr.btgp</li>
+<li>regr.btgpllm</li>
+<li>regr.btlm</li>
+<li>regr.cubist</li>
+<li>regr.elmNN</li>
+<li>regr.extraTrees</li>
+<li>regr.laGP</li>
+<li>regr.xgboost</li>
+<li>regr.xyf</li>
+<li>surv.rpart</li>
+</ul></section></section>
+    <section id="mlr-2.2" class="level1"><h1>mlr 2.2:</h1>
+<ul>
+<li>The web tutorial was MUCH improved!</li>
+<li>more example tasks and data sets</li>
+<li>Learners and tasks now support ordered factors as features. The task description knows whether ordered factors are present and it is checked whether the learner supports such a feature. We have set this property ‘ordered’ very conservatively, so very few learners have it, where we are sure ordered inputs are handled correctly during training. If you know of more models that support this, please inform us.</li>
+<li>basic R learners now have new slots: name (a descriptive name of the algorithm), short.name (abbreviation that can be used in plots and tables) and note (notes regarding slight changes for the mlr integration of the learner and such).</li>
+<li>makeLearner now supports some options regarding learner error handling and output which could before only be set globally via configureMlr</li>
+<li>Additional arguments for imputation functions to allow a more fine-grain control of dummy column creation</li>
+<li>imputeMin and imputeMax now subtract or add a multiple of the range of the data from the minimum or to the maximum, respectively.</li>
+<li>cluster methods now have property ‘prob’ when they support fuzzy cluster membership probabilities, and also then support predict.type = ‘prob’. Everything basically works the same as for posterior probabilities in classif.* methods.</li>
+<li>predict preserves the rownames of the input in its output</li>
+<li>fixed a bug in createDummyFeatures that caused an error when the data contained missing values.</li>
+<li>plotLearnerPrediction works for clustering and allows greyscale plots (for printing or articles)</li>
+<li>the whole object-oriented structure behind feature filtering was much improved. Smaller changes in the signature of makeFilterWrapper and filterFeatures have become necessary.</li>
+<li>fixed a bug in filter methods of the FSelector package that caused an error when variable names contained accented letters</li>
+<li>filterFeatures can now be also applied to the result of getFilterValues</li>
+<li>We dropped the data.frame version of some preprocessing operations like mergeFactorLevelsBySize, joinClassLevels and removeConstantFeatures for consistency. These now always require tasks as input.</li>
+<li>We support a pretty generic framework for stacking / super-learning now, see makeStackedLearner</li>
+<li>imbalancy correction + smote: ** fix a bug in “smote” when only factor features are present ** change to oversampling: sample new observations only (with replacement) ** extension to smote algorithm (sampling): minority class observations in binary classification are either chosen via sampling or alternatively, each minority class observation is used an equal number of times</li>
+<li>made the getters for BenchmarkResult more consistent. These are now: getBMRTaskIds, getBMRLearnerIds, getBMRPredictions, getBMRPerformances, getBMRAggrPerformances getBMRTuneResults, getFeatSelResults, getBMRFilteredFeatures The following methods do not work for BenchmarkResult anymore: getTuneResult, getFeatSelResult</li>
+<li>Removed getFilterResult, because it does the same as getFilteredFeatures</li>
+</ul>
+<section id="new-learners-5" class="level2"><h2>new learners:</h2>
+<ul>
+<li>classif.bartMachine</li>
+<li>classif.lqa</li>
+<li>classif.randomForestSRC</li>
+<li>classif.sda</li>
+<li>regr.ctree</li>
+<li>regr.plsr</li>
+<li>regr.randomForestSRC</li>
+<li>cluster.cmeans</li>
+<li>cluster.DBScan</li>
+<li>cluster.kmeans</li>
+<li>cluster.FarthestFirst</li>
+<li>surv.cvglmnet</li>
+<li>surv.optimCoxBoostPenalty</li>
+</ul></section><section id="new-filters-1" class="level2"><h2>new filters:</h2>
+<ul>
+<li>variance</li>
+<li>univariate</li>
+<li>carscore</li>
+<li>rf.importance, rf.min.depth</li>
+<li>anova.test, kruskal.test</li>
+<li>mrmr</li>
+</ul></section><section id="new-functions-4" class="level2"><h2>new functions</h2>
+<ul>
+<li>makeMulticlassWrapper</li>
+<li>makeStackedLearner, getStackedBaseLearnerPredictions</li>
+<li>joinClassLevels</li>
+<li>summarizeColumns, summarizeLevels</li>
+<li>capLargeValues, mergeFactorLevelsBySize</li>
+</ul></section></section>
+    <section id="mlr-2.1" class="level1"><h1>mlr 2.1:</h1>
+<ul>
+<li>mlr now supports multi-criteria tuning</li>
+<li>mlr now supports cluster analysis (experimental)</li>
+<li>improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.</li>
+<li>removed fix.factors option from randomForest, but added it in general to makeLearner, so it now works for all learners. Helps when feature factor levels where dropped in newdata prediction data.frames</li>
+<li>more consistent results for tuning algorithms and parameters with “trafos” : we always return the optimal settings on the transformed scale, but in the opt.path in the original scale.</li>
+<li>fix a bug when feature filtering resulted in a NoFeatureModel</li>
+<li>resample now returns a data.frame “err.mgs” or error messages that might have occurred during resampling</li>
+<li>stratified resampling for survival</li>
+</ul>
+<section id="new-learners-6" class="level2"><h2>new learners:</h2>
+<ul>
+<li>classif.cforest</li>
+<li>classif.glmnet</li>
+<li>classif.plsdaCaret</li>
+<li>regr.cforest</li>
+<li>regr.glmnet</li>
+<li>regr.svm</li>
+<li>surv.cforest</li>
+<li>cluster.SimpleKMeans</li>
+<li>cluster.EM</li>
+<li>cluster.XMeans</li>
+</ul></section><section id="new-measures-3" class="level2"><h2>new measures</h2>
+<ul>
+<li>bac</li>
+<li>db, dunn, g1, g2, silhouette</li>
+</ul></section><section id="new-functions-5" class="level2"><h2>new functions</h2>
+<ul>
+<li>makeClusterTask</li>
+<li>removeHyperPars</li>
+<li>tuneParamsMultiCrit</li>
+<li>makeTuneMultiCritControlGrid, makeTuneMultiCritControlRandom, makeTuneMultiCritControlNSGA2</li>
+<li>plotTuneMultiCritResult</li>
+<li>getFailureModelMsg</li>
+</ul></section></section>
+    <section id="mlr-2.0" class="level1"><h1>mlr 2.0:</h1>
+<ul>
+<li>mlr now supports survival analysis models (experimental)</li>
+<li>mlr now supports cost-sensitive learning with example-specific costs experimental)</li>
+<li>Some example tasks and data sets were added for simple access</li>
+<li>added FeatSelWrapper and getFeatSelResult</li>
+<li>performance functions now allows to compute multiple measures</li>
+<li>added multiclass.roc performance measure</li>
+<li>observation weights can now also be specified in the task</li>
+<li>added option on.learner.warning to configureMlr to suppress warnings in learners</li>
+<li>fixed a bug in stratified CV where elements where not distributed as evenly as possible when the split number did not divide the number of observation</li>
+<li>added class.weights param for classif.svm</li>
+<li>add fix.factors.prediction option to randomForest</li>
+<li>generic standard error estimation in randomForest and BaggingWrapper</li>
+<li>added fixup.data option to task constructors, so basic data cleanup can be performed</li>
+<li>show.info is now an option in configureMlr</li>
+<li>learners now support taggable properties that can be queried and changed. also see below.</li>
+<li>listLearners(forTask) was unified</li>
+<li>removed tuning via R’ optim method (makeTuneControlOptim), as the optimizers in there really make no sense for tuning</li>
+<li>Grid search was improved so one does not have to discretize parameters manually anymore (although this is still possible). Instead one now passes a ‘resolution’ argument. Internally we now use ParamHelpers::generateGridDesign for this.</li>
+<li>toy tasks were added for convenient usage: iris.task, sonar.task, bh.task they also also have corresponding resampling instances, so you directly start working, e.g., iris.rin</li>
+</ul>
+<section id="new-learners-7" class="level2"><h2>new learners:</h2>
+<ul>
+<li>classif.knn</li>
+<li>classif.IBk</li>
+<li>classif.LiblineaRBinary</li>
+<li>classif.LiblineaRLogReg</li>
+<li>classif.LiblineaRMultiClass</li>
+<li>classif.linDA</li>
+<li>classif.plr</li>
+<li>classif.plsDA</li>
+<li>classif.rrlda</li>
+<li>regr.crs</li>
+<li>regr.IBk</li>
+<li>regr.mob</li>
+<li>surv.CoxBoost</li>
+<li>surv.coxph</li>
+<li>surv.glmboost</li>
+<li>surv.glmnet</li>
+<li>surv.penalized</li>
+<li>surv.randomForestSRC</li>
+</ul></section><section id="new-measures-4" class="level2"><h2>new measures</h2>
+<ul>
+<li>multiauc</li>
+<li>cindex</li>
+<li>meancosts, mcp</li>
+</ul></section><section id="new-functions-6" class="level2"><h2>new functions</h2>
+<ul>
+<li>removeConstantFeatures, normalizeFeatures, dropFeatures, createDummyFeatures</li>
+<li>getTaskNFeats</li>
+<li>hasProperties, getProperties, setProperties, addProperties, removeProperties</li>
+<li>showHyperPars</li>
+<li>setId</li>
+<li>listMeasures</li>
+<li>isFailureModel</li>
+<li>plotLearnerPrediction</li>
+<li>plotThreshVsPerf</li>
+<li>holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus</li>
+<li>listFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues</li>
+<li>benchmark</li>
+<li>getPerformances, getAggrPerformances, getPredictions, getFilterResult, getTuneResult, getFeatSelResult</li>
+<li>oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper</li>
+<li>smote, makeSmoteWrapper</li>
+<li>downsample, makeDownsampleWrapper</li>
+<li>makeWeightedClassesWrapper</li>
+<li>makeTuneControlGenSA</li>
+<li>makeModelMultiplexer, makeModelMultiplexerParamSet</li>
+<li>makeCostSensTask, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner</li>
+<li>makeSurvTask</li>
+<li>impute, reimpute, makeImputeWrapper, lots of impute<method>, makeImputeMethod</method>
+</li>
+</ul></section></section>
+    <section id="mlr-1.1" class="level1"><h1>mlr 1.1:</h1>
+<ul>
+<li>Initial release to CRAN</li>
+</ul>
+<section id="major" class="level2"><h2>Major</h2>
+<ul>
+<li>Support for functional data (fda) using matrix columns has been added.</li>
+<li>Relaxed the way wrappers can be nested. the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper</li>
+<li>Refactored the resample progress messages to give a better overview and distinguish between train and test measures better</li>
+<li>calculateROCMeasures now returns absolute instead of relative values</li>
+</ul></section></section>
     </div>
   </div>
 
@@ -113,6 +795,19 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mlr-2.12">2.12</a></li>
+        <li><a href="#mlr-2.11">2.11</a></li>
+        <li><a href="#mlr-2.10">2.10</a></li>
+        <li><a href="#mlr-2.9">2.9</a></li>
+        <li><a href="#mlr-2.8">2.8</a></li>
+        <li><a href="#mlr-2.7">2.7</a></li>
+        <li><a href="#mlr-2.5">2.5</a></li>
+        <li><a href="#mlr-2.4">2.4</a></li>
+        <li><a href="#mlr-2.3">2.3</a></li>
+        <li><a href="#mlr-2.2">2.2</a></li>
+        <li><a href="#mlr-2.1">2.1</a></li>
+        <li><a href="#mlr-2.0">2.0</a></li>
+        <li><a href="#mlr-1.1">1.1</a></li>
       </ul>
     </div>
   </div>
