@@ -1,7 +1,5 @@
 context("createDummyFeatures")
 
-tsk = makeClassifTask(data = iris, target = "Species")
-
 test_that("createDummyFeatures", {
   df = data.frame(a = 1:5, b = letters[1:5], c = LETTERS[c(1, 1, 1, 2, 2)], stringsAsFactors = FALSE)
   expect_equal(df, createDummyFeatures(df))
@@ -16,8 +14,8 @@ test_that("createDummyFeatures", {
   grid = createDummyFeatures(expand.grid(x1 = letters[1:2], x2 = letters[3:4]), method = "reference")
   expect_equal(colnames(grid), c("x1.b", "x2.d"))
 
-  dummy.task = createDummyFeatures(tsk)
-  expect_equal(dummy.task, tsk)
+  dummy.task = createDummyFeatures(iris.task)
+  expect_equal(dummy.task, iris.task)
 
   df$a = as.factor(df$a)
   expect_equal(c("a", "b", "c.A", "c.B"),
