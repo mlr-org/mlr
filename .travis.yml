@@ -65,6 +65,15 @@ jobs:
         - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+   - stage: deploy
+     before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+     deploy:
+        provider: script
+        script: R -q -e 'tic::deploy()'
+        on:
+          all_branches: true
+      after_deploy: R -q -e 'tic::after_deploy()'
+      after_script: R -q -e 'tic::after_script()'
 
 notifications:
   email:
