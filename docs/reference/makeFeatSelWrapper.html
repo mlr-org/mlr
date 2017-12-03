@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -205,15 +209,13 @@ Default is set via <code><a href='configureMlr.html'>configureMlr</a></code>.</p
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># nested resampling with feature selection (with a pretty stupid algorithm for selection)</span>
+    <pre class="examples"><div class='input'><span class='co'># nested resampling with feature selection (with a pretty stupid algorithm for selection)</span>
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>ctrl</span> <span class='kw'>=</span> <span class='fu'><a href='FeatSelControl.html'>makeFeatSelControlRandom</a></span>(<span class='kw'>maxit</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFeatSelWrapper</span>(<span class='st'>"classif.ksvm"</span>, <span class='kw'>resampling</span> <span class='kw'>=</span> <span class='no'>inner</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='no'>ctrl</span>)
 <span class='co'># we also extract the selected features for all iteration here</span>
-<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getFeatSelResult</span>)
-<span class='co'># }</span></pre>
+<span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='no'>getFeatSelResult</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Started selecting features for learner 'classif.ksvm'</span></div><div class='output co'>#&gt; <span class='message'>With control class: FeatSelControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 1: 1000 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 1: mmce.test.mean=0.2800000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Result: Sepal.Length (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.3866667 </span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Started selecting features for learner 'classif.ksvm'</span></div><div class='output co'>#&gt; <span class='message'>With control class: FeatSelControlRandom</span></div><div class='output co'>#&gt; <span class='message'>Imputation value: 1</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-x] 1: 1000 (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel-y] 1: mmce.test.mean=0.3600000; time: 0.0 min</span></div><div class='output co'>#&gt; <span class='message'>[FeatSel] Result: Sepal.Length (1 bits)</span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.3200000 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3533333</span></div><div class='output co'>#&gt; <span class='message'></span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

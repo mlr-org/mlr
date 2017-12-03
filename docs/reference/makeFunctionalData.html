@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -149,14 +153,22 @@ Default is not to exclude anything.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># data.frame where columns 1:6 and 8:10 belong to a functional feature</span>
+    <pre class="examples"><div class='input'><span class='co'># data.frame where columns 1:6 and 8:10 belong to a functional feature</span>
 <span class='no'>d1</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>100</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>), <span class='st'>"target"</span> <span class='kw'>=</span> <span class='fu'>seq_len</span>(<span class='fl'>10</span>))
 <span class='co'># Transform to functional data</span>
 <span class='no'>d2</span> <span class='kw'>=</span> <span class='fu'>makeFunctionalData</span>(<span class='no'>d1</span>, <span class='kw'>fd.features</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"fd1"</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>6</span>, <span class='st'>"fd2"</span> <span class='kw'>=</span> <span class='fl'>8</span>:<span class='fl'>10</span>))
 <span class='co'># Create a regression task</span>
-<span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d2</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"target"</span>)
-<span class='co'># }</span></pre>
+<span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d2</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"target"</span>)</div><div class='output co'>#&gt; Supervised task: d2
+#&gt; Type: regr
+#&gt; Target: target
+#&gt; Observations: 10
+#&gt; Features:
+#&gt;    numerics     factors     ordered functionals 
+#&gt;           1           0           0           2 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
+#&gt; Is spatial: FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

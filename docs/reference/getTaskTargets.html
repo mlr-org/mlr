@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -152,10 +156,33 @@ Default for both binary classification and survival is &#8220;no&#8221; (do noth
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
-<span class='fu'>getTaskTargets</span>(<span class='no'>task</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+<span class='fu'>getTaskTargets</span>(<span class='no'>task</span>)</div><div class='output co'>#&gt;   [1] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;   [7] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [13] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [19] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [25] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [31] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [37] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [43] setosa     setosa     setosa     setosa     setosa     setosa    
+#&gt;  [49] setosa     setosa     versicolor versicolor versicolor versicolor
+#&gt;  [55] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [61] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [67] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [73] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [79] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [85] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [91] versicolor versicolor versicolor versicolor versicolor versicolor
+#&gt;  [97] versicolor versicolor versicolor versicolor virginica  virginica 
+#&gt; [103] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [109] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [115] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [121] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [127] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [133] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [139] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; [145] virginica  virginica  virginica  virginica  virginica  virginica 
+#&gt; Levels: setosa versicolor virginica</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -213,12 +217,27 @@ for this specific learner.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>makeLearner</span>(<span class='st'>"classif.rpart"</span>)
-<span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"t"</span>, <span class='kw'>nu</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>print</span>(<span class='no'>lrn</span>$<span class='no'>par.vals</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.rpart"</span>)</div><div class='output co'>#&gt; Learner classif.rpart from package rpart
+#&gt; Type: classif
+#&gt; Name: Decision Tree; Short name: rpart
+#&gt; Class: classif.rpart
+#&gt; Properties: twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp
+#&gt; Predict-Type: response
+#&gt; Hyperparameters: xval=0
+#&gt; </div><div class='input'><span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)</div><div class='output co'>#&gt; Learner classif.lda from package MASS
+#&gt; Type: classif
+#&gt; Name: Linear Discriminant Analysis; Short name: lda
+#&gt; Class: classif.lda
+#&gt; Properties: twoclass,multiclass,numerics,factors,prob
+#&gt; Predict-Type: prob
+#&gt; Hyperparameters: 
+#&gt; </div><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeLearner</span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"t"</span>, <span class='kw'>nu</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'>print</span>(<span class='no'>lrn</span>$<span class='no'>par.vals</span>)</div><div class='output co'>#&gt; $method
+#&gt; [1] "t"
+#&gt; 
+#&gt; $nu
+#&gt; [1] 10
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

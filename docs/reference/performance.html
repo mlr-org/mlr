@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -161,20 +165,15 @@ are extracted from it.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>training.set</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fu'>nrow</span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='no'>training.set</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>1</span>, <span class='fu'>nrow</span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>test.set</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>2</span>, <span class='fu'>nrow</span>(<span class='no'>iris</span>), <span class='kw'>by</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)
-<span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>[<span class='no'>test.set</span>, ])
-<span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)
-
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='kw'>newdata</span> <span class='kw'>=</span> <span class='no'>iris</span>[<span class='no'>test.set</span>, ])</div><div class='output co'>#&gt; <span class='error'>Error in predict(mod, newdata = iris[test.set, ]): object 'mod' not found</span></div><div class='input'><span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>mmce</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = mmce): object 'pred' not found</span></div><div class='input'>
 <span class='co'># Compute multiple performance measures at once</span>
 <span class='no'>ms</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"mmce"</span> <span class='kw'>=</span> <span class='no'>mmce</span>, <span class='st'>"acc"</span> <span class='kw'>=</span> <span class='no'>acc</span>, <span class='st'>"timetrain"</span> <span class='kw'>=</span> <span class='no'>timetrain</span>)
-<span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>ms</span>, <span class='no'>task</span>, <span class='no'>mod</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>performance</span>(<span class='no'>pred</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>ms</span>, <span class='no'>task</span>, <span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in performance(pred, measures = ms, task, mod): object 'pred' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

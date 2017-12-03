@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -190,13 +194,31 @@ Currently not used.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
+    <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
 <span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
-<span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)
-
-<span class='co'># }</span></pre>
+<span class='fu'>calculateROCMeasures</span>(<span class='no'>pred</span>)</div><div class='output co'>#&gt;     predicted
+#&gt; true M        R                             
+#&gt;    M 95       16        tpr: 0.86 fnr: 0.14 
+#&gt;    R 10       87        fpr: 0.1  tnr: 0.9  
+#&gt;      ppv: 0.9 for: 0.16 lrp: 8.3  acc: 0.88 
+#&gt;      fdr: 0.1 npv: 0.84 lrm: 0.16 dor: 51.66
+#&gt; 
+#&gt; 
+#&gt; Abbreviations:
+#&gt; tpr - True positive rate (Sensitivity, Recall)
+#&gt; fpr - False positive rate (Fall-out)
+#&gt; fnr - False negative rate (Miss rate)
+#&gt; tnr - True negative rate (Specificity)
+#&gt; ppv - Positive predictive value (Precision)
+#&gt; for - False omission rate
+#&gt; lrp - Positive likelihood ratio (LR+)
+#&gt; fdr - False discovery rate
+#&gt; npv - Negative predictive value
+#&gt; acc - Accuracy
+#&gt; lrm - Negative likelihood ratio (LR-)
+#&gt; dor - Diagnostic odds ratio</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

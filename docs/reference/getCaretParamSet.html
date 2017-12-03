@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -158,8 +162,7 @@ be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw'>if</span> (<span class='fu'>requireNamespace</span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'>requireNamespace</span>(<span class='st'>"mlbench"</span>)) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>requireNamespace</span>(<span class='st'>"caret"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'>requireNamespace</span>(<span class='st'>"mlbench"</span>)) {
   <span class='fu'>library</span>(<span class='no'>caret</span>)
   <span class='no'>classifTask</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
@@ -171,8 +174,25 @@ be defined by their lower and upper bounds. The default is <code>TRUE</code>.</p
   <span class='fu'>data</span>(<span class='no'>BostonHousing</span>)
   <span class='no'>regrTask</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeRegrTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BostonHousing</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"medv"</span>)
   <span class='fu'>getCaretParamSet</span>(<span class='st'>"gbm"</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>9L</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>regrTask</span>, <span class='kw'>discretize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}
-<span class='co'># }</span></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: caret</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘caret’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:mlr’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    train</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:purrr’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    lift</span></div><div class='output co'>#&gt; note: only 3 unique complexity parameters in default grid. Truncating the grid to 3 .
+#&gt; </div><div class='output co'>#&gt; $par.vals
+#&gt; $par.vals$shrinkage
+#&gt; [1] 0.1
+#&gt; 
+#&gt; $par.vals$n.minobsinnode
+#&gt; [1] 10
+#&gt; 
+#&gt; 
+#&gt; $par.set
+#&gt;                      Type len Def    Constr Req Tunable Trafo
+#&gt; interaction.depth integer   -   -    1 to 9   -    TRUE     -
+#&gt; n.trees           numeric   -   - 50 to 450   -    TRUE     -
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

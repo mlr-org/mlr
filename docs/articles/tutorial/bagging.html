@@ -110,13 +110,13 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean 
-##      0.2788095</code></pre>
+##      0.2933333</code></pre>
 <p>And now with bagging:</p>
 <pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">result =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> bag.lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">result<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean 
-##      0.2219048</code></pre>
+##      0.2309524</code></pre>
 <p>Training more learners takes more time, but can outperform pure learners on noisy data with many features.</p>
 <section id="changing-the-type-of-prediction" class="level2"><h2>Changing the type of prediction</h2>
 <p>In case of a <em>classification</em> problem the predicted class labels are determined by majority voting over the predictions of the individual models. Additionally, posterior probabilities can be estimated as the relative proportions of the predicted class labels. For this purpose you have to change the predict type of the <em>bagging learner</em> as follows.</p>
@@ -144,13 +144,13 @@
 <p>Predict the response and calculate the standard deviation:</p>
 <pre class="sourceCode r" id="cb10"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.inds)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(pred))</a></code></pre>
-<pre><code>##   id truth response       se
-## 2  2  21.6 21.28866 1.038088
-## 3  3  34.7 35.02443 5.684931
-## 5  5  36.2 33.82540 4.092455
-## 6  6  28.7 25.88302 3.763749
-## 8  8  27.1 15.65658 3.133115
-## 9  9  16.5 14.84697 2.520475</code></pre>
+<pre><code>##   id truth response        se
+## 2  2  21.6 21.23799 1.1488486
+## 3  3  34.7 32.83188 5.9607118
+## 5  5  36.2 33.53454 0.8386392
+## 6  6  28.7 23.81605 0.9868232
+## 8  8  27.1 14.52534 2.8624066
+## 9  9  16.5 13.97373 3.6488079</code></pre>
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>
 <p>Let’s visualise this a bit using [%ggplot2]. Here we plot the percentage of lower status of the population (<code>lstat</code>) against the prediction.</p>
 <pre class="sourceCode r" id="cb12"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)</a>

@@ -70,12 +70,16 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Basics</li>
+    <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
+    <li class="dropdown-header">Extend</li>
+    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
 <li>
@@ -118,7 +122,475 @@
       <tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+            <h2 id="section-get-functions" class="hasAnchor"><a href="#section-get-functions" class="anchor"></a>Get Functions</h2>
+            <p class="section-desc"><p>Retrieve various informations from objects</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRAggrPerformances.html">getBMRAggrPerformances</a></code> </p>
+          </td>
+          <td><p>Extract the aggregated performance values from a benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRFeatSelResults.html">getBMRFeatSelResults</a></code> </p>
+          </td>
+          <td><p>Extract the feature selection results from a benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRFilteredFeatures.html">getBMRFilteredFeatures</a></code> </p>
+          </td>
+          <td><p>Extract the feature selection results from a benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRLearnerIds.html">getBMRLearnerIds</a></code> </p>
+          </td>
+          <td><p>Return learner ids used in benchmark.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRLearners.html">getBMRLearners</a></code> </p>
+          </td>
+          <td><p>Return learners used in benchmark.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRLearnerShortNames.html">getBMRLearnerShortNames</a></code> </p>
+          </td>
+          <td><p>Return learner short.names used in benchmark.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRMeasureIds.html">getBMRMeasureIds</a></code> </p>
+          </td>
+          <td><p>Return measures IDs used in benchmark.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRMeasures.html">getBMRMeasures</a></code> </p>
+          </td>
+          <td><p>Return measures used in benchmark.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRModels.html">getBMRModels</a></code> </p>
+          </td>
+          <td><p>Extract all models from benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRPerformances.html">getBMRPerformances</a></code> </p>
+          </td>
+          <td><p>Extract the test performance values from a benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRPredictions.html">getBMRPredictions</a></code> </p>
+          </td>
+          <td><p>Extract the predictions from a benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRTaskDescriptions.html">getBMRTaskDescriptions</a></code> </p>
+          </td>
+          <td><p>Extract all task descriptions from benchmark result (DEPRECATED).</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRTaskDescs.html">getBMRTaskDescs</a></code> </p>
+          </td>
+          <td><p>Extract all task descriptions from benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRTaskIds.html">getBMRTaskIds</a></code> </p>
+          </td>
+          <td><p>Return task ids used in benchmark.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getBMRTuneResults.html">getBMRTuneResults</a></code> </p>
+          </td>
+          <td><p>Extract the tuning results from a benchmark result.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getCaretParamSet.html">getCaretParamSet</a></code> </p>
+          </td>
+          <td><p>Get tuning parameters from a learner of the caret R-package.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getClassWeightParam.html">getClassWeightParam</a></code> </p>
+          </td>
+          <td><p>Get the class weight parameter of a learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getConfMatrix.html">getConfMatrix</a></code> </p>
+          </td>
+          <td><p>Confusion matrix.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getDefaultMeasure.html">getDefaultMeasure</a></code> </p>
+          </td>
+          <td><p>Get default measure.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFailureModelDump.html">getFailureModelDump</a></code> </p>
+          </td>
+          <td><p>Return the error dump of FailureModel.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFailureModelMsg.html">getFailureModelMsg</a></code> </p>
+          </td>
+          <td><p>Return error message of FailureModel.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFeatSelResult.html">getFeatSelResult</a></code> </p>
+          </td>
+          <td><p>Returns the selected feature set and optimization path after training.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFeatureImportance.html">getFeatureImportance</a></code> </p>
+          </td>
+          <td><p>Calculates feature importance values for trained models.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFeatureImportanceLearner.html">getFeatureImportanceLearner</a></code> </p>
+          </td>
+          <td><p>Calculates feature importance values for a given learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code> </p>
+          </td>
+          <td><p>Returns the filtered features.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getFilterValues.html">getFilterValues</a></code> </p>
+          </td>
+          <td><p>Calculates feature filter values.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getHomogeneousEnsembleModels.html">getHomogeneousEnsembleModels</a></code> </p>
+          </td>
+          <td><p>Deprecated, use <code>getLearnerModel</code> instead.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getHyperPars.html">getHyperPars</a></code> </p>
+          </td>
+          <td><p>Get current parameter settings for a learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerId.html">getLearnerId</a></code> </p>
+          </td>
+          <td><p>Get the ID of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerModel.html">getLearnerModel</a></code> </p>
+          </td>
+          <td><p>Get underlying R model of learner integrated into mlr.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerPackages.html">getLearnerPackages</a></code> </p>
+          </td>
+          <td><p>Get the required R packages of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerParamSet.html">getLearnerParamSet</a></code> </p>
+          </td>
+          <td><p>Get the parameter set of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerParVals.html">getLearnerParVals</a></code> </p>
+          </td>
+          <td><p>Get the parameter values of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerPredictType.html">getLearnerPredictType</a></code> </p>
+          </td>
+          <td><p>Get the predict type of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerShortName.html">getLearnerShortName</a></code> </p>
+          </td>
+          <td><p>Get the short name of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getLearnerType.html">getLearnerType</a></code> </p>
+          </td>
+          <td><p>Get the type of the learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getMlrOptions.html">getMlrOptions</a></code> </p>
+          </td>
+          <td><p>Returns a list of mlr's options.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getMultilabelBinaryPerformances.html">getMultilabelBinaryPerformances</a></code> </p>
+          </td>
+          <td><p>Retrieve binary classification measures for multilabel classification predictions.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getNestedTuneResultsOptPathDf.html">getNestedTuneResultsOptPathDf</a></code> </p>
+          </td>
+          <td><p>Get the <code>opt.path</code>s from each tuning step from the outer resampling.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getNestedTuneResultsX.html">getNestedTuneResultsX</a></code> </p>
+          </td>
+          <td><p>Get the tuned hyperparameter settings from a nested tuning.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getOOBPreds.html">getOOBPreds</a></code> </p>
+          </td>
+          <td><p>Extracts out-of-bag predictions from trained models.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getOOBPredsLearner.html">getOOBPredsLearner</a></code> </p>
+          </td>
+          <td><p>Provides out-of-bag predictions for a given model and the corresponding learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getParamSet.html">getParamSet</a></code> </p>
+          </td>
+          <td><p>Get a description of all possible parameter settings for a learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getPredictionDump.html">getPredictionDump</a></code> </p>
+          </td>
+          <td><p>Return the error dump of a failed Prediction.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getPredictionProbabilities.html">getPredictionProbabilities</a></code> </p>
+          </td>
+          <td><p>Get probabilities for some classes.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getPredictionResponse.html">getPredictionResponse</a></code> <code><a href="getPredictionResponse.html">getPredictionSE</a></code> <code><a href="getPredictionResponse.html">getPredictionTruth</a></code> </p>
+          </td>
+          <td><p>Get response / truth from prediction object.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getPredictionTaskDesc.html">getPredictionTaskDesc</a></code> </p>
+          </td>
+          <td><p>Get summarizing task description from prediction.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getProbabilities.html">getProbabilities</a></code> </p>
+          </td>
+          <td><p>Deprecated, use <code>getPredictionProbabilities</code> instead.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getRRDump.html">getRRDump</a></code> </p>
+          </td>
+          <td><p>Return the error dump of ResampleResult.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getRRPredictionList.html">getRRPredictionList</a></code> </p>
+          </td>
+          <td><p>Get list of predictions for train and test set of each single resample iteration.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getRRPredictions.html">getRRPredictions</a></code> </p>
+          </td>
+          <td><p>Get predictions from resample results.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getRRTaskDesc.html">getRRTaskDesc</a></code> </p>
+          </td>
+          <td><p>Get task description from resample results (DEPRECATED).</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getRRTaskDescription.html">getRRTaskDescription</a></code> </p>
+          </td>
+          <td><p>Get task description from resample results (DEPRECATED).</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getStackedBaseLearnerPredictions.html">getStackedBaseLearnerPredictions</a></code> </p>
+          </td>
+          <td><p>Returns the predictions for each base learner.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskClassLevels.html">getTaskClassLevels</a></code> </p>
+          </td>
+          <td><p>Get the class levels for classification and multilabel tasks.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskCosts.html">getTaskCosts</a></code> </p>
+          </td>
+          <td><p>Extract costs in task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskData.html">getTaskData</a></code> </p>
+          </td>
+          <td><p>Extract data in task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskDesc.html">getTaskDesc</a></code> </p>
+          </td>
+          <td><p>Get a summarizing task description.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskDescription.html">getTaskDescription</a></code> </p>
+          </td>
+          <td><p>Deprecated, use <code><a href='reference/getTaskDesc.html'>getTaskDesc</a></code> instead.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code> </p>
+          </td>
+          <td><p>Get feature names of task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskFormula.html">getTaskFormula</a></code> </p>
+          </td>
+          <td><p>Get formula of a task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskId.html">getTaskId</a></code> </p>
+          </td>
+          <td><p>Get the id of the task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskNFeats.html">getTaskNFeats</a></code> </p>
+          </td>
+          <td><p>Get number of features in task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskSize.html">getTaskSize</a></code> </p>
+          </td>
+          <td><p>Get number of observations in task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskTargetNames.html">getTaskTargetNames</a></code> </p>
+          </td>
+          <td><p>Get the name(s) of the target column(s).</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskTargets.html">getTaskTargets</a></code> </p>
+          </td>
+          <td><p>Get target data of task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTaskType.html">getTaskType</a></code> </p>
+          </td>
+          <td><p>Get the type of the task.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getTuneResult.html">getTuneResult</a></code> </p>
+          </td>
+          <td><p>Returns the optimal hyperparameters and optimization path after training.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="LearnerProperties.html">getLearnerProperties</a></code> <code><a href="LearnerProperties.html">hasLearnerProperties</a></code> </p>
+          </td>
+          <td><p>Query properties of learners.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="MeasureProperties.html">getMeasureProperties</a></code> <code><a href="MeasureProperties.html">hasMeasureProperties</a></code> </p>
+          </td>
+          <td><p>Query properties of measures.</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-resample-functions" class="hasAnchor"><a href="#section-resample-functions" class="anchor"></a>Resample Functions</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="resample.html">resample</a></code> <code><a href="resample.html">crossval</a></code> <code><a href="resample.html">repcv</a></code> <code><a href="resample.html">holdout</a></code> <code><a href="resample.html">subsample</a></code> <code><a href="resample.html">bootstrapOOB</a></code> <code><a href="resample.html">bootstrapB632</a></code> <code><a href="resample.html">bootstrapB632plus</a></code> </p>
+          </td>
+          <td><p>Fit models according to a resampling strategy.</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-train-functions" class="hasAnchor"><a href="#section-train-functions" class="anchor"></a>Train Functions</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="aggregations.html">test.mean</a></code> <code><a href="aggregations.html">test.sd</a></code> <code><a href="aggregations.html">test.median</a></code> <code><a href="aggregations.html">test.min</a></code> <code><a href="aggregations.html">test.max</a></code> <code><a href="aggregations.html">test.sum</a></code> <code><a href="aggregations.html">test.range</a></code> <code><a href="aggregations.html">test.rmse</a></code> <code><a href="aggregations.html">train.mean</a></code> <code><a href="aggregations.html">train.sd</a></code> <code><a href="aggregations.html">train.median</a></code> <code><a href="aggregations.html">train.min</a></code> <code><a href="aggregations.html">train.max</a></code> <code><a href="aggregations.html">train.sum</a></code> <code><a href="aggregations.html">train.range</a></code> <code><a href="aggregations.html">train.rmse</a></code> <code><a href="aggregations.html">b632</a></code> <code><a href="aggregations.html">b632plus</a></code> <code><a href="aggregations.html">testgroup.mean</a></code> <code><a href="aggregations.html">testgroup.sd</a></code> <code><a href="aggregations.html">test.join</a></code> </p>
+          </td>
+          <td><p>Aggregation methods.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="train.html">train</a></code> </p>
+          </td>
+          <td><p>Train a learning algorithm.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="trainLearner.html">trainLearner</a></code> </p>
+          </td>
+          <td><p>Train an R learner.</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-check-functions" class="hasAnchor"><a href="#section-check-functions" class="anchor"></a>Check Functions</h2>
             <p class="section-desc"></p>
           </th>
         </tr>
@@ -1690,6 +2162,134 @@ multilabel task.</p></td>
           </td>
           <td><p>Yeast multilabel classification task.</p></td>
         </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-plot-functions" class="hasAnchor"><a href="#section-plot-functions" class="anchor"></a>Plot Functions</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotBMRBoxplots.html">plotBMRBoxplots</a></code> </p>
+          </td>
+          <td><p>Create box or violin plots for a BenchmarkResult.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotBMRRanksAsBarChart.html">plotBMRRanksAsBarChart</a></code> </p>
+          </td>
+          <td><p>Create a bar chart for ranks in a BenchmarkResult.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotBMRSummary.html">plotBMRSummary</a></code> </p>
+          </td>
+          <td><p>Plot a benchmark summary.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotCalibration.html">plotCalibration</a></code> </p>
+          </td>
+          <td><p>Plot calibration data using ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotCritDifferences.html">plotCritDifferences</a></code> </p>
+          </td>
+          <td><p>Plot critical differences for a selected measure.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotFilterValues.html">plotFilterValues</a></code> </p>
+          </td>
+          <td><p>Plot filter values using ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotFilterValuesGGVIS.html">plotFilterValuesGGVIS</a></code> </p>
+          </td>
+          <td><p>Plot filter values using ggvis.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotHyperParsEffect.html">plotHyperParsEffect</a></code> </p>
+          </td>
+          <td><p>Plot the hyperparameter effects data</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotLearnerPrediction.html">plotLearnerPrediction</a></code> </p>
+          </td>
+          <td><p>Visualizes a learning algorithm on a 1D or 2D data set.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotLearningCurve.html">plotLearningCurve</a></code> </p>
+          </td>
+          <td><p>Plot learning curve data using ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotLearningCurveGGVIS.html">plotLearningCurveGGVIS</a></code> </p>
+          </td>
+          <td><p>Plot learning curve data using ggvis.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotPartialDependence.html">plotPartialDependence</a></code> </p>
+          </td>
+          <td><p>Plot a partial dependence with ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotPartialDependenceGGVIS.html">plotPartialDependenceGGVIS</a></code> </p>
+          </td>
+          <td><p>Plot a partial dependence using ggvis.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotResiduals.html">plotResiduals</a></code> </p>
+          </td>
+          <td><p>Create residual plots for prediction objects or benchmark results.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotROCCurves.html">plotROCCurves</a></code> </p>
+          </td>
+          <td><p>Plots a ROC curve using ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotThreshVsPerf.html">plotThreshVsPerf</a></code> </p>
+          </td>
+          <td><p>Plot threshold vs. performance(s) for 2-class classification using ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotThreshVsPerfGGVIS.html">plotThreshVsPerfGGVIS</a></code> </p>
+          </td>
+          <td><p>Plot threshold vs. performance(s) for 2-class classification using ggvis.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></code> </p>
+          </td>
+          <td><p>Plots multi-criteria results after tuning using ggplot2.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotTuneMultiCritResultGGVIS.html">plotTuneMultiCritResultGGVIS</a></code> </p>
+          </td>
+          <td><p>Plots multi-criteria results after tuning using ggvis.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plotViperCharts.html">plotViperCharts</a></code> </p>
+          </td>
+          <td><p>Visualize binary classification predictions via ViperCharts system.</p></td>
+        </tr>
       </tbody>
       </table>
     </div>
@@ -1698,7 +2298,11 @@ multilabel task.</p></td>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-get-functions">Get Functions</a></li>
+      <li><a href="#section-resample-functions">Resample Functions</a></li>
+      <li><a href="#section-train-functions">Train Functions</a></li>
+      <li><a href="#section-check-functions">Check Functions</a></li>
+      <li><a href="#section-plot-functions">Plot Functions</a></li>
     </ul>
   </div>
 </div>
