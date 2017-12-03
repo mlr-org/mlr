@@ -42,13 +42,12 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Basics</li>
-    <li>
+<li>
       <a href="../../articles/tutorial/task.html">Tasks</a>
     </li>
     <li>
@@ -75,17 +74,25 @@
     <li>
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
-    <li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
       <a href="../../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../../news/index.html">News</a>
 </li>
@@ -163,18 +170,18 @@
 <a class="sourceLine" id="cb9-5" data-line-number="5">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.lm"</span>, bh.task, rdesc)</a></code></pre>
 <pre><code>## Resampling: cross-validation</code></pre>
 <pre><code>## Measures:             mse</code></pre>
-<pre><code>## [Resample] iter 1:    22.4396752</code></pre>
-<pre><code>## [Resample] iter 2:    28.9833619</code></pre>
-<pre><code>## [Resample] iter 3:    20.3787020</code></pre>
+<pre><code>## [Resample] iter 1:    18.7154841</code></pre>
+<pre><code>## [Resample] iter 2:    24.7954540</code></pre>
+<pre><code>## [Resample] iter 3:    26.1819116</code></pre>
 <pre><code>## </code></pre>
-<pre><code>## Aggregated Result: mse.test.mean=23.9339130</code></pre>
+<pre><code>## Aggregated Result: mse.test.mean=23.2309499</code></pre>
 <pre><code>## </code></pre>
 <pre class="sourceCode r" id="cb18"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">r</a></code></pre>
 <pre><code>## Resample Result
 ## Task: BostonHousing-example
 ## Learner: regr.lm
-## Aggr perf: mse.test.mean=23.9339130
-## Runtime: 0.0396838</code></pre>
+## Aggr perf: mse.test.mean=23.2309499
+## Runtime: 0.044719</code></pre>
 <p>The result <code>r</code> is an object of class [&amp;ResampleResult]. It contains performance results for the learner and some additional information like the runtime, predicted values, and optionally the models fitted in single resampling iterations.</p>
 <pre class="sourceCode r" id="cb20"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">## Peak into r</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">names</span>(r)</a></code></pre>
@@ -183,12 +190,12 @@
 ##  [9] "err.msgs"       "err.dumps"      "extract"        "runtime"</code></pre>
 <pre class="sourceCode r" id="cb22"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mse.test.mean 
-##      23.93391</code></pre>
+##      23.23095</code></pre>
 <pre class="sourceCode r" id="cb24"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">r<span class="op">$</span>measures.test</a></code></pre>
 <pre><code>##   iter      mse
-## 1    1 22.43968
-## 2    2 28.98336
-## 3    3 20.37870</code></pre>
+## 1    1 18.71548
+## 2    2 24.79545
+## 3    3 26.18191</code></pre>
 <p><code>r$measures.test</code> gives the performance on each of the 3 test data sets. <code>r$aggr</code> shows the aggregated performance value. Its name <code>"mse.test.mean"</code> indicates the performance measure, <a href="measures.md">mse</a>, and the method, <a href="&amp;aggregations">test.mean</a>, used to aggregate the 3 individual performances. <a href="&amp;aggregations">test.mean</a> is the default aggregation scheme for most performance measures and, as the name implies, takes the mean over the performances on the test data sets.</p>
 <p>Resampling in [%mlr] works the same way for all types of learning problems and learners. Below is a classification example where a <a href="&amp;rpart::rpart">classification tree (rpart)</a> is evaluated on the <a href="&amp;mlbench::sonar">Sonar</a> data set by subsampling with 5 iterations.</p>
 <p>In each subsampling iteration the data set <span class="math inline">\(D\)</span> is randomly partitioned into a training and a test set according to a given percentage, e.g., 2/3 training and 1/3 test set. If there is just one iteration, the strategy is commonly called <em>holdout</em> or <em>test sample estimation</em>.</p>
@@ -206,28 +213,28 @@
 <a class="sourceLine" id="cb26-11" data-line-number="11">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(lrn, sonar.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, fpr, fnr, timetrain))</a></code></pre>
 <pre><code>## Resampling: subsampling</code></pre>
 <pre><code>## Measures:             mmce        fpr         fnr         timetrain</code></pre>
-<pre><code>## [Resample] iter 1:    0.2857143   0.4117647   0.2000000   0.0170000</code></pre>
-<pre><code>## [Resample] iter 2:    0.1666667   0.3000000   0.0454545   0.0140000</code></pre>
-<pre><code>## [Resample] iter 3:    0.3095238   0.2631579   0.3478261   0.0130000</code></pre>
-<pre><code>## [Resample] iter 4:    0.1904762   0.1250000   0.2777778   0.0160000</code></pre>
-<pre><code>## [Resample] iter 5:    0.3571429   0.5000000   0.2272727   0.0150000</code></pre>
+<pre><code>## [Resample] iter 1:    0.3095238   0.5200000   0.0000000   0.0160000</code></pre>
+<pre><code>## [Resample] iter 2:    0.3571429   0.3913043   0.3157895   0.0140000</code></pre>
+<pre><code>## [Resample] iter 3:    0.4047619   0.5454545   0.2500000   0.0140000</code></pre>
+<pre><code>## [Resample] iter 4:    0.2142857   0.3913043   0.0000000   0.0170000</code></pre>
+<pre><code>## [Resample] iter 5:    0.2142857   0.2777778   0.1666667   0.0160000</code></pre>
 <pre><code>## </code></pre>
-<pre><code>## Aggregated Result: mmce.test.mean=0.2619048,fpr.test.mean=0.3199845,fnr.test.mean=0.2196662,timetrain.test.mean=0.0150000</code></pre>
+<pre><code>## Aggregated Result: mmce.test.mean=0.3000000,fpr.test.mean=0.4251682,fnr.test.mean=0.1464912,timetrain.test.mean=0.0154000</code></pre>
 <pre><code>## </code></pre>
 <pre class="sourceCode r" id="cb37"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">r</a></code></pre>
 <pre><code>## Resample Result
 ## Task: Sonar-example
 ## Learner: classif.rpart
-## Aggr perf: mmce.test.mean=0.2619048,fpr.test.mean=0.3199845,fnr.test.mean=0.2196662,timetrain.test.mean=0.0150000
-## Runtime: 0.330032</code></pre>
+## Aggr perf: mmce.test.mean=0.3000000,fpr.test.mean=0.4251682,fnr.test.mean=0.1464912,timetrain.test.mean=0.0154000
+## Runtime: 0.257376</code></pre>
 <p>If you want to add further measures afterwards, use [&amp;addRRMeasure].</p>
 <pre class="sourceCode r" id="cb39"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">## Add balanced error rate (ber) and time used to predict</a>
 <a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw"><a href="../../reference/addRRMeasure.html">addRRMeasure</a></span>(r, <span class="kw">list</span>(ber, timepredict))</a></code></pre>
 <pre><code>## Resample Result
 ## Task: Sonar-example
 ## Learner: classif.rpart
-## Aggr perf: mmce.test.mean=0.2619048,fpr.test.mean=0.3199845,fnr.test.mean=0.2196662,timetrain.test.mean=0.0150000,ber.test.mean=0.2698254,timepredict.test.mean=0.0454000
-## Runtime: 0.330032</code></pre>
+## Aggr perf: mmce.test.mean=0.3000000,fpr.test.mean=0.4251682,fnr.test.mean=0.1464912,timetrain.test.mean=0.0154000,ber.test.mean=0.2858297,timepredict.test.mean=0.0304000
+## Runtime: 0.257376</code></pre>
 <p>By default, [&amp;resample] prints progress messages and intermediate results. You can turn this off by setting <code>show.info = FALSE</code>, as done in the code chunk below. (If you are interested in suppressing these messages permanently have a look at the tutorial page about <a href="configureMlr.md">configuring mlr</a>.)</p>
 <p>In the above example, the <a href="&amp;makeLearner">Learner</a> was explicitly constructed. For convenience you can also specify the learner as a string and pass any learner parameters via the <code>...</code> argument of [&amp;resample].</p>
 <pre class="sourceCode r" id="cb41"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">"information"</span>), sonar.task, rdesc,</a>
@@ -237,8 +244,8 @@
 <pre><code>## Resample Result
 ## Task: Sonar-example
 ## Learner: classif.rpart
-## Aggr perf: mmce.test.mean=0.2666667,fpr.test.mean=0.3287953,fnr.test.mean=0.1958914,timetrain.test.mean=0.0150000
-## Runtime: 0.11888</code></pre>
+## Aggr perf: mmce.test.mean=0.2714286,fpr.test.mean=0.2877328,fnr.test.mean=0.2575016,timetrain.test.mean=0.0174000
+## Runtime: 0.146022</code></pre>
 </section><section id="accessing-resample-results" class="level2"><h2>Accessing resample results</h2>
 <p>Apart from the learner performance you can extract further information from the resample results, for example predicted values or the models fitted in individual resample iterations.</p>
 <section id="predictions" class="level3"><h3>Predictions</h3>
@@ -251,14 +258,14 @@
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ##    id truth response iter  set
-## 1 202     M        R    1 test
-## 2  30     R        M    1 test
-## 3  67     R        R    1 test
-## 4 125     M        R    1 test
-## 5 157     M        M    1 test
-## 6 193     M        M    1 test
+## 1  50     R        R    1 test
+## 2 124     M        M    1 test
+## 3 120     M        M    1 test
+## 4 136     M        M    1 test
+## 5  98     M        M    1 test
+## 6  48     R        M    1 test
 ## ... (#rows: 210, #cols: 5)</code></pre>
 <pre class="sourceCode r" id="cb45"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">pred =<span class="st"> </span><span class="kw"><a href="../../reference/getRRPredictions.html">getRRPredictions</a></span>(r)</a>
 <a class="sourceLine" id="cb45-2" data-line-number="2">pred</a></code></pre>
@@ -268,29 +275,29 @@
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ##    id truth response iter  set
-## 1 202     M        R    1 test
-## 2  30     R        M    1 test
-## 3  67     R        R    1 test
-## 4 125     M        R    1 test
-## 5 157     M        M    1 test
-## 6 193     M        M    1 test
+## 1  50     R        R    1 test
+## 2 124     M        M    1 test
+## 3 120     M        M    1 test
+## 4 136     M        M    1 test
+## 5  98     M        M    1 test
+## 6  48     R        M    1 test
 ## ... (#rows: 210, #cols: 5)</code></pre>
 <p><code>pred</code> is an object of class [&amp;ResamplePrediction]. Just as a [&amp;Prediction] object (see the tutorial page on <a href="predict.md">making predictions</a>) it has an element <code>$data</code> which is a <a href="&amp;base::data.frame">data.frame</a> that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s). You can use <a href="&amp;Prediction">as.data.frame</a> to directly access the <code>$data</code> slot. Moreover, all getter functions for [&amp;Prediction] objects like <a href="&amp;getPredictionResponse">getPredictionResponse</a> or [&amp;getPredictionProbabilities] are applicable.</p>
 <pre class="sourceCode r" id="cb47"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(pred))</a></code></pre>
 <pre><code>##    id truth response iter  set
-## 1 202     M        R    1 test
-## 2  30     R        M    1 test
-## 3  67     R        R    1 test
-## 4 125     M        R    1 test
-## 5 157     M        M    1 test
-## 6 193     M        M    1 test</code></pre>
+## 1  50     R        R    1 test
+## 2 124     M        M    1 test
+## 3 120     M        M    1 test
+## 4 136     M        M    1 test
+## 5  98     M        M    1 test
+## 6  48     R        M    1 test</code></pre>
 <pre class="sourceCode r" id="cb49"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionTruth</a></span>(pred))</a></code></pre>
-<pre><code>## [1] M R R M M M
+<pre><code>## [1] R M M M M R
 ## Levels: M R</code></pre>
 <pre class="sourceCode r" id="cb51"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">head</span>(<span class="kw"><a href="../../reference/getPredictionResponse.html">getPredictionResponse</a></span>(pred))</a></code></pre>
-<pre><code>## [1] R M R R M M
+<pre><code>## [1] R M M M M M
 ## Levels: M R</code></pre>
 <p>The columns <code>iter</code> and <code>set</code> in the <a href="&amp;base::data.frame">data.frame</a> indicate the resampling iteration and the data set (<code>train</code> or <code>test</code>) for which the prediction was made.</p>
 <p>By default, predictions are made for the test sets only. If predictions for the training set are required, set <code>predict = "train"</code> (for predictions on the train set only) or <code>predict = "both"</code> (for predictions on both train and test sets) in [&amp;makeResampleDesc]. In any case, this is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and some examples are shown <a href="resample#aggregating-performance-values">later on</a>.</p>
@@ -303,11 +310,11 @@
 <pre><code>## Resample Result
 ## Task: iris-example
 ## Learner: classif.lda
-## Aggr perf: mmce.test.mean=0.0200000
-## Runtime: 0.0132458</code></pre>
+## Aggr perf: mmce.test.mean=0.0600000
+## Runtime: 0.0127254</code></pre>
 <pre class="sourceCode r" id="cb55"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">r<span class="op">$</span>measures.train</a></code></pre>
 <pre><code>##   iter mmce
-## 1    1 0.02</code></pre>
+## 1    1    0</code></pre>
 <p>(Please note that nonetheless the misclassification rate <code>r$aggr</code> is estimated on the test data only. How to calculate performance measures on the training sets is shown <a href="resample#aggregating-performance-values">below</a>.)</p>
 <p>A second function to extract predictions from resample results is [&amp;getRRPredictionList] which returns a <a href="&amp;base::list">list</a> of predictions split by data set (train/test) and resampling iteration.</p>
 <pre class="sourceCode r" id="cb57"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">predList =<span class="st"> </span><span class="kw"><a href="../../reference/getRRPredictionList.html">getRRPredictionList</a></span>(r)</a>
@@ -319,12 +326,12 @@
 ## threshold: 
 ## time: 0.00
 ##      id      truth   response
-## 79   79 versicolor versicolor
-## 29   29     setosa     setosa
+## 83   83 versicolor versicolor
+## 74   74 versicolor versicolor
+## 41   41     setosa     setosa
+## 149 149  virginica  virginica
 ## 133 133  virginica  virginica
-## 91   91 versicolor versicolor
-## 25   25     setosa     setosa
-## 15   15     setosa     setosa
+## 138 138  virginica  virginica
 ## ... (#rows: 100, #cols: 3)
 ## 
 ## 
@@ -335,12 +342,12 @@
 ## threshold: 
 ## time: 0.00
 ##      id      truth   response
+## 42   42     setosa     setosa
+## 65   65 versicolor versicolor
+## 2     2     setosa     setosa
 ## 80   80 versicolor versicolor
-## 141 141  virginica  virginica
-## 95   95 versicolor versicolor
-## 101 101  virginica  virginica
-## 123 123  virginica  virginica
-## 84   84 versicolor  virginica
+## 31   31     setosa     setosa
+## 129 129  virginica  virginica
 ## ... (#rows: 50, #cols: 3)</code></pre>
 </section><section id="learner-models" class="level3"><h3>Learner models</h3>
 <p>In each resampling iteration a <a href="&amp;makeLearner">Learner</a> is fitted on the respective training set. By default, the resulting <a href="&amp;makeWrappedModel">WrappedModel</a>s are not included in the [&amp;ResampleResult] and slot <code>$models</code> is empty. In order to keep them, set <code>models = TRUE</code> when calling [&amp;resample], as in the following survival analysis example.</p>
@@ -351,7 +358,7 @@
 <a class="sourceLine" id="cb59-5" data-line-number="5">r<span class="op">$</span>models</a></code></pre>
 <pre><code>## [[1]]
 ## Model for learner.id=surv.coxph; learner.class=surv.coxph
-## Trained on: task.id = lung-example; obs = 111; features = 8
+## Trained on: task.id = lung-example; obs = 112; features = 8
 ## Hyperparameters: 
 ## 
 ## [[2]]
@@ -361,7 +368,7 @@
 ## 
 ## [[3]]
 ## Model for learner.id=surv.coxph; learner.class=surv.coxph
-## Trained on: task.id = lung-example; obs = 112; features = 8
+## Trained on: task.id = lung-example; obs = 111; features = 8
 ## Hyperparameters:</code></pre>
 </section><section id="the-extract-option" class="level3"><h3>The extract option</h3>
 <p>Keeping complete fitted models can be memory-intensive if these objects are large or the number of resampling iterations is high. Alternatively, you can use the <code>extract</code> argument of [&amp;resample] to retain only the information you need. To this end you need to pass a <a href="&amp;base::function">function</a> to <code>extract</code> which is applied to each <a href="&amp;makeWrappedModel">WrappedModel</a> object fitted in each resampling iteration.</p>
@@ -377,34 +384,30 @@
 ## For a complete list of functions, use 'library(help = "modeest")' or 'help.start()'.</code></pre>
 <pre class="sourceCode r" id="cb63"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">r<span class="op">$</span>extract</a></code></pre>
 <pre><code>## [[1]]
-##        mpg cyl     disp       hp     drat       wt   qsec  vs        am
-## 1 17.32000 7.2 270.5200 145.0000 2.948000 3.609000 18.386 0.4 0.0000000
-## 2 24.62000 4.6 117.5400 100.5000 4.017000 2.437800 18.715 0.8 0.7000000
-## 3 14.86667 8.0 413.8333 210.6667 3.268333 4.412333 16.965 0.0 0.1666667
-##       gear     carb
-## 1 3.000000 2.000000
-## 2 4.100000 2.500000
-## 3 3.333333 3.333333
+##        mpg cyl     disp       hp  drat       wt     qsec  vs  am     gear
+## 1 20.06667   6 185.9333 122.1667 3.530 3.063333 17.82333 0.5 0.5 3.833333
+## 2 27.18000   4 103.6400  81.2000 4.108 2.267800 19.05000 0.9 0.8 4.200000
+## 3 15.38000   8 313.3200 203.8000 3.344 3.605000 16.60800 0.0 0.2 3.400000
+##       carb
+## 1 3.333333
+## 2 1.600000
+## 3 3.200000
 ## 
 ## [[2]]
-##        mpg      cyl     disp        hp     drat       wt     qsec
-## 1 15.00000 8.000000 301.0000 335.00000 3.540000 3.570000 14.60000
-## 2 25.44545 4.545455 117.5364  90.72727 4.058182 2.474091 18.66000
-## 3 14.45556 8.000000 374.7556 212.11111 3.298889 4.133778 16.76556
-##          vs        am     gear     carb
-## 1 0.0000000 1.0000000 5.000000 8.000000
-## 2 0.7272727 0.7272727 4.181818 2.363636
-## 3 0.0000000 0.1111111 3.222222 3.444444
+##      mpg cyl   disp      hp    drat       wt    qsec  vs   am gear carb
+## 1 15.750   8 316.95 209.875 3.33625 3.560625 16.4125 0.0 0.25  3.5  3.5
+## 2 13.675   8 443.00 206.250 3.06000 4.966000 17.5675 0.0 0.00  3.0  3.5
+## 3 22.900   5 137.34 105.000 3.95100 2.656500 18.3110 0.7 0.60  4.0  2.7
 ## 
 ## [[3]]
-##        mpg cyl     disp        hp     drat       wt     qsec        vs
-## 1 25.55714   4 112.8429  90.14286 3.947143 2.372571 18.61286 0.8571429
-## 2 15.71111   8 317.8222 204.44444 3.186667 3.706667 16.67444 0.0000000
-## 3 19.75000   6 189.7000 113.50000 3.580000 3.175000 18.39000 0.6666667
-##          am     gear     carb
-## 1 0.7142857 4.142857 1.571429
-## 2 0.1111111 3.222222 3.444444
-## 3 0.3333333 3.666667 3.000000</code></pre>
+##        mpg      cyl     disp        hp     drat       wt    qsec        vs
+## 1 17.65000 7.500000 281.9000 155.00000 2.995000 3.633750 17.8275 0.2500000
+## 2 24.48889 4.444444 121.7778  91.66667 3.878889 2.565333 19.1900 0.8888889
+## 3 14.50000 8.000000 392.8750 228.12500 3.233750 4.285500 16.6425 0.0000000
+##          am gear carb
+## 1 0.0000000 3.00 2.25
+## 2 0.5555556 4.00 2.00
+## 3 0.1250000 3.25 4.00</code></pre>
 <p>As a second example, we extract the variable importances from fitted regression trees using function [&amp;getFeatureImportance]. (For more detailed information on this topic see the <a href="feature_selection.md">feature selection</a> page.)</p>
 <pre class="sourceCode r" id="cb65"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">## Extract the variable importance in a regression tree</a>
 <a class="sourceLine" id="cb65-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.rpart"</span>, bh.task, rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>, <span class="dt">extract =</span> getFeatureImportance)</a>
@@ -420,10 +423,10 @@
 ## Replace: NA
 ## Number of Monte-Carlo iterations: NA
 ## Local: FALSE
-##       crim       zn    indus chas      nox       rm      age      dis rad
-## 1 668.3543 256.9252 4266.355    0 3138.553 14078.37 2828.724 3086.403   0
-##        tax  ptratio        b    lstat
-## 1 3105.721 3325.485 387.2739 10643.32
+##       crim      zn    indus chas      nox       rm      age      dis rad
+## 1 3209.623 941.706 3657.886    0 3724.489 16812.34 2789.486 3044.197   0
+##        tax  ptratio       b   lstat
+## 1 574.7709 3419.556 500.916 8886.99
 ## 
 ## [[2]]
 ## FeatureImportance:
@@ -436,10 +439,10 @@
 ## Replace: NA
 ## Number of Monte-Carlo iterations: NA
 ## Local: FALSE
-##       crim       zn   indus chas      nox       rm      age      dis
-## 1 8538.639 368.5668 9058.09    0 10016.29 14237.06 7572.955 2989.929
+##       crim       zn    indus chas      nox       rm      age      dis
+## 1 8316.074 474.8362 9025.713    0 10086.81 13370.14 7969.373 2738.327
 ##        rad      tax  ptratio        b    lstat
-## 1 1131.331 1594.552 1244.179 162.9199 18274.85
+## 1 608.0214 1155.913 363.5951 18.40908 18130.96
 ## 
 ## [[3]]
 ## FeatureImportance:
@@ -452,10 +455,10 @@
 ## Replace: NA
 ## Number of Monte-Carlo iterations: NA
 ## Local: FALSE
-##       crim       zn    indus     chas      nox       rm      age      dis
-## 1 3052.297 1320.146 4906.361 108.8539 3966.526 17883.95 3059.395 3097.711
+##       crim       zn    indus chas      nox       rm      age      dis
+## 1 7417.102 232.1281 7142.826    0 7976.534 12138.31 7539.585 1975.678
 ##        rad      tax  ptratio        b    lstat
-## 1 641.0416 763.1453 3402.832 194.6956 11620.17</code></pre>
+## 1 651.8582 1373.059 672.1324 459.3501 16952.05</code></pre>
 </section></section><section id="stratification-and-blocking" class="level2"><h2>Stratification and blocking</h2>
 <ul>
 <li>
@@ -473,8 +476,8 @@
 <pre><code>## Resample Result
 ## Task: iris-example
 ## Learner: classif.lda
-## Aggr perf: mmce.test.mean=0.0197386
-## Runtime: 0.0268075</code></pre>
+## Aggr perf: mmce.test.mean=0.0200000
+## Runtime: 0.020757</code></pre>
 <p>Stratification is also available for survival tasks. Here the stratification balances the censoring rate.</p>
 </section><section id="stratification-with-respect-to-explanatory-variables" class="level3"><h3>Stratification with respect to explanatory variables</h3>
 <p>Sometimes it is required to also stratify on the input data, e.g., to ensure that all subgroups are represented in all training and test sets. To stratify on the input columns, specify <a href="&amp;base::factor">factor</a> columns of your task data via <code>stratify.cols</code>.</p>
@@ -485,8 +488,8 @@
 <pre><code>## Resample Result
 ## Task: BostonHousing-example
 ## Learner: regr.rpart
-## Aggr perf: mse.test.mean=22.8596357
-## Runtime: 0.0348089</code></pre>
+## Aggr perf: mse.test.mean=24.7130501
+## Runtime: 0.0442634</code></pre>
 </section><section id="blocking" class="level3"><h3>Blocking</h3>
 <p>If some observations “belong together” and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a <code>blocking</code> <a href="base::factor">factor</a> when <a href="task.md#further-settings">creating the task</a>.</p>
 <pre class="sourceCode r" id="cb71"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">## 5 blocks containing 30 observations each</a>
@@ -549,13 +552,13 @@
 ##   ..- attr(*, "class")= chr [1:2] "CVDesc" "ResampleDesc"
 ##  $ size      : int 150
 ##  $ train.inds:List of 3
-##   ..$ : int [1:100] 62 101 94 15 129 2 115 66 64 136 ...
-##   ..$ : int [1:100] 62 149 101 94 15 129 115 77 136 106 ...
-##   ..$ : int [1:100] 149 2 66 64 77 106 68 108 91 125 ...
+##   ..$ : int [1:100] 4 50 6 88 51 68 75 49 82 69 ...
+##   ..$ : int [1:100] 103 4 6 88 141 51 13 49 137 39 ...
+##   ..$ : int [1:100] 103 50 141 13 68 75 82 69 119 113 ...
 ##  $ test.inds :List of 3
-##   ..$ : int [1:50] 5 8 24 25 31 35 39 40 44 53 ...
-##   ..$ : int [1:50] 2 6 11 12 14 16 17 18 19 27 ...
-##   ..$ : int [1:50] 1 3 4 7 9 10 13 15 20 21 ...
+##   ..$ : int [1:50] 1 5 7 9 10 11 13 14 17 19 ...
+##   ..$ : int [1:50] 2 8 15 18 24 25 26 27 28 31 ...
+##   ..$ : int [1:50] 3 4 6 12 16 30 34 37 41 44 ...
 ##  $ group     : Factor w/ 0 levels: 
 ##  - attr(*, "class")= chr "ResampleInstance"</code></pre>
 <pre class="sourceCode r" id="cb83"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">## Create a resample instance given the size of the data set</a>
@@ -570,23 +573,23 @@
 ##   ..- attr(*, "class")= chr [1:2] "CVDesc" "ResampleDesc"
 ##  $ size      : int 150
 ##  $ train.inds:List of 3
-##   ..$ : int [1:100] 74 93 1 140 71 12 33 37 100 56 ...
-##   ..$ : int [1:100] 74 52 93 1 71 99 12 100 75 56 ...
-##   ..$ : int [1:100] 52 140 99 33 37 75 4 13 107 132 ...
+##   ..$ : int [1:100] 46 148 40 18 3 36 42 44 56 33 ...
+##   ..$ : int [1:100] 148 40 100 3 39 44 107 33 99 131 ...
+##   ..$ : int [1:100] 46 100 18 36 39 42 56 107 38 131 ...
 ##  $ test.inds :List of 3
-##   ..$ : int [1:50] 3 4 7 8 13 16 22 23 26 30 ...
-##   ..$ : int [1:50] 2 6 9 11 14 15 19 21 27 28 ...
-##   ..$ : int [1:50] 1 5 10 12 17 18 20 24 25 32 ...
+##   ..$ : int [1:50] 2 5 7 9 10 11 12 16 19 20 ...
+##   ..$ : int [1:50] 4 14 17 18 22 23 25 30 31 36 ...
+##   ..$ : int [1:50] 1 3 6 8 13 15 26 33 34 35 ...
 ##  $ group     : Factor w/ 0 levels: 
 ##  - attr(*, "class")= chr "ResampleInstance"</code></pre>
 <pre class="sourceCode r" id="cb85"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">## Access the indices of the training observations in iteration 3</a>
 <a class="sourceLine" id="cb85-2" data-line-number="2">rin<span class="op">$</span>train.inds[[<span class="dv">3</span>]]</a></code></pre>
-<pre><code>##   [1]  52 140  99  33  37  75   4  13 107 132  59  94  73 142 130  61  90
-##  [18] 120  15  98 116 121 150 145 119 110  14   6  67  34  48 128 127  44
-##  [35]  70  43  11  46 108 113  49  31  97 129  42  35  92 102  16  65  66
-##  [52]  50   2  28  89  22  77  58  81  45 111  84 122 138 112  21 125  26
-##  [69]  55 123  29 101  19  68   3   8  62 143 114  27 139   9  69  30  57
-##  [86] 103  63  53  36  51  23  78  79  40 136  86  87  64   7  91</code></pre>
+<pre><code>##   [1]  46 100  18  36  39  42  56 107  38 131  27  19 110  74  37  98  58
+##  [18]  29 120 116   5 115  10 112  30 149  72  89  41 102 129  91 117 125
+##  [35]  70 123 104 111 143 126  60  45 138  55  84 135 128 118  28  25  20
+##  [52] 109 137 122   7  51 127  21 136  80  66  59 130  83   9  52  76  85
+##  [69]  22  53 139  17  82  24 133   2  62  47  32  31  14  43  88 105 101
+##  [86]  81  11  78  49  50  16  23  69 141 124  12  71  48   4  54</code></pre>
 <p>The result <code>rin</code> inherits from class <a href="&amp;makeResampleInstance">ResampleInstance</a> and contains <a href="&amp;base::list">list</a>s of index vectors for the train and test sets.</p>
 <p>If a <a href="&amp;makeResampleDesc">ResampleDesc</a> is passed to [&amp;resample], it is instantiated internally. Naturally, it is also possible to pass a <a href="&amp;makeResampleInstance">ResampleInstance</a> directly.</p>
 <p>While the separation between resample descriptions, resample instances, and the [&amp;resample] function itself seems overly complicated, it has several advantages:</p>
@@ -604,7 +607,7 @@
 ##           0.02</code></pre>
 <pre class="sourceCode r" id="cb89"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">r.rpart<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean 
-##           0.06</code></pre>
+##     0.04666667</code></pre>
 <ul>
 <li>In order to add further resampling methods you can simply derive from the <a href="&amp;makeResampleDesc">ResampleDesc</a> and <a href="&amp;makeResampleInstance">ResampleInstance</a> classes, but you do neither have to touch [&amp;resample] nor any further methods that use the resampling strategy.</li>
 </ul>
@@ -624,14 +627,14 @@
 <pre><code>## Aggregation function: test.mean</code></pre>
 <pre class="sourceCode r" id="cb95"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">mmce<span class="op">$</span>aggr<span class="op">$</span>fun</a></code></pre>
 <pre><code>## function(task, perf.test, perf.train, measure, group, pred) mean(perf.test)
-## &lt;bytecode: 0x564d95100538&gt;
+## &lt;bytecode: 0x556337b58478&gt;
 ## &lt;environment: namespace:mlr&gt;</code></pre>
 <pre class="sourceCode r" id="cb97"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">## Root mean square error</a>
 <a class="sourceLine" id="cb97-2" data-line-number="2">rmse<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## Aggregation function: test.rmse</code></pre>
 <pre class="sourceCode r" id="cb99"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">rmse<span class="op">$</span>aggr<span class="op">$</span>fun</a></code></pre>
 <pre><code>## function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test^2))
-## &lt;bytecode: 0x564d9879a208&gt;
+## &lt;bytecode: 0x55633b1de4e8&gt;
 ## &lt;environment: namespace:mlr&gt;</code></pre>
 <p>You can change the aggregation method of a <a href="&amp;makeMeasure">Measure</a> via function [&amp;setAggregation]. All available aggregation schemes are listed on the [&amp;aggregations] documentation page.</p>
 <section id="example-one-measure-with-different-aggregations" class="level3"><h3>Example: One measure with different aggregations</h3>
@@ -653,21 +656,21 @@
 <a class="sourceLine" id="cb103-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"regr.lm"</span>, bh.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(mse, mseTestMedian, mseTestMin, mseTestMax))</a></code></pre>
 <pre><code>## Resampling: cross-validation</code></pre>
 <pre><code>## Measures:             mse       mse       mse       mse</code></pre>
-<pre><code>## [Resample] iter 1:    23.452294923.452294923.452294923.4522949</code></pre>
-<pre><code>## [Resample] iter 2:    26.878383226.878383226.878383226.8783832</code></pre>
-<pre><code>## [Resample] iter 3:    22.422750422.422750422.422750422.4227504</code></pre>
+<pre><code>## [Resample] iter 1:    18.317625318.317625318.317625318.3176253</code></pre>
+<pre><code>## [Resample] iter 2:    25.199366125.199366125.199366125.1993661</code></pre>
+<pre><code>## [Resample] iter 3:    26.674883226.674883226.674883226.6748832</code></pre>
 <pre><code>## </code></pre>
-<pre><code>## Aggregated Result: mse.test.mean=24.2511428,mse.test.median=23.4522949,mse.test.min=22.4227504,mse.test.max=26.8783832</code></pre>
+<pre><code>## Aggregated Result: mse.test.mean=23.3972916,mse.test.median=25.1993661,mse.test.min=18.3176253,mse.test.max=26.6748832</code></pre>
 <pre><code>## </code></pre>
 <pre class="sourceCode r" id="cb112"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1">r</a></code></pre>
 <pre><code>## Resample Result
 ## Task: BostonHousing-example
 ## Learner: regr.lm
-## Aggr perf: mse.test.mean=24.2511428,mse.test.median=23.4522949,mse.test.min=22.4227504,mse.test.max=26.8783832
-## Runtime: 0.0277104</code></pre>
+## Aggr perf: mse.test.mean=23.3972916,mse.test.median=25.1993661,mse.test.min=18.3176253,mse.test.max=26.6748832
+## Runtime: 0.027241</code></pre>
 <pre class="sourceCode r" id="cb114"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>##   mse.test.mean mse.test.median    mse.test.min    mse.test.max 
-##        24.25114        23.45229        22.42275        26.87838</code></pre>
+##        23.39729        25.19937        18.31763        26.67488</code></pre>
 </section><section id="example-calculating-the-training-error" class="level3"><h3>Example: Calculating the training error</h3>
 <p>Below we calculate the mean misclassification error (<a href="measures.md">mmce</a>) on the training and the test data sets. Note that we have to set <code>predict = "both"</code> when calling [&amp;makeResampleDesc] in order to get predictions on both training and test sets.</p>
 <pre class="sourceCode r" id="cb116"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">mmceTrainMean =<span class="st"> </span><span class="kw"><a href="../../reference/setAggregation.html">setAggregation</a></span>(mmce, train.mean)</a>
@@ -675,20 +678,20 @@
 <a class="sourceLine" id="cb116-3" data-line-number="3">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="st">"classif.rpart"</span>, iris.task, rdesc, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, mmceTrainMean))</a></code></pre>
 <pre><code>## Resampling: cross-validation</code></pre>
 <pre><code>## Measures:             mmce.train   mmce.test</code></pre>
-<pre><code>## [Resample] iter 1:    0.0400000    0.1200000</code></pre>
+<pre><code>## [Resample] iter 1:    0.0500000    0.0200000</code></pre>
 <pre><code>## [Resample] iter 2:    0.0300000    0.0600000</code></pre>
-<pre><code>## [Resample] iter 3:    0.0400000    0.0400000</code></pre>
+<pre><code>## [Resample] iter 3:    0.0300000    0.0800000</code></pre>
 <pre><code>## </code></pre>
-<pre><code>## Aggregated Result: mmce.test.mean=0.0733333,mmce.train.mean=0.0366667</code></pre>
+<pre><code>## Aggregated Result: mmce.test.mean=0.0533333,mmce.train.mean=0.0366667</code></pre>
 <pre><code>## </code></pre>
 <pre class="sourceCode r" id="cb125"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">r<span class="op">$</span>measures.train</a></code></pre>
 <pre><code>##   iter mmce mmce
-## 1    1 0.04 0.04
+## 1    1 0.05 0.05
 ## 2    2 0.03 0.03
-## 3    3 0.04 0.04</code></pre>
+## 3    3 0.03 0.03</code></pre>
 <pre class="sourceCode r" id="cb127"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>##  mmce.test.mean mmce.train.mean 
-##      0.07333333      0.03666667</code></pre>
+##      0.05333333      0.03666667</code></pre>
 </section><section id="example-bootstrap" class="level3"><h3>Example: Bootstrap</h3>
 <p>In <em>out-of-bag bootstrap estimation</em> <span class="math inline">\(B\)</span> new data sets <span class="math inline">\(D^{*1}, \ldots, D^{*B}\)</span> are drawn from the data set <span class="math inline">\(D\)</span> with replacement, each of the same size as <span class="math inline">\(D\)</span>. In the <span class="math inline">\(b\)</span>-th iteration, <span class="math inline">\(D^{*b}\)</span> forms the training set, while the remaining elements from <span class="math inline">\(D\)</span>, i.e., <span class="math inline">\(D \setminus D^{*b}\)</span>, form the test set.</p>
 <!--(
@@ -717,46 +720,46 @@
 <a class="sourceLine" id="cb131-2" data-line-number="2">  <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb131-3" data-line-number="3"><span class="kw">head</span>(r<span class="op">$</span>measures.train)</a></code></pre>
 <pre><code>##   iter       mmce       mmce       mmce
-## 1    1 0.02666667 0.02666667 0.02666667
-## 2    2 0.04000000 0.04000000 0.04000000
-## 3    3 0.01333333 0.01333333 0.01333333
-## 4    4 0.02666667 0.02666667 0.02666667
-## 5    5 0.01333333 0.01333333 0.01333333
-## 6    6 0.02000000 0.02000000 0.02000000</code></pre>
+## 1    1 0.03333333 0.03333333 0.03333333
+## 2    2 0.03333333 0.03333333 0.03333333
+## 3    3 0.03333333 0.03333333 0.03333333
+## 4    4 0.03333333 0.03333333 0.03333333
+## 5    5 0.03333333 0.03333333 0.03333333
+## 6    6 0.04000000 0.04000000 0.04000000</code></pre>
 <pre class="sourceCode r" id="cb133"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">## Compare misclassification rates for out-of-bag, b632, and b632+ bootstrap</a>
 <a class="sourceLine" id="cb133-2" data-line-number="2">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean      mmce.b632  mmce.b632plus 
-##     0.06959057     0.05256791     0.05400731</code></pre>
+##     0.04033878     0.03923277     0.03956777</code></pre>
 </section></section><section id="convenience-functions" class="level2"><h2>Convenience functions</h2>
 <p>The functionality described on this page allows for much control and flexibility. However, when quickly trying out some learners, it can get tedious to type all the code for defining the resampling strategy, setting the aggregation scheme and so on. As mentioned above, [%mlr] includes some pre-defined resample description objects for frequently used strategies like, e.g., 5-fold cross-validation (<a href="&amp;makeResampleDesc">cv5</a>). Moreover, [%mlr] provides special functions for the most common resampling methods, for example <a href="&amp;resample">holdout</a>, <a href="&amp;resample">crossval</a>, or <a href="&amp;resample">bootstrapB632</a>.</p>
 <pre class="sourceCode r" id="cb135"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw"><a href="../../reference/resample.html">crossval</a></span>(<span class="st">"classif.lda"</span>, iris.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw">list</span>(mmce, ber))</a></code></pre>
 <pre><code>## Resampling: cross-validation</code></pre>
 <pre><code>## Measures:             mmce      ber</code></pre>
-<pre><code>## [Resample] iter 1:    0.0400000 0.0380952</code></pre>
-<pre><code>## [Resample] iter 2:    0.0200000 0.0256410</code></pre>
-<pre><code>## [Resample] iter 3:    0.0000000 0.0000000</code></pre>
+<pre><code>## [Resample] iter 1:    0.0200000 0.0196078</code></pre>
+<pre><code>## [Resample] iter 2:    0.0200000 0.0196078</code></pre>
+<pre><code>## [Resample] iter 3:    0.0200000 0.0151515</code></pre>
 <pre><code>## </code></pre>
-<pre><code>## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0212454</code></pre>
+<pre><code>## Aggregated Result: mmce.test.mean=0.0200000,ber.test.mean=0.0181224</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## Resample Result
 ## Task: iris-example
 ## Learner: classif.lda
-## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0212454
-## Runtime: 0.0235002</code></pre>
+## Aggr perf: mmce.test.mean=0.0200000,ber.test.mean=0.0181224
+## Runtime: 0.0279243</code></pre>
 <pre class="sourceCode r" id="cb145"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw"><a href="../../reference/resample.html">bootstrapB632plus</a></span>(<span class="st">"regr.lm"</span>, bh.task, <span class="dt">iters =</span> <span class="dv">3</span>, <span class="dt">measures =</span> <span class="kw">list</span>(mse, mae))</a></code></pre>
 <pre><code>## Resampling: OOB bootstrapping</code></pre>
 <pre><code>## Measures:             mse.train   mae.train   mse.test    mae.test</code></pre>
-<pre><code>## [Resample] iter 1:    18.8801176  3.1155617   24.7566756  3.4174014</code></pre>
-<pre><code>## [Resample] iter 2:    27.2501229  3.6901770   21.6880537  3.4577840</code></pre>
-<pre><code>## [Resample] iter 3:    24.3135925  3.4473571   23.3052536  3.5004230</code></pre>
+<pre><code>## [Resample] iter 1:    17.9350148  2.9363514   31.3847451  3.6383931</code></pre>
+<pre><code>## [Resample] iter 2:    19.0503016  3.1339808   29.3640683  3.6180803</code></pre>
+<pre><code>## [Resample] iter 3:    21.9799292  3.2249632   25.5744930  3.7387198</code></pre>
 <pre><code>## </code></pre>
-<pre><code>## Aggregated Result: mse.b632plus=23.3752311,mae.b632plus=3.4453766</code></pre>
+<pre><code>## Aggregated Result: mse.b632plus=25.6059768,mae.b632plus=3.4690926</code></pre>
 <pre><code>## </code></pre>
 <pre><code>## Resample Result
 ## Task: BostonHousing-example
 ## Learner: regr.lm
-## Aggr perf: mse.b632plus=23.3752311,mae.b632plus=3.4453766
-## Runtime: 0.042527</code></pre>
+## Aggr perf: mse.b632plus=25.6059768,mae.b632plus=3.4690926
+## Runtime: 0.0404441</code></pre>
 </section>
 </div>
   </div>

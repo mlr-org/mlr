@@ -42,13 +42,12 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Basics</li>
-    <li>
+<li>
       <a href="../../articles/tutorial/task.html">Tasks</a>
     </li>
     <li>
@@ -75,17 +74,25 @@
     <li>
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
-    <li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
       <a href="../../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../../news/index.html">News</a>
 </li>
@@ -130,20 +137,20 @@
 <a class="sourceLine" id="cb1-10" data-line-number="10">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"Holdout"</span>)</a>
 <a class="sourceLine" id="cb1-11" data-line-number="11">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(<span class="st">"classif.ksvm"</span>, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">print</span>(<span class="kw">head</span>(<span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)))</a></code></pre>
-<pre><code>##           C     kernel sigma degree mmce.test.mean dob eol error.message
-## 1  9.660620 vanilladot    NA     NA           0.02   1  NA          &lt;NA&gt;
-## 2  8.839376 vanilladot    NA     NA           0.04   1  NA          &lt;NA&gt;
-## 3  9.925005    polydot    NA      2           0.12   1  NA          &lt;NA&gt;
-## 4 -2.905062    polydot    NA      2           0.10   1  NA          &lt;NA&gt;
-## 5  1.120067    polydot    NA      3           0.08   1  NA          &lt;NA&gt;
-## 6  6.850877    polydot    NA      4           0.10   1  NA          &lt;NA&gt;
-##   exec.time
-## 1     0.061
-## 2     0.718
-## 3     0.073
-## 4     0.033
-## 5     0.014
-## 6     0.014</code></pre>
+<pre><code>##           C     kernel    sigma degree mmce.test.mean dob eol
+## 1  2.547213    polydot       NA      5           0.10   1  NA
+## 2 -6.497225 vanilladot       NA     NA           0.16   1  NA
+## 3 11.182551    polydot       NA      3           0.10   1  NA
+## 4  5.001201 vanilladot       NA     NA           0.04   1  NA
+## 5 11.430651 vanilladot       NA     NA           0.02   1  NA
+## 6  1.413873     rbfdot 3.189689     NA           0.12   1  NA
+##   error.message exec.time
+## 1          &lt;NA&gt;     0.082
+## 2          &lt;NA&gt;     0.766
+## 3          &lt;NA&gt;     0.027
+## 4          &lt;NA&gt;     0.012
+## 5          &lt;NA&gt;     0.012
+## 6          &lt;NA&gt;     0.060</code></pre>
 <p>See how we made the kernel parameters like <code>sigma</code> and <code>degree</code> dependent on the <code>kernel</code> selection parameters? This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.</p>
 </section><section id="tuning-across-whole-model-spaces-with-modelmultiplexer" class="level2"><h2>Tuning across whole model spaces with ModelMultiplexer</h2>
 <p>We can now take the following example even one step further. If we use the <a href="&amp;makeModelMultiplexer">ModelMultiplexer</a> we can tune over different model classes at once, just as we did with the SVM kernels above.</p>
@@ -175,19 +182,19 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3">res =<span class="st"> </span><span class="kw"><a href="../../reference/tuneParams.html">tuneParams</a></span>(lrn, iris.task, rdesc, <span class="dt">par.set =</span> ps, <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">print</span>(<span class="kw">head</span>(<span class="kw">as.data.frame</span>(res<span class="op">$</span>opt.path)))</a></code></pre>
 <pre><code>##       selected.learner classif.ksvm.sigma classif.randomForest.ntree
-## 1         classif.ksvm          -7.058598                         NA
-## 2         classif.ksvm          -2.146342                         NA
-## 3 classif.randomForest                 NA                        249
-## 4 classif.randomForest                 NA                        497
-## 5 classif.randomForest                 NA                         86
-## 6 classif.randomForest                 NA                        433
+## 1         classif.ksvm         -0.4930995                         NA
+## 2         classif.ksvm         -5.5941028                         NA
+## 3         classif.ksvm        -11.1837655                         NA
+## 4         classif.ksvm          1.6773599                         NA
+## 5         classif.ksvm          9.2035074                         NA
+## 6 classif.randomForest                 NA                        205
 ##   mmce.test.mean dob eol error.message exec.time
-## 1     0.18000000   1  NA          &lt;NA&gt;     0.042
-## 2     0.04666667   1  NA          &lt;NA&gt;     0.039
-## 3     0.04000000   1  NA          &lt;NA&gt;     0.623
-## 4     0.05333333   1  NA          &lt;NA&gt;     0.075
-## 5     0.04000000   1  NA          &lt;NA&gt;     0.053
-## 6     0.06000000   1  NA          &lt;NA&gt;     0.066</code></pre>
+## 1     0.05333333   1  NA          &lt;NA&gt;     0.026
+## 2     0.09333333   1  NA          &lt;NA&gt;     0.026
+## 3     0.71333333   1  NA          &lt;NA&gt;     0.033
+## 4     0.08666667   1  NA          &lt;NA&gt;     0.043
+## 5     0.70000000   1  NA          &lt;NA&gt;     0.032
+## 6     0.05333333   1  NA          &lt;NA&gt;     0.407</code></pre>
 </section><section id="multi-criteria-evaluation-and-optimization" class="level2"><h2>Multi-criteria evaluation and optimization</h2>
 <p>During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.</p>
 <p>In the following example we aim to minimize both, the false positive and the false negative rates (<a href="measures.md">fpr</a> and <a href="measures.md">fnr</a>). We again tune the hyperparameters of an SVM (function <a href="&amp;kernlab::ksvm">ksvm</a>) with a radial basis kernel and use the <a href="&amp;sonar.task">sonar classification task</a> for illustration. As search strategy we choose a random search.</p>
@@ -202,22 +209,22 @@
 <a class="sourceLine" id="cb8-8" data-line-number="8">  <span class="dt">measures =</span> <span class="kw">list</span>(fpr, fnr), <span class="dt">control =</span> ctrl, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-9" data-line-number="9">res</a></code></pre>
 <pre><code>## Tune multicrit result:
-## Points on front: 3</code></pre>
+## Points on front: 2</code></pre>
 <pre class="sourceCode r" id="cb10"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(<span class="kw">trafoOptPath</span>(res<span class="op">$</span>opt.path)))</a></code></pre>
 <pre><code>##              C        sigma fpr.test.mean fnr.test.mean dob eol
-## 1 8.952717e-03 1.765657e+00     1.0000000    0.00000000   1  NA
-## 2 9.192842e+01 1.307211e-02     0.1818182    0.05405405   2  NA
-## 3 3.552132e+01 2.971269e-03     0.2424242    0.16216216   3  NA
-## 4 1.179537e+03 5.682054e-04     0.3030303    0.21621622   4  NA
-## 5 6.971734e-02 3.358817e+01     1.0000000    0.00000000   5  NA
-## 6 1.392492e-03 8.069659e-03     1.0000000    0.00000000   6  NA
+## 1 6.462504e-01 1.210443e-03     0.1666667         0.375   1  NA
+## 2 6.504821e-04 4.705344e-03     1.0000000         0.000   2  NA
+## 3 9.393380e+00 3.668682e-04     0.1666667         0.350   3  NA
+## 4 5.986990e-04 7.535077e-01     1.0000000         0.000   4  NA
+## 5 3.123911e+03 1.585721e+03     1.0000000         0.000   5  NA
+## 6 2.242642e-01 4.797821e-02     0.8333333         0.000   6  NA
 ##   error.message exec.time
-## 1          &lt;NA&gt;     0.025
-## 2          &lt;NA&gt;     0.024
-## 3          &lt;NA&gt;     0.023
-## 4          &lt;NA&gt;     0.043
-## 5          &lt;NA&gt;     0.029
-## 6          &lt;NA&gt;     0.036</code></pre>
+## 1          &lt;NA&gt;     0.032
+## 2          &lt;NA&gt;     0.026
+## 3          &lt;NA&gt;     0.024
+## 4          &lt;NA&gt;     0.023
+## 5          &lt;NA&gt;     0.024
+## 6          &lt;NA&gt;     0.024</code></pre>
 <p>The results can be visualized with function [&amp;plotTuneMultiCritResult]. The plot shows the false positive and false negative rates for all parameter settings evaluated during tuning. Points on the Pareto front are slightly increased.</p>
 <pre class="sourceCode r" id="cb12"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../../reference/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></span>(res)</a></code></pre>
 <p><img src="advanced_tune_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>

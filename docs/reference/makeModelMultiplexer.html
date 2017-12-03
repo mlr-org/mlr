@@ -65,12 +65,11 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Basics</li>
     <li>
       <a href="../articles/tutorial/task.html">Tasks</a>
     </li>
@@ -98,17 +97,25 @@
     <li>
       <a href="../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../news/index.html">News</a>
 </li>
@@ -232,12 +239,12 @@ List of Learners with unique IDs.</p></td>
 #&gt; 5         classif.ksvm           4.717987                         NA
 #&gt; 6         classif.ksvm           5.404095                         NA
 #&gt;   mmce.test.mean dob eol error.message exec.time
-#&gt; 1     0.06666667   1  NA          &lt;NA&gt;     0.152
-#&gt; 2     0.11333333   2  NA          &lt;NA&gt;     0.245
-#&gt; 3     0.06666667   3  NA          &lt;NA&gt;     0.078
-#&gt; 4     0.30000000   4  NA          &lt;NA&gt;     0.039
+#&gt; 1     0.06666667   1  NA          &lt;NA&gt;     0.037
+#&gt; 2     0.11333333   2  NA          &lt;NA&gt;     0.035
+#&gt; 3     0.06666667   3  NA          &lt;NA&gt;     0.039
+#&gt; 4     0.30000000   4  NA          &lt;NA&gt;     0.033
 #&gt; 5     0.26000000   5  NA          &lt;NA&gt;     0.037
-#&gt; 6     0.36000000   6  NA          &lt;NA&gt;     0.035</div><div class='input'>
+#&gt; 6     0.36000000   6  NA          &lt;NA&gt;     0.050</div><div class='input'>
 <span class='co'># more unique and reliable way to construct the param set</span>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeModelMultiplexerParamSet.html'>makeModelMultiplexerParamSet</a></span>(<span class='no'>lrn</span>,
   <span class='kw'>classif.ksvm</span> <span class='kw'>=</span> <span class='fu'>makeParamSet</span>(

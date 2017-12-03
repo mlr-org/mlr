@@ -65,12 +65,11 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Basics</li>
     <li>
       <a href="../articles/tutorial/task.html">Tasks</a>
     </li>
@@ -98,17 +97,25 @@
     <li>
       <a href="../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../news/index.html">News</a>
 </li>
@@ -215,7 +222,7 @@ In this case ggplot's <code>facet_wrap</code> will choose the layout itself.</p>
 <span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
 <span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>mod</span>, <span class='no'>sonar.task</span>)
 <span class='no'>pvs</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'>list</span>(<span class='no'>acc</span>, <span class='fu'><a href='setAggregation.html'>setAggregation</a></span>(<span class='no'>acc</span>, <span class='no'>train.mean</span>)))
-<span class='fu'>plotThreshVsPerf</span>(<span class='no'>pvs</span>)</div><div class='img'><img src='plotThreshVsPerf-3.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotThreshVsPerf</span>(<span class='no'>pvs</span>)</div><div class='img'><img src='plotThreshVsPerf-5.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

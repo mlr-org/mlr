@@ -65,12 +65,11 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Basics</li>
     <li>
       <a href="../articles/tutorial/task.html">Tasks</a>
     </li>
@@ -98,17 +97,25 @@
     <li>
       <a href="../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../news/index.html">News</a>
 </li>
@@ -236,7 +243,7 @@ Default is set via <code><a href='configureMlr.html'>configureMlr</a></code>.</p
 <span class='no'>bmr</span> <span class='kw'>=</span> <span class='fu'>benchmark</span>(<span class='no'>lrns</span>, <span class='no'>tasks</span>, <span class='no'>rdesc</span>, <span class='kw'>measures</span> <span class='kw'>=</span> <span class='no'>meas</span>)</div><div class='output co'>#&gt; <span class='message'>Task: iris-example, Learner: classif.lda</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             acc       ber       </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    1.0000000 0.0000000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.9600000 0.0394872 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: acc.test.mean=0.9800000,ber.test.mean=0.0197436</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Task: Sonar-example, Learner: classif.lda</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             acc       ber       </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.6538462 0.3484848 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.7115385 0.2881983 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: acc.test.mean=0.6826923,ber.test.mean=0.3183416</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Task: iris-example, Learner: classif.rpart</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             acc       ber       </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.9600000 0.0411111 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.9333333 0.0651282 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: acc.test.mean=0.9466667,ber.test.mean=0.0531197</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Task: Sonar-example, Learner: classif.rpart</span></div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             acc       ber       </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.7115385 0.2954545 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.7307692 0.2711802 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: acc.test.mean=0.7211538,ber.test.mean=0.2833174</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>rmat</span> <span class='kw'>=</span> <span class='fu'><a href='convertBMRToRankMatrix.html'>convertBMRToRankMatrix</a></span>(<span class='no'>bmr</span>)
 <span class='fu'>print</span>(<span class='no'>rmat</span>)</div><div class='output co'>#&gt;               iris-example Sonar-example
 #&gt; classif.lda              1             2
-#&gt; classif.rpart            2             1</div><div class='input'><span class='fu'><a href='plotBMRSummary.html'>plotBMRSummary</a></span>(<span class='no'>bmr</span>)</div><div class='img'><img src='benchmark-10.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='plotBMRBoxplots.html'>plotBMRBoxplots</a></span>(<span class='no'>bmr</span>, <span class='no'>ber</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"violin"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='img'><img src='benchmark-11.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='plotBMRRanksAsBarChart.html'>plotBMRRanksAsBarChart</a></span>(<span class='no'>bmr</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='st'>"stack"</span>)</div><div class='img'><img src='benchmark-12.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='friedmanTestBMR.html'>friedmanTestBMR</a></span>(<span class='no'>bmr</span>)</div><div class='output co'>#&gt; 
+#&gt; classif.rpart            2             1</div><div class='input'><span class='fu'><a href='plotBMRSummary.html'>plotBMRSummary</a></span>(<span class='no'>bmr</span>)</div><div class='img'><img src='benchmark-16.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='plotBMRBoxplots.html'>plotBMRBoxplots</a></span>(<span class='no'>bmr</span>, <span class='no'>ber</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"violin"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='img'><img src='benchmark-17.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='plotBMRRanksAsBarChart.html'>plotBMRRanksAsBarChart</a></span>(<span class='no'>bmr</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='st'>"stack"</span>)</div><div class='img'><img src='benchmark-18.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'><a href='friedmanTestBMR.html'>friedmanTestBMR</a></span>(<span class='no'>bmr</span>)</div><div class='output co'>#&gt; 
 #&gt; 	Friedman rank sum test
 #&gt; 
 #&gt; data:  acc.test.mean and learner.id and task.id

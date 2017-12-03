@@ -12,10 +12,8 @@ navbar:
     href: articles/mlr.html
   - text: Reference
     href: reference/index.html
-  - text: Tutorial
+  - text: Basics
     menu:
-    - text: Basics
-
     - text: Tasks
       href: articles/tutorial/task.html
     - text: Learners
@@ -35,13 +33,17 @@ navbar:
     - text: Visualization
       href: articles/tutorial/visualization.html
 
-    - text: Advanced
-
+  - text: Advanced
+    menu:
     - text: Advanced Tuning
       href: articles/tutorial/advanced_tune.html
     - text: Generic Bagging
       href: articles/tutorial/bagging.html
-    - text: Extend
+  - text: Extend
+    menu:
+    - text: extend
+  - text: Appendix
+    menu:
     - text: Appendix
   - text: News
     href: news/index.html

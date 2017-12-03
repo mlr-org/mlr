@@ -65,12 +65,11 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Basics</li>
     <li>
       <a href="../articles/tutorial/task.html">Tasks</a>
     </li>
@@ -98,17 +97,25 @@
     <li>
       <a href="../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../news/index.html">News</a>
 </li>
@@ -204,11 +211,11 @@ Default is <code>FALSE</code>.</p></td>
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>)
 <span class='no'>pred</span> <span class='kw'>=</span> <span class='fu'>predict</span>(<span class='no'>fit</span>, <span class='kw'>task</span> <span class='kw'>=</span> <span class='no'>sonar.task</span>)
 <span class='no'>roc</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>pred</span>, <span class='fu'>list</span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>))
-<span class='fu'>plotROCCurves</span>(<span class='no'>roc</span>)</div><div class='img'><img src='plotROCCurves-9.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plotROCCurves</span>(<span class='no'>roc</span>)</div><div class='img'><img src='plotROCCurves-15.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>bootstrapB632plus</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: OOB bootstrapping</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce.train   mmce.test    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0865385    0.3974359    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.1009615    0.3421053    </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 3:    0.0769231    0.3239437    </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.b632plus=0.3102063</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>roc_r</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='no'>r</span>, <span class='fu'>list</span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>), <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plotROCCurves</span>(<span class='no'>roc_r</span>)</div><div class='img'><img src='plotROCCurves-10.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plotROCCurves</span>(<span class='no'>roc_r</span>)</div><div class='img'><img src='plotROCCurves-16.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>r2</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>crossval</a></span>(<span class='no'>lrn</span>, <span class='no'>sonar.task</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.2571429 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.3478261 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 3:    0.3043478 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.3031056</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='no'>roc_l</span> <span class='kw'>=</span> <span class='fu'><a href='generateThreshVsPerfData.html'>generateThreshVsPerfData</a></span>(<span class='fu'>list</span>(<span class='kw'>boot</span> <span class='kw'>=</span> <span class='no'>r</span>, <span class='kw'>cv</span> <span class='kw'>=</span> <span class='no'>r2</span>), <span class='fu'>list</span>(<span class='no'>fpr</span>, <span class='no'>tpr</span>), <span class='kw'>aggregate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plotROCCurves</span>(<span class='no'>roc_l</span>)</div><div class='img'><img src='plotROCCurves-11.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plotROCCurves</span>(<span class='no'>roc_l</span>)</div><div class='img'><img src='plotROCCurves-17.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

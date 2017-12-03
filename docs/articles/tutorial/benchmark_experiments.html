@@ -42,13 +42,12 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Basics</li>
-    <li>
+<li>
       <a href="../../articles/tutorial/task.html">Tasks</a>
     </li>
     <li>
@@ -75,17 +74,25 @@
     <li>
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
-    <li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
       <a href="../../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../../news/index.html">News</a>
 </li>
@@ -444,33 +451,33 @@
 ## 14               Sonar-example        rpart     0.30785714    0.31153361
 ## 15               Sonar-example randomForest     0.17785714    0.17442696
 ##    timetrain.test.mean
-## 1               0.0039
-## 2               0.0188
-## 3               0.0655
-## 4               0.0063
-## 5               0.0136
-## 6               0.6070
-## 7               0.0100
-## 8               0.0126
-## 9               0.5897
-## 10              0.0034
-## 11              0.0075
-## 12              0.5807
-## 13              0.0273
-## 14              0.0121
-## 15              0.3070</code></pre>
+## 1               0.0022
+## 2               0.0065
+## 3               0.0287
+## 4               0.0062
+## 5               0.0112
+## 6               0.3053
+## 7               0.0067
+## 8               0.0110
+## 9               0.3355
+## 10              0.0033
+## 11              0.0070
+## 12              0.3022
+## 13              0.0136
+## 14              0.0115
+## 15              0.2450</code></pre>
 <p>From the aggregated performance values we can see that for the iris- and PimaIndiansDiabetes-example <a href="&amp;MASS::lda">linear discriminant analysis</a> performs well while for all other tasks the <a href="&amp;randomForest::randomForest">random forest</a> seems superior. Training takes longer for the <a href="&amp;randomForest::randomForest">random forest</a> than for the other learners.</p>
 <p>In order to draw any conclusions from the average performances at least their variability has to be taken into account or, preferably, the distribution of performance values across resampling iterations.</p>
 <p>The individual performances on the 10 folds for every task, learner, and measure are retrieved below.</p>
 <pre class="sourceCode r" id="cb81"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">perf =<span class="st"> </span><span class="kw"><a href="../../reference/getBMRPerformances.html">getBMRPerformances</a></span>(bmr, <span class="dt">as.df =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb81-2" data-line-number="2"><span class="kw">head</span>(perf)</a></code></pre>
 <pre><code>##        task.id learner.id iter      mmce       ber timetrain
-## 1 iris-example        lda    1 0.0000000 0.0000000     0.003
+## 1 iris-example        lda    1 0.0000000 0.0000000     0.002
 ## 2 iris-example        lda    2 0.1333333 0.1666667     0.002
 ## 3 iris-example        lda    3 0.0000000 0.0000000     0.002
 ## 4 iris-example        lda    4 0.0000000 0.0000000     0.003
-## 5 iris-example        lda    5 0.0000000 0.0000000     0.007
-## 6 iris-example        lda    6 0.0000000 0.0000000     0.010</code></pre>
+## 5 iris-example        lda    5 0.0000000 0.0000000     0.002
+## 6 iris-example        lda    6 0.0000000 0.0000000     0.003</code></pre>
 <p>A closer look at the result reveals that the <a href="&amp;randomForest::randomForest">random forest</a> outperforms the <a href="&amp;rpart::rpart">classification tree</a> in every instance, while <a href="&amp;MASS::lda">linear discriminant analysis</a> performs better than <a href="&amp;rpart::rpart">rpart</a> most of the time. Additionally <a href="&amp;MASS::lda">lda</a> sometimes even beats the <a href="&amp;randomForest::randomForest">random forest</a>. With increasing size of such [&amp;benchmark] experiments, those tables become almost unreadable and hard to comprehend.</p>
 <p>[%mlr] features some plotting functions to visualize results of benchmark experiments that you might find useful. Moreover, [%mlr] offers statistical hypothesis tests to assess performance differences between learners.</p>
 </section><section id="integrated-plots" class="level3"><h3>Integrated plots</h3>
@@ -498,12 +505,12 @@
 <pre class="sourceCode r" id="cb93"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">plt =<span class="st"> </span><span class="kw"><a href="../../reference/plotBMRBoxplots.html">plotBMRBoxplots</a></span>(bmr, <span class="dt">measure =</span> mmce)</a>
 <a class="sourceLine" id="cb93-2" data-line-number="2"><span class="kw">head</span>(plt<span class="op">$</span>data)</a></code></pre>
 <pre><code>##        task.id learner.id iter      mmce       ber timetrain
-## 1 iris-example        lda    1 0.0000000 0.0000000     0.003
+## 1 iris-example        lda    1 0.0000000 0.0000000     0.002
 ## 2 iris-example        lda    2 0.1333333 0.1666667     0.002
 ## 3 iris-example        lda    3 0.0000000 0.0000000     0.002
 ## 4 iris-example        lda    4 0.0000000 0.0000000     0.003
-## 5 iris-example        lda    5 0.0000000 0.0000000     0.007
-## 6 iris-example        lda    6 0.0000000 0.0000000     0.010</code></pre>
+## 5 iris-example        lda    5 0.0000000 0.0000000     0.002
+## 6 iris-example        lda    6 0.0000000 0.0000000     0.003</code></pre>
 <pre class="sourceCode r" id="cb95"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">levels</span>(plt<span class="op">$</span>data<span class="op">$</span>task.id) =<span class="st"> </span><span class="kw">c</span>(<span class="st">"Iris"</span>, <span class="st">"Ringnorm"</span>, <span class="st">"Waveform"</span>, <span class="st">"Diabetes"</span>, <span class="st">"Sonar"</span>)</a>
 <a class="sourceLine" id="cb95-2" data-line-number="2"><span class="kw">levels</span>(plt<span class="op">$</span>data<span class="op">$</span>learner.id) =<span class="st"> </span><span class="kw">c</span>(<span class="st">"LDA"</span>, <span class="st">"CART"</span>, <span class="st">"RF"</span>)</a>
 <a class="sourceLine" id="cb95-3" data-line-number="3"></a>

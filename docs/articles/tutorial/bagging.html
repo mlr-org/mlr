@@ -42,13 +42,12 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorial
+    Basics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Basics</li>
-    <li>
+<li>
       <a href="../../articles/tutorial/task.html">Tasks</a>
     </li>
     <li>
@@ -75,17 +74,25 @@
     <li>
       <a href="../../articles/tutorial/visualization.html">Visualization</a>
     </li>
-    <li class="dropdown-header">Advanced</li>
-    <li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Advanced
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
       <a href="../../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
     </li>
     <li>
       <a href="../../articles/tutorial/bagging.html">Generic Bagging</a>
     </li>
-    <li class="dropdown-header">Extend</li>
-    <li class="dropdown-header">Appendix</li>
   </ul>
 </li>
+<li class="dropdown-header">Extend</li>
+<li class="dropdown-header">Appendix</li>
 <li>
   <a href="../../news/index.html">News</a>
 </li>
@@ -137,13 +144,13 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">r =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">r<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean 
-##      0.2890476</code></pre>
+##      0.2992857</code></pre>
 <p>And now with bagging:</p>
 <pre class="sourceCode r" id="cb4"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">rdesc =<span class="st"> </span><span class="kw"><a href="../../reference/makeResampleDesc.html">makeResampleDesc</a></span>(<span class="st">"CV"</span>, <span class="dt">iters =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">result =<span class="st"> </span><span class="kw"><a href="../../reference/resample.html">resample</a></span>(<span class="dt">learner =</span> bag.lrn, <span class="dt">task =</span> sonar.task, <span class="dt">resampling =</span> rdesc, <span class="dt">show.info =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">result<span class="op">$</span>aggr</a></code></pre>
 <pre><code>## mmce.test.mean 
-##      0.2057143</code></pre>
+##      0.2402381</code></pre>
 <p>Training more learners takes more time, but can outperform pure learners on noisy data with many features.</p>
 <section id="changing-the-type-of-prediction" class="level2"><h2>Changing the type of prediction</h2>
 <p>In case of a <em>classification</em> problem the predicted class labels are determined by majority voting over the predictions of the individual models. Additionally, posterior probabilities can be estimated as the relative proportions of the predicted class labels. For this purpose you have to change the predict type of the <em>bagging learner</em> as follows.</p>
@@ -172,12 +179,12 @@
 <pre class="sourceCode r" id="cb10"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">pred =<span class="st"> </span><span class="kw">predict</span>(mod, <span class="dt">task =</span> bh.task, <span class="dt">subset =</span> test.inds)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">head</span>(<span class="kw">as.data.frame</span>(pred))</a></code></pre>
 <pre><code>##   id truth response       se
-## 2  2  21.6 22.46458 2.867534
-## 3  3  34.7 34.19295 1.946454
-## 5  5  36.2 33.16161 2.755166
-## 6  6  28.7 24.01124 1.896118
-## 8  8  27.1 14.80590 3.052722
-## 9  9  16.5 14.11212 2.202855</code></pre>
+## 2  2  21.6 21.56164 1.249964
+## 3  3  34.7 34.43968 2.693580
+## 5  5  36.2 34.43968 2.693580
+## 6  6  28.7 27.72666 5.982715
+## 8  8  27.1 15.22036 3.469127
+## 9  9  16.5 14.15237 4.004729</code></pre>
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>
 <p>Let’s visualise this a bit using [%ggplot2]. Here we plot the percentage of lower status of the population (<code>lstat</code>) against the prediction.</p>
 <pre class="sourceCode r" id="cb12"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)</a>
