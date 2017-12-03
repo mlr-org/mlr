@@ -71,6 +71,33 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Basics</li>
+    <li>
+      <a href="../articles/tutorial/task.html">Tasks</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/learners.html">Learners</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/predict.html">Predict</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/performance.html">Performance</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/resample.html">Resampling</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/tune.html">Tuning</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/benchmark_experiments.html">Benchmark Experiments</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/parallelization.html">Parallelization</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/visualization.html">Visualization</a>
+    </li>
     <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
@@ -213,15 +240,10 @@ Additional parameters passed down to the filter.</p></td>
 <span class='no'>inner</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"Holdout"</span>)
 <span class='no'>outer</span> <span class='kw'>=</span> <span class='fu'><a href='makeResampleDesc.html'>makeResampleDesc</a></span>(<span class='st'>"CV"</span>, <span class='kw'>iters</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'>makeFilterWrapper</span>(<span class='no'>lrn</span>, <span class='kw'>fw.perc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>)</div><div class='output co'>#&gt; &lt;simpleError in .Call("rfsrcGrow", as.integer(do.trace), as.integer(seed), as.integer(impute.only.bits +     var.used.bits + split.depth.bits + importance.bits + bootstrap.bits +     forest.bits + proximity.bits + perf.bits + statistics.bits),     as.integer(samptype.bits + forest.wt.bits + na.action.bits +         split.cust.bits + tree.err.bits + membership.bits + terminal.qualts.bits +         terminal.quants.bits), as.integer(splitinfo$index), as.integer(splitinfo$nsplit),     as.integer(mtry), as.integer(formulaDetail$ytry), as.integer(nodesize),     as.integer(nodedepth), as.integer(length(cause.wt)), as.double(cause.wt),     as.integer(ntree), as.integer(n), as.integer(length(yvar.types)),     as.character(yvar.types), as.integer(yvar.nlevels), as.double(as.vector(yvar)),     as.integer(n.xvar), as.character(xvar.types), as.integer(xvar.nlevels),     as.integer(sampsize), as.integer(samp), as.double(case.wt),     as.double(split.wt), as.double(yvar.wt), as.double(xvar.wt),     as.double(xvar), as.integer(length(event.info$time.interest)),     as.double(event.info$time.interest), as.integer(nimpute),     as.integer(get.rf.cores())): "rfsrcGrow" not resolved from current namespace (randomForestSRC)&gt;</div><div class='output co'>#&gt; <span class='error'>Error in randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task),     proximity = FALSE, forest = FALSE, importance = method, ...): An error has occurred in the grow algorithm.  Please turn trace on for further analysis.</span></div><div class='input'><span class='fu'>print</span>(<span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>mod</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getFilteredFeatures(mod): object 'mod' not found</span></div><div class='input'><span class='co'># now nested resampling, where we extract the features that the filter method selected</span>
 <span class='no'>r</span> <span class='kw'>=</span> <span class='fu'><a href='resample.html'>resample</a></span>(<span class='no'>lrn</span>, <span class='no'>task</span>, <span class='no'>outer</span>, <span class='kw'>extract</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>model</span>) {
   <span class='fu'><a href='getFilteredFeatures.html'>getFilteredFeatures</a></span>(<span class='no'>model</span>)
-})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 1:    0.0400000 </span></div><div class='output co'>#&gt; <span class='message'>[Resample] iter 2:    0.0533333 </span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>Aggregated Result: mmce.test.mean=0.0466667</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='input'><span class='fu'>print</span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] "Petal.Length" "Petal.Width" 
-#&gt; </div></pre>
+})</div><div class='output co'>#&gt; <span class='message'>Resampling: cross-validation</span></div><div class='output co'>#&gt; <span class='message'>Measures:             mmce      </span></div><div class='output co'>#&gt; &lt;simpleError in .Call("rfsrcGrow", as.integer(do.trace), as.integer(seed), as.integer(impute.only.bits +     var.used.bits + split.depth.bits + importance.bits + bootstrap.bits +     forest.bits + proximity.bits + perf.bits + statistics.bits),     as.integer(samptype.bits + forest.wt.bits + na.action.bits +         split.cust.bits + tree.err.bits + membership.bits + terminal.qualts.bits +         terminal.quants.bits), as.integer(splitinfo$index), as.integer(splitinfo$nsplit),     as.integer(mtry), as.integer(formulaDetail$ytry), as.integer(nodesize),     as.integer(nodedepth), as.integer(length(cause.wt)), as.double(cause.wt),     as.integer(ntree), as.integer(n), as.integer(length(yvar.types)),     as.character(yvar.types), as.integer(yvar.nlevels), as.double(as.vector(yvar)),     as.integer(n.xvar), as.character(xvar.types), as.integer(xvar.nlevels),     as.integer(sampsize), as.integer(samp), as.double(case.wt),     as.double(split.wt), as.double(yvar.wt), as.double(xvar.wt),     as.double(xvar), as.integer(length(event.info$time.interest)),     as.double(event.info$time.interest), as.integer(nimpute),     as.integer(get.rf.cores())): "rfsrcGrow" not resolved from current namespace (randomForestSRC)&gt;</div><div class='output co'>#&gt; <span class='error'>Error in randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task),     proximity = FALSE, forest = FALSE, importance = method, ...): An error has occurred in the grow algorithm.  Please turn trace on for further analysis.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>r</span>$<span class='no'>extract</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(r$extract): object 'r' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

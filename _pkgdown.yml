@@ -15,7 +15,28 @@ navbar:
   - text: Tutorial
     menu:
     - text: Basics
+
+    - text: Tasks
+      href: articles/tutorial/task.html
+    - text: Learners
+      href: articles/tutorial/learners.html
+    - text: Predict
+      href: articles/tutorial/predict.html
+    - text: Performance
+      href: articles/tutorial/performance.html
+    - text: Resampling
+      href: articles/tutorial/resample.html
+    - text: Tuning
+      href: articles/tutorial/tune.html
+    - text: Benchmark Experiments
+      href: articles/tutorial/benchmark_experiments.html
+    - text: Parallelization
+      href: articles/tutorial/parallelization.html
+    - text: Visualization
+      href: articles/tutorial/visualization.html
+
     - text: Advanced
+
     - text: Advanced Tuning
       href: articles/tutorial/advanced_tune.html
     - text: Generic Bagging

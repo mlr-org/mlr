@@ -71,6 +71,33 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Basics</li>
+    <li>
+      <a href="../articles/tutorial/task.html">Tasks</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/learners.html">Learners</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/predict.html">Predict</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/performance.html">Performance</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/resample.html">Resampling</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/tune.html">Tuning</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/benchmark_experiments.html">Benchmark Experiments</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/parallelization.html">Parallelization</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/visualization.html">Visualization</a>
+    </li>
     <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
@@ -307,11 +334,11 @@ The range of values of the feature you would want the partial plots on - passed 
     <pre class="examples"><div class='input'><span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"regr.svm"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>bh.task</span>)
 <span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>bh.task</span>, <span class='st'>"lstat"</span>)
-<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>bh.task</span>))</div><div class='img'><img src='generatePartialDependenceData-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>bh.task</span>))</div><div class='img'><img src='generatePartialDependenceData-7.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='no'>lrn</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
 <span class='no'>fit</span> <span class='kw'>=</span> <span class='fu'><a href='train.html'>train</a></span>(<span class='no'>lrn</span>, <span class='no'>iris.task</span>)
 <span class='no'>pd</span> <span class='kw'>=</span> <span class='fu'>generatePartialDependenceData</span>(<span class='no'>fit</span>, <span class='no'>iris.task</span>, <span class='st'>"Petal.Width"</span>)
-<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>iris.task</span>))</div><div class='img'><img src='generatePartialDependenceData-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'><a href='plotPartialDependence.html'>plotPartialDependence</a></span>(<span class='no'>pd</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='getTaskData.html'>getTaskData</a></span>(<span class='no'>iris.task</span>))</div><div class='img'><img src='generatePartialDependenceData-8.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># simulated example with weights computed via the joint distribution</span>
 <span class='co'># in practice empirical weights could be constructed by estimating the joint</span>
 <span class='co'># density from the training data (the data arg to fun) and computing the probability</span>

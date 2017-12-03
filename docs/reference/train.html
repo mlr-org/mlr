@@ -71,6 +71,33 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Basics</li>
+    <li>
+      <a href="../articles/tutorial/task.html">Tasks</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/learners.html">Learners</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/predict.html">Predict</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/performance.html">Performance</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/resample.html">Resampling</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/tune.html">Tuning</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/benchmark_experiments.html">Benchmark Experiments</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/parallelization.html">Parallelization</a>
+    </li>
+    <li>
+      <a href="../articles/tutorial/visualization.html">Visualization</a>
+    </li>
     <li class="dropdown-header">Advanced</li>
     <li>
       <a href="../articles/tutorial/advanced_tune.html">Advanced Tuning</a>
@@ -160,11 +187,17 @@ Weights from the task will be overwritten.</p></td>
 <span class='co'>## use linear discriminant analysis to classify iris data</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>learner</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.lda"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(mod): object 'mod' not found</span></div><div class='input'>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)
+<span class='fu'>print</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris; obs = 75; features = 4
+#&gt; Hyperparameters: method=mle</div><div class='input'>
 <span class='co'>## use random forest to classify iris data</span>
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='Task.html'>makeClassifTask</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 <span class='no'>learner</span> <span class='kw'>=</span> <span class='fu'><a href='makeLearner.html'>makeLearner</a></span>(<span class='st'>"classif.rpart"</span>, <span class='kw'>minsplit</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>predict.type</span> <span class='kw'>=</span> <span class='st'>"prob"</span>)
-<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Please use column names for `x`</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(mod): object 'mod' not found</span></div></pre>
+<span class='no'>mod</span> <span class='kw'>=</span> <span class='fu'>train</span>(<span class='no'>learner</span>, <span class='no'>task</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='no'>training.set</span>)
+<span class='fu'>print</span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; Model for learner.id=classif.rpart; learner.class=classif.rpart
+#&gt; Trained on: task.id = iris; obs = 75; features = 4
+#&gt; Hyperparameters: xval=0,minsplit=7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
