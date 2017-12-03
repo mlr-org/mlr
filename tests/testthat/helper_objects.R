@@ -12,6 +12,7 @@ binaryclass.class.col = 61
 binaryclass.class.levs = levels(binaryclass.df[, binaryclass.class.col])
 binaryclass.task = makeClassifTask("binary", data = binaryclass.df, target = binaryclass.target)
 
+data("bc.task.spatial", package = "mlr")
 binaryclass.spatial.df = bc.task.spatial$env$data
 binaryclass.spatial.formula = diplo01~.
 binaryclass.spatial.target = "diplo01"
@@ -122,6 +123,8 @@ surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 rm(getSurvData)
 
+data("gunpoint.task", package = "mlr")
+data("fuelsubset.task", package = "mlr")
 fda.binary.gp.task = gunpoint.task
 suppressMessages({gp = getTaskData(gunpoint.task, subset = seq_len(100), functionals.as = "dfcols")})
 gp.fdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
