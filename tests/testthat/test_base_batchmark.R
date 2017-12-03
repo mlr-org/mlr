@@ -212,6 +212,8 @@ test_that("batchmark", {
 })
 
 test_that("keep.preds and models are passed down to resample()", {
+  skip_if_not_installed("batchtools")
+  library(batchtools)
   task.names = "binary"
   tasks = list(binaryclass.task)
   learner.names = "classif.lda"
