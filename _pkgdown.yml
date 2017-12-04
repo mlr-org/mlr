@@ -49,6 +49,28 @@ navbar:
       href: articles/tutorial/advanced_tune.html
     - text: Feature Selection
       href: articles/tutorial/feature_selection.html
+    - text: Nested Resampling
+      href: articles/tutorial/nested_resampling.html
+    - text: Cost-Sensitive Classification
+      href: articles/tutorial/cost_sensitive_classif.html
+    - text: Imbalanced Classification Problems
+      href: articles/tutorial/imbalanced_classification_problems.html
+    - text: ROC Analysis and Performance Curves
+      href: articles/tutorial/roc_analysis.html
+    - text: Multilabel Classification
+      href: articles/tutorial/multilabel.html
+    - text: Learning Curve Analysis
+      href: articles/tutorial/learning_curve_analysis.html
+    - text: Partial Dependence Plots
+      href: articles/tutorial/partial_dependence.html
+    - text: Classifier Calibration
+      href: articles/tutorial/classifier_calibration.html
+    - text: Hyperparameter Tuning Effects
+      href: articles/tutorial/hyperparameter_tuning_effects.html
+    - text: Out-of-Bag Predictions
+      href: articles/tutorial/out_of_bag_predictions.html
+    - text: Handling of Spatial Data
+      href: articles/tutorial/handling_of_spatial_data.html
 
   - text: Extend
     menu:
