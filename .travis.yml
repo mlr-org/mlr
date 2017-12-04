@@ -66,14 +66,12 @@ jobs:
     #    - git push
     #    - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
     - stage: deploy-pkgdown
-      r_github_packages:
-        - jimhester/lintr
       install: R -q -e 'tic::install()'
       after_install: R -q -e 'tic::after_install()'
       before_script: R -q -e 'tic::before_script()'
       script:
         - R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
-      before_deploy: R -q -e 'tic::before_deploy()'
+      before_deploy: R -q -e 'tic::before_deploy(); remotes::install_github("jimhester/lintr")'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
