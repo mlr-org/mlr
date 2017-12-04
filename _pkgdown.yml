@@ -74,10 +74,25 @@ navbar:
 
   - text: Extend
     menu:
-    - text: extend
+    - text: Create Custom Learners
+      href: articles/tutorial/custom_learners.html
+    - text: Create Custom Measures
+      href: articles/tutorial/custom_measures.html
+    - text: Create Imputation Methods
+      href: articles/tutorial/create_imputation.html
+    - text: Create Custom Filters
+      href: articles/tutorial/create_filter.html
+
   - text: Appendix
     menu:
-    - text: Appendix
+    - text: Example Tasks
+      href: articles/tutorial/example_tasks.html
+    - text: Integrated Learners
+      href: articles/tutorial/integrated_learners.html
+    - text: Implemented Measures
+      href: articles/tutorial/implemented_measures.html
+    - text: Integrated Filter Methods
+      href: articles/tutorial/filter_methods.html
   - text: News
     href: news/index.html
   right:
