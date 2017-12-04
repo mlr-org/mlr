@@ -28,7 +28,7 @@ plots, and *plotting functions* which plot this output using either [%ggplot2] o
 This separation allows users to easily make custom visualizations by
 taking advantage of the generation functions. The only data transformation that is handled inside
 plotting functions is reshaping. The reshaped data is also accessible by calling the plotting
-functions and then extracting the data from the [ggplot](&ggplot2::ggplot) object.
+functions and then extracting the data from the `ggplot()` object.
 
 The functions are named accordingly.
 
