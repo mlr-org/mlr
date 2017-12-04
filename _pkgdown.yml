@@ -41,10 +41,14 @@ navbar:
       href: articles/tutorial/wrapper.html
     - text: Preprocessing
       href: articles/tutorial/preproc.html
-    - text: Advanced Tuning
-      href: articles/tutorial/advanced_tune.html
+    - text: Imputation
+      href: articles/tutorial/impute.html
     - text: Generic Bagging
       href: articles/tutorial/bagging.html
+    - text: Advanced Tuning
+      href: articles/tutorial/advanced_tune.html
+    - text: Feature Selection
+      href: articles/tutorial/feature_selection.html
 
   - text: Extend
     menu:
