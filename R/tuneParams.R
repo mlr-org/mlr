@@ -130,18 +130,18 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 #' @title Get the optimization path of a tuning result.
 #'
 #' @description
-#' Returns the optPath from a [\code{\link{tuneParams}}] object.
-#' @param tune.result [\code{\link{tuneParams}}] \cr
+#' Returns the opt.path from a [\code{\link{tuneParams}}] object.
+#' @param TuneResult [\code{\link{tuneParams}}] \cr
 #'   A tuning result of the [\code{\link{tuneParams}}] function.
 #' @param as.df [\code{logical(1)}]\cr
 #'   Should the optimization path be returned as a data frame?
 #'   Default is \code{TRUE}.
 #' @export
-getOptPath = function(tune.result, as.df = TRUE)
+getTuneResultOptPath = function(TuneResult, as.df = TRUE)
 {
   if (as.df == TRUE) {
-    return(as.data.frame(tune.result$opt.path))
+    return(as.data.frame(TuneResult$opt.path))
   } else {
-    return(tune.result$opt.path)
+    return(TuneResult$opt.path)
   }
 }
