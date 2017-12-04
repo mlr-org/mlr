@@ -41,19 +41,19 @@ This leads to the effect that the model, which was trained on the training set, 
 To reduce this bias on the resulting predictive accuracy estimate, [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/) suggested to use spatial partitioning in favor of random partitioning (see Figure 1). 
 Here, spatial clusters are equal to the number of folds chosen. 
 These spatially disjoint subsets of the data introduce a spatial distance between training and test set. 
-This reduces the influence of spatial autocorrelation and subsequently also the overoptimistc predictive accuracy estimates.
+This reduces the influence of spatial autocorrelation and subsequently also the overoptimistic predictive accuracy estimates.
 The example in Figure 1 shows a five-fold nested cross-validation setting and exhibits the difference between spatial and non-spatial partitioning.
 The nested approach is used when hyperparameter tuning is performed.
 
 ## How to use spatial partitioning in mlr
 
 Spatial partitioning can be used when performing cross-validation. 
-In any [resample](http://www.rdocumentation.org/packages/mlr/functions/resample.html) call you can choose `Spcross-validation` or `RepSpcross-validation` to use it. 
+In any [&resample] call you can choose `SpCV` or `RepSpCV` to use it. 
 There are some prerequisites for this:
 
-When specyfing the [task](task.md), you need to explicitly state that the task is `spatial` one by setting `spatial = TRUE`. 
+When specifying the [task](task.md), you need to explicitly state that the task is `spatial` one by setting `spatial = TRUE`. 
 Next, there need to be two variables named `x` and `y` in your data set that store the coordinate information. 
-If this applies, the coordinates will be used for spatial partitining if `Spcross-validation` or `RepSpcross-validation` are selected as resampling strategies. 
+If this applies, the coordinates will be used for spatial partitioning if `SpCV` or `RepSpCV` are selected as resampling strategies. 
 
 Also, these variables **will be removed** for any [train()](&train) or [predict()](&predict) call. 
 This means they will not be used as predictors within the specified learner but only to set up the sampling for the cross-validation task.
@@ -76,23 +76,23 @@ For performance assessment, a repeated spatial cross-validation with 5 folds and
 data("bc.task.spatial")
 bc.task.spatial
 
-learner.glm <- makeLearner("classif.ranger", predict.type = "prob")
+learner.glm = makeLearner("classif.ranger", predict.type = "prob")
 
-resampling <- makeResampleDesc("SpRepcross-validation", fold = 5, reps = 10)
+resampling = makeResampleDesc("SpRepCV", fold = 5, reps = 10)
 
 set.seed(123)
-out <- resample(learner = learner.glm, task = bc.task.spatial,
+out = resample(learner = learner.glm, task = bc.task.spatial,
   resampling = resampling, measures = list(auc))
 
 mean(out$measures.test$auc)
 ```
 
 We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting.
-To force use non-spatial cross-validation here, variables `x` and `y` need to be removed from the data set because they are not used for parititiong when using `Repcross-validation` and also should not be used as predictors. 
+To force use non-spatial cross-validation here, variables `x` and `y` need to be removed from the data set because they are not used for partitioning when using `RepCV` and also should not be used as predictors. 
 
 Additionally, the `spatial` task attribute needs to be set to `FALSE`.
-`mlr` tries to be smart by issuing a warning message if it detects variables named `x` or `y` in combination with  `spatial = FALSE`.
-Finally, `Repcross-validation` is chosen instead of `SpRepcross-validation`.
+`mlr` tries to be smart by issueing a warning message if it detects variables named `x` or `y` in combination with  `spatial = FALSE`.
+Finally, `RepCV` is chosen instead of `SpRepCV`.
 
 ### Non-Spatial Cross-Validation
 
@@ -104,12 +104,12 @@ bc.task.spatial$task.desc$spatial = FALSE
 bc.task.spatial$env$data$x = NULL
 bc.task.spatial$env$data$y = NULL
 
-learner.glm <- makeLearner("classif.ranger", predict.type = "prob")
+learner.glm = makeLearner("classif.ranger", predict.type = "prob")
 
-resampling <- makeResampleDesc("Repcross-validation", fold = 5, reps = 10)
+resampling = makeResampleDesc("RepCV", fold = 5, reps = 10)
 
 set.seed(123)
-out <- resample(learner = learner.glm, task = bc.task.spatial,
+out = resample(learner = learner.glm, task = bc.task.spatial,
   resampling = resampling, measures = list(auc))
 
 mean(out$measures.test$auc)
