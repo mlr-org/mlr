@@ -31,7 +31,7 @@ makeTuneMultiCritControlMBO = function(n.objectives = mbo.control$n.objectives,
 
   assertIntegerish(n.objectives, lower = 2L)
   if (!is.null(mbo.control)) {
-    stopping <- mbo.control[c("iters", "time.budget", "exec.time.budget",
+    stopping = mbo.control[c("iters", "time.budget", "exec.time.budget",
       "max.evals", "more.termination.conds")]
   }
 
