@@ -32,7 +32,7 @@ However, this assumption is violated in the spatial case due to spatial autocorr
 Subsequently, non-spatial cross-validation will fail to provide accurate performance estimates.
 
 
-![Nested Spatial and Non-Spatial Validation](img/spatial_cross_validation.png "Nested Spatial and Non-Spatial Validation")
+![Nested Spatial and Non-Spatial Cross-Validation](img/spatial_cross_validation.png "Nested Spatial and Non-Spatial Cross-Validation")
 
 By doing a random sampling of the data set (i.e. non-spatial sampling), training and test set data are often located directly next to each other (in geographical space).
 Hence, the test set will contain observations which are somewhat similar (due to spatial autocorrelation) to observations in the training set. 

@@ -10,7 +10,7 @@ env:
     - _R_CHECK_TESTS_NLINES_=999
     - R_MAX_NUM_DLLS=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
+    - WARMUPPKGS='roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
 
 addons:
   apt:
@@ -71,7 +71,7 @@ jobs:
       before_script: R -q -e 'tic::before_script()'
       script:
         - R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
-      before_deploy: R -q -e 'tic::before_deploy(); remotes::install_github("jimhester/lintr")'
+      before_deploy: R -q -e 'tic::before_deploy(); remotes::install_github("jimhester/lintr"); install.packages("pander")'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
