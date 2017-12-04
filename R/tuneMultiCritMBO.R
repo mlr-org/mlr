@@ -28,8 +28,9 @@ tuneMultiCritMBO = function(learner, task, resampling, measures, par.set, contro
     or = mlrMBO::mbo(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
   }
 
-  x = apply(convertListOfRowsToDataFrame(or$pareto.set), 1L,
-    function(z) trafoValue(par.set, as.list(z)))
+  df = convertListOfRowsToDataFrame(or$pareto.set)
+  x = lapply(1:nrow(df), function(i) trafoValue(par.set, as.list(df[i, ])))
+
   y = or$pareto.front
   colnames(y) = opt.path$y.names[1L:mbo.control$n.objectives]
   ind = or$pareto.inds

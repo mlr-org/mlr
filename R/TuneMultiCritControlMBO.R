@@ -1,14 +1,4 @@
-#' @title Create control object for multi criteria hyperparameter tuning with MBO.
-#'
-#' @description
-#' Model-based / Bayesian optimization with the function
-#' \code{\link[mlrMBO]{mbo}} from the \pkg{mlrMBO} package.
-#' Please refer to \url{https://github.com/mlr-org/mlrMBO} for further info.
-#'
-#' @inherit TuneMultiCritControl
-#' @param budget [\code{integer(1)}]\cr
-#'   Maximum budget for tuning. This value restricts the number of function evaluations.
-#'   If not \code{NULL}, this will overwrite existing stopping conditions in \code{mbo.control}.
+#' @export
 #' @param learner [\code{\link{Learner}} | \code{NULL}]\cr
 #'   The surrogate learner: A regression learner to model performance landscape.
 #'  For the default, \code{NULL}, \pkg{mlrMBO} will automatically create a suitable learner based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.
@@ -29,11 +19,10 @@
 #'   If the parameters have corresponding trafo functions,
 #'   the design must not be transformed before it is passed!
 #'   For the default, \code{NULL}, a default design is created like described in \code{\link[mlrMBO]{mbo}}.
-#' @return [\code{\link{TuneControlMBO}}]
+#' @param n.objectives [\code{integer(1)}]\cr
+#'   Number of objectives, i.e. number of \code{\link{Measure}}s to optimize.
 #' @references Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel Lang; mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions, Preprint: \url{https://arxiv.org/abs/1703.03373} (2017).
-#' @aliases TuneMultiCritControlMBO
-#' @family tuneMultiCrit
-#' @export
+#' @rdname TuneMultiCritControl
 makeTuneMultiCritControlMBO = function(n.objectives = mbo.control$n.objectives,
   same.resampling.instance = TRUE, impute.val = NULL,
   learner = NULL, mbo.control = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
