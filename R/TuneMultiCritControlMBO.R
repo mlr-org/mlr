@@ -1,27 +1,7 @@
 #' @export
-#' @param learner [\code{\link{Learner}} | \code{NULL}]\cr
-#'   The surrogate learner: A regression learner to model performance landscape.
-#'  For the default, \code{NULL}, \pkg{mlrMBO} will automatically create a suitable learner based on the rules described in \code{\link[mlrMBO]{makeMBOLearner}}.
-#' @param continue [\code{logical(1)}]\cr
-#'   Resume calculation from previous run using \code{\link[mlrMBO]{mboContinue}}?
-#'   Requires \dQuote{save.file.path} to be set.
-#'   Note that the \code{\link[ParamHelpers]{OptPath}} in the \code{\link[mlrMBO]{OptResult}}
-#'   will only include the evaluations after the continuation.
-#'   The complete \code{\link{OptPath}} will be found in the slot \code{$mbo.result$opt.path}.
-#' @param mbo.control [\code{\link[mlrMBO]{MBOControl}} | \code{NULL}]\cr
-#'   Control object for model-based optimization tuning.
-#'   For the default, \code{NULL}, the control object will be created with all the defaults as described in \code{\link[mlrMBO]{makeMBOControl}}.
-#' @param mbo.keep.result [\code{logical(1)}] \cr
-#'    Should the \code{\link[mlrMBO]{MBOMultiObjResult}} be stored in the result?
-#'    Default is \code{FALSE}.
-#' @param mbo.design [\code{data.frame} | \code{NULL}]\cr
-#'   Initial design as data frame.
-#'   If the parameters have corresponding trafo functions,
-#'   the design must not be transformed before it is passed!
-#'   For the default, \code{NULL}, a default design is created like described in \code{\link[mlrMBO]{mbo}}.
+#' @inheritParams makeTuneControlMBO
 #' @param n.objectives [\code{integer(1)}]\cr
 #'   Number of objectives, i.e. number of \code{\link{Measure}}s to optimize.
-#' @references Bernd Bischl, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas and Michel Lang; mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions, Preprint: \url{https://arxiv.org/abs/1703.03373} (2017).
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlMBO = function(n.objectives = mbo.control$n.objectives,
   same.resampling.instance = TRUE, impute.val = NULL,
@@ -29,11 +9,7 @@ makeTuneMultiCritControlMBO = function(n.objectives = mbo.control$n.objectives,
   continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE,
   mbo.design = NULL) {
 
-  assertIntegerish(n.objectives, lower = 2L)
-  if (!is.null(mbo.control)) {
-    stopping = mbo.control[c("iters", "time.budget", "exec.time.budget",
-      "max.evals", "more.termination.conds")]
-  }
+  assertInt(n.objectives, lower = 2L)
 
   if (!is.null(learner)) {
     learner = checkLearner(learner, type = "regr")
