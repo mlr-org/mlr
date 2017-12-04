@@ -14,6 +14,7 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
+library("ggplot2")
 ```
 
 In order to obtain honest performance estimates for a learner all parts of the model building
