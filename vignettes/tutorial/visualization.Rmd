@@ -18,8 +18,6 @@ library("ggplot2")
 library("lattice")
 ```
 
-# Visualization
-
 ## Generation and plotting functions
 [%mlr]'s visualization capabilities rely on *generation functions* which generate data for
 plots, and *plotting functions* which plot this output using either [%ggplot2] or [%ggvis]

@@ -1,7 +1,6 @@
 ---
 title: "Handling of Spatial Data"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
+author: "Patrick Schratz"
 #date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -31,6 +30,7 @@ The closer observations are located to each other, the more similar they are.
 If common validation procedures like cross-validation are applied to such data sets, they assume independence of the observation upfront to provide unbiased estimates.
 However, this assumption is violated in the spatial case due to spatial autocorrelation.
 Subsequently, non-spatial cross-validation will fail to provide accurate performance estimates.
+
 
 ![Nested Spatial and Non-Spatial Validation](img/spatial_cross_validation.png "Nested Spatial and Non-Spatial Validation")
 

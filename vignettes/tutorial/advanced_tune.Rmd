@@ -1,5 +1,5 @@
 ---
-title: "Advanced Tuning"
+title: "Iterated F-Racing for mixed spaces and dependencies"
 #author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
 #Tobias Kuehn, Erich Studerus, Lars Kotthoff"
 #date: "`r Sys.Date()`"
@@ -15,8 +15,6 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
-
-## Iterated F-Racing for mixed spaces and dependencies
 
 The package supports a larger number of tuning algorithms, which can all be looked up and
 selected via [&TuneControl]. One of the cooler algorithms is iterated F-racing from the
