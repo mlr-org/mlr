@@ -39,7 +39,7 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
 
 #' @export
 #' @rdname makeTaskDesc
-makeCostSensTaskDesc = function(id, data, target, blocking, costs) {
+makeCostSensTaskDesc = function(id, data, target, blocking, costs, spatial) {
   td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking)
   td$class.levels = colnames(costs)
   td$costs = costs
