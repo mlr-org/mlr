@@ -17,3 +17,4 @@ Icon?
 Thumbs.db
 *xgboost.model
 man/*.Rd
+docs/
