@@ -32,7 +32,8 @@ Authors@R: c(
     person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb"),
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
-    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"))
+    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
+    person("Thomas", "Maierhofer", email = "thomasjmaierhofer@gmail.com", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -65,6 +66,7 @@ Suggests:
     care,
     caret (>= 6.0-57),
     class,
+    classiFunc,
     clue,
     cluster,
     clusterSim (>= 0.44-5),
@@ -126,6 +128,7 @@ Suggests:
     party,
     penalized (>= 0.9-47),
     pls,
+    quadprog,
     PMCMR (>= 4.1),
     randomForest,
     randomForestSRC (>= 2.2.0),

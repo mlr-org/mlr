@@ -5,8 +5,8 @@
 \title{Create a stacked learner object.}
 \usage{
 makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL,
-  parset = list())
+  method = "stack.nocv", id = method, use.feat = FALSE,
+  resampling = NULL, parset = list())
 }
 \arguments{
 \item{base.learners}{[(list of) \code{\link{Learner}}]\cr
@@ -34,39 +34,56 @@ If the type of the base learner prediction, which is set up within \code{base.le
 
 \item{method}{[\code{character(1)}]\cr
 \dQuote{average} for averaging the predictions of the base learners,
+\dQuote{best.baseLearner} for choosing only the best base learner selected
+by cross validation,
 \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
 \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
-hill climbing algorithm and
+hill climbing algorithm,
 \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
-while speeding up the predictions and reducing the size of the model.
+while speeding up the predictions and reducing the size of the model and
+\dQuote{classif.bs.optimal} for averaging the predictions of the base learners,
+with the weights chosen Brier Score optimal, see Fuchs, K., J. Gertheiss, and G. Tutz (2015). Nearest
+neighbor ensembles for functional data with interpretable feature selection. Chemometrics and Intelligent
+Laboratory Systems 146, 186-197.
 Default is \dQuote{stack.nocv},}
+
+\item{id}{[\code{character(1)}]\cr
+Id string for object. Used to display object.
+Default is \code{method}.}
 
 \item{use.feat}{[\code{logical(1)}]\cr
 Whether the original features should also be passed to the super learner.
-Not used for \code{method = 'average'}.
+Not used for \code{method \%in\% c('average', 'hill.climb', 'classif.bs.optimal')}. # meas.bs.optimal
 Default is \code{FALSE}.}
 
 \item{resampling}{[\code{\link{ResampleDesc}}]\cr
-Resampling strategy for \code{method = 'stack.cv'}.
-Currently only CV is allowed for resampling.
-The default \code{NULL} uses 5-fold CV.}
+the resampling strategy for \code{method \%in\% c('stack.cv', 'best.baseLearner'}.
+Currently only CV is allowed.
+The default \code{NULL} uses 5-fold CV,
+the resampling strategy for \code{method = 'classif.bs.optimal'}
+Currently only LOO and CV are allowed.
+The default \code{NULL} uses LOO.}
 
-\item{parset}{the parameters for \code{hill.climb} method, including
+\item{parset}{[\code{list}]\cr
+the parameters for \code{hill.climb} method, including
 \describe{
   \item{\code{replace}}{Whether a base learner can be selected more than once.}
   \item{\code{init}}{Number of best models being included before the selection algorithm.}
   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-  \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
-  the smaller the score the better.}
+  \item{\code{metric}}{The result evaluation metric function taking two parameters
+  \code{pred} and \code{true}, the smaller the score the better.}
 }
 the parameters for \code{compress} method, including
 \describe{
    \item{k}{the size multiplier of the generated data}
    \item{prob}{the probability to exchange values}
    \item{s}{the standard deviation of each numerical feature}
-}}
+}
+the parameter \code{measure} for \code{best.baseLearner} method which gives
+the measure to be used for evaluating the base learners. Defaults to the
+default measure for the learner.}
 }
 \description{
 A stacked learner uses predictions of several base learners and fits
@@ -75,11 +92,15 @@ The following stacking methods are available:
 
  \describe{
   \item{\code{average}}{Averaging of base learner predictions without weights.}
+  \item{\code{best.baseLearner}}{Selecting the best base learner according to a given
+  \link{measures} using cross validation.}
   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
   \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
+  \item{\code{classif.bs.optimal}}{Weighted averaging of base learner predictions with weights
+  chosen Brier Score optimal.}
  }
 }
 \examples{
