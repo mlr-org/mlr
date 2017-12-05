@@ -128,5 +128,5 @@ Simpler models (e.g. GLM) will show less overoptimistic performance estimates.
 
 * The concept of spatial cross-validation was originally implemented in package [sperrorest](https://pat-s.github.io/sperrorest/index.html). This package comes with even more partitioning options and the ability to visualize the spatial grouping of folds. We plan to integrate more functions from [sperrorest](https://pat-s.github.io/sperrorest/index.html) into `mlr` so stay tuned!
 
-* For more detailed information, see [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/), [Brenning2012](http://ieeexplore.ieee.org/document/6352393/), Schratz2018 (in preperation).
+* For more detailed information, see [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/), [Brenning2012](http://ieeexplore.ieee.org/document/6352393/), Schratz2018 (in preparation).
 
