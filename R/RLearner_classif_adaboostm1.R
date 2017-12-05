@@ -2,7 +2,7 @@
 makeRLearner.classif.adaboostm1 = function() {
   makeRLearnerClassif(
     cl = "classif.adaboostm1",
-    package = c("RWeka"),
+    package = "RWeka",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "P", default = 100L, lower = 90L),
       makeLogicalLearnerParam(id = "Q", default = FALSE),
