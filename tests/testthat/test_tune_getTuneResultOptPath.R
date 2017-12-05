@@ -10,7 +10,7 @@ test_that("getTuneResultOptPath", {
   rdesc = makeResampleDesc("CV", iters = 3L)
   res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc,
                    par.set = ps, control = ctrl)
-  
+
   expect_equal(res$opt.path, getTuneResultOptPath(res, as.df = FALSE))
   expect_equal(as.data.frame(res$opt.path), getTuneResultOptPath(res))
 })
