@@ -1,4 +1,4 @@
-language: r
+language: ruby
 sudo: false
 dist: trusty
 cache: packages
