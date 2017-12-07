@@ -42,6 +42,7 @@
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
 
 ## learners - new
+* classif.adaboostm1
 * classif.fdaknn
 * classif.fdakernel
 * classif.fdanp
