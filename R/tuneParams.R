@@ -137,7 +137,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 #'   Should the optimization path be returned as a data frame?
 #'   Default is \code{TRUE}.
 #' @export
-getTuneResultOptPath = function(tune.result, as.df = TRUE){
+getTuneResultOptPath = function(tune.result, as.df = TRUE) {
   if (as.df == TRUE) {
     return(as.data.frame(tune.result$opt.path))
   } else {
