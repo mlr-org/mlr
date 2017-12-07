@@ -9,6 +9,8 @@
 * calculateROCMeasures now returns absolute instead of relative values
 * Added support for spatial data through task attribute "is.spatial" and spatial
   partitioning methods "SpCV" and "SpRepCV".
+* Classification tasks now store the class distribution in the
+  class.distribution member.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
