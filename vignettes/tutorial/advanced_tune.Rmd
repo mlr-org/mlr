@@ -17,7 +17,7 @@ library("ParamHelpers")
 ```
 
 The package supports a larger number of tuning algorithms, which can all be looked up and
-selected via [&TuneControl]. One of the cooler algorithms is iterated F-racing from the
+selected via `TuneControl()`. One of the cooler algorithms is iterated F-racing from the
 [%irace] package (technical description [here](http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf)). This not only works for arbitrary parameter types (numeric, integer,
 discrete, logical), but also for so-called dependent / hierarchical parameters:
 
@@ -55,7 +55,7 @@ base.learners = list(
 lrn = makeModelMultiplexer(base.learners)
 ```
 
-Function [&makeModelMultiplexerParamSet] offers a simple way to construct a parameter set for tuning:
+Function `makeModelMultiplexerParamSet()` offers a simple way to construct a parameter set for tuning:
 The parameter names are prefixed automatically and the `requires` element is set, too,
 to make all parameters subordinate to `selected.learner`.
 
@@ -84,7 +84,7 @@ We again tune the hyperparameters of an SVM (function [ksvm](&kernlab::ksvm)) wi
 basis kernel and use the [sonar classification task](&sonar.task) for illustration.
 As search strategy we choose a random search.
 
-For all available multi-criteria tuning algorithms see [&TuneMultiCritControl].
+For all available multi-criteria tuning algorithms see `TuneMultiCritControl()`.
 
 ```{r}
 ps = makeParamSet(
@@ -100,7 +100,7 @@ res
 head(as.data.frame(trafoOptPath(res$opt.path)))
 ```
 
-The results can be visualized with function [&plotTuneMultiCritResult].
+The results can be visualized with function `plotTuneMultiCritResult()`.
 The plot shows the false positive and false negative rates for all parameter settings evaluated
 during tuning. Points on the Pareto front are slightly increased.
 
