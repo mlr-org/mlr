@@ -57,7 +57,7 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
-      makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
+      makeDiscreteLearnerParam(id = "se.method", default = "sd",
         values = c("bootstrap", "jackknife",  "sd"),
         requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE),
         when = "both"),
@@ -86,7 +86,7 @@ makeRLearner.regr.randomForest = function() {
 }
 
 #' @export
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "sd", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
   data = getTaskData(.task, .subset, target.extra = TRUE)
   m = randomForest::randomForest(x = data[["data"]], y = data[["target"]],
     keep.inbag = if (is.null(keep.inbag)) TRUE else keep.inbag, ...)
@@ -101,7 +101,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
+predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.method = "sd", ...) {
   if (se.method == "bootstrap")
     pred = predict(.model$learner.model$single.model, newdata = .newdata, ...)
   else
