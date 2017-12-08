@@ -7,7 +7,9 @@ test_that("tuneParamsMultiCrit", {
     makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
   ctrl = makeTuneMultiCritControlRandom(maxit = 2)
-  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps, measures = mmce, control = ctrl))
+  expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc,
+    par.set = ps, measures = mmce, control = ctrl),
+    ".* May only contain the following types: Measure.")
 
   mycheck = function(res, k) {
     expect_output(print(res), "Points on front")
@@ -129,7 +131,8 @@ test_that("tuneParamsMultiCrit with budget", {
   mycheck(ctrl, ctrl$extra.args$maxit)
   ctrl = makeTuneMultiCritControlRandom(maxit = 3L, budget = 3L)
   mycheck(ctrl, ctrl$extra.args$maxit)
-  expect_error(makeTuneMultiCritControlRandom(maxit = 3L, budget = 5L))
+  expect_error(makeTuneMultiCritControlRandom(maxit = 3L, budget = 5L),
+    "The parameters .* differ.")
 
   # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 3)
@@ -138,13 +141,16 @@ test_that("tuneParamsMultiCrit with budget", {
   mycheck(ctrl, ctrl$extra.args$resolution^2)
   ctrl = makeTuneMultiCritControlGrid(resolution = 3, budget = 10L)
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl))
+    measures = list(tpr, fpr), control = ctrl),
+    ".* does not fit to the size of the grid .*")
 
   # nsga2
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
   mycheck(ctrl, ctrl$extra.args$popsize * (ctrl$extra.args$generations + 1))
-  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L))
-  expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L))
+  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L),
+    ".* contradicts the product of .*")
+  expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L),
+    ".* contradicts the product of .*")
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, budget = 12L)
   expect_equal(ctrl$extra.args$generations, 2L)
   mycheck(ctrl, 12L)
@@ -201,12 +207,16 @@ test_that("check n.objectives for MBO multi crit", {
     makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
 
-  expect_error(makeTuneMultiCritControlMBO(1L))
-  expect_error(makeTuneMultiCritControlMBO(1.5))
+  expect_error(makeTuneMultiCritControlMBO(1L),
+    ".* All elements must be >= 2.")
+  expect_error(makeTuneMultiCritControlMBO(1.5),
+    ".* Must be of type 'single integerish value', not 'double'.")
   ctrl = makeTuneMultiCritControlMBO(2L)
 
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, measures = list(mmce),
-    par.set = ps, control = ctrl))
+    par.set = ps, control = ctrl),
+    ".* Must have length >= 2, but has length 1.")
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, measures = list(mmce, tpr, fpr),
-    par.set = ps, control = ctrl))
+    par.set = ps, control = ctrl),
+    ".* Must have length 2, but has length 3.")
 })

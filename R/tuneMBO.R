@@ -14,10 +14,10 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   force(opt.path)
   force(show.info)
 
-  if (!is.null(mbo.control$n.objectives)) {
+  multicrit = mbo.control$n.objectives > 1L
+  if (multicrit) {
     assertList(measures, len = mbo.control$n.objectives)
   }
-  multicrit = !is.null(mbo.control$n.objectives) && mbo.control$n.objectives > 1L
 
   tff = tunerSmoofFun(learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
@@ -33,10 +33,9 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   }
 
   if (multicrit) {
-    df = convertListOfRowsToDataFrame(or$pareto.set)
-    x = lapply(seq_len(nrow(df)), function(i) trafoValue(par.set, as.list(df[i, ])))
+    x = lapply(or$pareto.set, function(z) trafoValue(par.set, z))
     y = or$pareto.front
-    colnames(y) = opt.path$y.names[1:mbo.control$n.objectives]
+    colnames(y) = opt.path$y.names
     ind = or$pareto.inds
   } else {
     x = trafoValue(par.set, or$x)
