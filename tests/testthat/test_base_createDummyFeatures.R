@@ -22,10 +22,9 @@ test_that("createDummyFeatures", {
     colnames(createDummyFeatures(df, cols = "c")))
 
   df = data.frame(quan = as.factor(sample(0:1, 10, replace = TRUE)))
-  levels(df$quan) = c("<5",">5")
+  levels(df$quan) = c("<5", ">5")
   df.cdf = createDummyFeatures(df)
   df.cdf
   colnames = names(df.cdf)
   expect_false("<5" %in% colnames ||  ">5" %in% colnames)
-
 })
