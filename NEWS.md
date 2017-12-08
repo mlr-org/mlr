@@ -30,6 +30,7 @@
 * extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
+* getOptPath
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
