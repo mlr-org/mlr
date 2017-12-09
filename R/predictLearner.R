@@ -82,7 +82,7 @@ insertLines = function(prediction, inserts) {
 #    return(prediction)
   if (is.matrix(prediction)) {
     ret = matrix(nrow = nrow(prediction) + sum(inserts), ncol = ncol(prediction))
-    ret[!inserts, , drop = FALSE] = prediction
+    ret[!inserts, ] = prediction
     colnames(ret) = colnames(prediction)
   } else {
     ret = rep(NA, length(prediction) + sum(inserts))
