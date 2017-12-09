@@ -31,13 +31,21 @@
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (missing(subset) || is.null(subset)) {
+  if (missing(subset))
+    subset = NULL
+  task = subsetTask(task, subset)
+  if (is.null(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
     if (is.logical(subset))
       subset = which(subset)
     else
       subset = asInteger(subset)
+  }
+  if (learner$fix.factors.prediction) {
+    tdat = getTaskData(task)
+    ttargidx = which(colnames(tdat) %in% getTaskTargetNames(task))
+    task = changeData(task, droplevels(tdat, except = ttargidx))
   }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
@@ -46,11 +54,11 @@ train = function(learner, task, subset, weights = NULL) {
   tn = getTaskTargetNames(task)
 
   # make pars list for train call
-  pars = list(.learner = learner, .task = task, .subset = subset)
+  pars = list(.learner = learner, .task = task, .subset = NULL)
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if (!is.null(weights)) {
-    assertNumeric(weights, len = length(subset), any.missing = FALSE, lower = 0)
+    assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
   } else {
     weights = getTaskWeights(task)
   }
@@ -65,7 +73,7 @@ train = function(learner, task, subset, weights = NULL) {
   # no vars? then use no vars model
 
   if (length(vars) == 0L) {
-    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDesc(task))
+    learner.model = makeNoFeaturesModel(targets = task$env$data[, tn], task.desc = getTaskDesc(task))
     time.train = 0
   } else {
     opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
