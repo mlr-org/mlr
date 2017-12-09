@@ -44,10 +44,3 @@ test_that("errors if spatial = TRUE and coordinates are not named 'x' or 'y'", {
     target = "diplo01", spatial = TRUE),
     "Please rename coordinates in data to 'x' and 'y'")
 })
-
-# check for warning if spatial = FALSE and coordinates are named 'x' or 'y'
-test_that("warning if spatial = TRUE and coordinates are not named 'x' or 'y'", {
-  expect_warning(makeClassifTask("data", binaryclass.spatial.df,
-    target = "diplo01", spatial = FALSE), fixed = TRUE,
-    "We detected that you have columns named 'x' and 'y' in your data.\nIf you have spatial data and want to use spatial cross-validation as resampling method, please set 'spatial = TRUE' during task creation (default = FALSE).\nIf not, you can safely ignore this warning.")
-})

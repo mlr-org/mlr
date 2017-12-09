@@ -46,6 +46,7 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, sp
   td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
+  td$class.distribution = table(data[target])
   if (length(td$class.levels) == 1L)
     td$negative = stri_paste("not_", positive)
   else if (length(td$class.levels) == 2L)
@@ -55,11 +56,11 @@ makeClassifTaskDesc = function(id, data, target, weights, blocking, positive, sp
 
 #' @export
 print.ClassifTask = function(x, ...) {
-  # remove 1st newline
-  di = printToChar(table(getTaskTargets(x)), collapse = NULL)[-1L]
+  di = printToChar(x$task.desc$class.distribution)
   m = length(x$task.desc$class.levels)
   print.SupervisedTask(x)
-  catf("Classes: %i", m)
-  catf(collapse(di, "\n"))
-  catf("Positive class: %s", x$task.desc$positive)
+  catf("Classes: %i", m, newline = FALSE)
+  # remove 1st newline
+  cat(di)
+  catf("\nPositive class: %s", x$task.desc$positive)
 }
