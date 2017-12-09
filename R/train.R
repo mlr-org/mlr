@@ -33,12 +33,14 @@ train = function(learner, task, subset, weights = NULL) {
   assertClass(task, classes = "Task")
   if (missing(subset))
     subset = NULL
+  if (is.logical(subset))
+    subset = which(subset)  # I believe this is a bug, see #2098
   task = subsetTask(task, subset)
   if (is.null(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
     if (is.logical(subset))
-      subset = which(subset)
+      subset = which(subset)  # I believe this is a bug, see #2098
     else
       subset = asInteger(subset)
   }
