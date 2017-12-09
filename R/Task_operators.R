@@ -333,6 +333,20 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     if (recode.target %nin% c("no", "surv")) {
       res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
+    # first condition checks if 'getTaskData' was called directly, i.e. checks if
+    # the call was from the GlobalEnv
+    # second condition checks which function called 'getTaskData' if call was not
+    # from the GlobalEnv. If cond2 is FALSE, 'getTaskData' was called from
+    # 'subsetTask' in a nested resampling call. In this case we remove x and y
+    # later (later = we arrive in 'getTaskData' twice in a 'resample' call) as
+    # we still need it for partitioning in upcoming function calls and only need
+    # to remove `x` and `y` before we proceed to the training step.
+    if (!identical(parent.frame(n = 1), globalenv()) &&
+        !sys.call(-2) == "subsetTask(.task, .subset)" &&
+        task$task.desc$is.spatial == TRUE) {
+      res$x = NULL
+      res$y = NULL
+    }
   }
   res
 }
@@ -420,12 +434,12 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$is.spatial),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$is.spatial),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$is.spatial),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial)
   )
 
   return(task)

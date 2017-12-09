@@ -118,6 +118,10 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
+    if (td$is.spatial == TRUE) {
+      pars$.newdata$x = NULL
+      pars$.newdata$y = NULL
+    }
     time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
 
     # remove NAs in 'p', 'truth' and 'newdata' (occurs if model inherits "lm" and misses factor levels in train)

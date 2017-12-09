@@ -26,6 +26,7 @@
 #'  the original order will be restored if necessary.
 #' @return Object of class \dQuote{Filter}.
 #' @export
+#' @family filter
 makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun) {
   assertString(name)
   assertString(desc)
@@ -63,6 +64,7 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #'  Default is \code{FALSE}.
 #' @return [\code{data.frame}].
 #' @export
+#' @family filter
 listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
@@ -449,7 +451,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-    print(getTaskFormula(task))
     y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }

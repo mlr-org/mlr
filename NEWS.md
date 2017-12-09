@@ -7,6 +7,10 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
+* Added support for spatial data through task attribute "is.spatial" and spatial
+  partitioning methods "SpCV" and "SpRepCV".
+* Classification tasks now store the class distribution in the
+  class.distribution member.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
@@ -26,6 +30,7 @@
 * extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
+* getOptPath
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -40,6 +45,7 @@
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
 
 ## learners - new
+* classif.adaboostm1
 * classif.fdaknn
 * classif.fdakernel
 * classif.fdanp
