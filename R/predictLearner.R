@@ -74,7 +74,7 @@ removeNALines = function(newdata) {
     return(list(newdata = newdata, inserts = FALSE))
   }
   narows = apply(namat, 1, any)
-  return(list(newdata = newdata[!narows, ], inserts = narows))
+  return(list(newdata = newdata[!narows, , drop = FALSE], inserts = narows))
 }
 
 insertLines = function(prediction, inserts) {
@@ -82,7 +82,7 @@ insertLines = function(prediction, inserts) {
 #    return(prediction)
   if (is.matrix(prediction)) {
     ret = matrix(nrow = nrow(prediction) + sum(inserts), ncol = ncol(prediction))
-    ret[!inserts, ] = prediction
+    ret[!inserts, , drop = FALSE] = prediction
     colnames(ret) = colnames(prediction)
   } else {
     ret = rep(NA, length(prediction) + sum(inserts))
