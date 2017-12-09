@@ -62,6 +62,8 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
     no.na = removeNALines(.newdata)
   else
     no.na = list(newdata = .newdata, inserts = FALSE)
+  if (!nrow(no.na$newdata))
+    no.na = list(newdata = .newdata, inserts = FALSE)  # no choice if all lines contain NA
   p = predictLearner(.learner, .model, no.na$newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
   return(insertLines(p, no.na$inserts))
