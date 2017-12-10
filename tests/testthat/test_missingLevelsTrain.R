@@ -2,7 +2,7 @@ context("missingLevelsTrain.R")
 
 test_that("additional factor levels in test data are removed and resample() does not error", {
 
-  task = sonar.task
+  task = subsetTask(sonar.task)
   # introduce factor level with only one observation
   task$env$data$test_fac = factor(c(rep("1", 1), c(rep("2", 3),
     rep("3", length(task$env$data$V1) - 4))))
