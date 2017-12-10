@@ -542,7 +542,7 @@ perf = getBMRPerformances(bmr, as.df = TRUE)
 
 ## Density plots for two tasks
 qplot(mmce, colour = learner.id, facets = . ~ task.id,
-  data = perf[perf$task.id %in% c("iris-example", "Sonar-example"),], geom = "density") +
+  data = perf[perf$task.id %in% c("iris_example", "Sonar_example"),], geom = "density") +
   theme(strip.text.x = element_text(size = 8))
 ```
 
