@@ -182,7 +182,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     newdata = task$env$data[test.i, ]
     # set factor levels, present in test but missing in train, to NA
     # see helpers.R
-    pred.test = check.factor(m, test.i)
+    pred.test = checkFactors(m, test.i)
     pred.test = predict(m, newdata = newdata)
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
@@ -209,7 +209,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     newdata = task$env$data[test.i, ]
     # set factor levels, present in test but missing in train, to NA
     # see helpers.R
-    pred.test = check.factor(m, test.i)
+    pred.test = checkFactors(m, test.i)
     pred.test = predict(m, newdata = newdata)
 
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
