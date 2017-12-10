@@ -11,6 +11,8 @@
   partitioning methods "SpCV" and "SpRepCV".
 * Classification tasks now store the class distribution in the
   class.distribution member.
+* mlr now predicts NA for data that contains NA and learners that do not support
+  missing values.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
