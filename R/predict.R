@@ -72,6 +72,10 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     newdata = newdata[subset, , drop = FALSE]
   }
 
+  # set factor levels, present in test but missing in train, to NA
+  # see helpers.R for checkFactors()
+  newdata = checkFactors(model, newdata)
+
   # if we saved a model and loaded it later just for prediction this is necessary
   requireLearnerPackages(learner)
   t.col = match(td$target, colnames(newdata))
