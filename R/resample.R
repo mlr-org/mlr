@@ -179,35 +179,11 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
-    if (task$task.desc$is.spatial == TRUE) {
-      newdata = task$env$data[test.i, ]
-      # set factor levels, present in test but missing in train, to NA
-      if (m$learner$fix.factors.prediction == TRUE) {
-        test.i = getTaskData(task, test.i)
-
-        # cheap error catching here
-        # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
-        if (is.null(test.i)) {
-          test.i = m$learner.model$data[test.i, ]
-        }
-        newdata = missingLevelsTrain(m, test.i)
-        pred.test = predict(m, newdata = newdata)
-      } else {
-        pred.test = predict(m, task, subset = test.i)
-      }
-    } else if (m$learner$fix.factors.prediction == TRUE) {
-      test.i = getTaskData(task, test.i)
-
-      # cheap error catching here
-      # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
-      if (is.null(test.i)) {
-        test.i = m$learner.model$data[test.i, ]
-      }
-      newdata = missingLevelsTrain(m, test.i)
-      pred.test = predict(m, newdata = newdata)
-    } else {
-      pred.test = predict(m, task, subset = test.i)
-    }
+    newdata = task$env$data[test.i, ]
+    # set factor levels, present in test but missing in train, to NA
+    # see helpers.R
+    pred.test = check.factor(m, test.i)
+    pred.test = predict(m, newdata = newdata)
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
@@ -230,28 +206,12 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
 
-    if (task$task.desc$is.spatial == TRUE) {
-      # set factor levels, present in test but missing in train, to NA
-      if (m$learner$fix.factors.prediction == TRUE) {
-        test.i = m$learner.model$data[test.i, ]
-        newdata = missingLevelsTrain(m, test.i)
-      } else {
-      newdata = task$env$data[test.i, ]
-      }
-      pred.test = predict(m, newdata = newdata)
-    } else if (m$learner$fix.factors.prediction == TRUE) {
-      test.i = getTaskData(task, test.i)
+    newdata = task$env$data[test.i, ]
+    # set factor levels, present in test but missing in train, to NA
+    # see helpers.R
+    pred.test = check.factor(m, test.i)
+    pred.test = predict(m, newdata = newdata)
 
-      # cheap error catching here
-      # in @test_base_generateFilterValuesData.R#93 data is not stored in m$learner.model ??
-      if (is.null(test.i)) {
-        test.i = m$learner.model$data[test.i, ]
-      }
-      newdata = missingLevelsTrain(m, test.i)
-      pred.test = predict(m, newdata = newdata)
-    } else {
-      pred.test = predict(m, task, subset = test.i)
-    }
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
