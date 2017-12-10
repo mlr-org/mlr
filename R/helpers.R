@@ -123,7 +123,7 @@ hasEmptyLevels = function(x) {
   !all(levels(x) %chin% as.character(unique(x)))
 }
 
-# checks factor levels, and fixes eventually occuring problems due to additional
+# checks factor levels, and fixes possibly occuring problems due to additional
 # levels in test data by setting these to NA
 checkFactors = function(.model, .newdata) {
   if (.model$learner$fix.factors.prediction == TRUE &&

@@ -28,7 +28,7 @@ trainLearner.classif.binomial = function(.learner, .task, .subset, .weights = NU
 #' @export
 predictLearner.classif.binomial = function(.learner, .model, .newdata, ...) {
 
-  # checks factor levels, and fixes eventually occuring problems due to additional
+  # checks factor levels, and fixes possibly occuring problems due to additional
   # levels in test data by setting these to NA
   checkFactors(.model, .newdata)
 
