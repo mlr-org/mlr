@@ -71,10 +71,6 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
 
 removeNALines = function(newdata) {
   namat = is.na(newdata)
-  if (!any(vlapply(namat, any))) {
-    # no NAs
-    return(list(newdata = newdata, inserts = FALSE))
-  }
   narows = apply(namat, 1, any)
   return(list(newdata = newdata[!narows, , drop = FALSE], inserts = narows))
 }

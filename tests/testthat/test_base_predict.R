@@ -145,10 +145,16 @@ test_that("predict works with data.table as newdata", {
 })
 
 test_that("predict with NA rows for learners that don't support missings automatically returns NA", {
-  mod = train("classif.knn", pid.task)
+  modknn = train("classif.knn", pid.task)
+  modrf = train(makeLearner("classif.randomForest", mtry = 1), pid.task)
   newdata = getTaskData(pid.task, target.extra = TRUE)$data
-  newdata[[1]][1] = NA
-  prediction = predict(mod, newdata = newdata)
-  expect_equal(which(is.na(prediction$data$response[1])), 1)
+  newdata.na = newdata
+  newdata.na[[1]][1] = NA
+  for (mod in list(modknn, modrf)) {
+    prediction = predict(mod, newdata = newdata)
+    prediction.na = predict(mod, newdata = newdata.na)
+    expect_equal(which(is.na(prediction.na$data$response[1])), 1)
+    expect_equal(prediction.na$data[-1, ], prediction$data[-1, ])
+  }
 })
 
