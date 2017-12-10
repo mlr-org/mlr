@@ -136,6 +136,6 @@ checkFactors = function(.model, .newdata) {
     }
     .newdata = missingLevelsTrain(.model, .newdata)
   } else {
-    return()
+    return(.newdata)
   }
 }
