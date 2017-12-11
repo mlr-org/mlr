@@ -28,11 +28,9 @@
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset, weights = NULL) {
+train = function(learner, task, subset = NULL, weights = NULL) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (missing(subset))
-    subset = NULL
   if (is.logical(subset))
     subset = which(subset)  # I believe this is a bug, see #2098
   task = subsetTask(task, subset)
@@ -60,7 +58,7 @@ train = function(learner, task, subset, weights = NULL) {
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if (!is.null(weights)) {
-    assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
+    assertNumeric(weights, len = getTaskSize(task), any.missing = FALSE, lower = 0)
   } else {
     weights = getTaskWeights(task)
   }
