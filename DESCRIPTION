@@ -11,7 +11,7 @@ Description: Interface to a large number of classification and regression
     allowing for easy nested resampling. Most operations can be parallelized.
 Authors@R: c(
     person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6002-6980")),
-    person("Michel", "Lang", email = "michellang@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-9754-0393"),
+    person("Michel", "Lang", email = "michellang@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-9754-0393")),
     person("Lars", "Kotthoff", email = "larsko@uwyo.edu", role = "aut"),
     person("Julia", "Schiffner", email = "schiffner@math.uni-duesseldorf.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
