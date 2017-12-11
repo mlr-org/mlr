@@ -33,6 +33,7 @@
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
 * getOptPath
+* makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
