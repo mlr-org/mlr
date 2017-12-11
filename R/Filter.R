@@ -451,7 +451,6 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-    print(getTaskFormula(task))
     y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }

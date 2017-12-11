@@ -168,13 +168,23 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
       train.task = lm$train.task
       train.i = lm$subset
     }
-    pred.train = predict(m, train.task, subset = train.i)
+    if (task$task.desc$is.spatial == TRUE) {
+      train.data = task$env$data[train.i, ]
+      pred.train = predict(m, newdata = train.data)
+    } else {
+      pred.train = predict(m, train.task, subset = train.i)
+    }
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
+    if (task$task.desc$is.spatial == TRUE) {
+      newdata = task$env$data[test.i, ]
+      pred.test = predict(m, newdata = newdata)
+    } else {
     pred.test = predict(m, task, subset = test.i)
+    }
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
@@ -186,13 +196,23 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
       train.task = lm$train.task
       train.i = lm$subset
     }
-    pred.train = predict(m, train.task, subset = train.i)
+    if (task$task.desc$is.spatial == TRUE) {
+      train.data = task$env$data[train.i, ]
+      pred.train = predict(m, newdata = train.data)
+    } else {
+      pred.train = predict(m, train.task, subset = train.i)
+    }
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
 
-    pred.test = predict(m, task, subset = test.i)
+    if (task$task.desc$is.spatial == TRUE) {
+      newdata = task$env$data[test.i, ]
+      pred.test = predict(m, newdata = newdata)
+    } else {
+      pred.test = predict(m, task, subset = test.i)
+    }
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)

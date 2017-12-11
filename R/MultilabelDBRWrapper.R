@@ -22,9 +22,10 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelDBRWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.DBR", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
     learner.subclass = "MultilabelDBRWrapper",
     model.subclass = "MultilabelDBRModel")
   x$type = "multilabel"

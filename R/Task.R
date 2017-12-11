@@ -21,10 +21,16 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
-#' Notes:
+#' @details
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
+#'
+#' If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
+#' resampling method, variables named \code{x} and \code{y} will be used for spatial
+#' partitioning of the data (kmeans clustering). They will not be
+#' used as predictors during modeling. Be aware: If coordinates are not named
+#' \code{x} and \code{y} they will be treated as normal predictors!
 #'
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' \code{\link{makeFunctionalData}}.
@@ -73,6 +79,9 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
+#' @param spatial [\code{logical(1)}]\cr
+#'   Does the task contain a spatial reference (coordinates) which should be used for
+#'   spatial partioning of the data? See details.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
@@ -93,7 +102,7 @@
 #' }
 NULL
 
-makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, spatial = FALSE) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -124,6 +133,13 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       assertFactor(blocking, len = nrow(data), any.missing = FALSE)
       if (length(blocking) && length(blocking) != nrow(data))
         stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+    }
+  }
+
+  if (spatial == TRUE) {
+    # check if coords are named 'x' and 'y'
+    if (!all(c("x", "y") %in% colnames(data))){
+      stop("Please rename coordinates in data to 'x' and 'y'.")
     }
   }
 
