@@ -4,7 +4,7 @@
 \alias{train}
 \title{Train a learning algorithm.}
 \usage{
-train(learner, task, subset, weights = NULL)
+train(learner, task, subset = NULL, weights = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -14,9 +14,9 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
+\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
 Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+By default (\code{NULL}) all observations are used.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
