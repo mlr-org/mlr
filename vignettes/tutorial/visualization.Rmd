@@ -62,7 +62,7 @@ For plotting we can use the built-in [%mlr] function [&plotThreshVsPerf].
 plotThreshVsPerf(d)
 ```
 
-Note that by default the [Measure](&makeMeasure) `name`s are used to annotate the panels.
+Note that by default the [Measure](&makeMeasure) names are used to annotate the panels.
 ```{r}
 fpr$name
 
@@ -72,18 +72,16 @@ This does not only apply to [&plotThreshVsPerf], but to other plot functions tha
 show performance measures as well, for example [&plotLearningCurve].
 You can use the `id`s instead of the names by setting `pretty.names = FALSE`.
 
-
 ### Customizing plots
 As mentioned above it is easily possible to customize the built-in plots or making your
 own visualizations from scratch based on the generated data.
 
 What will probably come up most often is changing labels and annotations.
-Generally, this can be done by manipulating the [ggplot](&ggplot2::ggplot) object,
-in this example the object returned by [&plotThreshVsPerf], using the usual [%ggplot2]
-functions like [ylab](&ggplot2::labs) or [labeller](&ggplot2::labeller).
+Generally, this can be done by manipulating the `ggplot2::ggplot()` object,
+in this example the object returned by [&plotThreshVsPerf], using the usual `ggplot2::ggplot2()` functions like `ggplot2::labs()` or `ggplot2::labeller()`.
 Moreover, you can change the underlying data, either `d$data` (resulting from
 [&generateThreshVsPerfData]) or the possibly reshaped data contained in the
-[ggplot](&ggplot2::ggplot) object (resulting from [&plotThreshVsPerf]), most often by
+`ggplot2::ggplot()` object (resulting from [&plotThreshVsPerf]), most often by
 renaming columns or factor levels.
 
 Below are two examples of how to alter the axis and panel labels of the above plot.
