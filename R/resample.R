@@ -179,12 +179,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
-    if (task$task.desc$is.spatial == TRUE) {
-      newdata = task$env$data[test.i, ]
-      pred.test = predict(m, newdata = newdata)
-    } else {
     pred.test = predict(m, task, subset = test.i)
-    }
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
@@ -207,12 +202,8 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
 
-    if (task$task.desc$is.spatial == TRUE) {
-      newdata = task$env$data[test.i, ]
-      pred.test = predict(m, newdata = newdata)
-    } else {
-      pred.test = predict(m, task, subset = test.i)
-    }
+    pred.test = predict(m, task, subset = test.i)
+
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)

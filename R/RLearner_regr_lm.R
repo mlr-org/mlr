@@ -28,6 +28,11 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
 
 #' @export
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
+
+  # checks factor levels, and fixes possibly occuring problems due to additional
+  # levels in test data by setting these to NA
+  checkFactors(.model, .newdata)
+
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, se.fit = FALSE, ...)
   } else {

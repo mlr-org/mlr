@@ -27,6 +27,11 @@ trainLearner.classif.binomial = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.classif.binomial = function(.learner, .model, .newdata, ...) {
+
+  # checks factor levels, and fixes possibly occuring problems due to additional
+  # levels in test data by setting these to NA
+  checkFactors(.model, .newdata)
+
   x = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {

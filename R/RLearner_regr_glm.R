@@ -64,6 +64,11 @@ trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsi
 
 #' @export
 predictLearner.regr.glm = function(.learner, .model, .newdata, ...) {
+
+  # checks factor levels, and fixes possibly occuring problems due to additional
+  # levels in test data by setting these to NA
+  checkFactors(.model, .newdata)
+
   se.fit = .learner$predict.type == "se"
   p = predict(.model$learner.model, newdata = .newdata, type = "response", se.fit = se.fit, ...)
   if (se.fit)
