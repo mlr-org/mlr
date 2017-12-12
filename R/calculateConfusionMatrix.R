@@ -25,7 +25,7 @@
 #' @param relative [\code{logical(1)}]\cr
 #'   If \code{TRUE} two additional matrices are calculated. One is normalized by rows and one by
 #'   columns.
-#' @param sums {\code{logical(1)}}\cr
+#' @param sums [\code{logical(1)}]\cr
 #'   If \code{TRUE} add absolute number of observations in each group.
 #' @return [\code{\link{ConfusionMatrix}}].
 #' @family performance
