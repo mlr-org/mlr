@@ -23,7 +23,7 @@ navbar:
     - text: Performance
       href: articles/tutorial/performance.html
     - text: Resampling
-      href: articles/tutorial/resample.html
+      href: articles/tutorial/resampling.html
     - text: Tuning
       href: articles/tutorial/tune.html
     - text: Benchmark Experiments
