@@ -68,16 +68,24 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   Points are colored according to their location.
 #'   Default is \code{TRUE}.
+#' @param point.info [\code{character(1)}]\cr
+#'   Show for each point which hyper parameters led to this point?
+#'   For \code{"click"}, information is displayed on mouse click.
+#'   For \code{"hover"}, information is displayed on mouse hover.
+#'   If set to \code{"none"}, no information is displayed.
+#'   Default is \code{"hover"}.
 #'
 #' @template ret_ggv
 #' @family tune_multicrit
 #' @export
 #' @examples
 #' # see tuneParamsMultiCrit
-plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
+plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover") {
   requirePackages("_ggvis")
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
+  assertChoice(point.info, choices = c("click", "hover", "none"))
+
   plt.data = as.data.frame(res$opt.path)
   plt.data$location = factor(row.names(plt.data) %in% res$ind, levels = c(TRUE, FALSE),
                              labels = c("frontier", "interior"))
@@ -103,6 +111,13 @@ plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
                        ggvis::prop("y", as.name(colnames(res$y)[2L])), key := ~id)
     plt = ggvis::layer_points(plt)
   }
-  plt = ggvis::add_tooltip(plt, info, "hover")
+
+  if (point.info == "hover") {
+    plt = ggvis::add_tooltip(plt, info, "hover")
+  }
+  else if (point.info == "click") {
+    plt = ggvis::add_tooltip(plt, info, "click")
+  }
+
   return(plt)
 }
