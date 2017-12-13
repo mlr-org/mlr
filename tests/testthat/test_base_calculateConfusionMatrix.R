@@ -70,3 +70,24 @@ test_that("calculateConfusionMatrix", {
   expect_equal(cm$relative.error, err.rel)
   expect_equal(cm$result[3, 3], err.abs)
 })
+
+
+test_that("calculateConfusionMatrix set argument works", {
+    mod = train("classif.lda", iris.task)
+    pred1 = crossval("classif.rpart", iris.task)$pred
+    pred2 = predict(mod, iris.task)
+    rdesc = makeResampleDesc("CV", iters=10, predict="both")
+    # here, you have set=train and set=test in pred3$data:
+    pred3 = resample("classif.rpart", iris.task, rdesc)$pred  
+
+    # pred1 was only predicted on test data, so a subset to train data has no entries:
+    expect_equal(sum(calculateConfusionMatrix(pred1, set = "train")$result), 0)
+
+    # pred2$data has no column "set" => argument set="train" would *not* make sense
+    expect_error(calculateConfusionMatrix(pred2, set = "train"))
+
+    # pred3 was predicted on both train and test set. Both subsetted matrices should give
+    # a positive total count:
+    expect_gt(sum(calculateConfusionMatrix(pred3, set = "train")$result), 0)
+    expect_gt(sum(calculateConfusionMatrix(pred3, set = "test")$result), 0)
+})

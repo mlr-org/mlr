@@ -27,6 +27,11 @@
 #'   columns.
 #' @param sums [\code{logical(1)}]\cr
 #'   If \code{TRUE} add absolute number of observations in each group.
+#' @param set [\code{character(1)}]\cr
+#'   Specifies which part(s) of the data are used for the calculation.
+#'   If \code{set} equals \code{train} or \code{test}, the \code{pred} object must be the result of a
+#'   resampling, otherwise an error is thrown.
+#'   Defaults to \dQuote{both}. Possible values are \dQuote{train}, \dQuote{test}, or \dQuote{both}.
 #' @return [\code{\link{ConfusionMatrix}}].
 #' @family performance
 #' @export
@@ -45,7 +50,7 @@
 #' r = crossval("classif.lda", iris.task, iters = 2L)
 #' print(calculateConfusionMatrix(r$pred))
 
-calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
+calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = "both") {
   checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE)
   assertFlag(relative)
   assertFlag(sums)
@@ -55,6 +60,13 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   resp = getPredictionResponse(pred)
   n.pred = length(resp)
   truth = getPredictionTruth(pred)
+
+  if (set != "both"){
+      assertClass(pred, classes = "ResamplePrediction")
+      truth = truth[pred$data$set == set]
+      resp = resp[pred$data$set == set]
+  }
+  
   tab = table(truth, resp)
   # create table for margins, where only the off-diag errs are in
   mt = tab
