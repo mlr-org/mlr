@@ -49,13 +49,18 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE)
   assertFlag(relative)
   assertFlag(sums)
-  cls = getTaskClassLevels(pred$task.desc)
-  k = length(cls)
   n = getTaskSize(pred$task.desc)
   resp = getPredictionResponse(pred)
   n.pred = length(resp)
   truth = getPredictionTruth(pred)
+
+  cls = union(levels(resp), levels(truth))
+  k = length(cls)
+  truth = factor(truth, levels = cls)
+  resp = factor(resp, levels = cls)
+
   tab = table(truth, resp)
+
   # create table for margins, where only the off-diag errs are in
   mt = tab
   diag(mt) = 0
