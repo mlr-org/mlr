@@ -12,6 +12,18 @@ binaryclass.class.col = 61
 binaryclass.class.levs = levels(binaryclass.df[, binaryclass.class.col])
 binaryclass.task = makeClassifTask("binary", data = binaryclass.df, target = binaryclass.target)
 
+data("bc.task.spatial", package = "mlr")
+binaryclass.spatial.df = bc.task.spatial$env$data
+binaryclass.spatial.formula = diplo01~.
+binaryclass.spatial.target = "diplo01"
+binaryclass.spatial.train.inds = c(1:300, 600:900)
+binaryclass.spatial.test.inds  = setdiff(seq_len(nrow(binaryclass.spatial.df)), binaryclass.spatial.train.inds)
+binaryclass.spatial.train = binaryclass.spatial.df[binaryclass.spatial.train.inds, ]
+binaryclass.spatial.test  = binaryclass.spatial.df[binaryclass.spatial.test.inds, ]
+binaryclass.spatial.class.col = 3
+binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
+binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, spatial = TRUE)
+
 multiclass.df = iris
 multiclass.formula = Species~.
 multiclass.target = "Species"
@@ -83,6 +95,17 @@ regr.num.test  = regr.num.df[regr.num.test.inds, ]
 regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
+regr.na.num.df = regr.num.df[1:10, ]
+regr.na.num.df[1, 1] = NA
+regr.na.num.formula = regr.num.formula
+regr.na.num.target = regr.num.target
+regr.na.num.train.inds = regr.num.train.inds
+regr.na.num.test.inds  = regr.num.test.inds
+regr.na.num.train = regr.na.num.df[regr.na.num.train.inds, ]
+regr.na.num.test  = regr.na.num.df[regr.na.num.test.inds, ]
+regr.na.num.class.col = 13
+regr.na.num.task = makeRegrTask("regrnanumdf", data = regr.na.num.df, target = regr.na.num.target)
+
 getSurvData = function(n = 100, p = 10) {
   set.seed(1)
   beta = c(rep(1, 10), rep(0, p - 10))
@@ -92,6 +115,13 @@ getSurvData = function(n = 100, p = 10) {
   cens.time = rexp(n, rate = 1 / 10)
   status = ifelse(real.time <= cens.time, TRUE, FALSE)
   obs.time = ifelse(real.time <= cens.time, real.time, cens.time) + 1
+
+  # mark large outliers in survival as censored
+  q = quantile(obs.time, .90)
+  i = which(obs.time > q)
+  obs.time[i] = q
+  cens.time[i] = FALSE
+
   return(cbind(data.frame(time = obs.time, status = status), x))
 }
 surv.df = getSurvData()
@@ -103,6 +133,26 @@ surv.train = surv.df[surv.train.inds, ]
 surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 rm(getSurvData)
+
+data("gunpoint.task", package = "mlr")
+data("fuelsubset.task", package = "mlr")
+fda.binary.gp.task = gunpoint.task
+suppressMessages({gp = getTaskData(gunpoint.task, subset = seq_len(100), functionals.as = "dfcols")})
+gp.fdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))
+fda.binary.gp.task.small = makeClassifTask(data = gp.fdf, target = "X1")
+fda.regr.fs.task = fuelsubset.task
+
+# nonsense fda multiclass task
+fda.multiclass.df = iris
+fda.multiclass.formula = Species~.
+fda.multiclass.target = "Species"
+fda.multiclass.train.inds = c(1:30, 51:80, 101:130)
+fda.multiclass.test.inds  = setdiff(1:150, multiclass.train.inds)
+fda.multiclass.train = multiclass.df[multiclass.train.inds, ]
+fda.multiclass.test  = multiclass.df[multiclass.test.inds, ]
+fda.multiclass.class.col = 5
+mc.fdf = makeFunctionalData(fda.multiclass.df, fd.features = list("fd1" = 1:2, "fd2" = 3:4))
+fda.multiclass.task = makeClassifTask("multiclass", data = mc.fdf, target = multiclass.target)
 
 costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)

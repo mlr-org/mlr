@@ -61,7 +61,13 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   subset = checkTaskSubset(subset, size)
 
   if (missing(newdata)) {
-    newdata = getTaskData(task, subset)
+    # if learner does not support functional, we convert to df cols
+    if (hasLearnerProperties(object$learner, "functionals") ||
+      hasLearnerProperties(object$learner, "single.functional")) {
+      newdata = getTaskData(task, subset, functionals.as = "matrix")
+    } else {
+      newdata = getTaskData(task, subset, functionals.as = "dfcols")
+    }
   } else {
     newdata = newdata[subset, , drop = FALSE]
   }
@@ -111,6 +117,10 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
+    }
+    if (td$is.spatial == TRUE) {
+      pars$.newdata$x = NULL
+      pars$.newdata$y = NULL
     }
     time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
 

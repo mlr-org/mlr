@@ -17,8 +17,7 @@ makeRLearner.surv.rpart = function() {
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
-    properties = c("rcens", "missings", "numerics", "factors", "ordered",
-      "weights", "featimp"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "featimp"),
     name = "Survival Tree",
     short.name = "rpart",
     note = "`xval` has been set to `0` by default for speed.",
@@ -39,11 +38,7 @@ trainLearner.surv.rpart = function(.learner, .task, .subset, .weights = NULL, ..
 
 #' @export
 predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
-  } else {
-    stop("Unsupported predict type")
-  }
+  predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
 }
 
 #' @export

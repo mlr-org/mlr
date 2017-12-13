@@ -5,15 +5,15 @@
 \title{Extract data in task.}
 \usage{
 getTaskData(task, subset = NULL, features, target.extra = FALSE,
-  recode.target = "no")
+  recode.target = "no", functionals.as = "dfcols")
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
+\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
 Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+By default (\code{NULL}) all observations are used.}
 
 \item{features}{[\code{character} | \code{integer} | \code{logical}]\cr
 Vector of selected inputs. You can either pass a character vector with the
@@ -41,6 +41,12 @@ For survival, you may choose to recode the survival times to \dQuote{left}, \dQu
 using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 See \code{\link[survival]{Surv}} for the format specification.
 Default for both binary classification and survival is \dQuote{no} (do nothing).}
+
+\item{functionals.as}{[\code{character(1)}]\cr
+How to represents functional features?
+Option \dQuote{matrix}: Keep them as matrix columns in the data.frame.
+Option \dQuote{dfcols}: Convert them to individual numeric data.frame columns.
+Default is \dQuote{dfcols}.}
 }
 \value{
 Either a data.frame or a list with data.frame \code{data} and vector \code{target}.

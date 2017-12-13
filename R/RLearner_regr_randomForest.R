@@ -9,7 +9,7 @@
 #' Currently implemented methods are:
 #'
 #' \itemize{
-#' \item If \code{se.method = "jackknife"}, the default, the standard error of a prediction
+#' \item If \code{se.method = "jackknife"} the standard error of a prediction
 #'   is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between
 #'   the prediction made by only using trees which did not contain said observation and
 #'   the ensemble prediction.
@@ -22,7 +22,7 @@
 #'   which is less computationally expensive. A Monte-Carlo bias correction may make the latter option
 #'   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{se.ntree = 100}.
 #'
-#' \item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
+#' \item If \code{se.method = "sd"}, the default, the standard deviation of the predictions across trees is
 #'   returned as the variance estimate.
 #'   This can be computed quickly but is also a very naive estimator.
 #' }
@@ -57,7 +57,7 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "se.ntree", default = 100L, lower = 1L, when = "both", requires = quote(se.method == "bootstrap")),
-      makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
+      makeDiscreteLearnerParam(id = "se.method", default = "sd",
         values = c("bootstrap", "jackknife",  "sd"),
         requires = quote(se.method %in% "jackknife" && keep.inbag == TRUE),
         when = "both"),
@@ -86,7 +86,7 @@ makeRLearner.regr.randomForest = function() {
 }
 
 #' @export
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "jackknife", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, se.method = "sd", keep.inbag = NULL, se.boot = 50L, se.ntree = 100L, ...) {
   data = getTaskData(.task, .subset, target.extra = TRUE)
   if (is.null(keep.inbag)) keep.inbag = (se.method == "jackknife" && .learner$predict.type == "se")
   m = randomForest::randomForest(x = data[["data"]], y = data[["target"]], keep.inbag = keep.inbag, ...)
@@ -130,7 +130,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, se.metho
 
 #' @export
 getOOBPredsLearner.regr.randomForest = function(.learner, .model) {
-  .model$learner.model$predicted
+  getLearnerModel(.model, more.unwrap = TRUE)$predicted
 }
 
 # Computes brute force or noisy bootstrap

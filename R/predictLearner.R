@@ -58,9 +58,37 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
       .newdata[ns] = mapply(factor, x = .newdata[ns],
          levels = fls, SIMPLIFY = FALSE)
   }
-  p = predictLearner(.learner, .model, .newdata, ...)
+  if ("missings" %nin% getLearnerProperties(.learner))
+    no.na = removeNALines(.newdata)
+  else
+    no.na = list(newdata = .newdata, inserts = FALSE)
+  if (!nrow(no.na$newdata))
+    no.na = list(newdata = .newdata, inserts = FALSE)  # no choice if all lines contain NA
+  p = predictLearner(.learner, .model, no.na$newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
-  return(p)
+  return(insertLines(p, no.na$inserts))
+}
+
+removeNALines = function(newdata) {
+  namat = is.na(newdata)
+  narows = apply(namat, 1, any)
+  return(list(newdata = newdata[!narows, , drop = FALSE], inserts = narows))
+}
+
+insertLines = function(prediction, inserts) {
+#  if (!any(inserts))
+#    return(prediction)
+  if (is.matrix(prediction)) {
+    ret = matrix(nrow = nrow(prediction) + sum(inserts), ncol = ncol(prediction))
+    ret[!inserts, ] = prediction
+    colnames(ret) = colnames(prediction)
+  } else {
+    ret = rep(NA, length(prediction) + sum(inserts))
+    ret[!inserts] = prediction
+    attributes(ret) = attributes(prediction)
+    names(ret) = NULL
+  }
+  return(ret)
 }
 
 checkPredictLearnerOutput = function(learner, model, p) {

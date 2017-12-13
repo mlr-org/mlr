@@ -124,3 +124,59 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+#' Basque pathogen infection spatial binary classification task.
+#'
+#' Contains the task (\code{bc.task.spatial}).
+#'
+#' @name bc.task.spatial
+#' @references Iturritxa, E., Mesanza, N., & Brenning, A. (2014). Spatial
+#' analysis of the risk of major forest diseases in Monterey pine plantations.
+#' Plant Pathology, 64(4), 880-889. doi:10.1111/ppa.12328
+NULL
+
+#' Gunpoint functional data classification task.
+#'
+#' Contains the task (\code{gunpoint.task}).
+#' You have to classify whether a person raises up a gun or just an empty hand.
+#'
+#' @name gunpoint.task
+#' @references See Ratanamahatana, C. A. & Keogh. E. (2004). Everything you know
+#'   about Dynamic Time Warping is Wrong. Proceedings of SIAM International
+#'   Conference on Data Mining (SDM05), 506-510.
+#' @keywords data
+#' @docType data
+NULL
+
+
+#' FuelSubset functional data regression task.
+#'
+#' Contains the task (\code{fuelsubset.task}).
+#' 2 functional covariates and 1 scalar covariate.
+#' You have to predict the heat value of some fuel based on the
+#' ultraviolet radiation spectrum and infrared ray radiation and one scalar
+#' column called h2o.
+#'
+#' The features and grids are scaled in the same way as in \code{\link[FDboost]{FDboost}}.
+#'
+#' @name fuelsubset.task
+#' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
+#' @keywords data
+#' @docType data
+NULL
+
+#' Phoneme functional data multilabel classification task.
+#'
+#' Contains the task (\code{phoneme.task}).
+#' The task contains a single functional covariate and 5 equally big classes (aa, ao, dcl, iy, sh).
+#' The aim is to predict the class of the phoneme in the functional.
+#' The dataset is contained in the package fda.usc.
+#'
+#' @name phoneme.task
+#' @references
+#'   F. Ferraty and P. Vieu (2003) "Curve discrimination: a nonparametric functional approach", Computational Statistics and Data Analysis, 44(1-2), 161-173.
+#'   F. Ferraty and P. Vieu (2006) Nonparametric functional data analysis, New York: Springer.
+#'   T. Hastie and R. Tibshirani and J. Friedman (2009) The elements of statistical learning: Data mining, inference and prediction, 2nd edn, New York: Springer.
+#' @keywords data
+#' @docType data
+NULL

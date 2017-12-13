@@ -105,6 +105,22 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   }
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")
+
+  if (show.info) {
+    messagef("Resampling: %s", rin$desc$id)
+
+    measure.lognames = extractSubList(measures, "id")
+    # when predict on both some measure might be in there twice,
+    # depending on aggregation fun, then we need to print each measure twice
+    if (rin$desc$predict == "both") {
+      id.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
+      id.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
+      measure.lognames = c(stri_paste(measure.lognames[id.train], "train", sep = "."),
+        stri_paste(measure.lognames[id.test], "test", sep = "."))
+    }
+    printResampleFormatLine("Measures:", measure.lognames)
+  }
+
   time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
   time2 = Sys.time()
@@ -119,17 +135,15 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 # this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
-  if (show.info)
-    messagef("[Resample] %s iter %i: ", rin$desc$id, i, .newline = FALSE)
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
-  calculateResampleIterationResult(learner = learner, task = task, train.i = train.i, test.i = test.i, measures = measures,
+  calculateResampleIterationResult(learner = learner, task = task, i = i, train.i = train.i, test.i = test.i, measures = measures,
     weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
 }
 
 
 #Evaluate one train/test split of the resample function and get one or more performance values
-calculateResampleIterationResult = function(learner, task, train.i, test.i, measures,
+calculateResampleIterationResult = function(learner, task, i, train.i, test.i, measures,
   weights, rdesc, model, extract, show.info) {
 
   err.msgs = c(NA_character_, NA_character_)
@@ -154,13 +168,23 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
       train.task = lm$train.task
       train.i = lm$subset
     }
-    pred.train = predict(m, train.task, subset = train.i)
+    if (task$task.desc$is.spatial == TRUE) {
+      train.data = task$env$data[train.i, ]
+      pred.train = predict(m, newdata = train.data)
+    } else {
+      pred.train = predict(m, train.task, subset = train.i)
+    }
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
   } else if (pp == "test") {
+    if (task$task.desc$is.spatial == TRUE) {
+      newdata = task$env$data[test.i, ]
+      pred.test = predict(m, newdata = newdata)
+    } else {
     pred.test = predict(m, task, subset = test.i)
+    }
     if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
@@ -172,13 +196,23 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
       train.task = lm$train.task
       train.i = lm$subset
     }
-    pred.train = predict(m, train.task, subset = train.i)
+    if (task$task.desc$is.spatial == TRUE) {
+      train.data = task$env$data[train.i, ]
+      pred.train = predict(m, newdata = train.data)
+    } else {
+      pred.train = predict(m, train.task, subset = train.i)
+    }
     if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = performance(task = task, model = m, pred = pred.train, measures = measures)
     names(ms.train) = vcapply(measures, measureAggrName)
     err.dumps$predict.train = getPredictionDump(pred.train)
 
-    pred.test = predict(m, task, subset = test.i)
+    if (task$task.desc$is.spatial == TRUE) {
+      newdata = task$env$data[test.i, ]
+      pred.test = predict(m, newdata = newdata)
+    } else {
+      pred.test = predict(m, task, subset = test.i)
+    }
     if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = performance(task = task, model = m, pred = pred.test, measures = measures)
     names(ms.test) = vcapply(measures, measureAggrName)
@@ -194,10 +228,21 @@ calculateResampleIterationResult = function(learner, task, train.i, test.i, meas
   if (show.info) {
     idx.train = which(vlapply(measures, function(x) "req.train" %in% x$aggr$properties))
     idx.test = which(vlapply(measures, function(x) "req.test" %in% x$aggr$properties))
-    if (pp == "train") x = ms.train[idx.train]
-    else if (pp == "test") x = ms.test[idx.test]
-    else x = c(ms.train[idx.train], ms.test[idx.test])
-    messagef(perfsToString(x))
+    ms.ids = extractSubList(measures, "id")
+    if (pp == "both") {
+      x = c(ms.train[idx.train], ms.test[idx.test])
+      names(x) = c(stri_paste(ms.ids[idx.train], "train", sep = "."),
+        stri_paste(ms.ids[idx.test], "test", sep = "."))
+    } else {
+      if (pp == "train") {
+        x = ms.train[idx.train]
+      } else {
+        x = ms.test[idx.test]
+      }
+      names(x) = ms.ids
+    }
+    iter.message = sprintf("[Resample] iter %i:", i)
+    printResampleFormatLine(iter.message, x)
   }
   list(
     measures.test = ms.test,
@@ -224,7 +269,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
-  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
+  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train, task.desc = getTaskDesc(task))
 
   # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   aggr = vnapply(seq_along(measures), function(i) {
@@ -248,8 +293,16 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   err.dumps = extractSubList(iter.results, "err.dumps", simplify = FALSE)
 
-  if (show.info)
-    messagef("[Resample] Aggr. Result: %s", perfsToString(aggr))
+  if (show.info) {
+    # use measure ids for printing
+    # aggr.out = aggr
+    # names(aggr.out) = extractSubList(measures, "id")
+    message("\n")
+    messagef("Aggregated Result: %s", perfsToString(aggr))
+    # last line break is there to seperate aggregated
+    # results from objects returned by other functions (e.g. benchmark)
+    message("\n")
+  }
 
   if (!keep.pred)
     pred = NULL

@@ -32,7 +32,7 @@ makeRLearner.classif.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "majority", values = c("majority", "sample-prior"))
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "missings", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "missings", "prob", "functionals"),
     name = "Featureless classifier",
     short.name = "featureless"
   )
@@ -41,7 +41,10 @@ makeRLearner.classif.featureless = function() {
 #' @export
 trainLearner.classif.featureless = function(.learner, .task, .subset, .weights = NULL,
   method = "majority", ...) {
-  y = getTaskTargets(.task)[.subset]
+  y = getTaskTargets(.task)
+  if (!is.null(.subset)) {
+    y = y[.subset]
+  }
   lvls = getTaskClassLevels(.task)
   # probs is always complete, if a class is empty is has 0 frequency in probs
   probs = prop.table(table(y))

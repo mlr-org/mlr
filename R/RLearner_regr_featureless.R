@@ -25,7 +25,7 @@ makeRLearner.regr.featureless = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "mean", values = c("mean", "median"))
     ),
-    properties = c("numerics", "factors", "ordered", "missings"),
+    properties = c("numerics", "factors", "ordered", "missings", "functionals"),
     name = "Featureless regression",
     short.name = "featureless"
   )
@@ -33,8 +33,10 @@ makeRLearner.regr.featureless = function() {
 
 #' @export
 trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL, method = "mean", ...) {
-  y = getTaskTargets(.task)[.subset]
-
+  y = getTaskTargets(.task)
+  if (!is.null(.subset)) {
+    y = y[.subset]
+  }
   if (method == "mean") {
     response = mean(y)
   } else if (method == "median") {
