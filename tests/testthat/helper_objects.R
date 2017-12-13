@@ -12,6 +12,18 @@ binaryclass.class.col = 61
 binaryclass.class.levs = levels(binaryclass.df[, binaryclass.class.col])
 binaryclass.task = makeClassifTask("binary", data = binaryclass.df, target = binaryclass.target)
 
+data("bc.task.spatial", package = "mlr")
+binaryclass.spatial.df = bc.task.spatial$env$data
+binaryclass.spatial.formula = diplo01~.
+binaryclass.spatial.target = "diplo01"
+binaryclass.spatial.train.inds = c(1:300, 600:900)
+binaryclass.spatial.test.inds  = setdiff(seq_len(nrow(binaryclass.spatial.df)), binaryclass.spatial.train.inds)
+binaryclass.spatial.train = binaryclass.spatial.df[binaryclass.spatial.train.inds, ]
+binaryclass.spatial.test  = binaryclass.spatial.df[binaryclass.spatial.test.inds, ]
+binaryclass.spatial.class.col = 3
+binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
+binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, spatial = TRUE)
+
 multiclass.df = iris
 multiclass.formula = Species~.
 multiclass.target = "Species"
@@ -111,6 +123,8 @@ surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 rm(getSurvData)
 
+data("gunpoint.task", package = "mlr")
+data("fuelsubset.task", package = "mlr")
 fda.binary.gp.task = gunpoint.task
 suppressMessages({gp = getTaskData(gunpoint.task, subset = seq_len(100), functionals.as = "dfcols")})
 gp.fdf = makeFunctionalData(gp[, seq_len(51)], fd.features = list("fd" = 2:51))

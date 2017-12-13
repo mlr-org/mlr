@@ -19,24 +19,28 @@
 multilabel task.}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, positive = NA_character_,
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, spatial = FALSE,
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 
 makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 
 makeCostSensTask(id = deparse(substitute(data)), data, costs,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, fixup.data = "warn",
+  weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn",
   check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 
 makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -64,6 +68,10 @@ Observations with the same blocking level \dQuote{belong together}.
 Specifically, they are either put all in the training or the test set
 during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
+
+\item{spatial}{[\code{logical(1)}]\cr
+Does the task contain a spatial reference (coordinates) which should be used for
+spatial partioning of the data? See details.}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary classification (otherwise ignored and set to NA).
@@ -114,11 +122,17 @@ Object members:
 \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
-
-Notes:
+}
+\details{
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
+
+If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
+resampling method, variables named \code{x} and \code{y} will be used for spatial
+partitioning of the data (kmeans clustering). They will not be
+used as predictors during modeling. Be aware: If coordinates are not named
+\code{x} and \code{y} they will be treated as normal predictors!
 
 Functional data can be added to a task via matrix columns. For more information refer to
 \code{\link{makeFunctionalData}}.

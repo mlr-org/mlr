@@ -56,17 +56,65 @@ test_that("calculateConfusionMatrix", {
   task = makeClassifTask(data = data, target = "Species")
   r = holdout(lrn, task, measures = ber)
   expect_error(calculateConfusionMatrix(r$pred), "FailureModel")
+})
 
+test_that("calculateConfusionMatrix elements are consistent with implemented measures", {
   #check values itself
-  task = subsetTask(sonar.task, 1:15)
-  pred = holdout(makeLearner("classif.rpart"), task)$pred
-  truth = factor(rep("R", 5), levels = c("M", "R"))
-  predicted = factor(c("R", "R", "M", "M", "M")) # two correct three wrong
-  err.abs = 3
-  err.rel = 3 / 5
+  task = subsetTask(sonar.task, 1:32)
+  pred = holdout(makeLearner("classif.rpart"), task, split = 1 / 2)$pred
+  truth = factor(rep(c("M", "R"), c(4, 12)))
+  predicted = factor(rep(c("M", "R", "M"), c(1, 10, 5)))
   pred$data$truth = truth
   pred$data$response = predicted
   cm = calculateConfusionMatrix(pred, relative = TRUE)
+  err.abs = 8
+  err.rel = 8 / 16
   expect_equal(cm$relative.error, err.rel)
   expect_equal(cm$result[3, 3], err.abs)
+
+  # check absolute counts in confusion matrix
+  tp = cm$result[1, 1]
+  fn = cm$result[1, 2]
+  fp = cm$result[2, 1]
+  tn = cm$result[2, 2]
+  cp = tp + fn  # condition positive
+  cn = tn + fp  # condition negative
+  pp = tp + fp  # predicted positive
+  pn = tn + fn  # predicted negative
+
+  # expect_equivalent instead of expect_equal because the performance() result
+  # contains an attribute (the name)
+  expect_equivalent(performance(pred, ppv), tp / pp)
+  expect_equivalent(performance(pred, acc), (tp + tn) / (cp + cn))
+  expect_equivalent(performance(pred, bac), mean(c(tp / cp, tn / cn)))
+  expect_equivalent(performance(pred, ber), mean(c(fp / cn, fn / cp)))
+
+  expect_equivalent(performance(pred, tpr), tp / cp)
+  expect_equivalent(performance(pred, fpr), fp / cn)
+  expect_equivalent(performance(pred, tnr), tn / cn)
+  expect_equivalent(performance(pred, fnr), fn / cp)
+
+  # check relative confusion matrices
+  expect_equivalent(colSums(cm$relative.col[1:2, 1:2]), c(1, 1))
+  expect_equivalent(rowSums(cm$relative.row[1:2, 1:2]), c(1, 1))
+  expect_equal(cm$relative.row[1, 1], cm$result[1, 1] / sum(cm$result[1, 1:2]))
+  expect_equal(cm$relative.row[1, 2], cm$result[1, 2] / sum(cm$result[1, 1:2]))
+  expect_equal(cm$relative.row[2, 1], cm$result[2, 1] / sum(cm$result[2, 1:2]))
+  expect_equal(cm$relative.row[2, 2], cm$result[2, 2] / sum(cm$result[2, 1:2]))
+  expect_equal(cm$relative.col[1, 1], cm$result[1, 1] / sum(cm$result[1:2, 1]))
+  expect_equal(cm$relative.col[1, 2], cm$result[1, 2] / sum(cm$result[1:2, 2]))
+  expect_equal(cm$relative.col[2, 1], cm$result[2, 1] / sum(cm$result[1:2, 1]))
+  expect_equal(cm$relative.col[2, 2], cm$result[2, 2] / sum(cm$result[1:2, 2]))
+})
+
+test_that("calculateConfusionMatrix with different factor levels (#2030)", {
+  lrn = makeLearner("classif.rpart")
+  m = train(lrn, iris.task)
+  nd = iris[101:150, ]
+  nd$Species = factor(nd$Species)
+
+  p = predict(m, newdata = nd)
+  cm = calculateConfusionMatrix(p)
+  expect_equal(cm$result[1, 4], 0)
+  expect_equal(cm$result[4, 4], 5)
 })

@@ -18,6 +18,7 @@ addons:
       - libgmp-dev
       - libgsl0-dev
 
+
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
@@ -45,9 +46,8 @@ jobs:
         - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
         - R --no-save <<< 'library("devtools"); document()'
       script:
-        - |
-          R CMD build .
-          travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+        - R CMD build .
+        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_script:
         - ../../travis-tool.sh dump_logs
