@@ -1,10 +1,6 @@
 context("tuneMBO")
 
 test_that("tuneMBO", {
-  skip_on_cran()
-  suppressWarnings(skip_if_not_installed("mlrMBO")) # will always throw warning: replacing previous import ‘BBmisc::printHead’ by ‘mlr::printHead’ when loading 'mlrMBO'
-  # attachNamespace("mlrMBO") # seems to be the only solution, as mlr is already loded by devtools but not recognized when mlrMBO wants to load it.
-
   n.des = 8
   n.iter = 2
   res = makeResampleDesc("Holdout")
@@ -44,3 +40,18 @@ test_that("tuneMBO", {
   df.op.trafo = as.data.frame(trafoOptPath(tr$opt.path))
   expect_true(all(df.op.trafo$sigma > 0))
 })
+
+
+test_that("tuneMBO works with tune.threshold", {
+  # there was a bug here, see issue #2002
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  ps = makeParamSet(
+    makeNumericParam("cp", lower = 0.1, upper = 1)
+  )
+  sur.lrn = makeLearner("regr.lm", predict.type = "se")
+  ctrl = makeTuneControlMBO(budget = 4L, tune.threshold = TRUE, mbo.design = generateDesign(3, par.set = ps), learner = sur.lrn)
+  lrn = makeTuneWrapper(lrn, hout, par.set = ps, control = ctrl)
+  mod = train(lrn, sonar.task)
+  expect_number(mod$learner.model$opt.result$threshold, lower = 0, upper = 1)
+})
+
