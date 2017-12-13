@@ -76,9 +76,9 @@ test_that("calculateConfusionMatrix set argument works", {
     mod = train("classif.lda", iris.task)
     pred1 = crossval("classif.rpart", iris.task)$pred
     pred2 = predict(mod, iris.task)
-    rdesc = makeResampleDesc("CV", iters=10, predict="both")
+    rdesc = makeResampleDesc("CV", iters = 10, predict = "both")
     # here, you have set=train and set=test in pred3$data:
-    pred3 = resample("classif.rpart", iris.task, rdesc)$pred  
+    pred3 = resample("classif.rpart", iris.task, rdesc)$pred
 
     # pred1 was only predicted on test data, so a subset to train data has no entries:
     expect_equal(sum(calculateConfusionMatrix(pred1, set = "train")$result), 0)
