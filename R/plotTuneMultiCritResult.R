@@ -74,22 +74,36 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #'   For \code{"hover"}, information is displayed on mouse hover.
 #'   If set to \code{"none"}, no information is displayed.
 #'   Default is \code{"hover"}.
+#' @param point.trafo [\code{logical(1)}]\cr
+#'   Should the information show the transformed hyper parameters?
+#'   Default is \code{TRUE}.
 #'
 #' @template ret_ggv
 #' @family tune_multicrit
 #' @export
 #' @examples
 #' # see tuneParamsMultiCrit
-plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover") {
+plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover", point.trafo = TRUE) {
   requirePackages("_ggvis")
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
   assertChoice(point.info, choices = c("click", "hover", "none"))
+  assertFlag(point.trafo)
 
   plt.data = as.data.frame(res$opt.path)
   plt.data$location = factor(row.names(plt.data) %in% res$ind, levels = c(TRUE, FALSE),
                              labels = c("frontier", "interior"))
-  plt.data$id = 1:nrow(plt.data)
+  plt.data$id = seq_len(nrow(plt.data))
+
+  if (point.trafo) {
+    for(param in res$opt.path$par.set$pars) {
+      plt.data[, param$id] = trafoValue(param, plt.data[, param$id])
+    }
+  }
+
+  if (!path) {
+    plt.data = plt.data[plt.data$location == "frontier", , drop = FALSE]
+  }
 
   info = function(x) {
     if (is.null(x)) {
@@ -101,16 +115,10 @@ plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover") 
     return(text)
   }
 
-  if (path) {
-    plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
-                       ggvis::prop("y", as.name(colnames(res$y)[2L])), key := ~id)
-    plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
-  } else {
-    plt.data = plt.data[plt.data$location == "frontier", , drop = FALSE]
-    plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
-                       ggvis::prop("y", as.name(colnames(res$y)[2L])), key := ~id)
-    plt = ggvis::layer_points(plt)
-  }
+  plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
+    ggvis::prop("y", as.name(colnames(res$y)[2L])),
+    ggvis::prop("key", ~id, scale = FALSE))
+  plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
 
   if (point.info == "hover") {
     plt = ggvis::add_tooltip(plt, info, "hover")
