@@ -102,6 +102,23 @@
 #' }
 NULL
 
+#' Exported for internal use.
+#' @param id [\code{character(1)}]\cr
+#'   task id
+#' @param data [\code{data.frame}]\cr
+#'   data
+#' @param target [\code{character}]\cr
+#'   target columns
+#' @param weights [\code{numeric}]\cr
+#'   weights
+#' @param blocking [\code{numeric}\cr
+#'   task data blocking
+#' @param spatial [\code{logical(1)}]\cr
+#'   whether data is spatial
+#' @keywords internal
+#' @name makeTaskDesc
+NULL
+
 makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, spatial = FALSE) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {

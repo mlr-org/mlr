@@ -421,6 +421,19 @@ subsetTask = function(task, subset = NULL, features) {
 
 
 # we create a new env, so the reference is not changed
+#' Change Task Data
+#'
+#' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
+#'
+#' @template arg_task
+#' @param data [\code{data.frame}]\cr
+#'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
+#' @param costs [\code{data.frame}\cr
+#'   Optional: cost matrix.
+#' @param weights [\code{numeric}]\cr
+#'   Optional: weight vector.
+#' @keywords internal
+#' @export
 changeData = function(task, data, costs, weights) {
   if (missing(data))
     data = getTaskData(task)
