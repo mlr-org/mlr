@@ -66,7 +66,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
       truth = truth[pred$data$set == set]
       resp = resp[pred$data$set == set]
   }
-  
+
   tab = table(truth, resp)
   # create table for margins, where only the off-diag errs are in
   mt = tab
