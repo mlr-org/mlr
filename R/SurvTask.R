@@ -30,7 +30,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     }
   }
 
-  task = makeSupervisedTask("regr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("surv", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     time = data[[target[1L]]]

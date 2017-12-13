@@ -43,10 +43,19 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   ps2 = par.set
   for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
-  smoof::makeSingleObjectiveFunction(
-    fn = function(x) {
-      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun)
-  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
+
+
+  fn = function(x) {
+    tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun)
+  }
+  if ("TuneMultiCritControlMBO" %in% class(ctrl)) {
+    # FIXME: Optimization of noisy multi-objective functions not supported at the moment by mlrMBO
+    fun = smoof::makeMultiObjectiveFunction(fn = fn, par.set = ps2, has.simple.signature = FALSE,
+      n.objectives = ctrl$mbo.control$n.objectives)
+  } else {
+    fun = smoof::makeSingleObjectiveFunction(fn = fn, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
+  }
+  return(fun)
 }
 
 # multiple xs in parallel

@@ -33,8 +33,10 @@ makeRLearner.regr.featureless = function() {
 
 #' @export
 trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NULL, method = "mean", ...) {
-  y = getTaskTargets(.task)[.subset]
-
+  y = getTaskTargets(.task)
+  if (!is.null(.subset)) {
+    y = y[.subset]
+  }
   if (method == "mean") {
     response = mean(y)
   } else if (method == "median") {
