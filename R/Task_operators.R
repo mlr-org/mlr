@@ -387,6 +387,7 @@ getTaskCosts.Task = function(task, subset = NULL) {
   NULL
 }
 
+#' @export
 getTaskCosts.CostSensTask = function(task, subset = NULL) {
   subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
   getTaskDesc(task)$costs[subset, , drop = FALSE]
