@@ -96,7 +96,7 @@ plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover", 
   plt.data$id = seq_len(nrow(plt.data))
 
   if (point.trafo) {
-    for(param in res$opt.path$par.set$pars) {
+    for (param in res$opt.path$par.set$pars) {
       plt.data[, param$id] = trafoValue(param, plt.data[, param$id])
     }
   }
