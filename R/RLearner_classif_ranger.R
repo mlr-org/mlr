@@ -18,7 +18,6 @@ makeRLearner.classif.ranger = function() {
       makeLogicalLearnerParam(id = "write.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
       makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both", tunable = FALSE),
-      makeDiscreteLearnerParam(id = "splitrule", values = c("gini", "extratrees"), default = "gini"),
       makeIntegerLearnerParam(id = "num.random.splits", lower = 1, default = 1, requires = quote(splitrule == "extratrees")),
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
