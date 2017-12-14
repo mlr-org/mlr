@@ -42,6 +42,8 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
   addClasses(task, "SurvTask")
 }
 
+#' @export
+#' @rdname makeTaskDesc
 makeSurvTaskDesc = function(id, data, target, weights, blocking, spatial) {
   td = makeTaskDescInternal("surv", id, data, target, weights, blocking, spatial)
   addClasses(td, c("SurvTaskDesc", "SupervisedTaskDesc"))

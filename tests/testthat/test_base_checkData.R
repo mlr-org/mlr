@@ -45,6 +45,9 @@ test_that("checkData", {
   df[, 1] = as.logical(df[, 1])
   colnames(df)[1] = "aaa"
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
+
+  # check costiris.task has costs
+  expect_equal(nrow(getTaskData(costiris.task)), nrow(getTaskCosts(costiris.task)))
 })
 
 test_that("changeData . getTaskData is a noop on builtin tasks", {

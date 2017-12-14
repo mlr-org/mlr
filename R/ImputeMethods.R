@@ -218,7 +218,8 @@ imputeNormal = function(mu = NA_real_, sd = NA_real_) {
 imputeHist = function(breaks, use.mids = TRUE) {
   if (missing(breaks)) {
     breaks = "Sturges"
-  } else {
+  }
+  if (!identical(breaks, "Sturges")) {
     breaks = asCount(breaks)
   }
   assertFlag(use.mids)
