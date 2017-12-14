@@ -174,7 +174,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
-          show.legend = TRUE)
+          show.legend = TRUE) + scale_fill_discrete(drop = FALSE)
         p = p + scale_alpha(limits = range(grid$.prob.pred.class))
       } else {
         p = p + geom_tile(mapping = aes_string(fill = target))

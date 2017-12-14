@@ -139,3 +139,8 @@ test_that("filter values are named and ordered correctly", { # we had an issue h
   expect_equal(fv$data$mock.filter, seq_along(ns))
   rm("mock.filter", envir = mlr:::.FilterRegister)
 })
+
+test_that("filter method 'variance' works with missing values", {
+  fi = generateFilterValuesData(regr.na.num.task, method = "variance")
+  expect_false(anyMissing(fi$data$variance))
+})

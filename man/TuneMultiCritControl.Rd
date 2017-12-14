@@ -22,8 +22,7 @@ makeTuneMultiCritControlMBO(n.objectives = mbo.control$n.objectives,
   same.resampling.instance = TRUE, impute.val = NULL, learner = NULL,
   mbo.control = NULL, tune.threshold = FALSE,
   tune.threshold.args = list(), continue = FALSE, log.fun = "default",
-  final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE,
-  mbo.design = NULL)
+  final.dw.perc = NULL, budget = NULL, mbo.design = NULL)
 
 makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
   impute.val = NULL, log.fun = "default", final.dw.perc = NULL,
@@ -115,10 +114,6 @@ Requires \dQuote{save.file.path} to be set.
 Note that the \code{\link[ParamHelpers]{OptPath}} in the \code{\link[mlrMBO]{OptResult}}
 will only include the evaluations after the continuation.
 The complete \code{\link{OptPath}} will be found in the slot \code{$mbo.result$opt.path}.}
-
-\item{mbo.keep.result}{[\code{logical(1)}] \cr
-Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
-Default is \code{FALSE}.}
 
 \item{mbo.design}{[\code{data.frame} | \code{NULL}]\cr
 Initial design as data frame.
