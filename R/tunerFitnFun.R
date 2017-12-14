@@ -47,7 +47,7 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
     fun = smoof::makeMultiObjectiveFunction(fn = fn, par.set = ps2, has.simple.signature = FALSE,
       n.objectives = ctrl$mbo.control$n.objectives, minimize = extractSubList(measures, "minimize"))
   } else {
-    fun = smoof::makeSingleObjectiveFunction(fn = fn, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE, minimize = measures[[1]]$minimize))
+    fun = smoof::makeSingleObjectiveFunction(fn = fn, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE, minimize = measures[[1]]$minimize)
   }
   return(fun)
 }
