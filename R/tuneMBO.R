@@ -18,7 +18,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
     messagef("Resuming previous MBO run using state in '%s'...", state)
     or = mlrMBO::mboContinue(state)
   } else {
-    or = mlrMBO::mbo(tff, design = control$mbo.design, learner = control$learner,control = mbo.control, show.info = FALSE)
+    or = mlrMBO::mbo(tff, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
   }
 
   if (multicrit) {
