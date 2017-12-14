@@ -11,12 +11,22 @@
   partitioning methods "SpCV" and "SpRepCV".
 * Classification tasks now store the class distribution in the
   class.distribution member.
+* mlr now predicts NA for data that contains NA and learners that do not support
+  missing values.
+* Tasks are now subsetted in the "train" function and the factor levels (for
+  classification tasks) based on this subset. This means that the factor level
+  distribution is not necessarily the same as for the entire task, and that the
+  task descriptions of models in resampling reflect the respective subset, while
+  the task description of resample predictions reflect the entire task and not
+  necessarily the task of any individual model.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
   range of values for the partial dependencies
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
+* plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
+  control interactivity
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -31,6 +41,7 @@
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
 * getOptPath
+* makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
 
 ## measures - general
 * measure "arsq" now has ID "arsq"

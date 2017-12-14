@@ -30,7 +30,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     }
   }
 
-  task = makeSupervisedTask("regr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("surv", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     time = data[[target[1L]]]
@@ -42,6 +42,8 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
   addClasses(task, "SurvTask")
 }
 
+#' @export
+#' @rdname makeTaskDesc
 makeSurvTaskDesc = function(id, data, target, weights, blocking, spatial) {
   td = makeTaskDescInternal("surv", id, data, target, weights, blocking, spatial)
   addClasses(td, c("SurvTaskDesc", "SupervisedTaskDesc"))
