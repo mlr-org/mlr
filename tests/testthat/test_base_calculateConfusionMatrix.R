@@ -122,32 +122,34 @@ test_that("calculateConfusionMatrix with different factor levels (#2030)", {
 
 test_that("calculateConfusionMatrix set argument works", {
     mod = train("classif.lda", iris.task)
-    pred1 = crossval("classif.rpart", iris.task)$pred
-    pred2 = predict(mod, iris.task)
+    pred1 = predict(mod, iris.task)
     rdesc = makeResampleDesc("CV", iters = 10, predict = "both")
     # here, you have set=train and set=test in pred3$data:
-    pred3 = resample("classif.rpart", iris.task, rdesc)$pred
+    pred2 = resample("classif.rpart", iris.task, rdesc)$pred
 
-    # pred1 was only predicted on test data, so a subset to train data has no entries:
-    expect_equal(sum(calculateConfusionMatrix(pred1, set = "train")$result), 0)
-
-    # pred2$data has no column "set" => argument set="train" would *not* make sense
-    expect_error(calculateConfusionMatrix(pred2, set = "train"))
+    # pred1$data has no column "set" => argument set="train" would *not* make sense
+    expect_error(calculateConfusionMatrix(pred1, set = "train"))
 
     # pred3 was predicted on both train and test set. Both subsetted matrices should give
     # a positive total count:
-    expect_gt(sum(calculateConfusionMatrix(pred3, set = "train")$result), 0)
-    expect_gt(sum(calculateConfusionMatrix(pred3, set = "test")$result), 0)
+    expect_gt(sum(calculateConfusionMatrix(pred2, set = "train")$result), 0)
+    expect_gt(sum(calculateConfusionMatrix(pred2, set = "test")$result), 0)
 })
 
-test_that("calculateConfusionMatrix returns all-zero confusion matrix when set argument is 'wrong'", {
+test_that("calculateConfusionMatrix raises error when set argument is 'wrong'", {
     # if a resampled prediction was computed with predict = "train" and is passed
-    # with set = "test" (and vice-versa), calculateConfusionMatrix should return
-    # a confusion matrix filled with zeroes.
+    # with set = "test" (and vice-versa), calculateConfusionMatrix should raise
+    # an error
 
     rdesc.test = makeResampleDesc("CV", iters = 3, predict = "test")
     pred.test = resample("classif.rpart", iris.task, rdesc.test)$pred
 
-    # check that each element is zero:
-    expect_true(all(calculateConfusionMatrix(pred.test, set = "train")$result == 0))
+    expect_error(calculateConfusionMatrix(pred.test, set = "train"))
+})
+
+test_that("calculateConfusionMatrix raises error when prediction object is empty", {
+    mod = train("classif.lda", iris.task)
+    pred = predict(mod, iris.task)
+    pred$data = pred$data[FALSE, ]
+    expect_error(calculateConfusionMatrix(pred))
 })

@@ -61,8 +61,13 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
 
   if (set != "both"){
       assertClass(pred, classes = "ResamplePrediction")
-      truth = truth[pred$data$set == set]
-      resp = resp[pred$data$set == set]
+      subset.idx = (pred$data$set == set)
+
+      if (!any(subset.idx)){
+          stopf("prediction object contains no observations for set = '%s'", set)
+      }
+      truth = truth[subset.idx]
+      resp = resp[subset.idx]
   }
 
   cls = union(levels(resp), levels(truth))
@@ -71,6 +76,9 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
   resp = factor(resp, levels = cls)
 
   tab = table(truth, resp)
+  if (all(tab == 0)){
+      stop("Confusion matrix is empty!")
+  }
 
   # create table for margins, where only the off-diag errs are in
   mt = tab
