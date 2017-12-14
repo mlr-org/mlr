@@ -120,11 +120,8 @@ plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover", 
     ggvis::prop("key", ~id, scale = FALSE))
   plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
 
-  if (point.info == "hover") {
-    plt = ggvis::add_tooltip(plt, info, "hover")
-  }
-  else if (point.info == "click") {
-    plt = ggvis::add_tooltip(plt, info, "click")
+  if (point.info != "none") {
+    plt = ggvis::add_tooltip(plt, info, point.info)
   }
 
   return(plt)
