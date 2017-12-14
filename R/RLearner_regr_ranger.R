@@ -38,30 +38,6 @@ makeRLearner.regr.ranger = function() {
 }
 
 #' @export
-<<<<<<< HEAD
-#' @export
-predictLearner.regr.ranger = function(.learner, .model, .newdata, se.method = "jackknife", ...) {
-
-  predict.se = .learner$predict.type == "se"
-  pred = predict(object = .model$learner.model, data = .newdata, predict.all = predict.se, ...)
-
-  # Computes the mc bias-corrected jackknife after bootstrap
-  if (predict.se) {
-    p = rowMeans(pred$predictions)
-    if (se.method == "jackknife") {
-      se = jacknifeStandardError(
-        aggregated.predictions = p,
-        individual.predictions = pred$predictions,
-        bag.counts = matrix(unlist(.model$learner.model$inbag.counts), ncol = length(.model$learner.model$inbag.counts), byrow = FALSE))
-    } else if (se.method == "sd") {
-      se = sdStandardError(
-        individual.predictions = pred$predictions
-        )
-    }
-    return(cbind(p, se))
-  } else {
-    return(pred$predictions)
-=======
 trainLearner.regr.ranger = function(.learner, .task, .subset, .weights, se.method = "jackknife", keep.inbag = NULL, mtry, mtry.perc, ...) {
   tn = getTaskTargetNames(.task)
   if (missing(mtry)) {
