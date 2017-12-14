@@ -5,13 +5,11 @@ template:
     bootswatch: cosmo
 
 navbar:
-  title: mlr
+  title:
   type: default
   left:
-  - icon: fa-home
-    href: index.html
-  - icon: slack
-    href: https://mlr-org.slack.com
+  #- icon: fa-home
+  #  href: index.html
   - text: Get Started
     href: articles/mlr.html
   - text: Reference
@@ -102,6 +100,12 @@ navbar:
   right:
   - icon: fa-github fa-lg
     href: https://github.com/mlr-org/mlr
+  - icon: fa-slack
+    href: https://mlr-org.slack.com
+  - icon: fa-stack-overflow
+    href: https://stackoverflow.com/questions/tagged/mlr
+  - icon: fa-rss
+    href: https://mlr-org.github.io
 
 reference:
 - title: Get Functions
