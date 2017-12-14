@@ -139,3 +139,15 @@ test_that("calculateConfusionMatrix set argument works", {
     expect_gt(sum(calculateConfusionMatrix(pred3, set = "train")$result), 0)
     expect_gt(sum(calculateConfusionMatrix(pred3, set = "test")$result), 0)
 })
+
+test_that("calculateConfusionMatrix returns all-zero confusion matrix when set argument is 'wrong'", {
+    # if a resampled prediction was computed with predict = "train" and is passed
+    # with set = "test" (and vice-versa), calculateConfusionMatrix should return
+    # a confusion matrix filled with zeroes.
+
+    rdesc_test = makeResampleDesc("CV", iters = 3, predict = "test")
+    pred_test = resample("classif.rpart", iris.task, rdesc_test)$pred
+
+    # check that each element is zero:
+    expect_true(all(calculateConfusionMatrix(pred_test, set = "train")$result == 0))
+})
