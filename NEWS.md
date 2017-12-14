@@ -25,6 +25,8 @@
   range of values for the partial dependencies
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
+* plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
+  control interactivity
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
