@@ -145,9 +145,9 @@ test_that("calculateConfusionMatrix returns all-zero confusion matrix when set a
     # with set = "test" (and vice-versa), calculateConfusionMatrix should return
     # a confusion matrix filled with zeroes.
 
-    rdesc_test = makeResampleDesc("CV", iters = 3, predict = "test")
-    pred_test = resample("classif.rpart", iris.task, rdesc_test)$pred
+    rdesc.test = makeResampleDesc("CV", iters = 3, predict = "test")
+    pred.test = resample("classif.rpart", iris.task, rdesc.test)$pred
 
     # check that each element is zero:
-    expect_true(all(calculateConfusionMatrix(pred_test, set = "train")$result == 0))
+    expect_true(all(calculateConfusionMatrix(pred.test, set = "train")$result == 0))
 })
