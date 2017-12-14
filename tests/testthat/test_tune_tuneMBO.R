@@ -27,9 +27,10 @@ test_that("tuneMBO", {
   mbo.ctrl = mlrMBO::setMBOControlTermination(mbo.ctrl, iters = 2)
   mbo.ctrl = mlrMBO::setMBOControlInfill(mbo.ctrl, crit = crit.ei)
   ctrl = makeTuneControlMBO(learner = sur.lrn, mbo.control = mbo.ctrl)
-  tr = tuneParams(lrn1, multiclass.task, res, par.set = ps1, control = ctrl)
+  tr = tuneParams(lrn1, multiclass.task, res, par.set = ps1, control = ctrl, measures = acc)
   expect_equal(getOptPathLength(tr$opt.path), n.des + n.iter)
   expect_equal(dim(as.data.frame(tr$opt.path)), c(n.des + n.iter, 2 + 1 + 4))
+  expect_number(tr$y, lower = 0.8, upper = 1)
 
   # Problem 2 with manually given initial design
   ctrl = makeTuneControlMBO(mbo.design = des2, budget = n.iter + n.des)
