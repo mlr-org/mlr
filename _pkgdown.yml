@@ -1,13 +1,17 @@
+url: https://pat-s.github.io/mlr
+
 template:
   params:
-    bootswatch: yeti
+    bootswatch: cosmo
 
 navbar:
   title: mlr
   type: default
   left:
-  - icon: fa-home fa-lg
+  - icon: fa-home
     href: index.html
+  - icon: slack
+    href: https://mlr-org.slack.com
   - text: Get Started
     href: articles/mlr.html
   - text: Reference
@@ -72,7 +76,7 @@ navbar:
     - text: Handling of Spatial Data
       href: articles/tutorial/handling_of_spatial_data.html
 
-  - text: Extend
+  - text: Extending
     menu:
     - text: Create Custom Learners
       href: articles/tutorial/custom_learners.html
