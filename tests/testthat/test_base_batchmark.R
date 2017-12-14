@@ -19,8 +19,8 @@ test_that("batchmark", {
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
   tab = summarizeExperiments(reg = reg)
-  expect_equal(tab$problem, as.factor("binary"))
-  expect_equal(tab$algorithm, as.factor("classif.lda"))
+  expect_equal(tab$problem, "binary")
+  expect_equal(tab$algorithm, "classif.lda")
   expect_set_equal(findExperiments(reg = reg)$job.id, 1:2)
 
   submitJobs(reg = reg)
@@ -212,6 +212,8 @@ test_that("batchmark", {
 })
 
 test_that("keep.preds and models are passed down to resample()", {
+  skip_if_not_installed("batchtools")
+  library(batchtools)
   task.names = "binary"
   tasks = list(binaryclass.task)
   learner.names = "classif.lda"

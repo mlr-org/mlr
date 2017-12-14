@@ -28,10 +28,10 @@ Currently not used.}
 \value{
 [\code{ROCMeasures}].
    A list containing two elements \code{confusion.matrix} which is
-   the 2 times 2 confusion matrix of relative frequencies and \code{measures}, a list of the above mentioned measures.
+   the 2 times 2 confusion matrix of absolute frequencies and \code{measures}, a list of the above mentioned measures.
 }
 \description{
-Calculate the relative number of correct/incorrect classifications and the following evaluation measures:
+Calculate the absolute number of correct/incorrect classifications and the following evaluation measures:
 
 
 \itemize{

@@ -3,7 +3,8 @@
 #' @description
 #' Retrieves the current hyperparameter settings of a learner.
 #'
-#' @template arg_learner
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}
 #'   the are used (see \code{\link[ParamHelpers]{LearnerParam}}).
@@ -13,7 +14,6 @@
 #' @family learner
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
-  assertClass(learner, classes = "Learner")
   assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }

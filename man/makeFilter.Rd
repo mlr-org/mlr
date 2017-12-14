@@ -25,6 +25,7 @@
 \alias{makeFilter}
 \alias{makeFilter}
 \alias{makeFilter}
+\alias{makeFilter}
 \title{Create a feature filter.}
 \format{An object of class \code{Filter} of length 6.}
 \usage{
@@ -167,6 +168,12 @@ numeric vectors and returns one (default is the difference), \code{aggregation},
 takes a \code{numeric} and returns a \code{numeric(1)} (default is the mean), \code{nmc},
 an \code{integer(1)}, and \code{replace}, a \code{logical(1)} which determines whether the feature being
 permuted is sampled with or without replacement.
+
+Filter \dQuote{auc} determines for each feature, how well the target
+variable can be predicted only based on this feature. More precisely, the
+prediction rule is: class 1 if the feature exceeds a threshold and class 0
+otherwise. The performance of this classification rule is measured by the
+AUC and the resulting filter score is |0.5 - AUC|.
 }
 \references{
 Kira, Kenji and Rendell, Larry (1992). The Feature Selection Problem: Traditional
@@ -174,5 +181,15 @@ Methods and a New Algorithm. AAAI-92 Proceedings.
 
 Kononenko, Igor et al. Overcoming the myopia of inductive learning algorithms
 with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.
+}
+\seealso{
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilterValues}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotFilterValues}}
 }
 \keyword{datasets}
