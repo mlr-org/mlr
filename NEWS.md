@@ -27,6 +27,8 @@
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
 * plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
   control interactivity
+* calculateConfusionMatrix: new parameter "set" to specify whether confusion
+  matrix should be computed for "train", "test", or "both" (default)
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
