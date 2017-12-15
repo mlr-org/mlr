@@ -132,8 +132,10 @@ test_that("calculateConfusionMatrix set argument works", {
 
     # pred3 was predicted on both train and test set. Both subsetted matrices should give
     # a positive total count:
-    expect_gt(sum(calculateConfusionMatrix(pred2, set = "train")$result), 0)
-    expect_gt(sum(calculateConfusionMatrix(pred2, set = "test")$result), 0)
+    test.obs = table(pred2$data$set)["test"]
+    train.obs = table(pred2$data$set)["train"]
+    expect_equivalent(sum(calculateConfusionMatrix(pred2, set = "train")$result[1:3, 1:3]), train.obs)
+    expect_equivalent(sum(calculateConfusionMatrix(pred2, set = "test")$result[1:3, 1:3]), test.obs)
 })
 
 test_that("calculateConfusionMatrix raises error when set argument is 'wrong'", {
@@ -147,9 +149,9 @@ test_that("calculateConfusionMatrix raises error when set argument is 'wrong'", 
     expect_error(calculateConfusionMatrix(pred.test, set = "train"))
 })
 
-test_that("calculateConfusionMatrix raises error when prediction object is empty", {
+test_that("calculateConfusionMatrix returns all-zero matrix when prediction object is empty", {
     mod = train("classif.lda", iris.task)
     pred = predict(mod, iris.task)
     pred$data = pred$data[FALSE, ]
-    expect_error(calculateConfusionMatrix(pred))
+    expect_true(all(calculateConfusionMatrix(pred)$result == 0))
 })
