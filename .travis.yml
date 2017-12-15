@@ -17,6 +17,7 @@ addons:
     packages:
       - libgmp-dev
       - libgsl0-dev
+      - imagemagick # for pkgdown favicon
 
 
 warnings_are_errors: true
