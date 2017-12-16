@@ -1,4 +1,4 @@
-![mlr](logo.png): Machine Learning in R
+![mlr](https://raw.githubusercontent.com/pat-s/mlr/master/logo.png): Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![Build Status tutorial](https://travis-ci.org/mlr-org/mlr-tutorial.svg?branch=gh-pages)](https://travis-ci.org/mlr-org/mlr-tutorial)
