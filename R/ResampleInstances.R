@@ -70,7 +70,7 @@ instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL, coor
 
 }
 
-instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL, coords) {
   initial.window.abs = floor(desc$initial.window * size)
   assertInt(initial.window.abs, lower = 1)
   if (size - initial.window.abs < desc$horizon)
@@ -106,7 +106,7 @@ instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds)
 }
 
-instantiateResampleInstance.GrowingCVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.GrowingCVDesc = function(desc, size, task = NULL, coords) {
   initial.window.abs = floor(desc$initial.window * size)
   assertInt(initial.window.abs, lower = 1)
   if (size - initial.window.abs < desc$horizon)
