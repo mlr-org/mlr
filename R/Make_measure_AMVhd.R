@@ -10,10 +10,10 @@
 #' the new performancecriteria AMVhd.
 #' @param amv.feats [\code{numeric}] \cr
 #' Number of features to be drawn in the feature subsamples.
-#' Default is 3.
+#' Default is 5.
 #' @param amv.iters [\code{numeric}] \cr
 #' Number of subsamples.
-#' Default is 10.
+#' Default is 50.
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
