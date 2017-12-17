@@ -68,7 +68,7 @@ instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL, coor
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
 
-instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL, coords) {
   thin = function(x, skip = 0) {
     n = length(x)
     x[seq(1, n, by = skip)]
@@ -104,7 +104,7 @@ instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL) {
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds )
 }
 
-instantiateResampleInstance.GrowingCVDesc = function(desc, size, task = NULL) {
+instantiateResampleInstance.GrowingCVDesc = function(desc, size, task = NULL, coords) {
   thin = function(x, skip = 0) {
     n = length(x)
     x[seq(1, n, by = skip)]
