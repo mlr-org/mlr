@@ -1,8 +1,5 @@
 ---
 title: "Integrating Another Measure"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -17,15 +14,13 @@ library("ParamHelpers")
 library("ggplot2")
 ```
 
-In some cases, you might want to evaluate a [&Prediction] or [&ResamplePrediction] with a
-[Measure](&makeMeasure) which is not yet implemented in [%mlr]. This could be either a
-performance measure which is not listed in the [Appendix](measures.md) or a measure that
-uses a misclassification cost matrix.
-
+In some cases, you might want to evaluate a `Prediction()` or `ResamplePrediction()` with a `Measure` (`makeMeasure()`) which is not yet implemented in `mlr`. 
+This could be either a performance measure which is not listed in the Appendix (`vignette("measure")`) or a measure that uses a misclassification cost matrix.
 
 ## Performance measures and aggregation schemes
-Performance measures in [%mlr] are objects of class [Measure](&makeMeasure).
-For example the [mse](measures.md) (mean squared error) looks as follows.
+
+Performance measures in `mlr` are objects of class `Measure` (`makeMeasure()`).
+For example the mse (`vignette("measure")`) (mean squared error) looks as follows.
 
 ```{r}
 str(mse)
@@ -35,42 +30,32 @@ mse$fun
 measureMSE
 ```
 
-See the [Measure](&makeMeasure) documentation page for a detailed description of the object
-slots.
+See the `Measure` (`makeMeasure()`) documentation page for a detailed description of the object slots.
 
 At the core is slot `$fun` which contains the function that calculates the performance value.
-The actual work is done by function [measureMSE](&measures).
-Similar functions, generally adhering to the naming scheme `measure` followed by the
-capitalized measure ID, exist for most performance measures.
-See the [&measures] help page for a complete list.
+The actual work is done by function `measureMSE` (`measures()`).
+Similar functions, generally adhering to the naming scheme `measure` followed by the capitalized measure ID, exist for most performance measures.
+See the [`measures()`] help page for a complete list.
 
-Just as [&Task] and [Learner](&makeLearner) objects each [Measure](&makeMeasure) has an
-identifier `$id` which is for example used to annotate results and plots.
-For plots there is also the option to use the longer measure `$name` instead. See the
-tutorial page on [Visualization](visualization.md) for more information.
+Just as `Task()` and Learner (`makeLearner()`) objects each `Measure` (`makeMeasure()`) has an identifier `$id` which is for example used to annotate results and plots.
+For plots there is also the option to use the longer measure `$name` instead. See the tutorial page on Visualization (`vignette("visualization")`) for more information.
 
-Moreover, a [Measure](&makeMeasure) includes a number of `$properties` that indicate for
-which types of learning problems it is suitable and what information is required to
-calculate it.
-Obviously, most measures need the [&Prediction] object (`"req.pred"`) and, for supervised
-problems, the true values of the target variable(s) (`"req.truth"`).
-You can use functions [getMeasureProperties](&MeasureProperties) and
-[hasMeasureProperties](&MeasureProperties) to determine the properties of a [Measure](&makeMeasure).
-Moreover, [&listMeasureProperties] shows all measure properties currently available in [%mlr].
+Moreover, a `Measure` (`makeMeasure()`) includes a number of `$properties` that indicate for which types of learning problems it is suitable and what information is required to calculate it.
+Obviously, most measures need the `Prediction()` object (`"req.pred"`) and, for supervised problems, the true values of the target variable(s) (`"req.truth"`).
+You can use functions `getMeasureProperties` (`MeasureProperties()`) and `hasMeasureProperties` (`MeasureProperties()`) to determine the properties of a `Measure` (`makeMeasure()`).
+Moreover, `listMeasureProperties()` shows all measure properties currently available in `mlr`.
 
 ```{r}
 listMeasureProperties()
 ```
 
-Additional to its properties, each [Measure](&makeMeasure) knows its extreme values `$best`
-and `$worst` and if it wants to be minimized or maximized (`$minimize`) during [tuning](tune.md)
-or [feature selection](feature_selection.md).
+Additional to its properties, each `Measure` (`makeMeasure()`) knows its extreme values `$best`
+and `$worst` and if it wants to be minimized or maximized (`$minimize`) during tuning (`vignette("tune")`)
+or feature selection (`vignette("feature_selection")`).
 
-For resampling slot `$aggr` specifies how the overall performance across all resampling
-iterations is calculated. Typically, this is just a matter of aggregating the performance
-values obtained on the test sets `perf.test` or the training sets `perf.train` by a simple
-function. The by far most common scheme is [test.mean](&aggregations), i.e., the unweighted
-mean of the performances on the test sets.
+For resampling slot `$aggr` specifies how the overall performance across all resampling iterations is calculated. 
+Typically, this is just a matter of aggregating the performance values obtained on the test sets `perf.test` or the training sets `perf.train` by a simple function. 
+The by far most common scheme is `test.mean` (`aggregations()`), i.e., the unweighted mean of the performances on the test sets.
 
 ```{r}
 str(test.mean)
@@ -78,33 +63,26 @@ str(test.mean)
 test.mean$fun
 ```
 
-All aggregation schemes are objects of class [&Aggregation] with the function in slot
-`$fun` doing the actual work.
-The `$properties` member indicates if predictions (or performance values) on the training
-or test data sets are required to calculate the aggregation.
+All aggregation schemes are objects of class `Aggregation()` with the function in slot `$fun` doing the actual work.
+The `$properties` member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.
 
-You can change the aggregation scheme of a [Measure](&makeMeasure) via function
-[&setAggregation]. See the tutorial page on [resampling](resample.md) for some examples
-and the [&aggregations] help page for all available aggregation schemes.
+You can change the aggregation scheme of a `Measure` (`makeMeasure()`) via function `setAggregation()`. 
+See the tutorial page on resampling (`vignette("resampling")`) for some examples and the `?aggregations()` help page for all available aggregation schemes.
 
-You can construct your own [Measure](&makeMeasure) and [&Aggregation] objects via functions
-[&makeMeasure], [&makeCostMeasure], [&makeCustomResampledMeasure] and [&makeAggregation].
+You can construct your own `Measure` (`makeMeasure()`) and `Aggregation()` objects via functions `makeMeasure()`, `makeCostMeasure()`, `makeCustomResampledMeasure()` and `makeAggregation()`.
 Some examples are shown in the following.
 
-
 ## Constructing a performance measure
-Function [&makeMeasure] provides a simple way to construct your own performance measure.
+
+Function `makeMeasure()` provides a simple way to construct your own performance measure.
 
 Below this is exemplified by re-implementing the mean misclassification error
-([mmce](measures.md)).
-We first write a function that computes the measure on the basis of the true and predicted
-class labels.
-Note that this function must have certain formal arguments listed in the documentation of
-[&makeMeasure].
-Then the [Measure](&makeMeasure) object is created and we work with it as usual with the
-[&performance] function.
+mmce (`vignette("measure")`).
+We first write a function that computes the measure on the basis of the true and predicted class labels.
+Note that this function must have certain formal arguments listed in the documentation of `makeMeasure()`.
+Then the `Measure` (`makeMeasure()`) object is created and we work with it as usual with the `performance()` function.
 
-See the **R** documentation of [&makeMeasure] for more details on the various parameters.
+See the **R** documentation of `makeMeasure()` for more details on the various parameters.
 
 ```{r}
 ## Define a function that calculates the misclassification rate
@@ -132,19 +110,16 @@ performance(pred, measures = my.mmce)
 performance(pred, measures = mmce)
 ```
 
-
 ## Constructing a measure for ordinary misclassification costs
-For in depth explanations and details see the tutorial page on
-[cost-sensitive classification](cost_sensitive_classif.md).
 
-To create a measure that involves ordinary, i.e., class-dependent misclassification costs
-you can use function [&makeCostMeasure]. You first need to define the cost matrix. The rows
-indicate true and the columns predicted classes and the rows and columns have to be named
-by the class labels. The cost matrix can then be wrapped in a [Measure](&makeMeasure)
-object and predictions can be evaluated as usual with the [&performance] function.
+For in depth explanations and details see the tutorial page on cost-sensitive classification (`vignette("cost_sensitive_classif")`).
 
-See the **R** documentation of function [&makeCostMeasure] for details on the various
-parameters.
+To create a measure that involves ordinary, i.e., class-dependent misclassification costs you can use function `makeCostMeasure()`. 
+You first need to define the cost matrix. 
+The rows indicate true and the columns predicted classes and the rows and columns have to be named by the class labels. 
+The cost matrix can then be wrapped in a `Measure` (`makeMeasure()`) object and predictions can be evaluated as usual with the `performance()` function.
+
+See the **R** documentation of function `makeCostMeasure()` for details on the various parameters.
 
 ```{r}
 ## Create the cost matrix
@@ -166,29 +141,22 @@ pred = predict(mod, newdata = iris)
 performance(pred, measures = my.costs)
 ```
 
-
 ## Creating an aggregation scheme
-It is possible to create your own aggregation scheme using function [&makeAggregation].
-You need to specify an identifier `id`, the `properties`, and write a function that does
-the actual aggregation. Optionally, you can `name` your aggregation scheme.
 
-Possible settings for `properties` are `"req.test"` and `"req.train"` if predictions
-on either the training or test sets are required, and the vector `c("req.train", "req.test")`
-if both are needed.
+It is possible to create your own aggregation scheme using function `makeAggregation()`.
+You need to specify an identifier `id`, the `properties`, and write a function that does the actual aggregation. 
+Optionally, you can `name` your aggregation scheme.
 
-The aggregation function must have a certain
-signature detailed in the documentation of [&makeAggregation].
-Usually, you will only need the performance values on the test sets `perf.test` or
-the training sets `perf.train`. In rare cases, e.g., the [&Prediction] object `pred` or
-information stored in the [&Task] object might be required to obtain the aggregated performance.
-For an example have a look at the
-[definition](https://github.com/mlr-org/mlr/blob/master/R/aggregations.R#L211) of function
-[test.join](&aggregations).
+Possible settings for `properties` are `"req.test"` and `"req.train"` if predictions on either the training or test sets are required, and the vector `c("req.train", "req.test")` if both are needed.
 
+The aggregation function must have a certain signature detailed in the documentation of `makeAggregation()`.
+Usually, you will only need the performance values on the test sets `perf.test` or the training sets `perf.train`. 
+In rare cases, e.g., the `Prediction()` object `pred` or information stored in the `Task()` object might be required to obtain the aggregated performance.
+For an example have a look at the [definition](https://github.com/mlr-org/mlr/blob/master/R/aggregations.R#L211) of function `test.join` (`aggregations()`).
 
 ### Example: Evaluating the range of measures
-Let's say you are interested in the range of the performance values obtained on individual
-test sets.
+
+Let's say you are interested in the range of the performance values obtained on individual test sets.
 
 ```{r}
 my.range.aggr = makeAggregation(id = "test.range", name = "Test Range",
@@ -198,13 +166,10 @@ my.range.aggr = makeAggregation(id = "test.range", name = "Test Range",
 )
 ```
 
-`perf.train` and `perf.test` are both numerical vectors containing the performances on
-the train and test data sets.
-In most cases (unless you are using bootstrap as resampling strategy or have set
-`predict = "both"` in [&makeResampleDesc]) the `perf.train` vector is empty.
+`perf.train` and `perf.test` are both numerical vectors containing the performances on the train and test data sets.
+In most cases (unless you are using bootstrap as resampling strategy or have set `predict = "both"` in `makeResampleDesc()`) the `perf.train` vector is empty.
 
-Now we can run a feature selection based on the first measure in the provided
-[list](&base::list) and see how the other measures turn out.
+Now we can run a feature selection based on the first measure in the provided list and see how the other measures turn out.
 
 ```{r, fig.asp = 7/9}
 ## mmce with default aggregation scheme test.mean
@@ -234,6 +199,5 @@ p = ggplot(aes(x = mmce.test.range, y = mmce.test.mean, ymax = mmce.test.max, ym
 print(p)
 ```
 
-The plot shows the range versus the mean misclassification error. The value on the
-y-axis thus corresponds to the length of the error bars. (Note that the points and error
-bars are jittered in y-direction.)
+The plot shows the range versus the mean misclassification error. 
+The value on the y-axis thus corresponds to the length of the error bars. (Note that the points and error bars are jittered in y-direction.)
