@@ -7,7 +7,7 @@
 #' @export
 #' @importFrom zoo index coredata
 makeMultiForecastRegrTask = function(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates", fixup.data = "warn",
+  weights = NULL, blocking = NULL, spatial = FALSE, frequency = 1L, date.col = "dates", fixup.data = "warn",
   check.data = TRUE) {
 
   assertString(id)
@@ -66,14 +66,14 @@ makeMultiForecastRegrTask = function(id = deparse(substitute(data)), data, targe
   if (is.target.all)
     target = colnames(data)
 
-  task = makeSupervisedTask("mfcregr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("mfcregr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
 
-  task$task.desc = makeMultiForecastRegrTaskDesc(id, data, target, weights, blocking, frequency, dates)
+  task$task.desc = makeMultiForecastRegrTaskDesc(id, data, target, weights, blocking, spatial, frequency, dates)
   addClasses(task, c("MultiForecastRegrTask", "TimeTask"))
 }
 
-makeMultiForecastRegrTaskDesc = function(id, data, target, weights, blocking, frequency, dates) {
-  td = makeTaskDescInternal("mfcregr", id, data, target, weights, blocking)
+makeMultiForecastRegrTaskDesc = function(id, data, target, weights, blocking, spatial, frequency, dates) {
+  td = makeTaskDescInternal("mfcregr", id, data, target, weights, blocking, spatial)
   td$dates = dates
   td$frequency = frequency
   addClasses(td, c("ForecastRegrTaskDesc", "SupervisedTaskDesc"))

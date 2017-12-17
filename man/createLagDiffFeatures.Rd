@@ -5,10 +5,11 @@
 \title{Generate lags and differences for feature variables}
 \usage{
 createLagDiffFeatures(obj, target = character(0L), lag = 0L,
-  difference = 0L, difference.lag = 0L, cols = NULL, seasonal.lag = 0L,
-  seasonal.difference = 0L, seasonal.difference.lag = 0L, frequency = 1L,
+  difference = 0L, difference.lag = 0L, cols = NULL,
+  seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
+  seasonal.difference.lag = 0L, frequency = 1L, add_dates = TRUE,
   na.pad = FALSE, return.nonlag = FALSE, grouping = NULL,
-  add_var = FALSE, date.col)
+  add_var = FALSE, TTR.funcs = NULL, date.col)
 }
 \arguments{
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
@@ -34,9 +35,10 @@ An integer denoting the period to difference over}
 
 \item{cols}{[\code{character}]\cr
 A character vector of columns to create lag features for.
-Default is to use all columns. NOTE: For forecast regression tasks, it is not
-a good idea to make lags of your target variable. So if cols are not specied by
-the user, createLagDiffFeatures will return a regr task.}
+Default is to use all columns.}
+
+\item{seasonal.cols}{[\code{character}]\cr
+A character vector of columns to create seasonal lag features for. Defaults to all columns}
 
 \item{seasonal.lag}{[\code{integer}]\cr
 An integer vector of seasonal lag lengths, made as \code{seasonal.lag * frequency}}
@@ -51,6 +53,9 @@ An integer denoting the period to seasonaly difference over}
 An integer representing the periodicity in the time series. If frequency is declared in the task,
 the task frequency will be used.}
 
+\item{add_dates}{[\code{logical}]\cr
+Whether date variables should be added}
+
 \item{na.pad}{[\code{logical}]\cr
 A logical to denote whether the data should be padded to the original size with NAs}
 
@@ -63,19 +68,27 @@ The name of the column to be passed to data.table's \code{by} function. This wil
 \item{add_var}{[\code{logical}]
 When TRUE, creates the lagged rolling variance based on the \code{lag}}
 
+\item{TTR.funcs}{[\code{list}]\cr
+A list of TTR functions such as \code{list(runSum = list(n = 1:10, cumulative = TRUE))}}
+
 \item{date.col}{[code{data.frame}]
 The dates for each observation. In the case of a forecasting task, these will be taken from the task description.}
+
+\item{momentum}{[\code{integer}] \cr
+An vector of integers denoting the lags for momentum calculation}
 }
 \description{
 Replace all variables with their generated lagged and differenced variables.
 }
 \examples{
 set.seed(1234)
-dat = data.frame(arima.sim(model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 200))
-times = as.POSIXct("1992-01-14") + 0:199
-colnames(dat) = c("arma_test")
+dat = data.frame(arma_test = as.numeric(arima.sim(model = list(ar = c(.5,.2), ma = c(.4), order = c(2,0,1)), n = 2000)))
+times = as.POSIXct("1992-01-14") + 0:1999
 regr.task = makeRegrTask(id = "Lagged ML model", data = dat, target = "arma_test")
-regr.task.lag = createLagDiffFeatures(regr.task, lag = 1L:10L, difference = 0L, date.col = times, add_var = TRUE)
+regr.task.lag = createLagDiffFeatures(regr.task, lag = 1L:200L, difference = 0L, date.col = times, add_var = TRUE)
+lrn = makeLearner("regr.lm")
+trn = train(lrn,regr.task.lag)
+forecast(trn, h = 5)
 }
 \seealso{
 Other eda_and_preprocess: \code{\link{capLargeValues}},

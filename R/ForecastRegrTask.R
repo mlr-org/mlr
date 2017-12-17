@@ -44,7 +44,7 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   data = data[, date.col != colnames(data), drop = FALSE]
 
   task = makeSupervisedTask("fcregr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
-  task$task.desc = makeForecastRegrTaskDesc(id, data, target, weights, blocking, spacial, frequency, dates, )
+  task$task.desc = makeForecastRegrTaskDesc(id, data, target, weights, blocking, spatial, frequency, dates)
   addClasses(task, c("ForecastRegrTask", "TimeTask"))
 }
 

@@ -34,12 +34,12 @@ makeCostSensTask(id = deparse(substitute(data)), data, costs,
   check.data = TRUE)
 
 makeForecastRegrTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates",
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, spatial = FALSE, frequency = 1L,
+  date.col = "dates", fixup.data = "warn", check.data = TRUE)
 
 makeMultiForecastRegrTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates",
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, spatial = FALSE, frequency = 1L,
+  date.col = "dates", fixup.data = "warn", check.data = TRUE)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn",
@@ -110,8 +110,6 @@ The columns correspond to classes and their names are the class labels
 (if unnamed we use y1 to yk as labels).
 Each entry (i,j) of the matrix specifies the cost of predicting class j
 for observation i.}
-<<<<<<< HEAD
-=======
 
 \item{frequency}{[\code{Integer(1)}]\cr
 The seasonality of the data. A frequency of 7L for daily data means a weekly seasonality,
@@ -121,13 +119,6 @@ Default is 1L for no seasonality.}
 \item{date.col}{[\code{character(1)}]\cr
 The column which contains the dates for your data. These dates should be unique, in a POSIXt format, and in ascending order.
 If \code{check.data} is TRUE, the first two conditions will be checked. If \code{fixup.data} is not 'no', then unorded data will be placed in ascending order.}
-
-\item{censoring}{[\code{character(1)}]\cr
-Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
-\dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
-the \dQuote{interval2} format.
-See \code{\link[survival]{Surv}} for details.}
->>>>>>> NEWS
 }
 \value{
 [\code{\link{Task}}].

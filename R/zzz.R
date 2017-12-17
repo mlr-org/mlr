@@ -10,6 +10,7 @@
 #' @import stats
 #' @import stringi
 #' @import data.table
+#' @import xts
 
 .onLoad = function(libname, pkgname) {
   backports::import(pkgname)

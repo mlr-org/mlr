@@ -55,7 +55,8 @@ Imports:
     stringi,
     survival,
     utils,
-    XML
+    XML,
+    xts
 Suggests:
     ada,
     adabag,
@@ -164,6 +165,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    TTR,
     wavelets,
     xgboost (>= 0.6-2)
 LazyData: yes

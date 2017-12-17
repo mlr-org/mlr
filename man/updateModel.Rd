@@ -16,9 +16,9 @@ The task.}
 \item{newdata}{[\code{data.frame}]\cr
 New observations to update the model}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
+\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
 Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+By default (\code{NULL}) all observations are used.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
