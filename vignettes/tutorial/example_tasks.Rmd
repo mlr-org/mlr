@@ -1,8 +1,5 @@
 ---
 title: "Example Tasks"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -19,7 +16,7 @@ ext = ".html"
 library("pander")
 ```
 
-For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
+For your convenience `mlr` provides pre-defined `Task()`s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
 
 ```{r echo=FALSE, results="asis"}
