@@ -1,8 +1,5 @@
 ---
 title: "Evaluating Hyperparameter Tuning"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -17,8 +14,7 @@ library("ParamHelpers")
 library("ggplot2")
 ```
 
-As mentioned on the [Tuning](tune.md) tutorial page, tuning a machine learning algorithm
-typically involves:
+As mentioned on the Tuning (`vignette("tune")`) tutorial page, tuning a machine learning algorithm typically involves:
 
 * the hyperparameter search space:
 
@@ -45,29 +41,24 @@ rdesc = makeResampleDesc("CV", iters = 2L)
 
 After tuning, you may want to evaluate the tuning process in order to answer questions such as:
 
-* How does varying the value of a hyperparameter change the performance of the machine learning
-  algorithm?
+* How does varying the value of a hyperparameter change the performance of the machine learning algorithm?
 * What's the relative importance of each hyperparameter?
 * How did the optimization algorithm (prematurely) converge?
 
-[%mlr] provides methods to generate and plot the data in order to evaluate the effect of
-hyperparameter tuning.
+`mlr` provides methods to generate and plot the data in order to evaluate the effect of hyperparameter tuning.
 
 ## Generating hyperparameter tuning data
 
-[%mlr] separates the generation of the data from the plotting of the data in case the user
-wishes to use the data in a custom way downstream.
+`mlr` separates the generation of the data from the plotting of the data in case the user wishes to use the data in a custom way downstream.
 
-The [&generateHyperParsEffectData] method takes the tuning result along with 2 additional
-arguments: `trafo` and `include.diagnostics`. The `trafo` argument will convert the
-hyperparameter data to be on the transformed scale in case a transformation was used when
-creating the parameter (as in the case below). The `include.diagnostics` argument will tell
-[%mlr] whether to include the eol and any error messages from the learner.
+The `generateHyperParsEffectData()` method takes the tuning result along with 2 additional arguments: `trafo` and `include.diagnostics`. 
+The `trafo` argument will convert the hyperparameter data to be on the transformed scale in case a transformation was used when
+creating the parameter (as in the case below). 
+The `include.diagnostics` argument will tell `mlr` whether to include the eol and any error messages from the learner.
 
 Below we perform random search on the `C` parameter for SVM on the famous
-[Pima Indians](&mlbench::PimaIndiansDiabetes) dataset.
-We generate the hyperparameter effect data so that the `C` parameter is on the transformed
-scale and we do not include diagnostic data:
+Pima Indians (`mlbench::PimaIndiansDiabetes()`) dataset.
+We generate the hyperparameter effect data so that the `C` parameter is on the transformed scale and we do not include diagnostic data:
 
 ```{r gen_data}
 ps = makeParamSet(
@@ -80,8 +71,7 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
-As a reminder from the [resampling](resample.md) tutorial, if we wanted to generate data on
-the training set as well as the validation set, we only need to make a few minor changes:
+As a reminder from the resampling (`vignette("resampling")`) tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
 
 ```{r gen_data_train}
 ps = makeParamSet(
@@ -95,11 +85,9 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
-In the example below, we perform grid search on the `C` parameter for SVM on the Pima Indians
-dataset using nested cross validation. We generate the hyperparameter effect data so that
-the `C` parameter is on the untransformed scale and we do not include diagnostic data. As
-you can see below, nested cross validation is supported without any extra work by the user,
-allowing the user to obtain an unbiased estimator for the performance.
+In the example below, we perform grid search on the `C` parameter for SVM on the Pima Indians dataset using nested cross validation. We generate the hyperparameter effect data so that
+the `C` parameter is on the untransformed scale and we do not include diagnostic data. 
+As you can see below, nested cross validation is supported without any extra work by the user, allowing the user to obtain an unbiased estimator for the performance.
 
 ```{r gen_nested}
 ps = makeParamSet(
@@ -113,21 +101,18 @@ res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult, 
 generateHyperParsEffectData(res)
 ```
 
-After generating the hyperparameter effect data, the next step is to visualize it. [%mlr]
-has several methods built-in to visualize the data, meant to support the needs of the
-researcher and the engineer in industry. The next few sections will walk through the
-visualization support for several use-cases.
+After generating the hyperparameter effect data, the next step is to visualize it. 
+`mlr` has several methods built-in to visualize the data, meant to support the needs of the researcher and the engineer in industry. 
+The next few sections will walk through the visualization support for several use-cases.
 
 ## Visualizing the effect of a single hyperparameter
 
-In a situation when the user is tuning a single hyperparameter for a learner, the user may
-wish to plot the performance of the learner against the values of the hyperparameter.
+In a situation when the user is tuning a single hyperparameter for a learner, the user may wish to plot the performance of the learner against the values of the hyperparameter.
 
-In the example below, we tune the number of clusters against the silhouette
-score on the Pima dataset. We specify the x-axis with the `x` argument and the y-axis with
-the `y` argument. If the `plot.type` argument is not specified, [%mlr] will attempt to plot
-a scatterplot by default. Since [&plotHyperParsEffect] returns a [ggplot](&ggplot2::ggplot)
-object, we can easily customize it to our liking!
+In the example below, we tune the number of clusters against the silhouette score on the Pima dataset. 
+We specify the x-axis with the `x` argument and the y-axis with the `y` argument. 
+If the `plot.type` argument is not specified, `mlr` will attempt to plot a scatterplot by default. 
+Since `plotHyperParsEffect()` returns a `ggplot2::ggplot()` object, we can easily customize it to our liking!
 
 ```{r cluster, eval = F}
 library("clusterSim")
@@ -147,10 +132,8 @@ plt + geom_point(colour = "red") +
   theme_bw()
 ```
 
-In the example below, we tune SVM with the `C` hyperparameter on the Pima dataset. We will
-use simulated annealing optimizer, so we are interested in seeing if the optimization
-algorithm actually improves with iterations. By default, [%mlr] only plots improvements to
-the global optimum.
+In the example below, we tune SVM with the `C` hyperparameter on the Pima dataset. 
+We will use simulated annealing optimizer, so we are interested in seeing if the optimization algorithm actually improves with iterations. By default, `mlr` only plots improvements to the global optimum.
 
 ```{r sa_single}
 ps = makeParamSet(
@@ -167,9 +150,8 @@ plt + ggtitle("Analyzing convergence of simulated annealing") +
   theme_minimal()
 ```
 
-In the case of a learner crash, [%mlr] will impute the crash with the worst value graphically
-and indicate the point. In the example below, we give the `C` parameter negative values,
-which will result in a learner crash for SVM.
+In the case of a learner crash, `mlr` will impute the crash with the worst value graphically and indicate the point. 
+In the example below, we give the `C` parameter negative values, which will result in a learner crash for SVM.
 
 ```{r single_crash}
 ps = makeParamSet(
@@ -185,8 +167,8 @@ plt + ggtitle("SVM learner crashes with negative C") +
   theme_bw()
 ```
 
-The example below uses [nested cross validation](nested_resampling.md) with an outer loop
-of 2 runs. [%mlr] indicates each run within the visualization.
+The example below uses nested cross validation (`vignette("nested_resampling")`) with an outer loop of 2 runs. 
+`mlr` indicates each run within the visualization.
 
 ```{r single_nested}
 ps = makeParamSet(
@@ -203,13 +185,11 @@ plotHyperParsEffect(data, x = "C", y = "acc.test.mean", plot.type = "line")
 
 ## Visualizing the effect of 2 hyperparameters
 
-In the case of tuning 2 hyperparameters simultaneously, [%mlr] provides the ability to plot
-a heatmap and contour plot in addition to a scatterplot or line.
+In the case of tuning 2 hyperparameters simultaneously, `mlr` provides the ability to plot a heatmap and contour plot in addition to a scatterplot or line.
 
-In the example below, we tune the `C` and `sigma` parameters for SVM on the Pima dataset. We use
-interpolation to produce a regular grid for plotting the heatmap. The `interpolation` argument
-accepts any regression learner from [%mlr] to perform the interpolation. The `z` argument
-will be used to fill the heatmap or color lines, depending on the `plot.type` used.
+In the example below, we tune the `C` and `sigma` parameters for SVM on the Pima dataset. 
+We use interpolation to produce a regular grid for plotting the heatmap. The `interpolation` argument accepts any regression learner from `mlr` to perform the interpolation. 
+The `z` argument will be used to fill the heatmap or color lines, depending on the `plot.type` used.
 
 ```{r two}
 ps = makeParamSet(
@@ -230,9 +210,7 @@ plt + scale_fill_gradient2(breaks = seq(min_plt, max_plt, length.out = 5),
   low = "blue", mid = "white", high = "red", midpoint = med_plt)
 ```
 
-We can use the `show.experiments` argument in order to visualize which points were
-specifically passed to the learner in the original experiment and which points were
-interpolated by [%mlr]:
+We can use the `show.experiments` argument in order to visualize which points were specifically passed to the learner in the original experiment and which points were interpolated by `mlr`:
 
 ```{r two_showargs}
 plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
@@ -248,11 +226,9 @@ plotHyperParsEffect(data, x = "iteration", y = "acc.test.mean",
   plot.type = "line")
 ```
 
-In the case where we are tuning 2 hyperparameters and we have a learner crash, [%mlr] will
-indicate the respective points and impute them with the worst value. In the example below,
-we tune `C` and `sigma`, forcing `C` to be negative for some instances which will crash SVM.
-We perform interpolation to get a regular grid in order to plot a heatmap. We can see that
-the interpolation creates axis parallel lines resulting from the learner crashes.
+In the case where we are tuning 2 hyperparameters and we have a learner crash, `mlr` will indicate the respective points and impute them with the worst value. 
+In the example below, we tune `C` and `sigma`, forcing `C` to be negative for some instances which will crash SVM.
+We perform interpolation to get a regular grid in order to plot a heatmap. We can see that the interpolation creates axis parallel lines resulting from the learner crashes.
 
 ```{r two_crash}
 ps = makeParamSet(
@@ -268,10 +244,10 @@ plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
   plot.type = "heatmap", interpolate = "regr.earth")
 ```
 
-A slightly more complicated example is using nested cross validation while simultaneously
-tuning 2 hyperparameters. In order to plot a heatmap in this case, [%mlr] will aggregate
-each of the nested runs by a user-specified function. The default function is `mean`. As
-expected, we can still take advantage of interpolation.
+A slightly more complicated example is using nested cross validation while simultaneously tuning 2 hyperparameters. 
+In order to plot a heatmap in this case, `mlr` will aggregate each of the nested runs by a user-specified function. 
+The default function is `mean`. 
+As expected, we can still take advantage of interpolation.
 
 ```{r two_nested}
 ps = makeParamSet(
@@ -294,15 +270,10 @@ plt + scale_fill_gradient2(breaks = seq(min_plt, max_plt, length.out = 5),
   low = "red", mid = "white", high = "blue", midpoint = med_plt)
 ```
 
-
 ## Visualizing the effects of more than 2 hyperparameters
 
-In order to visualize the result when tuning 3 or more hyperparameters simultaneously we
-can take advantage of [partial dependence plots](partial_dependence.md) to show how the
-performance depends on a one- or two-dimensional subset of the hyperparameters.
-Below we tune three hyperparameters `C`, `sigma`, and `degree` of an SVM with Bessel kernel
-and set the `partial.dep` flag to `TRUE` to indicate that we intend to calculate partial
-dependences.
+In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of partial dependence plots (`vignette("partial_dependence")`) to show how the performance depends on a one- or two-dimensional subset of the hyperparameters.
+Below we tune three hyperparameters `C`, `sigma`, and `degree` of an SVM with Bessel kernel and set the `partial.dep` flag to `TRUE` to indicate that we intend to calculate partial dependences.
 
 ```{r}
 ps = makeParamSet(
@@ -319,9 +290,8 @@ data = generateHyperParsEffectData(res, partial.dep = TRUE)
 ```
 
 You can generate a plot for a single hyperparameter like `C` as shown below.
-The `partial.dep.learn` can be any regression [Learner](&makeLearner) in [%mlr] and is used
-to regress the attained performance values on the values of the 3 hyperparameters visited
-during tuning. The fitted model serves as basis for calculating partial dependences.
+The `partial.dep.learn` can be any regression Learner (`makeLearner()`) in `mlr` and is used to regress the attained performance values on the values of the 3 hyperparameters visited during tuning. 
+The fitted model serves as basis for calculating partial dependences.
 
 ```{r}
 plotHyperParsEffect(data, x = "C", y = "acc.test.mean", plot.type = "line",

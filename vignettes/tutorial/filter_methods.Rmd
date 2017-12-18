@@ -1,8 +1,5 @@
 ---
 title: "Integrated Filter Methods"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -19,14 +16,11 @@ library("pander")
 ```
 
 The following table shows the available methods for calculating the feature importance.
-Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival
-analysis problems are supported.
-Columns **Fac.**, **Num.** and **Ord.** show if a particular method can deal with
-[factor](&base::factor), [numeric](&base::numeric) and [ordered factor](&base::factor)
-features.
-
+Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival analysis problems are supported.
+Columns **Fac.**, **Num.** and **Ord.** show if a particular method can deal with `factor`, `numeric` and `ordered factor` features.
 
 ## Current methods
+
 ```{r, echo = FALSE, results = "asis"}
 # urlContribPackages is defined in build
 linkPkg = function(x) {
@@ -48,6 +42,7 @@ pandoc.table(dfnd, style = "rmarkdown", split.tables = Inf, split.cells = Inf, e
 ```
 
 ## Deprecated methods
+
 ```{r, echo = FALSE, results = "asis"}
 dfd = df[depr,]
 rownames(dfd) = seq_len(nrow(dfd))

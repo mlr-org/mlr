@@ -1,8 +1,5 @@
 ---
 title: "Implemented Performance Measures"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -21,29 +18,25 @@ library("pander")
 
 This page shows the performance measures available for the different types of
 learning problems as well as general performance measures in alphabetical order.
-(See also the documentation about [&measures] and [&makeMeasure] for available measures and
-their properties.)
+(See also the documentation about `measures()` and `makeMeasure()` for available measures and their properties.)
 
-If you find that a measure is missing, you can either [open an issue](https://github.com/mlr-org/mlr/issues)
-or try [to implement a measure yourself](create_measure.md).
+If you find that a measure is missing, you can either [open an issue](https://github.com/mlr-org/mlr/issues) or try to implement a measure yourself (`vignette("custom_measures")`).
 
-Column **Minim.** indicates if the measure is minimized during, e.g., tuning or
-feature selection.
+Column **Minim.** indicates if the measure is minimized during, e.g., tuning or feature selection.
 **Best** and **Worst** show the best and worst values the performance measure can attain.
-For *classification*, column **Multi** indicates if a measure is suitable for
-multi-class problems. If not, the measure can only be used for binary classification problems.
+For *classification*, column **Multi** indicates if a measure is suitable for multi-class problems. 
+If not, the measure can only be used for binary classification problems.
 
 The next six columns refer to information required to calculate the performance measure.
 
-* **Pred.**: The [&Prediction] object.
+* **Pred.**: The `Prediction()` object.
 * **Truth**: The true values of the response variable(s) (for supervised learning).
 * **Probs**: The predicted probabilities (might be needed for classification).
-* **Model**: The [WrappedModel](&makeWrappedModel) (e.g., for calculating the training time).
-* **Task**: The [&Task] (relevant for cost-sensitive classification).
+* **Model**: The `WrappedModel` (`makeWrappedModel()`) (e.g., for calculating the training time).
+* **Task**: The `Task()` (relevant for cost-sensitive classification).
 * **Feats**: The predicted data (relevant for clustering).
 
-**Aggr.** shows the default [aggregation method](&aggregations) tied to the measure.
-
+**Aggr.** shows the default aggregation method (`aggregations()`) tied to the measure.
 
 ```{r include=FALSE}
 # urlMlrFunctions, ext are defined in build
@@ -106,41 +99,46 @@ getTab = function(type) {
 ```
 
 ### Classification
+
 ```{r echo=FALSE,results="asis"}
 getTab("classif")
 ```
 
 ### Regression
+
 ```{r echo=FALSE,results="asis"}
 getTab("regr")
 ```
 
 ### Survival analysis
+
 ```{r echo=FALSE,results="asis"}
 getTab("surv")
 ```
 
 ### Cluster analysis
+
 ```{r echo=FALSE,results="asis"}
 getTab("cluster")
 ```
 
 ### Cost-sensitive classification
+
 ```{r echo=FALSE,results="asis"}
 getTab("costsens")
 ```
 
-Note that in case of *ordinary misclassification costs* you can also generate performance
-measures from cost matrices by function [&makeCostMeasure].
-For details see the tutorial page on [cost-sensitive classification](cost_sensitive_classif.md)
-and also the page on [custom performance measures](create_measure.md).
+Note that in case of *ordinary misclassification costs* you can also generate performance measures from cost matrices by function `makeCostMeasure()`.
+For details see the tutorial page on cost-sensitive classification (`vignette("cost_sensitive_classif")`) and also the page on custom performance measures (`vignette("custom_measures")`).
 
 ### Multilabel classification
+
 ```{r echo=FALSE,results="asis"}
 getTab("multilabel")
 ```
 
 ### General performance measures
+
 ```{r echo=FALSE,results="asis"}
 getTab("general")
 ```
