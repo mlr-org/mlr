@@ -2,14 +2,20 @@
 % Please edit documentation in R/train.R
 \name{train}
 \alias{train}
+\alias{train.Learner}
+\alias{train.character}
 \title{Train a learning algorithm.}
 \usage{
-train(learner, task, subset = NULL, weights = NULL)
+train(x, ...)
+
+\method{train}{Learner}(x, task, subset = NULL, weights = NULL, ...)
+
+\method{train}{character}(x, task, subset = NULL, weights = NULL, ...)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+\item{x}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner. If you pass a string, the learner will be created via
+\code{\link{makeLearner}}.}
 
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
