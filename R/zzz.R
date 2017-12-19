@@ -15,7 +15,14 @@
   backports::import(pkgname)
 }
 
+attachcount = new.env(parent = emptyenv())
+attachcount$was.attached = FALSE
+
 .onAttach = function(libname, pkgname) {
+  if (attachcount$was.attached) {
+    return(NULL)
+  }
+  attachcount$was.attached = TRUE
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
   setHook(packageEvent("caret", "attach"), function(...) {

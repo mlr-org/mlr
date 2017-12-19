@@ -29,6 +29,8 @@ Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
 By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 Weights from the task will be overwritten.}
+
+\item{...\cr}{Not used.}
 }
 \value{
 [\code{\link{WrappedModel}}].
