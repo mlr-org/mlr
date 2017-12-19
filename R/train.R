@@ -32,7 +32,11 @@
 #' print(mod)
 #' @export
 train = function(x, ...) {
-  UseMethod("train")
+  if ("package:caret" %in% search()) {
+    caret::train(x, ...)
+  } else {
+    UseMethod("train")
+  }
 }
 
 #' @rdname train
@@ -116,11 +120,3 @@ train.Learner = function(x, task, subset = NULL, weights = NULL, ...) {
 #' @export
 train.character = train.Learner
 
-#' @export
-train.default = function(x, ...) {
-  if ("package:caret" %in% search()) {
-    caret::train(x, ...)
-  } else {
-    stopf("no applicable method for 'train' applied to an object of class \"%s\".\nMaybe you need to load the 'caret' package?", collapse(deparse(class(x)), "\n"))
-  }
-}

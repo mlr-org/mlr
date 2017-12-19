@@ -18,6 +18,10 @@
 .onAttach = function(libname, pkgname) {
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams", "ensemble"))
+  setHook(packageEvent("caret", "attach"), function(...) {
+    detach("package:mlr")
+    attachNamespace("mlr")
+  })
 }
 
 mlr = new.env(parent = emptyenv())
