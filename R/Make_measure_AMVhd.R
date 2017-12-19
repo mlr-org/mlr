@@ -71,7 +71,7 @@
 #' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
 #' task = task, feats = data[test.inds, 1:9])
 
-makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.feats = 3, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertNumeric(alphas, lower = 0, upper = 1)
