@@ -14,6 +14,7 @@
 #' @param amv.iters [\code{numeric}] \cr
 #' Number of subsamples.
 #' Default is 50.
+#' @note the ID of the learner have to to be to the default character!
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
