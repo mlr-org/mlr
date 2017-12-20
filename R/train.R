@@ -13,8 +13,7 @@
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 #'   Weights from the task will be overwritten.
-#' @param ...\cr
-#'   Not used.
+#' @param ... Not used.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
