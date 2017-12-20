@@ -101,7 +101,7 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
         lrn.id = model$learner$id
       }
 
-      lrn.amv = makeLearner(lrn.id, predict.type = "prob")
+      lrn.amv = makeLearner(lrn.id, predict.type = "prob", par.vals = model$learner$par.vals)
       lrn.amvw = makeAMVhdWrapper(lrn.amv, amv.iters = amv.iters, amv.feats = amv.feats)
       # wrapped model
       mod.amvw = train(lrn.amvw, task, subset = train.inds)
