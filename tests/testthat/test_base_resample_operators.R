@@ -48,9 +48,9 @@ test_that("getRRPredictionList with se predict.type", {
 
   ptest = predict(tmod, regr.task, subset = rinst$test.inds[[1]])
   attr(ptest$data,  "row.names") = as.integer(row.names(ptest$data))
-  
+
   expect_equal(pl$train[[1]]$data, ptrain$data)
 
-  expect_equal(pl$test[[1]]$data, ptest$data)  
+  expect_equal(pl$test[[1]]$data, ptest$data)
 
 })
