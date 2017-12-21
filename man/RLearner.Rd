@@ -7,6 +7,7 @@
 \alias{RLearnerMultilabel}
 \alias{RLearnerRegr}
 \alias{RLearnerSurv}
+\alias{RLearnerOneClass}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
 \alias{makeRLearnerMultilabel}
@@ -96,11 +97,6 @@ Name of the parameter, which can be used for providing class weights.}
 Character vector naming all functions of the learner's package being called which
 have a relevant R help page.
 Default is \code{character(0)}.}
-}
-\value{
-[\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
-  \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
-  \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}.
 }
 \description{
 Wraps an already implemented learning method from R to make it accessible to mlr.

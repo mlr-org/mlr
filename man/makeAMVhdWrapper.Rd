@@ -5,7 +5,7 @@
 \title{Preprocessing for using the anomaly detecion performance measure
 Area under the Mass Volume Curve for high dimensional data (AMVhd).}
 \usage{
-makeAMVhdWrapper(learner, amv.iters = 10L, amv.feats = 3)
+makeAMVhdWrapper(learner, amv.iters, amv.feats)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr

@@ -5,7 +5,7 @@
 \title{Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for data dimension less than 8}
 \usage{
 makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99),
-  n.alpha = 50, n.sim = 1e+05, best = 0, worst = NULL, name = id,
+  n.alpha = 50, n.sim = 10000, best = 0, worst = NULL, name = id,
   note = "")
 }
 \arguments{

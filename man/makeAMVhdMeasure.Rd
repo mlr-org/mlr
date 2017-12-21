@@ -4,8 +4,8 @@
 \alias{makeAMVhdMeasure}
 \title{Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for high dimensional data}
 \usage{
-makeAMVhdMeasure(id = "AMVhd", minimize = TRUE, amv.iters = 10,
-  amv.feats = 3, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e+05,
+makeAMVhdMeasure(id = "AMVhd", minimize = TRUE, amv.iters = 50,
+  amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e+05,
   best = 0, worst = NULL, name = id, note = "")
 }
 \arguments{
@@ -18,11 +18,11 @@ Default is \code{TRUE}.}
 
 \item{amv.iters}{[\code{numeric}] \cr
 Number of subsamples.
-Default is 10.}
+Default is 50.}
 
 \item{amv.feats}{[\code{numeric}] \cr
 Number of features to be drawn in the feature subsamples.
-Default is 3.}
+Default is 5.}
 
 \item{alphas}{[\code{numeric}] \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
