@@ -76,3 +76,5 @@ Other generate_plot_data: \code{\link{generateCritDifferencesData}},
 
 Other calibration: \code{\link{plotCalibration}}
 }
+\concept{calibration}
+\concept{generate_plot_data}

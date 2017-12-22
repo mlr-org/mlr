@@ -80,3 +80,5 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{performance}}, \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
+\concept{performance}
+\concept{roc}

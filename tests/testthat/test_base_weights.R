@@ -40,4 +40,3 @@ test_that("weights remain after subset", {
     expect_true(getTaskDesc(subsetTask(wtask, 1:10))$has.weights)
   }
 })
-    

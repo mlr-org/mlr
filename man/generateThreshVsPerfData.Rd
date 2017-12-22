@@ -55,3 +55,5 @@ Other thresh_vs_perf: \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
+\concept{generate_plot_data}
+\concept{thresh_vs_perf}

@@ -242,7 +242,7 @@ rsq = makeMeasure(id = "rsq", minimize = FALSE, best = 1, worst = -Inf,
 measureRSQ = function(truth, response) {
   rss = measureSSE(truth, response)
   ess = sum((truth - mean(truth))^2L)
-  if (ess == 0){
+  if (ess == 0) {
     warning("Measure is undefined if all truth values are equal.")
     return(NA_real_)
   }
@@ -267,7 +267,7 @@ expvar = makeMeasure(id = "expvar", minimize = FALSE, best = 1, worst = 0,
 measureEXPVAR = function(truth, response) {
   regss = sum((response - mean(truth))^2L)
   ess = sum((truth - mean(truth))^2L)
-  if (ess == 0){
+  if (ess == 0) {
     warning("Measure is undefined if all truth values are equal.")
     return(NA_real_)
   }
@@ -284,7 +284,7 @@ arsq = makeMeasure(id = "arsq", minimize = FALSE, best = 1, worst = 0,
   fun = function(task, model, pred, feats, extra.args) {
     n = length(pred$data$truth)
     p = length(model$features)
-    if (n == p + 1){
+    if (n == p + 1) {
       warning("Adjusted R-squared is undefined if the number observations is equal to the number of independent variables plus one.")
       return(NA_real_)
     }
@@ -355,8 +355,8 @@ mape = makeMeasure(id = "mape", minimize = TRUE, best = 0, worst = Inf,
 #' @export measureMAPE
 #' @rdname measures
 #' @format none
-measureMAPE = function(truth, response){
-  if (any(truth == 0)){
+measureMAPE = function(truth, response) {
+  if (any(truth == 0)) {
     warning("Measure is undefined if any truth value is equal to 0.")
     return(NA_real_)
   }
@@ -640,7 +640,7 @@ logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
 #' @export measureLogloss
 #' @rdname measures
 #' @format none
-measureLogloss = function(probabilities, truth){
+measureLogloss = function(probabilities, truth) {
   eps = 1e-15
   #let's confine the predicted probabilities to [eps,1 - eps], so logLoss doesn't reach infinity under any circumstance
   probabilities[probabilities > 1 - eps] = 1 - eps
@@ -666,7 +666,7 @@ ssr = makeMeasure(id = "ssr", minimize = FALSE, best = 1, worst = 0,
 #' @export measureSSR
 #' @rdname measures
 #' @format none
-measureSSR = function(probabilities, truth){
+measureSSR = function(probabilities, truth) {
   truth = match(as.character(truth), colnames(probabilities))
   p = getRowEls(probabilities, truth)
   mean(p / sqrt(rowSums(probabilities^2)))
@@ -689,7 +689,7 @@ qsr = makeMeasure(id = "qsr", minimize = FALSE, best = 1, worst = -1,
 #' @export measureQSR
 #' @rdname measures
 #' @format none
-measureQSR = function(probabilities, truth){
+measureQSR = function(probabilities, truth) {
   #We add this line because binary tasks only output one probability column
   if (is.null(dim(probabilities))) probabilities = cbind(probabilities, 1 - probabilities)
   truth = factor(truth, levels = colnames(probabilities))

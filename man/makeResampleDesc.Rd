@@ -17,7 +17,8 @@ makeResampleDesc(method, predict = "test", ..., stratify = FALSE,
 \item{method}{[\code{character(1)}]\cr
 \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-subsampling, \dQuote{Holdout} for holdout.}
+subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingCV} for growing window, and
+ \dQuote{FixedCV} for fixed windowing. Note that \dQuote{GrowingCV} and \dQuote{FixedCV} are for forecasting.}
 
 \item{predict}{[\code{character(1)}]\cr
 What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
@@ -32,8 +33,13 @@ Further parameters for strategies.\cr
   \dQuote{Subsample} between 0 and 1. Default is 2 / 3.}
 \item{reps [\code{integer(1)}]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
   Default is 10.}
-\item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
+\item{folds [\code{integer(1)}]}{Folds in the repeated CV for \code{RepCV}.
   Here \code{iters = folds * reps}. Default is 10.}
+\item{horizon [\code{integer(1)}]}{Number of observations to forecast for \code{GrowthCV}
+ and \code{FixedCV}. Default is 1}
+\item{initial.window [\code{numeric(1)}]}{Fraction of observations to start with
+ in \code{GrowthCV} and \code{FixedCV}. Default is 0.5}
+\item{skip [\code{integer(1)}]}{ The number of windows to skip in \code{GrowingCV} and \code{FixedCV}. Default is horizon - 1}
 }}
 
 \item{stratify}{[\code{logical(1)}]\cr
@@ -118,3 +124,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
+\concept{resample}

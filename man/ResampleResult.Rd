@@ -73,3 +73,5 @@ Other resample: \code{\link{ResamplePrediction}},
 Other debug: \code{\link{FailureModel}},
   \code{\link{getPredictionDump}}, \code{\link{getRRDump}}
 }
+\concept{debug}
+\concept{resample}

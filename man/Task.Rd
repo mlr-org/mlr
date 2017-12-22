@@ -157,3 +157,4 @@ Other costsens: \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 }
+\concept{costsens}
