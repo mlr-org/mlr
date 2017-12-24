@@ -1,5 +1,5 @@
 ---
-title: "Parallelization"
+# title: "Parallelization"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Parallelization
 
 **R** by default does not make use of parallelization.
 With the integration of `parallelMap()` into `mlr`, it becomes easy to activate the parallel computing capabilities already supported by `mlr`.

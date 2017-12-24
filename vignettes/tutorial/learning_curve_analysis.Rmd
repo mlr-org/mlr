@@ -1,5 +1,5 @@
 ---
-title: "Learning Curve Analysis"
+# title: "Learning Curve Analysis"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Learning Curve Analysis
 
 To analyze how the increase of observations in the training set improves the performance of a learner the *learning curve* is an appropriate visual tool.
 The experiment is conducted with an increasing subsample size and the performance is measured.

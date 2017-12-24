@@ -1,5 +1,5 @@
 ---
-title: "Benchmark Experiments"
+# title: "Benchmark Experiments"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,6 +14,8 @@ library("ParamHelpers")
 library("ggplot2")
 set.seed(5)
 ```
+
+# Benchmark Experiments
 
 In a benchmark experiment different learning methods are applied to one or several data sets with the aim to compare and rank the algorithms with respect to one or more performance measures.
 

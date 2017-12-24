@@ -1,5 +1,5 @@
 ---
-title: "Nested Resampling"
+# title: "Nested Resampling"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,10 +14,14 @@ library("ParamHelpers")
 library("ggplot2")
 ```
 
+# Nested Resampling
+
 In order to obtain honest performance estimates for a learner all parts of the model building like preprocessing and model selection steps should be included in the resampling, i.e., repeated for every pair of training/test data.
 For steps that themselves require resampling like parameter tuning (`vignette("tune")`) or feature selection (`vignette("feature_selection")`) (via the wrapper approach) this results in two nested resampling loops.
 
-![Nested Resampling Figure](img/nested_resampling.png "Nested Resampling Figure")
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Nested Resampling Figure"}
+knitr::include_graphics(here::here("vignettes/tutorial/pdf/img/nested_resampling.png"))
+```
 
 The graphic above illustrates nested resampling for parameter tuning with 3-fold cross-validation in the outer and 4-fold cross-validation in the inner loop.
 

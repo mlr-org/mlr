@@ -1,5 +1,5 @@
 ---
-title: "Learners"
+# title: "Learners"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -13,12 +13,14 @@ library("BBmisc")
 library("ParamHelpers")
 ```
 
+# Learners
+
 The following classes provide a unified interface to all popular machine learning methods in **R**:
 (cost-sensitive) classification, regression, survival analysis, and clustering.
 Many are already integrated in `mlr`, others are not, but the package is specifically designed to make extensions simple.
 
-Section [integrated learners](`vignette("integrated_learners")`) shows the already implemented machine learning methods and their properties.
-If your favorite method is missing, either [open an issue](https://github.com/mlr-org/mlr/issues) or take a look at [how to integrate a learning method yourself](create_learner.md).
+Section integrated learners (`vignette("integrated_learners")`) shows the already implemented machine learning methods and their properties.
+If your favorite method is missing, either [open an issue](https://github.com/mlr-org/mlr/issues) or take a look at how to integrate a learning method yourself (`vignette("create_learners")`).
 This basic introduction demonstrates how to use already implemented learners.
 
 ## Constructing a learner

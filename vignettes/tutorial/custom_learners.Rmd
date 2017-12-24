@@ -1,5 +1,5 @@
 ---
-title: "Integrating Another Learner"
+# title: "Integrating Another Learner"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Integrating Another Learner
 
 In order to integrate a learning algorithm into `mlr` some interface code has to be written.
 Three functions are mandatory for each learner.

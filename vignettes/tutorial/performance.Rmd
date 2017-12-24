@@ -1,5 +1,5 @@
 ---
-title: "Evaluating Learner Performance"
+# title: "Evaluating Learner Performance"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Evaluating Learner Performance
 
 The quality of the predictions of a model in `mlr` can be assessed with respect to a number of different performance measures.
 In order to calculate the performance measures, call `performance()` on the object returned by `predict` (`predict.WrappedModel()`) and specify the desired performance measures.

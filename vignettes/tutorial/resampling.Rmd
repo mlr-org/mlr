@@ -1,5 +1,5 @@
 ---
-title: "Resampling"
+# title: "Resampling"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -16,13 +16,18 @@ library("ParamHelpers")
 library("rpart")
 ```
 
+# Resampling
+
 Resampling strategies are usually used to assess the performance of a learning algorithm:
 The entire data set is (repeatedly) split into training sets $D^{*b}$ and test sets $D \setminus D^{*b}$, $b = 1,\ldots,B$.
 The learner is trained on each training set, predictions are made on the corresponding test set (sometimes on the training set as well) and the performance measure $S(D^{*b}, D \setminus D^{*b})$ is calculated.
 Then the $B$ individual performance values are aggregated, most often by calculating the mean.
 There exist various different resampling strategies, for example cross-validation and bootstrap, to mention just two popular approaches.
 
-![Resampling Figure](img/resampling.png "Resampling Figure")
+<!-- ![Resampling Figure](pdf/img/resampling.png "Resampling Figure") -->
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Resampling Figure"}
+knitr::include_graphics(here::here("vignettes/tutorial/pdf/img/resampling.png"))
+```
 
 If you want to read up on further details, the paper [Resampling Strategies for Model Assessment and Selection](http://link.springer.com/chapter/10.1007%2F978-0-387-47509-7_8) by Simon is probably not a bad choice.
 Bernd has also published a paper [Resampling methods for meta-model validation with recommendations for evolutionary computation](http://www.mitpressjournals.org/doi/pdf/10.1162/EVCO_a_00069) which contains detailed descriptions and lots of statistical background information on resampling methods.

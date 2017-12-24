@@ -1,5 +1,5 @@
 ---
-title: "Integrated Learners"
+# title: "Integrated Learners"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,7 +14,9 @@ library("ParamHelpers")
 urlContribPackages = urlBasePackages = "http://www.rdocumentation.org/packages/"
 ```
 
-This page lists the learning methods already integrated in [%mlr].
+# Integrated Learners
+
+This page lists the learning methods already integrated in `mlr`.
 
 Columns **Num.**, **Fac.**, **Ord.**, **NAs**, and **Weights** indicate if a method can cope with numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way (other than simply removing observations with missing values) and if observation weights are supported.
 

@@ -1,5 +1,5 @@
 ---
-title: "Cost-Sensitive Classification"
+# title: "Cost-Sensitive Classification"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Cost-Sensitive Classification
 
 In *regular classification* the aim is to minimize the misclassification rate and
 thus all types of misclassification errors are deemed equally severe.

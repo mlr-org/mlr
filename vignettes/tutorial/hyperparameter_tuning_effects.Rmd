@@ -1,5 +1,5 @@
 ---
-title: "Evaluating Hyperparameter Tuning"
+# title: "Evaluating Hyperparameter Tuning"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -13,6 +13,8 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 ```
+
+# Evaluating Hyperparameter Tuning
 
 As mentioned on the Tuning (`vignette("tune")`) tutorial page, tuning a machine learning algorithm typically involves:
 

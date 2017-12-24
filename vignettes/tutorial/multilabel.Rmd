@@ -1,5 +1,5 @@
 ---
-title: "Multilabel Classification"
+# title: "Multilabel Classification"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Multilabel Classification
 
 Multilabel classification is a classification problem where multiple target labels can be assigned to each observation instead of only one like in multiclass classification.
 

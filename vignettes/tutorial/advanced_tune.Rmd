@@ -1,5 +1,5 @@
 ---
-title: "Iterated F-Racing for mixed spaces and dependencies"
+# title: "Iterated F-Racing for mixed spaces and dependencies"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Iterated F-Racing for mixed spaces and dependencies
 
 The package supports a larger number of tuning algorithms, which can all be looked up and
 selected via `TuneControl()`. 

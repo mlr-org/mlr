@@ -1,5 +1,5 @@
 ---
-title: "Wrapper"
+# title: "Wrapper"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,6 +14,8 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 ```
+
+# Wrapper
 
 Wrappers can be employed to extend integrated learners (`makeLearner()`)  with new functionality.
 The broad scope of operations and methods which are implemented as wrappers underline the flexibility of the wrapping approach:

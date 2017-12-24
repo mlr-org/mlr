@@ -1,5 +1,5 @@
 ---
-title: "Tuning Hyperparameters"
+# title: "Tuning Hyperparameters"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Tuning Hyperparameters
 
 Many machine learning algorithms have hyperparameters that need to be set.
 If selected by the user they can be specified as explained on the tutorial page on learners (`vignette("learners")`) -- simply pass them to `makeLearner()`.

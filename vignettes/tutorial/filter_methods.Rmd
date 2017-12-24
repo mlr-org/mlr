@@ -1,5 +1,5 @@
 ---
-title: "Integrated Filter Methods"
+# title: "Integrated Filter Methods"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,6 +14,8 @@ library("ParamHelpers")
 urlContribPackages = "http://www.inside-r.org/packages/cran/"
 library("pander")
 ```
+
+# Feature Selection
 
 The following table shows the available methods for calculating the feature importance.
 Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival analysis problems are supported.

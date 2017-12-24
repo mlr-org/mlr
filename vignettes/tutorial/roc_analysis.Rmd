@@ -1,5 +1,5 @@
 ---
-title: "ROC Analysis and Performance Curves"
+# title: "ROC Analysis and Performance Curves"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -15,6 +15,8 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 ```
+
+# ROC Analysis and Performance Curves
 
 For binary scoring classifiers a *threshold* (or *cutoff*) value controls how predicted posterior probabilities are converted into class labels.
 ROC curves and other performance plots serve to visualize and analyse the relationship between one or two performance measures and the threshold.

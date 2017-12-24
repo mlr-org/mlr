@@ -1,5 +1,5 @@
 ---
-title: "Integrating Another Measure"
+# title: "Integrating Another Measure"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -13,6 +13,8 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 ```
+
+# Integrating Another Measure
 
 In some cases, you might want to evaluate a `Prediction()` or `ResamplePrediction()` with a `Measure` (`makeMeasure()`) which is not yet implemented in `mlr`. 
 This could be either a performance measure which is not listed in the Appendix (`vignette("measure")`) or a measure that uses a misclassification cost matrix.

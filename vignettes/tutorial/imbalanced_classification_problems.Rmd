@@ -1,5 +1,5 @@
 ---
-title: "Imbalanced Classification Problems"
+# title: "Imbalanced Classification Problems"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Imbalanced Classification Problems
 
 In case of *binary classification* strongly imbalanced classes
 often lead to unsatisfactory results regarding the prediction of new

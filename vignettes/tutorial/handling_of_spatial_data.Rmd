@@ -1,5 +1,5 @@
 ---
-title: "Handling of Spatial Data"
+# title: "Handling of Spatial Data"
 author: "Patrick Schratz"
 output: rmarkdown::html_vignette
 vignette: >
@@ -13,6 +13,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Handling of Spatial Data
 
 ## Introduction
 
@@ -30,7 +32,9 @@ If common validation procedures like cross-validation are applied to such data s
 However, this assumption is violated in the spatial case due to spatial autocorrelation.
 Subsequently, non-spatial cross-validation will fail to provide accurate performance estimates.
 
-![Nested Spatial and Non-Spatial Validation](img/spatial_cross_validation.png "Nested Spatial and Non-Spatial Validation")
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Nested Spatial and Non-Spatial Validation"}
+knitr::include_graphics(here::here("vignettes/tutorial/pdf/img/spatial_cross_validation.png"))
+```
 
 By doing a random sampling of the data set (i.e., non-spatial sampling), training and test set data are often located directly next to each other (in geographical space).
 Hence, the test set will contain observations which are somewhat similar (due to spatial autocorrelation) to observations in the training set. 

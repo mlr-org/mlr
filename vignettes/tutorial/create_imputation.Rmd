@@ -1,5 +1,5 @@
 ---
-title: "Creating an Imputation Method"
+# title: "Creating an Imputation Method"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Creating an Imputation Method
 
 Function `makeImputeMethod()` permits to create your own imputation method.
 For this purpose you need to specify a *learn* function that extracts the necessary information and an *impute* function that does the actual imputation.

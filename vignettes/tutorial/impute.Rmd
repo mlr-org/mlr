@@ -1,5 +1,5 @@
 ---
-title: "Imputation of Missing Values"
+# title: "Imputation of Missing Values"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,6 +14,8 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 ```
+
+# Imputation of Missing Values
 
 `mlr` provides several imputation methods which are listed on the help page `imputations()`.
 These include standard techniques as imputation by a constant value (like a fixed constant, the mean, median or mode)

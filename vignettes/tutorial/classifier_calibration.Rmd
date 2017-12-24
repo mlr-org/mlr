@@ -1,5 +1,5 @@
 ---
-title: "Classifier Calibration"
+# title: "Classifier Calibration"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Classifier Calibration
 
 A classifier is "calibrated" when the predicted probability of a class matches the expected frequency of that class. 
 `mlr` can visualize this by plotting estimated class probabilities (which are discretized) against the observed frequency of said class in the data using `generateCalibrationData()` and `plotCalibration()`.

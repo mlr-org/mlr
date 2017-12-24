@@ -1,5 +1,5 @@
 ---
-title: "Exploring Learner Predictions"
+# title: "Exploring Learner Predictions"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Exploring Learner Predictions
 
 Learners use features to learn a prediction function and make predictions, but the effect of those features is often not apparent.
 `mlr` can estimate the partial dependence of a learned function on a subset of the feature space using `generatePartialDependenceData()`.

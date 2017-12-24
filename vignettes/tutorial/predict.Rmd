@@ -1,5 +1,5 @@
 ---
-title: "Predicting Outcomes for New Data"
+# title: "Predicting Outcomes for New Data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -12,6 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 ```
+
+# Predicting Outcomes for New Data
 
 Predicting the target values for new observations is implemented the same way as most of the other predict methods in **R**.
 In general, all you need to do is call `predict` (`predict.WrappedModel()`) on the object returned by `train()` and pass the data you want predictions for.
