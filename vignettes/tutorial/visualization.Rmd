@@ -1,8 +1,5 @@
 ---
 title: "Visualization"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -19,23 +16,22 @@ library("lattice")
 ```
 
 ## Generation and plotting functions
+
 `mlr`'s visualization capabilities rely on *generation functions* which generate data for plots, and *plotting functions* which plot this output using either `ggplot2::ggplot2()` or `ggvis::ggvis()` (the latter being currently experimental).
 
-This separation allows users to easily make custom visualizations by
-taking advantage of the generation functions. The only data transformation that is handled inside
-plotting functions is reshaping. The reshaped data is also accessible by calling the plotting
-functions and then extracting the data from the `ggplot2::ggplot()` object.
+This separation allows users to easily make custom visualizations by taking advantage of the generation functions. The only data transformation that is handled inside plotting functions is reshaping. The reshaped data is also accessible by calling the plotting functions and then extracting the data from the `ggplot2::ggplot()` object.
 
 The functions are named accordingly.
 
-* Names of generation functions start with `generate` and are followed by a title-case description of their `FunctionPurpose`, followed by `Data`, i.e., `generateFunctionPurposeData`. These functions output objects of class `FunctionPurposeData`.
+* Names of generation functions start with `generate` and are followed by a title-case description of their `FunctionPurpose`, followed by `Data`, i.e., `generateFunctionPurposeData`. 
+These functions output objects of class `FunctionPurposeData`.
 * Plotting functions are prefixed by `plot` followed by their purpose, i.e., `plotFunctionPurpose`.
 * `ggvis::ggvis()` plotting functions have an additional suffix `GGVIS`, i.e., `plotFunctionPurposeGGVIS`.
 
 ### Some examples
+
 In the example below we create a plot of classifier performance as function of the decision threshold for the binary classification problem `sonar.task`.
-The generation function `generateThreshVsPerfData()` creates an object of class
-`ThreshVsPerfData` which contains the data for the plot in slot `$data`.
+The generation function `generateThreshVsPerfData()` creates an object of class `ThreshVsPerfData` which contains the data for the plot in slot `$data`.
 
 ```{r}
 lrn = makeLearner("classif.lda", predict.type = "prob")
@@ -71,12 +67,8 @@ You can use the `id`s instead of the names by setting `pretty.names = FALSE`.
 As mentioned above it is easily possible to customize the built-in plots or making your own visualizations from scratch based on the generated data.
 
 What will probably come up most often is changing labels and annotations.
-Generally, this can be done by manipulating the `ggplot2::ggplot()` object,
-in this example the object returned by `plotThreshVsPerf()`, using the usual `ggplot2::ggplot2()` functions like `ggplot2::labs()` or `ggplot2::labeller()`.
-Moreover, you can change the underlying data, either `d$data` (resulting from
-`generateThreshVsPerfData()` or the possibly reshaped data contained in the
-`ggplot2::ggplot()` object (resulting from `plotThreshVsPerf()`, most often by
-renaming columns or factor levels.
+Generally, this can be done by manipulating the `ggplot2::ggplot()` object, in this example the object returned by `plotThreshVsPerf()`, using the usual `ggplot2::ggplot2()` functions like `ggplot2::labs()` or `ggplot2::labeller()`.
+Moreover, you can change the underlying data, either `d$data` (resulting from `generateThreshVsPerfData()` or the possibly reshaped data contained in the `ggplot2::ggplot()` object (resulting from `plotThreshVsPerf()`, most often by renaming columns or factor levels.
 
 Below are two examples of how to alter the axis and panel labels of the above plot.
 
@@ -97,8 +89,7 @@ plt = plt + xlab("Cutoff") + ylab("Performance")
 plt
 ```
 
-Using the `ggplot2::labeller()` function requires calling `ggplot2::facet_wrap()` (or `ggplot2::facet_grid()`), which can be
-useful if you want to change how the panels are positioned (number of rows and columns) or influence the axis limits.
+Using the `ggplot2::labeller()` function requires calling `ggplot2::facet_wrap()` (or `ggplot2::facet_grid()`), which can be useful if you want to change how the panels are positioned (number of rows and columns) or influence the axis limits.
 
 ```{r}
 plt = plotThreshVsPerf(d, pretty.names = FALSE)
