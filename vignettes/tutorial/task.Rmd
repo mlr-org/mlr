@@ -1,8 +1,5 @@
 ---
 title: "Learning Tasks"
-#author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-#Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-#date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -16,8 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 ```
 
-Learning tasks encapsulate the data set and further relevant information about a machine
-learning problem, for example the name of the target variable for supervised problems.
+Learning tasks encapsulate the data set and further relevant information about a machine learning problem, for example the name of the target variable for supervised problems.
 
 ## Task types and creation
 
@@ -25,26 +21,21 @@ The tasks are organized in a hierarchy, with the generic `Task()` at the top.
 The following tasks can be instantiated and all inherit from the virtual superclass `Task()`:
 
 * `RegrTask()` for regression problems,
-* `ClassifTask()` for binary and multi-class classification problems
-  (`vignette("cost_sensitive_classif")`) with class-dependent costs
-  can be handled as well),
+* `ClassifTask()` for binary and multi-class classification problems (`vignette("cost_sensitive_classif")`) with class-dependent costs can be handled as well),
 * `SurvTask()` for survival analysis,
 * `ClusterTask()` for cluster analysis,
 * `MultilabelTask()` for multilabel classification problems,
-* `CostSensTask()` for general `vignette("cost_sensitive_classif")`
-  (with example-specific costs).
+* `CostSensTask()` for general `vignette("cost_sensitive_classif")` (with example-specific costs).
 
 To create a task, just call ``make<TaskType>``, e.g., `makeClassifTask()`.
 All tasks require an identifier (argument ``id``) and a `base::data.frame()` (argument ``data``).
 If no ID is provided it is automatically generated using the variable name of the data.
-The ID will be later used to name results, for example of
-`vignette("benchmark_experiments")`, and to annotate plots.
+The ID will be later used to name results, for example of `vignette("benchmark_experiments")`, and to annotate plots.
 Depending on the nature of the learning problem, additional arguments may be required and are discussed in the following sections.
 
 ### Regression
 
-For supervised learning like regression (as well as classification and
-survival analysis) we, in addition to ``data``, have to specify the name of the ``target`` variable.
+For supervised learning like regression (as well as classification and survival analysis) we, in addition to ``data``, have to specify the name of the ``target`` variable.
 
 ```{r}
 data(BostonHousing, package = "mlbench")
@@ -54,16 +45,14 @@ regr.task
 
 As you can see, the `Task()` records the type of the learning problem and basic information about the data set, e.g., the types of the features (`base::numeric()` vectors, `base::factors()` or ordered factors), the number of observations, or whether missing values are present.
 
-Creating tasks for classification and survival analysis follows the same scheme,
-the data type of the target variables included in ``data`` is simply different.
+Creating tasks for classification and survival analysis follows the same scheme, the data type of the target variables included in ``data`` is simply different.
 For each of these learning problems some specifics are described below.
 
 ### Classification
 
 For classification the target column has to be a `factor`.
 
-In the following example we define a classification task for the
-`mlbench::BreastCancer()` data set and exclude the variable ``Id`` from all furthercmodel fitting and evaluation.
+In the following example we define a classification task for the `mlbench::BreastCancer()` data set and exclude the variable ``Id`` from all furthercmodel fitting and evaluation.
 
 ```{r}
 data(BreastCancer, package = "mlbench")
@@ -133,16 +122,14 @@ cluster.task
 ### Cost-sensitive classification
 
 The standard objective in classification is to obtain a high prediction accuracy, i.e., to minimize the number of errors. 
-All types of misclassification errors are thereby deemed
-equally severe. 
+All types of misclassification errors are thereby deemed equally severe. 
 However, in many applications different kinds of errors cause different costs.
 
 In case of *class-dependent costs*, that solely depend on the actual and predicted class labels, it is sufficient to create an ordinary `ClassifTask()`.
 
 In order to handle *example-specific costs* it is necessary to generate a `CostSensTask()`.
 In this scenario, each example $(x, y)$ is associated with an individual cost vector of length $K$ with $K$ denoting the number of classes. 
-The $k$-th component indicates the cost of assigning $x$ to class $k$. Naturally, it is assumed that the cost of the intended class label $y$ is
-minimal.
+The $k$-th component indicates the cost of assigning $x$ to class $k$. Naturally, it is assumed that the cost of the intended class label $y$ is minimal.
 
 As the cost vector contains all relevant information about the intended class $y$, only the feature values $x$ and a ``cost`` matrix, which contains the cost vectors for all examples in the data set, are required to create the `CostSensTask()`.
 
@@ -164,16 +151,13 @@ For more details see the page `vignette("cost_sensitive_classif")`.
 The `Task()` help page also lists several other arguments to describe further details of the learning problem.
 
 For example, we could include a ``blocking`` factor in the task.
-This would indicate that some observations "belong together" and should
-not be separated when splitting the data into training and test sets for `vignette("resampling")`.
+This would indicate that some observations "belong together" and should not be separated when splitting the data into training and test sets for `vignette("resampling")`.
 
 Another option is to assign ``weights`` to observations.
-These can simply indicate observation frequencies or result from the sampling
-scheme used to collect the data.
+These can simply indicate observation frequencies or result from the sampling scheme used to collect the data.
 Note that you should use this option only if the weights really belong to the task.
 If you plan to train some learning algorithms with different weights on the same `Task()`, `mlr` offers several other ways to set observation or class weights (for supervised classification). 
-See for example the tutorial page about `vignette("train")` or function
-`makeWeightedClassesWrapper()`.
+See for example the tutorial page about `vignette("train")` or function `makeWeightedClassesWrapper()`.
 
 ## Accessing a learning task
 
@@ -186,8 +170,7 @@ To access the `TaskDesc()` that contains basic information about the task you ca
 getTaskDesc(classif.task)
 ```
 
-Note that `TaskDesc()` have slightly different elements for different
-types of `Task()`s.
+Note that `TaskDesc()` have slightly different elements for different types of `Task()`s.
 Frequently required elements can also be accessed directly.
 
 ```{r}
@@ -227,8 +210,7 @@ head(getTaskCosts(costsens.task))
 ```
 
 Note that `getTaskData()` offers many options for converting the data set into a convenient format.
-This especially comes in handy when you [integrate a new learner](`vignette("create_learner")`) from another **R**
-package into `mlr`.
+This especially comes in handy when you [integrate a new learner](`vignette("create_learner")`) from another **R** package into `mlr`.
 In this regard function `getTaskFormula()` is also useful.
 
 ## Modifying a learning task
@@ -252,13 +234,12 @@ task = normalizeFeatures(cluster.task, method = "range")
 summary(getTaskData(task))
 ```
 
-For more functions and more detailed explanations have a look at the
-[data preprocessing](`vignette("preproc")`) page.
+For more functions and more detailed explanations have a look at the data preprocessing (`vignette("preproc")`) page.
 
 ## Example tasks and convenience functions
 
 For your convenience `mlr` provides pre-defined `Task()`s for each type of learning problem.
 These are also used throughout this tutorial in order to get shorter and more readable code.
-A list of all `Task()`s can be found in the [Appendix](`vignette("example_tasks")`).
+A list of all `Task()`s can be found in the Appendix (`vignette("example_tasks")`).
 
 Moreover, `mlr`'s function `convertMLBenchObjToTask()` can generate `Task()`s from the data sets and data generating functions in package `mlbench::mlbench()`.
