@@ -10,15 +10,13 @@ env:
     - _R_CHECK_TESTS_NLINES_=999
     - R_MAX_NUM_DLLS=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='mlrMBO mldr parallelMap ParamHelpers C50 class cluster h2o GPfit mldr rotationForest RRF rknn rotationForest'
+    - WARMUPPKGS='mlrMBO mldr parallelMap ParamHelpers C50 class cluster h2o GPfit mldr rotationForest RRF rknn rotationForest' # packages which are not available as binaries in c2d4u ppa
 
 addons:
   apt:
     sources:
       - sourceline: 'ppa:marutter/rrutter'
       - sourceline: 'ppa:marutter/c2d4u'
-      #- sourceline: 'deb ${CRAN}/bin/linux/ubuntu $(lsb_release -cs)/'
-      #  key_url: 'https://packagecloud.io/gpg.key'
     packages:
       - libgmp-dev
       - libgsl0-dev
@@ -131,56 +129,36 @@ addons:
       - r-cran-xml
       - r-cran-xml2
 
-
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 
-#r_github_packages:
-#  - berndbischl/BBmisc
-#  - berndbischl/parallelMap
-#  - berndbischl/ParamHelpers
-#  - RevolutionAnalytics/quickcheck/pkg
-#  - jimhester/lintr
-
-jobs:
-  include:
-    #- stage: warmup-1
-    #  # install required packages which are not available as binary
-    #  install:
-    #    - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-    #    - Rscript -e 'devtools::install_github(c("RevolutionAnalytics/quickcheck/pkg", "jimhester/lintr"), build_vignettes = FALSE)'
-    #  script: true
-    #- stage: warmup-2
-    #  install:
-    #    - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-    #  script: true
-    - stage: check
-      before_install:
-        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-        - Rscript -e 'devtools::install_github(c("RevolutionAnalytics/quickcheck/pkg", "jimhester/lintr"), build_vignettes = FALSE)'
-      before_script:
-        - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-        - R --no-save <<< 'library("devtools"); document()'
-      script:
-        - R CMD build .
-        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-      after_script:
-        - ../../travis-tool.sh dump_logs
-      after_success:
-        - git checkout master
-        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-        - R --no-save <<< 'library("devtools"); document()'
-        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-        - git config user.name $GN
-        - git config user.email $GM
-        - git config credential.helper "store --file=.git/credentials"
-        - echo "https://$GT:@github.com" >> .git/credentials
-        - git config push.default matching
-        - git add --force man/*
-        - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
-        - git push
-        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+# install packages via install.packages()' that are not available as binaries in cd24u ppa
+before_install:
+  - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
+  - Rscript -e 'devtools::install_github(c("RevolutionAnalytics/quickcheck/pkg", "jimhester/lintr"), build_vignettes = FALSE)'
+before_script:
+  - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+  - R --no-save <<< 'library("devtools"); document()'
+script:
+  - R CMD build .
+  - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+  - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+after_script:
+  - ../../travis-tool.sh dump_logs
+after_success:
+  - git checkout master
+  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+  - R --no-save <<< 'library("devtools"); document()'
+  - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+  - git config user.name $GN
+  - git config user.email $GM
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://$GT:@github.com" >> .git/credentials
+  - git config push.default matching
+  - git add --force man/*
+  - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
+  - git push
+  - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
 
 notifications:
   email:
