@@ -20,7 +20,7 @@ addons:
     packages:
       - libgmp-dev
       - libgsl0-dev
-      - imagemagick # for pkgdown favicon
+
       - r-cran-ada
       - r-cran-adabag
       - r-cran-bartmachine
