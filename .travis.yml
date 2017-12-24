@@ -10,7 +10,14 @@ env:
     - _R_CHECK_TESTS_NLINES_=999
     - R_MAX_NUM_DLLS=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - NO_BINARIES='mlrMBO mldr parallelMap ParamHelpers C50 class cluster h2o GPfit mldr rotationForest RRF rknn rotationForest' # packages which are not available as binaries in c2d4u ppa
+    - NO_BINARIES='mlrMBO mldr C50 class cluster h2o GPfit mldr rotationForest RRF rknn rotationForest' # packages which are not available as binaries in c2d4u ppa
+
+r_github_packages:
+  - berndbischl/BBmisc
+  - berndbischl/parallelMap
+  - berndbischl/ParamHelpers
+  - RevolutionAnalytics/quickcheck/pkg
+  - jimhester/lintr
 
 addons:
   apt:
@@ -25,7 +32,6 @@ addons:
       - r-cran-adabag
       - r-cran-bartmachine
       - r-cran-batchtools
-      - r-cran-bbmisc
       - r-cran-brnn
       - r-cran-bst
       - r-cran-care
@@ -135,7 +141,6 @@ r_check_args: "--as-cran --run-donttest"
 # install packages via install.packages()' that are not available as binaries in cd24u ppa
 before_install:
   - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("NO_BINARIES"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-  - Rscript -e 'devtools::install_github(c("RevolutionAnalytics/quickcheck/pkg", "jimhester/lintr"), build_vignettes = FALSE)'
 before_script:
   - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
   - R --no-save <<< 'library("devtools"); document()'
