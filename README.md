@@ -1,4 +1,4 @@
-![mlr](https://raw.githubusercontent.com/pat-s/mlr/master/logo.png): Machine Learning in R
+![mlr](http://mlr-org.github.io/mlr-tutorial/img/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![Build Status tutorial](https://travis-ci.org/mlr-org/mlr-tutorial.svg?branch=gh-pages)](https://travis-ci.org/mlr-org/mlr-tutorial)
@@ -14,10 +14,9 @@
 * Internal [Jenkins test infrastructure](https://hagakure.cs.ubc.ca:2893/view/mlr/) - only for developers.
 * Install the development version
 
-```splus
-devtools::install_github("mlr-org/mlr")
-```
-
+    ```splus
+    devtools::install_github("mlr-org/mlr")
+    ```
 * [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
@@ -47,23 +46,21 @@ Introduction
 ============
 
 R does not define a standardized interface for all its machine learning
-algorithms. 
-Therefore, for any non-trivial experiments, you need to write
+algorithms. Therefore, for any non-trivial experiments, you need to write
 lengthy, tedious and error-prone wrappers to call the different algorithms and
-unify their respective output. 
-
-Additionally you need to implement infrastructure to resample your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and compare models in a statistically meaningful way. 
-As this becomes computationally expensive, you might want to parallelize your experiments as well. This often forces users to make crummy
+unify their respective output. Additionally you need to implement infrastructure
+to resample your models, optimize hyperparameters, select features, cope with
+pre- and post-processing of data and compare models in a statistically
+meaningful way. As this becomes computationally expensive, you might want to
+parallelize your experiments as well. This often forces users to make crummy
 trade-offs in their experiments due to time constraints or lacking expert
-programming skills. 
-
-**mlr** provides this infrastructure so that you can focus
-on your experiments! 
-The framework provides supervised methods like classification, regression and survival analysis along with their corresponding evaluation and optimization methods, as well as unsupervised methods like clustering. 
-It is written in a way that you can extend it yourself or deviate from the
+programming skills. **mlr** provides this infrastructure so that you can focus
+on your experiments! The framework provides supervised methods like
+classification, regression and survival analysis along with their corresponding
+evaluation and optimization methods, as well as unsupervised methods like clustering. It
+is written in a way that you can extend it yourself or deviate from the
 implemented convenience methods and construct your own complex experiments or
 algorithms. 
-
 Furthermore, the package is nicely connected to the [**OpenML**](https://github.com/openml/openml-r) R package and its [online platform](https://www.openml.org/), which aims at supporting collaborative machine learning online and allows to easily share datasets as well as machine learning tasks, algorithms and experiments in order to support reproducible research.
 
 Features
