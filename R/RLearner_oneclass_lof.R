@@ -4,7 +4,7 @@ makeRLearner.oneclass.lof = function() {
     cl = "oneclass.lof",
     package = "dbscan",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "k", default = 20L, lower = 1L, tunable = TRUE)
+      makeIntegerLearnerParam(id = "k", default = 20L, lower = 10L, tunable = TRUE)
     ),
     properties =  c("oneclass", "numerics", "factors", "prob"),
     note = "Rule of thumb for number of neighbours k = 20,
