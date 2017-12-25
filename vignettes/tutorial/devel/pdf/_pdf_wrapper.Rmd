@@ -81,7 +81,7 @@ library("ggplot2")
 ```{r child = '../cost_sensitive_classif.Rmd'}
 ```
 
-```{r child = '../imbalanced_classification_problems.Rmd'}
+```{r child = '../over_and_undersampling.Rmd'}
 ```
 
 ```{r child = '../roc_analysis.Rmd'}
