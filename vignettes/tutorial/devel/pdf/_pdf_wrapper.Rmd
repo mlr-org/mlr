@@ -28,7 +28,7 @@ library("ggplot2")
 ```{r child = '../task.Rmd'}
 ```
 
-```{r child = '../learners.Rmd'}
+```{r child = '../learner.Rmd'}
 ```
 
 ```{r child = '../predict.Rmd'}
@@ -37,7 +37,7 @@ library("ggplot2")
 ```{r child = '../performance.Rmd'}
 ```
 
-```{r child = '../resampling.Rmd'}
+```{r child = '../resample.Rmd'}
 ```
 
 ```{r child = '../tune.Rmd'}
@@ -54,16 +54,13 @@ library("ggplot2")
 
 # Advanced
 
-```{r child = '../configuring.Rmd'}
+```{r child = '../configureMlr.Rmd'}
 ```
 
 ```{r child = '../wrapper.Rmd'}
 ```
 
 ```{r child = '../preproc.Rmd'}
-```
-
-```{r child = '../configuring.Rmd'}
 ```
 
 ```{r child = '../impute.Rmd'}
@@ -93,7 +90,7 @@ library("ggplot2")
 ```{r child = '../multilabel.Rmd'}
 ```
 
-```{r child = '../learning_curve_analysis.Rmd'}
+```{r child = '../learning_curve.Rmd'}
 ```
 
 ```{r child = '../partial_dependence.Rmd'}
@@ -102,7 +99,7 @@ library("ggplot2")
 ```{r child = '../classifier_calibration.Rmd'}
 ```
 
-```{r child = '../hyperparameter_tuning_effects.Rmd'}
+```{r child = '../hyperpar_tuning_effects.Rmd'}
 ```
 
 ```{r child = '../out_of_bag_predictions.Rmd'}
@@ -113,10 +110,10 @@ library("ggplot2")
 
 # Extending
 
-```{r child = '../custom_learners.Rmd'}
+```{r child = '../create_learner.Rmd'}
 ```
 
-```{r child = '../custom_measures.Rmd'}
+```{r child = '../custom_measure.Rmd'}
 ```
 
 ```{r child = '../create_imputation.Rmd'}
@@ -133,7 +130,7 @@ library("ggplot2")
 ```{r child = '../integrated_learners.Rmd'}
 ```
 
-```{r child = '../implemented_measures.Rmd'}
+```{r child = '../measures.Rmd'}
 ```
 
 ```{r child = '../filter_methods.Rmd'}
