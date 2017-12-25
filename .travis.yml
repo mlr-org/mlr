@@ -71,6 +71,11 @@ matrix:
       dist: trusty
       sudo: false
       env: mlr_tutorial_html
+      addons:
+         apt:
+            packages:
+              - ghostscript
+              - imagemagick
       install:
         - R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::install()'
       after_install: R -q -e 'tic::after_install()'
@@ -90,6 +95,10 @@ matrix:
       dist: trusty
       sudo: false
       env: mlr_tutorial_pdf
+      addons:
+         apt:
+            packages:
+              - ghostscript
       install:
         - R -q -e 'install.packages(c("remotes", "rmarkdown", "bookdown", "pander")); remotes::install_github("krlmlr/here");'
       script:
