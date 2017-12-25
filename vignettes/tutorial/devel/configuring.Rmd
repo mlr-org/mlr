@@ -13,21 +13,7 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 library("lattice")
-
-# do not change this code
-re = "^Version: "
-text = readLines(here::here("DESCRIPTION"))
-text = grep(re, text, value = TRUE)
-devel_version = gsub(re, "", text)
-devel_url = paste0("https://pat-s-org.github.io/mlr/", devel_version, "/configuring.html")
-
-url = "https://cran.r-project.org/web/packages/mlr/"
-cran_description = paste(readLines(url), collapse="\n")
-cran_version = as.numeric(qdap::genXtract(cran_description, "/mlr_", ".zip")[1])
-cran_url = paste0("https://pat-s-org.github.io/mlr/", cran_version, "/configuring.html")
 ```
-
-[CRAN](`r url(cran_url)`) | [devel](`r url(devel_url)`)
 
 ## Configuring mlr
 
