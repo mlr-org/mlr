@@ -74,6 +74,8 @@ matrix:
       addons:
          apt:
             packages:
+              - libgmp-dev
+              - libgsl0-dev
               - imagemagick
       install:
         - R -q -e 'install.packages("RcppZiggurat"); install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::install()'
@@ -97,6 +99,8 @@ matrix:
       addons:
          apt:
             packages:
+              - libgmp-dev
+              - libgsl0-dev
               - ghostscript
       install:
         - R -q -e 'install.packages("RcppZiggurat"); install.packages(c("remotes", "rmarkdown", "bookdown", "pander")); remotes::install_github("krlmlr/here");'
