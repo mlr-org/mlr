@@ -31,7 +31,7 @@ r_github_packages:
   - jimhester/lintr
   - krlmlr/here
 
-jobs:
+matrix:
   include:
     #- stage: warmup-1
     #  install:
@@ -67,8 +67,10 @@ jobs:
     #    - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
     #    - git push
     #    - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-    - stage: mlr-tutorial-html
-      latex: true
+    - os: linux
+      dist: trusty
+      sudo: false
+      env: mlr_tutorial_html
       install:
         - R -q -e 'tic::install()'
       after_install: R -q -e 'tic::after_install()'
@@ -84,7 +86,10 @@ jobs:
            all_branches: true
       after_deploy: R -q -e 'tic::after_deploy()'
       after_script: R -q -e 'tic::after_script()'
-    - stage: mlr-tutorial-pdf
+    - os: linux
+      dist: trusty
+      sudo: false
+      env: mlr_tutorial_pdf
       script:
         - R -q -e 'install.packages(c("remotes", "rmarkdown", "bookdown", "pander")); remotes::install_github("krlmlr/here");'
         - R -q -e 'remotes::install_github("mlr-org/mlr")' # for some reason we need to call this as R CMD build does not install the github version (??). Getting 'Faceting must contain at least' error otherwise
