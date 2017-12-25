@@ -7,7 +7,7 @@ template:
 home:
   links:
   - text: Cheatsheet
-    href: https://github.com/mlr-org/mlr-tutorial/blob/gh-pages/cheatsheet/MlrCheatsheet.pdf
+    href: https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf
 
 navbar:
   title:
