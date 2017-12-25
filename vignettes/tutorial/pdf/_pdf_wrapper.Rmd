@@ -1,6 +1,6 @@
 ---
 title: "mlr Tutorial"
-author: "Julia Schiffner, Bernd Bischl, Michel Lang, Jakob Richter, Zachary M. Jones, Philipp Probst, Florian Pfisterer, Mason Gallo, Dominik Kirchhoff, Tobias Kühn, Janek Thomas, Kira Engelhardt, Teodora Pandeva, Gunnar König, Lars Kotthoff"
+author: "Julia Schiffner, Bernd Bischl, Michel Lang, Jakob Richter, Zachary M. Jones, Philipp Probst, Florian Pfisterer, Mason Gallo, Dominik Kirchhoff, Tobias Kühn, Janek Thomas, Kira Engelhardt, Teodora Pandeva, Gunnar König, Lars Kotthoff, Patrick Schratz"
 output: 
   bookdown::pdf_document2:
     number_sections: true
@@ -20,7 +20,7 @@ library("ggplot2")
 
 # Machine Learning in R: mlr Tutorial
 
-```{r child = '../../mlr.Rmd'}
+```{r child = '../_mlr-tutorial_intro.Rmd'}
 ```
 
 # Basics
