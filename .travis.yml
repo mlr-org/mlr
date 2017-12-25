@@ -76,7 +76,7 @@ jobs:
       script:
         - R -q -e 'install.packages(c("remotes", "rmarkdown", "bookdown", "pander", "qdap")); remotes::install_github("krlmlr/here"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
         - R -q -e 'remotes::install_github("mlr-org/mlr")' # for some reason we need to call this as R CMD build does not install the github version (??). Getting 'Faceting must contain at least' error otherwise
-        - R -q -e 'rmarkdown::render("vignettes/tutorial/2.12/pdf/_pdf_wrapper.Rmd")' # build pdf version
+        - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       before_deploy: R -q -e 'tic::before_deploy(); remotes::install_github("jimhester/lintr"); install.packages("pander");remotes::install_github("pat-s/pkgdown")'
       deploy:
          provider: script
@@ -91,8 +91,8 @@ jobs:
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://$GH_TOKEN:@github.com" >> .git/credentials
         - git config push.default matching
-        - mv vignettes/tutorial/2.12/pdf/_pdf_wrapper.pdf vignettes/tutorial/2.12/pdf/mlr-tutorial.pdf
-        - git add vignettes/tutorial/2.12/pdf/mlr-tutorial.pdf
+        - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
+        - git add vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git commit -a -m "update auto-generated tutorial pdf version [ci skip]"
         - git push
 
