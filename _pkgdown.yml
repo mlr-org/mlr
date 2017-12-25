@@ -4,6 +4,11 @@ template:
   params:
     bootswatch: cosmo
 
+home:
+  links:
+  - text: Cheatsheet
+    href: https://github.com/mlr-org/mlr-tutorial/blob/gh-pages/cheatsheet/MlrCheatsheet.pdf
+
 navbar:
   title:
   type: default
