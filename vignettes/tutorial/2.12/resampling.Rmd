@@ -28,7 +28,7 @@ There exist various different resampling strategies, for example cross-validatio
 knitr::include_graphics(here::here("vignettes/tutorial/2.12/pdf/img/resampling.png"))
 ```
 
-```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Resampling Figure, eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
+```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
 knitr::include_graphics(here::here("vignettes/tutorial/2.12/pdf/img/resampling.png"))
 ```
 
