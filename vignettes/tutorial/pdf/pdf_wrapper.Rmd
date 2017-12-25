@@ -1,13 +1,27 @@
 ---
-title: "mlr-tutorial"
+title: "mlr Tutorial"
 author: "Julia Schiffner, Bernd Bischl, Michel Lang, Jakob Richter, Zachary M. Jones, Philipp Probst, Florian Pfisterer, Mason Gallo, Dominik Kirchhoff, Tobias Kühn, Janek Thomas, Kira Engelhardt, Teodora Pandeva, Gunnar König, Lars Kotthoff"
 output: 
   bookdown::pdf_document2:
     number_sections: true
-    toc_depth: 2
+    toc_depth: 3
 biblio-style: apalike
 link-citations: yes
 ---
+
+```{r, echo = FALSE, message=FALSE}
+library("ROCR")
+library("glmnet")
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+```
+
+# Machine Learning in R: mlr Tutorial
+
+```{r child = '../../mlr.Rmd'}
+```
 
 # Basics
 
@@ -95,9 +109,6 @@ link-citations: yes
 ```
 
 ```{r child = '../handling_of_spatial_data.Rmd'}
-```
-
-```{r child = '../configuring.Rmd'}
 ```
 
 # Extending

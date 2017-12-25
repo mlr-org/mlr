@@ -16,7 +16,7 @@ ext = ".html"
 library("pander")
 ```
 
-# Example Tasks
+## Example Tasks
 
 For your convenience `mlr` provides pre-defined `Task()`s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.

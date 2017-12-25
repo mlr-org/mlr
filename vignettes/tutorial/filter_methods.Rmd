@@ -15,13 +15,13 @@ urlContribPackages = "http://www.inside-r.org/packages/cran/"
 library("pander")
 ```
 
-# Feature Selection
+## Feature Selection
 
 The following table shows the available methods for calculating the feature importance.
 Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival analysis problems are supported.
 Columns **Fac.**, **Num.** and **Ord.** show if a particular method can deal with `factor`, `numeric` and `ordered factor` features.
 
-## Current methods
+### Current methods
 
 ```{r, echo = FALSE, results = "asis"}
 # urlContribPackages is defined in build
@@ -43,7 +43,7 @@ rownames(dfnd) = seq_len(nrow(dfnd))
 pandoc.table(dfnd, style = "rmarkdown", split.tables = Inf, split.cells = Inf, emphasize.rownames = FALSE, justify = just)
 ```
 
-## Deprecated methods
+### Deprecated methods
 
 ```{r, echo = FALSE, results = "asis"}
 dfd = df[depr,]

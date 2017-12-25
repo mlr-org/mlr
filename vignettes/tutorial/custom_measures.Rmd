@@ -14,12 +14,12 @@ library("ParamHelpers")
 library("ggplot2")
 ```
 
-# Integrating Another Measure
+## Integrating Another Measure
 
 In some cases, you might want to evaluate a `Prediction()` or `ResamplePrediction()` with a `Measure` (`makeMeasure()`) which is not yet implemented in `mlr`. 
 This could be either a performance measure which is not listed in the Appendix (`vignette("measure")`) or a measure that uses a misclassification cost matrix.
 
-## Performance measures and aggregation schemes
+### Performance measures and aggregation schemes
 
 Performance measures in `mlr` are objects of class `Measure` (`makeMeasure()`).
 For example the mse (`vignette("measure")`) (mean squared error) looks as follows.
@@ -74,7 +74,7 @@ See the tutorial page on resampling (`vignette("resampling")`) for some examples
 You can construct your own `Measure` (`makeMeasure()`) and `Aggregation()` objects via functions `makeMeasure()`, `makeCostMeasure()`, `makeCustomResampledMeasure()` and `makeAggregation()`.
 Some examples are shown in the following.
 
-## Constructing a performance measure
+### Constructing a performance measure
 
 Function `makeMeasure()` provides a simple way to construct your own performance measure.
 
@@ -112,7 +112,7 @@ performance(pred, measures = my.mmce)
 performance(pred, measures = mmce)
 ```
 
-## Constructing a measure for ordinary misclassification costs
+### Constructing a measure for ordinary misclassification costs
 
 For in depth explanations and details see the tutorial page on cost-sensitive classification (`vignette("cost_sensitive_classif")`).
 
@@ -143,7 +143,7 @@ pred = predict(mod, newdata = iris)
 performance(pred, measures = my.costs)
 ```
 
-## Creating an aggregation scheme
+### Creating an aggregation scheme
 
 It is possible to create your own aggregation scheme using function `makeAggregation()`.
 You need to specify an identifier `id`, the `properties`, and write a function that does the actual aggregation. 
@@ -156,7 +156,7 @@ Usually, you will only need the performance values on the test sets `perf.test` 
 In rare cases, e.g., the `Prediction()` object `pred` or information stored in the `Task()` object might be required to obtain the aggregated performance.
 For an example have a look at the [definition](https://github.com/mlr-org/mlr/blob/master/R/aggregations.R#L211) of function `test.join` (`aggregations()`).
 
-### Example: Evaluating the range of measures
+#### Example: Evaluating the range of measures
 
 Let's say you are interested in the range of the performance values obtained on individual test sets.
 
