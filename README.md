@@ -184,13 +184,13 @@ If you want to modify/add a tutorial section, please follow these steps:
      If you want to insert a paragraph, skip one line.
      - The most up-level header starts with `##` and is subsequently followed by `###` and `####` etc.
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
-     - Reference images using a code chunk and `knitr::include_graphics("here::here("vignettes/pdf/img/<your_image>"))`. See examples in `resampling.Rmd`, `nested_resampling.Rmd` or `handling_of_spatial_data.Rmd`.
+     - Reference images using a code chunk and `knitr::include_graphics("here::here("vignettes/tutorial/devel/pdf/img/<your_image>"))`. See examples in `resampling.Rmd`, `nested_resampling.Rmd` or `handling_of_spatial_data.Rmd`.
      Using `knitr::include_graphics()` has the advantage that it automatically either selects .png (html) or .pdf files (pdf) for the respective version of the tutorial. 
      Furthermore, `here::here()` ensures that the relative paths are always correct for local building as well as for the html and pdf build process on Travis.
 3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using the `knit` button in RStudio) and see if everything works.
 This way you can also preview your site. 
 If you want to view the complete `pkgdown` site locally, run `pkgdown::serve_site()`.
 4. (optional) Add a new section to `.pkgdown.yml`, similar as the already listed ones.
-5. (optional) Add a new section to `/vignettes/tutorial/pdf/pdf_wrapper.Rmd`, similar as the already listed ones.
+5. (optional) Add a new section to `/vignettes/tutorial/devel/pdf/pdf_wrapper.Rmd`, similar as the already listed ones.
 
 If you want to open an issue that is related to `mlr-tutorial`, please label it with `tutorial` and mention @jakob-r or @pat-s if you need help.
