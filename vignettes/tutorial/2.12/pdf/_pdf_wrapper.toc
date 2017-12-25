@@ -1,0 +1,250 @@
+\contentsline {section}{\numberline {1}Machine Learning in R: mlr Tutorial}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Quick start}{4}{subsection.1.1}
+\contentsline {section}{\numberline {2}Basics}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Learning Tasks}{5}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Task types and creation}{5}{subsubsection.2.1.1}
+\contentsline {paragraph}{\numberline {2.1.1.1}Regression}{5}{paragraph.2.1.1.1}
+\contentsline {paragraph}{\numberline {2.1.1.2}Classification}{6}{paragraph.2.1.1.2}
+\contentsline {paragraph}{\numberline {2.1.1.3}Survival analysis}{6}{paragraph.2.1.1.3}
+\contentsline {paragraph}{\numberline {2.1.1.4}Multilabel classification}{7}{paragraph.2.1.1.4}
+\contentsline {paragraph}{\numberline {2.1.1.5}Cluster analysis}{7}{paragraph.2.1.1.5}
+\contentsline {paragraph}{\numberline {2.1.1.6}Cost-sensitive classification}{8}{paragraph.2.1.1.6}
+\contentsline {subsubsection}{\numberline {2.1.2}Further settings}{9}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}Accessing a learning task}{9}{subsubsection.2.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}Modifying a learning task}{11}{subsubsection.2.1.4}
+\contentsline {subsubsection}{\numberline {2.1.5}Example tasks and convenience functions}{12}{subsubsection.2.1.5}
+\contentsline {subsection}{\numberline {2.2}Learners}{12}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Constructing a learner}{13}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Accessing a learner}{14}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Modifying a learner}{16}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Listing learners}{16}{subsubsection.2.2.4}
+\contentsline {subsection}{\numberline {2.3}Predicting Outcomes for New Data}{18}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Accessing the prediction}{19}{subsubsection.2.3.1}
+\contentsline {paragraph}{\numberline {2.3.1.1}Regression: Extracting standard errors}{20}{paragraph.2.3.1.1}
+\contentsline {paragraph}{\numberline {2.3.1.2}Classification and clustering: Extracting probabilities}{21}{paragraph.2.3.1.2}
+\contentsline {paragraph}{\numberline {2.3.1.3}Classification: Confusion matrix}{22}{paragraph.2.3.1.3}
+\contentsline {subsubsection}{\numberline {2.3.2}Classification: Adjusting the decision threshold}{23}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}Visualizing the prediction}{25}{subsubsection.2.3.3}
+\contentsline {subsection}{\numberline {2.4}Evaluating Learner Performance}{28}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Available performance measures}{28}{subsubsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.2}Listing measures}{29}{subsubsection.2.4.2}
+\contentsline {subsubsection}{\numberline {2.4.3}Calculate performance measures}{30}{subsubsection.2.4.3}
+\contentsline {paragraph}{\numberline {2.4.3.1}Requirements of performance measures}{30}{paragraph.2.4.3.1}
+\contentsline {subsubsection}{\numberline {2.4.4}Access a performance measure}{31}{subsubsection.2.4.4}
+\contentsline {subsubsection}{\numberline {2.4.5}Binary classification}{31}{subsubsection.2.4.5}
+\contentsline {paragraph}{\numberline {2.4.5.1}Plot performance versus threshold}{31}{paragraph.2.4.5.1}
+\contentsline {paragraph}{\numberline {2.4.5.2}ROC measures}{32}{paragraph.2.4.5.2}
+\contentsline {subsection}{\numberline {2.5}Resampling}{33}{subsection.2.5}
+\contentsline {subsubsection}{\numberline {2.5.1}Defining the resampling strategy}{33}{subsubsection.2.5.1}
+\contentsline {subsubsection}{\numberline {2.5.2}Performing the resampling}{35}{subsubsection.2.5.2}
+\contentsline {subsubsection}{\numberline {2.5.3}Accessing resample results}{37}{subsubsection.2.5.3}
+\contentsline {paragraph}{\numberline {2.5.3.1}Predictions}{37}{paragraph.2.5.3.1}
+\contentsline {paragraph}{\numberline {2.5.3.2}Learner models}{40}{paragraph.2.5.3.2}
+\contentsline {paragraph}{\numberline {2.5.3.3}The extract option}{40}{paragraph.2.5.3.3}
+\contentsline {subsubsection}{\numberline {2.5.4}Stratification and blocking}{42}{subsubsection.2.5.4}
+\contentsline {paragraph}{\numberline {2.5.4.1}Stratification with respect to the target variable(s)}{42}{paragraph.2.5.4.1}
+\contentsline {paragraph}{\numberline {2.5.4.2}Stratification with respect to explanatory variables}{43}{paragraph.2.5.4.2}
+\contentsline {paragraph}{\numberline {2.5.4.3}Blocking}{43}{paragraph.2.5.4.3}
+\contentsline {subsubsection}{\numberline {2.5.5}Resample descriptions and resample instances}{43}{subsubsection.2.5.5}
+\contentsline {subsubsection}{\numberline {2.5.6}Aggregating performance values}{46}{subsubsection.2.5.6}
+\contentsline {paragraph}{\numberline {2.5.6.1}Example: One measure with different aggregations}{47}{paragraph.2.5.6.1}
+\contentsline {paragraph}{\numberline {2.5.6.2}Example: Calculating the training error}{47}{paragraph.2.5.6.2}
+\contentsline {paragraph}{\numberline {2.5.6.3}Example: Bootstrap}{48}{paragraph.2.5.6.3}
+\contentsline {subsubsection}{\numberline {2.5.7}Convenience functions}{49}{subsubsection.2.5.7}
+\contentsline {subsection}{\numberline {2.6}Tuning Hyperparameters}{50}{subsection.2.6}
+\contentsline {subsubsection}{\numberline {2.6.1}Specifying the search space}{50}{subsubsection.2.6.1}
+\contentsline {subsubsection}{\numberline {2.6.2}Specifying the optimization algorithm}{51}{subsubsection.2.6.2}
+\contentsline {subsubsection}{\numberline {2.6.3}Performing the tuning}{52}{subsubsection.2.6.3}
+\contentsline {subsubsection}{\numberline {2.6.4}Accessing the tuning result}{54}{subsubsection.2.6.4}
+\contentsline {subsubsection}{\numberline {2.6.5}Investigating hyperparameter tuning effects}{55}{subsubsection.2.6.5}
+\contentsline {subsubsection}{\numberline {2.6.6}Further comments}{57}{subsubsection.2.6.6}
+\contentsline {subsection}{\numberline {2.7}Benchmark Experiments}{57}{subsection.2.7}
+\contentsline {subsubsection}{\numberline {2.7.1}Conducting benchmark experiments}{58}{subsubsection.2.7.1}
+\contentsline {paragraph}{\numberline {2.7.1.1}Making experiments reproducible}{59}{paragraph.2.7.1.1}
+\contentsline {subsubsection}{\numberline {2.7.2}Accessing benchmark results}{60}{subsubsection.2.7.2}
+\contentsline {paragraph}{\numberline {2.7.2.1}Learner performances}{60}{paragraph.2.7.2.1}
+\contentsline {paragraph}{\numberline {2.7.2.2}Predictions}{61}{paragraph.2.7.2.2}
+\contentsline {paragraph}{\numberline {2.7.2.3}IDs}{62}{paragraph.2.7.2.3}
+\contentsline {paragraph}{\numberline {2.7.2.4}Fitted models}{62}{paragraph.2.7.2.4}
+\contentsline {paragraph}{\numberline {2.7.2.5}Learners and measures}{63}{paragraph.2.7.2.5}
+\contentsline {subsubsection}{\numberline {2.7.3}Merging benchmark results}{64}{subsubsection.2.7.3}
+\contentsline {subsubsection}{\numberline {2.7.4}Benchmark analysis and visualization}{65}{subsubsection.2.7.4}
+\contentsline {paragraph}{\numberline {2.7.4.1}Example: Comparing lda, rpart and random Forest}{65}{paragraph.2.7.4.1}
+\contentsline {paragraph}{\numberline {2.7.4.2}Integrated plots}{67}{paragraph.2.7.4.2}
+\contentsline {subparagraph}{\numberline {2.7.4.2.1}Visualizing performances}{67}{subparagraph.2.7.4.2.1}
+\contentsline {subparagraph}{\numberline {2.7.4.2.2}Visualizing aggregated performances}{70}{subparagraph.2.7.4.2.2}
+\contentsline {subparagraph}{\numberline {2.7.4.2.3}Calculating and visualizing ranks}{71}{subparagraph.2.7.4.2.3}
+\contentsline {paragraph}{\numberline {2.7.4.3}Comparing learners using hypothesis tests}{73}{paragraph.2.7.4.3}
+\contentsline {paragraph}{\numberline {2.7.4.4}Critical differences diagram}{74}{paragraph.2.7.4.4}
+\contentsline {paragraph}{\numberline {2.7.4.5}Custom plots}{76}{paragraph.2.7.4.5}
+\contentsline {subsubsection}{\numberline {2.7.5}Further comments}{78}{subsubsection.2.7.5}
+\contentsline {subsection}{\numberline {2.8}Parallelization}{78}{subsection.2.8}
+\contentsline {subsubsection}{\numberline {2.8.1}Parallelization levels}{79}{subsubsection.2.8.1}
+\contentsline {subsubsection}{\numberline {2.8.2}Custom learners and parallelization}{79}{subsubsection.2.8.2}
+\contentsline {subsubsection}{\numberline {2.8.3}The end}{80}{subsubsection.2.8.3}
+\contentsline {subsection}{\numberline {2.9}Visualization}{80}{subsection.2.9}
+\contentsline {subsubsection}{\numberline {2.9.1}Generation and plotting functions}{80}{subsubsection.2.9.1}
+\contentsline {paragraph}{\numberline {2.9.1.1}Some examples}{80}{paragraph.2.9.1.1}
+\contentsline {paragraph}{\numberline {2.9.1.2}Customizing plots}{81}{paragraph.2.9.1.2}
+\contentsline {subsubsection}{\numberline {2.9.2}Available generation and plotting functions}{86}{subsubsection.2.9.2}
+\contentsline {section}{\numberline {3}Advanced}{87}{section.3}
+\contentsline {subsection}{\numberline {3.1}Configuring mlr}{87}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Example: Reducing the output on the console}{87}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Accessing and resetting the configuration}{88}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Example: Turning off parameter checking}{89}{subsubsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.4}Example: Handling errors in a learning method}{90}{subsubsection.3.1.4}
+\contentsline {subsection}{\numberline {3.2}Wrapper}{91}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Example: Bagging wrapper}{91}{subsubsection.3.2.1}
+\contentsline {subsection}{\numberline {3.3}Data Preprocessing}{94}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Fusing learners with preprocessing}{95}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Preprocessing with makePreprocWrapperCaret}{96}{subsubsection.3.3.2}
+\contentsline {paragraph}{\numberline {3.3.2.1}Joint tuning of preprocessing options and learner parameters}{98}{paragraph.3.3.2.1}
+\contentsline {subsubsection}{\numberline {3.3.3}Writing a custom preprocessing wrapper}{100}{subsubsection.3.3.3}
+\contentsline {paragraph}{\numberline {3.3.3.1}Specifying the train function}{100}{paragraph.3.3.3.1}
+\contentsline {paragraph}{\numberline {3.3.3.2}Specifying the predict function}{101}{paragraph.3.3.3.2}
+\contentsline {paragraph}{\numberline {3.3.3.3}Creating the preprocessing wrapper}{101}{paragraph.3.3.3.3}
+\contentsline {paragraph}{\numberline {3.3.3.4}Joint tuning of preprocessing and learner parameters}{102}{paragraph.3.3.3.4}
+\contentsline {paragraph}{\numberline {3.3.3.5}Preprocessing wrapper functions}{104}{paragraph.3.3.3.5}
+\contentsline {subsection}{\numberline {3.4}Configuring mlr}{105}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Example: Reducing the output on the console}{105}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Accessing and resetting the configuration}{106}{subsubsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.3}Example: Turning off parameter checking}{107}{subsubsection.3.4.3}
+\contentsline {subsubsection}{\numberline {3.4.4}Example: Handling errors in a learning method}{108}{subsubsection.3.4.4}
+\contentsline {subsection}{\numberline {3.5}Imputation of Missing Values}{109}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Imputation and reimputation}{109}{subsubsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.2}Fusing a learner with imputation}{112}{subsubsection.3.5.2}
+\contentsline {subsection}{\numberline {3.6}Generic Bagging}{114}{subsection.3.6}
+\contentsline {subsubsection}{\numberline {3.6.1}Changing the type of prediction}{114}{subsubsection.3.6.1}
+\contentsline {subsection}{\numberline {3.7}Iterated F-Racing for mixed spaces and dependencies}{116}{subsection.3.7}
+\contentsline {subsubsection}{\numberline {3.7.1}Tuning across whole model spaces with ModelMultiplexer}{117}{subsubsection.3.7.1}
+\contentsline {subsubsection}{\numberline {3.7.2}Multi-criteria evaluation and optimization}{118}{subsubsection.3.7.2}
+\contentsline {subsection}{\numberline {3.8}Feature Selection}{119}{subsection.3.8}
+\contentsline {subsubsection}{\numberline {3.8.1}Filter methods}{119}{subsubsection.3.8.1}
+\contentsline {paragraph}{\numberline {3.8.1.1}Calculating the feature importance}{119}{paragraph.3.8.1.1}
+\contentsline {paragraph}{\numberline {3.8.1.2}Selecting a feature subset}{121}{paragraph.3.8.1.2}
+\contentsline {paragraph}{\numberline {3.8.1.3}Fuse a learner with a filter method}{121}{paragraph.3.8.1.3}
+\contentsline {paragraph}{\numberline {3.8.1.4}Tuning the size of the feature subset}{122}{paragraph.3.8.1.4}
+\contentsline {subsubsection}{\numberline {3.8.2}Wrapper methods}{125}{subsubsection.3.8.2}
+\contentsline {paragraph}{\numberline {3.8.2.1}Select a feature subset}{125}{paragraph.3.8.2.1}
+\contentsline {paragraph}{\numberline {3.8.2.2}Fuse a learner with feature selection}{127}{paragraph.3.8.2.2}
+\contentsline {subsection}{\numberline {3.9}Nested Resampling}{128}{subsection.3.9}
+\contentsline {subsubsection}{\numberline {3.9.1}Tuning}{130}{subsubsection.3.9.1}
+\contentsline {paragraph}{\numberline {3.9.1.1}Accessing the tuning result}{130}{paragraph.3.9.1.1}
+\contentsline {subsubsection}{\numberline {3.9.2}Feature selection}{132}{subsubsection.3.9.2}
+\contentsline {paragraph}{\numberline {3.9.2.1}Wrapper methods}{132}{paragraph.3.9.2.1}
+\contentsline {subparagraph}{\numberline {3.9.2.1.1}Accessing the selected features}{133}{subparagraph.3.9.2.1.1}
+\contentsline {paragraph}{\numberline {3.9.2.2}Filter methods with tuning}{134}{paragraph.3.9.2.2}
+\contentsline {subparagraph}{\numberline {3.9.2.2.1}Accessing the selected features and optimal percentage}{135}{subparagraph.3.9.2.2.1}
+\contentsline {subsubsection}{\numberline {3.9.3}Benchmark experiments}{136}{subsubsection.3.9.3}
+\contentsline {paragraph}{\numberline {3.9.3.1}Example 1: Two tasks, two learners, tuning}{136}{paragraph.3.9.3.1}
+\contentsline {paragraph}{\numberline {3.9.3.2}Example 2: One task, two learners, feature selection}{139}{paragraph.3.9.3.2}
+\contentsline {paragraph}{\numberline {3.9.3.3}Example 3: One task, two learners, feature filtering with tuning}{141}{paragraph.3.9.3.3}
+\contentsline {subsection}{\numberline {3.10}Cost-Sensitive Classification}{141}{subsection.3.10}
+\contentsline {subsubsection}{\numberline {3.10.1}Class-dependent misclassification costs}{142}{subsubsection.3.10.1}
+\contentsline {paragraph}{\numberline {3.10.1.1}Binary classification problems}{142}{paragraph.3.10.1.1}
+\contentsline {subparagraph}{\numberline {3.10.1.1.1}1. Thresholding}{143}{subparagraph.3.10.1.1.1}
+\contentsline {subparagraph}{\numberline {3.10.1.1.2}2. Rebalancing}{147}{subparagraph.3.10.1.1.2}
+\contentsline {paragraph}{\numberline {3.10.1.2}Multi-class problems}{150}{paragraph.3.10.1.2}
+\contentsline {subparagraph}{\numberline {3.10.1.2.1}1. Thresholding}{151}{subparagraph.3.10.1.2.1}
+\contentsline {subparagraph}{\numberline {3.10.1.2.2}2. Rebalancing}{152}{subparagraph.3.10.1.2.2}
+\contentsline {subsubsection}{\numberline {3.10.2}Example-dependent misclassification costs}{152}{subsubsection.3.10.2}
+\contentsline {subsection}{\numberline {3.11}Imbalanced Classification Problems}{154}{subsection.3.11}
+\contentsline {subsubsection}{\numberline {3.11.1}Sampling-based approaches}{155}{subsubsection.3.11.1}
+\contentsline {paragraph}{\numberline {3.11.1.1}(Simple) over- and undersampling}{155}{paragraph.3.11.1.1}
+\contentsline {paragraph}{\numberline {3.11.1.2}Over- and undersampling wrappers}{156}{paragraph.3.11.1.2}
+\contentsline {paragraph}{\numberline {3.11.1.3}Extensions to oversampling}{157}{paragraph.3.11.1.3}
+\contentsline {subparagraph}{\numberline {3.11.1.3.1}1. SMOTE (Synthetic Minority Oversampling Technique)}{157}{subparagraph.3.11.1.3.1}
+\contentsline {subparagraph}{\numberline {3.11.1.3.2}2. Overbagging}{157}{subparagraph.3.11.1.3.2}
+\contentsline {subsubsection}{\numberline {3.11.2}Cost-based approaches}{158}{subsubsection.3.11.2}
+\contentsline {paragraph}{\numberline {3.11.2.1}Weighted classes wrapper}{158}{paragraph.3.11.2.1}
+\contentsline {subsection}{\numberline {3.12}ROC Analysis and Performance Curves}{159}{subsection.3.12}
+\contentsline {subsubsection}{\numberline {3.12.1}Performance plots with plotROCCurves}{160}{subsubsection.3.12.1}
+\contentsline {paragraph}{\numberline {3.12.1.1}Example 1: Single predictions}{160}{paragraph.3.12.1.1}
+\contentsline {paragraph}{\numberline {3.12.1.2}Example 2: Benchmark experiment}{164}{paragraph.3.12.1.2}
+\contentsline {subsubsection}{\numberline {3.12.2}Performance plots with asROCRPrediction}{168}{subsubsection.3.12.2}
+\contentsline {paragraph}{\numberline {3.12.2.1}Example 1: Single predictions (continued)}{169}{paragraph.3.12.2.1}
+\contentsline {paragraph}{\numberline {3.12.2.2}Example 2: Benchmark experiments (continued)}{170}{paragraph.3.12.2.2}
+\contentsline {subsubsection}{\numberline {3.12.3}Viper charts}{172}{subsubsection.3.12.3}
+\contentsline {subsection}{\numberline {3.13}Multilabel Classification}{172}{subsection.3.13}
+\contentsline {subsubsection}{\numberline {3.13.1}Creating a task}{172}{subsubsection.3.13.1}
+\contentsline {subsubsection}{\numberline {3.13.2}Constructing a learner}{173}{subsubsection.3.13.2}
+\contentsline {paragraph}{\numberline {3.13.2.1}Algorithm adaptation methods}{173}{paragraph.3.13.2.1}
+\contentsline {paragraph}{\numberline {3.13.2.2}Problem transformation methods}{174}{paragraph.3.13.2.2}
+\contentsline {subparagraph}{\numberline {3.13.2.2.1}Binary relevance}{174}{subparagraph.3.13.2.2.1}
+\contentsline {subparagraph}{\numberline {3.13.2.2.2}Classifier chains}{174}{subparagraph.3.13.2.2.2}
+\contentsline {subparagraph}{\numberline {3.13.2.2.3}Nested stacking}{174}{subparagraph.3.13.2.2.3}
+\contentsline {subparagraph}{\numberline {3.13.2.2.4}Dependent binary relevance}{174}{subparagraph.3.13.2.2.4}
+\contentsline {subparagraph}{\numberline {3.13.2.2.5}Stacking}{175}{subparagraph.3.13.2.2.5}
+\contentsline {subsubsection}{\numberline {3.13.3}Train}{175}{subsubsection.3.13.3}
+\contentsline {subsubsection}{\numberline {3.13.4}Predict}{175}{subsubsection.3.13.4}
+\contentsline {subsubsection}{\numberline {3.13.5}Performance}{176}{subsubsection.3.13.5}
+\contentsline {subsubsection}{\numberline {3.13.6}Resampling}{176}{subsubsection.3.13.6}
+\contentsline {subsubsection}{\numberline {3.13.7}Binary performance}{177}{subsubsection.3.13.7}
+\contentsline {subsection}{\numberline {3.14}Learning Curve Analysis}{178}{subsection.3.14}
+\contentsline {subsubsection}{\numberline {3.14.1}Plotting the learning curve}{178}{subsubsection.3.14.1}
+\contentsline {subsection}{\numberline {3.15}Exploring Learner Predictions}{181}{subsection.3.15}
+\contentsline {subsubsection}{\numberline {3.15.1}Generating partial dependences}{182}{subsubsection.3.15.1}
+\contentsline {subsubsection}{\numberline {3.15.2}Functional ANOVA}{187}{subsubsection.3.15.2}
+\contentsline {subsubsection}{\numberline {3.15.3}Plotting partial dependences}{189}{subsubsection.3.15.3}
+\contentsline {subsection}{\numberline {3.16}Classifier Calibration}{196}{subsection.3.16}
+\contentsline {subsection}{\numberline {3.17}Evaluating Hyperparameter Tuning}{199}{subsection.3.17}
+\contentsline {subsubsection}{\numberline {3.17.1}Generating hyperparameter tuning data}{200}{subsubsection.3.17.1}
+\contentsline {subsubsection}{\numberline {3.17.2}Visualizing the effect of a single hyperparameter}{202}{subsubsection.3.17.2}
+\contentsline {subsubsection}{\numberline {3.17.3}Visualizing the effect of 2 hyperparameters}{205}{subsubsection.3.17.3}
+\contentsline {subsubsection}{\numberline {3.17.4}Visualizing the effects of more than 2 hyperparameters}{210}{subsubsection.3.17.4}
+\contentsline {subsection}{\numberline {3.18}Out-of-Bag Predictions}{212}{subsection.3.18}
+\contentsline {subsection}{\numberline {3.19}Handling of Spatial Data}{213}{subsection.3.19}
+\contentsline {subsubsection}{\numberline {3.19.1}Introduction}{213}{subsubsection.3.19.1}
+\contentsline {subsubsection}{\numberline {3.19.2}How to use spatial partitioning in mlr}{214}{subsubsection.3.19.2}
+\contentsline {subsubsection}{\numberline {3.19.3}Examples}{214}{subsubsection.3.19.3}
+\contentsline {paragraph}{\numberline {3.19.3.1}Spatial Cross-Validation}{214}{paragraph.3.19.3.1}
+\contentsline {paragraph}{\numberline {3.19.3.2}Non-Spatial Cross-Validation}{217}{paragraph.3.19.3.2}
+\contentsline {subsubsection}{\numberline {3.19.4}Notes}{219}{subsubsection.3.19.4}
+\contentsline {section}{\numberline {4}Extending}{219}{section.4}
+\contentsline {subsection}{\numberline {4.1}Integrating Another Learner}{219}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Classes, constructors, and naming schemes}{220}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Classification}{220}{subsubsection.4.1.2}
+\contentsline {paragraph}{\numberline {4.1.2.1}Definition of the learner}{221}{paragraph.4.1.2.1}
+\contentsline {paragraph}{\numberline {4.1.2.2}Creating the training function of the learner}{221}{paragraph.4.1.2.2}
+\contentsline {paragraph}{\numberline {4.1.2.3}Creating the prediction method}{222}{paragraph.4.1.2.3}
+\contentsline {subsubsection}{\numberline {4.1.3}Regression}{222}{subsubsection.4.1.3}
+\contentsline {subsubsection}{\numberline {4.1.4}Survival analysis}{223}{subsubsection.4.1.4}
+\contentsline {subsubsection}{\numberline {4.1.5}Clustering}{224}{subsubsection.4.1.5}
+\contentsline {subsubsection}{\numberline {4.1.6}Multilabel classification}{225}{subsubsection.4.1.6}
+\contentsline {subsubsection}{\numberline {4.1.7}Creating a new method for extracting feature importance values}{226}{subsubsection.4.1.7}
+\contentsline {subsubsection}{\numberline {4.1.8}Creating a new method for extracting out-of-bag predictions}{226}{subsubsection.4.1.8}
+\contentsline {subsubsection}{\numberline {4.1.9}Registering your learner}{227}{subsubsection.4.1.9}
+\contentsline {subsubsection}{\numberline {4.1.10}Further information for developers}{227}{subsubsection.4.1.10}
+\contentsline {paragraph}{\numberline {4.1.10.1}Unit testing}{227}{paragraph.4.1.10.1}
+\contentsline {subsection}{\numberline {4.2}Integrating Another Measure}{229}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Performance measures and aggregation schemes}{229}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Constructing a performance measure}{231}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}Constructing a measure for ordinary misclassification costs}{232}{subsubsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.4}Creating an aggregation scheme}{232}{subsubsection.4.2.4}
+\contentsline {paragraph}{\numberline {4.2.4.1}Example: Evaluating the range of measures}{233}{paragraph.4.2.4.1}
+\contentsline {subsection}{\numberline {4.3}Creating an Imputation Method}{234}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Example: Imputation using the mean}{235}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}Writing your own imputation method}{235}{subsubsection.4.3.2}
+\contentsline {subsection}{\numberline {4.4}Integrating Another Filter Method}{236}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}Filter objects}{236}{subsubsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.2}Writing a new filter method}{237}{subsubsection.4.4.2}
+\contentsline {section}{\numberline {5}Appendix}{240}{section.5}
+\contentsline {subsection}{\numberline {5.1}Example Tasks}{240}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Integrated Learners}{240}{subsection.5.2}
+\contentsline {paragraph}{\numberline {5.2.0.1}Classification (84)}{240}{paragraph.5.2.0.1}
+\contentsline {paragraph}{\numberline {5.2.0.2}Regression (61)}{251}{paragraph.5.2.0.2}
+\contentsline {paragraph}{\numberline {5.2.0.3}Survival analysis (12)}{259}{paragraph.5.2.0.3}
+\contentsline {paragraph}{\numberline {5.2.0.4}Cluster analysis (9)}{261}{paragraph.5.2.0.4}
+\contentsline {paragraph}{\numberline {5.2.0.5}Cost-sensitive classification}{262}{paragraph.5.2.0.5}
+\contentsline {paragraph}{\numberline {5.2.0.6}Multilabel classification (3)}{262}{paragraph.5.2.0.6}
+\contentsline {subsection}{\numberline {5.3}Implemented Performance Measures}{262}{subsection.5.3}
+\contentsline {paragraph}{\numberline {5.3.0.1}Classification}{263}{paragraph.5.3.0.1}
+\contentsline {paragraph}{\numberline {5.3.0.2}Regression}{266}{paragraph.5.3.0.2}
+\contentsline {paragraph}{\numberline {5.3.0.3}Survival analysis}{267}{paragraph.5.3.0.3}
+\contentsline {paragraph}{\numberline {5.3.0.4}Cluster analysis}{268}{paragraph.5.3.0.4}
+\contentsline {paragraph}{\numberline {5.3.0.5}Cost-sensitive classification}{269}{paragraph.5.3.0.5}
+\contentsline {paragraph}{\numberline {5.3.0.6}Multilabel classification}{269}{paragraph.5.3.0.6}
+\contentsline {paragraph}{\numberline {5.3.0.7}General performance measures}{270}{paragraph.5.3.0.7}
+\contentsline {subsection}{\numberline {5.4}Feature Selection}{271}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}Current methods}{271}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}Deprecated methods}{272}{subsubsection.5.4.2}
