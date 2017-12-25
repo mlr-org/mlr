@@ -72,7 +72,7 @@ jobs:
       after_install: R -q -e 'tic::after_install()'
       before_script: R -q -e 'tic::before_script()'
       script:
-        - R -q -e 'install.packages(c("remotes", "rmarkdown")); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+        - R -q -e 'install.packages(c("remotes", "rmarkdown", "bookdown")); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
         - R -q -e 'rmarkdown::render("vignettes/tutorial/pdf/_pdf_wrapper.Rmd")' # build pdf version
       before_deploy: R -q -e 'tic::before_deploy(); remotes::install_github("krlmlr/here"); remotes::install_github("jimhester/lintr"); install.packages("pander");remotes::install_github("pat-s/pkgdown")'
       deploy:
