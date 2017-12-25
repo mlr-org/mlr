@@ -10,7 +10,9 @@ if (Sys.getenv("id_rsa") != "") {
     add_step(step_setup_ssh())
 
   get_stage("deploy") %>%
-    add_step(step_build_pkgdown()) %>%
+    add_step(step_build_pkgdown())
+
+  get_stage("after_deploy") %>%
     add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
 }
 

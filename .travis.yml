@@ -90,7 +90,7 @@ matrix:
          script: R -q -e 'tic::deploy()'
          on:
            all_branches: true
-      after_deploy: R -q -e 'tic::after_deploy()'
+      after_success: R -q -e 'tic::after_deploy()'
       after_script: R -q -e 'tic::after_script()'
     - os: linux
       dist: trusty
