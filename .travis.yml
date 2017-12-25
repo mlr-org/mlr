@@ -29,6 +29,7 @@ r_github_packages:
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
+  - krlmlr/here
 
 jobs:
   include:
