@@ -14,7 +14,7 @@
 * Internal [Jenkins test infrastructure](https://hagakure.cs.ubc.ca:2893/view/mlr/) - only for developers.
 * Install the development version
 
-```splus
+```R
 devtools::install_github("mlr-org/mlr")
 ```
 
@@ -93,8 +93,6 @@ Features
 * Parallelization is built-in
 * Unit-testing
 * Detailed tutorial
-
-
 
 News
 ====
@@ -178,3 +176,27 @@ Just make sure that you have a glance at our [**mlr** coding guidelines](https:/
 
 For everything else the maintainer Bernd Bischl can be reached via [mail](mailto:bernd_bischl@gmx.net).
 He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)
+
+mlr-tutorial
+====
+
+We recently switched from [`mkdocs`](https://github.com/mkdocs/mkdocs) to [`pkgdown`](https://github.com/r-lib/pkgdown).
+With this change, all source files are now located in this repo under `vignettes/tutorial`.
+
+If you want to modify/add a tutorial section, please follow these steps:
+
+1. Open the respective source file, e.g. `task.Rmd`.
+2. Follow the style guide: 
+     - Reference `mlr` functions as <function()>, e.g. `makeLearner()`.
+     - Reference external functions as <package::function()>, e.g. `kernlab::ksvm()`.
+     - Reference other tutorial pages with <vignette("<name_of_vignette")>, e.g. `vignette("bagging")`
+     - Always start a new sentence with a new line. 
+     If you want to insert a paragraph, skip one line.
+     - The most up-level header starts with `##` and is subsequently followed by `###` and `####` etc.
+     - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
+     - Reference images using a code chunk and `knitr::include_graphics("here::here("vignettes/pdf/img/<your_image>"))`. See examples in `resampling.Rmd`, `nested_resampling.Rmd` or `handling_of_spatial_data.Rmd`.
+3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using the `knit` button in RStudio) and see if everything works.
+4. (optional) Add a new section to `.pkgdown.yml`, similar as the already listed ones.
+5. (optional) Add a new section to `/vignettes/tutorial/pdf/pdf_wrapper.Rmd`, similar as the already listed ones.
+
+If you want to open an issue that is related to `mlr-tutorial`, please label it with `tutorial` and mention @jakob-r or @pat-s if you need help.
