@@ -69,7 +69,7 @@ All aggregation schemes are objects of class `Aggregation()` with the function i
 The `$properties` member indicates if predictions (or performance values) on the training or test data sets are required to calculate the aggregation.
 
 You can change the aggregation scheme of a `Measure` (`makeMeasure()`) via function `setAggregation()`. 
-See the tutorial page on resampling (`vignette("resampling")`) for some examples and the `?aggregations()` help page for all available aggregation schemes.
+See the tutorial page on resampling (`vignette("resample")`) for some examples and the `?aggregations()` help page for all available aggregation schemes.
 
 You can construct your own `Measure` (`makeMeasure()`) and `Aggregation()` objects via functions `makeMeasure()`, `makeCostMeasure()`, `makeCustomResampledMeasure()` and `makeAggregation()`.
 Some examples are shown in the following.

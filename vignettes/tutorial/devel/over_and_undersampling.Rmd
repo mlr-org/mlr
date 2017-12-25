@@ -113,7 +113,7 @@ accuracy of the predictions, the *balanced error rate* ([ber](measures.md)) and 
 
 Alternatively, `mlr` also offers the integration of over- and undersampling
 via a wrapper approach (`vignette("wrapper")`). 
-This way over- and undersampling can be applied to already existing learners (`vignette("learners")`) to extend their functionality. 
+This way over- and undersampling can be applied to already existing learners (`vignette("learner")`) to extend their functionality. 
 
 The example given above is repeated once again, but this time with extended
 learners instead of modified tasks (see `makeOversampleWrapper()` and `makeUndersampleWrapper()`).
@@ -177,7 +177,7 @@ iteration (`obw.maxcl = "all"`) or bootstrapped with replacement to increase
 variability between training data sets during iterations (`obw.maxcl = "boot"`).
 
 The construction of the **Overbagging Wrapper** works similar
-to [&makeBaggingWrapper].
+to `makeBaggingWrapper()`.
 First an existing `mlr` learner has to be passed to `makeOverBaggingWrapper()`.
 The number of iterations or fitted models can be set via `obw.iters`.
 

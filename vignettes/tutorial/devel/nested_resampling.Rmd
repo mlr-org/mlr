@@ -38,7 +38,7 @@ In `mlr`, you can get nested resampling for free without programming any looping
 
 1. Generate a wrapped Learner (`makeLearner()`) via function `makeTuneWrapper()` or `makeFeatSelWrapper()`.
    Specify the inner resampling strategy using their `resampling` argument.
-2. Call function `resample()` (see also the section about resampling (`vignette("resampling")`) and pass the outer resampling strategy to its `resampling` argument.
+2. Call function `resample()` (see also the section about resampling (`vignette("resample")`) and pass the outer resampling strategy to its `resampling` argument.
 
 You can freely combine different inner and outer resampling strategies.
 

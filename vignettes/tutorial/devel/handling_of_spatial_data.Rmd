@@ -14,8 +14,6 @@ library("BBmisc")
 library("ParamHelpers")
 ```
 
-[CRAN](https://mlr-org.github.io/mlr/2.11/handling_of_spatial_data.html) | [devel](https://mlr-org.github.io/mlr/devel/handling_of_spatial_data.html)
-
 ## Handling of Spatial Data
 
 ### Introduction

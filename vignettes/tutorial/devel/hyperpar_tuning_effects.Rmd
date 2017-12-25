@@ -73,7 +73,7 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
-As a reminder from the resampling (`vignette("resampling")`) tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
+As a reminder from the resampling (`vignette("resample")`) tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
 
 ```{r gen_data_train}
 ps = makeParamSet(

@@ -45,7 +45,7 @@ Under these circumstances the classifier is expected to work well for a whole ra
 With `mlr` version 2.8 functions `generateROCRCurvesData`, `plotROCRCurves`, and `plotROCRCurvesGGVIS` were deprecated.
 
 Below are some examples that demonstrate the three possible ways.
-Note that you can only use [earners (`vignette("learners")`) that are capable of predicting probabilities.
+Note that you can only use [earners (`vignette("learner")`) that are capable of predicting probabilities.
 Have a look at the  learner table in the Appendix (`vignette("integrated_learners")`) or run `listLearners("classif", properties = c("twoclass", "prob"))` to get a list of all learners that support this.
 
 ### Performance plots with plotROCCurves

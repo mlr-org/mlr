@@ -155,9 +155,9 @@ Most generate interactive `shiny::shiny()` applications, that automatically star
  | `generateThreshVsPerfData()`      | `plotThresVsPerf()`        | `plotThreshVsPerfGGVIS()`     | `vignette("performance")`                                                      |
  |                                   | `plotROCCurves()`          | --                            | `vignette("roc_analysis")`                                                     |
  | `generateCritDifferencesData()`   | `plotCritDifferences()`    | --                            | `vignette("benchmark_experiments")`                                            |
- | `generateHyperParsEffectData()`   | `plotHyperParsEffect()`    |                               | `vignette("tune")`, `vignette("hyperparameter_tuning_effects")`                |
+ | `generateHyperParsEffectData()`   | `plotHyperParsEffect()`    |                               | `vignette("tune")`, `vignette("hyperpar_tuning_effects")`                |
  | `generateFilterValuesData()`      | `plotFilterValues()`       | `plotFilterValuesGGVIS()`     | `vignette("feature_selection")`                                                |
- | `generateLearningCurveData()`     | `plotLearningCurve()`      | `plotLearningCurveGGVIS()`    | `vignette("learning_curve_analysis")`                                          |
+ | `generateLearningCurveData()`     | `plotLearningCurve()`      | `plotLearningCurveGGVIS()`    | `vignette("learning_curve")`                                          |
  | `generatePartialDependenceData()` | `plotPartialDependence()`  | `plotPartialDependenceGGVIS()`| `vignette("partial_dependence")`                                               |
  | `generateFunctionalANOVAData()`   |                            |                               |                                                                                |
  | `generateCalibrationData()`       | `plotCalibration()`        | --                            | `vignette("classifier_calibration")`                                           |

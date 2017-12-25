@@ -150,7 +150,7 @@ listMeasures("multilabel")
 
 ### Resampling
 
-For evaluating the overall performance of the learning algorithm you can do some resampling (`vignette("resampling")`). 
+For evaluating the overall performance of the learning algorithm you can do some resampling (`vignette("resample")`). 
 As usual you have to define a resampling strategy, either via `makeResampleDesc()` or `makeResampleInstance()`. 
 After that you can run the `resample()` function. 
 Below the default measure Hamming loss is calculated.
