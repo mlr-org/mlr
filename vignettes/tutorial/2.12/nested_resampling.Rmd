@@ -19,7 +19,11 @@ library("ggplot2")
 In order to obtain honest performance estimates for a learner all parts of the model building like preprocessing and model selection steps should be included in the resampling, i.e., repeated for every pair of training/test data.
 For steps that themselves require resampling like parameter tuning (`vignette("tune")`) or feature selection (`vignette("feature_selection")`) (via the wrapper approach) this results in two nested resampling loops.
 
-```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Nested Resampling Figure"}
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Nested Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") == "latex"}
+knitr::include_graphics(here::here("vignettes/tutorial/2.12/pdf/img/nested_resampling.png"))
+```
+
+```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Nested Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
 knitr::include_graphics(here::here("vignettes/tutorial/2.12/pdf/img/nested_resampling.png"))
 ```
 

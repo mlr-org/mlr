@@ -24,8 +24,11 @@ The learner is trained on each training set, predictions are made on the corresp
 Then the $B$ individual performance values are aggregated, most often by calculating the mean.
 There exist various different resampling strategies, for example cross-validation and bootstrap, to mention just two popular approaches.
 
-<!-- ![Resampling Figure](pdf/img/resampling.png "Resampling Figure") -->
-```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Resampling Figure"}
+```{r echo=FALSE, out.width = "400pt", fig.align='center', fig.cap="Resampling Figure", eval = knitr::opts_knit$get("rmarkdown.pandoc.to") == "latex"}
+knitr::include_graphics(here::here("vignettes/tutorial/2.12/pdf/img/resampling.png"))
+```
+
+```{r echo=FALSE, out.width = "600px", fig.align='center', fig.cap="Resampling Figure, eval = knitr::opts_knit$get("rmarkdown.pandoc.to") != "latex"}
 knitr::include_graphics(here::here("vignettes/tutorial/2.12/pdf/img/resampling.png"))
 ```
 
