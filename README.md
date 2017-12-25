@@ -180,7 +180,7 @@ He (=me) is sometimes busy, so please use the other channels for appropriate stu
 mlr-tutorial
 ====
 
-We recently switched from [`mkdocs`](https://github.com/mkdocs/mkdocs) to [`pkgdown`](https://github.com/r-lib/pkgdown).
+Since v2.12 we switched from [`mkdocs`](https://github.com/mkdocs/mkdocs) to [`pkgdown`](https://github.com/r-lib/pkgdown).
 With this change, all source files are now located in this repo under `vignettes/tutorial`.
 
 If you want to modify/add a tutorial section, please follow these steps:
@@ -196,6 +196,8 @@ If you want to modify/add a tutorial section, please follow these steps:
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
      - Reference images using a code chunk and `knitr::include_graphics("here::here("vignettes/pdf/img/<your_image>"))`. See examples in `resampling.Rmd`, `nested_resampling.Rmd` or `handling_of_spatial_data.Rmd`.
 3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using the `knit` button in RStudio) and see if everything works.
+This way you can also preview your site. 
+If you want to view the complete `pkgdown` site locally, run `pkgdown::serve_site()`.
 4. (optional) Add a new section to `.pkgdown.yml`, similar as the already listed ones.
 5. (optional) Add a new section to `/vignettes/tutorial/pdf/pdf_wrapper.Rmd`, similar as the already listed ones.
 
