@@ -7,6 +7,12 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+```
+
 # Training a Learner
 
 Training a learner means fitting a model to a given data set.

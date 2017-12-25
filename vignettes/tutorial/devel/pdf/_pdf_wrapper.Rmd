@@ -113,7 +113,7 @@ library("ggplot2")
 ```{r child = '../create_learner.Rmd'}
 ```
 
-```{r child = '../custom_measure.Rmd'}
+```{r child = '../create_measure.Rmd'}
 ```
 
 ```{r child = '../create_imputation.Rmd'}
