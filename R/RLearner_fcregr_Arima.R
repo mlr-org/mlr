@@ -25,7 +25,7 @@ makeRLearner.fcregr.Arima = function() {
       # prediction params
       makeIntegerLearnerParam(id = "h", lower = 0L, upper = Inf,
         # NOTE: object$arma[5] is the frequency of the data
-        default = expression(ifelse(object$arma[5] > 1L, 2L * object$arma[5], 10L)),
+        #default = expression(ifelse(object$arma[5] > 1L, 2L * object$arma[5], 10L)),
         tunable = TRUE,
         when = "predict"),
       makeLogicalLearnerParam(id = "bootstrap", default = FALSE, when = "predict", tunable = FALSE),
@@ -33,7 +33,8 @@ makeRLearner.fcregr.Arima = function() {
       makeLogicalLearnerParam(id = "fan", default = FALSE, when = "predict", tunable = FALSE),
       makeIntegerLearnerParam(id = "npaths", default = 5000L, when = "predict"),
       # simulate params
-      makeIntegerLearnerParam(id = "nsim", lower = 0L, default = expression(length(object$x)), when = "predict"),
+      makeIntegerLearnerParam(id = "nsim", lower = 0L, #, default = expression(length(object$x))
+                              when = "predict"),
       makeIntegerLearnerParam(id = "seed", default = NULL, special.vals = list(NULL), tunable = FALSE, when = "predict"),
       makeLogicalLearnerParam(id = "future", default = TRUE, when = "predict"),
       keys = c("x", "object", "arma")

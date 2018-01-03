@@ -24,8 +24,8 @@ globalVariables("dates")
 #' @param frequency [\code{integer}]\cr
 #' An integer representing the periodicity in the time series. If frequency is declared in the task,
 #' the task frequency will be used.
-#' @param add_dates [\code{logical}]\cr
-#' Whether date variables should be added
+#' @param add_dates [\code{character()}]\cr
+#' A character vector of \code{data.table} date functions used to create date variables
 #' @param na.pad [\code{logical}]\cr
 #' A logical to denote whether the data should be padded to the original size with NAs
 #' @param difference.lag [\code{integer}]\cr
@@ -56,7 +56,7 @@ globalVariables("dates")
 #' forecast(trn, h = 5)
 createLagDiffFeatures = function(obj, target = character(0L), lag = 0L, difference = 0L, difference.lag = 0L,
   cols = NULL, seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
-  seasonal.difference.lag = 0L, frequency = 1L, add_dates = TRUE,
+  seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
   na.pad = FALSE, return.nonlag = FALSE, grouping = NULL, add_var = FALSE, TTR.funcs = NULL, date.col) {
 
   assertIntegerish(lag, lower = 0L, upper = 100000L)
@@ -78,7 +78,7 @@ createLagDiffFeatures = function(obj, target = character(0L), lag = 0L, differen
 createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   lag = 0L, difference = 0L, difference.lag = 0L,
   cols = NULL, seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
-  seasonal.difference.lag = 0L, frequency = 1L, add_dates = TRUE,
+  seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
   na.pad = FALSE, return.nonlag = FALSE, grouping = NULL, add_var = FALSE,
   TTR.funcs = NULL, date.col) {
 
@@ -106,6 +106,8 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
       #seasonal.cols = c(seasonal.cols, target)
       assertSubset(seasonal.cols, work.seasonal.cols)
     x = data[, c(seasonal.cols, grouping), with = FALSE]
+  } else {
+    seasonal.cols = cols
   }
   seasonal.cols = seasonal.cols[!(seasonal.cols %in% grouping)]
   lag.diff.full.names = vector(mode = "character")
@@ -229,22 +231,13 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     }
   }
 
-  if (add_dates) {
-    x[, `:=`(
-      quarter_dt = quarter(date.col) - 1,
-      month_dt = month(date.col) - 1,
-      year_dt = year(date.col) - 2004,
-      yday_dt = yday(date.col) - 1,
-      wday_dt = wday(date.col) - 1,
-      mday_dt = mday(date.col) - 1,
-      isoweek_dt = isoweek(date.col) - 1,
-      week_dt = week(date.col) - 1,
-      hour_dt = hour(date.col)
-    )]
-    lag.diff.full.names = c(lag.diff.full.names, "quarter_dt", "month_dt",
-                            "year_dt", "yday_dt", "wday_dt", "mday_dt", "isoweek_dt",
-                            "week_dt", "hour_dt")
+  if (!missing(add_dates)) {
+    for (date_func in add_dates) {
+      x[, paste0(date_func, "_dt") := get(date_func)(date.col) - min(get(date_func)(date.col))]
+      lag.diff.full.names = c(lag.diff.full.names, paste0(date_func, "_dt"))
+    }
   }
+
   max.shift = 1:(max(lag, seasonal.lag * frequency,
     max(difference, 1) * max(difference.lag, 1),
     max(seasonal.difference * frequency), max( seasonal.difference.lag * frequency)))
@@ -272,7 +265,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
 createLagDiffFeatures.Task = function(obj, target = character(0L),
   lag = 0L, difference = 0L, difference.lag = 0L,
   cols = NULL, seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
-  seasonal.difference.lag = 0L, frequency = 1L, add_dates = TRUE,
+  seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
   na.pad = FALSE, return.nonlag = FALSE, grouping = NULL,
   add_var = FALSE, TTR.funcs = NULL, date.col) {
 

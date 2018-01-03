@@ -40,7 +40,11 @@ updateModel = function(object, task, newdata, subset, weights = NULL, ...) {
     stop("No new data supplied")
   assertClass(task, classes = "Task")
   size = getTaskSize(task)
-  assertDataFrame(newdata, min.rows = 1L)
+  if (class(newdata)[1] != "data.frame") {
+    warningf("Provided data for update is not a pure data.frame but from class %s, hence it will be converted.",  class(data)[1])
+      data = as.data.frame(newdata)
+    }
+
   size = nrow(newdata)
 
   if (missing(subset)) {

@@ -415,7 +415,13 @@ subsetTask = function(task, subset = NULL, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   # Keep functionals here as they are (matrix)
-  task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+  if (!is.null(task$task.desc$pre.proc)) {
+    pre.proc = task$task.desc$pre.proc
+    task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+    task$task.desc$pre.proc = pre.proc
+  } else {
+    task = changeData(task, getTaskData(task, subset, features, functionals.as = "matrix"), getTaskCosts(task, subset), task$weights)
+  }
   if (!is.null(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
@@ -459,8 +465,8 @@ changeData = function(task, data, costs, weights) {
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$is.spatial),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
-    "fcregr" = makeForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$frequency, td$is.spatial),
-    "mfcregr" = makeMultiForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$frequency, td$is.spatial)
+    "fcregr" = makeForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$is.spatial, td$frequency, td$dates),
+    "mfcregr" = makeMultiForecastRegrTaskDesc(td$id, data, td$target, td$weights, td$blocking, td$is.spatial, td$frequency, td$dates)
   )
 
   return(task)

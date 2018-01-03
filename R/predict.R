@@ -83,7 +83,9 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     truth = newdata[, t.col, drop = TRUE]
     if (is.list(truth))
       truth = data.frame(truth)
-    newdata = newdata[, -t.col, drop = FALSE]
+     if (learner$type != "fcregr") {
+      newdata = newdata[, -t.col, drop = FALSE]
+     }
   } else {
     truth = NULL
   }

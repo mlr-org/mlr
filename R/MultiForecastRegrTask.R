@@ -11,7 +11,6 @@ makeMultiForecastRegrTask = function(id = deparse(substitute(data)), data, targe
   check.data = TRUE) {
 
   assertString(id)
-  assertClass(data,"data.frame")
   assertString(target)
   assertChoice(target, c("all", colnames(data)))
   assertInteger(frequency, lower = 0L, max.len = 1L)
@@ -20,6 +19,18 @@ makeMultiForecastRegrTask = function(id = deparse(substitute(data)), data, targe
 
 
   is.target.all = target == "all"
+  if (class(data)[1] != "data.frame") {
+    warningf("Provided data for task is not a pure data.frame but from class %s, hence it will be converted.",  class(data)[1])
+    if (class(data)[1] == "xts") {
+      date.vals = index(data)
+      data = as.data.frame(data)
+      data[["dates"]] = date.vals
+      date.col = "dates"
+    } else {
+      data = as.data.frame(data)
+    }
+  }
+  assertDataFrame(data)
   # Need to check that dates
   # 1. Exist
   # 2. Are unique
@@ -87,7 +98,7 @@ print.MultiForecastRegrTask = function(x, print.weights = TRUE, ...) {
   catf("Type: %s", td$type)
   catf("Target: %s", stri_paste(td$target, collapse = " "))
   catf("Observations: %i", td$size)
-  catf("Dates:\n Start: %s \n End:   %s", td$dates[1], td$dates[length(td$dates)])
+  catf("Dates:\n Start: %s \n End:   %s", td$dates[1,], td$dates[nrow(td$dates),])
   catf("Frequency: %i", td$frequency)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse = "\n"))

@@ -10,13 +10,24 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   check.data = TRUE) {
 
   assertString(id)
-  assertClass(data, "data.frame")
   assertString(target)
   assertString(date.col)
   frequency = asCount(frequency)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
+  if (class(data)[1] != "data.frame") {
+    warningf("Provided data for task is not a pure data.frame but from class %s, hence it will be converted.",  class(data)[1])
+    if (class(data)[1] == "xts") {
+      date.vals = index(data)
+      data = as.data.frame(data)
+      data[["dates"]] = date.vals
+      date.col = "dates"
+    } else {
+      data = as.data.frame(data)
+    }
+  }
+  assertDataFrame(data)
   # Need to check that dates
   # 1. Exist
   # 2. Are unique
