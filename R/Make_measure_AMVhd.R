@@ -42,7 +42,7 @@
 #'
 #' # create train and test sets
 #' library(BBmisc)
-#' inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+#' inds.split = BBmisc::chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
 #' train.inds = inds.split[[1]]
 #' test.inds = inds.split[[2]]
 #'
@@ -96,7 +96,7 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
       if (length(test.inds) == 0) stop("Pass argument subset in the train model.")
 
       if (model$learner$id %nin% listLearners(task)$class) {
-        lrn.id = substr(model$learner$id, 1, nchar(model$learner$id) - 6)
+        lrn.id = gsub(".AMVhd", "",model$learner$id)
       } else {
         lrn.id = model$learner$id
       }
