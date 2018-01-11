@@ -19,6 +19,7 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
+
 addons:
   apt:
     sources:
