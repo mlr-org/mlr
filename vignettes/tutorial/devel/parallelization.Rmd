@@ -1,6 +1,9 @@
 ---
 # title: "Parallelization"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
 vignette: >
   %\VignetteIndexEntry{mlr}
   %\VignetteEngine{knitr::rmarkdown}
