@@ -10,17 +10,7 @@ env:
     - _R_CHECK_TESTS_NLINES_=999
     - R_MAX_NUM_DLLS=999
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
-    - WARMUPPKGS='roxygen2 mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
-
-addons:
-  apt:
-    packages:
-      - libgmp-dev
-      - libgsl0-dev
-
-
-warnings_are_errors: true
-r_check_args: "--as-cran --run-donttest"
+    - NO_BINARIES='mlrMBO mldr C50 class cluster h2o GPfit mldr rotationForest RRF rknn rotationForest' # packages which are not available as binaries in c2d4u ppa
 
 r_github_packages:
   - berndbischl/BBmisc
@@ -29,42 +19,152 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
-jobs:
-  include:
-    - stage: warmup-1
-      install:
-        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-        - Rscript -e 'devtools::install_deps()'
-        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-      script: true
-    - stage: warmup-2
-      install:
-        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-      script: true
-    - stage: check
-      before_script:
-        - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-        - R --no-save <<< 'library("devtools"); document()'
-      script:
-        - R CMD build .
-        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-      after_script:
-        - ../../travis-tool.sh dump_logs
-      after_success:
-        - git checkout master
-        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-        - R --no-save <<< 'library("devtools"); document()'
-        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-        - git config user.name $GN
-        - git config user.email $GM
-        - git config credential.helper "store --file=.git/credentials"
-        - echo "https://$GT:@github.com" >> .git/credentials
-        - git config push.default matching
-        - git add --force man/*
-        - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
-        - git push
-        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:marutter/rrutter'
+      - sourceline: 'ppa:marutter/c2d4u'
+    packages:
+      - libgmp-dev
+      - libgsl0-dev
+
+      - r-cran-ada
+      - r-cran-adabag
+      - r-cran-bartmachine
+      - r-cran-batchtools
+      - r-cran-brnn
+      - r-cran-bst
+      - r-cran-care
+      - r-cran-caret
+      - r-cran-checkmate
+      - r-cran-clue
+      - r-cran-clustersim
+      - r-cran-clvalid
+      - r-cran-cmaes
+      - r-cran-coxboost
+      - r-cran-crs
+      - r-cran-cubist
+      - r-cran-data.table
+      - r-cran-deepnet
+      - r-cran-devtools
+      - r-cran-dicekriging
+      - r-cran-diceoptim
+      - r-cran-discriminer
+      - r-cran-dplyr
+      - r-cran-e1071
+      - r-cran-earth
+      - r-cran-elasticnet
+      - r-cran-elmnn
+      - r-cran-emoa
+      - r-cran-evtree
+      - r-cran-extratrees
+      - r-cran-fda.usc
+      - r-cran-fdboost
+      - r-cran-flare
+      - r-cran-fields
+      - r-cran-fnn
+      - r-cran-fpc
+      - r-cran-frbs
+      - r-cran-fselector
+      - r-cran-gbm
+      - r-cran-gensa
+      - r-cran-ggplot2
+      - r-cran-ggvis
+      - r-cran-glmnet
+      - r-cran-hmisc
+      - r-cran-igraph
+      - r-cran-ipred
+      - r-cran-irace
+      - r-cran-kernlab
+      - r-cran-kknn
+      - r-cran-klar
+      - r-cran-knitr
+      - r-cran-lagp
+      - r-cran-mass
+      - r-cran-mboost
+      - r-cran-mco
+      - r-cran-mda
+      - r-cran-mlbench
+      - r-cran-modeltools
+      - r-cran-mrmre
+      - r-cran-nnet
+      - r-cran-nodeharvest
+      - r-cran-neuralnet
+      - r-cran-numderiv
+      - r-cran-pamr
+      - r-cran-pander
+      - r-cran-party
+      - r-cran-penalized
+      - r-cran-pls
+      - r-cran-pmcmr
+      - r-cran-purrr
+      - r-cran-randomforestsrc
+      - r-cran-ranger
+      - r-cran-rcurl
+      - r-cran-refund
+      - r-cran-rex
+      - r-cran-rfast
+      - r-cran-rferns
+      - r-cran-rjson
+      - r-cran-rmarkdown
+      - r-cran-robustbase
+      - r-cran-rocr
+      - r-cran-roxygen2
+      - r-cran-rpart
+      - r-cran-rrlda
+      - r-cran-rsm
+      - r-cran-rsnns
+      - r-cran-rweka
+      - r-cran-rwekajars
+      - r-cran-r.utils
+      - r-cran-sda
+      - r-cran-shiny
+      - r-cran-smoof
+      - r-cran-sparselda
+      - r-cran-stepplr
+      - r-cran-stringi
+      - r-cran-survauc
+      - r-cran-survival
+      - r-cran-swarmsvm
+      - r-cran-svglite
+      - r-cran-testthat
+      - r-cran-tgp
+      - r-cran-th.data
+      - r-cran-wavelets
+      - r-cran-xgboost
+      - r-cran-xml
+      - r-cran-xml2
+
+warnings_are_errors: true
+r_check_args: "--as-cran --run-donttest"
+
+# install packages via install.packages()' that are not available as binaries in cd24u ppa
+before_install:
+  - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("NO_BINARIES"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
+before_script:
+  - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+  - R --no-save <<< 'library("devtools"); document()'
+script:
+  - R CMD build .
+  - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+  - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+after_script:
+  - ../../travis-tool.sh dump_logs
+after_success:
+  - git checkout master
+  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+  - R --no-save <<< 'library("devtools"); document()'
+  - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+  - git config user.name $GN
+  - git config user.email $GM
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://$GT:@github.com" >> .git/credentials
+  - git config push.default matching
+  - git add --force man/*
+  - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
+  - git push
+  - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
 
 notifications:
   email:
