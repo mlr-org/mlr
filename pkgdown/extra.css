@@ -20,7 +20,7 @@ code, kbd, pre, samp {
 
 /* Custom width and font size for navbar */
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
-    max-width: 1065px;
+    max-width: 1150px;
     font-size: 13px;
     border-color: #121212;
 }
