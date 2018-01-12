@@ -11,11 +11,9 @@ code, kbd, pre, samp {
     font-family: 'Fira Code', monospace;
 }
 
-/* Static header placement on mobile devices */
-@media (max-width: 767px) {
-  .navbar-fixed-top {
-    position: absolute;
-  }
+/* this shifts the github icon a little to the right so that the search button does not get shifted into a new line */
+.navbar-nav>li>a {
+    padding-left: 10px;
 }
 
 /* Custom width and font size for navbar */
