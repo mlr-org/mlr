@@ -1,11 +1,26 @@
 @import url(https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css);
 @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i);
 
 body {
-  font-family: 'Droid Serif', serif;
+  font-family: 'Fira Sans', sans-serif;
   font-size: 16px;
 }
 
 code, kbd, pre, samp {
     font-family: 'Fira Code', monospace;
+}
+
+/* Static header placement on mobile devices */
+@media (max-width: 767px) {
+  .navbar-fixed-top {
+    position: absolute;
+  }
+}
+
+/* Custom width and font size for navbar */
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    max-width: 1065px;
+    font-size: 13px;
+    border-color: #121212;
 }
