@@ -1,6 +1,11 @@
 @import url(https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
 
 body {
-  font-family: 'Fira Sans', serif;
-  font-size: 16;
+  font-family: 'Droid Serif', serif;
+  font-size: 16px;
+}
+
+code, kbd, pre, samp {
+    font-family: 'Fira Code', monospace;
 }
