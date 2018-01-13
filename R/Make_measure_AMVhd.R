@@ -89,7 +89,7 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
       n.sim = extra.args[[2]]
       amv.iters = extra.args[[3]]
       amv.feats = extra.args[[4]]
-      n.alpha = n.alpha[[5]]
+      n.alpha = extra.args[[5]]
       measure.amv = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       data = getTaskData(task, target.extra = TRUE)$data
