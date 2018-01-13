@@ -63,6 +63,7 @@ tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, con
     TuneMultiCritControlRandom = tuneMultiCritRandom,
     TuneMultiCritControlGrid = tuneMultiCritGrid,
     TuneMultiCritControlNSGA2 = tuneMultiCritNSGA2,
+    TuneMultiCritControlMBO = tuneMBO,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
   opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = getMlrOption("on.error.dump"))

@@ -5,7 +5,8 @@
 \alias{print.ConfusionMatrix}
 \title{Confusion matrix.}
 \usage{
-calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE)
+calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE,
+  set = "both")
 
 \method{print}{ConfusionMatrix}(x, both = TRUE, digits = 2, ...)
 }
@@ -17,8 +18,14 @@ Prediction object.}
 If \code{TRUE} two additional matrices are calculated. One is normalized by rows and one by
 columns.}
 
-\item{sums}{{\code{logical(1)}}\cr
+\item{sums}{[\code{logical(1)}]\cr
 If \code{TRUE} add absolute number of observations in each group.}
+
+\item{set}{[\code{character(1)}]\cr
+Specifies which part(s) of the data are used for the calculation.
+If \code{set} equals \code{train} or \code{test}, the \code{pred} object must be the result of a
+resampling, otherwise an error is thrown.
+Defaults to \dQuote{both}. Possible values are \dQuote{train}, \dQuote{test}, or \dQuote{both}.}
 
 \item{x}{[\code{\link{ConfusionMatrix}}]\cr
 Object to print.}
