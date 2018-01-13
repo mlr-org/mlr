@@ -33,8 +33,9 @@ Authors@R: c(
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
-    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"))
-    person("Minh-Anh", "Le", email = "minh-anh.le@cdtm.de", role = "ctb")
+    person("Minh Anh", "Le", email = "minh-anh.le@cdtm.de", role = "ctb"),
+    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb")
+    )
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
