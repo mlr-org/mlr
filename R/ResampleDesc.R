@@ -78,7 +78,7 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "OCHoldout", "OCCV", "OCRepCV", "OCSubsample", "OCBootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "SpCV", "SpRepCV", "OCHoldout", "OCCV", "OCRepCV", "OCSubsample", "OCBootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -122,6 +122,11 @@ makeResampleDescHoldout = function(iters, split = 2 / 3) {
 makeResampleDescCV = function(iters = 10L) {
   iters = asInt(iters, lower = 2L)
   makeResampleDescInternal("cross-validation", iters = iters)
+}
+
+makeResampleDescSpCV = function(iters = 10L) {
+  iters = asInt(iters, lower = 2L)
+  makeResampleDescInternal("spatial cross-validation", iters = iters)
 }
 
 makeResampleDescLOO = function() {
@@ -174,6 +179,12 @@ makeResampleDescOCRepCV = function(reps = 10L, folds = 10L) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
   makeResampleDescInternal("repeated cross-validation for oneclass-classification", iters = folds * reps, folds = folds, reps = reps)
+}
+
+makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
+  reps = asInt(reps, lower = 2L)
+  folds = asInt(folds, lower = 2L)
+  makeResampleDescInternal("repeated spatial cross-validation", iters = folds * reps, folds = folds, reps = reps)
 }
 
 ##############################################################################################

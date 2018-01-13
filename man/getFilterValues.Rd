@@ -35,7 +35,9 @@ For a list of features, use \code{\link{listFilterMethods}}.
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
+  \code{\link{makeFilter}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 
@@ -52,7 +54,9 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
+  \code{\link{makeFilter}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 }

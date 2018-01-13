@@ -15,7 +15,7 @@
 NULL
 
 
-makeResamplePrediction = function(instance, preds.test, preds.train) {
+makeResamplePrediction = function(instance, preds.test, preds.train, task.desc) {
   tenull = sapply(preds.test, is.null)
   trnull = sapply(preds.train, is.null)
   if (any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
@@ -40,7 +40,7 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
     predict.type = p1$predict.type,
     data = data,
     threshold = p1$threshold,
-    task.desc = p1$task.desc,
+    task.desc = task.desc,
     time = extractSubList(pall, "time")
   )
 }
