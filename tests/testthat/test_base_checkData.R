@@ -46,6 +46,22 @@ test_that("checkData", {
   colnames(df)[1] = "aaa"
   expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 
+  # check costiris.task has costs
+  expect_equal(nrow(getTaskData(costiris.task)), nrow(getTaskCosts(costiris.task)))
+})
+
+test_that("changeData . getTaskData is a noop on builtin tasks", {
+  # We expect changeData(task, getTaskData(task, ...)) to not change task.
+  # If it does, it means that the internal format of task or task.desc has
+  # changed, and that the data needs to be re-generated.
+  pkgdata = data(package = "mlr")$results[, "Item"]
+  tasknames = grep("\\.task$", pkgdata, value = TRUE)
+  for (task in tasknames) {
+    taskdata = get(task)
+    changeddata = changeData(taskdata, getTaskData(taskdata, functionals.as = "matrix"))
+    expect_equal(taskdata, changeddata)
+  }
+
   # check missing target column
   expect_error(makeOneClassTask(data = oneclass.df, positive = "FALSE", negative = "normal"), "argument \"target\" is missing, with no default")
   expect_error(makeOneClassTask(data = oneclass.df, target = "Anomaly", positive = "FALSE", negative = "TRUE"), "Assertion on 'Anomaly' failed: Must be of type 'factor', not 'NULL'.")

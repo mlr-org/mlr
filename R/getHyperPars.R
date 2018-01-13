@@ -14,7 +14,6 @@
 #' @family learner
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
-  assertClass(learner, classes = "Learner")
   assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }

@@ -17,9 +17,9 @@ The task. If this is passed, data from this task is predicted.}
 New observations which should be predicted.
 Pass this alternatively instead of \code{task}.}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
+\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
 Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+By default (\code{NULL}) all observations are used.}
 
 \item{...}{[any]\cr
 Currently ignored.}

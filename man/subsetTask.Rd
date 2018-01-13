@@ -10,9 +10,9 @@ subsetTask(task, subset = NULL, features)
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
+\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
 Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+By default (\code{NULL}) all observations are used.}
 
 \item{features}{[\code{character} | \code{integer} | \code{logical}]\cr
 Vector of selected inputs. You can either pass a character vector with the

@@ -8,8 +8,7 @@
 makeTuneControlMBO(same.resampling.instance = TRUE, impute.val = NULL,
   learner = NULL, mbo.control = NULL, tune.threshold = FALSE,
   tune.threshold.args = list(), continue = FALSE, log.fun = "default",
-  final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE,
-  mbo.design = NULL)
+  final.dw.perc = NULL, budget = NULL, mbo.design = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -72,10 +71,6 @@ Default is \code{NULL} which will not change anything.}
 
 \item{budget}{[\code{integer(1)}]\cr
 Maximum budget for tuning. This value restricts the number of function evaluations.}
-
-\item{mbo.keep.result}{[\code{logical(1)}] \cr
-Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
-Default is \code{FALSE}.}
 
 \item{mbo.design}{[\code{data.frame} | \code{NULL}]\cr
 Initial design as data frame.
