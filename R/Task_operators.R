@@ -457,7 +457,7 @@ changeData = function(task, data, costs, weights) {
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "oneclass" = makeOneClassTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$negative),
+    "oneclass" = makeOneClassTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$negative, td$is.spatial),
     "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$is.spatial),
     "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$is.spatial),
