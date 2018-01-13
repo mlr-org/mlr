@@ -1,4 +1,4 @@
-makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data, spatial) {
+makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data, spatial = FALSE) {
   task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data, spatial = spatial)
 
   if (check.data) {
