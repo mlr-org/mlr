@@ -162,9 +162,11 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   n.show = min(n.show, max(sapply(methods, function(x) sum(!is.na(data[[x]])))))
   data = melt(as.data.table(data), id.vars = c("name", "type"), variable = "method")
 
-  if (sort != "none")
-    data = do.call(rbind, lapply(methods, function(x)
-      head(sortByCol(data[data$method == x, ], "value", (sort == "inc")), n.show)))
+  if (sort != "none") {
+    sort.mult = if (sort == "inc") 1 else -1
+    setorderv(data, "value", sort.mult)
+    data = data[get("method") %in% methods, head(.SD, n.show), by = "method"]
+  }
 
   data$name = factor(data$name, levels = as.character(unique(data$name)))
   if (feat.type.cols)
