@@ -13,18 +13,20 @@
 #'   Note that when you have trafos on some of your params, \code{x} will always be
 #'   on the TRANSFORMED scale so you directly use it.}
 #' \item{y [\code{matrix}]}{Pareto front for \code{x}.}
+#' \item{threshold}{Currently \code{NULL}.}
 #' \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.
 #'   Note that when you have trafos on some of your params, the opt.path always contains the
 #'   UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to
 #'   transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
+#' \item{ind [\code{integer(n)}]}{Indices of Pareto optimal params in \code{opt.path}.}
 #' \item{measures [(list of) \code{\link{Measure}}]}{Performance measures.}
 #' }
 #' @name TuneMultiCritResult
 #' @rdname TuneMultiCritResult
 NULL
-makeTuneMultiCritResult = function(learner, ind, x, y, control, opt.path, measures) {
+makeTuneMultiCritResult = function(learner, ind, x, y, control, opt.path, measures, ...) {
   # set threshold to NULL, we can not currently tune for it in an MCO way
-  or = makeOptResult(learner, control, x, y, NULL, opt.path, "TuneMultiCritResult")
+  or = makeOptResult(learner, control, x, y, NULL, opt.path, "TuneMultiCritResult", ...)
   or$ind = ind
   or$measures = measures
   return(or)

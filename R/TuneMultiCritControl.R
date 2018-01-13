@@ -11,6 +11,8 @@
 #'   \item{makeTuneMultiCritControlNSGA2}{Evolutionary method \code{\link[mco]{nsga2}}.
 #'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #'     For integers the internally proposed numeric values are automatically rounded.}
+#'   \item{makeTuneMultiCritControlMBO}{Model-based/ Bayesian optimization. All kinds of
+#'     parameter types can be handled.}
 #' }
 #'
 #' @inheritParams TuneControl
@@ -20,17 +22,20 @@
 #'   must be identical to the size of the grid. For
 #'   \code{makeTuneMultiCritControlRandom} the \code{budget} equals the number
 #'   of iterations (\code{maxit}) performed by the random search algorithm.
-#'   And in case of \code{makeTuneMultiCritControlNSGA2} the \code{budget}
+#'   In case of \code{makeTuneMultiCritControlNSGA2} the \code{budget}
 #'   corresponds to the product of the maximum number of generations
 #'   (\code{max(generations)}) + 1 (for the initial population) and the size of
-#'   the population (\code{popsize}).
+#'   the population (\code{popsize}). For \code{makeTuneMultiCritControlMBO} the
+#'   \code{budget} equals the number of objective function evaluations, i.e. the
+#'   number of MBO iterations + the size of the initial design. If not \code{NULL},
+#'   this will overwrite existing stopping conditions in \code{mbo.control}.
 #' @return [\code{\link{TuneMultiCritControl}}]. The specific subclass is one of
 #'   \code{\link{TuneMultiCritControlGrid}}, \code{\link{TuneMultiCritControlRandom}},
-#'   \code{\link{TuneMultiCritControlNSGA2}}.
+#'   \code{\link{TuneMultiCritControlNSGA2}}, \code{\link{TuneMultiCritControlMBO}}.
 #' @family tune_multicrit
 #' @name TuneMultiCritControl
 #' @rdname TuneMultiCritControl
-#' @aliases TuneMultiCritControlGrid TuneMultiCritControlRandom TuneMultiCritControlNSGA2
+#' @aliases TuneMultiCritControlGrid TuneMultiCritControlRandom TuneMultiCritControlNSGA2 TuneMultiCritControlMBO
 NULL
 
 makeTuneMultiCritControl = function(measures, same.resampling.instance,
