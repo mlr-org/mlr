@@ -14,7 +14,7 @@
 #' @param amv.iters [\code{numeric}] \cr
 #' Number of subsamples.
 #' Default is 50.
-#' @note the ID of the learner have to to be to the default character!
+#' @note the ID of the learner have to to be the default id!
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
@@ -72,8 +72,7 @@
 #' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
 #' task = task, feats = data[test.inds, 1:9])
 
-
-makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e3, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertNumeric(alphas, lower = 0, upper = 1)
@@ -82,13 +81,15 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
   assertString(name)
   assertString(note)
 
-  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, n.sim),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas = alphas, n.sim = n.sim, amv.iters = amv.iters, amv.feats = amv.feats, n.alpha = n.alpha),
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
       alphas = extra.args[[1]]
       n.sim = extra.args[[2]]
-
+      amv.iters = extra.args[[3]]
+      amv.feats = extra.args[[4]]
+      n.alpha = n.alpha[[5]]
       measure.amv = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       data = getTaskData(task, target.extra = TRUE)$data

@@ -94,7 +94,9 @@ test_that("ber with faulty model produces NA", {
 })
 
 test_that("db with single cluster doesn't give warnings", {
-  expect_warning(crossval("cluster.kmeans", agri.task), NA)
+  # using mtcars instead of agri task here because agri conflicts with
+  # warning when column names inherit 'x' or 'y'
+  expect_warning(crossval("cluster.kmeans", mtcars.task), NA)
 })
 
 test_that("mcc is implemented correctly", { # see issue 363

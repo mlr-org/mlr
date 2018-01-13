@@ -342,6 +342,20 @@ getTaskData = function(task, subset = NULL, features, target.extra = FALSE, reco
     if (recode.target %nin% c("no", "surv")) {
       res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
+    # first condition checks if 'getTaskData' was called directly, i.e. checks if
+    # the call was from the GlobalEnv
+    # second condition checks which function called 'getTaskData' if call was not
+    # from the GlobalEnv. If cond2 is FALSE, 'getTaskData' was called from
+    # 'subsetTask' in a nested resampling call. In this case we remove x and y
+    # later (later = we arrive in 'getTaskData' twice in a 'resample' call) as
+    # we still need it for partitioning in upcoming function calls and only need
+    # to remove `x` and `y` before we proceed to the training step.
+    if (!identical(parent.frame(n = 1), globalenv()) &&
+        !sys.call(-2) == "subsetTask(.task, .subset)" &&
+        task$task.desc$is.spatial == TRUE) {
+      res$x = NULL
+      res$y = NULL
+    }
   }
   res
 }
@@ -382,6 +396,7 @@ getTaskCosts.Task = function(task, subset = NULL) {
   NULL
 }
 
+#' @export
 getTaskCosts.CostSensTask = function(task, subset = NULL) {
   subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
   getTaskDesc(task)$costs[subset, , drop = FALSE]
@@ -416,6 +431,19 @@ subsetTask = function(task, subset = NULL, features) {
 
 
 # we create a new env, so the reference is not changed
+#' Change Task Data
+#'
+#' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
+#'
+#' @template arg_task
+#' @param data [\code{data.frame}]\cr
+#'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
+#' @param costs [\code{data.frame}\cr
+#'   Optional: cost matrix.
+#' @param weights [\code{numeric}]\cr
+#'   Optional: weight vector.
+#' @keywords internal
+#' @export
 changeData = function(task, data, costs, weights) {
   if (missing(data))
     data = getTaskData(task)
@@ -430,12 +458,12 @@ changeData = function(task, data, costs, weights) {
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
     "oneclass" = makeOneClassTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$negative),
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$is.spatial),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$is.spatial),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$is.spatial),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$is.spatial)
   )
 
   return(task)

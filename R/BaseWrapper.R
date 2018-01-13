@@ -1,3 +1,22 @@
+#' Exported for internal use only.
+#' @param id [\code{character(1)}]\cr
+#'   Id string for object. Used to display object.
+#' @param type [\code{character(1)}]\cr
+#'   Learner type.
+#' @param next.learner [\code{Learner}]\cr
+#'   Learner to wrap.
+#' @param package [\code{character}]\cr
+#'   Packages to load when loading learner.
+#' @param par.set [\code{ParamSet}]\cr
+#'   Parameter set.
+#' @param par.vals [\code{list}]\cr
+#'   Optional list of named (hyper)parameter values.
+#' @param learner.subclass [\code{character}]\cr
+#'   Class to assign the new object.
+#' @param model.subclass [\code{character}]\cr
+#'   Class to assign learner models.
+#' @keywords internal
+#' @export
 makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals = list(), learner.subclass, model.subclass) {
   if (inherits(next.learner, "OptWrapper") && is.element("TuneWrapper", learner.subclass))

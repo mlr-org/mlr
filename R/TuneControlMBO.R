@@ -20,9 +20,6 @@
 #' @param mbo.control [\code{\link[mlrMBO]{MBOControl}} | \code{NULL}]\cr
 #'   Control object for model-based optimization tuning.
 #'   For the default, \code{NULL}, the control object will be created with all the defaults as described in \code{\link[mlrMBO]{makeMBOControl}}.
-#' @param mbo.keep.result [\code{logical(1)}] \cr
-#'    Should the \code{\link[mlrMBO]{MBOSingleObjResult}} be stored in the result?
-#'    Default is \code{FALSE}.
 #' @param mbo.design [\code{data.frame} | \code{NULL}]\cr
 #'   Initial design as data frame.
 #'   If the parameters have corresponding trafo functions,
@@ -35,7 +32,7 @@
 #' @export
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
   learner = NULL, mbo.control = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
+  continue = FALSE, log.fun = "default", final.dw.perc = NULL, budget = NULL, mbo.design = NULL) {
 
   if (!is.null(learner)) {
     learner = checkLearner(learner, type = "regr")
@@ -46,7 +43,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   }
   assertClass(mbo.control, "MBOControl")
   assertFlag(continue)
-  assertFlag(mbo.keep.result)
 
   if (!is.null(budget) && !is.null(mbo.design) && nrow(mbo.design) > budget)
     stopf("The size of the initial design (init.design.points = %i) exceeds the given budget (%i).",
@@ -61,7 +57,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   x$learner = learner
   x$mbo.control = mbo.control
   x$continue = continue
-  x$mbo.keep.result = mbo.keep.result
   x$mbo.design = mbo.design
   return(x)
 }
