@@ -12,7 +12,7 @@ This doc page exists, as we added additional uncertainty estimation functionalit
 Currently implemented methods are:
 
 \itemize{
-\item If \code{se.method = "jackknife"}, the default, the standard error of a prediction
+\item If \code{se.method = "jackknife"} the standard error of a prediction
   is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between
   the prediction made by only using trees which did not contain said observation and
   the ensemble prediction.
@@ -25,7 +25,7 @@ Currently implemented methods are:
   which is less computationally expensive. A Monte-Carlo bias correction may make the latter option
   prefarable in many cases. Defaults are \code{se.boot = 50} and \code{se.ntree = 100}.
 
-\item If \code{se.method = "sd"}, the standard deviation of the predictions across trees is
+\item If \code{se.method = "sd"}, the default, the standard deviation of the predictions across trees is
   returned as the variance estimate.
   This can be computed quickly but is also a very naive estimator.
 }

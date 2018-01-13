@@ -1,6 +1,15 @@
 # props checks if Learner has one or more properties specified in props as a
 # character vector.
 
+#' Exported for internal use only.
+#' @param learner [\code{\link{Learner}} | \code{character(1)}]\cr
+#'   The learner to check, or the name of the learner to create
+#' @param type [\code{character(1)}]\cr
+#'   What type of learner to require.
+#' @param props [\code{character(1)}]\cr
+#'   What properties to require.
+#' @keywords internal
+#' @export
 checkLearner = function(learner, type = NULL, props = NULL) {
   if (is.character(learner))
     learner = makeLearner(learner)

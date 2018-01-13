@@ -362,7 +362,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           regr.task = makeRegrTask(id = "interp", data = d.run[, c(x, y, z)],
             target = z)
           mod = train(lrn, regr.task)
-          prediction = predict(mod, newdata = grid)
+          prediction = predict(mod, newdata = grid[c(x, y)])
           grid[, z] = prediction$data[, prediction$predict.type]
           grid$learner_status = "Interpolated Point"
           grid$iteration = NA
