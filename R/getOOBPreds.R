@@ -24,7 +24,7 @@
 #' performance(oob, measures = list(auc, mmce))
 getOOBPreds = function(model, task) {
   assertClass(model, classes = "WrappedModel")
-  checkTask(task, task.type = c("classif", "regr", "surv"))
+  checkTask(task, task.type = c("oneclass", "classif", "regr", "surv"))
   checkModelCorrespondsTask(model, task)
 
   td = model$task.desc

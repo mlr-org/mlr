@@ -178,6 +178,14 @@ makePrediction.ClusterTaskDesc = function(task.desc, row.names, id, truth, predi
 }
 
 #' @export
+makePrediction.OneClassTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+  # we simply inherit from PredictionClassif, as structure is the same
+  p = makePrediction.ClassifTaskDesc(task.desc, row.names, id, truth, predict.type, predict.threshold, y, time, error, dump)
+  addClasses(p, "PredictionOneClass")
+}
+
+
+#' @export
 makePrediction.CostSensTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
   data = namedList(c("id", "response"))
   data$id = id

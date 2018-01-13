@@ -51,7 +51,7 @@
 #' print(calculateConfusionMatrix(r$pred))
 
 calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = "both") {
-  checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE)
+  checkPrediction(pred, task.type = c("oneclass", "classif"), check.truth = TRUE, no.na = TRUE)
   assertFlag(relative)
   assertFlag(sums)
   n = getTaskSize(pred$task.desc)

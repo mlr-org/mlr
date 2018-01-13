@@ -70,6 +70,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   learner = checkLearner(learner)
   assert(
+    checkClass(task, "OneClassTask"),
     checkClass(task, "ClassifTask"),
     checkClass(task, "RegrTask"),
     checkClass(task, "ClusterTask")
@@ -86,8 +87,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type %in% c("classif", "cluster") && taskdim != 2L)
-    stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
+  if (td$type %in% c("oneclass", "classif", "cluster") && taskdim != 2L)
+    stopf("(One-class) Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
   if (td$type == "regr" && taskdim %nin% 1:2)
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
@@ -160,7 +161,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   pred.grid = predict(mod, newdata = grid)
   grid[, target] = pred.grid$data$response
 
-  if (td$type == "classif") {
+  if (td$type %in% c("classif", "oneclass")) {
     data$.err = if (err.mark == "train")
       y != yhat
     else if (err.mark == "cv")

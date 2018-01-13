@@ -38,6 +38,7 @@
 #'     \item{surv}{Is the measure applicable for survival?}
 #'     \item{cluster}{Is the measure applicable for cluster?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
+#'     \item{oneclass}{Is the measure applicable for one-class classification learning?}
 #'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
 #'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
 #'     \item{req.task}{Is task object required in calculation? Usually not the case}
@@ -124,6 +125,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #' Get the default measure for a task type, task, task description or a learner.
 #' Currently these are:
 #'  \tabular{ll}{
+#'    oneclass    \tab f1 \cr
 #'    classif     \tab mmce\cr
 #'    regr        \tab mse\cr
 #'    cluster     \tab db\cr
@@ -131,7 +133,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    costsens    \tab mcp\cr
 #'    multilabel  \tab multilabel.hamloss\cr
 #' }
-#'
+#' Note: default measure f1 for one-class classification is an adhoc solution and not the optimal measurement for unsupervised learning.
 #' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
 #'  Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
 #' @return [\code{\link{Measure}}].
@@ -148,6 +150,7 @@ getDefaultMeasure = function(x) {
   else
     x
   switch(type,
+    oneclass = f1,
     classif = mmce,
     cluster = db,
     regr = mse,

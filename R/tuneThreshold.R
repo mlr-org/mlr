@@ -27,7 +27,7 @@
 #' @family tune
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
-  checkPrediction(pred, task.type = c("classif", "multilabel"), predict.type = "prob")
+  checkPrediction(pred, task.type = c("oneclass", "classif", "multilabel"), predict.type = "prob")
   td = pred$task.desc
   ttype = td$type
   measure = checkMeasures(measure, td)[[1L]]

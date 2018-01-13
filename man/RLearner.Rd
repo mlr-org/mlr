@@ -14,6 +14,7 @@
 \alias{makeRLearnerSurv}
 \alias{makeRLearnerCluster}
 \alias{makeRLearnerCostSens}
+\alias{makeRLearnerOneClass}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
@@ -41,14 +42,19 @@ makeRLearnerCluster(cl, package, par.set, par.vals = list(),
 makeRLearnerCostSens(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
   callees = character(0L))
+
+makeRLearnerOneClass(cl, package, par.set, par.vals = list(),
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  callees = character(0L))
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
 Class of learner. By convention, all classification learners
 start with \dQuote{classif.}, all regression learners with
 \dQuote{regr.}, all survival learners start with \dQuote{surv.},
-all clustering learners with \dQuote{cluster.}, and all multilabel
-classification learners start with \dQuote{multilabel.}.
+all clustering learners with \dQuote{cluster.}, all multilabel
+classification learners start with \dQuote{multilabel.}, and all
+one-classification learner (anomaly detection) with \dQuote{oneclass.}.
 A list of all integrated learners is available on the
 \code{\link{learners}} help page.}
 

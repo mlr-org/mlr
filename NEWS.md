@@ -2,6 +2,7 @@
 
 ## general
 * Support for functional data (fda) using matrix columns has been added.
+* Support for oneclass classification has (oneclass) been added.
 * Relaxed the way wrappers can be nested -- the only explicitly forbidden
   combination is to wrap a tuning wrapper around another optimization wrapper
 * Refactored the resample progress messages to give a better overview and
@@ -44,6 +45,7 @@
 * makeExtractFDAFeatsWrapper
 * getOptPath
 * makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
+* makeOneClassTask
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -64,6 +66,7 @@
 * classif.fdanp
 * classif.fdaglm
 * regr.fdaFDboost
+* oneclass.svm
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues

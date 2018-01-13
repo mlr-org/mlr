@@ -44,7 +44,7 @@ NULL
 #' @rdname measures
 #' @format none
 featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
+  properties = c("oneclass", "classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
   name = "Percentage of original features used for model",
   note =  "Useful for feature selection.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -56,7 +56,7 @@ featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
 #' @rdname measures
 #' @format none
 timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model"),
+  properties = c("oneclass", "classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model"),
   name = "Time of fitting the model",
   fun = function(task, model, pred, feats, extra.args) {
     model$time
@@ -67,7 +67,7 @@ timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf
 #' @rdname measures
 #' @format none
 timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.pred"),
+  properties = c("oneclass", "classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.pred"),
   name = "Time of predicting test set",
   fun = function(task, model, pred, feats, extra.args) {
     pred$time
@@ -78,7 +78,7 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst =
 #' @rdname measures
 #' @format none
 timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
+  properties = c("oneclass", "classif", "classif.multi", "multilabel", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
   name = "timetrain + timepredict",
   fun = function(task, model, pred, feats, extra.args) {
     model$time + pred$time
@@ -458,7 +458,7 @@ measureSpearmanRho = function(truth, response) {
 #' @rdname measures
 #' @format none
 mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "classif.multi", "req.pred", "req.truth"),
   name = "Mean misclassification error",
   note = "Defined as: mean(response != truth)",
   fun = function(task, model, pred, feats, extra.args) {
@@ -496,7 +496,7 @@ measureACC = function(truth, response) {
 #' @rdname measures
 #' @format none
 ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "classif.multi", "req.pred", "req.truth"),
   name = "Balanced error rate",
   note = "Mean of misclassification error rates on all individual classes.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -791,7 +791,7 @@ measureWKAPPA = function(truth, response) {
 #' @rdname measures
 #' @format none
 auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth", "req.prob"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth", "req.prob"),
   name = "Area under the curve",
   note = "Integral over the graph that results from computing fpr and tpr for many different thresholds.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -873,7 +873,7 @@ measureBrierScaled = function(probabilities, truth, negative, positive) {
 #' @rdname measures
 #' @format none
 bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "Balanced accuracy",
   note = "Mean of true positive rate and true negative rate.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -896,7 +896,7 @@ measureBAC = function(truth, response, negative, positive) {
 #' @rdname measures
 #' @format none
 tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "True positives",
   note = "Sum of all correctly classified observations in the positive class.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -915,7 +915,7 @@ measureTP = function(truth, response, positive) {
 #' @rdname measures
 #' @format none
 tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "True negatives",
   note = "Sum of correctly classified observations in the negative class. Also called correct rejections.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -934,7 +934,7 @@ measureTN = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 fp = makeMeasure(id = "fp", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False positives",
   note = "Sum of misclassified observations in the positive class. Also called false alarms.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -953,7 +953,7 @@ measureFP = function(truth, response, positive) {
 #' @rdname measures
 #' @format none
 fn = makeMeasure(id = "fn", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False negatives",
   note = "Sum of misclassified observations in the negative class. Also called misses.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -972,7 +972,7 @@ measureFN = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "True positive rate",
   note = "Percentage of correctly classified observations in the positive class. Also called hit rate or recall or sensitivity.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -991,7 +991,7 @@ measureTPR = function(truth, response, positive) {
 #' @rdname measures
 #' @format none
 tnr = makeMeasure(id = "tnr", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "True negative rate",
   note = "Percentage of correctly classified observations in the negative class. Also called specificity.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1010,7 +1010,7 @@ measureTNR = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False positive rate",
   note = "Percentage of misclassified observations in the positive class. Also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1029,7 +1029,7 @@ measureFPR = function(truth, response, negative, positive) {
 #' @rdname measures
 #' @format none
 fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False negative rate",
   note = "Percentage of misclassified observations in the negative class.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1048,7 +1048,7 @@ measureFNR = function(truth, response, negative, positive) {
 #' @rdname measures
 #' @format none
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "Positive predictive value",
   note = "Defined as: tp / (tp + fp). Also called precision. If the denominator is 0, PPV is set to be either 1 or 0 depending on whether the highest probability prediction is positive (1) or negative (0).",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1084,7 +1084,7 @@ measureEdgeCase = function(truth, positive, prob) {
 #' @rdname measures
 #' @format none
 npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "Negative predictive value",
   note = "Defined as: tn / (tn + fn).",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1103,7 +1103,7 @@ measureNPV = function(truth, response, negative) {
 #' @rdname measures
 #' @format none
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False discovery rate",
   note = "Defined as: fp / (tp + fp).",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1122,7 +1122,7 @@ measureFDR = function(truth, response, positive) {
 #' @rdname measures
 #' @format none
 mcc = makeMeasure(id = "mcc", minimize = FALSE,
-  properties = c("classif", "req.pred", "req.truth"), best = 1, worst = -1,
+  properties = c("oneclass", "classif", "req.pred", "req.truth"), best = 1, worst = -1,
   name = "Matthews correlation coefficient",
   note = "Defined as (tp * tn - fp * fn) / sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn)), denominator set to 1 if 0",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1150,7 +1150,7 @@ measureMCC = function(truth, response, negative, positive) {
 #' @rdname measures
 #' @format none
 f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "F1 measure",
   note = "Defined as: 2 * tp/ (sum(truth == positive) + sum(response == positive))",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1170,7 +1170,7 @@ measureF1 = function(truth, response, positive) {
 #' @rdname measures
 #' @format none
 gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "G-mean",
   note = "Geometric mean of recall and specificity.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1193,7 +1193,7 @@ measureGMEAN = function(truth, response, negative, positive) {
 #' @rdname measures
 #' @format none
 gpr = makeMeasure(id = "gpr", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "Geometric mean of precision and recall.",
   note = "Defined as: sqrt(ppv * tpr)",
   fun = function(task, model, pred, feats, extra.args) {

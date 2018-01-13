@@ -61,4 +61,28 @@ test_that("changeData . getTaskData is a noop on builtin tasks", {
     changeddata = changeData(taskdata, getTaskData(taskdata, functionals.as = "matrix"))
     expect_equal(taskdata, changeddata)
   }
+
+  # check missing target column
+  expect_error(makeOneClassTask(data = oneclass.df, positive = "FALSE", negative = "normal"), "argument \"target\" is missing, with no default")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "Anomaly", positive = "FALSE", negative = "TRUE"), "Assertion on 'Anomaly' failed: Must be of type 'factor', not 'NULL'.")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "V2", positive = "FALSE", negative = "TRUE"), "Assertion on 'V2' failed: Must be of type 'factor', not 'double'.")
+
+  # if target column has two class levels: check if missing positive/negative input will return error
+  expect_error(makeOneClassTask(data = oneclass.df, target = "Target", negative = "anomaly"), "argument \"positive\" is missing, with no default")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "Target", positive = "anomaly"), "argument \"negative\" is missing, with no default")
+  expect_error(makeOneClassTask(data = oneclass.df, target = "Target"), "argument \"positive\" is missing, with no default")
+
+  # if target column has two class levels and positive or negative are wrongly named
+  expect_error(makeOneClassTask(data = oneclass.df, target = "Target", positive = "anomaly", negative = "TRUE"), "'positive' or 'negative' not equal to class levels")
+
+  # data with target with one class level
+  oneclass.df.true = oneclass.df[oneclass.df$Target == "normal", , drop = TRUE]
+  oneclass.df.true$Target = droplevels(oneclass.df.true$Target)
+
+  # if target column has one class level, check autoset of second class
+  expect_set_equal(levels(makeOneClassTask(data = oneclass.df.true, target = "Target", positive = "normal", negative = "ANOMALY")$env$data$Target), c("normal", "ANOMALY"))
+  expect_set_equal(levels(makeOneClassTask(data = oneclass.df.true, target = "Target", positive = "ANOMALY", negative = "normal")$env$data$Target), c("normal", "ANOMALY"))
+
+  # if target column has one class level and positive and negative are wrongly named
+  expect_error(makeOneClassTask(data = oneclass.df.true, target = "Target", positive = "NORMAL", negative = "ANOMALY"), "Neither 'positive' nor 'negative' are subset of class levels")
 })
