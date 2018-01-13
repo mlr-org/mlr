@@ -99,6 +99,7 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
 
       if (model$learner$id %nin% listLearners(task)$class) {
         lrn.id = gsub(".AMVhd", "",model$learner$id)
+        lrn.id = gsub(".tuned", "",model$learner$id)
       } else {
         lrn.id = model$learner$id
       }
