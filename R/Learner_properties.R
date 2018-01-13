@@ -11,7 +11,7 @@
 #'   \item{single.functional}{Can exactly one functional feature be handled?}
 #'   \item{missings}{Can missing values in features be handled?}
 #'   \item{weights}{Can observations be weighted during fitting?}
-#'   \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
+#'   \item{oneclass, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
 #'   \item{class.weights}{Only for classif: Can class weights be handled?}
 #'   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
 #'   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}

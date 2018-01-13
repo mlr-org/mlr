@@ -4,7 +4,8 @@
 \alias{plotROCCurves}
 \title{Plots a ROC curve using ggplot2.}
 \usage{
-plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE)
+plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE,
+  facet.learner = FALSE)
 }
 \arguments{
 \item{obj}{[\code{ThreshVsPerfData}]\cr
@@ -20,9 +21,13 @@ Default is \code{TRUE}.}
 \item{pretty.names}{[\code{logical(1)}]\cr
 Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 Default is \code{TRUE}.}
+
+\item{facet.learner}{[\code{logical(1)}]\cr
+Weather to use facetting or different colors to compare multiple learners.
+Default is \code{FALSE}.}
 }
 \value{
-a ggvis plot object.
+ggplot2 plot object.
 }
 \description{
 Plots a ROC curve from predictions.
