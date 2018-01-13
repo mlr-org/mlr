@@ -76,7 +76,7 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "SpCV", "SpRepCV"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -120,6 +120,11 @@ makeResampleDescCV = function(iters = 10L) {
   makeResampleDescInternal("cross-validation", iters = iters)
 }
 
+makeResampleDescSpCV = function(iters = 10L) {
+  iters = asInt(iters, lower = 2L)
+  makeResampleDescInternal("spatial cross-validation", iters = iters)
+}
+
 makeResampleDescLOO = function() {
   makeResampleDescInternal("LOO", iters = NA_integer_)
 }
@@ -139,6 +144,12 @@ makeResampleDescRepCV = function(reps = 10L, folds = 10L) {
   reps = asInt(reps, lower = 2L)
   folds = asInt(folds, lower = 2L)
   makeResampleDescInternal("repeated cross-validation", iters = folds * reps, folds = folds, reps = reps)
+}
+
+makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
+  reps = asInt(reps, lower = 2L)
+  folds = asInt(folds, lower = 2L)
+  makeResampleDescInternal("repeated spatial cross-validation", iters = folds * reps, folds = folds, reps = reps)
 }
 
 ##############################################################################################
