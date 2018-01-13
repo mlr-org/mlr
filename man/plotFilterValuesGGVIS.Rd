@@ -45,6 +45,7 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

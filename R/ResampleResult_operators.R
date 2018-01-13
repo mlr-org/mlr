@@ -86,6 +86,8 @@ getRRPredictionList = function(res, ...) {
         # we need to remove the "prob." part in the colnames, otherwise
         # makePrediction thinks that the factor starts with "prob."
         colnames(y) = stri_replace_first_fixed(colnames(y), "prob.", replacement =  "")
+      } else if (predict.type == "se") {
+        y = as.matrix(p[c("response", "se")])
       } else {
         y = p$response
       }
