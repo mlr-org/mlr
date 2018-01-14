@@ -61,14 +61,14 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL, coords
 
 # Resample for oneclass-classification. Train data only contains one class, which is the normal class
 
-instantiateResampleInstance.OCHoldoutDesc = function(desc, size, task) {
+instantiateResampleInstance.OCHoldoutDesc = function(desc, size, task, coords = NULL) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #index of only normal class
   inds = sample(normal.inds, size * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
-instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
+instantiateResampleInstance.OCCVDesc = function(desc, size, task, coords = NULL) {
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
 
@@ -95,7 +95,7 @@ instantiateResampleInstance.OCCVDesc = function(desc, size, task) {
 }
 
 
-instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task) {
+instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task, coords = NULL) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #only normal class
   # sample without replacement only from the normal data to create train set
@@ -104,7 +104,7 @@ instantiateResampleInstance.OCSubsampleDesc = function(desc, size, task) {
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.OCBootstrapDesc = function(desc, size, task) {
+instantiateResampleInstance.OCBootstrapDesc = function(desc, size, task, coords = NULL) {
   label = getTaskTargets(task)
   normal.inds = which(label == task$task.desc$negative) #only normal class
   # sample with replacement only from the normal data to create train set
@@ -113,7 +113,7 @@ instantiateResampleInstance.OCBootstrapDesc = function(desc, size, task) {
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.OCRepCVDesc = function(desc, size = NULL, task) {
+instantiateResampleInstance.OCRepCVDesc = function(desc, size = NULL, task, coords = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("OCCV", iters = folds)
   i = replicate(desc$reps, makeResampleInstance(d, task), simplify = FALSE)
