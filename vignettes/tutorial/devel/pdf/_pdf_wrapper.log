@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.7)  11 JAN 2018 23:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.7)  12 JAN 2018 15:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1189,39 +1189,39 @@ es-sion (\T1/lmtt/m/n/10 stats::lm()\T1/lmr/m/n/10 (+20) ) on the \T1/lmtt/m/n/
 
 [39] [40]
 Overfull \hbox (181.24309pt too wide) in paragraph at lines 2788--2788
-[]\T1/lmtt/m/n/10 ## Aggregated Result: mmce.test.mean=0.2714286,fpr.test.mean=
-0.2351792,fnr.test.mean=0.2896880,timetrain.test.mean=0.0226000[] 
+[]\T1/lmtt/m/n/10 ## Aggregated Result: mmce.test.mean=0.2333333,fpr.test.mean=
+0.2718254,fnr.test.mean=0.1965201,timetrain.test.mean=0.0202000[] 
  []
 
 
 Overfull \hbox (139.24321pt too wide) in paragraph at lines 2806--2806
-[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2714286,fpr.test.mean=0.235179
-2,fnr.test.mean=0.2896880,timetrain.test.mean=0.0226000[] 
+[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2333333,fpr.test.mean=0.271825
+4,fnr.test.mean=0.1965201,timetrain.test.mean=0.0202000[] 
  []
 
 
 Overfull \hbox (433.24236pt too wide) in paragraph at lines 2824--2824
-[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2714286,fpr.test.mean=0.235179
-2,fnr.test.mean=0.2896880,timetrain.test.mean=0.0226000,ber.test.mean=0.2624336
-,timepredict.test.mean=0.0058000[] 
+[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2333333,fpr.test.mean=0.271825
+4,fnr.test.mean=0.1965201,timetrain.test.mean=0.0202000,ber.test.mean=0.2341728
+,timepredict.test.mean=0.0082000[] 
  []
 
 
 Overfull \hbox (139.24321pt too wide) in paragraph at lines 2853--2853
-[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2190476,fpr.test.mean=0.225953
-5,fnr.test.mean=0.1994524,timetrain.test.mean=0.0196000[] 
+[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2476190,fpr.test.mean=0.332424
+5,fnr.test.mean=0.1761348,timetrain.test.mean=0.0212000[] 
  []
 
 [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51]
 Overfull \hbox (165.49313pt too wide) in paragraph at lines 3692--3692
-[]\T1/lmtt/m/n/10 ## Aggregated Result: mse.test.mean=24.0227406,mse.test.media
-n=24.9053561,mse.test.min=20.9853651,mse.test.max=26.1775006[] 
+[]\T1/lmtt/m/n/10 ## Aggregated Result: mse.test.mean=24.5830429,mse.test.media
+n=22.3344989,mse.test.min=20.0342083,mse.test.max=31.3804215[] 
  []
 
 [52]
 Overfull \hbox (123.49326pt too wide) in paragraph at lines 3710--3710
-[]\T1/lmtt/m/n/10 ## Aggr perf: mse.test.mean=24.0227406,mse.test.median=24.905
-3561,mse.test.min=20.9853651,mse.test.max=26.1775006[] 
+[]\T1/lmtt/m/n/10 ## Aggr perf: mse.test.mean=24.5830429,mse.test.median=22.334
+4989,mse.test.min=20.0342083,mse.test.max=31.3804215[] 
  []
 
 [53] [54] [55]
@@ -2576,7 +2576,7 @@ pe1/public/lm/lmtk10.pfb></home/travis/texlive/texmf-dist/fonts/type1/public/lm
 /lmtt10.pfb></home/travis/texlive/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
 </home/travis/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on _pdf_wrapper.pdf (263 pages, 2685093 bytes).
+Output written on _pdf_wrapper.pdf (263 pages, 2685095 bytes).
 PDF statistics:
  3357 PDF objects out of 3580 (max. 8388607)
  2795 compressed objects within 28 object streams
