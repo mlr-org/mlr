@@ -15,7 +15,7 @@ urlContribPackages = "http://www.inside-r.org/packages/cran/"
 library("pander")
 
 # show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
