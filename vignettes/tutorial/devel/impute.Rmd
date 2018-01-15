@@ -1,5 +1,5 @@
 ---
-# title: "Imputation of Missing Values"
+title: "Imputation of Missing Values"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -13,9 +13,13 @@ library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 library("lattice")
-```
 
-## Imputation of Missing Values
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
 
 `mlr` provides several imputation methods which are listed on the help page `imputations()`.
 These include standard techniques as imputation by a constant value (like a fixed constant, the mean, median or mode)
@@ -34,7 +38,7 @@ listLearners("regr", properties = "missings")[c("class", "package")]
 
 See also the list of integrated learners (`vignette("integrated_learners")`) in the Appendix.
 
-### Imputation and reimputation
+## Imputation and reimputation
 
 Imputation can be done by function `impute()`.
 You can specify an imputation method for each feature individually or for classes of features like numerics or factors.
@@ -137,7 +141,7 @@ Especially when evaluating a machine learning method by some resampling techniqu
 `impute()`/`reimpute()` are called automatically each time before training/prediction.
 This can be achieved by creating an imputation wrapper.
 
-### Fusing a learner with imputation
+## Fusing a learner with imputation
 
 You can couple a Learner (`makeLearner()`) with imputation by function `makeImputeWrapper()` which basically has the same formal arguments as `impute()`.
 Like in the example above we impute ``Solar.R`` by random numbers from its empirical distribution,

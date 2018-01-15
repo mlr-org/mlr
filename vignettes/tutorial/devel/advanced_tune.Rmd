@@ -1,5 +1,5 @@
 ---
-# title: "Iterated F-Racing for mixed spaces and dependencies"
+title: "Iterated F-Racing for mixed spaces and dependencies"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -11,9 +11,13 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
-```
 
-## Iterated F-Racing for mixed spaces and dependencies
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
 
 The package supports a larger number of tuning algorithms, which can all be looked up and
 selected via `TuneControl()`. 
@@ -38,7 +42,7 @@ print(head(as.data.frame(res$opt.path)))
 See how we made the kernel parameters like `sigma` and `degree` dependent on the `kernel` selection parameters? 
 This approach allows you to tune parameters of multiple kernels at once, efficiently concentrating on the ones which work best for your given data set.
 
-### Tuning across whole model spaces with ModelMultiplexer
+## Tuning across whole model spaces with ModelMultiplexer
 
 We can now take the following example even one step further. If we use the
 `makeModelMultiplexer()` we can tune over different model classes at once,
@@ -68,7 +72,7 @@ res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl, show.info 
 print(head(as.data.frame(res$opt.path)))
 ```
 
-### Multi-criteria evaluation and optimization
+## Multi-criteria evaluation and optimization
 
 During tuning you might want to optimize multiple, potentially conflicting, performance measures simultaneously.
 

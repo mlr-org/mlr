@@ -1,5 +1,5 @@
 ---
-# title: "Integrating Another Filter Method"
+title: "Integrating Another Filter Method"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -11,14 +11,18 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
-```
 
-## Integrating Another Filter Method
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
 
 A lot of feature filter methods are already integrated in `mlr` and a complete list is given in the Appendix (`vignette("filter_methods")`) or can be obtained using `listFilterMethods()`.
 You can easily add another filter, be it a brand new one or a method which is already implemented in another package, via function `makeFilter()`.
 
-### Filter objects
+## Filter objects
 
 In `mlr` all filter methods are objects of class Filter (`makeFilter()`) and are registered in an environment called `.FilterRegister` (where `listFilterMethods()` looks them up to compile the list of available methods).
 To get to know their structure let's have a closer look at the `"rank.correlation"` filter which interfaces function `Rfast::correls()` in package `Rfast`.
@@ -39,7 +43,7 @@ Additionally, each Filter (`makeFilter()`) object has a `$name`, which should be
 If the filter method is implemented by another package its name is given in the `$pkg` member.
 Moreover, the supported task types and feature types are listed.
 
-### Writing a new filter method
+## Writing a new filter method
 
 You can integrate your own filter method using `makeFilter()`. 
 This function generates a Filter (`makeFilter()`) object and also registers it in the `.FilterRegister` environment.

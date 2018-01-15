@@ -1,5 +1,5 @@
 ---
-# title: "Example Tasks"
+title: "Example Tasks"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -14,9 +14,13 @@ library("ParamHelpers")
 urlMlrFunctions = "http://rpackages.ianhowson.com/cran/mlr/man/"
 ext = ".html"
 library("pander")
-```
 
-## Example Tasks
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
 
 For your convenience `mlr` provides pre-defined `Task()`s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.

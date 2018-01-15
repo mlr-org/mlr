@@ -1,5 +1,5 @@
 ---
-# title: "Training a Learner"
+title: "Training a Learner"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -11,9 +11,13 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
-```
 
-# Training a Learner
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
 
 Training a learner means fitting a model to a given data set.
 In `mlr` this can be done by calling function `train()` on a Learner (`makeLearner()`) and a suitable `Task()`.

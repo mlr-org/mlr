@@ -1,5 +1,5 @@
 ---
-# title: "Handling of Spatial Data"
+title: "Handling of Spatial Data"
 author: "Patrick Schratz"
 output: rmarkdown::html_vignette
 vignette: >
@@ -12,11 +12,15 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
+
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
 ```
 
-## Handling of Spatial Data
-
-### Introduction
+## Introduction
 
 Spatial data is different from non-spatial data by having a spatial reference information attached to each observation. 
 This information is usually stored as coordinates, often named `x` and `y`. 
@@ -51,7 +55,7 @@ This reduces the influence of spatial autocorrelation and subsequently also the 
 The example in Figure 1 shows a five-fold nested cross-validation setting and exhibits the difference between spatial and non-spatial partitioning.
 The nested approach is used when hyperparameter tuning is performed.
 
-### How to use spatial partitioning in mlr
+## How to use spatial partitioning in mlr
 
 Spatial partitioning can be used when performing cross-validation. 
 In any `resample()` call you can choose `SpCV` or `SpRepCV` to use it. 
@@ -70,7 +74,7 @@ This means they will not be used as predictors within the specified learner but 
 Coordinates must be named `x` and `y` to be used for spatial partitioning. 
 If named differently and `spatial = TRUE` was set during task creation, an error will occur. 
 
-### Examples
+## Examples
 
 The `bc.task.spatial` data set serves as an example data set for spatial modeling tasks in `mlr`.
 The task (`vignette("task")`) attribute `spatial` is set to `TRUE` to indicate that the data set also stores coordinate information.
@@ -79,7 +83,7 @@ In this example, the "Random Forest" algorithm (package `ranger::ranger()`) is u
 
 For performance assessment, a repeated spatial cross-validation with 5 folds and 10 repetitions is chosen.
 
-#### Spatial Cross-Validation
+### Spatial Cross-Validation
 
 ```{r, eval = TRUE}
 data("bc.task.spatial")
@@ -102,7 +106,7 @@ To force non-spatial cross-validation here, variables `x` and `y` need to be rem
 Additionally, the `spatial` task attribute needs to be set to `FALSE`.
 Finally, `RepCV` is chosen instead of `SpRepCV`.
 
-#### Non-Spatial Cross-Validation
+### Non-Spatial Cross-Validation
 
 ```{r, eval = TRUE}
 data("bc.task.spatial")
@@ -125,7 +129,7 @@ mean(out$measures.test$auc)
 
 The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.07 AUROC. 
 
-### Notes
+## Notes
 
 * Usually, coordinates are not used as predictors in spatial modeling.
 If you insist on using them and also want to perform spatial cross-validation, add them to the data set with a different name than `x` or `y`, e.g. `x1` and `y1`.

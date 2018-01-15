@@ -1,5 +1,5 @@
 ---
-# title: "Learning Curve Analysis"
+title: "Learning Curve Analysis"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
@@ -11,9 +11,13 @@ vignette: >
 library("mlr")
 library("BBmisc")
 library("ParamHelpers")
-```
 
-## Learning Curve Analysis
+# show grouped code output instead of single lines
+knitr::opts_chunk$set(cache = TRUE, collapse = FALSE, dev = "svg")
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
 
 To analyze how the increase of observations in the training set improves the performance of a learner the *learning curve* is an appropriate visual tool.
 The experiment is conducted with an increasing subsample size and the performance is measured.
@@ -25,7 +29,7 @@ To reduce noise increase the number of resampling iterations.
 You can define the resampling method in the `resampling` argument of `generateLearningCurveData()`.
 It is also possible to pass a ResampleInstance (`makeResampleInstance()`) (which is a result of `makeResampleInstance()`) to make resampling consistent for all passed learners and each step of increasing the number of observations.
 
-### Plotting the learning curve
+## Plotting the learning curve
 
 The `mlr` function `generateLearningCurveData()` can generate the data for *learning curves* for multiple learners (`vignette("integrated_learners")`) and multiple performance measures (`vignette("measures")`) at once.
 With `plotLearningCurve()` the result of `generateLearningCurveData()` can be plotted using `ggplot2`.
