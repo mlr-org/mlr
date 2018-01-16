@@ -26,7 +26,7 @@ predictLearner.oneclass.lof = function(.learner, .model, .newdata, ...) {
   # calculate lof, no trained model is needed
   # the lower the local density of a point -> the point is in a sparser region than its neighbors, which suggests that the point is an outlier.
   if(is.null(.learner$par.vals$k)) {
-    k = mod$learner$par.set$pars$k$default
+    k = .model$learner$par.set$pars$k$default
   } else if (!is.null(.learner$par.vals$k)) {
     k = .learner$par.vals$k
   } else {
