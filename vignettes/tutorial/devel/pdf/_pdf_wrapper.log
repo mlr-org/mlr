@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.7)  12 JAN 2018 15:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.7)  16 JAN 2018 00:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1024,7 +1024,7 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {/home/travis/texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4
-])
+] [5])
 \tf@toc=\write5
 \openout5 = `_pdf_wrapper.toc'.
 
@@ -1037,752 +1037,565 @@ LaTeX Font Info:    Try loading font information for T1+lmtt on input line 184.
 
 (/home/travis/texlive/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
+) [6]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 191.
-[5]
-Overfull \hbox (17.35555pt too wide) in paragraph at lines 245--249
+
+Overfull \hbox (17.35555pt too wide) in paragraph at lines 240--244
 []\T1/lmtt/m/n/10 ClassifTask() \T1/lmr/m/n/10 (-20) for bi-nary and multi-clas
 s clas-si-fi-ca-tion prob-lems (\T1/lmtt/m/n/10 vignette("cost_sensitive_classi
 f")\T1/lmr/m/n/10 (-20) )
  []
 
-[6] [7]
-Overfull \hbox (123.49326pt too wide) in paragraph at lines 443--443
-[]\T1/lmtt/m/n/10 ## Target: label1,label2,label3,label4,label5,label6,label7,l
-abel8,label9,label10,label11,label12,label13,label14[] 
- []
-
-[8] [9] [10] [11]
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 706
+[7] [8] [9] [10] [11] [12]
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 622
 .
 (/home/travis/texlive/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-Overfull \hbox (2.7436pt too wide) in paragraph at lines 706--706
-[]\T1/lmtt/m/n/10 ##  $ Cl.thickness   : Ord.factor w/ 10 levels "1"<"2"<"3"<"4
-"<..: 5 5 3 6 4 8 1 2 2 4 ...[] 
- []
-
-
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 706--706
-[]\T1/lmtt/m/n/10 ##  $ Cell.size      : Ord.factor w/ 10 levels "1"<"2"<"3"<"4
-"<..: 1 4 1 8 1 10 1 1 1 2 ...[] 
- []
-
-
-Overfull \hbox (7.99359pt too wide) in paragraph at lines 706--706
-[]\T1/lmtt/m/n/10 ##  $ Cell.shape     : Ord.factor w/ 10 levels "1"<"2"<"3"<"4
-"<..: 1 4 1 8 1 10 1 2 1 1 ...[] 
- []
-
-
-Overfull \hbox (2.7436pt too wide) in paragraph at lines 706--706
-[]\T1/lmtt/m/n/10 ##  $ Marg.adhesion  : Ord.factor w/ 10 levels "1"<"2"<"3"<"4
-"<..: 1 5 1 1 3 8 1 1 1 1 ...[] 
- []
-
-
-Overfull \hbox (2.7436pt too wide) in paragraph at lines 706--706
-[]\T1/lmtt/m/n/10 ##  $ Epith.c.size   : Ord.factor w/ 10 levels "1"<"2"<"3"<"4
-"<..: 2 7 2 3 2 7 2 2 2 2 ...[] 
- []
-
-[12] [13]
-Overfull \hbox (7.76526pt too wide) in paragraph at lines 849--851
+) [13] [14]
+Overfull \hbox (7.76526pt too wide) in paragraph at lines 730--732
 []\T1/lmr/m/n/10 (-20) For more func-tions and more de-tailed ex-pla-na-tions h
 ave a look at the data pre-pro-cess-ing (\T1/lmtt/m/n/10 vignette("preproc")\T1
 /lmr/m/n/10 (-20) )
  []
 
-[14]
-Overfull \hbox (28.99353pt too wide) in paragraph at lines 953--953
-[]\T1/lmtt/m/n/10 ## Properties: twoclass,multiclass,numerics,factors,ordered,p
-rob,class.weights,oobpreds,featimp[] 
- []
-
 [15] [16] [17] [18] [19] [20] [21] [22]
-Overfull \hbox (30.55086pt too wide) in paragraph at lines 1569--1574
-[]\T1/lmr/m/n/10 (-20) The pre-dicted prob-a-bil-i-ties can be ex-tracted from 
-the \T1/lmtt/m/n/10 Prediction() \T1/lmr/m/n/10 (-20) us-ing func-tion \T1/lmtt
-/m/n/10 getPredictionProbabilities()\T1/lmr/m/n/10 (-20) .
+Overfull \hbox (30.55086pt too wide) in paragraph at lines 1302--1307
+\T1/lmr/m/n/10 (-20) The pre-dicted prob-a-bil-i-ties can be ex-tracted from th
+e \T1/lmtt/m/n/10 Prediction() \T1/lmr/m/n/10 (-20) us-ing func-tion \T1/lmtt/m
+/n/10 getPredictionProbabilities()\T1/lmr/m/n/10 (-20) .
  []
 
 [23]
-Overfull \hbox (17.46304pt too wide) in paragraph at lines 1650--1652
+Overfull \hbox (17.46304pt too wide) in paragraph at lines 1374--1376
 []\T1/lmr/m/n/10 (-20) As men-tioned above, the pre-dicted pos-te-rior prob-a-b
 il-i-ties can be ac-cessed via the \T1/lmtt/m/n/10 getPredictionProbabilities()
 
  []
 
-[24] [25] [26] [27] [28]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf, id=881, 453.695pt x 28
-4.06125pt>
+[24] [25] [26] [27]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf, id=1114, 453.695pt x 2
+84.06125pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf Graphic file (type
  pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf
- used on input line 2002.
+ used on input line 1630.
 (pdftex.def)             Requested size: 453.6939pt x 284.06053pt.
-[29 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf, id=898, 453.695pt x 27
-7.035pt>
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf, id=1115, 453.695pt x 2
+77.035pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf Graphic file (type
  pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf
- used on input line 2028.
+ used on input line 1647.
 (pdftex.def)             Requested size: 453.6939pt x 277.03432pt.
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-81-1.pdf, id=899, 459.7175pt x 2
-84.06125pt>
+[28 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-79-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-81-1.pdf, id=1133, 459.7175pt x 
+284.06125pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-81-1.pdf Graphic file (type
  pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-81-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-81-1.pdf
- used on input line 2040.
+ used on input line 1659.
 (pdftex.def)             Requested size: 459.74442pt x 284.07787pt.
-[30 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-82-1.pdf, id=911, 451.6875pt x 2
-84.06125pt>
+[29 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-80-1.pdf> <./_pdf_wrapper_
+files/figure-latex/unnamed-chunk-81-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-82-1.pdf, id=1155, 451.6875pt x 
+284.06125pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-82-1.pdf Graphic file (type
  pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-82-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-82-1.pdf
- used on input line 2054.
+ used on input line 1673.
 (pdftex.def)             Requested size: 451.71394pt x 284.07787pt.
-[31 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-81-1.pdf> <./_pdf_wrapper_
-files/figure-latex/unnamed-chunk-82-1.pdf>] [32] [33]
-Overfull \hbox (9.10606pt too wide) in paragraph at lines 2227--2229
+[30 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-82-1.pdf>] [31]
+Overfull \hbox (9.10606pt too wide) in paragraph at lines 1815--1817
 []\T1/lmr/m/n/10 (-20) Calculate the mean squared er-ror, me-dian squared er-ro
 r and mean ab-so-lute er-ror (\T1/lmtt/m/n/10 mae \T1/lmr/m/n/10 (-20) (\T1/lmt
 t/m/n/10 vignette("measures")\T1/lmr/m/n/10 (-20) )). 
  []
 
-[34] [35]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf, id=954, 462.72874pt x 
-224.84pt>
+[32] [33]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf, id=1181, 462.72874pt x
+ 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf Graphic file (type
  pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf
- used on input line 2399.
+ used on input line 1964.
 (pdftex.def)             Requested size: 462.73466pt x 224.84286pt.
-[36 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf>]
+[34 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-93-1.pdf>]
 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/resampling.png, 
-id=968, 893.58844pt x 529.22719pt>
+id=1194, 893.58844pt x 529.22719pt>
 File: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/resampling.
 png Graphic file (type png)
 
 <use /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/resampling.p
 ng>
 Package pdftex.def Info: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/
-pdf/img/resampling.png used on input line 2480.
+pdf/img/resampling.png used on input line 2040.
 (pdftex.def)             Requested size: 399.99765pt x 236.89835pt.
-[37] [38 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/resampl
+[35] [36 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/resampl
 ing.png>]
-Underfull \hbox (badness 1584) in paragraph at lines 2593--2597
+Underfull \hbox (badness 1584) in paragraph at lines 2135--2139
 []\T1/lmr/m/n/10 (+20) As a first ex-am-ple, the per-for-mance of lin-ear re-gr
 es-sion (\T1/lmtt/m/n/10 stats::lm()\T1/lmr/m/n/10 (+20) ) on the \T1/lmtt/m/n/
 10 BostonHousing
  []
 
-[39] [40]
-Overfull \hbox (181.24309pt too wide) in paragraph at lines 2788--2788
-[]\T1/lmtt/m/n/10 ## Aggregated Result: mmce.test.mean=0.2333333,fpr.test.mean=
-0.2718254,fnr.test.mean=0.1965201,timetrain.test.mean=0.0202000[] 
- []
-
-
-Overfull \hbox (139.24321pt too wide) in paragraph at lines 2806--2806
-[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2333333,fpr.test.mean=0.271825
-4,fnr.test.mean=0.1965201,timetrain.test.mean=0.0202000[] 
- []
-
-
-Overfull \hbox (433.24236pt too wide) in paragraph at lines 2824--2824
-[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2333333,fpr.test.mean=0.271825
-4,fnr.test.mean=0.1965201,timetrain.test.mean=0.0202000,ber.test.mean=0.2341728
-,timepredict.test.mean=0.0082000[] 
- []
-
-
-Overfull \hbox (139.24321pt too wide) in paragraph at lines 2853--2853
-[]\T1/lmtt/m/n/10 ## Aggr perf: mmce.test.mean=0.2476190,fpr.test.mean=0.332424
-5,fnr.test.mean=0.1761348,timetrain.test.mean=0.0212000[] 
- []
-
-[41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51]
-Overfull \hbox (165.49313pt too wide) in paragraph at lines 3692--3692
-[]\T1/lmtt/m/n/10 ## Aggregated Result: mse.test.mean=24.5830429,mse.test.media
-n=22.3344989,mse.test.min=20.0342083,mse.test.max=31.3804215[] 
- []
-
-[52]
-Overfull \hbox (123.49326pt too wide) in paragraph at lines 3710--3710
-[]\T1/lmtt/m/n/10 ## Aggr perf: mse.test.mean=24.5830429,mse.test.median=22.334
-4989,mse.test.min=20.0342083,mse.test.max=31.3804215[] 
- []
-
-[53] [54] [55]
-Overfull \hbox (11.44968pt too wide) in paragraph at lines 4022--4025
+[37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50] [51]
+Overfull \hbox (11.44968pt too wide) in paragraph at lines 3152--3155
 []\T1/lmr/m/n/10 (-20) The eval-u-a-tion method is al-ready cov-ered in de-tail
  in eval-u-a-tion of learn-ing meth-ods (\T1/lmtt/m/n/10 vignette("performance"
 )\T1/lmr/m/n/10 (-20) )
  []
 
-[56]
-Overfull \hbox (14.69743pt too wide) in paragraph at lines 4076--4086
+
+Overfull \hbox (14.69743pt too wide) in paragraph at lines 3203--3213
 []\T1/lmr/m/n/10 (-20) We could also de-fine a con-tin-u-ous search space (us-i
 ng \T1/lmtt/m/n/10 makeNumericParam \T1/lmr/m/n/10 (-20) (\T1/lmtt/m/n/10 Param
 Helpers::makeNumericParam()\T1/lmr/m/n/10 (-20) )
  []
 
-[57] [58] [59] [60] [61] [62]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pdf, id=1096, 458.71375pt 
+[52] [53] [54] [55] [56]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pdf, id=1296, 458.71375pt 
 x 315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pd
-f used on input line 4616.
+f used on input line 3584.
 (pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
-[63 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pdf>] [64] [65] [66]
-[67] [68] [69] [70] [71] [72]
-Overfull \hbox (33.52547pt too wide) in paragraph at lines 5369--5373
-[]\T1/lmr/m/n/10 (-20) We con-sider \T1/lmtt/m/n/10 MASS::lda()\T1/lmr/m/n/10 (
--20) , clas-si-fi-ca-tion trees \T1/lmtt/m/n/10 rpart::rpart()\T1/lmr/m/n/10 (-
-20) , and ran-dom forests \T1/lmtt/m/n/10 randomForest::randomForest()\T1/lmr/m
-/n/10 (-20) .
+[57] [58 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-146-1.pdf>] [59] [60]
+[61] [62] [63] [64] [65]
+Overfull \hbox (33.52547pt too wide) in paragraph at lines 4108--4112
+\T1/lmr/m/n/10 (-20) We con-sider \T1/lmtt/m/n/10 MASS::lda()\T1/lmr/m/n/10 (-2
+0) , clas-si-fi-ca-tion trees \T1/lmtt/m/n/10 rpart::rpart()\T1/lmr/m/n/10 (-20
+) , and ran-dom forests \T1/lmtt/m/n/10 randomForest::randomForest()\T1/lmr/m/n
+/10 (-20) .
  []
 
-[73]
-Underfull \hbox (badness 1521) in paragraph at lines 5452--5458
+[66]
+Underfull \hbox (badness 1521) in paragraph at lines 4188--4194
 \T1/lmr/m/n/10 (+20) example lin-ear dis-crim-i-nant anal-y-sis (\T1/lmtt/m/n/1
 0 MASS::lda()\T1/lmr/m/n/10 (+20) ) per-forms well while for all other tasks th
 e
  []
 
 
-Overfull \hbox (15.43857pt too wide) in paragraph at lines 5452--5458
+Overfull \hbox (15.43857pt too wide) in paragraph at lines 4188--4194
 \T1/lmtt/m/n/10 randomForest::randomForest() \T1/lmr/m/n/10 (-20) seems su-pe-r
 ior. Train-ing takes longer for the \T1/lmtt/m/n/10 randomForest::randomForest(
 )
  []
 
-[74]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pdf, id=1163, 462.72874pt 
+[67]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pdf, id=1351, 462.72874pt 
 x 355.3275pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pd
-f used on input line 5522.
+f used on input line 4255.
 (pdftex.def)             Requested size: 462.73466pt x 355.33203pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-163-2.pdf, id=1164, 453.695pt x 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-163-2.pdf, id=1352, 453.695pt x 
 355.3275pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-163-2.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-163-2.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-163-2.pd
-f used on input line 5532.
+f used on input line 4265.
 (pdftex.def)             Requested size: 453.6939pt x 355.32661pt.
-[75 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pdf>] [76 <./_pdf_wr
+[68 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-163-1.pdf>] [69 <./_pdf_wr
 apper_files/figure-latex/unnamed-chunk-163-2.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pdf, id=1187, 462.72874pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pdf, id=1376, 462.72874pt 
 x 353.32pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pd
-f used on input line 5616.
+f used on input line 4314.
 (pdftex.def)             Requested size: 462.73466pt x 353.32452pt.
-[77 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-166-1.pdf, id=1200, 439.6425pt x
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-166-1.pdf, id=1377, 439.6425pt x
  355.3275pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-166-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-166-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-166-1.pd
-f used on input line 5637.
+f used on input line 4335.
 (pdftex.def)             Requested size: 439.65483pt x 355.33745pt.
-[78 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-166-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pdf, id=1214, 452.69125pt 
+[70 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-165-1.pdf>] [71 <./_pdf_wr
+apper_files/figure-latex/unnamed-chunk-166-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pdf, id=1402, 452.69125pt 
 x 355.3275pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pd
-f used on input line 5686.
+f used on input line 4381.
 (pdftex.def)             Requested size: 452.69014pt x 355.32661pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pdf, id=1215, 439.6425pt x
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pdf, id=1403, 439.6425pt x
  358.33875pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pd
-f used on input line 5698.
+f used on input line 4393.
 (pdftex.def)             Requested size: 439.65483pt x 358.3488pt.
-[79 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-170-1.pdf, id=1228, 453.695pt x 
+[72 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-168-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-170-1.pdf, id=1415, 453.695pt x 
 315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-170-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-170-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-170-1.pd
-f used on input line 5711.
+f used on input line 4406.
 (pdftex.def)             Requested size: 234.87741pt x 163.16705pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-170-2.pdf, id=1229, 453.695pt x 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-170-2.pdf, id=1416, 453.695pt x 
 315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-170-2.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-170-2.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-170-2.pd
-f used on input line 5712.
+f used on input line 4407.
 (pdftex.def)             Requested size: 234.87741pt x 163.16705pt.
 
-Overfull \hbox (2.22202pt too wide) in paragraph at lines 5711--5713
+Overfull \hbox (2.22202pt too wide) in paragraph at lines 4406--4408
 [][] [] 
  []
 
-[80 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pdf> <./_pdf_wrapper
+[73 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-169-1.pdf> <./_pdf_wrapper
 _files/figure-latex/unnamed-chunk-170-1.pdf> <./_pdf_wrapper_files/figure-latex
-/unnamed-chunk-170-2.pdf>] [81]
-Overfull \hbox (25.27557pt too wide) in paragraph at lines 5820--5824
+/unnamed-chunk-170-2.pdf>] [74]
+Overfull \hbox (25.27557pt too wide) in paragraph at lines 4509--4513
 []\T1/lmr/m/n/10 (-20) Function \T1/lmtt/m/n/10 generateCritDifferencesData() \
 T1/lmr/m/n/10 (-20) does all nec-es-sary cal-cu-la-tions while func-tion \T1/lm
 tt/m/n/10 plotCritDifferences()
  []
 
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pdf, id=1262, 456.70625pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pdf, id=1448, 456.70625pt 
 x 192.72pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pd
-f used on input line 5833.
+f used on input line 4522.
 (pdftex.def)             Requested size: 456.70512pt x 192.71951pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pdf, id=1263, 456.70625pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pdf, id=1449, 456.70625pt 
 x 188.705pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pd
-f used on input line 5843.
+f used on input line 4532.
 (pdftex.def)             Requested size: 456.70512pt x 188.70453pt.
-[82 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-174-1.pdf, id=1280, 453.695pt x 
+[75 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-173-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-174-1.pdf, id=1466, 453.695pt x 
 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-174-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-174-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-174-1.pd
-f used on input line 5869.
+f used on input line 4558.
 (pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
-[83 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pdf> <./_pdf_wrapper
+[76 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-173-2.pdf> <./_pdf_wrapper
 _files/figure-latex/unnamed-chunk-174-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pdf, id=1304, 453.695pt x 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pdf, id=1489, 453.695pt x 
 303.1325pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pd
-f used on input line 5903.
+f used on input line 4584.
 (pdftex.def)             Requested size: 453.6939pt x 303.13176pt.
-[84 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pdf, id=1316, 459.7175pt x
+[77 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-175-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pdf, id=1502, 459.7175pt x
  315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pd
-f used on input line 5942.
+f used on input line 4615.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-[85 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pdf>]
-Overfull \hbox (0.38202pt too wide) in paragraph at lines 5989--5995
+[78 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-176-1.pdf>]
+Overfull \hbox (0.38202pt too wide) in paragraph at lines 4660--4666
 []\T1/lmr/m/n/10 (-20) All you have to do is se-lect a back-end by call-ing one
  of the \T1/lmtt/m/n/10 parallelStart* \T1/lmr/m/n/10 (-20) (\T1/lmtt/m/n/10 pa
 rallelMap::parallelStart()\T1/lmr/m/n/10 (-20) )
  []
 
-[86] [87]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-182-1.pdf, id=1339, 462.72874pt 
+[79] [80]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-181-1.pdf, id=1524, 462.72874pt 
 x 224.84pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-182-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-181-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-182-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-182-1.pd
-f used on input line 6189.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-181-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-181-1.pd
+f used on input line 4807.
 (pdftex.def)             Requested size: 462.73466pt x 224.84286pt.
-[88 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-182-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf, id=1352, 462.72874pt 
+[81 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-181-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-183-1.pdf, id=1536, 462.72874pt 
 x 224.84pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-183-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pd
-f used on input line 6284.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-183-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-183-1.pd
+f used on input line 4875.
 (pdftex.def)             Requested size: 462.73466pt x 224.84286pt.
-[89]
-Overfull \hbox (20.46272pt too wide) in paragraph at lines 6286--6290
+
+Overfull \hbox (20.46272pt too wide) in paragraph at lines 4877--4881
 []\T1/lmr/m/n/10 (-20) Using the \T1/lmtt/m/n/10 ggplot2::labeller() \T1/lmr/m/
 n/10 (-20) func-tion re-quires call-ing \T1/lmtt/m/n/10 ggplot2::facet_wrap() \
 T1/lmr/m/n/10 (-20) (or \T1/lmtt/m/n/10 ggplot2::facet_grid()\T1/lmr/m/n/10 (-2
 0) ),
  []
 
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pdf, id=1358, 459.7175pt x
+[82 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-183-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf, id=1548, 459.7175pt x
  318.18875pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pd
+f used on input line 4899.
+(pdftex.def)             Requested size: 459.71637pt x 318.18796pt.
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pdf, id=1549, 459.7175pt x
+ 303.1325pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pd
-f used on input line 6308.
-(pdftex.def)             Requested size: 459.71637pt x 318.18796pt.
-[90 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-186-1.pdf, id=1370, 459.7175pt x
- 303.1325pt>
+f used on input line 4912.
+(pdftex.def)             Requested size: 459.72337pt x 303.13638pt.
+[83 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-184-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-186-1.pdf, id=1561, 453.695pt x 
+206.7725pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-186-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-186-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-186-1.pd
-f used on input line 6321.
-(pdftex.def)             Requested size: 459.72337pt x 303.13638pt.
-[91 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-187-1.pdf, id=1383, 453.695pt x 
-206.7725pt>
+f used on input line 4928.
+(pdftex.def)             Requested size: 453.6939pt x 206.77199pt.
+[84 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-185-1.pdf> <./_pdf_wrapper
+_files/figure-latex/unnamed-chunk-186-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-187-1.pdf, id=1580, 453.695pt x 
+303.1325pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-187-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-187-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-187-1.pd
-f used on input line 6337.
-(pdftex.def)             Requested size: 453.6939pt x 206.77199pt.
-[92 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-186-1.pdf> <./_pdf_wrapper
-_files/figure-latex/unnamed-chunk-187-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pdf, id=1402, 453.695pt x 
-303.1325pt>
+f used on input line 4953.
+(pdftex.def)             Requested size: 453.6939pt x 303.13176pt.
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pdf, id=1581, 436.63126pt 
+x 315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pd
-f used on input line 6370.
-(pdftex.def)             Requested size: 453.6939pt x 303.13176pt.
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-189-1.pdf, id=1403, 436.63126pt 
-x 315.1775pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-189-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-189-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-189-1.pd
-f used on input line 6378.
+f used on input line 4961.
 (pdftex.def)             Requested size: 436.63019pt x 315.17673pt.
-[93 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pdf>]
-Overfull \hbox (5.29736pt too wide) in paragraph at lines 6387--6395
+[85 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-187-1.pdf>]
+Overfull \hbox (5.29736pt too wide) in paragraph at lines 4970--4978
 \T1/lmtt/m/n/10 generateThreshVsPerfData()\T1/lmr/m/n/10 (-20) . Func-tions \T1
 /lmtt/m/n/10 plotPartialDependence() \T1/lmr/m/n/10 (-20) and \T1/lmtt/m/n/10 p
 lotPartialDependenceGGVIS()
  []
 
 
-Overfull \hbox (17.91791pt too wide) in paragraph at lines 6387--6395
+Overfull \hbox (17.91791pt too wide) in paragraph at lines 4970--4978
 \T1/lmr/m/n/10 (-20) can be ap-plied to the re-sults of both \T1/lmtt/m/n/10 ge
 neratePartialDependenceData() \T1/lmr/m/n/10 (-20) and \T1/lmtt/m/n/10 generate
 FunctionalANOVAData()\T1/lmr/m/n/10 (-20) . 
  []
 
 
-Overfull \hbox (538.64134pt too wide) in alignment at lines 6401--6416
+Overfull \hbox (538.64134pt too wide) in alignment at lines 4984--4999
  [] [] [] [] 
  []
 
 
-Overfull \hbox (538.64134pt too wide) in alignment at lines 6416--6522
+Overfull \hbox (538.64134pt too wide) in alignment at lines 4999--5105
  [] [] [] [] 
  []
 
-[94 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-189-1.pdf>]
-Overfull \hbox (44.63129pt too wide) in paragraph at lines 6548--6553
+[86 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-188-1.pdf>]
+Overfull \hbox (44.63129pt too wide) in paragraph at lines 5129--5134
 []\T1/lmr/m/n/10 (-20) Some func-tions like \T1/lmtt/m/n/10 resample()\T1/lmr/m
 /n/10 (-20) , \T1/lmtt/m/n/10 benchmark()\T1/lmr/m/n/10 (-20) , \T1/lmtt/m/n/10
  selectFeatures()\T1/lmr/m/n/10 (-20) , \T1/lmtt/m/n/10 tuneParams()\T1/lmr/m/n
 /10 (-20) , and \T1/lmtt/m/n/10 tuneParamsMultiCrit()
  []
 
-[95] [96]
-Overfull \hbox (296.74275pt too wide) in paragraph at lines 6730--6730
-[]\T1/lmtt/m/n/10 ## Error in setHyperPars2.Learner(learner, insert(par.vals, a
-rgs)): classif.ksvm: Setting parameter newParam without available description o
-bject![] 
- []
-
-[97]
-Overfull \hbox (291.49277pt too wide) in paragraph at lines 6777--6777
-[]\T1/lmtt/m/n/10 ## Warning in setHyperPars2.Learner(learner, insert(par.vals,
- args)): classif.ksvm: Setting parameter kernl without available description ob
-ject![] 
- []
-
-
-Overfull \hbox (307.24272pt too wide) in paragraph at lines 6783--6783
-[]\T1/lmtt/m/n/10 ## Warning in setHyperPars2.Learner(learner, insert(par.vals,
- args)): classif.ksvm: Setting parameter newParam without available description
- object![] 
- []
-
-
-Overfull \hbox (301.99274pt too wide) in paragraph at lines 6830--6830
-[]\T1/lmtt/m/n/10 ## Warning in train("classif.qda", task = iris.task, subset =
- 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping,
- ...) :[] 
- []
-
-[98] [99] [100] [101] [102] [103] [104]
-Underfull \hbox (badness 1248) in paragraph at lines 7430--7434
+[87] [88] [89] [90] [91] [92] [93] [94]
+Underfull \hbox (badness 1248) in paragraph at lines 5692--5696
 []\T1/lmtt/m/n/10 makePreprocWrapperCaret() \T1/lmr/m/n/10 (+20) is an in-ter-f
 ace to all pre-pro-cess-ing op-tions of-fered by \T1/lmtt/m/n/10 caret\T1/lmr/m
 /n/10 (+20) 's
  []
 
-[105]
-Overfull \hbox (1614.48892pt too wide) in paragraph at lines 7565--7565
-[]\T1/lmtt/m/n/10 ## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc
-.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=F
-ALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.
-spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.
-na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut
-=19,ppc.uniqueCut=10[] 
- []
-
-[106]
-Overfull \hbox (1614.48892pt too wide) in paragraph at lines 7582--7582
-[]\T1/lmtt/m/n/10 ## Hyperparameters: ppc.BoxCox=FALSE,ppc.YeoJohnson=FALSE,ppc
-.expoTrans=FALSE,ppc.center=TRUE,ppc.scale=TRUE,ppc.range=FALSE,ppc.knnImpute=F
-ALSE,ppc.bagImpute=FALSE,ppc.medianImpute=FALSE,ppc.pca=TRUE,ppc.ica=FALSE,ppc.
-spatialSign=FALSE,ppc.corr=FALSE,ppc.zv=FALSE,ppc.nzv=FALSE,ppc.thresh=0.9,ppc.
-na.remove=TRUE,ppc.k=5,ppc.fudge=0.2,ppc.numUnique=3,ppc.cutoff=0.9,ppc.freqCut
-=19,ppc.uniqueCut=10[] 
- []
-
-[107] [108] [109] [110] [111] [112] [113] [114] [115] [116] [117] [118] [119] [
-120] [121]
-<_pdf_wrapper_files/figure-latex/makeBaggingWrapper_regressionPlot-1.pdf, id=15
-54, 451.6875pt x 315.1775pt>
+[95] [96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [108] 
+[109] [110]
+<_pdf_wrapper_files/figure-latex/makeBaggingWrapper_regressionPlot-1.pdf, id=17
+14, 451.6875pt x 315.1775pt>
 File: _pdf_wrapper_files/figure-latex/makeBaggingWrapper_regressionPlot-1.pdf G
 raphic file (type pdf)
 <use _pdf_wrapper_files/figure-latex/makeBaggingWrapper_regressionPlot-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/makeBaggingWrapper_reg
-ressionPlot-1.pdf used on input line 8765.
+ressionPlot-1.pdf used on input line 6886.
 (pdftex.def)             Requested size: 451.71394pt x 315.19595pt.
-[122] [123 <./_pdf_wrapper_files/figure-latex/makeBaggingWrapper_regressionPlot
--1.pdf>] [124] [125]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-246-1.pdf, id=1584, 459.7175pt x
+[111 <./_pdf_wrapper_files/figure-latex/makeBaggingWrapper_regressionPlot-1.pdf
+>] [112] [113]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-245-1.pdf, id=1739, 459.7175pt x
  315.1775pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-246-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-245-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-246-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-246-1.pd
-f used on input line 8960.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-245-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-245-1.pd
+f used on input line 7053.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-
-Overfull \hbox (24.03078pt too wide) in paragraph at lines 8980--8987
-[]\T1/lmr/m/n/10 (-20) Different meth-ods for cal-cu-lat-ing the fea-ture im-po
-r-tance are built into \T1/lmtt/m/n/10 mlr\T1/lmr/m/n/10 (-20) 's func-tion \T1
-/lmtt/m/n/10 generateFilterValuesData()
+[114 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-245-1.pdf>]
+Overfull \hbox (24.03078pt too wide) in paragraph at lines 7071--7078
+\T1/lmr/m/n/10 (-20) Different meth-ods for cal-cu-lat-ing the fea-ture im-por-
+tance are built into \T1/lmtt/m/n/10 mlr\T1/lmr/m/n/10 (-20) 's func-tion \T1/l
+mtt/m/n/10 generateFilterValuesData()
  []
 
-[126 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-246-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-250-1.pdf, id=1597, 445.665pt x 
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-249-1.pdf, id=1752, 445.665pt x 
 301.125pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-250-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-249-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-250-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-250-1.pd
-f used on input line 9036.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-249-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-249-1.pd
+f used on input line 7121.
 (pdftex.def)             Requested size: 445.6707pt x 301.12885pt.
-[127] [128 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-250-1.pdf>]
-Underfull \hbox (badness 1859) in paragraph at lines 9129--9137
+[115] [116 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-249-1.pdf>]
+Underfull \hbox (badness 1859) in paragraph at lines 7212--7220
 \T1/lmr/m/n/10 (+20) of the k-nearest neigh-bor clas-si-fier (\T1/lmtt/m/n/10 F
 NN::fnn()\T1/lmr/m/n/10 (+20) ) with pre-ced-ing fea-ture se-lec-tion on the \T
 1/lmtt/m/n/10 iris
  []
 
-[129] [130] [131]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-260-1.pdf, id=1629, 459.7175pt x
+[117] [118] [119]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-259-1.pdf, id=1781, 459.7175pt x
  315.1775pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-260-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-259-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-260-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-260-1.pd
-f used on input line 9418.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-259-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-259-1.pd
+f used on input line 7394.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-[132]
-Overfull \hbox (27.10527pt too wide) in paragraph at lines 9441--9444
+
+Overfull \hbox (27.10527pt too wide) in paragraph at lines 7417--7420
 []\T1/lmr/m/n/10 (-20) The search strat-egy is de-fined by func-tions fol-low-i
 ng the nam-ing con-ven-tion \T1/lmtt/m/n/10 makeFeatSelControl<search_strategy\
 T1/lmr/m/n/10 (-20) .
  []
 
-[133 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-260-1.pdf>]
-Overfull \hbox (1052.74055pt too wide) in paragraph at lines 9510--9510
-[]\T1/lmtt/m/n/10 ## Features (18): mean_perimeter, mean_smoothness, mean_conca
-vepoints, mean_fractaldim, SE_radius, SE_texture, SE_perimeter, SE_area, SE_smo
-othness, SE_compactness, SE_concavity, worst_radius, worst_compactness, worst_c
-oncavity, worst_concavepoints, worst_symmetry, worst_fractaldim, pnodes[] 
- []
-
-
-Overfull \hbox (6.26773pt too wide) in paragraph at lines 9542--9552
+[120 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-259-1.pdf>]
+Overfull \hbox (6.26773pt too wide) in paragraph at lines 7501--7511
 []\T1/lmr/m/n/10 (-20) In a sec-ond ex-am-ple we fit a sim-ple lin-ear re-gres-
 sion model to the \T1/lmtt/m/n/10 BostonHousing \T1/lmr/m/n/10 (-20) (\T1/lmtt/
 m/n/10 mlbench::BostonHousing()\T1/lmr/m/n/10 (-20) )
  []
 
-[134]
-Underfull \hbox (badness 1320) in paragraph at lines 9572--9574
+[121]
+Underfull \hbox (badness 1320) in paragraph at lines 7528--7530
 []\T1/lmr/m/n/10 (+20) Further in-for-ma-tion about the se-quen-tial fea-ture s
 e-lec-tion pro-cess can be ob-tained by func-tion
  []
 
-[135]
-Overfull \hbox (926.74092pt too wide) in paragraph at lines 9642--9642
-[]\T1/lmtt/m/n/10 ## Features (17): mean_perimeter, mean_smoothness, mean_compa
-ctness, mean_fractaldim, SE_perimeter, SE_area, SE_smoothness, SE_compactness, 
-SE_concavity, SE_concavepoints, SE_symmetry, worst_radius, worst_texture, worst
-_area, worst_smoothness, worst_symmetry, pnodes[] 
- []
-
-
-Overfull \hbox (1078.99048pt too wide) in paragraph at lines 9713--9713
-[]\T1/lmtt/m/n/10 ## Features (18): mean_radius, mean_smoothness, mean_compactn
-ess, mean_concavepoints, mean_symmetry, mean_fractaldim, SE_texture, SE_perimet
-er, SE_smoothness, SE_concavepoints, SE_fractaldim, worst_radius, worst_texture
-, worst_area, worst_compactness, worst_concavepoints, worst_symmetry, pnodes[] 
-
- []
-
-
-Overfull \hbox (1194.49014pt too wide) in paragraph at lines 9713--9713
-[]\T1/lmtt/m/n/10 ## Features (21): mean_radius, mean_smoothness, mean_concavit
-y, mean_symmetry, mean_fractaldim, SE_radius, SE_texture, SE_perimeter, SE_area
-, SE_smoothness, SE_compactness, SE_concavity, SE_concavepoints, worst_texture,
- worst_area, worst_smoothness, worst_compactness, worst_concavity, worst_fracta
-ldim, tsize, pnodes[] 
- []
-
-
-Overfull \hbox (637.99176pt too wide) in paragraph at lines 9713--9713
-[]\T1/lmtt/m/n/10 ## Features (13): mean_radius, mean_area, mean_concavity, SE_
-texture, SE_smoothness, SE_compactness, SE_concavity, SE_symmetry, SE_fractaldi
-m, worst_smoothness, worst_compactness, worst_concavity, worst_symmetry[] 
- []
-
-
-Overfull \hbox (842.74117pt too wide) in paragraph at lines 9713--9713
-[]\T1/lmtt/m/n/10 ## Features (17): mean_radius, mean_smoothness, mean_fractald
-im, SE_radius, SE_perimeter, SE_area, SE_compactness, SE_concavity, SE_symmetry
-, worst_radius, worst_texture, worst_perimeter, worst_area, worst_concavepoints
-, worst_symmetry, tsize, pnodes[] 
- []
-
-[136]
-Overfull \hbox (538.24205pt too wide) in paragraph at lines 9713--9713
-[]\T1/lmtt/m/n/10 ## Features (11): mean_radius, mean_compactness, mean_concave
-points, mean_symmetry, SE_texture, SE_concavity, worst_radius, worst_compactnes
-s, worst_concavity, worst_symmetry, worst_fractaldim[] 
- []
-
-
+[122] [123]
 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/nested_resamplin
-g.png, id=1660, 995.97093pt x 711.4078pt>
+g.png, id=1806, 995.97093pt x 711.4078pt>
 File: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/nested_resa
 mpling.png Graphic file (type png)
 
 <use /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/nested_resam
 pling.png>
 Package pdftex.def Info: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/
-pdf/img/nested_resampling.png used on input line 9727.
+pdf/img/nested_resampling.png used on input line 7663.
 (pdftex.def)             Requested size: 400.00743pt x 285.71959pt.
 
-Overfull \hbox (16.16228pt too wide) in paragraph at lines 9753--9758
+Overfull \hbox (16.16228pt too wide) in paragraph at lines 7689--7694
 []\T1/lmr/m/n/10 (-20) Generate a wrapped Learner (\T1/lmtt/m/n/10 makeLearner(
 )\T1/lmr/m/n/10 (-20) ) via func-tion \T1/lmtt/m/n/10 makeTuneWrapper() \T1/lmr
 /m/n/10 (-20) or \T1/lmtt/m/n/10 makeFeatSelWrapper()\T1/lmr/m/n/10 (-20) .
  []
 
-[137 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/nested_resa
-mpling.png>] [138] [139]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-278-1.pdf, id=1678, 453.695pt x 
+[124 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/nested_resa
+mpling.png>] [125] [126]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-277-1.pdf, id=1822, 453.695pt x 
 224.84pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-278-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-277-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-278-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-278-1.pd
-f used on input line 9948.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-277-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-277-1.pd
+f used on input line 7864.
 (pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
-[140 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-278-1.pdf>]
-Overfull \hbox (26.35506pt too wide) in paragraph at lines 9986--9989
+
+Overfull \hbox (26.35506pt too wide) in paragraph at lines 7899--7902
 []\T1/lmr/m/n/10 (-20) Below we use se-quen-tial for-ward se-lec-tion with lin-
 ear re-gres-sion on the \T1/lmtt/m/n/10 BostonHousing \T1/lmr/m/n/10 (-20) (\T1
 /lmtt/m/n/10 mlbench::BostonHousing()
  []
 
-[141] [142] [143] [144]
-Overfull \hbox (9.52826pt too wide) in paragraph at lines 10285--10289
+[127 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-277-1.pdf>] [128] [129] [
+130]
+Overfull \hbox (9.52826pt too wide) in paragraph at lines 8143--8147
 []\T1/lmr/m/n/10 (-20) First, use \T1/lmtt/m/n/10 makeTuneWrapper() \T1/lmr/m/n
 /10 (-20) or \T1/lmtt/m/n/10 makeFeatSelWrapper() \T1/lmr/m/n/10 (-20) to gen-e
 r-ate wrapped Learner (\T1/lmtt/m/n/10 makeLearner()\T1/lmr/m/n/10 (-20) )s
  []
 
-[145] [146] [147] [148] [149] [150]
-Underfull \vbox (badness 10000) detected at line 10817
+[131] [132] [133] [134] [135] [136]
+Underfull \vbox (badness 10000) detected at line 8597
  []
 
-[151]
-Overfull \hbox (23.10663pt too wide) in paragraph at lines 10824--10830
+[137]
+Overfull \hbox (23.10663pt too wide) in paragraph at lines 8604--8610
 []\T1/lmr/m/n/10 (-20) A well-known cost-sensitive clas-si-fi-ca-tion prob-lem 
 is posed by the Ger-man Credit data set (\T1/lmtt/m/n/10 caret::GermanCredit()\
 T1/lmr/m/n/10 (-20) )
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10837
+Underfull \vbox (badness 10000) detected at line 8617
  []
 
-[152] [153] [154]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-308-1.pdf, id=1772, 459.7175pt x
+[138] [139] [140]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-307-1.pdf, id=1908, 459.7175pt x
  224.84pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-308-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-307-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-308-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-308-1.pd
-f used on input line 11112.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-307-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-307-1.pd
+f used on input line 8845.
 (pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
-[155 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-308-1.pdf>] [156] [157] [
-158] [159]
-Underfull \vbox (badness 10000) detected at line 11488
+[141 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-307-1.pdf>] [142] [143] [
+144]
+Underfull \vbox (badness 10000) detected at line 9156
  []
 
-[160] [161] [162] [163]
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 11755--11755
-[]\T1/lmtt/m/n/10 ## Model for learner.id=costsens.classif.multinom; learner.cl
-ass=CostSensWeightedPairsWrapper[] 
- []
-
-[164] [165] [166] [167] [168] [169]
-Overfull \hbox (25.25633pt too wide) in paragraph at lines 12290--12297
+[145] [146] [147] [148] [149] [150] [151] [152] [153]
+Overfull \hbox (25.25633pt too wide) in paragraph at lines 9804--9811
 \T1/lmr/m/n/10 (-20) (for al-ter-na-tives see also the pages about cost-sensiti
 ve clas-si-fi-ca-tion (\T1/lmtt/m/n/10 vignette("cost_sensitive_classif")\T1/lm
 r/m/n/10 (-20) )
  []
 
-[170]
-Underfull \hbox (badness 4303) in paragraph at lines 12357--12365
+[154]
+Underfull \hbox (badness 4303) in paragraph at lines 9871--9879
 \T1/lmtt/m/n/10 ResampleResult() \T1/lmr/m/n/10 (+20) and \T1/lmtt/m/n/10 Bench
 markResult() \T1/lmr/m/n/10 (+20) (re-sult-ing from \T1/lmtt/m/n/10 predict \T1
 /lmr/m/n/10 (+20) (\T1/lmtt/m/n/10 predict.WrappedModel()\T1/lmr/m/n/10 (+20) )
@@ -1790,7 +1603,7 @@ markResult() \T1/lmr/m/n/10 (+20) (re-sult-ing from \T1/lmtt/m/n/10 predict \T1
  []
 
 
-Overfull \hbox (7.79109pt too wide) in paragraph at lines 12386--12390
+Overfull \hbox (7.79109pt too wide) in paragraph at lines 9900--9904
 \T1/lmr/m/n/10 (-20) and \T1/lmtt/m/n/10 tpr \T1/lmr/m/n/10 (-20) (\T1/lmtt/m/n
 /10 vignette("measures")\T1/lmr/m/n/10 (-20) )). Ad-di-tion-ally, we also com-p
 ute er-ror rates (\T1/lmtt/m/n/10 mmce \T1/lmr/m/n/10 (-20) (\T1/lmtt/m/n/10 vi
@@ -1798,763 +1611,767 @@ gnette("measures")\T1/lmr/m/n/10 (-20) )).
  []
 
 
-Overfull \hbox (3.93658pt too wide) in paragraph at lines 12397--12400
+Overfull \hbox (3.93658pt too wide) in paragraph at lines 9911--9914
 []\T1/lmtt/m/n/10 generateThreshVsPerfData() \T1/lmr/m/n/10 (-20) re-turns an o
 b-ject of class \T1/lmtt/m/n/10 ThreshVsPerfData \T1/lmr/m/n/10 (-20) (\T1/lmtt
 /m/n/10 generateThreshVsPerfData()\T1/lmr/m/n/10 (-20) )
  []
 
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-332-1.pdf, id=1875, 462.72874pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-331-1.pdf, id=2002, 462.72874pt 
 x 316.18124pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-332-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-331-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-332-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-332-1.pd
-f used on input line 12414.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-331-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-331-1.pd
+f used on input line 9928.
 (pdftex.def)             Requested size: 352.32002pt x 240.73927pt.
-[171]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-334-1.pdf, id=1884, 462.72874pt 
+[155]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-333-1.pdf, id=2010, 462.72874pt 
 x 319.1925pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-334-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-333-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-334-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-334-1.pd
-f used on input line 12442.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-333-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-333-1.pd
+f used on input line 9953.
 (pdftex.def)             Requested size: 462.72762pt x 319.19171pt.
-[172 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-332-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-336-1.pdf, id=1899, 456.70625pt 
+[156 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-331-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-335-1.pdf, id=2025, 456.70625pt 
 x 320.19624pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-336-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-335-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-336-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-336-1.pd
-f used on input line 12467.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-335-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-335-1.pd
+f used on input line 9978.
 (pdftex.def)             Requested size: 456.71208pt x 320.20033pt.
-[173 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-334-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-338-1.pdf, id=1911, 452.69125pt 
+[157 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-333-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-337-1.pdf, id=2038, 452.69125pt 
 x 315.1775pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-337-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-337-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-337-1.pd
+f used on input line 10001.
+(pdftex.def)             Requested size: 352.3172pt x 245.294pt.
+[158 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-335-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-338-1.pdf, id=2053, 456.70625pt 
+x 316.18124pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-338-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-338-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-338-1.pd
-f used on input line 12493.
-(pdftex.def)             Requested size: 352.3172pt x 245.294pt.
-[174 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-336-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-339-1.pdf, id=1926, 456.70625pt 
-x 316.18124pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-339-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-339-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-339-1.pd
-f used on input line 12514.
+f used on input line 10022.
 (pdftex.def)             Requested size: 234.87532pt x 162.60599pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-339-2.pdf, id=1927, 456.70625pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-338-2.pdf, id=2054, 456.70625pt 
 x 316.18124pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-339-2.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-338-2.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-339-2.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-339-2.pd
-f used on input line 12515.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-338-2.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-338-2.pd
+f used on input line 10023.
 (pdftex.def)             Requested size: 234.87532pt x 162.60599pt.
 
-Overfull \hbox (2.21783pt too wide) in paragraph at lines 12514--12516
+Overfull \hbox (2.21783pt too wide) in paragraph at lines 10022--10024
 [][] [] 
  []
 
-[175 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-338-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-339-1.pdf> <./_pdf_wrapper_files/figure-late
-x/unnamed-chunk-339-2.pdf>]
-Underfull \hbox (badness 1496) in paragraph at lines 12527--12537
+[159 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-337-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-338-1.pdf> <./_pdf_wrapper_files/figure-late
+x/unnamed-chunk-338-2.pdf>]
+Underfull \hbox (badness 1496) in paragraph at lines 10035--10045
 []\T1/lmr/m/n/10 (+20) We again con-sider the \T1/lmtt/m/n/10 Sonar \T1/lmr/m/n
 /10 (+20) (\T1/lmtt/m/n/10 mlbench::Sonar()\T1/lmr/m/n/10 (+20) ) data set and 
 ap-ply \T1/lmtt/m/n/10 MASS::lda() \T1/lmr/m/n/10 (+20) as well as
  []
 
 
-Overfull \hbox (0.49377pt too wide) in paragraph at lines 12573--12576
+Overfull \hbox (0.49377pt too wide) in paragraph at lines 10078--10081
 []\T1/lmr/m/n/10 (-20) Calling \T1/lmtt/m/n/10 generateThreshVsPerfData() \T1/l
 mr/m/n/10 (-20) and \T1/lmtt/m/n/10 plotROCCurves() \T1/lmr/m/n/10 (-20) on the
  bench-mark re-sult (\T1/lmtt/m/n/10 BenchmarkResult()\T1/lmr/m/n/10 (-20) )
  []
 
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pdf, id=1955, 456.70625pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-341-1.pdf, id=2080, 456.70625pt 
+x 320.19624pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-341-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-341-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-341-1.pd
+f used on input line 10089.
+(pdftex.def)             Requested size: 456.71208pt x 320.20033pt.
+[160]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pdf, id=2085, 456.70625pt 
 x 320.19624pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pd
-f used on input line 12584.
+f used on input line 10107.
 (pdftex.def)             Requested size: 456.71208pt x 320.20033pt.
-[176]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-343-1.pdf, id=1960, 456.70625pt 
-x 320.19624pt>
+[161 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-341-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-343-1.pdf, id=2100, 453.695pt x 
+224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-343-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-343-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-343-1.pd
-f used on input line 12602.
-(pdftex.def)             Requested size: 456.71208pt x 320.20033pt.
-[177 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-344-1.pdf, id=1976, 453.695pt x 
-224.84pt>
+f used on input line 10118.
+(pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
+[162 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-342-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-343-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-344-1.pdf, id=2124, 456.70625pt 
+x 320.19624pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-344-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-344-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-344-1.pd
-f used on input line 12613.
-(pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
-[178 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-343-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-344-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-345-1.pdf, id=1999, 456.70625pt 
-x 320.19624pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-345-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-345-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-345-1.pd
-f used on input line 12643.
+f used on input line 10148.
 (pdftex.def)             Requested size: 456.71208pt x 320.20033pt.
 
-Underfull \hbox (badness 1565) in paragraph at lines 12667--12675
+Underfull \hbox (badness 1565) in paragraph at lines 10172--10180
 []\T1/lmtt/m/n/10 mlr\T1/lmr/m/n/10 (+20) 's func-tion \T1/lmtt/m/n/10 asROCRPr
 ediction() \T1/lmr/m/n/10 (+20) con-verts an \T1/lmtt/m/n/10 mlr Prediction() \
 T1/lmr/m/n/10 (+20) ob-ject to a \T1/lmtt/m/n/10 ROCR \T1/lmr/m/n/10 (+20) pre-
 dic-tion
  []
 
-[179 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-345-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pdf, id=2017, 439.6425pt x
+[163 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-344-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-346-1.pdf, id=2143, 439.6425pt x
  251.94125pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-346-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-346-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-346-1.pd
+f used on input line 10218.
+(pdftex.def)             Requested size: 352.32494pt x 201.90309pt.
+[164 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-346-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pdf, id=2155, 464.73625pt 
+x 253.94875pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pd
-f used on input line 12713.
-(pdftex.def)             Requested size: 352.32494pt x 201.90309pt.
-[180 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-348-1.pdf, id=2030, 464.73625pt 
-x 253.94875pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-348-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-348-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-348-1.pd
-f used on input line 12731.
+f used on input line 10236.
 (pdftex.def)             Requested size: 352.3239pt x 192.52255pt.
-[181 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-348-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pdf, id=2044, 439.6425pt x
+[165 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-347-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-349-1.pdf, id=2167, 439.6425pt x
+ 251.94125pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-349-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-349-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-349-1.pd
+f used on input line 10282.
+(pdftex.def)             Requested size: 352.32494pt x 201.90309pt.
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pdf, id=2168, 439.6425pt x
  251.94125pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pd
-f used on input line 12777.
+f used on input line 10306.
 (pdftex.def)             Requested size: 352.32494pt x 201.90309pt.
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-351-1.pdf, id=2045, 439.6425pt x
- 251.94125pt>
+[166 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-349-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-351-1.pdf, id=2180, 439.6425pt x
+ 248.93pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-351-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-351-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-351-1.pd
-f used on input line 12801.
-(pdftex.def)             Requested size: 352.32494pt x 201.90309pt.
-[182 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-351-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-352-1.pdf, id=2064, 439.6425pt x
- 248.93pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-352-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-352-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-352-1.pd
-f used on input line 12824.
+f used on input line 10329.
 (pdftex.def)             Requested size: 352.32494pt x 199.48991pt.
 
-Overfull \hbox (22.92404pt too wide) in paragraph at lines 12828--12834
+Overfull \hbox (22.92404pt too wide) in paragraph at lines 10333--10339
 \T1/lmtt/m/n/10 mlr \T1/lmr/m/n/10 (-20) also sup-ports []Viper-Charts[] for pl
 ot-ting ROC and other per-for-mance curves. Like \T1/lmtt/m/n/10 generateThresh
 VsPerfData()
  []
 
-[183 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-352-1.pdf>]
-Overfull \hbox (123.49326pt too wide) in paragraph at lines 12899--12899
-[]\T1/lmtt/m/n/10 ## Target: label1,label2,label3,label4,label5,label6,label7,l
-abel8,label9,label10,label11,label12,label13,label14[] 
- []
-
-[184]
-Overfull \hbox (76.0767pt too wide) in paragraph at lines 12945--12954
+[167 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-350-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-351-1.pdf>] [168]
+Overfull \hbox (76.0767pt too wide) in paragraph at lines 10441--10450
 \T1/lmtt/m/n/10 makeMultilabelClassifierChainsWrapper()\T1/lmr/m/n/10 (-20) , \
 T1/lmtt/m/n/10 makeMultilabelNestedStackingWrapper()\T1/lmr/m/n/10 (-20) , \T1/
 lmtt/m/n/10 makeMultilabelDBRWrapper()
  []
 
-[185]
-Overfull \hbox (118.24327pt too wide) in paragraph at lines 13049--13049
-[]\T1/lmtt/m/n/10 ## Model for learner.id=multilabel.binaryRelevance.classif.rp
-art; learner.class=MultilabelBinaryRelevanceWrapper[] 
- []
-
-
-Overfull \hbox (13.24358pt too wide) in paragraph at lines 13062--13062
-[]\T1/lmtt/m/n/10 ## Model for learner.id=multilabel.randomForestSRC; learner.c
-lass=multilabel.randomForestSRC[] 
- []
-
-[186]
-Underfull \hbox (badness 1540) in paragraph at lines 13175--13181
+[169] [170] [171]
+Underfull \hbox (badness 1540) in paragraph at lines 10618--10624
 \T1/lmr/m/n/10 (+20) For eval-u-at-ing the over-all per-for-mance of the learn-
 ing al-go-rithm you can do some re-sam-pling
  []
 
-[187] [188]
-<_pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pdf, id=2107, 453.695pt x 
+[172]
+<_pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pdf, id=2227, 453.695pt x 
 355.3275pt>
 File: _pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pd
-f used on input line 13321.
+f used on input line 10740.
 (pdftex.def)             Requested size: 453.6939pt x 355.32661pt.
-[189]
-<_pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pdf, id=2112, 453.695pt x 
+[173]
+<_pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pdf, id=2232, 453.695pt x 
 342.27875pt>
 File: _pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pd
-f used on input line 13356.
+f used on input line 10775.
 (pdftex.def)             Requested size: 453.6939pt x 342.2779pt.
-[190 <./_pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-364-1.pdf, id=2124, 453.695pt x 
+[174 <./_pdf_wrapper_files/figure-latex/LearningCurveTPFP-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-363-1.pdf, id=2245, 453.695pt x 
 303.1325pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-364-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-363-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-364-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-364-1.pd
-f used on input line 13371.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-363-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-363-1.pd
+f used on input line 10790.
 (pdftex.def)             Requested size: 453.6939pt x 303.13176pt.
-[191 <./_pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pdf>] [192 <./_pdf_
-wrapper_files/figure-latex/unnamed-chunk-364-1.pdf>] [193] [194] [195] [196] [1
-97] [198] [199] [200]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pdf, id=2187, 459.7175pt x
+[175 <./_pdf_wrapper_files/figure-latex/LearningCurveACCx-1.pdf>] [176 <./_pdf_
+wrapper_files/figure-latex/unnamed-chunk-363-1.pdf>] [177] [178] [179]
+Overfull \vbox (1.21829pt too high) detected at line 11106
+ []
+
+[180] [181] [182] [183]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-382-1.pdf, id=2304, 459.7175pt x
  224.84pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-382-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-382-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-382-1.pd
+f used on input line 11320.
+(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pdf, id=2305, 453.695pt x 
+224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pd
-f used on input line 14011.
-(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-384-1.pdf, id=2188, 453.695pt x 
-224.84pt>
+f used on input line 11332.
+(pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
+[184 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-382-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-384-1.pdf, id=2317, 459.7175pt x
+ 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-384-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-384-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-384-1.pd
-f used on input line 14023.
-(pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
+f used on input line 11344.
+(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pdf, id=2189, 459.7175pt x
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pdf, id=2318, 459.7175pt x
  224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pd
-f used on input line 14035.
+f used on input line 11355.
 (pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
-[201 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pdf> <./_pdf_wrappe
+[185 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-383-1.pdf> <./_pdf_wrappe
 r_files/figure-latex/unnamed-chunk-384-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-386-1.pdf, id=2208, 459.7175pt x
- 224.84pt>
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-386-1.pdf, id=2340, 453.695pt x 
+224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-386-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-386-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-386-1.pd
-f used on input line 14046.
-(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
+f used on input line 11368.
+(pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pdf, id=2209, 453.695pt x 
-224.84pt>
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pdf, id=2341, 453.695pt x 
+315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pd
-f used on input line 14059.
-(pdftex.def)             Requested size: 453.6939pt x 224.83945pt.
-[202 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-386-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-388-1.pdf, id=2235, 453.695pt x 
-315.1775pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-388-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-388-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-388-1.pd
-f used on input line 14074.
+f used on input line 11383.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
-[203 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-388-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-390-1.pdf, id=2254, 459.7175pt x
+[186 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-385-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-386-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-389-1.pdf, id=2363, 459.7175pt x
  224.84pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-389-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-389-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-389-1.pd
+f used on input line 11405.
+(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
+[187 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-387-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-390-1.pdf, id=2376, 456.70625pt 
+x 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-390-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-390-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-390-1.pd
-f used on input line 14096.
-(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
+f used on input line 11418.
+(pdftex.def)             Requested size: 456.71906pt x 224.8463pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-391-1.pdf, id=2255, 456.70625pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-391-1.pdf, id=2377, 462.72874pt 
 x 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-391-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-391-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-391-1.pd
-f used on input line 14109.
-(pdftex.def)             Requested size: 456.71906pt x 224.8463pt.
-[204 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-390-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-391-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-392-1.pdf, id=2280, 462.72874pt 
+f used on input line 11431.
+(pdftex.def)             Requested size: 462.73466pt x 224.84286pt.
+[188 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-389-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-390-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-392-1.pdf, id=2403, 462.72874pt 
 x 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-392-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-392-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-392-1.pd
-f used on input line 14122.
+f used on input line 11442.
 (pdftex.def)             Requested size: 462.73466pt x 224.84286pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-393-1.pdf, id=2281, 462.72874pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-393-1.pdf, id=2404, 456.70625pt 
 x 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-393-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-393-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-393-1.pd
-f used on input line 14133.
-(pdftex.def)             Requested size: 462.73466pt x 224.84286pt.
-[205 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-392-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-393-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-394-1.pdf, id=2304, 456.70625pt 
-x 224.84pt>
+f used on input line 11454.
+(pdftex.def)             Requested size: 456.71906pt x 224.8463pt.
+[189 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-391-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-392-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-394-1.pdf, id=2426, 459.7175pt x
+ 224.84pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-394-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-394-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-394-1.pd
-f used on input line 14145.
-(pdftex.def)             Requested size: 456.71906pt x 224.8463pt.
+f used on input line 11466.
+(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
 
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-395-1.pdf, id=2305, 459.7175pt x
- 224.84pt>
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-395-1.pdf, id=2427, 453.695pt x 
+342.27875pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-395-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-395-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-395-1.pd
-f used on input line 14157.
-(pdftex.def)             Requested size: 459.73741pt x 224.84973pt.
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-396-1.pdf, id=2306, 453.695pt x 
-342.27875pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-396-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-396-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-396-1.pd
-f used on input line 14169.
+f used on input line 11478.
 (pdftex.def)             Requested size: 453.6939pt x 342.2779pt.
-[206 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-394-1.pdf> <./_pdf_wrappe
-r_files/figure-latex/unnamed-chunk-395-1.pdf>] [207 <./_pdf_wrapper_files/figur
-e-latex/unnamed-chunk-396-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pdf, id=2341, 456.70625pt 
+[190 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-393-1.pdf> <./_pdf_wrappe
+r_files/figure-latex/unnamed-chunk-394-1.pdf>] [191 <./_pdf_wrapper_files/figur
+e-latex/unnamed-chunk-395-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-399-1.pdf, id=2462, 456.70625pt 
+x 343.2825pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-399-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-399-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-399-1.pd
+f used on input line 11558.
+(pdftex.def)             Requested size: 456.70512pt x 343.28165pt.
+[192]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pdf, id=2467, 456.70625pt 
 x 343.2825pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pd
-f used on input line 14257.
+f used on input line 11572.
 (pdftex.def)             Requested size: 456.70512pt x 343.28165pt.
-[208]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-401-1.pdf, id=2346, 456.70625pt 
+[193 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-399-1.pdf>]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-401-1.pdf, id=2483, 456.70625pt 
 x 343.2825pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-401-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-401-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-401-1.pd
-f used on input line 14271.
+f used on input line 11591.
 (pdftex.def)             Requested size: 456.70512pt x 343.28165pt.
-[209 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-402-1.pdf, id=2361, 456.70625pt 
-x 343.2825pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-402-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-402-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-402-1.pd
-f used on input line 14290.
-(pdftex.def)             Requested size: 456.70512pt x 343.28165pt.
-[210 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-401-1.pdf>] [211 <./_pdf_
-wrapper_files/figure-latex/unnamed-chunk-402-1.pdf>]
-Underfull \hbox (badness 1496) in paragraph at lines 14372--14377
+[194 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-400-1.pdf>] [195 <./_pdf_
+wrapper_files/figure-latex/unnamed-chunk-401-1.pdf>]
+Underfull \hbox (badness 1496) in paragraph at lines 11670--11675
 []\T1/lmr/m/n/10 (+20) Below we per-form ran-dom search on the \T1/lmtt/m/n/10 
 C \T1/lmr/m/n/10 (+20) pa-ram-e-ter for SVM on the fa-mous Pima In-di-ans
  []
 
-[212] [213] [214]
-<_pdf_wrapper_files/figure-latex/sa_single-1.pdf, id=2404, 458.71375pt x 315.17
+[196] [197]
+<_pdf_wrapper_files/figure-latex/sa_single-1.pdf, id=2520, 458.71375pt x 315.17
 75pt>
 File: _pdf_wrapper_files/figure-latex/sa_single-1.pdf Graphic file (type pdf)
 <use _pdf_wrapper_files/figure-latex/sa_single-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/sa_single-1.pdf used o
-n input line 14557.
+n input line 11846.
 (pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
-
-<_pdf_wrapper_files/figure-latex/single_crash-1.pdf, id=2405, 452.69125pt x 315
+[198]
+<_pdf_wrapper_files/figure-latex/single_crash-1.pdf, id=2526, 452.69125pt x 315
 .1775pt>
 File: _pdf_wrapper_files/figure-latex/single_crash-1.pdf Graphic file (type pdf
 )
 <use _pdf_wrapper_files/figure-latex/single_crash-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/single_crash-1.pdf use
-d on input line 14580.
+d on input line 11869.
 (pdftex.def)             Requested size: 452.69014pt x 315.17673pt.
-[215 <./_pdf_wrapper_files/figure-latex/sa_single-1.pdf>]
-<_pdf_wrapper_files/figure-latex/single_nested-1.pdf, id=2417, 452.69125pt x 31
+[199 <./_pdf_wrapper_files/figure-latex/sa_single-1.pdf>]
+<_pdf_wrapper_files/figure-latex/single_nested-1.pdf, id=2539, 452.69125pt x 31
 5.1775pt>
 File: _pdf_wrapper_files/figure-latex/single_nested-1.pdf Graphic file (type pd
 f)
 <use _pdf_wrapper_files/figure-latex/single_nested-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/single_nested-1.pdf us
-ed on input line 14601.
+ed on input line 11890.
 (pdftex.def)             Requested size: 452.69014pt x 315.17673pt.
-[216 <./_pdf_wrapper_files/figure-latex/single_crash-1.pdf>] <_pdf_wrapper_file
-s/figure-latex/two-1.pdf, id=2429, 453.695pt x 315.1775pt>
+[200 <./_pdf_wrapper_files/figure-latex/single_crash-1.pdf>] <_pdf_wrapper_file
+s/figure-latex/two-1.pdf, id=2551, 453.695pt x 315.1775pt>
 File: _pdf_wrapper_files/figure-latex/two-1.pdf Graphic file (type pdf)
 <use _pdf_wrapper_files/figure-latex/two-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/two-1.pdf used on inpu
-t line 14638.
+t line 11927.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
-[217 <./_pdf_wrapper_files/figure-latex/single_nested-1.pdf>]
-<_pdf_wrapper_files/figure-latex/two_showargs-1.pdf, id=2442, 453.695pt x 315.1
+[201 <./_pdf_wrapper_files/figure-latex/single_nested-1.pdf>]
+<_pdf_wrapper_files/figure-latex/two_showargs-1.pdf, id=2563, 453.695pt x 315.1
 775pt>
 File: _pdf_wrapper_files/figure-latex/two_showargs-1.pdf Graphic file (type pdf
 )
 <use _pdf_wrapper_files/figure-latex/two_showargs-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/two_showargs-1.pdf use
-d on input line 14653.
+d on input line 11942.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
-[218 <./_pdf_wrapper_files/figure-latex/two-1.pdf>]
-<_pdf_wrapper_files/figure-latex/two_optima-1.pdf, id=2456, 458.71375pt x 315.1
+[202 <./_pdf_wrapper_files/figure-latex/two-1.pdf>]
+<_pdf_wrapper_files/figure-latex/two_optima-1.pdf, id=2577, 458.71375pt x 315.1
 775pt>
 File: _pdf_wrapper_files/figure-latex/two_optima-1.pdf Graphic file (type pdf)
 <use _pdf_wrapper_files/figure-latex/two_optima-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/two_optima-1.pdf used 
-on input line 14665.
+on input line 11954.
 (pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
-[219 <./_pdf_wrapper_files/figure-latex/two_showargs-1.pdf>]
-<_pdf_wrapper_files/figure-latex/two_crash-1.pdf, id=2470, 453.695pt x 315.1775
+[203 <./_pdf_wrapper_files/figure-latex/two_showargs-1.pdf>]
+<_pdf_wrapper_files/figure-latex/two_crash-1.pdf, id=2591, 453.695pt x 315.1775
 pt>
 File: _pdf_wrapper_files/figure-latex/two_crash-1.pdf Graphic file (type pdf)
 <use _pdf_wrapper_files/figure-latex/two_crash-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/two_crash-1.pdf used o
-n input line 14691.
+n input line 11980.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
-[220 <./_pdf_wrapper_files/figure-latex/two_optima-1.pdf>]
-<_pdf_wrapper_files/figure-latex/two_nested-1.pdf, id=2482, 453.695pt x 315.177
+[204 <./_pdf_wrapper_files/figure-latex/two_optima-1.pdf>]
+<_pdf_wrapper_files/figure-latex/two_nested-1.pdf, id=2603, 453.695pt x 315.177
 5pt>
 File: _pdf_wrapper_files/figure-latex/two_nested-1.pdf Graphic file (type pdf)
 <use _pdf_wrapper_files/figure-latex/two_nested-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/two_nested-1.pdf used 
-on input line 14723.
+on input line 12012.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
-[221 <./_pdf_wrapper_files/figure-latex/two_crash-1.pdf>] [222 <./_pdf_wrapper_
+[205 <./_pdf_wrapper_files/figure-latex/two_crash-1.pdf>] [206 <./_pdf_wrapper_
 files/figure-latex/two_nested-1.pdf>]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pdf, id=2509, 458.71375pt 
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-404-1.pdf, id=2631, 458.71375pt 
 x 315.1775pt>
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-404-1.pdf Graphic file (typ
+e pdf)
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-404-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-404-1.pd
+f used on input line 12056.
+(pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
+
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pdf, id=2632, 453.695pt x 
+315.1775pt>
 File: _pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pdf Graphic file (typ
 e pdf)
 <use _pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pdf>
 Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pd
-f used on input line 14767.
-(pdftex.def)             Requested size: 458.73363pt x 315.19115pt.
-
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-406-1.pdf, id=2510, 453.695pt x 
-315.1775pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-406-1.pdf Graphic file (typ
-e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-406-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-406-1.pd
-f used on input line 14779.
+f used on input line 12068.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
-[223 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pdf>] [224 <./_pdf_
-wrapper_files/figure-latex/unnamed-chunk-406-1.pdf>]
+[207 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-404-1.pdf>] [208 <./_pdf_
+wrapper_files/figure-latex/unnamed-chunk-405-1.pdf>]
 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cross_va
-lidation.png, id=2537, 997.7275pt x 468.75125pt>
+lidation.png, id=2657, 997.7275pt x 468.75125pt>
 File: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cro
 ss_validation.png Graphic file (type png)
 
 <use /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cros
 s_validation.png>
 Package pdftex.def Info: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/
-pdf/img/spatial_cross_validation.png used on input line 14884.
+pdf/img/spatial_cross_validation.png used on input line 12155.
 (pdftex.def)             Requested size: 399.99738pt x 187.92632pt.
-[225] [226 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spati
-al_cross_validation.png (PNG copy)>] [227] [228] [229] [230] [231] [232] [233] 
-[234]
-Underfull \hbox (badness 1953) in paragraph at lines 15721--15728
+[209 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cro
+ss_validation.png (PNG copy)>] [210]
+Underfull \vbox (badness 10000) detected at line 12313
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 12313
+ []
+
+[211] [212]
+Underfull \vbox (badness 10000) detected at line 12417
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 12417
+ []
+
+[213] [214] [215]
+Underfull \hbox (badness 1953) in paragraph at lines 12593--12600
 []\T1/lmr/m/n/10 (+20) Next, we add in-for-ma-tion on the prop-er-ties of the l
 earner (see also the sec-tion on learn-ers
  []
 
-[235] [236] [237] [238] [239] [240]
-Overfull \hbox (59.7369pt too wide) in paragraph at lines 16248--16256
+[216] [217] [218] [219] [220] [221]
+Overfull \hbox (59.7369pt too wide) in paragraph at lines 13080--13088
 []\T1/lmr/m/n/10 (-20) The R file con-tain-ing the in-ter-face code should ad-h
 ere to the nam-ing con-ven-tion \T1/lmtt/m/n/10 RLearner_<type>_<learner_name>.
 R\T1/lmr/m/n/10 (-20) ,
  []
 
-[241] [242] [243] [244] [245]
-Overfull \hbox (88.82652pt too wide) in paragraph at lines 16653--16656
+[222] [223] [224] [225] [226]
+Overfull \hbox (88.82652pt too wide) in paragraph at lines 13438--13441
 \T1/lmr/m/n/10 (-20) For in depth ex-pla-na-tions and de-tails see the tu-to-ri
 al page on cost-sensitive clas-si-fi-ca-tion (\T1/lmtt/m/n/10 vignette("cost_se
 nsitive_classif")\T1/lmr/m/n/10 (-20) ). 
  []
 
-[246] [247]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-451-1.pdf, id=2671, 452.69125pt 
+[227] [228]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-450-1.pdf, id=2772, 452.69125pt 
 x 355.3275pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-451-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-450-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-451-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-451-1.pd
-f used on input line 16795.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-450-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-450-1.pd
+f used on input line 13569.
 (pdftex.def)             Requested size: 452.69014pt x 355.32661pt.
-[248] [249 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-451-1.pdf>] [250] [
-251] [252] [253]
-<_pdf_wrapper_files/figure-latex/unnamed-chunk-462-1.pdf, id=2705, 445.665pt x 
+[229] [230 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-450-1.pdf>] [231] [
+232] [233]
+<_pdf_wrapper_files/figure-latex/unnamed-chunk-461-1.pdf, id=2802, 445.665pt x 
 301.125pt>
-File: _pdf_wrapper_files/figure-latex/unnamed-chunk-462-1.pdf Graphic file (typ
+File: _pdf_wrapper_files/figure-latex/unnamed-chunk-461-1.pdf Graphic file (typ
 e pdf)
-<use _pdf_wrapper_files/figure-latex/unnamed-chunk-462-1.pdf>
-Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-462-1.pd
-f used on input line 17151.
+<use _pdf_wrapper_files/figure-latex/unnamed-chunk-461-1.pdf>
+Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-461-1.pd
+f used on input line 13883.
 (pdftex.def)             Requested size: 445.6707pt x 301.12885pt.
-
-Overfull \hbox (521.93921pt too wide) in alignment at lines 17201--17213
+[234]
+Overfull \hbox (521.93921pt too wide) in alignment at lines 13920--13932
  [] [] [] 
  []
 
 
-Overfull \hbox (521.93921pt too wide) in alignment at lines 17213--17341
+Overfull \hbox (521.93921pt too wide) in alignment at lines 13932--14060
  [] [] [] 
  []
 
-[254 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-462-1.pdf>]
-Overfull \hbox (5117.68947pt too wide) in alignment at lines 17373--17403
+[235 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-461-1.pdf>]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 14074.
+
+
+Overfull \hbox (5117.68947pt too wide) in alignment at lines 14090--14120
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (5117.68947pt too wide) in alignment at lines 17403--17921
+Overfull \hbox (5117.68947pt too wide) in alignment at lines 14120--14638
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (5117.68947pt too wide) in alignment at lines 17921--18427
+Overfull \hbox (5117.68947pt too wide) in alignment at lines 14638--15144
  [] [] [] [] [] [] [] [] [] 
  []
 
-[255]
-Overfull \hbox (5117.68947pt too wide) in alignment at lines 18427--18923
- [] [] [] [] [] [] [] [] [] 
- []
-
-
-Overfull \hbox (5117.68947pt too wide) in alignment at lines 18923--19425
- [] [] [] [] [] [] [] [] [] 
- []
-
-[256]
-Overfull \hbox (5117.68947pt too wide) in alignment at lines 19425--19454
+[236]
+Overfull \hbox (5117.68947pt too wide) in alignment at lines 15144--15640
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (4103.00975pt too wide) in alignment at lines 19466--19496
+Overfull \hbox (5117.68947pt too wide) in alignment at lines 15640--16142
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (4103.00975pt too wide) in alignment at lines 19496--19987
+Overfull \hbox (5117.68947pt too wide) in alignment at lines 16142--16171
+ [] [] [] [] [] [] [] [] [] 
+ []
+
+[237]
+Overfull \hbox (4103.00975pt too wide) in alignment at lines 16183--16213
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (4103.00975pt too wide) in alignment at lines 19987--20489
+Overfull \hbox (4103.00975pt too wide) in alignment at lines 16213--16704
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (4103.00975pt too wide) in alignment at lines 20489--20976
- [] [] [] [] [] [] [] [] [] 
- []
-
-[257]
-Overfull \hbox (4103.00975pt too wide) in alignment at lines 20976--21004
+Overfull \hbox (4103.00975pt too wide) in alignment at lines 16704--17206
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (4309.70311pt too wide) in alignment at lines 21019--21049
+Overfull \hbox (4103.00975pt too wide) in alignment at lines 17206--17693
+ [] [] [] [] [] [] [] [] [] 
+ []
+
+[238]
+Overfull \hbox (4103.00975pt too wide) in alignment at lines 17693--17721
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (4309.70311pt too wide) in alignment at lines 21049--21377
- [] [] [] [] [] [] [] [] [] 
- []
-
-[258]
-Overfull \hbox (2172.33067pt too wide) in alignment at lines 21389--21419
+Overfull \hbox (4309.70311pt too wide) in alignment at lines 17736--17766
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2172.33067pt too wide) in alignment at lines 21419--21634
+Overfull \hbox (4309.70311pt too wide) in alignment at lines 17766--18094
+ [] [] [] [] [] [] [] [] [] 
+ []
+
+[239]
+Overfull \hbox (2172.33067pt too wide) in alignment at lines 18106--18136
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 21642--21649
+Overfull \hbox (2172.33067pt too wide) in alignment at lines 18136--18351
+ [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18359--18366
 \T1/lmr/m/n/10 (+20) and the doc-u-men-ta-tion of \T1/lmtt/m/n/10 makeCostSensC
 lassifWrapper()\T1/lmr/m/n/10 (+20) , \T1/lmtt/m/n/10 makeCostSensRegrWrapper()
  \T1/lmr/m/n/10 (+20) and
  []
 
 
-Overfull \hbox (1162.35307pt too wide) in alignment at lines 21653--21683
+Overfull \hbox (1162.35307pt too wide) in alignment at lines 18370--18400
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1162.35307pt too wide) in alignment at lines 21683--21762
+Overfull \hbox (1162.35307pt too wide) in alignment at lines 18400--18479
  [] [] [] [] [] [] [] [] [] 
  []
 
-[259]
-Overfull \hbox (2727.68849pt too wide) in alignment at lines 21819--21861
+[240]
+Overfull \hbox (2727.68849pt too wide) in alignment at lines 18533--18575
  [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2727.68849pt too wide) in alignment at lines 21861--22581
+Overfull \hbox (2727.68849pt too wide) in alignment at lines 18575--19295
  [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2727.68849pt too wide) in alignment at lines 22581--23065
+Overfull \hbox (2727.68849pt too wide) in alignment at lines 19295--19779
  [] [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
-[260]
-Overfull \hbox (2269.39395pt too wide) in alignment at lines 23069--23108
+[241]
+Overfull \hbox (2269.39395pt too wide) in alignment at lines 19783--19822
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2269.39395pt too wide) in alignment at lines 23108--23686
+Overfull \hbox (2269.39395pt too wide) in alignment at lines 19822--20400
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2588.83109pt too wide) in alignment at lines 23690--23729
+Overfull \hbox (2588.83109pt too wide) in alignment at lines 20404--20443
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2588.83109pt too wide) in alignment at lines 23729--23873
+Overfull \hbox (2588.83109pt too wide) in alignment at lines 20443--20587
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2062.70059pt too wide) in alignment at lines 23877--23916
+Overfull \hbox (2062.70059pt too wide) in alignment at lines 20591--20630
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2062.70059pt too wide) in alignment at lines 23916--24088
- [] [] [] [] [] [] [] [] [] [] [] [] 
- []
-
-[261]
-Overfull \hbox (1329.88391pt too wide) in alignment at lines 24093--24132
+Overfull \hbox (2062.70059pt too wide) in alignment at lines 20630--20802
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1329.88391pt too wide) in alignment at lines 24132--24201
+Overfull \hbox (1329.88391pt too wide) in alignment at lines 20807--20846
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2593.52605pt too wide) in alignment at lines 24212--24251
+Overfull \hbox (1329.88391pt too wide) in alignment at lines 20846--20915
+ [] [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+[242]
+Overfull \hbox (2593.52605pt too wide) in alignment at lines 20927--20966
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (2593.52605pt too wide) in alignment at lines 24251--24468
+Overfull \hbox (2593.52605pt too wide) in alignment at lines 20966--21183
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1156.07683pt too wide) in alignment at lines 24473--24512
+Overfull \hbox (1156.07683pt too wide) in alignment at lines 21188--21227
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1156.07683pt too wide) in alignment at lines 24512--24641
+Overfull \hbox (1156.07683pt too wide) in alignment at lines 21227--21356
  [] [] [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1091.89984pt too wide) in alignment at lines 24654--24684
+Overfull \hbox (1091.89984pt too wide) in alignment at lines 21367--21397
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1091.89984pt too wide) in alignment at lines 24684--25185
+Overfull \hbox (1091.89984pt too wide) in alignment at lines 21397--21898
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1091.89984pt too wide) in alignment at lines 25185--25186
+Overfull \hbox (1091.89984pt too wide) in alignment at lines 21898--21899
  [] [] [] [] [] [] [] [] [] 
  []
 
-[262]
-Overfull \hbox (1091.89986pt too wide) in alignment at lines 25190--25220
+[243]
+Overfull \hbox (1091.89986pt too wide) in alignment at lines 21903--21933
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (1091.89986pt too wide) in alignment at lines 25220--25306
+Overfull \hbox (1091.89986pt too wide) in alignment at lines 21933--22019
  [] [] [] [] [] [] [] [] [] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 25308.
-[263]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 25308.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 22021.
+[244]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 22021.
 (./_pdf_wrapper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 25308.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 22021.
 
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 25308
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 22021
 .
 Package rerunfilecheck Info: File `_pdf_wrapper.out' has not changed.
-(rerunfilecheck)             Checksum: C25219C734F23A5032098713E984F7FF;29324.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 25308.
+(rerunfilecheck)             Checksum: 56FD0190A9B9D392B4AC4E645610B07E;40438.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 22021.
  ) 
 Here is how much of TeX's memory you used:
- 14772 strings out of 494936
- 231638 string characters out of 6180743
- 426344 words of memory out of 5000000
- 17144 multiletter control sequences out of 15000+600000
+ 14744 strings out of 494936
+ 230833 string characters out of 6180743
+ 419395 words of memory out of 5000000
+ 17164 multiletter control sequences out of 15000+600000
  78290 words of font info for 138 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 32i,7n,38p,873b,461s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,7n,38p,873b,440s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/home/travis/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/home/travis/
 texlive/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/home/travis/texlive/texmf-dis
 t/fonts/enc/dvips/lm/lm-mathit.enc}{/home/travis/texlive/texmf-dist/fonts/enc/d
@@ -2576,10 +2393,10 @@ pe1/public/lm/lmtk10.pfb></home/travis/texlive/texmf-dist/fonts/type1/public/lm
 /lmtt10.pfb></home/travis/texlive/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
 </home/travis/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on _pdf_wrapper.pdf (263 pages, 2685095 bytes).
+Output written on _pdf_wrapper.pdf (244 pages, 2676276 bytes).
 PDF statistics:
- 3357 PDF objects out of 3580 (max. 8388607)
- 2795 compressed objects within 28 object streams
- 554 named destinations out of 1000 (max. 500000)
- 13854 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 3436 PDF objects out of 3580 (max. 8388607)
+ 2892 compressed objects within 29 object streams
+ 506 named destinations out of 1000 (max. 500000)
+ 14246 words of extra memory for PDF output out of 14400 (max. 10000000)
 
