@@ -26,9 +26,6 @@
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
 #'
-#' Coordinates should be in "Universal Transverse Mercator" (UTM) format.
-#' They will be used for a spatial partitioning of the data (using k-means clustering).
-#'
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' \code{\link{makeFunctionalData}}.
 #'
@@ -77,8 +74,8 @@
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
 #' @param coordinates [\code{data.frame}]\cr
-#'   Does the task contain a spatial reference (coordinates) which should be used for
-#'   spatial partioning of the data? See details.
+#'   X and Y coordinates of a spatial data set that will be used for spatial partitioning of the data in a cross-validation resampling setting.
+#'   Coordinates have to be in "Universal Transverse Mercator" (UTM) format, i.e. numeric values.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
