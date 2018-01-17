@@ -72,6 +72,13 @@ train = function(learner, task, subset = NULL, weights = NULL) {
   vars = getTaskFeatureNames(task)
   # no vars? then use no vars model
 
+  # remove coordinates from data for train call
+  # only do so if we are NOT in a nested cv setting -> there we remove the coordinates in tuneParams()
+  if (isTRUE(task$task.desc$is.spatial) && !grepl("tuned", pars$.learner$id)) {
+    task$env$data$x = NULL
+    task$env$data$y = NULL
+  }
+
   if (length(vars) == 0L) {
     learner.model = makeNoFeaturesModel(targets = task$env$data[, tn], task.desc = getTaskDesc(task))
     time.train = 0
