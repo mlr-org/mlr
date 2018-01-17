@@ -7,7 +7,7 @@ makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data,
     w = which.first(target %nin% colnames(data))
     if (length(w) > 0L)
       stopf("Column names of data doesn't contain target var: %s", target[w])
-    checkTaskData(task$env$data, cols = setdiff(colnames(task$env$data), target))
+    checkTaskData(task$env$data, cols = setdiff(colnames(data), target))
   }
 
   addClasses(task, "SupervisedTask")
