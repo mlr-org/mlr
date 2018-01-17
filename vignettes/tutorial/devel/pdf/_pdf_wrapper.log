@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.7)  16 JAN 2018 00:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.6.7)  17 JAN 2018 20:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2078,19 +2078,14 @@ Package pdftex.def Info: _pdf_wrapper_files/figure-latex/unnamed-chunk-405-1.pd
 f used on input line 12068.
 (pdftex.def)             Requested size: 453.6939pt x 315.17673pt.
 [207 <./_pdf_wrapper_files/figure-latex/unnamed-chunk-404-1.pdf>] [208 <./_pdf_
-wrapper_files/figure-latex/unnamed-chunk-405-1.pdf>]
-</home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cross_va
-lidation.png, id=2657, 997.7275pt x 468.75125pt>
-File: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cro
-ss_validation.png Graphic file (type png)
-
-<use /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cros
-s_validation.png>
-Package pdftex.def Info: /home/travis/build/pat-s/mlr/vignettes/tutorial/devel/
-pdf/img/spatial_cross_validation.png used on input line 12155.
+wrapper_files/figure-latex/unnamed-chunk-405-1.pdf>] <img/spatial_cross_validat
+ion.png, id=2657, 997.7275pt x 468.75125pt>
+File: img/spatial_cross_validation.png Graphic file (type png)
+<use img/spatial_cross_validation.png>
+Package pdftex.def Info: img/spatial_cross_validation.png used on input line 12
+155.
 (pdftex.def)             Requested size: 399.99738pt x 187.92632pt.
-[209 </home/travis/build/pat-s/mlr/vignettes/tutorial/devel/pdf/img/spatial_cro
-ss_validation.png (PNG copy)>] [210]
+[209 <./img/spatial_cross_validation.png (PNG copy)>] [210]
 Underfull \vbox (badness 10000) detected at line 12313
  []
 
@@ -2366,7 +2361,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 22021.
  ) 
 Here is how much of TeX's memory you used:
  14744 strings out of 494936
- 230833 string characters out of 6180743
+ 230601 string characters out of 6180743
  419395 words of memory out of 5000000
  17164 multiletter control sequences out of 15000+600000
  78290 words of font info for 138 fonts, out of 8000000 for 9000
@@ -2393,7 +2388,7 @@ pe1/public/lm/lmtk10.pfb></home/travis/texlive/texmf-dist/fonts/type1/public/lm
 /lmtt10.pfb></home/travis/texlive/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
 </home/travis/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on _pdf_wrapper.pdf (244 pages, 2676276 bytes).
+Output written on _pdf_wrapper.pdf (244 pages, 2676055 bytes).
 PDF statistics:
  3436 PDF objects out of 3580 (max. 8388607)
  2892 compressed objects within 29 object streams
