@@ -121,12 +121,6 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("Imputation value: %g", control$impute.val)
   }
 
-  # remove coordinates from data for follow-up train() call
-  if (isTRUE(task$task.desc$is.spatial)) {
-    task$env$data$x = NULL
-    task$env$data$y = NULL
-  }
-
   or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
