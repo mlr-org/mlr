@@ -24,3 +24,4 @@ testinfo.RData
 ^docs$
 ^_pkgdown\.yml$
 logo.png
+^pkgdown$
