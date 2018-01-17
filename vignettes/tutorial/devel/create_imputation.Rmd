@@ -12,8 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -27,7 +27,7 @@ The *learn* and *impute* functions both have at least the following formal argum
 * ``col`` indicates the feature to be imputed.
 * ``target`` indicates the target variable(s) in a supervised learning task.
 
-## Example: Imputation using the mean
+### Example: Imputation using the mean
 
 Let's have a look at function imputeMean (`imputations()`).
 
@@ -51,7 +51,7 @@ imputeMean (`imputations()`) calls the unexported `mlr` function `simpleImpute` 
 The *learn* function calculates the mean of the non-missing observations in column ``col``.
 The mean is passed via argument ``const`` to the *impute* function that replaces all missing values in feature ``col``.
 
-## Writing your own imputation method
+### Writing your own imputation method
 
 Now let's write a new imputation method:
 A frequently used simple technique for longitudinal data is *last observation carried forward* (LOCF). 
@@ -68,10 +68,10 @@ imputeLOCF = function() {
       x = data[[col]]
       ind = is.na(x)
       dind = diff(ind)
-      lastValue = which(dind == 1)  # position of the last observed value previous to NA
-      lastNA = which(dind == -1)    # position of the last of potentially several consecutive NA's
-      values = x[lastValue]         # last observed value previous to NA
-      times = lastNA - lastValue    # number of consecutive NA's
+      lastValue = which(dind == 1)  ## position of the last observed value previous to NA
+      lastNA = which(dind == -1)    ## position of the last of potentially several consecutive NA's
+      values = x[lastValue]         ## last observed value previous to NA
+      times = lastNA - lastValue    ## number of consecutive NA's
       return(list(values = values, times = times))
     },
     impute = function(data, target, col, values, times) {

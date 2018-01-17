@@ -14,8 +14,8 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -39,7 +39,7 @@ First, they all wrap around `mlr` learners (`makeLearner()`)  and they return a 
 Therefore learners can be wrapped multiple times.
 Second, they are implemented using a *train* (pre-model hook) and *predict* (post-model hook) method.
 
-## Example: Bagging wrapper
+### Example: Bagging wrapper
 
 In this section we exemplary describe the bagging wrapper to create a random forest which supports weights.
 To achieve that we combine several decision trees from the `rpart` package to create our own custom random forest.

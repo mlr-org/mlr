@@ -15,8 +15,8 @@ urlMlrFunctions = "http://www.rdocumentation.org/packages/mlr/functions/"
 ext = ".html"
 library("pander")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -45,14 +45,14 @@ The next six columns refer to information required to calculate the performance 
 **Aggr.** shows the default aggregation method (`aggregations()`) tied to the measure.
 
 ```{r include=FALSE}
-# urlMlrFunctions, ext are defined in build
+## urlMlrFunctions, ext are defined in build
 linkFct = function(x, y) {
   collapse(sprintf("[%1$s](%3$s%2$s%4$s)", x, y, urlMlrFunctions, ext), sep = "<br />")
 }
 
 cn = function(x) if (is.null(x)) NA else gsub("\\n", " ", x)
 urls = function(x) if (is.na(x)) NA else gsub("(http)(\\S+)(\\.)", "[\\1\\2](\\1\\2)\\3", x)
-# regex is not ideal and can break
+## regex is not ideal and can break
 
 getTab = function(type) {
   m = list(featperc = featperc, timeboth = timeboth, timepredict = timepredict, timetrain = timetrain)
@@ -104,31 +104,31 @@ getTab = function(type) {
 }
 ```
 
-### Classification
+#### Classification
 
 ```{r echo=FALSE,results="asis"}
 getTab("classif")
 ```
 
-### Regression
+#### Regression
 
 ```{r echo=FALSE,results="asis"}
 getTab("regr")
 ```
 
-### Survival analysis
+#### Survival analysis
 
 ```{r echo=FALSE,results="asis"}
 getTab("surv")
 ```
 
-### Cluster analysis
+#### Cluster analysis
 
 ```{r echo=FALSE,results="asis"}
 getTab("cluster")
 ```
 
-### Cost-sensitive classification
+#### Cost-sensitive classification
 
 ```{r echo=FALSE,results="asis"}
 getTab("costsens")
@@ -137,13 +137,13 @@ getTab("costsens")
 Note that in case of *ordinary misclassification costs* you can also generate performance measures from cost matrices by function `makeCostMeasure()`.
 For details see the tutorial page on cost-sensitive classification (`vignette("cost_sensitive_classif")`) and also the page on custom performance measures (`vignette("create_measure")`).
 
-### Multilabel classification
+#### Multilabel classification
 
 ```{r echo=FALSE,results="asis"}
 getTab("multilabel")
 ```
 
-### General performance measures
+#### General performance measures
 
 ```{r echo=FALSE,results="asis"}
 getTab("general")

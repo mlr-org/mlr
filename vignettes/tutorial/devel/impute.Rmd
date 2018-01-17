@@ -14,8 +14,8 @@ library("ParamHelpers")
 library("ggplot2")
 library("lattice")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -32,13 +32,13 @@ Also note that some of the learning algorithms included in `mlr` can deal with m
 Those Learner (`makeLearner()`)s have the property ``"missings"`` and thus can be identified using `listLearners()`.
 
 ```{r}
-## Regression learners that can deal with missing values
+### Regression learners that can deal with missing values
 listLearners("regr", properties = "missings")[c("class", "package")]
 ```
 
 See also the list of integrated learners (`vignette("integrated_learners")`) in the Appendix.
 
-## Imputation and reimputation
+### Imputation and reimputation
 
 Imputation can be done by function `impute()`.
 You can specify an imputation method for each feature individually or for classes of features like numerics or factors.
@@ -141,7 +141,7 @@ Especially when evaluating a machine learning method by some resampling techniqu
 `impute()`/`reimpute()` are called automatically each time before training/prediction.
 This can be achieved by creating an imputation wrapper.
 
-## Fusing a learner with imputation
+### Fusing a learner with imputation
 
 You can couple a Learner (`makeLearner()`) with imputation by function `makeImputeWrapper()` which basically has the same formal arguments as `impute()`.
 Like in the example above we impute ``Solar.R`` by random numbers from its empirical distribution,

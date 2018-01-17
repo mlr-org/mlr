@@ -12,8 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -32,7 +32,7 @@ In order to tune a machine learning algorithm, you have to specify:
 An example of the search space could be searching values of the `C` parameter for `kernlab::ksvm()`:
 
 ```{r}
-## ex: create a search space for the C hyperparameter from 0.01 to 0.1
+### ex: create a search space for the C hyperparameter from 0.01 to 0.1
 ps = makeParamSet(
   makeNumericParam("C", lower = 0.01, upper = 0.1)
 )
@@ -41,7 +41,7 @@ ps = makeParamSet(
 An example of the optimization algorithm could be performing random search on the space:
 
 ```{r}
-## ex: random search with 100 iterations
+### ex: random search with 100 iterations
 ctrl = makeTuneControlRandom(maxit = 100L)
 ```
 
@@ -60,7 +60,7 @@ Throughout this section we consider classification examples. For the other types
 
 We use the iris classification task (`iris.task()`) for illustration and tune the hyperparameters of an SVM (function `kernlab::ksvm()`) from the `kernlab` package) with a radial basis kernel. The following examples tune the cost parameter `C` and the RBF kernel parameter `sigma` of the `kernlab::ksvm()`) function.
 
-## Specifying the search space
+### Specifying the search space
 
 We first must define a space to search when tuning our learner. For example, maybe we want to tune several specific values of a hyperparameter or perhaps we want to define a space from $10^{-10}$ to $10^{10}$ and let the optimization algorithm decide which points to choose.
 
@@ -97,7 +97,7 @@ In order to standardize your workflow across several packages, whenever paramete
 This is the case with the `kpar` argument of `kernlab::ksvm()`) which is a list of kernel parameters like `sigma`.
 This allows us to interface with learners from different packages in the same way when defining parameters to tune!
 
-## Specifying the optimization algorithm
+### Specifying the optimization algorithm
 
 Now that we have specified the search space, we need to choose an optimization algorithm for our parameters to pass to the `kernlab::ksvm()`) learner. 
 Optimization algorithms are considered `TuneControl()` objects in `mlr`.
@@ -137,7 +137,7 @@ Perhaps in this case we would want to increase the amount of iterations to ensur
 ctrl = makeTuneControlRandom(maxit = 200L)
 ```
 
-## Performing the tuning
+### Performing the tuning
 
 Now that we have specified a search space and the optimization algorithm, it's time to
 perform the tuning. 
@@ -172,10 +172,10 @@ As no performance measure was specified, by default the error rate (`mmce` (`vig
 Note that each measure (`makeMeasure()`) "knows" if it is minimized or maximized during tuning.
 
 ```{r}
-## error rate
+### error rate
 mmce$minimize
 
-## accuracy
+### accuracy
 acc$minimize
 ```
 
@@ -198,7 +198,7 @@ res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set =
 res
 ```
 
-## Accessing the tuning result
+### Accessing the tuning result
 
 The result object `TuneResult()` allows you to access the best found settings `$x` and their estimated performance `$y`.
 
@@ -225,7 +225,7 @@ predict(m, task = iris.task)
 
 But what if you wanted to inspect the other points on the search path, not just the optimal?
 
-## Investigating hyperparameter tuning effects
+### Investigating hyperparameter tuning effects
 
 We can inspect all points evaluated during the search by using `generateHyperParsEffectData()`:
 
@@ -265,7 +265,7 @@ This can be changed with the `global.only` argument.
 
 For an in-depth exploration of generating hyperparameter tuning effects and plotting the data, check out Hyperparameter Tuning Effects (`vignette("hyperpar_tuning_effects")`).
 
-## Further comments
+### Further comments
 
 * Tuning works for all other tasks like regression, survival analysis and so on in a completely similar fashion.
 

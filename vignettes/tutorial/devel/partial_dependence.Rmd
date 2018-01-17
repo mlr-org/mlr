@@ -12,8 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -53,7 +53,7 @@ Similarly, instead of using the mean to estimate the expected value of the funct
 See [Goldstein, Kapelner, Bleich, and Pitkin (2014)](http://arxiv.org/abs/1309.6392) for more details and their package `ICEbox` for the original implementation. 
 The algorithm works for any supervised learner with classification, regression, and survival tasks.
 
-## Generating partial dependences
+### Generating partial dependences
 
 Our implementation, following `mlr`'s visualization (`vignette("visualization")`) pattern, consists of the above mentioned function `generatePartialDependenceData()`, as well as two visualization functions, `plotPartialDependence()` and `plotPartialDependenceGGVIS()`. 
 The former generates input (objects of class `PartialDependenceData()`) for the latter.
@@ -184,7 +184,7 @@ pd.classif.der.ind = generatePartialDependenceData(fit.classif, iris.task, "Peta
 head(pd.classif.der.ind$data)
 ```
 
-## Functional ANOVA
+### Functional ANOVA
 
 [Hooker (2004)](http://dl.acm.org/citation.cfm?id=1014122) proposed the decomposition of a learned function $\hat{f}$ as a sum of lower dimensional functions $$f(\mathbf{x}) = g_0 + \sum_{i = 1}^p g_{i}(X_i) + \sum_{i \neq j} g_{ij}(x_{ij}) + \ldots$$ where $p$ is the number of features. `generateFunctionalANOVAData()` estimates the individual $g$ functions using partial dependence. 
 When functions depend only on one feature, they are equivalent to partial dependence, but a $g$ function which depends on more than one feature is the "effect" of only those features: lower dimensional "effects" are removed.
@@ -216,10 +216,10 @@ fa.bv = generateFunctionalANOVAData(fit.regr, bh.task, c("crim", "lstat", "age")
   depth = 2)
 fa.bv
 
-names(table(fa.bv$data$effect)) ## interaction effects estimated
+names(table(fa.bv$data$effect)) ### interaction effects estimated
 ```
 
-## Plotting partial dependences
+### Plotting partial dependences
 
 Results from `generatePartialDependenceData()` and `generateFunctionalANOVAData()` can be visualized with `plotPartialDependence()` and `plotPartialDependenceGGVIS()`.
 

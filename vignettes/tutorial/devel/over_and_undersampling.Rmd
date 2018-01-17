@@ -12,8 +12,8 @@ library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 
-# show grouped code output instead of single lines
-knitr::opts_chunk$set(cache = TRUE, collapse = FALSE)
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
 knitr::knit_hooks$set(document = function(x){
   gsub("```\n*```r*\n*", "", x)
 })
@@ -35,7 +35,7 @@ numerous correction methods which tackle the *imbalanced classification problem*
 These methods can generally be divided into *cost- and sampling-based approaches*.
 Below all methods supported by `mlr` are introduced.
 
-## Sampling-based approaches
+### Sampling-based approaches
 
 The basic idea of *sampling methods* is to simply adjust the proportion of the classes in order to increase the weight of the minority class observations within the model.
 
@@ -56,7 +56,7 @@ In this way the sampling is done as part of the *preprocesssing* and can therefo
 
 `mlr` currently supports the first two approaches.
 
-### (Simple) over- and undersampling
+#### (Simple) over- and undersampling
 
 As mentioned above *undersampling* always refers to the majority class, while
 *oversampling* affects the minority class. By the use of *undersampling*, randomly chosen observations of the majority class are eliminated. 
@@ -113,7 +113,7 @@ In this case the *performance measure* has to be considered very carefully.
 As the *misclassification rate* ([mmce](measures.md)) evaluates the overall
 accuracy of the predictions, the *balanced error rate* ([ber](measures.md)) and *area under the ROC Curve* ([auc](measures.md)) might be more suitable here, as the misclassifications within each class are separately taken into account.
 
-### Over- and undersampling wrappers
+#### Over- and undersampling wrappers
 
 Alternatively, `mlr` also offers the integration of over- and undersampling
 via a wrapper approach (`vignette("wrapper")`). 
@@ -138,11 +138,11 @@ performance(predict(mod.over, newdata = data.imbal.test), measures = list(mmce, 
 performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce, ber, auc))
 ```
 
-### Extensions to oversampling
+#### Extensions to oversampling
 
 Two extensions to (simple) oversampling are available in `mlr`.
 
-#### 1. SMOTE (Synthetic Minority Oversampling Technique)
+##### 1. SMOTE (Synthetic Minority Oversampling Technique)
 
 As the duplicating of the minority class observations can lead to overfitting,
 within *SMOTE* the "new cases" are constructed in a different way. 
@@ -171,7 +171,7 @@ performance(predict(mod.smote, newdata = data.imbal.test), measures = list(mmce,
 By default the number of nearest neighbours considered within the algorithm is
 set to 5.
 
-#### 2. Overbagging
+##### 2. Overbagging
 
 Another extension of oversampling consists in the combination of sampling with
 the bagging approach (`vignette("bagging")`). 
@@ -232,13 +232,13 @@ As the *random forest* itself is already a strong learner (and a bagged one
 as well), a further bagging step isn't very helpful here and usually won't
 improve the model.
 
-## Cost-based approaches
+### Cost-based approaches
 
 In contrast to sampling, *cost-based approaches* usually require particular 
 learners, which can deal with different *class-dependent costs*
 Cost-Sensitive Classification (`vignette("cost_sensitive_classif")`)).
 
-### Weighted classes wrapper
+#### Weighted classes wrapper
 
 Another approach independent of the underlying classifier is to 
 assign the costs as *class weights*, so that each observation receives a weight, depending on the class it belongs to. Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.
