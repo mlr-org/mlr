@@ -42,7 +42,7 @@ test_that("Nested SpRepCV works without errors", {
   bc.task.spatial
 
   lrn.ksvm = makeLearner("classif.ksvm",
-    predict.type = "prob",kernel = "rbfdot")
+    predict.type = "prob", kernel = "rbfdot")
 
   ps = makeParamSet(makeNumericParam("C", lower = 1, upper = 1),
     makeNumericParam("sigma", lower = 1, upper = 1))
