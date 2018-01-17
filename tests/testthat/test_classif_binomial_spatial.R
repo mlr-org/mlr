@@ -36,11 +36,3 @@ test_that("classif_binomial_spatial", {
                   binaryclass.spatial.target, binaryclass.spatial.train.inds,
                   old.probs.list, parset.list2)
 })
-
-# check for error if spatial = TRUE and coordinates are not named 'x' or 'y'
-test_that("errors if spatial = TRUE and coordinates are not named 'x' or 'y'", {
-  binaryclass.spatial.df$x = NULL
-  expect_error(makeClassifTask("data", binaryclass.spatial.df,
-    target = "diplo01", spatial = TRUE),
-    "Please rename coordinates in data to 'x' and 'y'")
-})

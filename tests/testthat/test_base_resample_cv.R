@@ -38,6 +38,30 @@ test_that("SpCV instance works", {
   }
 })
 
+test_that("Nested SpRepCV works without errors", {
+  bc.task.spatial
+
+  lrn.ksvm = makeLearner("classif.ksvm",
+    predict.type = "prob",kernel = "rbfdot")
+
+  ps = makeParamSet(makeNumericParam("C", lower = 1, upper = 1),
+    makeNumericParam("sigma", lower = 1, upper = 1))
+
+  ctrl = makeTuneControlRandom(maxit = 1)
+  inner = makeResampleDesc("SpCV", iters = 2)
+
+  wrapper.ksvm = makeTuneWrapper(lrn.ksvm, resampling = inner, par.set = ps,
+    control = ctrl, show.info = FALSE, measures = list(auc))
+
+  outer = makeResampleDesc("SpRepCV", folds = 2, reps = 2)
+
+  parallelStart(mode = "multicore", level = "mlr.tuneParams", cpus = 2)
+
+  resa.svm.spatial = resample(wrapper.ksvm, bc.task.spatial,
+    resampling = outer, show.info = TRUE, measures = list(auc))
+  parallelStop()
+})
+
 test_that("cv resampling works", {
   data = multiclass.df
   formula = multiclass.formula

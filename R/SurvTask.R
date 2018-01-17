@@ -1,6 +1,6 @@
 #' @rdname Task
 #' @export
-makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn", check.data = TRUE) {
+makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE, len = 2L)
@@ -30,7 +30,7 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     }
   }
 
-  task = makeSupervisedTask("surv", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
+  task = makeSupervisedTask("surv", data, target, weights, blocking, coordinates, fixup.data = fixup.data, check.data = check.data)
 
   if (check.data) {
     time = data[[target[1L]]]
@@ -38,13 +38,13 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, weights = 
     assertNumeric(time, lower = 0, finite = TRUE, any.missing = FALSE, .var.name = "target column time")
     assertLogical(event, any.missing = FALSE, .var.name = "target column event")
   }
-  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking, spatial)
+  task$task.desc = makeSurvTaskDesc(id, data, target, weights, blocking, coordinates)
   addClasses(task, "SurvTask")
 }
 
 #' @export
 #' @rdname makeTaskDesc
-makeSurvTaskDesc = function(id, data, target, weights, blocking, spatial) {
-  td = makeTaskDescInternal("surv", id, data, target, weights, blocking, spatial)
+makeSurvTaskDesc = function(id, data, target, weights, blocking, coordinates) {
+  td = makeTaskDescInternal("surv", id, data, target, weights, blocking, coordinates)
   addClasses(td, c("SurvTaskDesc", "SupervisedTaskDesc"))
 }
