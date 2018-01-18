@@ -21,6 +21,8 @@ test_that("cv instance works", {
 test_that("SpCV instance works", {
 
   coords = bc.task.spatial$env$data[, 1:2]
+  df <- bc.task.spatial$env$data
+  makeClassifTask(target = "diplo01", data = df, coordinates = coords)
 
   rin = makeResampleInstance(makeResampleDesc("SpCV", iters = 3), coords = coords)
 
@@ -55,11 +57,8 @@ test_that("Nested SpRepCV works without errors", {
 
   outer = makeResampleDesc("SpRepCV", folds = 2, reps = 2)
 
-  parallelStart(mode = "multicore", level = "mlr.tuneParams", cpus = 2)
-
   resa.svm.spatial = resample(wrapper.ksvm, bc.task.spatial,
-    resampling = outer, show.info = TRUE, measures = list(auc))
-  parallelStop()
+    resampling = outer, show.info = FALSE, measures = list(auc))
 })
 
 test_that("cv resampling works", {
