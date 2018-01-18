@@ -9,10 +9,6 @@ makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data,
       stopf("Column names of data doesn't contain target var: %s", target[w])
     checkTaskData(task$env$data, cols = setdiff(colnames(data), target))
   }
-  # check for correct structure of coordinates
-  if (!is.null(coordinates) && class(coordinates) != "data.frame" && nrow(coordinates) != nrow(data[, target])) {
-    stopf("Coordinates must be given in a data.frame with the same length as the data.")
-  }
 
   addClasses(task, "SupervisedTask")
 }
