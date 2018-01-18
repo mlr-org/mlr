@@ -6,6 +6,10 @@ makeUnsupervisedTask = function(type, data, weights, blocking, fixup.data, check
     # want to access the description object which is not existing yet
     checkTaskData(task$env$data)
   }
+  # check for correct structure of coordinates
+  if (!is.null(coordinates) && class(coordinates) != "data.frame" && nrow(coordinates) != nrow(data[, target])) {
+    stopf("Coordinates must be given in a data.frame with the same length as the data.")
+  }
   addClasses(task, "UnsupervisedTask")
 }
 
