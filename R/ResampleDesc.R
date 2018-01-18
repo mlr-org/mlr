@@ -48,13 +48,13 @@
 #'     Default is 10.}
 #'   \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
 #'     Here \code{iters = folds * reps}. Default is 10.}
-#'   \item{horizon [\code{integer(1)}]}{Number of observations to forecast for \code{GrowthCV}
-#'    and \code{FixedCV}. Default is 1}
+#'   \item{horizon [\code{integer(1)}]}{Number of observations to forecast for \dQuote{GrowingCV}
+#'    and \dQuote{FixedCV}. Default is 1.}
 #'   \item{initial.window [\code{numeric(1)}]}{Fraction of observations to start with
-#'    in \code{GrowthCV} and \code{FixedCV}. Default is 0.5}
+#'    in \dQuote{GrowingCV} and \dQuote{FixedCV}. Default is 0.5.}
 #'   \item{skip [\code{integer(1)}]}{ How many resamples to skip to thin the total amount
-#'    for \code{GrowingCV} and \code{FixedCV}. Default is horizon - 1 which gives
-#'    mutually exclusive chunks of test indices.}
+#'    for \dQuote{GrowingCV} and \dQuote{FixedCV}. This is passed through as the \dQuote{by} argument
+#'    in \code{seq()}. Default is horizon which gives mutually exclusive chunks of test indices.}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
 #'   Should stratification be done for the target variable?
