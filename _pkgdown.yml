@@ -104,6 +104,22 @@ navbar:
       href: articles/tutorial/devel/filter_methods.html
   - text: News
     href: news/index.html
+
+  - text: mlr-org Packages
+    menu:
+    - text: mlrMBO
+      href: https://github.com/mlr-org/mlrMBO
+    - text: mlrng
+      href: https://github.com/mlr-org/mlrng
+    - text: mlrCPO
+      href: https://github.com/mlr-org/mlrCPO
+    - text: shinyMlr
+      href: https://github.com/mlr-org/shinyMlr
+    - text: mlrCPO
+      href: https://github.com/mlr-org/mlrCPO
+    - text: mlrHyperopt
+      href: http://jakob-r.de/mlrHyperopt/index.html
+
   right:
   - icon: fa-github fa-lg
     href: https://github.com/mlr-org/mlr
