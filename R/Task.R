@@ -152,9 +152,8 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       if (nrow(coordinates) != nrow(data)) {
         stop("Coordinates have to be of the same length as number of rows in data! Or pass none at all.")
       }
-      if (class(coordinates)[1] != "data.frame") {
-        warningf("Provided coordinates are not a pure data.frame but from class %s, hence it will be converted.", class(coordinates)[1])
-        coordinates = as.data.frame(coordinates)
+      if (!is.data.frame(coordinates)) {
+        warningf("Provided coordinates are not given as a data.frame but as class %s. Please provide a data frame.", class(coordinates))
       }
     }
   }
