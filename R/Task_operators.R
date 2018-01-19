@@ -421,25 +421,27 @@ subsetTask = function(task, subset = NULL, features) {
 #'   Optional: weight vector.
 #' @keywords internal
 #' @export
-changeData = function(task, data, costs, weights) {
+changeData = function(task, data, costs, weights, coordinates) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))
     costs = getTaskCosts(task)
   if (missing(weights))
     weights = task$weights
+  if (missing(coordinates))
+    coordinates = task$coordinates
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, td$has.coordinates),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$has.coordinates),
-    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, td$has.coordinates),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$has.coordinates),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, td$has.coordinates),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$has.coordinates)
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, task$coordinates),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, task$coordinates),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
   )
 
   return(task)
