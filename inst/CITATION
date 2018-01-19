@@ -29,7 +29,7 @@ bref = c(
       person("Helena", "Kotthaus"),
       person("Peter", "Marwedel"),
       person("Claus", "Weihs"),
-      person("Joerg", "Rahnenfuehrer"),
+      person("Jörg", "Rahnenführer"),
       person("Bernd", "Bischl")
     ),
     journal = "Journal of Statistical Computation and Simulation",
