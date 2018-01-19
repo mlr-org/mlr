@@ -16,22 +16,28 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
 
-  # subset the coordinates with respect to the observations in the data
-  # in a nested cv call we only have a subset of the whole data here (the
-  # indices from the training fold of the outer loop)
-  task$coordinates = task$coordinates[as.integer(rownames(task$env$data)), ]
+  if (is.null(task) | !is.null(task$coordinates)) {
+    stopf("Please provide a task with suitable coordinates for SpCV.")
+  }
+  else {
+    # subset the coordinates with respect to the observations in the data
+    # in a nested cv call we only have a subset of the whole data here (the
+    # indices from the training fold of the outer loop)
+    task$coordinates = task$coordinates[as.integer(rownames(task$env$data)), ]
 
-  # perform kmeans clustering
-  inds = kmeans(task$coordinates, centers = desc$iters)
-  inds = factor(inds$cluster)
+    # perform kmeans clustering
+    inds = kmeans(task$coordinates, centers = desc$iters)
+    inds = factor(inds$cluster)
 
-  # uses resulting factor levels from kmeans clustering to set up a list of
-  # length x (x = folds) with row indices of the data referring to which fold
-  # each observations is assigned to
-  test.inds = lapply(levels(inds), function(x, spl)
-    which(spl == x), spl = inds)
+    # uses resulting factor levels from kmeans clustering to set up a list of
+    # length x (x = folds) with row indices of the data referring to which fold
+    # each observations is assigned to
+    test.inds = lapply(levels(inds), function(x, spl)
+      which(spl == x), spl = inds)
 
-  makeResampleInstanceInternal(desc, size, test.inds = test.inds)
+    makeResampleInstanceInternal(desc, size, test.inds = test.inds)
+  }
+
 }
 
 instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
