@@ -21,6 +21,3 @@ testinfo.RData
 ^.git$
 ^makeR$
 .github
-^docs$
-^_pkgdown\.yml$
-logo.png

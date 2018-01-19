@@ -134,9 +134,10 @@ NULL
 #' the geomorphology of the area. The data set provded here is (a subset of) the
 #' one from the 'natural' part of the RBSF area and corresponds to landslide
 #' distribution in the year 2000.
-#' @name ecuador
+#' @name spatial.task
 #'
-#' @keywords data
+#' @keywords datasets
+#'
 #' @docType data
 #'
 #' @format a `data.frame` with point samples of landslide and
@@ -149,6 +150,7 @@ NULL
 #' Brenning, A., 2005. Spatial prediction models for landslide hazards:
 #' review, comparison and evaluation.
 #' Natural Hazards and Earth System Sciences, 5(6): 853-862.
+NULL
 
 #' Gunpoint functional data classification task.
 #'

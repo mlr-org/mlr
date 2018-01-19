@@ -7,7 +7,7 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
-* Added support for spatial data through task attribute "is.spatial" and spatial
+* Added support for spatial data through task attribute "coordinates" and spatial
   partitioning methods "SpCV" and "SpRepCV".
 * Classification tasks now store the class distribution in the
   class.distribution member.
@@ -870,9 +870,5 @@
 # mlr 1.1:
 * Initial release to CRAN
 
-## Major
-- Support for functional data (fda) using matrix columns has been added.
-- Relaxed the way wrappers can be nested. the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper
-- Refactored the resample progress messages to give a better overview and distinguish between train and test measures better
-- calculateROCMeasures now returns absolute instead of relative values
+
 
