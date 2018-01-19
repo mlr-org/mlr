@@ -25,7 +25,13 @@ trainLearner.oneclass.lofactor = function(.learner, .task, .subset, .weights = N
 predictLearner.oneclass.lofactor = function(.learner, .model, .newdata, ...) {
   # calculate lof, no trained model is needed
   # the lower the local density of a point -> the point is in a sparser region than its neighbors, which suggests that the point is an outlier.
-  k = ifelse(!is.null(.learner$par.vals$k), .learner$par.vals$k, .model$learner$par.vals$k)
+  if(is.null(.learner$par.vals$k)) {
+    k = .model$learner$par.set$pars$k$default
+  } else if (!is.null(.learner$par.vals$k)) {
+    k = .learner$par.vals$k
+  } else {
+    k = .model$learner$par.vals$k
+  }
   p.df = DMwR::lofactor(.newdata, k = k, ...)
   message("lof method is unsupervised, therefore predict()-fct trains and predicts on the same data")
   #p.df.old = .model$learner.model
