@@ -16,8 +16,17 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
 
-  if (is.null(task) | is.null(task$coordinates) | rownames(task$coordinates) != rownames(task$env$data)) {
-    stopf("Please provide a task with suitable coordinates for SpCV. See ?Task for help.")
+  if (is.null(task)) {
+    stopf("Please provide a task.")
+  }
+  if (is.null(task$coordinates)) {
+    stopf("Please provide suitable cooridnates for SpCV. See ?Task for help.")
+  }
+  rownames.data = row.names(task$env$data)
+  rownames.coordinates = row.names(task$coordinates)
+
+  if (!identical(rownames.data, rownames.task)) {
+    stopf("Please provide coordinates that match the row names of the data.")
   }
   else {
     # subset the coordinates with respect to the observations in the data
