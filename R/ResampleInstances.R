@@ -16,8 +16,8 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
 
-  if (is.null(task) | is.null(task$coordinates)) {
-    stopf("Please provide a task with suitable coordinates for SpCV.")
+  if (is.null(task) | is.null(task$coordinates) | rownames(task$coordinates) != rownames(task$env$data)) {
+    stopf("Please provide a task with suitable coordinates for SpCV. See ?Task for help.")
   }
   else {
     # subset the coordinates with respect to the observations in the data
