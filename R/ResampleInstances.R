@@ -16,7 +16,7 @@ instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
 
 instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
 
-  if (is.null(task) | !is.null(task$coordinates)) {
+  if (is.null(task) | is.null(task$coordinates)) {
     stopf("Please provide a task with suitable coordinates for SpCV.")
   }
   else {
