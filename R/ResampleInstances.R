@@ -25,7 +25,7 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
   rownames.data = row.names(task$env$data)
   rownames.coordinates = row.names(task$coordinates)
 
-  if (!identical(rownames.data, rownames.task)) {
+  if (!identical(rownames.data, rownames.coordinates)) {
     stopf("Please provide coordinates that match the row names of the data.")
   }
   else {
