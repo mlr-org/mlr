@@ -155,6 +155,12 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       if (!is.data.frame(coordinates)) {
         warningf("Provided coordinates are not given as a data.frame but as class %s. Please provide a data frame.", class(coordinates))
       }
+      rownames.data = row.names(data)
+      rownames.coordinates = row.names(coordinates)
+
+      if (!identical(rownames.data, rownames.coordinates)) {
+        stopf("Please provide coordinates that match the row names of the data.")
+      }
     }
   }
 
