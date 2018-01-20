@@ -1,7 +1,8 @@
-context("resample_fixedcv")
+context("resample_growingwindowcv")
 
-test_that("fixed instance works", {
-  rin = makeResampleInstance(makeResampleDesc("FixedCV"), size = 25)
+
+test_that("growing instance works", {
+  rin = makeResampleInstance(desc = makeResampleDesc(method = "GrowingWindowCV"), size = 25)
 
   for (i in seq_len(length(rin$train.inds))) {
     i1 = rin$train.inds[[i]]

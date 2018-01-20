@@ -32,8 +32,8 @@
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingCV} for growing window
-#'   cross-validation, \dQuote{FixedCV} for fixed window cross validation.
+#'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window
+#'   cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation.
 #' @param predict [\code{character(1)}]\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
@@ -48,12 +48,12 @@
 #'     Default is 10.}
 #'   \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
 #'     Here \code{iters = folds * reps}. Default is 10.}
-#'   \item{horizon [\code{integer(1)}]}{Number of observations to forecast for \dQuote{GrowingCV}
-#'    and \dQuote{FixedCV}. Default is 1.}
+#'   \item{horizon [\code{integer(1)}]}{Number of observations to forecast for \dQuote{GrowingWindowCV}
+#'    and \dQuote{FixedWindowCV}. Default is 1.}
 #'   \item{initial.window [\code{numeric(1)}]}{Fraction of observations to start with
-#'    in \dQuote{GrowingCV} and \dQuote{FixedCV}. Default is 0.5.}
+#'    in \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}. Default is 0.5.}
 #'   \item{skip [\code{integer(1)}]}{ How many resamples to skip to thin the total amount
-#'    for \dQuote{GrowingCV} and \dQuote{FixedCV}. This is passed through as the \dQuote{by} argument
+#'    for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}. This is passed through as the \dQuote{by} argument
 #'    in \code{seq()}. Default is horizon which gives mutually exclusive chunks of test indices.}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
@@ -86,7 +86,7 @@
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
                                    "Subsample", "Bootstrap", "SpCV", "SpRepCV",
-                                   "GrowingCV", "FixedCV"))
+                                   "GrowingWindowCV", "FixedWindowCV"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -163,7 +163,7 @@ makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
 }
 
 
-makeResampleDescFixedCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+makeResampleDescFixedWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
   horizon = asInteger(horizon, lower = 1L, upper = Inf)
   assertNumeric(initial.window, lower = 0, upper = 1)
   skip = asInteger(skip, lower = 0L, upper = Inf)
@@ -171,7 +171,7 @@ makeResampleDescFixedCV = function(horizon = 1L, initial.window = .5, skip = hor
                            initial.window = initial.window, skip = skip, stratify = FALSE)
 }
 
-makeResampleDescGrowingCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
   horizon = asInteger(horizon, lower = 1L, upper = Inf)
   assertNumeric(initial.window, lower = 0, upper = 1)
   skip = asInteger(skip, lower = 0L, upper = Inf)
@@ -206,7 +206,7 @@ print.RepCVDesc = function(x, ...) {
 }
 
 #' @export
-print.GrowingCVDesc = function(x, ...) {
+print.GrowingWindowCVDesc = function(x, ...) {
   catf("Window description:\n %s: %.2f %% in initial window, horizon of %i, and skipping %i windows.",
        x$id, x$initial.window * 100, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
@@ -214,7 +214,7 @@ print.GrowingCVDesc = function(x, ...) {
 }
 
 #' @export
-print.FixedCVDesc = function(x, ...) {
+print.FixedWindowCVDesc = function(x, ...) {
   catf("Window description:\n %s: %.2f %% in initial window, horizon of %i, and skipping %i windows.",
        x$id, x$initial.window * 100, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
