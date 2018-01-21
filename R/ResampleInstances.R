@@ -22,12 +22,6 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
   if (is.null(task$coordinates)) {
     stopf("Please provide suitable coordinates for SpCV. See ?Task for help.")
   }
-  else {
-    # subset the coordinates with respect to the observations in the data
-    # in a nested cv call we only have a subset of the whole data here (the
-    # indices from the training fold of the outer loop)
-    task$coordinates = task$coordinates[as.integer(rownames(task$env$data)), ]
-
     # perform kmeans clustering
     inds = kmeans(task$coordinates, centers = desc$iters)
     inds = factor(inds$cluster)
@@ -39,8 +33,6 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
       which(spl == x), spl = inds)
 
     makeResampleInstanceInternal(desc, size, test.inds = test.inds)
-  }
-
 }
 
 instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {

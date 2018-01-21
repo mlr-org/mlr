@@ -402,6 +402,8 @@ subsetTask = function(task, subset = NULL, features) {
       task$blocking = task$blocking[subset]
     if (task$task.desc$has.weights)
       task$weights = task$weights[subset]
+    if (task$task.desc$has.coordinates)
+      task$coordinates = task$coordinates[subset, ]
   }
   return(task)
 }
