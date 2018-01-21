@@ -40,7 +40,7 @@
 #' rin = makeResampleInstance(rdesc, size = nrow(iris))
 #'
 #' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
-makeResampleInstance = function(desc, task, size,...) {
+makeResampleInstance = function(desc, task, size, ...) {
   assert(checkClass(desc, "ResampleDesc"), checkString(desc))
   if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
