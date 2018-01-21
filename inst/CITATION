@@ -45,7 +45,7 @@ bref = c(
     key = 'bischl2016class',
     author = c(
       person("Bernd", "Bischl"),
-      person("Tobias", "Kuehn"),
+      person("Tobias", "Kühn"),
       person("Gero", "Szepannek")
     ),
     booktitle = "Operations Research Proceedings 2014",
