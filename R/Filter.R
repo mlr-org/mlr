@@ -631,3 +631,28 @@ makeFilter(
     abs(0.5 - score)
   }
 )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "praznik",
+  desc = "mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = c("classif"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, method = "MIM", ...) {
+    method = paste0("praznik::",method)
+    data = getTaskData(task)
+    featnames = getTaskFeatureNames(task)
+    targetname = getTaskTargetNames(task)
+    X = data[, featnames]
+    Y = data[, targetname]
+    input = list(X = X, Y = Y, k = nselect)
+    algo = eval(parse(text=method))
+    res = do.call(algo, input)
+    res$score[featnames]
+  }
+)
+

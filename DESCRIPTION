@@ -135,6 +135,7 @@ Suggests:
     refund,
     rex,
     Rfast,
+    praznik,
     rFerns,
     rjson,
     rknn,
