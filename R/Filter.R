@@ -650,7 +650,7 @@ makeFilter(
     X = data[, featnames]
     Y = data[, targetname]
     input = list(X = X, Y = Y, k = nselect)
-    algo = eval(parse(text=criteria))
+    algo = eval(parse(text = criteria))
     res = do.call(algo, input)
     res$score[featnames]
   }
