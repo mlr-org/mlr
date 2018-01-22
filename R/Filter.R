@@ -642,15 +642,15 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = c("classif"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, method = "MIM", ...) {
-    method = paste0("praznik::",method)
+  fun = function(task, nselect, criteria = "MIM", ...) {
+    criteria = paste0("praznik::", criteria)
     data = getTaskData(task)
     featnames = getTaskFeatureNames(task)
     targetname = getTaskTargetNames(task)
     X = data[, featnames]
     Y = data[, targetname]
     input = list(X = X, Y = Y, k = nselect)
-    algo = eval(parse(text=method))
+    algo = eval(parse(text=criteria))
     res = do.call(algo, input)
     res$score[featnames]
   }
