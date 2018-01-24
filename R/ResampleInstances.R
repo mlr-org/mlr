@@ -22,17 +22,17 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
   if (is.null(task$coordinates)) {
     stopf("Please provide suitable coordinates for SpCV. See ?Task for help.")
   }
-    # perform kmeans clustering
-    inds = kmeans(task$coordinates, centers = desc$iters)
-    inds = factor(inds$cluster)
+  # perform kmeans clustering
+  inds = kmeans(task$coordinates, centers = desc$iters)
+  inds = factor(inds$cluster)
 
-    # uses resulting factor levels from kmeans clustering to set up a list of
-    # length x (x = folds) with row indices of the data referring to which fold
-    # each observations is assigned to
-    test.inds = lapply(levels(inds), function(x, spl)
-      which(spl == x), spl = inds)
+  # uses resulting factor levels from kmeans clustering to set up a list of
+  # length x (x = folds) with row indices of the data referring to which fold
+  # each observations is assigned to
+  test.inds = lapply(levels(inds), function(x, spl)
+    which(spl == x), spl = inds)
 
-    makeResampleInstanceInternal(desc, size, test.inds = test.inds)
+  makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
 instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
