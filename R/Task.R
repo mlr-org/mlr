@@ -111,7 +111,7 @@ NULL
 #' @param coordinates [\code{data.frame}]\cr
 #'   X and Y coordinates of a spatial data set that will be used for spatial partitioning of the data in a cross-validation resampling setting.
 #'   Coordinates have to be in "Universal Transverse Mercator" (UTM) format, i.e. numeric values.
-#'   Provided [\code{data.frame}] needs to have the same row number and row names as data.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data.
 #' @keywords internal
 #' @name makeTaskDesc
 NULL

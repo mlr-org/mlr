@@ -103,7 +103,7 @@ len1 = length(fuelSubset$uvvis.lambda)
 len2 = length(fuelSubset$nir.lambda)
 fdf = list(UVVIS = 1:len1, NIR = (len1 + 1):(len1 + len2))
 fs = data.frame("UVVIS" = fuelSubset$UVVIS, "NIR" = fuelSubset$NIR,
-                "heatan" = fuelSubset$heatan,  "h20" = fuelSubset$h2o)
+  "heatan" = fuelSubset$heatan,  "h20" = fuelSubset$h2o)
 fs.fdf = makeFunctionalData(fs, fd.features = fdf)
 fuelsubset.task = makeRegrTask(data = fs.fdf, target = "heatan")
 save(fuelsubset.task, file = file.path(dn, "fuelsubset.task.RData"), compress = "xz")
