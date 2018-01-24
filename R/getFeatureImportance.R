@@ -108,3 +108,8 @@ getFeatureImportance = function(object, ...) {
 getFeatureImportanceLearner = function(.learner, .model, ...) {
   UseMethod("getFeatureImportanceLearner")
 }
+
+#' @export
+getFeatureImportanceLearner.BaseWrapper = function(.learner, .model, ...) {
+  getFeatureImportanceLearner(.learner$next.learner, .model = .model, ...)
+}

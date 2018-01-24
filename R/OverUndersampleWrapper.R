@@ -72,18 +72,30 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
 
 #' @export
 trainLearner.UndersampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, usw.rate = 1, usw.cl = NULL, ...) {
-  .task = subsetTask(.task, .subset)
+  if (length(.weights) == getTaskSize(.task)) {
+    .task$weights = .weights
+    .task = subsetTask(.task, .subset)
+  } else {
+    .task = subsetTask(.task, .subset)
+    .task$weights = .weights
+  }
   .task = undersample(.task, rate = usw.rate, cl = usw.cl)
-  m = train(.learner$next.learner, .task, weights = .weights)
+  m = train(.learner$next.learner, .task, weights = .task$.weights)
   m$train.task = .task
   makeChainModel(next.model = m, cl = "UndersampleModel")
 }
 
 #' @export
 trainLearner.OversampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, osw.rate = 1, osw.cl = NULL, ...) {
-  .task = subsetTask(.task, .subset)
+    if (length(.weights) == getTaskSize(.task)) {
+    .task$weights = .weights
+    .task = subsetTask(.task, .subset)
+  } else {
+    .task = subsetTask(.task, .subset)
+    .task$weights = .weights
+  }
   .task = oversample(.task, rate = osw.rate, cl = osw.cl)
-  m = train(.learner$next.learner, .task, weights = .weights)
+  m = train(.learner$next.learner, .task, weights = .task$.weights)
   m$train.task = .task
   makeChainModel(next.model = m, cl = "OversampleModel")
 }

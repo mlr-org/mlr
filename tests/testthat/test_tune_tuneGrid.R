@@ -14,6 +14,7 @@ test_that("tuneGrid", {
   )
   ctrl = makeTuneControlGrid()
   tr1 = tuneParams(lrn, multiclass.task, rin, par.set = ps1, control = ctrl)
+  expect_number(tr1$y, lower = 0, upper = 0.2)
   op1 = as.data.frame(tr1$opt.path)
   op1$C = as.numeric(as.character(op1$C))
   op1$sigma = as.numeric(as.character(op1$sigma))
@@ -22,7 +23,8 @@ test_that("tuneGrid", {
     makeDiscreteParam("C", values = c.seq),
     makeDiscreteParam("sigma", values = sigma.seq.2)
   )
-  tr1.2 = tuneParams(lrn, multiclass.task, rin, par.set = ps1.2, control = ctrl)
+  tr1.2 = tuneParams(lrn, multiclass.task, rin, par.set = ps1.2, control = ctrl, measures = acc)
+  expect_number(tr1.2$y, lower = 0.8, upper = 1)
   op1.2 = as.data.frame(tr1.2$opt.path)
   op1.2$C = as.numeric(as.character(op1.2$C))
   op1.2$sigma = as.numeric(as.character(op1.2$sigma))
@@ -39,10 +41,10 @@ test_that("tuneGrid", {
   expect_equal(sortByCol(op1, c("C", "sigma")), sortByCol(op2, c("C", "sigma")))
 
   ctrl = makeTuneControlGrid(resolution = c(C = reso, sigma = reso * 2))
-  tr2 = tuneParams(lrn, multiclass.task, rin, par.set = ps2, control = ctrl)
-  op2 = as.data.frame(trafoOptPath(tr2$opt.path))
-  op1.2$exec.time = op2$exec.time = NULL
-  expect_equal(sortByCol(op1.2, c("C", "sigma")), sortByCol(op2, c("C", "sigma")))
+  tr2.2 = tuneParams(lrn, multiclass.task, rin, par.set = ps2, control = ctrl, measures = acc)
+  op2.2 = as.data.frame(trafoOptPath(tr2.2$opt.path))
+  op1.2$exec.time = op2.2$exec.time = NULL
+  expect_equal(sortByCol(op1.2, c("C", "sigma")), sortByCol(op2.2, c("C", "sigma")))
 
 })
 

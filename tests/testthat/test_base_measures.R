@@ -94,7 +94,9 @@ test_that("ber with faulty model produces NA", {
 })
 
 test_that("db with single cluster doesn't give warnings", {
-  expect_warning(crossval("cluster.kmeans", agri.task), NA)
+  # using mtcars instead of agri task here because agri conflicts with
+  # warning when column names inherit 'x' or 'y'
+  expect_warning(crossval("cluster.kmeans", mtcars.task), NA)
 })
 
 test_that("mcc is implemented correctly", { # see issue 363
@@ -356,7 +358,7 @@ test_that("check measure calculations", {
   #test multiclass measures
 
   #mmce
-  mmce.test = mean(c(1L != 1L, 2L != 0L, 0L != 0L, 1L != 2L))
+  mmce.test = mean(c(1L != 1L, 2L != 1L, 0L != 0L, 1L != 2L))
   mmce.perf = performance(pred.classif, measures = mmce, model = mod.classif)
   expect_equal(mmce.test, mmce$fun(pred = pred.classif))
   expect_equal(mmce.test, as.numeric(mmce.perf))

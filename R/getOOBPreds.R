@@ -56,9 +56,15 @@ getOOBPredsLearner = function(.learner, .model) {
   UseMethod("getOOBPredsLearner")
 }
 
+#' @export
+getOOBPredsLearner.BaseWrapper = function(.learner, .model) {
+  getOOBPredsLearner(.learner$next.learner, .model = .model)
+}
+
 # checks if the model was trained on the corresponding task by comparing
 # the descriptions
 checkModelCorrespondsTask = function(model, task) {
-  if (!identical(task$task.desc, model$task.desc))
+  compare = c("id", "type", "target", "n.feats", "has.weights", "has.blocking", "is.spatial", "positive")
+  if (!identical(task$task.desc[compare], model$task.desc[compare]))
     stopf("Description of the model does not correspond to the task")
 }
