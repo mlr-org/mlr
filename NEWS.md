@@ -22,7 +22,7 @@
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies
+  range of values for the partial dependencies, integrated with "mmpf" package
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
 * plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
