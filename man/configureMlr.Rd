@@ -76,4 +76,3 @@ If you call this function with an empty argument list, everything is set to its 
 \seealso{
 Other configure: \code{\link{getMlrOptions}}
 }
-\concept{configure}

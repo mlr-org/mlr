@@ -40,4 +40,3 @@ This can be used to implement custom feature FDA extraction.
 Other fda: \code{\link{extractFDAFeatures}},
   \code{\link{makeExtractFDAFeatsWrapper}}
 }
-\concept{fda}

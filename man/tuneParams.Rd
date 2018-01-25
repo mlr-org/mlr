@@ -128,4 +128,3 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}},
   \code{\link{tuneThreshold}}
 }
-\concept{tune}

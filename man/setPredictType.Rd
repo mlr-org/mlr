@@ -55,5 +55,3 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}}
 }
-\concept{learner}
-\concept{predict}

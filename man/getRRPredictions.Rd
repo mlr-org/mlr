@@ -26,4 +26,3 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{makeResampleInstance}},
   \code{\link{resample}}
 }
-\concept{resample}

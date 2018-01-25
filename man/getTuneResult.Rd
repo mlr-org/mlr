@@ -32,4 +32,3 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
-\concept{tune}

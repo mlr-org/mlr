@@ -4,6 +4,8 @@
 \alias{MeasureProperties}
 \alias{getMeasureProperties}
 \alias{hasMeasureProperties}
+\alias{getMeasureProperties}
+\alias{hasMeasureProperties}
 \title{Query properties of measures.}
 \usage{
 getMeasureProperties(measure)

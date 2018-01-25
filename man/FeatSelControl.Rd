@@ -174,4 +174,3 @@ Other featsel: \code{\link{analyzeFeatSelResult}},
   \code{\link{makeFeatSelWrapper}},
   \code{\link{selectFeatures}}
 }
-\concept{featsel}

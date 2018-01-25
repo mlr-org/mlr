@@ -48,5 +48,3 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
-\concept{learning_curve}
-\concept{plot}

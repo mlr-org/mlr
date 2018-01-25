@@ -59,5 +59,3 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 }
-\concept{filter}
-\concept{generate_plot_data}

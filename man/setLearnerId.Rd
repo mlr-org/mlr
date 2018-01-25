@@ -37,4 +37,3 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
-\concept{learner}

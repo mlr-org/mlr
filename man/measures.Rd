@@ -445,5 +445,4 @@ Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
-\concept{performance}
 \keyword{datasets}

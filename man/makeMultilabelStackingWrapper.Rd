@@ -80,5 +80,3 @@ Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
   \code{\link{makeMultilabelDBRWrapper}},
   \code{\link{makeMultilabelNestedStackingWrapper}}
 }
-\concept{multilabel}
-\concept{wrapper}

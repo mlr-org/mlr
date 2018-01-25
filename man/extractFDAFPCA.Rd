@@ -27,4 +27,3 @@ Other fda_featextractor: \code{\link{extractFDAFourier}},
   \code{\link{extractFDAMultiResFeatures}},
   \code{\link{extractFDAWavelets}}
 }
-\concept{fda_featextractor}

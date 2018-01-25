@@ -85,5 +85,3 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
-\concept{benchmark}
-\concept{plot}

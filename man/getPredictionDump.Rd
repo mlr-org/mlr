@@ -22,4 +22,3 @@ prediction did not fail, this returns \code{NULL}.
 Other debug: \code{\link{FailureModel}},
   \code{\link{ResampleResult}}, \code{\link{getRRDump}}
 }
-\concept{debug}

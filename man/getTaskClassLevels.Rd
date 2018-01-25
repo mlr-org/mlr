@@ -27,4 +27,3 @@ Other task: \code{\link{getTaskCosts}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}
 }
-\concept{task}

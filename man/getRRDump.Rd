@@ -28,4 +28,3 @@ Other debug: \code{\link{FailureModel}},
   \code{\link{ResampleResult}},
   \code{\link{getPredictionDump}}
 }
-\concept{debug}

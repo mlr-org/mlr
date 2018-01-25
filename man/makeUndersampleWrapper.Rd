@@ -73,5 +73,3 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeWeightedClassesWrapper}}
 }
-\concept{imbalancy}
-\concept{wrapper}

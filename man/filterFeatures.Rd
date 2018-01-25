@@ -56,4 +56,3 @@ Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 }
-\concept{filter}
