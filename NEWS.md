@@ -63,7 +63,9 @@
 * classif.fdakernel
 * classif.fdanp
 * classif.fdaglm
+* classif.mxff
 * regr.fdaFDboost
+* regr.mxff
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
