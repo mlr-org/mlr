@@ -64,7 +64,7 @@ As a rule of thumb, usually 100 repetitions are used with the aim to reduce vari
 
 There are some prerequisites for this:
 
-When specifying the task (`vignette("task")`), you need to explicitly state that the task is `spatial` one by setting `spatial = TRUE`. 
+When specifying the [task](task.html), you need to explicitly state that the task is `spatial` one by setting `spatial = TRUE`. 
 Next, there need to be two variables named `x` and `y` in your data set that store the coordinate information. 
 If this applies, the coordinates will be used for spatial partitioning if `SpCV` or `SpRepCV` are selected as resampling strategies. 
 
@@ -77,7 +77,7 @@ If named differently and `spatial = TRUE` was set during task creation, an error
 ### Examples
 
 The `bc.task.spatial` data set serves as an example data set for spatial modeling tasks in `mlr`.
-The task (`vignette("task")`) attribute `spatial` is set to `TRUE` to indicate that the data set also stores coordinate information.
+The task (task.html) attribute `spatial` is set to `TRUE` to indicate that the data set also stores coordinate information.
 
 In this example, the "Random Forest" algorithm (package `ranger::ranger()`) is used to model a binomial response variable.
 

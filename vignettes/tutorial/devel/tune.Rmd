@@ -20,7 +20,7 @@ knitr::knit_hooks$set(document = function(x){
 ```
 
 Many machine learning algorithms have hyperparameters that need to be set.
-If selected by the user they can be specified as explained on the tutorial page on learners (`vignette("learner")`) -- simply pass them to `makeLearner()`.
+If selected by the user they can be specified as explained on the tutorial page on [learners](learner.html) -- simply pass them to `makeLearner()`.
 Often suitable parameter values are not obvious and it is preferable to tune the hyperparameters, that is automatically identify values that lead to the best performance.
 
 In order to tune a machine learning algorithm, you have to specify:
@@ -52,7 +52,7 @@ rdesc = makeResampleDesc("CV", iters = 3L)
 measure = acc
 ```
 
-The evaluation method is already covered in detail in evaluation of learning methods (`vignette("performance")`) and resampling (`vignette("resample")`).
+The evaluation method is already covered in detail in [evaluation of learning methods](performance.html) and [resampling](resample.html).
 
 In this tutorial, we show how to specify the search space and optimization algorithm, how to do the tuning and how to access the tuning result, and how to visualize the hyperparameter tuning effects through several examples.
 
@@ -144,7 +144,7 @@ perform the tuning.
 We will need to define a resampling strategy and make note of our performance measure.
 
 We will use 3-fold cross-validation to assess the quality of a specific parameter setting.
-For this we need to create a resampling description just like in the resampling (`vignette("resample")`) part of the tutorial.
+For this we need to create a resampling description just like in the [resampling](resample.html) part of the tutorial.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3L)
@@ -167,7 +167,7 @@ res
 ```
 
 `tuneParams()` simply performs the cross-validation for every element of the cross-product and selects the parameter setting with the best mean performance.
-As no performance measure was specified, by default the error rate (`mmce` (`vignette("measures")`)) is used.
+As no performance measure was specified, by default the error rate ([mmce](measures.html)) is used.
 
 Note that each measure (`makeMeasure()`) "knows" if it is minimized or maximized during tuning.
 
@@ -181,10 +181,10 @@ acc$minimize
 
 Of course, you can pass other measures and also a `list` of measures to `tuneParams()`.
 In the latter case the first measure is optimized during tuning, the others are simply evaluated.
-If you are interested in optimizing several measures simultaneously have a look at Advanced Tuning (`vignette("advanced_tune")`).
+If you are interested in optimizing several measures simultaneously have a look at [Advanced Tuning](advanced_tune.html).
 
-In the example below we calculate the accuracy (`acc` (`vignette("measures")`)) instead of the error rate. 
-We use function `setAggregation()`, as described on the resampling (`vignette("resample")`) page, to additionally obtain the standard deviation of the accuracy. 
+In the example below we calculate the accuracy ([acc](measures.html)) instead of the error rate. 
+We use function `setAggregation()`, as described on the [resampling](resample.html) page, to additionally obtain the standard deviation of the accuracy. 
 We also use random search with 100 iterations on the `num_set` we defined above and set `show.info` to `FALSE` to hide the output for all 100 iterations:
 
 ```{r}
@@ -240,7 +240,7 @@ In order to get the *transformed* parameter values instead, use the `trafo` argu
 generateHyperParsEffectData(res, trafo = TRUE)
 ```
 
-Note that we can also generate performance on the train data along with the validation/test data, as discussed on the resampling (`vignette("resample")`) tutorial page:
+Note that we can also generate performance on the train data along with the validation/test data, as discussed on the [resampling](resample.html) tutorial page:
 
 ```{r}
 rdesc2 = makeResampleDesc("Holdout", predict = "both")
@@ -263,18 +263,18 @@ plotHyperParsEffect(data, x = "iteration", y = "acc.test.mean",
 Note that by default, we only plot the current global optima. 
 This can be changed with the `global.only` argument.
 
-For an in-depth exploration of generating hyperparameter tuning effects and plotting the data, check out Hyperparameter Tuning Effects (`vignette("hyperpar_tuning_effects")`).
+For an in-depth exploration of generating hyperparameter tuning effects and plotting the data, check out [Hyperparameter Tuning Effects](hyperpar_tuning_effects.html).
 
 ### Further comments
 
 * Tuning works for all other tasks like regression, survival analysis and so on in a completely similar fashion.
 
 * In longer running tuning experiments it is very annoying if the computation stops due to numerical or other errors. 
-Have a look at `on.learner.error` in `configureMlr()` as well as the examples given in section configure mlr (`vignette("configureMlr")`) of this tutorial.
+Have a look at `on.learner.error` in `configureMlr()` as well as the examples given in section [configure mlr](configureMlr.html) of this tutorial.
 You might also want to inform yourself about `impute.val` in `TuneControl()`.
 
 * As we continually optimize over the same data during tuning, the estimated performance value might be optimistically biased.
-A clean approach to ensure unbiased performance estimation is nested resampling (`vignette("nested_resampling")`), where we embed the whole model selection process into an outer resampling loop.
+A clean approach to ensure unbiased performance estimation is [nested resampling](nested_resampling.html), where we embed the whole model selection process into an outer resampling loop.
 
 
 <!--(

@@ -125,7 +125,7 @@ makeTab(tables[["cluster"]])
 For *ordinary misclassification costs* you can use all the standard classification methods listed above.
 
 For *example-dependent costs* there are several ways to generate cost-sensitive learners from ordinary regression and classification learners.
-See section cost-sensitive classification (`vignette("cost_sensitive_classif")`) and the documentation of `makeCostSensClassifWrapper()`, `makeCostSensRegrWrapper()` and `makeCostSensWeightedPairsWrapper()` for details.
+See section [cost-sensitive classification](cost_sensitive_classif.html) and the documentation of `makeCostSensClassifWrapper()`, `makeCostSensRegrWrapper()` and `makeCostSensWeightedPairsWrapper()` for details.
 
 #### Multilabel classification (`r numbers["multilabel"]`)
 
@@ -134,4 +134,4 @@ makeTab(tables[["multilabel"]])
 ```
 
 Moreover, you can use the binary relevance method to apply ordinary classification learners to the multilabel problem. 
-See the documentation of function `makeMultilabelBinaryRelevanceWrapper()` and the tutorial section on multilabel classification (`vignette("multilabel")`) for details.
+See the documentation of function `makeMultilabelBinaryRelevanceWrapper()` and the tutorial section on [multilabel classification](multilabel.html) for details.

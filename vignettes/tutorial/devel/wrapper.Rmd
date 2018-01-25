@@ -24,15 +24,15 @@ knitr::knit_hooks$set(document = function(x){
 Wrappers can be employed to extend integrated learners (`makeLearner()`)  with new functionality.
 The broad scope of operations and methods which are implemented as wrappers underline the flexibility of the wrapping approach:
 
-* Data preprocessing (`vignette("preproc")`)
-* Imputation (`vignette("impute")`)
-* Bagging (`vignette("bagging")`)
-* Tuning (`vignette("tune")`)
-* Feature selection (`vignette("feature_selection")`)
-* Cost-sensitive classification (`vignette("cost_sensitive_classif")`)
-* Over- and undersampling (`vignette("imbalanced_classification_problems")`) for imbalanced classification problems
+* [Data preprocessing](preproc.html)
+* [Imputation](impute.html)
+* [Bagging](bagging.html)
+* [Tuning](tune.html)
+* [Feature selection](feature_selection.html)
+* [Cost-sensitive classification](cost_sensitive_classif.html)
+* [Over- and undersampling](over_and_undersampling.html) for imbalanced classification problems
 * Multiclass extension (`makeMulticlassWrapper()`) for binary-class learners
-* Multilabel classification (`vignette("multilabel")`)
+* [Multilabel classification](multilabel.html)
 
 All these operations and methods have a few things in common:
 First, they all wrap around `mlr` learners (`makeLearner()`)  and they return a new learner.
@@ -75,7 +75,7 @@ Let's have a look at the available hyperparameters of the fused learner:
 getParamSet(wrapped.lrn)
 ```
 
-We choose to tune the parameters `minsplit` and `bw.feats` for the `mmce` (`vignette("measures")`) using a random search (`TuneControl()`) in a 3-fold CV:
+We choose to tune the parameters `minsplit` and `bw.feats` for the [mmce](measures.html) using a random search (`TuneControl()`) in a 3-fold CV:
 
 ```{r}
 ctrl = makeTuneControlRandom(maxit = 10)
@@ -93,7 +93,7 @@ Calling the train method of the newly constructed learner performs the following
 1. The tuning wrapper sets parameters for the underlying model in slot `$next.learner` and calls its train method.
 2. Next learner is the bagging wrapper. The passed down argument `bw.feats` is used in the bagging wrapper training function, the argument `minsplit` gets passed down to `$next.learner`. 
 The base wrapper function calls the base learner `bw.iters` times and stores the resulting models.
-3. The bagged models are evaluated using the mean `mmce` (`vignette("measures")`) (default aggregation for this performance measure) and new parameters are selected using the tuning method.
+3. The bagged models are evaluated using the mean [mmce](measures.html) (default aggregation for this performance measure) and new parameters are selected using the tuning method.
 4. This is repeated until the tuner terminates. Output is a tuned bagged learner.
 
 ```{r}

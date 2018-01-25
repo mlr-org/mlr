@@ -64,7 +64,7 @@ Through (simple) *oversampling* all observations of the minority class are consi
 In addition, exact copies of minority class cases are created
 by random sampling with repetitions.
 
-First, let's take a look at the effect for a classification task (`vignette("task")`).
+First, let's take a look at the effect for a classification [task](task.html).
 Based on a simulated `ClassifTask` (`Task()`) with imbalanced classes two new
 tasks (`task.over`, `task.under`) are created via `mlr` functions
 `oversample()` and `undersample()`, respectively.
@@ -90,7 +90,7 @@ Correspondingly, the *oversampling rate* must be greater or equal to 1,
 where 1 means no oversampling and 2 would result in doubling the minority
 class size.
 
-As a result the performance (`vignette("performance")`) should improve if the model is applied to new data.
+As a result the [performance](performance.html) should improve if the model is applied to new data.
 
 ```{r over-/undersampling_performance}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
@@ -110,14 +110,14 @@ performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce,
 ```
 
 In this case the *performance measure* has to be considered very carefully.
-As the *misclassification rate* ([mmce](measures.md)) evaluates the overall
-accuracy of the predictions, the *balanced error rate* ([ber](measures.md)) and *area under the ROC Curve* ([auc](measures.md)) might be more suitable here, as the misclassifications within each class are separately taken into account.
+As the *misclassification rate* ([mmce](measures.html)) evaluates the overall
+accuracy of the predictions, the *balanced error rate* ([ber](measures.html)) and *area under the ROC Curve* ([auc](measures.html)) might be more suitable here, as the misclassifications within each class are separately taken into account.
 
 #### Over- and undersampling wrappers
 
 Alternatively, `mlr` also offers the integration of over- and undersampling
-via a wrapper approach (`vignette("wrapper")`). 
-This way over- and undersampling can be applied to already existing learners (`vignette("learner")`) to extend their functionality. 
+via a [wrapper approach](wrapper.html). 
+This way over- and undersampling can be applied to already [existing learners](learner.html) to extend their functionality.
 
 The example given above is repeated once again, but this time with extended
 learners instead of modified tasks (see `makeOversampleWrapper()` and `makeUndersampleWrapper()`).
@@ -174,14 +174,13 @@ set to 5.
 ##### 2. Overbagging
 
 Another extension of oversampling consists in the combination of sampling with
-the bagging approach (`vignette("bagging")`). 
+the [bagging approach](bagging.html). 
 For each iteration of the bagging process, minority class observations are oversampled with a given rate in `obw.rate`.
 The majority class cases can either all be taken into account for each
 iteration (`obw.maxcl = "all"`) or bootstrapped with replacement to increase
 variability between training data sets during iterations (`obw.maxcl = "boot"`).
 
-The construction of the **Overbagging Wrapper** works similar
-to `makeBaggingWrapper()`.
+The construction of the **Overbagging Wrapper** works similar to `makeBaggingWrapper()`.
 First an existing `mlr` learner has to be passed to `makeOverBaggingWrapper()`.
 The number of iterations or fitted models can be set via `obw.iters`.
 
@@ -226,17 +225,12 @@ r2 = resample(learner = obw.lrn, task = task, resampling = rdesc, show.info = FA
 r2$aggr
 ```
 
-While *overbagging* slighty improves the performance of the *decision tree*,
-the auc decreases in the second example when additional overbagging is applied.
-As the *random forest* itself is already a strong learner (and a bagged one
-as well), a further bagging step isn't very helpful here and usually won't
-improve the model.
+While *overbagging* slighty improves the performance of the *decision tree*, the auc decreases in the second example when additional overbagging is applied.
+As the *random forest* itself is already a strong learner (and a bagged one as well), a further bagging step isn't very helpful here and usually won't improve the model.
 
 ### Cost-based approaches
 
-In contrast to sampling, *cost-based approaches* usually require particular 
-learners, which can deal with different *class-dependent costs*
-Cost-Sensitive Classification (`vignette("cost_sensitive_classif")`)).
+In contrast to sampling, *cost-based approaches* usually require particular learners, which can deal with different *class-dependent costs* [Cost-Sensitive Classification](cost_sensitive_classif.html).
 
 #### Weighted classes wrapper
 
@@ -244,7 +238,7 @@ Another approach independent of the underlying classifier is to
 assign the costs as *class weights*, so that each observation receives a weight, depending on the class it belongs to. Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.
 
 In this way every learner which supports weights can be extended through
-the wrapper approach (`vignette("wrapper")`).
+the [wrapper approach](wrapper.html).
 If the learner does not have a direct parameter for class weights, but supports observation weights, the weights depending on the class are internally set in the wrapper.
 
 ```{r makeWeightedClassesWrapper_setup1}

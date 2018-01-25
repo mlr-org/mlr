@@ -29,7 +29,7 @@ There are two ways to pass the data:
 
 The first way is preferable if you want predictions for data already included in a `Task()`.
 
-Just as `train()`, the `predict` (`predict.WrappedModel()`) function has a `subset` argument, so you can set aside different portions of the data in `Task()` for training and prediction (more advanced methods for splitting the data in train and test set are described in the section on resampling (`vignette("resample")`)).
+Just as `train()`, the `predict` (`predict.WrappedModel()`) function has a `subset` argument, so you can set aside different portions of the data in `Task()` for training and prediction (more advanced methods for splitting the data in train and test set are described in the section on [resampling](resample.html)).
 
 In the following example we fit a gradient boosting machine (`gbm::gbm()`) to every second observation of the `BostonHousing` (`mlbench::BostonHousing()`) data set and make predictions on the remaining data in `bh.task()`.
 
@@ -255,8 +255,7 @@ pred$threshold
 table(as.data.frame(pred)$response)
 ```
 
-If you are interested in tuning the threshold (vector) have a look at the section about
-performance curves and threshold tuning (`vignette("roc_analysis")`).
+If you are interested in tuning the threshold (vector) have a look at the section about [performance curves and threshold tuning](roc_analysis.html).
 
 ### Visualizing the prediction
 
@@ -271,9 +270,8 @@ Symbols with white border indicate misclassified observations.
 The posterior probabilities (if the learner under consideration supports this) are represented by the background color where higher saturation means larger probabilities.
 
 The plot title displays the ID of the Learner (`makeLearner()`) (in the following example CART), its parameters, its training performance and its cross-validation performance.
-`mmce` (`vignette("measures")`) stands for *mean misclassification error*, i.e., the error rate.
-See the sections on performance (`vignette("performance")`) and
-resampling (`vignette("resample")`) for further explanations.
+[mmce](measures.html) stands for *mean misclassification error*, i.e., the error rate.
+See the sections on [performance](performance.html) and [resampling](resample.html) for further explanations.
 
 ```{r, fig.asp = 5/8}
 lrn = makeLearner("classif.rpart", id = "CART")

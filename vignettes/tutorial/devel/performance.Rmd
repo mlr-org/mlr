@@ -25,19 +25,18 @@ In order to calculate the performance measures, call `performance()` on the obje
 ### Available performance measures
 
 `mlr` provides a large number of performance measures for all types of learning problems.
-Typical performance measures for *classification* are the mean misclassification error (`mmce` (`vignette("measures")`)), accuracy (`acc` (`vignette("measures")`)) or measures based on ROC analysis (`vignette("roc_analysis")`).
-For *regression* the mean of squared errors (`mse` (`vignette("measures")`)) or mean of absolute errors (`mae` (`vignette("measures")`)) are usually considered.
-For *clustering* tasks, measures such as the Dunn index (`dunn` (`vignette("measures")`)) are provided, while for *survival* predictions, the Concordance Index (`cindex` (`vignette("measures")`)) is supported, and for *cost-sensitive* predictions the misclassification penalty (`mcp` (`vignette("measures")`)) and others. 
-It is also possible to access the time to train the learner (`timetrain` (`vignette("measures")`)), the time to compute the prediction (`timepredict` (`vignette("measures")`)) and their sum (`timeboth` (`vignette("measures")`)) as performance measures.
+Typical performance measures for *classification* are the mean misclassification error ([mmce](measures.html)), accuracy ([acc](measures.html)) or measures based on [ROC analysis](roc_analysis.html).
+For *regression* the mean of squared errors ([mse](measures.html)) or mean of absolute errors ([mae](measures.html)) are usually considered.
+For *clustering* tasks, measures such as the Dunn index ([dunn](measures.html)) are provided, while for *survival* predictions, the Concordance Index ([cindex](measures.html)) is supported, and for *cost-sensitive* predictions the misclassification penalty ([mcp](measures.html)) and others. 
+It is also possible to access the time to train the learner ([timetrain](measures.html)), the time to compute the prediction ([timepredict](measures.html)) and their sum ([timeboth](measures.html)) as performance measures.
 
-To see which performance measures are implemented, have a look at the
-table of performance measures (`vignette("measures")`) and the `measures()` documentation page.
+To see which performance measures are implemented, have a look at the table of [performance measures](measures.html) and the `measures()` documentation page.
 
-If you want to implement an additional measure or include a measure with non-standard misclassification costs, see the section on creating custom measures (`vignette("create_measure")`).
+If you want to implement an additional measure or include a measure with non-standard misclassification costs, see the section on [creating custom measures](create_measure.html).
 
 ### Listing measures
 
-The properties and requirements of the individual measures are shown in the table of performance measures (`vignette("measures")`).
+The properties and requirements of the individual measures are shown in the table of [performance measures](measures.html).
 
 If you would like a list of available measures with certain properties or suitable for a certain learning `Task()` use the function `listMeasures()`.
 
@@ -48,7 +47,8 @@ listMeasures("classif", properties = "classif.multi")
 listMeasures(iris.task)
 ```
 
-For convenience there exists a default measure for each type of learning problem, which is calculated if nothing else is specified. As defaults we chose the most commonly used measures for the respective types, e.g., the mean squared error (`mse` (`vignette("measures")`)) for regression and the misclassification rate (`mmce` (`vignette("measures")`)) for classification.
+For convenience there exists a default measure for each type of learning problem, which is calculated if nothing else is specified. 
+As defaults we chose the most commonly used measures for the respective types, e.g., the mean squared error ([mse](measures.html)) for regression and the misclassification rate ([mmce](measures.html)) for classification.
 The help page of function `getDefaultMeasure()` lists all defaults for all types of learning problems.
 The function itself returns the default measure for a given task type, `Task()` or `Learner()`.
 
@@ -62,7 +62,7 @@ getDefaultMeasure(makeLearner("regr.lm"))
 
 ### Calculate performance measures
 
-In the following example we fit a gradient boosting machine (`gbm::gbm()`) on a subset of the `BostonHousing` (`mlbench::BostonHousing()`) data set and calculate the default measure mean squared error (`mse` (`vignette("measures")`)) on the remaining observations.
+In the following example we fit a gradient boosting machine (`gbm::gbm()`) on a subset of the `BostonHousing` (`mlbench::BostonHousing()`) data set and calculate the default measure mean squared error ([mse](measures.html)) on the remaining observations.
 
 ```{r}
 n = getTaskSize(bh.task)
@@ -73,15 +73,15 @@ pred = predict(mod, task = bh.task, subset = seq(2, n, 2))
 performance(pred)
 ```
 
-The following code computes the median of squared errors (`medse` (`vignette("measures")`)) instead.
+The following code computes the median of squared errors ([medse](measures.html)) instead.
 
 ```{r}
 performance(pred, measures = medse)
 ```
 
-Of course, we can also calculate multiple performance measures at once by simply passing a list of measures which can also include your own measure (`vignette("create_measure")`).
+Of course, we can also calculate multiple performance measures at once by simply passing a list of measures which can also include [your own measure](create_measure.html).
 
-Calculate the mean squared error, median squared error and mean absolute error (`mae` (`vignette("measures")`)).
+Calculate the mean squared error, median squared error and mean absolute error ([mae](measures.html)).
 
 ```{r}
 performance(pred, measures = list(mse, medse, mae))
@@ -93,7 +93,7 @@ For the other types of learning problems and measures, calculating the performan
 
 Note that in order to calculate some performance measures it is required that you pass the `Task()` or the fitted model (`makeWrappedModel()`) in addition to the `Prediction()`.
 
-For example in order to assess the time needed for training (`timetrain` (`vignette("measures")`)), the fitted model has to be passed.
+For example in order to assess the time needed for training ([timetrain](measures.html)), the fitted model has to be passed.
 
 ```{r}
 performance(pred, measures = timetrain, model = mod)
@@ -111,9 +111,8 @@ performance(pred, measures = dunn, task = mtcars.task)
 ```
 
 Moreover, some measures require a certain type of prediction.
-For example in binary classification in order to calculate the AUC (`auc` (`vignette("measures")`)) -- the area under the ROC (receiver operating characteristic) curve -- we have to make sure that posterior
-probabilities are predicted.
-For more information on ROC analysis, see the section on ROC analysis (`vignette("roc_analysis")`).
+For example in binary classification in order to calculate the AUC ([auc](measures.html)) -- the area under the ROC (receiver operating characteristic) curve -- we have to make sure that posterior probabilities are predicted.
+For more information on ROC analysis, see the section on [ROC analysis](roc_analysis.html).
 
 ```{r}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
@@ -123,7 +122,7 @@ pred = predict(mod, task = sonar.task)
 performance(pred, measures = auc)
 ```
 
-Also bear in mind that many of the performance measures that are available for classification, e.g., the false positive rate (`fpr` (`vignette("measures")`)), are only suitable for binary problems.
+Also bear in mind that many of the performance measures that are available for classification, e.g., the false positive rate ([fpr](measures.html)), are only suitable for binary problems.
 
 ### Access a performance measure
 
@@ -142,12 +141,12 @@ For binary classification specialized techniques exist to analyze the performanc
 
 #### Plot performance versus threshold
 
-As you may recall (see the previous section on making predictions (`vignette("predict")`)) in binary classification we can adjust the threshold used to map probabilities to class labels.
+As you may recall (see the previous section on [making predictions](predict.html)) in binary classification we can adjust the threshold used to map probabilities to class labels.
 Helpful in this regard is are the functions `generateThreshVsPerfData()` and `plotThreshVsPerf()`, which generate and plot, respectively, the learner performance versus the threshold.
 
-For more performance plots and automatic threshold tuning see `vignette("roc_analysis")`.
+For more performance plots and automatic threshold tuning see the section on [ROC analysis](roc_analysis.html).
 
-In the following example we consider the `mlbench::Sonar()` data set and plot the false positive rate (`fpr` (`vignette("measures")`)), the false negative rate (`fnr` (`vignette("measures")`)) as well as the misclassification rate (`mmce` (`vignette("measures")`)) for all possible threshold values.
+In the following example we consider the `mlbench::Sonar()` data set and plot the false positive rate ([fpr](measures.html)), the false negative rate ([fnr](measures.html)) as well as the misclassification rate ([mmce](measures.html)) for all possible threshold values.
 
 ```{r, fig.asp = 0.5}
 lrn = makeLearner("classif.lda", predict.type = "prob")
@@ -180,7 +179,7 @@ r = calculateROCMeasures(pred)
 r
 ```
 
-The top left $2 \times 2$ matrix is the confusion matrix (`vignette("predict")`), which shows the relative frequency of correctly and incorrectly classified observations. Below and to the right a large number of performance measures that can be inferred from the confusion matrix are added. 
+The top left $2 \times 2$ matrix is the [confusion matrix](predict.html), which shows the relative frequency of correctly and incorrectly classified observations. Below and to the right a large number of performance measures that can be inferred from the confusion matrix are added. 
 By default some additional info about the measures is printed.
 You can turn this off using the `abbreviations` argument of the `print` (`calculateROCMeasures()`) method:
 `print(r, abbreviations = FALSE)`.

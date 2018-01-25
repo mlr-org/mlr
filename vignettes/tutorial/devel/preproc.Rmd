@@ -26,7 +26,7 @@ algorithm.
 This comprises for example finding and resolving inconsistencies, imputation of missing values, identifying, removing or replacing outliers, discretizing numerical data or generating numerical dummy variables for categorical data, any kind of transformation like standardization of predictors or Box-Cox, dimensionality reduction and feature extraction and/or selection.
 
 `mlr` offers several options for data preprocessing.
-Some of the following simple methods to change a `Task()` (or `data.frame`) were already mentioned on the page about learning tasks (`vignette("task")`):
+Some of the following simple methods to change a `Task()` (or `data.frame`) were already mentioned on the page about [learning tasks](task.html):
 
 * `capLargeValues()`: Convert large/infinite numeric values.
 * `createDummyFeatures()`: Generate dummy variables for factor features.
@@ -39,8 +39,8 @@ Some of the following simple methods to change a `Task()` (or `data.frame`) were
 
 Moreover, there are tutorial pages devoted to
 
-* Feature selection (`vignette("feature_selection")`) and
-* Imputation of missing values (`vignette("impute")`).
+* [Feature selection](feature_selection.html) and
+* [Imputation of missing values](impute.html).
 
 ### Fusing learners with preprocessing
 
@@ -70,7 +70,7 @@ Imputation by a fixed constant, however, is not.
 To get a honest estimate of learner performance combined with preprocessing, all data-dependent preprocessing steps must be included in the resampling.
 This is automatically done when fusing a learner with preprocessing.
 
-To this end `mlr` provides two wrappers (`vignette("wrapper")`):
+To this end `mlr` provides two [wrappers](wrapper.html):
 
 * `makePreprocWrapperCaret()` is an interface to all preprocessing options offered by `caret`'s `caret::preProcess()` function.
 * `makePreprocWrapper()` permits to write your own custom preprocessing methods by defining the actions to be taken before training and before prediction.
@@ -80,7 +80,7 @@ In contrast to the preprocessing options listed above like `normalizeFeatures()`
 
 * the `Task()` itself remains unchanged,
 * the preprocessing is not done globally, i.e., for the whole data set, but for every pair of training/test data sets in, e.g., resampling,
-* any parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed can be tuned (`vignette("tune")`) together with the base learner parameters.
+* any parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed can be [tuned](tune.html) together with the base learner parameters.
 
 We start with some examples for `makePreprocWrapperCaret()`.
 
@@ -144,7 +144,7 @@ getLearnerModel(mod)
 getLearnerModel(mod, more.unwrap = TRUE)
 ```
 
-Below the performances of `MASS::qda()` with and without PCA preprocessing are compared in a benchmark experiment (`vignette("benchmark_experiments")`).
+Below the performances of `MASS::qda()` with and without PCA preprocessing are compared in a [benchmark experiment](benchmark_experiments.html).
 Note that we use stratified resampling to prevent errors in `MASS::qda()` due to a too small number of observations from either class.
 
 ```{r}
@@ -158,12 +158,11 @@ PCA preprocessing in this case turns out to be really beneficial for the perform
 #### Joint tuning of preprocessing options and learner parameters
 
 Let's see if we can optimize this a bit.
-The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal
-components.
+The threshold value of 0.9 above was chosen arbitrarily and led to 22 out of 60 principal components.
 But maybe a lower or higher number of principal components should be used.
 Moreover, `qda` (`MASS::qda()`) has several options that control how the class covariance matrices or class probabilities are estimated.
 
-Those preprocessing and learner parameters can be tuned (`vignette("tune")`) jointly.
+Those preprocessing and learner parameters can be [tuned](tune.html) jointly.
 Before doing this let's first get an overview of all the parameters of the wrapped learner using function `getParamSet()`.
 
 ```{r}
@@ -196,7 +195,7 @@ There seems to be a preference for a lower number of principal components (<27) 
 
 If the options offered by `makePreprocWrapperCaret()` are not enough, you can write your own preprocessing wrapper using function `makePreprocWrapper()`.
 
-As described in the tutorial section about wrapped learners (`vignette("wrapper")`) wrappers are implemented using a *train* and a *predict* method.
+As described in the tutorial section about [wrapped learners](wrapper.html) wrappers are implemented using a *train* and a *predict* method.
 In case of preprocessing wrappers these methods specify how to transform the data before training and before prediction and are *completely user-defined*.
 
 Below we show how to create a preprocessing wrapper that centers and scales the data before training/predicting.
@@ -288,7 +287,7 @@ lrn = makePreprocWrapper(lrn, train = trainfun, predict = predictfun,
 lrn
 ```
 
-Let's compare the cross-validated mean squared error (`mse` (`vignette("measures")`)) on the Boston Housing data set (`mlbench::BostonHousing()`) with and without scaling.
+Let's compare the cross-validated mean squared error ([mse](measures.html)) on the Boston Housing data set (`mlbench::BostonHousing()`) with and without scaling.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)
@@ -304,7 +303,7 @@ r
 #### Joint tuning of preprocessing and learner parameters
 
 Often it's not clear which preprocessing options work best with a certain learning algorithm.
-As already shown for the number of principal components in `makePreprocWrapperCaret()` we can tune (`vignette("tune")`) them easily together with other hyperparameters of the learner.
+As already shown for the number of principal components in `makePreprocWrapperCaret()` we can [tune](tune.html) them easily together with other hyperparameters of the learner.
 
 In our scaling example we can try if `nnet::nnet()` works best with both centering and scaling the data or if it's better to omit one of the two operations or do no preprocessing at all.
 In order to tune `center` and `scale` we have to add appropriate `LearnerParam` (`ParamHelpers::LearnerParam()`)s to the parameter set (`ParamHelpers::ParamSet()`) of the wrapped learner.

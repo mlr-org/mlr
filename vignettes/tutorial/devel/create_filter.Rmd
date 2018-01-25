@@ -19,7 +19,7 @@ knitr::knit_hooks$set(document = function(x){
 })
 ```
 
-A lot of feature filter methods are already integrated in `mlr` and a complete list is given in the Appendix (`vignette("filter_methods")`) or can be obtained using `listFilterMethods()`.
+A lot of feature filter methods are already integrated in `mlr` and a complete list is given in the [Appendix](filter_methods.html) or can be obtained using `listFilterMethods()`.
 You can easily add another filter, be it a brand new one or a method which is already implemented in another package, via function `makeFilter()`.
 
 ### Filter objects
@@ -97,7 +97,7 @@ listFilterMethods()$id
 ```
 
 You can use it like any other filter method already integrated in `mlr` (i.e., via the `method` argument of `generateFilterValuesData()` or the `fw.method` argument of
-`makeFilterWrapper()`; see also the page on feature selection (`vignette("feature_selection")`).
+`makeFilterWrapper()`; see also the page on [feature selection](feature_selection.html).
 
 ```{r}
 d = generateFilterValuesData(iris.task, method = c("nonsense.filter", "anova.test"))

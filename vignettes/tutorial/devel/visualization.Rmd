@@ -154,14 +154,13 @@ Functions `plotPartialDependence()` and `plotPartialDependenceGGVIS()` can be ap
 The `ggvis::ggvis()` functions are experimental and are subject to change, though they should work.
 Most generate interactive `shiny::shiny()` applications, that automatically start and run locally.
 
-| generation function               | ggplot2 plotting function  | ggvis plotting function       | tutorial pages                                                                 |
- | --------------------------------  | -------------------------  | ----------------------------- | ------------------------------------------------------------------------------ |
- | `generateThreshVsPerfData()`      | `plotThresVsPerf()`        | `plotThreshVsPerfGGVIS()`     | `vignette("performance")`                                                      |
- |                                   | `plotROCCurves()`          | --                            | `vignette("roc_analysis")`                                                     |
- | `generateCritDifferencesData()`   | `plotCritDifferences()`    | --                            | `vignette("benchmark_experiments")`                                            |
- | `generateHyperParsEffectData()`   | `plotHyperParsEffect()`    |                               | `vignette("tune")`, `vignette("hyperpar_tuning_effects")`                |
- | `generateFilterValuesData()`      | `plotFilterValues()`       | `plotFilterValuesGGVIS()`     | `vignette("feature_selection")`                                                |
- | `generateLearningCurveData()`     | `plotLearningCurve()`      | `plotLearningCurveGGVIS()`    | `vignette("learning_curve")`                                          |
- | `generatePartialDependenceData()` | `plotPartialDependence()`  | `plotPartialDependenceGGVIS()`| `vignette("partial_dependence")`                                               |
- | `generateFunctionalANOVAData()`   |                            |                               |                                                                                |
- | `generateCalibrationData()`       | `plotCalibration()`        | --                            | `vignette("classifier_calibration")`                                           |
+ | generation function               | ggplot2 plotting function  | ggvis plotting function       | tutorial pages                                                                     |
+ | --------------------------------  | -------------------------  | ----------------------------- | ---------------------------------------------------------------------------------- |  | `generateThreshVsPerfData()`      | `plotThresVsPerf()`        | `plotThreshVsPerfGGVIS()`     | [performance](performance.html)                                                    |
+ |                                   | `plotROCCurves()`          | --                            | [ROC analysis](roc_analysis.html)                                                  |
+ | `generateCritDifferencesData()`   | `plotCritDifferences()`    | --                            | [benchmark experiments](benchmark_experiments.html)                                |
+ | `generateHyperParsEffectData()`   | `plotHyperParsEffect()`    |                               | [tuning](tune.html), [hyperparameter tuning effects](hyperpar_tuning_effects.html) |
+ | `generateFilterValuesData()`      | `plotFilterValues()`       | `plotFilterValuesGGVIS()`     | [feature selection](feature_selection.html)                                        |
+ | `generateLearningCurveData()`     | `plotLearningCurve()`      | `plotLearningCurveGGVIS()`    | [learning curves](learning_curve.html)                                             |
+ | `generatePartialDependenceData()` | `plotPartialDependence()`  | `plotPartialDependenceGGVIS()`| [partial dependence](partial_dependence.html)                                      |
+ | `generateFunctionalANOVAData()`   |                            |                               |                                                                                    |
+ | `generateCalibrationData()`       | `plotCalibration()`        | --                            | [classifier calibration](classifier_calibration.html)                              |

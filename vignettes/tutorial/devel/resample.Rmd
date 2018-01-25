@@ -86,7 +86,7 @@ Generally, for *$K$-fold cross-validation* the data set $D$ is partitioned into 
 In the $b$-th of the $K$ iterations, the $b$-th subset is used for testing, while the union of the remaining parts forms the training set.
 
 As usual, you can either pass a Learner (`makeLearner()`) object to `resample()` or, as done here, provide the class name `"regr.lm"` of the learner.
-Since no performance measure is specified the default for regression learners (mean squared error, `mse` (`vignette("measures")`)) is calculated.
+Since no performance measure is specified the default for regression learners (mean squared error, [mse](measures.html)) is calculated.
 
 ```{r}
 ### Specify the resampling strategy (3-fold cross-validation)
@@ -112,7 +112,7 @@ r$measures.test
 
 `r$measures.test` gives the performance on each of the 3 test data sets.
 `r$aggr` shows the aggregated performance value.
-Its name `"mse.test.mean"` indicates the performance measure, `mse` (`vignette("measures")`), and the method, `test.mean` (`aggregations()`), used to aggregate the 3 individual performances. 
+Its name `"mse.test.mean"` indicates the performance measure, [mse](measures.html), and the method, `test.mean` (`aggregations()`), used to aggregate the 3 individual performances. 
 `test.mean` (`aggregations()`) is the default aggregation scheme for most performance measures and, as the name implies, takes the mean over the performances on the test data sets.
 
 Resampling in `mlr` works the same way for all types of learning problems and learners.
@@ -122,7 +122,7 @@ In each subsampling iteration the data set $D$ is randomly partitioned into a tr
 If there is just one iteration, the strategy is commonly called *holdout* or *test sample estimation*.
 
 You can calculate several measures at once by passing a `list` of Measures (`makeMeasure()`)s to `resample()`.
-Below, the error rate (`mmce` (`vignette("measures")`)), false positive and false negative rates (`fpr` (`vignette("measures")`), `fnr` (`vignette("measures")`)), and the time it takes to train the learner (`timetrain` (`vignette("measures")`)) are estimated by *subsampling* with 5 iterations.
+Below, the error rate ([mmce](measures.html)), false positive and false negative rates ([fpr](measures.html), [fnr](measures.html)), and the time it takes to train the learner ([timetrain](measures.html)) are estimated by *subsampling* with 5 iterations.
 
 ```{r}
 ### Subsampling with 5 iterations and default split ratio 2/3
@@ -148,8 +148,7 @@ addRRMeasure(r, list(ber, timepredict))
 ```
 
 By default, `resample()` prints progress messages and intermediate results. You can turn this off by setting `show.info = FALSE`, as done in the code chunk below. 
-(If you are interested in suppressing
-these messages permanently have a look at the tutorial page about configuring mlr (`vignette("configureMlr")`).)
+(If you are interested in suppressing these messages permanently have a look at the tutorial page about [configuring mlr](configureMlr.html).)
 
 In the above example, the Learner (`makeLearner()`) was explicitly constructed. 
 For convenience you can also specify the learner as a string and pass any learner parameters via the `...` argument of `resample()`.
@@ -180,7 +179,7 @@ pred
 ```
 
 `pred` is an object of class `resample()` Prediction.
-Just as a `Prediction()` object (see the tutorial page on making predictions (`vignette("predict")`)) it has an element `$data` which is a `data.frame` that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s).
+Just as a `Prediction()` object (see the tutorial page on making [predictions](predict.html) it has an element `$data` which is a `data.frame` that contains the predictions and in the case of a supervised learning problem the true values of the target variable(s).
 You can use `as.data.frame` (`Prediction()` to directly access the `$data` slot. 
 Moreover, all getter functions for `Prediction()` objects like `getPredictionResponse()` or `getPredictionProbabilities()` are applicable.
 
@@ -254,7 +253,7 @@ r$extract
 ```
 
 As a second example, we extract the variable importances from fitted regression trees using function `getFeatureImportance()`.
-(For more detailed information on this topic see the feature selection (`vignette("feature_selection")`) page.)
+(For more detailed information on this topic see the [feature selection](feature_selection.html) page.)
 
 ```{r}
 ### Extract the variable importance in a regression tree
@@ -305,7 +304,7 @@ r
 
 #### Blocking
 
-If some observations "belong together" and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a `blocking` `factor` when creating the task (`vignette("task")`).
+If some observations "belong together" and must not be separated when splitting the data into training and test sets for resampling, you can supply this information via a `blocking` `factor` when creating the [task](task.html).
 
 ```{r}
 ### 5 blocks containing 30 observations each
@@ -387,7 +386,7 @@ For the great majority of common resampling strategies (like holdout, cross-vali
 
 Each performance `Measure` (`makeMeasure()`) in `mlr` has a corresponding default aggregation method which is stored in slot `$aggr`.
 The default aggregation for most measures is `test.mean`(`aggregations()`).
-One exception is the root mean square error (`rmse` (`vignette("measures")`)).
+One exception is the root mean square error ([rmse](measures.html)).
 
 ```{r}
 ### Mean misclassification error
@@ -425,7 +424,7 @@ r$aggr
 
 #### Example: Calculating the training error
 
-Below we calculate the mean misclassification error (`mmce` (`vignette("measures")`)) on the training
+Below we calculate the mean misclassification error ([mmce](measures.html)) on the training
 and the test data sets. 
 Note that we have to set `predict = "both"` when calling `makeResampleDesc()` in order to get predictions on both training and test sets.
 

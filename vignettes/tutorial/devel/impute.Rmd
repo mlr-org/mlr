@@ -26,7 +26,7 @@ These include standard techniques as imputation by a constant value (like a fixe
 and random numbers (either from the empirical distribution of the feature under consideration or a certain distribution family).
 Moreover, missing values in one feature can be replaced based on the other features by predictions from any supervised Learner (`makeLearner()`) integrated into `mlr`.
 
-If your favourite option is not implemented in `mlr` yet, you can easily create your own imputation method (`vignette("create_imputation")`).
+If your favourite option is not implemented in `mlr` yet, you can easily create your own [imputation method](create_imputation.html).
 
 Also note that some of the learning algorithms included in `mlr` can deal with missing values in a sensible way, i.e., other than simply deleting observations with missing values.
 Those Learner (`makeLearner()`)s have the property ``"missings"`` and thus can be identified using `listLearners()`.
@@ -36,7 +36,7 @@ Those Learner (`makeLearner()`)s have the property ``"missings"`` and thus can b
 listLearners("regr", properties = "missings")[c("class", "package")]
 ```
 
-See also the list of integrated learners (`vignette("integrated_learners")`) in the Appendix.
+See also the list of [integrated learners](integrated_learners.html) in the Appendix.
 
 ### Imputation and reimputation
 
@@ -164,7 +164,7 @@ airq = subset(airq, subset = !is.na(airq$Ozone))
 task = makeRegrTask(data = airq, target = "Ozone")
 ```
 
-In the following the 3-fold cross-validated mean squared error (`vignette("measures")`) is calculated.
+In the following the 3-fold cross-validated [mean squared error](measures.html) is calculated.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)

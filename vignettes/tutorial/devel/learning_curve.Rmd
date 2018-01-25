@@ -31,7 +31,7 @@ It is also possible to pass a ResampleInstance (`makeResampleInstance()`) (which
 
 ### Plotting the learning curve
 
-The `mlr` function `generateLearningCurveData()` can generate the data for *learning curves* for multiple learners (`vignette("integrated_learners")`) and multiple performance measures (`vignette("measures")`) at once.
+The `mlr` function `generateLearningCurveData()` can generate the data for *learning curves* for [multiple learners](integrated_learners.html) and multiple [performance measures](measures.html) at once.
 With `plotLearningCurve()` the result of `generateLearningCurveData()` can be plotted using `ggplot2`.
 `plotLearningCurve()` has an argument `facet` which can be either `"measure"` or `"learner"`. 
 By default `facet = "measure"` and facetted subplots are created for each measure input to `generateLearningCurveData()`.

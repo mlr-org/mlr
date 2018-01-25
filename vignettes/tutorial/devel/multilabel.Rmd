@@ -139,9 +139,9 @@ These can be extracted by the usual accessor functions `getPredictionTruth()`, `
 ### Performance
 
 The performance of your prediction can be assessed via function `performance()`.
-You can specify via the `measures` argument which measure(s) (`vignette("measures")`) to calculate.
-The default measure for multilabel classification is the Hamming loss `multilabel.hamloss` (`vignette("measures")`)).
-All available measures for multilabel classification can be shown by `listMeasures()` and found in the table of performance measures (`vignette("measures")`) and the `?measures()` documentation page.
+You can specify via the `measures` argument which [measure(s)](measures.html) to calculate.
+The default measure for multilabel classification is the Hamming loss [multilabel.hamloss](measures.html).
+All available measures for multilabel classification can be shown by `listMeasures()` and found in the table of performance [measures](measures.html) and the `?measures()` documentation page.
 
 ```{r}
 performance(pred)
@@ -154,7 +154,7 @@ listMeasures("multilabel")
 
 ### Resampling
 
-For evaluating the overall performance of the learning algorithm you can do some resampling (`vignette("resample")`). 
+For evaluating the overall performance of the learning algorithm you can do some [resampling](resample.html). 
 As usual you have to define a resampling strategy, either via `makeResampleDesc()` or `makeResampleInstance()`. 
 After that you can run the `resample()` function. 
 Below the default measure Hamming loss is calculated.
@@ -170,9 +170,9 @@ r
 
 ### Binary performance
 
-If you want to calculate a binary performance measure like, e.g., the  `accuracy` (`vignette("measures")`), the `mmce` (`vignette("measures")`) or the `auc` (`vignette("measures")`) for each label, you can use function `getMultilabelBinaryPerformances()`.
+If you want to calculate a binary performance measure like, e.g., the  [accuracy](measures.html), the [mmce](measures.html) or the [auc](measures.html) for each label, you can use function `getMultilabelBinaryPerformances()`.
 You can apply this function to any multilabel prediction, e.g., also on the resample multilabel prediction. 
-For calculating the `auc`(`vignette("measures")`) you need predicted probabilities.
+For calculating the [auc](measures.html) you need predicted probabilities.
 
 ```{r}
 getMultilabelBinaryPerformances(pred, measures = list(acc, mmce, auc))

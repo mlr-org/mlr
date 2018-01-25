@@ -55,7 +55,7 @@ The algorithm works for any supervised learner with classification, regression, 
 
 ### Generating partial dependences
 
-Our implementation, following `mlr`'s visualization (`vignette("visualization")`) pattern, consists of the above mentioned function `generatePartialDependenceData()`, as well as two visualization functions, `plotPartialDependence()` and `plotPartialDependenceGGVIS()`. 
+Our implementation, following `mlr`'s [visualization](visualization.html) pattern, consists of the above mentioned function `generatePartialDependenceData()`, as well as two visualization functions, `plotPartialDependence()` and `plotPartialDependenceGGVIS()`. 
 The former generates input (objects of class `PartialDependenceData()`) for the latter.
 
 The first step executed by `generatePartialDependenceData()` is to generate a feature grid for every element of the character vector `features` passed. 

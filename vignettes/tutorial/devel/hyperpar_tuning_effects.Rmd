@@ -20,7 +20,7 @@ knitr::knit_hooks$set(document = function(x){
 })
 ```
 
-As mentioned on the Tuning (`vignette("tune")`) tutorial page, tuning a machine learning algorithm typically involves:
+As mentioned on the [tuning](tune.html) tutorial page, tuning a machine learning algorithm typically involves:
 
 * the hyperparameter search space:
 
@@ -77,7 +77,7 @@ res = tuneParams("classif.ksvm", task = pid.task, control = ctrl,
 generateHyperParsEffectData(res, trafo = T, include.diagnostics = FALSE)
 ```
 
-As a reminder from the resampling (`vignette("resample")`) tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
+As a reminder from the [resampling](resample.html) tutorial, if we wanted to generate data on the training set as well as the validation set, we only need to make a few minor changes:
 
 ```{r gen_data_train}
 ps = makeParamSet(
@@ -173,7 +173,7 @@ plt + ggtitle("SVM learner crashes with negative C") +
   theme_bw()
 ```
 
-The example below uses nested cross validation (`vignette("nested_resampling")`) with an outer loop of 2 runs. 
+The example below uses [nested cross validation](nested_resampling.html) with an outer loop of 2 runs. 
 `mlr` indicates each run within the visualization.
 
 ```{r single_nested}
@@ -278,7 +278,7 @@ plt + scale_fill_gradient2(breaks = seq(min_plt, max_plt, length.out = 5),
 
 ### Visualizing the effects of more than 2 hyperparameters
 
-In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of partial dependence plots (`vignette("partial_dependence")`) to show how the performance depends on a one- or two-dimensional subset of the hyperparameters.
+In order to visualize the result when tuning 3 or more hyperparameters simultaneously we can take advantage of [partial dependence plots](partial_dependence.html) to show how the performance depends on a one- or two-dimensional subset of the hyperparameters.
 Below we tune three hyperparameters `C`, `sigma`, and `degree` of an SVM with Bessel kernel and set the `partial.dep` flag to `TRUE` to indicate that we intend to calculate partial dependences.
 
 ```{r}
