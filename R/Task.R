@@ -152,7 +152,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       if (nrow(coordinates) != nrow(data)) {
         stop("Coordinates need to have the same length data! Or pass none at all.")
       }
-      if (ncol(coordinates) <= 2) {
+      if (ncol(coordinates) < 2) {
         stop("Supplied coordinates need to consist of at least two dimensions.")
       }
       if (!is.data.frame(coordinates)) {
