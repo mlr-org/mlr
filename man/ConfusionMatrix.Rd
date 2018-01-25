@@ -28,3 +28,4 @@ Other performance: \code{\link{calculateConfusionMatrix}},
   \code{\link{performance}}, \code{\link{setAggregation}},
   \code{\link{setMeasurePars}}
 }
+\concept{performance}

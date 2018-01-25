@@ -111,10 +111,10 @@ Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Ann
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 }
+\concept{generate_plot_data}

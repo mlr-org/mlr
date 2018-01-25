@@ -53,3 +53,4 @@ The description object contains these slots
 Other fda: \code{\link{makeExtractFDAFeatMethod}},
   \code{\link{makeExtractFDAFeatsWrapper}}
 }
+\concept{fda}

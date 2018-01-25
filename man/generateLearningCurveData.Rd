@@ -66,7 +66,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}},
@@ -75,3 +74,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
 Other learning_curve: \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}}
 }
+\concept{generate_plot_data}
+\concept{learning_curve}

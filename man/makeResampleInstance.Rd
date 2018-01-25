@@ -67,3 +67,4 @@ Other resample: \code{\link{ResamplePrediction}},
   \code{\link{getRRTaskDesc}},
   \code{\link{makeResampleDesc}}, \code{\link{resample}}
 }
+\concept{resample}

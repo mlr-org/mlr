@@ -30,3 +30,4 @@ Other impute: \code{\link{imputations}},
   \code{\link{impute}}, \code{\link{makeImputeWrapper}},
   \code{\link{reimpute}}
 }
+\concept{impute}
