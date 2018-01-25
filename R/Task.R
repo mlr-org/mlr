@@ -74,9 +74,9 @@
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
 #' @param coordinates [\code{data.frame}]\cr
-#'   X and Y coordinates of a spatial data set that will be used for spatial partitioning of the data in a cross-validation resampling setting.
-#'   Coordinates have to be in "Universal Transverse Mercator" (UTM) format, i.e. numeric values.
-#'   Provided [\code{data.frame}] needs to have the same number of rows as data.
+#'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+#'   Coordinates have to be numeric values.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data and consist of two columns (usually X and Y coordinates).
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
@@ -109,9 +109,9 @@ NULL
 #' @param blocking [\code{numeric}\cr
 #'   task data blocking
 #' @param coordinates [\code{data.frame}]\cr
-#'   X and Y coordinates of a spatial data set that will be used for spatial partitioning of the data in a cross-validation resampling setting.
-#'   Coordinates have to be in "Universal Transverse Mercator" (UTM) format, i.e. numeric values.
-#'   Provided [\code{data.frame}] needs to have the same number of rows as data.
+#'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+#'   Coordinates have to be numeric values.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data and consist of two columns (usually X and Y coordinates).
 #' @keywords internal
 #' @name makeTaskDesc
 NULL
@@ -151,6 +151,9 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
     if (!is.null(coordinates)) {
       if (nrow(coordinates) != nrow(data)) {
         stop("Coordinates have to be of the same length as number of rows in data! Or pass none at all.")
+      }
+      if (ncol(coordinates) != 2) {
+        stop("The coordinates data frame needs to have exactly two columns. Please provide both X and Y coordinate.")
       }
       if (!is.data.frame(coordinates)) {
         warningf("Provided coordinates are not given as a data.frame but as class %s. Please provide a data frame.", class(coordinates))
