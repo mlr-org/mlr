@@ -500,7 +500,7 @@ At the very least, many learners have hyperparameters that need to be tuned to g
 Reliable performance estimates can be obtained by `vignette("nested_resampling")`, i.e., by doing the tuning in an inner resampling loop while estimating the performance in an outer loop.
 Moreover, you might want to combine learners with pre-processing steps like imputation, scaling, outlier removal, dimensionality reduction or feature selection and so on.
 All this can be easily done using `mlr`'s wrapper functionality.
-The general principle is explained in the section about `vignette("wrapper")` in the Advanced part of this tutorial. 
+The general principle is explained in the section about [wrapper](wrapper.html) in the Advanced part of this tutorial. 
 There are also several sections devoted to common pre-processing steps.
 * Benchmark experiments can very quickly become computationally demanding. 
-`mlr` offers some possibilities for `vignette("parallelization")`.
+`mlr` offers some possibilities for [parallelization](parallelization.html).
