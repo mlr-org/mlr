@@ -58,7 +58,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
 
     ctrl = list(smooth = FALSE, simple.function = TRUE, max.call = 3000L, temperature = 250,
       visiting.param = 2.5, acceptance.param = -15)
-    or = GenSA(par = start, fn = fitn, lower = rep(0, k),
+    or = GenSA::GenSA(par = start, fn = fitn, lower = rep(0, k),
       upper = rep(1, k), control = ctrl)
     th = or$par / sum(or$par)
     names(th) = cls
