@@ -4,7 +4,7 @@
 \alias{makeTaskDescInternal}
 \title{Exported for internal use.}
 \usage{
-makeTaskDescInternal(type, id, data, target, weights, blocking, spatial)
+makeTaskDescInternal(type, id, data, target, weights, blocking, coordinates)
 }
 \arguments{
 \item{type}{[\code{character(1)}]\cr
@@ -25,8 +25,8 @@ weights}
 \item{blocking}{[\code{numeric}\cr
 task data blocking}
 
-\item{spatial}{[\code{logical(1)}]\cr
-whether data is spatial}
+\item{coordinates}{[\code{logical(1)}]\cr
+whether spatial coordinates have been provided}
 }
 \description{
 Exported for internal use.
