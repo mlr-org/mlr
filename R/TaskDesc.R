@@ -47,11 +47,11 @@ NULL
 #'   weights
 #' @param blocking [\code{numeric}\cr
 #'   task data blocking
-#' @param spatial [\code{logical(1)}]\cr
-#'   whether data is spatial
+#' @param coordinates [\code{logical(1)}]\cr
+#'   whether spatial coordinates have been provided
 #' @keywords internal
 #' @export
-makeTaskDescInternal = function(type, id, data, target, weights, blocking, spatial) {
+makeTaskDescInternal = function(type, id, data, target, weights, blocking, coordinates) {
   # get classes of feature cols
   cl = vcapply(data, function(x) class(x)[1L])
   cl = table(dropNamed(cl, target))
@@ -71,6 +71,6 @@ makeTaskDescInternal = function(type, id, data, target, weights, blocking, spati
     has.missings = anyMissing(data),
     has.weights = !is.null(weights),
     has.blocking = !is.null(blocking),
-    is.spatial = spatial
+    has.coordinates = !is.null(coordinates)
   )
 }
