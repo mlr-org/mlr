@@ -640,7 +640,7 @@ makeFilter(
   name = "praznik",
   desc = "mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = c("classif"),
+  supported.tasks = "classif",
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, criteria = "MIM", ...) {
     criteria = paste0("praznik::", criteria)
