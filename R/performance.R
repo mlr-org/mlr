@@ -14,6 +14,7 @@
 #'   are extracted from it.
 #' @param simpleaggr [\code{logical}]\cr
 #'   If TRUE, aggregation of \code{ResamplePrediction} objects is skipped. This is used internally for threshold tuning.
+#'   Default is \code{FALSE}
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -115,25 +116,25 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if (simpleaggr) {
     measure$fun(task, model, pred, feats, m$extra.args)
   } else {
-  if (inherits(pred, "ResamplePrediction")) {
-    if (is.null(pred$data$iter)) pred$data$iter = 1L
-    if (is.null(pred$data$set)) pred$data$set = "test"
-    fun = function(ss) {
-      is.train = ss$set == "train"
-      if (any(is.train)) {
-        pred$data = as.data.frame(ss[is.train, ])
-        perf.train = measure$fun(task, model, pred, feats, m$extra.args)
-      } else {
-        perf.train = NA_real_
+    if (inherits(pred, "ResamplePrediction")) {
+      if (is.null(pred$data$iter)) pred$data$iter = 1L
+      if (is.null(pred$data$set)) pred$data$set = "test"
+      fun = function(ss) {
+        is.train = ss$set == "train"
+        if (any(is.train)) {
+          pred$data = as.data.frame(ss[is.train, ])
+          perf.train = measure$fun(task, model, pred, feats, m$extra.args)
+        } else {
+          perf.train = NA_real_
+        }
+        pred$data = as.data.frame(ss[!is.train, ])
+        perf.test = measure$fun(task, model, pred, feats, m$extra.args)
+        list(perf.train = perf.train, perf.test = perf.test)
       }
-      pred$data = as.data.frame(ss[!is.train, ])
-      perf.test = measure$fun(task, model, pred, feats, m$extra.args)
-      list(perf.train = perf.train, perf.test = perf.test)
+      perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
+      measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
+    } else {
+      measure$fun(task, model, pred, feats, m$extra.args)
     }
-    perfs = as.data.table(pred$data)[, fun(.SD), by = "iter"]
-    measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
-  } else {
-    measure$fun(task, model, pred, feats, m$extra.args)
-  }
   }
 }
