@@ -164,4 +164,4 @@ LazyData: yes
 ByteCompile: yes
 Version: 2.12
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.0.1

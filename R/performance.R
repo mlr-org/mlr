@@ -12,6 +12,8 @@
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
 #'   are extracted from it.
+#' @param simpleaggr [\code{logical}]\cr
+#'   If TRUE, aggregation of \code{ResamplePrediction} objects is skipped. This is used internally for threshold tuning.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
