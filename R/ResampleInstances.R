@@ -72,8 +72,9 @@ instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
 
 
 instantiateResampleInstance.FixedWindowCVDesc = function(desc, size, task = NULL, coords) {
-  initial.window.abs = floor(desc$initial.window * size)
-  assertInt(initial.window.abs, lower = 1)
+  initial.window.abs = scaleWindows(desc$initial.window, size)
+  desc$horizon = scaleWindows(desc$horizon, initial.window.abs)
+
   if (size - initial.window.abs < desc$horizon) {
     stop(catf("The initial window is %i observations while the data is %i observations. \n There is not enough data left (%i observations) to create a test set for a %i size horizon.",
               initial.window.abs, size, initial.window.abs - size, desc$horizon))
@@ -84,25 +85,27 @@ instantiateResampleInstance.FixedWindowCVDesc = function(desc, size, task = NULL
   train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
   test.inds  = mapply(seq, stops + 1, stops + desc$horizon, SIMPLIFY = FALSE)
 
+  desc$skip = scaleWindows(desc$skip, length(train.inds))
+
   if (skip > 0) {
     train.inds = thin(train.inds, skip = skip)
     test.inds = thin(test.inds, skip = skip)
   }
-
-  if (length(test.inds) == 0)
+  if (length(test.inds) == 0) {
     stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
-
-  # If the last value is not included, shift everything over by one
+  }
   if (test.inds[[length(test.inds)]][desc$horizon] != size) {
-    warning("The last observation was excluded. To include the final observation please change either the initial.window or horizon.")
+    num.excluded = size - test.inds[[length(test.inds)]][desc$horizon]
+    warning(paste0("The last ", num.excluded, " observation(s) were excluded. To include these observations please change either the initial.window or horizon."))
   }
   desc$iters = length(test.inds)
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds)
 }
 
 instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NULL, coords) {
-  initial.window.abs = floor(desc$initial.window * size)
-  assertInt(initial.window.abs, lower = 1)
+  initial.window.abs = scaleWindows(desc$initial.window, size)
+  desc$horizon = scaleWindows(desc$horizon, initial.window.abs)
+
   if (size - initial.window.abs < desc$horizon) {
     stop(catf("The initial window is %i observations while the data is %i observations. \n There is not enough data left (%i observations) to create a test set for a %i size horizon.",
               initial.window.abs, size, initial.window.abs - size, desc$horizon))
@@ -113,17 +116,17 @@ instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NU
   train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
   test.inds  = mapply(seq, stops + 1, stops + desc$horizon, SIMPLIFY = FALSE)
 
+  desc$skip = scaleWindows(desc$skip, length(train.inds))
   if (skip > 0) {
     train.inds = thin(train.inds, skip = skip)
     test.inds  = thin(test.inds, skip = skip)
   }
-
   if (length(test.inds) == 0) {
     stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
   }
-  # If the last value if not included, shift everything over by one
   if (test.inds[[length(test.inds)]][desc$horizon] != size) {
-    warning("The last observation was excluded. To include the final observation please change either the initial.window or horizon.")
+    num.excluded = size - test.inds[[length(test.inds)]][desc$horizon]
+    warning(paste0("The last ", num.excluded, " observation(s) were excluded. To include these observations please change either the initial.window or horizon."))
   }
   desc$iters = length(test.inds)
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds)

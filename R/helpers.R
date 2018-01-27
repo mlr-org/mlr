@@ -128,3 +128,13 @@ thin = function(x, skip = 0) {
   n = length(x)
   x[seq(1, n, by = skip)]
 }
+
+# scale window if < 1
+scaleWindows = function(window, scaler) {
+  if (window < 1) {
+    scaled.window = round(window * scaler)
+  } else {
+    scaled.window = round(window)
+  }
+  return(scaled.window)
+}

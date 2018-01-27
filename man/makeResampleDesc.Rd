@@ -35,13 +35,22 @@ Further parameters for strategies.\cr
   Default is 10.}
 \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
   Here \code{iters = folds * reps}. Default is 10.}
-\item{horizon [\code{integer(1)}]}{Number of observations to forecast for \dQuote{GrowingWindowCV}
- and \dQuote{FixedWindowCV}. Default is 1.}
+\item{horizon [\code{numeric(1)}]}{Number of observations in the forecast test set for \dQuote{GrowingWindowCV}
+ and \dQuote{FixedWindowCV}. When \code{horizon > 1} this will be treated as the number of
+ observations to forecast, else it will be a fraction of the initial window. IE,
+ for 100 observations, initial window of .5, and horizon of .2, the test set will have
+ 10 observations. Default is 1.}
 \item{initial.window [\code{numeric(1)}]}{Fraction of observations to start with
- in \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}. Default is 0.5.}
-\item{skip [\code{integer(1)}]}{ How many resamples to skip to thin the total amount
+ in the training set for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}.
+ When \code{initial.window > 1} this will be treated as the number of
+ observations in the initial window, else it will be treated as the fraction
+ of observations to have in the initial window. Default is 0.5.}
+\item{skip [\code{numeric(1)}]}{ How many resamples to skip to thin the total amount
  for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}. This is passed through as the \dQuote{by} argument
- in \code{seq()}. Default is horizon which gives mutually exclusive chunks of test indices.}
+ in \code{seq()}. When \code{skip > 1} this will be treated as the increment of the sequence of resampling indices,
+  else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
+  of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
+   of test indices.}
 }}
 
 \item{stratify}{[\code{logical(1)}]\cr
