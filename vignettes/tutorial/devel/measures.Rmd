@@ -26,7 +26,7 @@ This page shows the performance measures available for the different types of
 learning problems as well as general performance measures in alphabetical order.
 (See also the documentation about `measures()` and `makeMeasure()` for available measures and their properties.)
 
-If you find that a measure is missing, you can either [open an issue](https://github.com/mlr-org/mlr/issues) or try to [implement a measure yourself](create_measure.html).
+If you find that a measure is missing, you can either [open an issue](https://github.com/mlr-org/mlr/issues) or try to [implement a measure yourself](create_measure.html){target="_blank"}.
 
 Column **Minim.** indicates if the measure is minimized during, e.g., tuning or feature selection.
 **Best** and **Worst** show the best and worst values the performance measure can attain.
@@ -135,7 +135,7 @@ getTab("costsens")
 ```
 
 Note that in case of *ordinary misclassification costs* you can also generate performance measures from cost matrices by function `makeCostMeasure()`.
-For details see the tutorial page on [cost-sensitive classification](cost_sensitive_classif.html) and also the page on [custom performance measures](create_measure.html).
+For details see the tutorial page on [cost-sensitive classification](cost_sensitive_classif.html){target="_blank"} and also the page on [custom performance measures](create_measure.html){target="_blank"}.
 
 #### Multilabel classification
 

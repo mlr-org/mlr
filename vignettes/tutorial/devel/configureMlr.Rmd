@@ -111,7 +111,7 @@ train(lrn, iris.task)
 
 If a learning method throws an error the default behavior of `mlr` is to
 generate an exception as well.
-However, in some situations, for example if you conduct a larger [bechmark experiment](benchmark_experiments.html) with multiple data sets and learners, you usually don't want the whole experiment stopped due to one error.
+However, in some situations, for example if you conduct a larger [bechmark experiment](benchmark_experiments.html){target="_blank"} with multiple data sets and learners, you usually don't want the whole experiment stopped due to one error.
 You can prevent this using the `on.learner.error` option of `configureMlr()`.
 
 ```{r error=TRUE}

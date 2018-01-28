@@ -456,7 +456,7 @@ perf = getBMRPerformances(bmr, as.df = TRUE)
 
 ### Density plots for two tasks
 qplot(mmce, colour = learner.id, facets = . ~ task.id,
-  data = perf[perf$task.id %in% c("iris_example", "Sonar_example"),], geom = "density") +
+  data = perf[perf$task.id %in% c("iris-example", "Sonar-example"),], geom = "density") +
   theme(strip.text.x = element_text(size = 8))
 ```
 
@@ -482,7 +482,7 @@ Moreover, this might be useful for the construction of ensembles of learning alg
 Below, function `GGally::ggpairs()` from package `GGally::GGally()` is used to generate a scatterplot matrix of [mean misclassification errors](measures.html){target="_blank"} on the `mlbench::Sonar()` data set.
 
 ```{r}
-perf = getBMRPerformances(bmr, task.id = "Sonar_example", as.df = TRUE)
+perf = getBMRPerformances(bmr, task.id = "Sonar-example", as.df = TRUE)
 df = reshape2::melt(perf, id.vars = c("task.id", "learner.id", "iter"))
 df = df[df$variable == "mmce",]
 df = reshape2::dcast(df, task.id + iter ~ variable + learner.id)

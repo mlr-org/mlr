@@ -58,7 +58,7 @@ For further details please see the `parallelization()` documentation page.
 
 ### Custom learners and parallelization
 
-If you have implemented a [custom learner yourself](create_learner.html), locally, you currently need to export this to the slave.
+If you have implemented a [custom learner yourself](create_learner.html){target="_blank"}, locally, you currently need to export this to the slave.
 So if you see an error after calling, e.g., a parallelized version of `resample()` like this:
 
 ```

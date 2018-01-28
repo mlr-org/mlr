@@ -48,7 +48,7 @@ mod
 Training a learner works the same way for every type of learning problem.
 Below is a survival analysis example where a Cox proportional hazards model (`survival::coxph()`) is fitted to the `survival::lung()` data set.
 Note that we use the corresponding `lung.task()` provided by `mlr`.
-All available `Task()`s are listed in the [Appendix](example_tasks.html).
+All available `Task()`s are listed in the [Appendix](example_tasks.html){target="_blank"}.
 
 ```{r}
 mod = train("surv.coxph", lung.task)
@@ -113,7 +113,7 @@ mod = train("regr.lm", bh.task, subset = train.set)
 mod
 ```
 
-Note, for later, that all standard [resampling strategies](resample.html) are supported.
+Note, for later, that all standard [resampling strategies](resample.html){target="_blank"} are supported.
 Therefore you usually do not have to subset the data yourself.
 
 Moreover, if the learner supports this, you can specify observation ``weights`` that reflect the relevance of observations in the training process.
@@ -132,7 +132,7 @@ w = 1/tab[target]
 train("classif.rpart", task = bc.task, weights = w)
 ```
 
-Note, for later, that `mlr` offers much more functionality to deal with [imbalanced classification problems](over_and_undersampling.html).
+Note, for later, that `mlr` offers much more functionality to deal with [imbalanced classification problems](over_and_undersampling.html){target="_blank"}.
 
 As another side remark for more advanced readers:
 By varying the weights in the calls to `train()`, you could also implement your own variant of a general boosting type algorithm on arbitrary `mlr` base learners.

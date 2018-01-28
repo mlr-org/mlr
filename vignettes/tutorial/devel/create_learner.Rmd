@@ -60,8 +60,8 @@ Their superclasses are `RLearner()` and finally `Learner` (`makeLearner()`).
 For all these (sub)classes there exist constructor functions `makeRLearner` (`RLearner()`), `makeRLearnerClassif` (`RLearner()`), `makeRLearneRegr` (`RLearner()`) etc. that are called internally by `makeLearner()`.
 
 A short side remark:
-As you might have noticed there does not exist a special learner class for [cost-sensitive classification (costsens)](cost_sensitive_classif.html) with example-specific costs. 
-This type of learning task is currently exclusively handled through [wrappers](wrapper.html) like `makeCostSensWeightedPairsWrapper()`.
+As you might have noticed there does not exist a special learner class for [cost-sensitive classification (costsens)](cost_sensitive_classif.html){target="_blank"} with example-specific costs. 
+This type of learning task is currently exclusively handled through [wrappers](wrapper.html){target="_blank"} like `makeCostSensWeightedPairsWrapper()`.
 
 In the following we show how to integrate learners for the five types of learning tasks mentioned above.
 Defining a completely new type of learner that has special properties and does not fit into one of the existing schemes is of course possible, but much more advanced and not covered here.
@@ -87,9 +87,9 @@ These are any options that can be set when running it to change how it learns, h
 
 In our example, we have discrete and numeric parameters, so we use `makeDiscreteLearnerParam` (`ParamHelpers::LearnerParam()`) and `makeNumericLearnerParam` (`ParamHelpers::LearnerParam()`) to incorporate the complete description of the parameters. 
 We include all possible values for discrete parameters and lower and upper bounds for numeric parameters. 
-Strictly speaking it is not necessary to provide bounds for all parameters and if this information is not available they can be estimated, but providing accurate and specific information here makes it possible to tune the learner much better (see the section on [tuning](tune.html)).
+Strictly speaking it is not necessary to provide bounds for all parameters and if this information is not available they can be estimated, but providing accurate and specific information here makes it possible to tune the learner much better (see the section on [tuning](tune.html){target="_blank"}).
 
-Next, we add information on the properties of the learner (see also the section on [learners](learner.html)). 
+Next, we add information on the properties of the learner (see also the section on [learners](learner.html){target="_blank"}). 
 Which types of features are supported (numerics, factors)? 
 Are case weights supported? 
 Are class weights supported? 
@@ -243,7 +243,7 @@ Again most of the data is passed straight through to/from the train/predict func
 
 ### Survival analysis
 
-For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the [cindex](measures.html) (for ``.learner$predict.type`` == ``"response"``). 
+For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the [cindex](measures.html){target="_blank"} (for ``.learner$predict.type`` == ``"response"``). 
 For ``.learner$predict.type`` == ``"prob"``, there is no substantially meaningful measure (yet). 
 You may either ignore this case or return something like predicted survival curves (cf. example below).
 
@@ -349,7 +349,7 @@ predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...)
 
 ### Multilabel classification
 
-As stated in the [multilabel](multilabel.html) section, multilabel classification methods can be divided into problem transformation methods and algorithm adaptation methods.
+As stated in the [multilabel](multilabel.html){target="_blank"} section, multilabel classification methods can be divided into problem transformation methods and algorithm adaptation methods.
 
 At this moment the only problem transformation method implemented in `mlr` is the binary relevance method (`makeMultilabelBinaryRelevanceWrapper()`). 
 Integrating more of these methods requires good knowledge of the architecture of the `mlr` package.
@@ -482,7 +482,7 @@ Sometimes, this makes it necessary to change or set some additional defaults as 
 ### Unit testing
 
 The tests make sure that we get the same results when the learner is invoked through the `mlr` interface and when using the original functions.
-If you are not familiar or want to learn more about unit testing and package `testthat` have a look at [the Testing chapter in Hadley Wickham's R packages](http://r-pkgs.had.co.nz/tests.html).
+If you are not familiar or want to learn more about unit testing and package `testthat` have a look at [the Testing chapter in Hadley Wickham's R packages](http://r-pkgs.had.co.nz/tests.html){target="_blank"}.
 
 In `mlr` all unit tests are in the following directory: <https://github.com/mlr-org/mlr/tree/master/tests/testthat>.
 For each learner interface there is an individual file whose name follows the scheme `test_<type>_<learner_name>.R`, for example <https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R>.

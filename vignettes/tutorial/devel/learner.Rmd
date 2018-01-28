@@ -23,8 +23,8 @@ The following classes provide a unified interface to all popular machine learnin
 (cost-sensitive) classification, regression, survival analysis, and clustering.
 Many are already integrated in `mlr`, others are not, but the package is specifically designed to make extensions simple.
 
-Section [integrated learners](integrated_learners.html) shows the already implemented machine learning methods and their properties.
-If your favorite method is missing, either [open an issue](https://github.com/mlr-org/mlr/issues) or take a look at how to [integrate a learning method yourself](create_learners.html).
+Section [integrated learners](integrated_learners.html){target="_blank"} shows the already implemented machine learning methods and their properties.
+If your favorite method is missing, either [open an issue](https://github.com/mlr-org/mlr/issues) or take a look at how to [integrate a learning method yourself](create_learners.html){target="_blank"}.
 This basic introduction demonstrates how to use already implemented learners.
 
 ### Constructing a learner
@@ -76,7 +76,7 @@ This class contains the properties of the method, e.g., which types of features 
 As you might have noticed, there is currently no special learner class for cost-sensitive classification.
 For ordinary misclassification costs you can use standard classification methods.
 For example-dependent costs there are several ways to generate cost-sensitive learners from ordinary regression and classification learners. 
-This is explained in greater detail in the section about [cost-sensitive classification](cost_sensitive_classif.html).
+This is explained in greater detail in the section about [cost-sensitive classification](cost_sensitive_classif.html){target="_blank"}.
 
 ### Accessing a learner
 
@@ -153,7 +153,7 @@ regr.lrn = removeHyperPars(regr.lrn, c("n.trees", "interaction.depth"))
 
 ### Listing learners
 
-A list of all learners integrated in `mlr` and their respective properties is shown in the [Appendix](integrated_learners.html).
+A list of all learners integrated in `mlr` and their respective properties is shown in the [Appendix](integrated_learners.html){target="_blank"}.
 
 If you would like a list of available learners, maybe only with certain properties or suitable for a certain learning `Task()` use function `listLearners()`.
 

@@ -64,7 +64,7 @@ As a rule of thumb, usually 100 repetitions are used with the aim to reduce vari
 
 There are some prerequisites for this:
 
-When specifying the [task](task.html), you need to provide spatial coordinates through argument `coordinates`.
+When specifying the [task](task.html){target="_blank"}, you need to provide spatial coordinates through argument `coordinates`.
 The supplied `data.frame` needs to have the same number of rows as the data and at least two dimensions need to be supplied.
 This means that a 3-D partitioning might also work but we have not tested this explicitly.
 Coordinates need to be numeric so it is suggested to use a UTM projection.
@@ -73,7 +73,7 @@ If this applies, the coordinates will be used for spatial partitioning if `SpCV`
 ### Examples
 
 The `spatial.task` data set serves as an example data set for spatial modeling tasks in `mlr`.
-The [task](task.html) argument `coordinates` is a `data.frame` with two coordinates that will later be used for the spatial partitioning of the data set.
+The [task](task.html){target="_blank"} argument `coordinates` is a `data.frame` with two coordinates that will later be used for the spatial partitioning of the data set.
 
 In this example, the "Random Forest" algorithm (package [ranger](&ranger::ranger)) is used to model a binomial response variable.
 
@@ -122,8 +122,8 @@ The introduced bias (caused by spatial autocorrelation) in performance in this e
 In general, it can be said that the more flexible a model is, the more it will profit from underlying spatial autocorrelation.
 Simpler models (e.g., GLM) will show less overoptimistic performance estimates.
 
-* The concept of spatial cross-validation was originally implemented in package [sperrorest](https://pat-s.github.io/sperrorest/index.html).
+* The concept of spatial cross-validation was originally implemented in package [sperrorest](https://pat-s.github.io/sperrorest/index.html){target="_blank"}.
 This package comes with even more partitioning options and the ability to visualize the spatial grouping of folds. 
-We plan to integrate more functions from [sperrorest](https://pat-s.github.io/sperrorest/index.html) into `mlr` so stay tuned!
+We plan to integrate more functions from [sperrorest](https://pat-s.github.io/sperrorest/index.html){target="_blank"} into `mlr` so stay tuned!
 
 * For more detailed information, see [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/) and [Brenning2012](http://ieeexplore.ieee.org/document/6352393/).
