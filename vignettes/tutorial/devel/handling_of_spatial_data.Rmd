@@ -64,76 +64,59 @@ As a rule of thumb, usually 100 repetitions are used with the aim to reduce vari
 
 There are some prerequisites for this:
 
-When specifying the [task](task.html), you need to explicitly state that the task is `spatial` one by setting `spatial = TRUE`. 
-Next, there need to be two variables named `x` and `y` in your data set that store the coordinate information. 
-If this applies, the coordinates will be used for spatial partitioning if `SpCV` or `SpRepCV` are selected as resampling strategies. 
-
-Also, these variables **will be removed** for any `train()` or `predict()` call. 
-This means they will not be used as predictors within the specified learner but only to set up the sampling for the cross-validation task.
-
-Coordinates must be named `x` and `y` to be used for spatial partitioning. 
-If named differently and `spatial = TRUE` was set during task creation, an error will occur. 
+When specifying the [task](task.html), you need to provide spatial coordinates through argument `coordinates`.
+The supplied `data.frame` needs to have the same number of rows as the data and at least two dimensions need to be supplied.
+This means that a 3-D partitioning might also work but we have not tested this explicitly.
+Coordinates need to be numeric so it is suggested to use a UTM projection.
+If this applies, the coordinates will be used for spatial partitioning if `SpCV` or `SpRepCV` is selected as resampling strategy. 
 
 ### Examples
 
-The `bc.task.spatial` data set serves as an example data set for spatial modeling tasks in `mlr`.
-The task (task.html) attribute `spatial` is set to `TRUE` to indicate that the data set also stores coordinate information.
+The `spatial.task` data set serves as an example data set for spatial modeling tasks in `mlr`.
+The [task](task.html) argument `coordinates` is a `data.frame` with two coordinates that will later be used for the spatial partitioning of the data set.
 
-In this example, the "Random Forest" algorithm (package `ranger::ranger()`) is used to model a binomial response variable.
+In this example, the "Random Forest" algorithm (package [ranger](&ranger::ranger)) is used to model a binomial response variable.
 
-For performance assessment, a repeated spatial cross-validation with 5 folds and 10 repetitions is chosen.
+For performance assessment, a repeated spatial cross-validation with 5 folds and 5 repetitions is chosen.
 
 #### Spatial Cross-Validation
 
 ```{r, eval = TRUE}
-data("bc.task.spatial")
-bc.task.spatial
+data("spatial.task")
+spatial.task
 
-learner.glm = makeLearner("classif.ranger", predict.type = "prob")
+learner.rf = makeLearner("classif.ranger", predict.type = "prob")
 
-resampling = makeResampleDesc("SpRepCV", fold = 5, reps = 10)
+resampling = makeResampleDesc("SpRepCV", fold = 5, reps = 5)
 
 set.seed(123)
-out = resample(learner = learner.glm, task = bc.task.spatial,
+out = resample(learner = learner.rf, task = spatial.task,
   resampling = resampling, measures = list(auc))
 
 mean(out$measures.test$auc)
 ```
 
 We can check for the introduced spatial autocorrelation bias here by performing the same modeling task using a non-spatial partitioning setting.
-To force non-spatial cross-validation here, variables `x` and `y` need to be removed from the data set because they are not used for partitioning when using `RepCV` and also should not be used as predictors. 
-
-Additionally, the `spatial` task attribute needs to be set to `FALSE`.
-Finally, `RepCV` is chosen instead of `SpRepCV`.
+To do so, we simply choose `RepCV` instead of `SpRepCV`.
+There is no need to remove `coordinates` from the task as it is only used if `SpCV` or `SpRepCV` is selected as the resampling strategy.
 
 #### Non-Spatial Cross-Validation
 
 ```{r, eval = TRUE}
-data("bc.task.spatial")
-bc.task.spatial
+learner.rf = makeLearner("classif.ranger", predict.type = "prob")
 
-bc.task.spatial$task.desc$spatial = FALSE
-bc.task.spatial$env$data$x = NULL
-bc.task.spatial$env$data$y = NULL
-
-learner.glm = makeLearner("classif.ranger", predict.type = "prob")
-
-resampling = makeResampleDesc("RepCV", fold = 5, reps = 10)
+resampling = makeResampleDesc("RepCV", fold = 5, reps = 5)
 
 set.seed(123)
-out = resample(learner = learner.glm, task = bc.task.spatial,
+out = resample(learner = learner.rf, task = spatial.task,
   resampling = resampling, measures = list(auc))
 
 mean(out$measures.test$auc)
 ```
 
-The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.07 AUROC. 
+The introduced bias (caused by spatial autocorrelation) in performance in this example is around 0.12 AUROC. 
 
 ### Notes
-
-* Usually, coordinates are not used as predictors in spatial modeling.
-If you insist on using them and also want to perform spatial cross-validation, add them to the data set with a different name than `x` or `y`, e.g. `x1` and `y1`.
-That way they will be treated as normal predictors.
 
 * Some models are more affected by spatial autocorrelation than others. 
 In general, it can be said that the more flexible a model is, the more it will profit from underlying spatial autocorrelation.
@@ -144,4 +127,3 @@ This package comes with even more partitioning options and the ability to visual
 We plan to integrate more functions from [sperrorest](https://pat-s.github.io/sperrorest/index.html) into `mlr` so stay tuned!
 
 * For more detailed information, see [Brenning 2005](https://www.nat-hazards-earth-syst-sci.net/5/853/2005/) and [Brenning2012](http://ieeexplore.ieee.org/document/6352393/).
-
