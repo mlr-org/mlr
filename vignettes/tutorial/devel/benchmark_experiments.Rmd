@@ -69,7 +69,7 @@ bmr
 ```
 
 In the printed summary table every row corresponds to one pair of `Task()` and `makeLearner()`.
-The entries show the [mean misclassification error](measures.html), the default performance measure for classification, on the test data set.
+The entries show the [mean misclassification error](measures.html){target="_blank"}, the default performance measure for classification, on the test data set.
 
 The result `bmr` is an object of class `BenchmarkResult()`. Basically, it contains a `base::list()` of lists of `ResampleResult()` objects, first ordered by `Task()` and then by `makeLearner()`.
 
@@ -246,7 +246,7 @@ This way, the same instance is used for all learners applied to a single task.
 
 It is also possible to choose a different resampling strategy for each `Task()` by passing a `base::list()` of the same length as the number of tasks that can contain both resample descriptions (`makeResampleDesc()`) and resample instances (`makeResampleInstance()`).
 
-We use the mean misclassification error [mmce](measures.html) as primary performance measure, but also calculate the balanced error rate [ber](measures.html) and the training time `timetrain`.
+We use the mean misclassification error [mmce](measures.html){target="_blank"} as primary performance measure, but also calculate the balanced error rate [ber](measures.html){target="_blank"} and the training time `timetrain`.
 
 ```{r, message = FALSE, echo= FALSE}
 set.seed(4444)
@@ -301,7 +301,7 @@ Plots are generated using `ggplot2::ggplot2()`. Further customization, such as r
 distribution of performance values across resampling iterations for one performance measure and for all learners and tasks (and thus visualize the output of `getBMRPerformances()`).
 
 Below are both variants, box and violin plots. 
-The first plot shows the [mmce](measures.html) and the second plot the [ber](measures.html).
+The first plot shows the [mmce](measures.html){target="_blank"} and the second plot the [ber](measures.html){target="_blank"}.
 Moreover, in the second plot we color the boxes according to the `learner.id`s.
 
 ```{r, fig.asp=7/9}
@@ -345,7 +345,7 @@ plt + ylab("Error rate")
 
 The aggregated performance values (resulting from `getBMRAggrPerformances()`) can be visualized by function `plotBMRSummary()`. 
 This plot draws one line for each task on which the aggregated values of one performance measure for all learners are displayed.
-By default, the first measure in the `base::list()` of Measure's (`makeMeasure()`) passed to `benchmark()` is used, in our example [mmce](measures.html).
+By default, the first measure in the `base::list()` of Measure's (`makeMeasure()`) passed to `benchmark()` is used, in our example [mmce](measures.html){target="_blank"}.
 Moreover, a small vertical jitter is added to prevent overplotting.
 
 ```{r, fig.asp = 7/9}
@@ -357,7 +357,7 @@ plotBMRSummary(bmr)
 Additional to the absolute performance, relative performance, i.e., ranking the learners is usually of interest and might provide valuable additional insight.
 
 Function `convertBMRToRankMatrix()` calculates ranks based on aggregated learner performances of one measure. 
-We choose the [mean misclassification error](measures.html).
+We choose the [mean misclassification error](measures.html){target="_blank"}.
 The rank structure can be visualized by `plotBMRRanksAsBarChart()`.
 
 ```{r}
@@ -365,7 +365,7 @@ m = convertBMRToRankMatrix(bmr, mmce)
 m
 ```
 
-Methods with best performance, i.e., with lowest [mmce](measures.html), are assigned the lowest rank.
+Methods with best performance, i.e., with lowest [mmce](measures.html){target="_blank"}, are assigned the lowest rank.
 Linear discriminant analysis (`MASS::lda()`) is best for the iris and PimaIndiansDiabetes-examples while the `randomForest::randomForest()` shows best results on the remaining tasks.
 
 `plotBMRRanksAsBarChart()` with option `pos = "tile"` shows a corresponding heat map. 
@@ -433,7 +433,7 @@ The critical difference $\mathit{CD}$ is calculated by $$\mathit{CD} = q_\alpha 
 For details see [Demsar (2006)](http://www.jmlr.org/papers/volume7/demsar06a/demsar06a.pdf).
 
 Function `generateCritDifferencesData()` does all necessary calculations while function `plotCritDifferences()` draws the plot. 
-See the tutorial page about [visualization](visualization.html) for details on data generation and plotting functions.
+See the tutorial page about [visualization](visualization.html){target="_blank"} for details on data generation and plotting functions.
 
 ```{r, fig.asp = 0.5}
 ### Nemenyi test
@@ -461,7 +461,7 @@ qplot(mmce, colour = learner.id, facets = . ~ task.id,
 ```
 
 In order to plot multiple performance measures in parallel, `perf` is reshaped to long format.
-Below we generate grouped boxplots showing the error rate and the training time [timetrain](measures.html).
+Below we generate grouped boxplots showing the error rate and the training time [timetrain](measures.html){target="_blank"}.
 
 ```{r, fig.asp = 2/3}
 ### Compare mmce and timetrain
@@ -479,7 +479,7 @@ This might help to gain further insight, for example by having a closer look at 
 test sets from iterations where one learner performs exceptionally well while another one
 is fairly bad.
 Moreover, this might be useful for the construction of ensembles of learning algorithms.
-Below, function `GGally::ggpairs()` from package `GGally::GGally()` is used to generate a scatterplot matrix of [mean misclassification errors](measures.html) on the `mlbench::Sonar()` data set.
+Below, function `GGally::ggpairs()` from package `GGally::GGally()` is used to generate a scatterplot matrix of [mean misclassification errors](measures.html){target="_blank"} on the `mlbench::Sonar()` data set.
 
 ```{r}
 perf = getBMRPerformances(bmr, task.id = "Sonar_example", as.df = TRUE)
@@ -494,13 +494,13 @@ GGally::ggpairs(df, 3:5)
 ### Further comments
 
 * Note that for supervised classification `mlr` offers some more plots that operate on `BenchmarkResult()` objects and allow you to compare the performance of learning algorithms.
-See for example the tutorial page on [ROC analysis](roc_analysis.html) and functions `generateThreshVsPerfData()`, `plotROCCurves()`, and `plotViperCharts()` as well as the page about [classifier calibration](classifier_calibration.html) and function `generateCalibrationData()`.
+See for example the tutorial page on [ROC analysis](roc_analysis.html){target="_blank"} and functions `generateThreshVsPerfData()`, `plotROCCurves()`, and `plotViperCharts()` as well as the page about [classifier calibration](classifier_calibration.html){target="_blank"} and function `generateCalibrationData()`.
 * In the examples shown in this section we applied "raw" learning algorithms, but often things are more complicated.
 At the very least, many learners have hyperparameters that need to be tuned to get sensible results. 
-Reliable performance estimates can be obtained by [nested resampling](nested_resampling.html), i.e., by doing the tuning in an inner resampling loop while estimating the performance in an outer loop.
+Reliable performance estimates can be obtained by [nested resampling](nested_resampling.html){target="_blank"}, i.e., by doing the tuning in an inner resampling loop while estimating the performance in an outer loop.
 Moreover, you might want to combine learners with pre-processing steps like imputation, scaling, outlier removal, dimensionality reduction or feature selection and so on.
 All this can be easily done using `mlr`'s wrapper functionality.
-The general principle is explained in the section about [wrapper](wrapper.html) in the Advanced part of this tutorial. 
+The general principle is explained in the section about [wrapper](wrapper.html){target="_blank"} in the Advanced part of this tutorial. 
 There are also several sections devoted to common pre-processing steps.
 * Benchmark experiments can very quickly become computationally demanding. 
-`mlr` offers some possibilities for [parallelization](parallelization.html).
+`mlr` offers some possibilities for [parallelization](parallelization.html){target="_blank"}.
