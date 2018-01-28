@@ -7,8 +7,8 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
-* Added support for spatial data through task attribute "is.spatial" and spatial
-  partitioning methods "SpCV" and "SpRepCV".
+* Added support for spatial data through additional argument "coordinates" and
+  spatial partitioning methods "SpCV" and "SpRepCV".
 * Classification tasks now store the class distribution in the
   class.distribution member.
 * mlr now predicts NA for data that contains NA and learners that do not support
@@ -22,7 +22,7 @@
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies
+  range of values for the partial dependencies, integrated with "mmpf" package
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
 * plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
@@ -63,7 +63,9 @@
 * classif.fdakernel
 * classif.fdanp
 * classif.fdaglm
+* classif.mxff
 * regr.fdaFDboost
+* regr.mxff
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
@@ -869,10 +871,4 @@
 
 # mlr 1.1:
 * Initial release to CRAN
-
-## Major
-- Support for functional data (fda) using matrix columns has been added.
-- Relaxed the way wrappers can be nested. the only explicitly forbidden combination is to wrap a tuning wrapper around another optimization wrapper
-- Refactored the resample progress messages to give a better overview and distinguish between train and test measures better
-- calculateROCMeasures now returns absolute instead of relative values
 

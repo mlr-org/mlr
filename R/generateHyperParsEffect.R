@@ -327,10 +327,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       d = generatePartialDependenceData(partial.fit, partial.task,
         interaction = TRUE)$data
       # need to aggregate grid
-      averaging = d[, c(hyperpars.effect.data$measures[1]), drop = FALSE]
+      averaging = d[, c(hyperpars.effect.data$measures[1]), with = FALSE]
       combined.hypers = c(hyperpars.effect.data$hyperparams, x, y, z)
       used.hypers = combined.hypers[duplicated(combined.hypers)]
-      hyperpars = lapply(d[, used.hypers], "[")
+      hyperpars = lapply(d[, used.hypers, with = FALSE], "[")
       d = aggregate(averaging, hyperpars, mean)
     }
   } else {

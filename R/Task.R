@@ -26,12 +26,6 @@
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 #' is then a char vector that points to these columns.
 #'
-#' If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
-#' resampling method, variables named \code{x} and \code{y} will be used for spatial
-#' partitioning of the data (kmeans clustering). They will not be
-#' used as predictors during modeling. Be aware: If coordinates are not named
-#' \code{x} and \code{y} they will be treated as normal predictors!
-#'
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' \code{\link{makeFunctionalData}}.
 #'
@@ -79,9 +73,10 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
-#' @param spatial [\code{logical(1)}]\cr
-#'   Does the task contain a spatial reference (coordinates) which should be used for
-#'   spatial partioning of the data? See details.
+#' @param coordinates [\code{data.frame}]\cr
+#'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+#'   Coordinates have to be numeric values.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
@@ -113,13 +108,15 @@ NULL
 #'   weights
 #' @param blocking [\code{numeric}\cr
 #'   task data blocking
-#' @param spatial [\code{logical(1)}]\cr
-#'   whether data is spatial
+#' @param coordinates [\code{data.frame}]\cr
+#'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+#'   Coordinates have to be numeric values.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.
 #' @keywords internal
 #' @name makeTaskDesc
 NULL
 
-makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, spatial = FALSE) {
+makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, coordinates = NULL) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -151,12 +148,16 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       if (length(blocking) && length(blocking) != nrow(data))
         stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
     }
-  }
-
-  if (spatial == TRUE) {
-    # check if coords are named 'x' and 'y'
-    if (!all(c("x", "y") %in% colnames(data))){
-      stop("Please rename coordinates in data to 'x' and 'y'.")
+    if (!is.null(coordinates)) {
+      if (nrow(coordinates) != nrow(data)) {
+        stop("Coordinates need to have the same length data! Or pass none at all.")
+      }
+      if (ncol(coordinates) < 2) {
+        stop("Supplied coordinates need to consist of at least two dimensions.")
+      }
+      if (!is.data.frame(coordinates)) {
+        warningf("Provided coordinates are not given as a data frame but as class %s. Please provide a data frame.", class(coordinates))
+      }
     }
   }
 
@@ -167,6 +168,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
     env = env,
     weights = weights,
     blocking = blocking,
+    coordinates = coordinates,
     task.desc = NA
   )
 }
@@ -202,4 +204,5 @@ print.Task = function(x, print.weights = TRUE, ...) {
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
+  catf("Has coordinates: %s", td$has.coordinates)
 }

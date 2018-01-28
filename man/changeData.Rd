@@ -4,7 +4,7 @@
 \alias{changeData}
 \title{Change Task Data}
 \usage{
-changeData(task, data, costs, weights)
+changeData(task, data, costs, weights, coordinates)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
