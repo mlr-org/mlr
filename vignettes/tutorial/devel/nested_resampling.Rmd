@@ -337,11 +337,11 @@ getBMRTuneResults(res, as.df = TRUE)
 It is also possible to extract the tuning results for individual tasks and learners and, as shown in earlier examples, inspect the optimization path (`ParamHelpers::OptPath()`).
 
 ```{r}
-tune.res = getBMRTuneResults(res, task.ids = "Sonar_example", learner.ids = "classif.ksvm.tuned",
+tune.res = getBMRTuneResults(res, task.ids = "Sonar-example", learner.ids = "classif.ksvm.tuned",
   as.df = TRUE)
 tune.res
 
-getNestedTuneResultsOptPathDf(res$results[["Sonar_example"]][["classif.ksvm.tuned"]])
+getNestedTuneResultsOptPathDf(res$results[["Sonar-example"]][["classif.ksvm.tuned"]])
 ```
 
 #### Example 2: One task, two learners, feature selection
