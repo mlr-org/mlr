@@ -139,10 +139,13 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     par.set = makeParamSet(
       # FIXME: hidden can also be a list of integer vectors for grid search
       # instead of makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L), len = NA_integer_, lower = 1L) parametrise hidden
-      makeIntegerLearnerParam(id = "layers", values = c(1,3,5), default = 3L),
+      makeIntegerLearnerParam(id = "layers", lower = 1L, upper = 5L, default = 3L),
       makeIntegerLearnerParam(id = "nodes1", lower = 1L, default = 1L),
-      makeIntegerLearnerParam(id = "nodes2", lower = 1L, requires = quote(layers = 3)),
-      makeIntegerLearnerParam(id = "nodes3", lower = 1L, requires = quote(layers = 5)),
+      makeIntegerLearnerParam(id = "nodes2", lower = 1L, requires = quote(layers > 1)),
+      makeIntegerLearnerParam(id = "nodes3", lower = 1L, requires = quote(layers > 2)),
+      makeIntegerLearnerParam(id = "nodes4", lower = 1L, requires = quote(layers > 3)),
+      makeIntegerLearnerParam(id = "nodes5", lower = 1L, requires = quote(layers > 4)),
+
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
         "TanhWithDropout", "RectifierWithDropout", "MaxoutWithDropout"), default = "Rectifier"), #"Maxout",  not for autoencoder
