@@ -643,6 +643,8 @@ makeFilter(
   supported.tasks = "classif",
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, criteria = "MIM", ...) {
+    candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+    assert_choice(criteria, candiates)
     criteria = paste0("praznik::", criteria)
     data = getTaskData(task)
     featnames = getTaskFeatureNames(task)

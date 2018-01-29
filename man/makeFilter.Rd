@@ -26,6 +26,7 @@
 \alias{makeFilter}
 \alias{makeFilter}
 \alias{makeFilter}
+\alias{makeFilter}
 \title{Create a feature filter.}
 \format{An object of class \code{Filter} of length 6.}
 \usage{
@@ -174,6 +175,9 @@ variable can be predicted only based on this feature. More precisely, the
 prediction rule is: class 1 if the feature exceeds a threshold and class 0
 otherwise. The performance of this classification rule is measured by the
 AUC and the resulting filter score is |0.5 - AUC|.
+
+Filters in the praznik package using mutual information criteria greedy search
+Features with higher scores are considered more important features
 }
 \references{
 Kira, Kenji and Rendell, Larry (1992). The Feature Selection Problem: Traditional
