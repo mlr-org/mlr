@@ -17,6 +17,7 @@
 #' @template ret_learner
 #' @family featsel
 #' @family wrapper
+#' @noMd
 #' @export
 #' @examples
 #' # nested resampling with feature selection (with a pretty stupid algorithm for selection)

@@ -23,6 +23,7 @@
 #' @aliases ModelMultiplexer
 #' @family multiplexer
 #' @family tune
+#' @noMd
 #' @export
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.

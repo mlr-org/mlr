@@ -28,6 +28,7 @@
 #'   same arguments as, and return the same result type as, \code{\link{resample}}.
 #' @return [\code{\link{TuneMultiCritResult}}].
 #' @family tune_multicrit
+#' @noMd
 #' @export
 #' @examples
 #' \donttest{

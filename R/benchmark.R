@@ -24,6 +24,7 @@
 #' @template arg_showinfo
 #' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
+#' @noMd
 #' @export
 #' @examples
 #' lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))

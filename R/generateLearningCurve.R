@@ -42,6 +42,7 @@
 #' measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
 #' show.info = FALSE)
 #' plotLearningCurve(r)
+#' @noMd
 #' @export
 generateLearningCurveData = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info"))  {

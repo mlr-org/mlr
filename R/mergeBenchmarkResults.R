@@ -11,6 +11,7 @@
 #'   task-learner combinations are missing or duplicated.
 #'   When merging \code{\link{BenchmarkResult}} objects with different measures,
 #'   all missing measures will automatically be recomputed.
+#' @noMd
 #' @export
 mergeBenchmarkResults = function(bmrs) {
   # check all objects have the class BenchmarkResult

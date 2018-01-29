@@ -87,6 +87,7 @@
 #'     predict.type = "response", method = "compress")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
+#' @noMd
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {

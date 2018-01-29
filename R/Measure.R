@@ -80,6 +80,7 @@
 #' @param note [\code{character}] \cr
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
+#' @noMd
 #' @export
 #' @family performance
 #' @aliases Measure

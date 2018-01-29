@@ -49,6 +49,7 @@
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
 #' @family performance
+#' @noMd
 #' @export
 makeCustomResampledMeasure = function(measure.id, aggregation.id, minimize = TRUE, properties = character(0L),
   fun, extra.args = list(), best = NULL, worst = NULL, measure.name = measure.id,

@@ -32,6 +32,7 @@
 #'   Registry, created by \code{\link[batchtools]{makeExperimentRegistry}}. If not explicitly passed,
 #'   uses the last created registry.
 #' @return [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
+#' @noMd
 #' @export
 #' @family benchmark
 batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {

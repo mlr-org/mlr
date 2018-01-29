@@ -30,6 +30,7 @@
 #' @template arg_showinfo
 #' @return [\code{\link{FeatSelResult}}].
 #' @family featsel
+#' @noMd
 #' @export
 #' @examples
 #' \donttest{
