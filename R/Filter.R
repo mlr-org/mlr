@@ -634,6 +634,7 @@ makeFilter(
 
 #' Filters in the praznik package using mutual information criteria greedy search
 #' Features with higher scores are considered more important features
+#' Currently only works with classification task with non-missing values
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
