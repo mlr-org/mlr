@@ -54,6 +54,7 @@
 #'   Additional parameters, which are passed to the underlying importance value
 #'   generating function.
 #' @return [\code{FeatureImportance}] An object containing a \code{data.frame} of the variable importances and further information.
+#' @noMd
 #' @export
 getFeatureImportance = function(object, ...) {
 

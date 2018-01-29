@@ -54,6 +54,7 @@
 #'
 #' @family generate_plot_data
 #' @family benchmark
+#' @noMd
 #' @export
 generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
                                        baseline = NULL, test = "bd") {
@@ -146,6 +147,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #' JMLR, 2006
 #' @family plot
 #' @family benchmark
+#' @noMd
 #' @export
 #' @examples
 #' # see benchmark

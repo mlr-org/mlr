@@ -24,6 +24,7 @@
 #' }
 #'
 #' @family benchmark
+#' @noMd
 #' @export
 #' @examples
 #' # see benchmark
