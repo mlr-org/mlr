@@ -1,5 +1,4 @@
 #' @title Generate partial dependence.
-#' @importFrom mmpf marginalPrediction uniformGrid cartesianExpand
 #' @importFrom data.table data.table melt
 #'
 #' @description
@@ -108,6 +107,8 @@ generatePartialDependenceData = function(obj, input, features,
   interaction = FALSE, derivative = FALSE, individual = FALSE,
   fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
   uniform = TRUE, n = c(10, NA), ...) {
+
+  requirePackages("mmpf")
   assertClass(obj, "WrappedModel")
   if (obj$learner$predict.type == "se" & individual)
     stop("individual = TRUE not compatabile with predict.type = 'se'!")
@@ -197,7 +198,7 @@ generatePartialDependenceData = function(obj, input, features,
         })
     }
   } else {
-    points = lapply(features, function(x) uniformGrid(data[[x]], n[1]))
+    points = lapply(features, function(x) mmpf::uniformGrid(data[[x]], n[1]))
     names(points) = features
     args = list(obj = obj, data = data, uniform = uniform, fun = fun,
       n = n, points = points, target = target, individual = individual, ...)
