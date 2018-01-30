@@ -653,22 +653,25 @@ makeFilter(
     targetname = getTaskTargetNames(task)
     data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
     int.yes = vapply(data, is.integer, FUN.VALUE = TRUE)
-    if(any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
-    numeric.yes = unlist(lapply(data, function(x) class(x) =="numeric"))
-    df_num = data.frame(data[, numeric.yes])
+    if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
+    numeric.yes = unlist(lapply(data, function(x) class(x) == "numeric"))
+    df.num = data.frame(data[, numeric.yes])
     interval = min(as.integer(getTaskSize(task)/3), 10L)
     interval = max(interval, 2L)
-    df_num = data.frame(apply(df_num, 2, cut, interval))
-    colnames(df_num) = colns[numeric.yes]
-    df_nonnum = data.frame(data[, !numeric.yes])
-    colnames(df_nonnum) =  colns[!numeric.yes]
-    data = cbind(df_nonnum, df_num)
+    df.num = data.frame(apply(df.num, 2, cut, interval))
+    colnames(df.num) = colns[numeric.yes]
+    df.nonnum = data.frame(data[, !numeric.yes])
+    colnames(df.nonnum) =  colns[!numeric.yes]
+    data = cbind(df.nonnum, df.num)
     X = data[, featnames]
     Y = data[, targetname]
     input = list(X = X, Y = Y, k = nselect)
     algo = eval(parse(text = criteria))
     res = do.call(what = algo, args = input)
-    res$score[featnames]
+    names.sel = names(res$selection)
+    rst = res$score
+    rst[setdiff(featnames, names.sel)] = 0
+    rst
   }
 )
 
