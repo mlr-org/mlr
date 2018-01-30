@@ -152,7 +152,7 @@ pd.ind.classif
 Individual estimates of partial dependence can also be centered by predictions made at all $n$ observations for a particular point in the prediction grid created by the features. 
 This is controlled by the argument `center` which is a list of the same length as the length of the `features` argument and contains the values of the `features` desired.
 
-```{r}
+```{r, eval = FALSE}
 iris = getTaskData(iris.task)
 pd.ind.classif = generatePartialDependenceData(fit.classif, iris.task, "Petal.Length", individual = TRUE,
   center = list("Petal.Length" = min(iris$Petal.Length)))
