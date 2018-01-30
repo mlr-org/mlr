@@ -216,7 +216,7 @@ print.RepCVDesc = function(x, ...) {
 
 #' @export
 print.GrowingWindowCVDesc = function(x, ...) {
-  catf("Window description:\n %s: %.2f in initial window, horizon of %i, and skipping %i windows.",
+  catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
        x$id, x$initial.window, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
@@ -224,7 +224,7 @@ print.GrowingWindowCVDesc = function(x, ...) {
 
 #' @export
 print.FixedWindowCVDesc = function(x, ...) {
-  catf("Window description:\n %s: %.2f in initial window, horizon of %i, and skipping %i windows.",
+  catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
        x$id, x$initial.window, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
