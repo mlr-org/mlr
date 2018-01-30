@@ -11,6 +11,10 @@ context("filterFeatures_praznik")
     task = makeClassifTask(data = df, target = "f")
     generateFilterValuesData(task, method = "praznik", criteria = "MIM", nselect = 2L)
     generateFilterValuesData(task, method = "praznik", criteria = "MIM", nselect = 1L)
+
+    lrn = makeLearner("classif.randomForest")
+    lrn = makeFilterWrapper(learner = lrn, fw.method = "praznik", fw.perc = 0.9, criteria = "MIM")
+    res = resample(learner = lrn, task = binaryclass.task, resampling = cv10, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
     expect_true(TRUE)
 })
 
