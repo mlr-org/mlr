@@ -34,3 +34,13 @@ code, kbd, pre, samp {
 .input-group {
     width: 90px;
 }
+
+/* increase font-weight for headers */
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+    font-weight: 700;
+}
+
+/* set font-size of all tables to 12 */
+.table {
+  font-size: 12px;
+}
