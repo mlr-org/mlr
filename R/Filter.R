@@ -656,7 +656,7 @@ makeFilter(
     if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
     numeric.yes = unlist(lapply(data, function(x) class(x) == "numeric"))
     df.num = data.frame(data[, numeric.yes])
-    interval = min(as.integer(getTaskSize(task)/3), 10L)
+    interval = min(as.integer(getTaskSize(task) / 3), 10L)
     interval = max(interval, 2L)
     df.num = data.frame(apply(df.num, 2, cut, interval))
     colnames(df.num) = colns[numeric.yes]
