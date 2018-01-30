@@ -641,20 +641,31 @@ makeFilter(
   name = "praznik",
   desc = "mutual information based feature selection filters",
   pkg = "praznik",
-  supported.tasks = "classif",
-  supported.features = c("numerics", "factors"),
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
   fun = function(task, nselect, criteria = "MIM", ...) {
     candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-    assert_choice(criteria, candiates)
+    checkmate::assert_choice(criteria, candiates)
     criteria = paste0("praznik::", criteria)
     data = getTaskData(task)
+    colns = colnames(data)
     featnames = getTaskFeatureNames(task)
     targetname = getTaskTargetNames(task)
+    data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
+    int.yes = vapply(data, is.integer, FUN.VALUE = TRUE)
+    if(any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
+    numeric.yes = unlist(lapply(data, function(x) class(x) =="numeric"))
+    df_num = data.frame(data[, numeric.yes])
+    df_num = data.frame(apply(df_num, 2, cut, 3))
+    colnames(df_num) = colns[numeric.yes]
+    df_nonnum = data.frame(data[, !numeric.yes])
+    colnames(df_nonnum) =  colns[!numeric.yes]
+    data = cbind(df_nonnum, df_num)
     X = data[, featnames]
     Y = data[, targetname]
     input = list(X = X, Y = Y, k = nselect)
     algo = eval(parse(text = criteria))
-    res = do.call(algo, input)
+    res = do.call(what = algo, args = input)
     res$score[featnames]
   }
 )
