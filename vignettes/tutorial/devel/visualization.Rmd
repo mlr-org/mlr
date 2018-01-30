@@ -154,13 +154,15 @@ Functions `plotPartialDependence()` and `plotPartialDependenceGGVIS()` can be ap
 The `ggvis::ggvis()` functions are experimental and are subject to change, though they should work.
 Most generate interactive `shiny::shiny()` applications, that automatically start and run locally.
 
- | generation function               | ggplot2 plotting function  | ggvis plotting function       | tutorial pages                                                                     |
- | --------------------------------  | -------------------------  | ----------------------------- | ---------------------------------------------------------------------------------- |  | `generateThreshVsPerfData()`      | `plotThresVsPerf()`        | `plotThreshVsPerfGGVIS()`     | [performance](performance.html){target="_blank"}                                                    |
- |                                   | `plotROCCurves()`          | --                            | [ROC analysis](roc_analysis.html){target="_blank"}                                                  |
- | `generateCritDifferencesData()`   | `plotCritDifferences()`    | --                            | [benchmark experiments](benchmark_experiments.html){target="_blank"}                                |
+ 
+ | generation function               | ggplot2 plotting function  | ggvis plotting function       | tutorial pages                                                                                                       |
+ | --------------------------------  | -------------------------  | ----------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+ | `generateThreshVsPerfData()`      | `plotThresVsPerf()`        | `plotThreshVsPerfGGVIS()`     | [performance](performance.html){target="_blank"}                                                                     |
+ |                                   | `plotROCCurves()`          | --                            | [ROC analysis](roc_analysis.html){target="_blank"}                                                                   |
+ | `generateCritDifferencesData()`   | `plotCritDifferences()`    | --                            | [benchmark experiments](benchmark_experiments.html){target="_blank"}                                                 |
  | `generateHyperParsEffectData()`   | `plotHyperParsEffect()`    |                               | [tuning](tune.html){target="_blank"}, [hyperparameter tuning effects](hyperpar_tuning_effects.html){target="_blank"} |
- | `generateFilterValuesData()`      | `plotFilterValues()`       | `plotFilterValuesGGVIS()`     | [feature selection](feature_selection.html){target="_blank"}                                        |
- | `generateLearningCurveData()`     | `plotLearningCurve()`      | `plotLearningCurveGGVIS()`    | [learning curves](learning_curve.html){target="_blank"}                                             |
- | `generatePartialDependenceData()` | `plotPartialDependence()`  | `plotPartialDependenceGGVIS()`| [partial dependence](partial_dependence.html){target="_blank"}                                      |
- | `generateFunctionalANOVAData()`   |                            |                               |                                                                                    |
- | `generateCalibrationData()`       | `plotCalibration()`        | --                            | [classifier calibration](classifier_calibration.html){target="_blank"}                              |
+ | `generateFilterValuesData()`      | `plotFilterValues()`       | `plotFilterValuesGGVIS()`     | [feature selection](feature_selection.html){target="_blank"}                                                         |
+ | `generateLearningCurveData()`     | `plotLearningCurve()`      | `plotLearningCurveGGVIS()`    | [learning curves](learning_curve.html){target="_blank"}                                                              |
+ | `generatePartialDependenceData()` | `plotPartialDependence()`  | `plotPartialDependenceGGVIS()`| [partial dependence](partial_dependence.html){target="_blank"}                                                       |
+ | `generateFunctionalANOVAData()`   |                            |                               |                                                                                                                      |
+ | `generateCalibrationData()`       | `plotCalibration()`        | --                            | [classifier calibration](classifier_calibration.html){target="_blank"}                                               |
