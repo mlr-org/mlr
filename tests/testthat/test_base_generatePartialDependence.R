@@ -1,7 +1,7 @@
 context("generatePartialDependence")
 
 test_that("generatePartialDependenceData", {
-  m = c(3, 10)
+  m = c(4, 10)
 
   # test regression with interactions, centering, and mixed factor features
   fr = train("regr.rpart", regr.task)
@@ -159,4 +159,8 @@ test_that("generatePartialDependenceData", {
   # issue 63 in the tutorial
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
     individual = TRUE, derivative = TRUE, n = m)
+
+  # test that would have caught a bug that occurs when the jacobian is estimated
+  pd.der.classif = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    derivative = TRUE, n = m)
 })
