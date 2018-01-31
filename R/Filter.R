@@ -659,7 +659,7 @@ makeFilter(
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, type = c("infogain"), equal = FALSE, ...) {
+  fun = function(task, nselect, type = "infogain", equal = FALSE, ...) {
     type.candidate = c("infogain", "gainratio", "symuncert")
     mdata = getTaskData(task)
     fns = getTaskFeatureNames(task)
