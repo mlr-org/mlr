@@ -1,5 +1,4 @@
 #' @title Generate partial dependence.
-#' @importFrom mmpf marginalPrediction uniformGrid cartesianExpand
 #' @importFrom data.table data.table melt
 #'
 #' @description
@@ -108,6 +107,8 @@ generatePartialDependenceData = function(obj, input, features,
   interaction = FALSE, derivative = FALSE, individual = FALSE,
   fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
   uniform = TRUE, n = c(10, NA), ...) {
+
+  requirePackages("mmpf")
   assertClass(obj, "WrappedModel")
   if (obj$learner$predict.type == "se" & individual)
     stop("individual = TRUE not compatabile with predict.type = 'se'!")
@@ -197,7 +198,7 @@ generatePartialDependenceData = function(obj, input, features,
         })
     }
   } else {
-    points = lapply(features, function(x) uniformGrid(data[[x]], n[1]))
+    points = lapply(features, function(x) mmpf::uniformGrid(data[[x]], n[1]))
     names(points) = features
     args = list(obj = obj, data = data, uniform = uniform, fun = fun,
       n = n, points = points, target = target, individual = individual, ...)
@@ -302,13 +303,14 @@ doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2
       individual = individual, ...),
       points[[x]], if (individual) z)
   } else {
-    ret = cbind(numDeriv::jacobian(numDerivWrapper,
-      x = points[[x]], model = obj, data = data,
-      uniform = uniform, aggregate.fun = fun, vars = x,
-      int.points = z,
-      predict.fun = getPrediction, n = n, target = target,
-      individual = individual, ...),
-      points[[x]], if (individual) z)
+    out = lapply(points[[x]], function(x.value) {
+      t(numDeriv::jacobian(numDerivWrapper, x = x.value, model = obj, data = data,
+        uniform = uniform, aggregate.fun = fun, vars = x, int.points = z,
+        predict.fun = getPrediction, n = n, target = target,
+        individual = individual, ...))
+    })
+    out = do.call("rbind", out)
+    ret = cbind(out, points[[x]], if (individual) z)
   }
   ret = as.data.table(ret)
   setnames(ret, names(ret), c(target, x, if (individual) "n"))
