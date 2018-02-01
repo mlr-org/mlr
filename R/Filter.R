@@ -632,37 +632,32 @@ makeFilter(
   }
 )
 
-#' Filters in the praznik package using mutual information criteria greedy search
-#' Features with higher scores are considered more important features
-#' Currently only works with classification task with non-missing values
-#' @rdname makeFilter
-#' @name makeFilter
-makeFilter(
-  name = "praznik",
-  desc = "mutual information based feature selection filters",
-  pkg = "praznik",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
-  supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = function(task, nselect, criteria = "MIM", ...) {
-    candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-    checkmate::assert_choice(criteria, candiates)
-    criteria = paste0("praznik::", criteria)
-    data = getTaskData(task)
+preprocess.cmi.praznik = function(data) {
     colns = colnames(data)
-    featnames = getTaskFeatureNames(task)
-    targetname = getTaskTargetNames(task)
     data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
     int.yes = vapply(data, is.integer, FUN.VALUE = TRUE)
     if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
     numeric.yes = unlist(lapply(data, function(x) class(x) == "numeric"))
     df.num = data.frame(data[, numeric.yes])
-    interval = min(as.integer(getTaskSize(task) / 3), 10L)
+    interval = min(as.integer(nrow(data) / 3), 10L)
     interval = max(interval, 2L)
     df.num = data.frame(apply(df.num, 2, cut, interval))
     colnames(df.num) = colns[numeric.yes]
     df.nonnum = data.frame(data[, !numeric.yes])
     colnames(df.nonnum) =  colns[!numeric.yes]
     data = cbind(df.nonnum, df.num)
+    return(data)
+}
+
+helper.cmi.praznik = function(criteria) {
+  function(task, nselect, ...) {
+    candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+    checkmate::assert_choice(criteria, candiates)
+    criteria = paste0("praznik::", criteria)
+    data = getTaskData(task)
+    featnames = getTaskFeatureNames(task)
+    targetname = getTaskTargetNames(task)
+    data = preprocess.cmi.praznik(data)  # pre-discretizing
     X = data[, featnames]
     Y = data[, targetname]
     input = list(X = X, Y = Y, k = nselect)
@@ -673,5 +668,117 @@ makeFilter(
     rst[setdiff(featnames, names.sel)] = 0
     rst
   }
-)
+}
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.MIM",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("MIM")
+  )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.JMI",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("JMI")
+  )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.DISR",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("DISR")
+  )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.JMIM",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("JMIM")
+  )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.NJMIM",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("NJMIM")
+  )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.MRMR",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("MRMR")
+  )
+
+#' Filters in the praznik package using mutual information criteria greedy search
+#' Features with higher scores are considered more important features
+#' Currently only tested with classification task with non-missing values
+#' candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+#' @rdname makeFilter
+#' @name makeFilter
+#'
+makeFilter(
+  name = "praznik.CMIM",
+  desc = "conditional mutual information based feature selection filters",
+  pkg = "praznik",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = helper.cmi.praznik("CMIM")
+  )
 
