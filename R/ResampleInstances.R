@@ -69,3 +69,12 @@ instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
   g = as.factor(rep(seq_len(desc$reps), each = folds))
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
+
+instantiateResampleInstance.FixedWindowCVDesc = function(desc, size, task = NULL, coords) {
+  makeResamplingWindow(desc, size, task, coords, "FixedWindowCV")
+}
+
+instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NULL, coords) {
+  makeResamplingWindow(desc, size, task, coords, "GrowingWindowCV")
+}
+
