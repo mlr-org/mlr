@@ -1,5 +1,5 @@
 context("filterFeatures_fselector_rcpp")
-  test_that("filterFeatures_fselector_rcpp",
+  test_that("filterFeatures_fselector_rcpp", {
     a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1)  # numeric vector
     b = c("one", "two", "three")  # character vector
     c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)  # logical vector
@@ -9,13 +9,20 @@ context("filterFeatures_fselector_rcpp")
     df = convertDataFrameCols(df, logicals.as.factor = TRUE)
     lapply(df, class)
     task = makeClassifTask(data = df, target = "f")
-    generateFilterValuesData(task, method = "info.gain.fselector.rcpp", nselect = 2L)
-    generateFilterValuesData(task, method = "gain.ratio.fselector.rcpp", nselect = 1L)
-    generateFilterValuesData(task, method = "symuncert.fselector.rcpp", nselect = 1L)
+    generateFilterValuesData(task, method = "FSelectorRcpp.infogain", nselect = 2L)
+    generateFilterValuesData(task, method = "FSelectorRcpp.gainratio", nselect = 1L)
+    generateFilterValuesData(task, method = "FSelectorRcpp.symuncert", nselect = 1L)
 
     lrn = makeLearner("classif.randomForest")
-    lrn = makeFilterWrapper(learner = lrn, fw.method = "info.gain.fselector.rcpp", fw.perc = 0.9)
+    lrn = makeFilterWrapper(learner = lrn, fw.method = "FSelectorRcpp.infogain", fw.perc = 0.9)
     res = resample(learner = lrn, task = binaryclass.task, resampling = cv10, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
+    lrn = makeLearner("classif.randomForest")
+    lrn = makeFilterWrapper(learner = lrn, fw.method = "FSelectorRcpp.gainratio", fw.perc = 0.9)
+    res = resample(learner = lrn, task = binaryclass.task, resampling = cv10, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
+    lrn = makeLearner("classif.randomForest")
+    lrn = makeFilterWrapper(learner = lrn, fw.method = "FSelectorRcpp.symuncert", fw.perc = 0.9)
+    res = resample(learner = lrn, task = binaryclass.task, resampling = cv10, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
+
     expect_true(TRUE)
 })
 

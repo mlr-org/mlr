@@ -40,3 +40,12 @@ test_that("FilterWrapper with praznik mutual information, resample", {
   })
 })
 
+test_that("FilterWrapper with praznik mutual information, resample", {
+  #wrapped learner with praznik on binaryclass.task
+  lrn = makeFilterWrapper(makeLearner("classif.randomForest"), fw.method = "praznik.MIM", fw.abs = 2)
+  mod = train(lrn, binaryclass.task)
+  feat.imp = getFeatureImportance(mod)$res
+  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(binaryclass.task)),
+    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
+  expect_equal(colnames(feat.imp), mod$features)
+})

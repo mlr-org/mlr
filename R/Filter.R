@@ -784,13 +784,13 @@ makeFilter(
 
 helper.fun.FSelectorRcpp = function(type = "infogain") {
   type.candidate = c("infogain", "gainratio", "symuncert")
-  fun = function(task, nselect, type = type, equal = FALSE, ...) {
+  fun = function(task, nselect, ...) {
     mdata = getTaskData(task)
     fns = getTaskFeatureNames(task)
     tns = getTaskTargetNames(task)
     X = mdata[, fns]
     y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
     ns = df.res[["attributes"]]
     imp = df.res[["importance"]]
     names(imp) = ns
@@ -803,19 +803,19 @@ helper.fun.FSelectorRcpp = function(type = "infogain") {
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "info.gain.fselector.rcpp",
+  name = "FSelectorRcpp.infogain",
   desc = "info.gain: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, type = "infogain", equal = FALSE, ...) {
-    type.candidate = c("infogain", "gainratio", "symuncert")
+  fun = function(task, nselect, ...) {
+    type = "infogain"
     mdata = getTaskData(task)
     fns = getTaskFeatureNames(task)
     tns = getTaskTargetNames(task)
     X = mdata[, fns]
     y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
     ns = df.res[["attributes"]]
     imp = df.res[["importance"]]
     names(imp) = ns
@@ -827,13 +827,13 @@ makeFilter(
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "gain.ratio.fselector.rcpp",
+  name = "FSelectorRcpp.gainratio",
   desc = "gain.ratio: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, type = "gainratio", equal = FALSE, ...) {
-    type.candidate = c("infogain", "gainratio", "symuncert")
+  fun = function(task, nselect, ...) {
+    type = "gainratio"
     mdata = getTaskData(task)
     fns = getTaskFeatureNames(task)
     tns = getTaskTargetNames(task)
@@ -851,33 +851,23 @@ makeFilter(
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
-  name = "symuncert.fselector.rcpp",
+  name = "FSelectorRcpp.symuncert",
   desc = "symmetric uncertainty: entropy based filter with Rcpp",
   pkg  = "FSelectorRcpp",
   supported.tasks = "classif",
   supported.features = c("numerics", "factors", "integer", "logical", "character"),
-  fun = function(task, nselect, type = "symuncert", equal = FALSE, ...) {
-    type.candidate = c("infogain", "gainratio", "symuncert")
+  fun = function(task, nselect, ...) {
+    type = "symuncert"
     mdata = getTaskData(task)
     fns = getTaskFeatureNames(task)
     tns = getTaskTargetNames(task)
     X = mdata[, fns]
     y = mdata[[tns]]
-    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = FALSE)
     ns = df.res[["attributes"]]
     imp = df.res[["importance"]]
     names(imp) = ns
     imp
   }
 )
-
-#makeFilter(
-#  name = "gainratio.fselector.rcpp",
-#  desc = "gainratio: entropy based filter with Rcpp",
-#  pkg  = "FSelectorRcpp",
-#  supported.tasks = "classif",
-#  supported.features = "numerics",
-#  fun = helper.fun.FSelectorRcpp("gainratio")
-#)
-#
 
