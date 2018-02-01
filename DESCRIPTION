@@ -93,6 +93,7 @@ Suggests:
     fpc,
     frbs,
     FSelector,
+    FSelectorRcpp,
     gbm,
     GenSA,
     ggvis,
