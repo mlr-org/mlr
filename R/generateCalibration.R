@@ -13,21 +13,21 @@
 #' @aliases CalibrationData
 #'
 #' @template arg_plotroc_obj
-#' @param breaks [`character(1)` | `numeric`]\cr
+#' @param breaks (`character(1)` | [numeric])\cr
 #'   If `character(1)`, the algorithm to use in generating probability bins.
 #'   See [hist()] for details.
-#'   If `numeric`, the cut points for the bins.
+#'   If [numeric], the cut points for the bins.
 #'   Default is \dQuote{Sturges}.
-#' @param groups [`integer(1)`]\cr
+#' @param groups (`integer(1)`)\cr
 #'   The number of bins to construct.
 #'   If specified, `breaks` is ignored.
 #'   Default is `NULL`.
-#' @param task.id [`character(1)`]\cr
+#' @param task.id (`character(1)`)\cr
 #'   Selected task in [BenchmarkResult()] to do plots for, ignored otherwise.
 #'   Default is first task.
 #'
-#' @return [CalibrationData]. A `list` containing:
-#'   \item{proportion}{[`data.frame`] with columns:
+#' @return [CalibrationData]. A [list] containing:
+#'   \item{proportion}{[data.frame] with columns:
 #'     \itemize{
 #'       \item `Learner` Name of learner.
 #'       \item `bin` Bins calculated according to the `breaks` or `groups` argument.
@@ -36,7 +36,7 @@
 #'         observations with posterior probabilities of class `Class` within the
 #'         interval given in `bin`.
 #'     }}
-#'   \item{data}{[`data.frame`] with columns:
+#'   \item{data}{[data.frame] with columns:
 #'     \itemize{
 #'       \item `Learner` Name of learner.
 #'       \item `truth` True class label.
@@ -44,7 +44,7 @@
 #'       \item `Probability` Predicted posterior probability of `Class`.
 #'       \item `bin` Bin corresponding to `Probability`.
 #'     }}
-#'   \item{task}{[[TaskDesc()]]\cr
+#'   \item{task}{([TaskDesc()])\cr
 #'     Task description.}
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
@@ -134,15 +134,15 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @family plot
 #' @family calibration
 #'
-#' @param obj [`CalibrationData`]\cr
+#' @param obj ([CalibrationData])\cr
 #'   Result of [generateCalibrationData()].
-#' @param smooth [`logical(1)`]\cr
+#' @param smooth (`logical(1)`)\cr
 #'   Whether to use a loess smoother.
 #'   Default is `FALSE`.
-#' @param reference [`logical(1)`]\cr
+#' @param reference (`logical(1)`)\cr
 #'   Whether to plot a reference line showing perfect calibration.
 #'   Default is `TRUE`.
-#' @param rag [`logical(1)`]\cr
+#' @param rag (`logical(1)`)\cr
 #'   Whether to include a rag plot which shows a rug plot on the top which pertains to
 #'   positive cases and on the bottom which pertains to negative cases.
 #'   Default is `TRUE`.
