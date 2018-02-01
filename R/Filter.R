@@ -782,3 +782,102 @@ makeFilter(
   fun = helper.cmi.praznik("CMIM")
   )
 
+helper.fun.FSelectorRcpp = function(type = "infogain") {
+  type.candidate = c("infogain", "gainratio", "symuncert")
+  fun = function(task, nselect, type = type, equal = FALSE, ...) {
+    mdata = getTaskData(task)
+    fns = getTaskFeatureNames(task)
+    tns = getTaskTargetNames(task)
+    X = mdata[, fns]
+    y = mdata[[tns]]
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    ns = df.res[["attributes"]]
+    imp = df.res[["importance"]]
+    names(imp) = ns
+    imp
+  }
+  return(fun)
+}
+
+#' Simple entropy based filter with Rcpp implementation
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "info.gain.fselector.rcpp",
+  desc = "info.gain: entropy based filter with Rcpp",
+  pkg  = "FSelectorRcpp",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "logical", "character"),
+  fun = function(task, nselect, type = "infogain", equal = FALSE, ...) {
+    type.candidate = c("infogain", "gainratio", "symuncert")
+    mdata = getTaskData(task)
+    fns = getTaskFeatureNames(task)
+    tns = getTaskTargetNames(task)
+    X = mdata[, fns]
+    y = mdata[[tns]]
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    ns = df.res[["attributes"]]
+    imp = df.res[["importance"]]
+    names(imp) = ns
+    imp
+  }
+)
+
+#' Simple entropy based filter with Rcpp implementation
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "gain.ratio.fselector.rcpp",
+  desc = "gain.ratio: entropy based filter with Rcpp",
+  pkg  = "FSelectorRcpp",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "logical", "character"),
+  fun = function(task, nselect, type = "gainratio", equal = FALSE, ...) {
+    type.candidate = c("infogain", "gainratio", "symuncert")
+    mdata = getTaskData(task)
+    fns = getTaskFeatureNames(task)
+    tns = getTaskTargetNames(task)
+    X = mdata[, fns]
+    y = mdata[[tns]]
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    ns = df.res[["attributes"]]
+    imp = df.res[["importance"]]
+    names(imp) = ns
+    imp
+  }
+)
+
+#' Simple entropy based filter with Rcpp implementation
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "symuncert.fselector.rcpp",
+  desc = "symmetric uncertainty: entropy based filter with Rcpp",
+  pkg  = "FSelectorRcpp",
+  supported.tasks = "classif",
+  supported.features = c("numerics", "factors", "integer", "logical", "character"),
+  fun = function(task, nselect, type = "symuncert", equal = FALSE, ...) {
+    type.candidate = c("infogain", "gainratio", "symuncert")
+    mdata = getTaskData(task)
+    fns = getTaskFeatureNames(task)
+    tns = getTaskTargetNames(task)
+    X = mdata[, fns]
+    y = mdata[[tns]]
+    df.res = FSelectorRcpp::information_gain(x = X, y = y, type = type, equal = equal)
+    ns = df.res[["attributes"]]
+    imp = df.res[["importance"]]
+    names(imp) = ns
+    imp
+  }
+)
+
+#makeFilter(
+#  name = "gainratio.fselector.rcpp",
+#  desc = "gainratio: entropy based filter with Rcpp",
+#  pkg  = "FSelectorRcpp",
+#  supported.tasks = "classif",
+#  supported.features = "numerics",
+#  fun = helper.fun.FSelectorRcpp("gainratio")
+#)
+#
+
