@@ -358,10 +358,10 @@ recodeY = function(y, type, td) {
 #' @description
 #' Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task [[Task()]]\cr
+#' @param task ([Task()])\cr
 #'   The task.
 #' @template arg_subset
-#' @return [`matrix` | `NULL`].
+#' @return (`matrix` | `NULL`).
 #' @family task
 #' @export
 getTaskCosts = function(task, subset = NULL) {

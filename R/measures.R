@@ -20,15 +20,15 @@
 #' Some measure have parameters. Their defaults are set in the constructor [makeMeasure()] and can be
 #' overwritten using [setMeasurePars()].
 #'
-#' @param truth [`factor`]\cr
+#' @param truth ([factor])\cr
 #'   Vector of the true class.
-#' @param response [`factor`]\cr
+#' @param response ([factor])\cr
 #'   Vector of the predicted class.
-#' @param negative [`character(1)`]\cr
+#' @param negative (`character(1)`)\cr
 #'   The name of the negative class.
-#' @param positive [`character(1)`]\cr
+#' @param positive (`character(1)`)\cr
 #'   The name of the positive class.
-#' @param probabilities [`numeric` | `matrix`]\cr
+#' @param probabilities ([numeric] | [matrix])\cr
 #'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
 #'   b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
 #'   columns are named with class labels.

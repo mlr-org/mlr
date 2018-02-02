@@ -4,15 +4,15 @@
 #'
 #' @template arg_pred
 #' @template arg_measures
-#' @param task [[Task()]]\cr
+#' @param task ([Task()])\cr
 #'   Learning task, might be requested by performance measure, usually not needed except for clustering or survival.
-#' @param model [[WrappedModel()]]\cr
+#' @param model ([WrappedModel()])\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed except for survival.
-#' @param feats [`data.frame`]\cr
+#' @param feats ([data.frame])\cr
 #'   Features of predicted data, usually not needed except for clustering.
 #'   If the prediction was generated from a `task`, you can also pass this instead and the features
 #'   are extracted from it.
-#' @return [named `numeric`]. Performance value(s), named by measure(s).
+#' @return (named [numeric]). Performance value(s), named by measure(s).
 #' @export
 #' @family performance
 #' @examples

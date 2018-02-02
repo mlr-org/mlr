@@ -9,20 +9,20 @@
 #' if not specified otherwise in `fd.features`. See `Examples` for the structure
 #' of the generated output.
 #'
-#' @param data [`data.frame`] \cr
+#' @param data ([data.frame]) \cr
 #'   A data.frame that contains the functional features as numeric columns.
-#' @param fd.features [`list`] \cr
+#' @param fd.features ([list]) \cr
 #'   Named list containing `integer` column indices or `character` column names.
 #'   Each element defines a functional feature, in the given order of the indices or column names.
 #'   The name of the list element defines the name of the functional feature.
 #'   All selected columns have to correspond to numeric data.frame entries.
 #'   The default is `NULL`, which means all numeric features are considered
 #'   to be a single functional \dQuote{fd1}.
-#' @param exclude.cols [`character` | `integer`]\cr
+#' @param exclude.cols ([character] | [integer])\cr
 #'   Column names or indices to exclude from conversion to functionals, even if they
 #'   are in included in `fd.features`.
 #'   Default is not to exclude anything.
-#' @return [`data.frame`].
+#' @return ([data.frame]).
 #' @export
 #' @examples
 #' # data.frame where columns 1:6 and 8:10 belong to a functional feature

@@ -84,17 +84,17 @@ getAlgoFun = function(lrn, measures, models) {
 #' This creates a [BenchmarkResult()] from a [batchtools::ExperimentRegistry()].
 #' To setup the benchmark have a look at [batchmark()].
 #'
-#' @param ids [`data.frame` or `integer`]\cr
+#' @param ids ([data.frame] or [integer])\cr
 #'   A [base::data.frame()] (or [data.table::data.table()])
 #'   with a column named \dQuote{job.id}.
 #'   Alternatively, you may also pass a vector of integerish job ids.
 #'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone()].
 #' @template arg_keep_pred
 #' @template arg_showinfo
-#' @param reg [[batchtools::ExperimentRegistry()]]\cr
+#' @param reg ([batchtools::ExperimentRegistry()])\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry()]. If not explicitly passed,
 #'   uses the last created registry.
-#' @return [[BenchmarkResult()]].
+#' @return ([BenchmarkResult()]).
 #' @export
 #' @family benchmark
 reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {

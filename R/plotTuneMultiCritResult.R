@@ -3,22 +3,22 @@
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res [[TuneMultiCritResult()]]\cr
+#' @param res ([TuneMultiCritResult()])\cr
 #'   Result of [tuneParamsMultiCrit()].
-#' @param path [`logical(1)`]\cr
+#' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   For the full path, the size of the points on the front is slightly increased.
 #'   Default is `TRUE`.
-#' @param col [`character(1)`]\cr
+#' @param col (`character(1)`)\cr
 #'   Which column of `res$opt.path` should be mapped to ggplot2 color?
 #'   Default is `NULL`, which means none.
-#' @param shape [`character(1)`]\cr
+#' @param shape (`character(1)`)\cr
 #'   Which column of `res$opt.path` should be mapped to ggplot2 shape?
 #'   Default is `NULL`, which means none.
-#' @param pointsize [`numeric(1)`]\cr
+#' @param pointsize (`numeric(1)`)\cr
 #'   Point size for ggplot2 [ggplot2::geom_point()] for data points.
 #'   Default is 2.
-#' @param pretty.names [\code{logical{1}}]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the ID of the measures instead of their name in labels. Defaults to `TRUE`.
 #' @template ret_gg2
 #' @family tune_multicrit

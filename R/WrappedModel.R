@@ -12,16 +12,16 @@
 #' The constructor `makeWrappedModel` is mainly for internal use.
 #'
 #' @template arg_learner
-#' @param learner.model [any]\cr
+#' @param learner.model (any)\cr
 #'   Underlying model.
 #' @template arg_taskdesc
 #' @template arg_subset
-#' @param features [`character`]\cr
+#' @param features ([character])\cr
 #'   Features used for training.
-#' @param factor.levels [named `list` of `character`]\cr
+#' @param factor.levels (named [list] of [character])\cr
 #'   Levels of factor variables (features and potentially target) in training data.
 #'   Named by variable name, non-factors do not occur in the list.
-#' @param time [`numeric(1)`]\cr
+#' @param time (`numeric(1)`)\cr
 #'   Computation time for model fit in seconds.
 #' @template ret_wmodel
 #' @export

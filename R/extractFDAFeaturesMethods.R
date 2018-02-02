@@ -3,28 +3,28 @@
 #' @description
 #' This can be used to implement custom feature FDA extraction.
 #'
-#' @param learn [`function(data, target, col, ...)`]\cr
+#' @param learn (`function(data, target, col, ...)`)\cr
 #'   Function to learn and extract information on functional column `col`.
 #'   Arguments are:
 #'   \itemize{
-#'   \item data [`data.frame`]\cr
+#'   \item data [data.frame]\cr
 #'     Data.frame with one row per observation of a single functional feature
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item data [`data.frame`]\cr
+#'   \item data [data.frame]\cr
 #'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point. All entries need to be numeric.
-#'   \item target [`character`]\cr
+#'   \item target [character]\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
-#'   \item col [`character` | `numeric`]\cr
+#'   \item col ([character] | [numeric])\cr
 #'     column names or indices, the extraction should be performed on.
 #'     The function has to return a named list of values.
 #'   }
-#' @param reextract [`function(data, target, col, ...)`]\cr
+#' @param reextract (`function(data, target, col, ...)`)\cr
 #'   Function used for reextracting data in predict phase.
 #'   Can be equal to `learn`.
-#' @param args [`list`]\cr
+#' @param args ([list])\cr
 #'   Named list of arguments to pass to `learn` via `...`.
 #' @export
 #' @family fda

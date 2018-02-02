@@ -16,7 +16,7 @@
 #' }
 #'
 #' @inheritParams TuneControl
-#' @param budget [`integer(1)`]\cr
+#' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. In case of `makeTuneMultiCritControlGrid` this number
 #'   must be identical to the size of the grid. For
@@ -29,7 +29,7 @@
 #'   `budget` equals the number of objective function evaluations, i.e. the
 #'   number of MBO iterations + the size of the initial design. If not `NULL`,
 #'   this will overwrite existing stopping conditions in `mbo.control`.
-#' @return [[TuneMultiCritControl()]]. The specific subclass is one of
+#' @return ([TuneMultiCritControl()]). The specific subclass is one of
 #'   [TuneMultiCritControlGrid()], [TuneMultiCritControlRandom()],
 #'   [TuneMultiCritControlNSGA2()], [TuneMultiCritControlMBO()].
 #' @family tune_multicrit

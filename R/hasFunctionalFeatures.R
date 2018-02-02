@@ -3,9 +3,9 @@
 #' @description
 #' See title.
 #'
-#' @param obj [`Task` | `TaskDesc` | `data.frame`]\cr
+#' @param obj (`Task` | `TaskDesc` | `data.frame`)\cr
 #'   Object to check.
-#' @return [`logical(1)`]
+#' @return (`logical(1)`)
 #' @export
 hasFunctionalFeatures = function(obj) {
   UseMethod("hasFunctionalFeatures")

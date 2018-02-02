@@ -4,14 +4,14 @@
 #' Random search. All kinds of parameter types can be handled.
 #'
 #' @inherit TuneControl
-#' @param budget [`integer(1)`]\cr
+#' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. The `budget` equals the number of iterations (`maxit`) performed by
 #'   the random search algorithm.
-#' @param maxit [`integer(1)` | NULL]\cr
+#' @param maxit (`integer(1)` | NULL)\cr
 #'   Number of iterations for random search.
 #'   Default is 100.
-#' @return [[TuneControlRandom()]]
+#' @return ([TuneControlRandom()])
 #' @aliases TuneControlRandom
 #' @family tune
 #' @export

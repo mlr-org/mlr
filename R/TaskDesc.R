@@ -35,19 +35,19 @@
 NULL
 
 #' Exported for internal use.
-#' @param type [`character(1)`]\cr
+#' @param type (`character(1)`)\cr
 #'   Task type.
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'   task id
-#' @param data [`data.frame`]\cr
+#' @param data ([data.frame])\cr
 #'   data
-#' @param target [`character`]\cr
+#' @param target ([character])\cr
 #'   target columns
-#' @param weights [`numeric`]\cr
+#' @param weights ([numeric])\cr
 #'   weights
-#' @param blocking [`numeric`\cr
+#' @param blocking ([numeric])\cr
 #'   task data blocking
-#' @param coordinates [`logical(1)`]\cr
+#' @param coordinates (`logical(1)`)\cr
 #'   whether spatial coordinates have been provided
 #' @keywords internal
 #' @export
