@@ -19,16 +19,22 @@
 #' @param resampling [[ResampleDesc()] or [ResampleInstance()]]\cr
 #'   Resampling strategy.
 #'   If a description is passed, it is instantiated automatically.
-#' @param iters [`integer(1)`]\cr
-#'   See [ResampleDesc()].
-#' @param folds [`integer(1)`]\cr
-#'   See [ResampleDesc()].
-#' @param reps [`integer(1)`]\cr
-#'   See [ResampleDesc()].
-#' @param split [`numeric(1)`]\cr
-#'   See [ResampleDesc()].
-#' @param stratify [`logical(1)`]\cr
-#'   See [ResampleDesc()].
+#' @param iters [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param folds [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param reps [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param split [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param stratify [\code{logical(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param horizon [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param initial.window [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param skip [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
 #' @template arg_measures
 #' @param weights [`numeric`]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
