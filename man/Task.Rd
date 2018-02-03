@@ -22,31 +22,31 @@
 multilabel task or one-class classification.}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, spatial = FALSE,
+  weights = NULL, blocking = NULL, coordinates = NULL,
   positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 
 makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
-  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
   check.data = TRUE)
 
 makeCostSensTask(id = deparse(substitute(data)), data, costs,
-  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
   check.data = TRUE)
 
 makeMultilabelTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn",
-  check.data = TRUE)
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", check.data = TRUE)
 
 makeOneClassTask(id = deparse(substitute(data)), data, target,
   weights = NULL, blocking = NULL, fixup.data = "warn", positive,
   negative, check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
   check.data = TRUE)
 
 makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, spatial = FALSE, fixup.data = "warn",
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
   check.data = TRUE)
 }
 \arguments{
@@ -76,9 +76,10 @@ Specifically, they are either put all in the training or the test set
 during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
 
-\item{spatial}{[\code{logical(1)}]\cr
-Does the task contain a spatial reference (coordinates) which should be used for
-spatial partioning of the data? See details.}
+\item{coordinates}{[\code{data.frame}]\cr
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary and one-class classification (otherwise ignored and set to NA).
@@ -145,20 +146,19 @@ For multilabel classification we assume that the presence of labels is encoded v
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
 
-<<<<<<< HEAD
+
 If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
 resampling method, variables named \code{x} and \code{y} will be used for spatial
 partitioning of the data (kmeans clustering). They will not be
 used as predictors during modeling. Be aware: If coordinates are not named
 \code{x} and \code{y} they will be treated as normal predictors!
-=======
+
 Note on one-class classification:
 One-class classification problem is an unsupervised learning problem, but we still require
 to define a target column, in order to allow supervised evalaution if labels are available.
 This class columns should be a factor, where the levels are the strings denoted by
 \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
 and the latter the name of the normal class.
->>>>>>> cbac328d26bf3ac1a1df7d5b77e0ebdc38c914d0
 
 Functional data can be added to a task via matrix columns. For more information refer to
 \code{\link{makeFunctionalData}}.
