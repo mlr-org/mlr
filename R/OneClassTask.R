@@ -60,7 +60,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
       levels(task$env$data[[target]]) = union(levs, c(positive, negative))
   }
 
-  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, coordinates, positive, negative)
+  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive, negative, coordinates)
   addClasses(task, "OneClassTask")
 }
 
