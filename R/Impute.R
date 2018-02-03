@@ -49,7 +49,7 @@
 #' @param dummy.cols [`character`]\cr
 #'   Column names to create dummy columns (containing binary missing indicator) for.
 #'   Default is `character(0)`.
-#' @param dummy.type [`character(1)`]\cr
+#' @param dummy.type (`character(1)`)\cr
 #'   How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 #'   or as \dQuote{factor}.
 #'   Default is \dQuote{factor}.

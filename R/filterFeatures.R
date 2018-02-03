@@ -5,7 +5,7 @@
 #' Features are then selected via `select` and `val`.
 #'
 #' @template arg_task
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   See [listFilterMethods()].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param fval [[FilterValues()]]\cr

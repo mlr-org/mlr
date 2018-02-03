@@ -9,10 +9,10 @@
 #' To see all possible properties of a learner, go to: [LearnerProperties()].
 #'
 #' @template arg_lrncl
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'   Id string for object. Used to display object.
 #'   Default is `cl`.
-#' @param predict.type [`character(1)`]\cr
+#' @param predict.type (`character(1)`)\cr
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).

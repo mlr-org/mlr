@@ -8,7 +8,7 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param trafo [`character(1)`]\cr
+#' @param trafo (`character(1)`)\cr
 #'   Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 #'   (with average handling of ties) of the scores per task.
 #'   NB: You can add always add [ggplot2::scale_x_log10()] to the result to put scores on a log scale.

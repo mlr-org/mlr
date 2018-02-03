@@ -6,7 +6,7 @@
 #'
 #' @template arg_taskdf
 #' @template arg_taskdf_target
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   Available are:
 #'   \describe{
 #'     \item{"1-of-n":}{For n factor levels there will be n dummy variables.}

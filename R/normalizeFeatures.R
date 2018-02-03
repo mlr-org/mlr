@@ -8,7 +8,7 @@
 #'
 #' @template arg_taskdf
 #' @template arg_taskdf_target
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   Normalizing method. Available are:\cr
 #'   \dQuote{center}: Subtract mean.\cr
 #'   \dQuote{scale}: Divide by standard deviation.\cr
@@ -19,7 +19,7 @@
 #' @param range [`numeric(2)`]\cr
 #'   Range for method \dQuote{range}.
 #'   Default is `c(0,1)`.
-#' @param on.constant [`character(1)`]\cr
+#' @param on.constant (`character(1)`)\cr
 #'   How should constant vectors be treated? Only used, of \dQuote{method != center},
 #'   since this methods does not fail for constant vectors. Possible actions are:\cr
 #'   \dQuote{quiet}: Depending on the method, treat them quietly:\cr

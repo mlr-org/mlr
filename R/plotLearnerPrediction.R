@@ -40,7 +40,7 @@
 #' @param se.band [`logical(1)`]\cr
 #'   For regression in 1D: Show band for standard error estimation?
 #'   Default is `TRUE`.
-#' @param err.mark [`character(1)`]:
+#' @param err.mark (`character(1)`):
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
@@ -48,7 +48,7 @@
 #'   Background colors for classification and regression.
 #'   Sorted from low, medium to high.
 #'   Default is `TRUE`.
-#' @param err.col [`character(1)`]\cr
+#' @param err.col (`character(1)`)\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{white}
 #' @param err.size [`integer(1)`]\cr

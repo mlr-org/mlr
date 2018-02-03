@@ -103,7 +103,7 @@ print.FilterValues = function(x, ...) {
 #' For a list of features, use [listFilterMethods()].
 #'
 #' @template arg_task
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   Filter method, see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect [`integer(1)`]\cr
@@ -132,7 +132,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #'
 #' @param fvalues [[FilterValues()]]\cr
 #'   Filter values.
-#' @param sort [`character(1)`]\cr
+#' @param sort (`character(1)`)\cr
 #'   Sort features like this.
 #'   \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
 #'   Default is decreasing.

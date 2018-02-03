@@ -7,11 +7,11 @@
 #' documentation for the `fun` parameter specific to each filter can
 #' be found in the description.
 #'
-#' @param name [`character(1)`]\cr
+#' @param name (`character(1)`)\cr
 #'  Identifier for the filter.
-#' @param desc [`character(1)`]\cr
+#' @param desc (`character(1)`)\cr
 #'  Short description of the filter.
-#' @param pkg [`character(1)`]\cr
+#' @param pkg (`character(1)`)\cr
 #'  Source package where the filter is implemented.
 #' @param supported.tasks [`character`]\cr
 #'  Task types supported.

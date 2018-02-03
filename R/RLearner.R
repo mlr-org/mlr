@@ -19,7 +19,7 @@
 #' @param properties [`character`]\cr
 #'   Set of learner properties. See above.
 #'   Default is `character(0)`.
-#' @param class.weights.param [`character(1)`]\cr
+#' @param class.weights.param (`character(1)`)\cr
 #'   Name of the parameter, which can be used for providing class weights.
 #' @param par.set [[ParamHelpers::ParamSet()]]\cr
 #'   Parameter set of (hyper)parameters and their constraints.
@@ -30,14 +30,14 @@
 #'   Useful when default values are missing in the underlying function.
 #'   The values can later be overwritten when the user sets hyperparameters.
 #'   Default is empty list.
-#' @param name [`character(1)`]\cr
+#' @param name (`character(1)`)\cr
 #'   Meaningful name for learner.
 #'   Default is `id`.
-#' @param short.name [`character(1)`]\cr
+#' @param short.name (`character(1)`)\cr
 #'   Short name for learner.
 #'   Should only be a few characters so it can be used in plots and tables.
 #'   Default is `id`.
-#' @param note [`character(1)`]\cr
+#' @param note (`character(1)`)\cr
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
 #' @param callees [`character`]\cr

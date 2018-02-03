@@ -68,7 +68,7 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   Points are colored according to their location.
 #'   Default is `TRUE`.
-#' @param point.info [`character(1)`]\cr
+#' @param point.info (`character(1)`)\cr
 #'   Show for each point which hyper parameters led to this point?
 #'   For `"click"`, information is displayed on mouse click.
 #'   For `"hover"`, information is displayed on mouse hover.

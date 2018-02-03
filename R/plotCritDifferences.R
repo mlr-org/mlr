@@ -22,14 +22,14 @@
 #' @template arg_measure
 #' @param p.value [`numeric`(1)]\cr
 #'   P-value for the critical difference. Default: 0.05
-#' @param baseline [`character(1)`]: [`learner.id`] \cr
+#' @param baseline (`character(1)`): [`learner.id`] \cr
 #'   Select a `learner.id` as baseline for the `test = "bd"`
 #'   ("Bonferroni-Dunn") critical differences
 #'   diagram.The critical difference Interval will then be positioned arround this learner.
 #'   Defaults to best performing algorithm. \cr
 #'   For `test = "nemenyi"`, no baseline is needed as it performs `all pairwise
 #'   comparisons.`
-#' @param test [`character(1)`] \cr
+#' @param test (`character(1)`) \cr
 #'   Test for which the critical differences are computed. \cr
 #'   \dQuote{bd} for the Bonferroni-Dunn Test, which is comparing all
 #'   classifiers to a `baseline`, thus performing a comparison
@@ -135,7 +135,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #'
 #' @param obj [`critDifferencesData`]
 #'   Result of \link{generateCritDifferencesData} function.
-#' @param baseline [`character(1)`]: [`learner.id`] \cr
+#' @param baseline (`character(1)`): [`learner.id`] \cr
 #'   Overwrites baseline from \link{generateCritDifferencesData}!\cr
 #'   Select a [`learner.id` as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.

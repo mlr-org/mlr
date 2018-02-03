@@ -5,7 +5,7 @@
 #'
 #' @param learner [[Learner()]]\cr
 #'   The learner.
-#' @param for.fun [`character(1)`]\cr
+#' @param for.fun (`character(1)`)\cr
 #'   Restrict the returned settings to hyperparameters corresponding to `when`
 #'   the are used (see [ParamHelpers::LearnerParam()]).
 #'   Must be a subset of: \dQuote{train}, \dQuote{predict} or \dQuote{both}.

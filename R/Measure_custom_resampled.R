@@ -6,14 +6,14 @@
 #' only calculate an aggregated value. If you can define a function that makes sense
 #' for every single training / test set, implement your own [Measure()].
 #'
-#' @param measure.id [`character(1)`]\cr
+#' @param measure.id (`character(1)`)\cr
 #'   Short name of measure.
-#' @param measure.name [`character(1)`]\cr
+#' @param measure.name (`character(1)`)\cr
 #'   Long name of measure.
 #'   Default is `measure.id`.
-#' @param aggregation.id [`character(1)`]\cr
+#' @param aggregation.id (`character(1)`)\cr
 #'   Short name of aggregation.
-#' @param aggregation.name [`character(1)`]\cr
+#' @param aggregation.name (`character(1)`)\cr
 #'   Long name of the aggregation.
 #'   Default is `aggregation.id`.
 #' @param fun [`function(task, group, pred, extra.args)`]\cr

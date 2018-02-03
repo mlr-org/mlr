@@ -33,7 +33,7 @@ getTaskDescription = function(x) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 #' @family task
 getTaskType = function(x) {
@@ -44,7 +44,7 @@ getTaskType = function(x) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 #' @family task
 getTaskId = function(x) {
@@ -161,7 +161,7 @@ getTaskSize = function(x) {
 #' For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 #'
 #' @template arg_task_or_desc
-#' @param target [`character(1)`]\cr
+#' @param target (`character(1)`)\cr
 #'   Left hand side of the formula.
 #'   Default is defined by task `x`.
 #' @param explicit.features [`logical(1)`]\cr
@@ -249,7 +249,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   If not, a single data.frame including the target columns is returned, otherwise a list
 #'   with the input data.frame and an extra vector or data.frame for the targets.
 #'   Default is `FALSE`.
-#' @param recode.target [`character(1)`]\cr
+#' @param recode.target (`character(1)`)\cr
 #'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
 #'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
@@ -260,7 +260,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 #'   See [survival::Surv()] for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
-#' @param functionals.as [`character(1)`]\cr
+#' @param functionals.as (`character(1)`)\cr
 #'   How to represents functional features?
 #'   Option \dQuote{matrix}: Keep them as matrix columns in the data.frame.
 #'   Option \dQuote{dfcols}: Convert them to individual numeric data.frame columns.

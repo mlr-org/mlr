@@ -3,7 +3,7 @@
 #' @description
 #' Creates a cost measure for non-standard classification error costs.
 #'
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
 #' @param minimize [`logical(1)`]\cr

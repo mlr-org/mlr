@@ -12,7 +12,7 @@
 #' @param data [`data.frame`]\cr
 #'   A data frame containing the features and target variable.
 #'   If missing, `task` must be supplied.
-#' @param target [`character(1)`]\cr
+#' @param target (`character(1)`)\cr
 #'   Name of the target variable.
 #'   If missing, `task` must be supplied.
 #' @export

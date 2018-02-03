@@ -23,7 +23,7 @@
 #' something like a new \dQuote{class.weights} parameter for the learner via observation weights.
 #'
 #' @template arg_learner_classif
-#' @param wcw.param [`character(1)`]\cr
+#' @param wcw.param (`character(1)`)\cr
 #'   Name of already existing learner parameter, which allows class weighting.
 #'   The default (`wcw.param = NULL`) will use the parameter defined in
 #'   the learner (`class.weights.param`). During training, the parameter

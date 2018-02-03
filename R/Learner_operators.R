@@ -2,7 +2,7 @@
 #'
 #' @description Get the type of the learner.
 #' @template arg_learner
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerType = function(learner) {
@@ -14,7 +14,7 @@ getLearnerType = function(learner) {
 #'
 #' @description Get the ID of the learner.
 #' @template arg_learner
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerId = function(learner) {
@@ -26,7 +26,7 @@ getLearnerId = function(learner) {
 #'
 #' @description Get the predict type of the learner.
 #' @template arg_learner
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerPredictType = function(learner) {
@@ -80,7 +80,7 @@ getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
 #'
 #' @description Set the ID of the learner.
 #' @template arg_learner
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'    New ID for learner.
 #' @template ret_learner
 #' @export
@@ -98,7 +98,7 @@ setLearnerId = function(learner, id) {
 #'   For wrapped learners, the wrapper id is successively attached to the short
 #'   name of the base learner. E.g: \dQuote{rf.bagged.imputed}
 #' @template arg_learner
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerShortName = function(learner) {

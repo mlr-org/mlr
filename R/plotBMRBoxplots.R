@@ -6,7 +6,7 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param style [`character(1)`]\cr
+#' @param style (`character(1)`)\cr
 #'   Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 #'   Default is \dQuote{box}.
 #' @param pretty.names [`logical(1)`]\cr

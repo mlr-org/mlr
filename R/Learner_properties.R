@@ -76,7 +76,7 @@ hasProperties = function(learner, props) {
 #' @description
 #'   This is useful for determining which learner properties are available.
 #'
-#' @param type [`character(1)`]\cr
+#' @param type (`character(1)`)\cr
 #'   Only return properties for a specified task type. Default is \dQuote{any}.
 #'
 #' @return [`character`].

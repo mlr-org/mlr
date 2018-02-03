@@ -21,20 +21,20 @@
 #'
 #' Object slots:
 #' \describe{
-#' \item{id [`character(1)`]}{Name of resampling strategy.}
+#' \item{id (`character(1)`)}{Name of resampling strategy.}
 #' \item{iters [`integer(1)`]}{Number of iterations. Note that this is always the complete number
 #'   of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.}
-#' \item{predict [`character(1)`]}{See argument.}
+#' \item{predict (`character(1)`)}{See argument.}
 #' \item{stratify [`logical(1)`]}{See argument.}
 #' \item{All parameters passed in ... under the respective argument name}{See arguments.}
 #' }
 #'
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
 #'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window
 #'   cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation.
-#' @param predict [`character(1)`]\cr
+#' @param predict (`character(1)`)\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
 #' @param ... [any]\cr

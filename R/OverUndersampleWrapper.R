@@ -18,10 +18,10 @@
 #'   Factor to oversample a class. Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param usw.cl [`character(1)`]\cr
+#' @param usw.cl (`character(1)`)\cr
 #'   Class that should be undersampled.
 #'   Default is `NULL`, which means the larger one.
-#' @param osw.cl [`character(1)`]\cr
+#' @param osw.cl (`character(1)`)\cr
 #'   Class that should be oversampled.
 #'   Default is `NULL`, which means the smaller one.
 #' @template ret_learner

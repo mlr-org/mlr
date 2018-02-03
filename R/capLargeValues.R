@@ -21,7 +21,7 @@
 #'   Replacement value for large entries.
 #'   Large negative entries are converted to `-impute`.
 #'   Default is `threshold`.
-#' @param what [`character(1)`]\cr
+#' @param what (`character(1)`)\cr
 #'   What kind of entries are affected?
 #'   \dQuote{abs} means `abs(x) > threshold`,
 #'   \dQuote{pos} means `abs(x) > threshold && x > 0`,

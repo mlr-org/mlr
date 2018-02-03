@@ -5,8 +5,8 @@
 #'
 #' Object members:
 #' \describe{
-#' \item{id [`character(1)`]}{Id string of task.}
-#' \item{type [`character(1)`]}{Type of task, \dQuote{classif} for classification,
+#' \item{id (`character(1)`)}{Id string of task.}
+#' \item{type (`character(1)`)}{Type of task, \dQuote{classif} for classification,
 #'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for
 #'   cluster analysis, \dQuote{costsens} for cost-sensitive classification, and
 #'   \dQuote{multilabel} for multilabel classification.}
@@ -25,9 +25,9 @@
 #' \item{has.blocking [`logical(1)`]}{Is a blocking factor for cases available in the task?}
 #' \item{class.levels [`character`]}{All possible classes.
 #'   Only present for \dQuote{classif}, \dQuote{costsens}, and \dQuote{multilabel}.}
-#' \item{positive [`character(1)`]}{Positive class label for binary classification.
+#' \item{positive (`character(1)`)}{Positive class label for binary classification.
 #'   Only present for \dQuote{classif}, NA for multiclass.}
-#' \item{negative [`character(1)`]}{Negative class label for binary classification.
+#' \item{negative (`character(1)`)}{Negative class label for binary classification.
 #'   Only present for \dQuote{classif}, NA for multiclass.}
 #' }
 #' @name TaskDesc

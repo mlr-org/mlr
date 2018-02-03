@@ -4,10 +4,10 @@
 #' A resample result is created by [resample()] and
 #' contains the following object members:
 #' \describe{
-#' \item{task.id [`character(1)`]:}{
+#' \item{task.id (`character(1)`):}{
 #'   Name of the Task.
 #' }
-#' \item{learner.id [`character(1)`]:}{
+#' \item{learner.id (`character(1)`):}{
 #'   Name of the Learner.
 #' }
 #' \item{measures.test [`data.frame`]:}{

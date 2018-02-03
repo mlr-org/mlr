@@ -147,18 +147,18 @@ print.HyperParsEffectData = function(x, ...) {
 #'
 #' @param hyperpars.effect.data [`HyperParsEffectData`]\cr
 #'  Result of [generateHyperParsEffectData()]
-#' @param x [`character(1)`]\cr
+#' @param x (`character(1)`)\cr
 #'  Specify what should be plotted on the x axis. Must be a column from
 #'  `HyperParsEffectData$data`. For partial dependence, this is assumed to
 #'  be a hyperparameter.
-#' @param y [`character(1)`]\cr
+#' @param y (`character(1)`)\cr
 #'  Specify what should be plotted on the y axis. Must be a column from
 #'  `HyperParsEffectData$data`
-#' @param z [`character(1)`]\cr
+#' @param z (`character(1)`)\cr
 #'  Specify what should be used as the extra axis for a particular geom. This
 #'  could be for the fill on a heatmap or color aesthetic for a line. Must be a
 #'  column from `HyperParsEffectData$data`. Default is `NULL`.
-#' @param plot.type [`character(1)`]\cr
+#' @param plot.type (`character(1)`)\cr
 #'  Specify the type of plot: \dQuote{scatter} for a scatterplot, \dQuote{heatmap} for a
 #'  heatmap, \dQuote{line} for a scatterplot with a connecting line, or \dQuote{contour} for a
 #'  contour plot layered ontop of a heatmap.
@@ -169,7 +169,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  \dQuote{scatter} or \dQuote{line}. Must be a column from
 #'  `HyperParsEffectData$data`. Not used with partial dependence.
 #'  Default is `FALSE`.
-#' @param facet [`character(1)`]\cr
+#' @param facet (`character(1)`)\cr
 #'  Specify what should be used as the facet axis for a particular geom. When
 #'  using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
 #'  for each outer loop. Must be a column from `HyperParsEffectData$data`

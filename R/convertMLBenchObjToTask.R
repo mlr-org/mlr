@@ -4,7 +4,7 @@
 #' We auto-set the target column, drop any column which is called \dQuote{Id} and
 #' convert logicals to factors.
 #'
-#' @param x [`character(1)`]\cr
+#' @param x (`character(1)`)\cr
 #'   Name of an mlbench function or dataset.
 #' @param n [`integer(1)`]\cr
 #'   Number of observations for data simul functions.

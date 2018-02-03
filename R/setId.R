@@ -4,7 +4,7 @@
 #' Deprecated, use [setLearnerId()] instead.
 #'
 #' @template arg_learner
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'    New id for learner.
 #' @template ret_learner
 #' @export

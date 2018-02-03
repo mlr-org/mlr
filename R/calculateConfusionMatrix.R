@@ -27,7 +27,7 @@
 #'   columns.
 #' @param sums [`logical(1)`]\cr
 #'   If `TRUE` add absolute number of observations in each group.
-#' @param set [`character(1)`]\cr
+#' @param set (`character(1)`)\cr
 #'   Specifies which part(s) of the data are used for the calculation.
 #'   If `set` equals `train` or `test`, the `pred` object must be the result of a
 #'   resampling, otherwise an error is thrown.

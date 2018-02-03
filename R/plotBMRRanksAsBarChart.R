@@ -8,10 +8,10 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param ties.method [`character(1)`]\cr
+#' @param ties.method (`character(1)`)\cr
 #'   See [rank()] for details.
 #' @template arg_aggregation_method
-#' @param pos [`character(1)`]\cr
+#' @param pos (`character(1)`)\cr
 #'   Optionally set how the bars are positioned in ggplot2.
 #'   Ranks are plotted on the x-axis.
 #'   \dQuote{tile} plots a heat map with `task` as the y-axis.

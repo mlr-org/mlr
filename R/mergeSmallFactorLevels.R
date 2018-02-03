@@ -12,7 +12,7 @@
 #'   w.r.t. the length of the factor exceeds `min.perc`.
 #'   Must be between 0 and 1.
 #'   Default is 0.01.
-#' @param new.level [`character(1)`]\cr
+#' @param new.level (`character(1)`)\cr
 #'   New name of merged level.
 #'   Default is \dQuote{.merged}
 #' @return `Task`, where merged levels are combined into a new level of name `new.level`.

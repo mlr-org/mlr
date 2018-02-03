@@ -19,7 +19,7 @@
 #'   The super learner that makes the final prediction based on the base learners.
 #'   If you pass a string, the super learner will be created via `makeLearner`.
 #'   Not used for `method = 'average'`. Default is `NULL`.
-#' @param predict.type [`character(1)`]\cr
+#' @param predict.type (`character(1)`)\cr
 #'   Sets the type of the final prediction for `method = 'average'`.
 #'   For other methods, the predict type should be set within `super.learner`.
 #'   If the type of the base learner prediction, which is set up within `base.learners`, is
@@ -34,7 +34,7 @@
 #'    For regression tasks, the final prediction will be the average of the base learner predictions.}
 #'   }
 #'
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.

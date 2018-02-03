@@ -61,7 +61,7 @@
 #' @template arg_log_fun
 #' @param prob [`numeric(1)`]\cr
 #'   Parameter of the random feature selection. Probability of choosing a feature.
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   Parameter of the sequential feature selection. A character representing the method. Possible
 #'   values are `sfs` (forward search), `sbs` (backward search), `sffs`
 #'   (floating forward search) and `sfbs` (floating backward search).

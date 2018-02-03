@@ -7,7 +7,7 @@
 #' @aliases FeatureImportanceData
 #'
 #' @template arg_task
-#' @param method [`character(1)`]\cr
+#' @param method (`character(1)`)\cr
 #'   The method used to compute the feature importance.
 #'   The only method available is \dQuote{permutation.importance}.
 #'   Default is \dQuote{permutation.importance}.

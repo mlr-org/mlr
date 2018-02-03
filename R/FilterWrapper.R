@@ -12,7 +12,7 @@
 #' down to the next learner.
 #'
 #' @template arg_learner
-#' @param fw.method [`character(1)`]\cr
+#' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods()].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param fw.perc [`numeric(1)`]\cr

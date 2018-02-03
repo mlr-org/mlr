@@ -109,7 +109,7 @@ print.LearningCurveData = function(x, ...) {
 #'
 #' @param obj [`LearningCurveData`]\cr
 #'   Result of [generateLearningCurveData()], with class `LearningCurveData`.
-#' @param facet [`character(1)`]\cr
+#' @param facet (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
 #'   The variable mapped to `facet` must have more than one unique value, otherwise it will
 #'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
@@ -165,7 +165,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #'
 #' @param obj [`LearningCurveData`]\cr
 #'   Result of [generateLearningCurveData()].
-#' @param interaction [`character(1)`]\cr
+#' @param interaction (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
 #'   making the `interaction` variable selectable via a drop-down menu.
 #'   This variable must have more than one unique value, otherwise it will be ignored.

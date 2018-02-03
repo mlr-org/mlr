@@ -13,25 +13,25 @@
 #'   Setting the argument manually in one of these functions will overwrite the default
 #'   value for that specific function call.
 #'   Default is `TRUE`.
-#' @param on.learner.error [`character(1)`]\cr
+#' @param on.learner.error (`character(1)`)\cr
 #'   What should happen if an error in an underlying learning algorithm is caught:\cr
 #'   \dQuote{stop}: R exception is generated.\cr
 #'   \dQuote{warn}: A `FailureModel` will be created, which predicts only NAs and a warning will be generated.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
-#' @param on.learner.warning [`character(1)`]\cr
+#' @param on.learner.warning (`character(1)`)\cr
 #'   What should happen if a warning in an underlying learning algorithm is generated:\cr
 #'   \dQuote{warn}: The warning is generated as usual.\cr
 #'   \dQuote{quiet}: The warning is suppressed.\cr
 #'   Default is \dQuote{warn}.
-#' @param on.par.without.desc [`character(1)`]\cr
+#' @param on.par.without.desc (`character(1)`)\cr
 #'   What should happen if a parameter of a learner is set to a value, but no parameter description object exists,
 #'   indicating a possibly wrong name:\cr
 #'   \dQuote{stop}: R exception is generated.\cr
 #'   \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
-#' @param on.par.out.of.bounds [`character(1)`]\cr
+#' @param on.par.out.of.bounds (`character(1)`)\cr
 #'   What should happen if a parameter of a learner is set to an out of bounds value.\cr
 #'   \dQuote{stop}: R exception is generated.\cr
 #'   \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr

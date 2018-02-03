@@ -9,7 +9,7 @@
 #' @param ids [`character`]\cr
 #'   Id strings. Must be unique.
 #'   Default is `cls`.
-#' @param type [`character(1)`]\cr
+#' @param type (`character(1)`)\cr
 #'   Shortcut to prepend type string to `cls` so one can set `cls = "rpart"`.
 #'   Default is `NULL`, i.e., this is not used.
 #' @inheritParams makeLearner

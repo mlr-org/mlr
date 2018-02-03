@@ -27,12 +27,12 @@
 #'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param obw.maxcl [`character(1)`]\cr
+#' @param obw.maxcl (`character(1)`)\cr
 #'   How should other class (usually larger class) be handled?
 #'   \dQuote{all} means every instance of the class gets in each bag,
 #'   \dQuote{boot} means the class instances are bootstrapped in each iteration.
 #'   Default is \dQuote{boot}.
-#' @param obw.cl [`character(1)`]\cr
+#' @param obw.cl (`character(1)`)\cr
 #'   Which class should be over- or undersampled. If `NULL`, `makeOverBaggingWrapper`
 #'   will take the smaller class.
 #' @template ret_learner

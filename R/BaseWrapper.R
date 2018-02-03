@@ -1,7 +1,7 @@
 #' Exported for internal use only.
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'   Id string for object. Used to display object.
-#' @param type [`character(1)`]\cr
+#' @param type (`character(1)`)\cr
 #'   Learner type.
 #' @param next.learner [`Learner`]\cr
 #'   Learner to wrap.

@@ -9,7 +9,7 @@
 #' either be specified by their lower and upper bounds or they will be
 #' discretized into specific values.
 #'
-#' @param learner [`character(1)`]\cr
+#' @param learner (`character(1)`)\cr
 #'   The name of the learner from `caret`
 #'   (cf. <https://topepo.github.io/caret/available-models.html>). Note that the
 #'   names in `caret` often differ from the ones in `mlr`.

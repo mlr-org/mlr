@@ -98,7 +98,7 @@
 NULL
 
 #' Exported for internal use.
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'   task id
 #' @param data [`data.frame`]\cr
 #'   data

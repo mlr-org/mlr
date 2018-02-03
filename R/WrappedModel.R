@@ -121,7 +121,7 @@ isFailureModel.WrappedModel = function(model) {
 #' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 #'
 #' @template arg_wrappedmod
-#' @return [`character(1)`].
+#' @return (`character(1)`).
 #' @export
 getFailureModelMsg = function(model) {
   UseMethod("getFailureModelMsg")
