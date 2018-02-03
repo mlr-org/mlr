@@ -26,7 +26,7 @@
 #'         Name of feature.
 #'       \item `type`([character])\cr
 #'         Feature column type.
-#'       \item `method`[`numeric`]\cr
+#'       \item `method`([numeric])\cr
 #'         One column for each method with the feature importance values.
 #'     }}
 #' @family generate_plot_data

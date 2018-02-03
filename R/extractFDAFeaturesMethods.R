@@ -134,7 +134,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' The function extracts the functional principal components from a data.frame
 #' containing functional features.
 #'
-#' @param pve [`numeric`]\cr
+#' @param pve ([numeric])\cr
 #'   Fraction of variance explained for the functional principal components.
 #'   Default is 0.99.
 #' @param npc [`integer`]\cr

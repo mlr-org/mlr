@@ -13,7 +13,7 @@
 #' @param resampling [[ResampleDesc()] | [ResampleInstance()]]\cr
 #'   Resampling strategy to evaluate the performance measure.
 #'   If no strategy is given a default "Holdout" will be performed.
-#' @param percs [`numeric`]\cr
+#' @param percs ([numeric])\cr
 #'   Vector of percentages to be drawn from the training split.
 #'   These values represent the x-axis.
 #'   Internally [makeDownsampleWrapper()] is used in combination with [benchmark()].

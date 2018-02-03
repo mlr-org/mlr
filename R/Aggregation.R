@@ -42,9 +42,9 @@ NULL
 #'   `perf.test` and optionally `perf.train` on the test and training data sets.
 #'   \describe{
 #'     \item{`task` [[Task()]]}{The task.}
-#'     \item{`perf.test` [`numeric`]}{
+#'     \item{`perf.test` ([numeric])}{
 #'       [performance()] results on the test data sets.}
-#'     \item{`perf.train` [`numeric`]}{
+#'     \item{`perf.train` ([numeric])}{
 #'       [performance()] results on the training data sets.}
 #'     \item{`measure` [[Measure()]]}{
 #'       Performance measure.}

@@ -12,8 +12,8 @@
 #' \item{x [`list`]}{Named list of hyperparameter values identified as optimal.
 #'   Note that when you have trafos on some of your params, `x` will always be
 #'   on the TRANSFORMED scale so you directly use it.}
-#' \item{y [`numeric`]}{Performance values for optimal `x`.}
-#' \item{threshold [`numeric`]}{Vector of finally found and used thresholds
+#' \item{y ([numeric])}{Performance values for optimal `x`.}
+#' \item{threshold ([numeric])}{Vector of finally found and used thresholds
 #'   if `tune.threshold` was enabled in [TuneControl()], otherwise not present and
 #'   hence `NULL`.}
 #' \item{opt.path [[ParamHelpers::OptPath()]]}{Optimization path which lead to `x`.

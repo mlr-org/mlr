@@ -29,7 +29,7 @@
 #'   the learner (`class.weights.param`). During training, the parameter
 #'   must accept a named vector of class weights, where length equals the
 #'   number of classes.
-#' @param wcw.weight [`numeric`]\cr
+#' @param wcw.weight ([numeric])\cr
 #'   Weight for each class.
 #'   Must be a vector of the same number of elements as classes are in task,
 #'   and must also be in the same order as the class levels are in

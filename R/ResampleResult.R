@@ -21,7 +21,7 @@
 #'   columns to performance measures. Usually not available, only if specifically requested,
 #'   see general description above.
 #' }
-#' \item{aggr [`numeric`]:}{
+#' \item{aggr ([numeric]):}{
 #'   Named vector of aggregated performance values. Names are coded like
 #'   this <measure>.<aggregation>.
 #' }

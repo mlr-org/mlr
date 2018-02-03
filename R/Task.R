@@ -104,7 +104,7 @@ NULL
 #'   data
 #' @param target ([character])\cr
 #'   target columns
-#' @param weights [`numeric`]\cr
+#' @param weights ([numeric])\cr
 #'   weights
 #' @param blocking [`numeric`\cr
 #'   task data blocking

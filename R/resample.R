@@ -36,7 +36,7 @@
 #' @param skip [`integer(1)`]\cr
 #'   See [ResampleDesc()].
 #' @template arg_measures
-#' @param weights [`numeric`]\cr
+#' @param weights ([numeric])\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as observations in task and in corresponding order.
 #'   Overwrites weights specified in the `task`.

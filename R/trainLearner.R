@@ -14,7 +14,7 @@
 #' @param .subset [`integer`]\cr
 #'   Subset of cases for training set, index the task with this.
 #'   You probably want to use [getTaskData()] for this purpose.
-#' @param .weights [`numeric`]\cr
+#' @param .weights ([numeric])\cr
 #'   Weights for each observation.
 #' @param ... [any]\cr
 #'   Additional (hyper)parameters, which need to be passed to the underlying train function.

@@ -419,7 +419,7 @@ subsetTask = function(task, subset = NULL, features) {
 #'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
 #' @param costs [`data.frame`\cr
 #'   Optional: cost matrix.
-#' @param weights [`numeric`]\cr
+#' @param weights ([numeric])\cr
 #'   Optional: weight vector.
 #' @keywords internal
 #' @export
