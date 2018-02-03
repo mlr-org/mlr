@@ -5,15 +5,15 @@
 #'   Learner type.
 #' @param next.learner [`Learner`]\cr
 #'   Learner to wrap.
-#' @param package [`character`]\cr
+#' @param package ([character])\cr
 #'   Packages to load when loading learner.
 #' @param par.set [`ParamSet`]\cr
 #'   Parameter set.
 #' @param par.vals [`list`]\cr
 #'   Optional list of named (hyper)parameter values.
-#' @param learner.subclass [`character`]\cr
+#' @param learner.subclass ([character])\cr
 #'   Class to assign the new object.
-#' @param model.subclass [`character`]\cr
+#' @param model.subclass ([character])\cr
 #'   Class to assign learner models.
 #' @keywords internal
 #' @export

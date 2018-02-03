@@ -38,7 +38,7 @@ getLearnerPredictType = function(learner) {
 #'
 #' @description Get the R packages the learner requires.
 #' @template arg_learner
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family learner
 getLearnerPackages = function(learner) {

@@ -61,7 +61,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' The same applies for many multilabel methods, see, e.g., [makeMultilabelBinaryRelevanceWrapper()].
 #'
 #' @template arg_task_or_type
-#' @param properties [`character`]\cr
+#' @param properties ([character])\cr
 #'   Set of required properties to filter for. Default is `character(0)`.
 #' @param quiet [`logical(1)`]\cr
 #'   Construct learners quietly to check their properties, shows no package startup messages.

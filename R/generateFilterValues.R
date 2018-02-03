@@ -5,7 +5,7 @@
 #' For a list of features, use [listFilterMethods()].
 #'
 #' @template arg_task
-#' @param method [`character`]\cr
+#' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect [`integer(1)`]\cr
@@ -22,9 +22,9 @@
 #'     Task description.}
 #'   \item{data}{[`data.frame`] with columns:
 #'     \itemize{
-#'       \item `name`[`character`]\cr
+#'       \item `name`([character])\cr
 #'         Name of feature.
-#'       \item `type`[`character`]\cr
+#'       \item `type`([character])\cr
 #'         Feature column type.
 #'       \item `method`[`numeric`]\cr
 #'         One column for each method with the feature importance values.

@@ -72,7 +72,7 @@
 #'   observations in each training set is as in the original data set. Useful for imbalanced class sizes.
 #'   For survival tasks stratification is done on the events, resulting in training sets with comparable
 #'   censoring rates.
-#' @param stratify.cols [`character`]\cr
+#' @param stratify.cols ([character])\cr
 #'   Stratify on specific columns referenced by name. All columns have to be factors.
 #'   Note that you have to ensure yourself that stratification is possible, i.e.
 #'   that each strata contains enough observations.

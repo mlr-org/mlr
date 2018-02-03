@@ -16,7 +16,7 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param features [`character`]\cr
+#' @param features ([character])\cr
 #'   Selected features for model.
 #'   By default the first 2 features are used.
 #' @template arg_measures

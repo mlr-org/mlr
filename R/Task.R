@@ -102,7 +102,7 @@ NULL
 #'   task id
 #' @param data [`data.frame`]\cr
 #'   data
-#' @param target [`character`]\cr
+#' @param target ([character])\cr
 #'   target columns
 #' @param weights [`numeric`]\cr
 #'   weights

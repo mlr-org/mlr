@@ -12,7 +12,7 @@
 #' \describe{
 #' \item{id (`character(1)`)}{Name of the aggregation method.}
 #' \item{name (`character(1)`)}{Long name of the aggregation method.}
-#' \item{properties [`character`]}{Properties of the aggregation.}
+#' \item{properties ([character])}{Properties of the aggregation.}
 #' \item{fun [`function(task, perf.test, perf.train, measure, group, pred)`]}{Aggregation function.}
 #' }
 #' @name Aggregation
@@ -31,7 +31,7 @@ NULL
 #'   Name of the aggregation method (preferably the same name as the generated function).
 #' @param name (`character(1)`)\cr
 #'   Long name of the aggregation method. Default is `id`.
-#' @param properties [`character`]\cr
+#' @param properties ([character])\cr
 #'   Set of aggregation properties.
 #'   \describe{
 #'     \item{req.train}{Are prediction or train sets required to calculate the aggregation?}

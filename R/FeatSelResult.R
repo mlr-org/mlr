@@ -9,7 +9,7 @@
 #' \describe{
 #' \item{learner [[Learner()]]}{Learner that was optimized.}
 #' \item{control [[FeatSelControl()]]}{ Control object from feature selection.}
-#' \item{x [`character`]}{Vector of feature names identified as optimal.}
+#' \item{x ([character])}{Vector of feature names identified as optimal.}
 #' \item{y [`numeric`]}{Performance values for optimal `x`.}
 #' \item{threshold [`numeric`]}{Vector of finally found and used thresholds
 #'   if `tune.threshold` was enabled in [FeatSelControl()], otherwise not present and

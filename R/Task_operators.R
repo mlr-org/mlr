@@ -58,7 +58,7 @@ getTaskId = function(x) {
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family task
 getTaskTargetNames = function(x) {
@@ -88,7 +88,7 @@ getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family task
 getTaskClassLevels = function(x) {
@@ -120,7 +120,7 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
 #' Target column name is not included.
 #'
 #' @template arg_task
-#' @return [`character`].
+#' @return ([character]).
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {

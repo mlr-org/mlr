@@ -14,7 +14,7 @@
 #'   \dQuote{scale}: Divide by standard deviation.\cr
 #'   \dQuote{standardize}: Center and scale.\cr
 #'   \dQuote{range}: Scale to a given range.\cr
-#' @param cols [`character`]\cr
+#' @param cols ([character])\cr
 #'   Columns to normalize. Default is to use all numeric columns.
 #' @param range [`numeric(2)`]\cr
 #'   Range for method \dQuote{range}.

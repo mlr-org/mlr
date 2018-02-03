@@ -21,7 +21,7 @@
 #' }
 #'
 #' @template arg_learner
-#' @param props [`character`]\cr
+#' @param props ([character])\cr
 #'   Vector of properties to query.
 #' @return `getLearnerProperties` returns a character vector with learner properties.
 #'  `hasLearnerProperties` returns a logical vector of the same length as `props`.
@@ -79,7 +79,7 @@ hasProperties = function(learner, props) {
 #' @param type (`character(1)`)\cr
 #'   Only return properties for a specified task type. Default is \dQuote{any}.
 #'
-#' @return [`character`].
+#' @return ([character]).
 #'
 #' @export
 listLearnerProperties = function(type = "any") {

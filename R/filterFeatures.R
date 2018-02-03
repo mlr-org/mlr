@@ -22,7 +22,7 @@
 #' @param threshold [`numeric(1)`]\cr
 #'   If set, select features whose score exceeds `threshold`.
 #'   Mutually exclusive with arguments `perc` and `abs`.
-#' @param mandatory.feat [`character`]\cr
+#' @param mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
 #' @param ... [any]\cr
 #'   Passed down to selected filter method.

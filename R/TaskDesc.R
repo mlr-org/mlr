@@ -23,7 +23,7 @@
 #' \item{has.missings [`logical(1)`]}{Are missing values present?}
 #' \item{has.weights [`logical(1)`]}{Are weights specified for each observation?}
 #' \item{has.blocking [`logical(1)`]}{Is a blocking factor for cases available in the task?}
-#' \item{class.levels [`character`]}{All possible classes.
+#' \item{class.levels ([character])}{All possible classes.
 #'   Only present for \dQuote{classif}, \dQuote{costsens}, and \dQuote{multilabel}.}
 #' \item{positive (`character(1)`)}{Positive class label for binary classification.
 #'   Only present for \dQuote{classif}, NA for multiclass.}

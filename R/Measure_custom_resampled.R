@@ -36,7 +36,7 @@
 #' @param minimize [`logical(1)`]\cr
 #'   Should the measure be minimized?
 #'   Default is `TRUE`.
-#' @param properties [`character`]\cr
+#' @param properties ([character])\cr
 #'   Set of measure properties. For a list of values see [Measure()].
 #'   Default is `character(0)`.
 #' @param best [`numeric(1)`]\cr
@@ -45,7 +45,7 @@
 #' @param worst [`numeric(1)`]\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
-#' @param note [`character`] \cr
+#' @param note ([character]) \cr
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
 #' @family performance

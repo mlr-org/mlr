@@ -13,7 +13,7 @@
 #' \describe{
 #'   \item{id (`character(1)`)}{See argument.}
 #'   \item{minimize [`logical(1)`]}{See argument.}
-#'   \item{properties [`character`]}{See argument.}
+#'   \item{properties ([character])}{See argument.}
 #'   \item{fun [`function`]}{See argument.}
 #'   \item{extra.args [`list`]}{See argument.}
 #'   \item{aggr [[Aggregation()]]}{See argument.}
@@ -28,7 +28,7 @@
 #' @param minimize [`logical(1)`]\cr
 #'   Should the measure be minimized?
 #'   Default is `TRUE`.
-#' @param properties [`character`]\cr
+#' @param properties ([character])\cr
 #'   Set of measure properties. Some standard property names include:
 #'   \describe{
 #'     \item{classif}{Is the measure applicable for classification?}
@@ -75,9 +75,9 @@
 #' @param worst [`numeric(1)`]\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
-#' @param name [`character`] \cr
+#' @param name ([character]) \cr
 #'   Name of the measure. Default is `id`.
-#' @param note [`character`] \cr
+#' @param note ([character]) \cr
 #'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
 #' @noMd

@@ -12,7 +12,7 @@
 #'   The only method available is \dQuote{permutation.importance}.
 #'   Default is \dQuote{permutation.importance}.
 #' @template arg_learner
-#' @param features [`character`]\cr
+#' @param features ([character])\cr
 #'   The features to compute the importance of.
 #'   The default is all of the features contained in the [Task()].
 #' @param interaction [`logical(1)`]\cr

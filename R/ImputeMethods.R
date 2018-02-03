@@ -264,7 +264,7 @@ imputeHist = function(breaks, use.mids = TRUE) {
 #'  Supervised learner. Its predictions will be used for imputations.
 #'  If you pass a string the learner will be created via [makeLearner()].
 #'  Note that the target column is not available for this operation.
-#' @param features [`character`]\cr
+#' @param features ([character])\cr
 #'  Features to use in `learner` for prediction.
 #'  Default is `NULL` which uses all available features except the target column
 #'  of the original task.

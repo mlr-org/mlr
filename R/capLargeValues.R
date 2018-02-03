@@ -6,11 +6,11 @@
 #' Only numeric/integer columns are affected.
 #'
 #' @template arg_taskdf
-#' @param target [`character`]\cr
+#' @param target ([character])\cr
 #'   Name of the column(s) specifying the response.
 #'   Target columns will not be capped.
 #'   Default is `character(0)`.
-#' @param cols [`character`]\cr
+#' @param cols ([character])\cr
 #'   Which columns to convert.
 #'   Default is all numeric columns.
 #' @param threshold [`numeric(1)`]\cr

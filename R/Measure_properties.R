@@ -6,7 +6,7 @@
 #'
 #' The measure properties are defined in [Measure()].
 #' @template arg_measure
-#' @param props [`character`]\cr
+#' @param props ([character])\cr
 #'   Vector of properties to query.
 #' @return `getMeasureProperties` returns a character vector with measure properties.
 #'  `hasMeasureProperties` returns a logical vector of the same length as `props`.
@@ -35,7 +35,7 @@ hasMeasureProperties = function(measure, props) {
 #' @description
 #' This is useful for determining which measure properties are available.
 #'
-#' @return [`character`].
+#' @return ([character]).
 #'
 #' @export
 listMeasureProperties = function() {

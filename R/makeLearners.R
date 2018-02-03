@@ -4,9 +4,9 @@
 #' Small helper function that can save some typing when creating mutiple learner objects.
 #' Calls [makeLearner()] multiple times internally.
 #'
-#' @param cls [`character`]\cr
+#' @param cls ([character])\cr
 #'   Classes of learners.
-#' @param ids [`character`]\cr
+#' @param ids ([character])\cr
 #'   Id strings. Must be unique.
 #'   Default is `cls`.
 #' @param type (`character(1)`)\cr

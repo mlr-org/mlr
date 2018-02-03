@@ -21,9 +21,9 @@
 #' @details
 #' The description object contains these slots
 #' \describe{
-#'   \item{target [`character`]}{See argument.}
-#'   \item{features [`character`]}{Feature names (column names of `data`).},
-#'   \item{classes [`character`]}{Feature classes (storage type of `data`).}
+#'   \item{target ([character])}{See argument.}
+#'   \item{features ([character])}{Feature names (column names of `data`).},
+#'   \item{classes ([character])}{Feature classes (storage type of `data`).}
 #'   \item{lvls [`named list`]}{Mapping of column names of factor features to their levels,
 #'     including newly created ones during imputation.}
 #'   \item{impute [`named list`]}{Mapping of column names to imputation functions.}
@@ -33,7 +33,7 @@
 #' }
 #'
 #' @template arg_taskdf
-#' @param target [`character`]\cr
+#' @param target ([character])\cr
 #'   Name of the column(s) specifying the response.
 #'   Default is `character(0)`.
 #' @param classes [`named list`]\cr
@@ -43,10 +43,10 @@
 #'   Named list containing names of imputation methods to impute missing values
 #'   in the data column referenced by the list element's name. Overrules imputation set via
 #'   `classes`.
-#' @param dummy.classes [`character`]\cr
+#' @param dummy.classes ([character])\cr
 #'   Classes of columns to create dummy columns for.
 #'   Default is `character(0)`.
-#' @param dummy.cols [`character`]\cr
+#' @param dummy.cols ([character])\cr
 #'   Column names to create dummy columns (containing binary missing indicator) for.
 #'   Default is `character(0)`.
 #' @param dummy.type (`character(1)`)\cr

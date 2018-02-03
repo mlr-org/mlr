@@ -4,7 +4,7 @@
 #' Merges factor levels that occur only infrequently into combined levels with a higher frequency.
 #'
 #' @template arg_task
-#' @param cols [`character`]
+#' @param cols ([character])
 #'   Which columns to convert.
 #'   Default is all factor and character columns.
 #' @param min.perc [`numeric(1)`]\cr

@@ -41,7 +41,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #' The function extracts features from functional data based on the fast fourier
 #' transform. For more details refer to [stats::fft()].
 #'
-#' @param trafo.coeff [`character`]\cr
+#' @param trafo.coeff ([character])\cr
 #'   Specifies which transformation of the complex frequency domain
 #'   representation should be calculated as a feature representation.
 #'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
@@ -94,10 +94,10 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' functional data.
 #' See [wavelets::dwt()] for more information.
 #'
-#' @param filter [`character`]\cr
+#' @param filter ([character])\cr
 #'   Specifies which filter should be used.
 #'   Default is \dQuote{la8}.
-#' @param boundary [`character`]\cr
+#' @param boundary ([character])\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.

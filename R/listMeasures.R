@@ -5,7 +5,7 @@
 #' whether they supports classification or regression.
 #'
 #' @template arg_task_or_type
-#' @param properties [`character`]\cr
+#' @param properties ([character])\cr
 #'   Set of required properties to filter for.
 #'   See [Measure()] for some standardized properties.
 #'   Default is `character(0)`.

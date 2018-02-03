@@ -24,7 +24,7 @@
 #' @param fw.threshold [`numeric(1)`]\cr
 #'   If set, select features whose score exceeds `fw.threshold`.
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
-#' @param fw.mandatory.feat [`character`]\cr
+#' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
 #' @param ... [any]\cr
 #'   Additional parameters passed down to the filter.
@@ -91,7 +91,7 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #'
 #' @param model [[WrappedModel()]]\cr
 #'   Trained Model created with [makeFilterWrapper()].
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {

@@ -11,7 +11,7 @@
 #' @param perc [`numeric(1)`]\cr
 #'   The percentage of a feature values in [0, 1) that must differ from the mode value.
 #'   Default is 0, which means only constant features with exactly one observed level are removed.
-#' @param dont.rm [`character`]\cr
+#' @param dont.rm ([character])\cr
 #'   Names of the columns which must not be deleted.
 #'   Default is no columns.
 #' @param na.ignore [`logical(1)`]\cr

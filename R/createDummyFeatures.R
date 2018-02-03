@@ -13,7 +13,7 @@
 #'     \item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
 #'   }
 #'   Default is \dQuote{1-of-n}.
-#' @param cols [`character`]\cr
+#' @param cols ([character])\cr
 #'   Columns to create dummy features for. Default is to use all columns.
 #' @template ret_taskdf
 #' @export

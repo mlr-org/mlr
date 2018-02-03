@@ -6,7 +6,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 #' Get probabilities for some classes.
 #'
 #' @template arg_pred
-#' @param cl [`character`]\cr
+#' @param cl ([character])\cr
 #'   Names of classes.
 #'   Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.
 #' @return [`data.frame`] with numerical columns or a numerical vector if length of `cl` is 1.

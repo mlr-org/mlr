@@ -4,7 +4,7 @@
 #' Gets the task IDs used in a benchmark experiment.
 #'
 #' @template arg_bmr
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family benchmark
 getBMRTaskIds = function(bmr) {
@@ -32,7 +32,7 @@ getBMRLearners = function(bmr) {
 #' Gets the IDs of the learners used in a benchmark experiment.
 #'
 #' @template arg_bmr
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family benchmark
 getBMRLearnerIds = function(bmr) {
@@ -46,7 +46,7 @@ getBMRLearnerIds = function(bmr) {
 #' Gets the learner short.names of the learners used in a benchmark experiment.
 #'
 #' @template arg_bmr
-#' @return [`character`].
+#' @return ([character]).
 #' @export
 #' @family benchmark
 getBMRLearnerShortNames = function(bmr) {

@@ -13,9 +13,9 @@
 #'  Short description of the filter.
 #' @param pkg (`character(1)`)\cr
 #'  Source package where the filter is implemented.
-#' @param supported.tasks [`character`]\cr
+#' @param supported.tasks ([character])\cr
 #'  Task types supported.
-#' @param supported.features [`character`]\cr
+#' @param supported.features ([character])\cr
 #'  Feature types supported.
 #' @param fun [`function(task, nselect, ...`]\cr
 #'  Function which takes a task and returns a named numeric vector of scores,

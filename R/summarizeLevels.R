@@ -4,7 +4,7 @@
 #' Characters and logicals will be treated as factors.
 #'
 #' @template arg_taskdf
-#' @param cols [`character`]\cr
+#' @param cols ([character])\cr
 #'   Restrict result to columns in `cols`.
 #'   Default is all factor, character and logical columns of `obj`.
 #' @return [`list`]. Named list of tables.

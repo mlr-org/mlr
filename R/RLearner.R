@@ -14,9 +14,9 @@
 #' To see all possible properties of a learner, go to: [LearnerProperties()].
 #'
 #' @template arg_lrncl
-#' @param package [`character`]\cr
+#' @param package ([character])\cr
 #'   Package(s) to load for the implementation of the learner.
-#' @param properties [`character`]\cr
+#' @param properties ([character])\cr
 #'   Set of learner properties. See above.
 #'   Default is `character(0)`.
 #' @param class.weights.param (`character(1)`)\cr
@@ -40,7 +40,7 @@
 #' @param note (`character(1)`)\cr
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
-#' @param callees [`character`]\cr
+#' @param callees ([character])\cr
 #'   Character vector naming all functions of the learner's package being called which
 #'   have a relevant R help page.
 #'   Default is `character(0)`.

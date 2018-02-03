@@ -5,7 +5,7 @@
 #' Which means that the default behavior for that param will now be used.
 #'
 #' @template arg_learner
-#' @param ids [`character`]\cr
+#' @param ids ([character])\cr
 #'   Parameter names to remove settings for.
 #'    Default is `character(0L)`.
 #' @template ret_learner
