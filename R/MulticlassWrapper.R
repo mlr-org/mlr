@@ -18,7 +18,7 @@
 #' wrapper cannot predict posterior probabilities.
 #'
 #' @template arg_learner
-#' @param mcw.method [character(1) | function] \cr
+#' @param mcw.method (`character(1)` | `function`) \cr
 #'   \dQuote{onevsone} or \dQuote{onevsrest}.
 #'   You can also pass a function, with signature `function(task)` and which
 #'   returns a ECOC codematrix with entries +1,-1,0.

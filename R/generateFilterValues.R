@@ -12,7 +12,7 @@
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
-#' @param more.args [named list]\cr
+#' @param more.args (named [list])\cr
 #'   Extra args passed down to filter methods. List elements are named with the filter
 #'   `method` name the args should be passed down to.
 #'   A more general and flexible option than `...`.

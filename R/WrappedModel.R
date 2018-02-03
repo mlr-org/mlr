@@ -140,7 +140,7 @@ getFailureModelMsg.WrappedModel = function(model) {
 #' `NULL`.
 #'
 #' @template arg_wrappedmod
-#' @return ([last.dump]).
+#' @return (`last.dump`).
 #' @export
 getFailureModelDump = function(model) {
   UseMethod("getFailureModelDump")

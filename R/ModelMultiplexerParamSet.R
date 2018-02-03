@@ -20,7 +20,7 @@
 #'   (b) Second option. Just the params you would enter in the param sets.
 #'   Even shorter to create. Only works when it can be uniquely identified to which
 #'   learner each of your passed parameters belongs.
-#' @param .check ([logical`)\cr
+#' @param .check ([logical])\cr
 #'   Check that for each param in `...` one param in found in the base learners.
 #'   Default is `TRUE`
 #' @template ret_ps

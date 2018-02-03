@@ -167,7 +167,7 @@ getTaskSize = function(x) {
 #' @param explicit.features (`logical(1)`)\cr
 #'   Should the features (right hand side of the formula) be explicitly listed?
 #'   Default is `FALSE`, i.e., they will be represented as `"."`.
-#' @param env ([environment`)\cr
+#' @param env ([environment])\cr
 #'   Environment of the formula.
 #'   Default is `parent.frame()`.
 #' @return ([formula]).

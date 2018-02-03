@@ -18,7 +18,7 @@
 #'   Note that when you have trafos on some of your params, the opt.path always contains the
 #'   UNTRANSFORMED values on the original scale. You can simply call `trafoOptPath(opt.path)` to
 #'   transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
-#' \item{ind ([integer(n)])}{Indices of Pareto optimal params in `opt.path`.}
+#' \item{ind (`integer(n)`)}{Indices of Pareto optimal params in `opt.path`.}
 #' \item{measures [(list of) [Measure()])}{Performance measures.}
 #' }
 #' @name TuneMultiCritResult

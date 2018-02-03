@@ -16,7 +16,7 @@
 #'   \item{target [character]}{See argument.}
 #'   \item{coln [character]}{colum names of data.}
 #'   \item{fd.cols [character]}{Functional feature names.}
-#'   \item{extractFDAFeat [list]}{Contains [feature.methods] and relevant
+#'   \item{extractFDAFeat [list]}{Contains `feature.methods` and relevant
 #'   parameters for reextraction}.
 #' }
 #'
@@ -28,7 +28,7 @@
 #'   Default is `character(0)`.
 #' @param feat.methods (named [list])\cr
 #'   List of functional features along with the desired methods for each functional feature.
-#'   \dQuote{all} applies the [extratFDAFeatures] method to each
+#'   \dQuote{all} applies the [extractFDAFeatures] method to each
 #'   functional feature.
 #'   Names of `feat.methods` must match column names of functional features.
 #'   Available feature extraction methods are available under family `fda_featextractor`.
@@ -36,7 +36,7 @@
 #' @return ([list])
 #'   \item{data ([data.frame] | [Task])}{Extracted features, returns a data.frame when
 #'   given a [data.frame] and a Task when given a Task.}
-#'   \item{desc ([extracFDAFeatDesc])}{Description object. See description for details.}
+#'   \item{desc (`extractFDAFeatDesc`)}{Description object. See description for details.}
 #' @family fda
 #' @export
 
@@ -153,7 +153,7 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from. Must contain functional features
 #'   as matrix columns.
-#' @param desc ([extractFDAFeatDesc])\cr
+#' @param desc (`extractFDAFeatDesc`)\cr
 #'   FDAFeature extraction description as returned by [extractFDAFeatures()]
 #' @return [data.frame] or [Task] containing the extracted Features
 #' @family extractFDAFeatures

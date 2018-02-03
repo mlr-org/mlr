@@ -176,7 +176,7 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 #' prediction did not fail, this returns `NULL`.
 #'
 #' @template arg_pred
-#' @return ([last.dump]).
+#' @return (`last.dump`).
 #' @family debug
 #' @export
 getPredictionDump = function(pred) {

@@ -20,7 +20,7 @@
 #' Additionally two components are added to the list:
 #' \describe{
 #'   \item{f.rejnull (`logical(1)`)}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
-#'   \item{crit.difference ([list(2)])}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
+#'   \item{crit.difference (`list(2)`)}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
 #' }
 #'
 #' @family benchmark

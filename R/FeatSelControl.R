@@ -91,8 +91,8 @@
 #' @return ([FeatSelControl()]). The specific subclass is one of
 #'   [FeatSelControlExhaustive()], [FeatSelControlRandom()],
 #'   [FeatSelControlSequential()], [FeatSelControlGA()].
-#' @references [Ron Kohavi] and [George H. John],
-#' [Wrappers for feature subset selection], Artificial Intelligence Volume 97, 1997, [273-324].
+#' @references Ron Kohavi and George H. John,
+#' Wrappers for feature subset selection, Artificial Intelligence Volume 97, 1997, 273-324.
 #' <http://ai.stanford.edu/~ronnyk/wrappersPrint.pdf>.\cr
 #' @family featsel
 #' @name FeatSelControl

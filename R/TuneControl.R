@@ -16,7 +16,7 @@
 #'   Further arguments for threshold tuning that are passed down to [tuneThreshold()].
 #'   Default is none.
 #' @template arg_log_fun
-#' @param final.dw.perc ([boolean])\cr
+#' @param final.dw.perc (`boolean`)\cr
 #'   If a Learner wrapped by a [makeDownsampleWrapper()] is used, you can define the value of `dw.perc` which is used to train the Learner with the final parameter setting found by the tuning.
 #'   Default is `NULL` which will not change anything.
 #' @param ... (any)\cr

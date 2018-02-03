@@ -44,7 +44,7 @@
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
-#' @param bg.cols ([character(3)`)\cr
+#' @param bg.cols (`character(3)`)\cr
 #'   Background colors for classification and regression.
 #'   Sorted from low, medium to high.
 #'   Default is `TRUE`.

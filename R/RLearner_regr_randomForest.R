@@ -38,12 +38,12 @@
 #' of the posterior mean \dQuote{response} value. This is always the same as from the underlying
 #' randomForest.
 #'
-#' @references [Joseph Sexton] and [Petter Laake];
-#' [Standard errors for bagged and random forest estimators],
-#' Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
-#' Also see: [Stefan Wager], [Trevor Hastie], and [Bradley Efron];
-#' [Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife],
-#' Journal of Machine Learning Research Volume 15, 2014, [1625-1651].
+#' @references Joseph Sexton and Petter Laake;
+#' Standard errors for bagged and random forest estimators,
+#' Computational Statistics and Data Analysis Volume 53, 2009, 801-811.
+#' Also see: Stefan Wager, Trevor Hastie, and Bradley Efron;
+#' Confidence Intervals for Random Forests: The Jackknife and the Infinitesimal Jackknife,
+#' Journal of Machine Learning Research Volume 15, 2014, 1625-1651.
 #'
 #' @name regr.randomForest
 #' @rdname regr.randomForest

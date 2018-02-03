@@ -42,7 +42,7 @@
 #'   Whether to compute the per-observation importance.
 #'   The default is `FALSE`.
 #'
-#' @return ([FeatureImportance]). A named list which contains the computed feature importance and the input arguments.
+#' @return (`FeatureImportance`). A named list which contains the computed feature importance and the input arguments.
 #'
 #' Object members:
 #' \item{res}{([data.frame])\cr

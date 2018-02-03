@@ -23,7 +23,7 @@
 #' @param discretize (`logical(1)`)\cr
 #'   Should the numerical parameters be discretized? Alternatively, they will
 #'   be defined by their lower and upper bounds. The default is `TRUE`.
-#' @return ([list(2)]). A list of parameters:
+#' @return (`list(2)`). A list of parameters:
 #' \itemize{
 #'   \item{`par.vals`} contains a list of all constant tuning parameters
 #'   \item{`par.set`} is a [ParamHelpers::ParamSet()], containing all the configurable

@@ -31,7 +31,7 @@
 #'   Stores error messages generated during train or predict, if these were caught
 #'   via [configureMlr()].
 #' }
-#' \item{err.dumps ([list of list of dump.frames]):}{
+#' \item{err.dumps (list of list of [dump.frames]):}{
 #'   List with length equal to number of resampling iterations. Contains lists
 #'   of `dump.frames` objects that can be fed to `debugger()` to inspect
 #'   error dumps generated on learner errors. One iteration can generate more than

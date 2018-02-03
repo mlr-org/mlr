@@ -10,7 +10,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @template arg_aggregation_method
-#' @return ([htest]): See [stats::friedman.test()] for details.
+#' @return (`htest`): See [stats::friedman.test()] for details.
 #' @family benchmark
 #' @export
 #' @examples
