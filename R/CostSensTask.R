@@ -1,7 +1,7 @@
 #' @export
 #' @rdname Task
 #' @family costsens
-makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blocking = NULL, spatial = FALSE, fixup.data = "warn", check.data = TRUE) {
+makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blocking = NULL, coordinates = NULL, fixup.data = "warn", check.data = TRUE) {
   assertString(id)
   assertDataFrame(data)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
@@ -20,7 +20,7 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
   }
   task = makeSupervisedTask("costsens", data = data, target = target,
                             weights = weights, blocking = blocking,
-                            spatial = spatial, fixup.data = fixup.data,
+                            coordinates = coordinates, fixup.data = fixup.data,
                             check.data = check.data)
 
   if (check.data) {
@@ -33,14 +33,14 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
       stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
   }
 
-  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking, costs, spatial)
+  task$task.desc = makeCostSensTaskDesc(id, data, target, blocking, costs, coordinates)
   addClasses(task, "CostSensTask")
 }
 
 #' @export
 #' @rdname makeTaskDesc
-makeCostSensTaskDesc = function(id, data, target, blocking, costs, spatial) {
-  td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking, spatial)
+makeCostSensTaskDesc = function(id, data, target, blocking, costs, coordinates) {
+  td = makeTaskDescInternal("costsens", id, data, target, weights = NULL, blocking = blocking, coordinates)
   td$class.levels = colnames(costs)
   td$costs = costs
   return(addClasses(td, c("CostSensTaskDesc", "SupervisedTaskDesc")))

@@ -1,3 +1,4 @@
+
 library(Matrix)
 library(MASS)
 library(methods)
@@ -20,7 +21,6 @@ set.seed(DATASEED)
 data(Sonar, package = "mlbench")
 sonar.task = makeClassifTask("Sonar-example", data = Sonar, target = "Class")
 save(sonar.task, file = file.path(dn, "sonar.task.RData"), compress = "xz")
-
 
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
@@ -48,7 +48,7 @@ anomaly = as.data.frame(anomaly)
 anomaly$Target = "Anomaly"
 data = rbind(normal, anomaly)
 data = na.omit(data)
-data[, 1:2] = normalize(data[, 1:2])
+data[, 1:2] = scale(data[, 1:2])
 
 
 oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "Target", positive = "Anomaly", negative = "Normal")
