@@ -15,7 +15,7 @@
 #'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
-#' @param desc [[ResampleDesc()] | `character(1)`]\cr
+#' @param desc [[ResampleDesc()] | `character(1)`)\cr
 #'   Resampling description object or name of resampling strategy.
 #'   In the latter case [makeResampleDesc()] will be called internally on the string.
 #' @param task [[Task()]]\cr
@@ -24,7 +24,7 @@
 #' @param size [[integer()]]\cr
 #'   Size of the data set to resample.
 #'   Can be used instead of `task`.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Passed down to [makeResampleDesc()] in case
 #'   you passed a string in `desc`.
 #'   Otherwise ignored.

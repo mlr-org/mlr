@@ -9,13 +9,13 @@
 #' @param type Type of plot. Can be \dQuote{scatterplot}, the default. Or
 #'   \dQuote{hist}, for a histogram, or in case of classification problems
 #'   a barplot, displaying the residuals.
-#' @param loess.smooth [`logical(1)`]\cr
+#' @param loess.smooth (`logical(1)`)\cr
 #'   Should a loess smoother be added to the plot? Defaults to `TRUE`.
 #'   Only applicable for regression tasks and if `type` is set to `scatterplot`.
-#' @param rug [`logical(1)`]\cr
+#' @param rug (`logical(1)`)\cr
 #'   Should marginal distributions be added to the plot? Defaults to `TRUE`.
 #'   Only applicable for regression tasks and if `type` is set to `scatterplot`.
-#' @param pretty.names [`logical(1)`]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the short name of the learner instead of its ID in labels.
 #'   Defaults to `TRUE`. \cr
 #'   Only applicable if a [BenchmarkResult()]

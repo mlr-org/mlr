@@ -5,10 +5,10 @@
 #'
 #' @param measure [[Measure()]]\cr
 #'   Performance measure.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Named (hyper)parameters with new settings. Alternatively these can be passed
 #'   using the `par.vals` argument.
-#' @param par.vals [`list`]\cr
+#' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   `...` take precedence over values in this list.
 #' @template ret_measure

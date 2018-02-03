@@ -50,7 +50,7 @@
 #'
 #' @param object [[WrappedModel()]]\cr
 #'   Wrapped model, result of [train()].
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Additional parameters, which are passed to the underlying importance value
 #'   generating function.
 #' @return [`FeatureImportance`] An object containing a `data.frame` of the variable importances and further information.
@@ -96,11 +96,11 @@ getFeatureImportance = function(object, ...) {
 #' In [getFeatureImportance()] missing features will get an importance of zero and if the vector contains `NA`
 #' they will also be replaced with zero.
 #'
-#' @param .learner [[Learner()] | `character(1)`]\cr
+#' @param .learner [[Learner()] | `character(1)`)\cr
 #'   The learner.
 #' @param .model [[WrappedModel()]]\cr
 #'  The model.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #' Additional parameters, which are passed to the underlying importance value
 #' generating function.
 #' @return ([numeric]) A named vector of variable importance.

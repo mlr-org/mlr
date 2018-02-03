@@ -137,7 +137,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' @param pve ([numeric])\cr
 #'   Fraction of variance explained for the functional principal components.
 #'   Default is 0.99.
-#' @param npc [`integer`]\cr
+#' @param npc [`integer`)\cr
 #'   Number of principal components to extract. Overrides `pve` param.
 #'   Default is `NULL`
 #' @return [`data.frame`].
@@ -181,11 +181,11 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' as features. The segments length are set in a hierachy way so the features
 #' cover different resolution levels.
 #'
-#' @param res.level [`integer(1)`]\cr
+#' @param res.level [`integer(1)`)\cr
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift [`numeric(1)`]\cr
+#' @param shift [`numeric(1)`)\cr
 #'   The overlapping proportion when slide the window for one step.
-#' @param curve.lens [`integer`]\cr
+#' @param curve.lens [`integer`)\cr
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
 #' @return [`data.frame`].
 #' @export

@@ -1,5 +1,5 @@
 #' @export
-#' @param resolution [`integer`]\cr
+#' @param resolution [`integer`)\cr
 #'   Resolution of the grid for each numeric/integer parameter in `par.set`.
 #'   For vector parameters, it is the resolution per dimension.
 #'   Either pass one resolution for all parameters, or a named vector.

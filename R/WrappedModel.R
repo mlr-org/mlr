@@ -72,14 +72,14 @@ print.WrappedModel = function(x, ...) {
 #'
 #' @param model [[WrappedModel()]]\cr
 #'   The model, returned by e.g., [train()].
-#' @param more.unwrap [`logical(1)`]\cr
+#' @param more.unwrap (`logical(1)`)\cr
 #'   Some learners are not basic learners from R, but implemented in mlr as meta-techniques.
 #'   Examples are everything that inherits from `HomogeneousEnsemble`.
 #'   In these cases, the `learner.model` is often a list of mlr [WrappedModel()]s.
 #'   This option allows to strip them further to basic R models.
 #'   The option is simply ignored for basic learner models.
 #'   Default is `FALSE`.
-#' @return [any]. A fitted model, depending the learner / wrapped package. E.g., a
+#' @return (any). A fitted model, depending the learner / wrapped package. E.g., a
 #'   model of class [rpart::rpart()] for learner \dQuote{classif.rpart}.
 #' @export
 getLearnerModel = function(model, more.unwrap = FALSE) {
@@ -100,7 +100,7 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' For complex wrappers this getter returns `TRUE` if ANY model contained in it failed.
 #'
 #' @template arg_wrappedmod
-#' @return [`logical(1)`].
+#' @return (`logical(1)`).
 #' @export
 isFailureModel = function(model) {
   UseMethod("isFailureModel")

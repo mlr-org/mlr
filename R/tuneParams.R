@@ -26,7 +26,7 @@
 #' @param control [[TuneControl()]]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
-#' @param resample.fun [`closure`]\cr
+#' @param resample.fun [`closure`)\cr
 #'   The function to use for resampling. Defaults to [resample()]. If a user-given function
 #'   is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
 #'   \dQuote{measures}, and \dQuote{show.info}; see [resample()]. Within this function,
@@ -134,7 +134,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 #' Returns the opt.path from a [[TuneResult()]] object.
 #' @param tune.result [[TuneResult()]] \cr
 #'   A tuning result of the [[tuneParams()]] function.
-#' @param as.df [`logical(1)`]\cr
+#' @param as.df (`logical(1)`)\cr
 #'   Should the optimization path be returned as a data frame?
 #'   Default is `TRUE`.
 #' @export

@@ -8,7 +8,7 @@
 #' parameter dimension.
 #'
 #' @inherit TuneControl
-#' @param budget [`integer(1)`]\cr
+#' @param budget [`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. The `budget` corresponds to the product of the number of generations
 #'   (`maxit`) and the number of offsprings per generation

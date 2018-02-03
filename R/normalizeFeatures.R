@@ -16,7 +16,7 @@
 #'   \dQuote{range}: Scale to a given range.\cr
 #' @param cols ([character])\cr
 #'   Columns to normalize. Default is to use all numeric columns.
-#' @param range [`numeric(2)`]\cr
+#' @param range [`numeric(2)`)\cr
 #'   Range for method \dQuote{range}.
 #'   Default is `c(0,1)`.
 #' @param on.constant (`character(1)`)\cr

@@ -20,41 +20,41 @@
 #'   Selected features for model.
 #'   By default the first 2 features are used.
 #' @template arg_measures
-#' @param cv [`integer(1)`]\cr
+#' @param cv [`integer(1)`)\cr
 #'   Do cross-validation and display in plot title?
 #'   Number of folds. 0 means no CV.
 #'   Default is 10.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Parameters for `learner`.
-#' @param gridsize [`integer(1)`]\cr
+#' @param gridsize [`integer(1)`)\cr
 #'   Grid resolution per axis for background predictions.
 #'   Default is 500 for 1D and 100 for 2D.
-#' @param pointsize [`numeric(1)`]\cr
+#' @param pointsize [`numeric(1)`)\cr
 #'   Pointsize for ggplot2 [ggplot2::geom_point()] for data points.
 #'   Default is 2.
-#' @param prob.alpha [`logical(1)`]\cr
+#' @param prob.alpha (`logical(1)`)\cr
 #'   For classification: Set alpha value of background to probability for
 #'   predicted class? Allows visualization of \dQuote{confidence} for prediction.
 #'   If not, only a constant color is displayed in the background for the predicted label.
 #'   Default is `TRUE`.
-#' @param se.band [`logical(1)`]\cr
+#' @param se.band (`logical(1)`)\cr
 #'   For regression in 1D: Show band for standard error estimation?
 #'   Default is `TRUE`.
 #' @param err.mark (`character(1)`):
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
-#' @param bg.cols [`character(3)`]\cr
+#' @param bg.cols [`character(3)`)\cr
 #'   Background colors for classification and regression.
 #'   Sorted from low, medium to high.
 #'   Default is `TRUE`.
 #' @param err.col (`character(1)`)\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{white}
-#' @param err.size [`integer(1)`]\cr
+#' @param err.size [`integer(1)`)\cr
 #'   For classification: Size of misclassified data points.
 #'   Default is `pointsize`.
-#' @param greyscale [`logical(1)`]\cr
+#' @param greyscale (`logical(1)`)\cr
 #'   Should the plot be greyscale completely?
 #'   Default is `FALSE`.
 #' @template arg_prettynames

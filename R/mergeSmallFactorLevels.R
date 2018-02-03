@@ -7,7 +7,7 @@
 #' @param cols ([character])
 #'   Which columns to convert.
 #'   Default is all factor and character columns.
-#' @param min.perc [`numeric(1)`]\cr
+#' @param min.perc [`numeric(1)`)\cr
 #'   The smallest levels of a factor are merged until their combined proportion
 #'   w.r.t. the length of the factor exceeds `min.perc`.
 #'   Must be between 0 and 1.

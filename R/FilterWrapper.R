@@ -15,18 +15,18 @@
 #' @param fw.method (`character(1)`)\cr
 #'   Filter method. See [listFilterMethods()].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param fw.perc [`numeric(1)`]\cr
+#' @param fw.perc [`numeric(1)`)\cr
 #'   If set, select `fw.perc`*100 top scoring features.
 #'   Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
-#' @param fw.abs [`numeric(1)`]\cr
+#' @param fw.abs [`numeric(1)`)\cr
 #'   If set, select `fw.abs` top scoring features.
 #'   Mutually exclusive with arguments `fw.perc` and `fw.threshold`.
-#' @param fw.threshold [`numeric(1)`]\cr
+#' @param fw.threshold [`numeric(1)`)\cr
 #'   If set, select features whose score exceeds `fw.threshold`.
 #'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
 #' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
 #' @template ret_learner
 #' @export

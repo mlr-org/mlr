@@ -17,7 +17,7 @@
 #'  Task types supported.
 #' @param supported.features ([character])\cr
 #'  Feature types supported.
-#' @param fun [`function(task, nselect, ...`]\cr
+#' @param fun (`function(task, nselect, ...`)\cr
 #'  Function which takes a task and returns a named numeric vector of scores,
 #'  one score for each feature of `task`.
 #'  Higher scores mean higher importance of the feature.
@@ -50,16 +50,16 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #'
 #' Returns a subset-able dataframe with filter information.
 #'
-#' @param desc [`logical(1)`]\cr
+#' @param desc (`logical(1)`)\cr
 #'  Provide more detailed information about filters.
 #'  Default is `TRUE`.
-#' @param tasks [`logical(1)`]\cr
+#' @param tasks (`logical(1)`)\cr
 #'  Provide information on supported tasks.
 #'  Default is `FALSE`.
-#' @param features [`logical(1)`]\cr
+#' @param features (`logical(1)`)\cr
 #'  Provide information on supported features.
 #'  Default is `FALSE`.
-#' @param include.deprecated [`logical(1)`]\cr
+#' @param include.deprecated (`logical(1)`)\cr
 #'  Should deprecated filter methods be included in the list.
 #'  Default is `FALSE`.
 #' @return [`data.frame`].

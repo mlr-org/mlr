@@ -8,7 +8,7 @@
 #'  After being wrapped the learner will support missing values although this will only be the case if `ppc.knnImpute`, `ppc.bagImpute` or `ppc.medianImpute` is set to `TRUE`.
 #'
 #' @template arg_learner
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   See [caret::preProcess()] for parameters not listed above.
 #'   If you use them you might want to define them in the `add.par.set` so that they can be tuned.
 #' @template ret_learner

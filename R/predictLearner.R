@@ -12,9 +12,9 @@
 #'   Wrapped learner.
 #' @param .model [[WrappedModel()]]\cr
 #'   Model produced by training.
-#' @param .newdata [`data.frame`]\cr
+#' @param .newdata [`data.frame`)\cr
 #'   New data to predict. Does not include target column.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Additional parameters, which need to be passed to the underlying predict function.
 #' @return
 #' \itemize{
@@ -103,9 +103,9 @@ insertLines = function(prediction, inserts) {
 #'   The learner.
 #' @param model [[WrappedModel()]]]\cr
 #'   Model produced by training.
-#' @param p [any]\cr
+#' @param p (any)\cr
 #'   The prediction made by `learner`.
-#' @return [any]. A sanitized version of `p`.
+#' @return (any). A sanitized version of `p`.
 #' @keywords internal
 #' @export
 checkPredictLearnerOutput = function(learner, model, p) {

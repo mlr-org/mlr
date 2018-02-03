@@ -20,7 +20,7 @@
 #'   Thus for each percentage a different set of observations is drawn resulting in noisy performance measures as the quality of the sample can differ.
 #' @param measures [(list of) [Measure()]]\cr
 #'   Performance measures to generate learning curves for, representing the y-axis.
-#' @param stratify [`logical(1)`]\cr
+#' @param stratify (`logical(1)`)\cr
 #'   Only for classification:
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
@@ -107,14 +107,14 @@ print.LearningCurveData = function(x, ...) {
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
-#' @param obj [`LearningCurveData`]\cr
+#' @param obj [`LearningCurveData`)\cr
 #'   Result of [generateLearningCurveData()], with class `LearningCurveData`.
 #' @param facet (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
 #'   The variable mapped to `facet` must have more than one unique value, otherwise it will
 #'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
 #'   The default is \dQuote{measure}.
-#' @param pretty.names [`logical(1)`]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the [Measure()] name instead of the id in the plot.
 #'   Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
@@ -163,7 +163,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
-#' @param obj [`LearningCurveData`]\cr
+#' @param obj [`LearningCurveData`)\cr
 #'   Result of [generateLearningCurveData()].
 #' @param interaction (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
@@ -173,7 +173,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
 #'   The default is \dQuote{measure}.
-#' @param pretty.names [`logical(1)`]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the [Measure()] name instead of the id in the plot.
 #'   Default is `TRUE`.
 #' @template ret_ggv

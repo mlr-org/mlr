@@ -20,7 +20,7 @@
 #' a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 #'
 #' @template arg_pred
-#' @param relative [`logical(1)`]\cr
+#' @param relative (`logical(1)`)\cr
 #'   If `TRUE` rows are normalized to show relative frequencies.
 #'   Default is `FALSE`.
 #' @return [`matrix`]. A confusion matrix.

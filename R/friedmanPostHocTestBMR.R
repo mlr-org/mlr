@@ -13,13 +13,13 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value [`numeric(1)`]\cr
+#' @param p.value [`numeric(1)`)\cr
 #'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
 #' @return [`pairwise.htest`]: See [PMCMR::posthoc.friedman.nemenyi.test()] for details.
 #' Additionally two components are added to the list:
 #' \describe{
-#'   \item{f.rejnull [`logical(1)`]}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
+#'   \item{f.rejnull (`logical(1)`)}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
 #'   \item{crit.difference [`list(2)`]}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
 #' }
 #'

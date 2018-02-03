@@ -64,7 +64,7 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #'
 #' @param res [[TuneMultiCritResult()]]\cr
 #'   Result of [tuneParamsMultiCrit()].
-#' @param path [`logical(1)`]\cr
+#' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   Points are colored according to their location.
 #'   Default is `TRUE`.
@@ -74,7 +74,7 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #'   For `"hover"`, information is displayed on mouse hover.
 #'   If set to `"none"`, no information is displayed.
 #'   Default is `"hover"`.
-#' @param point.trafo [`logical(1)`]\cr
+#' @param point.trafo (`logical(1)`)\cr
 #'   Should the information show the transformed hyper parameters?
 #'   Default is `TRUE`.
 #'

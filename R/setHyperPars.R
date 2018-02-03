@@ -1,10 +1,10 @@
 #' Set the hyperparameters of a learner object.
 #'
 #' @template arg_learner
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
 #'   using the `par.vals` argument.
-#' @param par.vals [`list`]\cr
+#' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   `...` take precedence over values in this list.
 #' @template ret_learner
@@ -29,7 +29,7 @@ setHyperPars = function(learner, ..., par.vals = list()) {
 #' Only exported for internal use.
 #' @param learner [[Learner()]]\cr
 #'   The learner.
-#' @param par.vals [`list`]\cr
+#' @param par.vals ([list])\cr
 #'   List of named (hyper)parameter settings.
 #' @export
 setHyperPars2 = function(learner, par.vals) {

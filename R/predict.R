@@ -14,11 +14,11 @@
 #'   Wrapped model, result of [train()].
 #' @param task [[Task()]]\cr
 #'   The task. If this is passed, data from this task is predicted.
-#' @param newdata [`data.frame`]\cr
+#' @param newdata [`data.frame`)\cr
 #'   New observations which should be predicted.
 #'   Pass this alternatively instead of `task`.
 #' @template arg_subset
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Currently ignored.
 #' @return [[Prediction()]].
 #' @family predict

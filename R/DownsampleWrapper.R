@@ -5,10 +5,10 @@
 #' It will only be trained on a subset of the original data to save computational time.
 #'
 #' @template arg_learner
-#' @param dw.perc [`numeric(1)`]\cr
+#' @param dw.perc [`numeric(1)`)\cr
 #'   See [downsample()].
 #'   Default is 1.
-#' @param dw.stratify [`logical(1)`]\cr
+#' @param dw.stratify (`logical(1)`)\cr
 #'   See [downsample()].
 #'   Default is `FALSE`.
 #' @template ret_learner

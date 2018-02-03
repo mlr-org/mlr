@@ -63,15 +63,15 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' @template arg_task_or_type
 #' @param properties ([character])\cr
 #'   Set of required properties to filter for. Default is `character(0)`.
-#' @param quiet [`logical(1)`]\cr
+#' @param quiet (`logical(1)`)\cr
 #'   Construct learners quietly to check their properties, shows no package startup messages.
 #'   Turn off if you suspect errors.
 #'   Default is `TRUE`.
-#' @param warn.missing.packages [`logical(1)`]\cr
+#' @param warn.missing.packages (`logical(1)`)\cr
 #'   If some learner cannot be constructed because its package is missing,
 #'   should a warning be shown?
 #'   Default is `TRUE`.
-#' @param check.packages [`logical(1)`]\cr
+#' @param check.packages (`logical(1)`)\cr
 #'   Check if required packages are installed. Calls `find.package()`.
 #'   If `create` is `TRUE`, this is done implicitly and the value of this parameter is ignored.
 #'   If `create` is `FALSE` and `check.packages` is `TRUE` the returned table only
@@ -79,7 +79,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   If `check.packages` set to `FALSE`, learners that cannot actually be constructed because
 #'   of missing packages may be returned.
 #'   Default is `FALSE`.
-#' @param create [`logical(1)`]\cr
+#' @param create (`logical(1)`)\cr
 #'   Instantiate objects (or return info table)?
 #'   Packages are loaded if and only if this option is `TRUE`.
 #'   Default is `FALSE`.

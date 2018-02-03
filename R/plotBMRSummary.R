@@ -14,10 +14,10 @@
 #'   NB: You can add always add [ggplot2::scale_x_log10()] to the result to put scores on a log scale.
 #'   Default is \dQuote{none}.
 #' @template arg_order_tsks
-#' @param pointsize [`numeric(1)`]\cr
+#' @param pointsize [`numeric(1)`)\cr
 #'   Point size for ggplot2 [ggplot2::geom_point()] for data points.
 #'   Default is 4.
-#' @param jitter [`numeric(1)`]\cr
+#' @param jitter [`numeric(1)`)\cr
 #'   Small vertical jitter to deal with overplotting in case of equal scores.
 #'   Default is 0.05.
 #' @template arg_prettynames

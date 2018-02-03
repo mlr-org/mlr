@@ -11,20 +11,20 @@
 #' is sampled from the two given levels of x1 and x2 per feature.
 #'
 #' @template arg_task
-#' @param rate [`numeric(1)`]\cr
+#' @param rate [`numeric(1)`)\cr
 #'   Factor to upsample the smaller class.
 #'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
-#' @param nn [`integer(1)`]\cr
+#' @param nn [`integer(1)`)\cr
 #'   Number of nearest neighbors to consider.
 #'   Default is 5.
-#' @param standardize [`integer(1)`]\cr
+#' @param standardize [`integer(1)`)\cr
 #'   Standardize input variables before calculating the nearest neighbors
 #'   for data sets with numeric input variables only. For mixed variables
 #'   (numeric and factor) the gower distance is used and variables are
 #'   standardized anyway.
 #'   Default is `TRUE`.
-#' @param alt.logic [`integer(1)`]\cr
+#' @param alt.logic [`integer(1)`)\cr
 #'   Use an alternative logic for selection of minority class observations.
 #'   Instead of sampling a minority class element AND one of its nearest
 #'   neighbors, each minority class element is taken multiple times (depending

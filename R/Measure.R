@@ -12,9 +12,9 @@
 #' Object slots:
 #' \describe{
 #'   \item{id (`character(1)`)}{See argument.}
-#'   \item{minimize [`logical(1)`]}{See argument.}
+#'   \item{minimize (`logical(1)`)}{See argument.}
 #'   \item{properties ([character])}{See argument.}
-#'   \item{fun [`function`]}{See argument.}
+#'   \item{fun (`function`]}{See argument.}
 #'   \item{extra.args [`list`]}{See argument.}
 #'   \item{aggr [[Aggregation()]]}{See argument.}
 #'   \item{best [`numeric(1)`]}{See argument.}
@@ -25,7 +25,7 @@
 #'
 #' @param id (`character(1)`)\cr
 #'   Name of measure.
-#' @param minimize [`logical(1)`]\cr
+#' @param minimize (`logical(1)`)\cr
 #'   Should the measure be minimized?
 #'   Default is `TRUE`.
 #' @param properties ([character])\cr
@@ -46,7 +46,7 @@
 #'     \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
 #'   }
 #'   Default is `character(0)`.
-#' @param fun [`function(task, model, pred, feats, extra.args)`]\cr
+#' @param fun (`function(task, model, pred, feats, extra.args)`)\cr
 #'   Calculates the performance value. Usually you will only need the prediction
 #'   object `pred`.
 #'   \describe{
@@ -61,7 +61,7 @@
 #'     \item{`extra.args` [`list`]}{
 #'       See below.}
 #'   }
-#' @param extra.args [`list`]\cr
+#' @param extra.args ([list])\cr
 #'   List of extra arguments which will always be passed to `fun`.
 #'   Can be changed after construction via [setMeasurePars()]<`3`>.
 #'   Default is empty list.
@@ -69,10 +69,10 @@
 #'   Aggregation funtion, which is used to aggregate the values measured
 #'   on test / training sets of the measure to a single value.
 #'   Default is [test.mean()].
-#' @param best [`numeric(1)`]\cr
+#' @param best [`numeric(1)`)\cr
 #'   Best obtainable value for measure.
 #'   Default is -`Inf` or `Inf`, depending on `minimize`.
-#' @param worst [`numeric(1)`]\cr
+#' @param worst [`numeric(1)`)\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
 #' @param name ([character]) \cr

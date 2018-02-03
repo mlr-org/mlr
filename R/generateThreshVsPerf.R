@@ -9,10 +9,10 @@
 #'
 #' @template arg_plotroc_obj
 #' @template arg_measures
-#' @param gridsize [`integer(1)`]\cr
+#' @param gridsize [`integer(1)`)\cr
 #'   Grid resolution for x-axis (threshold).
 #'   Default is 100.
-#' @param aggregate [`logical(1)`]\cr
+#' @param aggregate (`logical(1)`)\cr
 #'   Whether to aggregate [ResamplePrediction()]s or to plot the performance
 #'   of each iteration separately.
 #'   Default is `TRUE`.
@@ -106,7 +106,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @param obj [`ThreshVsPerfData`]\cr
+#' @param obj [`ThreshVsPerfData`)\cr
 #'   Result of [generateThreshVsPerfData()].
 #' @param measures [[Measure()] | list of [Measure()]]\cr
 #'   Performance measure(s) to plot.
@@ -118,10 +118,10 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #'   The variable mapped to `facet` must have more than one unique value, otherwise it will
 #'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
 #'   The default is \dQuote{measure}.
-#' @param mark.th [`numeric(1)`]\cr
+#' @param mark.th [`numeric(1)`)\cr
 #'   Mark given threshold with vertical line?
 #'   Default is `NA` which means not to do it.
-#' @param pretty.names [`logical(1)`]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the [Measure()] name instead of the id in the plot.
 #'   Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
@@ -206,9 +206,9 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @param obj [`ThreshVsPerfData`]\cr
+#' @param obj [`ThreshVsPerfData`)\cr
 #'   Result of [generateThreshVsPerfData()].
-#' @param mark.th [`numeric(1)`]\cr
+#' @param mark.th [`numeric(1)`)\cr
 #'   Mark given threshold with vertical line?
 #'   Default is `NA` which means not to do it.
 #' @param interaction (`character(1)`)\cr
@@ -219,7 +219,7 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
 #'   The default is \dQuote{measure}.
-#' @param pretty.names [`logical(1)`]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the [Measure()] name instead of the id in the plot.
 #'   Default is `TRUE`.
 #' @template ret_ggv
@@ -336,17 +336,17 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @param obj [`ThreshVsPerfData`]\cr
+#' @param obj [`ThreshVsPerfData`)\cr
 #'   Result of [generateThreshVsPerfData()].
 #' @param measures [`list(2)` of [Measure()]]\cr
 #'   Default is the first 2 measures passed to [generateThreshVsPerfData()].
-#' @param diagonal [`logical(1)`]\cr
+#' @param diagonal (`logical(1)`)\cr
 #'   Whether to plot a dashed diagonal line.
 #'   Default is `TRUE`.
-#' @param pretty.names [`logical(1)`]\cr
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the [Measure()] name instead of the id in the plot.
 #'   Default is `TRUE`.
-#' @param facet.learner [`logical(1)`]\cr
+#' @param facet.learner (`logical(1)`)\cr
 #'   Weather to use facetting or different colors to compare multiple learners.
 #'   Default is `FALSE`.
 #' @template ret_gg2

@@ -30,7 +30,7 @@ getNestedTuneResultsX = function(r) {
 #'
 #' @param r [[ResampleResult()]] \cr
 #'   The result of resampling of a tuning wrapper.
-#' @param trafo [`logical(1)`]\cr
+#' @param trafo (`logical(1)`)\cr
 #'   Should the units of the hyperparameter path be converted to the
 #'   transformed scale? This is only necessary when trafo was used to create
 #'   the `opt.path`s. Note that `opt.path`s are always stored on the

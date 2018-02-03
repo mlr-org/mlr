@@ -7,7 +7,7 @@
 #'
 #' If you call this function with an empty argument list, everything is set to its defaults.
 #'
-#' @param show.info [`logical(1)`]\cr
+#' @param show.info (`logical(1)`)\cr
 #'   Some methods of mlr support a `show.info` argument to enable
 #'   verbose output on the console. This option sets the default value for these arguments.
 #'   Setting the argument manually in one of these functions will overwrite the default
@@ -37,17 +37,17 @@
 #'   \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
-#' @param on.measure.not.applicable [`logical(1)`]\cr
+#' @param on.measure.not.applicable (`logical(1)`)\cr
 #'   What should happen if a measure is not applicable to a learner.\cr
 #'   \dQuote{stop}: R exception is generated.\cr
 #'   \dQuote{warn}: Warning, but value of the measure will be `NA`.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
-#' @param show.learner.output [`logical(1)`]\cr
+#' @param show.learner.output (`logical(1)`)\cr
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
 #'   Default is `TRUE`.
-#' @param on.error.dump [`logical(1)`]\cr
+#' @param on.error.dump (`logical(1)`)\cr
 #'   Specify whether [FailureModel()] models and failed predictions should contain an error dump
 #'   that can be used with `debugger` to inspect an error. This option is only effective if `on.learner.error`
 #'   is \dQuote{warn} or \dQuote{quiet}. If it is `TRUE`, the dump can be accessed using

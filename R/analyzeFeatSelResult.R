@@ -8,7 +8,7 @@
 #' Currently only implemented for sequential feature selection.
 #'
 #' @template arg_fsres
-#' @param reduce [`logical(1)`]\cr
+#' @param reduce (`logical(1)`)\cr
 #'   Per iteration: Print only the selected feature (or all features that were evaluated)?
 #'   Default is `TRUE`.
 #' @template ret_inv_null

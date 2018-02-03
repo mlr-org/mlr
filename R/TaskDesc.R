@@ -17,12 +17,12 @@
 #'   For \dQuote{multilabel} these are the names of logical columns that indicate whether a
 #'   class label is present and the number of target variables corresponds to the number of
 #'   classes.}
-#' \item{size [`integer(1)`]}{Number of cases in data set.}
-#' \item{n.feat [`integer(2)`]}{Number of features, named vector with entries:
+#' \item{size (`integer(1)`)}{Number of cases in data set.}
+#' \item{n.feat (`integer(2)`)}{Number of features, named vector with entries:
 #'   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}, \dQuote{functionals}.}
-#' \item{has.missings [`logical(1)`]}{Are missing values present?}
-#' \item{has.weights [`logical(1)`]}{Are weights specified for each observation?}
-#' \item{has.blocking [`logical(1)`]}{Is a blocking factor for cases available in the task?}
+#' \item{has.missings (`logical(1)`)}{Are missing values present?}
+#' \item{has.weights (`logical(1)`)}{Are weights specified for each observation?}
+#' \item{has.blocking (`logical(1)`)}{Is a blocking factor for cases available in the task?}
 #' \item{class.levels ([character])}{All possible classes.
 #'   Only present for \dQuote{classif}, \dQuote{costsens}, and \dQuote{multilabel}.}
 #' \item{positive (`character(1)`)}{Positive class label for binary classification.

@@ -80,13 +80,13 @@ calculateROCMeasures = function(pred) {
 
 #' @describeIn calculateROCMeasures
 #'
-#' @param x [`ROCMeasures`]\cr
+#' @param x [`ROCMeasures`)\cr
 #'   Created by [calculateROCMeasures()].
-#' @param abbreviations [`logical(1)`]\cr
+#' @param abbreviations (`logical(1)`)\cr
 #'   If `TRUE` a short paragraph with explanations of the used measures is printed additionally.
-#' @param digits [`integer(1)`]\cr
+#' @param digits [`integer(1)`)\cr
 #'   Number of digits the measures are rounded to.
-#' @param ... `[any]`\cr
+#' @param ... `(any)`\cr
 #'  Currently not used.
 #' @export
 print.ROCMeasures = function(x, abbreviations = TRUE, digits = 2, ...) {

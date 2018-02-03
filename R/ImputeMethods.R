@@ -8,17 +8,17 @@
 #' Create a custom imputation method.
 #'
 #' This is a constructor to create your own imputation methods.
-#' @param learn [`function(data, target, col, ...)`]\cr
+#' @param learn (`function(data, target, col, ...)`)\cr
 #'   Function to learn and extract information on column `col`
 #'   out of data frame `data`. Argument `target` specifies
 #'   the target column of the learning task.
 #'   The function has to return a named list of values.
-#' @param impute [`function(data, target, col, ...)`]\cr
+#' @param impute (`function(data, target, col, ...)`)\cr
 #'   Function to impute missing values in `col` using information
 #'   returned by `learn` on the same column.
 #'   All list elements of the return values o `learn`
 #'   are passed to this function into `...`.
-#' @param args [`list`]\cr
+#' @param args ([list])\cr
 #'   Named list of arguments to pass to `learn` via `...`.
 #' @family impute
 #' @export
@@ -71,7 +71,7 @@ simpleImpute = function(data, target, col, const) {
 NULL
 
 #' @export
-#' @param const [any]\cr
+#' @param const (any)\cr
 #'  Constant valued use for imputation.
 #' @rdname imputations
 imputeConstant = function(const) {
@@ -111,7 +111,7 @@ imputeMode = function() {
 }
 
 #' @export
-#' @param multiplier [`numeric(1)`]\cr
+#' @param multiplier [`numeric(1)`)\cr
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
 imputeMin = function(multiplier = 1) {
@@ -141,10 +141,10 @@ imputeMax = function(multiplier = 1) {
 }
 
 #' @export
-#' @param min [`numeric(1)`]\cr
+#' @param min [`numeric(1)`)\cr
 #'   Lower bound for uniform distribution.
 #'   If NA (default), it will be estimated from the data.
-#' @param max [`numeric(1)`]\cr
+#' @param max [`numeric(1)`)\cr
 #'   Upper bound for uniform distribution.
 #'   If NA (default), it will be estimated from the data.
 #' @rdname imputations
@@ -175,9 +175,9 @@ imputeUniform = function(min = NA_real_, max = NA_real_) {
 }
 
 #' @export
-#' @param mu [`numeric(1)`]\cr
+#' @param mu [`numeric(1)`)\cr
 #'   Mean of normal distribution. If missing it will be estimated from the data.
-#' @param sd [`numeric(1)`]\cr
+#' @param sd [`numeric(1)`)\cr
 #'   Standard deviation of normal distribution. If missing it will be estimated from the data.
 #' @rdname imputations
 imputeNormal = function(mu = NA_real_, sd = NA_real_) {
@@ -208,10 +208,10 @@ imputeNormal = function(mu = NA_real_, sd = NA_real_) {
 }
 
 #' @export
-#' @param breaks [`numeric(1)`]\cr
+#' @param breaks [`numeric(1)`)\cr
 #'  Number of breaks to use in [graphics::hist()]. If missing,
 #'  defaults to auto-detection via \dQuote{Sturges}.
-#' @param use.mids [`logical(1)`]\cr
+#' @param use.mids (`logical(1)`)\cr
 #'  If `x` is numeric and a histogram is used, impute with bin mids (default)
 #'  or instead draw uniformly distributed samples within bin range.
 #' @rdname imputations
@@ -260,7 +260,7 @@ imputeHist = function(breaks, use.mids = TRUE) {
   )
 }
 
-#' @param learner [[Learner()] | `character(1)`]\cr
+#' @param learner [[Learner()] | `character(1)`)\cr
 #'  Supervised learner. Its predictions will be used for imputations.
 #'  If you pass a string the learner will be created via [makeLearner()].
 #'  Note that the target column is not available for this operation.

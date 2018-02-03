@@ -9,20 +9,20 @@
 #' down to the next learner.
 #'
 #' @template arg_learner
-#' @param sw.rate [`numeric(1)`]\cr
+#' @param sw.rate [`numeric(1)`)\cr
 #'   Factor to oversample the smaller class. Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param sw.nn [`integer(1)`]\cr
+#' @param sw.nn [`integer(1)`)\cr
 #'   Number of nearest neighbors to consider.
 #'   Default is 5.
-#' @param sw.standardize [`logical(1)`]\cr
+#' @param sw.standardize (`logical(1)`)\cr
 #'   Standardize input variables before calculating the nearest neighbors
 #'   for data sets with numeric input variables only. For mixed variables
 #'   (numeric and factor) the gower distance is used and variables are
 #'   standardized anyway.
 #'   Default is `TRUE`.
-#' @param sw.alt.logic [`logical(1)`]\cr
+#' @param sw.alt.logic (`logical(1)`)\cr
 #'   Use an alternative logic for selection of minority class observations.
 #'   Instead of sampling a minority class element AND one of its nearest
 #'   neighbors, each minority class element is taken multiple times (depending

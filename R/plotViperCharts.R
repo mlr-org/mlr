@@ -14,7 +14,7 @@
 #'   First chart to display in focus in browser.
 #'   All other charts can be displayed by clicking on the browser page menu.
 #'   Default is \dQuote{rocc}.
-#' @param browse [`logical(1)`]\cr
+#' @param browse (`logical(1)`)\cr
 #'   Open ViperCharts plot in web browser? If not you simple get the URL returned.
 #'   Calls [browseURL()].
 #'   Default is `TRUE`.

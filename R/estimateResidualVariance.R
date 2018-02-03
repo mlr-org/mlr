@@ -9,7 +9,7 @@
 #' @param task [[RegrTask()]]\cr
 #'   Regression task.
 #'   If missing, `data` and `target` must be supplied.
-#' @param data [`data.frame`]\cr
+#' @param data [`data.frame`)\cr
 #'   A data frame containing the features and target variable.
 #'   If missing, `task` must be supplied.
 #' @param target (`character(1)`)\cr

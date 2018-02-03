@@ -20,7 +20,7 @@
 #'   Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
 #'   Default is \dQuote{response}.
 #' @template arg_predictthreshold
-#' @param fix.factors.prediction [`logical(1)`]\cr
+#' @param fix.factors.prediction (`logical(1)`)\cr
 #'   In some cases, problems occur in underlying learners for factor features during prediction.
 #'   If the new features have LESS factor levels than during training (a strict subset),
 #'   the learner might produce an  error like
@@ -29,15 +29,15 @@
 #'   We will simply add the missing factor levels missing from the test feature
 #'   (but present in training) to that feature.
 #'   Default is `FALSE`.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Optional named (hyper)parameters.
 #'   Alternatively these can be given using the `par.vals` argument.
-#' @param par.vals [`list`]\cr
+#' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameters. The arguments in
 #'   `...` take precedence over values in this list. We strongly
 #'   encourage you to use one or the other to pass (hyper)parameters
 #'   to the learner but not both.
-#' @param config [`named list`]\cr
+#' @param config (named [list])\cr
 #'   Named list of config option to overwrite global settings set via [configureMlr()]
 #'   for this specific learner.
 #' @return [[Learner()]].

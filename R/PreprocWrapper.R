@@ -7,7 +7,7 @@
 #' If the train or predict function is called on data / a task, the preprocessing is always performed automatically.
 #'
 #' @template arg_learner
-#' @param train [`function(data, target, args)`]\cr
+#' @param train (`function(data, target, args)`)\cr
 #'   Function to preprocess the data before training.
 #'   `target` is a string and denotes the target variable in `data`.
 #'   `args` is a list of further arguments and parameters to influence the
@@ -15,7 +15,7 @@
 #'   Must return a `list(data, control)`, where `data` is the preprocessed
 #'   data and `control` stores all information necessary to do the preprocessing
 #'   before predictions.
-#' @param predict [`function(data, target, args, control)`]\cr
+#' @param predict (`function(data, target, args, control)`)\cr
 #'   Function to preprocess the data before prediction.
 #'   `target` is a string and denotes the target variable in `data`.
 #'   `args` are the args that were passed to `train`.
@@ -25,7 +25,7 @@
 #'   Parameter set of [ParamHelpers::LearnerParam()] objects to describe the
 #'   parameters in `args`.
 #'   Default is empty set.
-#' @param par.vals [`list`]\cr
+#' @param par.vals ([list])\cr
 #'   Named list of default values for params in `args` respectively `par.set`.
 #'   Default is empty list.
 #' @return [[Learner()]].

@@ -43,7 +43,7 @@
 #'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 #'   while speeding up the predictions and reducing the size of the model.
 #'   Default is \dQuote{stack.nocv},
-#' @param use.feat [`logical(1)`]\cr
+#' @param use.feat (`logical(1)`)\cr
 #'   Whether the original features should also be passed to the super learner.
 #'   Not used for `method = 'average'`.
 #'   Default is `FALSE`.
@@ -159,8 +159,8 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 #'
 #' @description Returns the predictions for each base learner.
 #'
-#' @param model [`WrappedModel`]\cr Wrapped model, result of train.
-#' @param newdata [`data.frame`]\cr
+#' @param model [`WrappedModel`)\cr Wrapped model, result of train.
+#' @param newdata [`data.frame`)\cr
 #' New observations, for which the predictions using the specified base learners should be returned.
 #' Default is `NULL` and extracts the base learner predictions that were made during the training.
 #'

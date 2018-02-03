@@ -13,14 +13,14 @@
 #'   The name of the learner from `caret`
 #'   (cf. <https://topepo.github.io/caret/available-models.html>). Note that the
 #'   names in `caret` often differ from the ones in `mlr`.
-#' @param length [`integer(1)`]\cr
+#' @param length [`integer(1)`)\cr
 #'   A length / precision parameter which is used by `caret` for
 #'   generating the grid of tuning parameters. `caret` generates either as
 #'   many values per tuning parameter / dimension as defined by `length`
 #'   or only a single value (in case of non-tunable `par.vals`).
 #' @param task [[Task()]]\cr
 #'   Learning task, which might be requested for creating the tuning grid.
-#' @param discretize [`logical(1)`]\cr
+#' @param discretize (`logical(1)`)\cr
 #'   Should the numerical parameters be discretized? Alternatively, they will
 #'   be defined by their lower and upper bounds. The default is `TRUE`.
 #' @return [`list(2)`]. A list of parameters:

@@ -22,10 +22,10 @@
 #' Object slots:
 #' \describe{
 #' \item{id (`character(1)`)}{Name of resampling strategy.}
-#' \item{iters [`integer(1)`]}{Number of iterations. Note that this is always the complete number
+#' \item{iters (`integer(1)`)}{Number of iterations. Note that this is always the complete number
 #'   of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.}
 #' \item{predict (`character(1)`)}{See argument.}
-#' \item{stratify [`logical(1)`]}{See argument.}
+#' \item{stratify (`logical(1)`)}{See argument.}
 #' \item{All parameters passed in ... under the respective argument name}{See arguments.}
 #' }
 #'
@@ -37,14 +37,14 @@
 #' @param predict (`character(1)`)\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Further parameters for strategies.\cr
 #'   \describe{
-#'   \item{iters [`integer(1)`]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
+#'   \item{iters (`integer(1)`)}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
 #'     and \dQuote{Bootstrap}.}
 #'   \item{split [`numeric(1)`]}{Proportion of training cases for \dQuote{Holdout} and
 #'     \dQuote{Subsample} between 0 and 1. Default is 2 / 3.}
-#'   \item{reps [`integer(1)`]}{Repeats for \dQuote{RepCV}. Here `iters = folds * reps`.
+#'   \item{reps (`integer(1)`)}{Repeats for \dQuote{RepCV}. Here `iters = folds * reps`.
 #'     Default is 10.}
 #'   \item{folds [`integer(1)]`}{Folds in the repeated CV for `RepCV`.
 #'     Here `iters = folds * reps`. Default is 10.}
@@ -65,7 +65,7 @@
 #'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
 #'      of test indices.}
 #'   }
-#' @param stratify [`logical(1)`]\cr
+#' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
 #'   individually and the resulting index sets are joined to make sure that the proportion of

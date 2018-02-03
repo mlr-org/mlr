@@ -16,7 +16,7 @@
 #' @param aggregation.name (`character(1)`)\cr
 #'   Long name of the aggregation.
 #'   Default is `aggregation.id`.
-#' @param fun [`function(task, group, pred, extra.args)`]\cr
+#' @param fun (`function(task, group, pred, extra.args)`)\cr
 #'   Calculates performance value from [ResamplePrediction()] object.
 #'   For rare cases you can also use the task, the grouping or the extra arguments `extra.args`.
 #'   \describe{
@@ -30,19 +30,19 @@
 #'     \item{`extra.args` [`list`]}{
 #'       See below.}
 #'   }
-#' @param extra.args [`list`]\cr
+#' @param extra.args ([list])\cr
 #'   List of extra arguments which will always be passed to `fun`.
 #'   Default is empty list.
-#' @param minimize [`logical(1)`]\cr
+#' @param minimize (`logical(1)`)\cr
 #'   Should the measure be minimized?
 #'   Default is `TRUE`.
 #' @param properties ([character])\cr
 #'   Set of measure properties. For a list of values see [Measure()].
 #'   Default is `character(0)`.
-#' @param best [`numeric(1)`]\cr
+#' @param best [`numeric(1)`)\cr
 #'   Best obtainable value for measure.
 #'   Default is -`Inf` or `Inf`, depending on `minimize`.
-#' @param worst [`numeric(1)`]\cr
+#' @param worst [`numeric(1)`)\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
 #' @param note ([character]) \cr

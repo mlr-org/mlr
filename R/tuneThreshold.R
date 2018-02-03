@@ -16,10 +16,10 @@
 #' @param model [[WrappedModel()]]\cr
 #'   Fitted model. Rarely neeeded,
 #'   only when required for the performance measure.
-#' @param nsub [`integer(1)`]\cr
+#' @param nsub [`integer(1)`)\cr
 #'   Passed to [BBmisc::optimizeSubInts()] for 2class problems.
 #'   Default is 20.
-#' @param control [`list`]\cr
+#' @param control ([list])\cr
 #'   Control object for [cmaes::cma_es()] when used.
 #'   Default is empty list.
 #' @return [`list`]. A named list with with the following components:

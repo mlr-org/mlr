@@ -9,7 +9,7 @@
 #'   Set of required properties to filter for.
 #'   See [Measure()] for some standardized properties.
 #'   Default is `character(0)`.
-#' @param create [`logical(1)`]\cr
+#' @param create (`logical(1)`)\cr
 #'   Instantiate objects (or return strings)?
 #'   Default is `FALSE`.
 #' @return [`character` | `list` of [Measure()]]. Class names of matching

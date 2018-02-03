@@ -136,7 +136,7 @@ getTaskFeatureNames.Task = function(task) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [`integer(1)`].
+#' @return (`integer(1)`).
 #' @export
 #' @family task
 getTaskNFeats = function(x) {
@@ -147,7 +147,7 @@ getTaskNFeats = function(x) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [`integer(1)`].
+#' @return (`integer(1)`).
 #' @export
 #' @family task
 getTaskSize = function(x) {
@@ -164,10 +164,10 @@ getTaskSize = function(x) {
 #' @param target (`character(1)`)\cr
 #'   Left hand side of the formula.
 #'   Default is defined by task `x`.
-#' @param explicit.features [`logical(1)`]\cr
+#' @param explicit.features (`logical(1)`)\cr
 #'   Should the features (right hand side of the formula) be explicitly listed?
 #'   Default is `FALSE`, i.e., they will be represented as `"."`.
-#' @param env [`environment`]\cr
+#' @param env [`environment`)\cr
 #'   Environment of the formula.
 #'   Default is `parent.frame()`.
 #' @return [`formula`].
@@ -244,7 +244,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
-#' @param target.extra [`logical(1)`]\cr
+#' @param target.extra (`logical(1)`)\cr
 #'   Should target vector be returned separately?
 #'   If not, a single data.frame including the target columns is returned, otherwise a list
 #'   with the input data.frame and an extra vector or data.frame for the targets.
@@ -415,7 +415,7 @@ subsetTask = function(task, subset = NULL, features) {
 #' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
 #'
 #' @template arg_task
-#' @param data [`data.frame`]\cr
+#' @param data [`data.frame`)\cr
 #'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
 #' @param costs [`data.frame`\cr
 #'   Optional: cost matrix.

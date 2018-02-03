@@ -13,15 +13,15 @@
 #'  optimizer results. If nested CV output is passed, each element in the list
 #'  will be considered a separate run, and the data from each run will be
 #'  included in the dataframe within the returned `HyperParsEffectData`.
-#' @param include.diagnostics [`logical(1)`]\cr
+#' @param include.diagnostics (`logical(1)`)\cr
 #'  Should diagnostic info (eol and error msg) be included?
 #'  Default is `FALSE`.
-#' @param trafo [`logical(1)`]\cr
+#' @param trafo (`logical(1)`)\cr
 #'  Should the units of the hyperparameter path be converted to the
 #'  transformed scale? This is only useful when trafo was used to create the
 #'  path.
 #'  Default is `FALSE`.
-#' @param partial.dep [`logical(1)`]\cr
+#' @param partial.dep (`logical(1)`)\cr
 #'  Should partial dependence be requested based on converting to reg task? This
 #'  sets a flag so that we know to use partial dependence downstream. This
 #'  should most likely be set to `TRUE` if 2 or more hyperparameters were
@@ -145,7 +145,7 @@ print.HyperParsEffectData = function(x, ...) {
 #' or effect of a particular hyperparameter on some performance measure and/or
 #' optimizer.
 #'
-#' @param hyperpars.effect.data [`HyperParsEffectData`]\cr
+#' @param hyperpars.effect.data [`HyperParsEffectData`)\cr
 #'  Result of [generateHyperParsEffectData()]
 #' @param x (`character(1)`)\cr
 #'  Specify what should be plotted on the x axis. Must be a column from
@@ -163,7 +163,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  heatmap, \dQuote{line} for a scatterplot with a connecting line, or \dQuote{contour} for a
 #'  contour plot layered ontop of a heatmap.
 #'  Default is \dQuote{scatter}.
-#' @param loess.smooth [`logical(1)`]\cr
+#' @param loess.smooth (`logical(1)`)\cr
 #'  If `TRUE`, will add loess smoothing line to plots where possible. Note that
 #'  this is probably only useful when `plot.type` is set to either
 #'  \dQuote{scatter} or \dQuote{line}. Must be a column from
@@ -174,14 +174,14 @@ print.HyperParsEffectData = function(x, ...) {
 #'  using nested cross validation, set this to \dQuote{nested_cv_run} to obtain a facet
 #'  for each outer loop. Must be a column from `HyperParsEffectData$data`
 #'  Default is `NULL`.
-#' @param global.only [`logical(1)`]\cr
+#' @param global.only (`logical(1)`)\cr
 #'  If `TRUE`, will only plot the current global optima when setting
 #'  x = "iteration" and y as a performance measure from
 #'  `HyperParsEffectData$measures`. Set this to FALSE to always plot the
 #'  performance of every iteration, even if it is not an improvement. Not used
 #'  with partial dependence.
 #'  Default is `TRUE`.
-#' @param interpolate [[Learner()] | `character(1)`]\cr
+#' @param interpolate [[Learner()] | `character(1)`)\cr
 #'  If not `NULL`, will interpolate non-complete grids in order to visualize a more
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
@@ -190,25 +190,25 @@ print.HyperParsEffectData = function(x, ...) {
 #'  object or the learner as a string for interpolation. This cannot be used with partial
 #'  dependence.
 #'  Default is `NULL`.
-#' @param show.experiments [`logical(1)`]\cr
+#' @param show.experiments (`logical(1)`)\cr
 #'  If `TRUE`, will overlay the plot with points indicating where an experiment
 #'  ran. This is only useful when creating a heatmap or contour plot with
 #'  interpolation so that you can see which points were actually on the
 #'  original path. Note: if any learner crashes occurred within the path, this
 #'  will become `TRUE`. Not used with partial dependence.
 #'  Default is `FALSE`.
-#' @param show.interpolated [`logical(1)`]\cr
+#' @param show.interpolated (`logical(1)`)\cr
 #'  If `TRUE`, will overlay the plot with points indicating where interpolation
 #'  ran. This is only useful when creating a heatmap or contour plot with
 #'  interpolation so that you can see which points were interpolated. Not used
 #'  with partial dependence.
 #'  Default is `FALSE`.
-#' @param nested.agg [`function`]\cr
+#' @param nested.agg (`function`)\cr
 #'  The function used to aggregate nested cross validation runs when plotting 2
 #'  hyperparameters. This is also used for nested aggregation in partial
 #'  dependence.
 #'  Default is `mean`.
-#' @param partial.dep.learn [[Learner()] | `character(1)`]\cr
+#' @param partial.dep.learn [[Learner()] | `character(1)`)\cr
 #'  The regression learner used to learn partial dependence. Must be specified if
 #'  \dQuote{partial.dep} is set to `TRUE` in
 #'  [generateHyperParsEffectData()]. Accepts either a \link{Learner}

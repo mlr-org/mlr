@@ -24,22 +24,22 @@
 #'   \item{target ([character])}{See argument.}
 #'   \item{features ([character])}{Feature names (column names of `data`).},
 #'   \item{classes ([character])}{Feature classes (storage type of `data`).}
-#'   \item{lvls [`named list`]}{Mapping of column names of factor features to their levels,
+#'   \item{lvls (named [list])}{Mapping of column names of factor features to their levels,
 #'     including newly created ones during imputation.}
-#'   \item{impute [`named list`]}{Mapping of column names to imputation functions.}
-#'   \item{dummies [`named list`]}{Mapping of column names to imputation functions.}
-#'   \item{impute.new.levels [`logical(1)`]}{See argument.}
-#'   \item{recode.factor.levels [`logical(1)`]}{See argument.}
+#'   \item{impute (named [list])}{Mapping of column names to imputation functions.}
+#'   \item{dummies (named [list])}{Mapping of column names to imputation functions.}
+#'   \item{impute.new.levels (`logical(1)`)}{See argument.}
+#'   \item{recode.factor.levels (`logical(1)`)}{See argument.}
 #' }
 #'
 #' @template arg_taskdf
 #' @param target ([character])\cr
 #'   Name of the column(s) specifying the response.
 #'   Default is `character(0)`.
-#' @param classes [`named list`]\cr
+#' @param classes (named [list])\cr
 #'   Named list containing imputation techniques for classes of columns.
 #'   E.g. `list(numeric = imputeMedian())`.
-#' @param cols [`named list`]\cr
+#' @param cols (named [list])\cr
 #'   Named list containing names of imputation methods to impute missing values
 #'   in the data column referenced by the list element's name. Overrules imputation set via
 #'   `classes`.
@@ -53,17 +53,17 @@
 #'   How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 #'   or as \dQuote{factor}.
 #'   Default is \dQuote{factor}.
-#' @param force.dummies [`logical(1)`]\cr
+#' @param force.dummies (`logical(1)`)\cr
 #'   Force dummy creation even if the respective data column does not
 #'   contain any NAs. Note that (a) most learners will complain about
 #'   constant columns created this way but (b) your feature set might
 #'   be stochastic if you turn this off.
 #'   Default is `FALSE`.
-#' @param impute.new.levels [`logical(1)`]\cr
+#' @param impute.new.levels (`logical(1)`)\cr
 #'   If new, unencountered factor level occur during reimputation,
 #'   should these be handled as NAs and then be imputed the same way?
 #'   Default is `TRUE`.
-#' @param recode.factor.levels [`logical(1)`]\cr
+#' @param recode.factor.levels (`logical(1)`)\cr
 #'   Recode factor levels after reimputation, so they match the respective element of
 #'   `lvls` (in the description object) and therefore match the levels of the
 #'   feature factor in the training data after imputation?.
@@ -215,7 +215,7 @@ print.ImputationDesc = function(x, ...) {
 #' }
 #'
 #' @template arg_taskdf
-#' @param desc [`ImputationDesc`]\cr
+#' @param desc [`ImputationDesc`)\cr
 #'   Imputation description as returned by [impute()].
 #' @return Imputated `data.frame` or task with imputed data.
 #' @family impute

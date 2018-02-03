@@ -13,7 +13,7 @@
 #' \item{id (`character(1)`)}{Name of the aggregation method.}
 #' \item{name (`character(1)`)}{Long name of the aggregation method.}
 #' \item{properties ([character])}{Properties of the aggregation.}
-#' \item{fun [`function(task, perf.test, perf.train, measure, group, pred)`]}{Aggregation function.}
+#' \item{fun (`function(task, perf.test, perf.train, measure, group, pred)`]}{Aggregation function.}
 #' }
 #' @name Aggregation
 #' @seealso [makeAggregation()]
@@ -37,7 +37,7 @@ NULL
 #'     \item{req.train}{Are prediction or train sets required to calculate the aggregation?}
 #'     \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 #'   }
-#' @param fun [`function(task, perf.test, perf.train, measure, group, pred)`]\cr
+#' @param fun (`function(task, perf.test, perf.train, measure, group, pred)`)\cr
 #'   Calculates the aggregated performance. In most cases you will only need the performances
 #'   `perf.test` and optionally `perf.train` on the test and training data sets.
 #'   \describe{

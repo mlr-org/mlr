@@ -6,14 +6,14 @@
 #' @param id (`character(1)`)\cr
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
-#' @param minimize [`logical(1)`]\cr
+#' @param minimize (`logical(1)`)\cr
 #'   Should the measure be minimized?
 #'   Otherwise you are effectively specifying a benefits matrix.
 #'   Default is `TRUE`.
-#' @param costs [`matrix`]\cr
+#' @param costs [`matrix`)\cr
 #'   Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 #'   Rows indicate true classes, columns predicted classes.
-#' @param combine [`function`]\cr
+#' @param combine (`function`)\cr
 #'   How to combine costs over all cases for a SINGLE test set?
 #'   Note this is not the same as the `aggregate` argument in [makeMeasure()]
 #'   You can set this as well via [setAggregation()], as for any measure.

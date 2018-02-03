@@ -22,10 +22,10 @@
 #' a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 #'
 #' @template arg_pred
-#' @param relative [`logical(1)`]\cr
+#' @param relative (`logical(1)`)\cr
 #'   If `TRUE` two additional matrices are calculated. One is normalized by rows and one by
 #'   columns.
-#' @param sums [`logical(1)`]\cr
+#' @param sums (`logical(1)`)\cr
 #'   If `TRUE` add absolute number of observations in each group.
 #' @param set (`character(1)`)\cr
 #'   Specifies which part(s) of the data are used for the calculation.
@@ -127,11 +127,11 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
 #'
 #' @param x [[ConfusionMatrix()]]\cr
 #'   Object to print.
-#' @param both [`logical(1)`]\cr
+#' @param both (`logical(1)`)\cr
 #'   If `TRUE` both the absolute and relative confusion matrices are printed.
-#' @param digits [`integer(1)`]\cr
+#' @param digits [`integer(1)`)\cr
 #'   How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'  Currently not used.
 print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 
@@ -194,8 +194,8 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' \item{result [`matrix`]}{Confusion matrix of absolute values and marginals. Can also contain
 #'   row and column sums of observations.}
 #' \item{task.desc [[TaskDesc()]]}{Additional information about the task.}
-#' \item{sums [`logical(1)`]}{Flag if marginal sums of observations are calculated.}
-#' \item{relative [`logical(1)`]}{Flag if the relative confusion matrices are calculated.}
+#' \item{sums (`logical(1)`)}{Flag if marginal sums of observations are calculated.}
+#' \item{relative (`logical(1)`)}{Flag if the relative confusion matrices are calculated.}
 #' \item{relative.row [`matrix`]}{Confusion matrix of relative values and marginals normalized by row.}
 #' \item{relative.col [`matrix`]}{Confusion matrix of relative values and marginals normalized by column.}
 #' \item{relative.error [`numeric(1)`]}{Relative error overall.}

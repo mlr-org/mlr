@@ -25,7 +25,7 @@
 #'   Parameter set of (hyper)parameters and their constraints.
 #'   Dependent parameters with a `requires` field must use `quote` and not
 #'   `expression` to define it.
-#' @param par.vals [`list`]\cr
+#' @param par.vals ([list])\cr
 #'   Always set hyperparameters to these values when the object is constructed.
 #'   Useful when default values are missing in the underlying function.
 #'   The values can later be overwritten when the user sets hyperparameters.
