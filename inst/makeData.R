@@ -50,7 +50,7 @@ data = na.omit(data)
 data[, 1:2] = scale(data[, 1:2])
 
 
-oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "Target", positive = "Anomaly", negative = "Normal")
+oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "Target", coordinates = NULL, positive = "Anomaly", negative = "Normal")
 save(oneclass2d.task, file = file.path(dn, "oneclass2d.task.RData"))
 
 # regression
