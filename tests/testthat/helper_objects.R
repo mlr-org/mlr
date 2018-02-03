@@ -97,7 +97,9 @@ oneclass.train = oneclass.df[oneclass.train.inds, ]
 oneclass.test  = oneclass.df[oneclass.test.inds, ]
 oneclass.positive = "anomaly"
 oneclass.negative = "normal"
-oneclass.task = makeOneClassTask("oneclass", data = oneclass.df, target = oneclass.target, positive = oneclass.positive, negative = oneclass.negative)
+
+oneclass.task = makeOneClassTask("oneclass", data = oneclass.df,
+  target = oneclass.target, positive = oneclass.positive, negative = oneclass.negative)
 
 data(BostonHousing, package = "mlbench", envir = environment())
 regr.df = BostonHousing
