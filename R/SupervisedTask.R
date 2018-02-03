@@ -1,5 +1,5 @@
-makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data, spatial) {
-  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data, spatial = spatial)
+makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data, check.data, coordinates) {
+  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data, coordinates = coordinates)
 
   if (check.data) {
     # costsens does not have a target col...
@@ -7,7 +7,7 @@ makeSupervisedTask = function(type, data, target, weights, blocking, fixup.data,
     w = which.first(target %nin% colnames(data))
     if (length(w) > 0L)
       stopf("Column names of data doesn't contain target var: %s", target[w])
-    checkTaskData(task$env$data, cols = setdiff(colnames(task$env$data), target))
+    checkTaskData(task$env$data, cols = setdiff(colnames(data), target))
   }
 
   addClasses(task, "SupervisedTask")
@@ -29,5 +29,5 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
-  catf("Is spatial: %s", td$is.spatial)
+  catf("Has coordinates: %s", td$has.coordinates)
 }
