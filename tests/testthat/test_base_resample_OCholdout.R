@@ -16,8 +16,8 @@ test_that("OCholdout instance works", {
   size = length(label)
   normal.inds = which(label == oneclass.task$task.desc$negative)
   normal.size = length(normal.inds)
-  expect_equal(length(rin$train.inds[[1]]), 0.25 * normal.size)
-  expect_equal(length(rin$test.inds[[1]]), size - 0.25 * normal.size)
+  expect_equal(length(rin$train.inds[[1]]), floor(0.25 * size))
+  expect_equal(length(rin$test.inds[[1]]), size - floor(0.25 * size))
 
   # does training only have normal data?
   expect_false(any(length(rin$train.inds[[1]]) %nin% normal.inds))
