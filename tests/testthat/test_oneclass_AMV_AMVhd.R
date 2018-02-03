@@ -50,10 +50,10 @@ test_that("AMVhd", {
 
   # creates an AMVhd measure which calculates the area under the curve between 0.8 and 0.99
   # with 50 steps for high dimensional data.
-  amvhd = makeAMVhdMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
+  amvhd = makeAMVhdMeasure(id = "AMVhd", minimize = TRUE, alphas = c(0.8, 0.99),
     n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
 
-  expect_equal(amvhd$id, "AMV")
+  expect_equal(amvhd$id, "AMVhd")
   expect_equal(amvhd$extra.args[[1]], c(0.8, 0.99))
   expect_equal(amvhd$extra.args[[2]], 10e4)
 

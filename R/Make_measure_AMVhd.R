@@ -98,8 +98,9 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
       if (length(test.inds) == 0) stop("Pass argument subset in the train model.")
 
       if (model$learner$id %nin% listLearners(task)$class) {
-        lrn.id = gsub(".AMVhd", "",model$learner$id)
-        lrn.id = gsub(".tuned", "",model$learner$id)
+        lrn.id = model$learner$id
+        if(grepl(".AMVhd", model$learner$id)) lrn.id = gsub(".AMVhd", "",lrn.id)
+        if(grepl(".AMVhd", model$learner$id)) lrn.id = gsub(".tuned", "",lrn.id)
       } else {
         lrn.id = model$learner$id
       }
