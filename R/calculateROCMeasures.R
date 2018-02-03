@@ -16,7 +16,7 @@
 #' * `lrm` Negative likelihood ratio (LR-)
 #' * `dor` Diagnostic odds ratio
 #'
-#' For details on the used measures see [measures()] and also
+#' For details on the used measures see [measures] and also
 #' <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>.
 #'
 #' The element for the false omission rate in the resulting object is not called `for` but
@@ -78,7 +78,7 @@ calculateROCMeasures = function(pred) {
 #' @describeIn calculateROCMeasures
 #'
 #' @param x (`ROCMeasures`)\cr
-#'   Created by [calculateROCMeasures()].
+#'   Created by [calculateROCMeasures].
 #' @param abbreviations (`logical(1)`)\cr
 #'   If `TRUE` a short paragraph with explanations of the used measures is printed additionally.
 #' @param digits (`integer(1)`)\cr

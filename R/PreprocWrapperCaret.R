@@ -1,7 +1,7 @@
 #' @title Fuse learner with preprocessing.
 #'
 #' @description
-#' Fuses a learner with preprocessing methods provided by [caret::preProcess()].
+#' Fuses a learner with preprocessing methods provided by [caret::preProcess].
 #'  Before training the preprocessing will be performed and the preprocessing model will be stored.
 #'  Before prediction the preprocessing model will transform the test data according to the trained model.
 #'
@@ -9,7 +9,7 @@
 #'
 #' @template arg_learner
 #' @param ... (any)\cr
-#'   See [caret::preProcess()] for parameters not listed above.
+#'   See [caret::preProcess] for parameters not listed above.
 #'   If you use them you might want to define them in the `add.par.set` so that they can be tuned.
 #' @template ret_learner
 #' @family wrapper

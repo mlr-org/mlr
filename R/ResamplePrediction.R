@@ -2,8 +2,8 @@
 
 #' Prediction from resampling.
 #'
-#' Contains predictions from resampling, returned (among other stuff) by function [resample()].
-#' Can basically be used in the same way as [Prediction()], its super class.
+#' Contains predictions from resampling, returned (among other stuff) by function [resample].
+#' Can basically be used in the same way as [Prediction], its super class.
 #' The main differences are:
 #' (a) The internal data.frame (member `data`) contains an additional column `iter`, specifying the iteration
 #' of the resampling strategy, and and additional columns `set`, specifying whether the prediction

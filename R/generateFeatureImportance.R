@@ -14,7 +14,7 @@
 #' @template arg_learner
 #' @param features ([character])\cr
 #'   The features to compute the importance of.
-#'   The default is all of the features contained in the [Task()].
+#'   The default is all of the features contained in the [Task].
 #' @param interaction (`logical(1)`)\cr
 #'   Whether to compute the importance of the `features` argument jointly.
 #'   For `method = "permutation.importance"` this entails permuting the values of

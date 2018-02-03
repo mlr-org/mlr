@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Small helper function that can save some typing when creating mutiple learner objects.
-#' Calls [makeLearner()] multiple times internally.
+#' Calls [makeLearner] multiple times internally.
 #'
 #' @param cls ([character])\cr
 #'   Classes of learners.
@@ -13,7 +13,7 @@
 #'   Shortcut to prepend type string to `cls` so one can set `cls = "rpart"`.
 #'   Default is `NULL`, i.e., this is not used.
 #' @inheritParams makeLearner
-#' @return [named list of [Learner()]). Named by `ids`.
+#' @return [named list of [Learner]). Named by `ids`.
 #' @family learner
 #' @export
 #' @examples

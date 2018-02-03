@@ -3,7 +3,7 @@
 #' @description
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses [oversample()] or [undersample()] before every model fit.
+#' Internally uses [oversample] or [undersample] before every model fit.
 #'
 #' Note that observation weights do not influence the sampling and are simply passed
 #' down to the next learner.

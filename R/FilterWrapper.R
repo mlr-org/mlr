@@ -3,17 +3,17 @@
 #' @description
 #' Fuses a base learner with a filter method. Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses [filterFeatures()] before every model fit.
+#' Internally uses [filterFeatures] before every model fit.
 #'
 #' After training, the selected features can be retrieved with
-#' [getFilteredFeatures()].
+#' [getFilteredFeatures].
 #'
 #' Note that observation weights do not influence the filtering and are simply passed
 #' down to the next learner.
 #'
 #' @template arg_learner
 #' @param fw.method (`character(1)`)\cr
-#'   Filter method. See [listFilterMethods()].
+#'   Filter method. See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param fw.perc (`numeric(1)`)\cr
 #'   If set, select `fw.perc`*100 top scoring features.
@@ -89,8 +89,8 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 
 #' Returns the filtered features.
 #'
-#' @param model ([WrappedModel()])\cr
-#'   Trained Model created with [makeFilterWrapper()].
+#' @param model ([WrappedModel])\cr
+#'   Trained Model created with [makeFilterWrapper].
 #' @return ([character]).
 #' @export
 #' @family filter

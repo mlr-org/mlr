@@ -7,13 +7,13 @@
 #' The model must be fitted on the subset of `.task` given by `.subset`. All parameters
 #' in `...` must be passed to the underlying training function.
 #'
-#' @param .learner ([RLearner()])\cr
+#' @param .learner ([RLearner])\cr
 #'   Wrapped learner.
-#' @param .task ([Task()])\cr
+#' @param .task ([Task])\cr
 #'   Task to train learner on.
 #' @param .subset ([integer])\cr
 #'   Subset of cases for training set, index the task with this.
-#'   You probably want to use [getTaskData()] for this purpose.
+#'   You probably want to use [getTaskData] for this purpose.
 #' @param .weights ([numeric])\cr
 #'   Weights for each observation.
 #' @param ... (any)\cr

@@ -9,7 +9,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @param ties.method (`character(1)`)\cr
-#'   See [rank()] for details.
+#'   See [rank] for details.
 #' @template arg_aggregation_method
 #' @param pos (`character(1)`)\cr
 #'   Optionally set how the bars are positioned in ggplot2.

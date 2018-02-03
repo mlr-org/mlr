@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Creates a wrapper, which can be used like any other learner object.
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' For each pair of labels, we fit a binary classifier.
 #' For each observation we define the label to be the element of the pair with minimal costs.
@@ -15,7 +15,7 @@
 #' multiple binary ones and aggregates by voting.
 #'
 #' @template arg_learner_classif
-#' @return ([Learner()]).
+#' @return ([Learner]).
 #' @export
 #' @references
 #' Lin, HT.:

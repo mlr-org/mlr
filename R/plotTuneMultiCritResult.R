@@ -3,8 +3,8 @@
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res ([TuneMultiCritResult()])\cr
-#'   Result of [tuneParamsMultiCrit()].
+#' @param res ([TuneMultiCritResult])\cr
+#'   Result of [tuneParamsMultiCrit].
 #' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   For the full path, the size of the points on the front is slightly increased.
@@ -16,7 +16,7 @@
 #'   Which column of `res$opt.path` should be mapped to ggplot2 shape?
 #'   Default is `NULL`, which means none.
 #' @param pointsize (`numeric(1)`)\cr
-#'   Point size for ggplot2 [ggplot2::geom_point()] for data points.
+#'   Point size for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 2.
 #' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the ID of the measures instead of their name in labels. Defaults to `TRUE`.
@@ -62,8 +62,8 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res ([TuneMultiCritResult()])\cr
-#'   Result of [tuneParamsMultiCrit()].
+#' @param res ([TuneMultiCritResult])\cr
+#'   Result of [tuneParamsMultiCrit].
 #' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   Points are colored according to their location.

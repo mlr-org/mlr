@@ -4,9 +4,9 @@
 #' For a classification learner the `predict.type` can be set
 #' to \dQuote{prob} to predict probabilities and the maximum
 #' value selects the label. The threshold used to assign the label can later be changed using the
-#' [setThreshold()] function.
+#' [setThreshold] function.
 #'
-#' To see all possible properties of a learner, go to: [LearnerProperties()].
+#' To see all possible properties of a learner, go to: [LearnerProperties].
 #'
 #' @template arg_lrncl
 #' @param id (`character(1)`)\cr
@@ -38,9 +38,9 @@
 #'   encourage you to use one or the other to pass (hyper)parameters
 #'   to the learner but not both.
 #' @param config (named [list])\cr
-#'   Named list of config option to overwrite global settings set via [configureMlr()]
+#'   Named list of config option to overwrite global settings set via [configureMlr]
 #'   for this specific learner.
-#' @return ([Learner()]).
+#' @return ([Learner]).
 #' @family learner
 #' @export
 #' @aliases Learner

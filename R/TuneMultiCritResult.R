@@ -7,19 +7,19 @@
 #'
 #' Object members:
 #' \describe{
-#' \item{learner ([Learner()])}{Learner that was optimized.}
-#' \item{control ([TuneControl()])}{Control object from tuning.}
+#' \item{learner ([Learner])}{Learner that was optimized.}
+#' \item{control ([TuneControl])}{Control object from tuning.}
 #' \item{x ([list])}{List of lists of non-dominated hyperparameter settings in pareto set.
 #'   Note that when you have trafos on some of your params, `x` will always be
 #'   on the TRANSFORMED scale so you directly use it.}
 #' \item{y ([matrix])}{Pareto front for `x`.}
 #' \item{threshold}{Currently `NULL`.}
-#' \item{opt.path ([ParamHelpers::OptPath()])}{Optimization path which lead to `x`.
+#' \item{opt.path ([ParamHelpers::OptPath])}{Optimization path which lead to `x`.
 #'   Note that when you have trafos on some of your params, the opt.path always contains the
 #'   UNTRANSFORMED values on the original scale. You can simply call `trafoOptPath(opt.path)` to
 #'   transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
 #' \item{ind (`integer(n)`)}{Indices of Pareto optimal params in `opt.path`.}
-#' \item{measures [(list of) [Measure()])}{Performance measures.}
+#' \item{measures [(list of) [Measure])}{Performance measures.}
 #' }
 #' @name TuneMultiCritResult
 #' @rdname TuneMultiCritResult

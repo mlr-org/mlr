@@ -10,7 +10,7 @@
 #' @param rate (`numeric(1)`)\cr
 #'   A number representing the probability of selecting an element of the first string.
 #'   Default is `0.5`.
-#' @return ([crossover()]).
+#' @return ([crossover]).
 #' @name crossover
 #' @rdname crossover
 #' @aliases crossover

@@ -4,10 +4,10 @@
 #' Generate cleaned hyperparameter effect data from a tuning result or from a
 #' nested cross-validation tuning result. The object returned can be used for
 #' custom visualization or passed downstream to an out of the box mlr method,
-#' [plotHyperParsEffect()].
+#' [plotHyperParsEffect].
 #'
-#' @param tune.result ([TuneResult()] | [ResampleResult()])\cr
-#'  Result of [tuneParams()] (or [resample()] ONLY when used
+#' @param tune.result ([TuneResult] | [ResampleResult])\cr
+#'  Result of [tuneParams] (or [resample] ONLY when used
 #'  for nested cross-validation). The tuning result (or results if the
 #'  output is from nested cross-validation), also containing the
 #'  optimizer results. If nested CV output is passed, each element in the list
@@ -27,7 +27,7 @@
 #'  should most likely be set to `TRUE` if 2 or more hyperparameters were
 #'  tuned simultaneously. Partial dependence should always be requested when
 #'  more than 2 hyperparameters were tuned simultaneously. Setting to
-#'  `TRUE` will cause [plotHyperParsEffect()] to automatically
+#'  `TRUE` will cause [plotHyperParsEffect] to automatically
 #'  plot partial dependence when called downstream.
 #'  Default is `FALSE`.
 #'
@@ -146,7 +146,7 @@ print.HyperParsEffectData = function(x, ...) {
 #' optimizer.
 #'
 #' @param hyperpars.effect.data (`HyperParsEffectData`)\cr
-#'  Result of [generateHyperParsEffectData()]
+#'  Result of [generateHyperParsEffectData]
 #' @param x (`character(1)`)\cr
 #'  Specify what should be plotted on the x axis. Must be a column from
 #'  `HyperParsEffectData$data`. For partial dependence, this is assumed to
@@ -181,7 +181,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  performance of every iteration, even if it is not an improvement. Not used
 #'  with partial dependence.
 #'  Default is `TRUE`.
-#' @param interpolate ([Learner()] | `character(1)`)\cr
+#' @param interpolate ([Learner] | `character(1)`)\cr
 #'  If not `NULL`, will interpolate non-complete grids in order to visualize a more
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
@@ -208,10 +208,10 @@ print.HyperParsEffectData = function(x, ...) {
 #'  hyperparameters. This is also used for nested aggregation in partial
 #'  dependence.
 #'  Default is `mean`.
-#' @param partial.dep.learn ([Learner()] | `character(1)`)\cr
+#' @param partial.dep.learn ([Learner] | `character(1)`)\cr
 #'  The regression learner used to learn partial dependence. Must be specified if
 #'  \dQuote{partial.dep} is set to `TRUE` in
-#'  [generateHyperParsEffectData()]. Accepts either a \link{Learner}
+#'  [generateHyperParsEffectData]. Accepts either a \link{Learner}
 #'  object or the learner as a string for learning partial dependence.
 #'  Default is `NULL`.
 #' @template ret_gg2
@@ -222,7 +222,7 @@ print.HyperParsEffectData = function(x, ...) {
 #' respective measure. Execution time will be replaced with the max.
 #' Interpolation by its nature will result in predicted values for the
 #' performance measure. Use interpolation with caution. If \dQuote{partial.dep}
-#' is set to `TRUE` in [generateHyperParsEffectData()], only
+#' is set to `TRUE` in [generateHyperParsEffectData], only
 #' partial dependence will be plotted.
 #'
 #' Since a ggplot2 plot object is returned, the user can change the axis labels

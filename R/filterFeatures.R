@@ -1,15 +1,15 @@
 #' @title Filter features by thresholding filter values.
 #'
 #' @description
-#' First, calls [generateFilterValuesData()].
+#' First, calls [generateFilterValuesData].
 #' Features are then selected via `select` and `val`.
 #'
 #' @template arg_task
 #' @param method (`character(1)`)\cr
-#'   See [listFilterMethods()].
+#'   See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param fval ([FilterValues()])\cr
-#'   Result of [generateFilterValuesData()].
+#' @param fval ([FilterValues])\cr
+#'   Result of [generateFilterValuesData].
 #'   If you pass this, the filter values in the object are used for feature filtering.
 #'   `method` and `...` are ignored then.
 #'   Default is `NULL` and not used.

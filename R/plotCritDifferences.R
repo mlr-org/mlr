@@ -36,7 +36,7 @@
 #'   of one classifier to all others. \cr
 #'   Algorithms not connected by a single line are statistically different.
 #'   then the baseline. \cr
-#'   \dQuote{nemenyi} for the [PMCMR::posthoc.friedman.nemenyi.test()]
+#'   \dQuote{nemenyi} for the [PMCMR::posthoc.friedman.nemenyi.test]
 #'   which is comparing all classifiers to each other. The null hypothesis that
 #'   there is a difference between the classifiers can not be rejected for all
 #'   classifiers that have a single grey bar connecting them.

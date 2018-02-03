@@ -138,13 +138,13 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 #' @title Extract the predictions from a benchmark result.
 #'
 #' @description
-#' Either a list of lists of [ResamplePrediction()] objects, as returned by
-#' [resample()], or these objects are rbind-ed with extra columns
+#' Either a list of lists of [ResamplePrediction] objects, as returned by
+#' [resample], or these objects are rbind-ed with extra columns
 #' \dQuote{task.id} and \dQuote{learner.id}.
 #'
 #' If `predict.type` is \dQuote{prob}, the probabilities for each class are returned in addition to the response.
 #'
-#' If `keep.pred` is `FALSE` in the call to [benchmark()], the function will return `NULL`.
+#' If `keep.pred` is `FALSE` in the call to [benchmark], the function will return `NULL`.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -169,7 +169,7 @@ getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #'
 #' @description
 #' Either a list of lists of \dQuote{measure.test} data.frames, as returned by
-#' [resample()], or these objects are rbind-ed with extra columns
+#' [resample], or these objects are rbind-ed with extra columns
 #' \dQuote{task.id} and \dQuote{learner.id}.
 #'
 #'
@@ -191,7 +191,7 @@ getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = 
 #'
 #' @description
 #' Either a list of lists of \dQuote{aggr} numeric vectors, as returned by
-#' [resample()], or these objects are rbind-ed with extra columns
+#' [resample], or these objects are rbind-ed with extra columns
 #' \dQuote{task.id} and \dQuote{learner.id}.
 #'
 #'
@@ -239,7 +239,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @title Extract the tuning results from a benchmark result.
 #'
 #' @description
-#' Returns a nested list of [TuneResult()]s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If `as.df` is `TRUE`, a data frame with the \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
+#' Returns a nested list of [TuneResult]s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If `as.df` is `TRUE`, a data frame with the \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -259,7 +259,7 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @title Extract the feature selection results from a benchmark result.
 #'
 #' @description
-#' Returns a nested list of [FeatSelResult()]s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If `as.df` is `TRUE`, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+#' Returns a nested list of [FeatSelResult]s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If `as.df` is `TRUE`, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
 #'
 #' Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 #'
@@ -303,9 +303,9 @@ getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
 #' @title Extract all models from benchmark result.
 #'
 #' @description
-#' A list of lists containing all [WrappedModel()]s trained in the benchmark experiment.
+#' A list of lists containing all [WrappedModel]s trained in the benchmark experiment.
 #'
-#' If `models` is `FALSE` in the call to [benchmark()], the function will return `NULL`.
+#' If `models` is `FALSE` in the call to [benchmark], the function will return `NULL`.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -325,7 +325,7 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) 
 #' @title Extract all task descriptions from benchmark result (DEPRECATED).
 #'
 #' @description
-#' A list containing all [TaskDesc()]s for each task contained in the benchmark experiment.
+#' A list containing all [TaskDesc]s for each task contained in the benchmark experiment.
 #' @template arg_bmr
 #' @return ([list]).
 #' @export
@@ -338,7 +338,7 @@ getBMRTaskDescriptions = function(bmr) {
 #' @title Extract all task descriptions from benchmark result.
 #'
 #' @description
-#' A list containing all [TaskDesc()]s for each task contained in the benchmark experiment.
+#' A list containing all [TaskDesc]s for each task contained in the benchmark experiment.
 #' @template arg_bmr
 #' @return ([list]).
 #' @export

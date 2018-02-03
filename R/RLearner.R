@@ -11,7 +11,7 @@
 #' section in the online tutorial:
 #' <http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html>
 #'
-#' To see all possible properties of a learner, go to: [LearnerProperties()].
+#' To see all possible properties of a learner, go to: [LearnerProperties].
 #'
 #' @template arg_lrncl
 #' @param package ([character])\cr
@@ -21,7 +21,7 @@
 #'   Default is `character(0)`.
 #' @param class.weights.param (`character(1)`)\cr
 #'   Name of the parameter, which can be used for providing class weights.
-#' @param par.set ([ParamHelpers::ParamSet()])\cr
+#' @param par.set ([ParamHelpers::ParamSet])\cr
 #'   Parameter set of (hyper)parameters and their constraints.
 #'   Dependent parameters with a `requires` field must use `quote` and not
 #'   `expression` to define it.
@@ -44,9 +44,9 @@
 #'   Character vector naming all functions of the learner's package being called which
 #'   have a relevant R help page.
 #'   Default is `character(0)`.
-#' @return ([RLearner()]). The specific subclass is one of [RLearnerClassif()],
-#'   [RLearnerCluster()], [RLearnerMultilabel()],
-#'   [RLearnerRegr()], [RLearnerSurv()].
+#' @return ([RLearner]). The specific subclass is one of [RLearnerClassif],
+#'   [RLearnerCluster], [RLearnerMultilabel],
+#'   [RLearnerRegr], [RLearnerSurv].
 #' @name RLearner
 #' @rdname RLearner
 #' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv

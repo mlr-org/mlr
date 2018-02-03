@@ -6,7 +6,7 @@
 #'
 #' Object slots:
 #' \describe{
-#' \item{desc ([ResampleDesc()])}{See argument.}
+#' \item{desc ([ResampleDesc])}{See argument.}
 #' \item{size (`integer(1)`)}{See argument.}
 #' \item{train.inds (list of [integer])}{List of of training indices for all iterations.}
 #' \item{test.inds (list of [integer])}{List of of test indices for all iterations.}
@@ -15,20 +15,20 @@
 #'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
-#' @param desc ([ResampleDesc()] | `character(1)`)\cr
+#' @param desc ([ResampleDesc] | `character(1)`)\cr
 #'   Resampling description object or name of resampling strategy.
-#'   In the latter case [makeResampleDesc()] will be called internally on the string.
-#' @param task ([Task()])\cr
+#'   In the latter case [makeResampleDesc] will be called internally on the string.
+#' @param task ([Task])\cr
 #'   Data of task to resample from.
 #'   Prefer to pass this instead of `size`.
-#' @param size ([integer()])\cr
+#' @param size ([integer])\cr
 #'   Size of the data set to resample.
 #'   Can be used instead of `task`.
 #' @param ... (any)\cr
-#'   Passed down to [makeResampleDesc()] in case
+#'   Passed down to [makeResampleDesc] in case
 #'   you passed a string in `desc`.
 #'   Otherwise ignored.
-#' @return ([ResampleInstance()]).
+#' @return ([ResampleInstance]).
 #' @family resample
 #' @export
 #' @aliases ResampleInstance

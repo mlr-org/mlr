@@ -9,7 +9,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @param ties.method (`character(1)`)\cr
-#'   See [base::rank()] for details.
+#'   See [base::rank] for details.
 #' @template arg_aggregation_method
 #' @return ([matrix]) with measure ranks as entries.
 #'   The matrix has one row for each `learner`, and one column for each `task`.

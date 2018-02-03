@@ -1,7 +1,7 @@
 #' @title Get a description of all possible parameter settings for a learner.
 #'
 #' @description
-#' Returns the [ParamHelpers::ParamSet()] from a [Learner()].
+#' Returns the [ParamHelpers::ParamSet] from a [Learner].
 #'
 #' @template ret_ps
 #' @family learner

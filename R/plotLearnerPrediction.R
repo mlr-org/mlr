@@ -1,7 +1,7 @@
 #' @title Visualizes a learning algorithm on a 1D or 2D data set.
 #'
 #' @description
-#' Trains the model for 1 or 2 selected features, then displays it via [ggplot2::ggplot()].
+#' Trains the model for 1 or 2 selected features, then displays it via [ggplot2::ggplot].
 #' Good for teaching or exploring models.
 #'
 #' For classification and clustering, only 2D plots are supported. The data points, the classification and
@@ -30,7 +30,7 @@
 #'   Grid resolution per axis for background predictions.
 #'   Default is 500 for 1D and 100 for 2D.
 #' @param pointsize (`numeric(1)`)\cr
-#'   Pointsize for ggplot2 [ggplot2::geom_point()] for data points.
+#'   Pointsize for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 2.
 #' @param prob.alpha (`logical(1)`)\cr
 #'   For classification: Set alpha value of background to probability for

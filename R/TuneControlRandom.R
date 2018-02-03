@@ -11,7 +11,7 @@
 #' @param maxit (`integer(1)` | NULL)\cr
 #'   Number of iterations for random search.
 #'   Default is 100.
-#' @return ([TuneControlRandom()])
+#' @return ([TuneControlRandom])
 #' @aliases TuneControlRandom
 #' @family tune
 #' @export

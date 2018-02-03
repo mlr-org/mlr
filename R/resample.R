@@ -16,25 +16,25 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling ([ResampleDesc()] or [ResampleInstance()])\cr
+#' @param resampling ([ResampleDesc] or [ResampleInstance])\cr
 #'   Resampling strategy.
 #'   If a description is passed, it is instantiated automatically.
 #' @param iters (`integer(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param folds (`integer(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param reps (`integer(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param split (`numeric(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param stratify (`logical(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param horizon (`numeric(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param initial.window (`numeric(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @param skip (`integer(1)`)\cr
-#'   See [ResampleDesc()].
+#'   See [ResampleDesc].
 #' @template arg_measures
 #' @param weights ([numeric])\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
@@ -46,14 +46,14 @@
 #'   Default is `FALSE`.
 #' @param extract (`function`)\cr
 #'   Function used to extract information from a fitted model during resampling.
-#'   Is applied to every [WrappedModel()] resulting from calls to [train()]
+#'   Is applied to every [WrappedModel] resulting from calls to [train]
 #'   during resampling.
 #'   Default is to extract nothing.
 #' @template arg_keep_pred
 #' @param ... (any)\cr
 #'   Further hyperparameters passed to `learner`.
 #' @template arg_showinfo
-#' @return ([ResampleResult()]).
+#' @return ([ResampleResult]).
 #' @family resample
 #' @note If you would like to include results from the training data set, make
 #' sure to appropriately adjust the resampling strategy and the aggregation for

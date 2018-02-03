@@ -8,9 +8,9 @@
 #' model (`.model$learner.model`).
 #' All parameters in `...` must be passed to the underlying predict function.
 #'
-#' @param .learner ([RLearner()])\cr
+#' @param .learner ([RLearner])\cr
 #'   Wrapped learner.
-#' @param .model ([WrappedModel()])\cr
+#' @param .model ([WrappedModel])\cr
 #'   Model produced by training.
 #' @param .newdata ([data.frame])\cr
 #'   New data to predict. Does not include target column.
@@ -99,9 +99,9 @@ insertLines = function(prediction, inserts) {
 #'
 #' This function is for internal use.
 #'
-#' @param learner ([Learner()])\cr
+#' @param learner ([Learner])\cr
 #'   The learner.
-#' @param model ([WrappedModel()])]\cr
+#' @param model ([WrappedModel])]\cr
 #'   Model produced by training.
 #' @param p (any)\cr
 #'   The prediction made by `learner`.

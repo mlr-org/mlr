@@ -39,7 +39,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'
 #' @description
 #' The function extracts features from functional data based on the fast fourier
-#' transform. For more details refer to [stats::fft()].
+#' transform. For more details refer to [stats::fft].
 #'
 #' @param trafo.coeff ([character])\cr
 #'   Specifies which transformation of the complex frequency domain
@@ -92,7 +92,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @description
 #' The function extracts discrete wavelet transform coefficients from the raw
 #' functional data.
-#' See [wavelets::dwt()] for more information.
+#' See [wavelets::dwt] for more information.
 #'
 #' @param filter ([character])\cr
 #'   Specifies which filter should be used.

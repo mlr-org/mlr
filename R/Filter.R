@@ -3,7 +3,7 @@
 #' Create a feature filter.
 #'
 #' Creates and registers custom feature filters. Implemented filters
-#' can be listed with [listFilterMethods()]. Additional
+#' can be listed with [listFilterMethods]. Additional
 #' documentation for the `fun` parameter specific to each filter can
 #' be found in the description.
 #'
@@ -175,7 +175,7 @@ makeFilter(
 #' fitted in package \pkg{randomForestSRC}. The concrete method is selected via
 #' the `method` parameter. Possible values are `permute` (default), `random`,
 #' `anti`, `permute.ensemble`, `random.ensemble`, `anti.ensemble`.
-#' See the VIMP section in the docs for [randomForestSRC::rfsrc()] for
+#' See the VIMP section in the docs for [randomForestSRC::rfsrc] for
 #' details.
 #'
 #' @rdname makeFilter
@@ -267,7 +267,7 @@ makeFilter(
   }
 )
 
-#' Filter \dQuote{randomForest.importance} makes use of the [randomForest::importance()]
+#' Filter \dQuote{randomForest.importance} makes use of the [randomForest::importance]
 #' from package \pkg{randomForest}. The importance measure to use is selected via
 #' the `method` parameter:
 #' \describe{
@@ -582,7 +582,7 @@ makeFilter(
 
 #' Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
 #' learner before and after a feature is permuted. Special arguments to the filter function are
-#' `imp.learner`, a ([Learner()] or `character(1)]) which specifies the learner
+#' `imp.learner`, a ([Learner] or `character(1)]) which specifies the learner
 #' to use when computing the permutation importance, `contrast`, a `function` which takes two
 #' numeric vectors and returns one (default is the difference), `aggregation`, a `function` which
 #' takes a `numeric` and returns a `numeric(1)` (default is the mean), `nmc`,

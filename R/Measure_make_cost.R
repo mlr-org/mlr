@@ -15,9 +15,9 @@
 #'   Rows indicate true classes, columns predicted classes.
 #' @param combine (`function`)\cr
 #'   How to combine costs over all cases for a SINGLE test set?
-#'   Note this is not the same as the `aggregate` argument in [makeMeasure()]
-#'   You can set this as well via [setAggregation()], as for any measure.
-#'   Default is [mean()].
+#'   Note this is not the same as the `aggregate` argument in [makeMeasure]
+#'   You can set this as well via [setAggregation], as for any measure.
+#'   Default is [mean].
 #' @inheritParams makeMeasure
 #' @template ret_measure
 #' @export

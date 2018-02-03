@@ -21,7 +21,7 @@ getTaskDesc.TaskDesc = function(x) {
   x
 }
 
-#' Deprecated, use [getTaskDesc()] instead.
+#' Deprecated, use [getTaskDesc] instead.
 #' @inheritParams getTaskDesc
 #' @export
 getTaskDescription = function(x) {
@@ -54,7 +54,7 @@ getTaskId = function(x) {
 #' @title Get the name(s) of the target column(s).
 #'
 #' @description
-#' NB: For multilabel, [getTaskTargetNames()] and [getTaskClassLevels()]
+#' NB: For multilabel, [getTaskTargetNames] and [getTaskClassLevels]
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
@@ -84,7 +84,7 @@ getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
 #' @title Get the class levels for classification and multilabel tasks.
 #'
 #' @description
-#' NB: For multilabel, [getTaskTargetNames()] and [getTaskClassLevels()]
+#' NB: For multilabel, [getTaskTargetNames] and [getTaskClassLevels]
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
@@ -239,7 +239,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' @title Extract data in task.
 #'
 #' @description
-#' Useful in [trainLearner()] when you add a learning machine to the package.
+#' Useful in [trainLearner] when you add a learning machine to the package.
 #'
 #' @template arg_task
 #' @template arg_subset
@@ -258,7 +258,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 #'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
-#'   See [survival::Surv()] for the format specification.
+#'   See [survival::Surv] for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
 #' @param functionals.as (`character(1)`)\cr
 #'   How to represents functional features?
@@ -358,7 +358,7 @@ recodeY = function(y, type, td) {
 #' @description
 #' Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task ([Task()])\cr
+#' @param task ([Task])\cr
 #'   The task.
 #' @template arg_subset
 #' @return (`matrix` | `NULL`).
@@ -386,7 +386,7 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
-#' @return ([Task()]). Task with subsetted data.
+#' @return ([Task]). Task with subsetted data.
 #' @family task
 #' @export
 #' @examples

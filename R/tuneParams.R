@@ -7,35 +7,35 @@
 #' Allows for different optimization methods, such as grid search, evolutionary strategies,
 #' iterated F-race, etc. You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
-#' [TuneControl()].
+#' [TuneControl].
 #'
-#' Multi-criteria tuning can be done with [tuneParamsMultiCrit()].
+#' Multi-criteria tuning can be done with [tuneParamsMultiCrit].
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling ([ResampleInstance()] | [ResampleDesc()])\cr
+#' @param resampling ([ResampleInstance] | [ResampleDesc])\cr
 #'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are
 #'   evaluated on the same training/test sets.
-#'   If you want to change that behavior, look at [TuneControl()].
+#'   If you want to change that behavior, look at [TuneControl].
 #' @template arg_measures_opt
-#' @param par.set ([ParamHelpers::ParamSet()])\cr
+#' @param par.set ([ParamHelpers::ParamSet])\cr
 #'   Collection of parameters and their constraints for optimization.
 #'   Dependent parameters with a `requires` field must use `quote` and not
 #'   `expression` to define it.
-#' @param control ([TuneControl()])\cr
+#' @param control ([TuneControl])\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
 #' @param resample.fun ([closure])\cr
-#'   The function to use for resampling. Defaults to [resample()]. If a user-given function
+#'   The function to use for resampling. Defaults to [resample]. If a user-given function
 #'   is to be used instead, it should take the arguments \dQuote{learner}, \dQuote{task}, \dQuote{resampling},
-#'   \dQuote{measures}, and \dQuote{show.info}; see [resample()]. Within this function,
-#'   it is easiest to call [resample()] and possibly modify the result.
+#'   \dQuote{measures}, and \dQuote{show.info}; see [resample]. Within this function,
+#'   it is easiest to call [resample] and possibly modify the result.
 #'   However, it is possible to return a list with only the following essential slots:
 #'   the \dQuote{aggr} slot for general tuning, additionally the \dQuote{pred} slot if threshold tuning is performed
-#'   (see [TuneControl()]), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
+#'   (see [TuneControl]), and the \dQuote{err.msgs} and \dQuote{err.dumps} slots for error reporting.
 #'   This parameter must be the default when `mbo` tuning is performed.
-#' @return ([TuneResult()]).
+#' @return ([TuneResult]).
 #' @family tune
 #' @note If you would like to include results from the training data set, make
 #' sure to appropriately adjust the resampling strategy and the aggregation for
@@ -84,7 +84,7 @@
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
 #' }
-#' @seealso [generateHyperParsEffectData()]
+#' @seealso [generateHyperParsEffectData]
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), resample.fun = resample) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
@@ -131,9 +131,9 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 #' @title Get the optimization path of a tuning result.
 #'
 #' @description
-#' Returns the opt.path from a ([TuneResult()]) object.
-#' @param tune.result ([TuneResult()]) \cr
-#'   A tuning result of the ([tuneParams()]) function.
+#' Returns the opt.path from a ([TuneResult]) object.
+#' @param tune.result ([TuneResult]) \cr
+#'   A tuning result of the ([tuneParams]) function.
 #' @param as.df (`logical(1)`)\cr
 #'   Should the optimization path be returned as a data frame?
 #'   Default is `TRUE`.

@@ -2,7 +2,7 @@
 #' @description
 #' An aggregation method reduces the performance values of the test
 #' (and possibly the training sets) to a single value.
-#' To see all possible implemented aggregations look at [aggregations()].
+#' To see all possible implemented aggregations look at [aggregations].
 #'
 #' The aggregation can access all relevant information of the result after resampling
 #' and combine them into a single value. Though usually something very simple
@@ -16,7 +16,7 @@
 #' \item{fun (`function(task, perf.test, perf.train, measure, group, pred)])}{Aggregation function.}
 #' }
 #' @name Aggregation
-#' @seealso [makeAggregation()]
+#' @seealso [makeAggregation]
 #' @rdname Aggregation
 NULL
 
@@ -41,21 +41,21 @@ NULL
 #'   Calculates the aggregated performance. In most cases you will only need the performances
 #'   `perf.test` and optionally `perf.train` on the test and training data sets.
 #'   \describe{
-#'     \item{`task` ([Task()])}{The task.}
+#'     \item{`task` ([Task])}{The task.}
 #'     \item{`perf.test` ([numeric])}{
-#'       [performance()] results on the test data sets.}
+#'       [performance] results on the test data sets.}
 #'     \item{`perf.train` ([numeric])}{
-#'       [performance()] results on the training data sets.}
-#'     \item{`measure` ([Measure()])}{
+#'       [performance] results on the training data sets.}
+#'     \item{`measure` ([Measure])}{
 #'       Performance measure.}
 #'     \item{`group` ([factor])}{
 #'       Grouping of resampling iterations. This encodes whether specific iterations
 #'       'belong together' (e.g. repeated CV).}
-#'     \item{`pred` ([Prediction()])}{
+#'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
 #'   }
-#' @seealso [aggregations()], [setAggregation()]
-#' @return ([Aggregation()]).
+#' @seealso [aggregations], [setAggregation]
+#' @return ([Aggregation]).
 #' @examples
 #' # computes the interquartile range on all performance values
 #' test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",

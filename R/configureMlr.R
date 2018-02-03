@@ -1,7 +1,7 @@
 #' @title Configures the behavior of the package.
 #'
 #' @description
-#' Configuration is done by setting custom [options()].
+#' Configuration is done by setting custom [options].
 #'
 #' If you do not set an option here, its current value will be kept.
 #'
@@ -48,10 +48,10 @@
 #'   suppressed?
 #'   Default is `TRUE`.
 #' @param on.error.dump (`logical(1)`)\cr
-#'   Specify whether [FailureModel()] models and failed predictions should contain an error dump
+#'   Specify whether [FailureModel] models and failed predictions should contain an error dump
 #'   that can be used with `debugger` to inspect an error. This option is only effective if `on.learner.error`
 #'   is \dQuote{warn} or \dQuote{quiet}. If it is `TRUE`, the dump can be accessed using
-#'   [getFailureModelDump()] on the [FailureModel()], [getPredictionDump()] on the failed prediction, and [getRRDump()] on resample predictions.
+#'   [getFailureModelDump] on the [FailureModel], [getPredictionDump] on the failed prediction, and [getRRDump] on resample predictions.
 #'   Default is `FALSE`.
 #' @template ret_inv_null
 #' @family configure

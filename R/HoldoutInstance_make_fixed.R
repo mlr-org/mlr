@@ -7,7 +7,7 @@
 #' @param size (`integer(1)`)\cr
 #'   Size of the data set to resample.
 #'   The function needs to know the largest possible index of the whole data set.
-#' @return ([ResampleInstance()]).
+#' @return ([ResampleInstance]).
 #' @export
 makeFixedHoldoutInstance = function(train.inds, test.inds, size) {
   train.inds = asInteger(train.inds, any.missing = FALSE)

@@ -4,7 +4,7 @@
 #' Very simple getter.
 #'
 #' @param res ([ResampleResult])\cr
-#'   The result of [resample()] run with `keep.pred = TRUE`.
+#'   The result of [resample] run with `keep.pred = TRUE`.
 #' @return ([ResamplePrediction]).
 #' @export
 #' @family resample
@@ -21,7 +21,7 @@ getRRPredictions = function(res) {
 #' Get a summarizing task description.
 #'
 #' @param res ([ResampleResult])\cr
-#'   The result of [resample()].
+#'   The result of [resample].
 #' @return ([TaskDesc]).
 #' @export
 #' @family resample
@@ -36,7 +36,7 @@ getRRTaskDescription = function(res) {
 #' Get a summarizing task description.
 #'
 #' @param res ([ResampleResult])\cr
-#'   The result of [resample()].
+#'   The result of [resample].
 #' @return ([TaskDesc]).
 #' @export
 #' @family resample
@@ -48,17 +48,17 @@ getRRTaskDesc = function(res) {
 #'
 #' @description
 #' This function creates a list with two slots `train` and `test` where
-#' each slot is again a list of [Prediction()] objects for each single
+#' each slot is again a list of [Prediction] objects for each single
 #' resample iteration.
 #' In case that `predict = "train"` was used for the resample description
-#' (see [makeResampleDesc()]), the slot `test` will be `NULL`
+#' (see [makeResampleDesc]), the slot `test` will be `NULL`
 #' and in case that `predict = "test"` was used, the slot `train` will be
 #' `NULL`.
 #'
 #' @param res ([ResampleResult])\cr
-#'   The result of [resample()] run with `keep.pred = TRUE`.
+#'   The result of [resample] run with `keep.pred = TRUE`.
 #' @param ... (any)\cr
-#'   Further options passed to [makePrediction()].
+#'   Further options passed to [makePrediction].
 #' @return [list].
 #' @export
 #' @family resample
@@ -111,9 +111,9 @@ getRRPredictionList = function(res, ...) {
 #' @description
 #'  Adds new measures to an existing `ResampleResult`.
 #' @param res ([ResampleResult])\cr
-#'   The result of [resample()] run with `keep.pred = TRUE`.
+#'   The result of [resample] run with `keep.pred = TRUE`.
 #' @template arg_measures
-#' @return ([ResampleResult()]).
+#' @return ([ResampleResult]).
 #' @export
 #' @family resample
 addRRMeasure = function(res, measures) {
@@ -163,7 +163,7 @@ addRRMeasure = function(res, measures) {
 #'
 #' @description
 #' Returns the error dumps generated during resampling, which can be used with `debugger()`
-#' to debug errors. These dumps are saved if [configureMlr()] configuration `on.error.dump`,
+#' to debug errors. These dumps are saved if [configureMlr] configuration `on.error.dump`,
 #' or the corresponding learner `config`, is `TRUE`.
 #'
 #' The returned object is a list with as many entries as the resampling being used has folds. Each of these
@@ -172,7 +172,7 @@ addRRMeasure = function(res, measures) {
 #' \dQuote{predict.test} (prediction on test subset).
 #'
 #' @param res ([ResampleResult])\cr
-#'   The result of [resample()].
+#'   The result of [resample].
 #' @return [list].
 #' @family debug
 #' @export

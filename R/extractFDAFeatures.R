@@ -148,13 +148,13 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @description
 #' This function accepts a data frame or a task and an extractFDAFeatDesc
 #' (a FDA feature extraction description)
-#' as returned by [extractFDAFeatures()] to extract features
+#' as returned by [extractFDAFeatures] to extract features
 #' from previously unseen data.
 #' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from. Must contain functional features
 #'   as matrix columns.
 #' @param desc (`extractFDAFeatDesc`)\cr
-#'   FDAFeature extraction description as returned by [extractFDAFeatures()]
+#'   FDAFeature extraction description as returned by [extractFDAFeatures]
 #' @return [data.frame] or [Task] containing the extracted Features
 #' @family extractFDAFeatures
 #' @export

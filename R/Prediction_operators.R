@@ -172,7 +172,7 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 #'
 #' @description
 #' Returns the error dump that can be used with `debugger()` to evaluate errors.
-#' If [configureMlr()] configuration `on.error.dump` is `FALSE` or if the
+#' If [configureMlr] configuration `on.error.dump` is `FALSE` or if the
 #' prediction did not fail, this returns `NULL`.
 #'
 #' @template arg_pred

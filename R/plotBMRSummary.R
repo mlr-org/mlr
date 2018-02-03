@@ -4,18 +4,18 @@
 #' Creates a scatter plot, where each line refers to a task.
 #' On that line the aggregated scores for all learners are plotted, for that task.
 #' Optionally, you can apply a rank transformation or just use one of ggplot2's transformations
-#' like [ggplot2::scale_x_log10()].
+#' like [ggplot2::scale_x_log10].
 #'
 #' @template arg_bmr
 #' @template arg_measure
 #' @param trafo (`character(1)`)\cr
 #'   Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 #'   (with average handling of ties) of the scores per task.
-#'   NB: You can add always add [ggplot2::scale_x_log10()] to the result to put scores on a log scale.
+#'   NB: You can add always add [ggplot2::scale_x_log10] to the result to put scores on a log scale.
 #'   Default is \dQuote{none}.
 #' @template arg_order_tsks
 #' @param pointsize (`numeric(1)`)\cr
-#'   Point size for ggplot2 [ggplot2::geom_point()] for data points.
+#'   Point size for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 4.
 #' @param jitter (`numeric(1)`)\cr
 #'   Small vertical jitter to deal with overplotting in case of equal scores.

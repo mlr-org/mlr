@@ -2,8 +2,8 @@
 #'
 #' @description
 #'
-#' A subclass of [WrappedModel()]. It is created
-#' - if you set the respective option in [configureMlr()] -
+#' A subclass of [WrappedModel]. It is created
+#' - if you set the respective option in [configureMlr] -
 #' when a model internally crashed during training.
 #' The model always predicts NAs.
 #'

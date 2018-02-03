@@ -4,9 +4,9 @@
 #' Measures the quality of each binary label prediction w.r.t. some binary classification
 #' performance measure.
 #'
-#' @param pred ([Prediction()])\cr
+#' @param pred ([Prediction])\cr
 #'   Multilabel Prediction object.
-#' @param measures ([Measure()] | list of [Measure()])\cr
+#' @param measures ([Measure] | list of [Measure])\cr
 #'   Performance measure(s) to evaluate, must be applicable to binary classification performance.
 #'   Default is `mmce`.
 #' @return (named `matrix`). Performance value(s), column names are measure(s), row names are labels.

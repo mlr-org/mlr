@@ -10,7 +10,7 @@
 #'   Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 #'   Default is \dQuote{box}.
 #' @param pretty.names (`logical(1)`)\cr
-#'   Whether to use the [Measure()] name and the [Learner()]
+#'   Whether to use the [Measure] name and the [Learner]
 #'   short name instead of the id. Default is `TRUE`.
 #' @template arg_facet_nrow_ncol
 #' @template arg_order_lrns

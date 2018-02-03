@@ -8,7 +8,7 @@
 #' For each target, actual information of all binary labels (except the target variable) is used as additional features.
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template ret_learner

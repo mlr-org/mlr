@@ -6,19 +6,19 @@
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' Useful operators are: [getTaskFormula()],
-#' [getTaskFeatureNames()],
-#' [getTaskData()],
-#' [getTaskTargets()], and
-#' [subsetTask()].
+#' Useful operators are: [getTaskFormula],
+#' [getTaskFeatureNames],
+#' [getTaskData],
+#' [getTaskTargets], and
+#' [subsetTask].
 #'
 #' Object members:
 #' \describe{
 #' \item{env (`environment`)}{Environment where data for the task are stored.
-#'   Use [getTaskData()] in order to access it.}
+#'   Use [getTaskData] in order to access it.}
 #' \item{weights ([numeric])}{See argument. `NULL` if not present.}
 #' \item{blocking ([factor])}{See argument. `NULL` if not present.}
-#' \item{task.desc ([TaskDesc()])}{Encapsulates further information about the task.}
+#' \item{task.desc ([TaskDesc])}{Encapsulates further information about the task.}
 #' }
 #'
 #' @details
@@ -27,7 +27,7 @@
 #' is then a char vector that points to these columns.
 #'
 #' Functional data can be added to a task via matrix columns. For more information refer to
-#' [makeFunctionalData()].
+#' [makeFunctionalData].
 #'
 #' @param id (`character(1)`)\cr
 #'   Id string for object.
@@ -77,7 +77,7 @@
 #'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 #'   Coordinates have to be numeric values.
 #'   Provided [data.frame] needs to have the same number of rows as data and consist of at least two dimensions.
-#' @return ([Task()]).
+#' @return ([Task]).
 #' @name Task
 #' @rdname Task
 #' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask

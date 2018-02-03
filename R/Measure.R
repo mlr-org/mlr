@@ -2,7 +2,7 @@
 #'
 #' @description
 #' A measure object encapsulates a function to evaluate the performance of a prediction.
-#' Information about already implemented measures can be obtained here: [measures()].
+#' Information about already implemented measures can be obtained here: [measures].
 #'
 #' A learner is trained on a training set d1, results in a model m and predicts another set d2
 #' (which may be a different one or the training set) resulting in the prediction.
@@ -16,7 +16,7 @@
 #'   \item{properties ([character])}{See argument.}
 #'   \item{fun (`function])}{See argument.}
 #'   \item{extra.args ([list])}{See argument.}
-#'   \item{aggr ([Aggregation()])}{See argument.}
+#'   \item{aggr ([Aggregation])}{See argument.}
 #'   \item{best (`numeric(1)`)}{See argument.}
 #'   \item{worst (`numeric(1)`)}{See argument.}
 #'   \item{name (`character(1)`)}{See argument.}
@@ -50,11 +50,11 @@
 #'   Calculates the performance value. Usually you will only need the prediction
 #'   object `pred`.
 #'   \describe{
-#'     \item{`task` ([Task()])}{
+#'     \item{`task` ([Task])}{
 #'       The task.}
-#'     \item{`model` ([WrappedModel()])}{
+#'     \item{`model` ([WrappedModel])}{
 #'       The fitted model.}
-#'     \item{`pred` ([Prediction()])}{
+#'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
 #'     \item{`feats` ([data.frame])}{
 #'       The features.}
@@ -63,12 +63,12 @@
 #'   }
 #' @param extra.args ([list])\cr
 #'   List of extra arguments which will always be passed to `fun`.
-#'   Can be changed after construction via [setMeasurePars()]<`3`>.
+#'   Can be changed after construction via [setMeasurePars]<`3`>.
 #'   Default is empty list.
-#' @param aggr ([Aggregation()])\cr
+#' @param aggr ([Aggregation])\cr
 #'   Aggregation funtion, which is used to aggregate the values measured
 #'   on test / training sets of the measure to a single value.
-#'   Default is [test.mean()].
+#'   Default is [test.mean].
 #' @param best (`numeric(1)`)\cr
 #'   Best obtainable value for measure.
 #'   Default is -`Inf` or `Inf`, depending on `minimize`.
@@ -133,9 +133,9 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    multilabel  \tab multilabel.hamloss\cr
 #' }
 #'
-#' @param x ([character(1)` | [Task()] | [TaskDesc()] | [Learner()])\cr
+#' @param x ([character(1)` | [Task] | [TaskDesc] | [Learner])\cr
 #'  Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
-#' @return ([Measure()]).
+#' @return ([Measure]).
 #' @export
 getDefaultMeasure = function(x) {
   type = if (inherits(x, "TaskDesc"))

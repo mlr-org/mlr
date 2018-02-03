@@ -48,8 +48,8 @@
 #'    computation of the importance in xgboost is undocumented.}
 #'  }
 #'
-#' @param object ([WrappedModel()])\cr
-#'   Wrapped model, result of [train()].
+#' @param object ([WrappedModel])\cr
+#'   Wrapped model, result of [train].
 #' @param ... (any)\cr
 #'   Additional parameters, which are passed to the underlying importance value
 #'   generating function.
@@ -90,15 +90,15 @@ getFeatureImportance = function(object, ...) {
 #'
 #' @description
 #'
-#' This function is mostly for internal usage. To calculate feature importance use [getFeatureImportance()].
+#' This function is mostly for internal usage. To calculate feature importance use [getFeatureImportance].
 #'
 #' The return value is a named numeric vector. There does not need to be one value for each feature in the dataset.
-#' In [getFeatureImportance()] missing features will get an importance of zero and if the vector contains `NA`
+#' In [getFeatureImportance] missing features will get an importance of zero and if the vector contains `NA`
 #' they will also be replaced with zero.
 #'
-#' @param .learner ([Learner()] | `character(1)`)\cr
+#' @param .learner ([Learner] | `character(1)`)\cr
 #'   The learner.
-#' @param .model ([WrappedModel()])\cr
+#' @param .model ([WrappedModel])\cr
 #'  The model.
 #' @param ... (any)\cr
 #' Additional parameters, which are passed to the underlying importance value

@@ -5,7 +5,7 @@
 #' for imbalancy correction when we have strongly unequal class sizes.
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' OverBagging is implemented as follows:
 #' For each iteration a random data subset is sampled. Class examples

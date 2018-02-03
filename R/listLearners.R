@@ -56,9 +56,9 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #' This will be a lot faster.
 #'
 #' Note that for general cost-sensitive learning, mlr currently supports mainly
-#' \dQuote{wrapper} approaches like [CostSensWeightedPairsWrapper()],
+#' \dQuote{wrapper} approaches like [CostSensWeightedPairsWrapper],
 #' which are not listed, as they are not basic R learning algorithms.
-#' The same applies for many multilabel methods, see, e.g., [makeMultilabelBinaryRelevanceWrapper()].
+#' The same applies for many multilabel methods, see, e.g., [makeMultilabelBinaryRelevanceWrapper].
 #'
 #' @template arg_task_or_type
 #' @param properties ([character])\cr
@@ -83,7 +83,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   Instantiate objects (or return info table)?
 #'   Packages are loaded if and only if this option is `TRUE`.
 #'   Default is `FALSE`.
-#' @return ([data.frame` | `list` of [Learner()]).
+#' @return ([data.frame` | `list` of [Learner]).
 #'   Either a descriptive data.frame that allows access to all properties of the learners
 #'   or a list of created learner objects (named by ids of listed learners).
 #' @examples

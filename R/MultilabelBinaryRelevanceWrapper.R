@@ -6,13 +6,13 @@
 #' The multilabel classification problem is converted into simple binary classifications
 #' for each label/target on which the binary learner is applied.
 #'
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' Note that it does not make sense to set a threshold in the used base `learner`
 #' when you predict probabilities.
-#' On the other hand, it can make a lot of sense, to call [setThreshold()]
+#' On the other hand, it can make a lot of sense, to call [setThreshold]
 #' on the `MultilabelBinaryRelevanceWrapper` for each label indvidually;
-#' Or to tune these thresholds with [tuneThreshold()]; especially when you face very
+#' Or to tune these thresholds with [tuneThreshold]; especially when you face very
 #' unabalanced class distributions for each binary label.
 #'
 #' @template arg_learner

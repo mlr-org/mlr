@@ -8,7 +8,7 @@
 #' labels in the chain. During the prediction phase, when true labels are not available, they are
 #' replaced by predicted labels.
 #'
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_order

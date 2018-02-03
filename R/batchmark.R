@@ -1,11 +1,11 @@
 #' @title Run machine learning benchmarks as distributed experiments.
 #'
 #' @description
-#' This function is a very parallel version of [benchmark()] using \pkg{batchtools}.
+#' This function is a very parallel version of [benchmark] using \pkg{batchtools}.
 #' Experiments are created in the provided registry for each combination of
 #' learners, tasks and resamplings. The experiments are then stored in a registry and the
-#' runs can be started via [batchtools::submitJobs()]. A job is one train/test split
-#' of the outer resampling. In case of nested resampling (e.g. with [makeTuneWrapper()]),
+#' runs can be started via [batchtools::submitJobs]. A job is one train/test split
+#' of the outer resampling. In case of nested resampling (e.g. with [makeTuneWrapper]),
 #' each job is a full run of inner resampling, which can be parallelized in a second step
 #' with \pkg{ParallelMap}. For details on the usage and support backends have
 #' a look at the batchtools tutorial page:
@@ -13,23 +13,23 @@
 #'
 #' The general workflow with `batchmark` looks like this:
 #' \enumerate{
-#' \item{Create an ExperimentRegistry using [batchtools::makeExperimentRegistry()].}
-#' \item{Call `batchmark(...)` which defines jobs for all learners and tasks in an [base::expand.grid()] fashion.}
-#' \item{Submit jobs using [batchtools::submitJobs()].}
-#' \item{Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs()].}
-#' \item{Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult()].}
+#' \item{Create an ExperimentRegistry using [batchtools::makeExperimentRegistry].}
+#' \item{Call `batchmark(...)` which defines jobs for all learners and tasks in an [base::expand.grid] fashion.}
+#' \item{Submit jobs using [batchtools::submitJobs].}
+#' \item{Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].}
+#' \item{Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].}
 #' }
 #'
 #' If you want to use this with \pkg{OpenML} datasets you can generate tasks from a vector
 #' of dataset IDs easily with
 #' `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.
 #' @inheritParams benchmark
-#' @param resamplings [(list of) [ResampleDesc()])\cr
+#' @param resamplings [(list of) [ResampleDesc])\cr
 #'   Resampling strategy for each tasks.
 #'   If only one is provided, it will be replicated to match the number of tasks.
 #'   If missing, a 10-fold cross validation is used.
-#' @param reg ([batchtools::Registry()])\cr
-#'   Registry, created by [batchtools::makeExperimentRegistry()]. If not explicitly passed,
+#' @param reg ([batchtools::Registry])\cr
+#'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 #'   uses the last created registry.
 #' @return ([data.table]). Generated job ids are stored in the column \dQuote{job.id}.
 #' @noMd
@@ -81,20 +81,20 @@ getAlgoFun = function(lrn, measures, models) {
 #' @title Reduce results of a batch-distributed benchmark.
 #'
 #' @description
-#' This creates a [BenchmarkResult()] from a [batchtools::ExperimentRegistry()].
-#' To setup the benchmark have a look at [batchmark()].
+#' This creates a [BenchmarkResult] from a [batchtools::ExperimentRegistry].
+#' To setup the benchmark have a look at [batchmark].
 #'
 #' @param ids ([data.frame] or [integer])\cr
-#'   A [base::data.frame()] (or [data.table::data.table()])
+#'   A [base::data.frame] (or [data.table::data.table])
 #'   with a column named \dQuote{job.id}.
 #'   Alternatively, you may also pass a vector of integerish job ids.
-#'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone()].
+#'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone].
 #' @template arg_keep_pred
 #' @template arg_showinfo
-#' @param reg ([batchtools::ExperimentRegistry()])\cr
-#'   Registry, created by [batchtools::makeExperimentRegistry()]. If not explicitly passed,
+#' @param reg ([batchtools::ExperimentRegistry])\cr
+#'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 #'   uses the last created registry.
-#' @return ([BenchmarkResult()]).
+#' @return ([BenchmarkResult]).
 #' @export
 #' @family benchmark
 reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {

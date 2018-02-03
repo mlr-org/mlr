@@ -9,7 +9,7 @@
 #' During the prediction phase, predicted labels are obtained by the classifiers, which have been learned on
 #' all training data.
 #'
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_order

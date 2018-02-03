@@ -74,7 +74,7 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, m
 #' @name BenchmarkResult
 #' @rdname BenchmarkResult
 #' @description
-#' Result of a benchmark experiment conducted by [benchmark()]
+#' Result of a benchmark experiment conducted by [benchmark]
 #' with the following members:
 #' \describe{
 #' \item{results (list of [ResampleResult]):}{

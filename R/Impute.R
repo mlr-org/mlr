@@ -10,13 +10,13 @@
 #' The function `impute` performs the imputation on a data set and returns,
 #' alongside with the imputed data set, an \dQuote{ImputationDesc} object
 #' which can contain \dQuote{learned} coefficients and helpful data.
-#' It can then be passed together with a new data set to [reimpute()].
+#' It can then be passed together with a new data set to [reimpute].
 #'
 #' The imputation techniques can be specified for certain features or for feature classes,
 #' see function arguments.
 #'
 #' You can either provide an arbitrary object, use a built-in imputation method listed
-#' under [imputations()] or create one yourself using [makeImputeMethod()].
+#' under [imputations] or create one yourself using [makeImputeMethod].
 #'
 #' @details
 #' The description object contains these slots
@@ -204,7 +204,7 @@ print.ImputationDesc = function(x, ...) {
 #' Re-impute a data set
 #'
 #' This function accepts a data frame or a task and an imputation description
-#' as returned by [impute()] to perform the following actions:
+#' as returned by [impute] to perform the following actions:
 #' \enumerate{
 #'   \item Restore dropped columns, setting them to `NA`
 #'   \item Add dummy variables for columns as specified in `impute`
@@ -216,7 +216,7 @@ print.ImputationDesc = function(x, ...) {
 #'
 #' @template arg_taskdf
 #' @param desc (`ImputationDesc`)\cr
-#'   Imputation description as returned by [impute()].
+#'   Imputation description as returned by [impute].
 #' @return Imputated `data.frame` or task with imputed data.
 #' @family impute
 #' @export

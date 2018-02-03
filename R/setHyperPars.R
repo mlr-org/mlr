@@ -27,7 +27,7 @@ setHyperPars = function(learner, ..., par.vals = list()) {
 }
 
 #' Only exported for internal use.
-#' @param learner ([Learner()])\cr
+#' @param learner ([Learner])\cr
 #'   The learner.
 #' @param par.vals ([list])\cr
 #'   List of named (hyper)parameter settings.

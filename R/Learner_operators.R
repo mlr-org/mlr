@@ -50,7 +50,7 @@ getLearnerPackages = function(learner) {
 #' @title Get the parameter set of the learner.
 #'
 #' @description
-#' Alias for [getParamSet()].
+#' Alias for [getParamSet].
 #'
 #' @template arg_learner
 #' @template ret_ps
@@ -64,7 +64,7 @@ getLearnerParamSet = function(learner) {
 #' @title Get the parameter values of the learner.
 #'
 #' @description
-#' Alias for [getHyperPars()].
+#' Alias for [getHyperPars].
 #'
 #' @template arg_learner
 #' @inheritParams getHyperPars

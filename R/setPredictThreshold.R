@@ -1,7 +1,7 @@
 #' @title Set the probability threshold the learner should use.
 #'
 #' @description
-#' See `predict.threshold` in [makeLearner()] and [setThreshold()].
+#' See `predict.threshold` in [makeLearner] and [setThreshold].
 #'
 #' For complex wrappers only the top-level `predict.type` is currently set.
 #'

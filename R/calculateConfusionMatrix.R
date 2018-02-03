@@ -14,7 +14,7 @@
 #'
 #' The `print` function returns the relative matrices in
 #' a compact way so that both row and column marginals can be seen in one matrix.
-#' For details see [ConfusionMatrix()].
+#' For details see [ConfusionMatrix].
 #'
 #' Note that for resampling no further aggregation is currently performed.
 #' All predictions on all test sets are joined to a vector yhat, as are all labels
@@ -32,7 +32,7 @@
 #'   If `set` equals `train` or `test`, the `pred` object must be the result of a
 #'   resampling, otherwise an error is thrown.
 #'   Defaults to \dQuote{both}. Possible values are \dQuote{train}, \dQuote{test}, or \dQuote{both}.
-#' @return ([ConfusionMatrix()]).
+#' @return ([ConfusionMatrix]).
 #' @family performance
 #' @export
 #' @examples
@@ -125,7 +125,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
 #' @export
 #' @describeIn calculateConfusionMatrix
 #'
-#' @param x ([ConfusionMatrix()])\cr
+#' @param x ([ConfusionMatrix])\cr
 #'   Object to print.
 #' @param both (`logical(1)`)\cr
 #'   If `TRUE` both the absolute and relative confusion matrices are printed.
@@ -187,13 +187,13 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' @title Confusion matrix
 #'
 #' @description
-#' The result of [calculateConfusionMatrix()].
+#' The result of [calculateConfusionMatrix].
 #'
 #' Object members:
 #' \describe{
 #' \item{result ([matrix])}{Confusion matrix of absolute values and marginals. Can also contain
 #'   row and column sums of observations.}
-#' \item{task.desc ([TaskDesc()])}{Additional information about the task.}
+#' \item{task.desc ([TaskDesc])}{Additional information about the task.}
 #' \item{sums (`logical(1)`)}{Flag if marginal sums of observations are calculated.}
 #' \item{relative (`logical(1)`)}{Flag if the relative confusion matrices are calculated.}
 #' \item{relative.row ([matrix])}{Confusion matrix of relative values and marginals normalized by row.}

@@ -21,14 +21,14 @@
 #'   `args` are the args that were passed to `train`.
 #'   `control` is the object you returned in `train`.
 #'   Must return the processed data.
-#' @param par.set ([ParamHelpers::ParamSet()])\cr
-#'   Parameter set of [ParamHelpers::LearnerParam()] objects to describe the
+#' @param par.set ([ParamHelpers::ParamSet])\cr
+#'   Parameter set of [ParamHelpers::LearnerParam] objects to describe the
 #'   parameters in `args`.
 #'   Default is empty set.
 #' @param par.vals ([list])\cr
 #'   Named list of default values for params in `args` respectively `par.set`.
 #'   Default is empty list.
-#' @return ([Learner()]).
+#' @return ([Learner]).
 #' @family wrapper
 #' @export
 makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(), par.vals = list()) {

@@ -209,7 +209,7 @@ imputeNormal = function(mu = NA_real_, sd = NA_real_) {
 
 #' @export
 #' @param breaks (`numeric(1)`)\cr
-#'  Number of breaks to use in [graphics::hist()]. If missing,
+#'  Number of breaks to use in [graphics::hist]. If missing,
 #'  defaults to auto-detection via \dQuote{Sturges}.
 #' @param use.mids (`logical(1)`)\cr
 #'  If `x` is numeric and a histogram is used, impute with bin mids (default)
@@ -260,9 +260,9 @@ imputeHist = function(breaks, use.mids = TRUE) {
   )
 }
 
-#' @param learner ([Learner()] | `character(1)`)\cr
+#' @param learner ([Learner] | `character(1)`)\cr
 #'  Supervised learner. Its predictions will be used for imputations.
-#'  If you pass a string the learner will be created via [makeLearner()].
+#'  If you pass a string the learner will be created via [makeLearner].
 #'  Note that the target column is not available for this operation.
 #' @param features ([character])\cr
 #'  Features to use in `learner` for prediction.

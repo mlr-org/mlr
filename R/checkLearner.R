@@ -2,7 +2,7 @@
 # character vector.
 
 #' Exported for internal use only.
-#' @param learner ([Learner()] | `character(1)`)\cr
+#' @param learner ([Learner] | `character(1)`)\cr
 #'   The learner to check, or the name of the learner to create
 #' @param type (`character(1)`)\cr
 #'   What type of learner to require.

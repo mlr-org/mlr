@@ -1,7 +1,7 @@
 #' @title Create control structures for feature selection.
 #'
 #' @description
-#' Feature selection method used by [selectFeatures()].\cr
+#' Feature selection method used by [selectFeatures].\cr
 #' The methods used here follow a wrapper approach, described in
 #' Kohavi and John (1997) (see references).
 #'
@@ -52,11 +52,11 @@
 #'   Maximal number of features.
 #' @param tune.threshold (`logical(1)`)\cr
 #'   Should the threshold be tuned for the measure at hand, after each feature set evaluation,
-#'   via [tuneThreshold()]?
+#'   via [tuneThreshold]?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is `FALSE`.
 #' @param tune.threshold.args ([list])\cr
-#'   Further arguments for threshold tuning that are passed down to [tuneThreshold()].
+#'   Further arguments for threshold tuning that are passed down to [tuneThreshold].
 #'   Default is none.
 #' @template arg_log_fun
 #' @param prob (`numeric(1)`)\cr
@@ -88,9 +88,9 @@
 #' @param comma (`logical(1)`)\cr
 #'   Parameter of the GA feature selection, indicating whether to use a (`mu`, `lambda`)
 #'   or (`mu` + `lambda`) GA. The default is `FALSE`.
-#' @return ([FeatSelControl()]). The specific subclass is one of
-#'   [FeatSelControlExhaustive()], [FeatSelControlRandom()],
-#'   [FeatSelControlSequential()], [FeatSelControlGA()].
+#' @return ([FeatSelControl]). The specific subclass is one of
+#'   [FeatSelControlExhaustive], [FeatSelControlRandom],
+#'   [FeatSelControlSequential], [FeatSelControlGA].
 #' @references Ron Kohavi and George H. John,
 #' Wrappers for feature subset selection, Artificial Intelligence Volume 97, 1997, 273-324.
 #' <http://ai.stanford.edu/~ronnyk/wrappersPrint.pdf>.\cr

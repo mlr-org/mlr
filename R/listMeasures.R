@@ -7,12 +7,12 @@
 #' @template arg_task_or_type
 #' @param properties ([character])\cr
 #'   Set of required properties to filter for.
-#'   See [Measure()] for some standardized properties.
+#'   See [Measure] for some standardized properties.
 #'   Default is `character(0)`.
 #' @param create (`logical(1)`)\cr
 #'   Instantiate objects (or return strings)?
 #'   Default is `FALSE`.
-#' @return ([character` | `list` of [Measure()]). Class names of matching
+#' @return ([character` | `list` of [Measure]). Class names of matching
 #'   measures or instantiated objects.
 #' @export
 listMeasures = function(obj, properties = character(0L), create = FALSE) {

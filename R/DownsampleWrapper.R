@@ -6,10 +6,10 @@
 #'
 #' @template arg_learner
 #' @param dw.perc (`numeric(1)`)\cr
-#'   See [downsample()].
+#'   See [downsample].
 #'   Default is 1.
 #' @param dw.stratify (`logical(1)`)\cr
-#'   See [downsample()].
+#'   See [downsample].
 #'   Default is `FALSE`.
 #' @template ret_learner
 #' @family downsample

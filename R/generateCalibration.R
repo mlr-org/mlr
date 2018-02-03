@@ -15,7 +15,7 @@
 #' @template arg_plotroc_obj
 #' @param breaks (`character(1)` | [numeric])\cr
 #'   If `character(1)`, the algorithm to use in generating probability bins.
-#'   See [hist()] for details.
+#'   See [hist] for details.
 #'   If [numeric], the cut points for the bins.
 #'   Default is \dQuote{Sturges}.
 #' @param groups (`integer(1)`)\cr
@@ -23,7 +23,7 @@
 #'   If specified, `breaks` is ignored.
 #'   Default is `NULL`.
 #' @param task.id (`character(1)`)\cr
-#'   Selected task in [BenchmarkResult()] to do plots for, ignored otherwise.
+#'   Selected task in [BenchmarkResult] to do plots for, ignored otherwise.
 #'   Default is first task.
 #'
 #' @return [CalibrationData]. A [list] containing:
@@ -44,7 +44,7 @@
 #'       \item `Probability` Predicted posterior probability of `Class`.
 #'       \item `bin` Bin corresponding to `Probability`.
 #'     }}
-#'   \item{task}{([TaskDesc()])\cr
+#'   \item{task}{([TaskDesc])\cr
 #'     Task description.}
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
@@ -129,13 +129,13 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @title Plot calibration data using ggplot2.
 #'
 #' @description
-#' Plots calibration data from [generateCalibrationData()].
+#' Plots calibration data from [generateCalibrationData].
 #'
 #' @family plot
 #' @family calibration
 #'
 #' @param obj ([CalibrationData])\cr
-#'   Result of [generateCalibrationData()].
+#'   Result of [generateCalibrationData].
 #' @param smooth (`logical(1)`)\cr
 #'   Whether to use a loess smoother.
 #'   Default is `FALSE`.

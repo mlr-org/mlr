@@ -1,7 +1,7 @@
 #' @title Generate dummy variables for factor features.
 #'
 #' @description
-#' Replace all factor features with their dummy variables. Internally [model.matrix()] is used.
+#' Replace all factor features with their dummy variables. Internally [model.matrix] is used.
 #' Non factor features will be left untouched and passed to the result.
 #'
 #' @template arg_taskdf

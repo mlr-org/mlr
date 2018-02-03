@@ -1,7 +1,7 @@
 #' @title Induced model of learner.
 #'
 #' @description
-#' Result from [train()].
+#' Result from [train].
 #'
 #' It internally stores the underlying fitted model,
 #' the subset used for training, features used for training, levels of factors in the
@@ -70,17 +70,17 @@ print.WrappedModel = function(x, ...) {
 
 #' Get underlying R model of learner integrated into mlr.
 #'
-#' @param model ([WrappedModel()])\cr
-#'   The model, returned by e.g., [train()].
+#' @param model ([WrappedModel])\cr
+#'   The model, returned by e.g., [train].
 #' @param more.unwrap (`logical(1)`)\cr
 #'   Some learners are not basic learners from R, but implemented in mlr as meta-techniques.
 #'   Examples are everything that inherits from `HomogeneousEnsemble`.
-#'   In these cases, the `learner.model` is often a list of mlr [WrappedModel()]s.
+#'   In these cases, the `learner.model` is often a list of mlr [WrappedModel]s.
 #'   This option allows to strip them further to basic R models.
 #'   The option is simply ignored for basic learner models.
 #'   Default is `FALSE`.
 #' @return (any). A fitted model, depending the learner / wrapped package. E.g., a
-#'   model of class [rpart::rpart()] for learner \dQuote{classif.rpart}.
+#'   model of class [rpart::rpart] for learner \dQuote{classif.rpart}.
 #' @export
 getLearnerModel = function(model, more.unwrap = FALSE) {
   assertFlag(more.unwrap)
@@ -95,7 +95,7 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' @title Is the model a FailureModel?
 #'
 #' @description
-#' Such a model is created when one sets the corresponding option in [configureMlr()].
+#' Such a model is created when one sets the corresponding option in [configureMlr].
 #'
 #' For complex wrappers this getter returns `TRUE` if ANY model contained in it failed.
 #'
@@ -115,7 +115,7 @@ isFailureModel.WrappedModel = function(model) {
 #' @title Return error message of FailureModel.
 #'
 #' @description
-#' Such a model is created when one sets the corresponding option in [configureMlr()].
+#' Such a model is created when one sets the corresponding option in [configureMlr].
 #' If no failure occurred, `NA` is returned.
 #'
 #' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
@@ -136,7 +136,7 @@ getFailureModelMsg.WrappedModel = function(model) {
 #'
 #' @description
 #' Returns the error dump that can be used with `debugger()` to evaluate errors.
-#' If [configureMlr()] configuration `on.error.dump` is `FALSE`, this returns
+#' If [configureMlr] configuration `on.error.dump` is `FALSE`, this returns
 #' `NULL`.
 #'
 #' @template arg_wrappedmod

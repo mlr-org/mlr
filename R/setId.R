@@ -1,7 +1,7 @@
 #' @title Set the id of a learner object.
 #'
 #' @description
-#' Deprecated, use [setLearnerId()] instead.
+#' Deprecated, use [setLearnerId] instead.
 #'
 #' @template arg_learner
 #' @param id (`character(1)`)\cr

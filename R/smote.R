@@ -6,7 +6,7 @@
 #' for the minority class.
 #'
 #' The method handles factor features, too. The gower distance is used for nearest neighbor
-#' calculation, see [cluster::daisy()].
+#' calculation, see [cluster::daisy].
 #' For interpolation, the new factor level for x3
 #' is sampled from the two given levels of x1 and x2 per feature.
 #'

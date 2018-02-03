@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Calculates numerical filter values for features.
-#' For a list of features, use [listFilterMethods()].
+#' For a list of features, use [listFilterMethods].
 #'
 #' @template arg_task
 #' @param method ([character])\cr
@@ -18,7 +18,7 @@
 #'   A more general and flexible option than `...`.
 #'   Default is empty list.
 #' @return ([FilterValues]). A `list` containing:
-#'   \item{task.desc}{[[TaskDesc()])\cr
+#'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
 #'   \item{data}{([data.frame]) with columns:
 #'     \itemize{
@@ -100,7 +100,7 @@ print.FilterValues = function(x, ...) {
 #'
 #' @description
 #' Calculates numerical filter values for features.
-#' For a list of features, use [listFilterMethods()].
+#' For a list of features, use [listFilterMethods].
 #'
 #' @template arg_task
 #' @param method (`character(1)`)\cr
@@ -110,8 +110,8 @@ print.FilterValues = function(x, ...) {
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method.
-#' @return ([FilterValues()]).
-#' @note `getFilterValues` is deprecated in favor of [generateFilterValuesData()].
+#' @return ([FilterValues]).
+#' @note `getFilterValues` is deprecated in favor of [generateFilterValuesData].
 #' @family filter
 #' @export
 getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ...) {
@@ -130,7 +130,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #' @family filter
 #' @family generate_plot_data
 #'
-#' @param fvalues ([FilterValues()])\cr
+#' @param fvalues ([FilterValues])\cr
 #'   Filter values.
 #' @param sort (`character(1)`)\cr
 #'   Sort features like this.
@@ -197,7 +197,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #' @family plot
 #' @family filter
 #'
-#' @param fvalues ([FilterValues()])\cr
+#' @param fvalues ([FilterValues])\cr
 #'   Filter values.
 #' @param feat.type.cols (`logical(1)`)\cr
 #'   Colors for factor and numeric features.

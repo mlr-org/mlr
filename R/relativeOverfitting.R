@@ -5,14 +5,14 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @param predish ([ResampleDesc()] | [ResamplePrediction()] | [Prediction()])\cr
+#' @param predish ([ResampleDesc] | [ResamplePrediction] | [Prediction])\cr
 #'   Resampling strategy or resampling prediction or test predictions.
 #' @template arg_measures
 #' @template arg_task
 #' @template arg_learner
-#' @param pred.train ([Prediction()])\cr
+#' @param pred.train ([Prediction])\cr
 #'   Training predictions. Only needed if test predictions are passed.
-#' @param iter ([integer()])\cr
+#' @param iter ([integer])\cr
 #'   Iteration number. Default 1, usually you don't need to specify this. Only needed if test predictions are passed.
 #' @return ([data.frame]). Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
 #' @export

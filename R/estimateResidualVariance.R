@@ -2,11 +2,11 @@
 #'
 #' Estimate the residual variance of a regression model on a given task.
 #' If a regression learner is provided instead of a model, the model is
-#' trained (see [train()]) first.
+#' trained (see [train]) first.
 #'
-#' @param x ([Learner()] or [WrappedModel()])\cr
+#' @param x ([Learner] or [WrappedModel])\cr
 #'   Learner or wrapped model.
-#' @param task ([RegrTask()])\cr
+#' @param task ([RegrTask])\cr
 #'   Regression task.
 #'   If missing, `data` and `target` must be supplied.
 #' @param data ([data.frame])\cr

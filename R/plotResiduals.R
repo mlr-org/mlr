@@ -4,7 +4,7 @@
 #' Plots for model diagnostics. Provides scatterplots of true vs. predicted values
 #' and histograms of the model's residuals.
 #'
-#' @param obj ([Prediction()] | [BenchmarkResult()])\cr
+#' @param obj ([Prediction] | [BenchmarkResult])\cr
 #'   Input data.
 #' @param type Type of plot. Can be \dQuote{scatterplot}, the default. Or
 #'   \dQuote{hist}, for a histogram, or in case of classification problems
@@ -18,7 +18,7 @@
 #' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the short name of the learner instead of its ID in labels.
 #'   Defaults to `TRUE`. \cr
-#'   Only applicable if a [BenchmarkResult()]
+#'   Only applicable if a [BenchmarkResult]
 #'   is passed to `obj` in the function call, ignored otherwise.
 #' @template ret_gg2
 #' @family plot

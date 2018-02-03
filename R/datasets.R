@@ -3,7 +3,7 @@
 #' Contains the task (`iris.task`).
 #'
 #' @name iris.task
-#' @references See [datasets::iris()].
+#' @references See [datasets::iris].
 #' @keywords data
 #' @docType data
 NULL
@@ -13,7 +13,7 @@ NULL
 #' Contains the task (`sonar.task`).
 #'
 #' @name sonar.task
-#' @references See [mlbench::Sonar()].
+#' @references See [mlbench::Sonar].
 #' @keywords data
 #' @docType data
 NULL
@@ -23,7 +23,7 @@ NULL
 #' Contains the task (`bc.task`).
 #'
 #' @name bc.task
-#' @references See [mlbench::BreastCancer()].
+#' @references See [mlbench::BreastCancer].
 #'   The column `"Id"` and all incomplete cases have been removed from the task.
 #' @keywords data
 #' @docType data
@@ -34,7 +34,7 @@ NULL
 #' Contains the task (`pid.task`).
 #'
 #' @name pid.task
-#' @references See [mlbench::PimaIndiansDiabetes()].
+#' @references See [mlbench::PimaIndiansDiabetes].
 #'   Note that this is the uncorrected version from mlbench.
 #' @keywords data
 #' @docType data
@@ -46,7 +46,7 @@ NULL
 #'
 #' @name bh.task
 #' @aliases bh.task
-#' @references See [mlbench::BostonHousing()].
+#' @references See [mlbench::BostonHousing].
 #' @keywords data
 #' @docType data
 NULL
@@ -57,7 +57,7 @@ NULL
 #'
 #' @name wpbc.task
 #' @aliases wpbc.task
-#' @references See [TH.data::wpbc()].
+#' @references See [TH.data::wpbc].
 #'  Incomplete cases have been removed from the task.
 #' @keywords data
 #' @docType data
@@ -69,7 +69,7 @@ NULL
 #'
 #' @name lung.task
 #' @aliases lung.task
-#' @references See [survival::lung()].
+#' @references See [survival::lung].
 #'  Incomplete cases have been removed from the task.
 #' @keywords data
 #' @docType data
@@ -81,7 +81,7 @@ NULL
 #'
 #' @name mtcars.task
 #' @aliases mtcars.task
-#' @references See [datasets::mtcars()].
+#' @references See [datasets::mtcars].
 #' @keywords data
 #' @docType data
 NULL
@@ -92,7 +92,7 @@ NULL
 #'
 #' @name agri.task
 #' @aliases agri.task
-#' @references See [cluster::agriculture()].
+#' @references See [cluster::agriculture].
 #' @keywords data
 #' @docType data
 NULL
@@ -103,7 +103,7 @@ NULL
 #'
 #' @name costiris.task
 #' @aliases costiris.task
-#' @references See [datasets::iris()].
+#' @references See [datasets::iris].
 #'   The cost matrix was generated artificially following
 #'
 #'   Tu, H.-H. and Lin, H.-T. (2010), One-sided support vector regression for multiclass cost-sensitive classification.
@@ -174,7 +174,7 @@ NULL
 #' ultraviolet radiation spectrum and infrared ray radiation and one scalar
 #' column called h2o.
 #'
-#' The features and grids are scaled in the same way as in [FDboost::FDboost()].
+#' The features and grids are scaled in the same way as in [FDboost::FDboost].
 #'
 #' @name fuelsubset.task
 #' @references See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.

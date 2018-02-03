@@ -4,10 +4,10 @@
 #' \describe{
 #'   \item{makeTuneMultiCritControlGrid}{Grid search. All kinds of parameter types can be handled.
 #'     You can either use their correct param type and `resolution`,
-#'     or discretize them yourself by always using [ParamHelpers::makeDiscreteParam()]
-#'     in the `par.set` passed to [tuneParams()].}
+#'     or discretize them yourself by always using [ParamHelpers::makeDiscreteParam]
+#'     in the `par.set` passed to [tuneParams].}
 #'   \item{makeTuneMultiCritControlRandom}{Random search. All kinds of parameter types can be handled.}
-#'   \item{makeTuneMultiCritControlNSGA2}{Evolutionary method [mco::nsga2()].
+#'   \item{makeTuneMultiCritControlNSGA2}{Evolutionary method [mco::nsga2].
 #'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #'     For integers the internally proposed numeric values are automatically rounded.}
 #'   \item{makeTuneMultiCritControlMBO}{Model-based/ Bayesian optimization. All kinds of
@@ -28,9 +28,9 @@
 #'   `budget` equals the number of objective function evaluations, i.e. the
 #'   number of MBO iterations + the size of the initial design. If not `NULL`,
 #'   this will overwrite existing stopping conditions in `mbo.control`.
-#' @return ([TuneMultiCritControl()]). The specific subclass is one of
-#'   [TuneMultiCritControlGrid()], [TuneMultiCritControlRandom()],
-#'   [TuneMultiCritControlNSGA2()], [TuneMultiCritControlMBO()].
+#' @return ([TuneMultiCritControl]). The specific subclass is one of
+#'   [TuneMultiCritControlGrid], [TuneMultiCritControlRandom],
+#'   [TuneMultiCritControlNSGA2], [TuneMultiCritControlMBO].
 #' @family tune_multicrit
 #' @name TuneMultiCritControl
 #' @rdname TuneMultiCritControl

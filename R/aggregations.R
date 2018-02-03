@@ -29,7 +29,7 @@
 #'     with the arithmetic mean.}
 #' }
 #' @format None
-#' @seealso [Aggregation()]
+#' @seealso [Aggregation]
 #' @name aggregations
 #' @rdname aggregations
 NULL

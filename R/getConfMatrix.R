@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' `getConfMatrix` is deprecated. Please use [calculateConfusionMatrix()].
+#' `getConfMatrix` is deprecated. Please use [calculateConfusionMatrix].
 #'
 #'
 #' Calculates confusion matrix for (possibly resampled) prediction.
@@ -25,7 +25,7 @@
 #'   Default is `FALSE`.
 #' @return ([matrix]). A confusion matrix.
 #' @export
-#' @seealso [predict.WrappedModel()]
+#' @seealso [predict.WrappedModel]
 getConfMatrix = function(pred, relative = FALSE) {
   .Deprecated("calculateConfusionMatrix")
   calculateConfusionMatrix(pred, relative = relative)

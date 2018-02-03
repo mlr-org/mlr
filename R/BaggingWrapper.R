@@ -5,7 +5,7 @@
 #' (i.e., similar to what a `randomForest` does).
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via [getLearnerModel()].
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
@@ -21,7 +21,7 @@
 #' Note that the passed base learner must always have `predict.type = 'response'`,
 #' while the BaggingWrapper can estimate probabilities and standard errors, so it can
 #' be set, e.g., to `predict.type = 'prob'`. For this reason, when you call
-#' [setPredictType()], the type is only set for the BaggingWrapper, not passed
+#' [setPredictType], the type is only set for the BaggingWrapper, not passed
 #' down to the inner learner.
 #'
 #' @template arg_learner

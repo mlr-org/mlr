@@ -5,28 +5,28 @@
 #' Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
-#' [TuneMultiCritControl()].
+#' [TuneMultiCritControl].
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling ([ResampleInstance()] | [ResampleDesc()])\cr
+#' @param resampling ([ResampleInstance] | [ResampleDesc])\cr
 #'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are
 #'   evaluated on the same training/test sets.
-#'   If you want to change that behavior, look at [TuneMultiCritControl()].
-#' @param par.set ([ParamHelpers::ParamSet()])\cr
+#'   If you want to change that behavior, look at [TuneMultiCritControl].
+#' @param par.set ([ParamHelpers::ParamSet])\cr
 #'   Collection of parameters and their constraints for optimization.
 #'   Dependent parameters with a `requires` field must use `quote` and not
 #'   `expression` to define it.
-#' @param measures [list of [Measure()])\cr
+#' @param measures [list of [Measure])\cr
 #'   Performance measures to optimize simultaneously.
-#' @param control ([TuneMultiCritControl()])\cr
+#' @param control ([TuneMultiCritControl])\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
 #' @param resample.fun ([closure`)\cr
-#'   The function to use for resampling. Defaults to [resample()] and should take the
-#'   same arguments as, and return the same result type as, [resample()].
-#' @return ([TuneMultiCritResult()]).
+#'   The function to use for resampling. Defaults to [resample] and should take the
+#'   same arguments as, and return the same result type as, [resample].
+#' @return ([TuneMultiCritResult]).
 #' @family tune_multicrit
 #' @noMd
 #' @export

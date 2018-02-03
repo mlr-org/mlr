@@ -1,7 +1,7 @@
 #' @title RandomForest regression learner.
 #'
 #' @description
-#' mlr learner for regression tasks using [randomForest::randomForest()].
+#' mlr learner for regression tasks using [randomForest::randomForest].
 #'
 #' This doc page exists, as we added additional uncertainty estimation functionality
 #' (`predict.type = "se"`) for the randomForest, which is not provided by the underlying package.

@@ -2,21 +2,21 @@
 #'
 #' @description
 #' A description of a resampling algorithm contains all necessary information to
-#' create a [ResampleInstance()], when given the size of the data set.
+#' create a [ResampleInstance], when given the size of the data set.
 #'
 #' @details
 #' Some notes on some special strategies:
 #' \describe{
 #' \item{Repeated cross-validation}{Use \dQuote{RepCV}. Then you have to set the aggregation function
 #'   for your preferred performance measure to \dQuote{testgroup.mean}
-#'   via [setAggregation()].}
+#'   via [setAggregation].}
 #' \item{B632 bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
 #'   Then you have to set the aggregation function for your preferred performance measure to
-#'   \dQuote{b632} via [setAggregation()].}
+#'   \dQuote{b632} via [setAggregation].}
 #' \item{B632+ bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
 #'   Then you have to set the aggregation function for your preferred performance measure to
-#'   \dQuote{b632plus} via [setAggregation()].}
-#' \item{Fixed Holdout set}{Use [makeFixedHoldoutInstance()].}
+#'   \dQuote{b632plus} via [setAggregation].}
+#' \item{Fixed Holdout set}{Use [makeFixedHoldoutInstance].}
 #' }
 #'
 #' Object slots:
@@ -77,7 +77,7 @@
 #'   Note that you have to ensure yourself that stratification is possible, i.e.
 #'   that each strata contains enough observations.
 #'   This argument and `stratify` are mutually exclusive.
-#' @return ([ResampleDesc()]).
+#' @return ([ResampleDesc]).
 #' @family resample
 #' @export
 #' @aliases ResampleDesc

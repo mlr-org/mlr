@@ -16,14 +16,14 @@
 #'   Default is \dQuote{rocc}.
 #' @param browse (`logical(1)`)\cr
 #'   Open ViperCharts plot in web browser? If not you simple get the URL returned.
-#'   Calls [browseURL()].
+#'   Calls [browseURL].
 #'   Default is `TRUE`.
 #' @param auth.key (`character(1)`)\cr
 #'   API key to use for call to Viper charts website.
 #'   Only required if you want the chart to be private.
 #'   Default is `NULL`.
 #' @param task.id (`character(1)`)\cr
-#'   Selected task in [BenchmarkResult()] to do plots for, ignored otherwise.
+#'   Selected task in [BenchmarkResult] to do plots for, ignored otherwise.
 #'   Default is first task.
 #' @return (`character(1)`). Invisibly returns the ViperCharts URL.
 #' @family roc

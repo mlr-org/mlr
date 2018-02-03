@@ -4,8 +4,8 @@
 #' Constructs a grid of tuning parameters from a learner of the `caret`
 #' R-package. These values are then converted into a list of non-tunable
 #' parameters (`par.vals`) and a tunable
-#' [ParamHelpers::ParamSet()] (`par.set`), which can be used by
-#' [tuneParams()] for tuning the learner. Numerical parameters will
+#' [ParamHelpers::ParamSet] (`par.set`), which can be used by
+#' [tuneParams] for tuning the learner. Numerical parameters will
 #' either be specified by their lower and upper bounds or they will be
 #' discretized into specific values.
 #'
@@ -18,7 +18,7 @@
 #'   generating the grid of tuning parameters. `caret` generates either as
 #'   many values per tuning parameter / dimension as defined by `length`
 #'   or only a single value (in case of non-tunable `par.vals`).
-#' @param task ([Task()])\cr
+#' @param task ([Task])\cr
 #'   Learning task, which might be requested for creating the tuning grid.
 #' @param discretize (`logical(1)`)\cr
 #'   Should the numerical parameters be discretized? Alternatively, they will
@@ -26,7 +26,7 @@
 #' @return (`list(2)`). A list of parameters:
 #' \itemize{
 #'   \item{`par.vals`} contains a list of all constant tuning parameters
-#'   \item{`par.set`} is a [ParamHelpers::ParamSet()], containing all the configurable
+#'   \item{`par.set`} is a [ParamHelpers::ParamSet], containing all the configurable
 #'   tuning parameters
 #' }
 #' @export

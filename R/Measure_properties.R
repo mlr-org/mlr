@@ -4,7 +4,7 @@
 #' Properties can be accessed with `getMeasureProperties(measure)`, which returns a
 #' character vector.
 #'
-#' The measure properties are defined in [Measure()].
+#' The measure properties are defined in [Measure].
 #' @template arg_measure
 #' @param props ([character])\cr
 #'   Vector of properties to query.

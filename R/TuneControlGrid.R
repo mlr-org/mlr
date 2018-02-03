@@ -3,20 +3,20 @@
 #' @description
 #' A basic grid search can handle all kinds of parameter types.
 #' You can either use their correct param type and `resolution`,
-#' or discretize them yourself by always using [ParamHelpers::makeDiscreteParam()]
-#' in the `par.set` passed to [tuneParams()].
+#' or discretize them yourself by always using [ParamHelpers::makeDiscreteParam]
+#' in the `par.set` passed to [tuneParams].
 #'
 #' @inherit TuneControl
 #' @param resolution ([integer])\cr
 #'   Resolution of the grid for each numeric/integer parameter in `par.set`.
 #'   For vector parameters, it is the resolution per dimension.
 #'   Either pass one resolution for all parameters, or a named vector.
-#'   See [ParamHelpers::generateGridDesign()].
+#'   See [ParamHelpers::generateGridDesign].
 #'   Default is 10.
 #' @param budget (`integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. If set, must equal the size of the grid.
-#' @return ([TuneControlGrid()])
+#' @return ([TuneControlGrid])
 #' @aliases TuneControlGrid
 #' @family tune
 #' @export

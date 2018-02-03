@@ -1,7 +1,7 @@
 #' @title Show and visualize the steps of feature selection.
 #'
 #' @description
-#' This function prints the steps [selectFeatures()] took to find its optimal set
+#' This function prints the steps [selectFeatures] took to find its optimal set
 #' of features and the reason why it stopped.
 #' It can also print information about all calculations done in each intermediate step.
 #'

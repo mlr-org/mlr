@@ -4,7 +4,7 @@
 #' Construct your own performance measure, used after resampling.
 #' Note that individual training / test set performance values will be set to `NA`, you
 #' only calculate an aggregated value. If you can define a function that makes sense
-#' for every single training / test set, implement your own [Measure()].
+#' for every single training / test set, implement your own [Measure].
 #'
 #' @param measure.id (`character(1)`)\cr
 #'   Short name of measure.
@@ -17,15 +17,15 @@
 #'   Long name of the aggregation.
 #'   Default is `aggregation.id`.
 #' @param fun (`function(task, group, pred, extra.args)`)\cr
-#'   Calculates performance value from [ResamplePrediction()] object.
+#'   Calculates performance value from [ResamplePrediction] object.
 #'   For rare cases you can also use the task, the grouping or the extra arguments `extra.args`.
 #'   \describe{
-#'     \item{`task` ([Task()])}{
+#'     \item{`task` ([Task])}{
 #'       The task.}
 #'     \item{`group` ([factor])}{
 #'       Grouping of resampling iterations. This encodes whether specific iterations
 #'       'belong together' (e.g. repeated CV).}
-#'     \item{`pred` ([Prediction()])}{
+#'     \item{`pred` ([Prediction])}{
 #'       Prediction object.}
 #'     \item{`extra.args` ([list])}{
 #'       See below.}
@@ -37,7 +37,7 @@
 #'   Should the measure be minimized?
 #'   Default is `TRUE`.
 #' @param properties ([character])\cr
-#'   Set of measure properties. For a list of values see [Measure()].
+#'   Set of measure properties. For a list of values see [Measure].
 #'   Default is `character(0)`.
 #' @param best (`numeric(1)`)\cr
 #'   Best obtainable value for measure.
