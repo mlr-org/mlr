@@ -21,7 +21,6 @@ data(Sonar, package = "mlbench")
 sonar.task = makeClassifTask("Sonar-example", data = Sonar, target = "Class")
 save(sonar.task, file = file.path(dn, "sonar.task.RData"), compress = "xz")
 
-
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
 BreastCancer$Id = NULL
