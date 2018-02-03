@@ -30,7 +30,7 @@
 #'   A function which aggregates the differences.
 #'   This function must take a numeric vector and return a numeric vector of length 1.
 #'   The default is `mean`.
-#' @param nmc ([integer(1)`)\cr
+#' @param nmc (`integer(1)`)\cr
 #'   The number of Monte-Carlo iterations to use in computing the feature importance.
 #'   If `nmc == -1` and `method = "permutation.importance"` then all
 #'   permutations of the `features` are used.
@@ -45,7 +45,7 @@
 #' @return ([FeatureImportance]). A named list which contains the computed feature importance and the input arguments.
 #'
 #' Object members:
-#' \item{res}{([data.frame`)\cr
+#' \item{res}{([data.frame])\cr
 #'   Has columns for each feature or combination of features (colon separated) for which the importance is computed.
 #'   A row coresponds to importance of the feature specified in the column for the target.
 #' }
@@ -64,7 +64,7 @@
 #'   Whether or not, when `method = "permutation.importance"`, the feature values
 #'   are sampled with replacement.
 #' }
-#' \item{nmc}{([integer(1)`)\cr
+#' \item{nmc}{(`integer(1)`)\cr
 #'   The number of Monte-Carlo iterations used to compute the feature importance.
 #'   When `nmc == -1` and `method = "permutation.importance"` all permutations are used.
 #' }

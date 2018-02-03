@@ -107,7 +107,7 @@ print.LearningCurveData = function(x, ...) {
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
-#' @param obj ([LearningCurveData`)\cr
+#' @param obj ([LearningCurveData])\cr
 #'   Result of [generateLearningCurveData()], with class `LearningCurveData`.
 #' @param facet (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
@@ -163,7 +163,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
-#' @param obj ([LearningCurveData`)\cr
+#' @param obj ([LearningCurveData])\cr
 #'   Result of [generateLearningCurveData()].
 #' @param interaction (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application

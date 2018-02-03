@@ -129,7 +129,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
 #'   Object to print.
 #' @param both (`logical(1)`)\cr
 #'   If `TRUE` both the absolute and relative confusion matrices are printed.
-#' @param digits ([integer(1)`)\cr
+#' @param digits (`integer(1)`)\cr
 #'   How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.
 #' @param ... (any)\cr
 #'  Currently not used.
@@ -198,7 +198,7 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' \item{relative (`logical(1)`)}{Flag if the relative confusion matrices are calculated.}
 #' \item{relative.row ([matrix])}{Confusion matrix of relative values and marginals normalized by row.}
 #' \item{relative.col ([matrix])}{Confusion matrix of relative values and marginals normalized by column.}
-#' \item{relative.error ([numeric(1)])}{Relative error overall.}
+#' \item{relative.error (`numeric(1)`)}{Relative error overall.}
 #' }
 #' @name ConfusionMatrix
 #' @family performance

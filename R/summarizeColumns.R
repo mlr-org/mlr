@@ -9,7 +9,7 @@
 #' Characters and logicals will be treated as factors.
 #'
 #' @template arg_taskdf
-#' @return [`data.frame`]. With columns:
+#' @return ([data.frame]). With columns:
 #'   \item{name}{Name of column.}
 #'   \item{type}{Data type of column.}
 #'   \item{na}{Number of NAs in column.}

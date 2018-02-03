@@ -215,7 +215,7 @@ print.ImputationDesc = function(x, ...) {
 #' }
 #'
 #' @template arg_taskdf
-#' @param desc ([ImputationDesc`)\cr
+#' @param desc ([ImputationDesc])\cr
 #'   Imputation description as returned by [impute()].
 #' @return Imputated `data.frame` or task with imputed data.
 #' @family impute

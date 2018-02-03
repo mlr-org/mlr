@@ -9,7 +9,7 @@
 #'
 #' @template arg_plotroc_obj
 #' @template arg_measures
-#' @param gridsize ([integer(1)`)\cr
+#' @param gridsize (`integer(1)`)\cr
 #'   Grid resolution for x-axis (threshold).
 #'   Default is 100.
 #' @param aggregate (`logical(1)`)\cr
@@ -106,7 +106,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @param obj ([ThreshVsPerfData`)\cr
+#' @param obj ([ThreshVsPerfData])\cr
 #'   Result of [generateThreshVsPerfData()].
 #' @param measures ([Measure()] | list of [Measure()])\cr
 #'   Performance measure(s) to plot.
@@ -118,7 +118,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #'   The variable mapped to `facet` must have more than one unique value, otherwise it will
 #'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
 #'   The default is \dQuote{measure}.
-#' @param mark.th ([numeric(1)`)\cr
+#' @param mark.th (`numeric(1)`)\cr
 #'   Mark given threshold with vertical line?
 #'   Default is `NA` which means not to do it.
 #' @param pretty.names (`logical(1)`)\cr
@@ -206,9 +206,9 @@ plotThreshVsPerf = function(obj, measures = obj$measures,
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @param obj ([ThreshVsPerfData`)\cr
+#' @param obj ([ThreshVsPerfData])\cr
 #'   Result of [generateThreshVsPerfData()].
-#' @param mark.th ([numeric(1)`)\cr
+#' @param mark.th (`numeric(1)`)\cr
 #'   Mark given threshold with vertical line?
 #'   Default is `NA` which means not to do it.
 #' @param interaction (`character(1)`)\cr
@@ -336,7 +336,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @param obj ([ThreshVsPerfData`)\cr
+#' @param obj ([ThreshVsPerfData])\cr
 #'   Result of [generateThreshVsPerfData()].
 #' @param measures ([list(2)` of [Measure()])\cr
 #'   Default is the first 2 measures passed to [generateThreshVsPerfData()].

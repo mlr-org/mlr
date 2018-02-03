@@ -3,21 +3,18 @@
 #' @description
 #' Calculate the absolute number of correct/incorrect classifications and the following evaluation measures:
 #'
-#'
-#' \itemize{
-#'  \item `tpr` True positive rate (Sensitivity, Recall)
-#'  \item `fpr` False positive rate (Fall-out)
-#'  \item `fnr` False negative rate (Miss rate)
-#'  \item `tnr` True negative rate (Specificity)
-#'  \item `ppv` Positive predictive value (Precision)
-#'  \item `for` False omission rate
-#'  \item `lrp` Positive likelihood ratio (LR+)
-#'  \item `fdr` False discovery rate
-#'  \item `npv` Negative predictive value
-#'  \item `acc` Accuracy
-#'  \item `lrm` Negative likelihood ratio (LR-)
-#'  \item `dor` Diagnostic odds ratio
-#' }
+#' * `tpr` True positive rate (Sensitivity, Recall)
+#' * `fpr` False positive rate (Fall-out)
+#' * `fnr` False negative rate (Miss rate)
+#' * `tnr` True negative rate (Specificity)
+#' * `ppv` Positive predictive value (Precision)
+#' * `for` False omission rate
+#' * `lrp` Positive likelihood ratio (LR+)
+#' * `fdr` False discovery rate
+#' * `npv` Negative predictive value
+#' * `acc` Accuracy
+#' * `lrm` Negative likelihood ratio (LR-)
+#' * `dor` Diagnostic odds ratio
 #'
 #' For details on the used measures see [measures()] and also
 #' <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>.
@@ -80,11 +77,11 @@ calculateROCMeasures = function(pred) {
 
 #' @describeIn calculateROCMeasures
 #'
-#' @param x ([ROCMeasures`)\cr
+#' @param x ([ROCMeasures])\cr
 #'   Created by [calculateROCMeasures()].
 #' @param abbreviations (`logical(1)`)\cr
 #'   If `TRUE` a short paragraph with explanations of the used measures is printed additionally.
-#' @param digits ([integer(1)`)\cr
+#' @param digits (`integer(1)`)\cr
 #'   Number of digits the measures are rounded to.
 #' @param ... `(any)`\cr
 #'  Currently not used.

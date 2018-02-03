@@ -3,7 +3,7 @@
 #' @description
 #' Very simple getter.
 #'
-#' @param res ([ResampleResult`)\cr
+#' @param res ([ResampleResult])\cr
 #'   The result of [resample()] run with `keep.pred = TRUE`.
 #' @return ([ResamplePrediction]).
 #' @export
@@ -20,7 +20,7 @@ getRRPredictions = function(res) {
 #' @description
 #' Get a summarizing task description.
 #'
-#' @param res ([ResampleResult`)\cr
+#' @param res ([ResampleResult])\cr
 #'   The result of [resample()].
 #' @return ([TaskDesc]).
 #' @export
@@ -35,7 +35,7 @@ getRRTaskDescription = function(res) {
 #' @description
 #' Get a summarizing task description.
 #'
-#' @param res ([ResampleResult`)\cr
+#' @param res ([ResampleResult])\cr
 #'   The result of [resample()].
 #' @return ([TaskDesc]).
 #' @export
@@ -55,7 +55,7 @@ getRRTaskDesc = function(res) {
 #' and in case that `predict = "test"` was used, the slot `train` will be
 #' `NULL`.
 #'
-#' @param res ([ResampleResult`)\cr
+#' @param res ([ResampleResult])\cr
 #'   The result of [resample()] run with `keep.pred = TRUE`.
 #' @param ... (any)\cr
 #'   Further options passed to [makePrediction()].
@@ -110,7 +110,7 @@ getRRPredictionList = function(res, ...) {
 #' @title Compute new measures for existing ResampleResult
 #' @description
 #'  Adds new measures to an existing `ResampleResult`.
-#' @param res ([ResampleResult`)\cr
+#' @param res ([ResampleResult])\cr
 #'   The result of [resample()] run with `keep.pred = TRUE`.
 #' @template arg_measures
 #' @return ([ResampleResult()]).
@@ -171,7 +171,7 @@ addRRMeasure = function(res, measures) {
 #' \dQuote{train} (error during training step), \dQuote{predict.train} (prediction on training subset),
 #' \dQuote{predict.test} (prediction on test subset).
 #'
-#' @param res ([ResampleResult`)\cr
+#' @param res ([ResampleResult])\cr
 #'   The result of [resample()].
 #' @return [list].
 #' @family debug

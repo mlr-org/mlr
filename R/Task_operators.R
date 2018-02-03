@@ -415,7 +415,7 @@ subsetTask = function(task, subset = NULL, features) {
 #' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
 #'
 #' @template arg_task
-#' @param data ([data.frame`)\cr
+#' @param data ([data.frame])\cr
 #'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
 #' @param costs ([data.frame`\cr
 #'   Optional: cost matrix.

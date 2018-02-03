@@ -19,10 +19,10 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #'
 #' @template arg_learner
-#' @param obw.iters ([integer(1)`)\cr
+#' @param obw.iters (`integer(1)`)\cr
 #'   Number of fitted models in bagging.
 #'   Default is 10.
-#' @param obw.rate ([numeric(1)`)\cr
+#' @param obw.rate (`numeric(1)`)\cr
 #'   Factor to upsample a class in each bag.
 #'   Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.

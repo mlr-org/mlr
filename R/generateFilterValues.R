@@ -8,7 +8,7 @@
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect ([integer(1)`)\cr
+#' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
@@ -106,7 +106,7 @@ print.FilterValues = function(x, ...) {
 #' @param method (`character(1)`)\cr
 #'   Filter method, see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect ([integer(1)`)\cr
+#' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method.
@@ -136,7 +136,7 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #'   Sort features like this.
 #'   \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
 #'   Default is decreasing.
-#' @param n.show ([integer(1)`)\cr
+#' @param n.show (`integer(1)`)\cr
 #'   Number of features (maximal) to show.
 #'   Default is 20.
 #' @param feat.type.cols (`logical(1)`)\cr

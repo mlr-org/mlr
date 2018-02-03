@@ -8,8 +8,8 @@
 #' \describe{
 #' \item{desc ([ResampleDesc()])}{See argument.}
 #' \item{size (`integer(1)`)}{See argument.}
-#' \item{train.inds [list of `integer])}{List of of training indices for all iterations.}
-#' \item{test.inds [list of `integer])}{List of of test indices for all iterations.}
+#' \item{train.inds (list of [integer])}{List of of training indices for all iterations.}
+#' \item{test.inds (list of [integer])}{List of of test indices for all iterations.}
 #' \item{group ([factor])}{Optional grouping of resampling iterations. This encodes whether
 #'   specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
 #'   aggregate performance values accordingly. Default is 'factor()'.}

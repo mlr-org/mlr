@@ -13,7 +13,7 @@
 #'   The name of the learner from `caret`
 #'   (cf. <https://topepo.github.io/caret/available-models.html>). Note that the
 #'   names in `caret` often differ from the ones in `mlr`.
-#' @param length ([integer(1)`)\cr
+#' @param length (`integer(1)`)\cr
 #'   A length / precision parameter which is used by `caret` for
 #'   generating the grid of tuning parameters. `caret` generates either as
 #'   many values per tuning parameter / dimension as defined by `length`

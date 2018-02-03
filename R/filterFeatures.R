@@ -13,13 +13,13 @@
 #'   If you pass this, the filter values in the object are used for feature filtering.
 #'   `method` and `...` are ignored then.
 #'   Default is `NULL` and not used.
-#' @param perc ([numeric(1)`)\cr
+#' @param perc (`numeric(1)`)\cr
 #'   If set, select `perc`*100 top scoring features.
 #'   Mutually exclusive with arguments `abs` and `threshold`.
-#' @param abs ([numeric(1)`)\cr
+#' @param abs (`numeric(1)`)\cr
 #'   If set, select `abs` top scoring features.
 #'   Mutually exclusive with arguments `perc` and `threshold`.
-#' @param threshold ([numeric(1)`)\cr
+#' @param threshold (`numeric(1)`)\cr
 #'   If set, select features whose score exceeds `threshold`.
 #'   Mutually exclusive with arguments `perc` and `abs`.
 #' @param mandatory.feat ([character])\cr

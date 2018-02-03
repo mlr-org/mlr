@@ -6,8 +6,8 @@
 #'
 #' @param obj ([Task()] | [ResampleInstance()])\cr
 #'   Input data or a `ResampleInstance`.
-#' @param perc ([numeric(1)`)\cr
-#'   Percentage from [0, 1].
+#' @param perc (`numeric(1)`)\cr
+#'   Percentage from (0, 1).
 #'   Default is 1.
 #' @param stratify (`logical(1)`)\cr
 #'   Only for classification:

@@ -1,10 +1,10 @@
 #' Generate a fixed holdout instance for resampling.
 #'
-#' @param train.inds ([integer`)\cr
+#' @param train.inds ([integer])\cr
 #'   Indices for training set.
-#' @param test.inds ([integer`)\cr
+#' @param test.inds ([integer])\cr
 #'   Indices for test set.
-#' @param size ([integer(1)`)\cr
+#' @param size (`integer(1)`)\cr
 #'   Size of the data set to resample.
 #'   The function needs to know the largest possible index of the whole data set.
 #' @return ([ResampleInstance()]).

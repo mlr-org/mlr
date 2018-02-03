@@ -7,7 +7,7 @@
 #' @param cols ([character])\cr
 #'   Restrict result to columns in `cols`.
 #'   Default is all factor, character and logical columns of `obj`.
-#' @return [`list`]. Named list of tables.
+#' @return ([list]). Named list of tables.
 #' @export
 #' @family eda_and_preprocess
 #' summarizeLevels(iris)

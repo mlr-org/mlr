@@ -49,7 +49,7 @@
 #' \item{extract ([list]):}{
 #'   List of extracted parts from fitted models or `NULL`.
 #' }
-#' \item{runtime ([numeric(1)]):}{
+#' \item{runtime (`numeric(1)`):}{
 #'   Time in seconds it took to execute the resampling.
 #' }
 #' }

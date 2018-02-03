@@ -9,7 +9,7 @@
 #' reduced (downsampled) by randomly sampling without replacement from this class.
 #'
 #' @template arg_task
-#' @param rate ([numeric(1)`)\cr
+#' @param rate (`numeric(1)`)\cr
 #'   Factor to upsample or downsample a class.
 #'   For undersampling: Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent

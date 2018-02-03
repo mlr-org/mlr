@@ -7,7 +7,7 @@
 #'   First parent string.
 #' @param y ([logical`)\cr
 #'   Second parent string.
-#' @param rate ([numeric(1)`)\cr
+#' @param rate (`numeric(1)`)\cr
 #'   A number representing the probability of selecting an element of the first string.
 #'   Default is `0.5`.
 #' @return ([crossover()]).

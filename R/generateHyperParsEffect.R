@@ -145,7 +145,7 @@ print.HyperParsEffectData = function(x, ...) {
 #' or effect of a particular hyperparameter on some performance measure and/or
 #' optimizer.
 #'
-#' @param hyperpars.effect.data ([HyperParsEffectData`)\cr
+#' @param hyperpars.effect.data ([HyperParsEffectData])\cr
 #'  Result of [generateHyperParsEffectData()]
 #' @param x (`character(1)`)\cr
 #'  Specify what should be plotted on the x axis. Must be a column from

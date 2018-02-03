@@ -20,9 +20,9 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value [`numeric`(1)]\cr
+#' @param p.value ([numeric`(1)]\cr
 #'   P-value for the critical difference. Default: 0.05
-#' @param baseline (`character(1)`): [`learner.id`] \cr
+#' @param baseline (`character(1)`): ([learner.id]) \cr
 #'   Select a `learner.id` as baseline for the `test = "bd"`
 #'   ("Bonferroni-Dunn") critical differences
 #'   diagram.The critical difference Interval will then be positioned arround this learner.
@@ -40,13 +40,13 @@
 #'   which is comparing all classifiers to each other. The null hypothesis that
 #'   there is a difference between the classifiers can not be rejected for all
 #'   classifiers that have a single grey bar connecting them.
-#' @return [`critDifferencesData`]. List containing:
-#' \item{data}{[`data.frame`] containing the info for the descriptive
+#' @return ([critDifferencesData]). List containing:
+#' \item{data}{([data.frame]) containing the info for the descriptive
 #'                part of the plot}
-#' \item{friedman.nemenyi.test}{[`list`] of class `pairwise.htest` \cr
+#' \item{friedman.nemenyi.test}{([list]) of class `pairwise.htest` \cr
 #'                                contains the calculated
 #'                                \link[PMCMR]{posthoc.friedman.nemenyi.test}}
-#' \item{cd.info}{[`list`] containing info on the critical difference
+#' \item{cd.info}{([list]) containing info on the critical difference
 #'                  and its positioning}
 #' \item{baseline}{`baseline` chosen for plotting}
 #' \item{p.value}{p.value used for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
@@ -133,11 +133,11 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #' The positioning of some descriptive elements can be moved by modifying the
 #' generated data.
 #'
-#' @param obj [`critDifferencesData`]
+#' @param obj ([critDifferencesData])
 #'   Result of \link{generateCritDifferencesData} function.
-#' @param baseline (`character(1)`): [`learner.id`] \cr
+#' @param baseline (`character(1)`): ([learner.id]) \cr
 #'   Overwrites baseline from \link{generateCritDifferencesData}!\cr
-#'   Select a [`learner.id` as baseline for the critical difference
+#'   Select a ([learner.id` as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.
 #'   Defaults to best performing algorithm.
 #' @template arg_prettynames

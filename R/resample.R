@@ -16,24 +16,24 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling [[ResampleDesc()] or [ResampleInstance()]]\cr
+#' @param resampling ([ResampleDesc()] or [ResampleInstance()])\cr
 #'   Resampling strategy.
 #'   If a description is passed, it is instantiated automatically.
-#' @param iters [`integer(1)`)\cr
+#' @param iters (`integer(1)`)\cr
 #'   See [ResampleDesc()].
-#' @param folds [`integer(1)`)\cr
+#' @param folds (`integer(1)`)\cr
 #'   See [ResampleDesc()].
-#' @param reps [`integer(1)`)\cr
+#' @param reps (`integer(1)`)\cr
 #'   See [ResampleDesc()].
-#' @param split [`numeric(1)`)\cr
+#' @param split (`numeric(1)`)\cr
 #'   See [ResampleDesc()].
 #' @param stratify (`logical(1)`)\cr
 #'   See [ResampleDesc()].
-#' @param horizon [`numeric(1)`)\cr
+#' @param horizon (`numeric(1)`)\cr
 #'   See [ResampleDesc()].
-#' @param initial.window [`numeric(1)`)\cr
+#' @param initial.window (`numeric(1)`)\cr
 #'   See [ResampleDesc()].
-#' @param skip [`integer(1)`)\cr
+#' @param skip (`integer(1)`)\cr
 #'   See [ResampleDesc()].
 #' @template arg_measures
 #' @param weights ([numeric])\cr
@@ -53,7 +53,7 @@
 #' @param ... (any)\cr
 #'   Further hyperparameters passed to `learner`.
 #' @template arg_showinfo
-#' @return [[ResampleResult()]].
+#' @return ([ResampleResult()]).
 #' @family resample
 #' @note If you would like to include results from the training data set, make
 #' sure to appropriately adjust the resampling strategy and the aggregation for

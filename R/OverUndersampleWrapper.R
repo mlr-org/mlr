@@ -9,12 +9,12 @@
 #' down to the next learner.
 #'
 #' @template arg_learner
-#' @param usw.rate ([numeric(1)`)\cr
+#' @param usw.rate (`numeric(1)`)\cr
 #'   Factor to downsample a class. Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent
 #'   and 0 would imply reduction to 0 observations.
 #'   Default is 1.
-#' @param osw.rate ([numeric(1)`)\cr
+#' @param osw.rate (`numeric(1)`)\cr
 #'   Factor to oversample a class. Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.

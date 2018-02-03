@@ -1,7 +1,6 @@
 #' @title Create control structures for multi-criteria tuning.
 #'
-#' @description
-#' The following tuners are available:
+#' @description The following tuners are available:
 #' \describe{
 #'   \item{makeTuneMultiCritControlGrid}{Grid search. All kinds of parameter types can be handled.
 #'     You can either use their correct param type and `resolution`,

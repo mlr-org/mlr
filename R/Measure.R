@@ -17,8 +17,8 @@
 #'   \item{fun (`function])}{See argument.}
 #'   \item{extra.args ([list])}{See argument.}
 #'   \item{aggr ([Aggregation()])}{See argument.}
-#'   \item{best ([numeric(1)])}{See argument.}
-#'   \item{worst ([numeric(1)])}{See argument.}
+#'   \item{best (`numeric(1)`)}{See argument.}
+#'   \item{worst (`numeric(1)`)}{See argument.}
 #'   \item{name (`character(1)`)}{See argument.}
 #'   \item{note (`character(1)`)}{See argument.}
 #' }
@@ -69,10 +69,10 @@
 #'   Aggregation funtion, which is used to aggregate the values measured
 #'   on test / training sets of the measure to a single value.
 #'   Default is [test.mean()].
-#' @param best ([numeric(1)`)\cr
+#' @param best (`numeric(1)`)\cr
 #'   Best obtainable value for measure.
 #'   Default is -`Inf` or `Inf`, depending on `minimize`.
-#' @param worst ([numeric(1)`)\cr
+#' @param worst (`numeric(1)`)\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
 #' @param name ([character]) \cr

@@ -13,7 +13,7 @@
 #' @param threshold ([numeric])\cr
 #'   Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 #'   Only for binary classification it can be a single numerical threshold for the positive class.
-#' @return [[Prediction()]] with changed threshold and corresponding response.
+#' @return ([Prediction()]) with changed threshold and corresponding response.
 #' @export
 #' @seealso [predict.WrappedModel()]
 #' @examples

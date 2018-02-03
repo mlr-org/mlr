@@ -39,10 +39,10 @@
 #' @param properties ([character])\cr
 #'   Set of measure properties. For a list of values see [Measure()].
 #'   Default is `character(0)`.
-#' @param best ([numeric(1)`)\cr
+#' @param best (`numeric(1)`)\cr
 #'   Best obtainable value for measure.
 #'   Default is -`Inf` or `Inf`, depending on `minimize`.
-#' @param worst ([numeric(1)`)\cr
+#' @param worst (`numeric(1)`)\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
 #' @param note ([character]) \cr

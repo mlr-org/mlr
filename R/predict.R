@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Predict the target variable of new data using a fitted model.
-#' What is stored exactly in the [[Prediction()]] object depends
+#' What is stored exactly in the ([Prediction()]) object depends
 #' on the `predict.type` setting of the [Learner()].
 #' If `predict.type` was set to \dQuote{prob} probability thresholding
 #' can be done calling the [setThreshold()] function on the
@@ -10,17 +10,17 @@
 #'
 #' The row names of the input `task` or `newdata` are preserved in the output.
 #'
-#' @param object [[WrappedModel()]]\cr
+#' @param object ([WrappedModel()])\cr
 #'   Wrapped model, result of [train()].
-#' @param task [[Task()]]\cr
+#' @param task ([Task()])\cr
 #'   The task. If this is passed, data from this task is predicted.
-#' @param newdata [`data.frame`)\cr
+#' @param newdata ([data.frame])\cr
 #'   New observations which should be predicted.
 #'   Pass this alternatively instead of `task`.
 #' @template arg_subset
 #' @param ... (any)\cr
 #'   Currently ignored.
-#' @return [[Prediction()]].
+#' @return ([Prediction()]).
 #' @family predict
 #' @export
 #' @examples

@@ -13,7 +13,7 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value ([numeric(1)`)\cr
+#' @param p.value (`numeric(1)`)\cr
 #'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
 #' @return ([pairwise.htest]): See [PMCMR::posthoc.friedman.nemenyi.test()] for details.

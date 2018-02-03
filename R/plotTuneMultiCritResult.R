@@ -62,7 +62,7 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res [[TuneMultiCritResult()]]\cr
+#' @param res ([TuneMultiCritResult()])\cr
 #'   Result of [tuneParamsMultiCrit()].
 #' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?

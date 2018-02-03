@@ -4,7 +4,7 @@
 #' Plots for model diagnostics. Provides scatterplots of true vs. predicted values
 #' and histograms of the model's residuals.
 #'
-#' @param obj [[Prediction()] | [BenchmarkResult()]]\cr
+#' @param obj ([Prediction()] | [BenchmarkResult()])\cr
 #'   Input data.
 #' @param type Type of plot. Can be \dQuote{scatterplot}, the default. Or
 #'   \dQuote{hist}, for a histogram, or in case of classification problems
