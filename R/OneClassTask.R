@@ -2,7 +2,7 @@
 #' @rdname Task
 
 makeOneClassTask = function(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, spatial = FALSE, fixup.data = "warn", positive, negative,
+  weights = NULL, blocking = NULL, coordinates = NULL, fixup.data = "warn", positive, negative,
   check.data = TRUE) {
   assertString(id)
 
@@ -51,7 +51,7 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
       stopf("Neither 'positive' nor 'negative' are subset of class levels")
   }
 
-  task = makeSupervisedTask("oneclass", data, target, weights, blocking, spatial,
+  task = makeSupervisedTask("oneclass", data, target, weights, blocking, coordinates,
     fixup.data = fixup.data, check.data = check.data)
 
 
@@ -60,12 +60,12 @@ makeOneClassTask = function(id = deparse(substitute(data)), data, target,
       levels(task$env$data[[target]]) = union(levs, c(positive, negative))
   }
 
-  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, positive, negative, spatial)
+  task$task.desc = makeOneClassTaskDesc(id, data, target, weights, blocking, coordinates, positive, negative)
   addClasses(task, "OneClassTask")
 }
 
-makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive, negative, spatial) {
-  td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking, spatial)
+makeOneClassTaskDesc = function(id, data, target, weights, blocking, positive, negative, coordinates) {
+  td = makeTaskDescInternal("oneclass", id, data, target, weights, blocking, coordinates)
   levs = levels(data[[target]])
   td$class.levels = c(positive, negative)
   td$positive = positive

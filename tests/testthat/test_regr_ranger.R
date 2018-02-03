@@ -13,7 +13,7 @@ test_that("regr_ranger", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset, list(data = regr.train, formula = regr.formula, write.forest = TRUE, respect.unordered.factors = TRUE))
+    parset = c(parset, list(data = regr.train, formula = regr.formula, respect.unordered.factors = "order"))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(ranger::ranger, parset)
     p  = predict(m, data = regr.test)
@@ -37,10 +37,11 @@ test_that("regr_ranger se", {
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset.list[[i]] = c(parset, predict.type = "se")
-    parset = c(parset, list(data = regr.train, formula = regr.formula, write.forest = TRUE, respect.unordered.factors = TRUE, keep.inbag = TRUE))
+    parset = c(parset, list(data = regr.train, formula = regr.formula, respect.unordered.factors = "order", keep.inbag = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(ranger::ranger, parset)
-    p  = predict(m, data = regr.test, type = "se")
+    set.seed(getOption("mlr.debug.seed"))
+    p = predict(m, data = regr.test, type = "se")
     old.predicts.list[[i]] = cbind(p$predictions, p$se)
   }
 
