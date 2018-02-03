@@ -18,8 +18,8 @@ makeResampleDesc(method, predict = "test", ..., stratify = FALSE,
 \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
 
-subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window.
-cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation.}
+subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window
+cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation.
 Methods with prefix \dQuote{OC} are resampling exspecially for the oneclass
 classification case, where only normal observations (non-anomaly) are used for training.}
 
