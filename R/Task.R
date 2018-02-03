@@ -128,7 +128,7 @@
 #' # create tasks, it is required to set the positive class (anomaly class) and
 #' # the negative class (normal class) as well as the name of the target column
 #' oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data,
-#' target = "Target", positive = "Anomaly", negative = "Normal")
+#' target = "Target",coordinates = NULL, positive = "Anomaly", negative = "Normal")
 #'
 NULL
 
