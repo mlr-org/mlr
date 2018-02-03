@@ -32,7 +32,7 @@
 #'   If `set` equals `train` or `test`, the `pred` object must be the result of a
 #'   resampling, otherwise an error is thrown.
 #'   Defaults to \dQuote{both}. Possible values are \dQuote{train}, \dQuote{test}, or \dQuote{both}.
-#' @return [[ConfusionMatrix()]].
+#' @return ([ConfusionMatrix()]).
 #' @family performance
 #' @export
 #' @examples
@@ -125,11 +125,11 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
 #' @export
 #' @describeIn calculateConfusionMatrix
 #'
-#' @param x [[ConfusionMatrix()]]\cr
+#' @param x ([ConfusionMatrix()])\cr
 #'   Object to print.
 #' @param both (`logical(1)`)\cr
 #'   If `TRUE` both the absolute and relative confusion matrices are printed.
-#' @param digits [`integer(1)`)\cr
+#' @param digits ([integer(1)`)\cr
 #'   How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.
 #' @param ... (any)\cr
 #'  Currently not used.
@@ -191,14 +191,14 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 #'
 #' Object members:
 #' \describe{
-#' \item{result [`matrix`]}{Confusion matrix of absolute values and marginals. Can also contain
+#' \item{result ([matrix])}{Confusion matrix of absolute values and marginals. Can also contain
 #'   row and column sums of observations.}
-#' \item{task.desc [[TaskDesc()]]}{Additional information about the task.}
+#' \item{task.desc ([TaskDesc()])}{Additional information about the task.}
 #' \item{sums (`logical(1)`)}{Flag if marginal sums of observations are calculated.}
 #' \item{relative (`logical(1)`)}{Flag if the relative confusion matrices are calculated.}
-#' \item{relative.row [`matrix`]}{Confusion matrix of relative values and marginals normalized by row.}
-#' \item{relative.col [`matrix`]}{Confusion matrix of relative values and marginals normalized by column.}
-#' \item{relative.error [`numeric(1)`]}{Relative error overall.}
+#' \item{relative.row ([matrix])}{Confusion matrix of relative values and marginals normalized by row.}
+#' \item{relative.col ([matrix])}{Confusion matrix of relative values and marginals normalized by column.}
+#' \item{relative.error ([numeric(1)])}{Relative error overall.}
 #' }
 #' @name ConfusionMatrix
 #' @family performance

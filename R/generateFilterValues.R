@@ -8,7 +8,7 @@
 #' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect [`integer(1)`)\cr
+#' @param nselect ([integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method. Can only be use if `method` contains one element.
@@ -17,10 +17,10 @@
 #'   `method` name the args should be passed down to.
 #'   A more general and flexible option than `...`.
 #'   Default is empty list.
-#' @return [`FilterValues`]. A `list` containing:
-#'   \item{task.desc}{[[TaskDesc()]]\cr
+#' @return ([FilterValues]). A `list` containing:
+#'   \item{task.desc}{[[TaskDesc()])\cr
 #'     Task description.}
-#'   \item{data}{[`data.frame`] with columns:
+#'   \item{data}{([data.frame]) with columns:
 #'     \itemize{
 #'       \item `name`([character])\cr
 #'         Name of feature.
@@ -106,11 +106,11 @@ print.FilterValues = function(x, ...) {
 #' @param method (`character(1)`)\cr
 #'   Filter method, see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect [`integer(1)`)\cr
+#' @param nselect ([integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... (any)\cr
 #'   Passed down to selected method.
-#' @return [[FilterValues()]].
+#' @return ([FilterValues()]).
 #' @note `getFilterValues` is deprecated in favor of [generateFilterValuesData()].
 #' @family filter
 #' @export
@@ -130,13 +130,13 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #' @family filter
 #' @family generate_plot_data
 #'
-#' @param fvalues [[FilterValues()]]\cr
+#' @param fvalues ([FilterValues()])\cr
 #'   Filter values.
 #' @param sort (`character(1)`)\cr
 #'   Sort features like this.
 #'   \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
 #'   Default is decreasing.
-#' @param n.show [`integer(1)`)\cr
+#' @param n.show ([integer(1)`)\cr
 #'   Number of features (maximal) to show.
 #'   Default is 20.
 #' @param feat.type.cols (`logical(1)`)\cr
@@ -197,7 +197,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #' @family plot
 #' @family filter
 #'
-#' @param fvalues [[FilterValues()]]\cr
+#' @param fvalues ([FilterValues()])\cr
 #'   Filter values.
 #' @param feat.type.cols (`logical(1)`)\cr
 #'   Colors for factor and numeric features.

@@ -23,7 +23,7 @@
 #' @param relative (`logical(1)`)\cr
 #'   If `TRUE` rows are normalized to show relative frequencies.
 #'   Default is `FALSE`.
-#' @return [`matrix`]. A confusion matrix.
+#' @return ([matrix]). A confusion matrix.
 #' @export
 #' @seealso [predict.WrappedModel()]
 getConfMatrix = function(pred, relative = FALSE) {

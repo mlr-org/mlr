@@ -6,7 +6,7 @@
 #' custom visualization or passed downstream to an out of the box mlr method,
 #' [plotHyperParsEffect()].
 #'
-#' @param tune.result [[TuneResult()] | [ResampleResult()]]\cr
+#' @param tune.result ([TuneResult()] | [ResampleResult()])\cr
 #'  Result of [tuneParams()] (or [resample()] ONLY when used
 #'  for nested cross-validation). The tuning result (or results if the
 #'  output is from nested cross-validation), also containing the
@@ -31,7 +31,7 @@
 #'  plot partial dependence when called downstream.
 #'  Default is `FALSE`.
 #'
-#' @return [`HyperParsEffectData`]
+#' @return ([HyperParsEffectData])
 #'  Object containing the hyperparameter effects dataframe, the tuning
 #'  performance measures used, the hyperparameters used, a flag for including
 #'  diagnostic info, a flag for whether nested cv was used, a flag for whether
@@ -145,7 +145,7 @@ print.HyperParsEffectData = function(x, ...) {
 #' or effect of a particular hyperparameter on some performance measure and/or
 #' optimizer.
 #'
-#' @param hyperpars.effect.data [`HyperParsEffectData`)\cr
+#' @param hyperpars.effect.data ([HyperParsEffectData`)\cr
 #'  Result of [generateHyperParsEffectData()]
 #' @param x (`character(1)`)\cr
 #'  Specify what should be plotted on the x axis. Must be a column from
@@ -181,7 +181,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  performance of every iteration, even if it is not an improvement. Not used
 #'  with partial dependence.
 #'  Default is `TRUE`.
-#' @param interpolate [[Learner()] | `character(1)`)\cr
+#' @param interpolate ([Learner()] | `character(1)`)\cr
 #'  If not `NULL`, will interpolate non-complete grids in order to visualize a more
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that
@@ -208,7 +208,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  hyperparameters. This is also used for nested aggregation in partial
 #'  dependence.
 #'  Default is `mean`.
-#' @param partial.dep.learn [[Learner()] | `character(1)`)\cr
+#' @param partial.dep.learn ([Learner()] | `character(1)`)\cr
 #'  The regression learner used to learn partial dependence. Must be specified if
 #'  \dQuote{partial.dep} is set to `TRUE` in
 #'  [generateHyperParsEffectData()]. Accepts either a \link{Learner}

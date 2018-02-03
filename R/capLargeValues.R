@@ -13,11 +13,11 @@
 #' @param cols ([character])\cr
 #'   Which columns to convert.
 #'   Default is all numeric columns.
-#' @param threshold [`numeric(1)`)\cr
+#' @param threshold ([numeric(1)`)\cr
 #'   Threshold for capping.
 #'   Every entry whose absolute value is equal or larger is converted.
 #'   Default is `Inf`.
-#' @param impute [`numeric(1)`)\cr
+#' @param impute ([numeric(1)`)\cr
 #'   Replacement value for large entries.
 #'   Large negative entries are converted to `-impute`.
 #'   Default is `threshold`.
@@ -27,7 +27,7 @@
 #'   \dQuote{pos} means `abs(x) > threshold && x > 0`,
 #'   \dQuote{neg} means `abs(x) > threshold && x < 0`.
 #'   Default is \dQuote{abs}.
-#' @return [`data.frame`]
+#' @return ([data.frame])
 #' @export
 #' @family eda_and_preprocess
 #' @examples

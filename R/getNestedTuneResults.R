@@ -5,9 +5,9 @@
 #' with `resample(..., extract = getTuneResult)` this helper returns a `data.frame` with
 #' the the best found hyperparameter settings for each resampling iteration.
 #'
-#' @param r [[ResampleResult()]] \cr
+#' @param r ([ResampleResult()]) \cr
 #'   The result of resampling of a tuning wrapper.
-#' @return [`data.frame`]. One column for each tuned hyperparameter and one row for each outer resampling iteration.
+#' @return ([data.frame]). One column for each tuned hyperparameter and one row for each outer resampling iteration.
 #' @family tune
 #' @examples
 #' # see example of makeTuneWrapper
@@ -28,7 +28,7 @@ getNestedTuneResultsX = function(r) {
 #' with all `opt.path`s combined by `rbind`.
 #' An additional column `iter` indicates to what resampling iteration the row belongs.
 #'
-#' @param r [[ResampleResult()]] \cr
+#' @param r ([ResampleResult()]) \cr
 #'   The result of resampling of a tuning wrapper.
 #' @param trafo (`logical(1)`)\cr
 #'   Should the units of the hyperparameter path be converted to the
@@ -36,7 +36,7 @@ getNestedTuneResultsX = function(r) {
 #'   the `opt.path`s. Note that `opt.path`s are always stored on the
 #'   untransformed scale.
 #'   Default is `FALSE`.
-#' @return [`data.frame`]. See above.
+#' @return ([data.frame]). See above.
 #' @family tune
 #' @examples
 #' # see example of makeTuneWrapper

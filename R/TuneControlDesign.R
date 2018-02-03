@@ -5,11 +5,11 @@
 #' during tuning. All kinds of parameter types can be handled.
 #'
 #' @inherit TuneControl
-#' @param design [`data.frame`)\cr
+#' @param design ([data.frame`)\cr
 #'   `data.frame` containing the different parameter settings to be evaluated.
 #'   The columns have to be named according to the `ParamSet` which will be used in `tune()`.
 #'   Proper designs can be created with [ParamHelpers::generateDesign()] for instance.
-#' @return [[TuneControlDesign()]]
+#' @return ([TuneControlDesign()])
 #' @aliases TuneControlDesign
 #' @family tune
 #' @export

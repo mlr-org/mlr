@@ -18,7 +18,7 @@ getBMRTaskIds = function(bmr) {
 #' Gets the learners used in a benchmark experiment.
 #'
 #' @template arg_bmr
-#' @return [`list`].
+#' @return ([list]).
 #' @export
 #' @family benchmark
 getBMRLearners = function(bmr) {
@@ -60,7 +60,7 @@ getBMRLearnerShortNames = function(bmr) {
 #' Gets the measures used in a benchmark experiment.
 #'
 #' @template arg_bmr
-#' @return [`list`]. See above.
+#' @return ([list]). See above.
 #' @export
 #' @family benchmark
 getBMRMeasures = function(bmr) {
@@ -74,7 +74,7 @@ getBMRMeasures = function(bmr) {
 #' Gets the IDs of the measures used in a benchmark experiment.
 #'
 #' @template arg_bmr
-#' @return [`list`]. See above.
+#' @return ([list]). See above.
 #' @export
 #' @family benchmark
 getBMRMeasureIds = function(bmr) {
@@ -311,7 +311,7 @@ getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
 #' @template arg_bmr_drop
-#' @return [`list`].
+#' @return ([list]).
 #' @export
 #' @family benchmark
 getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) {
@@ -327,7 +327,7 @@ getBMRModels = function(bmr, task.ids = NULL, learner.ids = NULL, drop = FALSE) 
 #' @description
 #' A list containing all [TaskDesc()]s for each task contained in the benchmark experiment.
 #' @template arg_bmr
-#' @return [`list`].
+#' @return ([list]).
 #' @export
 getBMRTaskDescriptions = function(bmr) {
  .Deprecated("getBMRTaskDesc")
@@ -340,7 +340,7 @@ getBMRTaskDescriptions = function(bmr) {
 #' @description
 #' A list containing all [TaskDesc()]s for each task contained in the benchmark experiment.
 #' @template arg_bmr
-#' @return [`list`].
+#' @return ([list]).
 #' @export
 #' @family benchmark
 getBMRTaskDescs = function(bmr) {

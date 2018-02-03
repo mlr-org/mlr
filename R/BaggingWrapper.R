@@ -25,16 +25,16 @@
 #' down to the inner learner.
 #'
 #' @template arg_learner
-#' @param bw.iters [`integer(1)`)\cr
+#' @param bw.iters ([integer(1)`)\cr
 #'   Iterations = number of fitted models in bagging.
 #'   Default is 10.
 #' @param bw.replace (`logical(1)`)\cr
 #'   Sample bags with replacement (bootstrapping)?
 #'   Default is TRUE.
-#' @param bw.size [`numeric(1)`)\cr
+#' @param bw.size ([numeric(1)`)\cr
 #'   Percentage size of sampled bags.
 #'   Default is 1 for bootstrapping and 0.632 for subsampling.
-#' @param bw.feats [`numeric(1)`)\cr
+#' @param bw.feats ([numeric(1)`)\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #'   At least one feature will always be selected.

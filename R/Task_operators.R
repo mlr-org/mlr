@@ -167,10 +167,10 @@ getTaskSize = function(x) {
 #' @param explicit.features (`logical(1)`)\cr
 #'   Should the features (right hand side of the formula) be explicitly listed?
 #'   Default is `FALSE`, i.e., they will be represented as `"."`.
-#' @param env [`environment`)\cr
+#' @param env ([environment`)\cr
 #'   Environment of the formula.
 #'   Default is `parent.frame()`.
-#' @return [`formula`].
+#' @return ([formula]).
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
@@ -386,7 +386,7 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
-#' @return [[Task()]]. Task with subsetted data.
+#' @return ([Task()]). Task with subsetted data.
 #' @family task
 #' @export
 #' @examples
@@ -415,9 +415,9 @@ subsetTask = function(task, subset = NULL, features) {
 #' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
 #'
 #' @template arg_task
-#' @param data [`data.frame`)\cr
+#' @param data ([data.frame`)\cr
 #'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
-#' @param costs [`data.frame`\cr
+#' @param costs ([data.frame`\cr
 #'   Optional: cost matrix.
 #' @param weights ([numeric])\cr
 #'   Optional: weight vector.

@@ -7,10 +7,10 @@
 #' @family learning_curve
 #' @aliases LearningCurveData
 #'
-#' @param learners [(list of) [Learner()]]\cr
+#' @param learners [(list of) [Learner()])\cr
 #'   Learning algorithms which should be compared.
 #' @template arg_task
-#' @param resampling [[ResampleDesc()] | [ResampleInstance()]]\cr
+#' @param resampling ([ResampleDesc()] | [ResampleInstance()])\cr
 #'   Resampling strategy to evaluate the performance measure.
 #'   If no strategy is given a default "Holdout" will be performed.
 #' @param percs ([numeric])\cr
@@ -18,18 +18,18 @@
 #'   These values represent the x-axis.
 #'   Internally [makeDownsampleWrapper()] is used in combination with [benchmark()].
 #'   Thus for each percentage a different set of observations is drawn resulting in noisy performance measures as the quality of the sample can differ.
-#' @param measures [(list of) [Measure()]]\cr
+#' @param measures [(list of) [Measure()])\cr
 #'   Performance measures to generate learning curves for, representing the y-axis.
 #' @param stratify (`logical(1)`)\cr
 #'   Only for classification:
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
-#' @return [`LearningCurveData`]. A `list` containing:
-#'   \item{task}{[[Task()]]\cr
+#' @return ([LearningCurveData]). A `list` containing:
+#'   \item{task}{[[Task()])\cr
 #'     The task.}
-#'   \item{measures}{[(list of) [Measure()]]\cr
+#'   \item{measures}{[(list of) [Measure()])\cr
 #'     Performance measures.}
-#'   \item{data}{[`data.frame`] with columns:
+#'   \item{data}{([data.frame]) with columns:
 #'     \itemize{
 #'       \item `learner` Names of learners.
 #'       \item `percentage` Percentages drawn from the training split.
@@ -107,7 +107,7 @@ print.LearningCurveData = function(x, ...) {
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
-#' @param obj [`LearningCurveData`)\cr
+#' @param obj ([LearningCurveData`)\cr
 #'   Result of [generateLearningCurveData()], with class `LearningCurveData`.
 #' @param facet (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
@@ -163,7 +163,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
-#' @param obj [`LearningCurveData`)\cr
+#' @param obj ([LearningCurveData`)\cr
 #'   Result of [generateLearningCurveData()].
 #' @param interaction (`character(1)`)\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application

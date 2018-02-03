@@ -62,7 +62,7 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
 #' @param include.deprecated (`logical(1)`)\cr
 #'  Should deprecated filter methods be included in the list.
 #'  Default is `FALSE`.
-#' @return [`data.frame`].
+#' @return ([data.frame]).
 #' @export
 #' @family filter
 listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE, include.deprecated = FALSE) {
@@ -582,7 +582,7 @@ makeFilter(
 
 #' Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
 #' learner before and after a feature is permuted. Special arguments to the filter function are
-#' `imp.learner`, a [[Learner()] or `character(1)`] which specifies the learner
+#' `imp.learner`, a ([Learner()] or `character(1)]) which specifies the learner
 #' to use when computing the permutation importance, `contrast`, a `function` which takes two
 #' numeric vectors and returns one (default is the difference), `aggregation`, a `function` which
 #' takes a `numeric` and returns a `numeric(1)` (default is the mean), `nmc`,

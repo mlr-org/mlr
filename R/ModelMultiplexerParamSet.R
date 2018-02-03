@@ -11,16 +11,16 @@
 #'   This makes all parameters subordinate to `selected.learner`}
 #' }
 #'
-#' @param multiplexer [[ModelMultiplexer()]]\cr
+#' @param multiplexer ([ModelMultiplexer()])\cr
 #'   The muliplexer learner.
-#' @param ... [[ParamHelpers::ParamSet()] | [ParamHelpers::Param()]]\cr
+#' @param ... ([ParamHelpers::ParamSet()] | [ParamHelpers::Param()])\cr
 #'   (a) First option: Named param sets. Names must correspond to base learners.
 #'   You only need to enter the parameters you want to tune without reference
 #'   to the `selected.learner` field in any way.\cr
 #'   (b) Second option. Just the params you would enter in the param sets.
 #'   Even shorter to create. Only works when it can be uniquely identified to which
 #'   learner each of your passed parameters belongs.
-#' @param .check [`logical`)\cr
+#' @param .check ([logical`)\cr
 #'   Check that for each param in `...` one param in found in the base learners.
 #'   Default is `TRUE`
 #' @template ret_ps

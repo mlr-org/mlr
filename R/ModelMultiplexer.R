@@ -17,9 +17,9 @@
 #' The getter [getLearnerProperties()] returns the properties of the
 #' selected base learner.
 #'
-#' @param base.learners [`list` of [Learner()]]\cr
+#' @param base.learners ([list` of [Learner()])\cr
 #'  List of Learners with unique IDs.
-#' @return [`ModelMultiplexer`]. A [Learner()] specialized as `ModelMultiplexer`.
+#' @return ([ModelMultiplexer]). A [Learner()] specialized as `ModelMultiplexer`.
 #' @aliases ModelMultiplexer
 #' @family multiplexer
 #' @family tune

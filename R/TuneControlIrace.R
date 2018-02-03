@@ -16,16 +16,16 @@
 #' and how to change the file path.
 #'
 #' @inherit TuneControl
-#' @param budget [`integer(1)`)\cr
+#' @param budget ([integer(1)`)\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. It is passed to `maxExperiments`.
-#' @param n.instances [`integer(1)`)\cr
+#' @param n.instances ([integer(1)`)\cr
 #'   Number of random resampling instances for irace, see details.
 #'   Default is 100.
 #' @param show.irace.output (`logical(1)`)\cr
 #'   Show console output of irace while tuning?
 #'   Default is `FALSE`.
-#' @return [[TuneControlIrace()]]
+#' @return ([TuneControlIrace()])
 #' @aliases TuneControlIrace
 #' @family tune
 #' @export

@@ -68,9 +68,9 @@
 #'   `lvls` (in the description object) and therefore match the levels of the
 #'   feature factor in the training data after imputation?.
 #'   Default is `TRUE`.
-#' @return [`list`]
-#'   \item{data [`data.frame`]}{Imputed data.}
-#'   \item{desc [`ImputationDesc`]}{Description object.}
+#' @return ([list])
+#'   \item{data ([data.frame])}{Imputed data.}
+#'   \item{desc ([ImputationDesc])}{Description object.}
 #' @export
 #' @family impute
 #' @examples
@@ -215,7 +215,7 @@ print.ImputationDesc = function(x, ...) {
 #' }
 #'
 #' @template arg_taskdf
-#' @param desc [`ImputationDesc`)\cr
+#' @param desc ([ImputationDesc`)\cr
 #'   Imputation description as returned by [impute()].
 #' @return Imputated `data.frame` or task with imputed data.
 #' @family impute

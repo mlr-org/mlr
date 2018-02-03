@@ -9,11 +9,11 @@
 #' down to the next learner.
 #'
 #' @template arg_learner
-#' @param sw.rate [`numeric(1)`)\cr
+#' @param sw.rate ([numeric(1)`)\cr
 #'   Factor to oversample the smaller class. Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param sw.nn [`integer(1)`)\cr
+#' @param sw.nn ([integer(1)`)\cr
 #'   Number of nearest neighbors to consider.
 #'   Default is 5.
 #' @param sw.standardize (`logical(1)`)\cr

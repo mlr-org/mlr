@@ -40,7 +40,7 @@
 #' @param config (named [list])\cr
 #'   Named list of config option to overwrite global settings set via [configureMlr()]
 #'   for this specific learner.
-#' @return [[Learner()]].
+#' @return ([Learner()]).
 #' @family learner
 #' @export
 #' @aliases Learner

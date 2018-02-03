@@ -77,7 +77,7 @@
 #'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 #'   Coordinates have to be numeric values.
 #'   Provided [data.frame] needs to have the same number of rows as data and consist of at least two dimensions.
-#' @return [[Task()]].
+#' @return ([Task()]).
 #' @name Task
 #' @rdname Task
 #' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask MultilabelTask
@@ -100,18 +100,18 @@ NULL
 #' Exported for internal use.
 #' @param id (`character(1)`)\cr
 #'   task id
-#' @param data [`data.frame`)\cr
+#' @param data ([data.frame`)\cr
 #'   data
 #' @param target ([character])\cr
 #'   target columns
 #' @param weights ([numeric])\cr
 #'   weights
-#' @param blocking [`numeric`\cr
+#' @param blocking ([numeric`\cr
 #'   task data blocking
-#' @param coordinates [`data.frame`)\cr
+#' @param coordinates ([data.frame`)\cr
 #'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 #'   Coordinates have to be numeric values.
-#'   Provided [`data.frame`] needs to have the same number of rows as data and consist of at least two dimensions.
+#'   Provided ([data.frame]) needs to have the same number of rows as data and consist of at least two dimensions.
 #' @keywords internal
 #' @name makeTaskDesc
 NULL

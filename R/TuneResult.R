@@ -7,16 +7,16 @@
 #'
 #' Object members:
 #' \describe{
-#' \item{learner [[Learner()]]}{Learner that was optimized.}
-#' \item{control [[TuneControl()]]}{Control object from tuning.}
-#' \item{x [`list`]}{Named list of hyperparameter values identified as optimal.
+#' \item{learner ([Learner()])}{Learner that was optimized.}
+#' \item{control ([TuneControl()])}{Control object from tuning.}
+#' \item{x ([list])}{Named list of hyperparameter values identified as optimal.
 #'   Note that when you have trafos on some of your params, `x` will always be
 #'   on the TRANSFORMED scale so you directly use it.}
 #' \item{y ([numeric])}{Performance values for optimal `x`.}
 #' \item{threshold ([numeric])}{Vector of finally found and used thresholds
 #'   if `tune.threshold` was enabled in [TuneControl()], otherwise not present and
 #'   hence `NULL`.}
-#' \item{opt.path [[ParamHelpers::OptPath()]]}{Optimization path which lead to `x`.
+#' \item{opt.path ([ParamHelpers::OptPath()])}{Optimization path which lead to `x`.
 #'   Note that when you have trafos on some of your params, the opt.path always contains the
 #'   UNTRANSFORMED values on the original scale. You can simply call `trafoOptPath(opt.path)` to
 #'   transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}.

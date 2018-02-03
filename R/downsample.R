@@ -4,9 +4,9 @@
 #' Decrease the observations in a `task` or a `ResampleInstance`
 #' to a given percentage of observations.
 #'
-#' @param obj [[Task()] | [ResampleInstance()]]\cr
+#' @param obj ([Task()] | [ResampleInstance()])\cr
 #'   Input data or a `ResampleInstance`.
-#' @param perc [`numeric(1)`)\cr
+#' @param perc ([numeric(1)`)\cr
 #'   Percentage from [0, 1].
 #'   Default is 1.
 #' @param stratify (`logical(1)`)\cr
@@ -14,7 +14,7 @@
 #'   Should the downsampled data be stratified according to the target classes?
 #'   Default is `FALSE`.
 #' @seealso [makeResampleInstance()]
-#' @return [`data.frame` | [Task()] | [ResampleInstance()]]. Same type as `obj`.
+#' @return ([data.frame` | [Task()] | [ResampleInstance()]). Same type as `obj`.
 #' @family downsample
 #' @export
 downsample = function(obj, perc = 1, stratify = FALSE) {

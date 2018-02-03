@@ -6,7 +6,7 @@
 #'
 #' @param x (`character(1)`)\cr
 #'   Name of an mlbench function or dataset.
-#' @param n [`integer(1)`)\cr
+#' @param n ([integer(1)`)\cr
 #'   Number of observations for data simul functions.
 #'   Note that for a few mlbench function this setting is not exactly respected by mlbench.
 #'   Default is 100.

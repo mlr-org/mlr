@@ -13,7 +13,7 @@
 #'   \item{`compress`}{Train a neural network to compress the model from a collection of base learners.}
 #'  }
 #'
-#' @param base.learners [(list of) [Learner()]]\cr
+#' @param base.learners [(list of) [Learner()])\cr
 #'   A list of learners created with `makeLearner`.
 #' @param super.learner [\code{\link{Learner} | character(1)}]\cr
 #'   The super learner that makes the final prediction based on the base learners.
@@ -47,7 +47,7 @@
 #'   Whether the original features should also be passed to the super learner.
 #'   Not used for `method = 'average'`.
 #'   Default is `FALSE`.
-#' @param resampling [[ResampleDesc()]]\cr
+#' @param resampling ([ResampleDesc()])\cr
 #'   Resampling strategy for `method = 'stack.cv'`.
 #'   Currently only CV is allowed for resampling.
 #'   The default `NULL` uses 5-fold CV.
@@ -159,8 +159,8 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 #'
 #' @description Returns the predictions for each base learner.
 #'
-#' @param model [`WrappedModel`)\cr Wrapped model, result of train.
-#' @param newdata [`data.frame`)\cr
+#' @param model ([WrappedModel`)\cr Wrapped model, result of train.
+#' @param newdata ([data.frame`)\cr
 #' New observations, for which the predictions using the specified base learners should be returned.
 #' Default is `NULL` and extracts the base learner predictions that were made during the training.
 #'

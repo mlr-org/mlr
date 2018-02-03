@@ -9,7 +9,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 #' @param cl ([character])\cr
 #'   Names of classes.
 #'   Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.
-#' @return [`data.frame`] with numerical columns or a numerical vector if length of `cl` is 1.
+#' @return ([data.frame]) with numerical columns or a numerical vector if length of `cl` is 1.
 #'   Order of columns is defined by `cl`.
 #' @export
 #' @family predict
@@ -176,7 +176,7 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 #' prediction did not fail, this returns `NULL`.
 #'
 #' @template arg_pred
-#' @return [`last.dump`].
+#' @return ([last.dump]).
 #' @family debug
 #' @export
 getPredictionDump = function(pred) {

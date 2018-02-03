@@ -15,7 +15,7 @@
 #' multiple binary ones and aggregates by voting.
 #'
 #' @template arg_learner_classif
-#' @return [[Learner()]].
+#' @return ([Learner()]).
 #' @export
 #' @references
 #' Lin, HT.:

@@ -10,7 +10,7 @@
 #'   \dQuote{regr} for regression, \dQuote{surv} for survival and \dQuote{cluster} for
 #'   cluster analysis, \dQuote{costsens} for cost-sensitive classification, and
 #'   \dQuote{multilabel} for multilabel classification.}
-#' \item{target [`character(0)` | `character(1)` | `character(2)` | `character(n.classes)`]}{
+#' \item{target ([character(0)` | `character(1)` | `character(2)` | `character(n.classes)])}{
 #'   Name(s) of the target variable(s).
 #'   For \dQuote{surv} these are the names of the survival time and event columns, so it has length 2.
 #'   For \dQuote{costsens} it has length 0, as there is no target column, but a cost matrix instead.

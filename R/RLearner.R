@@ -21,7 +21,7 @@
 #'   Default is `character(0)`.
 #' @param class.weights.param (`character(1)`)\cr
 #'   Name of the parameter, which can be used for providing class weights.
-#' @param par.set [[ParamHelpers::ParamSet()]]\cr
+#' @param par.set ([ParamHelpers::ParamSet()])\cr
 #'   Parameter set of (hyper)parameters and their constraints.
 #'   Dependent parameters with a `requires` field must use `quote` and not
 #'   `expression` to define it.
@@ -44,7 +44,7 @@
 #'   Character vector naming all functions of the learner's package being called which
 #'   have a relevant R help page.
 #'   Default is `character(0)`.
-#' @return [[RLearner()]]. The specific subclass is one of [RLearnerClassif()],
+#' @return ([RLearner()]). The specific subclass is one of [RLearnerClassif()],
 #'   [RLearnerCluster()], [RLearnerMultilabel()],
 #'   [RLearnerRegr()], [RLearnerSurv()].
 #' @name RLearner

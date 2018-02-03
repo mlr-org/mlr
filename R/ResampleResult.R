@@ -10,12 +10,12 @@
 #' \item{learner.id (`character(1)`):}{
 #'   Name of the Learner.
 #' }
-#' \item{measures.test [`data.frame`]:}{
+#' \item{measures.test ([data.frame]):}{
 #'   Gives you access to performance measurements
 #'   on the individual test sets. Rows correspond to sets in resampling iterations,
 #'   columns to performance measures.
 #' }
-#' \item{measures.train [`data.frame`]:}{
+#' \item{measures.train ([data.frame]):}{
 #'   Gives you access to performance measurements
 #'   on the individual training sets. Rows correspond to sets in resampling iterations,
 #'   columns to performance measures. Usually not available, only if specifically requested,
@@ -25,13 +25,13 @@
 #'   Named vector of aggregated performance values. Names are coded like
 #'   this <measure>.<aggregation>.
 #' }
-#' \item{err.msgs [`data.frame`]:}{
+#' \item{err.msgs ([data.frame]):}{
 #'   Number of rows equals resampling iterations
 #'   and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
 #'   Stores error messages generated during train or predict, if these were caught
 #'   via [configureMlr()].
 #' }
-#' \item{err.dumps [`list of list of dump.frames`]:}{
+#' \item{err.dumps ([list of list of dump.frames]):}{
 #'   List with length equal to number of resampling iterations. Contains lists
 #'   of `dump.frames` objects that can be fed to `debugger()` to inspect
 #'   error dumps generated on learner errors. One iteration can generate more than
@@ -40,16 +40,16 @@
 #'   slots `$train`, `$predict.train`, or `$predict.test` if relevant.
 #'   The error dumps are only saved when option `on.error.dump` is `TRUE`.
 #' }
-#' \item{pred [[ResamplePrediction()]]:}{
+#' \item{pred ([ResamplePrediction()]):}{
 #'   Container for all predictions during resampling.
 #' }
-#' \item{models [list of [WrappedModel()]]:}{
+#' \item{models [list of [WrappedModel()]):}{
 #'   List of fitted models or `NULL`.
 #' }
-#' \item{extract [`list`]:}{
+#' \item{extract ([list]):}{
 #'   List of extracted parts from fitted models or `NULL`.
 #' }
-#' \item{runtime [`numeric(1)`]:}{
+#' \item{runtime ([numeric(1)]):}{
 #'   Time in seconds it took to execute the resampling.
 #' }
 #' }

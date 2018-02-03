@@ -83,7 +83,7 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   Instantiate objects (or return info table)?
 #'   Packages are loaded if and only if this option is `TRUE`.
 #'   Default is `FALSE`.
-#' @return [`data.frame` | `list` of [Learner()]].
+#' @return ([data.frame` | `list` of [Learner()]).
 #'   Either a descriptive data.frame that allows access to all properties of the learners
 #'   or a list of created learner objects (named by ids of listed learners).
 #' @examples

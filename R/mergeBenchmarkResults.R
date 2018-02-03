@@ -2,7 +2,7 @@
 #' @description The function automatically combines a list of [BenchmarkResult()]
 #'   objects into a single [BenchmarkResult()] object as long as the full
 #'   crossproduct of all task-learner combinations are available.
-#' @param bmrs [list of [BenchmarkResult()]]\cr
+#' @param bmrs [list of [BenchmarkResult()])\cr
 #'   `BenchmarkResult` objects that should be merged.
 #' @return [BenchmarkResult()]
 #' @details Note that if you want to merge several [BenchmarkResult()]

@@ -70,7 +70,7 @@ print.WrappedModel = function(x, ...) {
 
 #' Get underlying R model of learner integrated into mlr.
 #'
-#' @param model [[WrappedModel()]]\cr
+#' @param model ([WrappedModel()])\cr
 #'   The model, returned by e.g., [train()].
 #' @param more.unwrap (`logical(1)`)\cr
 #'   Some learners are not basic learners from R, but implemented in mlr as meta-techniques.
@@ -140,7 +140,7 @@ getFailureModelMsg.WrappedModel = function(model) {
 #' `NULL`.
 #'
 #' @template arg_wrappedmod
-#' @return [`last.dump`].
+#' @return ([last.dump]).
 #' @export
 getFailureModelDump = function(model) {
   UseMethod("getFailureModelDump")

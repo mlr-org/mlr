@@ -24,14 +24,14 @@
 #' of dataset IDs easily with
 #' `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.
 #' @inheritParams benchmark
-#' @param resamplings [(list of) [ResampleDesc()]]\cr
+#' @param resamplings [(list of) [ResampleDesc()])\cr
 #'   Resampling strategy for each tasks.
 #'   If only one is provided, it will be replicated to match the number of tasks.
 #'   If missing, a 10-fold cross validation is used.
-#' @param reg [[batchtools::Registry()]]\cr
+#' @param reg ([batchtools::Registry()])\cr
 #'   Registry, created by [batchtools::makeExperimentRegistry()]. If not explicitly passed,
 #'   uses the last created registry.
-#' @return [`data.table`]. Generated job ids are stored in the column \dQuote{job.id}.
+#' @return ([data.table]). Generated job ids are stored in the column \dQuote{job.id}.
 #' @noMd
 #' @export
 #' @family benchmark

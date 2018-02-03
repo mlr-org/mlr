@@ -45,10 +45,10 @@
 #'   Should the same resampling instance be used for all evaluations to reduce variance?
 #'   Default is `TRUE`.
 #' @template arg_imputey
-#' @param maxit [`integer(1)`)\cr
+#' @param maxit ([integer(1)`)\cr
 #'   Maximal number of iterations. Note, that this is usually not equal to the number
 #'   of function evaluations.
-#' @param max.features [`integer(1)`)\cr
+#' @param max.features ([integer(1)`)\cr
 #'   Maximal number of features.
 #' @param tune.threshold (`logical(1)`)\cr
 #'   Should the threshold be tuned for the measure at hand, after each feature set evaluation,
@@ -59,36 +59,36 @@
 #'   Further arguments for threshold tuning that are passed down to [tuneThreshold()].
 #'   Default is none.
 #' @template arg_log_fun
-#' @param prob [`numeric(1)`)\cr
+#' @param prob ([numeric(1)`)\cr
 #'   Parameter of the random feature selection. Probability of choosing a feature.
 #' @param method (`character(1)`)\cr
 #'   Parameter of the sequential feature selection. A character representing the method. Possible
 #'   values are `sfs` (forward search), `sbs` (backward search), `sffs`
 #'   (floating forward search) and `sfbs` (floating backward search).
-#' @param alpha [`numeric(1)`)\cr
+#' @param alpha ([numeric(1)`)\cr
 #'   Parameter of the sequential feature selection.
 #'   Minimal required value of improvement difference for a forward / adding step.
 #'   Default is 0.01.
-#' @param beta [`numeric(1)`)\cr
+#' @param beta ([numeric(1)`)\cr
 #'   Parameter of the sequential feature selection.
 #'   Minimal required value of improvement difference for a backward / removing step.
 #'   Negative values imply that you allow a slight decrease for the removal of a feature.
 #'   Default is -0.001.
-#' @param mu [`integer(1)`)\cr
+#' @param mu ([integer(1)`)\cr
 #'   Parameter of the GA feature selection. Size of the parent population.
-#' @param lambda [`integer(1)`)\cr
+#' @param lambda ([integer(1)`)\cr
 #'   Parameter of the GA feature selection. Size of the children population (should be smaller
 #'   or equal to `mu`).
-#' @param crossover.rate [`numeric(1)`)\cr
+#' @param crossover.rate ([numeric(1)`)\cr
 #'   Parameter of the GA feature selection. Probability of choosing a bit from the first parent
 #'   within the crossover mutation.
-#' @param mutation.rate [`numeric(1)`)\cr
+#' @param mutation.rate ([numeric(1)`)\cr
 #'   Parameter of the GA feature selection. Probability of flipping a feature bit, i.e. switch
 #'   between selecting / deselecting a feature.
 #' @param comma (`logical(1)`)\cr
 #'   Parameter of the GA feature selection, indicating whether to use a (`mu`, `lambda`)
 #'   or (`mu` + `lambda`) GA. The default is `FALSE`.
-#' @return [[FeatSelControl()]]. The specific subclass is one of
+#' @return ([FeatSelControl()]). The specific subclass is one of
 #'   [FeatSelControlExhaustive()], [FeatSelControlRandom()],
 #'   [FeatSelControlSequential()], [FeatSelControlGA()].
 #' @references [Ron Kohavi] and [George H. John],

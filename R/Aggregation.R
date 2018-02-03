@@ -13,7 +13,7 @@
 #' \item{id (`character(1)`)}{Name of the aggregation method.}
 #' \item{name (`character(1)`)}{Long name of the aggregation method.}
 #' \item{properties ([character])}{Properties of the aggregation.}
-#' \item{fun (`function(task, perf.test, perf.train, measure, group, pred)`]}{Aggregation function.}
+#' \item{fun (`function(task, perf.test, perf.train, measure, group, pred)])}{Aggregation function.}
 #' }
 #' @name Aggregation
 #' @seealso [makeAggregation()]
@@ -41,21 +41,21 @@ NULL
 #'   Calculates the aggregated performance. In most cases you will only need the performances
 #'   `perf.test` and optionally `perf.train` on the test and training data sets.
 #'   \describe{
-#'     \item{`task` [[Task()]]}{The task.}
+#'     \item{`task` ([Task()])}{The task.}
 #'     \item{`perf.test` ([numeric])}{
 #'       [performance()] results on the test data sets.}
 #'     \item{`perf.train` ([numeric])}{
 #'       [performance()] results on the training data sets.}
-#'     \item{`measure` [[Measure()]]}{
+#'     \item{`measure` ([Measure()])}{
 #'       Performance measure.}
-#'     \item{`group` [`factor`]}{
+#'     \item{`group` ([factor])}{
 #'       Grouping of resampling iterations. This encodes whether specific iterations
 #'       'belong together' (e.g. repeated CV).}
-#'     \item{`pred` [[Prediction()]]}{
+#'     \item{`pred` ([Prediction()])}{
 #'       Prediction object.}
 #'   }
 #' @seealso [aggregations()], [setAggregation()]
-#' @return [[Aggregation()]].
+#' @return ([Aggregation()]).
 #' @examples
 #' # computes the interquartile range on all performance values
 #' test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",

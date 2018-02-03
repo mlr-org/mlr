@@ -20,14 +20,14 @@
 #'   Calculates performance value from [ResamplePrediction()] object.
 #'   For rare cases you can also use the task, the grouping or the extra arguments `extra.args`.
 #'   \describe{
-#'     \item{`task` [[Task()]]}{
+#'     \item{`task` ([Task()])}{
 #'       The task.}
-#'     \item{`group` [`factor`]}{
+#'     \item{`group` ([factor])}{
 #'       Grouping of resampling iterations. This encodes whether specific iterations
 #'       'belong together' (e.g. repeated CV).}
-#'     \item{`pred` [[Prediction()]]}{
+#'     \item{`pred` ([Prediction()])}{
 #'       Prediction object.}
-#'     \item{`extra.args` [`list`]}{
+#'     \item{`extra.args` ([list])}{
 #'       See below.}
 #'   }
 #' @param extra.args ([list])\cr
@@ -39,10 +39,10 @@
 #' @param properties ([character])\cr
 #'   Set of measure properties. For a list of values see [Measure()].
 #'   Default is `character(0)`.
-#' @param best [`numeric(1)`)\cr
+#' @param best ([numeric(1)`)\cr
 #'   Best obtainable value for measure.
 #'   Default is -`Inf` or `Inf`, depending on `minimize`.
-#' @param worst [`numeric(1)`)\cr
+#' @param worst ([numeric(1)`)\cr
 #'   Worst obtainable value for measure.
 #'   Default is `Inf` or -`Inf`, depending on `minimize`.
 #' @param note ([character]) \cr

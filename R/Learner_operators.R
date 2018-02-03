@@ -68,7 +68,7 @@ getLearnerParamSet = function(learner) {
 #'
 #' @template arg_learner
 #' @inheritParams getHyperPars
-#' @return [`list`]. A named list of values.
+#' @return ([list]). A named list of values.
 #' @export
 #' @family learner
 getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {

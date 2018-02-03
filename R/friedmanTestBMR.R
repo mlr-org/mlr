@@ -2,7 +2,7 @@
 #'
 #' @description Performs a [stats::friedman.test()] for a selected measure.
 #' The null hypothesis is that apart from an effect of the different
-#' [[Task()]], the location parameter (aggregated performance measure)
+#' ([Task()]), the location parameter (aggregated performance measure)
 #' is the same for each [Learner()].
 #' Note that benchmark results for at least two learners on at least two tasks
 #' are required.
@@ -10,7 +10,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @template arg_aggregation_method
-#' @return [`htest`]: See [stats::friedman.test()] for details.
+#' @return ([htest]): See [stats::friedman.test()] for details.
 #' @family benchmark
 #' @export
 #' @examples
