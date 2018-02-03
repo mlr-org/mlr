@@ -135,13 +135,9 @@ Object members:
 \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
-<<<<<<< HEAD
-}
 \details{
-=======
 
 Note on multilabel:
->>>>>>> cbac328d26bf3ac1a1df7d5b77e0ebdc38c914d0
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
