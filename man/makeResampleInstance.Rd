@@ -5,7 +5,7 @@
 \alias{ResampleInstance}
 \title{Instantiates a resampling strategy object.}
 \usage{
-makeResampleInstance(desc, task, size, coords, ...)
+makeResampleInstance(desc, task, size, ...)
 }
 \arguments{
 \item{desc}{[\code{\link{ResampleDesc}} | \code{character(1)}]\cr
@@ -19,10 +19,6 @@ Prefer to pass this instead of \code{size}.}
 \item{size}{[\code{\link{integer}}]\cr
 Size of the data set to resample.
 Can be used instead of \code{task}.}
-
-\item{coords}{[\code{\link{data.frame}}]\cr
-Data.frame with two columns named 'x' and 'y' representing spatial coordinates.
-Used only if `desc = 'SpCV'` or `desc = 'SpRepCV'`.}
 
 \item{...}{[any]\cr
 Passed down to \code{\link{makeResampleDesc}} in case

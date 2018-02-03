@@ -32,9 +32,10 @@
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout. Methods with prefix \dQuote{OC} are resampling exspecially
-#'   for the oneclass classification case, where only normal observations (non-anomaly) are used for training,
-#'   \dQuote{OCCV}, \dQuote{OCRepCV}, \dQuote{OCBootstrap}, \dQuote{OCSubsample}, \dQuote{OCHoldhout}.
+#'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window
+#'   cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation. Methods with prefix \dQuote{OC} are resampling exspecially
+  #'   for the oneclass classification case, where only normal observations (non-anomaly) are used for training,
+  #'   \dQuote{OCCV}, \dQuote{OCRepCV}, \dQuote{OCBootstrap}, \dQuote{OCSubsample}, \dQuote{OCHoldhout}.
 #' @param predict [\code{character(1)}]\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
@@ -49,6 +50,22 @@
 #'     Default is 10.}
 #'   \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
 #'     Here \code{iters = folds * reps}. Default is 10.}
+#'   \item{horizon [\code{numeric(1)}]}{Number of observations in the forecast test set for \dQuote{GrowingWindowCV}
+#'    and \dQuote{FixedWindowCV}. When \code{horizon > 1} this will be treated as the number of
+#'    observations to forecast, else it will be a fraction of the initial window. IE,
+#'    for 100 observations, initial window of .5, and horizon of .2, the test set will have
+#'    10 observations. Default is 1.}
+#'   \item{initial.window [\code{numeric(1)}]}{Fraction of observations to start with
+#'    in the training set for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}.
+#'    When \code{initial.window > 1} this will be treated as the number of
+#'    observations in the initial window, else it will be treated as the fraction
+#'    of observations to have in the initial window. Default is 0.5.}
+#'   \item{skip [\code{numeric(1)}]}{ How many resamples to skip to thin the total amount
+#'    for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}. This is passed through as the \dQuote{by} argument
+#'    in \code{seq()}. When \code{skip > 1} this will be treated as the increment of the sequence of resampling indices,
+#'     else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
+#'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
+#'      of test indices.}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
 #'   Should stratification be done for the target variable?
@@ -78,7 +95,9 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "SpCV", "SpRepCV", "OCHoldout", "OCCV", "OCRepCV", "OCSubsample", "OCBootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
+                                   "Subsample", "Bootstrap", "SpCV", "SpRepCV",
+                                   "GrowingWindowCV", "FixedWindowCV",  "OCHoldout", "OCCV", "OCRepCV", "OCSubsample", "OCBootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -187,6 +206,23 @@ makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
   makeResampleDescInternal("repeated spatial cross-validation", iters = folds * reps, folds = folds, reps = reps)
 }
 
+
+makeResampleDescFixedWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+  assertNumeric(horizon, lower = 0)
+  assertNumeric(initial.window, lower = 0)
+  assertNumeric(skip, lower = 0)
+  makeResampleDescInternal("Fixed", iters = NA_integer_,  horizon = horizon,
+                           initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
+makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+  assertNumeric(horizon, lower = 0)
+  assertNumeric(initial.window, lower = 0)
+  assertNumeric(skip, lower = 0)
+  makeResampleDescInternal("Growing", iters = NA_integer_, horizon = horizon,
+                           initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
 ##############################################################################################
 
 #' @export
@@ -239,6 +275,23 @@ print.OCRepCVDesc = function(x, ...) {
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
   catf("Oneclass Holdout only allows normal observation in training")
+
+}
+
+#' @export
+print.GrowingWindowCVDesc = function(x, ...) {
+  catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
+       x$id, x$initial.window, x$horizon, x$skip)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+}
+
+#' @export
+print.FixedWindowCVDesc = function(x, ...) {
+  catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
+       x$id, x$initial.window, x$horizon, x$skip)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
 }
 
 ##############################################################################################
