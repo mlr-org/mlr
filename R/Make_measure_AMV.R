@@ -49,7 +49,7 @@
 #' performance(pred = pred, measures = list(AMV), model = mod, task = oneclass2d.task)
 
 
-makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e+04, best = 0, worst = NULL, name = id, note = "") {
 
   assertString(id)
   assertFlag(minimize)
@@ -86,14 +86,19 @@ makeAMVMeasure = function(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99), n.
       # type = 8: The resulting quantile estimates are approximately median-unbiased
       # regardless of the distribution of x.
 
-      # use prob of the normal class, as here high prob are indication for normal observation
+      # the reference paper states that it uses scores/prob that indicates anomaly
+      # if the score is low when calculating the AUMVC(hd)
+      # However, within mlR high prediction probability has a reversed interpretation,
+      # therefore use prob of the normal class
+      # (as here high prob are indication for normal observation)
       # to stay consistent with the theory in the reference paper.
       prob = getPredictionProbabilities(pred, cl = model$task.desc$negative)
+      #set na.rm = TRUE
       offsets = quantile(as.matrix(prob), 1 - alpha.seq, type = 8)
 
       ### Monte Carlo (MC) Integration for lambda
 
-      # Compute hypercube where test data lies
+      # Compute hypercube where data lies
       bounds = sapply(feats, FUN = function(x) c(min(x), max(x)))
 
       # Volume of the hypercube enclosing the test data.

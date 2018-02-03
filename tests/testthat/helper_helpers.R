@@ -134,8 +134,6 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list(), 
   }
 }
 
-
-
 testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = list(),
   tol = 1e-04) {
   inds = train.inds
@@ -170,7 +168,6 @@ testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = l
     expect_equal(p, old.probs, tolerance = tol)
   }
 }
-
 
 testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parset.list, positive = NULL, negative = NULL) {
   inds = train.inds
