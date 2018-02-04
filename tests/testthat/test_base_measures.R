@@ -940,3 +940,25 @@ test_that("setMeasurePars", {
   mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
   expect_equal(mm$extra.args, list(foo = 1))
 })
+
+test_that("bac works as intended with multiclass tasks", {
+  lrn = makeLearner("classif.rpart")
+  mod = train(lrn, task = iris.task)
+  pred = predict(mod, task = iris.task)
+
+  perf = performance(pred, measures = bac)
+  expect_numeric(perf)
+})
+
+test_that("new bac gives the same result as old implementation", {
+  lrn = makeLearner("classif.rpart")
+  task = binaryclass.task
+  mod = train(lrn, task = task)
+  pred = predict(mod, task = task)
+  perf = performance(pred, measures = bac)
+
+  old.bac = mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
+      tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
+
+  expect_equal(old_bac, perf)
+})
