@@ -221,7 +221,7 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
 
 #' @export
 trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weights = NULL,
-  layers = 1L, nodes1 = 200L, nodes2 = NULL, nodes3 = NULL, nodes4 = NULL ,nodes5 = NULL, ...) {
+  layers = 1L, nodes1 = 200L, nodes2 = NULL, nodes3 = NULL, nodes4 = NULL, nodes5 = NULL, ...) {
   hidden = c(nodes1, nodes2, nodes3, nodes4, nodes5)[1:layers]
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
