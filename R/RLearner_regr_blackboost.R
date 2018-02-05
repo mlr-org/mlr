@@ -8,8 +8,8 @@ makeRLearner.regr.blackboost = function() {
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       # families 'Poisson', 'NBinomial' and 'Hurdle' are for count data
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
-      makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
+      makeNumericVectorLearnerParam(id = "family.nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
+      makeNumericLearnerParam(id = "family.d", requires = quote(family == "Huber")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", default = "inbag", values = c("inbag", "oobag", "none")),
@@ -37,31 +37,30 @@ makeRLearner.regr.blackboost = function() {
   )
 }
 
-trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
-  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
-  defaults = getDefaults(getParamSet(.learner))
-  if (missing(teststat)) teststat = defaults$teststat
-  if (missing(testtype)) testtype = defaults$testtype
-  if (missing(mincriterion)) mincriterion = defaults$mincriterion
-  if (missing(maxdepth)) maxdepth = defaults$maxdepth
-  if (missing(savesplitstats)) savesplitstats = defaults$savesplitstats
-  tc =  learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion,
-    maxdepth, savesplitstats, ...)
+trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", family.nuirange = c(0, 100), family.d = NULL, custom.family.definition, ...) {
+
+  ctrl = learnerArgsToControl(mboost::boost_control, ..., .restrict = TRUE)
+  # tree_controls defaults of blackboost differ from party::ctree_control defaults :(
+  tc.defaults = getDefaults(getParamSet(.learner))
+  tc.defaults = tc.defaults[c("teststat", "testtype", "mincriterion", "maxdepth", "savesplitstats")]
+  tc = learnerArgsToControl(party::ctree_control, ..., .defaults = tc.defaults, .restrict = TRUE)
+
   family = switch(family,
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
-    Huber = mboost::Huber(d),
+    Huber = mboost::Huber(family.d),
     Poisson = mboost::Poisson(),
-    GammaReg = mboost::GammaReg(nuirange = nuirange),
-    NBinomial = mboost::NBinomial(nuirange = nuirange),
-    Hurdle = mboost::Hurdle(nuirange = nuirange),
+    GammaReg = mboost::GammaReg(nuirange = family.nuirange),
+    NBinomial = mboost::NBinomial(nuirange = family.nuirange),
+    Hurdle = mboost::Hurdle(nuirange = family.nuirange),
     custom.family = custom.family.definition
   )
   f = getTaskFormula(.task)
-  if (!is.null(.weights))
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, family = family, ...)
-  else
-    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+  args = list(formula = f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, family = family, ...)
+  args$weights = .weights # only adds weights when not-null
+  # remove control args from mboost call arg list
+  args = dropNamed(args, c(names(formals(mboost::boost_control)), names(formals(party::ctree_control))))
+  do.call(mboost::blackboost, args)
 }
 
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {

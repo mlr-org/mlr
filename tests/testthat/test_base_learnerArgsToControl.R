@@ -44,3 +44,16 @@ test_that("learnerArgsToControl works with a control object", {
   expect_equal(test2, glmnet::glmnet.control(fdev = fdev, devmax = devmax, mnlam = 3))
 })
 
+test_that("learnerArgsToControl works with args .defaults and .restrict", {
+
+  f = function(a = -1, b = -1, ...) c(a = a, b = b, list(...))
+  expect_equal(learnerArgsToControl(f, x = 1, b = 2, .restrict = TRUE), list(a = -1, b = 2))
+  expect_equal(learnerArgsToControl(f, x = 1, b = 2, .restrict = FALSE), list(a = -1, b = 2, x = 1))
+
+  expect_equal(learnerArgsToControl(f, x = 1, b = 2, .defaults = list(a = 9, b = 9), .restrict = TRUE),
+    list(a = 9, b = 2))
+  expect_equal(learnerArgsToControl(f, x = 1, b = 2, .defaults = list(a = 9, b = 9), .restrict = FALSE),
+    list(a = 9, b = 2, x = 1))
+})
+
+

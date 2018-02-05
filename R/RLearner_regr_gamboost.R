@@ -31,27 +31,13 @@ makeRLearner.regr.gamboost = function() {
 }
 
 #' @export
+# trainLearner.regr.gamboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
+
 trainLearner.regr.gamboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, trace, stopintern, ...) {
   requirePackages("mboost", why = "argument 'baselearner' requires package", suppress.warnings = TRUE)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
-  data = getTaskData(.task, .subset)
-  f = getTaskFormula(.task)
-  family = switch(family,
-    Gaussian = mboost::Gaussian(),
-    Laplace = mboost::Laplace(),
-    Huber = mboost::Huber(d),
-    Poisson = mboost::Poisson(),
-    GammaReg = mboost::GammaReg(nuirange = nuirange),
-    NBinomial = mboost::NBinomial(nuirange = nuirange),
-    Hurdle = mboost::Hurdle(nuirange = nuirange),
-    custom.family = custom.family.definition
-  )
-  if (is.null(.weights)) {
-    model = mboost::gamboost(f, data = data, control = ctrl, family = family, ...)
-  } else {
-    model = mboost::gamboost(f, data = data, control = ctrl, weights = .weights, family = family, ...)
-  }
-  model
+  family = convertFamilyParamRegr(family, family.nuirange, family.d)
+  callLearnerWithOptionalWeights(mboost::gamboost, family = family, control = ctrl, ..., .task = task, .weights = .weights)
 }
 
 #' @export
