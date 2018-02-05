@@ -873,7 +873,7 @@ measureBrierScaled = function(probabilities, truth, negative, positive) {
 #' @rdname measures
 #' @format none
 bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Balanced accuracy",
   note = "For binary tasks, mean of true positive rate and true negative rate.",
   fun = function(task, model, pred, feats, extra.args) {

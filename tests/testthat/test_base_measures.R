@@ -960,5 +960,5 @@ test_that("new bac gives the same result as old implementation", {
   old.bac = mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
       tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
 
-  expect_equal(old_bac, perf)
+  expect_equivalent(old.bac, perf)
 })
