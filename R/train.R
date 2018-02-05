@@ -3,7 +3,9 @@
 #' Given a \code{\link{Task}}, creates a model for the learning machine
 #' which can be used for predictions on new data.
 #'
-#' @template arg_learner
+#' @param x [\code{\link{Learner}} | \code{character(1)}]\cr
+#'   The learner. If you pass a string, the learner will be created via
+#'   \code{\link{makeLearner}}.
 #' @template arg_task
 #' @template arg_subset
 #' @param weights [\code{numeric}]\cr
@@ -11,6 +13,7 @@
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 #'   Weights from the task will be overwritten.
+#' @param ... Not used.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
@@ -28,8 +31,20 @@
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset = NULL, weights = NULL) {
-  learner = checkLearner(learner)
+#' @export
+train = function(x, ...) {
+  if ("package:caret" %in% search()) {
+    caret::train(x, ...)
+  } else {
+    UseMethod("train")
+  }
+}
+
+#' @rdname train
+#' @export
+train.Learner = function(x, task, subset = NULL, weights = NULL, ...) {
+  chkDots(...)
+  learner = checkLearner(x)
   assertClass(task, classes = "Task")
   if (is.logical(subset))
     subset = which(subset)  # I believe this is a bug, see #2098
@@ -101,3 +116,8 @@ train = function(learner, task, subset = NULL, weights = NULL) {
   factor.levels = getTaskFactorLevels(task)
   makeWrappedModel(learner, learner.model, getTaskDesc(task), subset, vars, factor.levels, time.train)
 }
+
+#' @rdname train
+#' @export
+train.character = train.Learner
+
