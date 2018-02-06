@@ -639,9 +639,15 @@ preprocess.cmi.praznik = function(data) {
     if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
     numeric.yes = unlist(lapply(data, function(x) class(x) == "numeric"))
     df.num = data.frame(data[, numeric.yes])
-    interval = min(as.integer(nrow(data) / 3), 10L)
+    interval = min(as.integer(nrow(data) / 3.0), 10L)
     interval = max(interval, 2L)
-    df.num = data.frame(apply(df.num, 2, cut, interval))
+    cols.unique.len = unlist(lapply(df.num, function(x) length(unique(x))))
+    const.cols.yes = unlist(lapply(df.num, function(x) length(unique(x)) < 2L))
+    if (any(const.cols.yes)) {
+    df.num.uni =  lapply(df.num[const.cols.yes], as.factor)
+    df.num.cut = df.num[!const.cols.yes]
+    df.num.cut = data.frame(apply(df.num.cut, 2L, cut, interval))
+    df.num = cbind(df.num.cut, df.num.uni)}
     colnames(df.num) = colns[numeric.yes]
     df.nonnum = data.frame(data[, !numeric.yes])
     colnames(df.nonnum) =  colns[!numeric.yes]
@@ -650,23 +656,34 @@ preprocess.cmi.praznik = function(data) {
 }
 
 helper.cmi.praznik = function(criteria) {
+  candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+  checkmate::assert_choice(criteria, candiates)
+  criteria = paste0("praznik::", criteria)
   function(task, nselect, ...) {
-    candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-    checkmate::assert_choice(criteria, candiates)
-    criteria = paste0("praznik::", criteria)
+    org.featnames = getTaskFeatureNames(task)
+    task = removeConstantFeatures(task)  # without removing constant features, praznik will generate Rcpp error
     data = getTaskData(task)
     featnames = getTaskFeatureNames(task)
     targetname = getTaskTargetNames(task)
     data = preprocess.cmi.praznik(data)  # pre-discretizing
     X = data[, featnames]
     Y = data[, targetname]
-    input = list(X = X, Y = Y, k = nselect)
+    k = min(nselect, length(featnames))
+    input = list(X = X, Y = Y, k = k)
     algo = eval(parse(text = criteria))
-    res = do.call(what = algo, args = input)
+    tryCatch({
+      res = do.call(what = algo, args = input)
+    }, error = {
+      input$k = min(nrow(X), k)  # this is not the right behavior, but to hack the praznik bug
+      res = do.call(what = algo, args = input)
+    })
     names.sel = names(res$selection)
-    rst = res$score
-    rst[setdiff(featnames, names.sel)] = 0
-    rst
+    rst.all = vector(length = length(org.featnames), mode = "numeric")
+    names(rst.all) = org.featnames
+    rst.all[names.sel] = res$score
+    # rst = res$score
+    # rst[setdiff(featnames, names.sel)] = 0  # replace NA with 0
+    rst.all
   }
 }
 
