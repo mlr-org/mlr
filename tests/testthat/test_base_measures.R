@@ -683,13 +683,13 @@ test_that("check measure calculations", {
   expect_equal(f1.test, multilabel.f1$fun(pred = pred.multilabel))
   expect_equal(f1.test, as.numeric(f1.perf))
   # check best and worst
-  expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
-  expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
+  expect_equal(measureMultilabelF1(multi.y, multi.y), multilabel.f1$best)
+  expect_equal(measureMultilabelF1(multi.y, !multi.y), multilabel.f1$worst)
   # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
-  expect_equal(mldr:::mldr_FMeasure(counters[-3, ]), measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
+  expect_equal(mldr:::mldr_FMeasure(counters[-3, ]), measureMultilabelF1(multi.y[-3, ], multi.p[-3, ]))
   # manual checks
-  expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
-  expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
+  expect_equal(measureMultilabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
+  expect_equal(measureMultilabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
 
   #accmult
   acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ]) / (sum(multi.y[i, ] | multi.p[i, ])))
