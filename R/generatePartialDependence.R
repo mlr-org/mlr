@@ -393,11 +393,6 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
   }
 
-  if ("FunctionalANOVAData" %in% class(obj)) {
-    if (length(unique(obj$data$effect)) > 1L & obj$interaction)
-      stop("Cannot plot multiple ANOVA effects of depth > 1.")
-  }
-
   if (!is.null(data)) {
     assertDataFrame(data, col.names = "unique", min.rows = 1L,
                     min.cols = length(obj$features) + length(obj$td$target))
@@ -449,10 +444,15 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
     obj$data = obj$data[which(obj$data$idx %in% id), ]
   }
 
-  if (obj$task.desc$type %in% c("regr", "classif"))
-    target = obj$task.desc$target
-  else
+  if (obj$task.desc$type %in% c("regr", "classif")) {
+    if (obj$task.desc$type == "classif" && length(obj$task.desc$class.levels) <= 2L) {
+      target = obj$task.desc$positive
+    } else {
+      target = obj$task.desc$target
+    }
+  } else {
     target = "Risk"
+  }
 
   # are there bounds compatible with a ribbon plot?
   bounds = all(c("lower", "upper") %in% colnames(obj$data) & obj$task.desc$type %in% c("surv", "regr") &
@@ -472,14 +472,17 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
     # when individual is false plot variable value against the target
     if (!obj$individual) {
       # for regression/survival this is a simple line plot
-      if (obj$task.desc$type %in% c("regr", "surv"))
+      if (obj$task.desc$type %in% c("regr", "surv") |
+            (obj$task.desc$type == "classif" & length(obj$task.desc$class.levels) <= 2L)) {
         plt = ggplot(obj$data, aes_string("Value", target)) +
           geom_line(color = ifelse(is.null(data), "black", "red")) + geom_point()
-      else # for classification create different colored lines
+      } else {# for classification create different colored lines
         plt = ggplot(obj$data, aes_string("Value", "Probability", group = "Class", color = "Class")) +
           geom_line() + geom_point()
+      }
     } else { # if individual is true make the lines semi-transparent
-      if (obj$task.desc$type %in% c("regr", "surv")) {
+      if (obj$task.desc$type %in% c("regr", "surv") |
+            (obj$task.desc$type == "classif" & length(obj$task.desc$class.levels) <= 2L)) {
         plt = ggplot(obj$data, aes_string("Value", target, group = "n")) +
           geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red")) + geom_point()
       } else {
