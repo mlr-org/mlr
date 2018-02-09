@@ -1,7 +1,7 @@
 #' @title Fuse learner with removal of constant features preprocessing.
 #'
 #' @description
-#' Fuses a base learner with the preprocessing implemented in \code{\link{removeConstantFeatures}}.
+#' Fuses a base learner with the preprocessing implemented in [removeConstantFeatures].
 #'
 #' @template arg_learner
 #' @inheritParams removeConstantFeatures

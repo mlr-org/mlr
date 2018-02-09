@@ -2,7 +2,7 @@
 #'
 #' @description Get the type of the learner.
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerType = function(learner) {
@@ -14,7 +14,7 @@ getLearnerType = function(learner) {
 #'
 #' @description Get the ID of the learner.
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerId = function(learner) {
@@ -26,7 +26,7 @@ getLearnerId = function(learner) {
 #'
 #' @description Get the predict type of the learner.
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerPredictType = function(learner) {
@@ -38,7 +38,7 @@ getLearnerPredictType = function(learner) {
 #'
 #' @description Get the R packages the learner requires.
 #' @template arg_learner
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 #' @family learner
 getLearnerPackages = function(learner) {
@@ -50,7 +50,7 @@ getLearnerPackages = function(learner) {
 #' @title Get the parameter set of the learner.
 #'
 #' @description
-#' Alias for \code{\link{getParamSet}}.
+#' Alias for [getParamSet].
 #'
 #' @template arg_learner
 #' @template ret_ps
@@ -64,11 +64,11 @@ getLearnerParamSet = function(learner) {
 #' @title Get the parameter values of the learner.
 #'
 #' @description
-#' Alias for \code{\link{getHyperPars}}.
+#' Alias for [getHyperPars].
 #'
 #' @template arg_learner
 #' @inheritParams getHyperPars
-#' @return [\code{list}]. A named list of values.
+#' @return ([list]). A named list of values.
 #' @export
 #' @family learner
 getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
@@ -80,7 +80,7 @@ getLearnerParVals = function(learner, for.fun = c("train", "predict", "both")) {
 #'
 #' @description Set the ID of the learner.
 #' @template arg_learner
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'    New ID for learner.
 #' @template ret_learner
 #' @export
@@ -98,7 +98,7 @@ setLearnerId = function(learner, id) {
 #'   For wrapped learners, the wrapper id is successively attached to the short
 #'   name of the base learner. E.g: \dQuote{rf.bagged.imputed}
 #' @template arg_learner
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family learner
 getLearnerShortName = function(learner) {
