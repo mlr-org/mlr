@@ -19,6 +19,8 @@
   task descriptions of models in resampling reflect the respective subset, while
   the task description of resample predictions reflect the entire task and not
   necessarily the task of any individual model.
+* Added support for growing and fixed window cross-validation for forecasting
+  through new resample methods "GrowingWindowCV" and "FixedWindowCV".
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
@@ -77,7 +79,6 @@
 * testgroup.sd
 
 ## filter - new
-
 * auc
 
 # mlr 2.11:

@@ -55,7 +55,7 @@ helpLearner = function(learner) {
 #'   is automatically extracted from the help pages of the learner, so it may be incomplete.
 #'
 #' @template arg_learner
-#' @param param [\code{character} | NULL]\cr
+#' @param param (`character` | NULL)\cr
 #'   Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
 #'   status of all parameters.
 #' @export

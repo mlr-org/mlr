@@ -1,53 +1,59 @@
 #' @title Fit models according to a resampling strategy.
 #'
 #' @description
-#' The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}
+#' The function `resample` fits a model specified by \link{Learner} on a \link{Task}
 #' and calculates predictions and performance \link{measures} for all training
 #' and all test sets specified by a either a resampling description (\link{ResampleDesc})
 #' or resampling instance (\link{ResampleInstance}).
 #'
-#' You are able to return all fitted models (parameter \code{models}) or extract specific parts
-#' of the models (parameter \code{extract}) as returning all of them completely
+#' You are able to return all fitted models (parameter `models`) or extract specific parts
+#' of the models (parameter `extract`) as returning all of them completely
 #' might be memory intensive.
 #'
 #' The remaining functions on this page are convenience wrappers for the various
 #' existing resampling strategies. Note that if you need to work with precomputed training and
-#' test splits (i.e., resampling instances), you have to stick with \code{resample}.
+#' test splits (i.e., resampling instances), you have to stick with `resample`.
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling [\code{\link{ResampleDesc}} or \code{\link{ResampleInstance}}]\cr
+#' @param resampling ([ResampleDesc] or [ResampleInstance])\cr
 #'   Resampling strategy.
 #'   If a description is passed, it is instantiated automatically.
-#' @param iters [\code{integer(1)}]\cr
-#'   See \code{\link{ResampleDesc}}.
-#' @param folds [\code{integer(1)}]\cr
-#'   See \code{\link{ResampleDesc}}.
-#' @param reps [\code{integer(1)}]\cr
-#'   See \code{\link{ResampleDesc}}.
-#' @param split [\code{numeric(1)}]\cr
-#'   See \code{\link{ResampleDesc}}.
-#' @param stratify [\code{logical(1)}]\cr
-#'   See \code{\link{ResampleDesc}}.
+#' @param iters (`integer(1)`)\cr
+#'   See [ResampleDesc].
+#' @param folds (`integer(1)`)\cr
+#'   See [ResampleDesc].
+#' @param reps (`integer(1)`)\cr
+#'   See [ResampleDesc].
+#' @param split (`numeric(1)`)\cr
+#'   See [ResampleDesc].
+#' @param stratify (`logical(1)`)\cr
+#'   See [ResampleDesc].
+#' @param horizon (`numeric(1)`)\cr
+#'   See [ResampleDesc].
+#' @param initial.window (`numeric(1)`)\cr
+#'   See [ResampleDesc].
+#' @param skip (`integer(1)`)\cr
+#'   See [ResampleDesc].
 #' @template arg_measures
-#' @param weights [\code{numeric}]\cr
+#' @param weights ([numeric])\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as observations in task and in corresponding order.
-#'   Overwrites weights specified in the \code{task}.
-#'   By default \code{NULL} which means no weights are used unless specified in the task.
-#' @param models [\code{logical(1)}]\cr
+#'   Overwrites weights specified in the `task`.
+#'   By default `NULL` which means no weights are used unless specified in the task.
+#' @param models (`logical(1)`)\cr
 #'   Should all fitted models be returned?
-#'   Default is \code{FALSE}.
-#' @param extract [\code{function}]\cr
+#'   Default is `FALSE`.
+#' @param extract (`function`)\cr
 #'   Function used to extract information from a fitted model during resampling.
-#'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
+#'   Is applied to every [WrappedModel] resulting from calls to [train]
 #'   during resampling.
 #'   Default is to extract nothing.
 #' @template arg_keep_pred
-#' @param ... [any]\cr
-#'   Further hyperparameters passed to \code{learner}.
+#' @param ... (any)\cr
+#'   Further hyperparameters passed to `learner`.
 #' @template arg_showinfo
-#' @return [\code{\link{ResampleResult}}].
+#' @return ([ResampleResult]).
 #' @family resample
 #' @note If you would like to include results from the training data set, make
 #' sure to appropriately adjust the resampling strategy and the aggregation for
