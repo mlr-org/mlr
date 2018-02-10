@@ -685,9 +685,12 @@ test_that("check measure calculations", {
   # check best and worst
   expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
   expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
-  # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
-  # expect_equal(mldr:::mldr_FMeasure(counters[-3, ]), measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
-  expect_equal(mldr::fmeasure(multi.y, multi.p), measureMultiLabelF1(multi.y, multi.p))
+  # compare with mldr: copy-pasted older mldr version
+  # mldr had a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
+  mldr.precision <- counters[-3, ]$TruePositives / counters[-3, ]$PredictedPositives
+  mldr.recall <- counters[-3, ]$TruePositives / counters[-3, ]$RealPositives
+  mldr.FMeasure = mean(mldr.precision * mldr.recall * 2 / (mldr.precision + mldr.recall), na.rm = TRUE)
+  expect_equal(mldr.FMeasure, measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
   # manual checks
   expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
   expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
@@ -731,9 +734,9 @@ test_that("check measure calculations", {
   # check best and worst
   expect_equal(measureMultilabelTPR(multi.y, multi.y), multilabel.tpr$best)
   expect_equal(measureMultilabelTPR(multi.y, !multi.y), multilabel.tpr$worst)
-  # compare with mldr
-  # expect_equal(mldr:::mldr_Recall(counters), measureMultilabelTPR(multi.y, multi.p))
-  expect_equal(mldr::recall(multi.y, multi.p), measureMultilabelTPR(multi.y, multi.p))
+  # compare with mldr (it throws a warning when recall() would divide by zero)
+  expect_equal(suppressWarnings(mldr::recall(multi.y, multi.p, undefined_value = "ignore")),
+    measureMultilabelTPR(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 1)
   expect_equal(measureMultilabelTPR(rbind(tf, tf), rbind(tf, tt)), mean(c(1 / 1, 1 / 1)))
