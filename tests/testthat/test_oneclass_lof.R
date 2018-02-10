@@ -10,7 +10,7 @@ test_that("oneclass_lof", {
   )
 
   old.probs.list = list()
-i = 1
+
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     # for lof, there is no seperation of test and train data
