@@ -37,7 +37,8 @@
 #' @export
 #' @family performance.
 #' @examples
-#' # creates an R-precision measure which calculates the precision for the top 5 (=p) ranks
+#' # creates an R-precision measure which calculates the relative number of true predicted
+#' # anomalies in the top p ranks of the test set to the number of anomalies on the entire test set
 #' rprecision = makePrecisionMeasure(id = "RPrecision", minimize = FALSE,
 #' best = 0, worst = NULL, type = "rprecision", adjusted = FALSE)
 #'
