@@ -149,15 +149,6 @@ pd.ind.classif = generatePartialDependenceData(fit.classif, iris.task, "Petal.Le
 pd.ind.classif
 ```
 
-Individual estimates of partial dependence can also be centered by predictions made at all $n$ observations for a particular point in the prediction grid created by the features. 
-This is controlled by the argument `center` which is a list of the same length as the length of the `features` argument and contains the values of the `features` desired.
-
-```{r, eval = FALSE}
-iris = getTaskData(iris.task)
-pd.ind.classif = generatePartialDependenceData(fit.classif, iris.task, "Petal.Length", individual = TRUE,
-  center = list("Petal.Length" = min(iris$Petal.Length)))
-```
-
 Partial derivatives can also be computed for individual partial dependence estimates and aggregate partial dependence. 
 This is restricted to a single feature at a time. 
 The derivatives of individual partial dependence estimates can be useful in finding regions of interaction between the feature for which the derivative is estimated and the features excluded.
@@ -182,41 +173,6 @@ head(pd.classif.der$data)
 pd.classif.der.ind = generatePartialDependenceData(fit.classif, iris.task, "Petal.Width", derivative = TRUE,
   individual = TRUE)
 head(pd.classif.der.ind$data)
-```
-
-### Functional ANOVA
-
-[Hooker (2004)](http://dl.acm.org/citation.cfm?id=1014122) proposed the decomposition of a learned function $\hat{f}$ as a sum of lower dimensional functions $$f(\mathbf{x}) = g_0 + \sum_{i = 1}^p g_{i}(X_i) + \sum_{i \neq j} g_{ij}(x_{ij}) + \ldots$$ where $p$ is the number of features. `generateFunctionalANOVAData()` estimates the individual $g$ functions using partial dependence. 
-When functions depend only on one feature, they are equivalent to partial dependence, but a $g$ function which depends on more than one feature is the "effect" of only those features: lower dimensional "effects" are removed.
-
-$$\hat{g}_u(X) = \frac{1}{N} \sum_{i = 1}^N \left( \hat{f}(X) - \sum_{v \subset u} g_v(X) \right)$$
-
-Here $u$ is a subset of ${1, \ldots, p}$. When $|v| = 1$ $g_v$ can be directly computed by computing the bivariate partial dependence of $\hat{f}$ on $X_u$ and then subtracting off the univariate partial dependences of the features contained in $v$.
-
-Although this decomposition is generalizable to classification it is currently only available for regression tasks.
-
-```{r}
-lrn.regr = makeLearner("regr.ksvm")
-fit.regr = train(lrn.regr, bh.task)
-
-fa = generateFunctionalANOVAData(fit.regr, bh.task, "lstat", depth = 1, fun = median)
-fa
-
-pd.regr = generatePartialDependenceData(fit.regr, bh.task, "lstat", fun = median)
-pd.regr
-```
-
-The `depth` argument is similar to the `interaction` argument in `generatePartialDependenceData()` but instead of specifying whether all of joint "effect" of all the `features` is computed, it determines whether "effects" of all subsets of the features given the specified `depth` are computed. 
-So, for example, with $p$ features and depth 1, the univariate partial dependence is returned. 
-If, instead, `depth = 2`, then all possible bivariate functional ANOVA effects are returned. 
-This is done by computing the univariate partial dependence for each feature and subtracting it from the bivariate partial dependence for each possible pair.
-
-```{r}
-fa.bv = generateFunctionalANOVAData(fit.regr, bh.task, c("crim", "lstat", "age"),
-  depth = 2)
-fa.bv
-
-names(table(fa.bv$data$effect)) ### interaction effects estimated
 ```
 
 ### Plotting partial dependences
@@ -272,41 +228,8 @@ When `individual = TRUE` each individual conditional expectation curve is plotte
 plotPartialDependence(pd.ind.regr)
 ```
 
-When the individual curves are centered by subtracting the individual conditional expectations estimated at a particular value of $X_s$ this results in a fixed intercept which aids in visualizing variation in predictions made by $\hat{f}^{(i)}_{X_s}$.
-
-```{r, fig.asp = 0.5}
-plotPartialDependence(pd.ind.classif)
-```
-
 Plotting partial derivative functions works the same as partial dependence. Below are estimates of the derivative of the mean aggregated partial dependence function, and the individual partial dependence functions for a regression and a classification task respectively.
 
 ```{r, fig.asp = 0.5}
 plotPartialDependence(pd.regr.der)
 ```
-
-This suggests that $\hat{f}$ is not additive in `lstat` except in the neighborhood of $25$.
-
-```{r, fig.asp = 0.5}
-plotPartialDependence(pd.regr.der.ind)
-```
-
-This suggests that `Petal.Width` interacts with some other feature in the neighborhood of $(1.5, 2)$ for classes "virginica" and "versicolor".
-
-```{r, fig.asp = 0.5}
-plotPartialDependence(pd.classif.der.ind)
-```
-
-Output from `generateFunctionalANOVAData()` can also be plotted using `plotPartialDependence()`.
-
-```{r, fig.asp = 0.5}
-fa = generateFunctionalANOVAData(fit.regr, bh.task, c("crim", "lstat"), depth = 1)
-plotPartialDependence(fa)
-```
-
-Interactions can often be more easily visualized by using functional ANOVA.
-
-```{r, fig.asp = 3/4}
-fa.bv = generateFunctionalANOVAData(fit.regr, bh.task, c("crim", "lstat"), depth = 2)
-plotPartialDependence(fa.bv, "tile")
-```
-
