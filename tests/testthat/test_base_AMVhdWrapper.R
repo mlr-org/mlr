@@ -28,7 +28,9 @@ test_that("AMVhdWrapper", {
 
 
   # wrapped learner, with 3 feature subsample for each of the 10 iteration
-  lrn.amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
+  feats = 3
+  iters = 10
+  lrn.amww = makeAMVhdWrapper(lrn, amv.iters = iters, amv.feats = feats)
 
   # wrapped model
   mod.amww = train(lrn.amww, task, subset = train.inds)
@@ -44,9 +46,9 @@ test_that("AMVhdWrapper", {
   expect_true(is.list(submod) && length(submod) == (lrn.amww$par.vals$amv.iters + 1))
   expect_true(inherits(submod[[1L]], "WrappedModel"))
   expect_true(length(submod[[1L]]$features) == (ncol(data) - 1))
-  expect_true(length(submod[[2L]]$features) == 3)
-  expect_equal(unique(sapply(extractSubList(submod, "subset", simplify = FALSE), length)), 630L)
-  expect_equal(unique(sapply(extractSubList(submod, "features", simplify = FALSE), length)), c(9L, 3L))
+  expect_true(length(submod[[2L]]$features) == feats)
+  expect_equal(unique(sapply(extractSubList(submod, "subset", simplify = FALSE), length)), length(train.inds))
+  expect_equal(unique(sapply(extractSubList(submod, "features", simplify = FALSE), length)), c(9L, feats))
 
   submod.unwrap = getLearnerModel(mod.amww, more.unwrap = TRUE)
   expect_true(is.list(submod.unwrap) && length(submod.unwrap) == (lrn.amww$par.vals$amv.iters + 1))
