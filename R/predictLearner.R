@@ -76,8 +76,8 @@ removeNALines = function(newdata) {
 }
 
 insertLines = function(prediction, inserts) {
-#  if (!any(inserts))
-#    return(prediction)
+  if (any(class(prediction) == "PredictionAMVhd"))
+     return(prediction)
   if (is.matrix(prediction)) {
     ret = matrix(nrow = nrow(prediction) + sum(inserts), ncol = ncol(prediction))
     ret[!inserts, ] = prediction

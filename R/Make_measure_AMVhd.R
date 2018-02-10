@@ -99,8 +99,8 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.f
 
       if (model$learner$id %nin% listLearners(task)$class) {
         lrn.id = model$learner$id
-        if(grepl(".AMVhd", model$learner$id)) lrn.id = gsub(".AMVhd", "",lrn.id)
-        if(grepl(".AMVhd", model$learner$id)) lrn.id = gsub(".tuned", "",lrn.id)
+        if(grepl(".AMVhd", lrn.id)) lrn.id = gsub(".AMVhd", "",lrn.id)
+        if(grepl(".tuned", lrn.id)) lrn.id = gsub(".tuned", "",lrn.id)
       } else {
         lrn.id = model$learner$id
       }
