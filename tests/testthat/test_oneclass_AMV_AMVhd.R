@@ -64,7 +64,7 @@ test_that("AMVhd", {
   pred = predict(mod, task, subset = test.inds)
 
   # calculate AMVhd performance
-  perf = performance(pred = pred.amww, measures = list(amvhd), model = mod.amww, task = task, feats = data[test.inds, 1:9])
+  perf = performance(pred = pred, measures = list(amvhd), model = mod, task = task, feats = data[test.inds, 1:9])
   expect_numeric(perf)
   expect_equal(names(perf), "AMVhd")
   expect_true(perf >= 0)
