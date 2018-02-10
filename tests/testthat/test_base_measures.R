@@ -687,10 +687,10 @@ test_that("check measure calculations", {
   expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
   # compare with mldr: copy-pasted older mldr version
   # mldr had a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
-  mldr.precision <- counters[-3, ]$TruePositives / counters[-3, ]$PredictedPositives
-  mldr.recall <- counters[-3, ]$TruePositives / counters[-3, ]$RealPositives
-  mldr.FMeasure = mean(mldr.precision * mldr.recall * 2 / (mldr.precision + mldr.recall), na.rm = TRUE)
-  expect_equal(mldr.FMeasure, measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
+  mldr.precision = counters[-3, ]$TruePositives / counters[-3, ]$PredictedPositives
+  mldr.recall = counters[-3, ]$TruePositives / counters[-3, ]$RealPositives
+  mldr.fmeasure = mean(mldr.precision * mldr.recall * 2 / (mldr.precision + mldr.recall), na.rm = TRUE)
+  expect_equal(mldr.fmeasure, measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
   # manual checks
   expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
   expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
