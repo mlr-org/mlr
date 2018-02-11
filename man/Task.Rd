@@ -159,7 +159,6 @@ Functional data can be added to a task via matrix columns. For more information 
 \code{\link{makeFunctionalData}}.
 }
 \examples{
-
 if (requireNamespace("mlbench")) {
   library(mlbench)
   data(BostonHousing)
