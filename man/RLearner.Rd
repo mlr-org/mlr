@@ -98,6 +98,11 @@ Character vector naming all functions of the learner's package being called whic
 have a relevant R help page.
 Default is \code{character(0)}.}
 }
+\value{
+[\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
+  \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
+  \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}, \code{\link{RLearnerOneClass}}.
+}
 \description{
 Wraps an already implemented learning method from R to make it accessible to mlr.
 Call this method in your constructor. You have to pass an id (name), the required

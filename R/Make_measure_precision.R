@@ -1,4 +1,4 @@
-#' @title Creates a precision  measure either: R-Precision, Precision at p (P@p), Average Precision (AP)
+#' @title Creates a precision  measure: R-Precision, Precision at p (P@p), Average Precision (AP)
 #'
 #' @description
 #' Creates a measure for anomaly detection with external ground truth (known labels).
@@ -37,16 +37,16 @@
 #' @export
 #' @family performance.
 #' @examples
-#' # creates an R-precision measure which calculates the relative number of true predicted
+#' # create an R-precision measure which calculates the relative number of true predicted
 #' # anomalies in the top p ranks of the test set to the number of anomalies on the entire test set
 #' rprecision = makePrecisionMeasure(id = "RPrecision", minimize = FALSE,
 #' best = 0, worst = NULL, type = "rprecision", adjusted = FALSE)
 #'
-#' # creates an P@5 measure which calculates the precision for the top 5 (=p) ranks
+#' # create an P@5 measure which calculates the precision for the top 5 (=p) ranks
 #' precisionat5 = makePrecisionMeasure(id = "Precisionat5", minimize = FALSE,
 #' best = 0, worst = NULL, p = 5, type = "precisionatp", adjusted = FALSE)
 #'
-#' # creates an average precision measure which calculates the average precision
+#' # create an average precision measure which calculates the average precision
 #' # for all ranks of possible choices of p in \{1, 2, ..., number of anomalies\}.
 #' avgprecision = makePrecisionMeasure(id = "AvgPrecision", minimize = FALSE,
 #' best = 0, worst = NULL, type = "avgprecision", adjusted = FALSE)

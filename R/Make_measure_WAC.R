@@ -1,7 +1,8 @@
-#' @title Creates the measure weighted accuracy for imbalanced data
+#' @title Creates the weighted accuracy measure
 #'
 #' @description
-#' Creates a measure for imbalanced data. The measure wac is similar to the balanced accuracy rate (bac).
+#' Creates a measure for imbalanced data or anomaly detection with externel ground truth (known label).
+#' The measure wac is similar to the balanced accuracy rate (bac).
 #' Bac is defined as the mean of true positive rate and true negative rate and wac just ads weights to each rates.
 #' For weights $w = 0.5$ the wac is resulted in the bac. The main purpose is to be able to give the true
 #' positive weight (tpr) a greater meaning than the true negative rate (tnr), as in anomaly detection the
