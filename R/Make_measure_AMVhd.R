@@ -1,4 +1,4 @@
-#' @title Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for high dimensional data
+#' @title Creates the measure Area under the Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for high dimensional data
 #'
 #' @description
 #' Creates a measure for oneclass classification on high dimensional data
@@ -16,7 +16,7 @@
 #' Default is 50.
 #' @note the ID of the learner have to to be the default id!
 #' @return [\code{numeric(1)}]
-#'   Area under Mass-Volume Curve (AMV) for high dimensional data.
+#'   Area under the Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
 #' arXiv preprint arXiv:1607.01152
 #' @inheritParams makeMeasure
@@ -25,7 +25,7 @@
 #' @export
 #' @family performance.
 #' @examples
-#' # creates anomaly data with feature size nine
+#' # create anomaly data with feature size nine
 #' sigma = matrix(0, 9, 9)
 #' diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
 #' normal = MASS::mvrnorm(n = 1000, rep(0, 9), sigma)
@@ -46,30 +46,19 @@
 #' train.inds = inds.split[[1]]
 #' test.inds = inds.split[[2]]
 #'
-#' # creates an AMVhd measure which calculates the area under the curve between 0.8 and 0.99
+#' # create an AMVhd measure which calculates the Area under the Mass-Volume Curve between 0.8 and 0.99
 #' # with 50 steps for high dimensional data.
 #' AMVhd = makeAMVhdMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
-#' n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
+#' n.alpha = 50, n.sim = 10e3, best = 0, worst = NULL)
 #'
 #' task = makeOneClassTask(data = data, target = "normal", positive = "TRUE", negative = "FALSE")
-#' # base learner
 #' lrn = makeLearner("oneclass.svm", predict.type = "prob")
-#'
-#' # for applying AMVhd we need to use the AMVhdWrapper
-#' # wrapped learner, with 3 feature subsample for each of the 10 iteration
-#' lrn_amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
-#' # wrapped model
-#' mod_amww = train(lrn_amww, task, subset = train.inds)
-#' # list all submodels, first list element is the full model
-#' submod = getLearnerModel(mod_amww, more.unwrap = FALSE)
-#' # wrapped prediction
-#' pred_amww = predict(mod_amww, task, subset = test.inds)
-#' # t contains the prediction with subsampled features
-#' t = attr(pred_amww, "AMVhdSubpredict")
+#' mod = train(lrn, task, subset = train.inds)
+#' pred = predict(mod, task, subset = test.inds)
 #'
 #' # calculate AMVhd performance
 #' set.seed(123)
-#' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
+#' performance(pred = pred, measures = list(AMVhd), model = mod,
 #' task = task, feats = data[test.inds, 1:9])
 
 makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e3, best = 0, worst = NULL, name = id, note = "") {
