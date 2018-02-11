@@ -2,10 +2,10 @@
 % Please edit documentation in R/Make_measure_AMVhd.R
 \name{makeAMVhdMeasure}
 \alias{makeAMVhdMeasure}
-\title{Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for high dimensional data}
+\title{Creates the measure Area under the Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for high dimensional data}
 \usage{
-makeAMVhdMeasure(id = "AMVhd", minimize = TRUE, amv.iters = 10,
-  amv.feats = 3, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e+05,
+makeAMVhdMeasure(id = "AMVhd", minimize = TRUE, amv.iters = 50,
+  amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1000,
   best = 0, worst = NULL, name = id, note = "")
 }
 \arguments{
@@ -16,8 +16,13 @@ Name of measure.}
 Should the measure be minimized?
 Default is \code{TRUE}.}
 
+\item{amv.iters}{[\code{numeric}] \cr
+Number of subsamples.
+Default is 50.}
+
 \item{amv.feats}{[\code{numeric}] \cr
-Number of features to be drawn in the feature subsamples}
+Number of features to be drawn in the feature subsamples.
+Default is 5.}
 
 \item{alphas}{[\code{numeric}] \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
@@ -27,7 +32,7 @@ Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are int
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
 \item{n.sim}{[\code{numeric(1)}] \cr
-Number of Monte-Carlo Samples, Default: 10^4.}
+Number of Monte-Carlo Samples, Default is 10^3.}
 
 \item{best}{[\code{numeric(1)}]\cr
 Best obtainable value for measure.
@@ -42,13 +47,10 @@ Name of the measure. Default is \code{id}.}
 
 \item{note}{[\code{character}] \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
-
-\item{avm.iters}{[\code{numeric}] \cr
-Number of subsamples}
 }
 \value{
 [\code{numeric(1)}]
-  Area under Mass-Volume Curve (AMV) for high dimensional data.
+  Area under the Mass-Volume Curve (AMV) for high dimensional data.
 
 [\code{\link{Measure}}].
 }
@@ -61,11 +63,14 @@ to reduce the dimension of the data, therefore AMV can be applied on each
 subsamples, yielding partial scores AMV_k. The mean of the partial scores is
 the new performancecriteria AMVhd.
 }
+\note{
+the ID of the learner have to to be the default id!
+}
 \examples{
-# creates anomaly data with feature size nine
+# create anomaly data with feature size nine
 sigma = matrix(0, 9, 9)
 diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
-normal = mvrnorm(n = 1000, rep(0, 9), sigma)
+normal = MASS::mvrnorm(n = 1000, rep(0, 9), sigma)
 colnames(normal) = paste0("V", 1:9)
 normal = as.data.frame(normal)
 normal$normal = TRUE
@@ -79,34 +84,23 @@ data = na.omit(data)
 
 # create train and test sets
 library(BBmisc)
-inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+inds.split = BBmisc::chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
 train.inds = inds.split[[1]]
 test.inds = inds.split[[2]]
 
-# creates an AMVhd measure which calculates the area under the curve between 0.8 and 0.99
+# create an AMVhd measure which calculates the Area under the Mass-Volume Curve between 0.8 and 0.99
 # with 50 steps for high dimensional data.
 AMVhd = makeAMVhdMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
-n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
+n.alpha = 50, n.sim = 10e3, best = 0, worst = NULL)
 
 task = makeOneClassTask(data = data, target = "normal", positive = "TRUE", negative = "FALSE")
-# base learner
 lrn = makeLearner("oneclass.svm", predict.type = "prob")
-
-# for applying AMVhd we need to use the AMVhdWrapper
-# wrapped learner, with 3 feature subsample for each of the 10 iteration
-lrn_amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
-# wrapped model
-mod_amww = train(lrn_amww, task, subset = train.inds)
-# list all submodels, first list element is the full model
-submod = getLearnerModel(mod_amww, more.unwrap = FALSE)
-# wrapped prediction
-pred_amww = predict(mod_amww, task, subset = test.inds)
-# t contains the prediction with subsampled features
-t = attr(pred_amww, "AMVhdSubpredict")
+mod = train(lrn, task, subset = train.inds)
+pred = predict(mod, task, subset = test.inds)
 
 # calculate AMVhd performance
 set.seed(123)
-performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
+performance(pred = pred, measures = list(AMVhd), model = mod,
 task = task, feats = data[test.inds, 1:9])
 }
 \references{
@@ -114,7 +108,5 @@ Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algori
 arXiv preprint arXiv:1607.01152
 }
 \seealso{
-Other performance.: \code{\link{makeAMVMeasure}},
-  \code{\link{makePrecisionMeasure}},
-  \code{\link{makeWACMeasure}}
+Other performance.: \code{\link{makeAMVMeasure}}
 }

@@ -11,6 +11,11 @@
 \alias{bootstrapB632plus}
 \alias{growingcv}
 \alias{fixedcv}
+\alias{oneclasscv}
+\alias{oneclassrepcv}
+\alias{oneclassholdout}
+\alias{oneclasssubsample}
+\alias{oneclassbootstrap}
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
@@ -51,6 +56,26 @@ growingcv(learner, task, horizon = 1, initial.window = 0.5, skip = 0,
 
 fixedcv(learner, task, horizon = 1L, initial.window = 0.5, skip = 0,
   measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+oneclasscv(learner, task, iters = 10L, stratify = FALSE, measures,
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+oneclassrepcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE,
+  measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+oneclassholdout(learner, task, split = 2/3, stratify = FALSE, measures,
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+oneclasssubsample(learner, task, iters = 30, split = 2/3,
+  stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+oneclassbootstrap(learner, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
