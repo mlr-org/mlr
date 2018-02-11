@@ -4,7 +4,6 @@
 \alias{convertingScoresToProbability}
 \title{Convert anomaly scores to probability estimates.}
 \usage{
-
 convertingScoresToProbability(anomaly.score, param = c(0, 1))
 }
 \arguments{
