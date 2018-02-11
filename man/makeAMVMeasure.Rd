@@ -9,43 +9,43 @@ makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99),
   note = "")
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{\link{\code{character(1)}}\cr
 Name of measure. Note: need to keep the string "AMV" in the ID if doing nested resampling.
 Default is \dQuote{AMV}.}
 
-\item{minimize}{[\code{logical(1)}]\cr
+\item{minimize}{(`logical(1)`)\cr
 Should the measure be minimized?
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{alphas}{[\code{numeric}] \cr
+\item{alphas}{\link{\code{numeric}} \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
 Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.}
 
-\item{n.alpha}{[\code{numeric}] \cr
+\item{n.alpha}{\link{\code{numeric}} \cr
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
-\item{n.sim}{[\code{numeric(1)}] \cr
+\item{n.sim}{\link{\code{numeric(1)}} \cr
 Number of Monte-Carlo Samples, Default is 10^3.}
 
-\item{best}{[\code{numeric(1)}]\cr
+\item{best}{(`numeric(1)`)\cr
 Best obtainable value for measure.
-Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
+Default is -`Inf` or `Inf`, depending on `minimize`.}
 
-\item{worst}{[\code{numeric(1)}]\cr
+\item{worst}{(`numeric(1)`)\cr
 Worst obtainable value for measure.
-Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
+Default is `Inf` or -`Inf`, depending on `minimize`.}
 
-\item{name}{[\code{character}] \cr
-Name of the measure. Default is \code{id}.}
+\item{name}{([character]) \cr
+Name of the measure. Default is `id`.}
 
-\item{note}{[\code{character}] \cr
+\item{note}{([character]) \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-[\code{numeric(1)}]
-  Area under the Mass-Volume Curve (AMV).
+\link{\code{numeric(1)}}
+Area under the Mass-Volume Curve (AMV).
 
-[\code{\link{Measure}}].
+[Measure].
 }
 \description{
 Creates a measure for oneclass classification. The measure computes the

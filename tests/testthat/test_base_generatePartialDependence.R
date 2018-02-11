@@ -112,6 +112,11 @@ test_that("generatePartialDependenceData", {
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
   bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
     individual = TRUE, n = m)
+  ## tests for binary classification plotting, discovered whilst trying to merge
+  ## pr #142
+  plotPartialDependence(bc)
+  bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"), n = m)
+  plotPartialDependence(bc)
 
   # check that derivative estimation works for ICE and pd for classification and regression
   fr = train(makeLearner("regr.ksvm"), regr.task)

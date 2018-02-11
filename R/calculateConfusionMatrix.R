@@ -8,13 +8,13 @@
 #' The last bottom right element displays the total amount of errors.
 #'
 #' A list is returned that contains multiple matrices.
-#' If \code{relative = TRUE} we compute three matrices, one with absolute values and two with relative.
+#' If `relative = TRUE` we compute three matrices, one with absolute values and two with relative.
 #' The relative confusion matrices are normalized based on rows and columns respectively,
-#' if \code{FALSE} we only compute the absolute value matrix.
+#' if `FALSE` we only compute the absolute value matrix.
 #'
-#' The \code{print} function returns the relative matrices in
+#' The `print` function returns the relative matrices in
 #' a compact way so that both row and column marginals can be seen in one matrix.
-#' For details see \code{\link{ConfusionMatrix}}.
+#' For details see [ConfusionMatrix].
 #'
 #' Note that for resampling no further aggregation is currently performed.
 #' All predictions on all test sets are joined to a vector yhat, as are all labels
@@ -22,17 +22,17 @@
 #' a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 #'
 #' @template arg_pred
-#' @param relative [\code{logical(1)}]\cr
-#'   If \code{TRUE} two additional matrices are calculated. One is normalized by rows and one by
+#' @param relative (`logical(1)`)\cr
+#'   If `TRUE` two additional matrices are calculated. One is normalized by rows and one by
 #'   columns.
-#' @param sums [\code{logical(1)}]\cr
-#'   If \code{TRUE} add absolute number of observations in each group.
-#' @param set [\code{character(1)}]\cr
+#' @param sums (`logical(1)`)\cr
+#'   If `TRUE` add absolute number of observations in each group.
+#' @param set (`character(1)`)\cr
 #'   Specifies which part(s) of the data are used for the calculation.
-#'   If \code{set} equals \code{train} or \code{test}, the \code{pred} object must be the result of a
+#'   If `set` equals `train` or `test`, the `pred` object must be the result of a
 #'   resampling, otherwise an error is thrown.
 #'   Defaults to \dQuote{both}. Possible values are \dQuote{train}, \dQuote{test}, or \dQuote{both}.
-#' @return [\code{\link{ConfusionMatrix}}].
+#' @return ([ConfusionMatrix]).
 #' @family performance
 #' @export
 #' @examples
@@ -125,13 +125,13 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE, set = 
 #' @export
 #' @describeIn calculateConfusionMatrix
 #'
-#' @param x [\code{\link{ConfusionMatrix}}]\cr
+#' @param x ([ConfusionMatrix])\cr
 #'   Object to print.
-#' @param both [\code{logical(1)}]\cr
-#'   If \code{TRUE} both the absolute and relative confusion matrices are printed.
-#' @param digits [\code{integer(1)}]\cr
+#' @param both (`logical(1)`)\cr
+#'   If `TRUE` both the absolute and relative confusion matrices are printed.
+#' @param digits (`integer(1)`)\cr
 #'   How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'  Currently not used.
 print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 
@@ -187,18 +187,18 @@ print.ConfusionMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' @title Confusion matrix
 #'
 #' @description
-#' The result of \code{\link{calculateConfusionMatrix}}.
+#' The result of [calculateConfusionMatrix].
 #'
 #' Object members:
 #' \describe{
-#' \item{result [\code{matrix}]}{Confusion matrix of absolute values and marginals. Can also contain
+#' \item{result ([matrix])}{Confusion matrix of absolute values and marginals. Can also contain
 #'   row and column sums of observations.}
-#' \item{task.desc [\code{\link{TaskDesc}}]}{Additional information about the task.}
-#' \item{sums [\code{logical(1)}]}{Flag if marginal sums of observations are calculated.}
-#' \item{relative [\code{logical(1)}]}{Flag if the relative confusion matrices are calculated.}
-#' \item{relative.row [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by row.}
-#' \item{relative.col [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by column.}
-#' \item{relative.error [\code{numeric(1)}]}{Relative error overall.}
+#' \item{task.desc ([TaskDesc])}{Additional information about the task.}
+#' \item{sums (`logical(1)`)}{Flag if marginal sums of observations are calculated.}
+#' \item{relative (`logical(1)`)}{Flag if the relative confusion matrices are calculated.}
+#' \item{relative.row ([matrix])}{Confusion matrix of relative values and marginals normalized by row.}
+#' \item{relative.col ([matrix])}{Confusion matrix of relative values and marginals normalized by column.}
+#' \item{relative.error (`numeric(1)`)}{Relative error overall.}
 #' }
 #' @name ConfusionMatrix
 #' @family performance

@@ -3,23 +3,23 @@
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res [\code{\link{TuneMultiCritResult}}]\cr
-#'   Result of \code{\link{tuneParamsMultiCrit}}.
-#' @param path [\code{logical(1)}]\cr
+#' @param res ([TuneMultiCritResult])\cr
+#'   Result of [tuneParamsMultiCrit].
+#' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   For the full path, the size of the points on the front is slightly increased.
-#'   Default is \code{TRUE}.
-#' @param col [\code{character(1)}]\cr
-#'   Which column of \code{res$opt.path} should be mapped to ggplot2 color?
-#'   Default is \code{NULL}, which means none.
-#' @param shape [\code{character(1)}]\cr
-#'   Which column of \code{res$opt.path} should be mapped to ggplot2 shape?
-#'   Default is \code{NULL}, which means none.
-#' @param pointsize [\code{numeric(1)}]\cr
-#'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+#'   Default is `TRUE`.
+#' @param col (`character(1)`)\cr
+#'   Which column of `res$opt.path` should be mapped to ggplot2 color?
+#'   Default is `NULL`, which means none.
+#' @param shape (`character(1)`)\cr
+#'   Which column of `res$opt.path` should be mapped to ggplot2 shape?
+#'   Default is `NULL`, which means none.
+#' @param pointsize (`numeric(1)`)\cr
+#'   Point size for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 2.
-#' @param pretty.names [\code{logical{1}}]\cr
-#'   Whether to use the ID of the measures instead of their name in labels. Defaults to \code{TRUE}.
+#' @param pretty.names (`logical(1)`)\cr
+#'   Whether to use the ID of the measures instead of their name in labels. Defaults to `TRUE`.
 #' @template ret_gg2
 #' @family tune_multicrit
 #' @export
@@ -62,21 +62,21 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res [\code{\link{TuneMultiCritResult}}]\cr
-#'   Result of \code{\link{tuneParamsMultiCrit}}.
-#' @param path [\code{logical(1)}]\cr
+#' @param res ([TuneMultiCritResult])\cr
+#'   Result of [tuneParamsMultiCrit].
+#' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   Points are colored according to their location.
-#'   Default is \code{TRUE}.
-#' @param point.info [\code{character(1)}]\cr
+#'   Default is `TRUE`.
+#' @param point.info (`character(1)`)\cr
 #'   Show for each point which hyper parameters led to this point?
-#'   For \code{"click"}, information is displayed on mouse click.
-#'   For \code{"hover"}, information is displayed on mouse hover.
-#'   If set to \code{"none"}, no information is displayed.
-#'   Default is \code{"hover"}.
-#' @param point.trafo [\code{logical(1)}]\cr
+#'   For `"click"`, information is displayed on mouse click.
+#'   For `"hover"`, information is displayed on mouse hover.
+#'   If set to `"none"`, no information is displayed.
+#'   Default is `"hover"`.
+#' @param point.trafo (`logical(1)`)\cr
 #'   Should the information show the transformed hyper parameters?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #'
 #' @template ret_ggv
 #' @family tune_multicrit

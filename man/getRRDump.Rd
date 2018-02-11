@@ -7,15 +7,15 @@
 getRRDump(res)
 }
 \arguments{
-\item{res}{[\code{ResampleResult}]\cr
-The result of \code{\link{resample}}.}
+\item{res}{(\link{ResampleResult})\cr
+The result of \link{resample}.}
 }
 \value{
-[list].
+\link{list}.
 }
 \description{
 Returns the error dumps generated during resampling, which can be used with \code{debugger()}
-to debug errors. These dumps are saved if \code{\link{configureMlr}} configuration \code{on.error.dump},
+to debug errors. These dumps are saved if \link{configureMlr} configuration \code{on.error.dump},
 or the corresponding learner \code{config}, is \code{TRUE}.
 
 The returned object is a list with as many entries as the resampling being used has folds. Each of these
