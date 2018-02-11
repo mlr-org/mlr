@@ -10,7 +10,7 @@
 #' encapsulated learner in a recursive fashion.
 #'
 #' @template arg_learner
-#' @param predict.type [\code{character(1)}]\cr
+#' @param predict.type (`character(1)`)\cr
 #'   Classification: \dQuote{response} or \dQuote{prob}.
 #'   Regression: \dQuote{response} or \dQuote{se}.
 #'   Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.

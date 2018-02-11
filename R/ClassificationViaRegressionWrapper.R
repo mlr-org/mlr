@@ -8,7 +8,7 @@
 #' Inspired by WEKA's ClassificationViaRegression (http://weka.sourceforge.net/doc.dev/weka/classifiers/meta/ClassificationViaRegression.html).
 #'
 #' @template arg_learner
-#' @param predict.type [\code{character(1)}]\cr
+#' @param predict.type (`character(1)`)\cr
 #'   \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the one with maximal probability).
 #' @template ret_learner
 #' @export

@@ -4,36 +4,36 @@
 #' Creates a wrapper, which can be used like any other learner object.
 #'
 #' Fitting is performed in a weighted fashion where each observation receives a weight,
-#' depending on the class it belongs to, see \code{wcw.weight}.
+#' depending on the class it belongs to, see `wcw.weight`.
 #' This might help to mitigate problems caused by imbalanced class distributions.
 #'
 #' This weighted fitting can be achieved in two ways:
 #'
 #' a) The learner already has a parameter for class weighting, so one weight can directly be defined
-#' per class. Example: \dQuote{classif.ksvm} and parameter \code{class.weights}.
-#' In this case we don't really do anything fancy. We convert \code{wcw.weight} a bit,
+#' per class. Example: \dQuote{classif.ksvm} and parameter `class.weights`.
+#' In this case we don't really do anything fancy. We convert `wcw.weight` a bit,
 #' but basically simply bind its value to the class weighting param.
 #' The wrapper in this case simply offers a convenient, consistent fashion for class weighting -
 #' and tuning! See example below.
 #'
 #' b) The learner does not have a direct parameter to support class weighting, but
-#' supports observation weights, so \code{hasLearnerProperties(learner, 'weights')} is \code{TRUE}.
+#' supports observation weights, so `hasLearnerProperties(learner, 'weights')` is `TRUE`.
 #' This means that an individual, arbitrary weight can be set per observation during training.
 #' We set this weight depending on the class internally in the wrapper. Basically we introduce
 #' something like a new \dQuote{class.weights} parameter for the learner via observation weights.
 #'
 #' @template arg_learner_classif
-#' @param wcw.param [\code{character(1)}]\cr
+#' @param wcw.param (`character(1)`)\cr
 #'   Name of already existing learner parameter, which allows class weighting.
-#'   The default (\code{wcw.param = NULL}) will use the parameter defined in
-#'   the learner (\code{class.weights.param}). During training, the parameter
+#'   The default (`wcw.param = NULL`) will use the parameter defined in
+#'   the learner (`class.weights.param`). During training, the parameter
 #'   must accept a named vector of class weights, where length equals the
 #'   number of classes.
-#' @param wcw.weight [\code{numeric}]\cr
+#' @param wcw.weight ([numeric])\cr
 #'   Weight for each class.
 #'   Must be a vector of the same number of elements as classes are in task,
 #'   and must also be in the same order as the class levels are in
-#'   \code{getTaskDesc(task)$class.levels}.
+#'   `getTaskDesc(task)$class.levels`.
 #'   For convenience, one must pass a single number in case of binary classification, which
 #'   is then taken as the weight of the positive class, while the negative class receives a weight
 #'   of 1.

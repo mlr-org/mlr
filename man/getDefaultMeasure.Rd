@@ -7,23 +7,27 @@
 getDefaultMeasure(x)
 }
 \arguments{
-\item{x}{[\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
-Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").}
+\item{x}{([character(1)` | [Task] | [TaskDesc] | [Learner])\cr
+Task type, task, task description, learner name, a learner, or a type of learner (e.g. "classif").
+
+[character(1)` | [Task]: R:character(1)%60%20%7C%20[Task
+[TaskDesc]: R:TaskDesc
+[Learner]: R:Learner}
 }
 \value{
-[\code{\link{Measure}}].
+(\link{Measure}).
 }
 \description{
 Get the default measure for a task type, task, task description or a learner.
 Currently these are:
- \tabular{ll}{
-   oneclass    \tab f1 \cr
-   classif     \tab mmce\cr
-   regr        \tab mse\cr
-   cluster     \tab db\cr
-   surv        \tab cindex\cr
-   costsens    \tab mcp\cr
-   multilabel  \tab multilabel.hamloss\cr
+\tabular{ll}{
+oneclass    \tab f1 \cr
+classif     \tab mmce\cr
+regr        \tab mse\cr
+cluster     \tab db\cr
+surv        \tab cindex\cr
+costsens    \tab mcp\cr
+multilabel  \tab multilabel.hamloss\cr
 }
 Note: default measure f1 for one-class classification is an adhoc solution and not the optimal measurement for unsupervised learning.
 }

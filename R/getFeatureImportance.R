@@ -2,7 +2,7 @@
 #'
 #' @description
 #' For some learners it is possible to calculate a feature importance measure.
-#' \code{getFeatureImportance} extracts those values from trained models.
+#' `getFeatureImportance` extracts those values from trained models.
 #' See below for a list of supported learners.
 #'
 #'
@@ -12,7 +12,7 @@
 #'    in a tree and the weight of that tree.}
 #'    \item{cforest} \cr
 #'    {Permutation principle of the 'mean decrease in accuracy' principle
-#'    in randomForest. If \code{auc=TRUE} (only for binary classification),
+#'    in randomForest. If `auc=TRUE` (only for binary classification),
 #'    area under the curve is used as measure.  The algorithm used for the survival
 #'    learner is 'extremely slow and experimental; use at your own risk'.
 #'    See \link[party:varimp]{varimp} for details and further parameters.}
@@ -21,11 +21,11 @@
 #'    \link[gbm:relative.influence]{relative.influence}
 #'    for details and further parameters.}
 #'    \item{randomForest} \cr
-#'    {For \code{type = 2} (the default) the 'MeanDecreaseGini' is measured,
+#'    {For `type = 2` (the default) the 'MeanDecreaseGini' is measured,
 #'    which is based on the Gini impurity index used for the calculation of the nodes.
-#'    Alternatively, you can set \code{type} to 1, then the measure is the mean
+#'    Alternatively, you can set `type` to 1, then the measure is the mean
 #'    decrease in accuracy calculated on OOB data. Note, that in this case
-#'    the learner's parameter \code{importance} needs to be set to be able to compute
+#'    the learner's parameter `importance` needs to be set to be able to compute
 #'    feature importance values.
 #'    See \link[randomForest:importance]{importance} for details.}
 #'    \item{RRF} \cr
@@ -37,7 +37,7 @@
 #'    \item{ranger} \cr
 #'    {Supports both measures mentioned above for the randomForest
 #'    learner. Note, that you need to specifically set the learners parameter
-#'    \code{importance}, to be able to compute feature importance measures.
+#'    `importance`, to be able to compute feature importance measures.
 #'    See \link[ranger:importance]{importance} and
 #'    \link[ranger:ranger]{ranger} for details.}
 #'    \item{rpart} \cr
@@ -48,12 +48,13 @@
 #'    computation of the importance in xgboost is undocumented.}
 #'  }
 #'
-#' @param object [\code{\link{WrappedModel}}]\cr
-#'   Wrapped model, result of \code{\link{train}}.
-#' @param ... [any]\cr
+#' @param object ([WrappedModel])\cr
+#'   Wrapped model, result of [train].
+#' @param ... (any)\cr
 #'   Additional parameters, which are passed to the underlying importance value
 #'   generating function.
-#' @return [\code{FeatureImportance}] An object containing a \code{data.frame} of the variable importances and further information.
+#' @return ([FeatureImportance]) An object containing a `data.frame` of the variable importances and further information.
+#' @noMd
 #' @export
 getFeatureImportance = function(object, ...) {
 
@@ -89,20 +90,20 @@ getFeatureImportance = function(object, ...) {
 #'
 #' @description
 #'
-#' This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.
+#' This function is mostly for internal usage. To calculate feature importance use [getFeatureImportance].
 #'
 #' The return value is a named numeric vector. There does not need to be one value for each feature in the dataset.
-#' In \code{\link{getFeatureImportance}} missing features will get an importance of zero and if the vector contains \code{NA}
+#' In [getFeatureImportance] missing features will get an importance of zero and if the vector contains `NA`
 #' they will also be replaced with zero.
 #'
-#' @param .learner [\code{\link{Learner}} | \code{character(1)}]\cr
+#' @param .learner ([Learner] | `character(1)`)\cr
 #'   The learner.
-#' @param .model [\code{\link{WrappedModel}}]\cr
+#' @param .model ([WrappedModel])\cr
 #'  The model.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #' Additional parameters, which are passed to the underlying importance value
 #' generating function.
-#' @return [\code{numeric}] A named vector of variable importance.
+#' @return ([numeric]) A named vector of variable importance.
 #' @export
 #' @keywords internal
 getFeatureImportanceLearner = function(.learner, .model, ...) {

@@ -2,41 +2,41 @@
 #'
 #' @description
 #' Extract non-functional features from functional features using various methods.
-#' The function \code{extractFDAFeatures} performs the extraction for all functional features
-#' via the methods specified in \code{feat.methods} and transforms all mentioned functional
+#' The function [extractFDAFeatures] performs the extraction for all functional features
+#' via the methods specified in `feat.methods` and transforms all mentioned functional
 #' matrix features into regular data.frame columns.
-#' Additionally, a \dQuote{\code{extractFDAFeatDesc}} object
+#' Additionally, a \dQuote{`extractFDAFeatDesc`} object
 #' which contains learned coefficients and other helpful data for
 #' extraction during the predict-phase is returned. This can be used with
-#' \code{\link{reextractFDAFeatures}} in order to extract features during the prediction phase.
+#' [reextractFDAFeatures] in order to extract features during the prediction phase.
 #'
 #' @details
 #' The description object contains these slots
 #' \describe{
-#'   \item{target [\code{character}]}{See argument.}
-#'   \item{coln [\code{character}]}{colum names of data.}
-#'   \item{fd.cols [\code{character}]}{Functional feature names.}
-#'   \item{extractFDAFeat [\code{list}]}{Contains \code{feature.methods} and relevant
+#'   \item{target [character]}{See argument.}
+#'   \item{coln [character]}{colum names of data.}
+#'   \item{fd.cols [character]}{Functional feature names.}
+#'   \item{extractFDAFeat [list]}{Contains `feature.methods` and relevant
 #'   parameters for reextraction}.
 #' }
 #'
-#' @param obj [\code{Task} | \code{data.frame}]\cr
+#' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from.
 #'   Must contain functional features as matrix columns.
-#' @param target [\code{character}]\cr
+#' @param target ([character])\cr
 #'   Task target column. Only neccessary for data.frames
-#'   Default is \code{character(0)}.
-#' @param feat.methods [\code{named list}]\cr
+#'   Default is `character(0)`.
+#' @param feat.methods (named [list])\cr
 #'   List of functional features along with the desired methods for each functional feature.
-#'   \dQuote{all} applies the \code{extratFDAFeatures} method to each
+#'   \dQuote{all} applies the [extractFDAFeatures] method to each
 #'   functional feature.
-#'   Names of \code{feat.methods} must match column names of functional features.
-#'   Available feature extraction methods are available under family \code{fda_featextractor}.
-#'   Default is \code{list()} which does nothing.
-#' @return [\code{list}]
-#'   \item{data [\code{data.frame} | \code{Task}]}{Extracted features, returns a data.frame when
-#'   given a data.frame and a Task when given a Task.}
-#'   \item{desc [\code{extracFDAFeatDesc}]}{Description object. See description for details.}
+#'   Names of `feat.methods` must match column names of functional features.
+#'   Available feature extraction methods are available under family `fda_featextractor`.
+#'   Default is [list] which does nothing.
+#' @return ([list])
+#'   \item{data ([data.frame] | [Task])}{Extracted features, returns a data.frame when
+#'   given a [data.frame] and a Task when given a Task.}
+#'   \item{desc (`extractFDAFeatDesc`)}{Description object. See description for details.}
 #' @family fda
 #' @export
 
@@ -148,14 +148,14 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @description
 #' This function accepts a data frame or a task and an extractFDAFeatDesc
 #' (a FDA feature extraction description)
-#' as returned by \code{\link{extractFDAFeatures}} to extract features
+#' as returned by [extractFDAFeatures] to extract features
 #' from previously unseen data.
-#' @param obj [\code{Task|data.frame}]\cr
+#' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from. Must contain functional features
 #'   as matrix columns.
-#' @param desc [\code{extractFDAFeatDesc}]\cr
-#'   FDAFeature extraction description as returned by \code{\link{extractFDAFeatures}}
-#' @return \code{data.frame} or \code{task} containing the extracted Features
+#' @param desc (`extractFDAFeatDesc`)\cr
+#'   FDAFeature extraction description as returned by [extractFDAFeatures]
+#' @return [data.frame] or [Task] containing the extracted Features
 #' @family extractFDAFeatures
 #' @export
 reextractFDAFeatures = function(obj, desc) {

@@ -81,7 +81,7 @@ propVectorToMatrix = function(p, levs) {
 #' @description
 #' Returns a character vector with each of the supported task types in mlr.
 #'
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 listTaskTypes = function() {
   c("oneclass", "classif", "regr", "surv", "costsens", "cluster", "multilabel")

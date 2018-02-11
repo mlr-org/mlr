@@ -12,7 +12,7 @@ ultraviolet radiation spectrum and infrared ray radiation and one scalar
 column called h2o.
 }
 \details{
-The features and grids are scaled in the same way as in \code{\link[FDboost]{FDboost}}.
+The features and grids are scaled in the same way as in \link[FDboost:FDboost]{FDboost::FDboost}.
 }
 \references{
 See Brockhaus, S., Scheipl, F., Hothorn, T., & Greven, S. (2015). The functional linear array model. Statistical Modelling, 15(3), 279–300.
