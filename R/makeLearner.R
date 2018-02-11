@@ -1,18 +1,18 @@
 #' @title Create learner object.
 #'
 #' @description
-#' For a classification learner the \code{predict.type} can be set
+#' For a classification learner the `predict.type` can be set
 #' to \dQuote{prob} to predict probabilities and the maximum
 #' value selects the label. The threshold used to assign the label can later be changed using the
-#' \code{\link{setThreshold}} function.
+#' [setThreshold] function.
 #'
-#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+#' To see all possible properties of a learner, go to: [LearnerProperties].
 #'
 #' @template arg_lrncl
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Id string for object. Used to display object.
-#'   Default is \code{cl}.
-#' @param predict.type [\code{character(1)}]\cr
+#'   Default is `cl`.
+#' @param predict.type (`character(1)`)\cr
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
@@ -21,27 +21,27 @@
 #'   One-class classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Default is \dQuote{response}.
 #' @template arg_predictthreshold
-#' @param fix.factors.prediction [\code{logical(1)}]\cr
+#' @param fix.factors.prediction (`logical(1)`)\cr
 #'   In some cases, problems occur in underlying learners for factor features during prediction.
 #'   If the new features have LESS factor levels than during training (a strict subset),
 #'   the learner might produce an  error like
 #'   \dQuote{type of predictors in new data do not match that of the training data}.
-#'   In this case one can repair this problem by setting this option to \code{TRUE}.
+#'   In this case one can repair this problem by setting this option to `TRUE`.
 #'   We will simply add the missing factor levels missing from the test feature
 #'   (but present in training) to that feature.
-#'   Default is \code{FALSE}.
-#' @param ... [any]\cr
+#'   Default is `FALSE`.
+#' @param ... (any)\cr
 #'   Optional named (hyper)parameters.
-#'   Alternatively these can be given using the \code{par.vals} argument.
-#' @param par.vals [\code{list}]\cr
+#'   Alternatively these can be given using the `par.vals` argument.
+#' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameters. The arguments in
-#'   \code{...} take precedence over values in this list. We strongly
+#'   `...` take precedence over values in this list. We strongly
 #'   encourage you to use one or the other to pass (hyper)parameters
 #'   to the learner but not both.
-#' @param config [\code{named list}]\cr
-#'   Named list of config option to overwrite global settings set via \code{\link{configureMlr}}
+#' @param config (named [list])\cr
+#'   Named list of config option to overwrite global settings set via [configureMlr]
 #'   for this specific learner.
-#' @return [\code{\link{Learner}}].
+#' @return ([Learner]).
 #' @family learner
 #' @export
 #' @aliases Learner

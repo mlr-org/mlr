@@ -1,11 +1,11 @@
 #' Convert arguments to control structure.
 #'
-#' Find all elements in \code{...} which are not missing and
-#' call \code{control} on them.
+#' Find all elements in `...` which are not missing and
+#' call `control` on them.
 #'
-#' @param control [\code{function}]\cr
+#' @param control (`function`)\cr
 #'   Function that creates control structure.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Arguments for control structure function.
 #' @return Control structure for learner.
 #' @export

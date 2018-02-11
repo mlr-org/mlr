@@ -7,19 +7,19 @@
 reextractFDAFeatures(obj, desc)
 }
 \arguments{
-\item{obj}{[\code{Task|data.frame}]\cr
+\item{obj}{(\link{Task} | \link{data.frame})\cr
 Task or data.frame to extract functional features from. Must contain functional features
 as matrix columns.}
 
-\item{desc}{[\code{extractFDAFeatDesc}]\cr
-FDAFeature extraction description as returned by \code{\link{extractFDAFeatures}}}
+\item{desc}{(\code{extractFDAFeatDesc})\cr
+FDAFeature extraction description as returned by \link{extractFDAFeatures}}
 }
 \value{
-\code{data.frame} or \code{task} containing the extracted Features
+\link{data.frame} or \link{Task} containing the extracted Features
 }
 \description{
 This function accepts a data frame or a task and an extractFDAFeatDesc
 (a FDA feature extraction description)
-as returned by \code{\link{extractFDAFeatures}} to extract features
+as returned by \link{extractFDAFeatures} to extract features
 from previously unseen data.
 }
