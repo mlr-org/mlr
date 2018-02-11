@@ -24,7 +24,7 @@ test_that("occv instance works", {
     # does training only have normal data?
     expect_false(any(i1 %nin% normal.inds))
   }
-  expect_equal(sort(c(unique(unlist(rin$test.inds)))), 1:1050)
+  expect_equal(sort(c(unique(unlist(rin$test.inds)))), 1:105)
 
   # OCCV instance is stochastic
   rin1 = makeResampleInstance(makeResampleDesc("OCCV", iters = 2L), oneclass.task)

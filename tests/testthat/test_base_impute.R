@@ -109,9 +109,9 @@ test_that("Impute data frame", {
   x = impute(data, target = target, dummy.classes = "numeric", dummy.cols = "z")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy", "z.dummy")))
 
-  x = impute(data, target = target, classes = list(factor = imputeMode(), numeric = imputeMedian(),
+  x = impute(data, target = character(0), classes = list(factor = imputeMode(), numeric = imputeMedian(),
       integer = imputeMedian(), logical = imputeConstant(1)))
-  expect_true(all(!is.na(x)))
+  expect_true(all(!is.na(x$data)))
 
   data2 = data[1:5, ]
   x = impute(data2, target = target, dummy.classes = c("numeric", "logical", "factor"), force.dummies = TRUE)

@@ -21,6 +21,7 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
+#' @details
 #' Note on multilabel:
 #' For multilabel classification we assume that the presence of labels is encoded via logical
 #' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
@@ -32,6 +33,12 @@
 #' This class columns should be a factor, where the levels are the strings denoted by
 #' \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
 #' and the latter the name of the normal class.
+#'
+#' If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
+#' resampling method, variables named \code{x} and \code{y} will be used for spatial
+#' partitioning of the data (kmeans clustering). They will not be
+#' used as predictors during modeling. Be aware: If coordinates are not named
+#' \code{x} and \code{y} they will be treated as normal predictors!
 #'
 #' Functional data can be added to a task via matrix columns. For more information refer to
 #' \code{\link{makeFunctionalData}}.
@@ -84,6 +91,10 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}.
+#' @param coordinates [\code{data.frame}]\cr
+#'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+#'   Coordinates have to be numeric values.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
@@ -106,7 +117,7 @@
 #' # for anomaly create example data with 5% anomalies
 #' set.seed(123)
 #' sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
-#' normal = as.data.frame(mvrnorm(n = 1000, rep(0, 2), sigma))
+#' normal = as.data.frame(MASS::mvrnorm(n = 1000, rep(0, 2), sigma))
 #' normal$Target = "Normal"
 #'
 #' anomaly = as.data.frame(matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2))
@@ -115,13 +126,32 @@
 #' data = na.omit(data)
 #'
 #' # create tasks, it is required to set the positive class (anomaly class) and
-#' the negative class (normal class) as well as the name of the target column
+#' # the negative class (normal class) as well as the name of the target column
 #' oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data,
-#' target = "Target", positive = "Anomaly", negative = "Normal")
+#' target = "Target",coordinates = NULL, positive = "Anomaly", negative = "Normal")
 #'
 NULL
 
-makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+#' Exported for internal use.
+#' @param id [\code{character(1)}]\cr
+#'   task id
+#' @param data [\code{data.frame}]\cr
+#'   data
+#' @param target [\code{character}]\cr
+#'   target columns
+#' @param weights [\code{numeric}]\cr
+#'   weights
+#' @param blocking [\code{numeric}\cr
+#'   task data blocking
+#' @param coordinates [\code{data.frame}]\cr
+#'   Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+#'   Coordinates have to be numeric values.
+#'   Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.
+#' @keywords internal
+#' @name makeTaskDesc
+NULL
+
+makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE, coordinates = NULL) {
   if (fixup.data != "no") {
     if (fixup.data == "quiet") {
       data = droplevels(data)
@@ -153,6 +183,17 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
       if (length(blocking) && length(blocking) != nrow(data))
         stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
     }
+    if (!is.null(coordinates)) {
+      if (nrow(coordinates) != nrow(data)) {
+        stop("Coordinates need to have the same length data! Or pass none at all.")
+      }
+      if (ncol(coordinates) < 2) {
+        stop("Supplied coordinates need to consist of at least two dimensions.")
+      }
+      if (!is.data.frame(coordinates)) {
+        warningf("Provided coordinates are not given as a data frame but as class %s. Please provide a data frame.", class(coordinates))
+      }
+    }
   }
 
   env = new.env(parent = emptyenv())
@@ -162,6 +203,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
     env = env,
     weights = weights,
     blocking = blocking,
+    coordinates = coordinates,
     task.desc = NA
   )
 }
@@ -197,4 +239,5 @@ print.Task = function(x, print.weights = TRUE, ...) {
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
+  catf("Has coordinates: %s", td$has.coordinates)
 }

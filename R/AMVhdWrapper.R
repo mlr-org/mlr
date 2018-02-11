@@ -41,7 +41,7 @@
 #' @family wrapper
 #' @export
 
-makeAMVhdWrapper = function(learner, amv.iters = 10L, amv.feats = 3) {
+makeAMVhdWrapper = function(learner, amv.iters, amv.feats) {
   learner = checkLearner(learner, type = "oneclass")
   pv = list()
   if (!missing(amv.iters)) {
@@ -74,14 +74,14 @@ print.AMVhdModel = function(x, ...) {
 
 #' @export
 trainLearner.AMVhdWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
-  amv.iters = 10, amv.feats = 3, ...) {
+  amv.iters, amv.feats, ...) {
   .task = subsetTask(.task, subset = .subset)
   d = getTaskNFeats(.task)
 
   fullmodel = train(.learner$next.learner, .task)
   args = list(d = d, dsub = amv.feats,  task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, show.info = FALSE)
-  exportMlrOptions(level = "mlr.ensemble")
+  #exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(doAMVhdTrainIteration, i = seq_len(amv.iters), more.args = args)
   models[[amv.iters + 1]] =  fullmodel
   models = rev(models)

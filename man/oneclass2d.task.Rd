@@ -3,7 +3,7 @@
 \docType{data}
 \name{oneclass2d.task}
 \alias{oneclass2d.task}
-\title{Artificial oneclass toy task.}
+\title{Artificial One-class classification toy task.}
 \description{
 Contains the task (\code{oneclass2d.task}).
 }

@@ -16,8 +16,13 @@ Name of measure.}
 Should the measure be minimized?
 Default is \code{TRUE}.}
 
+\item{amv.iters}{[\code{numeric}] \cr
+Number of subsamples.
+Default is 10.}
+
 \item{amv.feats}{[\code{numeric}] \cr
-Number of features to be drawn in the feature subsamples}
+Number of features to be drawn in the feature subsamples.
+Default is 3.}
 
 \item{alphas}{[\code{numeric}] \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
@@ -27,7 +32,7 @@ Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are int
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
 \item{n.sim}{[\code{numeric(1)}] \cr
-Number of Monte-Carlo Samples, Default: 10^4.}
+Number of Monte-Carlo Samples, Default is 10^4.}
 
 \item{best}{[\code{numeric(1)}]\cr
 Best obtainable value for measure.
@@ -42,9 +47,6 @@ Name of the measure. Default is \code{id}.}
 
 \item{note}{[\code{character}] \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
-
-\item{avm.iters}{[\code{numeric}] \cr
-Number of subsamples}
 }
 \value{
 [\code{numeric(1)}]
@@ -65,7 +67,7 @@ the new performancecriteria AMVhd.
 # creates anomaly data with feature size nine
 sigma = matrix(0, 9, 9)
 diag(sigma) = c(4, 5, 8, 3, 2, 6, 9, 3, 1)
-normal = mvrnorm(n = 1000, rep(0, 9), sigma)
+normal = MASS::mvrnorm(n = 1000, rep(0, 9), sigma)
 colnames(normal) = paste0("V", 1:9)
 normal = as.data.frame(normal)
 normal$normal = TRUE

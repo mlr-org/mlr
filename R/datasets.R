@@ -140,6 +140,32 @@ NULL
 #' @docType data
 NULL
 
+#' J. Muenchow's Ecuador landslide data set
+#'
+#' Data set created by Jannes Muenchow, University of Erlangen-Nuremberg,
+#' Germany.
+#' These data should be cited as Muenchow et al. (2012) (see reference below).
+#' This publication also contains additional information on data collection and
+#' the geomorphology of the area. The data set provded here is (a subset of) the
+#' one from the 'natural' part of the RBSF area and corresponds to landslide
+#' distribution in the year 2000.
+#' @name spatial.task
+#'
+#' @keywords datasets
+#'
+#' @docType data
+#'
+#' @format a `data.frame` with point samples of landslide and
+#' non-landslide locations in a study area in the Andes of southern Ecuador.
+#'
+#' @references Muenchow, J., Brenning, A., Richter, M., 2012. Geomorphic process
+#' rates of landslides along a humidity gradient in the tropical Andes.
+#' Geomorphology, 139-140: 271-284.
+#'
+#' Brenning, A., 2005. Spatial prediction models for landslide hazards:
+#' review, comparison and evaluation.
+#' Natural Hazards and Earth System Sciences, 5(6): 853-862.
+NULL
 
 #' Gunpoint functional data classification task.
 #'

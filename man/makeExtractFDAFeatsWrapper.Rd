@@ -32,7 +32,8 @@ Internally uses \code{\link{extractFDAFeatures}} before training the learner and
 Other fda: \code{\link{extractFDAFeatures}},
   \code{\link{makeExtractFDAFeatMethod}}
 
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},

@@ -46,8 +46,8 @@ makeResampleInstance = function(desc, task, size, ...) {
     desc = makeResampleDesc(desc, ...)
   if (grepl("oneclass", desc$id)) {
     if (missing(task)) stop("For resampling for oneclass-classification 'task' must be supplied")
-  } else if (!xor(missing(task), missing(size))) {
-    stop("One of 'size' or 'task' must be supplied")
+  } else if (!xor(missing(task), missing(size)) && missing(coords)) {
+    stop("One of 'size', 'task' or 'coords' must be supplied")
   }
   if (!missing(task)) {
     assertClass(task, classes = "Task")

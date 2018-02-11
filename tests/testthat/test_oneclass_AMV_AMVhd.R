@@ -50,28 +50,22 @@ test_that("AMVhd", {
 
   # creates an AMVhd measure which calculates the area under the curve between 0.8 and 0.99
   # with 50 steps for high dimensional data.
-  amvhd = makeAMVhdMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
-    n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
+  amvhd = makeAMVhdMeasure(id = "AMVhd", minimize = TRUE, alphas = c(0.8, 0.99),
+    n.alpha = 50, n.sim = 10e1, best = 0, worst = NULL)
 
-  expect_equal(amvhd$id, "AMV")
+  expect_equal(amvhd$id, "AMVhd")
   expect_equal(amvhd$extra.args[[1]], c(0.8, 0.99))
-  expect_equal(amvhd$extra.args[[2]], 10e4)
+  expect_equal(amvhd$extra.args[[2]], 10e1)
 
   task = makeOneClassTask(data = data, target = "normal", positive = "TRUE", negative = "FALSE")
   # base learner
   lrn = makeLearner("oneclass.svm", predict.type = "prob")
-  # for applying amvhd we need to use the AMVhdWrapper
-  # wrapped learner, with 3 feature subsample for each of the 10 iteration
-  lrn.amww = makeAMVhdWrapper(lrn, amv.iters = 10, amv.feats = 3)
-  # wrapped model
-  mod.amww = train(lrn.amww, task, subset = train.inds)
-  # wrapped prediction
-  pred.amww = predict(mod.amww, task, subset = test.inds)
-
+  mod = train(lrn, task, subset = train.inds)
+  pred = predict(mod, task, subset = test.inds)
 
   # calculate AMVhd performance
-  perf = performance(pred = pred.amww, measures = list(amvhd), model = mod.amww, task = task, feats = data[test.inds, 1:9])
+  perf = performance(pred = pred, measures = list(amvhd), model = mod, task = task, feats = data[test.inds, 1:9])
   expect_numeric(perf)
-  expect_equal(names(perf), "AMV")
+  expect_equal(names(perf), "AMVhd")
   expect_true(perf >= 0)
 })

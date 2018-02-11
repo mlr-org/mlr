@@ -120,6 +120,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("With control class: %s", cl)
     messagef("Imputation value: %g", control$impute.val)
   }
+
   or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
@@ -127,3 +128,20 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 }
 
 
+#' @title Get the optimization path of a tuning result.
+#'
+#' @description
+#' Returns the opt.path from a [\code{\link{TuneResult}}] object.
+#' @param tune.result [\code{\link{TuneResult}}] \cr
+#'   A tuning result of the [\code{\link{tuneParams}}] function.
+#' @param as.df [\code{logical(1)}]\cr
+#'   Should the optimization path be returned as a data frame?
+#'   Default is \code{TRUE}.
+#' @export
+getTuneResultOptPath = function(tune.result, as.df = TRUE) {
+  if (as.df == TRUE) {
+    return(as.data.frame(tune.result$opt.path))
+  } else {
+    return(tune.result$opt.path)
+  }
+}

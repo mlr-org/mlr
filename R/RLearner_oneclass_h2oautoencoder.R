@@ -139,10 +139,12 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     par.set = makeParamSet(
       # FIXME: hidden can also be a list of integer vectors for grid search
       # instead of makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L), len = NA_integer_, lower = 1L) parametrise hidden
-      makeIntegerLearnerParam(id = "layers", lower = 1L, upper = 3L, default = 1L),
+      makeIntegerLearnerParam(id = "layers", lower = 1L, upper = 5L, default = 3L),
       makeIntegerLearnerParam(id = "nodes1", lower = 1L, default = 1L),
       makeIntegerLearnerParam(id = "nodes2", lower = 1L, requires = quote(layers > 1)),
       makeIntegerLearnerParam(id = "nodes3", lower = 1L, requires = quote(layers > 2)),
+      makeIntegerLearnerParam(id = "nodes4", lower = 1L, requires = quote(layers > 3)),
+      makeIntegerLearnerParam(id = "nodes5", lower = 1L, requires = quote(layers > 4)),
 
       makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
       makeDiscreteLearnerParam("activation", values = c("Rectifier", "Tanh",
@@ -208,9 +210,9 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
     ),
     properties = c("oneclass", "numerics", "factors", "weights", "prob"),
     note = "Input variable 'autoencoder' is set to 'TRUE'. And input variable
-    'hidden' is parameterise by 'layers', 'nodes1', 'nodes2', 'nodes3'.
+    'hidden' is parameterise by 'layers', 'nodes1', 'nodes2', 'nodes3', 'nodes4', 'nodes5'.
     'layers' is the number of layer and the 'nodes' variable are indicating the
-    number of nodes in each layer. For now maximal three layers are possible",
+    number of nodes in each layer (1:5). For now maximal three layers are possible",
     name = "h2o.autoencoder",
     short.name = "h2o.ae",
     callees = c("h2o.deeplearning", "h2o.predict", "h2o.anomaly")
@@ -219,8 +221,8 @@ makeRLearner.oneclass.h2o.autoencoder = function() {
 
 #' @export
 trainLearner.oneclass.h2o.autoencoder = function(.learner, .task, .subset, .weights = NULL,
-  layers = 1L, nodes1 = 200L, nodes2 = NULL, nodes3 = NULL, ...) {
-  hidden = c(nodes1, nodes2, nodes3)[1:layers]
+  layers = 1L, nodes1 = 200L, nodes2 = NULL, nodes3 = NULL, nodes4 = NULL, nodes5 = NULL, ...) {
+  hidden = c(nodes1, nodes2, nodes3, nodes4, nodes5)[1:layers]
   # check if h2o connection already exists, otherwise start one
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
@@ -256,8 +258,6 @@ predictLearner.oneclass.h2o.autoencoder = function(.learner, .model, .newdata, .
   } else {
     # usually low scores are indicator for anomaly
     # here: low scores = low mse reconstruction error = indicator for normal data
-    # therefore make the scores negative before converting
-    # low prob = anomaly
     p = convertingScoresToProbability(p.df)$probability
     p = cbind(p, 1 - p) # p.df = mse.reconstruction error = high = anomaly (same for prob)
     colnames(p) = label

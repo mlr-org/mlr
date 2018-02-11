@@ -25,5 +25,5 @@ Currently these are:
    costsens    \tab mcp\cr
    multilabel  \tab multilabel.hamloss\cr
 }
-Note: default measure f1 for oneclass is an adhoc solution and not the optimal measurement for unsupervised learning.
+Note: default measure f1 for one-class classification is an adhoc solution and not the optimal measurement for unsupervised learning.
 }

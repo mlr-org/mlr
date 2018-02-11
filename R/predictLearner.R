@@ -58,11 +58,56 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
       .newdata[ns] = mapply(factor, x = .newdata[ns],
         levels = fls, SIMPLIFY = FALSE)
   }
-  p = predictLearner(.learner, .model, .newdata, ...)
+  if ("missings" %nin% getLearnerProperties(.learner))
+    no.na = removeNALines(.newdata)
+  else
+    no.na = list(newdata = .newdata, inserts = FALSE)
+  if (!nrow(no.na$newdata))
+    no.na = list(newdata = .newdata, inserts = FALSE)  # no choice if all lines contain NA
+  p = predictLearner(.learner, .model, no.na$newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
-  return(p)
+  return(insertLines(p, no.na$inserts))
 }
 
+removeNALines = function(newdata) {
+  namat = is.na(newdata)
+  narows = apply(namat, 1, any)
+  return(list(newdata = newdata[!narows, , drop = FALSE], inserts = narows))
+}
+
+insertLines = function(prediction, inserts) {
+  if (any(class(prediction) == "PredictionAMVhd"))
+     return(prediction)
+  if (is.matrix(prediction)) {
+    ret = matrix(nrow = nrow(prediction) + sum(inserts), ncol = ncol(prediction))
+    ret[!inserts, ] = prediction
+    colnames(ret) = colnames(prediction)
+  } else {
+    ret = rep(NA, length(prediction) + sum(inserts))
+    ret[!inserts] = prediction
+    attributes(ret) = attributes(prediction)
+    names(ret) = NULL
+  }
+  return(ret)
+}
+
+#' @title Check output returned by predictLearner.
+#'
+#' @description
+#' Check the output coming from a Learner's internal
+#' \code{predictLearner} function.
+#'
+#' This function is for internal use.
+#'
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
+#' @param model [\code{\link{WrappedModel}}]]\cr
+#'   Model produced by training.
+#' @param p [any]\cr
+#'   The prediction made by \code{learner}.
+#' @return [any]. A sanitized version of \code{p}.
+#' @keywords internal
+#' @export
 checkPredictLearnerOutput = function(learner, model, p) {
   cl = class(p)[1L]
   if (learner$type %in% c("oneclass", "classif")) {

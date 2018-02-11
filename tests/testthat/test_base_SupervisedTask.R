@@ -70,3 +70,16 @@ test_that("SupervisedTask does not drop positive class", {
   td = getTaskDesc(task)
   expect_true(setequal(c(td$positive, td$negative), unique(data$Species)))
 })
+
+test_that("Task $type and $task.desc$type agree", {
+  check = list(
+    classif = binaryclass.task,
+    multilabel = multilabel.task,
+    regr = regr.task,
+    surv = surv.task,
+    costsens = costsens.task)
+  for (type in names(check)) {
+    expect_identical(type, check[[type]]$type)
+    expect_identical(type, getTaskDesc(check[[type]])$type)
+  }
+})

@@ -10,10 +10,11 @@
 #' the new performancecriteria AMVhd.
 #' @param amv.feats [\code{numeric}] \cr
 #' Number of features to be drawn in the feature subsamples.
-#' Default is 3.
+#' Default is 5.
 #' @param amv.iters [\code{numeric}] \cr
 #' Number of subsamples.
-#' Default is 10.
+#' Default is 50.
+#' @note the ID of the learner have to to be the default id!
 #' @return [\code{numeric(1)}]
 #'   Area under Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
@@ -41,7 +42,7 @@
 #'
 #' # create train and test sets
 #' library(BBmisc)
-#' inds.split = chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
+#' inds.split = BBmisc::chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
 #' train.inds = inds.split[[1]]
 #' test.inds = inds.split[[2]]
 #'
@@ -71,7 +72,7 @@
 #' performance(pred = pred_amww, measures = list(AMVhd), model = mod_amww,
 #' task = task, feats = data[test.inds, 1:9])
 
-makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.feats = 3, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL, name = id, note = "") {
+makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 50, amv.feats = 5, alphas = c(0.9, 0.99), n.alpha = 50, n.sim = 1e3, best = 0, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertNumeric(alphas, lower = 0, upper = 1)
@@ -80,13 +81,15 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
   assertString(name)
   assertString(note)
 
-  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas, n.sim),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(alphas = alphas, n.sim = n.sim, amv.iters = amv.iters, amv.feats = amv.feats, n.alpha = n.alpha),
     properties = c("oneclass", "req.model", "req.pred", "predtype.prob", "req.feats"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
       alphas = extra.args[[1]]
       n.sim = extra.args[[2]]
-
+      amv.iters = extra.args[[3]]
+      amv.feats = extra.args[[4]]
+      n.alpha = extra.args[[5]]
       measure.amv = makeAMVMeasure(id = "AMV", minimize = minimize, alphas = alphas, n.alpha = n.alpha, n.sim = n.sim, best = best, worst = worst, name = id)
 
       data = getTaskData(task, target.extra = TRUE)$data
@@ -95,12 +98,14 @@ makeAMVhdMeasure = function(id = "AMVhd", minimize = TRUE, amv.iters = 10, amv.f
       if (length(test.inds) == 0) stop("Pass argument subset in the train model.")
 
       if (model$learner$id %nin% listLearners(task)$class) {
-        lrn.id = gsub("^([^.]*.[^.]*)..*$", "\\1", model$learner$id)
+        lrn.id = model$learner$id
+        if(grepl(".AMVhd", lrn.id)) lrn.id = gsub(".AMVhd", "",lrn.id)
+        if(grepl(".tuned", lrn.id)) lrn.id = gsub(".tuned", "",lrn.id)
       } else {
         lrn.id = model$learner$id
       }
 
-      lrn.amv = makeLearner(lrn.id, predict.type = "prob")
+      lrn.amv = makeLearner(lrn.id, predict.type = "prob", par.vals = model$learner$par.vals)
       lrn.amvw = makeAMVhdWrapper(lrn.amv, amv.iters = amv.iters, amv.feats = amv.feats)
       # wrapped model
       mod.amvw = train(lrn.amvw, task, subset = train.inds)

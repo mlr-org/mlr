@@ -10,8 +10,8 @@ makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99),
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
-Name of measure.
-Default is \dQuote{costs}.}
+Name of measure. Note: need to keep the string "AVM" in the ID if doing nested resampling with threshold tuning.
+Default is \dQuote{AMV}.}
 
 \item{minimize}{[\code{logical(1)}]\cr
 Should the measure be minimized?
@@ -25,7 +25,7 @@ Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are int
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
 \item{n.sim}{[\code{numeric(1)}] \cr
-Number of Monte-Carlo Samples, Default: 10^4.}
+Number of Monte-Carlo Samples, Default is 10^4.}
 
 \item{best}{[\code{numeric(1)}]\cr
 Best obtainable value for measure.
@@ -75,7 +75,7 @@ pred = predict(mod, oneclass2d.task, subset = test.inds)
 
 # calculate performance for prediction object, pass data of features used for
 # prediction as feats in performance
-performance(pred = pred, measures = list(AMV), model = mod, task = task)
+performance(pred = pred, measures = list(AMV), model = mod, task = oneclass2d.task)
 }
 \references{
 Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,

@@ -40,7 +40,24 @@
 #' @rdname TaskDesc
 NULL
 
-makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
+#' Exported for internal use.
+#' @param type [\code{character(1)}]\cr
+#'   Task type.
+#' @param id [\code{character(1)}]\cr
+#'   task id
+#' @param data [\code{data.frame}]\cr
+#'   data
+#' @param target [\code{character}]\cr
+#'   target columns
+#' @param weights [\code{numeric}]\cr
+#'   weights
+#' @param blocking [\code{numeric}\cr
+#'   task data blocking
+#' @param coordinates [\code{logical(1)}]\cr
+#'   whether spatial coordinates have been provided
+#' @keywords internal
+#' @export
+makeTaskDescInternal = function(type, id, data, target, weights, blocking, coordinates) {
   # get classes of feature cols
   cl = vcapply(data, function(x) class(x)[1L])
   cl = table(dropNamed(cl, target))
@@ -59,6 +76,7 @@ makeTaskDescInternal = function(type, id, data, target, weights, blocking) {
     n.feat = n.feat,
     has.missings = anyMissing(data),
     has.weights = !is.null(weights),
-    has.blocking = !is.null(blocking)
+    has.blocking = !is.null(blocking),
+    has.coordinates = !is.null(coordinates)
   )
 }

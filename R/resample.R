@@ -29,6 +29,12 @@
 #'   See \code{\link{ResampleDesc}}.
 #' @param stratify [\code{logical(1)}]\cr
 #'   See \code{\link{ResampleDesc}}.
+#' @param horizon [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param initial.window [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param skip [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
 #' @template arg_measures
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
@@ -97,7 +103,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
-    measures = measures, models = models, extract = extract, show.info = show.info)
+    measures = measures, model = models, extract = extract, show.info = show.info)
   if (!is.null(weights)) {
     more.args$weights = weights
   } else if (!is.null(getTaskWeights(task))) {
@@ -133,18 +139,18 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
 
 # this wraps around calculateREsampleIterationResult and contains the subsetting for a specific fold i
-doResampleIteration = function(learner, task, rin, i, measures, weights, models, extract, show.info) {
+doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   setSlaveOptions()
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
   calculateResampleIterationResult(learner = learner, task = task, i = i, train.i = train.i, test.i = test.i, measures = measures,
-    weights = weights, rdesc = rin$desc, models = models, extract = extract, show.info = show.info)
+    weights = weights, rdesc = rin$desc, model = model, extract = extract, show.info = show.info)
 }
 
 
 #Evaluate one train/test split of the resample function and get one or more performance values
 calculateResampleIterationResult = function(learner, task, i, train.i, test.i, measures,
-  weights, rdesc, models, extract, show.info) {
+  weights, rdesc, model, extract, show.info) {
 
   err.msgs = c(NA_character_, NA_character_)
   err.dumps = list()
@@ -236,7 +242,7 @@ calculateResampleIterationResult = function(learner, task, i, train.i, test.i, m
   list(
     measures.test = ms.test,
     measures.train = ms.train,
-    model = if (models) m else NULL,
+    model = if (model) m else NULL,
     pred.test = pred.test,
     pred.train = pred.train,
     err.msgs = err.msgs,
@@ -258,7 +264,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
-  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
+  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train, task.desc = getTaskDesc(task))
 
   # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   aggr = vnapply(seq_along(measures), function(i) {
@@ -298,6 +304,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   list(
     learner.id = learner.id,
+    task = task,
     task.id = getTaskId(task),
     task.desc = getTaskDesc(task),
     measures.train = ms.train,

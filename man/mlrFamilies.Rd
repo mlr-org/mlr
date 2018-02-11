@@ -14,8 +14,8 @@
 \item{fda_featextractor}{extractFDAFourier, extractFDAWavelets, extractFDAFPCA, extractFDAMultiResFeatures}
 \item{fda}{makeExtractFDAFeatMethod, extractFDAFeatures}
 \item{featsel}{analyzeFeatSelResult, makeFeatSelControl, getFeatSelResult, selectFeatures}
-\item{filter}{filterFeatures, getFilteredFeatures, generateFilterValuesData, getFilterValues, plotFilterValuesGGVIS}
-\item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData, generateFunctionalANOVAData}
+\item{filter}{filterFeatures, makeFilter, listFilterMethods, getFilteredFeatures, generateFilterValuesData, getFilterValues, plotFilterValuesGGVIS}
+\item{generate_plot_data}{generateFeatureImportanceData, plotFilterValues, generatePartialDependenceData}
 \item{help}{helpLearner, helpLearnerParam}
 \item{imbalancy}{oversample, smote}
 \item{impute}{makeImputeMethod, imputeConstant, impute, reimpute}
