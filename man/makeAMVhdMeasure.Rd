@@ -108,5 +108,7 @@ Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algori
 arXiv preprint arXiv:1607.01152
 }
 \seealso{
-Other performance.: \code{\link{makeAMVMeasure}}
+Other performance.: \code{\link{makeAMVMeasure}},
+  \code{\link{makePrecisionMeasure}},
+  \code{\link{makeWACMeasure}}
 }
