@@ -4,12 +4,12 @@
 #' to probability estimates with the sigmoid function (calibration function)
 #' 1 / (1 + exp(-(A + B * score))) and A = 0, B = 1. The higher the probability
 #' estimate the more likely the observation belongs to the anomaly class.
-#' NOTE: In the referenced paper the authors suggest to use the sigmoid function
+#' NOTE: In the reference paper the authors suggest to use the sigmoid function
 #' for converting anomaly scores to probability and applying the EM-Algorithm to
 #' find suitable values for parameters A and B. However this approach struggle
 #' with convergence problems. After a wide search and talking to some experts in
-#' this field, we couldn't find a appropriate default converting method. But all
-#' provided measurements in mlr depends only on the anomaly scores or are invariant
+#' this field, we couldn't find an appropriate default converting method. But all
+#' provided measurements in mlr depend only on the anomaly scores or are invariant
 #' to monotone increasing transformations. Therefore we are using the above sigmoid
 #' function, for now with default parameter A = 0, B = 1 with the goal to normalized
 #' the data to the intervall [0, 1] to enable the user to use all beneficial
@@ -41,7 +41,7 @@ NULL
 #' @return [\code{vector}] with probabilities as entries.
 #' @references Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
 #' @examples
-#' Data = oneclass2d.task$env$data # getTaskData(oneclass2d.task)
+#' Data = getTaskData(oneclass2d.task)
 #' svm.model = e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
 #' kernel = "radial", nu = 0.05)
 #  svm.pred = predict(svm.model, Data[,1:2])

@@ -22,7 +22,7 @@ estimate the more likely the observation belongs to the anomaly class.
 For more information see \code{\link{oneclassProbability}}.
 }
 \examples{
-Data = oneclass2d.task$env$data # getTaskData(oneclass2d.task)
+Data = getTaskData(oneclass2d.task)
 svm.model = e1071::svm(Data[,1:2], y = NULL, type = 'one-classification',
 kernel = "radial", nu = 0.05)
 dv = svm.model$decision.values
