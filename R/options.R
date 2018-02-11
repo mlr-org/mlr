@@ -3,7 +3,7 @@
 #' @description
 #' Gets the options for mlr.
 #'
-#' @return [\code{list}].
+#' @return ([list]).
 #' @export
 #' @family configure
 getMlrOptions = function() {

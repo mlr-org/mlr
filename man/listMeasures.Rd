@@ -18,23 +18,25 @@ listMeasures(obj, properties = character(0L), create = FALSE)
 \method{listMeasures}{Task}(obj, properties = character(0L), create = FALSE)
 }
 \arguments{
-\item{obj}{[\code{character(1)} | \code{\link{Task}}]\cr
-Either a task or the type of the task, in the latter case one of:
-\dQuote{classif}, \dQuote{regr},  \dQuote{surv}, \dQuote{costsens}, \dQuote{cluster}, \dQuote{multilabel}, \dQuote{oneclass}.
-Default is \code{NA}, matching all types.}
+\item{obj}{(`character(1)` | [Task])\cr
+Either `character(1)` task or the type of the task, in the latter case one of:
+\dQuote{classif} \dQuote{regr} \dQuote{surv} \dQuote{costsens} \dQuote{cluster} \dQuote{multilabel}, \dQuote{oneclass}.
+Default is `NA` matching all types.}
 
-\item{properties}{[\code{character}]\cr
+\item{properties}{(\link{character})\cr
 Set of required properties to filter for.
-See \code{\link{Measure}} for some standardized properties.
+See \link{Measure} for some standardized properties.
 Default is \code{character(0)}.}
 
-\item{create}{[\code{logical(1)}]\cr
+\item{create}{(\code{logical(1)})\cr
 Instantiate objects (or return strings)?
 Default is \code{FALSE}.}
 }
 \value{
-[\code{character} | \code{list} of \code{\link{Measure}}]. Class names of matching
-  measures or instantiated objects.
+([character\code{|}list` of [Measure]). Class names of matching
+measures or instantiated objects.
+
+[character\code{|}list` of [Measure]: R:character%60%20%7C%20%60list%60%20of%20[Measure
 }
 \description{
 Returns the matching measures which have specific characteristics, e.g.

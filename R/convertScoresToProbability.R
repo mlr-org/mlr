@@ -1,6 +1,6 @@
 #' @title Method for converting anomaly scores to probability estimates.
 #' @description
-#' The \code{\link{convertingScoresToProbability}} function converts anomaly scores
+#' The [convertingScoresToProbability] function converts anomaly scores
 #' to probability estimates with the sigmoid function (calibration function)
 #' 1 / (1 + exp(-(A + B * score))) and A = 0, B = 1. The higher the probability
 #' estimate the more likely the observation belongs to the anomaly class.
@@ -16,29 +16,27 @@
 #' functions of mlr. This function will be updated in the future.
 #'
 #' \describe{
-#' \item{anomaly.score [\code{numeric(1)}]}{ A numeric vector of anomaly score}
-#' \item{param [\code{numeric}]}{A vector of values for the parameter A and B of the sigmoid function.}
+#' \item{anomaly.score ([numeric])}{ A numeric vector of anomaly score}
+#' \item{param ([numeric])}{A vector of values for the parameter A and B of the sigmoid function.}
 #' }
 #' @references Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
 #' @name oneclassProbability
-#' @seealso \code{\link{convertingScoresToProbability}}
+#' @seealso [convertingScoresToProbability]
 #' @rdname oneclassProbability
 NULL
-
-
 #' @title Convert anomaly scores to probability estimates.
 #'
 #' @description
 #' Convert anomaly scores to probability estimates with the sigmoid function
 #' (calibration function) 1 / (1 + exp(-(0 + 1 * score))). The higher the probability
 #' estimate the more likely the observation belongs to the anomaly class.
-#' For more information see \code{\link{oneclassProbability}}.
+#' For more information see [oneclassProbability].
 #'
 #' @param anomaly.score a numeric vector of anomaly scores.
 #' @param param a vector of values for the parameter A and B of the sigmoid function.
 #' Default ist A = 0 and B = 1
-#' @seealso \code{\link{oneclassProbability}}
-#' @return [\code{vector}] with probabilities as entries.
+#' @seealso [oneclassProbability]
+#' @return [vector] with probabilities as entries.
 #' @references Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
 #' @examples
 #' Data = getTaskData(oneclass2d.task)

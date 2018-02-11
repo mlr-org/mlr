@@ -2,7 +2,7 @@
 #'
 #' @description
 #' This includes ROC, lift charts, cost curves, and so on.
-#' Please got to \url{http://viper.ijs.si} for further info.
+#' Please got to <http://viper.ijs.si> for further info.
 #'
 #' For resampled learners, the predictions from different iterations are combined into one.
 #' That is, for example for cross-validation, the predictions appear on
@@ -10,22 +10,22 @@
 #' no facility to separate the predictions for different resampling iterations.
 #'
 #' @template arg_plotroc_obj
-#' @param chart [\code{character(1)}]\cr
+#' @param chart (`character(1)`)\cr
 #'   First chart to display in focus in browser.
 #'   All other charts can be displayed by clicking on the browser page menu.
 #'   Default is \dQuote{rocc}.
-#' @param browse [\code{logical(1)}]\cr
+#' @param browse (`logical(1)`)\cr
 #'   Open ViperCharts plot in web browser? If not you simple get the URL returned.
-#'   Calls \code{\link{browseURL}}.
-#'   Default is \code{TRUE}.
-#' @param auth.key [\code{character(1)}]\cr
+#'   Calls [browseURL].
+#'   Default is `TRUE`.
+#' @param auth.key (`character(1)`)\cr
 #'   API key to use for call to Viper charts website.
 #'   Only required if you want the chart to be private.
-#'   Default is \code{NULL}.
-#' @param task.id [\code{character(1)}]\cr
-#'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+#'   Default is `NULL`.
+#' @param task.id (`character(1)`)\cr
+#'   Selected task in [BenchmarkResult] to do plots for, ignored otherwise.
 #'   Default is first task.
-#' @return [\code{character(1)}]. Invisibly returns the ViperCharts URL.
+#' @return (`character(1)`). Invisibly returns the ViperCharts URL.
 #' @family roc
 #' @family predict
 #' @export

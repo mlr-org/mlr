@@ -13,13 +13,13 @@ convertingScoresToProbability(anomaly.score, param = c(0, 1))
 Default ist A = 0 and B = 1}
 }
 \value{
-[\code{vector}] with probabilities as entries.
+\link{vector} with probabilities as entries.
 }
 \description{
 Convert anomaly scores to probability estimates with the sigmoid function
 (calibration function) 1 / (1 + exp(-(0 + 1 * score))). The higher the probability
 estimate the more likely the observation belongs to the anomaly class.
-For more information see \code{\link{oneclassProbability}}.
+For more information see \link{oneclassProbability}.
 }
 \examples{
 Data = getTaskData(oneclass2d.task)
@@ -35,5 +35,5 @@ plot(1:length(prob), prob[o], col = col[o])
 Gao, Jing, and Pang-Ning Tan. "Converting output scores from outlier detection algorithms into probability estimates." Data Mining, 2006. ICDM'06. Sixth International Conference on. IEEE, 2006.
 }
 \seealso{
-\code{\link{oneclassProbability}}
+\link{oneclassProbability}
 }
