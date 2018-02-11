@@ -27,7 +27,7 @@ test_that("resample convenience functions", {
   r = bootstrapB632plus("classif.rpart", multiclass.task, iters = 1L)
   mycheck(r)
 
-  r = oneclasscv
+  r = oneclasscv("oneclass.ksvm", oneclass2d.task)
   mycheck(r)
 
   r = oneclassholdout("oneclass.ksvm", oneclass2d.task)
@@ -36,9 +36,9 @@ test_that("resample convenience functions", {
   r = oneclasssubsample("oneclass.ksvm", oneclass2d.task)
   mycheck(r)
 
-  r = oneclassrepcv
+  r = oneclassrepcv("oneclass.ksvm", oneclass2d.task)
   mycheck(r)
 
-  r = oneclassbootstrap
+  r = oneclassbootstrap("oneclass.ksvm", oneclass2d.task)
   mycheck(r)
 })

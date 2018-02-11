@@ -2,16 +2,16 @@
 % Please edit documentation in R/Make_measure_AMV.R
 \name{makeAMVMeasure}
 \alias{makeAMVMeasure}
-\title{Creates the measure Area under Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for data dimension less than 8}
+\title{Creates the measure Area under the Mass-Volume Curve (AMV) for Anomaly detection (oneclass) for data dimension less than 8}
 \usage{
 makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99),
-  n.alpha = 50, n.sim = 1e+05, best = 0, worst = NULL, name = id,
+  n.alpha = 50, n.sim = 1000, best = 0, worst = NULL, name = id,
   note = "")
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
-Name of measure.
-Default is \dQuote{costs}.}
+Name of measure. Note: need to keep the string "AMV" in the ID if doing nested resampling.
+Default is \dQuote{AMV}.}
 
 \item{minimize}{[\code{logical(1)}]\cr
 Should the measure be minimized?
@@ -25,7 +25,7 @@ Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are int
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
 \item{n.sim}{[\code{numeric(1)}] \cr
-Number of Monte-Carlo Samples, Default: 10^4.}
+Number of Monte-Carlo Samples, Default is 10^3.}
 
 \item{best}{[\code{numeric(1)}]\cr
 Best obtainable value for measure.
@@ -43,7 +43,7 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
 [\code{numeric(1)}]
-  Area under Mass-Volume Curve (AMV).
+  Area under the Mass-Volume Curve (AMV).
 
 [\code{\link{Measure}}].
 }
@@ -52,18 +52,19 @@ Creates a measure for oneclass classification. The measure computes the
 Area under the Mass-Volume Curve via Monte-Carlo approximation
 of the diagonal. It uses the trapezoidal rule as implemented in
 package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
-the curse of dimensionality applies for data with dimension greater than eight.
+the curse of dimensionality applies for high dimensional data
+(here: dimension greater than eight, see \code{makeAMVhdMeasure}).
 The implementation is based on the python implementation:
 https://github.com/albertcthomas/anomaly_tuning.
-Differences are the type of quantile used, as the python default is not
+The difference is the type of quantile used, as the python default is not
 available in R.
 Note: prediction object must have \code{pred.type = 'prob'}
 }
 \examples{
-# creates an AMV measure which calculates the area under the curve between 0.8 and 0.99
-# with 50 steps.
+# create an AMV measure which calculates the area under the Mass-Volume curve
+#between 0.8 and 0.99 with 50 steps.
 AMV = makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.8, 0.99),
-n.alpha = 50, n.sim = 10e4, best = 0, worst = NULL)
+n.alpha = 50, n.sim = 10e3, best = 0, worst = NULL)
 
 data = getTaskData(oneclass2d.task)
 inds.split = BBmisc::chunk(seq_len(nrow(data)), shuffle = TRUE, props = c(0.6, 0.4))
@@ -75,14 +76,12 @@ pred = predict(mod, oneclass2d.task, subset = test.inds)
 
 # calculate performance for prediction object, pass data of features used for
 # prediction as feats in performance
-performance(pred = pred, measures = list(AMV), model = mod, task = task)
+performance(pred = pred, measures = list(AMV), model = mod, task = oneclass2d.task)
 }
 \references{
 Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
 ICML Anomaly Detection Workshop 2016
 }
 \seealso{
-Other performance.: \code{\link{makeAMVhdMeasure}},
-  \code{\link{makePrecisionMeasure}},
-  \code{\link{makeWACMeasure}}
+Other performance.: \code{\link{makeAMVhdMeasure}}
 }
