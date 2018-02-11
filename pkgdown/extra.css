@@ -56,3 +56,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 .col-md-3 {
     width: 15%;
 }
+
+/* margins of navbar-brand, default 14.5 and 10 */
+.navbar-brand {
+    padding: 7px 7px;
+}
