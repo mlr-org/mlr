@@ -107,8 +107,10 @@ matrix:
               - libgsl0-dev
               - ghostscript
       install:
-        - R -q -e 'install.packages("RcppZiggurat"); install.packages(c("rmarkdown", "bookdown", "pander"))'
+        - R -q -e 'install.packages(c("bookdown", "pander"))'
       script:
+        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
         - R CMD build .
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
