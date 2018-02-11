@@ -18,7 +18,7 @@
 #'   only when required for the performance measure.
 #' @param nsub [\code{integer(1)}]\cr
 #'   Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.
-#'   Default is 20. For AMV performance measure it is always 1 due to computational constraints.
+#'   Default is 20.
 #' @param control [\code{list}]\cr
 #'   Control object for \code{\link[cmaes]{cma_es}} when used.
 #'   Default is empty list.
@@ -33,12 +33,8 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   measure = checkMeasures(measure, td)[[1L]]
   if (!missing(task))
     assertClass(task, classes = "SupervisedTask")
-  if (!missing(model) && !is.list(model))
+  if (!missing(model))
     assertClass(model, classes = "WrappedModel")
-  if (!missing(model) && any(class(pred) %in% "ResamplePrediction")) {
-    assertClass(model, classes = "list")
-    for (i in model) assertClass(i, classes = "WrappedModel")
-  }
   assertList(control)
 
   probs = getPredictionProbabilities(pred)
@@ -50,28 +46,10 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
 
   cls = pred$task.desc$class.levels
   k = length(cls)
-
   fitn = function(x) {
     if (ttype == "multilabel" || k > 2)
       names(x) = cls
-
-    # If setthreshold is applied on a Resampleprediction object, the variable models
-    # has as many models as resample iters, amv-performance need a model to evaluate the pred
-    # pred has the prediction of the whole data set, it consist of iters parts (= #iters of resample)
-    # each part was the test set of a resample iters.
-    if (any(class(pred) %in% "ResamplePrediction" && grepl("AMV", measure$id))) {
-      y.tmp = vector()
-      for (i in seq_along(model)) {
-        pred.tmp = setThreshold(pred, threshold = x)
-        pred.tmp$data = pred.tmp$data[pred.tmp$data$iter == i, ]
-        y.tmp[i] = performance(pred.tmp, measures = measure, model = model[[i]], task = task)
-      }
-      y = mean(y.tmp)
-      names(y) = measure$id
-    } else {
-      y = performance(setThreshold(pred, x), measure, task, model)
-    }
-    return(y)
+    performance(setThreshold(pred, x), measure, task, model)
   }
 
   if (ttype == "multilabel" || k > 2L) {
@@ -82,8 +60,8 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
     names(th) = cls
     perf = or$val
   } else { # classif with k = 2
-    if ( pred$task.desc$type == "oneclass" | grepl("AMV", measure$id)) {
-      or = optimizeSubInts(f = fitn, lower = min(probs)-0.001, upper = max(probs)+0.001, maximum = !measure$minimize, nsub = 1)
+    if (pred$task.desc$type == "oneclass" & abs(diff(range(probs))) < 0.05) {
+      or = optimizeSubInts(f = fitn, lower = min(probs), upper = max(probs), maximum = !measure$minimize, nsub = 1)
     } else {
     or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
     }
