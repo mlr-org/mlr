@@ -46,13 +46,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 }
 
 /* relative width of text area, default 75% */
-@media (min-width: 992px)
 .col-md-9 {
     width: 85%;
 }
 
 /* relative width of sidebar area, default 25% */
-@media (min-width: 992px)
 .col-md-3 {
     width: 15%;
 }
