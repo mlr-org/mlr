@@ -7,69 +7,69 @@
 #' @aliases FeatureImportanceData
 #'
 #' @template arg_task
-#' @param method [\code{character(1)}]\cr
+#' @param method (`character(1)`)\cr
 #'   The method used to compute the feature importance.
 #'   The only method available is \dQuote{permutation.importance}.
 #'   Default is \dQuote{permutation.importance}.
 #' @template arg_learner
-#' @param features [\code{character}]\cr
+#' @param features ([character])\cr
 #'   The features to compute the importance of.
-#'   The default is all of the features contained in the \code{\link{Task}}.
-#' @param interaction [\code{logical(1)}]\cr
-#'   Whether to compute the importance of the \code{features} argument jointly.
-#'   For \code{method = "permutation.importance"} this entails permuting the values of
-#'   all \code{features} together and then contrasting the performance with that of
+#'   The default is all of the features contained in the [Task].
+#' @param interaction (`logical(1)`)\cr
+#'   Whether to compute the importance of the `features` argument jointly.
+#'   For `method = "permutation.importance"` this entails permuting the values of
+#'   all `features` together and then contrasting the performance with that of
 #'   the performance without the features being permuted.
-#'   The default is \code{FALSE}.
+#'   The default is `FALSE`.
 #' @template arg_measure
-#' @param contrast [\code{function}]\cr
+#' @param contrast (`function`)\cr
 #'   A difference function that takes a numeric vector and returns a numeric vector
 #'   of the same length.
 #'   The default is element-wise difference between the vectors.
-#' @param aggregation [\code{function}]\cr
+#' @param aggregation (`function`)\cr
 #'   A function which aggregates the differences.
 #'   This function must take a numeric vector and return a numeric vector of length 1.
-#'   The default is \code{mean}.
-#' @param nmc [\code{integer(1)}]\cr
+#'   The default is `mean`.
+#' @param nmc (`integer(1)`)\cr
 #'   The number of Monte-Carlo iterations to use in computing the feature importance.
-#'   If \code{nmc == -1} and \code{method = "permutation.importance"} then all
-#'   permutations of the \code{features} are used.
+#'   If `nmc == -1` and `method = "permutation.importance"` then all
+#'   permutations of the `features` are used.
 #'   The default is 50.
-#' @param replace [\code{logical(1)}]\cr
+#' @param replace (`logical(1)`)\cr
 #'   Whether or not to sample the feature values with or without replacement.
-#'   The default is \code{TRUE}.
-#' @param local [\code{logical(1)}]\cr
+#'   The default is `TRUE`.
+#' @param local (`logical(1)`)\cr
 #'   Whether to compute the per-observation importance.
-#'   The default is \code{FALSE}.
+#'   The default is `FALSE`.
 #'
-#' @return [\code{FeatureImportance}]. A named list which contains the computed feature importance and the input arguments.
+#' @return (`FeatureImportance`). A named list which contains the computed feature importance and the input arguments.
 #'
 #' Object members:
-#' \item{res}{[\code{data.frame}]\cr
+#' \item{res}{([data.frame])\cr
 #'   Has columns for each feature or combination of features (colon separated) for which the importance is computed.
 #'   A row coresponds to importance of the feature specified in the column for the target.
 #' }
-#' \item{interaction}{[\code{logical(1)}]\cr
-#'   Whether or not the importance of the \code{features} was computed jointly rather than individually.
+#' \item{interaction}{(`logical(1)`)\cr
+#'   Whether or not the importance of the `features` was computed jointly rather than individually.
 #' }
-#' \item{measure}{[\code{Measure}]}\cr
+#' \item{measure}{([Measure])}\cr
 #'   The measure used to compute performance.
-#' \item{contrast}{[\code{function}]\cr
+#' \item{contrast}{(`function`)\cr
 #'   The function used to compare the performance of predictions.
 #' }
-#' \item{aggregation}{[\code{function}]\cr
+#' \item{aggregation}{(`function`)\cr
 #'   The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.
 #' }
-#' \item{replace}{[\code{logical(1)}]\cr
-#'   Whether or not, when \code{method = "permutation.importance"}, the feature values
+#' \item{replace}{(`logical(1)`)\cr
+#'   Whether or not, when `method = "permutation.importance"`, the feature values
 #'   are sampled with replacement.
 #' }
-#' \item{nmc}{[\code{integer(1)}]\cr
+#' \item{nmc}{(`integer(1)`)\cr
 #'   The number of Monte-Carlo iterations used to compute the feature importance.
-#'   When \code{nmc == -1} and \code{method = "permutation.importance"} all permutations are used.
+#'   When `nmc == -1` and `method = "permutation.importance"` all permutations are used.
 #' }
-#' \item{local}{[\code{logical(1)}]\cr
-#'   Whether observation-specific importance is computed for the \code{features}.
+#' \item{local}{(`logical(1)`)\cr
+#'   Whether observation-specific importance is computed for the `features`.
 #' }
 #'
 #' @examples

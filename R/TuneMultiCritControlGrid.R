@@ -1,9 +1,9 @@
 #' @export
-#' @param resolution [\code{integer}]\cr
-#'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.
+#' @param resolution ([integer])\cr
+#'   Resolution of the grid for each numeric/integer parameter in `par.set`.
 #'   For vector parameters, it is the resolution per dimension.
 #'   Either pass one resolution for all parameters, or a named vector.
-#'   See \code{\link[ParamHelpers]{generateGridDesign}}.
+#'   See [ParamHelpers::generateGridDesign].
 #'   Default is 10.
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlGrid = function(same.resampling.instance = TRUE,

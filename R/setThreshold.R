@@ -6,16 +6,16 @@
 #' For binary classification: The positive class is predicted if the probability value exceeds the threshold.
 #' For multiclass: Probabilities are divided by corresponding thresholds and the class with maximum resulting value is selected.
 #' The result of both are equivalent if in the multi-threshold case the values are greater than 0 and sum to 1.
-#' For multilabel classification: A label is predicted (with entry \code{TRUE}) if a probability matrix entry
+#' For multilabel classification: A label is predicted (with entry `TRUE`) if a probability matrix entry
 #' exceeds the threshold of the corresponding label.
 #'
 #' @template arg_pred
-#' @param threshold [\code{numeric}]\cr
+#' @param threshold ([numeric])\cr
 #'   Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 #'   Only for binary classification it can be a single numerical threshold for the positive class.
-#' @return [\code{\link{Prediction}}] with changed threshold and corresponding response.
+#' @return ([Prediction]) with changed threshold and corresponding response.
 #' @export
-#' @seealso \code{\link{predict.WrappedModel}}
+#' @seealso [predict.WrappedModel]
 #' @examples
 #' # create task and train learner (LDA)
 #' task = makeClassifTask(data = iris, target = "Species")

@@ -7,27 +7,29 @@
 makeLearners(cls, ids = NULL, type = NULL, ...)
 }
 \arguments{
-\item{cls}{[\code{character}]\cr
+\item{cls}{(\link{character})\cr
 Classes of learners.}
 
-\item{ids}{[\code{character}]\cr
+\item{ids}{(\link{character})\cr
 Id strings. Must be unique.
 Default is \code{cls}.}
 
-\item{type}{[\code{character(1)}]\cr
+\item{type}{(\code{character(1)})\cr
 Shortcut to prepend type string to \code{cls} so one can set \code{cls = "rpart"}.
 Default is \code{NULL}, i.e., this is not used.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Optional named (hyper)parameters.
 Alternatively these can be given using the \code{par.vals} argument.}
 }
 \value{
-[named list of \code{\link{Learner}}]. Named by \code{ids}.
+[named list of [Learner]). Named by \code{ids}.
+
+[named list of [Learner]: R:named%20list%20of%20[Learner
 }
 \description{
 Small helper function that can save some typing when creating mutiple learner objects.
-Calls \code{\link{makeLearner}} multiple times internally.
+Calls \link{makeLearner} multiple times internally.
 }
 \examples{
 makeLearners(c("rpart", "lda"), type = "classif", predict.type = "prob")
