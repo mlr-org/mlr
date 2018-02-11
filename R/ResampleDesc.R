@@ -30,13 +30,7 @@
 #' }
 #'
 #' @param method [\code{character(1)}]\cr
-#'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
-#'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window
-#'   cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation.
-#'   Methods with prefix \dQuote{OC} are resampling exspecially
-#'   for the oneclass classification case, where only normal observations (non-anomaly) are used for training,
-#'   \dQuote{OCCV}, \dQuote{OCRepCV}, \dQuote{OCBootstrap}, \dQuote{OCSubsample}, \dQuote{OCHoldhout}.
+#'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation. Methods with prefix \dQuote{OC} are resampling exspecially for the one-class classification case, where only normal observations (non-anomaly) are used for training, \dQuote{OCCV}, \dQuote{OCRepCV}, \dQuote{OCBootstrap}, \dQuote{OCSubsample}, \dQuote{OCHoldhout}.
 #'
 #' @param predict [\code{character(1)}]\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
