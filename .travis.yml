@@ -81,14 +81,15 @@ matrix:
       after_install: R -q -e 'tic::after_install()'
       before_script: R -q -e 'tic::before_script()'
       script:
-        - R -q -e 'install.packages("rmarkdown"); remotes::install_github("krlmlr/here"); tic::prepare_all_stages(); tic::before_install()'
-        - R -q -e 'remotes::install_github("mlr-org/mlr")' # for some reason we need to call this as R CMD build does not install the github version (??). Getting 'Faceting must contain at least' error otherwise
+        - R -q -e 'install.packages("rmarkdown");tic::prepare_all_stages(); tic::before_install()'
+        - R CMD build .
       before_deploy: R -q -e 'tic::before_deploy(); remotes::install_github("jimhester/lintr"); install.packages("pander");remotes::install_github("pat-s/pkgdown")'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
-           all_branches: true
+           branch: master
+           condition: $TRAVIS_PULL_REQUEST = false
       after_success: R -q -e 'tic::after_deploy()'
       after_script: R -q -e 'tic::after_script()'
     - os: linux
@@ -104,7 +105,7 @@ matrix:
       install:
         - R -q -e 'install.packages("RcppZiggurat"); install.packages(c("remotes", "rmarkdown", "bookdown", "pander", "mmpf"))'
       script:
-        - R -q -e 'remotes::install_github("mlr-org/mlr")'
+        - R CMD build .
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
