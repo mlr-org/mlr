@@ -95,6 +95,7 @@ matrix:
     - os: linux
       dist: trusty
       sudo: false
+      pandoc_version: 2.1.1
       env: mlr_tutorial_pdf
       addons:
          apt:
