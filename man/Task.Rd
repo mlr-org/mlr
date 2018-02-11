@@ -38,8 +38,8 @@ makeMultilabelTask(id = deparse(substitute(data)), data, target,
   fixup.data = "warn", check.data = TRUE)
 
 makeOneClassTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, fixup.data = "warn", positive,
-  negative, check.data = TRUE)
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", positive, negative, check.data = TRUE)
 
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
   blocking = NULL, coordinates = NULL, fixup.data = "warn",
@@ -135,26 +135,25 @@ Object members:
 \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
+}
 \details{
-
 Note on multilabel:
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.
 
+Note on one-class classification:
+One-class classification problem is an unsupervised learning problem, but we still require
+to define a target column, in order to allow supervised evalaution if labels are available (e.g. for testing).
+This class columns should be binary, where the levels are strings denoted by
+\code{positive} and \code{negative}, where the former denotes the name of the anomaly class
+and the latter the name of the normal class.
 
 If \code{spatial = TRUE} and 'SpCV' or 'SpRepCV' are selected as
 resampling method, variables named \code{x} and \code{y} will be used for spatial
 partitioning of the data (kmeans clustering). They will not be
 used as predictors during modeling. Be aware: If coordinates are not named
 \code{x} and \code{y} they will be treated as normal predictors!
-
-Note on one-class classification:
-One-class classification problem is an unsupervised learning problem, but we still require
-to define a target column, in order to allow supervised evalaution if labels are available.
-This class columns should be a factor, where the levels are the strings denoted by
-\code{positive} and \code{negative}, where the former denotes the name of the anomaly class
-and the latter the name of the normal class.
 
 Functional data can be added to a task via matrix columns. For more information refer to
 \code{\link{makeFunctionalData}}.

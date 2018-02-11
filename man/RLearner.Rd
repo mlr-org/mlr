@@ -7,6 +7,7 @@
 \alias{RLearnerMultilabel}
 \alias{RLearnerRegr}
 \alias{RLearnerSurv}
+\alias{RLearnerOneClass}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
 \alias{makeRLearnerMultilabel}
@@ -100,7 +101,7 @@ Default is \code{character(0)}.}
 \value{
 [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
   \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
-  \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}.
+  \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}, \code{\link{RLearnerOneClass}}.
 }
 \description{
 Wraps an already implemented learning method from R to make it accessible to mlr.
