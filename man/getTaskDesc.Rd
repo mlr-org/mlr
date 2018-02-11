@@ -7,7 +7,7 @@
 getTaskDesc(x)
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{([Task] | [TaskDesc])\cr
 Task or its description object.}
 }
 \value{

@@ -1,1 +1,1 @@
-#' @return a ggvis plot object.
+#' @return (`character(1)`) ggvis plot object.

@@ -1,3 +1,3 @@
-#' @param task.desc [\code{\link{TaskDesc}}]\cr
+#' @param task.desc [TaskDesc]\cr
 #'   Task description object.
 
