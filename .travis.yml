@@ -29,7 +29,6 @@ r_github_packages:
   - berndbischl/ParamHelpers
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
-  - krlmlr/here
 
 matrix:
   include:
@@ -103,8 +102,9 @@ matrix:
               - libgsl0-dev
               - ghostscript
       install:
-        - R -q -e 'install.packages("RcppZiggurat"); install.packages(c("remotes", "rmarkdown", "bookdown", "pander")); remotes::install_github("krlmlr/here");'
+        - R -q -e 'install.packages("RcppZiggurat"); install.packages(c("remotes", "rmarkdown", "bookdown", "pander", "mmpf"))'
       script:
+        - R -q -e 'remotes::install_github("mlr-org/mlr")'
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
