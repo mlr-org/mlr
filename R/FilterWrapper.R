@@ -3,30 +3,30 @@
 #' @description
 #' Fuses a base learner with a filter method. Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses \code{\link{filterFeatures}} before every model fit.
+#' Internally uses [filterFeatures] before every model fit.
 #'
 #' After training, the selected features can be retrieved with
-#' \code{\link{getFilteredFeatures}}.
+#' [getFilteredFeatures].
 #'
 #' Note that observation weights do not influence the filtering and are simply passed
 #' down to the next learner.
 #'
 #' @template arg_learner
-#' @param fw.method [\code{character(1)}]\cr
-#'   Filter method. See \code{\link{listFilterMethods}}.
+#' @param fw.method (`character(1)`)\cr
+#'   Filter method. See [listFilterMethods].
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param fw.perc [\code{numeric(1)}]\cr
-#'   If set, select \code{fw.perc}*100 top scoring features.
-#'   Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.
-#' @param fw.abs [\code{numeric(1)}]\cr
-#'   If set, select \code{fw.abs} top scoring features.
-#'   Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.
-#' @param fw.threshold [\code{numeric(1)}]\cr
-#'   If set, select features whose score exceeds \code{fw.threshold}.
-#'   Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.
-#' @param fw.mandatory.feat [\code{character}]\cr
+#' @param fw.perc (`numeric(1)`)\cr
+#'   If set, select `fw.perc`*100 top scoring features.
+#'   Mutually exclusive with arguments `fw.abs` and `fw.threshold`.
+#' @param fw.abs (`numeric(1)`)\cr
+#'   If set, select `fw.abs` top scoring features.
+#'   Mutually exclusive with arguments `fw.perc` and `fw.threshold`.
+#' @param fw.threshold (`numeric(1)`)\cr
+#'   If set, select features whose score exceeds `fw.threshold`.
+#'   Mutually exclusive with arguments `fw.perc` and `fw.abs`.
+#' @param fw.mandatory.feat ([character])\cr
 #'   Mandatory features which are always included regardless of their scores
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Additional parameters passed down to the filter.
 #' @template ret_learner
 #' @export
@@ -89,9 +89,9 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 
 #' Returns the filtered features.
 #'
-#' @param model [\code{\link{WrappedModel}}]\cr
-#'   Trained Model created with \code{\link{makeFilterWrapper}}.
-#' @return [\code{character}].
+#' @param model ([WrappedModel])\cr
+#'   Trained Model created with [makeFilterWrapper].
+#' @return ([character]).
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {

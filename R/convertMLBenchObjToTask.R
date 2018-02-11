@@ -4,13 +4,13 @@
 #' We auto-set the target column, drop any column which is called \dQuote{Id} and
 #' convert logicals to factors.
 #'
-#' @param x [\code{character(1)}]\cr
+#' @param x (`character(1)`)\cr
 #'   Name of an mlbench function or dataset.
-#' @param n [\code{integer(1)}]\cr
+#' @param n (`integer(1)`)\cr
 #'   Number of observations for data simul functions.
 #'   Note that for a few mlbench function this setting is not exactly respected by mlbench.
 #'   Default is 100.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Passed on to data simul functions.
 #' @export
 #' @examples
