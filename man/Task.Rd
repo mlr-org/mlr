@@ -144,8 +144,8 @@ is then a char vector that points to these columns.
 
 Note on one-class classification:
 One-class classification problem is an unsupervised learning problem, but we still require
-to define a target column, in order to allow supervised evalaution if labels are available.
-This class columns should be a factor, where the levels are the strings denoted by
+to define a target column, in order to allow supervised evalaution if labels are available (e.g. for testing).
+This class columns should be binary, where the levels are strings denoted by
 \code{positive} and \code{negative}, where the former denotes the name of the anomaly class
 and the latter the name of the normal class.
 
