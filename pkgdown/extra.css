@@ -1,6 +1,6 @@
 @import url(https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css);
 @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i);
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,700,700i);
 
 body {
   font-family: 'Fira Sans', sans-serif;
@@ -19,7 +19,7 @@ code, kbd, pre, samp {
 /* Custom width and font size for navbar */
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
     max-width: 1100px;
-    font-size: 13px;
+    font-size: 15px;
     border-color: #121212;
 }
 
@@ -37,7 +37,7 @@ code, kbd, pre, samp {
 
 /* increase font-weight for headers */
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
-    font-weight: 700;
+    font-weight: 600;
 }
 
 /* set font-size of all tables to 12 */
