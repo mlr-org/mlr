@@ -1,9 +1,9 @@
 #' @title Set the probability threshold the learner should use.
 #'
 #' @description
-#' See \code{predict.threshold} in \code{\link{makeLearner}} and \code{\link{setThreshold}}.
+#' See `predict.threshold` in [makeLearner] and [setThreshold].
 #'
-#' For complex wrappers only the top-level \code{predict.type} is currently set.
+#' For complex wrappers only the top-level `predict.type` is currently set.
 #'
 #' @template arg_learner
 #' @template arg_predictthreshold

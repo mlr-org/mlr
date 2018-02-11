@@ -7,11 +7,11 @@
 simplifyMeasureNames(xs)
 }
 \arguments{
-\item{xs}{[\code{character}]\cr
+\item{xs}{(\link{character})\cr
 Character vector that (possibly) contains aggregated measure names.}
 }
 \value{
-[\code{character}].
+(\link{character}).
 }
 \description{
 Clips aggregation names from character vector.

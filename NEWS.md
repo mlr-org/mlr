@@ -69,11 +69,8 @@
 * classif.fdaglm
 * classif.mxff
 * regr.fdaFDboost
-<<<<<<< HEAD
 * oneclass.svm
-=======
 * regr.mxff
->>>>>>> master
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
