@@ -1262,15 +1262,24 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   definition by Montanes et al.: http: / /www.sciencedirect.com / science / article / pii / S0031320313004019.
   Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureMultiLabelF1(getPredictionTruth.PredictionMultilabel(pred),
+    measureMultilabelF1(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
+#' Deprecated, use `measureMultilabelF1` instead.
 #' @export measureMultiLabelF1
 #' @rdname measures
 #' @format none
 measureMultiLabelF1 = function(truth, response) {
+  .Deprecated("measureMultilabelF1")
+  measureMultilabelF1(truth, response)
+}
+
+#' @export measureMultilabelF1
+#' @rdname measures
+#' @format none
+measureMultilabelF1 = function(truth, response) {
   numerator = 2 * rowSums(truth & response)
   denominator = rowSums(truth + response)
   mean(ifelse(denominator == 0, 1, numerator / denominator))
