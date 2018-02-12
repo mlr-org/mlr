@@ -197,3 +197,13 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+#' Spam classification task.
+#'
+#' Contains the task (`spam.task`).
+#'
+#' @name spam.task
+#' @references See [kernlab::spam].
+#' @keywords data
+#' @docType data
+NULL
