@@ -49,6 +49,7 @@
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
+* measure "measureMultiLabelF1" was renamed to "measureMultilabelF1" for consistency
 
 ## measures - new
 * measureBER, measureRMSLE, measureF1

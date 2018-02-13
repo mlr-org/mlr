@@ -38,7 +38,7 @@ URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
-Roxygen: list(wrap = FALSE)
+Roxygen: list(wrap = FALSE, markdown = TRUE)
 Depends:
     R (>= 3.0.2),
     ParamHelpers (>= 1.10)
