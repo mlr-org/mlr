@@ -21,6 +21,7 @@
   necessarily the task of any individual model.
 * Added support for growing and fixed window cross-validation for forecasting
   through new resample methods "GrowingWindowCV" and "FixedWindowCV".
+* Added new spam.task classification task.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
