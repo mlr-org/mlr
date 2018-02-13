@@ -59,3 +59,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 .navbar-brand {
     padding: 7px 7px;
 }
+
+/* relax lower margins of headers, default -60px */
+.contents h1, .contents h2, .contents h3, .contents h4 {
+    margin-top: -40px;
+}
