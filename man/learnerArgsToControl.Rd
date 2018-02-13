@@ -7,10 +7,10 @@
 learnerArgsToControl(control, ...)
 }
 \arguments{
-\item{control}{[\code{function}]\cr
+\item{control}{(\code{function})\cr
 Function that creates control structure.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Arguments for control structure function.}
 }
 \value{

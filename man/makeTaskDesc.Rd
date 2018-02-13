@@ -24,25 +24,25 @@ makeRegrTaskDesc(id, data, target, weights, blocking, coordinates)
 makeSurvTaskDesc(id, data, target, weights, blocking, coordinates)
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(\code{character(1)})\cr
 task id}
 
-\item{data}{[\code{data.frame}]\cr
+\item{data}{(\link{data.frame})\cr
 data}
 
-\item{target}{[\code{character}]\cr
+\item{target}{(\link{character})\cr
 target columns}
 
-\item{weights}{[\code{numeric}]\cr
+\item{weights}{(\link{numeric})\cr
 weights}
 
-\item{blocking}{[\code{numeric}\cr
+\item{blocking}{([numeric`\cr
 task data blocking}
 
-\item{coordinates}{[\code{data.frame}]\cr
+\item{coordinates}{(\link{data.frame})\cr
 Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
 Coordinates have to be numeric values.
-Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.}
+Provided (\link{data.frame}) needs to have the same number of rows as data and consist of at least two dimensions.}
 }
 \description{
 Exported for internal use.
