@@ -631,3 +631,46 @@ makeFilter(
     abs(0.5 - score)
   }
 )
+
+
+#' Filter \dQuote{ranger.permutation} trains a ranger learner with
+#' \dQuote{importance = "permutation"} and assesses the variable
+#' importance for each feature.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "ranger.permutation",
+  desc = "Variable importance based on ranger permutation importance",
+  pkg  = "ranger",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, ...) {
+    lrn.type = paste0(getTaskType(task), ".ranger")
+    lrn = makeLearner(lrn.type, importance = "permutation", ...)
+    mod = train(lrn, task)
+    ranger::importance(mod$learner.model)
+  }
+)
+
+
+#' Filter \dQuote{ranger.impurity} trains a ranger learner with
+#' \dQuote{importance = "impurity"} and assesses the variable
+#' importance for each feature.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
+makeFilter(
+  name = "ranger.impurity",
+  desc = "Variable importance based on ranger impurity importance",
+  pkg  = "ranger",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors", "ordered"),
+  fun = function(task, nselect, ...) {
+    lrn.type = paste0(getTaskType(task), ".ranger")
+    lrn = makeLearner(lrn.type, importance = "impurity", ...)
+    mod = train(lrn, task)
+    ranger::importance(mod$learner.model)
+  }
+)
+
