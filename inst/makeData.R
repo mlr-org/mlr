@@ -4,7 +4,7 @@ library(devtools)
 
 
 DATASEED = 7761  # nolint
-COMPRESSION = "xz"
+COMPRESSION = "xz" # nolint
 
 # classification
 set.seed(DATASEED)
