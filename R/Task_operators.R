@@ -21,7 +21,7 @@ getTaskDesc.TaskDesc = function(x) {
   x
 }
 
-#' Deprecated, use \code{\link{getTaskDesc}} instead.
+#' Deprecated, use [getTaskDesc] instead.
 #' @inheritParams getTaskDesc
 #' @export
 getTaskDescription = function(x) {
@@ -33,7 +33,7 @@ getTaskDescription = function(x) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family task
 getTaskType = function(x) {
@@ -44,7 +44,7 @@ getTaskType = function(x) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 #' @family task
 getTaskId = function(x) {
@@ -54,11 +54,11 @@ getTaskId = function(x) {
 #' @title Get the name(s) of the target column(s).
 #'
 #' @description
-#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+#' NB: For multilabel, [getTaskTargetNames] and [getTaskClassLevels]
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 #' @family task
 getTaskTargetNames = function(x) {
@@ -84,11 +84,11 @@ getTaskTargetNames.UnsupervisedTaskDesc = function(x) {
 #' @title Get the class levels for classification and multilabel tasks.
 #'
 #' @description
-#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+#' NB: For multilabel, [getTaskTargetNames] and [getTaskClassLevels]
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 #' @family task
 getTaskClassLevels = function(x) {
@@ -120,7 +120,7 @@ getTaskClassLevels.MultilabelTaskDesc = function(x) {
 #' Target column name is not included.
 #'
 #' @template arg_task
-#' @return [\code{character}].
+#' @return ([character]).
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
@@ -136,7 +136,7 @@ getTaskFeatureNames.Task = function(task) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [\code{integer(1)}].
+#' @return (`integer(1)`).
 #' @export
 #' @family task
 getTaskNFeats = function(x) {
@@ -147,7 +147,7 @@ getTaskNFeats = function(x) {
 #'
 #' @description See title.
 #' @template arg_task_or_desc
-#' @return [\code{integer(1)}].
+#' @return (`integer(1)`).
 #' @export
 #' @family task
 getTaskSize = function(x) {
@@ -161,16 +161,16 @@ getTaskSize = function(x) {
 #' For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 #'
 #' @template arg_task_or_desc
-#' @param target [\code{character(1)}]\cr
+#' @param target (`character(1)`)\cr
 #'   Left hand side of the formula.
-#'   Default is defined by task \code{x}.
-#' @param explicit.features [\code{logical(1)}]\cr
+#'   Default is defined by task `x`.
+#' @param explicit.features (`logical(1)`)\cr
 #'   Should the features (right hand side of the formula) be explicitly listed?
-#'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
-#' @param env [\code{environment}]\cr
+#'   Default is `FALSE`, i.e., they will be represented as `"."`.
+#' @param env ([environment])\cr
 #'   Environment of the formula.
-#'   Default is \code{parent.frame()}.
-#' @return [\code{formula}].
+#'   Default is `parent.frame()`.
+#' @return ([formula]).
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
@@ -208,7 +208,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #'
 #' @template arg_task
 #' @inheritParams getTaskData
-#' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
+#' @return A `factor` for classification or a `numeric` for regression, a data.frame
 #'   of logical columns for multilabel.
 #' @family task
 #' @export
@@ -239,17 +239,17 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' @title Extract data in task.
 #'
 #' @description
-#' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
+#' Useful in [trainLearner] when you add a learning machine to the package.
 #'
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
-#' @param target.extra [\code{logical(1)}]\cr
+#' @param target.extra (`logical(1)`)\cr
 #'   Should target vector be returned separately?
 #'   If not, a single data.frame including the target columns is returned, otherwise a list
 #'   with the input data.frame and an extra vector or data.frame for the targets.
-#'   Default is \code{FALSE}.
-#' @param recode.target [\code{character(1)}]\cr
+#'   Default is `FALSE`.
+#' @param recode.target (`character(1)`)\cr
 #'   Should target classes be recoded? Supported are binary and multilabel classification and survival.
 #'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
@@ -258,14 +258,14 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 #'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 #'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
-#'   See \code{\link[survival]{Surv}} for the format specification.
+#'   See [survival::Surv] for the format specification.
 #'   Default for both binary classification and survival is \dQuote{no} (do nothing).
-#' @param functionals.as [\code{character(1)}]\cr
+#' @param functionals.as (`character(1)`)\cr
 #'   How to represents functional features?
 #'   Option \dQuote{matrix}: Keep them as matrix columns in the data.frame.
 #'   Option \dQuote{dfcols}: Convert them to individual numeric data.frame columns.
 #'   Default is \dQuote{dfcols}.
-#' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
+#' @return Either a data.frame or a list with data.frame `data` and vector `target`.
 #' @family task
 #' @export
 #' @examples
@@ -358,10 +358,10 @@ recodeY = function(y, type, td) {
 #' @description
 #' Returns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 #'
-#' @param task [\code{\link{Task}}]\cr
+#' @param task ([Task])\cr
 #'   The task.
 #' @template arg_subset
-#' @return [\code{matrix} | \code{NULL}].
+#' @return (`matrix` | `NULL`).
 #' @family task
 #' @export
 getTaskCosts = function(task, subset = NULL) {
@@ -386,7 +386,7 @@ getTaskCosts.CostSensTask = function(task, subset = NULL) {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
-#' @return [\code{\link{Task}}]. Task with subsetted data.
+#' @return ([Task]). Task with subsetted data.
 #' @family task
 #' @export
 #' @examples
@@ -415,11 +415,11 @@ subsetTask = function(task, subset = NULL, features) {
 #' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
 #'
 #' @template arg_task
-#' @param data [\code{data.frame}]\cr
+#' @param data ([data.frame])\cr
 #'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
-#' @param costs [\code{data.frame}\cr
+#' @param costs ([data.frame`\cr
 #'   Optional: cost matrix.
-#' @param weights [\code{numeric}]\cr
+#' @param weights ([numeric])\cr
 #'   Optional: weight vector.
 #' @keywords internal
 #' @export

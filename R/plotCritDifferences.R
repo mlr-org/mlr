@@ -3,14 +3,14 @@
 #' @description Generates data that can be used to plot a
 #' critical differences plot. Computes the critical differences according
 #' to either the
-#' \code{"Bonferroni-Dunn"} test or the \code{"Nemenyi"} test.\cr
-#' \code{"Bonferroni-Dunn"} usually yields higher power as it does not
+#' `"Bonferroni-Dunn"` test or the `"Nemenyi"` test.\cr
+#' `"Bonferroni-Dunn"` usually yields higher power as it does not
 #' compare all algorithms to each other, but all algorithms to a
-#' \code{baseline} instead. \cr
+#' `baseline` instead. \cr
 #' Learners are drawn on the y-axis according to their average rank. \cr
-#' For \code{test = "nemenyi"} a bar is drawn, connecting all groups of not
+#' For `test = "nemenyi"` a bar is drawn, connecting all groups of not
 #' significantly different learners.\cr
-#' For \code{test = "bd"} an interval is drawn arround the algorithm selected
+#' For `test = "bd"` an interval is drawn arround the algorithm selected
 #' as baseline. All learners within this interval are not signifcantly different
 #' from the baseline. \cr
 #' Calculation:
@@ -20,40 +20,41 @@
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value [\code{numeric}(1)]\cr
+#' @param p.value ([numeric`(1)]\cr
 #'   P-value for the critical difference. Default: 0.05
-#' @param baseline [\code{character(1)}]: [\code{learner.id}] \cr
-#'   Select a \code{learner.id} as baseline for the \code{test = "bd"}
+#' @param baseline (`character(1)`): ([learner.id]) \cr
+#'   Select a `learner.id` as baseline for the `test = "bd"`
 #'   ("Bonferroni-Dunn") critical differences
 #'   diagram.The critical difference Interval will then be positioned arround this learner.
 #'   Defaults to best performing algorithm. \cr
-#'   For \code{test = "nemenyi"}, no baseline is needed as it performs \code{all pairwise
-#'   comparisons.}
-#' @param test [\code{character(1)}] \cr
+#'   For `test = "nemenyi"`, no baseline is needed as it performs `all pairwise
+#'   comparisons.`
+#' @param test (`character(1)`) \cr
 #'   Test for which the critical differences are computed. \cr
 #'   \dQuote{bd} for the Bonferroni-Dunn Test, which is comparing all
-#'   classifiers to a \code{baseline}, thus performing a comparison
+#'   classifiers to a `baseline`, thus performing a comparison
 #'   of one classifier to all others. \cr
 #'   Algorithms not connected by a single line are statistically different.
 #'   then the baseline. \cr
-#'   \dQuote{nemenyi} for the \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}}
+#'   \dQuote{nemenyi} for the [PMCMR::posthoc.friedman.nemenyi.test]
 #'   which is comparing all classifiers to each other. The null hypothesis that
 #'   there is a difference between the classifiers can not be rejected for all
 #'   classifiers that have a single grey bar connecting them.
-#' @return [\code{critDifferencesData}]. List containing:
-#' \item{data}{[\code{data.frame}] containing the info for the descriptive
+#' @return ([critDifferencesData]). List containing:
+#' \item{data}{([data.frame]) containing the info for the descriptive
 #'                part of the plot}
-#' \item{friedman.nemenyi.test}{[\code{list}] of class \code{pairwise.htest} \cr
+#' \item{friedman.nemenyi.test}{([list]) of class `pairwise.htest` \cr
 #'                                contains the calculated
 #'                                \link[PMCMR]{posthoc.friedman.nemenyi.test}}
-#' \item{cd.info}{[\code{list}] containing info on the critical difference
+#' \item{cd.info}{([list]) containing info on the critical difference
 #'                  and its positioning}
-#' \item{baseline}{\code{baseline} chosen for plotting}
+#' \item{baseline}{`baseline` chosen for plotting}
 #' \item{p.value}{p.value used for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
 #'                  and for computation of the critical difference}
 #'
 #' @family generate_plot_data
 #' @family benchmark
+#' @noMd
 #' @export
 generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
                                        baseline = NULL, test = "bd") {
@@ -132,11 +133,11 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #' The positioning of some descriptive elements can be moved by modifying the
 #' generated data.
 #'
-#' @param obj [\code{critDifferencesData}]
+#' @param obj ([critDifferencesData])
 #'   Result of \link{generateCritDifferencesData} function.
-#' @param baseline [\code{character(1)}]: [\code{learner.id}] \cr
+#' @param baseline (`character(1)`): ([learner.id]) \cr
 #'   Overwrites baseline from \link{generateCritDifferencesData}!\cr
-#'   Select a [\code{learner.id} as baseline for the critical difference
+#'   Select a ([learner.id` as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.
 #'   Defaults to best performing algorithm.
 #' @template arg_prettynames
@@ -146,6 +147,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #' JMLR, 2006
 #' @family plot
 #' @family benchmark
+#' @noMd
 #' @export
 #' @examples
 #' # see benchmark

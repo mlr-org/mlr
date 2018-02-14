@@ -1,12 +1,12 @@
 #' Set the hyperparameters of a learner object.
 #'
 #' @template arg_learner
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
-#'   using the \code{par.vals} argument.
-#' @param par.vals [\code{list}]\cr
+#'   using the `par.vals` argument.
+#' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
-#'   \code{...} take precedence over values in this list.
+#'   `...` take precedence over values in this list.
 #' @template ret_learner
 #' @note If a named (hyper)parameter can't be found for the given learner, the 3
 #' closest (hyper)parameter names will be output in case the user mistyped.
@@ -27,9 +27,9 @@ setHyperPars = function(learner, ..., par.vals = list()) {
 }
 
 #' Only exported for internal use.
-#' @param learner [\code{\link{Learner}}]\cr
+#' @param learner ([Learner])\cr
 #'   The learner.
-#' @param par.vals [\code{list}]\cr
+#' @param par.vals ([list])\cr
 #'   List of named (hyper)parameter settings.
 #' @export
 setHyperPars2 = function(learner, par.vals) {
