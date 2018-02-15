@@ -677,13 +677,14 @@ helper.cmi.praznik = function(criteria) {
       input$k = min(nrow(X), k)  # this is not the right behavior, but to hack the praznik bug
       res = do.call(what = algo, args = input)
     })
-    names.sel = names(res$selection)
-    rst.all = vector(length = length(org.featnames), mode = "numeric")
-    names(rst.all) = org.featnames
-    rst.all[names.sel] = res$score
+    res$score
+    # names.sel = names(res$selection)
+    # rst.all = vector(length = length(org.featnames), mode = "numeric")
+    # names(rst.all) = org.featnames
+    # rst.all[names.sel] = res$score
     # rst = res$score
     # rst[setdiff(featnames, names.sel)] = 0  # replace NA with 0
-    rst.all
+    # rst.all
   }
 }
 
