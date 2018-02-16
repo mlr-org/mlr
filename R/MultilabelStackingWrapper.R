@@ -7,14 +7,14 @@
 #' as additional features (by cross validation).
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_cvfolds
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel

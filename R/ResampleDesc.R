@@ -2,65 +2,82 @@
 #'
 #' @description
 #' A description of a resampling algorithm contains all necessary information to
-#' create a \code{\link{ResampleInstance}}, when given the size of the data set.
+#' create a [ResampleInstance], when given the size of the data set.
 #'
 #' @details
 #' Some notes on some special strategies:
 #' \describe{
 #' \item{Repeated cross-validation}{Use \dQuote{RepCV}. Then you have to set the aggregation function
 #'   for your preferred performance measure to \dQuote{testgroup.mean}
-#'   via \code{\link{setAggregation}}.}
+#'   via [setAggregation].}
 #' \item{B632 bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
 #'   Then you have to set the aggregation function for your preferred performance measure to
-#'   \dQuote{b632} via \code{\link{setAggregation}}.}
+#'   \dQuote{b632} via [setAggregation].}
 #' \item{B632+ bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
 #'   Then you have to set the aggregation function for your preferred performance measure to
-#'   \dQuote{b632plus} via \code{\link{setAggregation}}.}
-#' \item{Fixed Holdout set}{Use \code{\link{makeFixedHoldoutInstance}}.}
+#'   \dQuote{b632plus} via [setAggregation].}
+#' \item{Fixed Holdout set}{Use [makeFixedHoldoutInstance].}
 #' }
 #'
 #' Object slots:
 #' \describe{
-#' \item{id [\code{character(1)}]}{Name of resampling strategy.}
-#' \item{iters [\code{integer(1)}]}{Number of iterations. Note that this is always the complete number
+#' \item{id (`character(1)`)}{Name of resampling strategy.}
+#' \item{iters (`integer(1)`)}{Number of iterations. Note that this is always the complete number
 #'   of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.}
-#' \item{predict [\code{character(1)}]}{See argument.}
-#' \item{stratify [\code{logical(1)}]}{See argument.}
+#' \item{predict (`character(1)`)}{See argument.}
+#' \item{stratify (`logical(1)`)}{See argument.}
 #' \item{All parameters passed in ... under the respective argument name}{See arguments.}
 #' }
 #'
-#' @param method [\code{character(1)}]\cr
+#' @param method (`character(1)`)\cr
 #'   \dQuote{CV} for cross-validation, \dQuote{LOO} for leave-one-out, \dQuote{RepCV} for
 #'   repeated cross-validation, \dQuote{Bootstrap} for out-of-bag bootstrap, \dQuote{Subsample} for
-#'   subsampling, \dQuote{Holdout} for holdout.
-#' @param predict [\code{character(1)}]\cr
+#'   subsampling, \dQuote{Holdout} for holdout, \dQuote{GrowingWindowCV} for growing window
+#'   cross-validation, \dQuote{FixedWindowCV} for fixed window cross validation.
+#' @param predict (`character(1)`)\cr
 #'   What to predict during resampling: \dQuote{train}, \dQuote{test} or \dQuote{both} sets.
 #'   Default is \dQuote{test}.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Further parameters for strategies.\cr
 #'   \describe{
-#'   \item{iters [\code{integer(1)}]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
+#'   \item{iters (`integer(1)`)}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
 #'     and \dQuote{Bootstrap}.}
-#'   \item{split [\code{numeric(1)}]}{Proportion of training cases for \dQuote{Holdout} and
+#'   \item{split (`numeric(1)`)}{Proportion of training cases for \dQuote{Holdout} and
 #'     \dQuote{Subsample} between 0 and 1. Default is 2 / 3.}
-#'   \item{reps [\code{integer(1)}]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
+#'   \item{reps (`integer(1)`)}{Repeats for \dQuote{RepCV}. Here `iters = folds * reps`.
 #'     Default is 10.}
-#'   \item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
-#'     Here \code{iters = folds * reps}. Default is 10.}
+#'   \item{folds (`integer(1)`)}{Folds in the repeated CV for `RepCV`.
+#'     Here `iters = folds * reps`. Default is 10.}
+#'   \item{horizon (`numeric(1)`)}{Number of observations in the forecast test set for \dQuote{GrowingWindowCV}
+#'    and \dQuote{FixedWindowCV}. When `horizon > 1` this will be treated as the number of
+#'    observations to forecast, else it will be a fraction of the initial window. IE,
+#'    for 100 observations, initial window of .5, and horizon of .2, the test set will have
+#'    10 observations. Default is 1.}
+#'   \item{initial.window (`numeric(1)`)}{Fraction of observations to start with
+#'    in the training set for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}.
+#'    When `initial.window > 1` this will be treated as the number of
+#'    observations in the initial window, else it will be treated as the fraction
+#'    of observations to have in the initial window. Default is 0.5.}
+#'   \item{skip (`numeric(1)`)}{ How many resamples to skip to thin the total amount
+#'    for \dQuote{GrowingWindowCV} and \dQuote{FixedWindowCV}. This is passed through as the \dQuote{by} argument
+#'    in `seq()`. When `skip > 1` this will be treated as the increment of the sequence of resampling indices,
+#'     else it will be a fraction of the total training indices. IE for 100 training sets and a value of .2, the increment
+#'     of the resampling indices will be 20. Default is \dQuote{horizon} which gives mutually exclusive chunks
+#'      of test indices.}
 #'   }
-#' @param stratify [\code{logical(1)}]\cr
+#' @param stratify (`logical(1)`)\cr
 #'   Should stratification be done for the target variable?
 #'   For classification tasks, this means that the resampling strategy is applied to all classes
 #'   individually and the resulting index sets are joined to make sure that the proportion of
 #'   observations in each training set is as in the original data set. Useful for imbalanced class sizes.
 #'   For survival tasks stratification is done on the events, resulting in training sets with comparable
 #'   censoring rates.
-#' @param stratify.cols [\code{character}]\cr
+#' @param stratify.cols ([character])\cr
 #'   Stratify on specific columns referenced by name. All columns have to be factors.
 #'   Note that you have to ensure yourself that stratification is possible, i.e.
 #'   that each strata contains enough observations.
-#'   This argument and \code{stratify} are mutually exclusive.
-#' @return [\code{\link{ResampleDesc}}].
+#'   This argument and `stratify` are mutually exclusive.
+#' @return ([ResampleDesc]).
 #' @family resample
 #' @export
 #' @aliases ResampleDesc
@@ -76,7 +93,9 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap", "SpCV", "SpRepCV"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
+                                   "Subsample", "Bootstrap", "SpCV", "SpRepCV",
+                                   "GrowingWindowCV", "FixedWindowCV"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -152,6 +171,23 @@ makeResampleDescSpRepCV = function(reps = 10L, folds = 10L) {
   makeResampleDescInternal("repeated spatial cross-validation", iters = folds * reps, folds = folds, reps = reps)
 }
 
+
+makeResampleDescFixedWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+  assertNumeric(horizon, lower = 0)
+  assertNumeric(initial.window, lower = 0)
+  assertNumeric(skip, lower = 0)
+  makeResampleDescInternal("Fixed", iters = NA_integer_,  horizon = horizon,
+                           initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
+makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, skip = horizon - 1) {
+  assertNumeric(horizon, lower = 0)
+  assertNumeric(initial.window, lower = 0)
+  assertNumeric(skip, lower = 0)
+  makeResampleDescInternal("Growing", iters = NA_integer_, horizon = horizon,
+                           initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
 ##############################################################################################
 
 #' @export
@@ -174,6 +210,22 @@ print.SubsampleDesc = function(x, ...) {
 print.RepCVDesc = function(x, ...) {
   catf("Resample description: %s with %i iterations: %i folds and %i reps.",
     x$id, x$iters, x$iters / x$reps, x$reps)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+}
+
+#' @export
+print.GrowingWindowCVDesc = function(x, ...) {
+  catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
+       x$id, x$initial.window, x$horizon, x$skip)
+  catf("Predict: %s", x$predict)
+  catf("Stratification: %s", x$stratify)
+}
+
+#' @export
+print.FixedWindowCVDesc = function(x, ...) {
+  catf("Window description:\n %s: %.2f in initial window, horizon of %.2f, and skipping %.2f windows.",
+       x$id, x$initial.window, x$horizon, x$skip)
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }

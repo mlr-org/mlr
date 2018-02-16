@@ -7,16 +7,16 @@
 changeData(task, data, costs, weights, coordinates)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{data}{[\code{data.frame}]\cr
+\item{data}{(\link{data.frame})\cr
 The new data to associate with the task. The names and types of the feature columns must match with the old data.}
 
-\item{costs}{[\code{data.frame}\cr
+\item{costs}{([data.frame`\cr
 Optional: cost matrix.}
 
-\item{weights}{[\code{numeric}]\cr
+\item{weights}{(\link{numeric})\cr
 Optional: weight vector.}
 }
 \description{

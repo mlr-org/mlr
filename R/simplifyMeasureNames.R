@@ -5,9 +5,9 @@
 #' E.g: 'mmce.test.mean' becomes 'mmce'.
 #' Elements that don't contain a measure name are ignored and returned unchanged.
 #'
-#' @param xs [\code{character}]\cr
+#' @param xs ([character])\cr
 #'   Character vector that (possibly) contains aggregated measure names.
-#' @return [\code{character}].
+#' @return ([character]).
 #' @export
 simplifyMeasureNames = function(xs) {
   assertCharacter(xs, any.missing = FALSE)

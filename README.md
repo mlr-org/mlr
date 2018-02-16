@@ -6,6 +6,7 @@
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
+* [mlr cheatsheet](https://github.com/mlr-org/mlr-tutorial/raw/gh-pages/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
     * [mlr release](https://pat-s.github.io/mlr/articles/tutorial/release/index.html) ([online](https://pat-s.github.io/mlr/articles/tutorial/release/index.html), [download PDF for offline usage](https://github.com/pat-s/mlr/blob/gh-pages/articles/tutorial/release/mlr-tutorial.pdf))
     * [mlr devel](https://pat-s.github.io/mlr/) ([online](https://pat-s.github.io/mlr/), [download PDF for offline usage](https://github.com/pat-s/mlr/tree/master/vignettes/tutorial/devel/pdf/mlr-tutorial.pdf))
