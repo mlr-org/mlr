@@ -6,4 +6,4 @@
 #'   classification learners start with \dQuote{multilabel.}.
 #'   A list of all integrated learners is available on the
 #'   [learners] help page.
-
+#' @md

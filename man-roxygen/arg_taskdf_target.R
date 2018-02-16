@@ -6,3 +6,4 @@
 #'   For multilabel classification these are the names of logical columns that indicate whether
 #'   `character(1)` class label is present and the number of target variables corresponds to the number of
 #'   classes.
+#' @md
