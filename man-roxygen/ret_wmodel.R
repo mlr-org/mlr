@@ -1,2 +1,2 @@
 #' @return [WrappedModel].
-
+#' @md
