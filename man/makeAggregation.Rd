@@ -7,39 +7,39 @@
 makeAggregation(id, name = id, properties, fun)
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(\code{character(1)})\cr
 Name of the aggregation method (preferably the same name as the generated function).}
 
-\item{name}{[\code{character(1)}]\cr
+\item{name}{(\code{character(1)})\cr
 Long name of the aggregation method. Default is \code{id}.}
 
-\item{properties}{[\code{character}]\cr
+\item{properties}{(\link{character})\cr
 Set of aggregation properties.
 \describe{
-  \item{req.train}{Are prediction or train sets required to calculate the aggregation?}
-  \item{req.test}{Are prediction or test sets required to calculate the aggregation?}
+\item{req.train}{Are prediction or train sets required to calculate the aggregation?}
+\item{req.test}{Are prediction or test sets required to calculate the aggregation?}
 }}
 
-\item{fun}{[\code{function(task, perf.test, perf.train, measure, group, pred)}]\cr
+\item{fun}{(\code{function(task, perf.test, perf.train, measure, group, pred)})\cr
 Calculates the aggregated performance. In most cases you will only need the performances
 \code{perf.test} and optionally \code{perf.train} on the test and training data sets.
 \describe{
-  \item{\code{task} [\code{\link{Task}}]}{The task.}
-  \item{\code{perf.test} [\code{numeric}]}{
-    \code{\link{performance}} results on the test data sets.}
-  \item{\code{perf.train} [\code{numeric}]}{
-    \code{\link{performance}} results on the training data sets.}
-  \item{\code{measure} [\code{\link{Measure}}]}{
-    Performance measure.}
-  \item{\code{group} [\code{factor}]}{
-    Grouping of resampling iterations. This encodes whether specific iterations
-    'belong together' (e.g. repeated CV).}
-  \item{\code{pred} [\code{\link{Prediction}}]}{
-    Prediction object.}
+\item{\code{task} (\link{Task})}{The task.}
+\item{\code{perf.test} (\link{numeric})}{
+\link{performance} results on the test data sets.}
+\item{\code{perf.train} (\link{numeric})}{
+\link{performance} results on the training data sets.}
+\item{\code{measure} (\link{Measure})}{
+Performance measure.}
+\item{\code{group} (\link{factor})}{
+Grouping of resampling iterations. This encodes whether specific iterations
+'belong together' (e.g. repeated CV).}
+\item{\code{pred} (\link{Prediction})}{
+Prediction object.}
 }}
 }
 \value{
-[\code{\link{Aggregation}}].
+(\link{Aggregation}).
 }
 \description{
 This is an advanced feature of mlr. It gives access to some
@@ -52,5 +52,5 @@ test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range
   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 }
 \seealso{
-\code{\link{aggregations}}, \code{\link{setAggregation}}
+\link{aggregations}, \link{setAggregation}
 }

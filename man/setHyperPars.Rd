@@ -7,20 +7,20 @@
 setHyperPars(learner, ..., par.vals = list())
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Named (hyper)parameters with new setting. Alternatively these can be passed
 using the \code{par.vals} argument.}
 
-\item{par.vals}{[\code{list}]\cr
+\item{par.vals}{(\link{list})\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
 }
 \value{
-[\code{\link{Learner}}].
+[Learner].
 }
 \description{
 Set the hyperparameters of a learner object.

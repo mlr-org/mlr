@@ -7,28 +7,28 @@
 #' If the train or predict function is called on data / a task, the preprocessing is always performed automatically.
 #'
 #' @template arg_learner
-#' @param train [\code{function(data, target, args)}]\cr
+#' @param train (`function(data, target, args)`)\cr
 #'   Function to preprocess the data before training.
-#'   \code{target} is a string and denotes the target variable in \code{data}.
-#'   \code{args} is a list of further arguments and parameters to influence the
+#'   `target` is a string and denotes the target variable in `data`.
+#'   `args` is a list of further arguments and parameters to influence the
 #'   preprocessing.
-#'   Must return a \code{list(data, control)}, where \code{data} is the preprocessed
-#'   data and \code{control} stores all information necessary to do the preprocessing
+#'   Must return a `list(data, control)`, where `data` is the preprocessed
+#'   data and `control` stores all information necessary to do the preprocessing
 #'   before predictions.
-#' @param predict [\code{function(data, target, args, control)}]\cr
+#' @param predict (`function(data, target, args, control)`)\cr
 #'   Function to preprocess the data before prediction.
-#'   \code{target} is a string and denotes the target variable in \code{data}.
-#'   \code{args} are the args that were passed to \code{train}.
-#'   \code{control} is the object you returned in \code{train}.
+#'   `target` is a string and denotes the target variable in `data`.
+#'   `args` are the args that were passed to `train`.
+#'   `control` is the object you returned in `train`.
 #'   Must return the processed data.
-#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
-#'   Parameter set of \code{\link[ParamHelpers]{LearnerParam}} objects to describe the
-#'   parameters in \code{args}.
+#' @param par.set ([ParamHelpers::ParamSet])\cr
+#'   Parameter set of [ParamHelpers::LearnerParam] objects to describe the
+#'   parameters in `args`.
 #'   Default is empty set.
-#' @param par.vals [\code{list}]\cr
-#'   Named list of default values for params in \code{args} respectively \code{par.set}.
+#' @param par.vals ([list])\cr
+#'   Named list of default values for params in `args` respectively `par.set`.
 #'   Default is empty list.
-#' @return [\code{\link{Learner}}].
+#' @return ([Learner]).
 #' @family wrapper
 #' @export
 makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(), par.vals = list()) {

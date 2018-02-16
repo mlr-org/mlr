@@ -2,24 +2,24 @@
 #'
 #' @description
 #' Normalize features by different methods.
-#' Internally \code{\link[BBmisc]{normalize}} is used for every feature column.
+#' Internally [BBmisc::normalize] is used for every feature column.
 #' Non numerical features will be left untouched and passed to the result.
 #' For constant features most methods fail, special behaviour for this case is implemented.
 #'
 #' @template arg_taskdf
 #' @template arg_taskdf_target
-#' @param method [\code{character(1)}]\cr
+#' @param method (`character(1)`)\cr
 #'   Normalizing method. Available are:\cr
 #'   \dQuote{center}: Subtract mean.\cr
 #'   \dQuote{scale}: Divide by standard deviation.\cr
 #'   \dQuote{standardize}: Center and scale.\cr
 #'   \dQuote{range}: Scale to a given range.\cr
-#' @param cols [\code{character}]\cr
+#' @param cols ([character])\cr
 #'   Columns to normalize. Default is to use all numeric columns.
-#' @param range [\code{numeric(2)}]\cr
+#' @param range (`numeric(2)`)\cr
 #'   Range for method \dQuote{range}.
-#'   Default is \code{c(0,1)}.
-#' @param on.constant [\code{character(1)}]\cr
+#'   Default is `c(0,1)`.
+#' @param on.constant (`character(1)`)\cr
 #'   How should constant vectors be treated? Only used, of \dQuote{method != center},
 #'   since this methods does not fail for constant vectors. Possible actions are:\cr
 #'   \dQuote{quiet}: Depending on the method, treat them quietly:\cr
@@ -30,7 +30,7 @@
 #'   \dQuote{warn}: Same behaviour as \dQuote{quiet}, but print a warning message.\cr
 #'   \dQuote{stop}: Stop with an error.\cr
 #' @template ret_taskdf
-#' @seealso \code{\link[BBmisc]{normalize}}
+#' @seealso [BBmisc::normalize]
 #' @export
 #' @family eda_and_preprocess
 normalizeFeatures = function(obj, target = character(0L), method = "standardize", cols = NULL,

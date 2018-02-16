@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' \code{getConfMatrix} is deprecated. Please use \code{\link{calculateConfusionMatrix}}.
+#' `getConfMatrix` is deprecated. Please use [calculateConfusionMatrix].
 #'
 #'
 #' Calculates confusion matrix for (possibly resampled) prediction.
@@ -20,12 +20,12 @@
 #' a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 #'
 #' @template arg_pred
-#' @param relative [\code{logical(1)}]\cr
-#'   If \code{TRUE} rows are normalized to show relative frequencies.
-#'   Default is \code{FALSE}.
-#' @return [\code{matrix}]. A confusion matrix.
+#' @param relative (`logical(1)`)\cr
+#'   If `TRUE` rows are normalized to show relative frequencies.
+#'   Default is `FALSE`.
+#' @return ([matrix]). A confusion matrix.
 #' @export
-#' @seealso \code{\link{predict.WrappedModel}}
+#' @seealso [predict.WrappedModel]
 getConfMatrix = function(pred, relative = FALSE) {
   .Deprecated("calculateConfusionMatrix")
   calculateConfusionMatrix(pred, relative = relative)
