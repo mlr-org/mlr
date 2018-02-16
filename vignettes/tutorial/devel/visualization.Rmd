@@ -140,7 +140,7 @@ plt
 ```
 
 ```{r, fig.asp = 5/6}
-plot(Probability ~ Value, data = plt$data, type = "b", xlab = plt$data$Feature[1])
+plot(M ~ Value, data = plt$data, type = "b", xlab = plt$data$Feature[1])
 ```
 
 ### Available generation and plotting functions

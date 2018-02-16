@@ -17,8 +17,6 @@ navbar:
   #  href: index.html
   - text: Get Started
     href: articles/mlr.html
-  - text: Reference
-    href: reference/index.html
   - text: Basics
     menu:
     - text: Tasks
@@ -94,6 +92,10 @@ navbar:
 
   - text: Appendix
     menu:
+    - text: Function Reference
+      href: reference/index.html
+    - text: News
+      href: news/index.html
     - text: Example Tasks
       href: articles/tutorial/devel/example_tasks.html
     - text: Integrated Learners
@@ -102,8 +104,6 @@ navbar:
       href: articles/tutorial/devel/measures.html
     - text: Integrated Filter Methods
       href: articles/tutorial/devel/filter_methods.html
-  - text: News
-    href: news/index.html
 
   - text: mlr-org Packages
     menu:
@@ -115,8 +115,6 @@ navbar:
       href: https://github.com/mlr-org/mlrCPO
     - text: shinyMlr
       href: https://github.com/mlr-org/shinyMlr
-    - text: mlrCPO
-      href: https://github.com/mlr-org/mlrCPO
     - text: mlrHyperopt
       href: http://jakob-r.de/mlrHyperopt/index.html
 

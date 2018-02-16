@@ -1,4 +1,4 @@
-![mlr](https://raw.githubusercontent.com/pat-s/mlr/master/logo.png): Machine Learning in R
+![mlr](https://raw.githubusercontent.com/pat-s/mlr/master/logo.png) Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
@@ -171,27 +171,38 @@ He (=me) is sometimes busy, so please use the other channels for appropriate stu
 mlr-tutorial
 ====
 
-Since v2.12 we switched from [`mkdocs`](https://github.com/mkdocs/mkdocs) to [`pkgdown`](https://github.com/r-lib/pkgdown).
+Since v2.12 we switched from [mkdocs](https://github.com/mkdocs/mkdocs) to [pkgdown](https://github.com/r-lib/pkgdown).
 With this change, all source files are now located in this repo under `vignettes/tutorial`.
+
+**Modify a tutorial section**:
 
 If you want to modify/add a tutorial section, please follow these steps:
 
 1. Open the respective source file, e.g. `task.Rmd`.
-2. Follow the style guide: 
+2. Follow the style guide while editing: 
      - Reference `mlr` functions as <function()>, e.g. `makeLearner()`.
      - Reference external functions as <package::function()>, e.g. `kernlab::ksvm()`.
-     - Reference other tutorial pages with <vignette("<name_of_vignette")>, e.g. `vignette("bagging")`
+     - Reference other tutorial pages with `<name_of_vignette>.html`, e.g. `[bagging](bagging.html)`.
      - Always start a new sentence with a new line. 
-     If you want to insert a paragraph, skip one line.
-     - The most up-level header starts with `##` and is subsequently followed by `###` and `####` etc.
+     - If you want to insert a paragraph, skip one line.
+     - The most up-level header starts with `###` and is subsequently followed by `####` and `#####` etc.
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
-     - Reference images using a code chunk and `knitr::include_graphics("here::here("vignettes/tutorial/devel/pdf/img/<your_image>"))`. See examples in `resampling.Rmd`, `nested_resampling.Rmd` or `handling_of_spatial_data.Rmd`.
-     Using `knitr::include_graphics()` has the advantage that it automatically either selects .png (html) or .pdf files (pdf) for the respective version of the tutorial. 
-     Furthermore, `here::here()` ensures that the relative paths are always correct for local building as well as for the html and pdf build process on Travis.
+     - Referencing images is a bit tricky since we need to ensure that they look good in both the HTML and PDF version.
+       Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/devel/resampling.Rmd), [nested_resampling.Rmd](https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/devel/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/devel/handling_of_spatial_data.Rmd).
 3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using the `knit` button in RStudio) and see if everything works.
-This way you can also preview your site. 
-If you want to view the complete `pkgdown` site locally, run `pkgdown::serve_site()`.
-4. (optional) Add a new section to `.pkgdown.yml`, similar as the already listed ones.
-5. (optional) Add a new section to `/vignettes/tutorial/devel/pdf/pdf_wrapper.Rmd`, similar as the already listed ones.
+   Put required packages in the setup chunk at the beginning of the tutorial.
+   
+**Preview the changes**:
 
-If you want to open an issue that is related to `mlr-tutorial`, please label it with `tutorial` and mention @jakob-r or @pat-s if you need help.
+If you want to view the complete `pkgdown` site locally, run `pkgdown::serve_site()`.
+You don't have to render the complete site every time you change one tutorial. 
+Just edit the `.Rmd` under your local `docs/` directory and preview the tutorial again in the browser.
+Important: Do not commit the changed `.Rmd` file under `docs/` but copy the changes to the respective file in the `vignettes/` directory and commit only this file.
+
+**Adding a new section**:
+
+Edit `_pkgdown.yml` and add the new section at the appropriate place.
+
+**Issues and Pull Requests**:
+
+If you want to open an issue or pull request that is related to `mlr-tutorial`, label it with `tutorial` and mention [jakob-r](https://github.com/jakob-r) or [pat-s](https://github.com/pat-s) if you need help.
