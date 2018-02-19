@@ -162,6 +162,11 @@ library("ggplot2")
 ```{r child = '../handling_of_spatial_data.Rmd'}
 ```
 
+## Functional Data
+
+```{r child = '../functional_data.Rmd'}
+```
+
 # Extending
 
 ## Integrating Another Learner
