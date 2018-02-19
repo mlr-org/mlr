@@ -2,16 +2,16 @@
 # sort classes wrt to size
 getMinMaxClass = function(y) {
   tab = table(y)
-  j.small = getMinIndex(tab)
+  j.large = getMaxIndex(tab)
   ns = names(tab)
-  min.name = ns[j.small]
-  max.name = ns[-j.small]
+  min.names = ns[-j.large]
+  max.name = ns[j.large]
   list(
-    min.name = min.name,
-    min.size = tab[j.small],
-    min.inds = which(y == min.name),
+    min.names = min.names,
+    min.sizes = tab[-j.large],
+    min.inds = setNames(lapply(min.names, function(z) which(y == z)), min.names),
     max.name = max.name,
-    max.size = tab[-j.small],
+    max.size = tab[j.large],
     max.inds = which(y == max.name)
   )
 }

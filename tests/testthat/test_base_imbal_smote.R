@@ -36,6 +36,19 @@ test_that("smote works with rate 1 (no new examples)",  {
   expect_equal(tab2alt["R"], tab1["R"])
 })
 
+test_that("smote works with multiclass",  {
+  # iris with all equal already
+  y = multiclass.df[, multiclass.target]
+  tab1 = table(y, dnn = NULL)
+  task = smote(multiclass.task)
+  df = getTaskData(task)
+  tab2 = table(df[, multiclass.target], dnn = NULL)
+  expect_equal(tab2, tab1)
+  expect_equal(df, multiclass.df)
+
+  # FIXME: CONTINUE HERE WITH REALLY IMBALANCED DATA
+})
+
 test_that("smote works with only factor features",  {
   n = 10
   d = data.frame(

@@ -27,7 +27,7 @@ oversample = function(task, rate, cl = NULL) {
   assertNumber(rate, lower = 1)
   y = getTaskTargets(task)
   if (is.null(cl)) {
-    cl = getMinMaxClass(y)$min.name
+    cl = getMinMaxClass(y)$min.names
   } else {
     assertChoice(cl, levels(y))
   }
