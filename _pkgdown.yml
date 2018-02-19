@@ -78,6 +78,8 @@ navbar:
       href: articles/tutorial/devel/out_of_bag_predictions.html
     - text: Handling of Spatial Data
       href: articles/tutorial/devel/handling_of_spatial_data.html
+    - text: Functional Data
+      href: articles/tutorial/devel/functional_data.html
 
   - text: Extending
     menu:
