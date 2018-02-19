@@ -32,11 +32,16 @@ For a more in depth introduction to functional data analysis see e.g [When the d
 
 Each observation of a functional covariate in the data are evaluations of a functional, i.e. measurements of a scalar value at various time points.
 A single observation might then look like this: 
-```{r, fig.asp = 0.7}
-# Plot NIR curve for first observarion
+```{r, fig.asp = 0.7, message=FALSE}
+# Load required packages
 library(FDboost)
-data(fuelSubset, package = "FDboost")
 library(ggplot2)
+```
+
+```{r}
+# Plot NIR curve for first observarion
+data(fuelSubset, package = "FDboost")
+
 # NIR_Obs_1 are the measurements for NIR of the first functional covariate.
 # lambda are the time points, the data was measured at.
 df = data.frame("NIR_Obs1" = fuelSubset$NIR[1, ],
@@ -45,28 +50,31 @@ ggplot(df) +
   geom_line(aes(y = NIR_Obs1, x = lambda))
 ```
 
+
+
+
 ## How to model functional data?
 
 There are two commonly used approaches for analyzing functional data.
 
-* Directly analyze the functional data using a [learner](&Learner) that is suitable for functional data on a [Task](&makeTask). Those learners have the prefixes __classif.fda__ and __regr.fda__.
+* Directly analyze the functional data using a [learner](learner.html) that is suitable for functional data on a [task](task.html). Those learners have the prefixes __classif.fda__ and __regr.fda__.
 
-For more info on learners see [fda learners](functional_data.Rmd#constructing-a-learner.md).
+For more info on learners see [fda learners](functional_data.html#constructing-a-learner).
 For this purpose, the functional data has to be saved as a matrix column in the data.frame used
-for constructing the [Task](&makeTask). For more info on functional tasks consider the following section.
+for constructing the [task](task.html). For more info on functional tasks consider the following section.
 
-* Transform the task into a format suitable for standard __classification__ or __regression__ [learners](&Learner).
+* Transform the task into a format suitable for standard __classification__ or __regression__ [learners](learner.html).
 
-This is done by [extracting](functional_data.Rmd#feature-extraction.md) non-temporal/non-functional features from the curves. Non-temporal features do not have any interdependence between each other, similarly to features in traditional machine learning. This is explained in more detail [below](functional_data.Rmd#feature-extraction.md).
+This is done by [extracting](functional_data.html#feature-extraction) non-temporal/non-functional features from the curves. Non-temporal features do not have any interdependence between each other, similarly to features in traditional machine learning. This is explained in more detail [below](functional_data.html#feature-extraction).
 
 
-## Creating a Task that contains functional features
+## Creating a task that contains functional features
 
-The first step is to get the data in the right format. [%mlr] expects a  [data.frame](&base::data.frame) which consists of the functional features and the target variable as input. Functional data in contrast to __numeric__ data have to be stored as a matrix column in the data.frame.
-After that a [Task](&makeTask) that contains the data in a well-defined format is created. [Tasks](&makeTask) come in different flavours, such as [ClassifTask](&makeClassifTask) and [RegrTask](&makeRegrTask), which can be used according to the class of the target variable.
+The first step is to get the data in the right format. [%mlr] expects a  `base::data.frame` which consists of the functional features and the target variable as input. Functional data in contrast to __numeric__ data have to be stored as a matrix column in the data.frame.
+After that a [task](task.html) that contains the data in a well-defined format is created. [tasks](task.html) come in different flavours, such as `makeClassifTask()` and `makeRegrTask()`, which can be used according to the class of the target variable.
 
 In the following example, the data is first stored as matrix columns using the
-helper function [makeFunctionalData](&makeFunctionalData) for the [fuelSubset](&fuelSubset.task)
+helper function `makeFunctionalData()` for the [fuelSubset](&fuelSubset.task)
 data from package [%FDboost].
 
 The data is provided in the following structure:
@@ -91,7 +99,7 @@ df = data.frame(fuelSubset[c("heatan", "h2o", "UVVIS", "NIR")])
 str(df[, 1:5])
 ```
 
-Before constructing the [Task](&makeTask), the data is again reformated so it contains column matrices. 
+Before constructing the [task](task.html), the data is again reformated so it contains column matrices. 
 This is done by providing a list __fd.features__, that identifies the functional covariates. 
 All columns not mentioned in the list are kept as-is. In our case the column indices 3:136 correspond to the columns of the UVVIS matrix. Alternatively we could also specify the respective column names.
 
@@ -103,13 +111,13 @@ fd.features = list("UVVIS" = 3:136, "NIR" = 137:367)
 fdf = makeFunctionalData(df, fd.features = fd.features)
 ```
 
-[makeFunctionalData](&makeFunctionalData) returns a data.frame, where the functional features are contained as matrices.
+`makeFunctionalData()` returns a data.frame, where the functional features are contained as matrices.
 
 ```{r}
 str(fdf)
 ```
 
-Now with a data.frame containing the functionals as matrices, a [Task](&makeTask) can be created:
+Now with a data.frame containing the functionals as matrices, a [task](task.html) can be created:
 
 ```{r}
 ## Create a regression task, classification tasks behave analogously
@@ -121,13 +129,13 @@ tsk1
 
 ## Constructing a learner
 
-For functional data, [learners](&Learner) are constructed using 
+For functional data, [learners](learner.html) are constructed using 
 `makeLearner("classif.<R_method_name>")` or 
 `makeLearner("regr.<R_method_name>")` depending on the target variable.
 
-Applying learners to a [Task](&makeTask) works in two ways:
+Applying learners to a [task](task.html) works in two ways:
 
-* **Use a [learner](&Learner) suitable for functional data**
+* **Use a [learner](learner.html) suitable for functional data**
 
   + For regression:
   
@@ -145,7 +153,7 @@ Applying learners to a [Task](&makeTask) works in two ways:
     knn.lrn = makeLearner("classif.fdausc.knn")
   ```
 
-* **Use a _standard_ [learner](&Learner)**:
+* **Use a _standard_ [learner](learner.html)**:
 
 In this case the temporal structure is disregarded, and the functional data treated as simple numeric features.
 
@@ -154,17 +162,17 @@ In this case the temporal structure is disregarded, and the functional data trea
 rpartlrn = makeLearner("classif.rpart")
 ```
 
-* Alternatively, transform the functional data into a non-temporal/non-functional space by [extracting](functional_data.Rmd#feature-extraction) features before training.
-In this case, a normal regression- or classification-[learner](&Learner) 
+* Alternatively, transform the functional data into a non-temporal/non-functional space by [extracting](functional_data.html#feature-extraction) features before training.
+In this case, a normal regression- or classification-[learner](learner.html) 
 can be applied.
 
-This is explained in more detail in the [feature extraction](functional_data.Rmd#feature-extraction)
+This is explained in more detail in the [feature extraction](functional_data.html#feature-extraction)
 section below.
 
 
 ## Train the learner
 
-The resulting [learner](&Learner) can now be trained on the task created in section [Creating a Task](functional_data.Rmd#creating-a-task) above. 
+The resulting [learner](learner.html) can now be trained on the task created in section [Creating a task](functional_data.html#creating-a-task) above. 
 
 ```{r, warning = FALSE}
 ## Train the fdalrn on the constructed task
@@ -187,8 +195,8 @@ m
 
 ## Feature extraction
 
-In contrast to applying a learner that works on a [Task](&makeTask) containing functional features,
-the [Task](&makeTask) can be converted to a normal [&Task.md].
+In contrast to applying a learner that works on a [task](task.html) containing functional features,
+the [task](task.html) can be converted to a normal [task](task.html).
 This works by transforming the functional features into a 
 non-functional domain, e.g by extracting wavelets.
 
@@ -253,8 +261,8 @@ task.fourier
 
 ## Wrappers
 
-Additionally we can wrap the preprocessing around a standard learner such as [classif.rpart](&rpart::rpart).
-For additional information, please consider the [Wrappers](wrapper.md#wrapper) section.
+Additionally we can wrap the preprocessing around a standard learner such as [classif.rpart](rpart::rpart).
+For additional information, please consider the [Wrappers](wrapper.html#wrapper) section.
 
 ```{r}
 ## Use a FDAFeatExtractWrapper

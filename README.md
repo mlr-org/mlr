@@ -194,7 +194,7 @@ If you want to modify/add a tutorial section, please follow these steps:
    
 **Preview the changes**:
 
-If you want to view the complete `pkgdown` site locally, run `pkgdown::serve_site()`.
+If you want to view the complete `pkgdown` site locally, run `pkgdown::build_site()`.
 You don't have to render the complete site every time you change one tutorial. 
 Just edit the `.Rmd` under your local `docs/` directory and preview the tutorial again in the browser.
 Important: Do not commit the changed `.Rmd` file under `docs/` but copy the changes to the respective file in the `vignettes/` directory and commit only this file.
