@@ -4,4 +4,4 @@
 #'   object size / mem usage, if you do not really need them.
 #'   In this case you can set this argument to `FALSE`.
 #'   Default is `TRUE`.
-
+#' @md

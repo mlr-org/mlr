@@ -33,8 +33,9 @@ Authors@R: c(
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
-    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb", comment = c(ORCID = '0000-0003-0748-6624')))
-URL: https://github.com/mlr-org/mlr, https://pat-s.github.io/mlr
+    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"),
+    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"))
+URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
