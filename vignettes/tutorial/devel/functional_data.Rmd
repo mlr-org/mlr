@@ -133,7 +133,7 @@ For functional data, [learners](learner.html) are constructed using  `makeLearne
 
 Applying learners to a [task](task.html) works in two ways
 
-#### Use a [learner](learner.html) suitable for functional data
+#### Either use a [learner](learner.html) suitable for functional data
 
   
 ```{r}
@@ -147,11 +147,11 @@ Applying learners to a [task](task.html) works in two ways
 ```
 
 ```{r}
-    ## Or alternatively use knn for classification:
+    ## Or alternatively, use knn for classification:
     knn.lrn = makeLearner("classif.fdausc.knn")
 ```
 
-#### Use a _standard_ [learner](learner.html)
+#### Or, use a standard [learner](learner.html)
 
 In this case the temporal structure is disregarded, and the functional data treated as simple numeric features.
 
@@ -170,7 +170,7 @@ This is explained in more detail in the [feature extraction](functional_data.htm
 
 The resulting [learner](learner.html) can now be trained on the task created in section [Creating a task](functional_data.html#creating-a-task) above. 
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, message=FALSE}
 ## Train the fdalrn on the constructed task
 m = train(learner = fdalrn, task = tsk1)
 p = predict(m, tsk1)
@@ -206,7 +206,8 @@ Additional arguments supplied to the _extract_ functions are passed on.
 
 ```{r}
 ## feat.methods specifies what to extract from which functional
-## In this example, from the first functional we extract the Fourier transformation, from the second the fpca scores.
+## In this example, we extract the Fourier transformation from the first functional.
+## From the second functional, fpca scores are extracted.
 feat.methods = list("UVVIS" = extractFDAFourier(), "NIR" = extractFDAFPCA())
 
 ## Either create a new task from an existing task
@@ -254,7 +255,7 @@ task.fourier
 
 ### Wrappers
 
-Additionally we can wrap the preprocessing around a standard learner such as [classif.rpart](rpart::rpart).
+Additionally we can wrap the preprocessing around a standard learner such as [classif.rpart](rpart::rpart()).
 For additional information, please consider the [Wrappers](wrapper.html#wrapper) section.
 
 ```{r}
