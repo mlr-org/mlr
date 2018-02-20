@@ -22,16 +22,21 @@
 #' @template ret_task
 #' @family imbalancy
 #' @export
-oversample = function(task, rate, cl = NULL) {
-  checkTask(task, "ClassifTask", binary = TRUE)
-  assertNumber(rate, lower = 1)
+oversample = function(task, rate = NULL, cl = NULL) {
+  checkTask(task, "ClassifTask")
+  assertNumber(rate, lower = 1, null.ok = TRUE)
+  assertSubset(cl, getTaskClassLevels(task))
   y = getTaskTargets(task)
-  if (is.null(cl)) {
-    cl = getMinMaxClass(y)$min.names
-  } else {
-    assertChoice(cl, levels(y))
-  }
-  j = sampleBinaryClass(y, rate = rate, cl = cl, resample.other.class = FALSE)
+  z = getMinMaxClass(y)
+  r = rate
+  min.names = if (is.null(cl)) z$min.names else cl
+  j = lapply(min.names, function(s) {
+    if (is.null(rate)) {
+      r = z$max.size/z$min.size[s]
+    }
+    sampleMultiClass(y, rate = r, cl = s)
+  })
+  j = c(unlist(j), which(y %nin% min.names))
   subsetTask(task, j)
 }
 
@@ -40,11 +45,10 @@ oversample = function(task, rate, cl = NULL) {
 undersample = function(task, rate, cl = NULL) {
   checkTask(task, "ClassifTask", binary = TRUE)
   assertNumber(rate, lower = 0, upper = 1)
+  assertSubset(cl, getTaskClassLevels(task))
   y = getTaskTargets(task)
   if (is.null(cl)) {
     cl = getMinMaxClass(y)$max.name
-  } else {
-    assertChoice(cl, levels(y))
   }
   j = sampleBinaryClass(y, rate = rate, cl = cl, resample.other.class = FALSE)
   subsetTask(task, j)

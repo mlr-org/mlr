@@ -43,3 +43,14 @@ sampleBinaryClass = function(y, rate, cl, resample.other.class) {
     newinds2 = inds2
   c(newinds1, newinds2)
 }
+
+
+sampleMultiClass = function(y, rate, cl) {
+  inds1 = which(y == cl)
+  newsize = round(length(inds1) * rate)
+  if (rate < 1) {
+    sample(inds1, newsize, replace = FALSE)
+  } else {
+    c(inds1, sample(inds1, newsize - length(inds1), replace = TRUE))
+  }
+}

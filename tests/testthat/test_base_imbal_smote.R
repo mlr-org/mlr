@@ -46,7 +46,17 @@ test_that("smote works with multiclass",  {
   expect_equal(tab2, tab1)
   expect_equal(df, multiclass.df)
 
-  # FIXME: CONTINUE HERE WITH REALLY IMBALANCED DATA
+  # generate imbalanced data from iris
+  imbal.ids = c(1:10, 51:120)
+  imbal.multiclass.df = multiclass.df[imbal.ids,]
+  y = imbal.multiclass.df[, multiclass.target]
+  tab1 = table(y, dnn = NULL)
+  imbal.task = makeClassifTask(data = imbal.multiclass.df, target = multiclass.target)
+  task = smote(imbal.task)
+  df = getTaskData(task)
+  tab2 = table(df[, multiclass.target], dnn = NULL)
+  expect_equal(names(tab2), names(tab1))
+  expect_equal(unique(tab2), 50)
 })
 
 test_that("smote works with only factor features",  {

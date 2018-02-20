@@ -15,6 +15,29 @@ test_that("over and undersample works",  {
   expect_equal(tab2["R"], tab1["R"])
 })
 
+test_that("oversample works with multiclass",  {
+  # With balanced data
+  y = multiclass.df[, multiclass.target]
+  tab1 = table(y, dnn = FALSE)
+  task = oversample(multiclass.task)
+  df = getTaskData(task)
+  tab2 = table(df[, multiclass.target], dnn = FALSE)
+  expect_equal(tab2, tab1)
+  # expect_equal(df, multiclass.df) # need special code to keep order the same
+
+  # With imbalanced data
+  imbal.ids = c(1:10, 51:120)
+  imbal.multiclass.df = multiclass.df[imbal.ids,]
+  y = imbal.multiclass.df[, multiclass.target]
+  tab1 = table(y, dnn = NULL)
+  imbal.task = makeClassifTask(data = imbal.multiclass.df, target = multiclass.target)
+  task = oversample(imbal.task)
+  df = getTaskData(task)
+  tab2 = table(df[, multiclass.target], dnn = NULL)
+  expect_equal(names(tab2), names(tab1))
+  expect_equal(unique(tab2), 50)
+})
+
 test_that("over and undersample wrapper",  {
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
@@ -29,7 +52,6 @@ test_that("over and undersample wrapper",  {
 test_that("over and undersample arg check works", {
   task = makeClassifTask(data = multiclass.df, target = multiclass.target)
   expect_error(undersample(task, rate = 0.5), "binary")
-  expect_error(oversample(task, rate = 0.5), "binary")
 })
 
 test_that("over and undersample works with weights", {
