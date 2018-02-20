@@ -131,36 +131,37 @@ tsk1
 
 For functional data, [learners](learner.html) are constructed using  `makeLearner("classif.<R_method_name>")` or  `makeLearner("regr.<R_method_name>")` depending on the target variable.
 
-Applying learners to a [task](task.html) works in two ways:
+Applying learners to a [task](task.html) works in two ways
 
-* **Use a [learner](learner.html) suitable for functional data**
+#### Use a [learner](learner.html) suitable for functional data
 
-  * For regression:
   
 ```{r}
-    ## The following learners can be used for the task.
-    listLearners(tsk1, properties = "functionals")
-    ## Create a FDboost learner
+    ## The following learners can be used for tsk1 (a regression task).
+    listLearners(tsk1, properties = "functionals", warn.missing.packages = FALSE)
+```
+
+```{r}
+    ## Create a FDboost learner for regression
     fdalrn = makeLearner("regr.FDboost")
 ```
-  
-  * Or alternatively for classification:
-  
+
 ```{r}
-    ## Knn learner
+    ## Or alternatively use knn for classification:
     knn.lrn = makeLearner("classif.fdausc.knn")
 ```
 
-* **Use a _standard_ [learner](learner.html)**:
+#### Use a _standard_ [learner](learner.html)
 
 In this case the temporal structure is disregarded, and the functional data treated as simple numeric features.
 
 ```{r}
-## Decision Tree learner
-rpartlrn = makeLearner("classif.rpart")
+    ## Decision Tree learner
+    rpartlrn = makeLearner("classif.rpart")
 ```
 
-* Alternatively, transform the functional data into a non-temporal/non-functional space by [extracting](functional_data.html#feature-extraction) features before training.
+
+Alternatively, transform the functional data into a non-temporal/non-functional space by [extracting](functional_data.html#feature-extraction) features before training.
 In this case, a normal regression- or classification-[learner](learner.html) can be applied.
 
 This is explained in more detail in the [feature extraction](functional_data.html#feature-extraction) section below.
