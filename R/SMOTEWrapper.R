@@ -37,20 +37,10 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L,
 
   learner = checkLearner(learner, "classif")
   pv = list()
-  if (!missing(sw.rate)) {
-    assertNumber(sw.rate, lower = 1)
-    pv$sw.rate = sw.rate
-  }
-  if (!missing(sw.nn)) {
-    sw.nn = asCount(sw.nn, positive = TRUE)
-    pv$sw.nn = sw.nn
-  }
-  if (!missing(sw.standardize)) {
-    pv$sw.standardize = sw.standardize
-  }
-  if (!missing(sw.alt.logic)) {
-    pv$sw.alt.logic = sw.alt.logic
-  }
+  pv$sw.rate = assertNumber(sw.rate, lower = 1, null.ok = TRUE)
+  pv$sw.nn = assertInt(sw.nn, lower = 1)
+  pv$sw.standardize = assertFlag(sw.standardize)
+  pv$sw.alt.logic = assertFlag(sw.alt.logic)
   id = stri_paste(learner$id, "smoted", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "sw.rate", lower = 1),

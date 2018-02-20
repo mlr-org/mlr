@@ -16,6 +16,7 @@
 #'   and 0 would imply reduction to 0 observations.
 #'   For oversampling: Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
+#'   If `NULL` the rate will calculated automatically so that the minorty classes will have the same sample sizes as the majority class.
 #' @param cl (`character(1)`)\cr
 #'   Which class should be over- or undersampled. If `NULL`, `oversample`
 #'   will select the smaller and `undersample` the larger class.

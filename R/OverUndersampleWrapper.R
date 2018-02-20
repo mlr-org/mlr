@@ -18,6 +18,7 @@
 #'   Factor to oversample a class. Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
+#'   If `NULL` the rate will calculated automatically so that the minorty classes will have the same sample sizes as the majority class.
 #' @param usw.cl (`character(1)`)\cr
 #'   Class that should be undersampled.
 #'   Default is `NULL`, which means the larger one.
@@ -53,14 +54,8 @@ makeUndersampleWrapper = function(learner, usw.rate = 1, usw.cl = NULL) {
 makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
   learner = checkLearner(learner, "classif")
   pv = list()
-  if (!missing(osw.rate)) {
-    assertNumber(osw.rate, lower = 1)
-    pv$osw.rate = osw.rate
-  }
-  if (!is.null(osw.cl)) {
-    assertString(osw.cl)
-    pv$osw.cl = osw.cl
-  }
+  pv$osw.rate = assertNumber(osw.rate, lower = 1, null.ok = TRUE)
+  pv$osw.cl = assertString(osw.cl, null.ok = TRUE)
   id = stri_paste(learner$id, "oversampled", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "osw.rate", lower = 1),
