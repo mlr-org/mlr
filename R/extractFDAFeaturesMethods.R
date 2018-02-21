@@ -1,19 +1,18 @@
 #' @title Constructor for FDA feature extraction methods.
 #'
 #' @description
-#' This can be used to implement custom feature FDA extraction.
+#' This can be used to implement custom FDA feature extraction.
+#' Takes a \code{learn} and a \code{reextract} function along with some optional
+#' parameters to those as argument.
 #'
 #' @param learn (`function(data, target, col, ...)`)\cr
 #'   Function to learn and extract information on functional column `col`.
 #'   Arguments are:
 #'   \itemize{
 #'   \item data [data.frame]\cr
-#'     Data.frame with one row per observation of a single functional feature
+#'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item data [data.frame]\cr
-#'     Data.frame containing matricies with one row per observation of a single functional
-#'     or time series and one column per measurement time point. All entries need to be numeric.
 #'   \item target [character]\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
@@ -76,7 +75,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     }
     # Add more legible column names to the output
     df = as.data.frame(fft.pa)
-    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)), sep = ".")
+    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)))
     df
   }
   makeExtractFDAFeatMethod(
@@ -94,11 +93,13 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' functional data.
 #' See [wavelets::dwt] for more information.
 #'
-#' @param filter [character(1)]\cr
-#'   Specifies which filter should be used. Default is \dQuote{la8}.
-#'   Must be one of `d`|`la`|`bl`|`c` followed by an even
+#' @param filter [`character(1)`]\cr
+#'   Specifies which filter should be used.
+#'   Must be one of `d`|`la`}|`bl`|`c` followed by an even
 #'   number for the level of the filter.
+#'   The level of the filter needs to be smaller or equal then the time-series length.
 #'   For more information and acceptable filters see \code{help(wt.filter)}.
+#'   Defaults to `la8`.
 #' @param boundary [character(1)]\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
@@ -112,9 +113,16 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
+  # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
+  # to handle it right now.
+  # @param n.levels [\code{integer(1)}]\cr
+  #   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
   # FIXME: Add n.levels parameter. Has no default. When n.leves are not provided, we do not understand yet if there is a difference
+
   lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
+    assertDataFrame(data)
+    assertChoice(col, choices = colnames(data))
 
     assertDataFrame(data)
     assertChoice(col, choices = colnames(data))
@@ -129,7 +137,6 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
       # Extract wavelet coefficients W and level scaling coeffictients V
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
-
     df = as.data.frame(wtdata)
     colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
@@ -182,4 +189,3 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc))
 }
-

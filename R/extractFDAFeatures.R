@@ -2,12 +2,13 @@
 #'
 #' @description
 #' Extract non-functional features from functional features using various methods.
-#' The function [extractFDAFeatures] performs the extraction for all functional features
+#'
+#' The function \code{extractFDAFeatures} performs the extraction for all functional features
 #' via the methods specified in `feat.methods` and transforms all mentioned functional
-#' matrix features into regular data.frame columns.
+#' (matrix) features into regular data.frame columns.
 #' Additionally, a \dQuote{`extractFDAFeatDesc`} object
 #' which contains learned coefficients and other helpful data for
-#' extraction during the predict-phase is returned. This can be used with
+#' re-extraction during the predict-phase is returned. This can be used with
 #' [reextractFDAFeatures] in order to extract features during the prediction phase.
 #'
 #' @details
@@ -41,17 +42,14 @@
 #'   \item{desc (`extracFDAFeatDesc`)}{Description object. See description for details.}
 #' @family fda
 #' @export
-
-
-# FIXME: this does not run because of a problem in extractFDAWavelets
-# @examples
-# df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
-# fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
-# task = makeClassifTask(data = fdf, target = "y")
-# extracted = extractFDAFeatures(task,
-# feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets()))
-# print(extracted$task)
-# reextractFDAFeatures(task, extracted$desc)
+#' @examples
+#' df = data.frame(x = matrix(rnorm(24), ncol = 8), y = factor(c("a", "a", "b")))
+#' fdf = makeFunctionalData(df, fd.features = list(x1 = 1:4, x2=5:8), exclude.cols = "y")
+#' task = makeClassifTask(data = fdf, target = "y")
+#' extracted = extractFDAFeatures(task,
+#' feat.methods = list("x1" = extractFDAFourier(), "x2" = extractFDAWavelets(filter = "haar")))
+#' print(extracted$task)
+#' reextractFDAFeatures(task, extracted$desc)
 
 extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
   assertList(feat.methods)
@@ -187,7 +185,7 @@ reextractFDAFeatures.data.frame = function(obj, desc) {
   # Reappend target and non-functional features
   keep.cols = setdiff(colnames(obj), desc$fd.cols)
   data = cbind(df, obj[keep.cols])
-  data
+  return(data)
 }
 
 

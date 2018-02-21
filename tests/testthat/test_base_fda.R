@@ -396,3 +396,14 @@ test_that("Self-created data.frame's", {
   df2$fd1 = matrix(as.factor(rep("a", 100L)), ncol = 10L)
   expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
 })
+
+# Test whether we support stratification: #1669
+test_that("supports stratification", {
+  res = makeResampleDesc(method = "RepCV", predict = "test",
+  stratify = TRUE,
+  folds = 2L, reps = 2L)
+
+  # resampling instances
+  resinst = makeResampleInstance(res, gunpoint.task)
+  expect_class(resinst, "ResampleInstance")
+})

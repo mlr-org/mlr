@@ -6,8 +6,9 @@ test_that("extractFDAFeatures", {
   # check output data
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
-  expect_equal(nrow(df), 129)
-  # expect_subset(colnames(df), c("UVVIS.mean", "NIR.min", "NIR.max", "heatan", "h20"))
+  expect_equal(nrow(df), 129L)
+  expect_subset(colnames(df), c(paste0("NIR.phase", seq_len(231)),
+    paste0("UVVIS.multires", seq_len(9)), "heatan", "h20"))
 })
 
 test_that("extractFeatures multiple times", {
@@ -16,11 +17,11 @@ test_that("extractFeatures multiple times", {
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
   df = getTaskData(t$task)
-  expect_is(df, "data.frame")
+  expect_class(df, "data.frame")
   expect_true(nrow(df) == 129L)
-  # expect_true(ncol(df) == 6L)
-  # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-    # "h20", "NIR.mean"))
+  expect_true(ncol(df) == 154L)
+  expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase", seq_len(134)),
+    paste0("NIR.multires", seq_len(9)), paste0("UVVIS.multires", seq_len(9))))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -28,9 +29,11 @@ test_that("extractFeatures multiple times", {
   df = getTaskData(t$task)
   expect_is(df, "data.frame")
   expect_true(nrow(df) == 129L)
-  # expect_true(ncol(df) == 8L)
-  # expect_subset(colnames(df), c("UVVIS.mean", "UVVIS.min", "UVVIS.max", "heatan",
-    # "h20", "NIR.mean", "NIR.min", "NIR.max"))
+  expect_true(ncol(df) == 385L)
+  expect_subset(colnames(df),
+    c("heatan", "h20",
+      paste0("UVVIS.multires", seq_len(9)), paste0("NIR.multires", seq_len(9)),
+      paste0("UVVIS.phase", seq_len(134)), paste0("NIR.phase", seq_len(231))))
 })
 
 
@@ -145,7 +148,7 @@ test_that("Wavelet method are equal to package", {
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
   df = as.data.frame(wtdata)
-  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)), sep = ".")
+  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)))
 
   expect_equal(nrow(wavelets.gp), nrow(gp$data))
   expect_equal(wavelets.gp, df)
@@ -167,16 +170,15 @@ test_that("extract and reextract Wavelets", {
 
 
 test_that("getUniFDAMultiResFeatures works on data.frame", {
-  i = 100 # number of instances
-  tl  = 200 # length of each time serie instance
-  ts = replicate(i, rnorm(tl))
-  gp = t(as.data.frame(ts))
-  ngp = extractFDAMultiResFeatures()$learn(data = gp, res.level = 3, shift = 0.5, curve.lens = NULL)
-  expect_true(nrow(ngp) == nrow(gp))
-  expect_true(ncol(ngp) == 11L)
-  ngp = extractFDAMultiResFeatures()$learn(data = gp, curve.lens = c(100, 100), res.level = 3, shift = 0.5)
-  expect_true(nrow(ngp) == nrow(gp))
-  expect_true(ncol(ngp) == 20L)
+  gp = getTaskData(fda.binary.gp.task.small, functionals.as = "matrix")
+  ngp1 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", res.level = 3,
+    shift = 0.5, curve.lens = NULL)
+  expect_true(nrow(ngp1) == nrow(gp))
+  expect_true(ncol(ngp1) == 9L)
+  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", curve.lens = c(25, 25),
+    res.level = 3, shift = 0.5)
+  expect_true(nrow(ngp2) == nrow(gp))
+  expect_true(ncol(ngp2) == 16L)
 })
 
 test_that("get...FDAMultiResFeatures works on data.frame", {
@@ -281,7 +283,7 @@ test_that("Fourier equal to package", {
   }
   # Add more legible column names to the output
   df = as.data.frame(fft.pa)
-  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)), sep = ".")
+  colnames(df) = stringi::stri_paste("amplitude", seq_len(ncol(fft.pa)))
 
   expect_equal(df, fourier.a.gp)
 
