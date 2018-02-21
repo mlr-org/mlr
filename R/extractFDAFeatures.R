@@ -35,11 +35,11 @@
 #'   Available feature extraction methods are available under family `fda_featextractor`.
 #'   Specifying a functional feature multiple times with different extraction methods allows
 #'   for the extraction of different features from the same functional.
-#'   Default is [list] which does nothing.
+#'   Default is [list()] which does nothing.
 #' @return ([list])
 #'   \item{data ([data.frame] | [Task])}{Extracted features, returns a data.frame when
-#'   given a [data.frame] and a Task when given a Task.}
-#'   \item{desc (`extractFDAFeatDesc`)}{Description object. See description for details.}
+#'   given a data.frame and a Task when given a Task.}
+#'   \item{desc (`extracFDAFeatDesc`)}{Description object. See description for details.}
 #' @family fda
 #' @export
 #' @examples

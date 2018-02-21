@@ -105,23 +105,24 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
+#' @param n.levels [\code{integer(1)}]\cr
+#'   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
   assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
-
   # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
   # to handle it right now.
   # @param n.levels [\code{integer(1)}]\cr
   #   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
+  # FIXME: Add n.levels parameter. Has no default. When n.leves are not provided, we do not understand yet if there is a difference
 
   lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
     assertDataFrame(data)
     assertChoice(col, choices = colnames(data))
-
 
     assertDataFrame(data)
     assertChoice(col, choices = colnames(data))
@@ -137,7 +138,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
     df = as.data.frame(wtdata)
-    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)))
+    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
