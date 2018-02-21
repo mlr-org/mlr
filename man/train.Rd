@@ -4,31 +4,31 @@
 \alias{train}
 \title{Train a learning algorithm.}
 \usage{
-train(learner, task, subset, weights = NULL)
+train(learner, task, subset = NULL, weights = NULL)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
-Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+\item{subset}{([integer] | [logical] | `NULL`)\cr
+Selected cases. Either `character(1)` logical or an index vector.
+By default `NULL` if all observations are used.}
 
-\item{weights}{[\code{numeric}]\cr
+\item{weights}{(\link{numeric})\cr
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
-By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
+By default \code{NULL} which means no weights are used unless specified in the task (\link{Task}).
 Weights from the task will be overwritten.}
 }
 \value{
-[\code{\link{WrappedModel}}].
+(\link{WrappedModel}).
 }
 \description{
-Given a \code{\link{Task}}, creates a model for the learning machine
+Given a \link{Task}, creates a model for the learning machine
 which can be used for predictions on new data.
 }
 \examples{
@@ -47,5 +47,5 @@ mod = train(learner, task, subset = training.set)
 print(mod)
 }
 \seealso{
-\code{\link{predict.WrappedModel}}
+\link{predict.WrappedModel}
 }

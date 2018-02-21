@@ -6,11 +6,11 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE, ...) 
 #' Get probabilities for some classes.
 #'
 #' @template arg_pred
-#' @param cl [\code{character}]\cr
+#' @param cl ([character])\cr
 #'   Names of classes.
 #'   Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.
-#' @return [\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.
-#'   Order of columns is defined by \code{cl}.
+#' @return ([data.frame]) with numerical columns or a numerical vector if length of `cl` is 1.
+#'   Order of columns is defined by `cl`.
 #' @export
 #' @family predict
 #' @examples
@@ -75,7 +75,7 @@ getPredictionTaskDesc = function(pred) {
   pred$task.desc
 }
 
-#' Deprecated, use \code{getPredictionProbabilities} instead.
+#' Deprecated, use `getPredictionProbabilities` instead.
 #' @param pred Deprecated.
 #' @param cl Deprecated.
 #' @export
@@ -171,12 +171,12 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
 #' @title Return the error dump of a failed Prediction.
 #'
 #' @description
-#' Returns the error dump that can be used with \code{debugger()} to evaluate errors.
-#' If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE} or if the
-#' prediction did not fail, this returns \code{NULL}.
+#' Returns the error dump that can be used with `debugger()` to evaluate errors.
+#' If [configureMlr] configuration `on.error.dump` is `FALSE` or if the
+#' prediction did not fail, this returns `NULL`.
 #'
 #' @template arg_pred
-#' @return [\code{last.dump}].
+#' @return (`last.dump`).
 #' @family debug
 #' @export
 getPredictionDump = function(pred) {

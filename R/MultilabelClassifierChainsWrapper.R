@@ -8,14 +8,14 @@
 #' labels in the chain. During the prediction phase, when true labels are not available, they are
 #' replaced by predicted labels.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_order
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel
@@ -23,9 +23,10 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
+  id = stri_paste("multilabel.classifierChains", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
     learner.subclass = "MultilabelClassifierChainsWrapper",
     model.subclass = "MultilabelClassifierChainsModel")
   x$type = "multilabel"

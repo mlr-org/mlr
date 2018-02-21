@@ -1,37 +1,38 @@
 #' @title Run machine learning benchmarks as distributed experiments.
 #'
 #' @description
-#' This function is a very parallel version of \code{\link{benchmark}} using \pkg{batchtools}.
+#' This function is a very parallel version of [benchmark] using \pkg{batchtools}.
 #' Experiments are created in the provided registry for each combination of
 #' learners, tasks and resamplings. The experiments are then stored in a registry and the
-#' runs can be started via \code{\link[batchtools]{submitJobs}}. A job is one train/test split
-#' of the outer resampling. In case of nested resampling (e.g. with \code{\link{makeTuneWrapper}}),
+#' runs can be started via [batchtools::submitJobs]. A job is one train/test split
+#' of the outer resampling. In case of nested resampling (e.g. with [makeTuneWrapper]),
 #' each job is a full run of inner resampling, which can be parallelized in a second step
 #' with \pkg{ParallelMap}. For details on the usage and support backends have
 #' a look at the batchtools tutorial page:
-#' \url{https://github.com/mllg/batchtools}.
+#' <https://github.com/mllg/batchtools>.
 #'
-#' The general workflow with \code{batchmark} looks like this:
+#' The general workflow with `batchmark` looks like this:
 #' \enumerate{
-#' \item{Create an ExperimentRegistry using \code{\link[batchtools]{makeExperimentRegistry}}.}
-#' \item{Call \code{batchmark(...)} which defines jobs for all learners and tasks in an \code{\link[base]{expand.grid}} fashion.}
-#' \item{Submit jobs using \code{\link[batchtools]{submitJobs}}.}
-#' \item{Babysit the computation, wait for all jobs to finish using \code{\link[batchtools]{waitForJobs}}.}
-#' \item{Call \code{reduceBatchmarkResult()} to reduce results into a \code{\link{BenchmarkResult}}.}
+#' \item{Create an ExperimentRegistry using [batchtools::makeExperimentRegistry].}
+#' \item{Call `batchmark(...)` which defines jobs for all learners and tasks in an [base::expand.grid] fashion.}
+#' \item{Submit jobs using [batchtools::submitJobs].}
+#' \item{Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].}
+#' \item{Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].}
 #' }
 #'
 #' If you want to use this with \pkg{OpenML} datasets you can generate tasks from a vector
 #' of dataset IDs easily with
-#' \code{tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))}.
+#' `tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.
 #' @inheritParams benchmark
-#' @param resamplings [(list of) \code{\link{ResampleDesc}}]\cr
+#' @param resamplings [(list of) [ResampleDesc])\cr
 #'   Resampling strategy for each tasks.
 #'   If only one is provided, it will be replicated to match the number of tasks.
 #'   If missing, a 10-fold cross validation is used.
-#' @param reg [\code{\link[batchtools]{Registry}}]\cr
-#'   Registry, created by \code{\link[batchtools]{makeExperimentRegistry}}. If not explicitly passed,
+#' @param reg ([batchtools::Registry])\cr
+#'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 #'   uses the last created registry.
-#' @return [\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
+#' @return ([data.table]). Generated job ids are stored in the column \dQuote{job.id}.
+#' @noMd
 #' @export
 #' @family benchmark
 batchmark = function(learners, tasks, resamplings, measures, models = TRUE, reg = batchtools::getDefaultRegistry()) {
@@ -80,20 +81,20 @@ getAlgoFun = function(lrn, measures, models) {
 #' @title Reduce results of a batch-distributed benchmark.
 #'
 #' @description
-#' This creates a \code{\link{BenchmarkResult}} from a \code{\link[batchtools]{ExperimentRegistry}}.
-#' To setup the benchmark have a look at \code{\link{batchmark}}.
+#' This creates a [BenchmarkResult] from a [batchtools::ExperimentRegistry].
+#' To setup the benchmark have a look at [batchmark].
 #'
-#' @param ids [\code{data.frame} or \code{integer}]\cr
-#'   A \code{\link[base]{data.frame}} (or \code{\link[data.table]{data.table}})
+#' @param ids ([data.frame] or [integer])\cr
+#'   A [base::data.frame] (or [data.table::data.table])
 #'   with a column named \dQuote{job.id}.
 #'   Alternatively, you may also pass a vector of integerish job ids.
-#'   If not set, defaults to all successfully terminated jobs (return value of \code{\link[batchtools]{findDone}}.
+#'   If not set, defaults to all successfully terminated jobs (return value of [batchtools::findDone].
 #' @template arg_keep_pred
 #' @template arg_showinfo
-#' @param reg [\code{\link[batchtools]{ExperimentRegistry}}]\cr
-#'   Registry, created by \code{\link[batchtools]{makeExperimentRegistry}}. If not explicitly passed,
+#' @param reg ([batchtools::ExperimentRegistry])\cr
+#'   Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 #'   uses the last created registry.
-#' @return [\code{\link{BenchmarkResult}}].
+#' @return ([BenchmarkResult]).
 #' @export
 #' @family benchmark
 reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getMlrOption("show.info"), reg = batchtools::getDefaultRegistry()) {
@@ -108,7 +109,7 @@ reduceBatchmarkResults = function(ids = NULL, keep.pred = TRUE, show.info = getM
     warning("Collecting results for a subset of jobs. The resulting BenchmarkResult may be misleading.")
 
   problem = algorithm = NULL # for data.table's NSE
-  tab = batchtools::getJobPars(ids, flatten = FALSE, reg = reg)[, c("job.id", "problem", "algorithm")]
+  tab = batchtools::getJobPars(ids, reg = reg)[, c("job.id", "problem", "algorithm")]
   setkeyv(tab, cols = c("problem", "algorithm"), physical = FALSE)
   result = namedList(tab[, unique(problem)])
 

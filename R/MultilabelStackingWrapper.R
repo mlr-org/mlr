@@ -7,14 +7,14 @@
 #' as additional features (by cross validation).
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_cvfolds
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel
@@ -22,9 +22,10 @@
 #' @example inst/examples/MultilabelWrapper.R
 makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
-  id = paste("multilabel", learner$id, sep = ".")
-  packs = learner$package
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs, learner.subclass = "MultilabelStackingWrapper", model.subclass = "MultilabelStackingModel")
+  id = stri_paste("multilabel.stacking", getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs, learner.subclass = "MultilabelStackingWrapper", model.subclass = "MultilabelStackingModel")
   x$type = "multilabel"
   x$cv.folds = cv.folds
   return(x)

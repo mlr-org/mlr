@@ -4,8 +4,8 @@
 \alias{ResamplePrediction}
 \title{Prediction from resampling.}
 \description{
-Contains predictions from resampling, returned (among other stuff) by function \code{\link{resample}}.
-Can basically be used in the same way as \code{\link{Prediction}}, its super class.
+Contains predictions from resampling, returned (among other stuff) by function \link{resample}.
+Can basically be used in the same way as \link{Prediction}, its super class.
 The main differences are:
 (a) The internal data.frame (member \code{data}) contains an additional column \code{iter}, specifying the iteration
 of the resampling strategy, and and additional columns \code{set}, specifying whether the prediction

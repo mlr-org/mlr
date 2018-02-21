@@ -1,3 +1,3 @@
-#' @param obj [\code{data.frame} | \code{\link{Task}}]\cr
+#' @param obj ([data.frame] | [Task])\cr
 #'   Input data.
-
+#' @md

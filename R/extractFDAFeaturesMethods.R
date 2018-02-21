@@ -5,26 +5,26 @@
 #' Takes a \code{learn} and a \code{reextract} function along with some optional
 #' parameters to those as argument.
 #'
-#' @param learn [\code{function(data, target, col, ...)}]\cr
-#'   Function to learn and extract information on functional column \code{col}.
+#' @param learn (`function(data, target, col, ...)`)\cr
+#'   Function to learn and extract information on functional column `col`.
 #'   Arguments are:
 #'   \itemize{
-#'   \item data [\code{data.frame}]\cr
+#'   \item data [data.frame]\cr
 #'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item target [\code{character}]\cr
+#'   \item target [character]\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
-#'   \item col [\code{character} | \code{numeric}]\cr
+#'   \item col ([character] | [numeric])\cr
 #'     column names or indices, the extraction should be performed on.
 #'     The function has to return a named list of values.
 #'   }
-#' @param reextract [\code{function(data, target, col, ...)}]\cr
+#' @param reextract (`function(data, target, col, ...)`)\cr
 #'   Function used for reextracting data in predict phase.
-#'   Can be equal to \code{learn}.
-#' @param args [\code{list}]\cr
-#'   Named list of arguments to pass to \code{learn} via \code{...}.
+#'   Can be equal to `learn`.
+#' @param args ([list])\cr
+#'   Named list of arguments to pass to `learn` via `...`.
 #' @export
 #' @family fda
 makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
@@ -38,14 +38,14 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
 #'
 #' @description
 #' The function extracts features from functional data based on the fast fourier
-#' transform. For more details refer to \code{\link[stats]{fft}}.
+#' transform. For more details refer to [stats::fft].
 #'
-#' @param trafo.coeff [\code{character}]\cr
+#' @param trafo.coeff ([character])\cr
 #'   Specifies which transformation of the complex frequency domain
 #'   representation should be calculated as a feature representation.
 #'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
 #'   Default is \dQuote{phase}.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAFourier = function(trafo.coeff = "phase") {
@@ -91,21 +91,21 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @description
 #' The function extracts discrete wavelet transform coefficients from the raw
 #' functional data.
-#' See \code{\link[wavelets]{dwt}} for more information.
+#' See [wavelets::dwt] for more information.
 #'
-#' @param filter [\code{character(1)}]\cr
+#' @param filter [`character(1)`]\cr
 #'   Specifies which filter should be used.
-#'   Must be one of \code{d}|\code{la}|\code{bl}|\code{c} followed by an even
+#'   Must be one of `d`|`la`}|`bl`|`c` followed by an even
 #'   number for the level of the filter.
 #'   The level of the filter needs to be smaller or equal then the time-series length.
 #'   For more information and acceptable filters see \code{help(wt.filter)}.
-#'   Defaults to \dQuote{la8}.
-#' @param boundary [\code{character(1)}]\cr
+#'   Defaults to `la8`.
+#' @param boundary [character(1)]\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
@@ -149,13 +149,13 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' The function extracts the functional principal components from a data.frame
 #' containing functional features.
 #'
-#' @param pve [\code{numeric}]\cr
+#' @param pve ([numeric])\cr
 #'   Fraction of variance explained for the functional principal components.
 #'   Default is 0.99.
-#' @param npc [\code{integer}]\cr
-#'   Number of principal components to extract. Overrides \code{pve} param.
-#'   Default is \code{NULL}
-#' @return [\code{data.frame}].
+#' @param npc ([integer])\cr
+#'   Number of principal components to extract. Overrides `pve` param.
+#'   Default is `NULL`
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAFPCA = function(pve = 0.99, npc = NULL) {
@@ -203,15 +203,15 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' (that is, in each iteration smaller segments are considered), the features
 #' cover different resolution levels of the curve.
 #'
-#' @param res.level [\code{integer(1)}]\cr
+#' @param res.level (`integer(1)`)\cr
 #'   The resolution depth, each length is divided by a factor of 2.
-#' @param shift [\code{numeric(1)}]\cr
+#' @param shift (`numeric(1)`)\cr
 #'   The overlapping proportion when slide the window for one step.
-#' @param curve.lens [\code{integer}]\cr
+#' @param curve.lens ([integer])\cr
 #'   Instead of splitting the curves in half from the top, a vector of sub-curves can be
 #'   can be specified. Specifies the curve subsequence's lengths.
 #'   Needs to sum up to the length of the functional.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {

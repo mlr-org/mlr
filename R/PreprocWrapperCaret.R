@@ -1,16 +1,16 @@
 #' @title Fuse learner with preprocessing.
 #'
 #' @description
-#' Fuses a learner with preprocessing methods provided by \code{\link[caret]{preProcess}}.
+#' Fuses a learner with preprocessing methods provided by [caret::preProcess].
 #'  Before training the preprocessing will be performed and the preprocessing model will be stored.
 #'  Before prediction the preprocessing model will transform the test data according to the trained model.
 #'
-#'  After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.medianImpute} is set to \code{TRUE}.
+#'  After being wrapped the learner will support missing values although this will only be the case if `ppc.knnImpute`, `ppc.bagImpute` or `ppc.medianImpute` is set to `TRUE`.
 #'
 #' @template arg_learner
-#' @param ... [any]\cr
-#'   See \code{\link[caret]{preProcess}} for parameters not listed above.
-#'   If you use them you might want to define them in the \code{add.par.set} so that they can be tuned.
+#' @param ... (any)\cr
+#'   See [caret::preProcess] for parameters not listed above.
+#'   If you use them you might want to define them in the `add.par.set` so that they can be tuned.
 #' @template ret_learner
 #' @family wrapper
 #' @export
@@ -29,6 +29,9 @@ makePreprocWrapperCaret = function(learner, ...) {
     makeLogicalLearnerParam("ppc.pca", default = FALSE),
     makeLogicalLearnerParam("ppc.ica", default = FALSE),
     makeLogicalLearnerParam("ppc.spatialSign", default = FALSE),
+    makeLogicalLearnerParam("ppc.corr", default = FALSE),
+    makeLogicalLearnerParam("ppc.zv", default = FALSE),
+    makeLogicalLearnerParam("ppc.nzv", default = FALSE),
     makeNumericLearnerParam("ppc.thresh", lower = 0, default = 0.95),
     # FIXME: pcaComp has data dep. default, number of features
     makeIntegerLearnerParam("ppc.pcaComp", lower = 1L),
@@ -38,7 +41,10 @@ makePreprocWrapperCaret = function(learner, ...) {
     # outcome #FIXME do we need that?
     makeNumericLearnerParam("ppc.fudge", default = 0.2, lower = 0),
     makeIntegerLearnerParam("ppc.numUnique", default = 3L, lower = 1L),
-    makeIntegerLearnerParam("ppc.n.comp", lower = 1L)
+    makeIntegerLearnerParam("ppc.n.comp", lower = 1L),
+    makeNumericLearnerParam("ppc.cutoff", default = 0.9, lower = 0, upper = 1),
+    makeNumericLearnerParam("ppc.freqCut", default = 95 / 5, lower = 1),
+    makeNumericLearnerParam("ppc.uniqueCut", default = 10, lower = 0)
   )
   par.vals = getDefaults(par.set)
   par.vals = insert(par.vals, list(...))
@@ -47,12 +53,14 @@ makePreprocWrapperCaret = function(learner, ...) {
     all.methods = c(
       "BoxCox",               "YeoJohnson",         "expoTrans",          "center",
       "scale",                "range",              "knnImpute",          "bagImpute",
-      "medianImpute",         "pca",                "ica",                "spatialSign"
+      "medianImpute",         "pca",                "ica",                "spatialSign",
+      "zv",                   "nzv",                "corr"
     )
     logindex = c(
       args$ppc.BoxCox,        args$ppc.YeoJohnson,  args$ppc.expoTrans,   args$ppc.center,
       args$ppc.scale,         args$ppc.range,       args$ppc.knnImpute,   args$ppc.bagImpute,
-      args$ppc.medianImpute,  args$ppc.pca,         args$ppc.ica,         args$ppc.spatialSign
+      args$ppc.medianImpute,  args$ppc.pca,         args$ppc.ica,         args$ppc.spatialSign,
+      args$ppc.zv,            args$ppc.nzv,         args$ppc.corr
     )
 
     cargs = list(
@@ -63,7 +71,10 @@ makePreprocWrapperCaret = function(learner, ...) {
       k = args$ppc.k,
       fudge = args$ppc.fudge,
       numUnique = args$ppc.numUnique,
-      n.comp = args$ppc.n.comp
+      n.comp = args$ppc.n.comp,
+      cutoff = args$ppc.cutoff,
+      freqCut = args$ppc.freqCut,
+      uniqueCut = args$ppc.uniqueCut
     )
 
     cns = colnames(data)
@@ -92,4 +103,3 @@ getLearnerProperties.PreprocWrapperCaret = function(learner) {
   }
   props
 }
-

@@ -1,19 +1,19 @@
 #' Train a learning algorithm.
 #'
-#' Given a \code{\link{Task}}, creates a model for the learning machine
+#' Given a [Task], creates a model for the learning machine
 #' which can be used for predictions on new data.
 #'
 #' @template arg_learner
 #' @template arg_task
 #' @template arg_subset
-#' @param weights [\code{numeric}]\cr
+#' @param weights ([numeric])\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
-#'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
+#'   If given, must be of same length as `subset` and in corresponding order.
+#'   By default `NULL` which means no weights are used unless specified in the task ([Task]).
 #'   Weights from the task will be overwritten.
-#' @return [\code{\link{WrappedModel}}].
+#' @return ([WrappedModel]).
 #' @export
-#' @seealso \code{\link{predict.WrappedModel}}
+#' @seealso [predict.WrappedModel]
 #' @examples
 #' training.set = sample(seq_len(nrow(iris)), nrow(iris) / 2)
 #'
@@ -28,16 +28,24 @@
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset, weights = NULL) {
+train = function(learner, task, subset = NULL, weights = NULL) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
-  if (missing(subset) || is.null(subset)) {
+  if (is.logical(subset))
+    subset = which(subset)  # I believe this is a bug, see #2098
+  task = subsetTask(task, subset)
+  if (is.null(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
     if (is.logical(subset))
-      subset = which(subset)
+      subset = which(subset)  # I believe this is a bug, see #2098
     else
       subset = asInteger(subset)
+  }
+  if (learner$fix.factors.prediction) {
+    tdat = getTaskData(task)
+    ttargidx = which(colnames(tdat) %in% getTaskTargetNames(task))
+    task = changeData(task, droplevels(tdat, except = ttargidx))
   }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
@@ -46,11 +54,11 @@ train = function(learner, task, subset, weights = NULL) {
   tn = getTaskTargetNames(task)
 
   # make pars list for train call
-  pars = list(.learner = learner, .task = task, .subset = subset)
+  pars = list(.learner = learner, .task = task, .subset = NULL)
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if (!is.null(weights)) {
-    assertNumeric(weights, len = length(subset), any.missing = FALSE, lower = 0)
+    assertNumeric(weights, len = getTaskSize(task), any.missing = FALSE, lower = 0)
   } else {
     weights = getTaskWeights(task)
   }
@@ -65,7 +73,7 @@ train = function(learner, task, subset, weights = NULL) {
   # no vars? then use no vars model
 
   if (length(vars) == 0L) {
-    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = getTaskDesc(task))
+    learner.model = makeNoFeaturesModel(targets = task$env$data[, tn], task.desc = getTaskDesc(task))
     time.train = 0
   } else {
     opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
