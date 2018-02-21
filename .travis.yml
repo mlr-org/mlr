@@ -70,6 +70,7 @@ matrix:
       dist: trusty
       sudo: false
       env: mlr_tutorial_html
+      pandoc_version: 2.1.1
       addons:
          apt:
             packages:
