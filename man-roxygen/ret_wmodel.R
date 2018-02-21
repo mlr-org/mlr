@@ -1,2 +1,2 @@
-#' @return [\code{\link{WrappedModel}}].
-
+#' @return [WrappedModel].
+#' @md

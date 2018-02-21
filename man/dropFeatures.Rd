@@ -7,14 +7,14 @@
 dropFeatures(task, features)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{features}{[\code{character}]\cr
+\item{features}{(\link{character})\cr
 Features to drop.}
 }
 \value{
-[\code{\link{Task}}].
+[Task].
 }
 \description{
 Drop some features of task.

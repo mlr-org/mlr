@@ -1,2 +1,2 @@
-#' @return [\code{\link{Task}}].
-
+#' @return [Task].
+#' @md
