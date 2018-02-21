@@ -32,7 +32,8 @@ Authors@R: c(
     person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb"),
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
-    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"))
+    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
+    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -116,8 +117,10 @@ Suggests:
     mlbench,
     mldr,
     mlrMBO,
+    mmpf,
     modeltools,
     mRMRe,
+    mxnet,
     nnet,
     nodeHarvest (>= 0.7-3),
     neuralnet,
@@ -164,4 +167,4 @@ LazyData: yes
 ByteCompile: yes
 Version: 2.12
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.0.1

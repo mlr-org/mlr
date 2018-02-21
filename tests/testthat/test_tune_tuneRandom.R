@@ -9,9 +9,9 @@ test_that("tuneRandom", {
   )
 
   ctrl = makeTuneControlRandom(maxit = 5)
-  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, measures = acc)
   expect_equal(getOptPathLength(tr$opt.path), 5)
-  expect_true(!is.na(tr$y))
+  expect_number(tr$y, lower = 0.8, upper = 1)
 })
 
 test_that("tuneRandom works with dependent params", {
@@ -26,7 +26,7 @@ test_that("tuneRandom works with dependent params", {
   ctrl = makeTuneControlRandom(maxit = 5)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_equal(getOptPathLength(tr$opt.path), 5)
-  expect_true(!is.na(tr$y))
+  expect_number(tr$y, lower = 0, upper = 0.2)
 })
 
 test_that("tuneRandom works with trafo", {

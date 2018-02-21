@@ -29,6 +29,12 @@
 #'   See \code{\link{ResampleDesc}}.
 #' @param stratify [\code{logical(1)}]\cr
 #'   See \code{\link{ResampleDesc}}.
+#' @param horizon [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param initial.window [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param skip [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
 #' @template arg_measures
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
@@ -249,7 +255,7 @@ mergeResampleResult = function(learner.id, task, iter.results, measures, rin, mo
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
-  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
+  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train, task.desc = getTaskDesc(task))
 
   # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   aggr = vnapply(seq_along(measures), function(i) {

@@ -6,7 +6,7 @@ options(batchtools.verbose = FALSE)
 test_that("batchmark", {
   skip_if_not_installed("batchtools")
   library(batchtools)
-  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
 
   task.names = c("binary", "multiclass")
   tasks = list(binaryclass.task, multiclass.task)
@@ -19,8 +19,8 @@ test_that("batchmark", {
   expect_data_table(ids, ncol = 1L, nrow = 2, key = "job.id")
   expect_set_equal(ids$job.id, 1:2)
   tab = summarizeExperiments(reg = reg)
-  expect_equal(tab$problem, as.factor("binary"))
-  expect_equal(tab$algorithm, as.factor("classif.lda"))
+  expect_equal(tab$problem, "binary")
+  expect_equal(tab$algorithm, "classif.lda")
   expect_set_equal(findExperiments(reg = reg)$job.id, 1:2)
 
   submitJobs(reg = reg)
@@ -42,7 +42,7 @@ test_that("batchmark", {
   expect_equal(ncol(preds), 9)
   expect_equal(unique(preds$iter), 1:2)
 
-  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
   res = batchmark(learners = learners, task = tasks, resampling = rin, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
@@ -95,7 +95,7 @@ test_that("batchmark", {
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 2L))
   measures = list(mmce, acc)
 
-  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
   res = batchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures, reg = reg)
   submitJobs(reg = reg)
   expect_true(waitForJobs(reg = reg))
@@ -169,7 +169,11 @@ test_that("batchmark", {
   tfd = getBMRFeatSelResults(res, as.df = TRUE)
   expect_is(tfd, "data.frame")
   expect_equal(ncol(tfd), 4)
-  expect_equal(nrow(tfd), 61)
+  feats = c(
+    lapply(tf$binary$classif.lda.featsel, function(x) x$x),
+    lapply(tf$multiclass$classif.lda.featsel, function(x) x$x)
+  )
+  expect_equal(nrow(tfd), sum(lengths(feats)))
   expect_equal(unique(tfd$task.id), factor(task.names))
   expect_equal(unique(tfd$learner.id), factor("classif.lda.featsel"))
   expect_equal(unique(tfd$iter), 1:2)
@@ -212,6 +216,8 @@ test_that("batchmark", {
 })
 
 test_that("keep.preds and models are passed down to resample()", {
+  skip_if_not_installed("batchtools")
+  library(batchtools)
   task.names = "binary"
   tasks = list(binaryclass.task)
   learner.names = "classif.lda"
@@ -257,7 +263,7 @@ test_that("keep.preds and models are passed down to resample()", {
 test_that("batchmark works with resampling instances", {
   skip_if_not_installed("batchtools")
   library(batchtools)
-  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE)
+  reg = makeExperimentRegistry(file.dir = NA, make.default = FALSE, seed = 1)
   task = binaryclass.task
   learner.names = c("classif.lda", "classif.rpart")
   learners = lapply(learner.names, makeLearner)

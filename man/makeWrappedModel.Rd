@@ -19,9 +19,9 @@ Underlying model.}
 \item{task.desc}{[\code{\link{TaskDesc}}]\cr
 Task description object.}
 
-\item{subset}{[\code{integer} | \code{logical}]\cr
+\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
 Selected cases. Either a logical or an index vector.
-By default all observations are used.}
+By default (\code{NULL}) all observations are used.}
 
 \item{features}{[\code{character}]\cr
 Features used for training.}

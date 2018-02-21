@@ -19,24 +19,28 @@
 multilabel task.}
 \usage{
 makeClassifTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, positive = NA_character_,
-  fixup.data = "warn", check.data = TRUE)
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 
 makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
-
-makeCostSensTask(id = deparse(substitute(data)), data, costs,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
-
-makeMultilabelTask(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, fixup.data = "warn",
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
   check.data = TRUE)
 
+makeCostSensTask(id = deparse(substitute(data)), data, costs,
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
+  check.data = TRUE)
+
+makeMultilabelTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, coordinates = NULL,
+  fixup.data = "warn", check.data = TRUE)
+
 makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
+  check.data = TRUE)
 
 makeSurvTask(id = deparse(substitute(data)), data, target, weights = NULL,
-  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+  blocking = NULL, coordinates = NULL, fixup.data = "warn",
+  check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -64,6 +68,11 @@ Observations with the same blocking level \dQuote{belong together}.
 Specifically, they are either put all in the training or the test set
 during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
+
+\item{coordinates}{[\code{data.frame}]\cr
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided [\code{data.frame}] needs to have the same number of rows as data and consist of at least two dimensions.}
 
 \item{positive}{[\code{character(1)}]\cr
 Positive class for binary classification (otherwise ignored and set to NA).
@@ -114,8 +123,8 @@ Object members:
 \item{blocking [\code{factor}]}{See argument. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
-
-Notes:
+}
+\details{
 For multilabel classification we assume that the presence of labels is encoded via logical
 columns in \code{data}. The name of the column specifies the name of the label. \code{target}
 is then a char vector that points to these columns.

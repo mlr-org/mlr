@@ -7,12 +7,30 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
+* Added support for spatial data through additional argument "coordinates" and
+  spatial partitioning methods "SpCV" and "SpRepCV".
+* Classification tasks now store the class distribution in the
+  class.distribution member.
+* mlr now predicts NA for data that contains NA and learners that do not support
+  missing values.
+* Tasks are now subsetted in the "train" function and the factor levels (for
+  classification tasks) based on this subset. This means that the factor level
+  distribution is not necessarily the same as for the entire task, and that the
+  task descriptions of models in resampling reflect the respective subset, while
+  the task description of resample predictions reflect the entire task and not
+  necessarily the task of any individual model.
+* Added support for growing and fixed window cross-validation for forecasting
+  through new resample methods "GrowingWindowCV" and "FixedWindowCV".
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies
+  range of values for the partial dependencies, integrated with "mmpf" package
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
+* plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
+  control interactivity
+* calculateConfusionMatrix: new parameter "set" to specify whether confusion
+  matrix should be computed for "train", "test", or "both" (default)
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -26,6 +44,8 @@
 * extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
+* getOptPath
+* makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -40,11 +60,14 @@
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
 
 ## learners - new
+* classif.adaboostm1
 * classif.fdaknn
 * classif.fdakernel
 * classif.fdanp
 * classif.fdaglm
+* classif.mxff
 * regr.fdaFDboost
+* regr.mxff
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
@@ -56,7 +79,6 @@
 * testgroup.sd
 
 ## filter - new
-
 * auc
 
 # mlr 2.11:
@@ -850,7 +872,6 @@
 
 # mlr 1.1:
 * Initial release to CRAN
-
 
 
 

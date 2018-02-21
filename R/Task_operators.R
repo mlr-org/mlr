@@ -373,6 +373,7 @@ getTaskCosts.Task = function(task, subset = NULL) {
   NULL
 }
 
+#' @export
 getTaskCosts.CostSensTask = function(task, subset = NULL) {
   subset = checkTaskSubset(subset, size = getTaskDesc(task)$size)
   getTaskDesc(task)$costs[subset, , drop = FALSE]
@@ -401,31 +402,48 @@ subsetTask = function(task, subset = NULL, features) {
       task$blocking = task$blocking[subset]
     if (task$task.desc$has.weights)
       task$weights = task$weights[subset]
+    if (task$task.desc$has.coordinates)
+      task$coordinates = task$coordinates[subset, ]
   }
   return(task)
 }
 
 
 # we create a new env, so the reference is not changed
-changeData = function(task, data, costs, weights) {
+#' Change Task Data
+#'
+#' Mainly for internal use. Changes the data associated with a task, without modifying other task properties.
+#'
+#' @template arg_task
+#' @param data [\code{data.frame}]\cr
+#'   The new data to associate with the task. The names and types of the feature columns must match with the old data.
+#' @param costs [\code{data.frame}\cr
+#'   Optional: cost matrix.
+#' @param weights [\code{numeric}]\cr
+#'   Optional: weight vector.
+#' @keywords internal
+#' @export
+changeData = function(task, data, costs, weights, coordinates) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))
     costs = getTaskCosts(task)
   if (missing(weights))
     weights = task$weights
+  if (missing(coordinates))
+    coordinates = task$coordinates
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task["weights"] = list(weights)  # so also 'NULL' gets set
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
-    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive),
-    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking),
-    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking),
-    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking)
+    "classif" = makeClassifTaskDesc(td$id, data, td$target, task$weights, task$blocking, td$positive, task$coordinates),
+    "regr" = makeRegrTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, task$coordinates),
+    "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
   )
 
   return(task)
