@@ -358,11 +358,11 @@ test_that("benchmarking on fda tasks works", {
 
 
   # Test benchmark mixed learners regression
-  lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
+  lrns2 = list(makeLearner("regr.fdaFDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
   expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},
                  "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")
-  expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart", "regr.featureless"))
+  expect_equal(names(bmr2$results$fs.fdf), c("regr.fdaFDboost", "regr.rpart", "regr.featureless"))
   expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
   expect_error(train(makeLearner("classif.fdausc.knn"), iris.task), "numeric inputs")
 })
@@ -370,7 +370,7 @@ test_that("benchmarking on fda tasks works", {
 test_that("makeFunctionalData for matricies contained in data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
   df2 = makeFunctionalData(df, fd.features = list("UVVIS" = "UVVIS", "NIR" = "NIR"),
-                     exclude.cols = c("heatan", "h20"))
+    exclude.cols = c("heatan", "h20"))
   expect_equivalent(df, df2)
 
   df = data.frame(matrix(rnorm(100), ncol = 10L))
@@ -395,4 +395,15 @@ test_that("Self-created data.frame's", {
   df2 = data.frame(matrix(rnorm(100), ncol = 10L))
   df2$fd1 = matrix(as.factor(rep("a", 100L)), ncol = 10L)
   expect_error(makeRegrTask(data = df2, target = "X1"), regexp = "Unsupported feature type")
+})
+
+# Test whether we support stratification: #1669
+test_that("supports stratification", {
+  res = makeResampleDesc(method = "RepCV", predict = "test",
+  stratify = TRUE,
+  folds = 2L, reps = 2L)
+
+  # resampling instances
+  resinst = makeResampleInstance(res, gunpoint.task)
+  expect_class(resinst, "ResampleInstance")
 })

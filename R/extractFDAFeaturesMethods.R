@@ -1,19 +1,18 @@
 #' @title Constructor for FDA feature extraction methods.
 #'
 #' @description
-#' This can be used to implement custom feature FDA extraction.
+#' This can be used to implement custom FDA feature extraction.
+#' Takes a \code{learn} and a \code{reextract} function along with some optional
+#' parameters to those as argument.
 #'
 #' @param learn (`function(data, target, col, ...)`)\cr
 #'   Function to learn and extract information on functional column `col`.
 #'   Arguments are:
 #'   \itemize{
 #'   \item data [data.frame]\cr
-#'     Data.frame with one row per observation of a single functional feature
+#'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item data [data.frame]\cr
-#'     Data.frame containing matricies with one row per observation of a single functional
-#'     or time series and one column per measurement time point. All entries need to be numeric.
 #'   \item target [character]\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
@@ -76,7 +75,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     }
     # Add more legible column names to the output
     df = as.data.frame(fft.pa)
-    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)), sep = ".")
+    colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)))
     df
   }
   makeExtractFDAFeatMethod(
@@ -94,35 +93,52 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' functional data.
 #' See [wavelets::dwt] for more information.
 #'
-#' @param filter ([character])\cr
+#' @param filter [`character(1)`]\cr
 #'   Specifies which filter should be used.
-#'   Default is \dQuote{la8}.
-#' @param boundary ([character])\cr
+#'   Must be one of `d`|`la`}|`bl`|`c` followed by an even
+#'   number for the level of the filter.
+#'   The level of the filter needs to be smaller or equal then the time-series length.
+#'   For more information and acceptable filters see \code{help(wt.filter)}.
+#'   Defaults to `la8`.
+#' @param boundary [character(1)]\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
+#' @param n.levels [\code{integer(1)}]\cr
+#'   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
-  assertCharacter(filter)
+  assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
   assertChoice(boundary, c("periodic", "reflection"))
+  # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
+  # to handle it right now.
+  # @param n.levels [\code{integer(1)}]\cr
+  #   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
+  # FIXME: Add n.levels parameter. Has no default. When n.leves are not provided, we do not understand yet if there is a difference
 
   lrn = function(data, target = NULL, col, filter, boundary) {
     requirePackages("wavelets", default.method = "load")
+    assertDataFrame(data)
+    assertChoice(col, choices = colnames(data))
 
-    assertClass(data, "data.frame")
-    assertNumeric(as.matrix(data[, col]))
+    assertDataFrame(data)
+    assertChoice(col, choices = colnames(data))
+    # Convert to list in order to catch params that do not have defaults (n.levels)
+    args = learnerArgsToControl(list, filter = filter, boundary = boundary)
 
-    df = convertRowsToList(data[, col, drop = FALSE])
-    wtdata = t(dapply(df, fun = function(x) {
-      wt = wavelets::dwt(as.numeric(x), filter = filter, boundary = boundary)
+    # Convert to list of rows and extract wavelets from each time-series.
+    rowlst = convertRowsToList(data[, col, drop = FALSE])
+    wtdata = t(dapply(rowlst, fun = function(x) {
+      args$X = as.numeric(x)
+      wt = do.call(wavelets::dwt, args)
+      # Extract wavelet coefficients W and level scaling coeffictients V
       unlist(c(wt@W, wt@V[[wt@level]]))
     }))
-
     df = as.data.frame(wtdata)
-    colnames(df) = stri_paste("wav", filter, seq_len(ncol(wtdata)), sep = ".")
+    colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
   }
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
@@ -172,95 +188,4 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
   }
 
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc))
-}
-
-#' @title Multiresolution feature extraction.
-#'
-#' @description
-#' The function extracts currently the mean of multiple segments of each curve and stacks them
-#' as features. The segments length are set in a hierachy way so the features
-#' cover different resolution levels.
-#'
-#' @param res.level (`integer(1)`)\cr
-#'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift (`numeric(1)`)\cr
-#'   The overlapping proportion when slide the window for one step.
-#' @param curve.lens ([integer])\cr
-#'   Curve subsequence lengths. Needs to sum up to the length of the functional.
-#' @return ([data.frame]).
-#' @export
-#' @family fda_featextractor
-extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
-
-  # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.
-  getUniFDAMultiResFeatures = function(data, res.level, shift) {
-    feat.list = apply(data, 1, getCurveFeatures, res.level = res.level, shift = shift)
-    data.frame(t(feat.list))
-  }
-
-  getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, curve.lens) {
-    # Assert that curve.lens sums up to ncol(data)
-    stopifnot(sum(curve.lens) == ncol(data))
-
-    clsum = cumsum(curve.lens)
-    feat.list = apply(data, 1, function(x) {
-      # Extract the data from the different subcurves specified by curve.lens
-      subfeats = Map(function(seqstart, seqend) {
-        getCurveFeatures(x[seqstart:seqend], res.level = res.level, shift = shift)
-      }, clsum - curve.lens + 1, cumsum(curve.lens))
-      # And return as vector
-      unlist(subfeats)
-    })
-    data.frame(t(feat.list))
-  }
-
-
-  #  Get Features from a single (sub-)curve
-  getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
-    m = length(x)
-    start = 1L
-    feats = numeric(0L)
-    ssize = m  # initialize segment size to be the length of the curve
-    for (rl in 1:res.level) {  # ssize is divided by 2 at the end of the loop
-      soffset = ceiling(shift * ssize)  # overlap distance
-      # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
-      sstart = 1L
-      send = sstart + ssize - 1L  # end position
-      while (send <= m) {  # until the segment reach the end
-        # messagef("start, end: %i, %i", sstart, send)
-        f = getSegmentFeatures(x[sstart:send])
-        # print(f)
-        feats = c(feats, f)  # append the feats from the last resolution hierachy
-        sstart = sstart + soffset
-        send = send + soffset
-      }
-      ssize = ceiling(ssize / 2)  # decrease the segment size
-      if (ssize < 1L)  # if the the divide by 2 is too much
-        break
-    }
-    return(feats)
-  }
-
-  getSegmentFeatures = function(x) {
-    mean(x)
-  }
-
-  lrn = function(data, target, col, res.level, shift, curve.lens) {
-
-    data = data[, col, drop = FALSE]
-    if (is.data.frame(data))
-      data = as.matrix(data)
-    assertMatrix(data, mode = "numeric")
-
-    # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
-    # subcurves from which the features are extracted
-    if (is.null(curve.lens)) {
-      getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
-    } else {
-      getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
-    }
-  }
-
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
-    args = list(res.level = res.level, shift = shift, curve.lens = curve.lens))
 }

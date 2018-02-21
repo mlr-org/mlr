@@ -14,10 +14,7 @@
 #' @template ret_learner
 makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
 
-  # FIXME:
-  # This is stupid, we can not handle multiple tasks for a single wrapper this way.
-  # (Impute cant do this neither if using cols = list("X1" = ...)).
-  # One solution would be to be able to specify "all" features (regexp would be overkill?).
+  assertList(feat.methods, names = "named")
 
   learner = checkLearner(learner)
   args = list(feat.methods = feat.methods)
