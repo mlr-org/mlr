@@ -5,8 +5,6 @@ cache: packages
 
 env:
   global:
-    - Tutorial_HTML=TRUE
-    - Tutorial_PDF=TRUE
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
@@ -20,7 +18,6 @@ addons:
       - libgmp-dev
       - libgsl0-dev
       - imagemagick # for pkgdown favicon
-
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
@@ -72,15 +69,15 @@ jobs:
       pandoc_version: 2.1.1
       env: Tutorial_HTML=TRUE
       install:
-      #  - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-      #  - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
+        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
         - R -q -e 'devtools::install_github("ropenscilabs/tic"); tic::install()'
       after_install: R -q -e 'tic::after_install()'
       before_script: R -q -e 'tic::before_script()'
       script:
       # we need rmarkdown and pander for building the tutorial sites
         - R -q -e 'install.packages(c("rmarkdown", "pander"));tic::prepare_all_stages(); tic::before_install()'
-      #  - R CMD build .
+        - R CMD build .
       before_deploy: R -q -e 'tic::before_deploy(); devtools::install_github("jimhester/lintr");devtools::install_github("pat-s/pkgdown")'
       deploy:
          provider: script
@@ -96,9 +93,9 @@ jobs:
       install:
         - R -q -e 'install.packages(c("bookdown", "pander"))'
       script:
-      #  - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-      #  - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-      #  - R CMD build .
+        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
+        - R CMD build .
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
