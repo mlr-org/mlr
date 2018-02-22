@@ -133,31 +133,30 @@ For functional data, [learners](learner.html) are constructed using  `makeLearne
 
 Applying learners to a [task](task.html) works in two ways
 
-#### Either use a [learner](learner.html) suitable for functional data
+**Either use a [learner](learner.html) suitable for functional data:**
 
-  
 ```{r}
-    ## The following learners can be used for tsk1 (a regression task).
-    listLearners(tsk1, properties = "functionals", warn.missing.packages = FALSE)
+## The following learners can be used for tsk1 (a regression task).
+listLearners(tsk1, properties = "functionals", warn.missing.packages = FALSE)
 ```
 
 ```{r}
-    ## Create a FDboost learner for regression
-    fdalrn = makeLearner("regr.FDboost")
+## Create a FDboost learner for regression
+fdalrn = makeLearner("regr.FDboost")
 ```
 
 ```{r}
-    ## Or alternatively, use knn for classification:
-    knn.lrn = makeLearner("classif.fdausc.knn")
+## Or alternatively, use knn for classification:
+knn.lrn = makeLearner("classif.fdausc.knn")
 ```
 
-#### Or, use a standard [learner](learner.html)
+**or use a standard [learner](learner.html):**
 
 In this case the temporal structure is disregarded, and the functional data treated as simple numeric features.
 
 ```{r}
-    ## Decision Tree learner
-    rpartlrn = makeLearner("classif.rpart")
+## Decision Tree learner
+rpartlrn = makeLearner("classif.rpart")
 ```
 
 
