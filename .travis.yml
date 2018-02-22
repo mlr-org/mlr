@@ -69,6 +69,7 @@ jobs:
       pandoc_version: 2.1.1
       install:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'if (length(find.package("remotes", quiet = TRUE)) == 0) install.packages("remotes")' # needed for tic
         - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
         - R -q -e 'devtools::install_github("ropenscilabs/tic"); tic::install()'
       after_install: R -q -e 'tic::after_install()'
