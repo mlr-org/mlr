@@ -10,7 +10,7 @@ oversample(task, rate, cl = NULL)
 undersample(task, rate, cl = NULL)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{rate}{(\code{numeric(1)})\cr
@@ -26,7 +26,7 @@ Which class should be over- or undersampled. If \code{NULL}, \code{oversample}
 will select the smaller and \code{undersample} the larger class.}
 }
 \value{
-[Task].
+\link{Task}.
 }
 \description{
 Oversampling: For a given class (usually the smaller one) all existing observations are

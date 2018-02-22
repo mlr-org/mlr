@@ -29,7 +29,7 @@ Whether to use the \link{Measure} name instead of the id in the plot.
 Default is \code{TRUE}.}
 }
 \value{
-(`character(1)`) ggvis plot object.
+(\code{character(1)}) ggvis plot object.
 }
 \description{
 Plots threshold vs. performance(s) data that has been generated with \link{generateThreshVsPerfData}.

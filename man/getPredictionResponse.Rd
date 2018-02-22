@@ -13,7 +13,7 @@ getPredictionSE(pred)
 getPredictionTruth(pred)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 }
 \value{

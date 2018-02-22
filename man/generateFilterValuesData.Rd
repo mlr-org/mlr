@@ -9,7 +9,7 @@ generateFilterValuesData(task, method = "randomForestSRC.rfsrc",
   nselect = getTaskNFeats(task), ..., more.args = list())
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{method}{(\link{character})\cr

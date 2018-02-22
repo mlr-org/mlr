@@ -10,7 +10,7 @@ setAggregation(measure, aggr)
 \item{measure}{(\link{Measure})\cr
 Performance measure.}
 
-\item{aggr}{([Aggregation])\cr
+\item{aggr}{(\link{Aggregation})\cr
 Aggregation function.}
 }
 \value{

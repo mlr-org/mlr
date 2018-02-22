@@ -9,12 +9,12 @@
 makeCostSensRegrWrapper(learner)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The regression learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Creates a wrapper, which can be used like any other learner object.

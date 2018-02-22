@@ -10,7 +10,7 @@ calculateROCMeasures(pred)
 \method{print}{ROCMeasures}(x, abbreviations = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
 \item{x}{(\code{ROCMeasures})\cr
