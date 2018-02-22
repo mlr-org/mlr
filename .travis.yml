@@ -5,6 +5,8 @@ cache: packages
 
 env:
   global:
+    - Tutorial_HTML=TRUE
+    - Tutorial_PDF=TRUE
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0  # no error if suggested packs are not avail
     - _R_CHECK_TESTS_NLINES_=999
@@ -30,47 +32,45 @@ r_github_packages:
   - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
-matrix:
+jobs:
   include:
-    #- stage: warmup-1
-    #  install:
-    #    - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-    #    - Rscript -e 'devtools::install_deps()'
-    #    - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-    #  script: true
-    #- stage: warmup-2
-    #  install:
-    #    - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-    #  script: true
-    #- stage: check
-    #  before_script:
-    #    - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-    #    - R --no-save <<< 'library("devtools"); document()'
-    #  script:
-    #    - R CMD build .
-    #    - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests
-    #    - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-    #  after_script:
-    #    - ../../travis-tool.sh dump_logs
-    #  after_success:
-    #    - git checkout master
-    #    - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-    #    - R --no-save <<< 'library("devtools"); document()'
-    #    - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-    #    - git config user.name $GN
-    #    - git config user.email $GM
-    #    - git config credential.helper "store --file=.git/credentials"
-    #    - echo "https://$GT:@github.com" >> .git/credentials
-    #    - git config push.default matching
-    #    - git add --force man/*
-    #    - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
-    #    - git push
-    #    - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-    - os: linux
-      dist: trusty
-      sudo: false
-      env: mlr_tutorial_html
+    - stage: warmup-1
+      install:
+        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'devtools::install_deps()'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
+      script: true
+    - stage: warmup-2
+      install:
+        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
+      script: true
+    - stage: check
+      before_script:
+        - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+        - R --no-save <<< 'library("devtools"); document()'
+      script:
+        - R CMD build .
+        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests
+        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+      after_script:
+        - ../../travis-tool.sh dump_logs
+      after_success:
+        - git checkout master
+        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+        - R --no-save <<< 'library("devtools"); document()'
+        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+        - git config user.name $GN
+        - git config user.email $GM
+        - git config credential.helper "store --file=.git/credentials"
+        - echo "https://$GT:@github.com" >> .git/credentials
+        - git config push.default matching
+        - git add --force man/*
+        - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
+        - git push
+        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+    - stage: Tutorial HTML
       pandoc_version: 2.1.1
+      env: Tutorial_HTML=TRUE
       addons:
          apt:
             packages:
@@ -96,11 +96,9 @@ matrix:
            condition: $TRAVIS_PULL_REQUEST = false
       after_success: R -q -e 'tic::after_deploy()'
       after_script: R -q -e 'tic::after_script()'
-    - os: linux
-      dist: trusty
-      sudo: false
+    - stage: Tutorial PDF
       pandoc_version: 2.1.1
-      env: mlr_tutorial_pdf
+      env: Tutorial_PDF=TRUE
       addons:
          apt:
             packages:
