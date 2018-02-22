@@ -67,7 +67,6 @@ jobs:
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
     - stage: Tutorial HTML
       pandoc_version: 2.1.1
-      env: Tutorial_HTML=TRUE
       install:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
@@ -89,7 +88,6 @@ jobs:
       after_script: R -q -e 'tic::after_script()'
     - stage: Tutorial PDF
       pandoc_version: 2.1.1
-      env: Tutorial_PDF=TRUE
       install:
         - R -q -e 'install.packages(c("bookdown", "pander"))'
       script:
