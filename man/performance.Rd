@@ -7,12 +7,12 @@
 performance(pred, measures, task = NULL, model = NULL, feats = NULL)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
-\item{measures}{([Measure] | list of [Measure])\cr
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
 \item{task}{(\link{Task})\cr
 Learning task, might be requested by performance measure, usually not needed except for clustering or survival.}

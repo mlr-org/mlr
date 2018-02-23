@@ -8,9 +8,9 @@ makeBaggingWrapper(learner, bw.iters = 10L, bw.replace = TRUE, bw.size,
   bw.feats = 1)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{bw.iters}{(\code{integer(1)})\cr
 Iterations = number of fitted models in bagging.
@@ -30,7 +30,7 @@ Default is 1.
 At least one feature will always be selected.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a learner with the bagging method

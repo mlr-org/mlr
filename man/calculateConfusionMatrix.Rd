@@ -11,7 +11,7 @@ calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE,
 \method{print}{ConfusionMatrix}(x, both = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
 \item{relative}{(\code{logical(1)})\cr

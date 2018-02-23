@@ -8,7 +8,7 @@ capLargeValues(obj, target = character(0L), cols = NULL, threshold = Inf,
   impute = threshold, what = "abs")
 }
 \arguments{
-\item{obj}{([data.frame] | [Task])\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
 \item{target}{(\link{character})\cr

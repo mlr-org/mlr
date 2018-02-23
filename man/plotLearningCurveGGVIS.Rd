@@ -24,7 +24,7 @@ Whether to use the \link{Measure} name instead of the id in the plot.
 Default is \code{TRUE}.}
 }
 \value{
-(`character(1)`) ggvis plot object.
+(\code{character(1)}) ggvis plot object.
 }
 \description{
 Visualizes data size (percentage used for model) vs. performance measure(s).

@@ -7,9 +7,9 @@
 makeDownsampleWrapper(learner, dw.perc = 1, dw.stratify = FALSE)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{dw.perc}{(\code{numeric(1)})\cr
 See \link{downsample}.
@@ -20,7 +20,7 @@ See \link{downsample}.
 Default is \code{FALSE}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Creates a learner object, which can be
