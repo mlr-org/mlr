@@ -8,7 +8,7 @@ mergeSmallFactorLevels(task, cols = NULL, min.perc = 0.01,
   new.level = ".merged")
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{cols}{(\link{character})

@@ -7,7 +7,7 @@
 getFailureModelMsg(model)
 }
 \arguments{
-\item{model}{([WrappedModel])\cr
+\item{model}{(\link{WrappedModel})\cr
 The model.}
 }
 \value{

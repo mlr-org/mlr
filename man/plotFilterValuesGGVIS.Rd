@@ -16,7 +16,7 @@ Colors for factor and numeric features.
 Default is \code{FALSE}.}
 }
 \value{
-(`character(1)`) ggvis plot object.
+(\code{character(1)}) ggvis plot object.
 }
 \description{
 Plot filter values using ggvis.

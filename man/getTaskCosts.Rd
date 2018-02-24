@@ -10,9 +10,9 @@ getTaskCosts(task, subset = NULL)
 \item{task}{(\link{Task})\cr
 The task.}
 
-\item{subset}{([integer] | [logical] | `NULL`)\cr
-Selected cases. Either `character(1)` logical or an index vector.
-By default `NULL` if all observations are used.}
+\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
+Selected cases. Either a logical or an index vector.
+By default \code{NULL} if all observations are used.}
 }
 \value{
 (\code{matrix} | \code{NULL}).

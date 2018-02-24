@@ -13,7 +13,7 @@ getMeasureProperties(measure)
 hasMeasureProperties(measure, props)
 }
 \arguments{
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 

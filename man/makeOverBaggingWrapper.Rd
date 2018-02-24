@@ -8,9 +8,9 @@ makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate = 1,
   obw.maxcl = "boot", obw.cl = NULL)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{obw.iters}{(\code{integer(1)})\cr
 Number of fitted models in bagging.
@@ -33,7 +33,7 @@ Which class should be over- or undersampled. If \code{NULL}, \code{makeOverBaggi
 will take the smaller class.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a classification learner for binary classification with an over-bagging method
