@@ -47,7 +47,7 @@ jobs:
         - R --no-save <<< 'library("devtools"); document()'
       script:
         - R CMD build .
-        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests
+        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_script:
         - ../../travis-tool.sh dump_logs
@@ -94,7 +94,7 @@ jobs:
       script:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-        - R CMD build .
+        - R -q -e "devtools::document(roclets=c('rd', 'collate', 'namespace'))"
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
