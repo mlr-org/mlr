@@ -17,6 +17,7 @@ addons:
     packages:
       - libgmp-dev
       - libgsl0-dev
+      - ghostscript # for mlr-tutorial pdf
       - imagemagick # for pkgdown favicon
 
 warnings_are_errors: true
@@ -94,7 +95,7 @@ jobs:
       script:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-        - R -q -e "devtools::document(roclets=c('rd', 'collate', 'namespace'))"
+        - R CMD build .
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
