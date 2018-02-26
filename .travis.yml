@@ -96,7 +96,7 @@ jobs:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
         - R CMD build .
-        - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
+        - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd", envir = new.env(), clean = TRUE)' # build pdf version
       after_success:
         - git checkout master
         - git config user.name $GIT_NAME
