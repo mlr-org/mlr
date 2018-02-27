@@ -12,10 +12,10 @@ link-citations: yes
 ```{r, echo = FALSE, message=FALSE}
 library("ROCR")
 library("glmnet")
-library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
+library("mlr")
 ```
 
 # Machine Learning in R: mlr Tutorial
