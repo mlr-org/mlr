@@ -7,8 +7,8 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
-* Added support for spatial data through task attribute "is.spatial" and spatial
-  partitioning methods "SpCV" and "SpRepCV".
+* Added support for spatial data through additional argument "coordinates" and
+  spatial partitioning methods "SpCV" and "SpRepCV".
 * Classification tasks now store the class distribution in the
   class.distribution member.
 * mlr now predicts NA for data that contains NA and learners that do not support
@@ -19,10 +19,13 @@
   task descriptions of models in resampling reflect the respective subset, while
   the task description of resample predictions reflect the entire task and not
   necessarily the task of any individual model.
+* Added support for growing and fixed window cross-validation for forecasting
+  through new resample methods "GrowingWindowCV" and "FixedWindowCV".
+* Added new spam.task classification task.
 
 ## functions - general
 * generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies
+  range of values for the partial dependencies, integrated with "mmpf" package
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
 * plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
@@ -47,6 +50,7 @@
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
+* measure "measureMultiLabelF1" was renamed to "measureMultilabelF1" for consistency
 
 ## measures - new
 * measureBER, measureRMSLE, measureF1
@@ -63,7 +67,9 @@
 * classif.fdakernel
 * classif.fdanp
 * classif.fdaglm
+* classif.mxff
 * regr.fdaFDboost
+* regr.mxff
 
 ## learners - removed
 * {classif,regr}.bdk: broke our API, stability issues
@@ -75,7 +81,6 @@
 * testgroup.sd
 
 ## filter - new
-
 * auc
 
 # mlr 2.11:
@@ -869,7 +874,6 @@
 
 # mlr 1.1:
 * Initial release to CRAN
-
 
 
 

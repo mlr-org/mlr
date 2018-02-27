@@ -11,36 +11,38 @@
 \alias{makeTaskDesc}
 \title{Exported for internal use.}
 \usage{
-makeClassifTaskDesc(id, data, target, weights, blocking, positive, spatial)
+makeClassifTaskDesc(id, data, target, weights, blocking, positive, coordinates)
 
-makeClusterTaskDesc(id, data, weights, blocking, spatial)
+makeClusterTaskDesc(id, data, weights, blocking, coordinates)
 
-makeCostSensTaskDesc(id, data, target, blocking, costs, spatial)
+makeCostSensTaskDesc(id, data, target, blocking, costs, coordinates)
 
-makeMultilabelTaskDesc(id, data, target, weights, blocking, spatial)
+makeMultilabelTaskDesc(id, data, target, weights, blocking, coordinates)
 
-makeRegrTaskDesc(id, data, target, weights, blocking, spatial)
+makeRegrTaskDesc(id, data, target, weights, blocking, coordinates)
 
-makeSurvTaskDesc(id, data, target, weights, blocking, spatial)
+makeSurvTaskDesc(id, data, target, weights, blocking, coordinates)
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(\code{character(1)})\cr
 task id}
 
-\item{data}{[\code{data.frame}]\cr
+\item{data}{(\link{data.frame})\cr
 data}
 
-\item{target}{[\code{character}]\cr
+\item{target}{(\link{character})\cr
 target columns}
 
-\item{weights}{[\code{numeric}]\cr
+\item{weights}{(\link{numeric})\cr
 weights}
 
-\item{blocking}{[\code{numeric}\cr
+\item{blocking}{([numeric`\cr
 task data blocking}
 
-\item{spatial}{[\code{logical(1)}]\cr
-whether data is spatial}
+\item{coordinates}{(\link{data.frame})\cr
+Coordinates of a spatial data set that will be used for spatial partitioning of the data in a spatial cross-validation resampling setting.
+Coordinates have to be numeric values.
+Provided (\link{data.frame}) needs to have the same number of rows as data and consist of at least two dimensions.}
 }
 \description{
 Exported for internal use.

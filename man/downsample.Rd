@@ -7,27 +7,30 @@
 downsample(obj, perc = 1, stratify = FALSE)
 }
 \arguments{
-\item{obj}{[\code{\link{Task}} | \code{\link{ResampleInstance}}]\cr
+\item{obj}{(\link{Task} | \link{ResampleInstance})\cr
 Input data or a \code{ResampleInstance}.}
 
-\item{perc}{[\code{numeric(1)}]\cr
-Percentage from [0, 1].
+\item{perc}{(\code{numeric(1)})\cr
+Percentage from (0, 1).
 Default is 1.}
 
-\item{stratify}{[\code{logical(1)}]\cr
+\item{stratify}{(\code{logical(1)})\cr
 Only for classification:
 Should the downsampled data be stratified according to the target classes?
 Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
+([data.frame\code{| [Task] | [ResampleInstance]). Same type as}obj`.
+
+[data.frame` | [Task]: R:data.frame%60%20%7C%20[Task
+[ResampleInstance]: R:ResampleInstance
 }
 \description{
 Decrease the observations in a \code{task} or a \code{ResampleInstance}
 to a given percentage of observations.
 }
 \seealso{
-\code{\link{makeResampleInstance}}
+\link{makeResampleInstance}
 
 Other downsample: \code{\link{makeDownsampleWrapper}}
 }
