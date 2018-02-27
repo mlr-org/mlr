@@ -8,11 +8,11 @@ vignette: >
 ---
 
 ```{r, echo = FALSE, message=FALSE}
-library("mlr")
 library("BBmisc")
 library("ParamHelpers")
 library("ggplot2")
 library("lattice")
+library("mlr")
 
 ## show grouped code output instead of single lines
 knitr::opts_chunk$set(collapse = FALSE)
