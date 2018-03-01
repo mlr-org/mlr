@@ -31,6 +31,7 @@ makeRLearner.classif.mxff = function() {
       makeIntegerLearnerParam(id = "num.filter2", lower = 1L,
         requires = quote(conv.layer2 == TRUE)),
       makeIntegerLearnerParam(id = "num.filter3", lower = 1L,
+        requires = quote(conv.layer3 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.data.shape", tunable = FALSE,
         requires = quote(conv.layer1 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.kernel1", lower = 1L, len = 2,
