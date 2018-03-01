@@ -26,6 +26,12 @@ makeRLearner.classif.mxff = function() {
         requires = quote(layers > 1 && conv.layer1 == TRUE)),
       makeLogicalLearnerParam(id = "conv.layer3", default = FALSE,
         requires = quote(layers > 2 && conv.layer2 == TRUE)),
+      makeIntegerLearnerParam(id = "num.filter1", lower = 1L,
+        requires = quote(conv.layer1 == TRUE)),
+      makeIntegerLearnerParam(id = "num.filter2", lower = 1L,
+        requires = quote(conv.layer2 == TRUE)),
+      makeIntegerLearnerParam(id = "num.filter3", lower = 1L,
+        requires = quote(conv.layer3 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.data.shape", tunable = FALSE,
         requires = quote(conv.layer1 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.kernel1", lower = 1L, len = 2,
@@ -160,7 +166,9 @@ makeRLearner.classif.mxff = function() {
     `batch.normalization2` and `batch.normalization3` are defined accordingly.
     If `conv.layer1` is `FALSE`, the first layer is a `FullyConnected` layer and `num.layer1` gives
     the number of neurons. If `conv.layer1` is `TRUE`, then `num.layer1` gives the number of
-    filters. In this case, `act1` is applied as an `Activation` layer afterwards (as is the case
+    filters. Alternatively, the number of filters can be given in `num.filter1` if `conv.layer1`
+    is `TRUE` and any value of `num.layer1` is overwritten.
+    In this case, `act1` is applied as an `Activation` layer afterwards (as is the case
     with a `FullyConnected` layer).
     This is the same for `conv.layer2` and `conv.layer3`. A `Convolution`
     layer cannot follow a `FullyConnected` layer. To stick with the example of the first layer,
@@ -200,6 +208,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   layers = 1L, num.layer1 = 1L, num.layer2 = 1L, num.layer3 = 1L,
   act1 = "tanh", act2 = "tanh", act3 = "tanh", act.out = "softmax",
   conv.data.shape = NULL, conv.layer1 = FALSE, conv.layer2 = FALSE, conv.layer3 = FALSE,
+  num.filter1 = 1L, num.filter2 = 1L, num.filter3 = 1L,
   conv.kernel1 = NULL, conv.kernel2 = NULL, conv.kernel3 = NULL,
   conv.stride1 = NULL, conv.stride2 = NULL, conv.stride3 = NULL,
   conv.dilate1 = NULL, conv.dilate2 = NULL, conv.dilate3 = NULL,
@@ -275,6 +284,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     sym = mxnet::mx.symbol.Variable("data")
     act = c(act1, act2, act3)[1:layers]
     nums = c(num.layer1, num.layer2, num.layer3)[1:layers]
+    filters = list(num.filter1, num.filter2, num.filter3)[1:layers]
     convs = c(conv.layer1, conv.layer2, conv.layer3)[1:layers]
     conv.kernels = list(conv.kernel1, conv.kernel2, conv.kernel3)[1:layers]
     conv.strides = list(conv.stride1, conv.stride2, conv.stride3)[1:layers]
@@ -284,6 +294,15 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     pool.strides = list(pool.stride1, pool.stride2, pool.stride3)[1:layers]
     pool.pads = list(pool.pad1, pool.pad2, pool.pad3)[1:layers]
     pool.types = list(pool.type1, pool.type2, pool.type3)[1:layers]
+
+    # set nums to filters if necessary
+    for (i in 1:layers) {
+      if (convs[i] & !is.null(filters[[i]])) {
+        nums[i] = filters[[i]]
+      }
+    }
+
+
     if (batch.normalization) {
       batch.normalization = c(TRUE, TRUE, TRUE)
     } else {
