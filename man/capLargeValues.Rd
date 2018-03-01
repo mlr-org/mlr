@@ -8,29 +8,29 @@ capLargeValues(obj, target = character(0L), cols = NULL, threshold = Inf,
   impute = threshold, what = "abs")
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{target}{[\code{character}]\cr
+\item{target}{(\link{character})\cr
 Name of the column(s) specifying the response.
 Target columns will not be capped.
 Default is \code{character(0)}.}
 
-\item{cols}{[\code{character}]\cr
+\item{cols}{(\link{character})\cr
 Which columns to convert.
 Default is all numeric columns.}
 
-\item{threshold}{[\code{numeric(1)}]\cr
+\item{threshold}{(\code{numeric(1)})\cr
 Threshold for capping.
 Every entry whose absolute value is equal or larger is converted.
 Default is \code{Inf}.}
 
-\item{impute}{[\code{numeric(1)}]\cr
+\item{impute}{(\code{numeric(1)})\cr
 Replacement value for large entries.
 Large negative entries are converted to \code{-impute}.
 Default is \code{threshold}.}
 
-\item{what}{[\code{character(1)}]\cr
+\item{what}{(\code{character(1)})\cr
 What kind of entries are affected?
 \dQuote{abs} means \code{abs(x) > threshold},
 \dQuote{pos} means \code{abs(x) > threshold && x > 0},
@@ -38,7 +38,7 @@ What kind of entries are affected?
 Default is \dQuote{abs}.}
 }
 \value{
-[\code{data.frame}]
+(\link{data.frame})
 }
 \description{
 Convert numeric entries which large/infinite (absolute) values

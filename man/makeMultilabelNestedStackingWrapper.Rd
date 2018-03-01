@@ -7,20 +7,20 @@
 makeMultilabelNestedStackingWrapper(learner, order = NULL, cv.folds = 2)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{order}{[\code{character}]\cr
+\item{order}{(\link{character})\cr
 Specifies the chain order using the names of the target labels.
 E.g. for \code{m} target labels, this must be a character vector of length \code{m} that contains a permutation of the target label names.
-Default is \code{NULL}, which uses a random ordering of the target label names.}
+Default is \code{NULL} which uses a random ordering of the target label names.}
 
-\item{cv.folds}{[\code{integer(1)}]\cr
-The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.}
+\item{cv.folds}{(`integer(1)`)\cr
+The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is `2`.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Every learner which is implemented in mlr and which supports binary
@@ -31,7 +31,7 @@ of all previous labels in the chain.
 During the prediction phase, predicted labels are obtained by the classifiers, which have been learned on
 all training data.
 
-Models can easily be accessed via \code{\link{getLearnerModel}}.
+Models can easily be accessed via \link{getLearnerModel}.
 }
 \examples{
 d = getTaskData(yeast.task)

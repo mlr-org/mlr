@@ -8,10 +8,10 @@ createDummyFeatures(obj, target = character(0L), method = "1-of-n",
   cols = NULL)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{target}{[\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
+\item{target}{(\code{character(1)} | \code{character(2)} | \code{character(n.classes)})\cr
 Name(s) of the target variable(s).
 Only used when \code{obj} is a data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
@@ -20,22 +20,22 @@ For multilabel classification these are the names of logical columns that indica
 a class label is present and the number of target variables corresponds to the number of
 classes.}
 
-\item{method}{[\code{character(1)}]\cr
+\item{method}{(\code{character(1)})\cr
 Available are:
 \describe{
-  \item{"1-of-n":}{For n factor levels there will be n dummy variables.}
-  \item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
+\item{"1-of-n":}{For n factor levels there will be n dummy variables.}
+\item{"reference":}{There will be n-1 dummy variables leaving out the first factor level of each variable.}
 }
 Default is \dQuote{1-of-n}.}
 
-\item{cols}{[\code{character}]\cr
+\item{cols}{(\link{character})\cr
 Columns to create dummy features for. Default is to use all columns.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
+\link{data.frame} | \link{Task}. Same type as \code{obj}.
 }
 \description{
-Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
+Replace all factor features with their dummy variables. Internally \link{model.matrix} is used.
 Non factor features will be left untouched and passed to the result.
 }
 \seealso{

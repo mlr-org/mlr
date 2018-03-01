@@ -7,19 +7,19 @@
 setMeasurePars(measure, ..., par.vals = list())
 }
 \arguments{
-\item{measure}{[\code{\link{Measure}}]\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Named (hyper)parameters with new settings. Alternatively these can be passed
 using the \code{par.vals} argument.}
 
-\item{par.vals}{[\code{list}]\cr
+\item{par.vals}{(\link{list})\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
 }
 \value{
-[\code{\link{Measure}}].
+\link{Measure}.
 }
 \description{
 Sets hyperparameters of measures.

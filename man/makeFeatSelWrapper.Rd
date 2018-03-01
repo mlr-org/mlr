@@ -8,19 +8,19 @@ makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
   control, show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{resampling}{[\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+\item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
 Resampling strategy for feature selection. If you pass a description,
 it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
-If you want to change that behaviour, look at \code{\link{FeatSelControl}}.}
+If you want to change that behaviour, look at [FeatSelControl].}
 
-\item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
+\item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
 \item{bit.names}{[character]\cr
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
@@ -30,28 +30,28 @@ Per default these are the feature names of the task.}
 Function which transforms an integer-0-1 vector into a character vector of selected features.
 Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.}
 
-\item{control}{[see \code{\link{FeatSelControl}}]
+\item{control}{[see [FeatSelControl])
 Control object for search method.
 Also selects the optimization algorithm for feature selection.}
 
-\item{show.info}{[\code{logical(1)}]\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
+Default is set via \link{configureMlr}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a search strategy to select variables.
 Creates a learner object, which can be used like any other learner object,
-but which internally uses \code{\link{selectFeatures}}.
+but which internally uses [selectFeatures].
 If the train function is called on it,
 the search strategy and resampling are invoked to select an optimal set of variables.
 Finally, a model is fitted on the complete training data with these variables and returned.
-See \code{\link{selectFeatures}} for more details.
+See [selectFeatures] for more details.
 
 After training, the optimal features (and other related information) can be retrieved with
-\code{\link{getFeatSelResult}}.
+[getFeatSelResult].
 }
 \examples{
 # nested resampling with feature selection (with a pretty stupid algorithm for selection)

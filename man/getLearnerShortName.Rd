@@ -7,17 +7,17 @@
 getLearnerShortName(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{character(1)}].
+(\code{character(1)}).
 }
 \description{
 For an ordinary learner simply its short name is returned.
-  For wrapped learners, the wrapper id is successively attached to the short
-  name of the base learner. E.g: \dQuote{rf.bagged.imputed}
+For wrapped learners, the wrapper id is successively attached to the short
+name of the base learner. E.g: \dQuote{rf.bagged.imputed}
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},

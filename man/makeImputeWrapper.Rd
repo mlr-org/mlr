@@ -10,57 +10,57 @@ makeImputeWrapper(learner, classes = list(), cols = list(),
   recode.factor.levels = TRUE)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{classes}{[\code{named list}]\cr
+\item{classes}{(named \link{list})\cr
 Named list containing imputation techniques for classes of columns.
 E.g. \code{list(numeric = imputeMedian())}.}
 
-\item{cols}{[\code{named list}]\cr
+\item{cols}{(named \link{list})\cr
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overrules imputation set via
 \code{classes}.}
 
-\item{dummy.classes}{[\code{character}]\cr
+\item{dummy.classes}{(\link{character})\cr
 Classes of columns to create dummy columns for.
 Default is \code{character(0)}.}
 
-\item{dummy.cols}{[\code{character}]\cr
+\item{dummy.cols}{(\link{character})\cr
 Column names to create dummy columns (containing binary missing indicator) for.
 Default is \code{character(0)}.}
 
-\item{dummy.type}{[\code{character(1)}]\cr
+\item{dummy.type}{(\code{character(1)})\cr
 How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 or as \dQuote{factor}.
 Default is \dQuote{factor}.}
 
-\item{force.dummies}{[\code{logical(1)}]\cr
+\item{force.dummies}{(\code{logical(1)})\cr
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
 be stochastic if you turn this off.
 Default is \code{FALSE}.}
 
-\item{impute.new.levels}{[\code{logical(1)}]\cr
+\item{impute.new.levels}{(\code{logical(1)})\cr
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
 Default is \code{TRUE}.}
 
-\item{recode.factor.levels}{[\code{logical(1)}]\cr
+\item{recode.factor.levels}{(\code{logical(1)})\cr
 Recode factor levels after reimputation, so they match the respective element of
 \code{lvls} (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.
 Default is \code{TRUE}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with an imputation method. Creates a learner object, which can be
 used like any other learner object.
-Internally uses \code{\link{impute}} before training the learner and \code{\link{reimpute}}
+Internally uses \link{impute} before training the learner and \link{reimpute}
 before predicting.
 }
 \seealso{

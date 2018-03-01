@@ -2,14 +2,14 @@
 % Please edit documentation in R/Task_operators.R
 \name{getTaskDescription}
 \alias{getTaskDescription}
-\title{Deprecated, use \code{\link{getTaskDesc}} instead.}
+\title{Deprecated, use \link{getTaskDesc} instead.}
 \usage{
 getTaskDescription(x)
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{(\link{Task} | \link{TaskDesc})\cr
 Task or its description object.}
 }
 \description{
-Deprecated, use \code{\link{getTaskDesc}} instead.
+Deprecated, use \link{getTaskDesc} instead.
 }

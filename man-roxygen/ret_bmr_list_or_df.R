@@ -1,2 +1,2 @@
-#' @return [\code{list} | \code{data.frame}]. See above.
-
+#' @return ([list] | [data.frame]). See above.
+#' @md

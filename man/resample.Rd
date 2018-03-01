@@ -9,6 +9,8 @@
 \alias{bootstrapOOB}
 \alias{bootstrapB632}
 \alias{bootstrapB632plus}
+\alias{growingcv}
+\alias{fixedcv}
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
@@ -42,70 +44,87 @@ bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
   models = FALSE, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
+
+growingcv(learner, task, horizon = 1, initial.window = 0.5, skip = 0,
+  measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
+
+fixedcv(learner, task, horizon = 1L, initial.window = 0.5, skip = 0,
+  measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{resampling}{[\code{\link{ResampleDesc}} or \code{\link{ResampleInstance}}]\cr
+\item{resampling}{(\link{ResampleDesc} or \link{ResampleInstance})\cr
 Resampling strategy.
 If a description is passed, it is instantiated automatically.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
-\item{weights}{[\code{numeric}]\cr
+\item{weights}{(\link{numeric})\cr
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as observations in task and in corresponding order.
 Overwrites weights specified in the \code{task}.
 By default \code{NULL} which means no weights are used unless specified in the task.}
 
-\item{models}{[\code{logical(1)}]\cr
+\item{models}{(\code{logical(1)})\cr
 Should all fitted models be returned?
 Default is \code{FALSE}.}
 
-\item{extract}{[\code{function}]\cr
+\item{extract}{(\code{function})\cr
 Function used to extract information from a fitted model during resampling.
-Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
+Is applied to every \link{WrappedModel} resulting from calls to \link{train}
 during resampling.
 Default is to extract nothing.}
 
-\item{keep.pred}{[\code{logical(1)}]\cr
+\item{keep.pred}{(\code{logical(1)})\cr
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
 In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Further hyperparameters passed to \code{learner}.}
 
-\item{show.info}{[\code{logical(1)}]\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
+Default is set via \link{configureMlr}.}
 
-\item{iters}{[\code{integer(1)}]\cr
-See \code{\link{ResampleDesc}}.}
+\item{iters}{(\code{integer(1)})\cr
+See \link{ResampleDesc}.}
 
-\item{stratify}{[\code{logical(1)}]\cr
-See \code{\link{ResampleDesc}}.}
+\item{stratify}{(\code{logical(1)})\cr
+See \link{ResampleDesc}.}
 
-\item{folds}{[\code{integer(1)}]\cr
-See \code{\link{ResampleDesc}}.}
+\item{folds}{(\code{integer(1)})\cr
+See \link{ResampleDesc}.}
 
-\item{reps}{[\code{integer(1)}]\cr
-See \code{\link{ResampleDesc}}.}
+\item{reps}{(\code{integer(1)})\cr
+See \link{ResampleDesc}.}
 
-\item{split}{[\code{numeric(1)}]\cr
-See \code{\link{ResampleDesc}}.}
+\item{split}{(\code{numeric(1)})\cr
+See \link{ResampleDesc}.}
+
+\item{horizon}{(\code{numeric(1)})\cr
+See \link{ResampleDesc}.}
+
+\item{initial.window}{(\code{numeric(1)})\cr
+See \link{ResampleDesc}.}
+
+\item{skip}{(\code{integer(1)})\cr
+See \link{ResampleDesc}.}
 }
 \value{
-[\code{\link{ResampleResult}}].
+(\link{ResampleResult}).
 }
 \description{
 The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}

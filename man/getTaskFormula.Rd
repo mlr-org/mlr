@@ -8,23 +8,23 @@ getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE,
   env = parent.frame())
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{(\link{Task} | \link{TaskDesc})\cr
 Task or its description object.}
 
-\item{target}{[\code{character(1)}]\cr
+\item{target}{(\code{character(1)})\cr
 Left hand side of the formula.
 Default is defined by task \code{x}.}
 
-\item{explicit.features}{[\code{logical(1)}]\cr
+\item{explicit.features}{(\code{logical(1)})\cr
 Should the features (right hand side of the formula) be explicitly listed?
 Default is \code{FALSE}, i.e., they will be represented as \code{"."}.}
 
-\item{env}{[\code{environment}]\cr
+\item{env}{(\link{environment})\cr
 Environment of the formula.
 Default is \code{parent.frame()}.}
 }
 \value{
-[\code{formula}].
+(\link{formula}).
 }
 \description{
 This is usually simply \dQuote{<target> ~ .}.

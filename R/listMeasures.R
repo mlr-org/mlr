@@ -5,14 +5,14 @@
 #' whether they supports classification or regression.
 #'
 #' @template arg_task_or_type
-#' @param properties [\code{character}]\cr
+#' @param properties ([character])\cr
 #'   Set of required properties to filter for.
-#'   See \code{\link{Measure}} for some standardized properties.
-#'   Default is \code{character(0)}.
-#' @param create [\code{logical(1)}]\cr
+#'   See [Measure] for some standardized properties.
+#'   Default is `character(0)`.
+#' @param create (`logical(1)`)\cr
 #'   Instantiate objects (or return strings)?
-#'   Default is \code{FALSE}.
-#' @return [\code{character} | \code{list} of \code{\link{Measure}}]. Class names of matching
+#'   Default is `FALSE`.
+#' @return ([character` | `list` of [Measure]). Class names of matching
 #'   measures or instantiated objects.
 #' @export
 listMeasures = function(obj, properties = character(0L), create = FALSE) {

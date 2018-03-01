@@ -7,26 +7,26 @@
 smote(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{rate}{[\code{numeric(1)}]\cr
+\item{rate}{(\code{numeric(1)})\cr
 Factor to upsample the smaller class.
 Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.}
 
-\item{nn}{[\code{integer(1)}]\cr
+\item{nn}{(\code{integer(1)})\cr
 Number of nearest neighbors to consider.
 Default is 5.}
 
-\item{standardize}{[\code{integer(1)}]\cr
+\item{standardize}{(\code{integer(1)})\cr
 Standardize input variables before calculating the nearest neighbors
 for data sets with numeric input variables only. For mixed variables
 (numeric and factor) the gower distance is used and variables are
 standardized anyway.
 Default is \code{TRUE}.}
 
-\item{alt.logic}{[\code{integer(1)}]\cr
+\item{alt.logic}{(\code{integer(1)})\cr
 Use an alternative logic for selection of minority class observations.
 Instead of sampling a minority class element AND one of its nearest
 neighbors, each minority class element is taken multiple times (depending
@@ -35,7 +35,7 @@ is sampled.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{\link{Task}}].
+\link{Task}.
 }
 \description{
 In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
@@ -43,7 +43,7 @@ Both points are now interpolated / convex-combined, resulting in a new virtual d
 for the minority class.
 
 The method handles factor features, too. The gower distance is used for nearest neighbor
-calculation, see \code{\link[cluster]{daisy}}.
+calculation, see \link[cluster:daisy]{cluster::daisy}.
 For interpolation, the new factor level for x3
 is sampled from the two given levels of x1 and x2 per feature.
 }

@@ -8,56 +8,56 @@ batchmark(learners, tasks, resamplings, measures, models = TRUE,
   reg = batchtools::getDefaultRegistry())
 }
 \arguments{
-\item{learners}{[(list of) \code{\link{Learner}} | \code{character}]\cr
+\item{learners}{(list of \link{Learner} | \link{character})\cr
 Learning algorithms which should be compared, can also be a single learner.
-If you pass strings the learners will be created via \code{\link{makeLearner}}.}
+If you pass strings the learners will be created via \link{makeLearner}.}
 
-\item{tasks}{[(list of) \code{\link{Task}}]\cr
+\item{tasks}{{list of \link{Task}}\cr
 Tasks that learners should be run on.}
 
-\item{resamplings}{[(list of) \code{\link{ResampleDesc}}]\cr
+\item{resamplings}{[(list of) [ResampleDesc])\cr
 Resampling strategy for each tasks.
 If only one is provided, it will be replicated to match the number of tasks.
 If missing, a 10-fold cross validation is used.}
 
-\item{measures}{[(list of) \code{\link{Measure}}]\cr
+\item{measures}{(list of \link{Measure})\cr
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
 
-\item{models}{[\code{logical(1)}]\cr
-Should all fitted models be stored in the \code{\link{ResampleResult}}?
+\item{models}{(\code{logical(1)})\cr
+Should all fitted models be stored in the \link{ResampleResult}?
 Default is \code{TRUE}.}
 
-\item{reg}{[\code{\link[batchtools]{Registry}}]\cr
-Registry, created by \code{\link[batchtools]{makeExperimentRegistry}}. If not explicitly passed,
+\item{reg}{([batchtools::Registry])\cr
+Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,
 uses the last created registry.}
 }
 \value{
-[\code{data.table}]. Generated job ids are stored in the column \dQuote{job.id}.
+([data.table]). Generated job ids are stored in the column \dQuote{job.id}.
 }
 \description{
-This function is a very parallel version of \code{\link{benchmark}} using \pkg{batchtools}.
+This function is a very parallel version of [benchmark] using \pkg{batchtools}.
 Experiments are created in the provided registry for each combination of
 learners, tasks and resamplings. The experiments are then stored in a registry and the
-runs can be started via \code{\link[batchtools]{submitJobs}}. A job is one train/test split
-of the outer resampling. In case of nested resampling (e.g. with \code{\link{makeTuneWrapper}}),
+runs can be started via [batchtools::submitJobs]. A job is one train/test split
+of the outer resampling. In case of nested resampling (e.g. with [makeTuneWrapper]),
 each job is a full run of inner resampling, which can be parallelized in a second step
 with \pkg{ParallelMap}. For details on the usage and support backends have
 a look at the batchtools tutorial page:
-\url{https://github.com/mllg/batchtools}.
+<https://github.com/mllg/batchtools>.
 
-The general workflow with \code{batchmark} looks like this:
+The general workflow with `batchmark` looks like this:
 \enumerate{
-\item{Create an ExperimentRegistry using \code{\link[batchtools]{makeExperimentRegistry}}.}
-\item{Call \code{batchmark(...)} which defines jobs for all learners and tasks in an \code{\link[base]{expand.grid}} fashion.}
-\item{Submit jobs using \code{\link[batchtools]{submitJobs}}.}
-\item{Babysit the computation, wait for all jobs to finish using \code{\link[batchtools]{waitForJobs}}.}
-\item{Call \code{reduceBatchmarkResult()} to reduce results into a \code{\link{BenchmarkResult}}.}
+\item{Create an ExperimentRegistry using [batchtools::makeExperimentRegistry].}
+\item{Call `batchmark(...)` which defines jobs for all learners and tasks in an [base::expand.grid] fashion.}
+\item{Submit jobs using [batchtools::submitJobs].}
+\item{Babysit the computation, wait for all jobs to finish using [batchtools::waitForJobs].}
+\item{Call `reduceBatchmarkResult()` to reduce results into a [BenchmarkResult].}
 }
 
 If you want to use this with \pkg{OpenML} datasets you can generate tasks from a vector
 of dataset IDs easily with
-\code{tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))}.
+`tasks = lapply(data.ids, function(x) convertOMLDataSetToMlr(getOMLDataSet(x)))`.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},

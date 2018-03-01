@@ -10,57 +10,57 @@ impute(obj, target = character(0L), classes = list(), cols = list(),
   recode.factor.levels = TRUE)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{target}{[\code{character}]\cr
+\item{target}{(\link{character})\cr
 Name of the column(s) specifying the response.
 Default is \code{character(0)}.}
 
-\item{classes}{[\code{named list}]\cr
+\item{classes}{(named \link{list})\cr
 Named list containing imputation techniques for classes of columns.
 E.g. \code{list(numeric = imputeMedian())}.}
 
-\item{cols}{[\code{named list}]\cr
+\item{cols}{(named \link{list})\cr
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overrules imputation set via
 \code{classes}.}
 
-\item{dummy.classes}{[\code{character}]\cr
+\item{dummy.classes}{(\link{character})\cr
 Classes of columns to create dummy columns for.
 Default is \code{character(0)}.}
 
-\item{dummy.cols}{[\code{character}]\cr
+\item{dummy.cols}{(\link{character})\cr
 Column names to create dummy columns (containing binary missing indicator) for.
 Default is \code{character(0)}.}
 
-\item{dummy.type}{[\code{character(1)}]\cr
+\item{dummy.type}{(\code{character(1)})\cr
 How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 or as \dQuote{factor}.
 Default is \dQuote{factor}.}
 
-\item{force.dummies}{[\code{logical(1)}]\cr
+\item{force.dummies}{(\code{logical(1)})\cr
 Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
 be stochastic if you turn this off.
 Default is \code{FALSE}.}
 
-\item{impute.new.levels}{[\code{logical(1)}]\cr
+\item{impute.new.levels}{(\code{logical(1)})\cr
 If new, unencountered factor level occur during reimputation,
 should these be handled as NAs and then be imputed the same way?
 Default is \code{TRUE}.}
 
-\item{recode.factor.levels}{[\code{logical(1)}]\cr
+\item{recode.factor.levels}{(\code{logical(1)})\cr
 Recode factor levels after reimputation, so they match the respective element of
 \code{lvls} (in the description object) and therefore match the levels of the
 feature factor in the training data after imputation?.
 Default is \code{TRUE}.}
 }
 \value{
-[\code{list}]
-  \item{data [\code{data.frame}]}{Imputed data.}
-  \item{desc [\code{ImputationDesc}]}{Description object.}
+(\link{list})
+\item{data (\link{data.frame})}{Imputed data.}
+\item{desc (\code{ImputationDesc})}{Description object.}
 }
 \description{
 Allows imputation of missing feature values through various techniques.
@@ -72,26 +72,26 @@ same imputation on the test set as on the training set.
 The function \code{impute} performs the imputation on a data set and returns,
 alongside with the imputed data set, an \dQuote{ImputationDesc} object
 which can contain \dQuote{learned} coefficients and helpful data.
-It can then be passed together with a new data set to \code{\link{reimpute}}.
+It can then be passed together with a new data set to \link{reimpute}.
 
 The imputation techniques can be specified for certain features or for feature classes,
 see function arguments.
 
 You can either provide an arbitrary object, use a built-in imputation method listed
-under \code{\link{imputations}} or create one yourself using \code{\link{makeImputeMethod}}.
+under \link{imputations} or create one yourself using \link{makeImputeMethod}.
 }
 \details{
 The description object contains these slots
 \describe{
-  \item{target [\code{character}]}{See argument.}
-  \item{features [\code{character}]}{Feature names (column names of \code{data}).},
-  \item{classes [\code{character}]}{Feature classes (storage type of \code{data}).}
-  \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
-    including newly created ones during imputation.}
-  \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
-  \item{dummies [\code{named list}]}{Mapping of column names to imputation functions.}
-  \item{impute.new.levels [\code{logical(1)}]}{See argument.}
-  \item{recode.factor.levels [\code{logical(1)}]}{See argument.}
+\item{target (\link{character})}{See argument.}
+\item{features (\link{character})}{Feature names (column names of \code{data}).},
+\item{classes (\link{character})}{Feature classes (storage type of \code{data}).}
+\item{lvls (named \link{list})}{Mapping of column names of factor features to their levels,
+including newly created ones during imputation.}
+\item{impute (named \link{list})}{Mapping of column names to imputation functions.}
+\item{dummies (named \link{list})}{Mapping of column names to imputation functions.}
+\item{impute.new.levels (\code{logical(1)})}{See argument.}
+\item{recode.factor.levels (\code{logical(1)})}{See argument.}
 }
 }
 \examples{

@@ -7,13 +7,13 @@
 getClassWeightParam(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{numeric \link{LearnerParam}}]:
-  A numeric parameter object, containing the class weight parameter of the given learner.
+\link{numeric} \link{LearnerParam}:
+A numeric parameter object, containing the class weight parameter of the given learner.
 }
 \description{
 Gets the class weight parameter of a learner.

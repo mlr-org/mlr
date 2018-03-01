@@ -1,7 +1,7 @@
 #' @export
 #' @inheritParams makeTuneControlMBO
-#' @param n.objectives [\code{integer(1)}]\cr
-#'   Number of objectives, i.e. number of \code{\link{Measure}}s to optimize.
+#' @param n.objectives (`integer(1)`)\cr
+#'   Number of objectives, i.e. number of [Measure]s to optimize.
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlMBO = function(n.objectives = mbo.control$n.objectives,
   same.resampling.instance = TRUE, impute.val = NULL,

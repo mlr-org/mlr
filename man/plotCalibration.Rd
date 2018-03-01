@@ -8,23 +8,23 @@ plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE,
   facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{obj}{[\code{CalibrationData}]\cr
-Result of \code{\link{generateCalibrationData}}.}
+\item{obj}{(\link{CalibrationData})\cr
+Result of \link{generateCalibrationData}.}
 
-\item{smooth}{[\code{logical(1)}]\cr
+\item{smooth}{(\code{logical(1)})\cr
 Whether to use a loess smoother.
 Default is \code{FALSE}.}
 
-\item{reference}{[\code{logical(1)}]\cr
+\item{reference}{(\code{logical(1)})\cr
 Whether to plot a reference line showing perfect calibration.
 Default is \code{TRUE}.}
 
-\item{rag}{[\code{logical(1)}]\cr
+\item{rag}{(\code{logical(1)})\cr
 Whether to include a rag plot which shows a rug plot on the top which pertains to
 positive cases and on the bottom which pertains to negative cases.
 Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
 In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
@@ -32,7 +32,7 @@ In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 ggplot2 plot object.
 }
 \description{
-Plots calibration data from \code{\link{generateCalibrationData}}.
+Plots calibration data from \link{generateCalibrationData}.
 }
 \examples{
 \dontrun{

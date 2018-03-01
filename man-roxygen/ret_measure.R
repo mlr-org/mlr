@@ -1,2 +1,2 @@
-#' @return [\code{\link{Measure}}].
-
+#' @return [Measure].
+#' @md

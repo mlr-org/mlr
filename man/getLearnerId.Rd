@@ -7,12 +7,12 @@
 getLearnerId(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{character(1)}].
+(\code{character(1)}).
 }
 \description{
 Get the ID of the learner.

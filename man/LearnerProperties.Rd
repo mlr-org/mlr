@@ -13,16 +13,16 @@ getLearnerProperties(learner)
 hasLearnerProperties(learner, props)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{props}{[\code{character}]\cr
+\item{props}{(\link{character})\cr
 Vector of properties to query.}
 }
 \value{
 \code{getLearnerProperties} returns a character vector with learner properties.
- \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
+\code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
 }
 \description{
 Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
@@ -30,18 +30,18 @@ character vector.
 
 The learner properties are defined as follows:
 \describe{
-  \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
-  \item{functionals}{Can an arbitrary number of functional features be handled?}
-  \item{single.functional}{Can exactly one functional feature be handled?}
-  \item{missings}{Can missing values in features be handled?}
-  \item{weights}{Can observations be weighted during fitting?}
-  \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
-  \item{class.weights}{Only for classif: Can class weights be handled?}
-  \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
-  \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
-  \item{se}{Only for regr: Can standard errors be predicted?}
-  \item{oobpreds}{Only for classif, regr and surv: Can out of bag predictions be extracted from the trained model?}
-  \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
+\item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
+\item{functionals}{Can an arbitrary number of functional features be handled?}
+\item{single.functional}{Can exactly one functional feature be handled?}
+\item{missings}{Can missing values in features be handled?}
+\item{weights}{Can observations be weighted during fitting?}
+\item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
+\item{class.weights}{Only for classif: Can class weights be handled?}
+\item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
+\item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
+\item{se}{Only for regr: Can standard errors be predicted?}
+\item{oobpreds}{Only for classif, regr and surv: Can out of bag predictions be extracted from the trained model?}
+\item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 }
 }
 \seealso{

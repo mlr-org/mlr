@@ -1,3 +1,4 @@
-#' @param models [\code{logical(1)}]\cr
-#'   Should all fitted models be stored in the \code{\link{ResampleResult}}?
-#'   Default is \code{TRUE}.
+#' @param models (`logical(1)`)\cr
+#'   Should all fitted models be stored in the [ResampleResult]?
+#'   Default is `TRUE`.
+#' @md

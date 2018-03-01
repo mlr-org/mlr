@@ -10,11 +10,11 @@ makeTuneControlDesign(same.resampling.instance = TRUE, impute.val = NULL,
   log.fun = "default")
 }
 \arguments{
-\item{same.resampling.instance}{[\code{logical(1)}]\cr
+\item{same.resampling.instance}{(\code{logical(1)})\cr
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
 
-\item{impute.val}{[\code{numeric}]\cr
+\item{impute.val}{(\link{numeric})\cr
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -26,36 +26,36 @@ you aggregate by mean value, or \code{Inf} instead.
 For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
 in the same order as your measures.}
 
-\item{design}{[\code{data.frame}]\cr
+\item{design}{(\link{data.frame})\cr
 \code{data.frame} containing the different parameter settings to be evaluated.
 The columns have to be named according to the \code{ParamSet} which will be used in \code{tune()}.
-Proper designs can be created with \code{\link[ParamHelpers]{generateDesign}} for instance.}
+Proper designs can be created with \link[ParamHelpers:generateDesign]{ParamHelpers::generateDesign} for instance.}
 
-\item{tune.threshold}{[\code{logical(1)}]\cr
+\item{tune.threshold}{(\code{logical(1)})\cr
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
-via \code{\link{tuneThreshold}}?
+via \link{tuneThreshold}?
 Only works for classification if the predict type is \dQuote{prob}.
 Default is \code{FALSE}.}
 
-\item{tune.threshold.args}{[\code{list}]\cr
-Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+\item{tune.threshold.args}{(\link{list})\cr
+Further arguments for threshold tuning that are passed down to \link{tuneThreshold}.
 Default is none.}
 
-\item{log.fun}{[\code{function} | \code{character(1)}]\cr
+\item{log.fun}{(\code{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to \dQuote{memory}, the memory usage for each evaluation will also be displayed, with a small increase
+If set to \dQuote{memory} the memory usage for each evaluation will also be displayed, with \code{character(1)} small increase
 in run time.
-Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+Otherwise \code{character(1)} function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-\code{stage}, and \code{prev.stage} is expected.
+\code{stage} and \code{prev.stage} is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from \code{\link{gc}}).
+(the latter two both taken from \link{gc}).
 See the implementation for details.}
 }
 \value{
-[\code{\link{TuneControlDesign}}]
+(\link{TuneControlDesign})
 }
 \description{
 Completely pre-specifiy a \code{data.frame} of design points to be evaluated

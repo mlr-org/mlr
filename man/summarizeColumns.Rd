@@ -7,25 +7,25 @@
 summarizeColumns(obj)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 }
 \value{
-[\code{data.frame}]. With columns:
-  \item{name}{Name of column.}
-  \item{type}{Data type of column.}
-  \item{na}{Number of NAs in column.}
-  \item{disp}{Measure of dispersion, for numerics and integers \code{\link{sd}} is used, for
-    categorical columns the qualitative variation.}
-  \item{mean}{Mean value of column, NA for categorical columns.}
-  \item{median}{Median value of column, NA for categorical columns.}
-  \item{mad}{MAD of column, NA for categorical columns.}
-  \item{min}{Minimal value of column, for categorical columns the size of the smallest category.}
-  \item{max}{Maximal value of column, for categorical columns the size of the largest category.}
-  \item{nlevs}{For categorical columns, the number of factor levels, NA else.}
+(\link{data.frame}). With columns:
+\item{name}{Name of column.}
+\item{type}{Data type of column.}
+\item{na}{Number of NAs in column.}
+\item{disp}{Measure of dispersion, for numerics and integers \link{sd} is used, for
+categorical columns the qualitative variation.}
+\item{mean}{Mean value of column, NA for categorical columns.}
+\item{median}{Median value of column, NA for categorical columns.}
+\item{mad}{MAD of column, NA for categorical columns.}
+\item{min}{Minimal value of column, for categorical columns the size of the smallest category.}
+\item{max}{Maximal value of column, for categorical columns the size of the largest category.}
+\item{nlevs}{For categorical columns, the number of factor levels, NA else.}
 }
 \description{
-Summarizes a data.frame, somewhat differently than the normal \code{\link{summary}} function of R.
+Summarizes a data.frame, somewhat differently than the normal \link{summary} function of R.
 The function is mainly useful as a basic EDA tool on data.frames before they are converted to tasks,
 but can be used on tasks as well.
 

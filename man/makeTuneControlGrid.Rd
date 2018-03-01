@@ -10,11 +10,11 @@ makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
   log.fun = "default", final.dw.perc = NULL, budget = NULL)
 }
 \arguments{
-\item{same.resampling.instance}{[\code{logical(1)}]\cr
+\item{same.resampling.instance}{(\code{logical(1)})\cr
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
 
-\item{impute.val}{[\code{numeric}]\cr
+\item{impute.val}{(\link{numeric})\cr
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -26,52 +26,52 @@ you aggregate by mean value, or \code{Inf} instead.
 For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
 in the same order as your measures.}
 
-\item{resolution}{[\code{integer}]\cr
+\item{resolution}{(\link{integer})\cr
 Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
-See \code{\link[ParamHelpers]{generateGridDesign}}.
+See \link[ParamHelpers:generateGridDesign]{ParamHelpers::generateGridDesign}.
 Default is 10.}
 
-\item{tune.threshold}{[\code{logical(1)}]\cr
+\item{tune.threshold}{(\code{logical(1)})\cr
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
-via \code{\link{tuneThreshold}}?
+via \link{tuneThreshold}?
 Only works for classification if the predict type is \dQuote{prob}.
 Default is \code{FALSE}.}
 
-\item{tune.threshold.args}{[\code{list}]\cr
-Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+\item{tune.threshold.args}{(\link{list})\cr
+Further arguments for threshold tuning that are passed down to \link{tuneThreshold}.
 Default is none.}
 
-\item{log.fun}{[\code{function} | \code{character(1)}]\cr
+\item{log.fun}{(\code{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to \dQuote{memory}, the memory usage for each evaluation will also be displayed, with a small increase
+If set to \dQuote{memory} the memory usage for each evaluation will also be displayed, with \code{character(1)} small increase
 in run time.
-Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+Otherwise \code{character(1)} function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-\code{stage}, and \code{prev.stage} is expected.
+\code{stage} and \code{prev.stage} is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from \code{\link{gc}}).
+(the latter two both taken from \link{gc}).
 See the implementation for details.}
 
-\item{final.dw.perc}{[\code{boolean}]\cr
-If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
+\item{final.dw.perc}{(\code{boolean})\cr
+If a Learner wrapped by a \link{makeDownsampleWrapper} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 Default is \code{NULL} which will not change anything.}
 
-\item{budget}{[\code{integer(1)}]\cr
+\item{budget}{(\code{integer(1)})\cr
 Maximum budget for tuning. This value restricts the number of function
 evaluations. If set, must equal the size of the grid.}
 }
 \value{
-[\code{\link{TuneControlGrid}}]
+(\link{TuneControlGrid})
 }
 \description{
 A basic grid search can handle all kinds of parameter types.
 You can either use their correct param type and \code{resolution},
-or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
-in the \code{par.set} passed to \code{\link{tuneParams}}.
+or discretize them yourself by always using \link[ParamHelpers:makeDiscreteParam]{ParamHelpers::makeDiscreteParam}
+in the \code{par.set} passed to \link{tuneParams}.
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},

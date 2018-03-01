@@ -10,14 +10,14 @@ makeMeasure(id, minimize, properties = character(0L), fun,
   name = id, note = "")
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(`character(1)`)\cr
 Name of measure.}
 
-\item{minimize}{[\code{logical(1)}]\cr
+\item{minimize}{(`logical(1)`)\cr
 Should the measure be minimized?
-Default is \code{TRUE}.}
+Default is `TRUE`.}
 
-\item{properties}{[\code{character}]\cr
+\item{properties}{([character])\cr
 Set of measure properties. Some standard property names include:
 \describe{
   \item{classif}{Is the measure applicable for classification?}
@@ -34,54 +34,54 @@ Set of measure properties. Some standard property names include:
   \item{req.feats}{Are feature values required in calculation? Usually not the case.}
   \item{req.prob}{Are predicted probabilities required in calculation? Usually not the case, example would be AUC.}
 }
-Default is \code{character(0)}.}
+Default is `character(0)`.}
 
-\item{fun}{[\code{function(task, model, pred, feats, extra.args)}]\cr
+\item{fun}{(`function(task, model, pred, feats, extra.args)`)\cr
 Calculates the performance value. Usually you will only need the prediction
-object \code{pred}.
+object `pred`.
 \describe{
-  \item{\code{task} [\code{\link{Task}}]}{
+  \item{`task` ([Task])}{
     The task.}
-  \item{\code{model} [\code{\link{WrappedModel}}]}{
+  \item{`model` ([WrappedModel])}{
     The fitted model.}
-  \item{\code{pred} [\code{\link{Prediction}}]}{
+  \item{`pred` ([Prediction])}{
     Prediction object.}
-  \item{\code{feats} [\code{data.frame}]}{
+  \item{`feats` ([data.frame])}{
     The features.}
-  \item{\code{extra.args} [\code{list}]}{
+  \item{`extra.args` ([list])}{
     See below.}
 }}
 
-\item{extra.args}{[\code{list}]\cr
-List of extra arguments which will always be passed to \code{fun}.
-Can be changed after construction via \code{\link{setMeasurePars}}<`3`>.
+\item{extra.args}{([list])\cr
+List of extra arguments which will always be passed to `fun`.
+Can be changed after construction via [setMeasurePars]<`3`>.
 Default is empty list.}
 
-\item{aggr}{[\code{\link{Aggregation}}]\cr
+\item{aggr}{([Aggregation])\cr
 Aggregation funtion, which is used to aggregate the values measured
 on test / training sets of the measure to a single value.
-Default is \code{\link{test.mean}}.}
+Default is [test.mean].}
 
-\item{best}{[\code{numeric(1)}]\cr
+\item{best}{(`numeric(1)`)\cr
 Best obtainable value for measure.
-Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
+Default is -`Inf` or `Inf`, depending on `minimize`.}
 
-\item{worst}{[\code{numeric(1)}]\cr
+\item{worst}{(`numeric(1)`)\cr
 Worst obtainable value for measure.
-Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
+Default is `Inf` or -`Inf`, depending on `minimize`.}
 
-\item{name}{[\code{character}] \cr
-Name of the measure. Default is \code{id}.}
+\item{name}{([character]) \cr
+Name of the measure. Default is `id`.}
 
-\item{note}{[\code{character}] \cr
+\item{note}{([character]) \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-[\code{\link{Measure}}].
+\link{Measure}.
 }
 \description{
 A measure object encapsulates a function to evaluate the performance of a prediction.
-Information about already implemented measures can be obtained here: \code{\link{measures}}.
+Information about already implemented measures can be obtained here: [measures].
 
 A learner is trained on a training set d1, results in a model m and predicts another set d2
 (which may be a different one or the training set) resulting in the prediction.
@@ -90,16 +90,16 @@ the fitted model and the prediction.
 
 Object slots:
 \describe{
-  \item{id [\code{character(1)}]}{See argument.}
-  \item{minimize [\code{logical(1)}]}{See argument.}
-  \item{properties [\code{character}]}{See argument.}
-  \item{fun [\code{function}]}{See argument.}
-  \item{extra.args [\code{list}]}{See argument.}
-  \item{aggr [\code{\link{Aggregation}}]}{See argument.}
-  \item{best [\code{numeric(1)}]}{See argument.}
-  \item{worst [\code{numeric(1)}]}{See argument.}
-  \item{name [\code{character(1)}]}{See argument.}
-  \item{note [\code{character(1)}]}{See argument.}
+  \item{id (`character(1)`)}{See argument.}
+  \item{minimize (`logical(1)`)}{See argument.}
+  \item{properties ([character])}{See argument.}
+  \item{fun (`function])}{See argument.}
+  \item{extra.args ([list])}{See argument.}
+  \item{aggr ([Aggregation])}{See argument.}
+  \item{best (`numeric(1)`)}{See argument.}
+  \item{worst (`numeric(1)`)}{See argument.}
+  \item{name (`character(1)`)}{See argument.}
+  \item{note (`character(1)`)}{See argument.}
 }
 }
 \examples{

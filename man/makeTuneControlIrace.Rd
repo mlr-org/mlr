@@ -11,7 +11,7 @@ makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   budget = NULL, ...)
 }
 \arguments{
-\item{impute.val}{[\code{numeric}]\cr
+\item{impute.val}{(\link{numeric})\cr
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -23,65 +23,65 @@ you aggregate by mean value, or \code{Inf} instead.
 For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
 in the same order as your measures.}
 
-\item{n.instances}{[\code{integer(1)}]\cr
+\item{n.instances}{(\code{integer(1)})\cr
 Number of random resampling instances for irace, see details.
 Default is 100.}
 
-\item{show.irace.output}{[\code{logical(1)}]\cr
+\item{show.irace.output}{(\code{logical(1)})\cr
 Show console output of irace while tuning?
 Default is \code{FALSE}.}
 
-\item{tune.threshold}{[\code{logical(1)}]\cr
+\item{tune.threshold}{(\code{logical(1)})\cr
 Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
-via \code{\link{tuneThreshold}}?
+via \link{tuneThreshold}?
 Only works for classification if the predict type is \dQuote{prob}.
 Default is \code{FALSE}.}
 
-\item{tune.threshold.args}{[\code{list}]\cr
-Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+\item{tune.threshold.args}{(\link{list})\cr
+Further arguments for threshold tuning that are passed down to \link{tuneThreshold}.
 Default is none.}
 
-\item{log.fun}{[\code{function} | \code{character(1)}]\cr
+\item{log.fun}{(\code{function} | \code{character(1)})\cr
 Function used for logging. If set to \dQuote{default} (the default), the evaluated design points, the resulting
 performances, and the runtime will be reported.
-If set to \dQuote{memory}, the memory usage for each evaluation will also be displayed, with a small increase
+If set to \dQuote{memory} the memory usage for each evaluation will also be displayed, with \code{character(1)} small increase
 in run time.
-Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+Otherwise \code{character(1)} function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-\code{stage}, and \code{prev.stage} is expected.
+\code{stage} and \code{prev.stage} is expected.
 The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
-(the latter two both taken from \code{\link{gc}}).
+(the latter two both taken from \link{gc}).
 See the implementation for details.}
 
-\item{final.dw.perc}{[\code{boolean}]\cr
-If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
+\item{final.dw.perc}{(\code{boolean})\cr
+If a Learner wrapped by a \link{makeDownsampleWrapper} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 Default is \code{NULL} which will not change anything.}
 
-\item{budget}{[\code{integer(1)}]\cr
+\item{budget}{(\code{integer(1)})\cr
 Maximum budget for tuning. This value restricts the number of function
 evaluations. It is passed to \code{maxExperiments}.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Further control parameters passed to the \code{control} arguments of
-\code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
-towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
+\link[cmaes:cma_es]{cmaes::cma_es} or \link[GenSA:GenSA]{GenSA::GenSA}, as well as
+towards the \code{tunerConfig} argument of \link[irace:irace]{irace::irace}.}
 }
 \value{
-[\code{\link{TuneControlIrace}}]
+(\link{TuneControlIrace})
 }
 \description{
-Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
+Tuning with iterated F-Racing with method \link[irace:irace]{irace::irace}.
 All kinds of parameter types can be handled. We return the best of the final elite
 candidates found by irace in the last race. Its estimated performance is the mean of all
 evaluations ever done for that candidate. More information on irace can be found in the TR at
 \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.
 
-For resampling you have to pass a \code{\link{ResampleDesc}},
-not a \code{\link{ResampleInstance}}.
+For resampling you have to pass a \link{ResampleDesc},
+not a \link{ResampleInstance}.
 The resampling strategy is randomly instantiated \code{n.instances} times and
 these are the instances in the sense of irace (\code{instances} element of \code{tunerConfig}
-in \code{\link[irace]{irace}}). Also note that irace will always
+in \link[irace:irace]{irace::irace}). Also note that irace will always
 store its tuning results in a file on disk, see the package documentation for details on this
 and how to change the file path.
 }
