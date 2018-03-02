@@ -68,6 +68,7 @@
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
 * classif.lda learner: add 'prior' hyperparameter
 * ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
+* h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
 
 ## learners - new
 * classif.adaboostm1
