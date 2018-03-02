@@ -302,12 +302,12 @@ makeFilter(
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
-  pkg  = "FSelector",
+  pkg  = character(0L),
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    y = FSelector::linear.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+    data = getTaskData(task, target.extra = TRUE)
+    abs(cor(as.matrix(data$data), data$target, use = "complete.obs", method = "pearson")[, 1L])
   }
 )
 
@@ -319,12 +319,12 @@ makeFilter(
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
-  pkg  = "FSelector",
+  pkg  = character(0L),
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
+    data = getTaskData(task, target.extra = TRUE)
+    abs(cor(as.matrix(data$data), data$target, use = "complete.obs", method = "spearman")[, 1L])
   }
 )
 
