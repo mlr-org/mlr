@@ -121,7 +121,6 @@ Suggests:
     mmpf,
     modeltools,
     mRMRe,
-    mxnet,
     nnet,
     nodeHarvest (>= 0.7-3),
     neuralnet,
