@@ -7,7 +7,7 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
-* Added support for spatial data by providing spatial partitioning methods "SpCV" and "SpRepCV". 
+* Added support for spatial data by providing spatial partitioning methods "SpCV" and "SpRepCV".
 * Added new spatial.task classification task.
 * Added new spam.task classification task.
 * Classification tasks now store the class distribution in the
@@ -24,7 +24,7 @@
   through new resample methods "GrowingWindowCV" and "FixedWindowCV".
 
 ## functions - general
-* generatePartialDependenceData: depends now on the "mmpf" package, 
+* generatePartialDependenceData: depends now on the "mmpf" package,
   removed parameter: "center", "resample", "fmin", "fmax" and "gridsize"
   added parameter: "uniform" and "n" to configure the grid for the partial dependence plot
 * batchmark: allow resample instances and reduction of partial results
@@ -47,7 +47,7 @@
 * extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
-* getOptPath
+* getTuneResultOptPath
 * makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
 
 ## functions - removed

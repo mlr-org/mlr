@@ -53,19 +53,14 @@ ggplot2 plot object.
 Plot a partial dependence from \link{generatePartialDependenceData} using ggplot2.
 }
 \seealso{
-Other partial_dependence: \code{\link{generatePartialDependenceData}},
-  \code{\link{plotPartialDependenceGGVIS}}
+Other partial_dependence: \code{\link{generatePartialDependenceData}}
 
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
