@@ -66,8 +66,7 @@ calculateROCMeasures(pred)
 
 }
 \seealso{
-Other roc: \code{\link{asROCRPrediction}},
-  \code{\link{plotViperCharts}}
+Other roc: \code{\link{asROCRPrediction}}
 
 Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},
