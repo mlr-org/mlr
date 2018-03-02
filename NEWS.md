@@ -69,6 +69,7 @@
 * classif.lda learner: add 'prior' hyperparameter
 * ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
 * h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
+* h20*: Add support for "missings"
 
 ## learners - new
 * classif.adaboostm1
