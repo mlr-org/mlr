@@ -137,7 +137,6 @@ Suggests:
     RCurl,
     refund,
     rex,
-    Rfast,
     rFerns,
     rjson,
     rknn,
