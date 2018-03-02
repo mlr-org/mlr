@@ -42,11 +42,3 @@ test_that("classif_bartMachine", {
   }
 
 })
-
-# issue 422
-test_that("classif_bartMachine works with missing values", {
-  requirePackagesOrSkip("bartMachine", default.method = "load")
-  foo = binaryclass.df
-  foo[1, 1] = NA
-  bartMachine::bartMachine(X = foo, y = foo[[binaryclass.target]], use_missing_data = TRUE)
-})
