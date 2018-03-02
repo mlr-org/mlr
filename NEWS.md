@@ -24,8 +24,9 @@
 * Added new spam.task classification task.
 
 ## functions - general
-* generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies, integrated with "mmpf" package
+* generatePartialDependenceData: depends now on the "mmpf" package, 
+  removed parameter: "center", "resample", "fmin", "fmax" and "gridsize"
+  added parameter: "uniform" and "n" to configure the grid for the partial dependence plot
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
 * plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to

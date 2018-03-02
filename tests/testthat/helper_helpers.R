@@ -1,6 +1,3 @@
-library(checkmate)
-library(BBmisc)
-
 requirePackagesOrSkip = function(packs, default.method = "attach") {
   ok = requirePackages(packs, why = "unit test", stop = FALSE, suppress.warnings = TRUE, default.method = default.method)
   if (any(!ok))
