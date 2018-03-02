@@ -67,6 +67,9 @@
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
 * classif.lda learner: add 'prior' hyperparameter
+* ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
+* h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
+* h20*: Add support for "missings"
 
 ## learners - new
 * classif.adaboostm1
