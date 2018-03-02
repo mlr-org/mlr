@@ -22,6 +22,7 @@
 * Added support for growing and fixed window cross-validation for forecasting
   through new resample methods "GrowingWindowCV" and "FixedWindowCV".
 * Added new spam.task classification task.
+* Remove all ggvis functions.
 
 ## functions - general
 * generatePartialDependenceData: depends now on the "mmpf" package, 

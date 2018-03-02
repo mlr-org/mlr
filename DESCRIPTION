@@ -96,7 +96,6 @@ Suggests:
     FSelector,
     gbm,
     GenSA,
-    ggvis,
     glmnet,
     h2o (>= 3.6.0.8),
     GPfit,
