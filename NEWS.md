@@ -7,8 +7,9 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
-* Added support for spatial data through additional argument "coordinates" and
-  spatial partitioning methods "SpCV" and "SpRepCV".
+* Added support for spatial data by providing spatial partitioning methods "SpCV" and "SpRepCV". 
+* Added new spatial.task classification task.
+* Added new spam.task classification task.
 * Classification tasks now store the class distribution in the
   class.distribution member.
 * mlr now predicts NA for data that contains NA and learners that do not support
@@ -21,8 +22,6 @@
   necessarily the task of any individual model.
 * Added support for growing and fixed window cross-validation for forecasting
   through new resample methods "GrowingWindowCV" and "FixedWindowCV".
-* Added new spam.task classification task.
-* Remove all ggvis functions.
 
 ## functions - general
 * generatePartialDependenceData: depends now on the "mmpf" package, 
@@ -34,6 +33,7 @@
   control interactivity
 * calculateConfusionMatrix: new parameter "set" to specify whether confusion
   matrix should be computed for "train", "test", or "both" (default)
+* PlotBMRSummary: Add parameter "shape"
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -49,6 +49,9 @@
 * makeExtractFDAFeatsWrapper
 * getOptPath
 * makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
+
+## functions - removed
+* Removed plotViperCharts
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
@@ -84,6 +87,7 @@
 
 ## filter - new
 * auc
+* ranger.permutation, ranger.impurity
 
 # mlr 2.11:
 

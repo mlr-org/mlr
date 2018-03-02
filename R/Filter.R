@@ -294,45 +294,37 @@ makeFilter(
   }
 )
 
-#' The Pearson correlation between each feature and the target is used as an indicator
-#' of feature importance. Rows with NA values are not taken into consideration.
+#' The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
+#' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \code{\link[base]{cor}}).
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
-  pkg  = "Rfast",
+  pkg  = character(0L),
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    d = getTaskData(task, target.extra = TRUE)
-    y = Rfast::correls(d$target, d$data, type = "pearson")
-    for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] = cor(d$target, d$data[, i], use = "complete.obs")
-    }
-    setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
+    data = getTaskData(task, target.extra = TRUE)
+    abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "pearson")[, 1L])
   }
 )
 
-#' The Spearman correlation between each feature and the target is used as an indicator
-#' of feature importance. Rows with NA values are not taken into consideration.
+#' The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
+#' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \code{\link[base]{cor}}).
 #'
 #' @rdname makeFilter
 #' @name makeFilter
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
-  pkg  = "Rfast",
+  pkg  = character(0L),
   supported.tasks = "regr",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    d = getTaskData(task, target.extra = TRUE)
-    y = Rfast::correls(d$target, d$data, type = "spearman")
-    for (i in which(is.na(y[, "correlation"]))) {
-      y[i, "correlation"] = cor(d$target, d$data[, i], use = "complete.obs", method = "spearman")
-    }
-    setNames(abs(y[, "correlation"]), getTaskFeatureNames(task))
+    data = getTaskData(task, target.extra = TRUE)
+    abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])
   }
 )
 
@@ -517,21 +509,16 @@ univariate = makeFilter(
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
-  pkg = "Rfast",
+  pkg = character(0L),
   supported.tasks = "classif",
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
-    d = getTaskData(task, target.extra = TRUE)
-    y = as.integer(d$target)
-    X = as.matrix(d$data)
-    an = Rfast::anovas(X, y)
-    for (i in which(is.na(an[, "F value"]))) {
-      j = !is.na(X[, i])
-      if (any(j)) {
-        an[i, ] = Rfast::anovas(X[j, i, drop = FALSE], y[j])
-      }
-    }
-    setNames(an[, "F value"], getTaskFeatureNames(task))
+    data = getTaskData(task)
+    vnapply(getTaskFeatureNames(task), function(feat.name) {
+      f = as.formula(stri_paste(feat.name, "~", getTaskTargetNames(task)))
+      aov.t = aov(f, data = data)
+      summary(aov.t)[[1L]][1L, "F value"]
+    })
   }
 )
 

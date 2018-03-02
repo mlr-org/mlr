@@ -878,34 +878,6 @@ test_that("measure properties", {
     })))
 })
 
-test_that("measures quickcheck", {
-  skip_on_cran()
-  options(warn = 2)
-  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
-  lrn = makeLearner("classif.rpart")
-
-  quickcheckTest(
-    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
-      {
-        classes = factor(c("foo", "bar"))
-        data$target = rep_len(classes, length.out = nrow(data))
-
-        train.ids = 1:(2 * nrow(data) / 3)
-        test.ids = setdiff(seq_len(nrow(data)), train.ids)
-        task = makeClassifTask(data = data, target = "target")
-
-        mod = train(lrn, task = task, subset = train.ids)
-        pred = predict(mod, task = task, subset = test.ids)
-        perf = performance(pred, measures = ms)
-
-        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
-      }
-    ),
-    about = "binary classification measures",
-    sample.size = 100
-  )
-})
-
 test_that("measures ppv denominator 0", {
   set.seed(1)
   task = sonar.task

@@ -134,7 +134,6 @@ Suggests:
     ranger (>= 0.8.0),
     refund,
     rex,
-    Rfast,
     rFerns,
     rknn,
     rmarkdown,
