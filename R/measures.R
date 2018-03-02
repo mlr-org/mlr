@@ -1267,15 +1267,6 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   }
 )
 
-#' Deprecated, use `measureMultilabelF1` instead.
-#' @export measureMultiLabelF1
-#' @rdname measures
-#' @format none
-measureMultiLabelF1 = function(truth, response) {
-  .Deprecated("measureMultilabelF1")
-  measureMultilabelF1(truth, response)
-}
-
 #' @export measureMultilabelF1
 #' @rdname measures
 #' @format none
