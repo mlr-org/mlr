@@ -232,6 +232,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     expect_equal(mean(ms[, "mse"]), tr$performances[1, 2], check.names = FALSE)
     expect_equal(sd(ms[, "mse"]), tr$performances[1, 3], check.names = FALSE)
   }
+  invisible(TRUE)
 }
 
 testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
