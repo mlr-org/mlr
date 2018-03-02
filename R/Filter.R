@@ -295,7 +295,7 @@ makeFilter(
 )
 
 #' The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
-#' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \code{\link[base]{cor}}).
+#' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in [cor]).
 #'
 #' @rdname makeFilter
 #' @name makeFilter
@@ -312,7 +312,7 @@ makeFilter(
 )
 
 #' The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
-#' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \code{\link[base]{cor}}).
+#' Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in [cor]).
 #'
 #' @rdname makeFilter
 #' @name makeFilter

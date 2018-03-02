@@ -107,10 +107,10 @@ the \code{method} parameter:
 }
 
 The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
-Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \code{\link[base]{cor}}).
+Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \link{cor}).
 
 The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
-Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \code{\link[base]{cor}}).
+Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \link{cor}).
 
 Filter \dQuote{information.gain} uses the entropy-based information gain
 between each feature and target individually as an importance measure.
