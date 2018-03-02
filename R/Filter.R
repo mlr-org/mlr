@@ -307,7 +307,7 @@ makeFilter(
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
     data = getTaskData(task, target.extra = TRUE)
-    abs(cor(as.matrix(data$data), data$target, use = "complete.obs", method = "pearson")[, 1L])
+    abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "pearson")[, 1L])
   }
 )
 
@@ -324,7 +324,7 @@ makeFilter(
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
     data = getTaskData(task, target.extra = TRUE)
-    abs(cor(as.matrix(data$data), data$target, use = "complete.obs", method = "spearman")[, 1L])
+    abs(cor(as.matrix(data$data), data$target, use = "pairwise.complete.obs", method = "spearman")[, 1L])
   }
 )
 
