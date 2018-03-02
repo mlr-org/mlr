@@ -34,6 +34,7 @@
 * calculateConfusionMatrix: new parameter "set" to specify whether confusion
   matrix should be computed for "train", "test", or "both" (default)
 * PlotBMRSummary: Add parameter "shape"
+* plotROCCurves: Add faceting argument
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
