@@ -32,7 +32,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
   assertString(note)
 
 
-  makeMeasure(id = id, minimize = minimize, extra.args = list(costs, combine),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(costs = costs, combine = combine),
     properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {

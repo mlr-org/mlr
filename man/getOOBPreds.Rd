@@ -7,10 +7,10 @@
 getOOBPreds(model, task)
 }
 \arguments{
-\item{model}{([WrappedModel])\cr
+\item{model}{(\link{WrappedModel})\cr
 The model.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 }
 \value{

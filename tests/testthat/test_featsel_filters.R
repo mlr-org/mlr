@@ -46,22 +46,6 @@ test_that("filterFeatures", {
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
-  # extra tests for filters based on functions of the Rfast package, including
-  # whether they use pairwise complete observations
-  y = 1:10
-  x = data.frame(x1 = c(1:6, 1:3, NA), x2 = c(1, 1:8, 1))
-  tsk = makeRegrTask(data = cbind(y, x), target = "y")
-  expect_equal(as.vector(cor(y, x, use = "pairwise.complete.obs")),
-    generateFilterValuesData(tsk, "linear.correlation")$data$linear.correlation)
-
-  expect_equal(as.vector(cor(y, x, use = "pairwise.complete.obs", method = "spearman")),
-     generateFilterValuesData(tsk, "rank.correlation")$data$rank.correlation)
-
-  y = rep(letters[1:2], 5L)
-  tsk = makeClassifTask(data = cbind(y, x), target = "y")
-  expect_equal(as.vector(sapply(x, function(i) summary(aov(i ~ y))[[1]][1, "F value"])),
-    generateFilterValuesData(tsk, "anova.test")$data$anova.test)
-
   # extra test for auc filter (two class dataset)
   toy.data = data.frame(
     Class = factor(c(1L, 0L, 1L, 1L, 0L, 1L, 0L, 0L)),
@@ -77,4 +61,3 @@ test_that("filterFeatures", {
   expect_numeric(fv$data$auc, any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(toy.task))
   expect_equal(fv$data$auc, c(0.25, 0.25, 0.5, 0.5, 0.125))
 })
-

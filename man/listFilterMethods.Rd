@@ -36,7 +36,5 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }
