@@ -77,7 +77,7 @@ Name of the measure. Default is `id`.}
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-[Measure].
+\link{Measure}.
 }
 \description{
 A measure object encapsulates a function to evaluate the performance of a prediction.
