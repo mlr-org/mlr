@@ -63,7 +63,7 @@ Default is `aggregation.id`.}
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-[Measure].
+\link{Measure}.
 }
 \description{
 Construct your own performance measure, used after resampling.

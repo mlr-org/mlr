@@ -10,9 +10,9 @@ makeImputeWrapper(learner, classes = list(), cols = list(),
   recode.factor.levels = TRUE)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{classes}{(named \link{list})\cr
 Named list containing imputation techniques for classes of columns.
@@ -55,7 +55,7 @@ feature factor in the training data after imputation?.
 Default is \code{TRUE}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with an imputation method. Creates a learner object, which can be

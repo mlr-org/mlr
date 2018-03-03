@@ -10,9 +10,9 @@ addRRMeasure(res, measures)
 \item{res}{(\link{ResampleResult})\cr
 The result of \link{resample} run with \code{keep.pred = TRUE}.}
 
-\item{measures}{([Measure] | list of [Measure])\cr
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 }
 \value{
 (\link{ResampleResult}).
