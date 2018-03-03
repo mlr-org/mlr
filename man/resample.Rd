@@ -79,20 +79,20 @@ oneclassbootstrap(learner, task, iters = 30, stratify = FALSE, measures,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{resampling}{(\link{ResampleDesc} or \link{ResampleInstance})\cr
 Resampling strategy.
 If a description is passed, it is instantiated automatically.}
 
-\item{measures}{([Measure] | list of [Measure])\cr
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
 \item{weights}{(\link{numeric})\cr
 Optional, non-negative case weight vector to be used during fitting.
@@ -110,19 +110,19 @@ Is applied to every \link{WrappedModel} resulting from calls to \link{train}
 during resampling.
 Default is to extract nothing.}
 
-\item{keep.pred}{(`logical(1)`)\cr
-Keep the prediction data in the `pred` slot of the result object.
+\item{keep.pred}{(\code{logical(1)})\cr
+Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to `FALSE`.
-Default is `TRUE`.}
+In this case you can set this argument to \code{FALSE}.
+Default is \code{TRUE}.}
 
 \item{...}{(any)\cr
 Further hyperparameters passed to \code{learner}.}
 
-\item{show.info}{(`logical(1)`)\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via [configureMlr].}
+Default is set via \link{configureMlr}.}
 
 \item{iters}{(\code{integer(1)})\cr
 See \link{ResampleDesc}.}

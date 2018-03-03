@@ -7,9 +7,9 @@
 setPredictType(learner, predict.type)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{predict.type}{(\code{character(1)})\cr
 Classification: \dQuote{response} or \dQuote{prob}.
@@ -20,7 +20,7 @@ One-class classification: \dQuote{response} or \dQuote{prob}.
 Default is \dQuote{response}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Possible prediction types are:
@@ -36,7 +36,6 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
-  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}}
 

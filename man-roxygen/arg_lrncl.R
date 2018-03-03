@@ -7,4 +7,4 @@
 #'   one-classification learner (anomaly detection) with \dQuote{oneclass.}.
 #'   A list of all integrated learners is available on the
 #'   [learners] help page.
-
+#' @md

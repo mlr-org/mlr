@@ -137,6 +137,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
 #' @param as.df (`logical(1)`)\cr
 #'   Should the optimization path be returned as a data frame?
 #'   Default is `TRUE`.
+#' @return ([ParamHelpers::OptPath]) or ([data.frame]).
 #' @export
 getTuneResultOptPath = function(tune.result, as.df = TRUE) {
   if (as.df == TRUE) {
