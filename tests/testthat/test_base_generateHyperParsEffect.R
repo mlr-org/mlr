@@ -230,10 +230,10 @@ test_that("2 hyperparams nested", {
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
     plot.type = "contour", interpolate = "regr.earth",
     show.interpolated = TRUE)
-  print(plt)
+  expect_warning(print(plt))
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
-  ggsave(path)
+  expect_warning(ggsave(path))
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster", "GeomContour"))
   expect_equal(plt$labels$x, "C")
@@ -283,7 +283,7 @@ test_that("2+ hyperparams", {
 
   # test single hyperparam creation
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.learn = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
@@ -295,7 +295,7 @@ test_that("2+ hyperparams", {
 
   # test bivariate
   plt = plotHyperParsEffect(data, x = "C", y = "sigma", z = "acc.test.mean",
-    plot.type = "heatmap", partial.dep.learn = "regr.randomForest")
+    plot.type = "heatmap", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
@@ -320,7 +320,7 @@ test_that("2+ hyperparams", {
   res = resample(lrn, task = pid.task, resampling = cv2, extract = getTuneResult)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.learn = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
@@ -341,7 +341,7 @@ test_that("2+ hyperparams", {
     resampling = rdesc, par.set = ps, show.info = FALSE)
   data = generateHyperParsEffectData(res, partial.dep = TRUE)
   plt = plotHyperParsEffect(data, x = "C", y = "acc.test.mean",
-    plot.type = "line", partial.dep.learn = "regr.randomForest")
+    plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")

@@ -34,8 +34,8 @@ Authors@R: c(
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
     person("Minh Anh", "Le", email = "minh-anh.le@cdtm.de", role = "ctb"),
-    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb")
-    )
+    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"),
+    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -97,7 +97,6 @@ Suggests:
     FSelector,
     gbm,
     GenSA,
-    ggvis,
     glmnet,
     h2o (>= 3.6.0.8),
     GPfit,
@@ -122,7 +121,6 @@ Suggests:
     mmpf,
     modeltools,
     mRMRe,
-    mxnet,
     nnet,
     nodeHarvest (>= 0.7-3),
     neuralnet,
@@ -135,12 +133,9 @@ Suggests:
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.8.0),
-    RCurl,
     refund,
     rex,
-    Rfast,
     rFerns,
-    rjson,
     rknn,
     rmarkdown,
     robustbase,
