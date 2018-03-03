@@ -7,7 +7,7 @@
 changeData(task, data, costs, weights, coordinates)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{data}{(\link{data.frame})\cr

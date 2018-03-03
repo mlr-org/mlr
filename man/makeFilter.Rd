@@ -26,6 +26,8 @@
 \alias{makeFilter}
 \alias{makeFilter}
 \alias{makeFilter}
+\alias{makeFilter}
+\alias{makeFilter}
 \title{Create a feature filter.}
 \format{An object of class \code{Filter} of length 6.}
 \usage{
@@ -104,11 +106,11 @@ the \code{method} parameter:
 \item{node.impurity}{Total decrease in node impurity.}
 }
 
-The Pearson correlation between each feature and the target is used as an indicator
-of feature importance. Rows with NA values are not taken into consideration.
+The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
+Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \link{cor}).
 
-The Spearman correlation between each feature and the target is used as an indicator
-of feature importance. Rows with NA values are not taken into consideration.
+The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
+Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \link{cor}).
 
 Filter \dQuote{information.gain} uses the entropy-based information gain
 between each feature and target individually as an importance measure.
@@ -170,6 +172,14 @@ variable can be predicted only based on this feature. More precisely, the
 prediction rule is: class 1 if the feature exceeds a threshold and class 0
 otherwise. The performance of this classification rule is measured by the
 AUC and the resulting filter score is |0.5 - AUC|.
+
+Filter \dQuote{ranger.permutation} trains a ranger learner with
+\dQuote{importance = "permutation"} and assesses the variable
+importance for each feature.
+
+Filter \dQuote{ranger.impurity} trains a ranger learner with
+\dQuote{importance = "impurity"} and assesses the variable
+importance for each feature.
 }
 \references{
 Kira, Kenji and Rendell, Larry (1992). The Feature Selection Problem: Traditional
@@ -185,7 +195,6 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 }
 \keyword{datasets}

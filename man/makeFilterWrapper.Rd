@@ -9,9 +9,9 @@ makeFilterWrapper(learner, fw.method = "randomForestSRC.rfsrc",
   fw.mandatory.feat = NULL, ...)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{fw.method}{(\code{character(1)})\cr
 Filter method. See \link{listFilterMethods}.
@@ -36,7 +36,7 @@ Mandatory features which are always included regardless of their scores}
 Additional parameters passed down to the filter.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a filter method. Creates a learner object, which can be
@@ -69,9 +69,7 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
-  \code{\link{makeFilter}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 
 Other wrapper: \code{\link{makeAMVhdWrapper}},
   \code{\link{makeBaggingWrapper}},
