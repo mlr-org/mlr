@@ -117,7 +117,7 @@ NULL
 #' Contains the task (`yeast.task`).
 #'
 #' @name yeast.task
-#' @source <http://sourceforge.net/projects/mulan/files/datasets/yeast.rar>
+#' @source <https://archive.ics.uci.edu/ml/datasets/Yeast> (In long instead of wide format)
 #' @references Elisseeff, A., & Weston, J. (2001):
 #' A kernel method for multi-labelled classification.
 #' In Advances in neural information processing systems (pp. 681-687).
@@ -194,6 +194,16 @@ NULL
 #'   F. Ferraty and P. Vieu (2003) "Curve discrimination: a nonparametric functional approach", Computational Statistics and Data Analysis, 44(1-2), 161-173.
 #'   F. Ferraty and P. Vieu (2006) Nonparametric functional data analysis, New York: Springer.
 #'   T. Hastie and R. Tibshirani and J. Friedman (2009) The elements of statistical learning: Data mining, inference and prediction, 2nd edn, New York: Springer.
+#' @keywords data
+#' @docType data
+NULL
+
+#' Spam classification task.
+#'
+#' Contains the task (`spam.task`).
+#'
+#' @name spam.task
+#' @references See [kernlab::spam].
 #' @keywords data
 #' @docType data
 NULL

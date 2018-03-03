@@ -52,9 +52,8 @@ test_that("helpLearner of wrapped learner", {
 
   environment(testfn)$readline = function(x) stop("Was not expecting readline.")
 
-
   # check that it doesn't give an error
-  quiet(testfn(makeBaggingWrapper(makeLearner("classif.qda"), 2)))
+  expect_output(testfn(makeBaggingWrapper(makeLearner("classif.qda"), 2)), "No information about learner")
 })
 
 test_that("helpLearnerParam", {
