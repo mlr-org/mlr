@@ -41,9 +41,11 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
 #' @export
 trainLearner.DownsampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   dw.perc = 1, dw.stratify = FALSE, ...) {
+  # If weights vector length fits to task size, set weights before subsetting (Issue #838)
   if (length(.weights) == getTaskSize(.task)) {
     .task$weights = .weights
     .task = subsetTask(.task, .subset)
+  # otherwise subset first and then set weights
   } else {
     .task = subsetTask(.task, .subset)
     .task$weights = .weights

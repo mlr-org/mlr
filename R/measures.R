@@ -1105,7 +1105,7 @@ measureNPV = function(truth, response, negative) {
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = c("oneclass", "classif", "req.pred", "req.truth"),
   name = "False discovery rate",
-  note = "Defined as: fp / (tp + fp).",
+  note = "Defined as: (fp) / (tp + fp).",
   fun = function(task, model, pred, feats, extra.args) {
     measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
@@ -1262,15 +1262,15 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   definition by Montanes et al.: http: / /www.sciencedirect.com / science / article / pii / S0031320313004019.
   Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureMultiLabelF1(getPredictionTruth.PredictionMultilabel(pred),
+    measureMultilabelF1(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
-#' @export measureMultiLabelF1
+#' @export measureMultilabelF1
 #' @rdname measures
 #' @format none
-measureMultiLabelF1 = function(truth, response) {
+measureMultilabelF1 = function(truth, response) {
   numerator = 2 * rowSums(truth & response)
   denominator = rowSums(truth + response)
   mean(ifelse(denominator == 0, 1, numerator / denominator))
@@ -1376,7 +1376,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 #' *On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data*
 #' Statistics in medicine. 2011;30(10):1105-1117. <http://dx.doi.org/10.1002/sim.4154>.
 cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
-  properties = c("surv", "req.pred", "req.truth", "req.model"),
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
   name = "Uno's Concordance index",
   note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno. Implemented in survAUC::UnoC.",
   fun = function(task, model, pred, feats, extra.args) {
@@ -1552,3 +1552,5 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
     clusterSim::index.S(clusterSim::dist.GDM(feats), r)
   }
 )
+
+
