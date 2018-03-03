@@ -3,7 +3,6 @@ library(BBmisc)
 library(devtools)
 DATASEED = 7761  # nolint
 COMPRESSION = "xz" # nolint
-
 # classification
 set.seed(DATASEED)
 data(iris, package = "datasets")
