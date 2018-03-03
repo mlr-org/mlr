@@ -72,9 +72,11 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
 
 #' @export
 trainLearner.UndersampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, usw.rate = 1, usw.cl = NULL, ...) {
+  # If weights vector length fits to task size, set weights before subsetting (Issue #838)
   if (length(.weights) == getTaskSize(.task)) {
     .task$weights = .weights
     .task = subsetTask(.task, .subset)
+  # otherwise subset first and then set weights
   } else {
     .task = subsetTask(.task, .subset)
     .task$weights = .weights
@@ -87,9 +89,11 @@ trainLearner.UndersampleWrapper = function(.learner, .task, .subset = NULL, .wei
 
 #' @export
 trainLearner.OversampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, osw.rate = 1, osw.cl = NULL, ...) {
-    if (length(.weights) == getTaskSize(.task)) {
+  # If weights vector length fits to task size, set weights before subsetting (Issue #838)
+  if (length(.weights) == getTaskSize(.task)) {
     .task$weights = .weights
     .task = subsetTask(.task, .subset)
+  # otherwise subset first and then set weights
   } else {
     .task = subsetTask(.task, .subset)
     .task$weights = .weights

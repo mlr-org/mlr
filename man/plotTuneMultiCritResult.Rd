@@ -42,6 +42,5 @@ Visualizes the pareto front and possibly the dominated points.
 }
 \seealso{
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},
-  \code{\link{plotTuneMultiCritResultGGVIS}},
   \code{\link{tuneParamsMultiCrit}}
 }
