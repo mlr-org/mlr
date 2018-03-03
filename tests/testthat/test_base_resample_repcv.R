@@ -40,7 +40,8 @@ test_that("repcv instance works", {
 test_that("repcv resampling works", {
   rdesc = makeResampleDesc("RepCV", folds = 2, reps = 2)
   m = setAggregation(mmce, testgroup.mean)
-  resample(makeLearner("classif.lda"), multiclass.task, rdesc)
+  res = resample(makeLearner("classif.lda"), multiclass.task, rdesc)
+  expect_class(res, "ResampleResult")
 })
 
 test_that("repcv instance is stochastic", {

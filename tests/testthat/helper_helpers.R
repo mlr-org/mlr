@@ -1,5 +1,3 @@
-library(checkmate)
-
 requirePackagesOrSkip = function(packs, default.method = "attach") {
   ok = requirePackages(packs, why = "unit test", stop = FALSE, suppress.warnings = TRUE, default.method = default.method)
   if (any(!ok))
@@ -233,6 +231,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     expect_equal(mean(ms[, "mse"]), tr$performances[1, 2], check.names = FALSE)
     expect_equal(sd(ms[, "mse"]), tr$performances[1, 3], check.names = FALSE)
   }
+  invisible(TRUE)
 }
 
 testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
@@ -284,18 +283,6 @@ mylist = function(..., create = FALSE) {
 testFacetting = function(obj, nrow = NULL, ncol = NULL) {
   expect_equal(obj$facet$params$nrow, nrow)
   expect_equal(obj$facet$params$ncol, ncol)
-}
-
-quickcheckTest = function(...) {
-  skip_if_not_installed("quickcheck")
-  qc = quickcheck::test(...)
-
-  if (any(!qc$pass)) {
-    print("Quickcheck tests failed with input:")
-    print(qc$cases[[which.first(!qc$pass)]])
-  }
-
-  expect_true(all(qc$pass), info = "Some Quickcheck tests failed.")
 }
 
 testDocForStrings = function(doc, x, grid.size = 1L, ordered = FALSE) {

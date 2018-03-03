@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.classif.mxff = function() {
-  makeRLearnerClassif(
-    cl = "classif.mxff",
+makeRLearner.regr.mxff = function() {
+  makeRLearnerRegr(
+    cl = "regr.mxff",
     package = "mxnet",
     par.set = makeParamSet(
       # architectural hyperparameters
@@ -19,14 +19,14 @@ makeRLearner.classif.mxff = function() {
       makeDiscreteLearnerParam(id = "act3", default = "tanh",
         values = c("tanh", "relu", "sigmoid", "softrelu"),
         requires = quote(layers > 2)),
-      makeDiscreteLearnerParam(id = "act.out", default = "softmax",
-        values = c("rmse", "softmax", "logistic")),
+      makeDiscreteLearnerParam(id = "act.out", default = "rmse",
+        values = c("rmse", "mae")),
       makeLogicalLearnerParam(id = "conv.layer1", default = FALSE),
       makeLogicalLearnerParam(id = "conv.layer2", default = FALSE,
         requires = quote(layers > 1 && conv.layer1 == TRUE)),
       makeLogicalLearnerParam(id = "conv.layer3", default = FALSE,
         requires = quote(layers > 2 && conv.layer2 == TRUE)),
-      makeIntegerVectorLearnerParam(id = "conv.data.shape", tunable = FALSE,
+      makeIntegerVectorLearnerParam(id = "conv.data.shape",
         requires = quote(conv.layer1 == TRUE)),
       makeIntegerVectorLearnerParam(id = "conv.kernel1", lower = 1L, len = 2,
         requires = quote(conv.layer1 == TRUE)),
@@ -91,13 +91,8 @@ makeRLearner.classif.mxff = function() {
         requires = quote(dropout.global == FALSE)),
       makeNumericLearnerParam(id = "dropout.layer3", lower = 0, upper = 1 - 1e-7,
         requires = quote(dropout.global == FALSE)),
-      makeLogicalLearnerParam(id = "batch.normalization", default = FALSE),
-      makeLogicalLearnerParam(id = "batch.normalization1", default = FALSE,
-        requires = quote(batch.normalization == FALSE)),
-      makeLogicalLearnerParam(id = "batch.normalization2", default = FALSE,
-        requires = quote(layers > 1 && batch.normalization == FALSE)),
-      makeLogicalLearnerParam(id = "batch.normalization3", default = FALSE,
-        requires = quote(layers > 2 && batch.normalization == FALSE)),
+      makeDiscreteLearnerParam(id = "dropout.mode", default = "training", values = c("training", "always")),
+      makeIntegerLearnerParam(id = "dropout.predict.repls", default = 20, lower = 2, requires = quote(dropout.mode  == "always")),
       makeUntypedLearnerParam(id = "ctx", default = mxnet::mx.ctx.default(), tunable = FALSE),
       makeIntegerLearnerParam(id = "begin.round", default = 1L),
       makeIntegerLearnerParam(id = "num.round", default = 10L),
@@ -138,26 +133,20 @@ makeRLearner.classif.mxff = function() {
         requires = quote(optimizer == "rmsprop")),
       makeNumericLearnerParam(id = "momentum", default = 0, requires = quote(optimizer == "sgd"))
     ),
-    properties = c("twoclass", "multiclass", "numerics", "prob"),
+    properties = c("numerics", "se"),
     par.vals = list(learning.rate = 0.1, array.layout = "rowmajor", verbose = FALSE),
     name = "Feedforward Neural Network",
     short.name = "mxff",
     note = "Default of `learning.rate` set to `0.1`. Default of `array.layout` set to `'rowmajor'`.
     Default of `verbose` is set to `FALSE`. If `symbol` is specified, it will be passed to mxnet
-    ignoring almost all other architectural specifications, the exception being that when convolution
-    is used in the symbol, `conv.layer1` has to be set to `TRUE` and `conv.data.shape` has to
-    be specified.
-    Default of `initializer` is set to NULL, which results in the default mxnet initializer being called when
-    training a model. Number of output nodes is detected automatically.
-    The upper bound for dropout is set to `1 - 1e-7` as in `mx.mlp`
+    ignoring other architectural specifications. Default of `initializer` is set to NULL, which
+    results in the default mxnet initializer being called when training a model. Number of output
+    nodes is detected automatically. The upper bound for dropout is set to `1 - 1e-7` as in `mx.mlp`
     in the `mxnet` package. If `dropout.global` is `TRUE`, the same dropout rate `dropout.input`
     will be applied to the inputs and all the hidden layers. If `dropout.global` is `FALSE`,
     `dropout.input` will be applied to the inputs, and the different `dropout.layer` parameters to
-    their respective layers.
-    `batch.normalization` specifies whether batch normalization should be used in all hidden layers.
-    If `batch.normalization` is set to `FALSE`, `batch.normalization1` specifies whether batch
-    normalization should be used in the first hidden layer,
-    `batch.normalization2` and `batch.normalization3` are defined accordingly.
+    their respective layers. `dropout.mode` specifies if dropout should only be used in training or
+    also for predictions, which allows stochastic predictions. This can be controlled for `se` with `dropout.predict.repls`.
     If `conv.layer1` is `FALSE`, the first layer is a `FullyConnected` layer and `num.layer1` gives
     the number of neurons. If `conv.layer1` is `TRUE`, then `num.layer1` gives the number of
     filters. In this case, `act1` is applied as an `Activation` layer afterwards (as is the case
@@ -171,7 +160,7 @@ makeRLearner.classif.mxff = function() {
     `pool.kernel1`, `pool.stride1`, `pool.pad1`
     and `pool.type1` correspond to the parameters in `mx.symbol.Pooling`.
     When convolution is used, `conv.data.shape` needs to be specified, which is a vector giving the
-    dimensionality of the data (e.g. for MNIST `c(28, 28)` or `c(28, 28, 1) and for CIFAR10
+    dimensionality of the data (e.g. for MNIST `c(28, 28)` or `c(28, 28, 1)` and for CIFAR10
     `c(28, 28, 3)`). Furthermore, `array.layout` is set to `colmajor` if convolution is used, to
     enable compatability with `mxnet`. When using convolution,
     `mx.model.FeedForward.create` expects the array containing the data to have `4` dimensions.
@@ -196,9 +185,9 @@ makeRLearner.classif.mxff = function() {
 }
 
 #' @export
-trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.regr.mxff = function(.learner, .task, .subset, .weights = NULL,
   layers = 1L, num.layer1 = 1L, num.layer2 = 1L, num.layer3 = 1L,
-  act1 = "tanh", act2 = "tanh", act3 = "tanh", act.out = "softmax",
+  act1 = "tanh", act2 = "tanh", act3 = "tanh", act.out = "rmse",
   conv.data.shape = NULL, conv.layer1 = FALSE, conv.layer2 = FALSE, conv.layer3 = FALSE,
   conv.kernel1 = NULL, conv.kernel2 = NULL, conv.kernel3 = NULL,
   conv.stride1 = NULL, conv.stride2 = NULL, conv.stride3 = NULL,
@@ -210,11 +199,13 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
   pool.type1 = "max", pool.type2 = "max", pool.type3 = "max",
   dropout.global = TRUE, dropout.input = NULL,
   dropout.layer1 = NULL, dropout.layer2 = NULL, dropout.layer3 = NULL,
-  batch.normalization = FALSE, batch.normalization1 = FALSE,
-  batch.normalization2 = FALSE, batch.normalization3 = FALSE,
   symbol = NULL, validation.ratio = NULL, eval.data = NULL,
   early.stop.badsteps = NULL, epoch.end.callback = NULL, early.stop.maximize = TRUE,
-  array.layout = "rowmajor", ...) {
+  array.layout = "rowmajor", dropout.mode = "training", dropout.predict.repls = 20, ...) {
+
+  if (.learner$predict.type == "se" & dropout.mode != "always")
+    stop("dropout.mode needs to be equal to 'always' for se prediction.")
+
   # transform data in correct format
   d = getTaskData(.task, subset = .subset, target.extra = TRUE)
   y = as.numeric(d$target) - 1
@@ -284,11 +275,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     pool.strides = list(pool.stride1, pool.stride2, pool.stride3)[1:layers]
     pool.pads = list(pool.pad1, pool.pad2, pool.pad3)[1:layers]
     pool.types = list(pool.type1, pool.type2, pool.type3)[1:layers]
-    if (batch.normalization) {
-      batch.normalization = c(TRUE, TRUE, TRUE)
-    } else {
-      batch.normalization = c(batch.normalization1, batch.normalization2, batch.normalization3)
-    }
+
     # add dropout if specified
     if (dropout.global == TRUE) {
       # construct a list of dropout rates
@@ -302,7 +289,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     }
 
     if (!is.null(dropout[[1]])) {
-      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]])
+      sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[1]], mode = dropout.mode)
     }
 
     # construct hidden layers using symbols
@@ -314,10 +301,6 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
           dilate = conv.dilates[[i]], pad = conv.pads[[i]], num_filter = nums[i])
         # construct convolutional layer with do.call to omit null values
         sym = do.call(mxnet::mx.symbol.Convolution, conv.inputs[!sapply(conv.inputs, is.null)])
-        # add batch normalization if specified
-        if (batch.normalization[i]) {
-          sym = mxnet::mx.symbol.BatchNorm(sym)
-        }
         # add activation
         sym = mxnet::mx.symbol.Activation(sym, act_type = act[i])
         # prepare pooling inputs
@@ -336,15 +319,11 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
           }
         }
         sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = nums[i])
-        # add batch normalization if specified
-        if (batch.normalization[i]) {
-          sym = mxnet::mx.symbol.BatchNorm(sym)
-        }
         sym = mxnet::mx.symbol.Activation(sym, act_type = act[i])
       }
       # add dropout if specified
       if (!is.null(dropout[[i + 1]])) {
-        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]])
+        sym = mxnet::mx.symbol.Dropout(sym, p = dropout[[i + 1]], mode = dropout.mode)
       }
     }
 
@@ -352,15 +331,10 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
     if (convs[layers]) {
       sym = mxnet::mx.symbol.flatten(sym)
     }
-    nodes.out = switch(act.out,
-      softmax = nlevels(d$target),
-      logistic = 1,
-      stop("Output activation not supported yet."))
-    sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = nodes.out)
+    sym = mxnet::mx.symbol.FullyConnected(sym, num_hidden = 1)
     out = switch(act.out,
-      # rmse = mxnet::mx.symbol.LinearRegressionOutput(sym),
-      softmax = mxnet::mx.symbol.SoftmaxOutput(sym),
-      logistic = mxnet::mx.symbol.LogisticRegressionOutput(sym),
+      rmse = mxnet::mx.symbol.LinearRegressionOutput(sym),
+      mae = mxnet::mx.symbol.MAERegressionOutput(sym),
       stop("Output activation not supported yet."))
   }
 
@@ -371,7 +345,7 @@ trainLearner.classif.mxff = function(.learner, .task, .subset, .weights = NULL,
 }
 
 #' @export
-predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.mxff = function(.learner, .model, .newdata, ...) {
   x = data.matrix(.newdata)
   array.layout = .model$learner$par.vals$array.layout
   conv.layer1 = ifelse(is.null(.learner$par.vals$conv.layer1),
@@ -386,23 +360,12 @@ predictLearner.classif.mxff = function(.learner, .model, .newdata, ...) {
     x = array(aperm(x), dim = dims)
     array.layout = "colmajor"
   }
-  p = predict(.model$learner.model, X = x, array.layout = array.layout)
-  if (.learner$predict.type == "response") {
-    # in very rare cases, the mxnet FeedForward algorithm does not converge and returns useless /
-    # error output in the probability matrix. In this case, which.max returns integer(0).
-    # To avoid errors, return NA instead.
-    p = apply(p, 2, function(i) {
-      w = which.max(i)
-      return(ifelse(length(w > 0), w, NA))
-    })
-    p = factor(p, exclude = NA)
-    levels(p) = .model$task.desc$class.levels
-    return(p)
+  if (.learner$predict.type == "se") {
+    p = replicate(.learner$par.vals$dropout.predict.repls, predict(.model$learner.model, X = x, array.layout = array.layout)[1, ])
+    cbind(rowMeans(p), apply(p, 1, sd))
+  } else {
+    predict(.model$learner.model, X = x, array.layout = array.layout)[1, ]
   }
-  if (.learner$predict.type == "prob") {
-    p = t(p)
-    colnames(p) = .model$task.desc$class.levels
-    return(p)
-  }
+
 }
 

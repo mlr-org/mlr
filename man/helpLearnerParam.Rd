@@ -7,9 +7,9 @@
 helpLearnerParam(learner, param = NULL)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{param}{(\code{character} | NULL)\cr
 Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
