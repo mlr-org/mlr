@@ -81,13 +81,13 @@ Number of objectives, i.e. number of \link{Measure}s to optimize.}
 \item{impute.val}{(\link{numeric})\cr
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
-It is not stored in the optimization path, an NA and (\code{character(1)}) corresponding error message are
+It is not stored in the optimization path, an NA and a corresponding error message are
 logged instead.
 Note that this value is later multiplied by -1 for maximization measures internally, so you
-need to enter \code{character(1)} larger positive value for maximization here as well.
+need to enter a larger positive value for maximization here as well.
 Default is the worst obtainable value of the performance measure you optimize for when
 you aggregate by mean value, or \code{Inf} instead.
-For multi-criteria optimization pass \code{character(1)} vector of imputation values, one for each of your measures,
+For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
 in the same order as your measures.}
 
 \item{learner}{(\link{Learner} | \code{NULL})\cr
@@ -151,7 +151,6 @@ parameter types can be handled.}
 }
 }
 \seealso{
-Other tune_multicrit: \code{\link{plotTuneMultiCritResultGGVIS}},
-  \code{\link{plotTuneMultiCritResult}},
+Other tune_multicrit: \code{\link{plotTuneMultiCritResult}},
   \code{\link{tuneParamsMultiCrit}}
 }

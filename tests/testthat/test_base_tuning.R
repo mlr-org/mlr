@@ -149,7 +149,8 @@ test_that("Learner defined with expression in param requires, see #369 and PH #5
 
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom()
-  tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
+  res = tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
+  expect_class(res, "TuneResult")
 })
 
 
@@ -159,7 +160,8 @@ test_that("tuning does not break with small discrete values, see bug in #1115", 
     makeDiscreteParam("cp", values = c(1e-8, 1e-9))
   )
   # this next line created an exception in the bug
-  tuneParams("classif.rpart", multiclass.task, hout, par.set = ps, control = ctrl)
+  res = tuneParams("classif.rpart", multiclass.task, hout, par.set = ps, control = ctrl)
+  expect_class(res, "TuneResult")
 })
 
 test_that("tuning works with large param.sets", {
@@ -171,6 +173,7 @@ test_that("tuning works with large param.sets", {
     makeParamSet(makeIntegerLearnerParam(paste0("some.parameter", x), 1, 10))
   }))
   lrn$par.set = c(lrn$par.set, long.learner.params)
-  tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
+  res = tuneParams(lrn, pid.task, cv5, par.set = long.learner.params, control = ctrl, show.info = TRUE)
+  expect_class(res, "TuneResult")
 })
 

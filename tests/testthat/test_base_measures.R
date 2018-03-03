@@ -664,9 +664,9 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelHamloss(multi.y, multi.y), multilabel.hamloss$best)
   expect_equal(measureMultilabelHamloss(multi.y, !multi.y), multilabel.hamloss$worst)
   # compare with mldr
-  expect_equal(mldr:::mldr_HL(multi.y, multi.p), measureMultilabelHamloss(multi.y, multi.p))
+  expect_equal(mldr::hamming_loss(multi.y, multi.p), measureMultilabelHamloss(multi.y, multi.p))
   # mldr defines the accuracy as 1-hamloss
-  expect_equal(mldr:::mldr_Accuracy(counters), 1 - measureMultilabelHamloss(multi.y, multi.p))
+  expect_equal(mldr::accuracy(multi.y, multi.p), 1 - measureMultilabelHamloss(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelHamloss(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 2) # 1 of 2 values are wrong
   expect_equal(measureMultilabelHamloss(cbind(tf, tf), cbind(tf, tt)), 1 / 4) # 1 of 4 values are wrong
@@ -680,7 +680,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelSubset01(multi.y, multi.y), multilabel.subset01$best)
   expect_equal(measureMultilabelSubset01(multi.y, !multi.y), multilabel.subset01$worst)
   # compare with mldr: we have implemented the subset loss which is 1 - subset accuracy
-  expect_equal(mldr:::mldr_SubsetAccuracy(multi.y, multi.p), 1 - measureMultilabelSubset01(multi.y, multi.p))
+  expect_equal(mldr::subset_accuracy(multi.y, multi.p), 1 - measureMultilabelSubset01(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelSubset01(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1) # 1 of 1 obs is wrong
   expect_equal(measureMultilabelSubset01(cbind(tf, tf), cbind(tf, tt)), 1 / 2) # 1 of 2 obs is wrong
@@ -693,13 +693,20 @@ test_that("check measure calculations", {
   expect_equal(f1.test, multilabel.f1$fun(pred = pred.multilabel))
   expect_equal(f1.test, as.numeric(f1.perf))
   # check best and worst
-  expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
-  expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
-  # compare with mldr: mldr has a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
-  expect_equal(mldr:::mldr_FMeasure(counters[-3, ]), measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
+
+  expect_equal(measureMultilabelF1(multi.y, multi.y), multilabel.f1$best)
+  expect_equal(measureMultilabelF1(multi.y, !multi.y), multilabel.f1$worst)
+
+  # compare with mldr: copy-pasted older mldr version
+  # mldr had a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
+  mldr.precision = counters[-3, ]$TruePositives / counters[-3, ]$PredictedPositives
+  mldr.recall = counters[-3, ]$TruePositives / counters[-3, ]$RealPositives
+  mldr.fmeasure = mean(mldr.precision * mldr.recall * 2 / (mldr.precision + mldr.recall), na.rm = TRUE)
+  expect_equal(mldr.fmeasure, measureMultilabelF1(multi.y[-3, ], multi.p[-3, ]))
+
   # manual checks
-  expect_equal(measureMultiLabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
-  expect_equal(measureMultiLabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
+  expect_equal(measureMultilabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
+  expect_equal(measureMultilabelF1(rbind(tf, tf), rbind(tf, tt)), mean(c(2 * 1 / 2, 2 * 1 / 3))) # 1 TRUE-TRUE match of 2 and 3 TRUE values per obs
 
   #accmult
   acc.test = vnapply(seq_row(multi.y), function(i) sum(multi.y[i, ] & multi.p[i, ]) / (sum(multi.y[i, ] | multi.p[i, ])))
@@ -726,7 +733,7 @@ test_that("check measure calculations", {
   expect_equal(measureMultilabelPPV(multi.y, multi.y), multilabel.ppv$best)
   expect_equal(measureMultilabelPPV(multi.y, !multi.y), multilabel.ppv$worst)
   # compare with mldr
-  expect_equal(mldr:::mldr_Precision(counters), measureMultilabelPPV(multi.y, multi.p))
+  expect_equal(mldr::precision(multi.y, multi.p), measureMultilabelPPV(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelPPV(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 2)
   expect_equal(measureMultilabelPPV(rbind(tf, tf), rbind(tf, tt)), mean(c(1 / 1, 1 / 2)))
@@ -740,8 +747,9 @@ test_that("check measure calculations", {
   # check best and worst
   expect_equal(measureMultilabelTPR(multi.y, multi.y), multilabel.tpr$best)
   expect_equal(measureMultilabelTPR(multi.y, !multi.y), multilabel.tpr$worst)
-  # compare with mldr
-  expect_equal(mldr:::mldr_Recall(counters), measureMultilabelTPR(multi.y, multi.p))
+  # compare with mldr (it throws a warning when recall() would divide by zero)
+  expect_equal(suppressWarnings(mldr::recall(multi.y, multi.p, undefined_value = "ignore")),
+    measureMultilabelTPR(multi.y, multi.p))
   # manual checks
   expect_equal(measureMultilabelTPR(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 1 / 1)
   expect_equal(measureMultilabelTPR(rbind(tf, tf), rbind(tf, tt)), mean(c(1 / 1, 1 / 1)))
@@ -980,34 +988,6 @@ test_that("measure properties", {
       res = all(getMeasureProperties(m) %in% props)
       all(res) & length(res) > 0
     })))
-})
-
-test_that("measures quickcheck", {
-  skip_on_cran()
-  options(warn = 2)
-  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
-  lrn = makeLearner("classif.rpart")
-
-  quickcheckTest(
-    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
-      {
-        classes = factor(c("foo", "bar"))
-        data$target = rep_len(classes, length.out = nrow(data))
-
-        train.ids = 1:(2 * nrow(data) / 3)
-        test.ids = setdiff(seq_len(nrow(data)), train.ids)
-        task = makeClassifTask(data = data, target = "target")
-
-        mod = train(lrn, task = task, subset = train.ids)
-        pred = predict(mod, task = task, subset = test.ids)
-        perf = performance(pred, measures = ms)
-
-        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
-      }
-    ),
-    about = "binary classification measures",
-    sample.size = 100
-  )
 })
 
 test_that("measures ppv denominator 0", {

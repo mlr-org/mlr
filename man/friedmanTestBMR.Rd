@@ -7,15 +7,15 @@
 friedmanTestBMR(bmr, measure = NULL, aggregation = "default")
 }
 \arguments{
-\item{bmr}{([BenchmarkResult])\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{aggregation}{(`character(1)`) \cr
-\dQuote{mean} or \dQuote{default}. See [getBMRAggrPerformances]
+\item{aggregation}{(\code{character(1)}) \cr
+\dQuote{mean} or \dQuote{default}. See \link{getBMRAggrPerformances}
 for details on \dQuote{default}.}
 }
 \value{

@@ -48,7 +48,8 @@ test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
   tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
   # this resulted in an error as "s" was not passed to predict
-  resample(tw, binaryclass.task, rdesc)
+  res = resample(tw, binaryclass.task, rdesc)
+  expect_class(res, "ResampleResult")
 })
 
 test_that("TuneWrapper uses tune.threshold", {
