@@ -17,9 +17,9 @@ The task. If this is passed, data from this task is predicted.}
 New observations which should be predicted.
 Pass this alternatively instead of \code{task}.}
 
-\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
-Selected cases. Either a logical or an index vector.
-By default \code{NULL} if all observations are used.}
+\item{subset}{([integer] | [logical] | `NULL`)\cr
+Selected cases. Either `character(1)` logical or an index vector.
+By default `NULL` if all observations are used.}
 
 \item{...}{(any)\cr
 Currently ignored.}
@@ -58,6 +58,7 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
+  \code{\link{plotViperCharts}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }

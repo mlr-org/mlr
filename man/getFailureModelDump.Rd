@@ -7,7 +7,7 @@
 getFailureModelDump(model)
 }
 \arguments{
-\item{model}{(\link{WrappedModel})\cr
+\item{model}{([WrappedModel])\cr
 The model.}
 }
 \value{

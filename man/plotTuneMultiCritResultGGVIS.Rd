@@ -28,7 +28,7 @@ Should the information show the transformed hyper parameters?
 Default is \code{TRUE}.}
 }
 \value{
-(\code{character(1)}) ggvis plot object.
+(`character(1)`) ggvis plot object.
 }
 \description{
 Visualizes the pareto front and possibly the dominated points.

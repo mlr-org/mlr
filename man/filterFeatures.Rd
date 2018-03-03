@@ -8,7 +8,7 @@ filterFeatures(task, method = "randomForestSRC.rfsrc", fval = NULL,
   perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
 \item{method}{(\code{character(1)})\cr
@@ -40,7 +40,7 @@ Mandatory features which are always included regardless of their scores}
 Passed down to selected filter method.}
 }
 \value{
-\link{Task}.
+[Task].
 }
 \description{
 First, calls \link{generateFilterValuesData}.

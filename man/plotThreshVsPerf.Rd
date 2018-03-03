@@ -32,9 +32,9 @@ Default is \code{NA} which means not to do it.}
 Whether to use the \link{Measure} name instead of the id in the plot.
 Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.

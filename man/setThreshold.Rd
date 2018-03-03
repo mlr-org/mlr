@@ -7,7 +7,7 @@
 setThreshold(pred, threshold)
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 
 \item{threshold}{(\link{numeric})\cr

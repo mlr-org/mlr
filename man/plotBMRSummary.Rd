@@ -8,10 +8,10 @@ plotBMRSummary(bmr, measure = NULL, trafo = "none", order.tsks = NULL,
   pointsize = 4L, jitter = 0.05, pretty.names = TRUE)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
@@ -21,8 +21,8 @@ Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank tr
 NB: You can add always add \link[ggplot2:scale_x_log10]{ggplot2::scale_x_log10} to the result to put scores on a log scale.
 Default is \dQuote{none}.}
 
-\item{order.tsks}{(\code{character(n.tasks)})\cr
-Character vector with \code{task.ids} in new order.}
+\item{order.tsks}{(`character(n.tasks)`)\cr
+Character vector with `task.ids` in new order.}
 
 \item{pointsize}{(\code{numeric(1)})\cr
 Point size for ggplot2 \link[ggplot2:geom_point]{ggplot2::geom_point} for data points.
@@ -32,8 +32,8 @@ Default is 4.}
 Small vertical jitter to deal with overplotting in case of equal scores.
 Default is 0.05.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to `TRUE`.}
 }
 \value{
 ggplot2 plot object.

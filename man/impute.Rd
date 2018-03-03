@@ -10,7 +10,7 @@ impute(obj, target = character(0L), classes = list(), cols = list(),
   recode.factor.levels = TRUE)
 }
 \arguments{
-\item{obj}{(\link{data.frame} | \link{Task})\cr
+\item{obj}{([data.frame] | [Task])\cr
 Input data.}
 
 \item{target}{(\link{character})\cr

@@ -7,7 +7,7 @@
 getConfMatrix(pred, relative = FALSE)
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 
 \item{relative}{(\code{logical(1)})\cr

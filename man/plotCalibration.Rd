@@ -24,9 +24,9 @@ Whether to include a rag plot which shows a rug plot on the top which pertains t
 positive cases and on the bottom which pertains to negative cases.
 Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.

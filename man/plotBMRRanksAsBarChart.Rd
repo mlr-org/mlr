@@ -9,18 +9,18 @@ plotBMRRanksAsBarChart(bmr, measure = NULL, ties.method = "average",
   order.tsks = NULL, pretty.names = TRUE)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
 \item{ties.method}{(\code{character(1)})\cr
 See \link{rank} for details.}
 
-\item{aggregation}{(\code{character(1)}) \cr
-\dQuote{mean} or \dQuote{default}. See \link{getBMRAggrPerformances}
+\item{aggregation}{(`character(1)`) \cr
+\dQuote{mean} or \dQuote{default}. See [getBMRAggrPerformances]
 for details on \dQuote{default}.}
 
 \item{pos}{(\code{character(1)})\cr
@@ -33,14 +33,14 @@ Allows for comparison of learners within and and across ranks.
 \dQuote{dodge} plots a bar plot with bars next to each other instead
 of stacked bars.}
 
-\item{order.lrns}{(\code{character(n.learners)})\cr
-Character vector with \code{learner.ids} in new order.}
+\item{order.lrns}{(`character(n.learners)`)\cr
+Character vector with `learner.ids` in new order.}
 
-\item{order.tsks}{(\code{character(n.tasks)})\cr
-Character vector with \code{task.ids} in new order.}
+\item{order.tsks}{(`character(n.tasks)`)\cr
+Character vector with `task.ids` in new order.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to `TRUE`.}
 }
 \value{
 ggplot2 plot object.

@@ -7,9 +7,9 @@
 helpLearner(learner)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 }
 \description{
 Interactive function that gives the user quick access to the

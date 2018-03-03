@@ -26,7 +26,7 @@ from the output to make the display more readable. Each row is sampled with prob
 Default is \code{1}.}
 }
 \value{
-(\code{character(1)}) ggvis plot object.
+(`character(1)`) ggvis plot object.
 }
 \description{
 Plot partial dependence from \link{generatePartialDependenceData} using ggvis.

@@ -8,11 +8,11 @@ tuneParamsMultiCrit(learner, task, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
 \item{resampling}{([ResampleInstance] | [ResampleDesc])\cr
@@ -32,9 +32,9 @@ Dependent parameters with a `requires` field must use `quote` and not
 \item{control}{([TuneMultiCritControl])\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
-\item{show.info}{(\code{logical(1)})\cr
+\item{show.info}{(`logical(1)`)\cr
 Print verbose output on console?
-Default is set via \link{configureMlr}.}
+Default is set via [configureMlr].}
 
 \item{resample.fun}{([closure`)\cr
 The function to use for resampling. Defaults to [resample] and should take the
