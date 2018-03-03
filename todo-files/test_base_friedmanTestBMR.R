@@ -23,7 +23,7 @@ test_that("test_friedmanTestBMR", {
   # Make sure nnet is always worse then rpart. (add error)
   res$results$binary$classif.nnet$measures.test$acc = 1
   res$results$multiclass$classif.nnet$measures.test$acc = 1
-  r4 = friedmanPostHocTestBMR(res, acc, p.value = .99)
+  expect_warning({r4 = friedmanPostHocTestBMR(res, acc, p.value = .99)})
   if (r4$p.value < .99) {
     expect_is(r4, "PMCMR")
     expect_true(r4$f.rejnull)

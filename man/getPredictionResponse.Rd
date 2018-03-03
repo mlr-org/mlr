@@ -13,7 +13,7 @@ getPredictionSE(pred)
 getPredictionTruth(pred)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 }
 \value{
@@ -34,7 +34,6 @@ multilabel  \tab logical matrix, columns named with labels\cr
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionTaskDesc}},
-  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}

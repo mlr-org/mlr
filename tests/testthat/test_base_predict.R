@@ -143,18 +143,3 @@ test_that("predict works with data.table as newdata", {
   mod = train(lrn, iris.task)
   expect_warning(predict(mod, newdata = data.table(iris)), regexp = "Provided data for prediction is not a pure data.frame but from class data.table, hence it will be converted.")
 })
-
-test_that("predict with NA rows for learners that don't support missings automatically returns NA", {
-  modknn = train("classif.knn", pid.task)
-  modrf = train(makeLearner("classif.randomForest", mtry = 1), pid.task)
-  newdata = getTaskData(pid.task, target.extra = TRUE)$data
-  newdata.na = newdata
-  newdata.na[[1]][1] = NA
-  for (mod in list(modknn, modrf)) {
-    prediction = predict(mod, newdata = newdata)
-    prediction.na = predict(mod, newdata = newdata.na)
-    expect_equal(which(is.na(prediction.na$data$response[1])), 1)
-    expect_equal(prediction.na$data[-1, ], prediction$data[-1, ])
-  }
-})
-

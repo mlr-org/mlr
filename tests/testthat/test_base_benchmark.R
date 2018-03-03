@@ -217,7 +217,9 @@ test_that("keep.preds and models are passed down to resample()", {
 test_that("benchmark work with learner string", {
   # we had a bug here, check that learner(s) are created from string
   b = benchmark("classif.rpart", iris.task, hout)
+  expect_class(b, "BenchmarkResult")
   b = benchmark(c("classif.rpart", "classif.lda"), iris.task, hout)
+  expect_class(b, "BenchmarkResult")
 })
 
 test_that("drop option works for BenchmarkResults_operators", {
