@@ -7,19 +7,20 @@
 setPredictType(learner, predict.type)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{predict.type}{[\code{character(1)}]\cr
+\item{predict.type}{(\code{character(1)})\cr
 Classification: \dQuote{response} or \dQuote{prob}.
 Regression: \dQuote{response} or \dQuote{se}.
 Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
 Clustering: \dQuote{response} or \dQuote{prob}.
+One-class classification: \dQuote{response} or \dQuote{prob}.
 Default is \dQuote{response}.}
 }
 \value{
-[\code{\link{Learner}}].
+[Learner].
 }
 \description{
 Possible prediction types are:

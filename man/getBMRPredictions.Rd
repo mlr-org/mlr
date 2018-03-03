@@ -8,28 +8,28 @@ getBMRPredictions(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
   drop = FALSE)
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{task.ids}{[\code{character(1)}]\cr
+\item{task.ids}{(`character(1)`)\cr
 Restrict result to certain tasks.
 Default is all.}
 
-\item{learner.ids}{[\code{character(1)}]\cr
+\item{learner.ids}{(`character(1)`)\cr
 Restrict result to certain learners.
 Default is all.}
 
-\item{as.df}{[\code{character(1)}]\cr
-Return one data.frame as result - or a list of lists of objects?.
-Default is \code{FALSE}.}
+\item{as.df}{(`character(1)`)\cr
+Return one data.frame as result - or (`character(1)`) list of lists of objects?.
+Default is `FALSE`.}
 
-\item{drop}{[\code{logical(1)}]\cr
-If drop is \code{FALSE} (the default), a nested list with
+\item{drop}{(`logical(1)`)\cr
+If drop is `FALSE` (the default), (`character(1)`) nested list with
 the following structure is returned:\cr
-\code{res[task.ids][learner.ids]}.\cr
-If drop is set to \code{TRUE}, it is checked if the list
+`res[task.ids][learner.ids]`.\cr
+If drop is set to `TRUE` it is checked if the list
 structure can be simplified.\cr
-If only one learner was passed, a list with entries
+If only one learner was passed, `character(1)` list with entries
 for each task is returned.\cr
 If only one task was passed, the entries are named after
 the corresponding learner.\cr
@@ -39,16 +39,16 @@ Note that the name of the
 task/learner will be dropped from the return object.}
 }
 \value{
-[\code{list} | \code{data.frame}]. See above.
+([list] | [data.frame]). See above.
 }
 \description{
-Either a list of lists of \code{\link{ResamplePrediction}} objects, as returned by
-\code{\link{resample}}, or these objects are rbind-ed with extra columns
+Either a list of lists of \link{ResamplePrediction} objects, as returned by
+\link{resample}, or these objects are rbind-ed with extra columns
 \dQuote{task.id} and \dQuote{learner.id}.
 
 If \code{predict.type} is \dQuote{prob}, the probabilities for each class are returned in addition to the response.
 
-If \code{keep.pred} is \code{FALSE} in the call to \code{\link{benchmark}}, the function will return \code{NULL}.
+If \code{keep.pred} is \code{FALSE} in the call to \link{benchmark}, the function will return \code{NULL}.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},

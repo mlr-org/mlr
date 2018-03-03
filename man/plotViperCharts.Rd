@@ -8,33 +8,33 @@ plotViperCharts(obj, chart = "rocc", browse = TRUE, auth.key = NULL,
   task.id = NULL)
 }
 \arguments{
-\item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
-Single prediction object, list of them, single resample result, list of them, or a benchmark result.
-In case of a list probably produced by different learners you want to compare, then
+\item{obj}{(list of [Prediction] | list of [ResampleResult] | [BenchmarkResult])\cr
+Single prediction object, list of them, single resample result, list of them, or `character(1)` benchmark result.
+In case of `character(1)` list probably produced by different learners you want to compare, then
 name the list with the names you want to see in the plots, probably
 learner shortnames or ids.}
 
-\item{chart}{[\code{character(1)}]\cr
+\item{chart}{(\code{character(1)})\cr
 First chart to display in focus in browser.
 All other charts can be displayed by clicking on the browser page menu.
 Default is \dQuote{rocc}.}
 
-\item{browse}{[\code{logical(1)}]\cr
+\item{browse}{(\code{logical(1)})\cr
 Open ViperCharts plot in web browser? If not you simple get the URL returned.
-Calls \code{\link{browseURL}}.
+Calls \link{browseURL}.
 Default is \code{TRUE}.}
 
-\item{auth.key}{[\code{character(1)}]\cr
+\item{auth.key}{(\code{character(1)})\cr
 API key to use for call to Viper charts website.
 Only required if you want the chart to be private.
 Default is \code{NULL}.}
 
-\item{task.id}{[\code{character(1)}]\cr
-Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+\item{task.id}{(\code{character(1)})\cr
+Selected task in \link{BenchmarkResult} to do plots for, ignored otherwise.
 Default is first task.}
 }
 \value{
-[\code{character(1)}]. Invisibly returns the ViperCharts URL.
+(\code{character(1)}). Invisibly returns the ViperCharts URL.
 }
 \description{
 This includes ROC, lift charts, cost curves, and so on.

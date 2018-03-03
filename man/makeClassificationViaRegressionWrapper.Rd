@@ -7,15 +7,15 @@
 makeClassificationViaRegressionWrapper(learner, predict.type = "response")
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{predict.type}{[\code{character(1)}]\cr
+\item{predict.type}{(\code{character(1)})\cr
 \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the one with maximal probability).}
 }
 \value{
-[\code{\link{Learner}}].
+[Learner].
 }
 \description{
 Builds regression models that predict for the positive class whether a particular example belongs to it (1) or not (-1).
@@ -31,7 +31,8 @@ mod = train(lrn, sonar.task, subset = 1:140)
 predictions = predict(mod, newdata = getTaskData(sonar.task)[141:208, 1:60])
 }
 \seealso{
-Other wrapper: \code{\link{makeBaggingWrapper}},
+Other wrapper: \code{\link{makeAMVhdWrapper}},
+  \code{\link{makeBaggingWrapper}},
   \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},

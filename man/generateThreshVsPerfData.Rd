@@ -9,33 +9,33 @@ generateThreshVsPerfData(obj, measures, gridsize = 100L, aggregate = TRUE,
   task.id = NULL)
 }
 \arguments{
-\item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
-Single prediction object, list of them, single resample result, list of them, or a benchmark result.
-In case of a list probably produced by different learners you want to compare, then
+\item{obj}{(list of [Prediction] | list of [ResampleResult] | [BenchmarkResult])\cr
+Single prediction object, list of them, single resample result, list of them, or `character(1)` benchmark result.
+In case of `character(1)` list probably produced by different learners you want to compare, then
 name the list with the names you want to see in the plots, probably
 learner shortnames or ids.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
+\item{measures}{([Measure] | list of [Measure])\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 
-\item{gridsize}{[\code{integer(1)}]\cr
+\item{gridsize}{(\code{integer(1)})\cr
 Grid resolution for x-axis (threshold).
 Default is 100.}
 
-\item{aggregate}{[\code{logical(1)}]\cr
-Whether to aggregate \code{\link{ResamplePrediction}}s or to plot the performance
+\item{aggregate}{(\code{logical(1)})\cr
+Whether to aggregate \link{ResamplePrediction}s or to plot the performance
 of each iteration separately.
 Default is \code{TRUE}.}
 
-\item{task.id}{[\code{character(1)}]\cr
-Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+\item{task.id}{(\code{character(1)})\cr
+Selected task in \link{BenchmarkResult} to do plots for, ignored otherwise.
 Default is first task.}
 }
 \value{
-[\code{ThreshVsPerfData}]. A named list containing the measured performance
-  across the threshold grid, the measures, and whether the performance estimates were
-  aggregated (only applicable for (list of) \code{\link{ResampleResult}}s).
+(\link{ThreshVsPerfData}). A named list containing the measured performance
+across the threshold grid, the measures, and whether the performance estimates were
+aggregated (only applicable for (list of) \link{ResampleResult}s).
 }
 \description{
 Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.
@@ -45,7 +45,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{getFilterValues}},

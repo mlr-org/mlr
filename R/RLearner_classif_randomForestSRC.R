@@ -34,7 +34,7 @@ makeRLearner.classif.randomForestSRC = function() {
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
       makeDiscreteLearnerParam(id = "split.depth", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
-      makeIntegerLearnerParam(id = "seed", upper = 0L, tunable = FALSE),
+      makeIntegerLearnerParam(id = "seed", lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE, when = "both"), # is currently ignored
       makeLogicalLearnerParam(id = "membership", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
@@ -67,7 +67,7 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
 
 #' @export
 getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
-  preds = .model$learner.model$predicted.oob
+  preds = getLearnerModel(.model, more.unwrap = TRUE)$predicted.oob
   if (.learner$predict.type == "response") {
     factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
   } else {
@@ -77,6 +77,6 @@ getOOBPredsLearner.classif.randomForestSRC = function(.learner, .model) {
 
 #' @export
 getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   randomForestSRC::vimp(mod, ...)$importance[, "all"]
 }

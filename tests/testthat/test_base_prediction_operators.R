@@ -9,14 +9,16 @@ multilabel.pred2 = predict(train(lrn2, multilabel.task), multilabel.task)
 regr.pred = mypredict(regr.task)
 surv.pred = mypredict(surv.task)
 cluster.pred = predict(train("cluster.kmeans", agri.task), agri.task)
+oneclass.pred = predict(train("oneclass.svm", oneclass.task), oneclass.task)
 
-test_that("getPredictionResponse", {
+  test_that("getPredictionResponse", {
   expect_true(is.factor(getPredictionResponse(classif.pred)))
   expect_true(is.logical(getPredictionResponse(multilabel.pred)))
   expect_true(is.logical(getPredictionResponse(multilabel.pred2)))
   expect_true(is.numeric(getPredictionResponse(regr.pred)))
   expect_true(is.numeric(getPredictionResponse(surv.pred)))
   expect_true(is.integer(getPredictionResponse(cluster.pred)))
+  expect_true(is.factor(getPredictionResponse(oneclass.pred)))
 })
 
 test_that("getPredictionTruth", {
@@ -26,6 +28,7 @@ test_that("getPredictionTruth", {
   expect_true(is.numeric(getPredictionTruth(regr.pred)))
   expect_true(is.Surv(getPredictionTruth(surv.pred)))
   expect_error(getPredictionTruth(cluster.pred), "no truth")
+  expect_true(is.factor(getPredictionTruth(oneclass.pred)))
 })
 
 test_that("getPredictionProbabilities", {
@@ -38,4 +41,5 @@ test_that("getPredictionProbabilities", {
   lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn)
   multilabel.pred2 = predict(train(lrn2, multilabel.task), multilabel.task)
   expect_true(is.numeric(getPredictionProbabilities(multilabel.pred2, "y2")))
+  expect_error(getPredictionProbabilities(oneclass.pred))
 })

@@ -27,34 +27,31 @@ getNameProposals = function(input, possible.inputs, nproposals = 3L) {
   return(possibles)
 }
 
-# generates a grid for a vector of features and returns a list
-# expand.grid can be applied to this to find all possible combinations of the features
-generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
-  sapply(features, function(feature) {
-      nunique = length(unique(data[[feature]]))
-      cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
-      if (resample == "none") {
-        switch(paste0(class(data[[feature]]), collapse = ":"),
-          "integer" = as.integer(seq.int(fmin[[feature]], fmax[[feature]], length.out = cutoff)),
-          "numeric" = seq(fmin[[feature]], fmax[[feature]], length.out = cutoff),
-          "ordered:factor" = sort(unique(data[[feature]]))[as.integer(seq.int(1, nunique, length.out = cutoff))],
-          "factor" = sample(unique(data[[feature]]), size = cutoff) ## impossible to order selection if cutoff < nunique w/o ordering
-        )
-
-      } else {
-        if (is.ordered(data[[feature]])) {
-          sort(sample(data[[feature]], size = cutoff, replace = resample == "bootstrap"))
-        } else {
-          sample(data[[feature]], size = cutoff, replace = resample == "bootstrap")
-        }
-      }
-  }, simplify = FALSE)
-}
-
 # shorter way of printing debug dumps
 #' @export
 print.mlr.dump = function(x, ...) {
   cat("<debug dump>\n")
   invisible(NULL)
 }
+
+
+# applys the appropriate getPrediction* helper function
+getPrediction = function(object, newdata, ...) {
+  pred = do.call("predict", c(list("object" = object, "newdata" = newdata), list(...)))
+  point = switch(object$task.desc$type,
+    "regr" = getPredictionResponse(pred),
+    "surv" = getPredictionResponse(pred),
+    "classif" = if (object$learner$predict.type == "response")
+      getPredictionResponse(pred) else getPredictionProbabilities(pred))
+
+  if (object$learner$predict.type == "se")
+    cbind("preds" = point, "se" = getPredictionSE(pred))
+  else
+    point
+}
+
+
+
+
+
 

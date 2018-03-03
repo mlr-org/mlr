@@ -121,6 +121,7 @@
 \alias{cindex}
 \alias{cindex.uno}
 \alias{iauc.uno}
+\alias{ibrier}
 \alias{meancosts}
 \alias{mcp}
 \alias{db}
@@ -367,6 +368,8 @@ cindex.uno
 
 iauc.uno
 
+ibrier
+
 meancosts
 
 mcp
@@ -382,21 +385,21 @@ G2
 silhouette
 }
 \arguments{
-\item{truth}{[\code{factor}]\cr
+\item{truth}{(\link{factor})\cr
 Vector of the true class.}
 
-\item{response}{[\code{factor}]\cr
+\item{response}{(\link{factor})\cr
 Vector of the predicted class.}
 
-\item{probabilities}{[\code{numeric} | \code{matrix}]\cr
+\item{probabilities}{(\link{numeric} | \link{matrix})\cr
 a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
 b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
 columns are named with class labels.}
 
-\item{negative}{[\code{character(1)}]\cr
+\item{negative}{(\code{character(1)})\cr
 The name of the negative class.}
 
-\item{positive}{[\code{character(1)}]\cr
+\item{positive}{(\code{character(1)})\cr
 The name of the positive class.}
 }
 \description{
@@ -404,19 +407,19 @@ A performance measure is evaluated after a single train/predict step and returns
 of the prediction (or maybe only the model, think AIC).
 The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 
-All supported measures can be found by \code{\link{listMeasures}} or as a table
+All supported measures can be found by \link{listMeasures} or as a table
 in the tutorial appendix: \url{http://mlr-org.github.io/mlr-tutorial/release/html/measures/}.
 
-If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
-If you want to implement your own measure, look at \code{\link{makeMeasure}}.
+If you want a measure for a misclassification cost matrix, look at \link{makeCostMeasure}.
+If you want to implement your own measure, look at \link{makeMeasure}.
 
 Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
 
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
 
-Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
-overwritten using \code{\link{setMeasurePars}}.
+Some measure have parameters. Their defaults are set in the constructor \link{makeMeasure} and can be
+overwritten using \link{setMeasurePars}.
 }
 \references{
 He, H. & Garcia, E. A. (2009)

@@ -7,11 +7,11 @@
 getBMRLearnerShortNames(bmr)
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 }
 \value{
-[\code{character}].
+(\link{character}).
 }
 \description{
 Gets the learner short.names of the learners used in a benchmark experiment.

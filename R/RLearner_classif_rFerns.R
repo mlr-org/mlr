@@ -31,5 +31,5 @@ predictLearner.classif.rFerns = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getOOBPredsLearner.classif.rFerns = function(.learner, .model) {
-  .model$learner.model$oobPreds
+  getLearnerModel(.model, more.unwrap = TRUE)$oobPreds
 }

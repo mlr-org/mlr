@@ -23,12 +23,12 @@ test_that("propVectorToMatrix", {
 })
 
 test_that("listTaskTypes", {
-  expected = c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  expected = c("oneclass", "classif", "regr", "surv", "costsens", "cluster", "multilabel")
   expect_equal(expected, listTaskTypes())
 })
 
 test_that("listLearnerProperties", {
-  expected = c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
+  expected = c("oneclass", "classif", "regr", "surv", "costsens", "cluster", "multilabel")
   expect_equal(expected, listTaskTypes())
 })
 

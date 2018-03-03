@@ -4,19 +4,31 @@
 \alias{plotTuneMultiCritResultGGVIS}
 \title{Plots multi-criteria results after tuning using ggvis.}
 \usage{
-plotTuneMultiCritResultGGVIS(res, path = TRUE)
+plotTuneMultiCritResultGGVIS(res, path = TRUE, point.info = "hover",
+  point.trafo = TRUE)
 }
 \arguments{
-\item{res}{[\code{\link{TuneMultiCritResult}}]\cr
-Result of \code{\link{tuneParamsMultiCrit}}.}
+\item{res}{(\link{TuneMultiCritResult})\cr
+Result of \link{tuneParamsMultiCrit}.}
 
-\item{path}{[\code{logical(1)}]\cr
+\item{path}{(\code{logical(1)})\cr
 Visualize all evaluated points (or only the non-dominated pareto front)?
 Points are colored according to their location.
 Default is \code{TRUE}.}
+
+\item{point.info}{(\code{character(1)})\cr
+Show for each point which hyper parameters led to this point?
+For \code{"click"}, information is displayed on mouse click.
+For \code{"hover"}, information is displayed on mouse hover.
+If set to \code{"none"}, no information is displayed.
+Default is \code{"hover"}.}
+
+\item{point.trafo}{(\code{logical(1)})\cr
+Should the information show the transformed hyper parameters?
+Default is \code{TRUE}.}
 }
 \value{
-a ggvis plot object.
+(`character(1)`) ggvis plot object.
 }
 \description{
 Visualizes the pareto front and possibly the dominated points.

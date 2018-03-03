@@ -52,7 +52,7 @@ predictLearner.classif.RRF = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.RRF = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   ctrl = list(...)
   if (is.null(ctrl$type)) {
     ctrl$type = 2L

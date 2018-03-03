@@ -4,18 +4,18 @@
 #' Merges factor levels that occur only infrequently into combined levels with a higher frequency.
 #'
 #' @template arg_task
-#' @param cols [\code{character}]
+#' @param cols ([character])
 #'   Which columns to convert.
 #'   Default is all factor and character columns.
-#' @param min.perc [\code{numeric(1)}]\cr
+#' @param min.perc (`numeric(1)`)\cr
 #'   The smallest levels of a factor are merged until their combined proportion
-#'   w.r.t. the length of the factor exceeds \code{min.perc}.
+#'   w.r.t. the length of the factor exceeds `min.perc`.
 #'   Must be between 0 and 1.
 #'   Default is 0.01.
-#' @param new.level [\code{character(1)}]\cr
+#' @param new.level (`character(1)`)\cr
 #'   New name of merged level.
 #'   Default is \dQuote{.merged}
-#' @return \code{Task}, where merged levels are combined into a new level of name \code{new.level}.
+#' @return `Task`, where merged levels are combined into a new level of name `new.level`.
 #' @family eda_and_preprocess
 #' @export
 mergeSmallFactorLevels = function(task, cols = NULL, min.perc = 0.01, new.level = ".merged") {

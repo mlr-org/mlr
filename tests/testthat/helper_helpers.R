@@ -48,22 +48,19 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   test = df[-inds, ]
 
   lrn = do.call("makeLearner", c(list(t.name), parset))
-  # FIXME this heuristic will backfire eventually
-  if (length(target) == 0)
-    task = makeClusterTask(data = df)
-  else if (is.numeric(df[, target]))
-    task = makeRegrTask(data = df, target = target)
-  else if (is.factor(df[, target]))
-    task = makeClassifTask(data = df, target = target)
-  else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.logical(df[, target[2L]]))
-    task = makeSurvTask(data = df, target = target)
-  else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]]))
-    task = makeMultilabelTask(data = df, target = target)
-  else
+  task = switch(lrn$type,
+    cluster = makeClusterTask(data = df),
+    regr = makeRegrTask(data = df, target = target),
+    classif = makeClassifTask(data = df, target = target),
+    surv = makeSurvTask(data = df, target = target),
+    multilabel = makeMultilabelTask(data = df, target = target),
+    oneclass = makeOneClassTask(data = df, target = target, positive = oneclass.positive, negative = oneclass.negative))
+
+  if (is.null(task))
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
 
-  if (inherits(m, "FailureModel")){
+  if (inherits(m, "FailureModel")) {
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
@@ -74,12 +71,17 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     } else {
     # to avoid issues with dropped levels in the class factor we only check the elements as chars
     if (is.numeric(cp$data$response) && is.numeric(old.predicts))
-      expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      if (lrn$predict.type == "se") {
+        expect_equal(unname(cbind(cp$data$response, cp$data$se)), unname(old.predicts), tol = 1e-5)
+      } else {
+        expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      }
     else
       expect_equal(as.character(cp$data$response), as.character(old.predicts))
     }
   }
 }
+
 
 testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, parset.list) {
   inds = train.inds
@@ -94,7 +96,46 @@ testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, 
 }
 
 
-testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) {
+testProb = function(t.name, df, target, train.inds, old.probs, parset = list(), positive = NULL, negative = NULL) {
+  inds = train.inds
+  train = df[inds, ]
+  test = df[-inds, ]
+
+  if (length(target) == 1) {
+    if (grepl("oneclass", t.name)) {
+      task = makeOneClassTask(data = df, target = target, positive = positive, negative = negative)
+    } else {
+      task = makeClassifTask(data = df, target = target)
+    }
+  } else {
+    task = makeMultilabelTask(data = df, target = target)
+  }
+  lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
+  m = try(train(lrn, task, subset = inds))
+
+  if (inherits(m, "FailureModel")) {
+    expect_is(old.predicts, "try-error")
+  } else{
+    cp = predict(m, newdata = test)
+    # dont need names for num vector, 2 classes
+    if (is.numeric(old.probs))
+      names(old.probs) = NULL
+    else
+      old.probs = as.matrix(old.probs)
+
+    p = getPredictionProbabilities(cp)
+    if (is.data.frame(p))
+      p = as.matrix(p)
+    # we change names a bit so dont check them
+    colnames(p) = colnames(old.probs) = NULL
+    rownames(p) = rownames(old.probs) = NULL
+    class(old.probs) = NULL
+    expect_equal(p, old.probs)
+  }
+}
+
+testProbWithTol = function(t.name, df, target, train.inds, old.probs, parset = list(),
+  tol = 1e-04) {
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -124,11 +165,11 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
     colnames(p) = colnames(old.probs) = NULL
     rownames(p) = rownames(old.probs) = NULL
     class(old.probs) = NULL
-    expect_equal(p, old.probs)
+    expect_equal(p, old.probs, tolerance = tol)
   }
 }
 
-testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parset.list) {
+testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parset.list, positive = NULL, negative = NULL) {
   inds = train.inds
   train = df[inds, ]
   test = df[-inds, ]
@@ -136,7 +177,21 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
-    testProb(t.name, df, target, train.inds, old.probs, parset)
+    testProb(t.name, df, target, train.inds, old.probs, parset, positive, negative)
+  }
+}
+
+
+testProbParsetsWithTol = function(t.name, df, target, train.inds, old.probs.list, parset.list,
+  tol = 1e-04) {
+  inds = train.inds
+  train = df[inds, ]
+  test = df[-inds, ]
+
+  for (i in seq_along(parset.list)) {
+    parset = parset.list[[i]]
+    old.probs = old.probs.list[[i]]
+    testProbWithTol(t.name, df, target, train.inds, old.probs, parset, tol = tol)
   }
 }
 

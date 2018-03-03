@@ -96,3 +96,47 @@ test_that("training performance works as expected (#1357)", {
   r = resample(lrn, binaryclass.task, rdesc, measures = list(setAggregation(num, train.mean)))
   expect_gt(r$measures.train$num, getTaskSize(binaryclass.task) * 0.5 + 1)
 })
+
+test_that("Wrapper works with weights, we had issue #2047", {
+  n = nrow(binaryclass.df)
+  w = 1:n
+  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target, weights = w)
+  b = table(getTaskTargets(task))
+
+  # weights from task, use all
+  lrn = makeOversampleWrapper("classif.__mlrmocklearners__6", osw.rate = 1)
+  m = train(lrn, task)
+  expect_set_equal(getLearnerModel(m, more.unwrap = TRUE)$weights, w)
+
+  lrn = makeUndersampleWrapper("classif.__mlrmocklearners__6", usw.rate = 1)
+  m = train(lrn, task)
+  expect_set_equal(getLearnerModel(m, more.unwrap = TRUE)$weights, w)
+
+  # weights from task, really sample
+  lrn = makeOversampleWrapper("classif.__mlrmocklearners__6", osw.rate = 2)
+  m = train(lrn, task)
+  u = getLearnerModel(m, more.unwrap = TRUE)$weights
+  expect_equal(length(u), min(b) * 2 + max(b))
+  expect_subset(u, w)
+
+  lrn = makeUndersampleWrapper("classif.__mlrmocklearners__6", usw.rate = 0.5)
+  m = train(lrn, task)
+  u = getLearnerModel(m, more.unwrap = TRUE)$weights
+  expect_equal(length(u), round(max(b) / 2) + min(b))
+  expect_subset(u, w)
+
+  # weights from train
+  subset = c(head(which(getTaskTargets(task) == names(b)[1]), 5), head(which(getTaskTargets(task) == names(b)[2]), 5))
+  lrn = makeOversampleWrapper("classif.__mlrmocklearners__6", osw.rate = 2)
+  m = train(lrn, task, subset = subset, weights = 1:10)
+  u = getLearnerModel(m, more.unwrap = TRUE)$weights
+  expect_equal(length(u), 15)
+  expect_subset(u, 1:10)
+
+  lrn = makeUndersampleWrapper("classif.__mlrmocklearners__6", usw.rate = 2 / 5)
+  m = train(lrn, task, subset = subset, weights = 1:10)
+  u = getLearnerModel(m, more.unwrap = TRUE)$weights
+  expect_equal(length(u), 7)
+  expect_subset(u, 1:10)
+
+})

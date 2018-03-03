@@ -10,34 +10,36 @@ makeLearner(cl, id = cl, predict.type = "response",
   par.vals = list(), config = list())
 }
 \arguments{
-\item{cl}{[\code{character(1)}]\cr
+\item{cl}{(`character(1)`)\cr
 Class of learner. By convention, all classification learners
 start with \dQuote{classif.}, all regression learners with
 \dQuote{regr.}, all survival learners start with \dQuote{surv.},
-all clustering learners with \dQuote{cluster.}, and all multilabel
-classification learners start with \dQuote{multilabel.}.
+all clustering learners with \dQuote{cluster.}, all multilabel
+classification learners start with \dQuote{multilabel.}, and all
+one-classification learner (anomaly detection) with \dQuote{oneclass.}.
 A list of all integrated learners is available on the
-\code{\link{learners}} help page.}
+[learners] help page.}
 
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(\code{character(1)})\cr
 Id string for object. Used to display object.
 Default is \code{cl}.}
 
-\item{predict.type}{[\code{character(1)}]\cr
+\item{predict.type}{(\code{character(1)})\cr
 Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
 Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities),
 Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
+One-class classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 Default is \dQuote{response}.}
 
-\item{predict.threshold}{[\code{numeric}]\cr
-Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
-Only for binary classification it can be a single numerical threshold for the positive class.
-See \code{\link{setThreshold}} for details on how it is applied.
-Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
+\item{predict.threshold}{([numeric])\cr
+Threshold to produce class labels. Has to be `character(1)` named vector, where names correspond to class labels.
+Only for binary classification it can be `character(1)` single numerical threshold for the positive class.
+See [setThreshold] for details on how it is applied.
+Default is `NULL` which means 0.5 / an equal threshold for each class.}
 
-\item{fix.factors.prediction}{[\code{logical(1)}]\cr
+\item{fix.factors.prediction}{(\code{logical(1)})\cr
 In some cases, problems occur in underlying learners for factor features during prediction.
 If the new features have LESS factor levels than during training (a strict subset),
 the learner might produce an  error like
@@ -47,30 +49,30 @@ We will simply add the missing factor levels missing from the test feature
 (but present in training) to that feature.
 Default is \code{FALSE}.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Optional named (hyper)parameters.
 Alternatively these can be given using the \code{par.vals} argument.}
 
-\item{par.vals}{[\code{list}]\cr
+\item{par.vals}{(\link{list})\cr
 Optional list of named (hyper)parameters. The arguments in
 \code{...} take precedence over values in this list. We strongly
 encourage you to use one or the other to pass (hyper)parameters
 to the learner but not both.}
 
-\item{config}{[\code{named list}]\cr
-Named list of config option to overwrite global settings set via \code{\link{configureMlr}}
+\item{config}{(named \link{list})\cr
+Named list of config option to overwrite global settings set via \link{configureMlr}
 for this specific learner.}
 }
 \value{
-[\code{\link{Learner}}].
+(\link{Learner}).
 }
 \description{
 For a classification learner the \code{predict.type} can be set
 to \dQuote{prob} to predict probabilities and the maximum
 value selects the label. The threshold used to assign the label can later be changed using the
-\code{\link{setThreshold}} function.
+\link{setThreshold} function.
 
-To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+To see all possible properties of a learner, go to: \link{LearnerProperties}.
 }
 \examples{
 makeLearner("classif.rpart")

@@ -1,3 +1,3 @@
-#' @param subset [\code{integer} | \code{logical}]\cr
-#'   Selected cases. Either a logical or an index vector.
-#'   By default all observations are used.
+#' @param subset ([integer] | [logical] | `NULL`)\cr
+#'   Selected cases. Either `character(1)` logical or an index vector.
+#'   By default `NULL` if all observations are used.

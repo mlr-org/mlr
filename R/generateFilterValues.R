@@ -2,31 +2,31 @@
 #'
 #' @description
 #' Calculates numerical filter values for features.
-#' For a list of features, use \code{\link{listFilterMethods}}.
+#' For a list of features, use [listFilterMethods].
 #'
 #' @template arg_task
-#' @param method [\code{character}]\cr
+#' @param method ([character])\cr
 #'   Filter method(s), see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect [\code{integer(1)}]\cr
+#' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
-#' @param ... [any]\cr
-#'   Passed down to selected method. Can only be use if \code{method} contains one element.
-#' @param more.args [named list]\cr
+#' @param ... (any)\cr
+#'   Passed down to selected method. Can only be use if `method` contains one element.
+#' @param more.args (named [list])\cr
 #'   Extra args passed down to filter methods. List elements are named with the filter
-#'   \code{method} name the args should be passed down to.
-#'   A more general and flexible option than \code{...}.
+#'   `method` name the args should be passed down to.
+#'   A more general and flexible option than `...`.
 #'   Default is empty list.
-#' @return [\code{FilterValues}]. A \code{list} containing:
-#'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
+#' @return ([FilterValues]). A `list` containing:
+#'   \item{task.desc}{[[TaskDesc])\cr
 #'     Task description.}
-#'   \item{data}{[\code{data.frame}] with columns:
+#'   \item{data}{([data.frame]) with columns:
 #'     \itemize{
-#'       \item \code{name}[\code{character}]\cr
+#'       \item `name`([character])\cr
 #'         Name of feature.
-#'       \item \code{type}[\code{character}]\cr
+#'       \item `type`([character])\cr
 #'         Feature column type.
-#'       \item \code{method}[\code{numeric}]\cr
+#'       \item `method`([numeric])\cr
 #'         One column for each method with the feature importance values.
 #'     }}
 #' @family generate_plot_data
@@ -100,18 +100,18 @@ print.FilterValues = function(x, ...) {
 #'
 #' @description
 #' Calculates numerical filter values for features.
-#' For a list of features, use \code{\link{listFilterMethods}}.
+#' For a list of features, use [listFilterMethods].
 #'
 #' @template arg_task
-#' @param method [\code{character(1)}]\cr
+#' @param method (`character(1)`)\cr
 #'   Filter method, see above.
 #'   Default is \dQuote{randomForestSRC.rfsrc}.
-#' @param nselect [\code{integer(1)}]\cr
+#' @param nselect (`integer(1)`)\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Passed down to selected method.
-#' @return [\code{\link{FilterValues}}].
-#' @note \code{getFilterValues} is deprecated in favor of \code{\link{generateFilterValuesData}}.
+#' @return ([FilterValues]).
+#' @note `getFilterValues` is deprecated in favor of [generateFilterValuesData].
 #' @family filter
 #' @export
 getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ...) {
@@ -130,19 +130,19 @@ getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = get
 #' @family filter
 #' @family generate_plot_data
 #'
-#' @param fvalues [\code{\link{FilterValues}}]\cr
+#' @param fvalues ([FilterValues])\cr
 #'   Filter values.
-#' @param sort [\code{character(1)}]\cr
+#' @param sort (`character(1)`)\cr
 #'   Sort features like this.
 #'   \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
 #'   Default is decreasing.
-#' @param n.show [\code{integer(1)}]\cr
+#' @param n.show (`integer(1)`)\cr
 #'   Number of features (maximal) to show.
 #'   Default is 20.
-#' @param feat.type.cols [\code{logical(1)}]\cr
+#' @param feat.type.cols (`logical(1)`)\cr
 #'   Colors for factor and numeric features.
-#'   \code{FALSE} means no colors.
-#'   Default is \code{FALSE}.
+#'   `FALSE` means no colors.
+#'   Default is `FALSE`.
 #' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
@@ -162,9 +162,11 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   n.show = min(n.show, max(sapply(methods, function(x) sum(!is.na(data[[x]])))))
   data = melt(as.data.table(data), id.vars = c("name", "type"), variable = "method")
 
-  if (sort != "none")
-    data = do.call(rbind, lapply(methods, function(x)
-      head(sortByCol(data[data$method == x, ], "value", (sort == "inc")), n.show)))
+  if (sort != "none") {
+    sort.mult = if (sort == "inc") 1 else -1
+    setorderv(data, "value", sort.mult)
+    data = data[get("method") %in% methods, head(.SD, n.show), by = "method"]
+  }
 
   data$name = factor(data$name, levels = as.character(unique(data$name)))
   if (feat.type.cols)
@@ -195,12 +197,12 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #' @family plot
 #' @family filter
 #'
-#' @param fvalues [\code{\link{FilterValues}}]\cr
+#' @param fvalues ([FilterValues])\cr
 #'   Filter values.
-#' @param feat.type.cols [\code{logical(1)}]\cr
+#' @param feat.type.cols (`logical(1)`)\cr
 #'   Colors for factor and numeric features.
-#'   \code{FALSE} means no colors.
-#'   Default is \code{FALSE}.
+#'   `FALSE` means no colors.
+#'   Default is `FALSE`.
 #' @template ret_ggv
 #' @export
 #' @examples \dontrun{

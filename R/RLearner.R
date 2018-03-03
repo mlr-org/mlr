@@ -9,47 +9,47 @@
 #'
 #' For a general overview on how to integrate a learning algorithm into mlr's system, please read the
 #' section in the online tutorial:
-#' \url{http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html}
+#' <http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html>
 #'
-#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+#' To see all possible properties of a learner, go to: [LearnerProperties].
 #'
 #' @template arg_lrncl
-#' @param package [\code{character}]\cr
+#' @param package ([character])\cr
 #'   Package(s) to load for the implementation of the learner.
-#' @param properties [\code{character}]\cr
+#' @param properties ([character])\cr
 #'   Set of learner properties. See above.
-#'   Default is \code{character(0)}.
-#' @param class.weights.param [\code{character(1)}]\cr
+#'   Default is `character(0)`.
+#' @param class.weights.param (`character(1)`)\cr
 #'   Name of the parameter, which can be used for providing class weights.
-#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
+#' @param par.set ([ParamHelpers::ParamSet])\cr
 #'   Parameter set of (hyper)parameters and their constraints.
-#'   Dependent parameters with a \code{requires} field must use \code{quote} and not
-#'   \code{expression} to define it.
-#' @param par.vals [\code{list}]\cr
+#'   Dependent parameters with a `requires` field must use `quote` and not
+#'   `expression` to define it.
+#' @param par.vals ([list])\cr
 #'   Always set hyperparameters to these values when the object is constructed.
 #'   Useful when default values are missing in the underlying function.
 #'   The values can later be overwritten when the user sets hyperparameters.
 #'   Default is empty list.
-#' @param name [\code{character(1)}]\cr
+#' @param name (`character(1)`)\cr
 #'   Meaningful name for learner.
-#'   Default is \code{id}.
-#' @param short.name [\code{character(1)}]\cr
+#'   Default is `id`.
+#' @param short.name (`character(1)`)\cr
 #'   Short name for learner.
 #'   Should only be a few characters so it can be used in plots and tables.
-#'   Default is \code{id}.
-#' @param note [\code{character(1)}]\cr
+#'   Default is `id`.
+#' @param note (`character(1)`)\cr
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
-#' @param callees [\code{character}]\cr
+#' @param callees ([character])\cr
 #'   Character vector naming all functions of the learner's package being called which
 #'   have a relevant R help page.
-#'   Default is \code{character(0)}.
-#' @return [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
-#'   \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
-#'   \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}.
+#'   Default is `character(0)`.
+#' @return ([RLearner]). The specific subclass is one of [RLearnerClassif],
+#'   [RLearnerCluster], [RLearnerMultilabel],
+#'   [RLearnerRegr], [RLearnerSurv], [RLearnerOneClass].
 #' @name RLearner
 #' @rdname RLearner
-#' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv
+#' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv RLearnerOneClass
 NULL
 
 #' @export
@@ -67,7 +67,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   requirePackages(package, why = stri_paste("learner", id, sep = " "), default.method = "load")
 
   assertString(id)
-  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens"))
+  assertChoice(type, choices = c("oneclass", "classif", "regr", "multilabel", "surv", "cluster", "costsens"))
   assertSubset(properties, listLearnerProperties(type))
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
@@ -164,4 +164,13 @@ makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), propert
   )
 
   return(lrn)
+}
+
+#' @export
+#' @rdname RLearner
+makeRLearnerOneClass = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
+  addClasses(
+    makeRLearnerInternal(cl, "oneclass", package, par.set, par.vals, properties, name, short.name, note, callees),
+    c(cl, "RLearnerOneClass")
+  )
 }

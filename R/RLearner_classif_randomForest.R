@@ -55,15 +55,16 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
 #' @export
 getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
   if (.learner$predict.type == "response") {
-    unname(.model$learner.model$predicted)
+    m = getLearnerModel(.model, more.unwrap = TRUE)
+    unname(m$predicted)
   } else {
-   .model$learner.model$votes
+    getLearnerModel(.model, more.unwrap = TRUE)$votes
   }
 }
 
 #' @export
 getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   ctrl = list(...)
   if (is.null(ctrl$type)) {
     ctrl$type = 2L

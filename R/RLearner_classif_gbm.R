@@ -73,6 +73,6 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.gbm = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   gbm::relative.influence(mod, mod$n.trees, ...)
 }

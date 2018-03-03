@@ -27,7 +27,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
 
   if (td$n.feat["ordered"] > 0L && !hasLearnerProperties(learner, "ordered")) {
-    wrong.cols = getColNames(task, is.factor)
+    wrong.cols = getColNames(task, function(x) class(x)[1] == "ordered")
     stopf("Task '%s' has ordered factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
 
@@ -48,7 +48,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) {
       if (!hasLearnerProperties(learner, "oneclass"))
-        stopf("Task '%s' is a one-class-problem, but learner '%s' does not support that!", td$id, learner$id)
+        stopf("Task '%s' is a one-class classification problem, but learner '%s' does not support that!", td$id, learner$id)
     } else if (length(td$class.levels) == 2L) {
       if (!hasLearnerProperties(learner, "twoclass"))
         stopf("Task '%s' is a two-class-problem, but learner '%s' does not support that!", td$id, learner$id)

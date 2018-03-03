@@ -66,3 +66,66 @@ bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measur
   measures = checkMeasures(measures, task, aggr = b632plus)
   resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
 }
+
+#' @rdname resample
+#' @export
+growingcv = function(learner, task, horizon = 1, initial.window = .5, skip = 0, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner, ...)
+  rdesc = makeResampleDesc("GrowingCV", horizon = horizon, initial.window = initial.window, skip = skip)
+  measures = checkMeasures(measures, task, aggr = b632plus)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+fixedcv = function(learner, task, horizon = 1L, initial.window = .5, skip = 0, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner, ...)
+  rdesc = makeResampleDesc("FixedCV", horizon = horizon, initial.window = initial.window, skip = skip)
+  measures = checkMeasures(measures, task, aggr = b632plus)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+oneclasscv = function(learner, task, iters = 10L, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
+  rdesc = makeResampleDesc("OCCV", iters = iters, stratify = stratify)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+oneclassrepcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
+  rdesc = makeResampleDesc("OCRepCV", folds = folds, reps = reps, stratify = stratify)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+oneclassholdout = function(learner, task, split = 2 / 3, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
+  rdesc = makeResampleDesc("OCHoldout", split = split, stratify = stratify)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+oneclasssubsample = function(learner, task, iters = 30, split = 2 / 3, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
+  rdesc = makeResampleDesc("OCSubsample", iters = iters, split = split, stratify = stratify)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}
+
+#' @rdname resample
+#' @export
+oneclassbootstrap = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  learner = checkLearner(learner)
+  learner = setHyperPars(learner, ...)
+  rdesc = makeResampleDesc("OCBootstrap", iters = iters, stratify = stratify)
+  resample(learner, task, rdesc, measures = measures, models = models, keep.pred = keep.pred, show.info = show.info)
+}

@@ -1,3 +1,5 @@
+library(Matrix)
+library(MASS)
 library(methods)
 library(BBmisc)
 library(devtools)
@@ -19,7 +21,6 @@ data(Sonar, package = "mlbench")
 sonar.task = makeClassifTask("Sonar-example", data = Sonar, target = "Class")
 save(sonar.task, file = file.path(dn, "sonar.task.RData"), compress = "xz")
 
-
 set.seed(DATASEED)
 data(BreastCancer, package = "mlbench")
 BreastCancer$Id = NULL
@@ -31,6 +32,26 @@ set.seed(DATASEED)
 data(PimaIndiansDiabetes, package = "mlbench")
 pid.task = makeClassifTask("PimaIndiansDiabetes-example", data = PimaIndiansDiabetes, target = "diabetes", positive = "pos")
 save(pid.task, file = file.path(dn, "pid.task.RData"), compress = "xz")
+
+# one-classification (anomaly detection)
+set.seed(DATASEED)
+sigma = matrix(c(2, 0, 0, 5, 0, 0), 2, 2)
+normal = mvrnorm(n = 1000, rep(0, 2), sigma)
+colnames(normal) = paste0("V", 1:2)
+normal = as.data.frame(normal)
+normal$Target = "Normal"
+
+anomaly = matrix(sample(size = 50 * 2, x = 20:100, replace = TRUE), 50, 2)
+colnames(anomaly) = paste0("V", 1:2)
+anomaly = as.data.frame(anomaly)
+anomaly$Target = "Anomaly"
+data = rbind(normal, anomaly)
+data = na.omit(data)
+data[, 1:2] = scale(data[, 1:2])
+
+
+oneclass2d.task = makeOneClassTask("one-class-2d-example", data = data, target = "Target", coordinates = NULL, positive = "Anomaly", negative = "Normal")
+save(oneclass2d.task, file = file.path(dn, "oneclass2d.task.RData"))
 
 # regression
 set.seed(DATASEED)
