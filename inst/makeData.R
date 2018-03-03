@@ -1,7 +1,6 @@
 library(mlr)
 library(BBmisc)
 library(devtools)
-
 DATASEED = 7761  # nolint
 COMPRESSION = "xz" # nolint
 
