@@ -4,9 +4,10 @@ makeRLearner.fdaregr.fgam = function() {
     cl = "fdaregr.fgam",
     package = "refund",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
-      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
-      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),
+      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # see mgcv::s() documentation: the dimension of the basis used to represent the smooth term.
+      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # thin plate regression or cubic spline or cubic spline
+      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),  # see mgcv::s() documentation: The order of the penalty for this term (e.g. 2 for normal
+      # teti: tensor product smooths, t2: alternative tensor product smooths
       makeIntegerVectorLearnerParam(id = "mgcv.teti.m", lower = 1L),  # see mgcv::te() documentation
       makeIntegerVectorLearnerParam(id = "mgcv.teti.k", lower = 1L),  # see mgcv::te() documentation
       # skipped argvals
@@ -47,7 +48,7 @@ trainLearner.fdaregr.fgam = function(.learner, .task, .subset, .weights = NULL, 
   for (fdn in fdns) {
     gn = paste0(fdn, ".grid")
     mat.list[[fdn]]=  as.matrix(d[, tdesc$fd.features[[fdn]], drop = FALSE])
-    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k=%s, bs=%s)", fdn, Qtransform, deparse(mgcv.s.k), bs)
+    formula.terms[fdn] = sprintf("af(%s, basistype = 's', Qtransform = %d, k=%s, bs=%s)", fdn, Qtransform, deparse(mgcv.s.k), bs)  # refund::af: $\int_{T}F(X_i(t),t)dt$
   }
   mat.list = c(mat.list, fdg)
   mat.list[[tn]] = d[, tn]
