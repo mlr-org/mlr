@@ -151,7 +151,6 @@ parameter types can be handled.}
 }
 }
 \seealso{
-Other tune_multicrit: \code{\link{plotTuneMultiCritResultGGVIS}},
-  \code{\link{plotTuneMultiCritResult}},
+Other tune_multicrit: \code{\link{plotTuneMultiCritResult}},
   \code{\link{tuneParamsMultiCrit}}
 }

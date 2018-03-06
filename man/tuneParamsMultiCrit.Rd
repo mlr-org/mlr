@@ -67,6 +67,5 @@ plotTuneMultiCritResult(res, path = TRUE)
 }
 \seealso{
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},
-  \code{\link{plotTuneMultiCritResultGGVIS}},
   \code{\link{plotTuneMultiCritResult}}
 }

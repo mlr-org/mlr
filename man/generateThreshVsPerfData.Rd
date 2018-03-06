@@ -51,6 +51,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{plotFilterValues}}
 
 Other thresh_vs_perf: \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

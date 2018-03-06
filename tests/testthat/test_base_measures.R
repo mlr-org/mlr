@@ -684,15 +684,15 @@ test_that("check measure calculations", {
   expect_equal(f1.test, as.numeric(f1.perf))
   # check best and worst
 
-  expect_equal(measureMultiLabelF1(multi.y, multi.y), multilabel.f1$best)
-  expect_equal(measureMultiLabelF1(multi.y, !multi.y), multilabel.f1$worst)
+  expect_equal(measureMultilabelF1(multi.y, multi.y), multilabel.f1$best)
+  expect_equal(measureMultilabelF1(multi.y, !multi.y), multilabel.f1$worst)
 
   # compare with mldr: copy-pasted older mldr version
   # mldr had a bug when RealPositives or PredictedPositives are 0 (see https://github.com/fcharte/mldr/issues/36)
   mldr.precision = counters[-3, ]$TruePositives / counters[-3, ]$PredictedPositives
   mldr.recall = counters[-3, ]$TruePositives / counters[-3, ]$RealPositives
   mldr.fmeasure = mean(mldr.precision * mldr.recall * 2 / (mldr.precision + mldr.recall), na.rm = TRUE)
-  expect_equal(mldr.fmeasure, measureMultiLabelF1(multi.y[-3, ], multi.p[-3, ]))
+  expect_equal(mldr.fmeasure, measureMultilabelF1(multi.y[-3, ], multi.p[-3, ]))
 
   # manual checks
   expect_equal(measureMultilabelF1(matrix(tf, ncol = 2), matrix(tt, ncol = 2)), 2 * 1 / 3) # 1 TRUE-TRUE match of 3 TRUE values
@@ -876,34 +876,6 @@ test_that("measure properties", {
       res = all(getMeasureProperties(m) %in% props)
       all(res) & length(res) > 0
     })))
-})
-
-test_that("measures quickcheck", {
-  skip_on_cran()
-  options(warn = 2)
-  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
-  lrn = makeLearner("classif.rpart")
-
-  quickcheckTest(
-    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
-      {
-        classes = factor(c("foo", "bar"))
-        data$target = rep_len(classes, length.out = nrow(data))
-
-        train.ids = 1:(2 * nrow(data) / 3)
-        test.ids = setdiff(seq_len(nrow(data)), train.ids)
-        task = makeClassifTask(data = data, target = "target")
-
-        mod = train(lrn, task = task, subset = train.ids)
-        pred = predict(mod, task = task, subset = test.ids)
-        perf = performance(pred, measures = ms)
-
-        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
-      }
-    ),
-    about = "binary classification measures",
-    sample.size = 100
-  )
 })
 
 test_that("measures ppv denominator 0", {

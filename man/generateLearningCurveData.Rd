@@ -71,6 +71,5 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
-Other learning_curve: \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}}
+Other learning_curve: \code{\link{plotLearningCurve}}
 }
