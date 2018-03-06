@@ -928,9 +928,8 @@ test_that("bac works as intended with multiclass tasks", {
 
   perf = performance(pred, measures = bac)
   expected.bac = mean(diag(table(pred$data$truth, pred$data$response) / table(pred$data$truth, pred$data$truth)))
-    
+
   expect_equivalent(perf, expected.bac)
-                  
 })
 
 test_that("new bac gives the same result as old implementation", {
