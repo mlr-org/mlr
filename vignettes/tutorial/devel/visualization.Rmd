@@ -139,7 +139,7 @@ head(plt$data)
 plt
 ```
 
-```{r problematic chunks, fig.asp = 5/6}
+```{r problematic chunks, fig.asp = 5/6, eval = FALSE}
 plot(M ~ Value, data = plt$data, type = "b", xlab = plt$data$Feature[1])
 ```
 
