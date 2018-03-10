@@ -81,8 +81,13 @@ For performance assessment, a repeated spatial cross-validation with 5 folds and
 
 #### Spatial Cross-Validation
 
+```{r, echo = FALSE}
+spatial.task <- data("spatial.task")
+```
+
+
 ```{r, eval = TRUE}
-data("spatial.task")
+# data("spatial.task")
 spatial.task
 
 learner.rf = makeLearner("classif.ranger", predict.type = "prob")
