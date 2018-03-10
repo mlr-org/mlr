@@ -1,15 +1,15 @@
 #' @title Create control object for hyperparameter tuning with predefined design.
 #'
 #' @description
-#' Completely pre-specifiy a \code{data.frame} of design points to be evaluated
+#' Completely pre-specifiy a `data.frame` of design points to be evaluated
 #' during tuning. All kinds of parameter types can be handled.
 #'
 #' @inherit TuneControl
-#' @param design [\code{data.frame}]\cr
-#'   \code{data.frame} containing the different parameter settings to be evaluated.
-#'   The columns have to be named according to the \code{ParamSet} which will be used in \code{tune()}.
-#'   Proper designs can be created with \code{\link[ParamHelpers]{generateDesign}} for instance.
-#' @return [\code{\link{TuneControlDesign}}]
+#' @param design ([data.frame])\cr
+#'   `data.frame` containing the different parameter settings to be evaluated.
+#'   The columns have to be named according to the `ParamSet` which will be used in `tune()`.
+#'   Proper designs can be created with [ParamHelpers::generateDesign] for instance.
+#' @return ([TuneControlDesign])
 #' @aliases TuneControlDesign
 #' @family tune
 #' @export

@@ -20,3 +20,4 @@ testinfo.RData
 ^thirdparty$
 ^.git$
 ^makeR$
+.github

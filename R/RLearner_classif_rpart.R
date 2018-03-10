@@ -45,6 +45,6 @@ predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$variable.importance
 }

@@ -9,16 +9,16 @@
 makeCostSensWeightedPairsWrapper(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The classification learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{\link{Learner}}].
+(\link{Learner}).
 }
 \description{
 Creates a wrapper, which can be used like any other learner object.
-Models can easily be accessed via \code{\link{getLearnerModel}}.
+Models can easily be accessed via \link{getLearnerModel}.
 
 For each pair of labels, we fit a binary classifier.
 For each observation we define the label to be the element of the pair with minimal costs.

@@ -31,7 +31,7 @@ getFailureModelDump.HomogeneousEnsembleModel = function(model) {
   ifelse(j == 0L, NULL, msgs[[j]])
 }
 
-#' Deprecated, use \code{getLearnerModel} instead.
+#' Deprecated, use `getLearnerModel` instead.
 #' @param model Deprecated.
 #' @param learner.models Deprecated.
 #' @export

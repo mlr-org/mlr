@@ -4,20 +4,20 @@
 #' Creates a scatter plot, where each line refers to a task.
 #' On that line the aggregated scores for all learners are plotted, for that task.
 #' Optionally, you can apply a rank transformation or just use one of ggplot2's transformations
-#' like \code{\link[ggplot2]{scale_x_log10}}.
+#' like [ggplot2::scale_x_log10].
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param trafo [\code{character(1)}]\cr
+#' @param trafo (`character(1)`)\cr
 #'   Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 #'   (with average handling of ties) of the scores per task.
-#'   NB: You can add always add \code{\link[ggplot2]{scale_x_log10}} to the result to put scores on a log scale.
+#'   NB: You can add always add [ggplot2::scale_x_log10] to the result to put scores on a log scale.
 #'   Default is \dQuote{none}.
 #' @template arg_order_tsks
-#' @param pointsize [\code{numeric(1)}]\cr
-#'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+#' @param pointsize (`numeric(1)`)\cr
+#'   Point size for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 4.
-#' @param jitter [\code{numeric(1)}]\cr
+#' @param jitter (`numeric(1)`)\cr
 #'   Small vertical jitter to deal with overplotting in case of equal scores.
 #'   Default is 0.05.
 #' @template arg_prettynames
@@ -55,8 +55,11 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
     levels(df$learner.id) = learner.short.names
   }
 
-  p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id"))
+  # shape parameter is added and set to 19 later, so it can be changed
+  p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id", shape = "learner.id"))
   p = p + geom_point(size = pointsize, position = position_jitter(width = 0, height = jitter))
+  # set shape to standard shape 19
+  p = p + scale_shape_manual(values = rep(19, length(getBMRLearnerIds(bmr))))
   # we dont need y label, the task names speak for themselves
   p = p + ylab("")
   p = p + xlab(xlab.string)

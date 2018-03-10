@@ -8,20 +8,20 @@ mergeSmallFactorLevels(task, cols = NULL, min.perc = 0.01,
   new.level = ".merged")
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{cols}{[\code{character}]
+\item{cols}{(\link{character})
 Which columns to convert.
 Default is all factor and character columns.}
 
-\item{min.perc}{[\code{numeric(1)}]\cr
+\item{min.perc}{(\code{numeric(1)})\cr
 The smallest levels of a factor are merged until their combined proportion
 w.r.t. the length of the factor exceeds \code{min.perc}.
 Must be between 0 and 1.
 Default is 0.01.}
 
-\item{new.level}{[\code{character(1)}]\cr
+\item{new.level}{(\code{character(1)})\cr
 New name of merged level.
 Default is \dQuote{.merged}}
 }

@@ -9,28 +9,28 @@ plotBMRBoxplots(bmr, measure = NULL, style = "box", order.lrns = NULL,
   facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 
-\item{measure}{[\code{\link{Measure}}]\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{style}{[\code{character(1)}]\cr
+\item{style}{(\code{character(1)})\cr
 Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 Default is \dQuote{box}.}
 
-\item{order.lrns}{[\code{character(n.learners)}]\cr 
+\item{order.lrns}{(\code{character(n.learners)})\cr
 Character vector with \code{learner.ids} in new order.}
 
-\item{order.tsks}{[\code{character(n.tasks)}] \cr 
+\item{order.tsks}{(\code{character(n.tasks)})\cr
 Character vector with \code{task.ids} in new order.}
 
-\item{pretty.names}{[\code{logical(1)}]\cr
-Whether to use the \code{\link{Measure}} name and the \code{\link{Learner}}
+\item{pretty.names}{(\code{logical(1)})\cr
+Whether to use the \link{Measure} name and the \link{Learner}
 short name instead of the id. Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
 In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
@@ -49,13 +49,9 @@ Other plot: \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 
 Other benchmark: \code{\link{BenchmarkResult}},

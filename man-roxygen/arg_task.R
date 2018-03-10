@@ -1,3 +1,3 @@
-#' @param task [\code{\link{Task}}]\cr
+#' @param task ([Task])\cr
 #'   The task.
-
+#' @md

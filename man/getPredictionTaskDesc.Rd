@@ -7,7 +7,7 @@
 getPredictionTaskDesc(pred)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 }
 \value{
@@ -20,7 +20,6 @@ See title.
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
-  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}

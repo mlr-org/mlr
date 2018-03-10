@@ -8,25 +8,25 @@ plotResiduals(obj, type = "scatterplot", loess.smooth = TRUE, rug = TRUE,
   pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{[\code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
+\item{obj}{(\link{Prediction} | \link{BenchmarkResult})\cr
 Input data.}
 
 \item{type}{Type of plot. Can be \dQuote{scatterplot}, the default. Or
 \dQuote{hist}, for a histogram, or in case of classification problems
 a barplot, displaying the residuals.}
 
-\item{loess.smooth}{[\code{logical(1)}]\cr
+\item{loess.smooth}{(\code{logical(1)})\cr
 Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
 Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.}
 
-\item{rug}{[\code{logical(1)}]\cr
+\item{rug}{(\code{logical(1)})\cr
 Should marginal distributions be added to the plot? Defaults to \code{TRUE}.
 Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.}
 
-\item{pretty.names}{[\code{logical(1)}]\cr
+\item{pretty.names}{(\code{logical(1)})\cr
 Whether to use the short name of the learner instead of its ID in labels.
 Defaults to \code{TRUE}. \cr
-Only applicable if a \code{\link{BenchmarkResult}}
+Only applicable if a \link{BenchmarkResult}
 is passed to \code{obj} in the function call, ignored otherwise.}
 }
 \value{
@@ -42,12 +42,8 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

@@ -6,136 +6,99 @@
 \title{Generate partial dependence.}
 \usage{
 generatePartialDependenceData(obj, input, features, interaction = FALSE,
-  derivative = FALSE, individual = FALSE, center = NULL, fun = mean,
-  bounds = c(qnorm(0.025), qnorm(0.975)), resample = "none", fmin, fmax,
-  gridsize = 10L, range = NULL, ...)
+  derivative = FALSE, individual = FALSE, fun = mean,
+  bounds = c(qnorm(0.025), qnorm(0.975)), uniform = TRUE, n = c(10, NA),
+  ...)
 }
 \arguments{
-\item{obj}{[\code{\link{WrappedModel}}]\cr
-Result of \code{\link{train}}.}
+\item{obj}{(\link{WrappedModel})\cr
+Result of \link{train}.}
 
-\item{input}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{input}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{features}{[\code{character}]\cr
+\item{features}{\link{character}\cr
 A vector of feature names contained in the training data.
 If not specified all features in the \code{input} will be used.}
 
-\item{interaction}{[\code{logical(1)}]\cr
+\item{interaction}{(\code{logical(1)})\cr
 Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
 prediction grid for each feature is taken, and the partial dependence at each unique combination of
 values of the features is estimated. Note that if the length of \code{features} is greater than two,
-\code{\link{plotPartialDependence}} and \code{\link{plotPartialDependenceGGVIS}} cannot be used.
+\link{plotPartialDependence} cannot be used.
 If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
 than two.
 Default is \code{FALSE}.}
 
-\item{derivative}{[\code{logical(1)}]\cr
+\item{derivative}{(\code{logical(1)})\cr
 Whether or not the partial derivative of the learned function with respect to the features should be
 estimated. If \code{TRUE} \code{interaction} must be \code{FALSE}. The partial derivative of individual
 observations may be estimated. Note that computation time increases as the learned prediction function
 is evaluated at \code{gridsize} points * the number of points required to estimate the partial derivative.
-Additional arguments may be passed to \code{\link[numDeriv]{grad}} (for regression or survival tasks) or
-\code{\link[numDeriv]{jacobian}} (for classification tasks). Note that functions which are not smooth may
+Additional arguments may be passed to \link[numDeriv:grad]{numDeriv::grad} (for regression or survival tasks) or
+\link[numDeriv:jacobian]{numDeriv::jacobian} (for classification tasks). Note that functions which are not smooth may
 result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
 or estimates trending towards +/- infinity (at discontinuities).
 Default is \code{FALSE}.}
 
-\item{individual}{[\code{logical(1)}]\cr
+\item{individual}{(\code{logical(1)})\cr
 Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
 rather than aggregating (using \code{fun}) the partial dependences of \code{features}, plot the
 partial dependences of all observations in \code{data} across all values of the \code{features}.
 The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 Default is \code{FALSE}.}
 
-\item{center}{[\code{list}]\cr
-A named list containing the fixed values of the \code{features}
-used to calculate an individual partial dependence which is then
-subtracted from each individual partial dependence made across the prediction grid created for the
-\code{features}: centering the individual partial dependence lines to make them more interpretable.
-This argument is ignored if \code{individual != TRUE}.
-Default is \code{NULL}.}
+\item{fun}{\code{function}\cr
 
-\item{fun}{[\code{function}]\cr
-For regression, a function that accepts a numeric vector and returns either a single number
-such as a measure of location such as the mean, or three numbers, which give a lower bound,
-a measure of location, and an upper bound. Note if three numbers are returned they must be
-in this order. For classification with \code{predict.type = "prob"} the function must accept
-a numeric matrix with the number of columns equal to the number of class levels of the target.
-For classification with \code{predict.type = "response"} (the default) the function must accept
-a character vector and output a numeric vector with length equal to the number of classes in the
-target feature. Two variables, \code{data} and \code{newdata} are made available to \code{fun} internally via a
-wrapper. `data` is the training data from `input` and `newdata` contains a single point from the
-prediction grid for \code{features} along with the training data for features not in \code{features}.
-This allows the computation of weights based on comparisons of the prediction grid to the training data.
+A function which operates on the output on the predictions made on the \code{input} data. For regression
+this means a numeric vector, and, e.g., for a multiclass classification problem, this migh instead be probabilities
+which are returned as a numeric matrix. This argument can return vectors of arbitrary length, however,
+if their length is greater than one, they must by named, e.g., \code{fun = mean} or
+\code{fun = function(x) c("mean" = mean(x), "variance" = var(x))}.
 The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 in which case the default is the proportion of observations predicted to be in each class.}
 
-\item{bounds}{[\code{numeric(2)}]\cr
+\item{bounds}{(\code{numeric(2)})\cr
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
 Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.}
 
-\item{resample}{[\code{character(1)}]\cr
-Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
-values are sampled with replacement from the training data. If \dQuote{subsample} then
-values are sampled without replacement from the training data. If \dQuote{none} an evenly spaced
-grid between either the empirical minimum and maximum, or the minimum and maximum defined by
-\code{fmin} and \code{fmax}, is created.
-Default is \dQuote{none}.}
+\item{uniform}{(\code{logical(1)})\cr
+Whether or not the prediction grid for the \code{features} is a uniform grid of size \code{n[1]} or sampled with
+replacement from the \code{input}.
+Default is \code{TRUE}.}
 
-\item{fmin}{[\code{numeric}]\cr
-The minimum value that each element of \code{features} can take.
-This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
-than the theoretical minimum for a given feature. This only applies to numeric features and a
-\code{NA} should be inserted into the vector if the corresponding feature is a factor.
-Default is the empirical minimum of each numeric feature and NA for factor features.}
+\item{n}{(\code{integer21})\cr
+The first element of \code{n} gives the size of the prediction grid created for each feature.
+The second element of \code{n} gives the size of the sample to be drawn without replacement from the \code{input} data.
+Setting \code{n[2]} less than the number of rows in the \code{input} will decrease computation time.
+The default for \code{n[1]} is 10, and the default for \code{n[2]} is the number of rows in the \code{input}.}
 
-\item{fmax}{[\code{numeric}]\cr
-The maximum value that each element of \code{features} can take.
-This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
-than the theoretical maximum for a given feature. This only applies to numeric features and a
-\code{NA} should be inserted into the vector if the corresponding feature is a factor.
-Default is the empirical maximum of each numeric feature and NA for factor features.}
-
-\item{gridsize}{[\code{integer(1)}]\cr
-The length of the prediction grid created for each feature.
-If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
-the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
-length of the evenly spaced grid created.}
-
-\item{range}{[\code{list}]\cr
-The range of values of the feature you would want the partial plots on - passed as a numeric list}
-
-\item{...}{additional arguments to be passed to \code{\link{predict}}.}
+\item{...}{additional arguments to be passed to \link[mmpf:marginalPrediction]{mmpf::marginalPrediction}.}
 }
 \value{
-[\code{PartialDependenceData}]. A named list, which contains the partial dependence,
-  input data, target, features, task description, and other arguments controlling the type of
-  partial dependences made.
+\link{PartialDependenceData}. A named list, which contains the partial dependence,
+input data, target, features, task description, and other arguments controlling the type of
+partial dependences made.
 
 Object members:
-  \item{data}{[\code{data.frame}]\cr
-    Has columns for the prediction: one column for regression and
-    survival analysis, and a column for class and the predicted probability for classification as well
-    as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
-    additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
-  \item{task.desc}{[\code{\link{TaskDesc}}]\cr
-    Task description.}
-  \item{target}{Target feature for regression, target feature levels for classification,
-        survival and event indicator for survival.}
-  \item{features}{[\code{character}]\cr
-    Features argument input.}
-  \item{interaction}{[\code{logical(1)}]\cr
-    Whether or not the features were interacted (i.e. conditioning).}
-  \item{derivative}{[\code{logical(1)}]\cr
-    Whether or not the partial derivative was estimated.}
-  \item{individual}{[\code{logical(1)}]\cr
-    Whether the partial dependences were aggregated or the individual curves are retained.}
-  \item{center}{[\code{logical(1)}]\cr
-    If \code{individual == TRUE} whether the partial dependence at the values of the
-                features specified was subtracted from the individual partial dependences. Only displayed if
-                \code{individual == TRUE}.}
+\item{data}{\link{data.frame}\cr
+Has columns for the prediction: one column for regression and
+survival analysis, and a column for class and the predicted probability for classification as well
+as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
+additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
+\item{task.desc}{\link{TaskDesc}\cr
+Task description.}
+\item{target}{Target feature for regression, target feature levels for classification,
+survival and event indicator for survival.}
+\item{features}{\link{character}\cr
+Features argument input.}
+\item{interaction}{(\code{logical(1)})\cr
+Whether or not the features were interacted (i.e. conditioning).}
+\item{derivative}{(\code{logical(1)})\cr
+Whether or not the partial derivative was estimated.}
+\item{individual}{(\code{logical(1)})\cr
+Whether the partial dependences were aggregated or the individual curves are retained.}
 }
 \description{
 Estimate how the learned prediction function is affected by one or more features.
@@ -154,36 +117,6 @@ lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
 plotPartialDependence(pd, data = getTaskData(iris.task))
-
-# simulated example with weights computed via the joint distribution
-# in practice empirical weights could be constructed by estimating the joint
-# density from the training data (the data arg to fun) and computing the probability
-# of the prediction grid under this estimated density (the newdata arg) or
-# by using something like data depth or outlier classification to weight the
-# unusualness of points in arg newdata.
-sigma = matrix(c(1, .5, .5, 1), 2, 2)
-C = chol(sigma)
-X = replicate(2, rnorm(100)) \%*\% C
-alpha = runif(2, -1, 1)
-y = X \%*\% alpha
-df = data.frame(y, X)
-tsk = makeRegrTask(data = df, target = "y")
-fit = train("regr.svm", tsk)
-
-w.fun = function(x, newdata) {
- # compute multivariate normal density given sigma
- sigma = matrix(c(1, .5, .5, 1), 2, 2)
- dec = chol(sigma)
- tmp = backsolve(dec, t(newdata), transpose = TRUE)
- rss = colSums(tmp^2)
- logretval = -sum(log(diag(dec))) - 0.5 * ncol(newdata) * log(2 * pi) - 0.5 * rss
- w = exp(logretval)
- # weight prediction grid given probability of grid points under the joint
- # density
- sum(w * x) / sum(w)
-}
-
-generatePartialDependenceData(fit, tsk, "X1", fun = w.fun)
 }
 \references{
 Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.
@@ -191,14 +124,12 @@ Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking 
 Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 }
 \seealso{
-Other partial_dependence: \code{\link{plotPartialDependenceGGVIS}},
-  \code{\link{plotPartialDependence}}
+Other partial_dependence: \code{\link{plotPartialDependence}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}},

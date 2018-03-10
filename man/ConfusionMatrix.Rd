@@ -4,18 +4,18 @@
 \alias{ConfusionMatrix}
 \title{Confusion matrix}
 \description{
-The result of \code{\link{calculateConfusionMatrix}}.
+The result of \link{calculateConfusionMatrix}.
 
 Object members:
 \describe{
-\item{result [\code{matrix}]}{Confusion matrix of absolute values and marginals. Can also contain
-  row and column sums of observations.}
-\item{task.desc [\code{\link{TaskDesc}}]}{Additional information about the task.}
-\item{sums [\code{logical(1)}]}{Flag if marginal sums of observations are calculated.}
-\item{relative [\code{logical(1)}]}{Flag if the relative confusion matrices are calculated.}
-\item{relative.row [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by row.}
-\item{relative.col [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by column.}
-\item{relative.error [\code{numeric(1)}]}{Relative error overall.}
+\item{result (\link{matrix})}{Confusion matrix of absolute values and marginals. Can also contain
+row and column sums of observations.}
+\item{task.desc (\link{TaskDesc})}{Additional information about the task.}
+\item{sums (\code{logical(1)})}{Flag if marginal sums of observations are calculated.}
+\item{relative (\code{logical(1)})}{Flag if the relative confusion matrices are calculated.}
+\item{relative.row (\link{matrix})}{Confusion matrix of relative values and marginals normalized by row.}
+\item{relative.col (\link{matrix})}{Confusion matrix of relative values and marginals normalized by column.}
+\item{relative.error (\code{numeric(1)})}{Relative error overall.}
 }
 }
 \seealso{

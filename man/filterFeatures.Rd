@@ -8,49 +8,49 @@ filterFeatures(task, method = "randomForestSRC.rfsrc", fval = NULL,
   perc = NULL, abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{method}{[\code{character(1)}]\cr
-See \code{\link{listFilterMethods}}.
+\item{method}{(\code{character(1)})\cr
+See \link{listFilterMethods}.
 Default is \dQuote{randomForestSRC.rfsrc}.}
 
-\item{fval}{[\code{\link{FilterValues}}]\cr
-Result of \code{\link{generateFilterValuesData}}.
+\item{fval}{(\link{FilterValues})\cr
+Result of \link{generateFilterValuesData}.
 If you pass this, the filter values in the object are used for feature filtering.
 \code{method} and \code{...} are ignored then.
 Default is \code{NULL} and not used.}
 
-\item{perc}{[\code{numeric(1)}]\cr
+\item{perc}{(\code{numeric(1)})\cr
 If set, select \code{perc}*100 top scoring features.
 Mutually exclusive with arguments \code{abs} and \code{threshold}.}
 
-\item{abs}{[\code{numeric(1)}]\cr
+\item{abs}{(\code{numeric(1)})\cr
 If set, select \code{abs} top scoring features.
 Mutually exclusive with arguments \code{perc} and \code{threshold}.}
 
-\item{threshold}{[\code{numeric(1)}]\cr
+\item{threshold}{(\code{numeric(1)})\cr
 If set, select features whose score exceeds \code{threshold}.
 Mutually exclusive with arguments \code{perc} and \code{abs}.}
 
-\item{mandatory.feat}{[\code{character}]\cr
+\item{mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Passed down to selected filter method.}
 }
 \value{
-[\code{\link{Task}}].
+\link{Task}.
 }
 \description{
-First, calls \code{\link{generateFilterValuesData}}.
+First, calls \link{generateFilterValuesData}.
 Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
 Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

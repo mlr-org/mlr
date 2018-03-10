@@ -16,4 +16,10 @@ ehthumbs.db
 Icon?
 Thumbs.db
 *xgboost.model
+.#*
+*~
+\#*#
+.project
+.settings
+.ipynb_checkpoints
 man/*.Rd

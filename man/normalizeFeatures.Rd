@@ -8,10 +8,10 @@ normalizeFeatures(obj, target = character(0L), method = "standardize",
   cols = NULL, range = c(0, 1), on.constant = "quiet")
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{target}{[\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
+\item{target}{(\code{character(1)} | \code{character(2)} | \code{character(n.classes)})\cr
 Name(s) of the target variable(s).
 Only used when \code{obj} is a data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
@@ -20,42 +20,42 @@ For multilabel classification these are the names of logical columns that indica
 a class label is present and the number of target variables corresponds to the number of
 classes.}
 
-\item{method}{[\code{character(1)}]\cr
+\item{method}{(\code{character(1)})\cr
 Normalizing method. Available are:\cr
 \dQuote{center}: Subtract mean.\cr
 \dQuote{scale}: Divide by standard deviation.\cr
 \dQuote{standardize}: Center and scale.\cr
 \dQuote{range}: Scale to a given range.\cr}
 
-\item{cols}{[\code{character}]\cr
+\item{cols}{(\link{character})\cr
 Columns to normalize. Default is to use all numeric columns.}
 
-\item{range}{[\code{numeric(2)}]\cr
+\item{range}{(\code{numeric(2)})\cr
 Range for method \dQuote{range}.
 Default is \code{c(0,1)}.}
 
-\item{on.constant}{[\code{character(1)}]\cr
+\item{on.constant}{(\code{character(1)})\cr
 How should constant vectors be treated? Only used, of \dQuote{method != center},
 since this methods does not fail for constant vectors. Possible actions are:\cr
 \dQuote{quiet}: Depending on the method, treat them quietly:\cr
-  \dQuote{scale}: No division by standard deviation is done, input values.
-     will be returned untouched.\cr
-  \dQuote{standardize}: Only the mean is subtracted, no division is done.\cr
-  \dQuote{range}: All values are mapped to the mean of the given range.\cr
+\dQuote{scale}: No division by standard deviation is done, input values.
+will be returned untouched.\cr
+\dQuote{standardize}: Only the mean is subtracted, no division is done.\cr
+\dQuote{range}: All values are mapped to the mean of the given range.\cr
 \dQuote{warn}: Same behaviour as \dQuote{quiet}, but print a warning message.\cr
 \dQuote{stop}: Stop with an error.\cr}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
+\link{data.frame} | \link{Task}. Same type as \code{obj}.
 }
 \description{
 Normalize features by different methods.
-Internally \code{\link[BBmisc]{normalize}} is used for every feature column.
+Internally \link[BBmisc:normalize]{BBmisc::normalize} is used for every feature column.
 Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.
 }
 \seealso{
-\code{\link[BBmisc]{normalize}}
+\link[BBmisc:normalize]{BBmisc::normalize}
 
 Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{createDummyFeatures}},

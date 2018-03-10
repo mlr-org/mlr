@@ -7,15 +7,15 @@
 getPredictionDump(pred)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 }
 \value{
-[\code{last.dump}].
+(\code{last.dump}).
 }
 \description{
 Returns the error dump that can be used with \code{debugger()} to evaluate errors.
-If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE} or if the
+If \link{configureMlr} configuration \code{on.error.dump} is \code{FALSE} or if the
 prediction did not fail, this returns \code{NULL}.
 }
 \seealso{

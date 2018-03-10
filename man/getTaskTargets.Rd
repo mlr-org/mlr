@@ -7,10 +7,10 @@
 getTaskTargets(task, recode.target = "no")
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{recode.target}{[\code{character(1)}]\cr
+\item{recode.target}{(\code{character(1)})\cr
 Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 In the two latter cases the target vector is converted into a numeric vector.
@@ -19,12 +19,12 @@ The positive class is coded as \dQuote{+1} and the negative class either as \dQu
 In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
-See \code{\link[survival]{Surv}} for the format specification.
+See \link[survival:Surv]{survival::Surv} for the format specification.
 Default for both binary classification and survival is \dQuote{no} (do nothing).}
 }
 \value{
 A \code{factor} for classification or a \code{numeric} for regression, a data.frame
-  of logical columns for multilabel.
+of logical columns for multilabel.
 }
 \description{
 Get target data of task.

@@ -13,7 +13,7 @@ getPredictionSE(pred)
 getPredictionTruth(pred)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 }
 \value{
@@ -21,20 +21,19 @@ See above.
 }
 \description{
 The following types are returned, depending on task type:
- \tabular{ll}{
-   classif     \tab factor\cr
-   regr        \tab numeric\cr
-   se          \tab numeric\cr
-   cluster     \tab integer\cr
-   surv        \tab numeric\cr
-   multilabel  \tab logical matrix, columns named with labels\cr
+\tabular{ll}{
+classif     \tab factor\cr
+regr        \tab numeric\cr
+se          \tab numeric\cr
+cluster     \tab integer\cr
+surv        \tab numeric\cr
+multilabel  \tab logical matrix, columns named with labels\cr
 }
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionTaskDesc}},
-  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}

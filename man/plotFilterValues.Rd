@@ -8,24 +8,24 @@ plotFilterValues(fvalues, sort = "dec", n.show = 20L,
   feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{fvalues}{[\code{\link{FilterValues}}]\cr
+\item{fvalues}{(\link{FilterValues})\cr
 Filter values.}
 
-\item{sort}{[\code{character(1)}]\cr
+\item{sort}{(\code{character(1)})\cr
 Sort features like this.
 \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
 Default is decreasing.}
 
-\item{n.show}{[\code{integer(1)}]\cr
+\item{n.show}{(\code{integer(1)})\cr
 Number of features (maximal) to show.
 Default is 20.}
 
-\item{feat.type.cols}{[\code{logical(1)}]\cr
+\item{feat.type.cols}{(\code{logical(1)})\cr
 Colors for factor and numeric features.
 \code{FALSE} means no colors.
 Default is \code{FALSE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
 Number of rows and columns for facetting. Default for both is \code{NULL}.
 In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
@@ -44,14 +44,13 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}}
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterWrapper}}, \code{\link{makeFilter}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},

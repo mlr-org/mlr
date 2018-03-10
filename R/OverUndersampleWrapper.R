@@ -3,27 +3,27 @@
 #' @description
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
+#' Internally uses [oversample] or [undersample] before every model fit.
 #'
 #' Note that observation weights do not influence the sampling and are simply passed
 #' down to the next learner.
 #'
 #' @template arg_learner
-#' @param usw.rate [\code{numeric(1)}]\cr
+#' @param usw.rate (`numeric(1)`)\cr
 #'   Factor to downsample a class. Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent
 #'   and 0 would imply reduction to 0 observations.
 #'   Default is 1.
-#' @param osw.rate [\code{numeric(1)}]\cr
-#'   Factor to oversample a class. Must be between 1 and \code{Inf},
+#' @param osw.rate (`numeric(1)`)\cr
+#'   Factor to oversample a class. Must be between 1 and `Inf`,
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #'   Default is 1.
-#' @param usw.cl [\code{character(1)}]\cr
+#' @param usw.cl (`character(1)`)\cr
 #'   Class that should be undersampled.
-#'   Default is \code{NULL}, which means the larger one.
-#' @param osw.cl [\code{character(1)}]\cr
+#'   Default is `NULL`, which means the larger one.
+#' @param osw.cl (`character(1)`)\cr
 #'   Class that should be oversampled.
-#'   Default is \code{NULL}, which means the smaller one.
+#'   Default is `NULL`, which means the smaller one.
 #' @template ret_learner
 #' @family imbalancy
 #' @family wrapper
@@ -72,18 +72,34 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
 
 #' @export
 trainLearner.UndersampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, usw.rate = 1, usw.cl = NULL, ...) {
-  .task = subsetTask(.task, .subset)
+  # If weights vector length fits to task size, set weights before subsetting (Issue #838)
+  if (length(.weights) == getTaskSize(.task)) {
+    .task$weights = .weights
+    .task = subsetTask(.task, .subset)
+  # otherwise subset first and then set weights
+  } else {
+    .task = subsetTask(.task, .subset)
+    .task$weights = .weights
+  }
   .task = undersample(.task, rate = usw.rate, cl = usw.cl)
-  m = train(.learner$next.learner, .task, weights = .weights)
+  m = train(.learner$next.learner, .task, weights = .task$.weights)
   m$train.task = .task
   makeChainModel(next.model = m, cl = "UndersampleModel")
 }
 
 #' @export
 trainLearner.OversampleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, osw.rate = 1, osw.cl = NULL, ...) {
-  .task = subsetTask(.task, .subset)
+  # If weights vector length fits to task size, set weights before subsetting (Issue #838)
+  if (length(.weights) == getTaskSize(.task)) {
+    .task$weights = .weights
+    .task = subsetTask(.task, .subset)
+  # otherwise subset first and then set weights
+  } else {
+    .task = subsetTask(.task, .subset)
+    .task$weights = .weights
+  }
   .task = oversample(.task, rate = osw.rate, cl = osw.cl)
-  m = train(.learner$next.learner, .task, weights = .weights)
+  m = train(.learner$next.learner, .task, weights = .task$.weights)
   m$train.task = .task
   makeChainModel(next.model = m, cl = "OversampleModel")
 }

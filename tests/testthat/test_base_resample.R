@@ -180,3 +180,36 @@ test_that("resample is extended by an additional measure", {
   res = resample(lrn, binaryclass.task, cv3, mmce, keep.pred = FALSE)
   expect_error(addRRMeasure(res, auc), "keep.pred")
 })
+
+test_that("resample printer respects show.info", {
+  show.info.saved = getMlrOptions()$show.info
+  lrn = makeLearner("regr.lm")
+
+  configureMlr(show.info = TRUE)
+  expect_message(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+
+  configureMlr(show.info = FALSE)
+  expect_silent(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+
+  configureMlr(show.info = show.info.saved)
+})
+
+test_that("resample drops unseen factors in predict data set", {
+  data = data.frame(a = c("a", "b", "a", "b", "a", "c"),
+      b = c(1, 1, 2, 2, 2, 1),
+      trg = c("a", "b", "a", "b", "a", "b"))
+  task = makeClassifTask("unseen.factors", data, "trg")
+  resinst = makeResampleInstance("Holdout", task)
+  resinst$train.inds[[1]] = 1:4
+  resinst$test.inds[[1]] = 5:6
+
+  lrn = makeLearner("classif.logreg", fix.factors.prediction = FALSE)
+  model = train(lrn, subsetTask(task, 1:4))
+  expect_error(predict(model, subsetTask(task, 5:6)), "factor a has new levels c")
+  expect_error(resample(lrn, task, resinst), "factor a has new levels c")
+
+  lrn = makeLearner("classif.logreg", fix.factors.prediction = TRUE)
+  model = train(lrn, subsetTask(task, 1:4))
+  predict(model, subsetTask(task, 5:6))
+  resample(lrn, task, resinst)
+})

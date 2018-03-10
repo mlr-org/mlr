@@ -25,6 +25,9 @@
 \alias{makeFilter}
 \alias{makeFilter}
 \alias{makeFilter}
+\alias{makeFilter}
+\alias{makeFilter}
+\alias{makeFilter}
 \title{Create a feature filter.}
 \format{An object of class \code{Filter} of length 6.}
 \usage{
@@ -37,22 +40,22 @@ rf.min.depth
 univariate
 }
 \arguments{
-\item{name}{[\code{character(1)}]\cr
+\item{name}{(\code{character(1)})\cr
 Identifier for the filter.}
 
-\item{desc}{[\code{character(1)}]\cr
+\item{desc}{(\code{character(1)})\cr
 Short description of the filter.}
 
-\item{pkg}{[\code{character(1)}]\cr
+\item{pkg}{(\code{character(1)})\cr
 Source package where the filter is implemented.}
 
-\item{supported.tasks}{[\code{character}]\cr
+\item{supported.tasks}{(\link{character})\cr
 Task types supported.}
 
-\item{supported.features}{[\code{character}]\cr
+\item{supported.features}{(\link{character})\cr
 Feature types supported.}
 
-\item{fun}{[\code{function(task, nselect, ...}]\cr
+\item{fun}{(\code{function(task, nselect, ...})\cr
 Function which takes a task and returns a named numeric vector of scores,
 one score for each feature of \code{task}.
 Higher scores mean higher importance of the feature.
@@ -65,7 +68,7 @@ Object of class \dQuote{Filter}.
 }
 \description{
 Creates and registers custom feature filters. Implemented filters
-can be listed with \code{\link{listFilterMethods}}. Additional
+can be listed with \link{listFilterMethods}. Additional
 documentation for the \code{fun} parameter specific to each filter can
 be found in the description.
 
@@ -82,7 +85,7 @@ Filter \dQuote{randomForestSRC.rfsrc} computes the importance of random forests
 fitted in package \pkg{randomForestSRC}. The concrete method is selected via
 the \code{method} parameter. Possible values are \code{permute} (default), \code{random},
 \code{anti}, \code{permute.ensemble}, \code{random.ensemble}, \code{anti.ensemble}.
-See the VIMP section in the docs for \code{\link[randomForestSRC]{rfsrc}} for
+See the VIMP section in the docs for \link[randomForestSRC:rfsrc]{randomForestSRC::rfsrc} for
 details.
 
 Filter \dQuote{randomForestSRC.var.select} uses the minimal depth variable
@@ -95,19 +98,19 @@ The implementation follows the principle of mean decrese in accuracy used
 by the \pkg{randomForest} package (see description of \dQuote{randomForest.importance})
 filter.
 
-Filter \dQuote{randomForest.importance} makes use of the \code{\link[randomForest]{importance}}
+Filter \dQuote{randomForest.importance} makes use of the \link[randomForest:importance]{randomForest::importance}
 from package \pkg{randomForest}. The importance measure to use is selected via
 the \code{method} parameter:
 \describe{
-  \item{oob.accuracy}{Permutation of Out of Bag (OOB) data.}
-  \item{node.impurity}{Total decrease in node impurity.}
+\item{oob.accuracy}{Permutation of Out of Bag (OOB) data.}
+\item{node.impurity}{Total decrease in node impurity.}
 }
 
-The Pearson correlation between each feature and the target is used as an indicator
-of feature importance. Rows with NA values are not taken into consideration.
+The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
+Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \link{cor}).
 
-The Spearman correlation between each feature and the target is used as an indicator
-of feature importance. Rows with NA values are not taken into consideration.
+The absolute Pearson correlation between each feature and the target is used as an indicator of feature importance.
+Missing values are not taken into consideration in a pairwise fashion (see \dQuote{pairwise.complete.obs} in \link{cor}).
 
 Filter \dQuote{information.gain} uses the entropy-based information gain
 between each feature and target individually as an importance measure.
@@ -161,12 +164,22 @@ low importance.
 
 Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
 learner before and after a feature is permuted. Special arguments to the filter function are
-\code{imp.learner}, a [\code{\link{Learner}} or \code{character(1)}] which specifies the learner
-to use when computing the permutation importance, \code{contrast}, a \code{function} which takes two
-numeric vectors and returns one (default is the difference), \code{aggregation}, a \code{function} which
-takes a \code{numeric} and returns a \code{numeric(1)} (default is the mean), \code{nmc},
-an \code{integer(1)}, and \code{replace}, a \code{logical(1)} which determines whether the feature being
+\code{imp.learner}, a (\link{Learner} or \code{character(1)]) which specifies the learner to use when computing the permutation importance,}contrast\code{, a}function\code{which takes two numeric vectors and returns one (default is the difference),}aggregation\code{, a}function\code{which takes a}numeric\code{and returns a}numeric(1)\code{(default is the mean),}nmc\code{, an}integer(1)\code{, and}replace\code{, a}logical(1)` which determines whether the feature being
 permuted is sampled with or without replacement.
+
+Filter \dQuote{auc} determines for each feature, how well the target
+variable can be predicted only based on this feature. More precisely, the
+prediction rule is: class 1 if the feature exceeds a threshold and class 0
+otherwise. The performance of this classification rule is measured by the
+AUC and the resulting filter score is |0.5 - AUC|.
+
+Filter \dQuote{ranger.permutation} trains a ranger learner with
+\dQuote{importance = "permutation"} and assesses the variable
+importance for each feature.
+
+Filter \dQuote{ranger.impurity} trains a ranger learner with
+\dQuote{importance = "impurity"} and assesses the variable
+importance for each feature.
 }
 \references{
 Kira, Kenji and Rendell, Larry (1992). The Feature Selection Problem: Traditional
@@ -174,5 +187,14 @@ Methods and a New Algorithm. AAAI-92 Proceedings.
 
 Kononenko, Igor et al. Overcoming the myopia of inductive learning algorithms
 with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.
+}
+\seealso{
+Other filter: \code{\link{filterFeatures}},
+  \code{\link{generateFilterValuesData}},
+  \code{\link{getFilterValues}},
+  \code{\link{getFilteredFeatures}},
+  \code{\link{listFilterMethods}},
+  \code{\link{makeFilterWrapper}},
+  \code{\link{plotFilterValues}}
 }
 \keyword{datasets}

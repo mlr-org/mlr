@@ -66,4 +66,5 @@ test_that("selectFeatures/sfs works with wrapper", {
   task = subsetTask(binaryclass.task, features = getTaskFeatureNames(binaryclass.task)[1:2])
   rdesc = makeResampleDesc("Holdout", split = 0.8, stratify = TRUE)
   sel = selectFeatures(lrn2, task, rdesc, control = ctrl)
+  expect_class(sel, "FeatSelResult")
 })

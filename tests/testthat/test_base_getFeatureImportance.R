@@ -28,6 +28,14 @@ test_that("getFeatureImportance", {
     any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(regr.task))
   expect_equal(colnames(feat.imp), mod$features)
 
+  #wrapped learner
+  lrn = makeFilterWrapper(makeLearner("regr.gbm"), fw.method = "information.gain", fw.abs = 2)
+  mod = train(lrn, regr.task)
+  feat.imp = getFeatureImportance(mod)$res
+  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(regr.task)),
+    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(regr.task))
+  expect_equal(colnames(feat.imp), mod$features)
+
   #For learners without the possibility to calculate feature importance a meaningfull error should
   #be returned
   lrn = makeLearner("classif.qda")

@@ -7,17 +7,17 @@
 helpLearnerParam(learner, param = NULL)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{param}{[\code{character} | NULL]\cr
+\item{param}{(\code{character} | NULL)\cr
 Parameter(s) to describe. Defaults to NULL, which prints information on the documentation
 status of all parameters.}
 }
 \description{
 Print the description of parameters of a given learner. The description
-  is automatically extracted from the help pages of the learner, so it may be incomplete.
+is automatically extracted from the help pages of the learner, so it may be incomplete.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},

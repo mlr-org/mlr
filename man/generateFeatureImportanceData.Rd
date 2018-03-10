@@ -11,86 +11,86 @@ generateFeatureImportanceData(task, method = "permutation.importance",
   replace = TRUE, local = FALSE)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{method}{[\code{character(1)}]\cr
+\item{method}{(\code{character(1)})\cr
 The method used to compute the feature importance.
 The only method available is \dQuote{permutation.importance}.
 Default is \dQuote{permutation.importance}.}
 
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{features}{[\code{character}]\cr
+\item{features}{(\link{character})\cr
 The features to compute the importance of.
-The default is all of the features contained in the \code{\link{Task}}.}
+The default is all of the features contained in the \link{Task}.}
 
-\item{interaction}{[\code{logical(1)}]\cr
+\item{interaction}{(\code{logical(1)})\cr
 Whether to compute the importance of the \code{features} argument jointly.
 For \code{method = "permutation.importance"} this entails permuting the values of
 all \code{features} together and then contrasting the performance with that of
 the performance without the features being permuted.
 The default is \code{FALSE}.}
 
-\item{measure}{[\code{\link{Measure}}]\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
-\item{contrast}{[\code{function}]\cr
+\item{contrast}{(\code{function})\cr
 A difference function that takes a numeric vector and returns a numeric vector
 of the same length.
 The default is element-wise difference between the vectors.}
 
-\item{aggregation}{[\code{function}]\cr
+\item{aggregation}{(\code{function})\cr
 A function which aggregates the differences.
 This function must take a numeric vector and return a numeric vector of length 1.
 The default is \code{mean}.}
 
-\item{nmc}{[\code{integer(1)}]\cr
+\item{nmc}{(\code{integer(1)})\cr
 The number of Monte-Carlo iterations to use in computing the feature importance.
 If \code{nmc == -1} and \code{method = "permutation.importance"} then all
 permutations of the \code{features} are used.
 The default is 50.}
 
-\item{replace}{[\code{logical(1)}]\cr
+\item{replace}{(\code{logical(1)})\cr
 Whether or not to sample the feature values with or without replacement.
 The default is \code{TRUE}.}
 
-\item{local}{[\code{logical(1)}]\cr
+\item{local}{(\code{logical(1)})\cr
 Whether to compute the per-observation importance.
 The default is \code{FALSE}.}
 }
 \value{
-[\code{FeatureImportance}]. A named list which contains the computed feature importance and the input arguments.
+(\code{FeatureImportance}). A named list which contains the computed feature importance and the input arguments.
 
 Object members:
-\item{res}{[\code{data.frame}]\cr
-  Has columns for each feature or combination of features (colon separated) for which the importance is computed.
-  A row coresponds to importance of the feature specified in the column for the target.
+\item{res}{(\link{data.frame})\cr
+Has columns for each feature or combination of features (colon separated) for which the importance is computed.
+A row coresponds to importance of the feature specified in the column for the target.
 }
-\item{interaction}{[\code{logical(1)}]\cr
-  Whether or not the importance of the \code{features} was computed jointly rather than individually.
+\item{interaction}{(\code{logical(1)})\cr
+Whether or not the importance of the \code{features} was computed jointly rather than individually.
 }
-\item{measure}{[\code{Measure}]}\cr
-  The measure used to compute performance.
-\item{contrast}{[\code{function}]\cr
-  The function used to compare the performance of predictions.
+\item{measure}{(\link{Measure})}\cr
+The measure used to compute performance.
+\item{contrast}{(\code{function})\cr
+The function used to compare the performance of predictions.
 }
-\item{aggregation}{[\code{function}]\cr
-  The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.
+\item{aggregation}{(\code{function})\cr
+The function which is used to aggregate the contrast between the performance of predictions across Monte-Carlo iterations.
 }
-\item{replace}{[\code{logical(1)}]\cr
-  Whether or not, when \code{method = "permutation.importance"}, the feature values
-  are sampled with replacement.
+\item{replace}{(\code{logical(1)})\cr
+Whether or not, when \code{method = "permutation.importance"}, the feature values
+are sampled with replacement.
 }
-\item{nmc}{[\code{integer(1)}]\cr
-  The number of Monte-Carlo iterations used to compute the feature importance.
-  When \code{nmc == -1} and \code{method = "permutation.importance"} all permutations are used.
+\item{nmc}{(\code{integer(1)})\cr
+The number of Monte-Carlo iterations used to compute the feature importance.
+When \code{nmc == -1} and \code{method = "permutation.importance"} all permutations are used.
 }
-\item{local}{[\code{logical(1)}]\cr
-  Whether observation-specific importance is computed for the \code{features}.
+\item{local}{(\code{logical(1)})\cr
+Whether observation-specific importance is computed for the \code{features}.
 }
 }
 \description{
@@ -111,7 +111,6 @@ Jerome Friedman; Greedy Function Approximation: A Gradient Boosting Machine, Ann
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},

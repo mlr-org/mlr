@@ -4,7 +4,11 @@ test_that("plotLearnerPrediction", {
   gs = 10
   plotLearnerPrediction("classif.rpart", multiclass.task, gridsize = gs)
   ggsave(tempfile(fileext = ".png"))
+  plotLearnerPrediction("classif.rpart", multiclass.task, gridsize = gs, err.mark = "none")
+  ggsave(tempfile(fileext = ".png"))
   plotLearnerPrediction("classif.rpart", binaryclass.task, gridsize = gs)
+  ggsave(tempfile(fileext = ".png"))
+  plotLearnerPrediction("classif.rpart", binaryclass.task, gridsize = gs, err.mark = "none")
   ggsave(tempfile(fileext = ".png"))
 
   plotLearnerPrediction("regr.rpart", regr.task, gridsize = gs)

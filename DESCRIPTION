@@ -12,7 +12,7 @@ Description: Interface to a large number of classification and regression
 Authors@R: c(
     person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre")),
     person("Michel", "Lang", email = "michellang@gmail.com", role = "aut"),
-    person("Lars", "Kotthoff", email = "larsko@cs.ubc.ca", role = "aut"),
+    person("Lars", "Kotthoff", email = "larsko@uwyo.edu", role = "aut"),
     person("Julia", "Schiffner", email = "schiffner@math.uni-duesseldorf.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
@@ -32,12 +32,14 @@ Authors@R: c(
     person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb"),
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
-    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"))
+    person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
+    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"),
+    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
-Roxygen: list(wrap = FALSE)
+Roxygen: list(wrap = FALSE, markdown = TRUE)
 Depends:
     R (>= 3.0.2),
     ParamHelpers (>= 1.10)
@@ -84,6 +86,8 @@ Suggests:
     emoa,
     evtree,
     extraTrees,
+    fda.usc,
+    FDboost,
     flare,
     fields,
     FNN,
@@ -92,7 +96,6 @@ Suggests:
     FSelector,
     gbm,
     GenSA,
-    ggvis,
     glmnet,
     h2o (>= 3.6.0.8),
     GPfit,
@@ -115,6 +118,7 @@ Suggests:
     mlbench,
     mldr,
     mlrMBO,
+    mmpf,
     modeltools,
     mRMRe,
     nnet,
@@ -126,15 +130,12 @@ Suggests:
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
-    pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.6.0),
-    RCurl,
+    ranger (>= 0.8.0),
+    refund,
     rex,
-    Rfast,
     rFerns,
-    rjson,
     rknn,
     rmarkdown,
     robustbase,
@@ -157,7 +158,8 @@ Suggests:
     testthat,
     tgp,
     TH.data,
-    xgboost (>= 0.6-2),
+    wavelets,
+    xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
 Version: 2.12

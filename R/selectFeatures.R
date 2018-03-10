@@ -5,18 +5,18 @@
 #' Allows for different optimization methods, such as forward search or a genetic algorithm.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at the
-#' subclasses of [\code{\link{FeatSelControl}}].
+#' subclasses of ([FeatSelControl]).
 #'
 #' All algorithms operate on a 0-1-bit encoding of candidate solutions. Per default a single bit corresponds
-#' to a single feature, but you are able to change this by using the arguments \code{bit.names}
-#' and \code{bits.to.features}. Thus allowing you to switch on whole groups of features with a single bit.
+#' to a single feature, but you are able to change this by using the arguments `bit.names`
+#' and `bits.to.features`. Thus allowing you to switch on whole groups of features with a single bit.
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+#' @param resampling ([ResampleInstance] | [ResampleDesc])\cr
 #'   Resampling strategy for feature selection. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
-#'   If you want to change that behaviour, look at \code{\link{FeatSelControl}}.
+#'   If you want to change that behaviour, look at [FeatSelControl].
 #' @template arg_measures_opt
 #' @param bit.names [character]\cr
 #'   Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
@@ -24,12 +24,13 @@
 #' @param bits.to.features [function(x, task)]\cr
 #'   Function which transforms an integer-0-1 vector into a character vector of selected features.
 #'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-#' @param control [see \code{\link{FeatSelControl}}]
+#' @param control [see [FeatSelControl])
 #'   Control object for search method.
 #'   Also selects the optimization algorithm for feature selection.
 #' @template arg_showinfo
-#' @return [\code{\link{FeatSelResult}}].
+#' @return ([FeatSelResult]).
 #' @family featsel
+#' @noMd
 #' @export
 #' @examples
 #' \donttest{
