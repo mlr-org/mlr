@@ -81,7 +81,7 @@ jobs:
       # we need rmarkdown and pander for building the tutorial sites
         - R -q -e 'install.packages(c("rmarkdown", "pander"));tic::prepare_all_stages(); tic::before_install()'
         - R CMD build .
-      before_deploy: R -q -e 'tic::before_deploy(); devtools::install_github("jimhester/lintr");devtools::install_github("pat-s/pkgdown")'
+      before_deploy: R -q -e 'tic::before_deploy(); devtools::install_github("jimhester/lintr");devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2")'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
@@ -99,7 +99,7 @@ jobs:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
         - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
         - R CMD build .
-        - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd", clean = FALSE, envir = globalenv())' # build pdf version
+        - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
         - git config user.name $GIT_NAME
