@@ -1,3 +1,7 @@
+# the whole unit tests currently breaks on CRAN due to a problem with datatable on WB / rdevel
+# see PR here:
+# https://github.com/mlr-org/mlr/pull/2210
+
 context("batchmark")
 
 prev = getOption("batchtools.verbose")

@@ -276,7 +276,7 @@ measureBrierScaled(probabilities, truth, negative, positive)
 
 bac
 
-measureBAC(truth, response, negative, positive)
+measureBAC(truth, response)
 
 tp
 
