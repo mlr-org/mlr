@@ -1,4 +1,4 @@
-![mlr](https://raw.githubusercontent.com/pat-s/mlr/master/logo.png) Machine Learning in R
+![mlr](https://raw.githubusercontent.com/mlr-org/mlr/master/logo.png) Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
@@ -8,9 +8,9 @@
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
 * [mlr cheatsheet](https://github.com/mlr-org/mlr-tutorial/raw/gh-pages/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
-    * [mlr release](https://pat-s.github.io/mlr/articles/tutorial/release/index.html) ([online](https://pat-s.github.io/mlr/articles/tutorial/release/index.html), [download PDF for offline usage](https://github.com/pat-s/mlr/blob/gh-pages/articles/tutorial/release/mlr-tutorial.pdf))
-    * [mlr devel](https://pat-s.github.io/mlr/) ([online](https://pat-s.github.io/mlr/), [download PDF for offline usage](https://github.com/pat-s/mlr/tree/master/vignettes/tutorial/devel/pdf/mlr-tutorial.pdf))
-* [R Documentation in HTML](https://pat-s.github.io/mlr/reference/index.html)
+    * [mlr release](https://mlr-org.github.io/mlr/articles/tutorial/release/index.html) ([online](https://mlr-org.github.io/mlr/articles/tutorial/release/index.html), [download PDF for offline usage](https://github.com/mlr-org/mlr/blob/gh-pages/articles/tutorial/release/mlr-tutorial.pdf))
+    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/master/vignettes/tutorial/devel/pdf/mlr-tutorial.pdf))
+* [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
 ```R
@@ -171,10 +171,10 @@ He (=me) is sometimes busy, so please use the other channels for appropriate stu
 mlr-tutorial
 ====
 
-Since v2.12 we switched from [mkdocs](https://github.com/mkdocs/mkdocs) to [pkgdown](https://github.com/r-lib/pkgdown).
+With the start of v2.13 we switched from [mkdocs](https://github.com/mkdocs/mkdocs) to [pkgdown](https://github.com/r-lib/pkgdown).
 With this change, all source files are now located in this repo under `vignettes/tutorial`.
 
-**Modify a tutorial section**:
+**Modification of a tutorial section**:
 
 If you want to modify/add a tutorial section, please follow these steps:
 
@@ -188,7 +188,7 @@ If you want to modify/add a tutorial section, please follow these steps:
      - The most up-level header starts with `###` and is subsequently followed by `####` and `#####` etc.
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
      - Referencing images is a bit tricky since we need to ensure that they look good in both the HTML and PDF version.
-       Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/devel/resampling.Rmd), [nested_resampling.Rmd](https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/devel/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/pat-s/mlr/blob/master/vignettes/tutorial/devel/handling_of_spatial_data.Rmd).
+       Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/resampling.Rmd), [nested_resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/handling_of_spatial_data.Rmd).
 3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using the `knit` button in RStudio) and see if everything works.
    Put required packages in the setup chunk at the beginning of the tutorial.
    
