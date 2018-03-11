@@ -64,7 +64,7 @@ jobs:
         - git config push.default matching
         - git add --force NEWS
         - git add --force man/*
-        - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
+        - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
 
