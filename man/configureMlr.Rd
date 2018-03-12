@@ -64,7 +64,7 @@ is \dQuote{warn} or \dQuote{quiet}. If it is \code{TRUE}, the dump can be access
 Default is \code{FALSE}.}
 }
 \value{
-(`invisible(NULL)`).
+(\code{invisible(NULL)}).
 }
 \description{
 Configuration is done by setting custom \link{options}.
