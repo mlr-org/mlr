@@ -27,7 +27,6 @@ r_github_packages:
   - berndbischl/BBmisc
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
-  - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
 jobs:
