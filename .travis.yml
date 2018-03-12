@@ -106,8 +106,8 @@ jobs:
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
-        - git config user.name $GIT_NAME
-        - git config user.email $GIT_EMAIL
+        - git config user.name $GN
+        - git config user.email $GM
         - git config credential.helper "store --file=.git/credentials"
         - echo "https://$GT:@github.com" >> .git/credentials
         - git config push.default matching
