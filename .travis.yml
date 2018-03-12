@@ -112,7 +112,7 @@ jobs:
         - git config push.default matching
         - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git add --force vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
-        - git commit -a -m "update auto-generated tutorial pdf version [ci skip]"
+        - git commit docs -m "update auto-generated tutorial pdf version [ci skip]"
         - git push --force
 
 notifications:
