@@ -7,20 +7,20 @@
 makeMultilabelNestedStackingWrapper(learner, order = NULL, cv.folds = 2)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{order}{(\link{character})\cr
+\item{order}{([character])\cr
 Specifies the chain order using the names of the target labels.
-E.g. for \code{m} target labels, this must be a character vector of length \code{m} that contains a permutation of the target label names.
-Default is \code{NULL} which uses a random ordering of the target label names.}
+E.g. for `m` target labels, this must be (`character(1)`) character vector of length `m` that contains (`character(1)`) permutation of the target label names.
+Default is `NULL` which uses (`character(1)`) random ordering of the target label names.}
 
 \item{cv.folds}{(`integer(1)`)\cr
 The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is `2`.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Every learner which is implemented in mlr and which supports binary

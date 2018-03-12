@@ -184,7 +184,7 @@ makeRLearner.classif.mxff = function() {
     enable compatability with `mxnet`. When using convolution,
     `mx.model.FeedForward.create` expects the array containing the data to have `4` dimensions.
     To allow for flexibility, `conv.data.shape` can have length `1` to `4`, the dimensions are
-    taken in ascending order. For common cases, giving an `conv.data.shape` of length `2` or `3`is
+    taken in ascending order. For common cases, giving an `conv.data.shape` of length `2` or `3` is
     sufficient.
     `validation.ratio` gives the ratio of training data that will not
     be used for training but as validation data similar to the data provided in `eval.data`.

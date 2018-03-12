@@ -7,18 +7,18 @@
 setPredictThreshold(learner, predict.threshold)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{predict.threshold}{(\link{numeric})\cr
-Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
-Only for binary classification it can be a single numerical threshold for the positive class.
-See \link{setThreshold} for details on how it is applied.
-Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
+\item{predict.threshold}{([numeric])\cr
+Threshold to produce class labels. Has to be `character(1)` named vector, where names correspond to class labels.
+Only for binary classification it can be `character(1)` single numerical threshold for the positive class.
+See [setThreshold] for details on how it is applied.
+Default is `NULL` which means 0.5 / an equal threshold for each class.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 See \code{predict.threshold} in \link{makeLearner} and \link{setThreshold}.
@@ -30,6 +30,7 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
+  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictType}}
 

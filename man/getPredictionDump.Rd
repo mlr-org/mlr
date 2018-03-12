@@ -7,7 +7,7 @@
 getPredictionDump(pred)
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 }
 \value{

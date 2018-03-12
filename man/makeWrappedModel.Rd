@@ -9,9 +9,9 @@ makeWrappedModel(learner, learner.model, task.desc, subset, features,
   factor.levels, time)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{learner.model}{(any)\cr
 Underlying model.}
@@ -19,9 +19,9 @@ Underlying model.}
 \item{task.desc}{[TaskDesc]\cr
 Task description object.}
 
-\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
-Selected cases. Either a logical or an index vector.
-By default \code{NULL} if all observations are used.}
+\item{subset}{([integer] | [logical] | `NULL`)\cr
+Selected cases. Either `character(1)` logical or an index vector.
+By default `NULL` if all observations are used.}
 
 \item{features}{(\link{character})\cr
 Features used for training.}
@@ -34,7 +34,7 @@ Named by variable name, non-factors do not occur in the list.}
 Computation time for model fit in seconds.}
 }
 \value{
-\link{WrappedModel}.
+[WrappedModel].
 }
 \description{
 Result from \link{train}.

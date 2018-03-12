@@ -7,15 +7,15 @@
 analyzeFeatSelResult(res, reduce = TRUE)
 }
 \arguments{
-\item{res}{(\link{FeatSelResult})\cr
-The result of of \link{selectFeatures}.}
+\item{res}{([FeatSelResult])\cr
+The result of of [selectFeatures].}
 
 \item{reduce}{(\code{logical(1)})\cr
 Per iteration: Print only the selected feature (or all features that were evaluated)?
 Default is \code{TRUE}.}
 }
 \value{
-(\code{invisible(NULL)}).
+(`invisible(NULL)`).
 }
 \description{
 This function prints the steps \link{selectFeatures} took to find its optimal set

@@ -14,9 +14,6 @@ A tuning result of the (\link{tuneParams}) function.}
 Should the optimization path be returned as a data frame?
 Default is \code{TRUE}.}
 }
-\value{
-(\link[ParamHelpers:OptPath]{ParamHelpers::OptPath}) or (\link{data.frame}).
-}
 \description{
 Returns the opt.path from a (\link{TuneResult}) object.
 }

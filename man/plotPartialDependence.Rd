@@ -30,9 +30,9 @@ If \link{generatePartialDependenceData} is called with the \code{interaction} ar
 each feature is plotted in its own facet.
 Default is \code{NULL}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 
 \item{p}{(\code{numeric(1)})\cr
 If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
@@ -53,14 +53,19 @@ ggplot2 plot object.
 Plot a partial dependence from \link{generatePartialDependenceData} using ggplot2.
 }
 \seealso{
-Other partial_dependence: \code{\link{generatePartialDependenceData}}
+Other partial_dependence: \code{\link{generatePartialDependenceData}},
+  \code{\link{plotPartialDependenceGGVIS}}
 
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

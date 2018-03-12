@@ -7,7 +7,7 @@
 getBMRTaskIds(bmr)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 }
 \value{

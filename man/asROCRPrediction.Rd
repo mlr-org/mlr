@@ -7,18 +7,20 @@
 asROCRPrediction(pred)
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 }
 \description{
 Converts predictions to a format package ROCR can handle.
 }
 \seealso{
-Other roc: \code{\link{calculateROCMeasures}}
+Other roc: \code{\link{calculateROCMeasures}},
+  \code{\link{plotViperCharts}}
 
 Other predict: \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
+  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}

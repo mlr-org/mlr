@@ -8,28 +8,28 @@ getBMRAggrPerformances(bmr, task.ids = NULL, learner.ids = NULL,
   as.df = FALSE, drop = FALSE)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{task.ids}{(\code{character(1)})\cr
+\item{task.ids}{(`character(1)`)\cr
 Restrict result to certain tasks.
 Default is all.}
 
-\item{learner.ids}{(\code{character(1)})\cr
+\item{learner.ids}{(`character(1)`)\cr
 Restrict result to certain learners.
 Default is all.}
 
-\item{as.df}{(\code{character(1)})\cr
-Return one \link{data.frame} as result - or a list of lists of objects?.
-Default is \code{FALSE}.}
+\item{as.df}{(`character(1)`)\cr
+Return one data.frame as result - or (`character(1)`) list of lists of objects?.
+Default is `FALSE`.}
 
-\item{drop}{(\code{logical(1)})\cr
-If drop is \code{FALSE} (the default), a nested list with
+\item{drop}{(`logical(1)`)\cr
+If drop is `FALSE` (the default), (`character(1)`) nested list with
 the following structure is returned:\cr
-\code{res[task.ids][learner.ids]}.\cr
-If drop is set to \code{TRUE} it is checked if the list
+`res[task.ids][learner.ids]`.\cr
+If drop is set to `TRUE` it is checked if the list
 structure can be simplified.\cr
-If only one learner was passed, a list with entries
+If only one learner was passed, `character(1)` list with entries
 for each task is returned.\cr
 If only one task was passed, the entries are named after
 the corresponding learner.\cr
@@ -39,7 +39,7 @@ Note that the name of the
 task/learner will be dropped from the return object.}
 }
 \value{
-(\link{list} | \link{data.frame}). See above.
+([list] | [data.frame]). See above.
 }
 \description{
 Either a list of lists of \dQuote{aggr} numeric vectors, as returned by

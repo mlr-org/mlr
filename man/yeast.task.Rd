@@ -5,7 +5,7 @@
 \alias{yeast.task}
 \title{Yeast multilabel classification task.}
 \source{
-\url{https://archive.ics.uci.edu/ml/datasets/Yeast} (In long instead of wide format)
+\url{http://sourceforge.net/projects/mulan/files/datasets/yeast.rar}
 }
 \description{
 Contains the task (\code{yeast.task}).

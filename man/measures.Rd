@@ -111,7 +111,7 @@
 \alias{multilabel.subset01}
 \alias{measureMultilabelSubset01}
 \alias{multilabel.f1}
-\alias{measureMultilabelF1}
+\alias{measureMultiLabelF1}
 \alias{multilabel.acc}
 \alias{measureMultilabelACC}
 \alias{multilabel.ppv}
@@ -348,7 +348,7 @@ measureMultilabelSubset01(truth, response)
 
 multilabel.f1
 
-measureMultilabelF1(truth, response)
+measureMultiLabelF1(truth, response)
 
 multilabel.acc
 

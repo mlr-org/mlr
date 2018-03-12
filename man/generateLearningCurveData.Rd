@@ -13,7 +13,7 @@ generateLearningCurveData(learners, task, resampling = NULL,
 \item{learners}{[(list of) [Learner])\cr
 Learning algorithms which should be compared.}
 
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
 \item{resampling}{([ResampleDesc] | [ResampleInstance])\cr
@@ -33,9 +33,9 @@ Performance measures to generate learning curves for, representing the y-axis.}
 Only for classification:
 Should the downsampled data be stratified according to the target classes?}
 
-\item{show.info}{(\code{logical(1)})\cr
+\item{show.info}{(`logical(1)`)\cr
 Print verbose output on console?
-Default is set via \link{configureMlr}.}
+Default is set via [configureMlr].}
 }
 \value{
 ([LearningCurveData]). A `list` containing:
@@ -71,5 +71,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
-Other learning_curve: \code{\link{plotLearningCurve}}
+Other learning_curve: \code{\link{plotLearningCurveGGVIS}},
+  \code{\link{plotLearningCurve}}
 }

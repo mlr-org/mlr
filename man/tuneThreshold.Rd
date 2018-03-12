@@ -7,7 +7,7 @@
 tuneThreshold(pred, measure, task, model, nsub = 20L, control = list())
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 
 \item{measure}{(\link{Measure})\cr

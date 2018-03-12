@@ -11,20 +11,20 @@ plotLearnerPrediction(learner, task, features = NULL, measures, cv = 10L,
   pretty.names = TRUE)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
 \item{features}{(\link{character})\cr
 Selected features for model.
 By default the first 2 features are used.}
 
-\item{measures}{(\link{Measure} | list of \link{Measure})\cr
+\item{measures}{([Measure] | list of [Measure])\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \link{getDefaultMeasure}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 
 \item{cv}{(\code{integer(1)})\cr
 Do cross-validation and display in plot title?
@@ -74,8 +74,8 @@ Default is \code{pointsize}.}
 Should the plot be greyscale completely?
 Default is \code{FALSE}.}
 
-\item{pretty.names}{(\code{logical(1)})\cr
-Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
+\item{pretty.names}{(`logical(1)`)\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to `TRUE`.}
 }
 \value{
 The ggplot2 object.

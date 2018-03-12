@@ -10,14 +10,14 @@ makeLearner(cl, id = cl, predict.type = "response",
   par.vals = list(), config = list())
 }
 \arguments{
-\item{cl}{(\code{character(1)})\cr
+\item{cl}{(`character(1)`)\cr
 Class of learner. By convention, all classification learners
 start with \dQuote{classif.} all regression learners with
 \dQuote{regr.} all survival learners start with \dQuote{surv.}
 all clustering learners with \dQuote{cluster.} and all multilabel
 classification learners start with \dQuote{multilabel.}.
 A list of all integrated learners is available on the
-\link{learners} help page.}
+[learners] help page.}
 
 \item{id}{(\code{character(1)})\cr
 Id string for object. Used to display object.
@@ -31,11 +31,11 @@ Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster 
 Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
 Default is \dQuote{response}.}
 
-\item{predict.threshold}{(\link{numeric})\cr
-Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
-Only for binary classification it can be a single numerical threshold for the positive class.
-See \link{setThreshold} for details on how it is applied.
-Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
+\item{predict.threshold}{([numeric])\cr
+Threshold to produce class labels. Has to be `character(1)` named vector, where names correspond to class labels.
+Only for binary classification it can be `character(1)` single numerical threshold for the positive class.
+See [setThreshold] for details on how it is applied.
+Default is `NULL` which means 0.5 / an equal threshold for each class.}
 
 \item{fix.factors.prediction}{(\code{logical(1)})\cr
 In some cases, problems occur in underlying learners for factor features during prediction.

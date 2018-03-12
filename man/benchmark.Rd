@@ -24,20 +24,20 @@ If missing, a 10-fold cross validation is used.}
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
 
-\item{keep.pred}{(\code{logical(1)})\cr
-Keep the prediction data in the \code{pred} slot of the result object.
+\item{keep.pred}{(`logical(1)`)\cr
+Keep the prediction data in the `pred` slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can set this argument to \code{FALSE}.
-Default is \code{TRUE}.}
+In this case you can set this argument to `FALSE`.
+Default is `TRUE`.}
 
-\item{models}{(\code{logical(1)})\cr
-Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+\item{models}{(`logical(1)`)\cr
+Should all fitted models be stored in the [ResampleResult]?
+Default is `TRUE`.}
 
-\item{show.info}{(\code{logical(1)})\cr
+\item{show.info}{(`logical(1)`)\cr
 Print verbose output on console?
-Default is set via \link{configureMlr}.}
+Default is set via [configureMlr].}
 }
 \value{
 \link{BenchmarkResult}.
