@@ -7,7 +7,7 @@
 getTaskFeatureNames(task)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 }
 \value{

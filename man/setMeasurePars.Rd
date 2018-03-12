@@ -19,7 +19,7 @@ Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
 }
 \value{
-\link{Measure}.
+[Measure].
 }
 \description{
 Sets hyperparameters of measures.

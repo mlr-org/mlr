@@ -42,7 +42,7 @@ Name of the measure. Default is `id`.}
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-\link{Measure}.
+[Measure].
 }
 \description{
 Creates a cost measure for non-standard classification error costs.

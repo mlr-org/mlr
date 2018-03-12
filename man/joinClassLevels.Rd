@@ -7,7 +7,7 @@
 joinClassLevels(task, new.levels)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
 \item{new.levels}{(\code{list} of \code{character})\cr
@@ -15,7 +15,7 @@ Element names specify the new class levels to create, while the corresponding el
 character vector specifies the existing class levels which will be joined to the new one.}
 }
 \value{
-\link{Task}.
+[Task].
 }
 \description{
 Join some class existing levels to new, larger class levels for classification problems.

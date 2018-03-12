@@ -10,7 +10,7 @@ calculateROCMeasures(pred)
 \method{print}{ROCMeasures}(x, abbreviations = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{pred}{(\link{Prediction})\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 
 \item{x}{(\code{ROCMeasures})\cr
@@ -66,7 +66,8 @@ calculateROCMeasures(pred)
 
 }
 \seealso{
-Other roc: \code{\link{asROCRPrediction}}
+Other roc: \code{\link{asROCRPrediction}},
+  \code{\link{plotViperCharts}}
 
 Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},

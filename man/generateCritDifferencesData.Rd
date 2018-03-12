@@ -8,10 +8,10 @@ generateCritDifferencesData(bmr, measure = NULL, p.value = 0.05,
   baseline = NULL, test = "bd")
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 

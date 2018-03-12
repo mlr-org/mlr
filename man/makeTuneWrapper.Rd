@@ -8,9 +8,9 @@ makeTuneWrapper(learner, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
@@ -18,10 +18,10 @@ it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
 If you want to change that behavior, look at \link{TuneControl}.}
 
-\item{measures}{(list of \link{Measure} | \link{Measure})\cr
+\item{measures}{(list of [Measure] | [Measure])\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here \link{getDefaultMeasure}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 
 \item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
 Collection of parameters and their constraints for optimization.
@@ -31,12 +31,12 @@ Dependent parameters with a \code{requires} field must use \code{quote} and not
 \item{control}{(\link{TuneControl})\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
-\item{show.info}{(\code{logical(1)})\cr
+\item{show.info}{(`logical(1)`)\cr
 Print verbose output on console?
-Default is set via \link{configureMlr}.}
+Default is set via [configureMlr].}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a base learner with a search strategy to select its hyperparameters.

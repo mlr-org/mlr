@@ -7,9 +7,9 @@
 makeDummyFeaturesWrapper(learner, method = "1-of-n", cols = NULL)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{method}{(\code{character(1)})\cr
 Available are:
@@ -23,7 +23,7 @@ Default is \dQuote{1-of-n}.}
 Columns to create dummy features for. Default is to use all columns.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a base learner with the dummy feature creator (see \link{createDummyFeatures}).

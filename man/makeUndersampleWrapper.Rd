@@ -10,9 +10,9 @@ makeUndersampleWrapper(learner, usw.rate = 1, usw.cl = NULL)
 makeOversampleWrapper(learner, osw.rate = 1, osw.cl = NULL)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{usw.rate}{(\code{numeric(1)})\cr
 Factor to downsample a class. Must be between 0 and 1,
@@ -34,7 +34,7 @@ Class that should be oversampled.
 Default is \code{NULL}, which means the smaller one.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Creates a learner object, which can be

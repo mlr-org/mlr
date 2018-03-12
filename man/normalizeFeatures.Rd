@@ -8,16 +8,16 @@ normalizeFeatures(obj, target = character(0L), method = "standardize",
   cols = NULL, range = c(0, 1), on.constant = "quiet")
 }
 \arguments{
-\item{obj}{(\link{data.frame} | \link{Task})\cr
+\item{obj}{([data.frame] | [Task])\cr
 Input data.}
 
-\item{target}{(\code{character(1)} | \code{character(2)} | \code{character(n.classes)})\cr
+\item{target}{(`character(1)` | `character(2)` | `character(n.classes)`)\cr
 Name(s) of the target variable(s).
-Only used when \code{obj} is a data.frame, otherwise ignored.
+Only used when `obj` is `character(1)` data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
 so it has length 2.
 For multilabel classification these are the names of logical columns that indicate whether
-a class label is present and the number of target variables corresponds to the number of
+`character(1)` class label is present and the number of target variables corresponds to the number of
 classes.}
 
 \item{method}{(\code{character(1)})\cr
@@ -46,7 +46,7 @@ will be returned untouched.\cr
 \dQuote{stop}: Stop with an error.\cr}
 }
 \value{
-\link{data.frame} | \link{Task}. Same type as \code{obj}.
+[data.frame] | [Task]. Same type as `obj`.
 }
 \description{
 Normalize features by different methods.

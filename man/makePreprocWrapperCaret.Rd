@@ -7,16 +7,16 @@
 makePreprocWrapperCaret(learner, ...)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{...}{(any)\cr
 See \link[caret:preProcess]{caret::preProcess} for parameters not listed above.
 If you use them you might want to define them in the \code{add.par.set} so that they can be tuned.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Fuses a learner with preprocessing methods provided by \link[caret:preProcess]{caret::preProcess}.

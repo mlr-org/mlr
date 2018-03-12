@@ -24,9 +24,9 @@ If missing, a 10-fold cross validation is used.}
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
 
-\item{models}{(\code{logical(1)})\cr
-Should all fitted models be stored in the \link{ResampleResult}?
-Default is \code{TRUE}.}
+\item{models}{(`logical(1)`)\cr
+Should all fitted models be stored in the [ResampleResult]?
+Default is `TRUE`.}
 
 \item{reg}{([batchtools::Registry])\cr
 Registry, created by [batchtools::makeExperimentRegistry]. If not explicitly passed,

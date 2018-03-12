@@ -8,9 +8,9 @@ makePreprocWrapper(learner, train, predict, par.set = makeParamSet(),
   par.vals = list())
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{train}{(\code{function(data, target, args)})\cr
 Function to preprocess the data before training.

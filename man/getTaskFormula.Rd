@@ -8,7 +8,7 @@ getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE,
   env = parent.frame())
 }
 \arguments{
-\item{x}{(\link{Task} | \link{TaskDesc})\cr
+\item{x}{([Task] | [TaskDesc])\cr
 Task or its description object.}
 
 \item{target}{(\code{character(1)})\cr

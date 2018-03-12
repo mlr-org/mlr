@@ -8,9 +8,9 @@ makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L, sw.standardize = TRUE,
   sw.alt.logic = FALSE)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{sw.rate}{(\code{numeric(1)})\cr
 Factor to oversample the smaller class. Must be between 1 and \code{Inf},
@@ -37,7 +37,7 @@ is sampled.
 Default is \code{FALSE}.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Creates a learner object, which can be

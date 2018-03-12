@@ -21,9 +21,9 @@ The default is \dQuote{measure}.}
 Whether to use the \link{Measure} name instead of the id in the plot.
 Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -32,14 +32,19 @@ ggplot2 plot object.
 Visualizes data size (percentage used for model) vs. performance measure(s).
 }
 \seealso{
-Other learning_curve: \code{\link{generateLearningCurveData}}
+Other learning_curve: \code{\link{generateLearningCurveData}},
+  \code{\link{plotLearningCurveGGVIS}}
 
 Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotLearningCurveGGVIS}},
+  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

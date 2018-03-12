@@ -9,10 +9,10 @@ plotBMRBoxplots(bmr, measure = NULL, style = "box", order.lrns = NULL,
   facet.wrap.ncol = NULL)
 }
 \arguments{
-\item{bmr}{(\link{BenchmarkResult})\cr
+\item{bmr}{([BenchmarkResult])\cr
 Benchmark result.}
 
-\item{measure}{(\link{Measure})\cr
+\item{measure}{([Measure])\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
@@ -20,19 +20,19 @@ Default is the first measure used in the benchmark experiment.}
 Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 Default is \dQuote{box}.}
 
-\item{order.lrns}{(\code{character(n.learners)})\cr
-Character vector with \code{learner.ids} in new order.}
+\item{order.lrns}{(`character(n.learners)`)\cr
+Character vector with `learner.ids` in new order.}
 
-\item{order.tsks}{(\code{character(n.tasks)})\cr
-Character vector with \code{task.ids} in new order.}
+\item{order.tsks}{(`character(n.tasks)`)\cr
+Character vector with `task.ids` in new order.}
 
 \item{pretty.names}{(\code{logical(1)})\cr
 Whether to use the \link{Measure} name and the \link{Learner}
 short name instead of the id. Default is \code{TRUE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
-Number of rows and columns for facetting. Default for both is \code{NULL}.
-In this case ggplot's \code{facet_wrap} will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
+Number of rows and columns for facetting. Default for both is `NULL`.
+In this case ggplot's `facet_wrap` will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -49,9 +49,13 @@ Other plot: \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
+  \code{\link{plotFilterValuesGGVIS}},
+  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
+  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
+  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 
 Other benchmark: \code{\link{BenchmarkResult}},

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Resampling - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/custom_mlr.css" rel="stylesheet">
+        <link href="../css/custom_highlight.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../index.html">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../task/index.html">Tasks</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../learner/index.html">Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../train/index.html">Train</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../predict/index.html">Predict</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../performance/index.html">Performance</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="index.html">Resampling</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../benchmark_experiments/index.html">Benchmark Experiments</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../parallelization/index.html">Parallelization</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../visualization/index.html">Visualization</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../configureMlr/index.html">Configuration</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../wrapper/index.html">Wrapped Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../preproc/index.html">Preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../impute/index.html">Imputation</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bagging/index.html">Bagging</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../tune/index.html">Tuning</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../feature_selection/index.html">Feature Selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../nested_resampling/index.html">Nested Resampling</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../cost_sensitive_classif/index.html">Cost-Sensitive Classification</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../over_and_undersampling/index.html">Imbalanced Classification Problems</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../roc_analysis/index.html">ROC Analysis</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../multilabel/index.html">Multilabel Classification</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../learning_curve/index.html">Learning Curves</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../partial_dependence/index.html">Partial Dependence Plots</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../classifier_calibration/index.html">Classifier Calibration Plots</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../create_learner/index.html">Create Custom Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../create_measure/index.html">Create Custom Measures</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../create_imputation/index.html">Create Imputation Methods</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../create_filter/index.html">Create Custom Filters</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../example_tasks/index.html">Example Tasks</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../integrated_learners/index.html">Integrated Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../measures/index.html">Implemented Performance Measures</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../filter_methods/index.html">Integrated Filter Methods</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../performance/index.html">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../benchmark_experiments/index.html">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/mlr-org/mlr/">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#resampling">Resampling</a></li>
+        
+            <li><a href="#stratified-resampling">Stratified resampling</a></li>
+        
+            <li><a href="#accessing-individual-learner-models">Accessing individual learner models</a></li>
+        
+            <li><a href="#resample-descriptions-and-resample-instances">Resample descriptions and resample instances</a></li>
+        
+            <li><a href="#aggregating-performance-values">Aggregating performance values</a></li>
+        
+            <li><a href="#convenience-functions">Convenience functions</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="resampling">Resampling</h1>
+<p>In order to assess the performance of a learning algorithm, resampling
+strategies are usually used.
+The entire data set is split into (multiple) training and test sets.
+You train a learner on each training set, predict on the corresponding test set (sometimes
+on the training set as well) and calculate some performance measure.
+Then the individual performance values are aggregated, typically by calculating the mean.
+There exist various different resampling strategies, for example
+cross-validation and bootstrap, to mention just two popular approaches.</p>
+<p><img alt="Resampling Figure" src="../img/resampling.png" title="Resampling Figure" /></p>
+<p>If you want to read up further details, the paper
+<a href="http://link.springer.com/chapter/10.1007%2F978-0-387-47509-7_8">Resampling Strategies for Model Assessment and Selection</a>
+by Simon is proabably not a bad choice.
+Bernd has also published a paper
+<a href="http://www.mitpressjournals.org/doi/pdf/10.1162/EVCO_a_00069">Resampling methods for meta-model validation with recommendations for evolutionary computation</a>
+which contains detailed descriptions and lots of statistical background information on resampling methods.</p>
+<p>In <a href="http://rpackages.ianhowson.com/cran/mlr/">mlr</a> the resampling strategy can be chosen via the function <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">makeResampleDesc</a>.
+The supported resampling strategies are:</p>
+<ul>
+<li>Cross-validation (<code>"CV"</code>),</li>
+<li>Leave-one-out cross-validation (<code>"LOO""</code>),</li>
+<li>Repeated cross-validation (<code>"RepCV"</code>),</li>
+<li>Out-of-bag bootstrap and other variants (<code>"Bootstrap"</code>),</li>
+<li>Subsampling, also called Monte-Carlo cross-validaton (<code>"Subsample"</code>),</li>
+<li>Holdout (training/test) (<code>"Holdout"</code>).</li>
+</ul>
+<p>The <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">resample</a> function evaluates the performance of a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeLearner.html">Learner</a> using
+the specified resampling strategy for a given machine learning <a href="http://rpackages.ianhowson.com/cran/mlr/man/Task.html">Task</a>.</p>
+<p>In the following example the performance of the
+<a href="http://rpackages.ianhowson.com/cran/survival/man/coxph.html">Cox proportional hazards model</a> on the
+<a href="http://rpackages.ianhowson.com/cran/survival/man/lung.html">lung</a> data set is calculated using <em>3-fold cross-validation</em>.
+Generally, in <em><script type="math/tex">K</script>-fold cross-validation</em> the data set <script type="math/tex">D</script> is partitioned into <script type="math/tex">K</script> subsets of
+(approximately) equal size.
+In the <script type="math/tex">i</script>-th step of the <script type="math/tex">K</script> iterations, the <script type="math/tex">i</script>-th subset is
+used for testing, while the union of the remaining parts forms the training
+set.
+The default performance measure in survival analysis is the concordance index (<a href="../measures/index.html">cindex</a>).</p>
+<pre><code class="r">## Specify the resampling strategy (3-fold cross-validation)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+
+## Calculate the performance
+r = resample(&quot;surv.coxph&quot;, lung.task, rdesc)
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: cindex.test.mean=0.627
+r
+#&gt; Resample Result
+#&gt; Task: lung-example
+#&gt; Learner: surv.coxph
+#&gt; cindex.aggr: 0.63
+#&gt; cindex.mean: 0.63
+#&gt; cindex.sd: 0.05
+#&gt; Runtime: 0.27795
+## peak a little bit into r
+names(r)
+#&gt;  [1] &quot;learner.id&quot;     &quot;task.id&quot;        &quot;measures.train&quot; &quot;measures.test&quot; 
+#&gt;  [5] &quot;aggr&quot;           &quot;pred&quot;           &quot;models&quot;         &quot;err.msgs&quot;      
+#&gt;  [9] &quot;extract&quot;        &quot;runtime&quot;
+r$aggr
+#&gt; cindex.test.mean 
+#&gt;        0.6271182
+r$measures.test
+#&gt;   iter    cindex
+#&gt; 1    1 0.5783027
+#&gt; 2    2 0.6324074
+#&gt; 3    3 0.6706444
+r$measures.train
+#&gt;   iter cindex
+#&gt; 1    1     NA
+#&gt; 2    2     NA
+#&gt; 3    3     NA
+</code></pre>
+
+<p><code>r$measures.test</code> gives the value of the performance measure on the 3 individual test
+data sets.
+<code>r$aggr</code> shows the aggregated performance value.
+Its name, <code>"cindex.test.mean"</code>, indicates the performance measure, <a href="../measures/index.html">cindex</a>,
+and the method used to aggregate the 3 individual performances.
+<a href="http://rpackages.ianhowson.com/cran/mlr/man/aggregations.html">test.mean</a> is the default method and, as the name implies, takes the mean over the
+performances on the 3 test data sets.
+No predictions on the training data sets were made and thus <code>r$measures.train</code> contains missing values.</p>
+<p>If predictions for the training set are required, too, set <code>predict = "train"</code>or <code>predict = "both"</code>
+in <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">makeResampleDesc</a>. This is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and
+we will see some examples later on.</p>
+<p><code>r$pred</code> is an object of class <a href="http://rpackages.ianhowson.com/cran/mlr/man/ResamplePrediction.html">ResamplePrediction</a>.
+Just as a <a href="http://rpackages.ianhowson.com/cran/mlr/man/Prediction.html">Prediction</a> object (see the section on <a href="../predict/index.html">making predictions</a>)
+<code>r$pred</code> has an element called <code>"data"</code> which is a <code>data.frame</code> that contains the
+predictions and in case of a supervised learning problem the true values of the target
+variable.</p>
+<pre><code class="r">head(r$pred$data)
+#&gt;   id truth.time truth.event   response iter  set
+#&gt; 1  1        455        TRUE -0.4951788    1 test
+#&gt; 2  2        210        TRUE  0.9573824    1 test
+#&gt; 3  4        310        TRUE  0.8069059    1 test
+#&gt; 4 10        613        TRUE  0.1918188    1 test
+#&gt; 5 12         61        TRUE  0.6638736    1 test
+#&gt; 6 14         81        TRUE -0.1873917    1 test
+</code></pre>
+
+<p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
+if an individual prediction was made on the test or the training data set.</p>
+<p>In the above example the performance measure is the concordance index (<a href="../measures/index.html">cindex</a>).
+Of course, it is  possible to compute multiple performance measures at once by
+passing a list of measures
+(see also the previous section on <a href="../performance/index.html">evaluating learner performance</a>).</p>
+<p>In the following we estimate the Dunn index (<a href="../measures/index.html">dunn</a>), the Davies-Bouldin cluster
+separation measure (<a href="../measures/index.html">db</a>), and the time for training the learner (<a href="../measures/index.html">timetrain</a>)
+by <em>subsampling</em> with 5 iterations.
+In each iteration the data set <script type="math/tex">D</script> is randomly partitioned into a
+training and a test set according to a given percentage, e.g., 2/3
+training and 1/3 test set. If there is just one iteration, the strategy
+is commonly called <em>holdout</em> or <em>test sample estimation</em>.</p>
+<pre><code class="r">## cluster iris feature data
+task = makeClusterTask(data = iris[,-5])
+## Subsampling with 5 iterations and default split 2/3
+rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 5)
+## Subsampling with 5 iterations and 4/5 training data
+rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 5, split = 4/5)
+
+## Calculate the three performance measures
+r = resample(&quot;cluster.kmeans&quot;, task, rdesc, measures = list(dunn, db, timetrain))
+#&gt; [Resample] subsampling iter: 1
+#&gt; [Resample] subsampling iter: 2
+#&gt; [Resample] subsampling iter: 3
+#&gt; [Resample] subsampling iter: 4
+#&gt; [Resample] subsampling iter: 5
+#&gt; [Resample] Result: dunn.test.mean=0.274,db.test.mean=0.51,timetrain.test.mean=0.0016
+r$aggr
+#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
+#&gt;           0.2738893           0.5103655           0.0016000
+</code></pre>
+
+<h2 id="stratified-resampling">Stratified resampling</h2>
+<p>For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. Stratified resampling ensures this.
+This is particularly useful in case of imbalanced classes and small data sets. Otherwise it may happen, for example,
+that observations of less frequent classes are missing in some of the training sets which can
+decrease the performance of the learner, or lead to model crashes
+In order to conduct stratified resampling, set <code>stratify = TRUE</code> when calling <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">makeResampleDesc</a>.</p>
+<pre><code class="r">## 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3, stratify = TRUE)
+
+r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mmce.test.mean=0.02
+</code></pre>
+
+<p>Stratification is also available for survival tasks.
+Here the stratification balances the censoring rate.</p>
+<p>Sometimes it is required to also stratify on the input data, e.g. to ensure that all subgroups are represented in all training and test sets.
+To stratify on the input columns, specify factor columns of your task data via <code>stratify.cols</code></p>
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3, stratify.cols = &quot;chas&quot;)
+r = resample(&quot;regr.rpart&quot;, bh.task, rdesc)
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mse.test.mean=23.2
+</code></pre>
+
+<h2 id="accessing-individual-learner-models">Accessing individual learner models</h2>
+<p>In each resampling iteration a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeLearner.html">Learner</a> is fitted on the respective training set.
+By default, the resulting <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeWrappedModel.html">WrappedModel</a>s are not returned by <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">resample</a>.
+If you want to keep them, set <code>models = TRUE</code> when calling <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">resample</a>.</p>
+<pre><code class="r">## 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+
+r = resample(&quot;classif.lda&quot;, iris.task, rdesc, models = TRUE)
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mmce.test.mean=0.02
+r$models
+#&gt; [[1]]
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 100; features = 4
+#&gt; Hyperparameters: 
+#&gt; 
+#&gt; [[2]]
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 100; features = 4
+#&gt; Hyperparameters: 
+#&gt; 
+#&gt; [[3]]
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 100; features = 4
+#&gt; Hyperparameters:
+</code></pre>
+
+<p>Keeping only certain information instead of entire <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeWrappedModel.html">models</a>, for example the
+variable importance in a regression tree, can be achieved using the <code>extract</code> argument.
+The function passed to <code>extract</code> is applied to each <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeWrappedModel.html">model</a> fitted on one of
+the 3 training sets.</p>
+<pre><code class="r">## 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+
+## Extract the variable importance in a regression tree
+r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
+    extract = function(x) x$learner.model$variable.importance)
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mse.test.mean=30.3
+r$extract
+#&gt; [[1]]
+#&gt;         rm      lstat       crim      indus        age    ptratio 
+#&gt; 15228.2872 10742.2277  3893.2744  3651.6232  2601.5262  2551.8492 
+#&gt;        dis        nox        rad        tax         zn 
+#&gt;  2498.2748  2419.5269  1014.2609   743.3742   308.8209 
+#&gt; 
+#&gt; [[2]]
+#&gt;       lstat         nox         age       indus        crim          rm 
+#&gt; 15725.19021  9323.20270  8474.23077  8358.67000  8251.74446  7332.59637 
+#&gt;          zn         dis         tax         rad     ptratio           b 
+#&gt;  6151.29577  2741.12074  2055.67537  1216.01398   634.78381    71.00088 
+#&gt; 
+#&gt; [[3]]
+#&gt;         rm      lstat        age    ptratio        nox        dis 
+#&gt; 15890.9279 13262.3672  4296.4175  3678.6651  3668.4944  3512.2753 
+#&gt;       crim        tax      indus         zn          b        rad 
+#&gt;  3474.5883  2844.9918  1437.7900  1284.4714   578.6932   496.2382
+</code></pre>
+
+<h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
+<p>As shown above, the function <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">makeResampleDesc</a> is used to specify the resampling strategy.</p>
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+str(rdesc)
+#&gt; List of 4
+#&gt;  $ id      : chr &quot;cross-validation&quot;
+#&gt;  $ iters   : int 3
+#&gt;  $ predict : chr &quot;test&quot;
+#&gt;  $ stratify: logi FALSE
+#&gt;  - attr(*, &quot;class&quot;)= chr [1:2] &quot;CVDesc&quot; &quot;ResampleDesc&quot;
+</code></pre>
+
+<p>The result <code>rdesc</code>is an object of class <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">ResampleDesc</a> and contains,
+as the name implies, a description of the resampling strategy.
+In principle, this is an instruction for drawing training and test sets including
+the necessary parameters like the number of iterations, the sizes of the training and test
+sets etc.</p>
+<p>Based on this description, the data set is randomly partitioned into multiple training and
+test sets.
+For each iteration, we get a set of index vectors indicating the training and test examples.
+These are stored in a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleInstance.html">ResampleInstance</a>.</p>
+<p>If a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">ResampleDesc</a> is passed to <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">resample</a>, it is instantiated internally.
+Naturally, it is also possible to pass a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleInstance.html">ResampleInstance</a> directly.</p>
+<p>A <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleInstance.html">ResampleInstance</a> can be created through the function
+<a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleInstance.html">makeResampleInstance</a> given a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">ResampleDesc</a> and either the size of
+the data set at hand or the <a href="http://rpackages.ianhowson.com/cran/mlr/man/Task.html">Task</a>.
+It basically performs the random drawing of indices to separate the data into training and
+test sets according to the description.</p>
+<pre><code class="r">## Create a resample instance based an a task
+rin = makeResampleInstance(rdesc, task = iris.task)
+rin
+#&gt; Resample instance for 150 cases.
+#&gt; Resample description: cross-validation with 3 iterations.
+#&gt; Predict: test
+#&gt; Stratification: FALSE
+
+## Create a resample instance given the size of the data set
+rin = makeResampleInstance(rdesc, size = nrow(iris))
+str(rin)
+#&gt; List of 5
+#&gt;  $ desc      :List of 4
+#&gt;   ..$ id      : chr &quot;cross-validation&quot;
+#&gt;   ..$ iters   : int 3
+#&gt;   ..$ predict : chr &quot;test&quot;
+#&gt;   ..$ stratify: logi FALSE
+#&gt;   ..- attr(*, &quot;class&quot;)= chr [1:2] &quot;CVDesc&quot; &quot;ResampleDesc&quot;
+#&gt;  $ size      : int 150
+#&gt;  $ train.inds:List of 3
+#&gt;   ..$ : int [1:100] 36 81 6 82 120 110 118 132 105 61 ...
+#&gt;   ..$ : int [1:100] 6 119 120 110 121 118 99 100 29 127 ...
+#&gt;   ..$ : int [1:100] 36 81 82 119 121 99 132 105 61 115 ...
+#&gt;  $ test.inds :List of 3
+#&gt;   ..$ : int [1:50] 2 3 4 5 7 9 11 16 22 24 ...
+#&gt;   ..$ : int [1:50] 8 12 17 19 20 23 25 27 32 33 ...
+#&gt;   ..$ : int [1:50] 1 6 10 13 14 15 18 21 29 31 ...
+#&gt;  $ group     : Factor w/ 0 levels: 
+#&gt;  - attr(*, &quot;class&quot;)= chr &quot;ResampleInstance&quot;
+
+## Access the indices of the training observations in iteration 3
+rin$train.inds[[3]]
+#&gt;   [1]  36  81  82 119 121  99 132 105  61 115  17  42   4  71   5  79  30
+#&gt;  [18] 113 138  19 150  77  58  92 114 133   8 109  33 145  22 111  97  24
+#&gt;  [35]   7  44   3  20 134  96  16  43 149   9  46  32 139  87   2  11  52
+#&gt;  [52]  86  40 141 142  72  54  48  83  64  90 112 148 129 137 116 143  69
+#&gt;  [69]  84  25  80  37  38  75 130 126 135 107 146  26  12  98  55 124  60
+#&gt;  [86]  63 117  23  67  73  28 106  76  50 144  59  47 102  56  27
+</code></pre>
+
+<p>While having two separate objects, resample descriptions and instances as well as the <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">resample</a>
+function seems overly complicated, it has several advantages:</p>
+<ul>
+<li>Resample instances allow for paired experiments, that is comparing the performance
+  of several learners on exactly the same training and test sets.
+  This is particularly useful if you want to add another method to a comparison experiment
+  you already did.</li>
+</ul>
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+rin = makeResampleInstance(rdesc, task = iris.task)
+
+## Calculate the performance of two learners based on the same resample instance
+r.lda = resample(&quot;classif.lda&quot;, iris.task, rin, show.info = FALSE)
+r.rpart = resample(&quot;classif.rpart&quot;, iris.task, rin, show.info = FALSE)
+r.lda$aggr
+#&gt; mmce.test.mean 
+#&gt;     0.02666667
+r.rpart$aggr
+#&gt; mmce.test.mean 
+#&gt;           0.06
+</code></pre>
+
+<ul>
+<li>It is easy to add other resampling methods later on. You can
+  simply derive from the <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleInstance.html">ResampleInstance</a>
+  class, but you do not have to touch any methods that use the
+  resampling strategy.</li>
+</ul>
+<p>As mentioned above, when calling <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleInstance.html">makeResampleInstance</a> the index sets are drawn randomly.
+Mainly for <em>holdout</em> (<em>test sample</em>) <em>estimation</em> you might want full control about the training
+and tests set and specify them manually.
+This can be done using the function <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a>.</p>
+<pre><code class="r">rin = makeFixedHoldoutInstance(train.inds = 1:100, test.inds = 101:150, size = 150)
+rin
+#&gt; Resample instance for 150 cases.
+#&gt; Resample description: holdout with 0.67 split rate.
+#&gt; Predict: test
+#&gt; Stratification: FALSE
+</code></pre>
+
+<h2 id="aggregating-performance-values">Aggregating performance values</h2>
+<p>In resampling we get (for each measure we wish to calculate) one performance
+value (on the test set, training set, or both) for each iteration.
+Subsequently, these are aggregated.
+As mentioned above, mainly the mean over the performance values on the test data sets
+(<a href="http://rpackages.ianhowson.com/cran/mlr/man/aggregations.html">test.mean</a>) is calculated.</p>
+<p>For example, a 10-fold cross validation computes 10 values for the chosen
+performance measure.
+The aggregated value is the mean of these 10 numbers.
+<a href="http://rpackages.ianhowson.com/cran/mlr/">mlr</a> knows how to handle it because each <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeMeasure.html">Measure</a> knows how it is aggregated:</p>
+<pre><code class="r">## Mean misclassification error
+mmce$aggr
+#&gt; Aggregation function: test.mean
+
+## Root mean square error
+rmse$aggr
+#&gt; Aggregation function: test.rmse
+</code></pre>
+
+<p>The aggregation method of a <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeMeasure.html">Measure</a> can be changed via the function <a href="http://rpackages.ianhowson.com/cran/mlr/man/setAggregation.html">setAggregation</a>.
+See the documentation of <a href="http://rpackages.ianhowson.com/cran/mlr/man/aggregations.html">aggregations</a> for available methods.</p>
+<h3 id="example-different-measures-and-aggregations">Example: Different measures and aggregations</h3>
+<p><a href="http://rpackages.ianhowson.com/cran/mlr/man/aggregations.html">test.median</a> computes the median of the performance values on the test sets.</p>
+<pre><code class="r">## We use the mean error rate and the median of the true positive rates
+m1 = mmce
+m2 = setAggregation(tpr, test.median)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(&quot;classif.rpart&quot;, sonar.task, rdesc, measures = list(m1, m2))
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mmce.test.mean=0.293,tpr.test.median=0.735
+r$aggr
+#&gt;  mmce.test.mean tpr.test.median 
+#&gt;       0.2930987       0.7352941
+</code></pre>
+
+<h3 id="example-calculating-the-training-error">Example: Calculating the training error</h3>
+<p>Here we calculate the mean misclassification error (<a href="../measures/index.html">mmce</a>) on the training and the test
+data sets. Note that we have to set <code>predict = "both"</code>when calling <a href="http://rpackages.ianhowson.com/cran/mlr/man/makeResampleDesc.html">makeResampleDesc</a>
+in order to get predictions on both data sets, training and test.</p>
+<pre><code class="r">mmce.train.mean = setAggregation(mmce, train.mean)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3, predict = &quot;both&quot;)
+r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, mmce.train.mean))
+#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mmce.test.mean=0.0467,mmce.train.mean=0.0367
+r$measures.train
+#&gt;   iter mmce mmce
+#&gt; 1    1 0.04 0.04
+#&gt; 2    2 0.03 0.03
+#&gt; 3    3 0.04 0.04
+r$aggr
+#&gt;  mmce.test.mean mmce.train.mean 
+#&gt;      0.04666667      0.03666667
+</code></pre>
+
+<h3 id="example-bootstrap">Example: Bootstrap</h3>
+<p>In <em>out-of-bag bootstrap estimation</em> <script type="math/tex">B</script> new data sets <script type="math/tex">D_1</script> to <script type="math/tex">D_B</script> are drawn from the
+data set <script type="math/tex">D</script> with replacement, each of the same size as <script type="math/tex">D</script>.
+In the <script type="math/tex">i</script>-th iteration, <script type="math/tex">D_i</script> forms the training set, while the remaining elements from
+<script type="math/tex">D</script>, i.e., elements not in the training set, form the test set.</p>
+<!--(
+                     |resampling_desc_figure|
+
+                     |resampling_nested_resampling_figure|
+)-->
+
+<p>The variants <em>b632</em> and <em>b632+</em> calculate a convex combination of the training performance and
+the out-of-bag bootstrap performance and thus require predictions on the training sets and an
+appropriate aggregation strategy.</p>
+<pre><code class="r">rdesc = makeResampleDesc(&quot;Bootstrap&quot;, predict = &quot;both&quot;, iters = 10)
+b632.mmce = setAggregation(mmce, b632)
+b632plus.mmce = setAggregation(mmce, b632plus)
+b632.mmce
+#&gt; Name: Mean misclassification error
+#&gt; Performance measure: mmce
+#&gt; Properties: classif,classif.multi,req.pred,req.truth
+#&gt; Minimize: TRUE
+#&gt; Best: 0; Worst: 1
+#&gt; Aggregated by: b632
+#&gt; Note:
+
+r = resample(&quot;classif.rpart&quot;, iris.task, rdesc,
+    measures = list(mmce, b632.mmce, b632plus.mmce), show.info = FALSE)
+head(r$measures.train)
+#&gt;   iter        mmce        mmce        mmce
+#&gt; 1    1 0.026666667 0.026666667 0.026666667
+#&gt; 2    2 0.026666667 0.026666667 0.026666667
+#&gt; 3    3 0.006666667 0.006666667 0.006666667
+#&gt; 4    4 0.026666667 0.026666667 0.026666667
+#&gt; 5    5 0.033333333 0.033333333 0.033333333
+#&gt; 6    6 0.013333333 0.013333333 0.013333333
+r$aggr
+#&gt; mmce.test.mean      mmce.b632  mmce.b632plus 
+#&gt;     0.07051905     0.05389071     0.05496489
+</code></pre>
+
+<h2 id="convenience-functions">Convenience functions</h2>
+<p>When quickly trying out some learners, it can get tedious to write the <strong>R</strong>
+code for generating a resample instance, setting the aggregation strategy and so
+on. For this reason <a href="http://rpackages.ianhowson.com/cran/mlr/">mlr</a> provides some convenience functions for the
+frequently used resampling strategies, for example <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">holdout</a>,
+<a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">crossval</a> or <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">bootstrapB632</a>. But note that you do not
+have as much control and flexibility as when using <a href="http://rpackages.ianhowson.com/cran/mlr/man/resample.html">resample</a> with a resample
+description or instance.</p>
+<pre><code class="r">holdout(&quot;regr.lm&quot;, bh.task, measures = list(mse, mae))
+crossval(&quot;classif.lda&quot;, iris.task, iters = 3, measures = list(mmce, ber))
+</code></pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

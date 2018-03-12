@@ -7,15 +7,15 @@
 setLearnerId(learner, id)
 }
 \arguments{
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{id}{(\code{character(1)})\cr
 New ID for learner.}
 }
 \value{
-\link{Learner}.
+[Learner].
 }
 \description{
 Set the ID of the learner.

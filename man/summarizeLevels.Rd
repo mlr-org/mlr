@@ -7,7 +7,7 @@
 summarizeLevels(obj, cols = NULL)
 }
 \arguments{
-\item{obj}{(\link{data.frame} | \link{Task})\cr
+\item{obj}{([data.frame] | [Task])\cr
 Input data.}
 
 \item{cols}{(\link{character})\cr

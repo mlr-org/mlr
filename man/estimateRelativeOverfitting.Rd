@@ -11,16 +11,16 @@ estimateRelativeOverfitting(predish, measures, task, learner = NULL,
 \item{predish}{(\link{ResampleDesc} | \link{ResamplePrediction} | \link{Prediction})\cr
 Resampling strategy or resampling prediction or test predictions.}
 
-\item{measures}{(\link{Measure} | list of \link{Measure})\cr
+\item{measures}{([Measure] | list of [Measure])\cr
 Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \link{getDefaultMeasure}.}
+Default is the default measure for the task, see here [getDefaultMeasure].}
 
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
-\item{learner}{(\link{Learner} | \code{character(1)})\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \link{makeLearner}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
 \item{pred.train}{(\link{Prediction})\cr
 Training predictions. Only needed if test predictions are passed.}

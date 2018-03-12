@@ -7,7 +7,7 @@
 smote(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE)
 }
 \arguments{
-\item{task}{(\link{Task})\cr
+\item{task}{([Task])\cr
 The task.}
 
 \item{rate}{(\code{numeric(1)})\cr
@@ -35,7 +35,7 @@ is sampled.
 Default is \code{FALSE}.}
 }
 \value{
-\link{Task}.
+[Task].
 }
 \description{
 In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
