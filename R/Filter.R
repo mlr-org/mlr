@@ -632,6 +632,7 @@ makeFilter(
   }
 )
 
+# preprocess the data before applying praznik filter
 preprocess.cmi.praznik = function(data) {
     colns = colnames(data)
     data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
@@ -671,55 +672,10 @@ helper.cmi.praznik = function(criteria) {
     k = min(nselect, length(featnames))
     input = list(X = X, Y = Y, k = k)
     algo = eval(parse(text = criteria))
-    tryCatch({
-      res = do.call(what = algo, args = input)
-    }, error = {
-      input$k = min(nrow(X), k)  # this is not the right behavior, but to hack the praznik bug
-      res = do.call(what = algo, args = input)
-    })
+    res = do.call(what = algo, args = input)
     res$score
-    # names.sel = names(res$selection)
-    # rst.all = vector(length = length(org.featnames), mode = "numeric")
-    # names(rst.all) = org.featnames
-    # rst.all[names.sel] = res$score
-    # rst = res$score
-    # rst[setdiff(featnames, names.sel)] = 0  # replace NA with 0
-    # rst.all
+    # fun must return a named vector of feature importance values. By convention the most important features receive the highest scores. If you are making use of the nselect option fun can either return a vector of nselect scores or a vector as long as the total numbers of features in the task filled with NAs for all features whose scores weren't calculated.
   }
-}
-
-helper.cmi.praznik.pureR = function(criteria) {
-  candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-  checkmate::assert_choice(criteria, candiates)
-  criteria = paste0("praznik::pure", criteria)
-  function(task, nselect, ...) {
-    org.featnames = getTaskFeatureNames(task)
-    task = removeConstantFeatures(task)  # without removing constant features, praznik will generate Rcpp error
-    data = getTaskData(task)
-    featnames = getTaskFeatureNames(task)
-    targetname = getTaskTargetNames(task)
-    data = preprocess.cmi.praznik(data)  # pre-discretizing
-    X = data[, featnames]
-    Y = data[, targetname]
-    k = min(nselect, length(featnames))
-    input = list(X = X, Y = Y, k = k)
-    algo = eval(parse(text = criteria))
-    tryCatch({
-      res = do.call(what = algo, args = input)
-    }, error = {
-      input$k = min(nrow(X), k)  # this is not the right behavior, but to hack the praznik bug
-      res = do.call(what = algo, args = input)
-    })
-    res$score
-    names.sel = res$selection
-    rst.all = vector(length = length(org.featnames), mode = "numeric")
-    names(rst.all) = org.featnames
-    rst.all[names.sel] = res$score
-    # rst = res$score
-    # rst[setdiff(featnames, names.sel)] = 0  # replace NA with 0
-    # rst.all
-  }
-}
 
 #' Filters in the praznik package using mutual information criteria greedy search
 #' Features with higher scores are considered more important features
