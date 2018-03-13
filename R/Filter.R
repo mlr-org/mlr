@@ -656,7 +656,7 @@ preprocess.cmi.praznik = function(data) {
     return(data)
 }
 
-helper.cmi.praznik = function(criteria) {
+helper.cmi.praznik = function(criteria, preprocess = FALSE) {
   candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
   checkmate::assert_choice(criteria, candiates)
   criteria = paste0("praznik::", criteria)
@@ -666,7 +666,7 @@ helper.cmi.praznik = function(criteria) {
     data = getTaskData(task)
     featnames = getTaskFeatureNames(task)
     targetname = getTaskTargetNames(task)
-    data = preprocess.cmi.praznik(data)  # pre-discretizing
+    if(preprocess) data = preprocess.cmi.praznik(data)  # no pre-discretizing by default
     X = data[, featnames]
     Y = data[, targetname]
     k = min(nselect, length(featnames))
@@ -674,8 +674,10 @@ helper.cmi.praznik = function(criteria) {
     algo = eval(parse(text = criteria))
     res = do.call(what = algo, args = input)
     res$score
+    }}
     # fun must return a named vector of feature importance values. By convention the most important features receive the highest scores. If you are making use of the nselect option fun can either return a vector of nselect scores or a vector as long as the total numbers of features in the task filled with NAs for all features whose scores weren't calculated.
-  }
+    # test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 2)
+    # test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 4)
 
 #' Filters in the praznik package using mutual information criteria greedy search
 #' Features with higher scores are considered more important features
