@@ -30,6 +30,8 @@ r_github_packages:
   - jimhester/lintr
 
 jobs:
+  allow_failures:
+    - env: TUTORIAL=HTML TUTORIAL=PDF
   include:
     - stage: warmup-1
       install:
