@@ -35,6 +35,7 @@
   matrix should be computed for "train", "test", or "both" (default)
 * PlotBMRSummary: Add parameter "shape"
 * plotROCCurves: Add faceting argument
+* PreprocWrapperCaret: Add param "ppc.corr", "ppc.zv", "ppc.nzv", "ppc.n.comp", "ppc.cutoff", "ppc.freqCut", "ppc.uniqueCut"
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -69,7 +70,7 @@
 * classif.lda learner: add 'prior' hyperparameter
 * ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
 * h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
-* h20*: Add support for "missings"
+* h20*: Add support for "missings" 
 
 ## learners - new
 * classif.adaboostm1
@@ -885,6 +886,4 @@
 
 # mlr 1.1:
 * Initial release to CRAN
-
-
 
