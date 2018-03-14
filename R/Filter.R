@@ -845,7 +845,7 @@ makeFilter(
     X = mdata[, fns]
     y = mdata[[tns]]
     fit = glmnet::glmnet(X,y)
-    return(coef(fit, s = 0.1))
+    return(abs(coef(fit, s = 0.1)))
   }
   )
 
