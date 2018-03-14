@@ -832,6 +832,23 @@ makeFilter(
   }
 )
 
+makeFilter(
+  name = "glmnet.lasso",
+  desc = "lasso",
+  pkg = "glmnet",
+  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
+  supported.features = c("numerics", "factors", "integer", "character", "logical"),
+  fun = function(task, nselect, ...) {
+    mdata = getTaskData(task)
+    fns = getTaskFeatureNames(task)
+    tns = getTaskTargetNames(task)
+    X = mdata[, fns]
+    y = mdata[[tns]]
+    fit = glmnet::glmnet(X,y)
+    return(coef(fit, s = 0.1))
+  }
+  )
+
 #' Simple entropy based filter with Rcpp implementation
 #' @rdname makeFilter
 #' @name makeFilter
