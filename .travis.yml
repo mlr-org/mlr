@@ -30,10 +30,8 @@ r_github_packages:
   - jimhester/lintr
 
 jobs:
-  fast_finish: true
   allow_failures:
-    - env: TUTORIAL=HTML
-    - env: TUTORIAL=PDF
+    - env: TUTORIAL=HTML TUTORIAL=PDF
   include:
     - stage: warmup-1
       install:
@@ -112,7 +110,7 @@ jobs:
         - git config user.name $GN
         - git config user.email $GM
         - git config credential.helper "store --file=.git/credentials"
-        - echo "https://$GH_TOKEN:@github.com" >> .git/credentials
+        - echo "https://$GT:@github.com" >> .git/credentials
         - git config push.default matching
         - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git add --force vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
