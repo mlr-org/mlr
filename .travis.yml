@@ -27,10 +27,13 @@ r_github_packages:
   - berndbischl/BBmisc
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
-  - RevolutionAnalytics/quickcheck/pkg
   - jimhester/lintr
 
 jobs:
+  fast_finish: true
+  allow_failures:
+    - env: TUTORIAL=HTML
+    - env: TUTORIAL=PDF
   include:
     - stage: warmup-1
       install:
@@ -106,10 +109,10 @@ jobs:
         - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
       after_success:
         - git checkout master
-        - git config user.name $GIT_NAME
-        - git config user.email $GIT_EMAIL
+        - git config user.name $GN
+        - git config user.email $GM
         - git config credential.helper "store --file=.git/credentials"
-        - echo "https://$GH_TOKEN:@github.com" >> .git/credentials
+        - echo "https://$GT:@github.com" >> .git/credentials
         - git config push.default matching
         - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git add --force vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
