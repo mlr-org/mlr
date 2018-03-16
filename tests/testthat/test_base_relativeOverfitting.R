@@ -46,7 +46,7 @@ test_that("relativeOverfitting works with multiple measures with ResamplePredict
 
 test_that("relativeOverfitting works for regression with ResamplePrediction", {
   rdesc = makeResampleDesc("CV", iters = 2)
-  rpred = resample("regr.lm", regr.small.task, rdesc)$pred
+  rpred = resample("regr.rpart", regr.small.task, rdesc)$pred
   ro = estimateRelativeOverfitting(rpred, mse, regr.small.task)
   expect_true(is.data.frame(ro))
   expect_true(is.numeric(ro$relative.overfit.mse))
@@ -75,7 +75,7 @@ test_that("relativeOverfitting works with multiple measures with train/test", {
 })
 
 test_that("relativeOverfitting works for regression with train/test", {
-  mod = train(makeLearner("regr.lm"), regr.small.task, subset = regr.small.train.inds)
+  mod = train(makeLearner("regr.rpart"), regr.small.task, subset = regr.small.train.inds)
   pred.train = predict(mod, task = regr.small.task, subset = regr.small.train.inds)
   pred.test = predict(mod, task = regr.small.task, subset = regr.small.test.inds)
   ro = estimateRelativeOverfitting(pred.test, mse, regr.small.task, pred.train = pred.train)

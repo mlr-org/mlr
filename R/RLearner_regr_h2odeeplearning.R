@@ -230,6 +230,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
     properties = c("numerics", "factors", "weights", "missings"),
     name = "h2o.deeplearning",
     short.name = "h2o.dl",
+    note = 'The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
     callees = "h2o.deeplearning"
   )
 }

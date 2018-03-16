@@ -9,7 +9,7 @@ removeConstantFeatures(obj, perc = 0, dont.rm = character(0L),
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{obj}{([data.frame] | [Task])\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
 \item{perc}{(\code{numeric(1)})\cr
@@ -31,12 +31,12 @@ Numerical tolerance to treat two numbers as equal.
 Variables stored as \code{double} will get rounded accordingly before computing the mode.
 Default is \code{sqrt(.Maschine$double.eps)}.}
 
-\item{show.info}{(`logical(1)`)\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via [configureMlr].}
+Default is set via \link{configureMlr}.}
 }
 \value{
-[data.frame] | [Task]. Same type as `obj`.
+\link{data.frame} | \link{Task}. Same type as \code{obj}.
 }
 \description{
 Constant features can lead to errors in some models and obviously provide
