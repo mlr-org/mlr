@@ -833,7 +833,9 @@ makeFilter(
     y = mdata[[tns]]
     X = as.matrix(X)
     fit = glmnet::glmnet(X,y, family="binomial")
-    vec = abs(coef(fit, s = 0.1))
+    index = which.min(abs(fit$df - nselect))
+    s = fit$lambda[index]
+    vec = abs(coef(fit, s = s))
     vec = as.vector(vec)
     names(vec) = fns
     return(vec)
