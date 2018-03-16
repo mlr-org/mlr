@@ -844,8 +844,12 @@ makeFilter(
     tns = getTaskTargetNames(task)
     X = mdata[, fns]
     y = mdata[[tns]]
-    fit = glmnet::glmnet(X,y)
-    return(abs(coef(fit, s = 0.1)))
+    X = as.matrix(X)
+    fit = glmnet::glmnet(X,y, family="binomial")
+    vec = abs(coef(fit, s = 0.1))
+    vec = as.vector(vec)
+    names(vec) = fns
+    return(vec)
   }
   )
 
