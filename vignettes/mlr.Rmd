@@ -1,15 +1,20 @@
 ---
 title: "mlr: Machine Learning in R"
-author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
-Tobias Kuehn, Erich Studerus, Lars Kotthoff"
-date: "`r Sys.Date()`"
+# author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
+# Tobias Kuehn, Erich Studerus, Lars Kotthoff"
+# date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-# mlr: Machine Learning in R
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+```
 
 This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
@@ -85,7 +90,6 @@ Reading is highly recommended!
   and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip)
   as zip for offline usage
 * [Wiki](https://github.com/mlr-org/mlr/wiki) with additional information for developers
-
 
 ## Thanks
 

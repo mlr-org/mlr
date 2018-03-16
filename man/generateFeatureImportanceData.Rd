@@ -11,7 +11,7 @@ generateFeatureImportanceData(task, method = "permutation.importance",
   replace = TRUE, local = FALSE)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{method}{(\code{character(1)})\cr
@@ -19,9 +19,9 @@ The method used to compute the feature importance.
 The only method available is \dQuote{permutation.importance}.
 Default is \dQuote{permutation.importance}.}
 
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{features}{(\link{character})\cr
 The features to compute the importance of.
@@ -34,7 +34,7 @@ all \code{features} together and then contrasting the performance with that of
 the performance without the features being permuted.
 The default is \code{FALSE}.}
 
-\item{measure}{([Measure])\cr
+\item{measure}{(\link{Measure})\cr
 Performance measure.
 Default is the first measure used in the benchmark experiment.}
 
