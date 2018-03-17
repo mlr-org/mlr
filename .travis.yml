@@ -74,50 +74,32 @@ jobs:
     - stage: Tutorial
       env: TUTORIAL=HTML
       pandoc_version: 2.1.2
-      install:
+      before_install:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-        - Rscript -e 'if (length(find.package("remotes", quiet = TRUE)) == 0) install.packages("remotes")' # needed for tic
-        - Rscript -e 'if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")' # favicon creation
-        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-        - R -q -e 'devtools::install_github("ropenscilabs/tic"); tic::install()'
-      after_install: R -q -e 'tic::after_install()'
-      before_script: R -q -e 'tic::before_script()'
-      script:
-        # we need rmarkdown and pander for building the tutorial sites
-        - R -q -e 'install.packages(c("rmarkdown", "pander"));tic::prepare_all_stages(); tic::before_install()'
-        # for some reason we need to install from github as 'R CMD BUILD' results in build errors of the PDF
-        - R -q -e 'devtools::install_github("mlr-org/mlr")'
-      before_deploy: R -q -e 'tic::before_deploy(); devtools::install_github("jimhester/lintr");devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2")'
+        - devtools::install_github("ropenscilabs/tic")
+      install: R -q -e 'tic::install()'
+      script: R --no-save <<< 'library("devtools"); document()'
+      before_deploy: R -q -e 'tic::before_deploy()'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
            branch: master
            condition: $TRAVIS_PULL_REQUEST = false
-      after_success: R -q -e 'tic::after_deploy()'
-      after_script: R -q -e 'tic::after_script()'
     - stage: Tutorial
       env: TUTORIAL=PDF
       pandoc_version: 2.1.2
-      install:
-        - R -q -e 'install.packages(c("bookdown", "pander"))'
-      script:
+      before_install:
         - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-        # for some reason we need to install from github as 'R CMD BUILD' results in build errors of the PDF
-        - R -q -e 'devtools::install_github("mlr-org/mlr")'
-        - R -q -e 'rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")' # build pdf version
-      after_success:
-        - git checkout master
-        - git config user.name $GN
-        - git config user.email $GM
-        - git config credential.helper "store --file=.git/credentials"
-        - echo "https://$GT:@github.com" >> .git/credentials
-        - git config push.default matching
-        - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
-        - git add --force vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
-        - git commit -a -m "update auto-generated tutorial pdf version [ci skip]"
-        - git push --force
+        - devtools::install_github("ropenscilabs/tic")
+      install: R -q -e 'tic::install()'
+      script: R --no-save <<< 'library("devtools"); document()'
+      deploy:
+         provider: script
+         script: R -q -e 'tic::deploy()'
+         on:
+           branch: master
+           condition: $TRAVIS_PULL_REQUEST = false
 
 notifications:
   email:
