@@ -13,6 +13,9 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
+  get_stage("script") %>%
+    add_code_step(devtools::document())
+
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
 
@@ -27,6 +30,9 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(if (length(find.package("fs", quiet = TRUE)) == 0) install.packages("fs")) %>%
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+
+  get_stage("script") %>%
+    add_code_step(devtools::document())
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh()) %>%

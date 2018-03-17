@@ -77,7 +77,7 @@ jobs:
       pandoc_version: 2.1.2
       before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
-      script: R --no-save <<< 'library("devtools"); document()'
+      script:  R -q -e 'tic::script()'
       before_deploy: R -q -e 'tic::before_deploy()'
       deploy:
          provider: script
@@ -90,7 +90,7 @@ jobs:
       pandoc_version: 2.1.2
       before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
-      script: R --no-save <<< 'library("devtools"); document()'
+      script:  R -q -e 'tic::script()'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
