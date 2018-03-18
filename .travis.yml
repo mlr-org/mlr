@@ -19,6 +19,7 @@ addons:
       - libgsl0-dev
       - ghostscript # for mlr-tutorial pdf
       - imagemagick # for pkgdown favicon
+      - libopenblas-dev # optimized numerical library
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
