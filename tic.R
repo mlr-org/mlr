@@ -1,22 +1,26 @@
-#add_package_checks()
-
 # condition on env variable
+# if (Sys.getenv("check") == "TRUE") {
+#
+#   get_stage("install") %>%
+#     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
+#                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
+#     add_code_step(devtools::document())
+#
+#   get_stage("script") {
+#     add_code_step(system2("travis_wait"
+#   }
+#
+# }
+
 if (Sys.getenv("TUTORIAL") == "HTML") {
-  #  Other example criteria:
-  # - `inherits(ci(), "TravisCI")`: Only for Travis CI
-  # - `ci()$is_tag()`: Only for tags, not for branches
-  # - `Sys.getenv("BUILD_PKGDOWN") != ""`: If the env var "BUILD_PKGDOWN" is set
-  # - `Sys.getenv("TRAVIS_EVENT_TYPE") == "cron"`: Only for Travis cron jobs
 
   get_stage("install") %>%
-    add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>%
+    add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>% # favicon creation
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
-
-  #get_stage("script") %>%
-  #  add_code_step(devtools::document())
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh()) %>%
+    # this pkgdown fork includes the tweaked navbar for mlr
     add_code_step(devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2"))
 
   get_stage("deploy") %>%
@@ -29,9 +33,11 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(if (length(find.package("fs", quiet = TRUE)) == 0) install.packages("fs")) %>%
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown")) %>%
+    add_code_step(if (length(find.package("bookdown", quiet = TRUE)) == 0) install.packages("bookdown")) %>%
     add_code_step(if (length(find.package("roxygen2", quiet = TRUE)) == 0) devtools::install_github("klutometis/roxygen")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
+  # this ensures that the NAMESPACE is correct. R CMD Build is not enough for the PDF build.
   get_stage("script") %>%
     add_code_step(devtools::document())
 
