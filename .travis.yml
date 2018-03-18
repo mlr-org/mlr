@@ -35,12 +35,12 @@ jobs:
     - env: TUTORIAL=HTML
     - env: TUTORIAL=PDF
   include:
-#    - stage: warmup-1
-#      install:
-#        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-#        - Rscript -e 'devtools::install_deps()'
-#        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-#      script: true
+    - stage: warmup-1
+      install:
+        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+        - Rscript -e 'devtools::install_deps()'
+        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
+      script: true
 #    - stage: warmup-2
 #      install:
 #        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'

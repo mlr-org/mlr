@@ -11,7 +11,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("install") %>%
     add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown"))# %>%
-    # add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) added by add_package_checks()?
+    add_code_step(remotes::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("script") %>%
     add_code_step(devtools::document())
@@ -29,7 +29,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(if (length(find.package("fs", quiet = TRUE)) == 0) install.packages("fs")) %>%
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown")) #%>%
-    # add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+    add_code_step(remotes::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("script") %>%
     add_code_step(devtools::document())
