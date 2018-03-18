@@ -93,7 +93,7 @@ jobs:
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic")'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
-      before_deploy: R -q -e 'tic::before_deploy()'
+      # before_deploy: R -q -e 'tic::before_deploy()' dont't push right now as it wipes the whole directory
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
