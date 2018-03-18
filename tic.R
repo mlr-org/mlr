@@ -21,7 +21,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh()) %>%
     # this pkgdown fork includes the tweaked navbar for mlr
-    add_code_step(devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2"))
+    add_code_step(devtools::install_github("pat-s/pkgdown"))
 
   get_stage("deploy") %>%
     add_step(step_build_pkgdown()) %>%
@@ -47,6 +47,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("deploy") %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")) %>%
     add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf")) %>%
-    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "master"))
+    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "master",
+                              remote_url = "git@github.com:pat-s/mlr.git"))
 }
 
