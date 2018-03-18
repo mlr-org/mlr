@@ -2,7 +2,7 @@
 
 # condition on env variable
 if (Sys.getenv("TUTORIAL") == "HTML") {
-  # pkgdown documentation can be built optionally. Other example criteria:
+  #  Other example criteria:
   # - `inherits(ci(), "TravisCI")`: Only for Travis CI
   # - `ci()$is_tag()`: Only for tags, not for branches
   # - `Sys.getenv("BUILD_PKGDOWN") != ""`: If the env var "BUILD_PKGDOWN" is set
