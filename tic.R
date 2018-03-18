@@ -47,6 +47,6 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("deploy") %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")) %>%
     add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf")) %>%
-    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf", branch = "master"))
+    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "master"))
 }
 
