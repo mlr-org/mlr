@@ -75,7 +75,7 @@ jobs:
       env: TUTORIAL=HTML
       latex: false
       pandoc_version: 2.1.2
-      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       before_deploy: R -q -e 'tic::before_deploy()'
@@ -88,7 +88,7 @@ jobs:
     - stage: Tutorial
       env: TUTORIAL=PDF
       pandoc_version: 2.1.2
-      before_install: R -q -e 'install.packages("remotes"); remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages(); tic::before_install()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       deploy:
