@@ -1,4 +1,4 @@
-add_package_checks()
+#add_package_checks()
 
 # condition on env variable
 if (Sys.getenv("TUTORIAL") == "HTML") {
