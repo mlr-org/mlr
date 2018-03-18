@@ -77,7 +77,7 @@ jobs:
       env: TUTORIAL=HTML
       latex: false
       pandoc_version: 2.1.2
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); print(Sys.getenv("TUTORIAL"))'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic")'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
       before_deploy: R -q -e 'tic::before_deploy()'
