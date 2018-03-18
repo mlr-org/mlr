@@ -10,7 +10,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("install") %>%
     add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>%
-    add_code_step(if (length(find.package("pkgdown", quiet = TRUE)) == 0) devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2")) %>%
+    add_code_step(devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   #get_stage("script") %>%
