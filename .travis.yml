@@ -29,6 +29,7 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - jimhester/lintr
+  - klutometis/roxygen
 
 jobs:
   fast_finish: true
