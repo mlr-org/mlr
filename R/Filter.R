@@ -657,6 +657,7 @@ helper.cmi.praznik = function(criteria, preprocess = FALSE) {
     X = data[, featnames]
     Y = data[, targetname]
     k = min(nselect, length(featnames))
+    k = max(k,1)
     input = list(X = X, Y = Y, k = k)
     algo = eval(parse(text = criteria))
     res = do.call(what = algo, args = input)
