@@ -414,9 +414,26 @@ classif.bs.optimal = function(learner, task) {
 
   # Transform the bootstrapped predicted values into the required format of the
   # matrix P
-  P = sapply(probs, function(dat) {
-    as.vector(t(dat))
-  })
+  # convert from list to data frame
+  probs = as.data.frame(probs)
+
+  # reorder data frame to original order
+  probs = probs[order(test.inds), , drop = FALSE]
+
+  # rename columns to be the same for across all classes
+  nclasses = length(getTaskClassLevels(task))
+  colnames(probs) = rep(names(bls), each = nclasses)
+
+  # reorder data frame to be like P in Fuchs etal. (2015)
+  probsList = list()
+  for (i in 1:nclasses) {
+    probsList[[i]] = probs[(seq_along(colnames(probs)) - 1) %% nclasses == (i - 1)]
+  }
+  P = bind_rows(probsList)
+
+  # convert to matrix
+  P = as.matrix(P)
+
 
   # code the response
   z = as.vector(model.matrix( ~ . -1, data = data.frame(getTaskTargets(task))))
