@@ -412,6 +412,11 @@ classif.bs.optimal = function(learner, task) {
   }
   names(probs) = names(bls)
 
+  # name of target column
+  tn = getTaskTargetNames(task)
+  # order of resampled observations
+  test.inds = unlist(rin$test.inds)
+
   # Transform the bootstrapped predicted values into the required format of the
   # matrix P
   # convert from list to data frame
@@ -429,7 +434,7 @@ classif.bs.optimal = function(learner, task) {
   for (i in 1:nclasses) {
     probsList[[i]] = probs[(seq_along(colnames(probs)) - 1) %% nclasses == (i - 1)]
   }
-  P = bind_rows(probsList)
+  P <- do.call("rbind", probsList)
 
   # convert to matrix
   P = as.matrix(P)
