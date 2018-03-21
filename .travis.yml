@@ -87,7 +87,7 @@ jobs:
         - R -q -e 'install.packages(c("rmarkdown", "pander"));tic::prepare_all_stages(); tic::before_install()'
         # for some reason we need to install from github as 'R CMD BUILD' results in build errors of the PDF
         - R -q -e 'devtools::install_github("mlr-org/mlr")'
-      before_deploy: R -q -e 'tic::before_deploy(); devtools::install_github("jimhester/lintr");devtools::install_github("pat-s/pkgdown@cc1579abcf00cb11bc856e48f3b9d3c91432c2c2")'
+      before_deploy: R -q -e 'tic::before_deploy(); devtools::install_github("jimhester/lintr");devtools::install_github("pat-s/pkgdown@63a1dcd18c12bc1d585419bf53195e5cf18ba32e")'
       deploy:
          provider: script
          script: R -q -e 'tic::deploy()'
@@ -117,7 +117,8 @@ jobs:
         - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git add --force vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git commit -a -m "update auto-generated tutorial pdf version [ci skip]"
-        - git push --force
+        # only push for non cron jobs
+        - if [[ "${TRAVIS_EVENT_TYPE}" != "cron"]]; then git push --force; fi
 
 notifications:
   email:
