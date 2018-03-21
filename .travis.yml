@@ -117,7 +117,8 @@ jobs:
         - mv vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git add --force vignettes/tutorial/devel/pdf/mlr-tutorial.pdf
         - git commit -a -m "update auto-generated tutorial pdf version [ci skip]"
-        - git push --force
+        # only push for non cron jobs
+        - if [[ "${TRAVIS_EVENT_TYPE}" != "cron"]]; then git push --force; fi
 
 notifications:
   email:
