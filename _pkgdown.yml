@@ -3,6 +3,15 @@ url: https://mlr-org.github.io/mlr
 template:
   params:
     bootswatch: cosmo
+  path: pkgdown/templates
+  assets: pkgdown/assets
+  default_assets: false
+
+development:
+  mode: devel
+  destination: dev
+  version_label: info
+  version_tooltip: "Github version"
 
 home:
   links:
