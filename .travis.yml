@@ -90,19 +90,25 @@ jobs:
          on:
            branch: master
            condition: $TRAVIS_PULL_REQUEST = false
-    - stage: Tutorial
-      env: TUTORIAL=PDF
-      pandoc_version: 2.1.2
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      install: R -q -e 'tic::install()'
-      script:  R -q -e 'tic::script()'
+#    - stage: Tutorial
+#      env: TUTORIAL=PDF
+#      pandoc_version: 2.1.2
+##      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+#      install: R -q -e 'tic::install()'
+#      script:  R -q -e 'tic::script()'
       # before_deploy: R -q -e 'tic::before_deploy()' dont't push right now as it wipes the whole directory
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           branch: master
-           condition: $TRAVIS_PULL_REQUEST = false
+ #     deploy:
+ #        provider: script
+ #        script: R -q -e 'tic::deploy()'
+ #        on:
+  #         branch: master
+  #         condition: $TRAVIS_PULL_REQUEST = false
+    - stage: covr
+      env: stage='covr'
+      latex: false
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      after_success: R -q -e 'tic::after_success()'
+
 
 notifications:
   email:
