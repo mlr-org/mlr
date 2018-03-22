@@ -19,9 +19,9 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_deploy") %>%
-    add_step(step_setup_ssh()) %>%
+    add_step(step_setup_ssh()) #%>%
     # this pkgdown fork includes the tweaked navbar for mlr
-    add_code_step(devtools::install_github("pat-s/pkgdown"))
+    #add_code_step(devtools::install_github("pat-s/pkgdown"))
 
   get_stage("deploy") %>%
     add_step(step_build_pkgdown()) %>%
