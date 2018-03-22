@@ -24,7 +24,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     #add_code_step(devtools::install_github("pat-s/pkgdown"))
 
   get_stage("deploy") %>%
-    add_step(step_build_pkgdown()) %>%
+    add_step(step_build_pkgdown(lazy = TRUE)) %>%
     add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
 
 } else if (Sys.getenv("TUTORIAL") == "PDF") {
