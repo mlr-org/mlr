@@ -8,9 +8,9 @@ template:
   default_assets: false
 
 development:
-  mode: devel
+  mode: auto
   destination: dev
-  version_label: info
+  version_label: danger
   version_tooltip: "Github version"
 
 home:
