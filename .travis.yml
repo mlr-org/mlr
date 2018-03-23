@@ -105,6 +105,7 @@ jobs:
       env: TUTORIAL=HTML
       latex: false
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      script: true
       after_success: R -q -e 'tic::after_success()'
 
 
