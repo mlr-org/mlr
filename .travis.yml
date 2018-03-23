@@ -102,7 +102,7 @@ jobs:
   #         branch: master
   #         condition: $TRAVIS_PULL_REQUEST = false
     - stage: covr
-      env: STAGE=covr
+      env: TUTORIAL=HTML
       latex: false
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       after_success: R -q -e 'tic::after_success()'
