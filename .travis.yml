@@ -1,5 +1,5 @@
 language: r
-sudo: false
+sudo: required
 dist: trusty
 cache:
   - packages
