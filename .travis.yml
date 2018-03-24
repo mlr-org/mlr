@@ -1,5 +1,4 @@
 language: r
-r: oldrel
 sudo: required
 dist: trusty
 cache:
