@@ -3,6 +3,7 @@ sudo: false
 dist: trusty
 cache:
   - packages
+  - ccache
 
 env:
   global:
@@ -22,8 +23,8 @@ addons:
       - imagemagick # for pkgdown favicon
       - libopenblas-dev # optimized numerical library
 
-warnings_are_errors: true
-r_check_args: "--as-cran --run-donttest"
+#warnings_are_errors: true
+#r_check_args: "--as-cran --run-donttest"
 
 r_github_packages:
   - berndbischl/BBmisc
@@ -33,74 +34,86 @@ r_github_packages:
 
 jobs:
   fast_finish: true
-#  allow_failures:
-#    - env: TUTORIAL=HTML
-#    - env: TUTORIAL=PDF
+  allow_failures:
+    - env: TUTORIAL=HTML
+    - env: TUTORIAL=PDF
   include:
-#    - stage: warmup-1
-#      install:
-#        - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
-#        - Rscript -e 'devtools::install_deps()'
-#        - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
-#      script: true
-#    - stage: warmup-2
-#      install:
-#        - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
-#      script: true
-#    - stage: check
-       #env: check=TRUE
-#      before_script:
-#        - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-#        - R --no-save <<< 'library("devtools"); document()'
-#      script:
-#        - R CMD build .
-#        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests
-#        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
-#      after_script:
-#        - ../../travis-tool.sh dump_logs
-#      after_success:
-#        - git checkout master
-#        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
-#        - R --no-save <<< 'library("devtools"); document()'
-#        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
-#        - git config user.name $GN
-#        - git config user.email $GM
-#        - git config credential.helper "store --file=.git/credentials"
- #       - bash inst/convert_to_ascii_news.sh
-#        - echo "https://$GT:@github.com" >> .git/credentials
- #       - git config push.default matching
-#        - git add --force NEWS
- #       - git add --force man/*
-#        - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
-#        - git push
-#        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
-#    - stage: Tutorial
-#      env: TUTORIAL=HTML
-#      latex: false
-#      pandoc_version: 2.1.2
-#      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-#      install: R -q -e 'tic::install()'
-#      script:  R -q -e 'tic::script()'
-#      before_deploy: R -q -e 'tic::before_deploy()'
-#      deploy:
-#         provider: script
-#         script: R -q -e 'tic::deploy()'
-#         on:
-#           branch: master
-#           condition: $TRAVIS_PULL_REQUEST = false
-#    - stage: Tutorial
-#      env: TUTORIAL=PDF
-#      pandoc_version: 2.1.2
-##      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-#      install: R -q -e 'tic::install()'
-#      script:  R -q -e 'tic::script()'
-      # before_deploy: R -q -e 'tic::before_deploy()' dont't push right now as it wipes the whole directory
- #     deploy:
- #        provider: script
- #        script: R -q -e 'tic::deploy()'
- #        on:
-  #         branch: master
-  #         condition: $TRAVIS_PULL_REQUEST = false
+   - stage: warmup-1
+     # only stages with the same env share a cache
+     env: check=TRUE
+     r_github_packages:
+       - berndbischl/BBmisc
+       - berndbischl/parallelMap
+       - berndbischl/ParamHelpers
+       - jimhester/lintr
+     install:
+       - Rscript -e 'if (length(find.package("devtools", quiet = TRUE)) == 0) install.packages("devtools")'
+       - Rscript -e 'devtools::install_deps()'
+       - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
+     script: true
+   - stage: warmup-2
+     env: check=TRUE
+     r_github_packages:
+       - berndbischl/BBmisc
+       - berndbischl/parallelMap
+       - berndbischl/ParamHelpers
+       - jimhester/lintr
+     install:
+       - Rscript -e 'devtools::install_deps(upgrade = TRUE, dependencies = TRUE)'
+     script: true
+   - stage: check
+     env: check=TRUE
+     r_github_packages:
+       - berndbischl/BBmisc
+       - berndbischl/parallelMap
+       - berndbischl/ParamHelpers
+       - jimhester/lintr
+     before_install: R -q -e 'tic::before_install()'
+     before_script: R -q -e 'tic::before_script()'
+     script: R -q -e 'tic::script()'
+     after_success:
+       - git checkout master
+       - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+       - R --no-save <<< 'library("devtools"); document()'
+       - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+       - git config user.name $GN
+       - git config user.email $GM
+       - git config credential.helper "store --file=.git/credentials"
+       - bash inst/convert_to_ascii_news.sh
+       - echo "https://$GT:@github.com" >> .git/credentials
+       - git config push.default matching
+       - git add --force NEWS
+       - git add --force man/*
+       - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
+       - git push
+       - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+   - stage: Tutorial
+     env: TUTORIAL=HTML
+     latex: false
+     pandoc_version: 2.1.2
+     before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+     install: R -q -e 'tic::install()'
+     script:  R -q -e 'tic::script()'
+     before_deploy: R -q -e 'tic::before_deploy()'
+     deploy:
+        provider: script
+        script: R -q -e 'tic::deploy()'
+        on:
+          branch: master
+          condition: $TRAVIS_PULL_REQUEST = false
+   - stage: Tutorial
+     env: TUTORIAL=PDF
+     pandoc_version: 2.1.2
+     before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+     install: R -q -e 'tic::install()'
+     script:  R -q -e 'tic::script()'
+     before_deploy: R -q -e 'tic::before_deploy()'
+     deploy:
+        provider: script
+        script: R -q -e 'tic::deploy()'
+        on:
+          branch: master
+          condition: $TRAVIS_PULL_REQUEST = false
     - stage: covr
       env: TUTORIAL=HTML
       latex: false
