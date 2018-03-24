@@ -10,7 +10,7 @@ template:
 development:
   mode: auto
   destination: dev
-  version_label: danger
+  version_label: info
   version_tooltip: "Github version"
 
 home:
