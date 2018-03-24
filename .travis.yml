@@ -63,7 +63,7 @@ jobs:
         - berndbischl/ParamHelpers
         - jimhester/lintr
       before_install:
-        - cd tmp/
+        - cd /tmp
         - wget https://cran.r-project.org/src/base/R-3/R-3.4.4.tar.gz
         - tar xzvf R-3.4.4.tar.gz
         - rm R-3.4.4.tar.gz
