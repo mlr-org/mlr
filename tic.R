@@ -11,7 +11,7 @@ if (Sys.getenv("check") == "TRUE") {
     add_code_step(devtools::document())
 
   get_stage("script") %>%
-    add_step(step_rcmdcheck(args = c("--as-cran", "--run-donttest")))
+    add_step(step_rcmdcheck(warnings_are_errors = FALSE, args = c("--as-cran", "--run-donttest")))
 
 }
 
