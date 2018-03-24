@@ -63,9 +63,9 @@ jobs:
         - berndbischl/ParamHelpers
         - jimhester/lintr
       before_install:
-        - wget https://cran.r-project.org/src/base/R-3/R-3.4.4.tar.gz
-        - (mv R-3* /tmp; cd /tmp; tar xzf R-3.4.4.tar.gz)
-        - (cd /tmp/R-3.4.4 ; ./configure; make; sudo make install)
+        - wget https://cran.r-project.org/src/base/R-3/R-3.4.3.tar.gz
+        - (mv R-3* /tmp; cd /tmp; tar xzf R-3.4.3.tar.gz)
+        - (cd /tmp/R-3.4.3 ; ./configure; make; sudo make install)
         - sudo mkdir -p /usr/local/lib/R/site-library $R_LIBS_USER
         - sudo chmod 2777 /usr/local/lib/R /usr/local/lib/R/site-library $R_LIBS_USER
         - echo 'options(repos = c(CRAN = "http://cloud.r-project.org"))' > ~/.Rprofile.site
