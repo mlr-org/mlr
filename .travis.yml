@@ -44,7 +44,7 @@ jobs:
       script: true
     - stage: warmup-2
       env: check=TRUE
-      before_install: 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
       script: true
     - stage: check
