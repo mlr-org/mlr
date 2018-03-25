@@ -63,14 +63,19 @@ jobs:
         - berndbischl/ParamHelpers
         - jimhester/lintr
       before_install:
-        - wget https://cran.r-project.org/src/base/R-3/R-3.4.3.tar.gz
-        - (mv R-3* /tmp; cd /tmp; tar xzf R-3.4.3.tar.gz)
-        - (cd /tmp/R-3.4.3 ; ./configure --enable-R-shlib --with-lapack --with-blas F77=gfortran; make; sudo make install)
-        - echo 'options(repos = c(CRAN = "http://cloud.r-project.org"))' > ~/.Rprofile.site
-        - Rscript -e 'sessionInfo()'
+        #- sudo make prefix=/usr/local uninstall-libR
+        #- wget https://cran.r-project.org/src/base/R-3/R-3.4.3.tar.gz
+        #- (mv R-3* /tmp; cd /tmp; tar xzf R-3.4.3.tar.gz)
+        #- (cd /tmp/R-3.4.3 ; ./configure --enable-R-shlib --with-lapack --with-blas F77=gfortran; make; sudo make install)
+        #- echo 'options(repos = c(CRAN = "http://cloud.r-project.org"))' > ~/.Rprofile.site
+        #- Rscript -e 'sessionInfo()'
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
-      script: R -q -e 'tic::script()'
+      #script: R -q -e 'tic::script()'
+      script:
+        - R CMD build .
+        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
+        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""

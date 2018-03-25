@@ -10,8 +10,8 @@ if (Sys.getenv("check") == "TRUE") {
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
     add_code_step(devtools::document())
 
-  get_stage("script") %>%
-    add_step(step_rcmdcheck(warnings_are_errors = FALSE, args = c("--as-cran", "--run-donttest")))
+  # get_stage("script") %>%
+  #   add_step(step_rcmdcheck(warnings_are_errors = FALSE, args = c("--as-cran", "--run-donttest")))
 
 }
 
