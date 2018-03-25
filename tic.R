@@ -1,18 +1,12 @@
 # condition on env variable
 if (Sys.getenv("check") == "TRUE") {
 
-  get_stage("before_install") %>%
-    add_code_step(utils::update.packages(ask = FALSE))
-
   get_stage("install") %>%
+    add_code_step('pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)')
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
     add_code_step(devtools::document())
-
-  # get_stage("script") %>%
-  #   add_step(step_rcmdcheck(warnings_are_errors = FALSE, args = c("--as-cran", "--run-donttest")))
-
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
