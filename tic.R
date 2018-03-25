@@ -1,5 +1,6 @@
 # condition on env variable
-if (Sys.getenv("cache") == "TRUE") {
+
+if (Sys.getenv("WARMUP") == "TRUE") {
 
   get_stage("install") %>%
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0)
@@ -9,11 +10,14 @@ if (Sys.getenv("cache") == "TRUE") {
 
   get_stage("before_script") %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+}
+
+if (Sys.getenv("RCMDCHECK") == "TRUE") {
 
   get_stage("script") %>%
     add_code_step(devtools::document()) %>% # build namespace
     add_code_step(system2("R", args = c("CMD", "build", "."))) %>%
-    add_code_step(system2("travis_wait", args = c("100", "R", "CMD", "check", "mlr*.tar.gz", "--as-cran", "--run-donttest", "--no-tests"))) %>%
+    add_code_step(system("travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests")) %>%
     add_code_step(system2("grep", args = c("-q", "-R", "'WARNING'", "'mlr.Rcheck/00check.log'", ";", "[ $? -ne 0 ]")))
 }
 

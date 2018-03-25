@@ -4,6 +4,7 @@ dist: trusty
 cache:
   - packages
   - ccache
+  - "name": "shared" # https://github.com/travis-ci/travis-build/pull/1265
 
 env:
   global:
@@ -29,8 +30,8 @@ jobs:
     - env: TUTORIAL=PDF
   include:
     - stage: warmup-1
+      env: WARMUP==TRUE
       # only stages with the same env share a cache
-      env: cache=TRUE
       # this should be share to other stages via the cache
       r_github_packages:
         - berndbischl/BBmisc
@@ -43,12 +44,12 @@ jobs:
         - R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
-      env: cache=TRUE
+      env: WARMUP==TRUE
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
       script: true
     - stage: check
-      env: cache=TRUE
+      env: RCMDCHECK=TRUE
       before_install:
         #- wget -qO - --header="X-Papertrail-Token: xZfj5jnjiSDNzq0UuJvj" https://papertrailapp.com/destinations/8278091/setup.sh | sudo bash
         #- sudo make prefix=/usr/local uninstall-libR
