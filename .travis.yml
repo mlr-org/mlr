@@ -37,17 +37,15 @@ jobs:
         - berndbischl/parallelMap
         - berndbischl/ParamHelpers
         - jimhester/lintr
-      before_install:
-        - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install:
       #  - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
         - R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
       env: check=TRUE
-      before_install:
-        - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      install: R -q -e 'tic::install()'
+      before_install: 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      before_script: R -q -e 'tic::before_script()'
       script: true
     - stage: check
       env: check=TRUE
@@ -63,10 +61,7 @@ jobs:
       before_script: R -q -e 'tic::before_script()'
       install: R -q -e 'tic::install()'
       warnings_are_errors: true
-      script:
-        - R CMD build .
-        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
+      script: R -q -e 'tic::script()'
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""

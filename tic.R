@@ -5,9 +5,16 @@ if (Sys.getenv("check") == "TRUE") {
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0)
       install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])) %>%
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
-                                           "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
-    add_code_step(devtools::document())
+                                           "-install-package", "thirdparty/XMeans1.0.4.zip")))
+
+  get_stage("before_script") %>%
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+
+  get_stage("script") %>%
+    add_code_step(devtools::document()) %>% # build namespace
+    add_code_step(system2("R", args = c("CMD", "build", "."))) %>%
+    add_code_step(system2("travis_wait", args = c("100", "R", "CMD", "check", "mlr*.tar.gz", "--as-cran", "--run-donttest", "--no-tests"))) %>%
+    add_code_step(system2("grep", args = c("-q", "-R", "'WARNING'", "'mlr.Rcheck/00check.log'", ";", "[ $? -ne 0 ]")))
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
