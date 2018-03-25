@@ -1,5 +1,5 @@
 # condition on env variable
-if (Sys.getenv("check") == "TRUE") {
+if (Sys.getenv("cache") == "TRUE") {
 
   get_stage("install") %>%
     add_code_step(if (length(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()]) > 0)

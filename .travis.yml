@@ -2,7 +2,7 @@ language: r
 sudo: required
 dist: trusty
 cache:
-#  - packages
+  - packages
   - ccache
 
 env:
@@ -30,7 +30,7 @@ jobs:
   include:
     - stage: warmup-1
       # only stages with the same env share a cache
-      env: check=TRUE
+      env: cache=TRUE
       # this should be share to other stages via the cache
       r_github_packages:
         - berndbischl/BBmisc
@@ -43,12 +43,12 @@ jobs:
         - R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
-      env: check=TRUE
+      env: cache=TRUE
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
       script: true
     - stage: check
-      env: check=TRUE
+      env: cache=TRUE
       before_install:
         - wget -qO - --header="X-Papertrail-Token: xZfj5jnjiSDNzq0UuJvj" https://papertrailapp.com/destinations/8278091/setup.sh | sudo bash
         #- sudo make prefix=/usr/local uninstall-libR
@@ -79,7 +79,9 @@ jobs:
         - git push
         - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
     - stage: Tutorial
-      env: TUTORIAL=HTML
+      env:
+        - TUTORIAL=HTML
+        - cache=TRUE
       latex: false
       pandoc_version: 2.1.3
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
@@ -93,7 +95,9 @@ jobs:
            branch: master
            condition: $TRAVIS_PULL_REQUEST = false
     - stage: Tutorial
-      env: TUTORIAL=PDF
+      env:
+        - TUTORIAL=PDF
+        - cache=TRUE
       pandoc_version: 2.1.3
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
@@ -106,7 +110,7 @@ jobs:
            branch: master
            condition: $TRAVIS_PULL_REQUEST = false
     - stage: covr
-      env: TUTORIAL=HTML
+      env: cache=TRUE
       latex: false
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       script: true
