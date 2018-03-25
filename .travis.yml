@@ -30,7 +30,7 @@ jobs:
     - env: TUTORIAL=PDF
   include:
     - stage: warmup-1
-      env: WARMUP==TRUE
+      env: RCMDCHECK==TRUE
       # only stages with the same env share a cache
       # this should be share to other stages via the cache
       r_github_packages:
@@ -44,7 +44,7 @@ jobs:
         - R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
-      env: WARMUP==TRUE
+      env: RCMDCHECK==TRUE
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
       script: true
@@ -59,8 +59,6 @@ jobs:
         #- echo 'options(repos = c(CRAN = "http://cloud.r-project.org"))' > ~/.Rprofile.site
         #- Rscript -e 'sessionInfo()'
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      before_script: R -q -e 'tic::before_script()'
-      install: R -q -e 'tic::install()'
       warnings_are_errors: true
       script: R -q -e 'tic::script()'
       after_success:
