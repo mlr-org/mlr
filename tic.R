@@ -9,6 +9,9 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
+  get_stage("before_script") %>%
+    add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
+                                           "-install-package", "thirdparty/XMeans1.0.4.zip")))
 #   get_stage("script") %>%
 #     add_code_step(devtools::document()) %>% # build namespace
 #     add_code_step(system2("R", args = c("CMD", "build", "."))) %>%

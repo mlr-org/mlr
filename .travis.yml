@@ -68,6 +68,7 @@ jobs:
         #- Rscript -e 'sessionInfo()'
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: true
+      before_script: R -q -e 'tic::before_script()'
       script:
         - R CMD build .
         - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
