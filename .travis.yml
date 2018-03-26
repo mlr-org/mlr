@@ -4,7 +4,7 @@ dist: trusty
 cache:
   - packages
   - ccache
-  - "name": "shared" # https://github.com/travis-ci/travis-build/pull/1265
+  #- "name": "shared" # https://github.com/travis-ci/travis-build/pull/1265
 
 env:
   global:
@@ -15,14 +15,6 @@ env:
     - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
     - WARMUPPKGS='roxygen2 pander mlrMBO purrr mlbench mldr RWeka RWekajars knitr dplyr ggplot2 ranger randomForest kernlab Rfast igraph rjson rmarkdown shiny svglite xgboost xml2'
 
-addons:
-  apt:
-    packages:
-      - libgmp-dev
-      - libgsl0-dev
-      - ghostscript # for mlr-tutorial pdf
-      - imagemagick # for pkgdown favicon
-
 jobs:
   fast_finish: true
   allow_failures:
@@ -31,6 +23,11 @@ jobs:
   include:
     - stage: warmup-1
       env: RCMDCHECK==TRUE
+      addons:
+        apt:
+          packages:
+           - libgmp-dev
+           - libgsl0-dev
       # only stages with the same env share a cache
       # this should be share to other stages via the cache
       r_github_packages:
@@ -38,6 +35,7 @@ jobs:
         - berndbischl/parallelMap
         - berndbischl/ParamHelpers
         - jimhester/lintr
+        - klutometis/roxygen
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install:
       #  - Rscript -e 'pkgs = trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]); pkgs = pkgs[!pkgs %in% installed.packages()]; if (length(pkgs) > 0) install.packages(pkgs)'
@@ -45,11 +43,21 @@ jobs:
       script: true
     - stage: warmup-2
       env: RCMDCHECK==TRUE
+      addons:
+        apt:
+          packages:
+           - libgmp-dev
+           - libgsl0-dev
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       before_script: R -q -e 'tic::before_script()'
       script: true
     - stage: check
       env: RCMDCHECK=TRUE
+      addons:
+        apt:
+          packages:
+           - libgmp-dev
+           - libgsl0-dev
       before_install:
         #- wget -qO - --header="X-Papertrail-Token: xZfj5jnjiSDNzq0UuJvj" https://papertrailapp.com/destinations/8278091/setup.sh | sudo bash
         #- sudo make prefix=/usr/local uninstall-libR
@@ -60,7 +68,10 @@ jobs:
         #- Rscript -e 'sessionInfo()'
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: true
-      script: R -q -e 'tic::script()'
+      script:
+        - R -q -e 'devtools::document()'
+        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests
+        - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
@@ -81,6 +92,12 @@ jobs:
       env:
         - TUTORIAL=HTML
         - cache=TRUE
+      addons:
+        apt:
+          packages:
+           - libgmp-dev
+           - libgsl0-dev
+           - imagemagick # for favicon
       latex: false
       pandoc_version: 2.1.3
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
@@ -97,6 +114,12 @@ jobs:
       env:
         - TUTORIAL=PDF
         - cache=TRUE
+      addons:
+        apt:
+          packages:
+           - libgmp-dev
+           - libgsl0-dev
+           - ghostscript # for mlr-tutorial pdf
       pandoc_version: 2.1.3
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'

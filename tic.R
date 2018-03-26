@@ -9,11 +9,11 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
-  get_stage("script") %>%
-    add_code_step(devtools::document()) %>% # build namespace
-    add_code_step(system2("R", args = c("CMD", "build", "."))) %>%
-    add_code_step(system("travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests")) %>%
-    add_code_step(system2("grep", args = c("-q", "-R", "'WARNING'", "'mlr.Rcheck/00check.log'", ";", "[ $? -ne 0 ]")))
+#   get_stage("script") %>%
+#     add_code_step(devtools::document()) %>% # build namespace
+#     add_code_step(system2("R", args = c("CMD", "build", "."))) %>%
+#     add_code_step(system("travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests")) %>%
+#     add_code_step(system2("grep", args = c("-q", "-R", "'WARNING'", "'mlr.Rcheck/00check.log'", ";", "[ $? -ne 0 ]")))
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
