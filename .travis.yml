@@ -67,7 +67,7 @@ jobs:
         #- echo 'options(repos = c(CRAN = "http://cloud.r-project.org"))' > ~/.Rprofile.site
         #- Rscript -e 'sessionInfo()'
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      warnings_are_errors: true
+      warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script:
         - R CMD build .
