@@ -69,8 +69,8 @@ jobs:
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: true
       script:
-        - travis_wait 100 R -q -e 'devtools::check(document = FALSE, args = c("--as-cran", "--run-donttest"))'
-        # - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests
+        - R CMD build .
+        - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
         - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_success:
         - git checkout master
