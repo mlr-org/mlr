@@ -25,7 +25,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(system2("sed", c("-i","-e", '/^##/ s/#/', "-e", "'/^###/ s/#/'", "'/^####/ s/#/'", "vignettes/tutorial/devel/*.Rmd")))
 
   get_stage("deploy") %>%
-    add_step(step_build_pkgdown()) #%>%
+    add_step(step_build_pkgdown()) %>%
     add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
 
 } else if (Sys.getenv("TUTORIAL") == "PDF") {
