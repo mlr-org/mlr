@@ -61,5 +61,5 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 }
 if (Sys.getenv("covr") == "TRUE") {
   get_stage("after_success") %>%
-    step_run_code(covr::codecov(quiet = FALSE))
+    add_code_step(covr::codecov(quiet = FALSE))
 }
