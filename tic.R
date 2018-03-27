@@ -12,11 +12,6 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   get_stage("before_script") %>%
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                            "-install-package", "thirdparty/XMeans1.0.4.zip")))
-#   get_stage("script") %>%
-#     add_code_step(devtools::document()) %>% # build namespace
-#     add_code_step(system2("R", args = c("CMD", "build", "."))) %>%
-#     add_code_step(system("travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest --no-tests")) %>%
-#     add_code_step(system2("grep", args = c("-q", "-R", "'WARNING'", "'mlr.Rcheck/00check.log'", ";", "[ $? -ne 0 ]")))
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
@@ -28,14 +23,10 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh()) %>%
     add_code_step(system2("sed", c("-i","-e", '/^##/ s/#/', "-e", "'/^###/ s/#/'", "'/^####/ s/#/'", "vignettes/tutorial/devel/*.Rmd")))
-    # this pkgdown fork includes the tweaked navbar for mlr
-    #add_code_step(devtools::install_github("pat-s/pkgdown"))
-
-
 
   get_stage("deploy") %>%
     add_step(step_build_pkgdown()) #%>%
-    #add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
+    add_step(step_push_deploy(orphan = TRUE, path = "docs", branch = "gh-pages"))
 
 } else if (Sys.getenv("TUTORIAL") == "PDF") {
 
@@ -56,10 +47,6 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("deploy") %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")) %>%
-    add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf"))# %>%
-    #add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "tutorial_pdf"))
-}
-if (Sys.getenv("covr") == "TRUE") {
-  get_stage("after_success") %>%
-    add_code_step(covr::codecov(quiet = FALSE))
+    add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf")) %>%
+    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "tutorial_pdf"))
 }

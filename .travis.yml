@@ -4,8 +4,6 @@ dist: trusty
 cache:
   - packages
   - ccache
-  #- "name": "shared" # https://github.com/travis-ci/travis-build/pull/1265
-
 env:
   global:
     - _R_CHECK_TIMINGS_=0
@@ -59,20 +57,12 @@ jobs:
            - libgmp-dev
            - libgsl0-dev
       before_install:
-        #- wget -qO - --header="X-Papertrail-Token: xZfj5jnjiSDNzq0UuJvj" https://papertrailapp.com/destinations/8278091/setup.sh | sudo bash
-        #- sudo make prefix=/usr/local uninstall-libR
-        #- wget https://cran.r-project.org/src/base/R-3/R-3.4.3.tar.gz
-        #- (mv R-3* /tmp; cd /tmp; tar xzf R-3.4.3.tar.gz)
-        #- (cd /tmp/R-3.4.3 ; ./configure --enable-R-shlib --with-lapack --with-blas F77=gfortran; make; sudo make install)
-        #- echo 'options(repos = c(CRAN = "http://cloud.r-project.org"))' > ~/.Rprofile.site
-        #- Rscript -e 'sessionInfo()'
         - R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script:
         - R CMD build .
         - travis_wait 100 R CMD check mlr*.tar.gz --as-cran --run-donttest
-       # - grep -q -R "WARNING" "mlr.Rcheck/00check.log" ; [ $? -ne 0 ]
       after_success:
         - git checkout master
         - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
@@ -92,7 +82,6 @@ jobs:
     - stage: Tutorial
       env:
         - TUTORIAL=HTML
-        - cache=TRUE
       addons:
         apt:
           packages:
@@ -114,7 +103,6 @@ jobs:
     - stage: Tutorial
       env:
         - TUTORIAL=PDF
-        - cache=TRUE
       addons:
         apt:
           packages:
@@ -132,12 +120,6 @@ jobs:
          on:
            branch: master
            condition: $TRAVIS_PULL_REQUEST = false
-    - stage: covr
-      env: covr=TRUE
-      latex: false
-      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
-      script: true
-      after_success: R -q -e 'tic::after_success()'
 
 notifications:
   email:
