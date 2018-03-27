@@ -59,7 +59,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf"))# %>%
     #add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "tutorial_pdf"))
 }
-if (Sys.getenv("TUTORIAL") == "HTML") {
+if (Sys.getenv("covr") == "TRUE") {
   get_stage("after_success") %>%
     step_run_code(covr::codecov(quiet = FALSE))
 }
