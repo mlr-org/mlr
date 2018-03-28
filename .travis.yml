@@ -99,7 +99,9 @@ jobs:
          script: R -q -e 'tic::deploy()'
          on:
            branch: master
-           condition: $TRAVIS_PULL_REQUEST = false
+           condition:
+             - $TRAVIS_PULL_REQUEST = false
+             - $TRAVIS_EVENT_TYPE != cron
     - stage: Tutorial
       env:
         - TUTORIAL=PDF
@@ -119,7 +121,9 @@ jobs:
          script: R -q -e 'tic::deploy()'
          on:
            branch: master
-           condition: $TRAVIS_PULL_REQUEST = false
+           condition:
+             - $TRAVIS_PULL_REQUEST = false
+             - $TRAVIS_EVENT_TYPE != cron
 
 notifications:
   email:
