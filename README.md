@@ -9,7 +9,7 @@
 * [mlr cheatsheet](https://github.com/mlr-org/mlr-tutorial/raw/gh-pages/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
     * [mlr release](https://mlr-org.github.io/mlr/articles/tutorial/release/index.html) ([online](https://mlr-org.github.io/mlr/articles/tutorial/release/index.html), [download PDF for offline usage](https://github.com/mlr-org/mlr/blob/gh-pages/articles/tutorial/release/mlr-tutorial.pdf))
-    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/master/vignettes/tutorial/devel/pdf/mlr-tutorial.pdf))
+    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial.pdf))
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
