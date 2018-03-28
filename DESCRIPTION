@@ -165,4 +165,3 @@ ByteCompile: yes
 Version: 2.13
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
->>>>>>> d5355bd5faee9c98be6f9721f0d09e90eea1bb6b
