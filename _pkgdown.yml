@@ -3,12 +3,12 @@ url: https://mlr-org.github.io/mlr
 template:
   params:
     bootswatch: cosmo
+    docsearch:
+      api_key: e300ecafdf04fe1199e3339c825ce7d0
+      index_name: mlr
   path: pkgdown/templates
   assets: pkgdown/assets
   default_assets: false
-  docsearch:
-    api_key: e300ecafdf04fe1199e3339c825ce7d0
-    index_name: mlr
 
 development:
   mode: auto
