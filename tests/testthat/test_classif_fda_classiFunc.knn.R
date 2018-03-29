@@ -110,3 +110,25 @@ test_that("classiFunc.knn can be predicted in parallel", {
   expect_equal(cp$data, cp.parallel$data)
 
 })
+
+test_that("rucrdtw can be used as distance measure in classiFunc.knn", {
+  requirePackagesOrSkip(c("classiFunc", "rucrdtw"), default.method = "load")
+
+  data(ArrowHead, package = "classiFunc")
+
+  lrn =  makeLearner("classif.classiFunc.knn",
+                     par.vals = list(metric = "L2", knn = 3),
+                     predict.type = "prob")
+
+  # create task
+  fdata = makeFunctionalData(ArrowHead, exclude.cols = "target")
+  task = makeClassifTask(data = fdata, target = "target")
+
+  # train model
+  set.seed(getOption("mlr.debug.seed"))
+  m = train(lrn, task)
+  cp = predict(m, task = task)
+  expect_class(cp, "PredictionClassif")
+  expect_data_frame(cp$data)
+
+})
