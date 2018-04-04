@@ -15,25 +15,25 @@ makeRLearner.multilabel.cforest = function() {
       makeUntypedLearnerParam(id = "scores"),
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       # Not sure if this is best practice (!!! Please check !!!):
-      makeUntypedLearnerParam(id = "perturb", 
-                              default = list(replace = FALSE, fraction = 0.632)),
-      makeIntegerLearnerParam(id = "mtry", lower = 1L, 
-                              default = ceiling(sqrt(nvar))), # is this possible?
-      makeFunctionLearnerParam("applyfun", default = NULL, 
-                               special.vals = list(NULL)),
-      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L, 
-                              tunable = FALSE, special.vals = list(NULL)),
+      makeUntypedLearnerParam(id = "perturb",
+        default = list(replace = FALSE, fraction = 0.632)),
+      makeIntegerLearnerParam(id = "mtry", lower = 1L,
+        default = ceiling(sqrt(nvar))), # is this possible?
+      makeFunctionLearnerParam("applyfun", default = NULL,
+        special.vals = list(NULL)),
+      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L,
+        tunable = FALSE, special.vals = list(NULL)),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
-      
+
       ## ctree_control
-      makeDiscreteLearnerParam(id = "teststat", default = "quadratic", 
-                               values = c("quadratic", "maximum")),
-      makeDiscreteLearnerParam(id = "splitstat", default = "quadratic", 
-                               values = c("quadratic", "maximum")),
+      makeDiscreteLearnerParam(id = "teststat", default = "quadratic",
+        values = c("quadratic", "maximum")),
+      makeDiscreteLearnerParam(id = "splitstat", default = "quadratic",
+        values = c("quadratic", "maximum")),
       makeLogicalLearnerParam(id = "splittest", default = FALSE),
-      makeDiscreteLearnerParam(id = "testtype", default = "Univariate", 
-                               values = c("Bonferroni", "MonteCarlo", 
-                                          "Univariate", "Teststatistic")),
+      makeDiscreteLearnerParam(id = "testtype", default = "Univariate",
+        values = c("Bonferroni", "MonteCarlo",
+          "Univariate", "Teststatistic")),
       makeNumericLearnerParam(id = "nmax", default = Inf, lower = 0, allow.inf = TRUE),
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "mincriterion", default = 0, lower = 0, upper = 1), # default = 1- alpha
@@ -44,28 +44,28 @@ makeRLearner.multilabel.cforest = function() {
       makeLogicalLearnerParam(id = "stump", default = FALSE),
       makeLogicalLearnerParam(id = "lookahead", default = FALSE),
       makeLogicalLearnerParam(id = "MIA", default = FALSE),
-      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, 
-                              requires = quote(testtype=="MonteCarlo")),
-      makeNumericLearnerParam(id = "tol", default = sqrt(.Machine$double.eps), 
-                              lower = 0, upper = Inf), 
+      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L,
+        requires = quote(testtype=="MonteCarlo")),
+      makeNumericLearnerParam(id = "tol", default = sqrt(.Machine$double.eps),
+        lower = 0, upper = Inf),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "numsurrogate", default = FALSE), 
-      makeIntegerLearnerParam(id = "mtry", default = Inf, lower = 1, 
-                              special.vals = list(Inf)),
-      makeIntegerLearnerParam(id = "maxdepth", default = Inf, lower = 0L, 
-                              special.vals = list(Inf)),
+      makeLogicalLearnerParam(id = "numsurrogate", default = FALSE),
+      makeIntegerLearnerParam(id = "mtry", default = Inf, lower = 1,
+        special.vals = list(Inf)),
+      makeIntegerLearnerParam(id = "maxdepth", default = Inf, lower = 0L,
+        special.vals = list(Inf)),
       makeLogicalLearnerParam(id = "multiway", default = FALSE),
       makeIntegerLearnerParam(id = "splittry", default = 2L, lower = 1L),
       makeLogicalLearnerParam(id = "intersplit", default = FALSE),
       makeLogicalLearnerParam(id = "majority", default = FALSE),
       makeLogicalLearnerParam(id = "caseweights", default = TRUE),
       makeFunctionLearnerParam("applyfun", default = NULL, special.vals = list(NULL)),
-      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L, 
-                              tunable = FALSE, special.vals = list(NULL)),
+      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L,
+        tunable = FALSE, special.vals = list(NULL)),
       makeLogicalLearnerParam(id = "saveinfo", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "update", default = FALSE),
-      makeDiscreteLearnerParam(id = "splitflavour", default = "ctree", 
-                               values = c("ctree", "exhaustive")) 
+      makeDiscreteLearnerParam(id = "splitflavour", default = "ctree",
+        values = c("ctree", "exhaustive"))
     ),
     properties = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
     par.vals = list(),
@@ -76,11 +76,11 @@ makeRLearner.multilabel.cforest = function() {
 }
 
 #' @export
-trainLearner.multilabel.cforest = function(.learner, .task, .subset, 
-                                           logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
-                                           nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                                           splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
-                                           update, splitflavour, ...) {
+trainLearner.multilabel.cforest = function(.learner, .task, .subset,
+  logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
+  nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
+  splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
+  update, splitflavour, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
   defaults = getDefaults(getParamSet(.learner))
@@ -88,11 +88,11 @@ trainLearner.multilabel.cforest = function(.learner, .task, .subset,
   if (missing(testtype)) testtype = defaults$testtype
   if (missing(mincriterion)) mincriterion = defaults$mincriterion
   if (missing(saveinfo)) safeinfo = defaults$saveinfo
-  ctrl = learnerArgsToControl(partykit::ctree_control, 
-                              logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
-                              nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                              splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
-                              update, splitflavour)
+  ctrl = learnerArgsToControl(partykit::ctree_control,
+    logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
+    nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
+    splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
+    update, splitflavour)
   partykit::cforest(f, data = d, control = ctrl, weights = .weights, ...)
 }
 
