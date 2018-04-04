@@ -23,4 +23,9 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   ps.rpart = getLearnerParamSet(makeLearner("regr.rpart"))
   expect_subset(getParamIds(ps.rpart), getParamIds(ps))
   expect_subset(getParamIds(methods$NIR$par.set), getParamIds(ps))
+
+  ps2 = makeParamSet(
+    makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")),
+    makeIntegerParam("minsplit", lower = 1, upper = 30))
+  tuneParams(lrn, subsetTask(fuelsubset.task, features = 3), cv2, mse, ps2, makeTuneControlRandom(maxit = 2))
 })

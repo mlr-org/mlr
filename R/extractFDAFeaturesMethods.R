@@ -127,7 +127,7 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     paste0("bl", c(14,18,20)),
     paste0("c", c(6,12,18,24,30))
   )
-  asserChoice(filter, filter.vals)
+  assertChoice(filter, filter.vals)
   assertChoice(boundary, c("periodic", "reflection"))
 
   # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how

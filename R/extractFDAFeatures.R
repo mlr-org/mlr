@@ -51,14 +51,14 @@
 #' print(extracted$task)
 #' reextractFDAFeatures(task, extracted$desc)
 
-extractFDAFeatures = function(obj, target = character(0L), feat.methods = list()) {
+extractFDAFeatures = function(obj, target = character(0L), feat.methods = list(), ...) {
   assertList(feat.methods)
   UseMethod("extractFDAFeatures")
 }
 
 
 #' @export
-extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list()) {
+extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.methods = list(), ...) {
 
   fdf = getFunctionalFeatures(obj)
   assertDataFrame(fdf, min.cols = 1L)
@@ -118,7 +118,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
 }
 
 #' @export
-extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = list()) {
+extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = list(), ...) {
 
   stopifnot((hasFunctionalFeatures(obj)))
 
@@ -126,7 +126,7 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
   target = getTaskTargetNames(obj)
 
   # Extract features from data
-  extracted = extractFDAFeatures.data.frame(obj = data, target = target, feat.methods = feat.methods)
+  extracted = extractFDAFeatures.data.frame(obj = data, target = target, feat.methods = feat.methods, ...)
 
   # And change data so it only contains non-functional features
   task = changeData(obj, extracted$data)
