@@ -90,7 +90,7 @@ trainLearner.classif.cforest = function(.learner, .task, .subset,
   ctrl = learnerArgsToControl(partykit::ctree_control, 
                               logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
                               nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                              splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo
+                              splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
                               update, splitflavour)
   partykit::cforest(f, data = d, control = ctrl, weights = .weights, ...)
 }

@@ -72,7 +72,7 @@ trainLearner.regr.ctree = function(.learner, .task, .subset, .weights = NULL,
   ctrl = learnerArgsToControl(partykit::ctree_control, 
                               logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
                               nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                              splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo
+                              splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
                               update, splitflavour)
   f = getTaskFormula(.task)
   partykit::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, 
