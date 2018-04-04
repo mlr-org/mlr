@@ -79,7 +79,7 @@ makeRLearner.multilabel.cforest = function() {
 trainLearner.multilabel.cforest = function(.learner, .task, .subset, 
                                            logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
                                            nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                                           splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo
+                                           splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
                                            update, splitflavour, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)

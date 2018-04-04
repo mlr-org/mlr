@@ -78,7 +78,7 @@ makeRLearner.classif.cforest = function() {
 trainLearner.classif.cforest = function(.learner, .task, .subset, 
                                         logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
                                         nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                                        splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo
+                                        splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
                                         update, splitflavour, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)

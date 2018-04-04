@@ -66,7 +66,7 @@ makeRLearner.regr.ctree = function() {
 trainLearner.regr.ctree = function(.learner, .task, .subset, .weights = NULL, 
                                    logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
                                    nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-                                   splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo
+                                   splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
                                    update, splitflavour, ...) {
   
   ctrl = learnerArgsToControl(partykit::ctree_control, 
