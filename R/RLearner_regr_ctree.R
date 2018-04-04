@@ -34,9 +34,9 @@ makeRLearner.regr.ctree = function() {
       makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, 
                               requires = quote(testtype=="MonteCarlo")),
       makeNumericLearnerParam(id = "tol", default = sqrt(.Machine$double.eps), 
-                              lower = 0, upper = Inf), # tol
+                              lower = 0, upper = Inf), 
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "numsurrogate", default = FALSE), # numsurrogate
+      makeLogicalLearnerParam(id = "numsurrogate", default = FALSE), 
       makeIntegerLearnerParam(id = "mtry", default = Inf, lower = 1, 
                               special.vals = list(Inf)),
       makeIntegerLearnerParam(id = "maxdepth", default = Inf, lower = 0L, 
@@ -49,7 +49,7 @@ makeRLearner.regr.ctree = function() {
       makeFunctionLearnerParam("applyfun", default = NULL, special.vals = list(NULL)),
       makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L, 
                               tunable = FALSE, special.vals = list(NULL)),
-      makeLogicalLearnerParam(id = "saveinfo", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "saveinfo", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "update", default = FALSE),
       makeDiscreteLearnerParam(id = "splitflavour", default = "ctree", 
                                values = c("ctree", "exhaustive")) # exhaustive means it is not unbiased
