@@ -10,17 +10,16 @@ makeRLearner.regr.fdafgam = function() {
     cl = "regr.fdafgam",
     package = "refund",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # te:tensor product smooths, mgcv::s: Defining smooths in GAM formulae
-      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # mgcv::s the dimension of the basis used to represent the smooth term
-      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # mgcv::s "tp"’ for thin plate regression spline, ‘"cr"’ for cubic regression spline
-      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),  # mgcv::s The order of the penalty for this term
-      # mgcv::te, mgcv::tr Define tensor product smooths or tensor product interactions
+      makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
+      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # mgcv::s:k the dimension of the spline basis(#knots + 2)
+      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # mgcv::s:bs "tp"’ for thin plate regression spline, ‘"cr"’ for cubic regression spline
+      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),  # mgcv::s:m The order of the penalty for this term
       makeIntegerVectorLearnerParam(id = "mgcv.te_ti.m", lower = 1L, default = NA, special.vals = list(NA)),  # The order of the spline and its penalty (for smooth classes that use this) for each term.
       makeIntegerVectorLearnerParam(id = "mgcv.te_ti.k", lower = 1L, default = NA, special.vals = list(NA)),  # the dimension(s) of the bases used to represent the smooth term.  If not supplied then set to ‘5^d’.
-      # skipped argvals
+      # skipped: argvals(indices of evaluation of ‘X’)
       makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
-      makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)), # FIXME: currently not used in train
-      # skipped args: presmooth.opts, Xrange
+      # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)), # FIXME: currently not used in train
+      # FIXME: skipped args: presmooth.opts, Xrange
       makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     ),
     properties = c("numerics"),
@@ -29,16 +28,8 @@ makeRLearner.regr.fdafgam = function() {
   )
 }
 
-#  @param s.k [\code{integer}] \cr
-#  the dimension of the basis used to represent the smooth term.
-#  The default depends on the number of variables that the smooth is a function of.
-#  it should be chosen to be large enough that you are reasonably sure of having
-#  enough degrees of freedom to represent the underlying ‘truth’ reasonably well,
-#  but small enough to maintain reasonable computational efficiency.
-#  k must be chosen: the defaults are essentially arbitrary??????????
-#  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "s", integration = "simpson", ...) {
+trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
   parlist = list(...)  #FIXME: currently this is not used, will be implemented in future version
   suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
   m = getTaskData(.task, functionals.as = "matrix")
@@ -81,7 +72,7 @@ trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL, 
   mat.list[[tn]] = d[, tn]
   # Create the formula and train the model
   form = as.formula(sprintf("%s~%s", tn, collapse(unlist(formula.terms), "+")))
-  refund::pfr(formula = form, data = mat.list)
+  refund::pfr(formula = form, data = mat.list, family = gaussian())
 }
 
 #' @export
