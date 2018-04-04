@@ -5,8 +5,6 @@ makeRLearner.classif.ctree = function() {
     package = "partykit",
     par.set = makeParamSet(
       ## ctree
-      makeUntypedLearnerParam(id = "subset"), # should this be included or not?
-      makeIntegerVectorLearnerParam(id = "weights"), # should this be included or not?
       makeFunctionLearnerParam(id = "na.action"),
       makeUntypedLearnerParam(id = "offset"),
       makeDiscreteLearnerParam(id = "cluster"),
@@ -79,7 +77,7 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
                               splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo
                               update, splitflavour)
   f = getTaskFormula(.task)
-  partykit::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, weights = .weights, ...)
+  partykit::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, weights = .weights, subset = .subset, ...)
 }
 
 #' @export
