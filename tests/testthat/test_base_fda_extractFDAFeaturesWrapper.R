@@ -27,5 +27,5 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   ps2 = makeParamSet(
     makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")),
     makeIntegerParam("minsplit", lower = 1, upper = 30))
-  tuneParams(lrn, subsetTask(fuelsubset.task, features = 3), cv2, mse, ps2, makeTuneControlRandom(maxit = 2))
+  mod = tuneParams(lrn, subsetTask(fuelsubset.task, features = 3), cv2, mse, ps2, makeTuneControlRandom(maxit = 2))
 })
