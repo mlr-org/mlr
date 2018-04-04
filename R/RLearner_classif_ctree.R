@@ -15,10 +15,14 @@ makeRLearner.classif.ctree = function() {
       makeUntypedLearnerParam(id = "scores"),
       makeLogicalLearnerParam(id = "doFit", default = TRUE, tunable = FALSE)
       ## ctree_control
-      makeDiscreteLearnerParam(id = "teststat", default = "quadratic", values = c("quadratic", "maximum")),
-      makeDiscreteLearnerParam(id = "splitstat", default = "quadratic", values = c("quadratic", "maximum")),
+      makeDiscreteLearnerParam(id = "teststat", default = "quadratic", 
+                               values = c("quadratic", "maximum")),
+      makeDiscreteLearnerParam(id = "splitstat", default = "quadratic", 
+                               values = c("quadratic", "maximum")),
       makeLogicalLearnerParam(id = "splittest", default = FALSE),
-      makeDiscreteLearnerParam(id = "testtype", default = "Bonferroni", values = c("Bonferroni", "MonteCarlo", "Univariate", "Teststatistic")),
+      makeDiscreteLearnerParam(id = "testtype", default = "Bonferroni", 
+                               values = c("Bonferroni", "MonteCarlo", 
+                                          "Univariate", "Teststatistic")),
       makeNumericLearnerParam(id = "nmax", default = Inf, lower = 0, allow.inf = TRUE),
       makeNumericLearnerParam(id = "alpha", default = 0.05, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "mincriterion", lower = 0, upper = 1), # default = 1- alpha
@@ -29,22 +33,28 @@ makeRLearner.classif.ctree = function() {
       makeLogicalLearnerParam(id = "stump", default = FALSE),
       makeLogicalLearnerParam(id = "lookahead", default = FALSE),
       makeLogicalLearnerParam(id = "MIA", default = FALSE),
-      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = quote(testtype=="MonteCarlo")),
-      makeNumericLearnerParam(id = "tol", default = sqrt(.Machine$double.eps), lower = 0, upper = Inf), # tol
+      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, 
+                              requires = quote(testtype=="MonteCarlo")),
+      makeNumericLearnerParam(id = "tol", default = sqrt(.Machine$double.eps), 
+                              lower = 0, upper = Inf), # tol
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "numsurrogate", default = FALSE), # numsurrogate
-      makeIntegerLearnerParam(id = "mtry", default = Inf, lower = 1, special.vals = list(Inf)),
-      makeIntegerLearnerParam(id = "maxdepth", default = Inf, lower = 0L, special.vals = list(Inf)),
+      makeIntegerLearnerParam(id = "mtry", default = Inf, lower = 1, 
+                              special.vals = list(Inf)),
+      makeIntegerLearnerParam(id = "maxdepth", default = Inf, lower = 0L, 
+                              special.vals = list(Inf)),
       makeLogicalLearnerParam(id = "multiway", default = FALSE),
       makeIntegerLearnerParam(id = "splittry", default = 2L, lower = 1L),
       makeLogicalLearnerParam(id = "intersplit", default = FALSE),
       makeLogicalLearnerParam(id = "majority", default = FALSE),
       makeLogicalLearnerParam(id = "caseweights", default = TRUE),
       makeFunctionLearnerParam("applyfun", default = NULL, special.vals = list(NULL)),
-      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L, tunable = FALSE, special.vals = list(NULL)),
+      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L, 
+                              tunable = FALSE, special.vals = list(NULL)),
       makeLogicalLearnerParam(id = "saveinfo", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "update", default = FALSE),
-      makeDiscreteLearnerParam(id = "splitflavour", default = "ctree", values = c("ctree", "exhaustive")) # exhaustive means it is not unbiased
+      makeDiscreteLearnerParam(id = "splitflavour", default = "ctree", 
+                               values = c("ctree", "exhaustive")) # exhaustive means it is not unbiased
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights"),
     name = "Conditional Inference Trees",
