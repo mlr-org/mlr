@@ -25,13 +25,17 @@
 #'   Can be equal to `learn`.
 #' @param args ([list])\cr
 #'   Named list of arguments to pass to `learn` via `...`.
+#' @param par.set ([ParamSet])\cr
+#'   Paramset added to the learner if used in conjunction with a `makeExtractFDAFeatsWrapper`.
+#'   Can be `NULL`.`
 #' @export
 #' @family fda
-makeExtractFDAFeatMethod = function(learn, reextract, args = list()) {
+makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = NULL) {
   assertFunction(learn, args = c("data", "target", "col"))
   assertFunction(reextract, args = c("data", "target", "col"))
   assertList(args, names = "named")
-  setClasses(list(learn = learn, reextract = reextract, args = args), "extractFDAFeatMethod")
+  assertClass(par.set, classes = "ParamSet", null.ok = TRUE)
+  setClasses(list(learn = learn, reextract = reextract, args = args, par.set = par.set), "extractFDAFeatMethod")
 }
 
 #' @title Fast Fourier transform features.
@@ -78,10 +82,14 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     colnames(df) = stri_paste(trafo.coeff, seq_len(ncol(fft.pa)))
     df
   }
+
+  ps = makeParamSet(makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")))
+
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn,
-    args = list(trafo.coeff = trafo.coeff)
+    args = list(trafo.coeff = trafo.coeff),
+    par.set = ps
   )
 }
 
@@ -111,8 +119,17 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' @export
 #' @family fda_featextractor
 extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
-  assertString(filter, pattern = "((d|la|bl|c)\\d*[02468])|haar")
+
+  # All possible values for the filters
+  filter.vals = c(
+    paste0("d", c(2,4,6,8,10,12,14,16,18,20)),
+    paste0("la", c(8,10,12,14,16,18,20)),
+    paste0("bl", c(14,18,20)),
+    paste0("c", c(6,12,18,24,30))
+  )
+  assertChoice(filter, filter.vals)
   assertChoice(boundary, c("periodic", "reflection"))
+
   # FIXME: Add n.levels parameter. This param does not have defaults, I do not know how
   # to handle it right now.
   # @param n.levels [\code{integer(1)}]\cr
@@ -141,7 +158,11 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     colnames(df) = stri_paste("wav", filter, seq_len(ncol(df)), sep = ".")
     return(df)
   }
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary))
+  ps = makeParamSet(
+    makeDiscreteParam("filter", values = filter.vals),
+    makeDiscreteParam("boundary", values = c("periodic", "reflection"))
+  )
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(filter = filter, boundary = boundary), par.set = ps)
 }
 
 #' @title Extract functional principal component analysis features.
@@ -186,6 +207,6 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
     names(df.fpca) = paste0("Fpca", seq_len(ncol(df.fpca)))
     return(df.fpca)
   }
-
-  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc))
+  ps = makeParamSet(makeNumericParam("pve", lower = 0, upper = 1))
+  makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc), par.set = ps)
 }

@@ -29,8 +29,9 @@ makeExtractFDAFeatsWrapper = function(learner, feat.methods = list()) {
   predictfun = function(data, target, args, control) {
     reextractFDAFeatures(data, control)
   }
+  ps = do.call("c", extractSubList(args$feat.methods, "par.set", simplify = FALSE))
 
-  lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
+  lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args, par.set = ps)
   lrn$id = stri_replace(lrn$id, replacement = ".extracted", regex = "[.]preproc$")
   addClasses(lrn, "extractFDAFeatsWrapper")
 }
