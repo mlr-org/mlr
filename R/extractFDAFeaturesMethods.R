@@ -219,9 +219,9 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' For more details refer to \code{\link[FDboost]{bsignal}}.
 #'
 #' @param bsignal.knots [\code{integer}]\cr
-#' The number of knots for bspline.
+#'   The number of knots for bspline.
 #' @param bsignal.df [\code{numeric}]\cr
-#' The effective degree of freedom of penalized bspline.
+#'   The effective degree of freedom of penalized bspline.
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
