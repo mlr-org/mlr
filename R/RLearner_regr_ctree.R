@@ -11,7 +11,7 @@ makeRLearner.regr.ctree = function() {
       makeFunctionLearnerParam(id = "ytrafo", default = NULL),
       makeFunctionLearnerParam(id = "converged", default = NULL),
       makeUntypedLearnerParam(id = "scores"),
-      makeLogicalLearnerParam(id = "doFit", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "doFit", default = TRUE, tunable = FALSE),
       ## ctree_control
       makeDiscreteLearnerParam(id = "teststat", default = "quadratic",
         values = c("quadratic", "maximum")),
