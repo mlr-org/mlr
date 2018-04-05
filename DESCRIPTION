@@ -127,6 +127,7 @@ Suggests:
     numDeriv,
     pamr,
     party,
+    partykit (>= 1.2-0),
     penalized (>= 0.9-47),
     pls,
     PMCMR (>= 4.1),
