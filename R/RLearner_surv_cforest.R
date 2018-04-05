@@ -12,11 +12,13 @@ makeRLearner.surv.cforest = function() {
       makeFunctionLearnerParam(id = "ytrafo", default = NULL),
       makeUntypedLearnerParam(id = "scores"),
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
-      # Not sure if this is best practice (!!! Please check !!!):
-      makeUntypedLearnerParam(id = "perturb",
-        default = list(replace = FALSE, fraction = 0.632)),
-      makeIntegerLearnerParam(id = "mtry", lower = 1L,
-        default = ceiling(sqrt(nvar))), # is this possible?
+      ## Instead of this
+      # makeUntypedLearnerParam(id = "perturb",
+      #   default = list(replace = FALSE, fraction = 0.632)),
+      ## We do this (to allow for tuning these parameters)
+      makeLogicalLearnerParam(id = "perturb.replace", default = TRUE),
+      makeNumericLearnerParam(id = "perturb.fraction", default = 0.632),
+      makeIntegerLearnerParam(id = "mtry", lower = 1L), # default = ceiling(sqrt(nvar))
       makeFunctionLearnerParam("applyfun", default = NULL,
         special.vals = list(NULL)),
       makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L,
