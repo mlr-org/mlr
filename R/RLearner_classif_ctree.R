@@ -80,7 +80,6 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
     nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
     splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
     update, splitflavour)
-  xxx <<- ctrl
   f = getTaskFormula(.task)
   partykit::ctree(f, data = getTaskData(.task, .subset), control = ctrl,
     weights = .weights, ...)
