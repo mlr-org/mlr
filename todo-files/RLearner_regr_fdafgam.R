@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.regr.fdafgam = function() {
+makeRLearner.regr.fgam = function() {
   makeRLearnerRegr(
-    cl = "regr.fdafgam",
+    cl = "regr.fgam",
     package = "refund",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
@@ -33,7 +33,7 @@ makeRLearner.regr.fdafgam = function() {
 #  k must be chosen: the defaults are essentially arbitrary??????????
 #  see mgcv::choose.k using mgcv::gam.check
 #' @export
-trainLearner.regr.fdafgam = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL,
   Qtransform = TRUE, mgcv.s.k = -1L, bs = "tp", ...) {
 
   df = getTaskData(.task, subset = .subset, target.extra = TRUE,
@@ -87,7 +87,7 @@ reformat2list4mat2 = function(.data, tdesc){
 }
 
 #' @export
-predictLearner.regr.fdafgam = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.fgam = function(.learner, .model, .newdata, ...) {
   mextra_para  = list(...)
   tdesc = getTaskDesc(.model)
   list4mat = reformat2list4mat2(.newdata, tdesc)
