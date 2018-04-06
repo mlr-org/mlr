@@ -5,8 +5,8 @@ test_that("multilabel_cforest", {
 
   parset.list = list(
     list(),
-    list(control = party::cforest_unbiased(mtry = 2)),
-    list(control = party::cforest_unbiased(ntree = 200))
+    list(mtry = 2),
+    list(ntree = 200)
   )
   parset.list2 = list(
     list(),
@@ -21,7 +21,7 @@ test_that("multilabel_cforest", {
     pars = list(multilabel.formula, data = multilabel.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(party::cforest, pars)
+    m = do.call(partykit::cforest, pars)
     p = predict(m, newdata = multilabel.test) # multivariate cforest can only predict probs
     p2 = do.call(rbind, p)
     old.probs.list[[i]] = data.frame(p2)
