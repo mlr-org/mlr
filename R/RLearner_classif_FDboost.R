@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.classif.fdaFDboost = function() {
+makeRLearner.classif.FDboost = function() {
   makeRLearnerClassif(
-    cl = "classif.fdaFDboost",
+    cl = "classif.FDboost",
     package = c("FDboost", "mboost"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Binomial", values = c("AdaExp", "Binomial", "AUC", "custom.family")),
@@ -27,7 +27,7 @@ makeRLearner.classif.fdaFDboost = function() {
 }
 
 #' @export
-trainLearner.classif.fdaFDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
+trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
   knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, Binomial.link = "logit",
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
 
@@ -93,7 +93,7 @@ trainLearner.classif.fdaFDboost = function(.learner, .task, .subset, .weights = 
 }
 
 #' @export
-predictLearner.classif.fdaFDboost = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   type = ifelse(.learner$predict.type == "response", "class", "response")  # additional parameters passed to mboost::predict(), in mboost, "response" returns probabilities and "class" returns the predicted class
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
