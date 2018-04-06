@@ -26,7 +26,7 @@ makeRLearner.classif.fdausc.np = function() {
 }
 
 #' @export
-trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
+trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric = "metric.lp", ...) {
 
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
@@ -35,7 +35,12 @@ trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = N
   data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
 
   par.cv = learnerArgsToControl(list, trim, draw)
-  metric = match.fun(metric)
+  metric = switch(metric,
+    "metric.lp" = fda.usc::metric.lp,
+    "metric.dist" = fda.usc::metric.dist,
+    "metric.hausdorff" = fda.usc::metric.hausdorff,
+    "metric.kl" = fda.usc::metric.kl,
+    fda.usc::metric.lp)
   mod = fda.usc::classif.np(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
     par.S = list(w = .weights), metric = metric, ...)
   # Fix a bug in the package
