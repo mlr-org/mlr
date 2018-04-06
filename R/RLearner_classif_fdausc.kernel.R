@@ -27,7 +27,7 @@ makeRLearner.classif.fdausc.kernel = function() {
 }
 
 #' @export
-trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, ...) {
+trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, ...) {
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
   fd = getFunctionalFeatures(d$data)
@@ -35,8 +35,9 @@ trainLearner.classif.fdausc.kernel = function(.learner, .task, .subset, .weights
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
   par.cv = learnerArgsToControl(list, trim, draw)
+  metric = match.fun(metric)
   fda.usc::classif.kernel(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
-    par.S = list(w = .weights), ...)
+    par.S = list(w = .weights), metric = metric, ...)
 }
 
 #' @export

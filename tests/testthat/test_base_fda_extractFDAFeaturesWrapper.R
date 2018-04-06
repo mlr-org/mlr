@@ -29,3 +29,23 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
     makeIntegerParam("minsplit", lower = 1, upper = 30))
   mod = tuneParams(lrn, subsetTask(fuelsubset.task, features = 3), cv2, mse, ps2, makeTuneControlRandom(maxit = 2))
 })
+
+
+test_that("extractFDAFeaturesWrapper ParSet Works", {
+  methods = list("fd1" = extractFDAFourier())
+  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
+  ps = getLearnerParamSet(lrn)
+
+  # Check whether all Ids are contained in the resulting param set
+  ps.rpart = getLearnerParamSet(makeLearner("classif.xgboost"))
+  expect_subset(getParamIds(ps.rpart), getParamIds(ps))
+  expect_subset(getParamIds(methods$fd1$par.set), getParamIds(ps))
+
+  ps2 = makeParamSet(
+    makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")),
+    makeIntegerParam("max_depth", lower = 1, upper = 3))
+  df = getTaskData(fuelsubset.task, functionals.as = "matrix")[, c("heatan", "UVVIS")]
+  colnames(df) = c("target", "fd1")
+  df$target = as.factor(round(df$target/10, 0))
+  mod = tuneParams(lrn, makeClassifTask(data = df, target = "target"), cv2, acc, ps2, makeTuneControlRandom(maxit = 2))
+})
