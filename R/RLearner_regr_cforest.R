@@ -6,10 +6,10 @@ makeRLearner.regr.cforest = function() {
     par.set = makeParamSet(
       ## cforest
       makeUntypedLearnerParam(id = "offset"),
-      makeDiscreteVectorLearnerParam(id = "cluster"),
-      makeDiscreteVectorLearnerParam(id = "strata"),
+      makeUntypedLearnerParam(id = "cluster"),
+      makeUntypedLearnerParam(id = "strata"),
       makeFunctionLearnerParam(id = "na.action"),
-      makeFunctionLearnerParam(id = "ytrafo", default = NULL),
+      makeFunctionLearnerParam(id = "ytrafo", default = NULL, special.vals = list(NULL)),
       makeUntypedLearnerParam(id = "scores"),
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       ## Instead of this
@@ -77,7 +77,8 @@ makeRLearner.regr.cforest = function() {
 }
 
 #' @export
-trainLearner.regr.cforest = function(.learner, .task, .subset, .weights,
+trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
+  teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
   logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
   nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
   splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
@@ -90,6 +91,7 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights,
   if (missing(mincriterion)) mincriterion = defaults$mincriterion
   if (missing(saveinfo)) safeinfo = defaults$saveinfo
   ctrl = learnerArgsToControl(partykit::ctree_control,
+    teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
     logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
     nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
     splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,

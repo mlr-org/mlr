@@ -7,9 +7,9 @@ makeRLearner.regr.ctree = function() {
       ## ctree
       makeFunctionLearnerParam(id = "na.action"),
       makeUntypedLearnerParam(id = "offset"),
-      makeDiscreteVectorLearnerParam(id = "cluster"),
-      makeFunctionLearnerParam(id = "ytrafo", default = NULL),
-      makeFunctionLearnerParam(id = "converged", default = NULL),
+      makeUntypedLearnerParam(id = "cluster"),
+      makeFunctionLearnerParam(id = "ytrafo", default = NULL, special.vals = list(NULL)),
+      makeFunctionLearnerParam(id = "converged", default = NULL, special.vals = list(NULL)),
       makeUntypedLearnerParam(id = "scores"),
       makeLogicalLearnerParam(id = "doFit", default = TRUE, tunable = FALSE),
       ## ctree_control
@@ -63,13 +63,15 @@ makeRLearner.regr.ctree = function() {
 }
 
 #' @export
-trainLearner.regr.ctree = function(.learner, .task, .subset, .weights,
+trainLearner.regr.ctree = function(.learner, .task, .subset, .weights = NULL,
+  teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
   logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
   nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
   splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
   update, splitflavour, ...) {
 
   ctrl = learnerArgsToControl(partykit::ctree_control,
+    teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
     logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
     nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
     splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
