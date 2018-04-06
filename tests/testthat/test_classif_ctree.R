@@ -1,7 +1,7 @@
 context("classif_ctree")
 
 test_that("classif_ctree", {
-  requirePackagesOrSkip("party", default.method = "load")
+  requirePackagesOrSkip("partykit", default.method = "load")
 
   parset.list = list(
     list(),
@@ -16,11 +16,11 @@ test_that("classif_ctree", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    ctrl = do.call(party::ctree_control, parset)
+    ctrl = do.call(partykit::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = party::ctree(formula = multiclass.formula, data = multiclass.train, control = ctrl)
+    m = partykit::ctree(formula = multiclass.formula, data = multiclass.train, control = ctrl)
     p  = predict(m, newdata = multiclass.test, type = "response")
-    p2 = Reduce(rbind, party::treeresponse(m, newdata = multiclass.test, type = "prob"))
+    p2 = predict(m, newdata = multiclass.test, type = "prob")
     rownames(p2) = NULL
     colnames(p2) = levels(multiclass.df[, multiclass.target])
     old.predicts.list[[i]] = p
@@ -31,13 +31,5 @@ test_that("classif_ctree", {
     old.predicts.list, parset.list)
   testProbParsets("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list)
-
-  df = iris
-  df[, 1] = 1:150
-  df1 = df[seq(1, 150, 2), ]
-  df2 = df[seq(2, 150, 2), ]
-  ct = makeClassifTask(target = "Species", data = df1)
-  m = train(makeLearner("classif.ctree"), ct)
-  predict(m, newdata = df2)
 
 })

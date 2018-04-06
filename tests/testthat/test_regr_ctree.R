@@ -15,10 +15,10 @@ test_that("regr_ctree", {
 
   for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    ctrl = do.call(party::ctree_control, parset)
+    ctrl = do.call(partykit::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = party::ctree(formula = regr.formula, data = regr.train, control = ctrl)
-    p  = predict(m, newdata = regr.test, type = "response")[, 1L]
+    m = partykit::ctree(formula = regr.formula, data = regr.train, control = ctrl)
+    p  = predict(m, newdata = regr.test, type = "response")
     old.predicts.list[[i]] = p
   }
 
