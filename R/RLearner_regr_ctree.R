@@ -7,7 +7,7 @@ makeRLearner.regr.ctree = function() {
       ## ctree
       makeFunctionLearnerParam(id = "na.action"),
       makeUntypedLearnerParam(id = "offset"),
-      makeDiscreteLearnerParam(id = "cluster"),
+      makeDiscreteVectorLearnerParam(id = "cluster"),
       makeFunctionLearnerParam(id = "ytrafo", default = NULL),
       makeFunctionLearnerParam(id = "converged", default = NULL),
       makeUntypedLearnerParam(id = "scores"),

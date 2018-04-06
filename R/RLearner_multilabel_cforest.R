@@ -8,8 +8,8 @@ makeRLearner.multilabel.cforest = function() {
     par.set = makeParamSet(
       ## cforest
       makeUntypedLearnerParam(id = "offset"),
-      makeDiscreteLearnerParam(id = "cluster"),
-      makeDiscreteLearnerParam(id = "strata"),
+      makeDiscreteVectorLearnerParam(id = "cluster"),
+      makeDiscreteVectorLearnerParam(id = "strata"),
       makeFunctionLearnerParam(id = "na.action"),
       makeFunctionLearnerParam(id = "ytrafo", default = NULL),
       makeUntypedLearnerParam(id = "scores"),
