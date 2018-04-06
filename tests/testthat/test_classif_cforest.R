@@ -1,12 +1,12 @@
 context("classif_cforest")
 
 test_that("classif_cforest", {
-  requirePackagesOrSkip("party", default.method = "load")
+  requirePackagesOrSkip("partykit", default.method = "load")
 
   parset.list = list(
     list(),
-    list(control = party::cforest_unbiased(mtry = 2)),
-    list(control = party::cforest_unbiased(ntree = 200))
+    list(mtry = 2),
+    list(ntree = 200)
   )
   parset.list2 = list(
     list(),
@@ -22,10 +22,9 @@ test_that("classif_cforest", {
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(party::cforest, pars)
+    m = do.call(partykit::cforest, pars)
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test)
-    p = predict(m, newdata = binaryclass.test, type = "prob")
-    old.probs.list[[i]] = sapply(p, "[", 1)
+    old.probs.list[[i]] = predict(m, newdata = binaryclass.test, type = "prob")[, 1]
   }
 
   testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
@@ -35,7 +34,7 @@ test_that("classif_cforest", {
 
   # issue 556
   parset.list3 = list(
-    list(replace = FALSE)
+    list(perturb.replace = FALSE)
   )
   testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list3)
