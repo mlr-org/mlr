@@ -52,8 +52,6 @@ makeRLearner.multilabel.cforest = function() {
         lower = 0, upper = Inf),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "numsurrogate", default = FALSE),
-      makeIntegerLearnerParam(id = "mtry", default = Inf, lower = 1,
-        special.vals = list(Inf)),
       makeIntegerLearnerParam(id = "maxdepth", default = Inf, lower = 0L,
         special.vals = list(Inf)),
       makeLogicalLearnerParam(id = "multiway", default = FALSE),
@@ -61,9 +59,6 @@ makeRLearner.multilabel.cforest = function() {
       makeLogicalLearnerParam(id = "intersplit", default = FALSE),
       makeLogicalLearnerParam(id = "majority", default = FALSE),
       makeLogicalLearnerParam(id = "caseweights", default = TRUE),
-      makeFunctionLearnerParam("applyfun", default = NULL, special.vals = list(NULL)),
-      makeIntegerLearnerParam(id = "cores", default = NULL, lower = 1L,
-        tunable = FALSE, special.vals = list(NULL)),
       makeLogicalLearnerParam(id = "saveinfo", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "update", default = FALSE),
       makeDiscreteLearnerParam(id = "splitflavour", default = "ctree",
@@ -81,8 +76,8 @@ makeRLearner.multilabel.cforest = function() {
 trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = NULL,
   teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
   logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
-  nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-  splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
+  nresample, tol, maxsurrogate, numsurrogate, maxdepth, multiway,
+  splittry, intersplit, majority, caseweights, saveinfo,
   update, splitflavour, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
@@ -94,8 +89,8 @@ trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = 
   ctrl = learnerArgsToControl(partykit::ctree_control,
     teststat, splitstat, splittest, testtype, nmax, alpha, mincriterion,
     logmincriterion, minsplit, minbucket, minprob, stump, lookahead, MIA,
-    nresample, tol, maxsurrogate, numsurrogate, mtry, maxdepth, multiway,
-    splittry, intersplit, majority, caseweights, applyfun, cores, saveinfo,
+    nresample, tol, maxsurrogate, numsurrogate, maxdepth, multiway,
+    splittry, intersplit, majority, caseweights, saveinfo,
     update, splitflavour)
   partykit::cforest(f, data = d, control = ctrl, weights = .weights, ...)
 }
