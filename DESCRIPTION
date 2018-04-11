@@ -79,6 +79,7 @@ Suggests:
     DiceKriging,
     DiceOptim,
     DiscriMiner,
+    dtw,
     e1071,
     earth,
     elasticnet,
