@@ -37,10 +37,16 @@ extractFDADTWKernel = function(dtw.refs, method.align = dtw::asymmetric) {
     colnames(df) = stri_paste("dtw", seq_len(ncol(df)), sep = ".")
     df
   }
+
+  ps = makeParamSet(
+    makeDiscreteLearnerParam(id = "method.align", default = dtw::asymmetric, values = c(dtw::asymmetric, dtw::symmetric1, dtw::symmetric2))
+  )
+
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn,
-    args = list(dtw.refs = dtw.refs, method.align = method.align)
+    args = list(dtw.refs = dtw.refs, method.align = method.align),
+    par.set = ps
   )
 }
 
