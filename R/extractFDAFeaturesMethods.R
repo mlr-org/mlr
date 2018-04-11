@@ -279,7 +279,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #' @export
 #' @family fda_featextractor
 extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass) {
-  lrn = function(data, target = NULL, col, scale, trim, trim_amount, parallel, na.action) {
+  lrn = function(data, target = NULL, col, scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass) {
     assertClass(data, "data.frame")
     assertLogical(scale)
     assertLogical(trim)
