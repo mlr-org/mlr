@@ -256,3 +256,64 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
   )
 }
 
+
+#' @title Time-Series Feature Heuristics
+#'
+#' @description
+#' The function extracts features from functional data based on known Heuristics.
+#' For more details refer to \code{\link[tsfeatures]{tsfeatures}}.
+#'
+#' @param scale [\code{boolean}]\cr
+#'   If TRUE, time series are scaled to mean 0 and sd 1 before features are computed.
+#' @param trim [\code{boolean}]\cr
+#'   If TRUE, time series are trimmed by \code{trim_amount} before features are computed.
+#'   Values larger than trim_amount in absolute value are set to NA.
+#' @param trim_amount [\code{numeric}]\cr
+#'   Default level of trimming if trim==TRUE.
+#' @param parallel [\code{boolean}]\cr
+#'   If TRUE, multiple cores (or multiple sessions) will be used.
+#'   This only speeds things up when there are a large number of time series.
+#' @param na.action [\code{function}]\cr
+#'   A function to handle missing values. Use na.interp to estimate missing values
+#' @return [\code{data.frame}].
+#' @export
+#' @family fda_featextractor
+extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass) {
+  lrn = function(data, target = NULL, col, scale, trim, trim_amount, parallel, na.action) {
+    assertClass(data, "data.frame")
+    assertLogical(scale)
+    assertLogical(trim)
+    assertLogical(parallel)
+    assertNumeric(trim_amount)
+    assertFunction(na.action)
+
+    # Transform data to matrix
+    data = as.matrix(data[, col, drop = FALSE])
+    assertNumeric(data)
+    # Convert to list of rows
+    list = as.list(data.frame(t(data)))
+
+    # We do not compute heterogeneity, hw_parameters
+    feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
+      "crossing_points", "flat_spots", "hurst",
+      "holt_parameters", "lumpiness", "max_kl_shift", "max_var_shift", "max_level_shift",
+      "stability", "nonlinearity", "pacf")
+
+    tsfeats = tsfeatures::tsfeatures(list, features = feats)
+    return(tsfeats)
+  }
+  ps = makeParamSet(
+    makeLogicalParam("scale", default = TRUE),
+    makeLogicalParam("trim", default = FALSE),
+    makeNumericParam("trim_amount", lower = 0L, upper = 1L, default = 0.1),
+    makeLogicalParam("parallel", default = FALSE),
+    makeFunctionParam("na.action", default = na.pass)
+  )
+  makeExtractFDAFeatMethod(
+    learn = lrn,
+    reextract = lrn,
+    args = list(scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action),
+    par.set = ps
+  )
+}
+
