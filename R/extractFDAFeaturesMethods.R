@@ -67,10 +67,14 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 
     # Calculate fourier coefficients (row wise) which are complex numbers
     fft.trafo = t(apply(data, 1, fft))
+
+
+
     # Extract amplitude or phase of fourier coefficients which are real numbers
     fft.pa = switch(trafo.coeff,
       amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
-      phase = apply(fft.trafo, 2, function(x) atan(Im(x) / Re(x)))
+      # In some cases the fft values are very small and rounded to 0.
+      phase = apply(fft.trafo, 2, function(x) atan(Im(x) / ifelse(abs(Re(x)) < .Machine$double.eps, .Machine$double.eps, Re(x))))
     )
 
     # If there is only one row in data, fft returns an array
