@@ -186,20 +186,6 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
   if (length(new.cols))
     stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
 
-  # Treat method parameters
-  # Overwrite the par.vals from ... so it is set correctly during tuning
-  feat.args = list(...)
-  desc$extractFDAFeat = Map(function(x) {
-    if (!is.null(x$par.set))
-      # Only set relevant params
-      feat.args = feat.args[names(feat.args) %in% getParamIds(desc$extractFDAFeat$par.set)]
-    if (length(feat.args) > 0)
-      # Overwrite args
-      desc$extractFDAFeat$args = feat.args
-    return(x)
-  }, desc$extractFDAFeat)
-
-
   # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.col) {
