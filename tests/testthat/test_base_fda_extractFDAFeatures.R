@@ -298,10 +298,12 @@ test_that("tsfeatures works", {
 
   requirePackagesOrSkip("tsfeatures")
 
-  gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:10,]
+  gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30,]
   lrn = extractFDATsfeatures()$learn
   gpfeats = lrn(data = gp1, col = "UVVIS")
   expect_equal(nrow(gpfeats), nrow(gp1))
+
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30), feat.methods = list("UVVIS" = extractFDATsfeatures()))
   # FIXME: Decide on extraction subset before testing versus method.
 })
 

@@ -277,11 +277,13 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #'   This only speeds things up when there are a large number of time series.
 #' @param na.action [\code{function}]\cr
 #'   A function to handle missing values. Use na.interp to estimate missing values
+#'@param ... [\code{any}]\cr
+#'   Further arguments passed on to the respective tsfeatures functions.
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
-extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass) {
-  lrn = function(data, target = NULL, col, scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass) {
+extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
+  lrn = function(data, target = NULL, col, scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
     assertClass(data, "data.frame")
     assertLogical(scale)
     assertLogical(trim)
@@ -293,16 +295,21 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     data = as.matrix(data[, col, drop = FALSE])
     assertNumeric(data)
     # Convert to list of rows
-    list = as.list(data.frame(t(data)))
+    row_lst = as.list(data.frame(t(data)))
 
     # We do not compute heterogeneity, hw_parameters
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
-      "crossing_points", "flat_spots", "hurst",
-      "holt_parameters", "lumpiness", "max_kl_shift", "max_var_shift", "max_level_shift",
-      "stability", "nonlinearity", "pacf")
+      "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
+      "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
 
-    tsfeats = tsfeatures::tsfeatures(list, features = feats)
-    return(tsfeats)
+    tsfeats = tsfeatures::tsfeatures(row_lst, features = feats)
+
+    # Get rid of series and type columns
+    tsfeats = data.frame(lapply(tsfeats, as.numeric))
+    # Get rid of constant features
+    const_feats = which(viapply(tsfeats, function(x) length(unique(x))) == 1L)
+
+    return(as.data.frame(tsfeats[, - const_feats]))
   }
   ps = makeParamSet(
     makeLogicalParam("scale", default = TRUE),
@@ -314,7 +321,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn,
-    args = list(scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action),
+    args = list(scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
     par.set = ps
   )
 }

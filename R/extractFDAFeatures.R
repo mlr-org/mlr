@@ -85,6 +85,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   # cleanup empty list items
   feat.methods = Filter(Negate(is.null), feat.methods)
 
+  # Treat method parameters:
   # Overwrite the par.vals from ... so it is set correctly during tuning
   feat.args = list(...)
   desc$extractFDAFeat = Map(function(x) {
@@ -121,6 +122,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   } else if (any(unique(vnapply(vals, nrow)) != nrow(obj))) {
     stop("feat.method needs to return a data.frame with one row per observation in the original data and equal nrow per column.")
   }
+
   # cbind resulting columns. Use data.table to ensure proper naming.
   df = as.data.frame(do.call(cbind, lapply(vals, setDT)))
 
@@ -151,8 +153,8 @@ extractFDAFeatures.Task = function(obj, target = character(0L), feat.methods = l
 print.extractFDAFeatDesc = function(x, ...) {
   catf("Extraction of features from functional data:")
   catf("Target: %s", collapse(x$target))
-  # FIXME: This could be missunderstood
-  catf("Functional Features: %i; Extracted features: %i", length(x$fd.cols), length(x$extractFDAFeat))
+  catf("Remaining functional Features: %i after extraction on %i functional features",
+    length(x$fd.cols), length(x$extractFDAFeat))
 }
 
 
@@ -171,18 +173,31 @@ print.extractFDAFeatDesc = function(x, ...) {
 #' @return [data.frame] or [Task] containing the extracted Features
 #' @family extractFDAFeatures
 #' @export
-reextractFDAFeatures = function(obj, desc) {
+reextractFDAFeatures = function(obj, desc, ...) {
   UseMethod("reextractFDAFeatures")
 }
 
 #' @export
-reextractFDAFeatures.data.frame = function(obj, desc) {
+reextractFDAFeatures.data.frame = function(obj, desc, ...) {
   assertClass(desc, classes = "extractFDAFeatDesc")
 
   # check for new columns
   new.cols = names(which(names(obj) %nin% desc$coln))
   if (length(new.cols))
     stop("New columns (%s) found in data. Unable to extract.", collapse(new.cols))
+
+  # Treat method parameters
+  # Overwrite the par.vals from ... so it is set correctly during tuning
+  feat.args = list(...)
+  desc$extractFDAFeat = Map(function(x) {
+    if (!is.null(x$par.set))
+      # Only set relevant params
+      feat.args = feat.args[names(feat.args) %in% getParamIds(desc$extractFDAFeat$par.set)]
+    if (length(feat.args) > 0)
+      # Overwrite args
+      desc$extractFDAFeat$args = feat.args
+    return(x)
+  }, desc$extractFDAFeat)
 
 
   # reextract features using reextractDescription and return
