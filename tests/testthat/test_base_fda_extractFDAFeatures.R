@@ -305,3 +305,20 @@ test_that("Fourier equal to package", {
 
 })
 
+
+context("fda dtw extract")
+
+test_that("dtw extract works", {
+  task = subsetTask(fuelsubset.task, features = "UVVIS")
+  daf = getTaskData(task, functionals.as = "matrix")
+  daf = daf$UVVIS
+  fmethods = list("UVVIS" = extractFDADTWKernel())
+  res = extractFDAFeatures(fuelsubset.task, feat.methods = fmethods)
+  # check output data
+  df = getTaskData(res$task, functionals.as = "matrix")
+  expect_is(df, "data.frame")
+  expect_equal(nrow(df), 129)
+  expect_equal(ncol(df), 13)
+})
+
+
