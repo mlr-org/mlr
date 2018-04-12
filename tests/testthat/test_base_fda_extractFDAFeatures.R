@@ -294,21 +294,22 @@ test_that("Fourier equal to package", {
 })
 
 
-test_that("Fourier equal to package", {
+test_that("tsfeatures works", {
+
+  requirePackagesOrSkip("tsfeatures")
 
   gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:10,]
   lrn = extractFDATsfeatures()$learn
   gpfeats = lrn(data = gp1, col = "UVVIS")
   expect_equal(nrow(gpfeats), nrow(gp1))
-
   # FIXME: Decide on extraction subset before testing versus method.
-
 })
 
 
 context("fda dtw extract")
 
 test_that("dtw extract works", {
+  requirePackagesOrSkip("rucrdtw")
   task = subsetTask(fuelsubset.task, features = "UVVIS")
   daf = getTaskData(task, functionals.as = "matrix")
   daf = daf$UVVIS
@@ -318,7 +319,7 @@ test_that("dtw extract works", {
   df = getTaskData(res$task, functionals.as = "matrix")
   expect_is(df, "data.frame")
   expect_equal(nrow(df), 129)
-  expect_equal(ncol(df), 13)
+  expect_equal(ncol(df), 9)
 })
 
 

@@ -17,14 +17,15 @@
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
-extractFDADTWKernel = function(ref.method = "random", n.refs = 10L, refs = NULL, dtwwindow = 0.05) {
+extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {
   requirePackages("rucrdtw", default.method = "attach")
 
   # Function that extracts dtw-distances for a single observation and a set of reference
   # curves
   getDtwDist = function(frow, refs, dtwwindow) {
     # Compute dtw distance from the selected row to each reference row
-    vnapply(seq_len(nrow(refs)), function(i) ucrdtw_vv(frow, refs[i,], dtwwindow)$distance)
+    row = vnapply(seq_len(nrow(refs)), function(i) ucrdtw_vv(frow, refs[i,], dtwwindow)$distance)
+    return(row)
   }
   lrn = function(data, target = NULL, col, ref.method, n.refs, refs, dtwwindow) {
     assertClass(data, "data.frame")
@@ -38,7 +39,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 10L, refs = NULL,
     # Obtain reference curves indices
     if (is.null(refs) | is.integer(refs)) {
     if (ref.method == "random")
-      refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs, 0))), 1L)
+      refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0))), 1L)
     if (ref.method == "all")
       refs = seq_len(nrow(data))
     refs = data[refs, ]

@@ -26,7 +26,7 @@ makeRLearner.classif.fdausc.np = function() {
 }
 
 #' @export
-trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric = "metric.lp", ...) {
+trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = NULL, trim, draw, metric, Ker, ...) {
 
   # Get and transform functional data
   d = getTaskData(.task, subset = .subset, target.extra = TRUE, functionals.as = "matrix")
@@ -34,15 +34,18 @@ trainLearner.classif.fdausc.np = function(.learner, .task, .subset, .weights = N
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
 
+  # Deal with arguments
   par.cv = learnerArgsToControl(list, trim, draw)
-  metric = switch(metric,
-    "metric.lp" = fda.usc::metric.lp,
-    "metric.dist" = fda.usc::metric.dist,
-    "metric.hausdorff" = fda.usc::metric.hausdorff,
-    "metric.kl" = fda.usc::metric.kl,
-    fda.usc::metric.lp)
-  mod = fda.usc::classif.np(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
-    par.S = list(w = .weights), metric = metric, ...)
+  par.funs = learnerArgsToControl(list, metric, Ker)
+  par.funs = lapply(par.funs, function(x) getFromNamespace(x, "fda.usc"))
+
+  trainfun = getFromNamespace("classif.np", "fda.usc")
+  mod = do.call("trainfun",
+    c(list(group = d$target, fdataobj = data.fdclass, par.CV = par.cv, par.S = list(w = .weights)),
+      list(metric = par.funs$metric)[which(names(par.funs) == "metric")],
+      list(Ker = par.funs$Ker)[which(names(par.funs) == "Ker")],
+      ...))
+
   # Fix a bug in the package
   mod$C[[1]] = quote(classif.np)
   return(mod)

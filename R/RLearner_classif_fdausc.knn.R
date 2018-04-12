@@ -30,14 +30,15 @@ trainLearner.classif.fdausc.knn = function(.learner, .task, .subset, .weights = 
   # transform the data into fda.usc:fdata class type.
   data.fdclass = fda.usc::fdata(mdata = as.matrix(fd))
   par.cv = learnerArgsToControl(list, trim, draw)
-  metric = switch(metric,
-    "metric.lp" = fda.usc::metric.lp,
-    "metric.dist" = fda.usc::metric.dist,
-    "metric.hausdorff" = fda.usc::metric.hausdorff,
-    "metric.kl" = fda.usc::metric.kl,
-    fda.usc::metric.lp)
-  fda.usc::classif.knn(group = d$target, fdataobj = data.fdclass, par.CV = par.cv,
-    par.S = list(w = .weights), metric = metric, ...)
+
+  par.funs = learnerArgsToControl(list, metric)
+  par.funs = lapply(par.funs, function(x) getFromNamespace(x, "fda.usc"))
+
+  trainfun = getFromNamespace("classif.knn", "fda.usc")
+  mod = do.call("trainfun",
+    c(list(group = d$target, fdataobj = data.fdclass, par.CV = par.cv, par.S = list(w = .weights)),
+      list(metric = par.funs$metric)[which(names(par.funs) == "metric")],
+      ...))
  }
 
 #' @export
