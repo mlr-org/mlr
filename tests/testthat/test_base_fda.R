@@ -358,7 +358,7 @@ test_that("benchmarking on fda tasks works", {
 
 
   # Test benchmark mixed learners regression
-  lrns2 = list(makeLearner("regr.fdaFDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
+  lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
   expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, cv2)},
                  "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")

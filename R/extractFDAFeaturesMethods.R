@@ -209,7 +209,10 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
     names(df.fpca) = paste0("Fpca", seq_len(ncol(df.fpca)))
     return(df.fpca)
   }
-  ps = makeParamSet(makeNumericParam("pve", lower = 0, upper = 1))
+  ps = makeParamSet(
+    makeNumericParam("pve", lower = 0, upper = 1),
+    makeIntegerParam("npc", lower = 1, upper = Inf)
+  )
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, args = list(pve = pve, npc = npc), par.set = ps)
 }
 

@@ -90,8 +90,9 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   desc$extractFDAFeat = Map(function(x) {
     # Only set relevant params
     feat.args = feat.args[names(feat.args) %in% getParamIds(x$par.set)]
-    # Overwrite args
-    x$args = feat.args
+    if (length(feat.args) > 0)
+      # Overwrite args
+      x$args = feat.args
     return(x)
   }, feat.methods)
 
