@@ -292,3 +292,16 @@ test_that("Fourier equal to package", {
   gp2 = data.frame(v1  =  t(1:4), X1 = as.factor(1))
   expect_error(extractFourierFeatures(data = gp2, trafo.coeff = "amplitude"))
 })
+
+
+test_that("Fourier equal to package", {
+
+  gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:10,]
+  lrn = extractFDATsfeatures()$learn
+  gpfeats = lrn(data = gp1, col = "UVVIS")
+  expect_equal(nrow(gpfeats), nrow(gp1))
+
+  # FIXME: Decide on extraction subset before testing versus method.
+
+})
+
