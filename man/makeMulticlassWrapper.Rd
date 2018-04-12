@@ -7,9 +7,9 @@
 makeMulticlassWrapper(learner, mcw.method = "onevsrest")
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{mcw.method}{(\code{character(1)} | \code{function}) \cr
 \dQuote{onevsone} or \dQuote{onevsrest}.
@@ -20,7 +20,7 @@ Columns define new binary problems, rows correspond to classes (rows must be nam
 Default is \dQuote{onevsrest}.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a multi-class method.

@@ -27,8 +27,6 @@ test_that("tuneParamsMultiCrit", {
   # and check plotting
   print(plotTuneMultiCritResult(res, path = TRUE))
   print(plotTuneMultiCritResult(res, path = FALSE))
-  plotTuneMultiCritResultGGVIS(res, path = TRUE)
-  plotTuneMultiCritResultGGVIS(res, path = FALSE)
 
   # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 2L)
@@ -208,7 +206,7 @@ test_that("check n.objectives for MBO multi crit", {
   )
 
   expect_error(makeTuneMultiCritControlMBO(1L),
-    ".* All elements must be >= 2.")
+    ".* >= 2")
   expect_error(makeTuneMultiCritControlMBO(1.5),
     ".* Must be of type 'single integerish value', not 'double'.")
   ctrl = makeTuneMultiCritControlMBO(2L)
