@@ -7,8 +7,8 @@
 #'   How should the reference curves be obtained?
 #'   Method `random` draws `n.refs` random reference curves, while `all` uses all curves as references.
 #'   In order to use user-provided reference curves, this parameter is set to `fixed`.
-#' @param n.refs [\code{integer}]\cr
-#'   Number of reference curves to be drawn.
+#' @param n.refs [\code{numeric}]\cr
+#'   Number of reference curves to be drawn (as a fraction of the number of observations in the training data).
 #' @param refs [\code{matrix|integer vector}]\cr
 #'   Integer vector of training set row indices or a matrix of reference curves with the same length as
 #'   the functionals in the training data. Overwrites `ref.method` and `n.refs`.
@@ -29,7 +29,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 10L, refs = NULL,
   lrn = function(data, target = NULL, col, ref.method, n.refs, refs, dtwwindow) {
     assertClass(data, "data.frame")
     assertChoice(ref.method, c("random", "all", "fixed"))
-    assertInt(n.refs, lower = 1L, upper = nrow(data))
+    assertNumeric(n.refs, lower = 0, upper = 1)
     assertChoice(class(refs), c("matrix", "integer", "NULL"))
     assertNumber(dtwwindow)
 
@@ -38,7 +38,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 10L, refs = NULL,
     # Obtain reference curves indices
     if (is.null(refs) | is.integer(refs)) {
     if (ref.method == "random")
-      refs = sample(seq_len(nrow(data)), n.refs)
+      refs = sample(seq_len(nrow(data)), max(min(nrow(data), round(n.refs, 0))), 1L)
     if (ref.method == "all")
       refs = seq_len(nrow(data))
     refs = data[refs, ]
