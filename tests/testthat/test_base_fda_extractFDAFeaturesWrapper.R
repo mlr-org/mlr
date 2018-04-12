@@ -41,11 +41,10 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   expect_subset(getParamIds(ps.rpart), getParamIds(ps))
   expect_subset(getParamIds(methods$fd1$par.set), getParamIds(ps))
 
-  ps2 = makeParamSet(
-    makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")),
-    makeIntegerParam("max_depth", lower = 1, upper = 3))
+  ps2 = makeParamSet(makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")))
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")[, c("heatan", "UVVIS")]
   colnames(df) = c("target", "fd1")
   df$target = as.factor(round(df$target/10, 0))
-  mod = tuneParams(lrn, makeClassifTask(data = df, target = "target"), cv2, acc, ps2, makeTuneControlRandom(maxit = 2))
+  mod = tuneParams(lrn, makeClassifTask(data = df, target = "target"), cv2, acc, ps2, makeTuneControlGrid(resolution = 2L))
 })
+

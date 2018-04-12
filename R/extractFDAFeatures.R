@@ -81,9 +81,20 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
     extractFDAFeat = namedList(names(feat.methods))
   )
 
-  desc$extractFDAFeat = feat.methods
+
   # cleanup empty list items
-  desc$extractFDAFeat = Filter(Negate(is.null), desc$extractFDAFeat)
+  feat.methods = Filter(Negate(is.null), feat.methods)
+
+  # Overwrite the par.vals from ... so it is set correctly during tuning
+  feat.args = list(...)
+  desc$extractFDAFeat = Map(function(x) {
+    # Only set relevant params
+    feat.args = feat.args[names(feat.args) %in% getParamIds(x$par.set)]
+    # Overwrite args
+    x$args = feat.args
+    return(x)
+  }, feat.methods)
+
   # Subset fd.cols accordingly
   desc$fd.cols = names(desc$extractFDAFeat)
   # Apply function from x to all functional features and return as list of

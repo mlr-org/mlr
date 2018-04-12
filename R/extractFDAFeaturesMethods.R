@@ -68,8 +68,6 @@ extractFDAFourier = function(trafo.coeff = "phase") {
     # Calculate fourier coefficients (row wise) which are complex numbers
     fft.trafo = t(apply(data, 1, fft))
 
-
-
     # Extract amplitude or phase of fourier coefficients which are real numbers
     fft.pa = switch(trafo.coeff,
       amplitude = sqrt(apply(fft.trafo, 2, function(x) Re(x)^2 + Im(x)^2)),
