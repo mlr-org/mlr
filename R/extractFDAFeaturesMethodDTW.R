@@ -38,7 +38,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 10L, refs = NULL,
     # Obtain reference curves indices
     if (is.null(refs) | is.integer(refs)) {
     if (ref.method == "random")
-      refs = sample(seq_len(nrow(data)), max(min(nrow(data), round(n.refs, 0))), 1L)
+      refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs, 0))), 1L)
     if (ref.method == "all")
       refs = seq_len(nrow(data))
     refs = data[refs, ]
@@ -54,7 +54,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 10L, refs = NULL,
 
   ps = makeParamSet(
     makeDiscreteParam(id = "ref.method", default = "random", values = c("random", "all", "fixed")),
-    makeIntegerParam(id = "n.refs", lower = 1L, upper = Inf),
+    makeNumericParam(id = "n.refs", lower = 0, upper = 1),
     makeUntypedParam(id = "refs"),
     makeNumericParam(id = "dtwwindow", lower = 0, upper = 1)
   )
