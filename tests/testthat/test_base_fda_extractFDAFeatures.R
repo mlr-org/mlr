@@ -305,10 +305,9 @@ test_that("tsfeatures works", {
 
   extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30), feat.methods = list("UVVIS" = extractFDATsfeatures()))
   # FIXME: Decide on extraction subset before testing versus method.
+  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35), extr$desc)
+  # FIXME: Tests
 })
-
-
-context("fda dtw extract")
 
 test_that("dtw extract works", {
   requirePackagesOrSkip("rucrdtw")
@@ -322,6 +321,15 @@ test_that("dtw extract works", {
   expect_is(df, "data.frame")
   expect_equal(nrow(df), 129)
   expect_equal(ncol(df), 9)
+})
+
+test_that("extraction returns correct cols", {
+  requirePackagesOrSkip("tsfeatures")
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 3:10), extr$desc)
+  expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
+  expect_equal(colnames(getTaskData(extr$task), functionals.as = "matrix"),
+    colnames(getTaskData(reextr, functionals.as = "matrix")))
 })
 
 

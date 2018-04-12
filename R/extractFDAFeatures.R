@@ -103,16 +103,20 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   # Apply function from x to all functional features and return as list of
   # lists for each functional feature.
   extracts = Map(function(x, fd.col) {
-    list(
+    lst = list(
       # feats are the extracted features
       feats = do.call(x$learn, c(x$args, list(data = obj, target = target, col = fd.col))),
       args = x$args, # Args passed to x$reextract
       reextract = x$reextract  # pass on reextraction learner for extraction in prediction
     )
+    # Append colnames of extracted features
+    lst$extracted_colnames = colnames(lst$feats)
+    return(lst)
   }, x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
+
   # Append Info relevant for reextraction to desc
-  desc$extractFDAFeat = lapply(extracts, function(x) {c(x["args"], x["reextract"])})
+  desc$extractFDAFeat = c(lapply(extracts, function(x) {c(x["args"], x["reextract"], x["extracted_colnames"])}))
 
   # Extract feats for every functional feature and cbind to data.frame
   vals = extractSubList(extracts, "feats", simplify = FALSE)
@@ -189,7 +193,9 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
   # reextract features using reextractDescription and return
   reextract = Map(
     function(xn, x, fd.col) {
-      do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col), x$args))
+      df = do.call(x$reextract, c(list(data = obj, target = desc$target, col = fd.col), x$args))
+      # Keep only extracted colnames
+      df[, x$extracted_colnames]
     },
     xn = names(desc$extractFDAFeat), x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
