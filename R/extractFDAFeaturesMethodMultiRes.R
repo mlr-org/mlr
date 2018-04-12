@@ -19,7 +19,8 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
   # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.
   getUniFDAMultiResFeatures = function(data, res.level, shift) {
     feat.list = apply(data, 1, getCurveFeatures, res.level = res.level, shift = shift)
-    data.frame(t(feat.list))
+    df = data.frame(t(feat.list))
+    return(df)
   }
 
   getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, curve.lens) {
@@ -35,7 +36,8 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
       # And return as vector
       unlist(subfeats)
     })
-    data.frame(t(feat.list))
+    df = data.frame(t(feat.list))
+    return(df)
   }
 
 
@@ -79,10 +81,12 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
     # subcurves from which the features are extracted
     if (is.null(curve.lens)) {
-      getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
+      df = getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
     } else {
-      getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
+      df = getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
     }
+    colnames(df) = stri_paste("multires", seq_len(ncol(df)), sep = ".")
+    return(df)
   }
   ps = makeParamSet(
     makeIntegerParam("res.level", lower = 1, upper = Inf),

@@ -363,7 +363,7 @@ test_that("benchmarking on fda tasks works", {
   lrns2 = list(makeLearner("regr.FDboost"), makeLearner("regr.rpart"), makeLearner("regr.featureless"))
   expect_message({bmr2 = benchmark(lrns2, fda.regr.fs.task, hout)}, "Functional features have been")
   expect_class(bmr2, "BenchmarkResult")
-  expect_equal(names(bmr2$results$fs.fdf), c("regr.fdaFDboost", "regr.rpart", "regr.featureless"))
+  expect_equal(names(bmr2$results$fs.fdf), c("regr.FDboost", "regr.rpart", "regr.featureless"))
   expect_numeric(as.data.frame(bmr2)$mse, lower = 0L, upper = Inf)
   expect_error(train(makeLearner("classif.fdausc.knn"), iris.task), "numeric inputs")
 })

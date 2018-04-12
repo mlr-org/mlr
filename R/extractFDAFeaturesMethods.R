@@ -127,7 +127,8 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
     paste0("d", c(2,4,6,8,10,12,14,16,18,20)),
     paste0("la", c(8,10,12,14,16,18,20)),
     paste0("bl", c(14,18,20)),
-    paste0("c", c(6,12,18,24,30))
+    paste0("c", c(6,12,18,24,30)),
+    "haar"
   )
   assertChoice(filter, filter.vals)
   assertChoice(boundary, c("periodic", "reflection"))

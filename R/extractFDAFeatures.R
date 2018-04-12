@@ -88,8 +88,9 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   # Overwrite the par.vals from ... so it is set correctly during tuning
   feat.args = list(...)
   desc$extractFDAFeat = Map(function(x) {
-    # Only set relevant params
-    feat.args = feat.args[names(feat.args) %in% getParamIds(x$par.set)]
+    if (!is.null(x$par.set))
+      # Only set relevant params
+      feat.args = feat.args[names(feat.args) %in% getParamIds(x$par.set)]
     if (length(feat.args) > 0)
       # Overwrite args
       x$args = feat.args

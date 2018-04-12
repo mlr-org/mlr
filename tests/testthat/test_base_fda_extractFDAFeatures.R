@@ -8,11 +8,12 @@ test_that("extractFDAFeatures", {
   expect_is(df, "data.frame")
   expect_equal(nrow(df), 129L)
   expect_subset(colnames(df), c(paste0("NIR.phase", seq_len(231)),
-    paste0("UVVIS.multires", seq_len(9)), "heatan", "h20"))
+    paste0("UVVIS.multires.", seq_len(9)), "heatan", "h20"))
 })
 
 test_that("extractFeatures multiple times", {
-  methods = list("UVVIS" = extractFDAMultiResFeatures(), "UVVIS" = extractFDAFourier(),
+  methods = list("UVVIS" = extractFDAMultiResFeatures(),
+    "UVVIS" = extractFDAFourier(),
     "NIR" = extractFDAMultiResFeatures())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
   # check output data
@@ -21,7 +22,7 @@ test_that("extractFeatures multiple times", {
   expect_true(nrow(df) == 129L)
   expect_true(ncol(df) == 154L)
   expect_subset(colnames(df), c("heatan", "h20", paste0("UVVIS.phase", seq_len(134)),
-    paste0("NIR.multires", seq_len(9)), paste0("UVVIS.multires", seq_len(9))))
+    paste0("NIR.multires.", seq_len(9)), paste0("UVVIS.multires.", seq_len(9))))
 
   methods = list("all" = extractFDAMultiResFeatures(), "all" = extractFDAFourier())
   t = extractFDAFeatures(fuelsubset.task, feat.methods = methods)
@@ -32,7 +33,7 @@ test_that("extractFeatures multiple times", {
   expect_true(ncol(df) == 385L)
   expect_subset(colnames(df),
     c("heatan", "h20",
-      paste0("UVVIS.multires", seq_len(9)), paste0("NIR.multires", seq_len(9)),
+      paste0("UVVIS.multires.", seq_len(9)), paste0("NIR.multires.", seq_len(9)),
       paste0("UVVIS.phase", seq_len(134)), paste0("NIR.phase", seq_len(231))))
 })
 
@@ -51,7 +52,7 @@ test_that("Wrong methods yield errors", {
 
   wrng1 = function() {
     lrn = function(data, target, col, vals = NULL) {1}
-    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng1())),
     "feat.method needs to return")
@@ -59,7 +60,7 @@ test_that("Wrong methods yield errors", {
 
   wrng2 = function() {
     lrn = function(data) {data[, 1]}
-    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn)
+    makeExtractFDAFeatMethod(learn = lrn, reextract = lrn, par.set = makeParamSet())
   }
   expect_error(extractFDAFeatures(t, feat.methods = list("NIR" = wrng2())),
     "Must have formal arguments")
@@ -148,7 +149,7 @@ test_that("Wavelet method are equal to package", {
     unlist(c(wt@W, wt@V[[wt@level]]))
   }))
   df = as.data.frame(wtdata)
-  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)))
+  colnames(df) = stringi::stri_paste("wav", "haar", seq_len(ncol(wtdata)), sep = ".")
 
   expect_equal(nrow(wavelets.gp), nrow(gp$data))
   expect_equal(wavelets.gp, df)
