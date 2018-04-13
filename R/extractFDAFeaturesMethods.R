@@ -264,6 +264,8 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #' @description
 #' The function extracts features from functional data based on known Heuristics.
 #' For more details refer to \code{\link[tsfeatures]{tsfeatures}}.
+#' Under the hood this function uses the package \code{\link[tsfeatures]{tsfeatures}}
+#' For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #'
 #' @param scale [\code{boolean}]\cr
 #'   If TRUE, time series are scaled to mean 0 and sd 1 before features are computed.

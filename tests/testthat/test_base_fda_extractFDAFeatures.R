@@ -333,3 +333,10 @@ test_that("extraction returns correct cols", {
 })
 
 
+test_that("extract and reextract have correct args", {
+  lrn = makeExtractFDAFeatsWrapper("regr.rpart", feat.methods = list("all" = extractFDAFourier()))
+  mod = train(setHyperPars(lrn, trafo.coeff = "amplitude"), subsetTask(fuelsubset.task, subset = 1:20))
+  prd = predict(mod, subsetTask(fuelsubset.task, subset = 21:40))
+  expect_equal(mod$learner.model$control$extractFDAFeat$UVVIS$args$trafo.coeff, "amplitude")
+  expect_equal(mod$learner.model$control$extractFDAFeat$NIR$args$trafo.coeff, "amplitude")
+})
