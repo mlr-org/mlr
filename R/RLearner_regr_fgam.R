@@ -35,7 +35,7 @@ trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtr
   m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
-  formmat = getFGAMFormulaMat(m, targetname = tn, fns = fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
+  formmat = getFGAMFormulaMat(mdata = m, targetname = tn, fns = fns, d = d, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
   refund::pfr(formula = formmat$form, data = formmat$mat.list, family = gaussian())
 }
 

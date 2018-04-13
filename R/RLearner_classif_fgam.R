@@ -32,21 +32,21 @@ makeRLearner.classif.fgam = function() {
 trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
   parlist = list(...)  #FIXME: currently this is not used, will be implemented in future version
   suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
-  m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
-
   # tranform target to be 0 1
   vt = getTaskTargets(.task)
   uvt = unique(vt)
-  dd = getTaskData(.task, target.extra = TRUE)
+  dd = getTaskData(.task, target.extra = TRUE, functionals.as = "matrix")
   newtarget = sapply(dd$target, function(x) {if(x == uvt[1]) return(1); return(0)})
   nd = cbind(dd$data, newtarget)
   colnames(nd)[ncol(nd)] = tn
   ##
-  formmat = getFGAMFormulaMat(m = nd, tn, fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
+  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, d = d, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
   family = binomial()
-  refund::pfr(formula = formmat$form, data = formmat$mat.list, family = family)
+  formula = formmat$form
+  data = formmat$mat.list
+  refund::pfr(formula = formula, data = data, family = family)
 }
 
 #' @export

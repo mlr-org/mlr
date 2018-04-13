@@ -1,13 +1,13 @@
 # helper for fgam regression and classification
-getFGAMFormulaMat = function(m, targetname, fns, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
+getFGAMFormulaMat = function(mdata, targetname, fns, d, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
   formula.terms = namedList()
   mat.list = namedList(fns)
   # Treat functional covariates
-  if (hasFunctionalFeatures(m)) {
-    fdns = colnames(getFunctionalFeatures(m))
+  if (hasFunctionalFeatures(mdata)) {
+    fdns = colnames(getFunctionalFeatures(mdata))
     # later on, the grid elements in mat.list should have suffix ".grid"
     fdg = namedList(fdns)
-    fd.grids = lapply(fdns, function(name) seq_len(ncol(m[, name])))
+    fd.grids = lapply(fdns, function(name) seq_len(ncol(mdata[, name])))
     names(fd.grids) = fdns
     fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
@@ -20,7 +20,7 @@ getFGAMFormulaMat = function(m, targetname, fns, Qtransform = TRUE, mgcv.s.k = -
       # ... create a corresponding grid name
       gn = stri_paste(fdn, ".grid")
       # ... extract the corresponding original data into a list of matrices
-      mat.list[[fdn]] = m[, fdn]
+      mat.list[[fdn]] = mdata[, fdn]
       # ... create a formula item
       # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), while refund::lf means linear Model (FLM)
       formula.terms[fdn] = switch(basistype,
@@ -33,6 +33,7 @@ getFGAMFormulaMat = function(m, targetname, fns, Qtransform = TRUE, mgcv.s.k = -
     stop("fgam does not support soley non-functional data")  # !hasFunctionalFeatures(m)
   }
   # add target names
+  mat.list[[targetname]] = d[, targetname]
   # Create the formula and train the model
   form = as.formula(sprintf("%s~%s", targetname, collapse(unlist(formula.terms), "+")))
   return(list(form = form, mat.list = mat.list))
