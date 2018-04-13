@@ -27,5 +27,8 @@ test_that("fgam works for classifcation", {
   lrn = makeLearner("classif.fgam", par.vals = list(mgcv.te_ti.k = 3L, mgcv.te_ti.m = 2))
   m = train(lrn, gunpoint.task)
   cp = predict(m, task = gunpoint.task)
+  # prob output
+  lrn = makeLearner("classif.fgam", par.vals = list(mgcv.te_ti.k = 3L, mgcv.te_ti.m = 2), predict.type = "prob")
+  m = train(lrn, gunpoint.task)
   expect_true(TRUE)
 })

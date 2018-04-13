@@ -19,7 +19,7 @@ makeRLearner.classif.FDboost = function() {
       makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
     ),
     par.vals = list(family = "Binomial"),
-    properties = c("functionals", "numerics", "twoclass"),
+    properties = c("functionals", "numerics", "twoclass", "prob"),
     name = "Functional linear array classification boosting",
     short.name = "FDboost",
     note = "Only allow one base learner for functional covariate and one base learner for scalar covariate, the parameters for these base learners are the same. Also we currently do not support interaction between scalar covariates"
