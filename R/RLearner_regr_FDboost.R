@@ -3,7 +3,7 @@ makeRLearner.regr.FDboost = function() {
   makeRLearnerRegr(
     cl = "regr.FDboost",
     package = c("FDboost", "mboost"),
-    par.set = fdboostps,
+    par.set = FDboostRegrPs,
     properties = c("numerics", "functionals"),
     name = "Functional linear array regression boosting",
     short.name = "FDboost",
@@ -16,7 +16,7 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
   knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L,
   nu = 0.1, family = "Gaussian", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
 
-  family = switch(family,
+  family = switch(family,  # no binomial family
     Gaussian = mboost::Gaussian(),
     Laplace = mboost::Laplace(),
     Huber = mboost::Huber(d),

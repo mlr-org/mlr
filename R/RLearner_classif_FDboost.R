@@ -27,9 +27,7 @@ makeRLearner.classif.FDboost = function() {
 }
 
 #' @export
-trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L,
-  knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, Binomial.link = "logit",
-  nu = 0.1, family = "Binomial", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
+trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NULL, mstop = 100L, knots = 10L, df = 4L, bsignal.check.ident = FALSE, degree = 3L, differences = 1L, Binomial.link = "logit", nu = 0.1, family = "Binomial", custom.family.definition = NULL, nuirange = c(0, 100), d = NULL, ...) {
 
   family = switch(family,
     Binomial = mboost::Binomial(link = Binomial.link),
@@ -37,7 +35,6 @@ trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NUL
     AUC = mboost::AUC(),
     #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
-
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   hh = getFDboostFormulaMat(.task, knots = knots, df = df, bsignal.check.ident = bsignal.check.ident, degree = degree, differences = differences)
   FDboost::FDboost(formula = hh$form, timeformula = ~bols(1), data = hh$mat.list, control = ctrl, family = family)
