@@ -53,3 +53,11 @@ fgamParaSet = makeParamSet(
       makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     )
 
+getBinomialTarget = function(.task)  {
+  vt = getTaskTargets(.task)
+  uvt = unique(vt)
+  dd = getTaskData(.task, target.extra = TRUE, functionals.as = "matrix")
+  newtarget = sapply(dd$target, function(x) {if(x == uvt[1]) return(1); return(0)})
+  return(list(newtarget = newtarget, uvt = uvt))
+}
+
