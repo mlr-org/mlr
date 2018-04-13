@@ -1,5 +1,5 @@
 # helper for fgam regression and classification
-getFGAMFormulaMat = function(mdata, targetname, fns, d, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
+getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
   formula.terms = namedList()
   mat.list = namedList(fns)
   # Treat functional covariates
@@ -33,9 +33,23 @@ getFGAMFormulaMat = function(mdata, targetname, fns, d, Qtransform = TRUE, mgcv.
     stop("fgam does not support soley non-functional data")  # !hasFunctionalFeatures(m)
   }
   # add target names
-  mat.list[[targetname]] = d[, targetname]
+  mat.list[[targetname]] = mdata[, targetname]
   # Create the formula and train the model
   form = as.formula(sprintf("%s~%s", targetname, collapse(unlist(formula.terms), "+")))
   return(list(form = form, mat.list = mat.list))
 }
+
+fgamParaSet = makeParamSet(
+      makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
+      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
+      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # mgcv::s:bs "tp"’ for thin plate regression spline, ‘"cr"’ for cubic regression spline
+      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),  # mgcv::s:m The order of the penalty for this term, default: let mgcv choose. The original default is NA but mlr will generate warnings for this.
+      makeIntegerVectorLearnerParam(id = "mgcv.te_ti.m", lower = 1L, default = NA, special.vals = list(NA)),  # The order of the spline and its penalty (for smooth classes that use this) for each term.
+      makeIntegerVectorLearnerParam(id = "mgcv.te_ti.k", lower = 1L, default = NA, special.vals = list(NA)),  # the dimension(s) of the bases used to represent the smooth term.  If not supplied then set to ‘5^d’.
+      # skipped: argvals(indices of evaluation of ‘X’)
+      makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
+      # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)), # FIXME: currently not used in train
+      # FIXME: skipped args: presmooth.opts, Xrange
+      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
+    )
 

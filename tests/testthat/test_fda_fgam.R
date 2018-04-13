@@ -1,5 +1,5 @@
 # Be carefull that one need to change the columns name again after cbine several matrix
-context("FDA_regr_fgam")
+context("FDA_regrclassif_fgam")
 test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   requirePackagesOrSkip("refund")
   data(DTI)
@@ -13,11 +13,13 @@ test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   task = makeRegrTask(data = fdf, target = "pasat")
   mod1f = train(learner = lrn, task = task)
   prd_mlr = predict(object = mod1f, newdata = fdf)
-  all.equal(as.numeric(prd_refund), prd_mlr$data$response)
+  res = all.equal(as.numeric(prd_refund), prd_mlr$data$response)
+  expect_true(res)
 })
 
 test_that("fgam works for clasisifcation", {
   lrn = makeLearner("classif.fgam", par.vals = list(mgcv.te_ti.k = 7L, mgcv.te_ti.m = 2))
   m = train(lrn, gunpoint.task)
   cp = predict(m, task = gunpoint.task)
+  expect_true(TRUE)
 })

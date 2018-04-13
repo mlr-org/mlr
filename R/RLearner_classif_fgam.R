@@ -9,19 +9,7 @@ makeRLearner.classif.fgam = function() {
   makeRLearnerClassif(
     cl = "classif.fgam",
     package = "refund",
-    par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
-      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
-      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # mgcv::s:bs "tp"’ for thin plate regression spline, ‘"cr"’ for cubic regression spline
-      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, default = NA, special.vals = list(NA)),  # mgcv::s:m The order of the penalty for this term, default: let mgcv choose
-      makeIntegerVectorLearnerParam(id = "mgcv.te_ti.m", lower = 1L, default = NA, special.vals = list(NA)),  # The order of the spline and its penalty (for smooth classes that use this) for each term.
-      makeIntegerVectorLearnerParam(id = "mgcv.te_ti.k", lower = 1L, default = NA, special.vals = list(NA)),  # the dimension(s) of the bases used to represent the smooth term.  If not supplied then set to ‘5^d’.
-      # skipped: argvals(indices of evaluation of ‘X’)
-      makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
-      # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)), # FIXME: currently not used in train
-      # FIXME: skipped args: presmooth.opts, Xrange
-      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
-    ),
+    par.set = fgamParaSet,
     properties = c("functionals", "numerics", "twoclass"),
     name = "functional general additive model",
     short.name = "FGAM"
@@ -42,7 +30,7 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
   nd = cbind(dd$data, newtarget)
   colnames(nd)[ncol(nd)] = tn
   ##
-  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, d = nd, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
+  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
   formula = formmat$form
   data = formmat$mat.list
   mod = refund::pfr(formula = formula, data = data, family = binomial())
@@ -54,7 +42,7 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
 predictLearner.classif.fgam = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
-  pred = predict(.model$learner.model, newdata = nl, type = 'prob')
+  pred = predict(.model$learner.model, newdata = nl, type = 'response')  # predict.fgam, predict.gam, predict.pfr
   uvt = .model$learner.model$uvt
   newpred = round(pred)
   newpred = sapply(newpred, function(x) {if(x == 1) return(uvt[1]); return(uvt[2])})
