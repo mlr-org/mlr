@@ -43,6 +43,7 @@ predictLearner.classif.fgam = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
   pred = predict(.model$learner.model, newdata = nl, type = 'response')  # predict.fgam, predict.gam, predict.pfr
+  # FIXME: have prob and responde output both? Note the response in predict.fgam means actually probability
   uvt = .model$learner.model$uvt
   newpred = round(pred)
   newpred = sapply(newpred, function(x) {if(x == 1) return(uvt[1]); return(uvt[2])})
