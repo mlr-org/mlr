@@ -5,11 +5,11 @@ test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   data(DTI)
   DTI1 = DTI[DTI$visit == 1 & complete.cases(DTI),]  # subset a portion of the data(complete.cases select non missing value rows)
   # DTI1 is already a matrix dataframe, Fit model with additive functional term for functional feature cca, using tensor product basis
-  fit.af = refund::pfr(formula = pasat ~ af(cca, Qtransform=TRUE, k=c(7,7)), data = DTI1)
+  fit.af = refund::pfr(formula = pasat ~ af(cca, Qtransform = TRUE, k = 7, m = 2), data = DTI1)
   prd_refund = predict(fit.af, newdata = DTI1, type = 'response')
   df = data.frame(as.list(DTI1[, c("pasat", "cca")]))  # makeFunctionalData require plain dataframe
   fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94))  # dim(DTI1$cca) = (66,93)
-  lrn = makeLearner("regr.fgam")
+  lrn = makeLearner("regr.fgam", Qtransform = TRUE, mgcv.te_ti.k = 7, mgcv.te_ti.m = 2)
   task = makeRegrTask(data = fdf, target = "pasat")
   mod1f = train(learner = lrn, task = task)
   prd_mlr = predict(object = mod1f, newdata = fdf)
