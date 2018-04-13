@@ -42,18 +42,23 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
   nd = cbind(dd$data, newtarget)
   colnames(nd)[ncol(nd)] = tn
   ##
-  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, d = d, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
-  family = binomial()
+  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, d = nd, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
   formula = formmat$form
   data = formmat$mat.list
-  refund::pfr(formula = formula, data = data, family = family)
+  mod = refund::pfr(formula = formula, data = data, family = binomial())
+  mod$uvt = uvt
+  mod
 }
 
 #' @export
 predictLearner.classif.fgam = function(.learner, .model, .newdata, ...) {
   assert(hasFunctionalFeatures(.newdata))
   nl = as.list(.newdata)
-  pred = predict(.model$learner.model, newdata = nl, type = 'response')
-  return(as.vector(pred))
+  pred = predict(.model$learner.model, newdata = nl, type = 'prob')
+  uvt = .model$learner.model$uvt
+  newpred = round(pred)
+  newpred = sapply(newpred, function(x) {if(x == 1) return(uvt[1]); return(uvt[2])})
+  newpred = as.factor(newpred)
+  return(newpred)
 }
 

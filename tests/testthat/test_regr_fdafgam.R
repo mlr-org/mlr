@@ -19,5 +19,5 @@ test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
 test_that("fgam works for clasisifcation", {
   lrn = makeLearner("classif.fgam", par.vals = list(mgcv.te_ti.k = 7L, mgcv.te_ti.m = 2))
   m = train(lrn, gunpoint.task)
-  cp = predict(m, newdata = gunpoint.task)
+  cp = predict(m, task = gunpoint.task)
 })
