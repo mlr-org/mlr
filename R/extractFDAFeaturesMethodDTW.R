@@ -24,7 +24,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
   # curves
   getDtwDist = function(frow, refs, dtwwindow) {
     # Compute dtw distance from the selected row to each reference row
-    row = vnapply(seq_len(nrow(refs)), function(i) ucrdtw_vv(frow, refs[i,], dtwwindow)$distance)
+    row = vnapply(seq_len(nrow(refs)), function(i) rucrdtw::ucrdtw_vv(frow, refs[i, ], dtwwindow)$distance)
     return(row)
   }
   lrn = function(data, target = NULL, col, ref.method, n.refs, refs, dtwwindow) {
@@ -45,10 +45,10 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
     refs = data[refs, ]
     }
 
-    feats_dtw = t(apply(data, 1L, function(x) getDtwDist(x, refs, dtwwindow)))
+    feats.dtw = t(apply(data, 1L, function(x) getDtwDist(x, refs, dtwwindow)))
 
     # Add more legible column names to the output
-    df = as.data.frame(feats_dtw)
+    df = as.data.frame(feats.dtw)
     colnames(df) = stri_paste("dtw", seq_len(ncol(df)), sep = ".")
     return(df)
   }
