@@ -10,7 +10,7 @@ makeRLearner.regr.fgam = function() {
     cl = "regr.fgam",
     package = "refund",
     par.set = fgamParaSet,
-    properties = c("numerics"),
+    properties = c("functionals", "single.functional"),
     name = "functional general additive model",
     short.name = "FGAM"
   )

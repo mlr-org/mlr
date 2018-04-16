@@ -24,8 +24,10 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
       # ... create a formula item
       # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), while refund::lf means linear Model (FLM)
       formula.terms[fdn] = switch(basistype,
-        "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')", fdn, basistype, Qtransform, mgcv.s.k, mgcv.s.bs, integration),
-        "te" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')", fdn, basistype, Qtransform, mgcv.te_ti.k, mgcv.te_ti.m, integration))
+        "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",
+          fdn, basistype, Qtransform, mgcv.s.k, mgcv.s.bs, integration),
+        "te" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
+          fdn, basistype, Qtransform, mgcv.te_ti.k, mgcv.te_ti.m, integration))
     }
     # add grid names
     mat.list = c(mat.list, fdg)

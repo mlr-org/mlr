@@ -10,7 +10,7 @@ makeRLearner.classif.fgam = function() {
     cl = "classif.fgam",
     package = "refund",
     par.set = fgamParaSet,
-    properties = c("functionals", "numerics", "twoclass", "prob"),
+    properties = c("functionals", "single.functional", "twoclass", "prob"),
     name = "functional general additive model",
     short.name = "FGAM"
   )
