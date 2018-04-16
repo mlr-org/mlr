@@ -42,7 +42,6 @@ trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
-  assert(hasFunctionalFeatures(.newdata))
   type = ifelse(.learner$predict.type == "response", "class", "response")  # additional parameters passed to mboost::predict(), in mboost, "response" returns probabilities and "class" returns the predicted class
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
   if (.learner$predict.type  == "prob") {
