@@ -48,7 +48,7 @@ trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, k
   }
   keep.inbag = if (is.null(keep.inbag)) FALSE else keep.inbag
   keep.inbag = if (.learner$predict.type == "se") TRUE else keep.inbag
-  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset), 
+  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
                  case.weights = .weights, keep.inbag = keep.inbag, mtry = mtry, ...)
 }
 
