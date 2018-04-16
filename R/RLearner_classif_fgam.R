@@ -9,7 +9,7 @@ makeRLearner.classif.fgam = function() {
   makeRLearnerClassif(
     cl = "classif.fgam",
     package = "refund",
-    par.set = fgamParaSet,
+    par.set = fgam.ps,
     properties = c("functionals", "single.functional", "twoclass", "prob"),
     name = "functional general additive model",
     short.name = "FGAM"
@@ -17,7 +17,7 @@ makeRLearner.classif.fgam = function() {
 }
 
 #' @export
-trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
+trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA ,basistype = "te", integration = "simpson", ...) {
   parlist = list(...)  #FIXME: currently this is not used, will be implemented in future version
   suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
   tn = getTaskTargetNames(.task)
@@ -26,7 +26,7 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
   vt = getTaskTargets(.task)
   uvt = unique(vt)
   dd = getTaskData(.task, target.extra = TRUE, functionals.as = "matrix")
-  newtarget = sapply(dd$target, function(x) {if(x == uvt[1]) return(1); return(0)})
+  newtarget = sapply(dd$target, function(x) {if (x == uvt[1]) return(1); return(0)})
   nd = cbind(dd$data, newtarget)
   colnames(nd)[ncol(nd)] = tn
   ##

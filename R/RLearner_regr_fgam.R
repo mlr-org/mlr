@@ -17,7 +17,7 @@ makeRLearner.regr.fgam = function() {
 }
 
 #' @export
-trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
+trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA ,basistype = "te", integration = "simpson", ...) {
   parlist = list(...)  #FIXME: currently this is not used, will be implemented in future version
   suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
   m = getTaskData(.task, functionals.as = "matrix")

@@ -1,5 +1,5 @@
 # helper for fgam regression and classification
-getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA , basistype = "te", integration = "simpson", ...) {
+getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
   formula.terms = namedList()
   mat.list = namedList(fns)
   # Treat functional covariates
@@ -41,7 +41,7 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
   return(list(form = form, mat.list = mat.list))
 }
 
-fgamParaSet = makeParamSet(
+fgam.ps = makeParamSet(
       makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
       makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
       makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # mgcv::s:bs "tp"’ for thin plate regression spline, ‘"cr"’ for cubic regression spline
@@ -59,11 +59,11 @@ getBinomialTarget = function(.task)  {
   vt = getTaskTargets(.task)
   uvt = unique(vt)
   dd = getTaskData(.task, target.extra = TRUE, functionals.as = "matrix")
-  newtarget = sapply(dd$target, function(x) {if(x == uvt[1]) return(1); return(0)})
+  newtarget = sapply(dd$target, function(x) {if (x == uvt[1]) return(1); return(0)})
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
-FDboostRegrPs = makeParamSet(
+FDboost.ps = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),

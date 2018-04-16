@@ -240,9 +240,9 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
     data = as.matrix(data[, col, drop = FALSE])
     assertNumeric(data)
     blrn = FDboost::bsignal(x = data, s = 1:ncol(data), knots = bsignal.knots, degree = bsignal.df)
-    feats_bsignal = mboost::extract(object = blrn, what = "design")  # get the design matrix of the base learner
+    feats.bsignal = mboost::extract(object = blrn, what = "design")  # get the design matrix of the base learner
     # Add more legible column names to the output
-    df = as.data.frame(feats_bsignal)
+    df = as.data.frame(feats.bsignal)
     colnames(df) = stri_paste("bsig", seq_len(ncol(df)), sep = ".")
     df
   }
@@ -297,21 +297,21 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     data = as.matrix(data[, col, drop = FALSE])
     assertNumeric(data)
     # Convert to list of rows
-    row_lst = as.list(data.frame(t(data)))
+    row.lst = as.list(data.frame(t(data)))
 
     # We do not compute heterogeneity, hw_parameters
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
       "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
       "max_kl_shift", "max_var_shift", "max_level_shift", "stability", "nonlinearity")
 
-    tsfeats = tsfeatures::tsfeatures(row_lst, features = feats)
+    tsfeats = tsfeatures::tsfeatures(row.lst, features = feats)
 
     # Get rid of series and type columns
     tsfeats = data.frame(lapply(tsfeats, as.numeric))
     # Get rid of constant features
-    const_feats = which(viapply(tsfeats, function(x) length(unique(x))) == 1L)
+    const.feats = which(viapply(tsfeats, function(x) length(unique(x))) == 1L)
 
-    return(as.data.frame(tsfeats[, - const_feats]))
+    return(as.data.frame(tsfeats[, - const.feats]))
   }
   ps = makeParamSet(
     makeLogicalParam("scale", default = TRUE),
