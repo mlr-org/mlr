@@ -17,13 +17,12 @@ makeRLearner.regr.fgam = function() {
 }
 
 #' @export
-trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA ,basistype = "te", integration = "simpson", ...) {
-  parlist = list(...)  #FIXME: currently this is not used, will be implemented in future version
-  suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
+trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
+  #FIXME: currently this is not used parlist = list(...), will be implemented in future version
   m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
-  formmat = getFGAMFormulaMat(mdata = m, targetname = tn, fns = fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
+  formmat = getFGAMFormulaMat(mdata = m, targetname = tn, fns = fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k, basistype = basistype, integration = integration, ...)
   refund::pfr(formula = formmat$form, data = formmat$mat.list, family = gaussian())
 }
 
