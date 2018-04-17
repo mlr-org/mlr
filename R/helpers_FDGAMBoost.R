@@ -1,5 +1,5 @@
 # helper for fgam regression and classification
-getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
+getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
   formula.terms = namedList()
   mat.list = namedList(fns)
   # Treat functional covariates
@@ -13,7 +13,6 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
     # also setup charvec of formula terms for func covars
     mat.list = namedList(fdns)
-    #formula.terms = setNames(character(length = fdns))
     formula.terms = namedList(fdns)
     # for each functional covariate
     for (fdn in fdns) {
@@ -23,16 +22,16 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
       mat.list[[fdn]] = mdata[, fdn]
       # ... create a formula item
       # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), while refund::lf means linear Model (FLM)
-      formula.terms[fdn] = switch(basistype,
+      formula.terms[fdn] = switch(parlist$basistype,
         "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",
-          fdn, basistype, Qtransform, mgcv.s.k, mgcv.s.bs, integration),
+          fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
         "te" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
-          fdn, basistype, Qtransform, mgcv.te_ti.k, mgcv.te_ti.m, integration))
+          fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$mgcv.te_ti.m, parlist$integration))
     }
     # add grid names
     mat.list = c(mat.list, fdg)
   } else {
-    stop("fgam does not support soley non-functional data")  # !hasFunctionalFeatures(m)
+    stop("fgam does not support soley non-functional data")
   }
   # add target names
   mat.list[[targetname]] = mdata[, targetname]
@@ -40,6 +39,7 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
   form = as.formula(sprintf("%s~%s", targetname, collapse(unlist(formula.terms), "+")))
   return(list(form = form, mat.list = mat.list))
 }
+
 
 fgam.ps = makeParamSet(
       makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
@@ -54,6 +54,8 @@ fgam.ps = makeParamSet(
       # FIXME: skipped args: presmooth.opts, Xrange
       makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     )
+
+fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE)
 
 getBinomialTarget = function(.task)  {
   vt = getTaskTargets(.task)
