@@ -70,7 +70,7 @@ getBinomialTarget = function(.task)  {
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
-FDboost.ps = makeParamSet(
+FDboostRegrPs = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
@@ -88,13 +88,10 @@ FDboost.ps = makeParamSet(
     )
 
 getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, differences) {
-suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
   tdata = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
-
   formula.terms = namedList()
   mat.list = namedList(getTaskFeatureNames(.task))
-
   # Treat functional covariates
   if (hasFunctionalFeatures(tdata)) {
     fdns = colnames(getFunctionalFeatures(tdata))
@@ -126,14 +123,14 @@ suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
 
   # Add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
   for (fsn in setdiff(colnames(tdata), c(fdns, tn))) {
-    mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
+    mat.list[[fsn]] = as.vector(as.matrix(tdata[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
       fsn, knots, df, degree, differences)
   }
 
 
   # add target names
-  mat.list[[tn]] = d[, tn]
+  mat.list[[tn]] = tdata[, tn]
 
   # Create the formula and train the model
   form = as.formula(sprintf("%s ~ %s", tn, collapse(unlist(formula.terms), "+")))

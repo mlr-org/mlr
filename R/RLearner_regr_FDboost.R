@@ -35,4 +35,5 @@ trainLearner.regr.FDboost = function(.learner, .task, .subset, .weights = NULL, 
 predictLearner.regr.FDboost = function(.learner, .model, .newdata, ...) {
   nl = as.list(.newdata)
   prd = predict(object = .model$learner.model, newdata = nl, which = NULL)
+  prd
 }
