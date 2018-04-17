@@ -31,7 +31,7 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
 })
 
 
-test_that("extractFDAFeaturesWrapper ParSet Works", {
+test_that("extractFDAFeaturesWrapper ParSet Works II", {
   methods = list("fd1" = extractFDAFourier())
   lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
   ps = getLearnerParamSet(lrn)
@@ -46,5 +46,17 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   colnames(df) = c("target", "fd1")
   df$target = as.factor(round(df$target/10, 0))
   mod = tuneParams(lrn, makeClassifTask(data = df, target = "target"), cv2, acc, ps2, makeTuneControlGrid(resolution = 2L))
+})
+
+
+test_that("extractFDAFeaturesWrapper ParSet Works", {
+  methods = list("fd" = extractFDATsfeatures())
+  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
+  ps = makeParamSet(
+    makeNumericParam("eta", lower = 0.0001, upper = 0.3),
+    makeLogicalParam("scale", default = TRUE))
+  lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
+
+  train(lrn, subsetTask(gunpoint.task, subset = 1:30))
 })
 

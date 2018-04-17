@@ -267,7 +267,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #' Under the hood this function uses the package \code{\link[tsfeatures]{tsfeatures}}
 #' For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #'
-#' @param scale [\code{boolean}]\cr
+#' @param tsfeatures.scale [\code{boolean}]\cr
 #'   If TRUE, time series are scaled to mean 0 and sd 1 before features are computed.
 #' @param trim [\code{boolean}]\cr
 #'   If TRUE, time series are trimmed by \code{trim_amount} before features are computed.
@@ -284,10 +284,10 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
-extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
-  lrn = function(data, target = NULL, col, scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
+extractFDATsfeatures = function(tsfeatures.scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
+  lrn = function(data, target = NULL, col, tsfeatures.scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
     assertClass(data, "data.frame")
-    assertLogical(scale)
+    assertLogical(tsfeatures.scale)
     assertLogical(trim)
     assertLogical(parallel)
     assertNumeric(trim_amount)
@@ -299,6 +299,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     # Convert to list of rows
     row.lst = as.list(data.frame(t(data)))
 
+    requirePackages("tsfeatures", why = "time-series feature extraction")
     # We do not compute heterogeneity, hw_parameters
     feats = c("frequency", "stl_features", "entropy", "acf_features", "arch_stat",
       "crossing_points", "flat_spots", "hurst",  "holt_parameters", "lumpiness",
@@ -311,10 +312,10 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
     # Get rid of constant features
     const.feats = which(viapply(tsfeats, function(x) length(unique(x))) == 1L)
 
-    return(as.data.frame(tsfeats[, - const.feats]))
+    return(tsfeats[, - const.feats])
   }
   ps = makeParamSet(
-    makeLogicalParam("scale", default = TRUE),
+    makeLogicalParam("tsfeatures.scale", default = TRUE),
     makeLogicalParam("trim", default = FALSE),
     makeNumericParam("trim_amount", lower = 0L, upper = 1L, default = 0.1),
     makeLogicalParam("parallel", default = FALSE),
@@ -323,7 +324,7 @@ extractFDATsfeatures = function(scale = TRUE, trim = FALSE, trim_amount = 0.1, p
   makeExtractFDAFeatMethod(
     learn = lrn,
     reextract = lrn,
-    args = list(scale = scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
+    args = list(tsfeatures.scale = tsfeatures.scale, trim = trim, trim_amount = trim_amount, parallel = parallel, na.action = na.action, ...),
     par.set = ps
   )
 }

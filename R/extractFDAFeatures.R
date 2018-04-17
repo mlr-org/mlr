@@ -117,6 +117,7 @@ extractFDAFeatures.data.frame = function(obj, target = character(0L), feat.metho
   }, x = desc$extractFDAFeat, fd.col = desc$fd.cols)
 
 
+
   # Append Info relevant for reextraction to desc
   desc$extractFDAFeat = c(lapply(extracts, function(x) {c(x["args"], x["reextract"], x["extracted_colnames"])}))
 
