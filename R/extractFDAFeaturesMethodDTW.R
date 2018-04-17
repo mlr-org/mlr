@@ -56,7 +56,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
   ps = makeParamSet(
     makeDiscreteParam(id = "ref.method", default = "random", values = c("random", "all", "fixed")),
     makeNumericParam(id = "n.refs", lower = 0, upper = 1),
-    makeUntypedParam(id = "refs"),
+    makeUntypedParam(id = "refs", default = NULL),
     makeNumericParam(id = "dtwwindow", lower = 0, upper = 1)
   )
 
