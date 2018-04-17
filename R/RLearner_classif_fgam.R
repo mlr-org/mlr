@@ -17,9 +17,10 @@ makeRLearner.classif.fgam = function() {
 }
 
 #' @export
-trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA ,basistype = "te", integration = "simpson", ...) {
+trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
   parlist = list(...)  #FIXME: currently this is not used, will be implemented in future version
-  suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
+  suppressMessages({
+    d = getTaskData(.task, functionals.as = "dfcols")})
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
   # tranform target to be 0 1
@@ -30,7 +31,7 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
   nd = cbind(dd$data, newtarget)
   colnames(nd)[ncol(nd)] = tn
   ##
-  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k , basistype = basistype, integration = integration, ...)
+  formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, Qtransform = Qtransform, mgcv.s.k = mgcv.s.k, mgcv.s.bs = mgcv.s.bs, mgcv.s.m = mgcv.s.m, mgcv.te_ti.m = mgcv.te_ti.m, mgcv.te_ti.k = mgcv.te_ti.k, basistype = basistype, integration = integration, ...)
   formula = formmat$form
   data = formmat$mat.list
   mod = refund::pfr(formula = formula, data = data, family = binomial())
