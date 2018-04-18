@@ -20,9 +20,7 @@ By default \code{NULL} if all observations are used.}
 
 \item{weights}{(\link{numeric})\cr
 Optional, non-negative case weight vector to be used during fitting.
-If given, must be of same length as \code{subset} and in corresponding order.
-By default \code{NULL} which means no weights are used unless specified in the task (\link{Task}).
-Weights from the task will be overwritten.}
+If given, must be of same length as \code{subset} and in corresponding order.}
 }
 \value{
 (\link{WrappedModel}).
