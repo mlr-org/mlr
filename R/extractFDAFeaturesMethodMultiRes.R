@@ -29,6 +29,8 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
     clsum = cumsum(seg.lens)
     feat.list = apply(data, 1, function(x) {
       # Extract the data from the different subcurves specified by seg.lens
+      # the start of the seg is clsum - seg.lens + 1, the end of the seg is cumsum(seg.lens)
+      # ex: seg.lens = c(2, 3, 4), clsum = c(2, 5, 9), clsum - seg.lens +1 = 1, 3, 6
       subfeats = Map(function(seqstart, seqend) {
         getCurveFeatures(x[seqstart:seqend], res.level = res.level, shift = shift)
       }, clsum - seg.lens + 1, cumsum(seg.lens))
@@ -43,7 +45,6 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
   #  Get Features from a single (sub-)curve
   getCurveFeatures = function(x, res.level = 3L, shift = 0.5) {
     m = length(x)
-    start = 1L
     feats = numeric(0L)
     ssize = m  # initialize segment size to be the length of the curve
     for (rl in 1:res.level) {
