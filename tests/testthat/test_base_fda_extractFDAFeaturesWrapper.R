@@ -56,7 +56,7 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
     makeNumericParam("eta", lower = 0.0001, upper = 0.3),
     makeLogicalParam("tsfeatures.scale", default = TRUE))
   lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
-
-  train(lrn, subsetTask(gunpoint.task, subset = 1:30))
+  suppressWarnings(train(lrn, subsetTask(gunpoint.task, subset = 2:30)))
+  expect_true(TRUE)
 })
 

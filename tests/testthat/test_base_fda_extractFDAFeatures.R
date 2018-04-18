@@ -327,7 +327,7 @@ test_that("extraction returns correct cols", {
   extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 3:10), extr$desc)
   expect_equal(extr$task$task.desc$n.feat, reextr$task.desc$n.feat)
-  expect_equal(colnames(getTaskData(extr$task), functionals.as = "matrix"),
+  expect_equal(colnames(getTaskData(extr$task, functionals.as = "matrix")),
     colnames(getTaskData(reextr, functionals.as = "matrix")))
 })
 
