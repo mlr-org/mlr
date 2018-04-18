@@ -9,8 +9,6 @@
 #' @param weights ([numeric])\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as `subset` and in corresponding order.
-#'   By default `NULL` which means no weights are used unless specified in the task ([Task]).
-#'   Weights from the task will be overwritten.
 #' @return ([WrappedModel]).
 #' @export
 #' @seealso [predict.WrappedModel]

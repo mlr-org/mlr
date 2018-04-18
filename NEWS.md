@@ -1,5 +1,7 @@
 # mlr 2.12:
 
+- some fake news changes
+
 ## general
 * Support for functional data (fda) using matrix columns has been added.
 * Relaxed the way wrappers can be nested -- the only explicitly forbidden
