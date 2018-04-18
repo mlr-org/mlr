@@ -54,9 +54,16 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
   ps = makeParamSet(
     makeNumericParam("eta", lower = 0.0001, upper = 0.3),
-    makeLogicalParam("scale", default = TRUE))
+    makeLogicalParam("tsfeatures.scale", default = TRUE))
   lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
-
   train(lrn, subsetTask(gunpoint.task, subset = 1:30))
 })
 
+test_that("extractFDAFeaturesWrapper works for dtwkernel", {
+  methods = list("fd" = extractFDADTWKernel())
+  lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
+  ps = makeParamSet(
+    makeNumericParam("eta", lower = 0.0001, upper = 0.3))
+  lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
+  train(lrn, subsetTask(gunpoint.task, subset = 1:30))
+})

@@ -303,7 +303,7 @@ test_that("tsfeatures works", {
   gpfeats = lrn(data = gp1, col = "UVVIS")
   expect_equal(nrow(gpfeats), nrow(gp1))
 
-  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30), feat.methods = list("UVVIS" = extractFDATsfeatures()))
+  extr = extractFDAFeatures(subsetTask(fuelsubset.task, subset = 1:30, features = 2), feat.methods = list("UVVIS" = extractFDATsfeatures()))
   # FIXME: Decide on extraction subset before testing versus method.
   reextr = reextractFDAFeatures(subsetTask(fuelsubset.task, subset = 31:35), extr$desc)
   # FIXME: Tests

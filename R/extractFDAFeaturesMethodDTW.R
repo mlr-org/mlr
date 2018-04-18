@@ -27,7 +27,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
     row = vnapply(seq_len(nrow(refs)), function(i) rucrdtw::ucrdtw_vv(frow, refs[i, ], dtwwindow)$distance)
     return(row)
   }
-  lrn = function(data, target = NULL, col, ref.method, n.refs, refs, dtwwindow) {
+  lrn = function(data, target = NULL, col, ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {
     assertClass(data, "data.frame")
     assertChoice(ref.method, c("random", "all", "fixed"))
     assertNumeric(n.refs, lower = 0, upper = 1)
@@ -39,7 +39,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
     # Obtain reference curves indices
     if (is.null(refs) | is.integer(refs)) {
     if (ref.method == "random")
-      refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0))), 1L)
+      refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0))), 2L)
     if (ref.method == "all")
       refs = seq_len(nrow(data))
     refs = data[refs, ]
@@ -55,7 +55,7 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
 
   ps = makeParamSet(
     makeDiscreteParam(id = "ref.method", default = "random", values = c("random", "all", "fixed")),
-    makeNumericParam(id = "n.refs", lower = 0, upper = 1),
+    makeNumericParam(id = "n.refs", default = 0.05, lower = 0, upper = 1),
     makeUntypedParam(id = "refs", default = NULL),
     makeNumericParam(id = "dtwwindow", lower = 0, upper = 1)
   )
