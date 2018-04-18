@@ -18,6 +18,9 @@ r_github_packages:
   - berndbischl/parallelMap
   - berndbischl/ParamHelpers
   - jimhester/lintr
+  - robjhyndman/forecast
+  - robjhyndman/tsfeatures
+
 
 jobs:
   fast_finish: true
