@@ -7,7 +7,7 @@ test_that("generateLearningCurve", {
   expect_true(all(c("learner", "percentage", "acc", "timeboth") %in% colnames(r$data)))
   plotLearningCurve(r)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(length(r$measures)))

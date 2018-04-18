@@ -7,7 +7,7 @@
 getStackedBaseLearnerPredictions(model, newdata = NULL)
 }
 \arguments{
-\item{model}{(\link{WrappedModel})\cr Wrapped model, result of train.}
+\item{model}{([WrappedModel`)\cr Wrapped model, result of train.}
 
 \item{newdata}{(\link{data.frame})\cr
 New observations, for which the predictions using the specified base learners should be returned.
