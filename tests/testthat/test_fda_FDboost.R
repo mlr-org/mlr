@@ -1,4 +1,4 @@
-context("FDA_regr_FDboost")
+context("FDA_FDboost")
 # predict the heat value of fossil fuels using spectral data, one spectrum is
 # ultra-violet-visible (UV-VIS), measured at 1335 wavelengths(lambda = 1/f$), the ohter a near infrared
 # spectrum(NIR), measured at 2307 wavelengths(lambda = 1/f$). The distance for both data are
@@ -32,5 +32,14 @@ test_that("regr_FDboost is equal to reference", {
     functionals.as = "matrix")))
   expect_equal(prd$data$response, prd2)
 
+
+})
+
+test_that("test if classif_FDboost train works", {
+  requirePackagesOrSkip("FDboost", default.method = "load")
+  lrn = makeLearner("classif.FDboost", knots = 40L, df = 4L, mstop = 100L)
+  set.seed(getOption("mlr.debug.seed"))
+  mlr.mod = train(lrn, fda.binary.gp.task)
+  prd = predict(mlr.mod, newdata = getTaskData(fda.binary.gp.task, functionals.as = "matrix"))
 
 })

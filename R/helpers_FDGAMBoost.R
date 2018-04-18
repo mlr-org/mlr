@@ -1,5 +1,10 @@
 # helper for fgam regression and classification
-getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k = -1L, mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
+# @title Regression of functional data by Functional Generalized Additive Models.
+#
+# @description
+# FGAM estimate a smooth function for scalar on functional regression. Where the target is a scalar and the covarite is functional covariate, and the regression is an integration with respect to a link function upon the conditional expectation. $g\{E(Y_i|X_i)\} = \theta_0 +\int_{\tau} F\{X_i(\tau), \tau \}d{\tau}$, where the smooth function $F\{X(t), t\}$(estimation surface which is fitted againt all X(t), t pair) is not binded to be linear with the functional predictor $X(t)$ and takes an additive form which could quantify how important each functional point is to the response. The basic form for the smooth function is penalized splines. Typical application for FGAM is Diffusion tensor imaging(DTI) parallel diffusivity on Corpus Callosum where signal is higher for voxels where diffusion is hindered for multiple sclerosis patient PASAT score( A cognitive measure). For each pixel, there could be a tensor of 3*3 symmetric matrix which results from applying gradient from several non-collinear directions. In FGAM, X(t) is transformed to be in the interval of [0,1] by cdf tranform to let the limited observation data to fill all space of the surface and invariant to tranformation of functional predictors. FGAM support multiple functional covariate. Currently, only splines are used as base learner.
+#
+getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
   formula.terms = namedList()
   mat.list = namedList(fns)
   # Treat functional covariates
@@ -13,7 +18,6 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
     # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
     # also setup charvec of formula terms for func covars
     mat.list = namedList(fdns)
-    #formula.terms = setNames(character(length = fdns))
     formula.terms = namedList(fdns)
     # for each functional covariate
     for (fdn in fdns) {
@@ -23,16 +27,16 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
       mat.list[[fdn]] = mdata[, fdn]
       # ... create a formula item
       # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), while refund::lf means linear Model (FLM)
-      formula.terms[fdn] = switch(basistype,
+      formula.terms[fdn] = switch(parlist$basistype,
         "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",
-          fdn, basistype, Qtransform, mgcv.s.k, mgcv.s.bs, integration),
+          fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
         "te" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
-          fdn, basistype, Qtransform, mgcv.te_ti.k, mgcv.te_ti.m, integration))
+          fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$mgcv.te_ti.m, parlist$integration))
     }
     # add grid names
     mat.list = c(mat.list, fdg)
   } else {
-    stop("fgam does not support soley non-functional data")  # !hasFunctionalFeatures(m)
+    stop("fgam does not support soley non-functional data")
   }
   # add target names
   mat.list[[targetname]] = mdata[, targetname]
@@ -40,6 +44,7 @@ getFGAMFormulaMat = function(mdata, targetname, fns, Qtransform = TRUE, mgcv.s.k
   form = as.formula(sprintf("%s~%s", targetname, collapse(unlist(formula.terms), "+")))
   return(list(form = form, mat.list = mat.list))
 }
+
 
 fgam.ps = makeParamSet(
       makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
@@ -55,6 +60,8 @@ fgam.ps = makeParamSet(
       makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
     )
 
+fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE)
+
 getBinomialTarget = function(.task)  {
   vt = getTaskTargets(.task)
   uvt = unique(vt)
@@ -63,7 +70,7 @@ getBinomialTarget = function(.task)  {
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
-FDboost.ps = makeParamSet(
+FDboostRegrPs = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
@@ -81,13 +88,10 @@ FDboost.ps = makeParamSet(
     )
 
 getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, differences) {
-suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
   tdata = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
-
   formula.terms = namedList()
   mat.list = namedList(getTaskFeatureNames(.task))
-
   # Treat functional covariates
   if (hasFunctionalFeatures(tdata)) {
     fdns = colnames(getFunctionalFeatures(tdata))
@@ -119,14 +123,14 @@ suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
 
   # Add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
   for (fsn in setdiff(colnames(tdata), c(fdns, tn))) {
-    mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
+    mat.list[[fsn]] = as.vector(as.matrix(tdata[, fsn, drop = FALSE]))
     formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
       fsn, knots, df, degree, differences)
   }
 
 
   # add target names
-  mat.list[[tn]] = d[, tn]
+  mat.list[[tn]] = tdata[, tn]
 
   # Create the formula and train the model
   form = as.formula(sprintf("%s ~ %s", tn, collapse(unlist(formula.terms), "+")))
@@ -143,54 +147,3 @@ getClassifFamily = function(family, Binomial.link) {
   return(family)
 }
 
-
-#suppressMessages({d = getTaskData(.task, functionals.as = "dfcols")})
-#  m = getTaskData(.task, functionals.as = "matrix")
-#  tn = getTaskTargetNames(.task)
-#
-#  formula.terms = namedList()
-#  mat.list = namedList(getTaskFeatureNames(.task))
-#
-#  # Treat functional covariates
-#  if (hasFunctionalFeatures(m)) {
-#    fdns = colnames(getFunctionalFeatures(m))
-#    # later on, the grid elements in mat.list should have suffix ".grid"
-#    fdg = namedList(fdns)
-#    fd.grids = lapply(fdns, function(name) seq_len(ncol(m[, name])))
-#    names(fd.grids) = fdns
-#    fdg = setNames(fd.grids, stri_paste(fdns, ".grid"))
-#    # setup mat.list: for each func covar we add its data matrix and its grid. and once the target col
-#    # also setup charvec of formula terms for func covars
-#    mat.list = namedList(fdns)
-#    #formula.terms = setNames(character(length = fdns))
-#    formula.terms = namedList(fdns)
-#    # for each functional covariate
-#    for (fdn in fdns) {
-#      # ... create a corresponding grid name
-#      gn = stri_paste(fdn, ".grid")
-#      # ... extract the corresponding original data into a list of matrices
-#      mat.list[[fdn]] = m[, fdn]
-#      # ... create a formula item
-#      formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
-#        fdn, gn, knots, df, degree, differences, bsignal.check.ident)
-#    }
-#    # add grid names
-#    mat.list = c(mat.list, fdg)
-#  } else {
-#    fdns = NULL
-#  }
-#
-#  # Add formula to each scalar covariate, if there is no scalar covariate, this fd.scalars will be empty
-#  for (fsn in setdiff(colnames(m), c(fdns, tn))) {
-#    mat.list[[fsn]] = as.vector(as.matrix(d[, fsn, drop = FALSE]))
-#    formula.terms[fsn] = sprintf("bbs(%s, knots = %i, df = %f, degree = %i, differences = %i)",
-#      fsn, knots, df, degree, differences)
-#  }
-#
-#
-#  # add target names
-#  mat.list[[tn]] = d[, tn]
-#
-#  # Create the formula and train the model
-#  form = as.formula(sprintf("%s ~ %s", tn, collapse(unlist(formula.terms), "+")))
-#

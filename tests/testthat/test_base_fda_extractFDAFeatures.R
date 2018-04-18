@@ -173,10 +173,10 @@ test_that("extract and reextract Wavelets", {
 test_that("getUniFDAMultiResFeatures works on data.frame", {
   gp = getTaskData(fda.binary.gp.task.small, functionals.as = "matrix")
   ngp1 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", res.level = 3,
-    shift = 0.5, curve.lens = NULL)
+    shift = 0.5, seg.lens = NULL)
   expect_true(nrow(ngp1) == nrow(gp))
   expect_true(ncol(ngp1) == 9L)
-  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", curve.lens = c(25, 25),
+  ngp2 = extractFDAMultiResFeatures()$learn(data = gp, col = "fd", seg.lens = c(25, 25),
     res.level = 3, shift = 0.5)
   expect_true(nrow(ngp2) == nrow(gp))
   expect_true(ncol(ngp2) == 16L)
@@ -186,21 +186,21 @@ test_that("get...FDAMultiResFeatures works on data.frame", {
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")
 
   lrn = extractFDAMultiResFeatures()$learn
-  dfn = lrn(df, col = "UVVIS", res.level = 3L, shift = 0.5, curve.lens = NULL)
+  dfn = lrn(df, col = "UVVIS", res.level = 3L, shift = 0.5, seg.lens = NULL)
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 9L)
 
-  dfn2 = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, curve.lens = NULL)
+  dfn2 = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, seg.lens = NULL)
   expect_true(nrow(df) == nrow(dfn2))
   expect_true(ncol(dfn2) == 9L)
 
   expect_true(!all(dfn == dfn2))
 
-  dfn = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, curve.lens = c(100L, 131L))
+  dfn = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, seg.lens = c(100L, 131L))
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 19L)
 
-  dfn = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, curve.lens = 231L)
+  dfn = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, seg.lens = 231L)
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 9L)
 })
@@ -297,8 +297,7 @@ test_that("Fourier equal to package", {
 test_that("tsfeatures works", {
 
   requirePackagesOrSkip("tsfeatures")
-
-  gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30,]
+  gp1 = getTaskData(fuelsubset.task, functionals.as = "matrix")[1:30, ]
   lrn = extractFDATsfeatures()$learn
   gpfeats = lrn(data = gp1, col = "UVVIS")
   expect_equal(nrow(gpfeats), nrow(gp1))

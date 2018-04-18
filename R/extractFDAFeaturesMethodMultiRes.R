@@ -9,30 +9,31 @@
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
 #' @param shift [\code{numeric(1)}]\cr
 #'   The overlapping proportion when slide the window for one step.
-#' @param curve.lens [\code{integer}]\cr
+#' @param seg.lens [\code{integer}]\cr
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
 #' @return [\code{data.frame}].
 #' @export
 #' @family fda_featextractor
-extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = NULL) {
+extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NULL) {
 
-  # Helper function for getFDAMultiResFeatures, extracts for a whole subsequence.
-  getUniFDAMultiResFeatures = function(data, res.level, shift) {
+  getCurveFeaturesDF = function(data, res.level, shift) {
     feat.list = apply(data, 1, getCurveFeatures, res.level = res.level, shift = shift)
     df = data.frame(t(feat.list))
     return(df)
   }
 
-  getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, curve.lens) {
-    # Assert that curve.lens sums up to ncol(data)
-    stopifnot(sum(curve.lens) == ncol(data))
+  getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, seg.lens) {
+    # Assert that seg.lens sums up to ncol(data)
+    stopifnot(sum(seg.lens) == ncol(data))
 
-    clsum = cumsum(curve.lens)
+    clsum = cumsum(seg.lens)
     feat.list = apply(data, 1, function(x) {
-      # Extract the data from the different subcurves specified by curve.lens
+      # Extract the data from the different subcurves specified by seg.lens
+      # the start of the seg is clsum - seg.lens + 1, the end of the seg is cumsum(seg.lens)
+      # ex: seg.lens = c(2, 3, 4), clsum = c(2, 5, 9), clsum - seg.lens +1 = 1, 3, 6
       subfeats = Map(function(seqstart, seqend) {
         getCurveFeatures(x[seqstart:seqend], res.level = res.level, shift = shift)
-      }, clsum - curve.lens + 1, cumsum(curve.lens))
+      }, clsum - seg.lens + 1, cumsum(seg.lens))
       # And return as vector
       unlist(subfeats)
     })
@@ -42,17 +43,18 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
 
 
   #  Get Features from a single (sub-)curve
-  getCurveFeatures = function(x, res.level = 3, shift = 0.5) {
+  getCurveFeatures = function(x, res.level = 3L, shift = 0.5) {
     m = length(x)
-    start = 1L
     feats = numeric(0L)
     ssize = m  # initialize segment size to be the length of the curve
-    for (rl in 1:res.level) {  # ssize is divided by 2 at the end of the loop
+    for (rl in 1:res.level) {
+      # ssize is divided by 2 at the end of the loop
       soffset = ceiling(shift * ssize)  # overlap distance
       # messagef("reslev = %i, ssize = %i, soffset=%i", rl, ssize, soffset)
       sstart = 1L
       send = sstart + ssize - 1L  # end position
-      while (send <= m) {  # until the segment reach the end
+      while (send <= m) {
+        # until the segment reach the end
         # messagef("start, end: %i, %i", sstart, send)
         f = getSegmentFeatures(x[sstart:send])
         # print(f)
@@ -71,7 +73,7 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
     mean(x)
   }
 
-  lrn = function(data, target, col, res.level, shift, curve.lens) {
+  lrn = function(data, target, col, res.level, shift, seg.lens) {
 
     data = data[, col, drop = FALSE]
     if (is.data.frame(data))
@@ -80,19 +82,19 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, curve.lens = 
 
     # The difference is that for the getFDAMultiResFeatures, the curve is again subdivided into
     # subcurves from which the features are extracted
-    if (is.null(curve.lens)) {
-      df = getUniFDAMultiResFeatures(data = data, res.level = res.level, shift = shift)
+    if (is.null(seg.lens)) {
+      df = getCurveFeaturesDF(data = data, res.level = res.level, shift = shift)
     } else {
-      df = getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, curve.lens = curve.lens)
+      df = getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, seg.lens = seg.lens)
     }
     colnames(df) = stri_paste("multires", seq_len(ncol(df)), sep = ".")
     return(df)
   }
   ps = makeParamSet(
-    makeIntegerParam("res.level", lower = 1, upper = Inf),
-    makeNumericParam("shift", lower = 0, upper = Inf)
+    makeIntegerParam("res.level", lower = 1L, upper = 5L),
+    makeNumericParam("shift", lower = 0.1, upper = 1.0)
   )
 
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
-    args = list(res.level = res.level, shift = shift, curve.lens = curve.lens), par.set = ps)
+    args = list(res.level = res.level, shift = shift, seg.lens = seg.lens), par.set = ps)
 }

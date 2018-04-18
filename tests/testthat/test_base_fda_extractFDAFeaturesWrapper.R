@@ -44,7 +44,7 @@ test_that("extractFDAFeaturesWrapper ParSet Works II", {
   ps2 = makeParamSet(makeDiscreteParam("trafo.coeff", values = c("phase", "amplitude")))
   df = getTaskData(fuelsubset.task, functionals.as = "matrix")[, c("heatan", "UVVIS")]
   colnames(df) = c("target", "fd1")
-  df$target = as.factor(round(df$target/10, 0))
+  df$target = as.factor(round(df$target / 10, 0))
   mod = tuneParams(lrn, makeClassifTask(data = df, target = "target"), cv2, acc, ps2, makeTuneControlGrid(resolution = 2L))
 })
 
