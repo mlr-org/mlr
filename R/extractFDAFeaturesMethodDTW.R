@@ -34,18 +34,20 @@ extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL
     assertChoice(class(refs), c("matrix", "integer", "NULL"))
     assertNumber(dtwwindow)
 
-    data = as.matrix(data[, col, drop = FALSE])
+    data = as.matrix(data[col])
 
     # Obtain reference curves indices
     if (is.null(refs) | is.integer(refs)) {
-    if (ref.method == "random")
-      refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0))), 2L)
-    if (ref.method == "all")
-      refs = seq_len(nrow(data))
-    refs = data[refs, ]
+      if (ref.method == "random")
+        refs = sample(seq_len(nrow(data)), size = max(min(nrow(data), round(n.refs * nrow(data), 0)), 2L))
+      if (ref.method == "all")
+        refs = seq_len(nrow(data))
+      refs.data = data[refs, , drop = FALSE]
+    } else {
+      refs.data = refs
     }
 
-    feats.dtw = t(apply(data, 1L, function(x) getDtwDist(x, refs, dtwwindow)))
+    feats.dtw = t(apply(data, 1L, function(x) getDtwDist(x, refs.data, dtwwindow)))
 
     # Add more legible column names to the output
     df = as.data.frame(feats.dtw)

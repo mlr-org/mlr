@@ -53,18 +53,18 @@ test_that("extractFDAFeaturesWrapper ParSet Works", {
   methods = list("fd" = extractFDATsfeatures())
   lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
   ps = makeParamSet(
-    makeNumericParam("eta", lower = 0.0001, upper = 0.3),
+    makeNumericParam("eta", lower = 0.01, upper = 0.3),
     makeLogicalParam("tsfeatures.scale", default = TRUE))
-  lrn = makeTuneWrapper(learner = lrn, resampling = cv5, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
+  lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
   suppressWarnings(train(lrn, subsetTask(gunpoint.task, subset = 2:30)))
   expect_true(TRUE)
 })
 
 test_that("extractFDAFeaturesWrapper works for dtwkernel", {
-  methods = list("fd" = extractFDADTWKernel())
+  methods = list("fd" = extractFDADTWKernel(n.refs = 0.7))
   lrn = makeExtractFDAFeatsWrapper("classif.xgboost", feat.methods = methods)
-  ps = makeParamSet(
-    makeNumericParam("eta", lower = 0.0001, upper = 0.3))
-  lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlMBO(budget = 10L))
-  train(lrn, subsetTask(gunpoint.task, subset = 1:30))
+  ps = makeParamSet(makeNumericParam("eta", lower = 0.01, upper = 0.3))
+  lrn = makeTuneWrapper(learner = lrn, resampling = cv2, measure = acc, par.set = ps, control = makeTuneControlRandom(budget = 2L))
+  mod = train(lrn, subsetTask(gunpoint.task, subset = 2:30))
+  expect_class(mod, "TuneModel")
 })
