@@ -17,10 +17,6 @@ The task.}
 \item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
 By default \code{NULL} if all observations are used.}
-
-\item{weights}{(\link{numeric})\cr
-Optional, non-negative case weight vector to be used during fitting.
-If given, must be of same length as \code{subset} and in corresponding order.}
 }
 \value{
 (\link{WrappedModel}).
