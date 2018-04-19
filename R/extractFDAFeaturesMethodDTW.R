@@ -3,18 +3,18 @@
 #' @description
 #' The function extracts features from functional data based on the DTW distance with a reference dataframe.
 #'
-#' @param ref.method [\code{character}]\cr
+#' @param ref.method (`character(1)`)\cr
 #'   How should the reference curves be obtained?
 #'   Method `random` draws `n.refs` random reference curves, while `all` uses all curves as references.
 #'   In order to use user-provided reference curves, this parameter is set to `fixed`.
-#' @param n.refs [\code{numeric}]\cr
+#' @param n.refs (`numeric(1)`)\cr
 #'   Number of reference curves to be drawn (as a fraction of the number of observations in the training data).
-#' @param refs [\code{matrix|integer vector}]\cr
+#' @param refs (`matrix`|`integer(n)`)\cr
 #'   Integer vector of training set row indices or a matrix of reference curves with the same length as
 #'   the functionals in the training data. Overwrites `ref.method` and `n.refs`.
-#' @param dtwwindow [\code{numeric}]\cr
+#' @param dtwwindow (`numeric(1)`)\cr
 #'   Size of the warping window size (as a proportion of query length).
-#' @return [\code{data.frame}].
+#' @return [data.frame].
 #' @export
 #' @family fda_featextractor
 extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {

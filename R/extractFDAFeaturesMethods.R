@@ -103,20 +103,21 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #' functional data.
 #' See [wavelets::dwt] for more information.
 #'
-#' @param filter [`character(1)`]\cr
+#' @param filter (`character(1)`)\cr
 #'   Specifies which filter should be used.
 #'   Must be one of `d`|`la`}|`bl`|`c` followed by an even
 #'   number for the level of the filter.
 #'   The level of the filter needs to be smaller or equal then the time-series length.
 #'   For more information and acceptable filters see \code{help(wt.filter)}.
 #'   Defaults to `la8`.
-#' @param boundary [character(1)]\cr
+#' @param boundary (`character(1)`)\cr
 #'   Boundary to be used.
 #'   \dQuote{periodic} assumes circular time series,
 #'   for \dQuote{reflection} the series is extended to twice its length.
 #'   Default is \dQuote{periodic}.
-#' @param n.levels [\code{integer(1)}]\cr
-#'   Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
+#  @param n.levels [\code{integer(1)}]\cr
+#    Level of decomposition. See \code{\link[wavelets]{dwt}} for details.
+#    FIXME: Find out how to set this.
 #' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
