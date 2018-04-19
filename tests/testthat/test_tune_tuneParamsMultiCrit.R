@@ -206,7 +206,7 @@ test_that("check n.objectives for MBO multi crit", {
   )
 
   expect_error(makeTuneMultiCritControlMBO(1L),
-    ".* >= 2")
+    ".* All elements must be >= 2.")
   expect_error(makeTuneMultiCritControlMBO(1.5),
     ".* Must be of type 'single integerish value', not 'double'.")
   ctrl = makeTuneMultiCritControlMBO(2L)

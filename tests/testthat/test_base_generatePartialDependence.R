@@ -15,7 +15,7 @@ test_that("generatePartialDependenceData", {
 
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))

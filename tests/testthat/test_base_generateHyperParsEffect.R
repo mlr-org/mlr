@@ -44,7 +44,7 @@ test_that("1 numeric hyperparam", {
     plot.type = "line")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -73,7 +73,7 @@ test_that("1 discrete hyperparam", {
   plt = plotHyperParsEffect(new, x = "kernel", y = "acc.test.mean")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -102,7 +102,7 @@ test_that("1 numeric hyperparam with optimizer failure", {
   plt = plotHyperParsEffect(new, x = "C", y = "acc.test.mean")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -133,7 +133,7 @@ test_that("1 numeric hyperparam with nested cv", {
   plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
 
   # make sure plot has expected attributes
@@ -163,7 +163,7 @@ test_that("2 hyperparams", {
     plot.type = "line")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
@@ -176,7 +176,7 @@ test_that("2 hyperparams", {
     show.experiments = TRUE)
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster"))
@@ -199,7 +199,7 @@ test_that("2 hyperparams", {
     plot.type = "heatmap", interpolate = "regr.earth")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster"))
@@ -232,7 +232,7 @@ test_that("2 hyperparams nested", {
     show.interpolated = TRUE)
   expect_warning(print(plt))
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   expect_warning(ggsave(path))
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster", "GeomContour"))
@@ -256,7 +256,7 @@ test_that("2 hyperparams nested", {
     show.experiments = TRUE)
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomPoint", "GeomRaster"))
@@ -286,7 +286,7 @@ test_that("2+ hyperparams", {
     plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
@@ -298,7 +298,7 @@ test_that("2+ hyperparams", {
     plot.type = "heatmap", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_equal(class(plt$layers[[1]]$geom)[1], "GeomTile")
   expect_equal(plt$labels$x, "C")
@@ -323,7 +323,7 @@ test_that("2+ hyperparams", {
     plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))
@@ -344,7 +344,7 @@ test_that("2+ hyperparams", {
     plot.type = "line", partial.dep.learn = "regr.rpart")
   print(plt)
   dir = tempdir()
-  path = file.path(dir, "test.svg")
+  path = stri_paste(dir, "/test.svg")
   ggsave(path)
   expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]),
     c("GeomLine", "GeomPoint"))

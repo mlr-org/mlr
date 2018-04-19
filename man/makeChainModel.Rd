@@ -7,7 +7,7 @@
 makeChainModel(next.model, cl)
 }
 \arguments{
-\item{next.model}{(\link{WrappedModel})\cr
+\item{next.model}{([WrappedModel`)\cr
 The next model.}
 
 \item{cl}{(\link{character})\cr
