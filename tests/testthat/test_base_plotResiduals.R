@@ -7,7 +7,7 @@ test_that("plotResiduals with prediction object", {
   preds = predict(mod, regr.task)
   plotResiduals(preds)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   # points
@@ -19,7 +19,7 @@ test_that("plotResiduals with prediction object", {
   # histogram
   plotResiduals(preds, type = "hist")
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), 30L)
@@ -29,7 +29,7 @@ test_that("plotResiduals with prediction object", {
   preds = predict(mod, multiclass.task)
   plotResiduals(preds)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   num.points = sum(calculateConfusionMatrix(preds)$result[1:3, 1:3] != 0)
@@ -42,7 +42,7 @@ test_that("plotResiduals with BenchmarkResult", {
   bmr = benchmark(lrns, tasks, hout)
   plotResiduals(bmr, type = "scatterplot")
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   grid.size = length(getBMRTaskIds(bmr)) * length(getBMRLearnerIds(bmr))
@@ -51,7 +51,7 @@ test_that("plotResiduals with BenchmarkResult", {
   # histogram
   plotResiduals(bmr, type = "hist")
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   # barplot now. We can't test for exact number of bars anymore
@@ -62,7 +62,7 @@ test_that("plotResiduals with BenchmarkResult", {
 
   plotResiduals(bmr, pretty.names = FALSE)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(bmr), grid.size = 2L)
