@@ -70,7 +70,7 @@ getBinomialTarget = function(.task)  {
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
-FDboostRegrPs = makeParamSet(
+fdboost.regr.ps = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
@@ -135,15 +135,5 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
   # Create the formula and train the model
   form = as.formula(sprintf("%s ~ %s", tn, collapse(unlist(formula.terms), "+")))
   return(list(mat.list = mat.list, form = form))
-}
-
-getClassifFamily = function(family, Binomial.link) {
-  family = switch(family,
-    Binomial = mboost::Binomial(link = Binomial.link),
-    AdaExp = mboost::AdaExp(),
-    AUC = mboost::AUC(),
-    #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
-    custom.family = custom.family.definition)
-  return(family)
 }
 

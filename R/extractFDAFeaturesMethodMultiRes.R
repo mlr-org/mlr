@@ -22,7 +22,7 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
     return(df)
   }
 
-  getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, seg.lens) {
+  getFDAMultiResFeatures = function(data, res.level = 3L, shift = 0.5, seg.lens = NULL) {
     # Assert that seg.lens sums up to ncol(data)
     stopifnot(sum(seg.lens) == ncol(data))
 
