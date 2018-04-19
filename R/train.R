@@ -6,6 +6,11 @@
 #' @template arg_learner
 #' @template arg_task
 #' @template arg_subset
+#' @param weights ([numeric])\cr
+#'   Optional, non-negative case weight vector to be used during fitting.
+#'   If given, must be of same length as `subset` and in corresponding order.
+#'   By default `NULL` which means no weights are used unless specified in the task ([Task]).
+#'   Weights from the task will be overwritten.
 #' @return ([WrappedModel]).
 #' @export
 #' @seealso [predict.WrappedModel]
@@ -81,8 +86,8 @@ train = function(learner, task, subset = NULL, weights = NULL) {
     fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
     fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
-        withCallingHandlers(x, error = function(c) utils::dump.frames())
-      }
+      withCallingHandlers(x, error = function(c) utils::dump.frames())
+    }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
