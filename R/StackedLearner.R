@@ -159,7 +159,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 #'
 #' @description Returns the predictions for each base learner.
 #'
-#' @param model ([WrappedModel])\cr Wrapped model, result of train.
+#' @param model ([WrappedModel`)\cr Wrapped model, result of train.
 #' @param newdata ([data.frame])\cr
 #' New observations, for which the predictions using the specified base learners should be returned.
 #' Default is `NULL` and extracts the base learner predictions that were made during the training.

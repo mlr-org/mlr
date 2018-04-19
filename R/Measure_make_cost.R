@@ -10,7 +10,7 @@
 #'   Should the measure be minimized?
 #'   Otherwise you are effectively specifying a benefits matrix.
 #'   Default is `TRUE`.
-#' @param costs ([matrix])\cr
+#' @param costs ([matrix`)\cr
 #'   Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 #'   Rows indicate true classes, columns predicted classes.
 #' @param combine (`function`)\cr
