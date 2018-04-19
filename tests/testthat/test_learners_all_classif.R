@@ -13,7 +13,8 @@ test_that("learners work: classif", {
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     classif.xyf = list(ydim = 2L),
     classif.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
-    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
+    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed")),
+    classif.FDboost = list(mstop = 2L)
   )
 
   # binary classif

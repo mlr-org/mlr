@@ -213,7 +213,7 @@ reextractFDAFeatures.data.frame = function(obj, desc, ...) {
 
 
 #' @export
-reextractFDAFeatures.Task = function(obj, desc) {
+reextractFDAFeatures.Task = function(obj, desc, ...) {
   # get data and pass to extractor
   df = getTaskData(obj, functionals.as = "matrix")
   extracted = reextractFDAFeatures.data.frame(df, desc)
