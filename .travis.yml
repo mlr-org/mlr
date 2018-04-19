@@ -66,7 +66,7 @@ jobs:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
-           branch: travis
+           branch: master
            condition:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
