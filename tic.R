@@ -22,7 +22,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   get_stage("deploy") %>%
     add_code_step(system2("bash", args = c("inst/convert_to_ascii_news.sh"))) %>%
     add_code_step(devtools::document()) %>%
-    add_step(step_push_deploy(orphan = FALSE, branch = "master", commit_paths = c("man/*", "NEWS")))
+    add_step(step_push_deploy(orphan = FALSE, branch = "master", commit_paths = c("NAMESPACE", "man/*", "NEWS")))
 }
 
 if (Sys.getenv("TUTORIAL") == "HTML") {
