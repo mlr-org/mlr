@@ -6,7 +6,7 @@ test_that("checkTaskSubset", {
   expect_equal(subs20, checkTaskSubset(subs20, size = 50))
   subs.bool = sample(c(TRUE, FALSE), size = 50, replace = TRUE)
   expect_equal(which(subs.bool), checkTaskSubset(subs.bool, size = 50))
-  expect_error(checkTaskSubset(subs20, size = 10), regexp = "All elements must be <= 10")
+  expect_error(checkTaskSubset(subs20, size = 10), regexp = "<= 10")
   #oversampling is allowed
   subs50 = sample.int(20, 50, replace = TRUE)
   expect_equal(subs50, checkTaskSubset(subs50, size = 20))

@@ -53,7 +53,7 @@ You don't need to change any data or learning `Task()`s and it's quite easy to c
 On the other hand this helps to avoid a common mistake in evaluating the performance of a
 learner with preprocessing:
 Preprocessing is often seen as completely independent of the later applied learning algorithms.
-When estimating the performance of the a learner, e.g., by cross-validation all preprocessing is done beforehand on the full data set and only training/predicting the learner is done on the train/test sets.
+When estimating the performance of a learner, e.g., by cross-validation all preprocessing is done beforehand on the full data set and only training/predicting the learner is done on the train/test sets.
 Depending on what exactly is done as preprocessing this can lead to overoptimistic results.
 For example if imputation by the mean is done on the whole data set before evaluating the learner
 performance you are using information from the test data during training, which can cause
