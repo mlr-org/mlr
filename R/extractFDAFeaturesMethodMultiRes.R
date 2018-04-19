@@ -16,7 +16,7 @@
 #' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NULL) {
 
-  getCurveFeaturesDF = function(data, res.level, shift) {
+  getCurveFeaturesDF = function(data, res.level = 3L, shift = 0.5) {
     feat.list = apply(data, 1, getCurveFeatures, res.level = res.level, shift = shift)
     df = data.frame(t(feat.list))
     return(df)

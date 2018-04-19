@@ -17,7 +17,7 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
   assertNumber(pve, lower = 0, upper = 1)
   assertCount(npc, null.ok = TRUE)
 
-  lrn = function(data, target, col, vals, pve, npc) {
+  lrn = function(data, target, col, vals, pve = 0.99, npc = NULL) {
     requirePackages("mboost", default.method = "load")
     requirePackages("refund", default.method = "load")
     assert(
