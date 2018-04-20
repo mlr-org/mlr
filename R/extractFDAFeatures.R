@@ -24,7 +24,7 @@
 #' @param obj ([Task] | [data.frame])\cr
 #'   Task or data.frame to extract functional features from.
 #'   Must contain functional features as matrix columns.
-#' @param target ([character])\cr
+#' @param target (`character(1)`)\cr
 #'   Task target column. Only neccessary for data.frames
 #'   Default is `character(0)`.
 #' @param feat.methods (named [list])\cr

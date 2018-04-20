@@ -5,11 +5,11 @@
 #' as features. The segments length are set in a hierachy way so the features
 #' cover different resolution levels.
 #'
-#' @param res.level ([integer(1)])\cr
+#' @param res.level (`integer(1)`)\cr
 #'   The number of resolution hierachy, each length is divided by a factor of 2.
-#' @param shift ([integer(1)])\cr
+#' @param shift (`numeric(1)`)\cr
 #'   The overlapping proportion when slide the window for one step.
-#' @param seg.lens ([integer(1)])\cr
+#' @param seg.lens (`integer(1)`)\cr
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
 #' @return [data.frame].
 #' @export
@@ -73,7 +73,7 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
     mean(x)
   }
 
-  lrn = function(data, target, col, res.level, shift, seg.lens) {
+  lrn = function(data, target, col, res.level = 3L, shift = 0.5, seg.lens = NULL) {
 
     data = data[, col, drop = FALSE]
     if (is.data.frame(data))

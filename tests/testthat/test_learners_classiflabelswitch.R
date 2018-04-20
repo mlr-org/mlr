@@ -37,7 +37,8 @@ hpars = list(
   classif.LiblineaRLogReg = list(type = 7),
   classif.LiblineaRBinary = list(type = 1),
   classif.LiblineaRMultiClass = list(type = 1),
-  classif.nodeHarvest = list(nodes = 100L, maxinter = 1L)
+  classif.nodeHarvest = list(nodes = 100L, maxinter = 1L),
+  classif.FDboost = list(mstop = 10L)
 )
 
 

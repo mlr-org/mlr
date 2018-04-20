@@ -13,10 +13,10 @@
 #'     Data.frame containing matricies with one row per observation of a single functional
 #'     or time series and one column per measurement time point.
 #'     All entries need to be numeric.
-#'   \item target [character]\cr
+#'   \item target (`character(1)`)\cr
 #'     Name of the target variable. Default: \dQuote{NULL}.
 #'     The variable is only set to be consistent with the API.
-#'   \item col ([character] | [numeric])\cr
+#'   \item col (`character(1)` | `numeric(1)`)\cr
 #'     column names or indices, the extraction should be performed on.
 #'     The function has to return a named list of values.
 #'   }
@@ -44,7 +44,7 @@ makeExtractFDAFeatMethod = function(learn, reextract, args = list(), par.set = N
 #' The function extracts features from functional data based on the fast fourier
 #' transform. For more details refer to [stats::fft].
 #'
-#' @param trafo.coeff ([character])\cr
+#' @param trafo.coeff (`character(1)`)\cr
 #'   Specifies which transformation of the complex frequency domain
 #'   representation should be calculated as a feature representation.
 #'   Must be one of \dQuote{amplitude} or \dQuote{phase}.
@@ -179,21 +179,22 @@ extractFDAWavelets = function(filter = "la8", boundary = "periodic") {
 #' Under the hood this function uses the package \code{\link[tsfeatures]{tsfeatures}}
 #' For more information see Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #'
-#' @param tsfeatures.scale [\code{boolean}]\cr
+#' @param tsfeatures.scale (`logical(1)`)\cr
 #'   If TRUE, time series are scaled to mean 0 and sd 1 before features are computed.
-#' @param trim [\code{boolean}]\cr
+#' @param trim (`logical(1)`)\cr
 #'   If TRUE, time series are trimmed by \code{trim_amount} before features are computed.
 #'   Values larger than trim_amount in absolute value are set to NA.
-#' @param trim_amount [\code{numeric}]\cr
+#' @param trim_amount (`numeric(1)`)\cr
 #'   Default level of trimming if trim==TRUE.
-#' @param parallel [\code{boolean}]\cr
+#' @param parallel (`logical(1)`)\cr
 #'   If TRUE, multiple cores (or multiple sessions) will be used.
 #'   This only speeds things up when there are a large number of time series.
-#' @param na.action [\code{function}]\cr
+#' @param na.action (`logical(1)`)\cr
 #'   A function to handle missing values. Use na.interp to estimate missing values
-#'@param ... [\code{any}]\cr
+#'@param ... (any)\cr
 #'   Further arguments passed on to the respective tsfeatures functions.
-#' @return [\code{data.frame}].
+#' @return ([data.frame])
+#' @references Hyndman, Wang and Laptev, Large-Scale Unusual Time Series Detection, ICDM 2015.
 #' @export
 #' @family fda_featextractor
 extractFDATsfeatures = function(tsfeatures.scale = TRUE, trim = FALSE, trim_amount = 0.1, parallel = FALSE, na.action = na.pass, ...) {
