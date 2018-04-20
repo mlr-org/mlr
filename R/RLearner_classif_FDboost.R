@@ -58,8 +58,7 @@ predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
       if(!is.null(dim(p))) {
         p = p[, 1L]
       }
-      levs = c(td$negative, td$positive)
-      return(propVectorToMatrix(p, levs))
+      return(propVectorToMatrix(p, c(td$positive, td$negative)))
     }
   } else {
     return(p)

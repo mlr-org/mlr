@@ -40,6 +40,6 @@ test_that("test if classif_FDboost train works", {
   prd2 = predict(true.mod, as.list(getTaskData(fda.binary.gp.task,
     functionals.as = "matrix")), type = "response")
   attributes(prd2) = NULL
-  expect_equal(prd$data$prob.1, prd2)
+  expect_equal(prd$data$prob.2, prd2)
 
 })
