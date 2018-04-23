@@ -105,7 +105,7 @@ extractFDAFourier = function(trafo.coeff = "phase") {
 #'
 #' @param filter (`character(1)`)\cr
 #'   Specifies which filter should be used.
-#'   Must be one of `d`|`la`}|`bl`|`c` followed by an even
+#'   Must be one of `d`|`la`|`bl`|`c` followed by an even
 #'   number for the level of the filter.
 #'   The level of the filter needs to be smaller or equal then the time-series length.
 #'   For more information and acceptable filters see \code{help(wt.filter)}.
