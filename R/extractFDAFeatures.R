@@ -39,8 +39,7 @@
 #' @param ... (any) \cr
 #'  Further args passed on to methods.
 #' @return ([list])
-#'   \item{data|task ([data.frame] | [Task])}{Extracted features, returns a data.frame when
-#'   given a data.frame and a Task when given a Task.}
+#'   \item{data|task ([data.frame] | [Task])}{Extracted features, same type as obj.}
 #'   \item{desc (`extracFDAFeatDesc`)}{Description object. See description for details.}
 #' @family fda
 #' @export

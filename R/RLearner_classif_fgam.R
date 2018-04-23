@@ -14,6 +14,7 @@ makeRLearner.classif.fgam = function() {
 #' @export
 trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, ...) {
   requirePackages("refund")
+
   parlist = list(...)
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
@@ -28,6 +29,7 @@ trainLearner.classif.fgam = function(.learner, .task, .subset, .weights = NULL, 
   formmat = getFGAMFormulaMat(mdata = nd, targetname = tn, fns = fns, parlist)
   formula = formmat$form
   data = formmat$mat.list
+  pfr = refund::pfr
   mod = pfr(formula = formula, data = data, family = binomial())
   mod$uvt = uvt
   mod

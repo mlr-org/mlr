@@ -20,6 +20,7 @@ trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, ...
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
   formmat = getFGAMFormulaMat(mdata = m, targetname = tn, fns = fns, parlist = parlist)
+  pfr = refund::pfr
   pfr(formula = formmat$form, data = formmat$mat.list, family = gaussian())
 }
 
