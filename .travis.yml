@@ -20,7 +20,6 @@ r_github_packages:
   - jimhester/lintr
   - robjhyndman/tsfeatures
 
-
 jobs:
   fast_finish: true
   allow_failures:

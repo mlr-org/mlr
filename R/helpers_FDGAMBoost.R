@@ -71,6 +71,10 @@ getBinomialTarget = function(.task)  {
   return(list(newtarget = newtarget, uvt = uvt))
 }
 
+
+
+# FDBoost
+
 fdboost.regr.ps = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
@@ -113,7 +117,8 @@ getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, d
       # ... extract the corresponding original data into a list of matrices
       mat.list[[fdn]] = tdata[, fdn]
       # ... create a formula item
-      formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i, differences = %i, check.ident = %s)",
+      formula.terms[fdn] = sprintf("bsignal(%s, %s, knots = %i, df = %f, degree = %i,
+        differences = %i, check.ident = %s)",
         fdn, gn, knots, df, degree, differences, bsignal.check.ident)
     }
     # add grid names
