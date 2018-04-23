@@ -87,6 +87,12 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
     } else {
       df = getFDAMultiResFeatures(data = data, res.level = res.level, shift = shift, seg.lens = seg.lens)
     }
+
+    # For res.level=1 make sure we return the correct dimensions
+    if(res.level == 1L)
+      df = data.frame(t(df))
+
+    rownames(df) = NULL
     colnames(df) = stri_paste("multires", seq_len(ncol(df)), sep = ".")
     return(df)
   }

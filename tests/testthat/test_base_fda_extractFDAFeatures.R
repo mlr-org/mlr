@@ -203,6 +203,10 @@ test_that("get...FDAMultiResFeatures works on data.frame", {
   dfn = lrn(df, col = "NIR", res.level = 3L, shift = 0.5, seg.lens = 231L)
   expect_true(nrow(df) == nrow(dfn))
   expect_true(ncol(dfn) == 9L)
+
+  dfn = lrn(df, col = "NIR", res.level = 1L, shift = 0.5, seg.lens = 231L)
+  expect_true(nrow(df) == nrow(dfn))
+  expect_true(ncol(dfn) == 1L)
 })
 
 test_that("extract and reextract MultiRes", {
