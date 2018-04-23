@@ -36,7 +36,7 @@ Control object for search method. Also selects the optimization algorithm for tu
 Print verbose output on console?
 Default is set via \link{configureMlr}.}
 
-\item{resample.fun}{([closure`)\cr
+\item{resample.fun}{([closure])\cr
 The function to use for resampling. Defaults to [resample] and should take the
 same arguments as, and return the same result type as, [resample].}
 }
