@@ -6,7 +6,7 @@ test_that("fgam works for classifcation", {
   matdd$fd = dd$data$fd
   hh = getBinomialTarget(gunpoint.task)
   matdd$X1 = hh$newtarget
-  fit.af = refund::pfr(formula = X1 ~ refund::af(fd, Qtransform = TRUE, k = 3, m = 2), data = matdd, family = binomial())
+  fit.af = pfr(formula = X1 ~ af(fd, Qtransform = TRUE, k = 3, m = 2), data = matdd, family = binomial())
   lrn = makeLearner("classif.fgam", par.vals = list(mgcv.te_ti.k = 3L, mgcv.te_ti.m = 2))
   m = train(lrn, gunpoint.task)
   cp = predict(m, task = gunpoint.task)

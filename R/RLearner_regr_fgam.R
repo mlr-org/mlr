@@ -14,12 +14,13 @@ makeRLearner.regr.fgam = function() {
 #' @export
 # trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, Qtransform = TRUE, mgcv.s.k = c(-1L), mgcv.s.bs = "tp", mgcv.s.m = NA, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA, basistype = "te", integration = "simpson", ...) {
 trainLearner.regr.fgam = function(.learner, .task, .subset, .weights = NULL, ...) {
+  requirePackages("refund")
   parlist = list(...)
   m = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)
   fns = getTaskFeatureNames(.task)
   formmat = getFGAMFormulaMat(mdata = m, targetname = tn, fns = fns, parlist = parlist)
-  refund::pfr(formula = formmat$form, data = formmat$mat.list, family = gaussian())
+  pfr(formula = formmat$form, data = formmat$mat.list, family = gaussian())
 }
 
 #' @export

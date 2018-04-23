@@ -6,7 +6,7 @@ test_that("testif FDA_regr_fgam generate same prediction with refund::pfr", {
   dti1 = DTI[DTI$visit == 1 & complete.cases(DTI), ]
   # subset a portion of the data(complete.cases select non missing value rows)
   # dti1 is already a matrix dataframe
-  fit.af = refund::pfr(formula = pasat ~ refund::af(cca, Qtransform = TRUE, k = 7, m = 2), data = dti1)
+  fit.af = pfr(formula = pasat ~ af(cca, Qtransform = TRUE, k = 7, m = 2), data = dti1)
   prd.refund = predict(fit.af, newdata = dti1, type = "response")
   df = data.frame(as.list(dti1[, c("pasat", "cca")]))  # makeFunctionalData require plain dataframe
   fdf = makeFunctionalData(df, fd.features = list("cca" = 2:94))  # dim(dti1$cca) = (66,93)
