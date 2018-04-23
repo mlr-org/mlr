@@ -14,7 +14,7 @@
 #'   the functionals in the training data. Overwrites `ref.method` and `n.refs`.
 #' @param dtwwindow (`numeric(1)`)\cr
 #'   Size of the warping window size (as a proportion of query length).
-#' @return [data.frame].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDADTWKernel = function(ref.method = "random", n.refs = 0.05, refs = NULL, dtwwindow = 0.05) {

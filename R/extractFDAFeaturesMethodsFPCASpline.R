@@ -4,10 +4,10 @@
 #' The function extracts the functional principal components from a data.frame
 #' containing functional features.
 #'
-#' @param pve ([numeric])\cr
+#' @param pve (`numeric(1)`)\cr
 #'   Fraction of variance explained for the functional principal components.
 #'   Default is 0.99.
-#' @param npc ([integer])\cr
+#' @param npc (`integer(1)`)\cr
 #'   Number of principal components to extract. Overrides `pve` param.
 #'   Default is `NULL`
 #' @return ([data.frame]).
@@ -54,11 +54,11 @@ extractFDAFPCA = function(pve = 0.99, npc = NULL) {
 #' The function extracts features from functional data based on the Bspline fit.
 #' For more details refer to \code{\link[FDboost]{bsignal}}.
 #'
-#' @param bsignal.knots [\code{integer}]\cr
+#' @param bsignal.knots (`integer(1)`)\cr
 #'   The number of knots for bspline.
-#' @param bsignal.df [\code{numeric}]\cr
+#' @param bsignal.df (`numeric(1)`)\cr
 #'   The effective degree of freedom of penalized bspline.
-#' @return [\code{data.frame}].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {

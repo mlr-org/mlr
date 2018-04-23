@@ -92,6 +92,7 @@ Suggests:
     flare,
     fields,
     FNN,
+    forecast (>= 8.3),
     fpc,
     frbs,
     FSelector,

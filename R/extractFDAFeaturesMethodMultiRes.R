@@ -11,7 +11,7 @@
 #'   The overlapping proportion when slide the window for one step.
 #' @param seg.lens (`integer(1)`)\cr
 #'   Curve subsequence lengths. Needs to sum up to the length of the functional.
-#' @return [data.frame].
+#' @return ([data.frame]).
 #' @export
 #' @family fda_featextractor
 extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NULL) {
