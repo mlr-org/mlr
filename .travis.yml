@@ -26,8 +26,7 @@ jobs:
     - env: TUTORIAL=PDF
   include:
     - stage: warmup-1
-      env:
-        - TUTORIAL=PDF
+      env: RCMDCHECK=TRUE
       addons:
         apt:
           packages:
@@ -41,8 +40,7 @@ jobs:
         - R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
-      env:
-        - TUTORIAL=PDF
+      env: RCMDCHECK=TRUE
       addons:
         apt:
           packages:
