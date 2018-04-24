@@ -36,8 +36,8 @@
 #'   Specifying a functional feature multiple times with different extraction methods allows
 #'   for the extraction of different features from the same functional.
 #'   Default is [list()] which does nothing.
-#' @param ... (any) \cr
-#'  Further args passed on to methods.
+#' @param ... (any)\cr
+#'   Further hyperparameters passed to methods.
 #' @return ([list])
 #'   \item{data|task ([data.frame] | [Task])}{Extracted features, same type as obj.}
 #'   \item{desc (`extracFDAFeatDesc`)}{Description object. See description for details.}
@@ -174,7 +174,7 @@ print.extractFDAFeatDesc = function(x, ...) {
 #'   as matrix columns.
 #' @param desc (`extractFDAFeatDesc`)\cr
 #'   FDAFeature extraction description as returned by [extractFDAFeatures]
-#' @param ... (any) \cr
+#' @param ... (any)\cr
 #'  Further args passed on to methods.
 #' @return [data.frame] or [Task] containing the extracted Features
 #' @family extractFDAFeatures
