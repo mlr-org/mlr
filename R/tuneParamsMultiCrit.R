@@ -23,7 +23,7 @@
 #' @param control ([TuneMultiCritControl])\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
-#' @param resample.fun ([closure`)\cr
+#' @param resample.fun ([closure])\cr
 #'   The function to use for resampling. Defaults to [resample] and should take the
 #'   same arguments as, and return the same result type as, [resample].
 #' @return ([TuneMultiCritResult]).

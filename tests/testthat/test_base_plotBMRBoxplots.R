@@ -8,7 +8,7 @@ test_that("BenchmarkResult", {
   res = benchmark(lrns, tasks, rdesc, meas)
   plotBMRBoxplots(res)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_equal(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), length(getBMRTaskIds(res)))
@@ -24,7 +24,7 @@ test_that("BenchmarkResult", {
   # pretty names works
   plotBMRBoxplots(res)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res), grid.size = 2L)
@@ -32,7 +32,7 @@ test_that("BenchmarkResult", {
 
   plotBMRBoxplots(res, pretty.names = FALSE)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerIds(res), grid.size = 2L)
@@ -42,7 +42,7 @@ test_that("BenchmarkResult", {
   new.order = c("classif.rpart", "classif.nnet")
   plotBMRBoxplots(res, pretty.names = TRUE, order.lrns = new.order)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res)[2:1],
