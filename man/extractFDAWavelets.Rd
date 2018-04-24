@@ -7,14 +7,15 @@
 extractFDAWavelets(filter = "la8", boundary = "periodic")
 }
 \arguments{
-\item{boundary}{\link{character(1)}\cr
+\item{filter}{(\link{character})\cr
+Specifies which filter should be used.
+Default is \dQuote{la8}.}
+
+\item{boundary}{(\link{character})\cr
 Boundary to be used.
 \dQuote{periodic} assumes circular time series,
 for \dQuote{reflection} the series is extended to twice its length.
 Default is \dQuote{periodic}.}
-
-\item{n.levels}{\link{\code{integer(1)}}\cr
-Level of decomposition. See \code{\link[wavelets]{dwt}} for details.}
 }
 \value{
 (\link{data.frame}).
@@ -25,10 +26,7 @@ functional data.
 See \link[wavelets:dwt]{wavelets::dwt} for more information.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDABsignal}},
-  \code{\link{extractFDADTWKernel}},
-  \code{\link{extractFDAFPCA}},
+Other fda_featextractor: \code{\link{extractFDAFPCA}},
   \code{\link{extractFDAFourier}},
-  \code{\link{extractFDAMultiResFeatures}},
-  \code{\link{extractFDATsfeatures}}
+  \code{\link{extractFDAMultiResFeatures}}
 }

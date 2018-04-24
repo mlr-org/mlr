@@ -3,7 +3,7 @@ makeRLearner.regr.FDboost = function() {
   makeRLearnerRegr(
     cl = "regr.FDboost",
     package = c("FDboost", "mboost"),
-    par.set = fdboost.regr.ps,
+    par.set = FDboostRegrPs,
     properties = c("numerics", "functionals"),
     name = "Functional linear array regression boosting",
     short.name = "FDboost",

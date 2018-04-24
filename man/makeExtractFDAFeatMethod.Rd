@@ -4,7 +4,7 @@
 \alias{makeExtractFDAFeatMethod}
 \title{Constructor for FDA feature extraction methods.}
 \usage{
-makeExtractFDAFeatMethod(learn, reextract, args = list(), par.set = NULL)
+makeExtractFDAFeatMethod(learn, reextract, args = list())
 }
 \arguments{
 \item{learn}{(\code{function(data, target, col, ...)})\cr
@@ -12,9 +12,12 @@ Function to learn and extract information on functional column \code{col}.
 Arguments are:
 \itemize{
 \item data \link{data.frame}\cr
-Data.frame containing matricies with one row per observation of a single functional
+Data.frame with one row per observation of a single functional feature
 or time series and one column per measurement time point.
 All entries need to be numeric.
+\item data \link{data.frame}\cr
+Data.frame containing matricies with one row per observation of a single functional
+or time series and one column per measurement time point. All entries need to be numeric.
 \item target \link{character}\cr
 Name of the target variable. Default: \dQuote{NULL}.
 The variable is only set to be consistent with the API.
@@ -29,15 +32,9 @@ Can be equal to \code{learn}.}
 
 \item{args}{(\link{list})\cr
 Named list of arguments to pass to \code{learn} via \code{...}.}
-
-\item{par.set}{(\link{ParamSet})\cr
-Paramset added to the learner if used in conjunction with a \code{makeExtractFDAFeatsWrapper}.
-Can be \code{NULL}.`}
 }
 \description{
-This can be used to implement custom FDA feature extraction.
-Takes a \code{learn} and a \code{reextract} function along with some optional
-parameters to those as argument.
+This can be used to implement custom feature FDA extraction.
 }
 \seealso{
 Other fda: \code{\link{extractFDAFeatures}},

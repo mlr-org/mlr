@@ -21,10 +21,7 @@ The function extracts features from functional data based on the fast fourier
 transform. For more details refer to \link[stats:fft]{stats::fft}.
 }
 \seealso{
-Other fda_featextractor: \code{\link{extractFDABsignal}},
-  \code{\link{extractFDADTWKernel}},
-  \code{\link{extractFDAFPCA}},
+Other fda_featextractor: \code{\link{extractFDAFPCA}},
   \code{\link{extractFDAMultiResFeatures}},
-  \code{\link{extractFDATsfeatures}},
   \code{\link{extractFDAWavelets}}
 }
