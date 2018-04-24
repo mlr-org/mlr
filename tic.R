@@ -17,6 +17,7 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_setup_ssh())
 
   get_stage("script") %>%
+    add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck())
 
   get_stage("deploy") %>%
