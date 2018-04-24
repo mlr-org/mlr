@@ -12,9 +12,9 @@ setPredictType.StackedLearner = function(learner, predict.type) {
   return(lrn)
 }
 
-#' Returns response from Prediction object 
+#' Returns response from Prediction object
 #' @param pred Prediction
-#' @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one 
+#' @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one
 
 getResponse = function(pred, full.matrix = NULL) {
   # if classification with probabilities
@@ -35,9 +35,9 @@ getResponse = function(pred, full.matrix = NULL) {
   }
 }
 
-#' Returns response or probabilites from Prediction with the speciality that the 
-#' first feature of a multiclass classification prediction will be removed to 
-#' overcome multicollinearity problems  
+#' Returns response or probabilites from Prediction with the speciality that the
+#' first feature of a multiclass classification prediction will be removed to
+#' overcome multicollinearity problems
 #' @param pred Prediction from predict or resample
 
 getPredictionDataNonMulticoll = function(pred) {
@@ -50,7 +50,7 @@ getPredictionDataNonMulticoll = function(pred) {
   if (pt == "prob") {
       pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
       colnames(pred.matrix) = td$class.levels
-      pred.matrix = pred.matrix[, -1, drop = TRUE] # 
+      pred.matrix = pred.matrix[, -1, drop = TRUE] #
       return(pred.matrix)
   } else {
     # for perdict.type = "response"
@@ -59,13 +59,13 @@ getPredictionDataNonMulticoll = function(pred) {
 }
 
 #' Create a super learner task
-#' 
+#'
 #' @param type "classif" or "regr"
 #' @param data data
 #' @param target target as character
-# FIXME: "save" version which rm constant features and features with NAs. BUT 
-# might not be useful owing to the fact that predictLearner does not know which 
-# features are removed  
+# FIXME: "save" version which rm constant features and features with NAs. BUT
+# might not be useful owing to the fact that predictLearner does not know which
+# features are removed
 
 makeSuperLearnerTask = function(type, data, target) {
   keep.idx = colSums(is.na(data)) == 0
@@ -73,22 +73,22 @@ makeSuperLearnerTask = function(type, data, target) {
   if (getMlrOption("show.info") & (length(keep.idx) < ncol(data)))
     warningf("Feature '%s' will be removed\n", names(data)[!keep.idx])
   if (type == "classif") {
-    removeConstantFeatures(obj = makeClassifTask(id = "level1data", 
+    removeConstantFeatures(obj = makeClassifTask(id = "level1data",
       data = data, target = target, fixup.data = "no"))
   } else {
-    removeConstantFeatures(obj = makeRegrTask(id = "level1data", 
+    removeConstantFeatures(obj = makeRegrTask(id = "level1data",
       data = data, target = target, fixup.data = "no"))
 
   }
 }
 
-#' Count the ratio (used if base.learner predict.type = "response" and 
+#' Count the ratio (used if base.learner predict.type = "response" and
 #' super.learner predict.type is "prob")
 #' @param pred.data Prediction data
 #' @param levels Target levels of classifiaction task
 #' @param model.weight Model weights, default is 1/number of data points
 
-rowiseRatio = function(pred.data, levels, model.weight = NULL) {
+rowWiseRatio = function(pred.data, levels, model.weight = NULL) {
   m = length(levels)
   p = ncol(pred.data)
   if (is.null(model.weight)) {
@@ -110,7 +110,7 @@ rowiseRatio = function(pred.data, levels, model.weight = NULL) {
 #' @param bls [list of base.learner]
 #' @param task [Task]
 #' @param show.info show.info
-#' @param id Id needed to create unique model name 
+#' @param id Id needed to create unique model name
 #' @param save.on.disc save.on.disc
 
 doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
@@ -124,11 +124,11 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
       messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
     X = list(base.models = model.id, pred = pred)
   } else { # save.on.disc = FALSE:
-    if (show.info) 
+    if (show.info)
       messagef("[Base Learner] %s is applied. ", bls$id)
     X = list(base.models = model, pred = pred)
   }
- X 
+ X
 }
 
 #' Resampling and prediction in one function (used for parallelMap)
@@ -137,7 +137,7 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
 #' @param rin Resample Description
 #' @param measures Measures for resampling
 #' @param show.info show.info
-#' @param id Id needed to create unique model name 
+#' @param id Id needed to create unique model name
 #' @param save.on.disc save.on.disc
 
 doTrainResample = function(bls, task, rin, measures, show.info, id, save.on.disc) {
@@ -147,16 +147,16 @@ doTrainResample = function(bls, task, rin, measures, show.info, id, save.on.disc
   if (save.on.disc) {
     model.id = paste("saved.model", id, bls$id, "RData", sep = ".")
     saveRDS(model, file = model.id)
-    if (show.info) 
+    if (show.info)
       messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
     X = list(base.models = model.id, resres = r)
   } else { # save.on.disc = FALSE:
-    if (show.info) 
+    if (show.info)
       messagef("[Base Learner] %s applied.", bls$id)
     X = list(base.models = model, resres = r)
   }
   #print(paste(object.size(r)[1]/1000000, "MB"))
-  X 
+  X
 }
 
 
@@ -181,7 +181,7 @@ orderScore = function(scores, minimize, init) {
   if (minimize) {
     order(scores)[1:init]
   } else {
-    rev(order(scores))[1:init] 
+    rev(order(scores))[1:init]
   }
 }
 
@@ -191,12 +191,12 @@ orderScore = function(scores, minimize, init) {
 
 convertModelNameToBlsName = function(base.model.id, stack.id) {
   id = substr(base.model.id, 1, nchar(base.model.id) - 6) # remove .RData
-  id = substr(id, 13 + nchar(stack.id) + 1, nchar(id))  
+  id = substr(id, 13 + nchar(stack.id) + 1, nchar(id))
   id
 }
 
 #' Remove Stacking models from disc.
-#' 
+#'
 #' @param stack.id Name of stack.
 #' @param bls.ids Vector of base learner names.
 #' @export
@@ -208,10 +208,10 @@ removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
 
 
 #' Aggregate predictions
-#' 
-#' Aggregate predicitons results by averaging (for \code{regr}, and  \code{classif} with prob) or mode ( \code{classif} with response). 
+#'
+#' Aggregate predicitons results by averaging (for \code{regr}, and  \code{classif} with prob) or mode ( \code{classif} with response).
 #' (works for regr, classif, multiclass)
-#' 
+#'
 #' @param pred.list [list of \code{Predictions}]\cr
 #' @param sm.pt Final predict type, "prob" or "response"
 #' @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
@@ -232,13 +232,13 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
   x = lapply(pred.list, function(x) x$predict.type)
   pts.unequal = unlist(lapply(2:length(x), function(i) !all.equal(x[[1]], x[[i]])))
   if (any(pts.unequal)) stopf("Predict type in prediction '1' and '%s' differ. This is not possible!",  which(pts.unequal)[1])
-  
+
   #x = unlist(lapply(pred.list, function(x) checkIfNullOrAnyNA(x$data$response)))
   #print(which(x))
   #print(pred.list)
   #if (any(x)) messagef("Prediction '%s' is broken and will be removed.", which(x))
   #pred.list = pred.list[!x]
-  
+
   # Body
   pred1 = pred.list[[1]]
   type = getTaskType(pred1)
@@ -246,11 +246,11 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
   rn = row.names(pred1$data)
   pt = pred1$predict.type
   if (is.null(sm.pt)) sm.pt = pt
-  
+
   assertChoice(sm.pt, choices = c("prob", "response"))
   ti = NA_real_
-  pred.length = length(pred.list) 
-  
+  pred.length = length(pred.list)
+
   # Reduce results
   # type = "classif"
   if (type == "classif") {
@@ -268,12 +268,12 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
         preds = as.data.frame(lapply(pred.list, getPredictionResponse))
         y = factor(apply(preds, 1L, computeMode), td$class.levels)
       } else {
-        # rowiseRatio copied from Tong He (he said it's not the best solution). 
-        # This method should be rarely used, because pt = "response", 
-        # sm.pt = "prob" should perfrom worse than setting pt = "prob" (due to 
+        # rowWiseRatio copied from Tong He (he said it's not the best solution).
+        # This method should be rarely used, because pt = "response",
+        # sm.pt = "prob" should perfrom worse than setting pt = "prob" (due to
         # information loss when convertring probs to factors)
         preds = as.data.frame(lapply(pred.list, function(x) x$data$response))
-        y = rowiseRatio(preds, td$class.levels, model.weight = NULL)
+        y = rowWiseRatio(preds, td$class.levels, model.weight = NULL)
       }
     }
   # type = "regr"
@@ -295,11 +295,11 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
 
 
 #' Expand Predictions according to frequency argument
-#' 
+#'
 #' @param pred.list [\code{list} of \code{Predictions}]\cr
-#'  List of Predictions which should be expanded. 
+#'  List of Predictions which should be expanded.
 #' @param freq [\code{named vector}]\cr
-#'  Named vector containing the frequency of the chosen predictions. 
+#'  Named vector containing the frequency of the chosen predictions.
 #'  Vector names must be set to the model names.
 #' @export
 
@@ -309,18 +309,18 @@ expandPredList = function(pred.list, freq) {
   # checkListElementClass(pred.list, "Prediction")
   only.preds = unique(unlist(lapply(pred.list, function(x) any(class(x) == "Prediction"))))
   if (!only.preds) stopf("List elements in 'pred.list' are not all of class 'Prediction'")
-  
+
   keep = names(which(freq > 0))
   freq = freq[keep]
   pred.list = pred.list[keep]
   grid = data.frame(model = names(freq), freq, row.names = NULL)
-  expand = as.character(rep(grid$model, grid$freq)) 
+  expand = as.character(rep(grid$model, grid$freq))
   final.pred.list = vector("list", length(expand))
   names(final.pred.list) = paste(expand, 1:length(expand), sep = "_")
-  
+
   for (i in seq_along(expand)) {
     use = expand[i]
-    final.pred.list[i] = pred.list[use] 
+    final.pred.list[i] = pred.list[use]
   }
  final.pred.list
 }
