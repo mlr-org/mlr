@@ -1,8 +1,9 @@
 ### other helpers ###
 
 #' Sets the predict.type for the super learner of a stacked learner
-#' @param learner StackedLearner.
-#' @param predict.type "prob" or "response".
+#' @param learner ([StackedLearner]).
+#' @param predict.type (`character(1)`)\cr
+#'        `prob` for probabilities or `response` for classes.
 #' @export
 
 setPredictType.StackedLearner = function(learner, predict.type) {
@@ -12,10 +13,10 @@ setPredictType.StackedLearner = function(learner, predict.type) {
   return(lrn)
 }
 
-#' Returns response from Prediction object
-#' @param pred Prediction
-#' @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one
 
+# Returns response from Prediction object
+# @param pred Prediction
+# @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one
 getResponse = function(pred, full.matrix = NULL) {
   # if classification with probabilities
   if (pred$predict.type == "prob") {
@@ -35,11 +36,11 @@ getResponse = function(pred, full.matrix = NULL) {
   }
 }
 
-#' Returns response or probabilites from Prediction with the speciality that the
-#' first feature of a multiclass classification prediction will be removed to
-#' overcome multicollinearity problems
-#' @param pred Prediction from predict or resample
 
+# Returns response or probabilites from Prediction with the speciality that the
+# first feature of a multiclass classification prediction will be removed to
+# overcome multicollinearity problems
+# @param pred Prediction from predict or resample
 getPredictionDataNonMulticoll = function(pred) {
   if (any(class(pred) == "ResampleResult")) {
     pred = pred$pred
@@ -58,15 +59,14 @@ getPredictionDataNonMulticoll = function(pred) {
   }
 }
 
-#' Create a super learner task
-#'
-#' @param type "classif" or "regr"
-#' @param data data
-#' @param target target as character
+# Create a super learner task
+#
+# @param type "classif" or "regr"
+# @param data data
+# @param target target as character
 # FIXME: "save" version which rm constant features and features with NAs. BUT
 # might not be useful owing to the fact that predictLearner does not know which
 # features are removed
-
 makeSuperLearnerTask = function(type, data, target) {
   keep.idx = colSums(is.na(data)) == 0
   data = data[, keep.idx, drop = FALSE]
@@ -82,12 +82,11 @@ makeSuperLearnerTask = function(type, data, target) {
   }
 }
 
-#' Count the ratio (used if base.learner predict.type = "response" and
-#' super.learner predict.type is "prob")
-#' @param pred.data Prediction data
-#' @param levels Target levels of classifiaction task
-#' @param model.weight Model weights, default is 1/number of data points
-
+# Count the ratio (used if base.learner predict.type = "response" and
+# super.learner predict.type is "prob")
+# @param pred.data Prediction data
+# @param levels Target levels of classifiaction task
+# @param model.weight Model weights, default is 1/number of data points
 rowWiseRatio = function(pred.data, levels, model.weight = NULL) {
   m = length(levels)
   p = ncol(pred.data)
@@ -106,13 +105,12 @@ rowWiseRatio = function(pred.data, levels, model.weight = NULL) {
 }
 
 
-#' Training and prediction in one function (used for parallelMap)
-#' @param bls [list of base.learner]
-#' @param task [Task]
-#' @param show.info show.info
-#' @param id Id needed to create unique model name
-#' @param save.on.disc save.on.disc
-
+# Training and prediction in one function (used for parallelMap)
+# @param bls [list of base.learner]
+# @param task [Task]
+# @param show.info show.info
+# @param id Id needed to create unique model name
+# @param save.on.disc save.on.disc
 doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
   setSlaveOptions()
   model = train(bls, task)
@@ -131,15 +129,14 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
  X
 }
 
-#' Resampling and prediction in one function (used for parallelMap)
-#' @param bls [list of base.learner]
-#' @param task [Task]
-#' @param rin Resample Description
-#' @param measures Measures for resampling
-#' @param show.info show.info
-#' @param id Id needed to create unique model name
-#' @param save.on.disc save.on.disc
-
+# Resampling and prediction in one function (used for parallelMap)
+# @param bls [list of base.learner]
+# @param task [Task]
+# @param rin Resample Description
+# @param measures Measures for resampling
+# @param show.info show.info
+# @param id Id needed to create unique model name
+# @param save.on.disc save.on.disc
 doTrainResample = function(bls, task, rin, measures, show.info, id, save.on.disc) {
   setSlaveOptions()
   model = train(bls, task)
@@ -161,7 +158,6 @@ doTrainResample = function(bls, task, rin, measures, show.info, id, save.on.disc
 
 
 # Check if NULL or any NA in x
-
 checkIfNullOrAnyNA = function(x) {
   if (is.null(x)) return(TRUE)
   if (any(is.na(x))) return(TRUE)
@@ -170,7 +166,6 @@ checkIfNullOrAnyNA = function(x) {
 
 
 # Order a scores vector and return the best init numbers
-
 orderScore = function(scores, minimize, init) {
   # checks
   assertClass(scores, "numeric")
@@ -185,10 +180,9 @@ orderScore = function(scores, minimize, init) {
   }
 }
 
-#' Convert models names (when model was saved on disc) to base learner name
-#' @param base.model.id Unique ID used to save model on disc
-#' @param stack.id ID from makeStackedLearner
-
+# Convert models names (when model was saved on disc) to base learner name
+# @param base.model.id Unique ID used to save model on disc
+# @param stack.id ID from makeStackedLearner
 convertModelNameToBlsName = function(base.model.id, stack.id) {
   id = substr(base.model.id, 1, nchar(base.model.id) - 6) # remove .RData
   id = substr(id, 13 + nchar(stack.id) + 1, nchar(id))
@@ -197,27 +191,26 @@ convertModelNameToBlsName = function(base.model.id, stack.id) {
 
 #' Remove Stacking models from disc.
 #'
-#' @param stack.id Name of stack.
-#' @param bls.ids Vector of base learner names.
+#' @param stack.id (`character(1)`)\cr
+#' Name of stack.
+#' @param bls.ids (`character(1)`)\cr
+#' Vector of base learner names.
 #' @export
-
 removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
   term = paste0("rm saved.model.", stack.id, "*", bls.ids, ".RData")
   system(term)
 }
 
 
-#' Aggregate predictions
-#'
-#' Aggregate predicitons results by averaging (for \code{regr}, and  \code{classif} with prob) or mode ( \code{classif} with response).
-#' (works for regr, classif, multiclass)
-#'
-#' @param pred.list [list of \code{Predictions}]\cr
-#' @param sm.pt Final predict type, "prob" or "response"
-#' @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
-#' @export
+# Aggregate predictions
+#
+# Aggregate predicitons results by averaging (for \code{regr}, and  \code{classif} with prob) or mode ( \code{classif} with response).
+# (works for regr, classif, multiclass)
+#
+# @param pred.list [list of \code{Predictions}]\cr
+# @param sm.pt Final predict type, "prob" or "response"
+# @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
 # FIXME: add more methods (geometric mean, rank specific stuff)
-
 aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
   # return pred if list only contains one pred
   if (length(pred.list) == 1) {
@@ -289,20 +282,16 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
     tr = pred1$data$truth
     return(makePrediction(task.desc = td, rn, id = id, truth = tr, predict.type = sm.pt, predict.threshold = NULL, y, time = ti))
   }
-
-
 }
 
 
-#' Expand Predictions according to frequency argument
-#'
-#' @param pred.list [\code{list} of \code{Predictions}]\cr
-#'  List of Predictions which should be expanded.
-#' @param freq [\code{named vector}]\cr
-#'  Named vector containing the frequency of the chosen predictions.
-#'  Vector names must be set to the model names.
-#' @export
-
+# Expand Predictions according to frequency argument
+#
+# @param pred.list [\code{list} of \code{Predictions}]\cr
+#  List of Predictions which should be expanded.
+# @param freq [\code{named vector}]\cr
+#  Named vector containing the frequency of the chosen predictions.
+#  Vector names must be set to the model names.
 expandPredList = function(pred.list, freq) {
   assertClass(pred.list, "list")
   assertClass(freq, "numeric")
