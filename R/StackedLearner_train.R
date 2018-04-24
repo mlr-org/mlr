@@ -1,8 +1,8 @@
-#' Switch to train \code{StackedLearner}.
-#' @param .learner StackedLearner.
-#' @param .task Task.
-#' @param .subset Subset of Task.
-#' @param ... ...
+# Switch to train \code{StackedLearner}.
+# @param .learner StackedLearner.
+# @param .task Task.
+# @param .subset Subset of Task.
+# @param ... ...\cr Further arguments passed on to the learner.
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   .task = subsetTask(.task, subset = .subset)
