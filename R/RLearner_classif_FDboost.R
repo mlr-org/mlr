@@ -36,14 +36,21 @@ trainLearner.classif.FDboost = function(.learner, .task, .subset, .weights = NUL
     #PropOdds = mboost::PropOdds(nuirange = nuirange, offrange = offrange),
     custom.family = custom.family.definition)
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
+
   hh = getFDboostFormulaMat(.task, knots = knots, df = df, bsignal.check.ident = bsignal.check.ident, degree = degree, differences = differences)
+  if (.learner$predict.type == "prob") {
+    td = getTaskDesc(.task)
+    levs = c(td$negative, td$positive)
+    hh$mat.list[[getTaskTargetNames(.task)]] = factor(hh$mat.list[[getTaskTargetNames(.task)]], levs)
+  }
+
   FDboost::FDboost(formula = hh$form, timeformula = ~bols(1), data = hh$mat.list, control = ctrl, family = family)
 }
 
 #' @export
 predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")  # additional parameters passed to mboost::predict()
-                                                                           # in mboost, "response" returns probabilities and "class" returns the predicted class
+  # in mboost, "response" returns probabilities and "class" returns the predicted class
   p = predict(.model$learner.model, newdata = as.list(.newdata), type = type, ...)
 
   if (.learner$predict.type  == "prob") {
@@ -58,7 +65,7 @@ predictLearner.classif.FDboost = function(.learner, .model, .newdata, ...) {
       if(!is.null(dim(p))) {
         p = p[, 1L]
       }
-      return(propVectorToMatrix(p, c(td$positive, td$negative)))
+      return(propVectorToMatrix(p, c(td$negative, td$positive)))
     }
   } else {
     return(p)
