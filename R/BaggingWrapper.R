@@ -2,10 +2,10 @@
 #'
 #' @description
 #' Fuses a learner with the bagging method
-#' (i.e., similar to what a \code{randomForest} does).
+#' (i.e., similar to what a `randomForest` does).
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
@@ -18,23 +18,23 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #' For regression the mean value and the standard deviations across predictions is computed.
 #'
-#' Note that the passed base learner must always have \code{predict.type = 'response'},
+#' Note that the passed base learner must always have `predict.type = 'response'`,
 #' while the BaggingWrapper can estimate probabilities and standard errors, so it can
-#' be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
-#' \code{\link{setPredictType}}, the type is only set for the BaggingWrapper, not passed
+#' be set, e.g., to `predict.type = 'prob'`. For this reason, when you call
+#' [setPredictType], the type is only set for the BaggingWrapper, not passed
 #' down to the inner learner.
 #'
 #' @template arg_learner
-#' @param bw.iters [\code{integer(1)}]\cr
+#' @param bw.iters (`integer(1)`)\cr
 #'   Iterations = number of fitted models in bagging.
 #'   Default is 10.
-#' @param bw.replace [\code{logical(1)}]\cr
+#' @param bw.replace (`logical(1)`)\cr
 #'   Sample bags with replacement (bootstrapping)?
 #'   Default is TRUE.
-#' @param bw.size [\code{numeric(1)}]\cr
+#' @param bw.size (`numeric(1)`)\cr
 #'   Percentage size of sampled bags.
 #'   Default is 1 for bootstrapping and 0.632 for subsampling.
-#' @param bw.feats [\code{numeric(1)}]\cr
+#' @param bw.feats (`numeric(1)`)\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #'   At least one feature will always be selected.
@@ -68,7 +68,7 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeIntegerLearnerParam(id = "bw.iters", lower = 1L, default = 10L),
     makeLogicalLearnerParam(id = "bw.replace", default = TRUE),
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
-    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
+    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2 / 3)
   )
   makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "BaggingWrapper", model.subclass = "BaggingModel")
@@ -83,40 +83,40 @@ print.BaggingModel = function(x, ...) {
 }
 
 #' @export
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
+trainLearner.BaggingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL,
   bw.iters = 10, bw.replace = TRUE, bw.size, bw.feats = 1, ...) {
 
   if (missing(bw.size))
     bw.size = if (bw.replace) 1 else 0.632
   .task = subsetTask(.task, subset = .subset)
   n = getTaskSize(.task)
+  # number of observations to sample
   m = round(n * bw.size)
-  allinds = seq_len(n)
-  if (bw.feats < 1) {
-    feats = getTaskFeatureNames(.task)
-    k = max(round(bw.feats * length(feats)), 1)
-  }
-  models = lapply(seq_len(bw.iters), function(i) {
-    bag = sample(allinds, m, replace = bw.replace)
-    w = .weights[bag]
-    if (bw.feats < 1) {
-      feats2 = sample(feats, k, replace = FALSE)
-      .task2 = subsetTask(.task, features = feats2)
-      train(.learner$next.learner, .task2, subset = bag, weights = w)
-    } else {
-      train(.learner$next.learner, .task, subset = bag, weights = w)
-    }
-  })
-  m = makeHomChainModel(.learner, models)
+  # number of features to sample
+  k = max(round(bw.feats * getTaskNFeats(.task)), 1)
+
+  args = list(n = n, m = m, k = k, bw.replace = bw.replace,
+    task = .task, learner = .learner, weights = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(doBaggingTrainIteration, i = seq_len(bw.iters), more.args = args, level = "mlr.ensemble")
+  makeHomChainModel(.learner, models)
+}
+
+doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weights) {
+  setSlaveOptions()
+  bag = sample(seq_len(n), m, replace = bw.replace)
+  task = subsetTask(task, features = sample(getTaskFeatureNames(task), k, replace = FALSE))
+  train(learner$next.learner, task, subset = bag, weights = weights[bag])
 }
 
 #' @export
-predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.BaggingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    g(predict(m, newdata = nd, ...)$data$response)
+    g(predict(m, newdata = nd, subset = .subset, ...)$data$response)
   }))
   if (.learner$predict.type == "response") {
     if (.learner$type == "classif")
@@ -124,7 +124,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
     else
       rowMeans(p)
   } else {
-    if (.learner$type == 'classif') {
+    if (.learner$type == "classif") {
       levs = .model$task.desc$class.levels
       p = apply(p, 1L, function(x) {
         x = factor(x, levels = levs) # we need all level for the table and we need them in consistent order!

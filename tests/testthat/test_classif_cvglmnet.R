@@ -12,7 +12,7 @@ test_that("classif_cvglmnet", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     x = binaryclass.train
     y = x[, binaryclass.class.col]
@@ -39,6 +39,6 @@ test_that("classif_cvglmnet", {
 
   testSimpleParsets("classif.cvglmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.cvglmnet", binaryclass.df, binaryclass.target,
+  testProbParsets("classif.cvglmnet", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
 })

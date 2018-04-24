@@ -7,9 +7,9 @@ makeRLearner.multilabel.randomForestSRC = function() {
       makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
       makeDiscreteLearnerParam(id = "bootstrap", default = "by.root",
         values = c("by.root", "by.node", "none", "by.user")),
-      makeIntegerLearnerParam(id = "mtry", default = NULL, lower = 1L, 
+      makeIntegerLearnerParam(id = "mtry", default = NULL, lower = 1L,
         special.vals = list(NULL)),
-      makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = NULL, 
+      makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = NULL,
         special.vals = list(NULL)),
       makeIntegerLearnerParam(id = "nodedepth", default = NULL,
         special.vals = list(NULL)),
@@ -22,7 +22,7 @@ makeRLearner.multilabel.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "importance", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
           "permute.ensemble", "random.ensemble", "anti.ensemble")),
-      makeDiscreteLearnerParam(id = "na.action", default = "na.impute", 
+      makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
         values = c("na.omit", "na.impute"), when = "both"),
       # FIXME the default in rfsrc() for na.action is na.omit
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
@@ -52,7 +52,8 @@ makeRLearner.multilabel.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "prob", "weights"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = "`na.action` has been set to `na.impute` by default to allow missing data support."
+    note = "`na.action` has been set to `na.impute` by default to allow missing data support.",
+    callees = "rfsrc"
   )
 }
 
@@ -61,7 +62,7 @@ trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .we
   targets = getTaskTargetNames(.task)
   f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
   d = getTaskData(.task, .subset, recode.target = "multilabel.factor")
-  randomForestSRC::rfsrc(f , data = d, case.wt = .weights, ...)
+  randomForestSRC::rfsrc(f, data = d, case.wt = .weights, ...)
 }
 
 #' @export

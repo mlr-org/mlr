@@ -14,7 +14,7 @@ test_that("regr_nnet", {
   })
   testSimple("regr.nnet", regr.df, regr.target, regr.train.inds, p,
     parset = list())
-  
+
   # test with params passed
   set.seed(getOption("mlr.debug.seed"))
   capture.output({

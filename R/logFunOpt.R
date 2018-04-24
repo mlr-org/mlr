@@ -23,7 +23,9 @@ logFunMemory = function(learner, task, resampling, measures, par.set, control, o
   x.string, y, remove.nas, stage, prev.stage, prefixes) {
 
   if (stage == 1L) {
-    gc(); gc(); gc()
+    gc()
+    gc()
+    gc()
     start.time = Sys.time()
     messagef("[%s] %i: %s", prefixes[stage], dob, x.string)
     return(list(start.time = start.time))

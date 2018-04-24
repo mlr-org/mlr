@@ -8,7 +8,7 @@ test_that("classif_mda", {
     list(start.method = "lvq", subclasses = 2),
     list(start.method = "lvq", subclasses = 3)
   )
-  
+
   parset.list2 = list(
     list(),
     list(start.method = "lvq", subclasses = 2),
@@ -18,7 +18,7 @@ test_that("classif_mda", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list1)) {
+  for (i in seq_along(parset.list1)) {
     parset = parset.list1[[i]]
     pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
@@ -34,7 +34,7 @@ test_that("classif_mda", {
 
   testSimpleParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets  ("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
+  testProbParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list2)
 
   tt = mda::mda

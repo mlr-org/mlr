@@ -1,5 +1,5 @@
 # in case we have tune.threshold activated we want this as an extra. otherwise NULL
-# @arg control 
+# @arg control
 #   control [TuneControl]
 #   res [result from evalOptimizationState]
 getTuneThresholdExtra = function(control, res) {
@@ -11,3 +11,4 @@ getTuneThresholdExtra = function(control, res) {
     NULL
   }
 }
+

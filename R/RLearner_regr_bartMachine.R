@@ -13,7 +13,7 @@ makeRLearner.regr.bartMachine = function() {
       makeNumericLearnerParam(id = "q", default = 0.9, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "nu", default = 3L, lower = 1L),
       makeNumericLearnerParam(id = "prob_rule_class", default = 0.5, lower = 0, upper = 1),
-      makeNumericVectorLearnerParam(id = "mh_prob_steps", default = c(2.5, 2.5, 4)/9, len = 3L),
+      makeNumericVectorLearnerParam(id = "mh_prob_steps", default = c(2.5, 2.5, 4) / 9, len = 3L),
       makeLogicalLearnerParam(id = "debug_log", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "run_in_sample", default = TRUE),
       makeDiscreteLearnerParam(id = "s_sq_y", default = "mse", values = c("mse", "var")),
@@ -33,7 +33,8 @@ makeRLearner.regr.bartMachine = function() {
     properties = c("numerics", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
-    note = "`use_missing_data` has been set to `TRUE` by default to allow missing data support."
+    note = "`use_missing_data` has been set to `TRUE` by default to allow missing data support.",
+    callees = c("bartMachine", "predict.bartMachine")
   )
 }
 
@@ -47,3 +48,4 @@ trainLearner.regr.bartMachine = function(.learner, .task, .subset, .weights = NU
 predictLearner.regr.bartMachine = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, new_data = .newdata, ...)
 }
+

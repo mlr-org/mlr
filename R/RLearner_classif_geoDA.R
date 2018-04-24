@@ -10,7 +10,8 @@ makeRLearner.classif.geoDA = function() {
     # FIXME default of geoDa for validation is NULL, par.vals is redundant here.
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Geometric Predictive Discriminant Analysis",
-    short.name = "geoda"
+    short.name = "geoda",
+    callees = c("geoDA", "classify")
   )
 }
 

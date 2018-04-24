@@ -7,11 +7,11 @@
 getTuneResult(object)
 }
 \arguments{
-\item{object}{[\code{\link{WrappedModel}}]\cr
-Trained Model created with \code{\link{makeTuneWrapper}}.}
+\item{object}{(\link{WrappedModel})\cr
+Trained Model created with \link{makeTuneWrapper}.}
 }
 \value{
-[\code{\link{TuneResult}}].
+(\link{TuneResult}).
 }
 \description{
 Returns the optimal hyperparameters and optimization path after training.
@@ -22,6 +22,13 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsX}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }

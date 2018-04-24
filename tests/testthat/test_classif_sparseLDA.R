@@ -16,7 +16,7 @@ test_that("classif_sparseLDA", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     target.col = which(colnames(multiclass.train) == multiclass.target)
     X = multiclass.train[, -target.col]
@@ -34,6 +34,6 @@ test_that("classif_sparseLDA", {
 
   testSimpleParsets("classif.sparseLDA", multiclass.df, multiclass.target,
     multiclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets  ("classif.sparseLDA", multiclass.df, multiclass.target,
+  testProbParsets("classif.sparseLDA", multiclass.df, multiclass.target,
     multiclass.train.inds, old.probs.list, parset.list)
 })

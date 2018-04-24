@@ -14,7 +14,7 @@ test_that("chains", {
   inner = makeResampleDesc("CV", iters = 2)
 
   ps = makeParamSet(
-    makeDiscreteParam(id = "minsplit", values = c(5,10)),
+    makeDiscreteParam(id = "minsplit", values = c(5, 10)),
     makeDiscreteParam(id = "fw.perc", values = c(0.8, 1))
   )
 
@@ -24,7 +24,7 @@ test_that("chains", {
   p = predict(m, task = multiclass.task)
   or = m$learner.model$opt.result
   expect_equal(length(or$x), 2)
-  expect_equal(getOptPathLength(or$opt.path), 2*2)
+  expect_equal(getOptPathLength(or$opt.path), 2 * 2)
   perf = performance(p, mmce)
   expect_true(perf < 0.1)
 })

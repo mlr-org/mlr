@@ -21,7 +21,7 @@ makeRLearner.regr.glmnet = function() {
       makeNumericVectorLearnerParam(id = "lower.limits", upper = 0),
       makeNumericVectorLearnerParam(id = "upper.limits", lower = 0),
       makeIntegerLearnerParam(id = "maxit", default = 100000L, lower = 1L),
-      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance","naive")),
+      makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance", "naive")),
       makeLogicalLearnerParam(id = "standardize.response", default = FALSE),
       makeNumericLearnerParam(id = "fdev", default = 1.0e-5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "devmax", default = 0.999, lower = 0, upper = 1),
@@ -43,7 +43,8 @@ makeRLearner.regr.glmnet = function() {
       glmnet uses a global control object for its parameters. mlr resets all control parameters to their defaults
       before setting the specified parameters and after training.
       If you are setting glmnet.control parameters through glmnet.control,
-      you need to save and re-set them after running the glmnet learner."
+      you need to save and re-set them after running the glmnet learner.",
+    callees = c("glmnet", "glmnet.control", "predict.glmnet")
   )
 }
 

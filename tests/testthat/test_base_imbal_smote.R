@@ -29,11 +29,11 @@ test_that("smote works with rate 1 (no new examples)",  {
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"])
 
-  taskAlt = smote(binaryclass.task, rate = 1, alt.logic = TRUE)
-  dfAlt = getTaskData(taskAlt)
-  tab2Alt = table(dfAlt[, binaryclass.target])
-  expect_equal(tab2Alt["M"], tab1["M"])
-  expect_equal(tab2Alt["R"], tab1["R"])
+  task.alt = smote(binaryclass.task, rate = 1, alt.logic = TRUE)
+  df.alt = getTaskData(task.alt)
+  tab2alt = table(df.alt[, binaryclass.target])
+  expect_equal(tab2alt["M"], tab1["M"])
+  expect_equal(tab2alt["R"], tab1["R"])
 })
 
 test_that("smote works with only factor features",  {
@@ -41,7 +41,7 @@ test_that("smote works with only factor features",  {
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
     x2 = sample(c("a", "b"), n, replace = TRUE),
-    y = c(rep("a",2),rep("b",8))
+    y = c(rep("a", 2), rep("b", 8))
   )
   task = makeClassifTask(data = d, target = "y")
   task2 = smote(task, rate = 1.4, nn = 2L)
@@ -73,8 +73,26 @@ test_that("smote wrapper",  {
 test_that("smote works with only integer features", {
   dat = getTaskData(pid.task)
   i = sapply(dat, is.numeric)
-  dat[,i] = lapply(dat[,i], as.integer)
+  dat[, i] = lapply(dat[, i], as.integer)
   tsk = makeClassifTask(data = dat, target = "diabetes")
   task2 = smote(tsk, 2)
   expect_equal(getTaskSize(task2), 1036)
 })
+
+
+# FIXME: Reactivate test, the test is failing on an R CMD check but not test().
+#        Probably due to seeding problems.
+#test_that("smote works with constant factor features", {
+#  # This reproduces the bug from issue #1951
+#  d = data.frame(
+#    x1 = rpois(100, 2),
+#    x2 = gl(5, 20, labels = LETTERS[1:5]),
+#    y = as.factor(c(rep("+", 90), rep("-", 10)))
+#  )
+#
+#  task = makeClassifTask(data = d, target = "y")
+#  task2 = smote(task, rate = 9, nn = 4L)
+#
+#  expect_equal(table(getTaskData(task2)$x2, getTaskData(task2)$y)[5, 1], 90)
+#})
+

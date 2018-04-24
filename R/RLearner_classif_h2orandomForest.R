@@ -17,9 +17,10 @@ makeRLearner.classif.h2o.randomForest = function() {
       makeIntegerLearnerParam("max_after_balance_size", lower = 0L, default = 5L),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "missings", "prob"),
     name = "h2o.randomForest",
-    short.name = "h2o.rf"
+    short.name = "h2o.rf",
+    callees = "h2o.randomForest"
   )
 }
 
@@ -46,11 +47,9 @@ predictLearner.classif.h2o.randomForest = function(.learner, .model, .newdata, .
 
   # check if class names are integers. if yes, colnames of p.df need to be adapted
   int = stri_detect_regex(p.df$predict, "^[[:digit:]]+$")
-  if (any(int)) {
-    pcol = stri_detect_regex("^p[[:digit:]]+$", colnames(p.df))
-    if (any(pcol))
-      colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
-  }
+  pcol = stri_detect_regex(colnames(p.df), "^p[[:digit:]]+$")
+  if (any(int) && any(pcol))
+    colnames(p.df)[pcol] = stri_sub(colnames(p.df)[pcol], 2L)
 
   if (.learner$predict.type == "response") {
     return(p.df$predict)

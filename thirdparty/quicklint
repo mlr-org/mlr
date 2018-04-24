@@ -1,0 +1,46 @@
+#!/bin/sh
+
+if [ ! -z "$1" ] ; then
+  if [ "$1" = "-h" -o "$1" = "--help" ] ; then
+    echo -e "Usage:\n$1 [mlr folder]"
+    exit 0
+  fi
+  mlrpath="$1"
+else
+  mlrpath="$(git rev-parse --show-toplevel)"
+  if [ "$?" != "0" ] ; then
+    exit 1
+  fi
+fi
+cd -- "$mlrpath" || exit 1
+linthelper="./tests/testthat/helper_lint.R"
+
+if [ ! -f "$linthelper" ] ; then
+  echo -e "File ${linthelper} expected but not found.\nMaybe $(pwd) this is not the mlr directory?"
+  exit 1
+fi
+
+git diff --name-only master | grep '\.R$' | \
+Rscript --vanilla -e "\
+  library('BBmisc') ;\
+  library('checkmate') ;\
+  source('${linthelper}') ;\
+  ok = isLintrVersionOk(TRUE) ;\
+  library('lintr') ;\
+  infile = file('stdin') ;\
+  open(infile) ;\
+  bad = FALSE ;\
+  while(length({line = readLines(infile, 1)}) == 1) { \
+    if (!file.exists(line)) next ;\
+    catf('Linting file %s...', line, newline = FALSE) ;\
+    lintres = lint(line, linters = linters) ;\
+    if (length(lintres) > 0) {\
+      catf('FAIL:') ;\
+      print(lintres) ;\
+      bad = TRUE \
+    } else {\
+      catf('ok') \
+    } \
+  } ;\
+  if (bad) stop('Style errors found.') \
+"

@@ -1,7 +1,7 @@
 context("createDummyFeatures")
 
 test_that("createDummyFeatures", {
-  df = data.frame(a = 1:5, b = letters[1:5], c = LETTERS[c(1,1,1,2,2)], stringsAsFactors = FALSE)
+  df = data.frame(a = 1:5, b = letters[1:5], c = LETTERS[c(1, 1, 1, 2, 2)], stringsAsFactors = FALSE)
   expect_equal(df, createDummyFeatures(df))
   df$c = as.factor(df$c)
   df.d = createDummyFeatures(df)
@@ -19,5 +19,5 @@ test_that("createDummyFeatures", {
 
   df$a = as.factor(df$a)
   expect_equal(c("a", "b", "c.A", "c.B"),
-    colnames(createDummyFeatures(df, cols = c("c"))))
+    colnames(createDummyFeatures(df, cols = "c")))
 })

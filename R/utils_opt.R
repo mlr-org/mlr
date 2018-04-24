@@ -62,7 +62,7 @@ logicalToFeatures = function(x, all.vars) {
   if (is.matrix(x)) {
     if (missing(all.vars))
       all.vars = colnames(x)
-    lapply(seq_row(x), function(i) all.vars[x[i,]])
+    lapply(seq_row(x), function(i) all.vars[x[i, ]])
   } else {
     if (missing(all.vars))
       all.vars = names(x)

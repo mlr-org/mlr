@@ -12,10 +12,11 @@ makeRLearner.regr.h2o.gbm = function() {
       makeIntegerLearnerParam("nbins_cats", lower = 1L, default = 1024),
       makeIntegerLearnerParam("seed", tunable = FALSE)
     ),
-    properties = c("numerics", "factors"),
+    properties = c("numerics", "factors", "missings"),
     name = "h2o.gbm",
     short.name = "h2o.gbm",
-    note = "'distribution' is set automatically to 'gaussian'."
+    note = "'distribution' is set automatically to 'gaussian'.",
+    callees = "h2o.gbm"
   )
 }
 
@@ -25,7 +26,7 @@ trainLearner.regr.h2o.gbm = function(.learner, .task, .subset, .weights = NULL, 
   conn.up = tryCatch(h2o::h2o.getConnection(), error = function(err) return(FALSE))
   if (!inherits(conn.up, "H2OConnection")) {
     h2o::h2o.init()
-  }   
+  }
   y = getTaskTargetNames(.task)
   x = getTaskFeatureNames(.task)
   d = getTaskData(.task, subset = .subset)

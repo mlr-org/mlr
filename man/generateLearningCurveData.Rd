@@ -10,45 +10,45 @@ generateLearningCurveData(learners, task, resampling = NULL,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learners}{[(list of) \code{\link{Learner}}]\cr
+\item{learners}{[(list of) [Learner])\cr
 Learning algorithms which should be compared.}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{resampling}{[\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
+\item{resampling}{([ResampleDesc] | [ResampleInstance])\cr
 Resampling strategy to evaluate the performance measure.
 If no strategy is given a default "Holdout" will be performed.}
 
-\item{percs}{[\code{numeric}]\cr
+\item{percs}{([numeric])\cr
 Vector of percentages to be drawn from the training split.
 These values represent the x-axis.
-Internally \code{\link{makeDownsampleWrapper}} is used in combination with \code{\link{benchmark}}.
+Internally [makeDownsampleWrapper] is used in combination with [benchmark].
 Thus for each percentage a different set of observations is drawn resulting in noisy performance measures as the quality of the sample can differ.}
 
-\item{measures}{[(list of) \code{\link{Measure}}]\cr
+\item{measures}{[(list of) [Measure])\cr
 Performance measures to generate learning curves for, representing the y-axis.}
 
-\item{stratify}{[\code{logical(1)}]\cr
+\item{stratify}{(`logical(1)`)\cr
 Only for classification:
 Should the downsampled data be stratified according to the target classes?}
 
-\item{show.info}{[\code{logical(1)}]\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via \code{\link{configureMlr}}.}
+Default is set via \link{configureMlr}.}
 }
 \value{
-[\code{LearningCurveData}]. A \code{list} containing:
-  \item{task}{[\code{\link{Task}}]\cr
+([LearningCurveData]). A `list` containing:
+  \item{task}{[[Task])\cr
     The task.}
-  \item{measures}{[(list of) \code{\link{Measure}}]\cr
+  \item{measures}{[(list of) [Measure])\cr
     Performance measures.}
-  \item{data}{[\code{data.frame}] with columns:
+  \item{data}{([data.frame]) with columns:
     \itemize{
-      \item \code{learner} Names of learners.
-      \item \code{percentage} Percentages drawn from the training split.
+      \item `learner` Names of learners.
+      \item `percentage` Percentages drawn from the training split.
       \item One column for each
-    \code{\link{Measure}} passed to \code{\link{generateLearningCurveData}}.
+    [Measure] passed to [generateLearningCurveData].
    }}
 }
 \description{
@@ -66,12 +66,10 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}},
   \code{\link{plotFilterValues}}
 
-Other learning_curve: \code{\link{plotLearningCurveGGVIS}},
-  \code{\link{plotLearningCurve}}
+Other learning_curve: \code{\link{plotLearningCurve}}
 }

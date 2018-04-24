@@ -20,7 +20,8 @@ makeRLearner.classif.rpart = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights", "featimp"),
     name = "Decision Tree",
     short.name = "rpart",
-    note = "`xval` has been set to `0` by default for speed."
+    note = "`xval` has been set to `0` by default for speed.",
+    callees = c("rpart", "rpart.control")
   )
 }
 
@@ -44,6 +45,6 @@ predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
 
 #' @export
 getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
+  mod = getLearnerModel(.model, more.unwrap = TRUE)
   mod$variable.importance
 }

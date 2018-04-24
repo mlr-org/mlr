@@ -11,7 +11,7 @@ test_that("tuneIrace", {
   ctrl = makeTuneControlIrace(maxExperiments = n, nbIterations = 1L, minNbSurvival = 1)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(getOptPathLength(tr1$opt.path) >= 10 && getOptPathLength(tr1$opt.path) <= n)
-  expect_true(!is.na(tr1$y))
+  expect_number(tr1$y, lower = 0, upper = 0.2)
 
   # with trafo
   ps2 = makeParamSet(
@@ -21,9 +21,9 @@ test_that("tuneIrace", {
 
   n = 20
   ctrl = makeTuneControlIrace(maxExperiments = n, nbIterations = 1L, minNbSurvival = 1)
-  tr2 = tuneParams(makeLearner("classif.ksvm"), multiclass.task, rdesc, par.set = ps2, control = ctrl)
+  tr2 = tuneParams(makeLearner("classif.ksvm"), multiclass.task, rdesc, par.set = ps2, control = ctrl, measures = acc)
   expect_true(getOptPathLength(tr2$opt.path) >= 10 && getOptPathLength(tr2$opt.path) <= n)
-  expect_true(!is.na(tr2$y))
+  expect_number(tr2$y, lower = 0.8, upper = 1)
 })
 
 test_that("tuneIrace works with dependent params", {
@@ -33,7 +33,7 @@ test_that("tuneIrace works with dependent params", {
   )
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlIrace(maxExperiments = 40 ,nbIterations = 2L, minNbSurvival = 1)
+  ctrl = makeTuneControlIrace(maxExperiments = 40, nbIterations = 2L, minNbSurvival = 1)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) >= 20 && getOptPathLength(tr$opt.path) <= 100)
   expect_true(!is.na(tr$y))
@@ -153,15 +153,15 @@ test_that("irace works with unnamed discrete values", {
   res = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl)
 })
 
-# there was a bug when the column of an opt-path was NA all the way 
+# there was a bug when the column of an opt-path was NA all the way
 test_that("irace handles parameters with unsatisfiable requirement gracefully", {
   lrn = makeLearner("classif.J48")
-  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival=1L)
-            
-  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3, requires=quote(R != R)), makeLogicalParam("R"))  # C never feasible
+  ctrl = makeTuneControlIrace(maxExperiments = 20L, nbIterations = 1L, minNbSurvival = 1L)
+
+  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3, requires = quote(R != R)), makeLogicalParam("R"))  # C never feasible
   res = tuneParams(lrn, pid.task, hout, par.set = ps, control = ctrl)
-  
-  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3), makeLogicalParam("R", requires=quote(C > 1)))  # R never feasible
+
+  ps = makeParamSet(makeNumericParam("C", 0.1, 0.3), makeLogicalParam("R", requires = quote(C > 1)))  # R never feasible
   res = tuneParams(lrn, sonar.task, hout, par.set = ps, control = ctrl)
 })
-            
+

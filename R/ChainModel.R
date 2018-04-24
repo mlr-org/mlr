@@ -1,3 +1,11 @@
+#' Only exported for internal use.
+#' @param next.model ([WrappedModel])\cr
+#'   The next model.
+#' @param cl ([character])\cr
+#'   Subclass to assign to the resulting model.
+#'
+#' @keywords internal
+#' @export
 makeChainModel = function(next.model, cl) {
   setClasses(list(next.model = next.model), c(cl, "ChainModel", "WrappedModel"))
 }
@@ -10,7 +18,7 @@ getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
   if (inherits(model$learner.model, "NoFeaturesModel"))
     return(model$learner.model)
   if (more.unwrap)
-    model$learner.model$next.model$learner.model
+    getLearnerModel(model$learner.model$next.model, more.unwrap = TRUE)
   else
     model$learner.model$next.model
 }
@@ -19,5 +27,3 @@ getLearnerModel.BaseWrapperModel = function(model, more.unwrap = FALSE) {
 print.ChainModel = function(x, ...) {
   print(x$next.model)
 }
-
-

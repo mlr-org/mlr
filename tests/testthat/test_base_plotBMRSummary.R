@@ -6,22 +6,22 @@ test_that("BenchmarkSummary", {
   rdesc = makeResampleDesc("CV", iters = 2L)
   meas = list(acc, mmce, ber, timeboth)
   res = benchmark(lrns, tasks, rdesc, meas)
-  nTasks = length(getBMRTaskIds(res))
-  nLrns = length(getBMRLearnerIds(res))
+  n.tasks = length(getBMRTaskIds(res))
+  n.lrns = length(getBMRLearnerIds(res))
 
   plotBMRSummary(res)
 
   # pretty.names works
   plotBMRSummary(res)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerShortNames(res))
-  
+
   plotBMRSummary(res, pretty.names = FALSE)
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   testDocForStrings(doc, getBMRLearnerIds(res))
@@ -34,5 +34,5 @@ test_that("BenchmarkSummary", {
   res = benchmark(lrns, tasks, rdesc, meas)
   expect_error(plotBMRSummary(res),
     "names are not unique")
-  
+
 })

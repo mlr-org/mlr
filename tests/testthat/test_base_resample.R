@@ -42,13 +42,13 @@ test_that("resample", {
   rf4 = setThreshold(rf4, 1)
 
   expect_equal(rf1$data$response, rf2$data$response)
-  td = getTaskDescription(binaryclass.task)
+  td = getTaskDesc(binaryclass.task)
   f1 = factor(rep(td$positive, cv.i$size), levels = td$class.levels)
   expect_equal(rf3$data$response, f1)
   f2 = factor(rep(td$negative, cv.i$size), levels = td$class.levels)
   expect_equal(rf4$data$response, f2)
 
-  ct = makeClassifTask(data = iris[,c("Species", "Petal.Width")], target = "Species")
+  ct = makeClassifTask(data = iris[, c("Species", "Petal.Width")], target = "Species")
   fit = resample(lrn1, ct, makeResampleDesc("CV", iters = 2))
 
   expect_error(resample("classif.rpart", multiclass.task, makeResampleDesc("Holdout"),
@@ -68,8 +68,8 @@ test_that("resampling, predicting train set works", {
   expect_false(anyNA(r$pred$time))
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
-  expect_equal(getTaskDescription(multiclass.task), r$pred$task.desc)
-  
+  expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
+
   rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
   lrn = makeLearner("classif.rpart")
   m1 = setAggregation(mmce, train.mean)
@@ -80,9 +80,9 @@ test_that("resampling, predicting train set works", {
   expect_false(anyNA(r$pred$time))
   expect_false(is.null(r$pred$predict.type))
   expect_false(is.null(r$pred$threshold))
-  expect_equal(getTaskDescription(multiclass.task), r$pred$task.desc)
-  
-  
+  expect_equal(getTaskDesc(multiclass.task), r$pred$task.desc)
+
+
 
 })
 
@@ -136,7 +136,7 @@ test_that("resample has error messages when prediction fails", {
   configureMlr(on.learner.warning = "quiet")
 
   lrn = makeLearner("classif.knn")
-  lrn$properties = c(lrn$properties, c("missings"))
+  lrn$properties = c(lrn$properties, "missings")
 
   task = makeClassifTask("test", data = Sonar, target = "Class")
   task$env$data$V1[1:2] = NA
@@ -179,4 +179,37 @@ test_that("resample is extended by an additional measure", {
   # keep.pred must be TRUE
   res = resample(lrn, binaryclass.task, cv3, mmce, keep.pred = FALSE)
   expect_error(addRRMeasure(res, auc), "keep.pred")
+})
+
+test_that("resample printer respects show.info", {
+  show.info.saved = getMlrOptions()$show.info
+  lrn = makeLearner("regr.lm")
+
+  configureMlr(show.info = TRUE)
+  expect_message(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+
+  configureMlr(show.info = FALSE)
+  expect_silent(resample(lrn, bh.task, cv10, list(mape, medae, mse)))
+
+  configureMlr(show.info = show.info.saved)
+})
+
+test_that("resample drops unseen factors in predict data set", {
+  data = data.frame(a = c("a", "b", "a", "b", "a", "c"),
+      b = c(1, 1, 2, 2, 2, 1),
+      trg = c("a", "b", "a", "b", "a", "b"))
+  task = makeClassifTask("unseen.factors", data, "trg")
+  resinst = makeResampleInstance("Holdout", task)
+  resinst$train.inds[[1]] = 1:4
+  resinst$test.inds[[1]] = 5:6
+
+  lrn = makeLearner("classif.logreg", fix.factors.prediction = FALSE)
+  model = train(lrn, subsetTask(task, 1:4))
+  expect_error(predict(model, subsetTask(task, 5:6)), "factor a has new levels c")
+  expect_error(resample(lrn, task, resinst), "factor a has new levels c")
+
+  lrn = makeLearner("classif.logreg", fix.factors.prediction = TRUE)
+  model = train(lrn, subsetTask(task, 1:4))
+  predict(model, subsetTask(task, 5:6))
+  resample(lrn, task, resinst)
 })

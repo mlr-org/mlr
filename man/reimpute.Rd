@@ -7,25 +7,25 @@
 reimpute(obj, desc)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{desc}{[\code{ImputationDesc}]\cr
-Imputation description as returned by \code{\link{impute}}.}
+\item{desc}{(\code{ImputationDesc})\cr
+Imputation description as returned by \link{impute}.}
 }
 \value{
 Imputated \code{data.frame} or task with imputed data.
 }
 \description{
 This function accepts a data frame or a task and an imputation description
-as returned by \code{\link{impute}} to perform the following actions:
+as returned by \link{impute} to perform the following actions:
 \enumerate{
-  \item Restore dropped columns, setting them to \code{NA}
-  \item Add dummy variables for columns as specified in \code{impute}
-  \item Optionally check factors for new levels to treat them as \code{NA}s
-  \item Reorder factor levels to ensure identical integer representation as
-    before
-  \item Impute missing values using previously collected data
+\item Restore dropped columns, setting them to \code{NA}
+\item Add dummy variables for columns as specified in \code{impute}
+\item Optionally check factors for new levels to treat them as \code{NA}s
+\item Reorder factor levels to ensure identical integer representation as
+before
+\item Impute missing values using previously collected data
 }
 }
 \seealso{

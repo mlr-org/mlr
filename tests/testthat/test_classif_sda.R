@@ -11,5 +11,5 @@ test_that("classif_sda", {
   })
 
   testSimple("classif.sda", multiclass.df, multiclass.target, multiclass.train.inds, p$class)
-  testProb  ("classif.sda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
+  testProb("classif.sda", multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
 })

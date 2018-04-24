@@ -9,12 +9,14 @@ makeRLearner.classif.lda = function() {
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0),
       makeDiscreteLearnerParam(id = "predict.method", values = c("plug-in", "predictive", "debiased"),
         default = "plug-in", when = "predict"),
-      makeLogicalLearnerParam(id = "CV", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "CV", default = FALSE, tunable = FALSE),
+      makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1, tunable = TRUE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Linear Discriminant Analysis",
     short.name = "lda",
-    note = "Learner parameter `predict.method` maps to `method` in `predict.lda`."
+    note = "Learner parameter `predict.method` maps to `method` in `predict.lda`.",
+    callees = c("lda", "predict.lda")
   )
 }
 

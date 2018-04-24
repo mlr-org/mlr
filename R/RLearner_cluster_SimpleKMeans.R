@@ -22,9 +22,10 @@ makeRLearner.cluster.SimpleKMeans = function() {
       makeLogicalLearnerParam(id = "V", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics"),
+    properties = "numerics",
     name = "K-Means Clustering",
-    short.name = "simplekmeans"
+    short.name = "simplekmeans",
+    callees = c("SimpleKMeans", "Weka_control")
   )
 }
 

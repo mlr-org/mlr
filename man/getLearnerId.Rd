@@ -7,12 +7,12 @@
 getLearnerId(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{character(1)}].
+(\code{character(1)}).
 }
 \description{
 Get the ID of the learner.
@@ -27,8 +27,9 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerPredictType}},
   \code{\link{getLearnerShortName}},
   \code{\link{getLearnerType}}, \code{\link{getParamSet}},
-  \code{\link{makeLearners}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}},
   \code{\link{setPredictThreshold}},

@@ -23,7 +23,8 @@ makeRLearner.classif.glmboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmboost",
-    note = "`family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited."
+    note = "`family` has been set to `Binomial` by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited.",
+    callees = c("glmboost", "mboost_fit", "boost_control", "Binomial", "AdaExp", "AUC")
   )
 }
 
@@ -38,7 +39,7 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
     custom.family = custom.family.definition)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
-    td = getTaskDescription(.task)
+    td = getTaskDesc(.task)
     levs = c(td$negative, td$positive)
     d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }
@@ -63,7 +64,7 @@ predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
       # one observation prediction + family PropOdds returns a numeric vector instead of matrix
       # FIXME: add/change the outcommented line below to enable predicting one obs
       # (caution: check whether the right class is assigned)
-      # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2) 
+      # if (nrow(.newdata) == 1 && is.vector(p)) dim(p) = c(1,2)
       p = p[, 1L]
       levs = c(td$negative, td$positive)
       return(propVectorToMatrix(p, levs))

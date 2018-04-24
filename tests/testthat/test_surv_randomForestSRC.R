@@ -11,7 +11,7 @@ test_that("surv_randomForestSRC", {
   )
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset, list(data = surv.train, formula = surv.formula, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))

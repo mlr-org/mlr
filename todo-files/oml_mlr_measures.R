@@ -47,7 +47,7 @@ save.image("datasetup.RData")
 runs = sapply(run.ids, getOMLRun, simplify = FALSE, verbosity = 0L)
 #get all the calculated measures and store in list:
 oml.measures = list()
-for ( i in 1:length(runs)) {
+for ( i in seq_along(runs)) {
   oml.measures[[i]] <- runs[[i]]$output.data$evaluations[, c("name", "value")]
 }
 #we need lists for the mlr-measures we want

@@ -8,7 +8,7 @@ makeRLearner.regr.blackboost = function() {
         "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
       # families 'Poisson', 'NBinomial' and 'Hurdle' are for count data
       makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0,100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
+      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),
       makeNumericLearnerParam(id = "d", requires = quote(family == "Huber")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
@@ -31,11 +31,13 @@ makeRLearner.regr.blackboost = function() {
     properties = c("numerics", "factors", "weights", "missings"),
     name = "Gradient Boosting with Regression Trees",
     short.name = "blackboost",
-    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness.",
+    callees = c("blackboost", "mboost_fit", "boost_control", "ctree_control",
+      "Gaussian", "Laplace", "Huber", "GammaReg", "NBinomial", "Hurdle")
   )
 }
 
-trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0,100), d = NULL, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
+trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, family = "Gaussian", nuirange = c(0, 100), d = NULL, custom.family.definition, mstop, nu, risk, stopintern, trace, teststat, testtype, mincriterion, maxdepth, savesplitstats, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   defaults = getDefaults(getParamSet(.learner))
   if (missing(teststat)) teststat = defaults$teststat

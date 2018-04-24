@@ -1,81 +1,31 @@
-#' @title Create control structures for tuning.
+#' @title Control object for tuning
 #'
-#' @description
-#' The following tuners are available:
-#' \describe{
-#'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
-#'     You can either use their correct param type and \code{resolution},
-#'     or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
-#'     in the \code{par.set} passed to \code{\link{tuneParams}}.}
-#'   \item{makeTuneControlRandom}{Random search. All kinds of parameter types can be handled.}
-#'   \item{makeTuneControlDesign}{Completely pre-specifiy a data.frame of design points to be evaluated
-#'     during tuning. All kinds of parameter types can be handled.}
-#'   \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
-#'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
-#'     For integers the internally proposed numeric values are automatically rounded.
-#'     The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
-#'     parameter dimension.}
-#'   \item{makeTuneControlGenSA}{Generalized simulated annealing with method \code{\link[GenSA]{GenSA}}.
-#'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
-#'     For integers the internally proposed numeric values are automatically rounded.}
-#'   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
-#'     All kinds of parameter types can be handled. We return the best of the final elite
-#'     candidates found by irace in the last race. Its estimated performance is the mean of all
-#'     evaluations ever done for that candidate. More information on irace can be found in the TR at
-#'     \url{http://iridia.ulb.ac.be/IridiaTrSeries/link/IridiaTr2011-004.pdf}.}
-#' }
-#'
-#' Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
-#' not a \code{\link{ResampleInstance}}.
-#' The resampling strategy is randomly instantiated \code{n.instances} times and
-#' these are the instances in the sense of irace (\code{instances} element of \code{tunerConfig}
-#' in \code{\link[irace]{irace}}). Also note that irace will always
-#' store its tuning results in a file on disk, see the package documentation for details on this
-#' and how to change the file path.
-#'
-#' @param same.resampling.instance [\code{logical(1)}]\cr
+#' @description General tune control object.
+#' @param same.resampling.instance (`logical(1)`)\cr
 #'   Should the same resampling instance be used for all evaluations to reduce variance?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template arg_imputey
-#' @param start [\code{list}]\cr
+#' @param start ([list])\cr
 #'   Named list of initial parameter values.
-#' @param tune.threshold [\code{logical(1)}]\cr
+#' @param tune.threshold (`logical(1)`)\cr
 #'   Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
-#'   via \code{\link{tuneThreshold}}?
+#'   via [tuneThreshold]?
 #'   Only works for classification if the predict type is \dQuote{prob}.
-#'   Default is \code{FALSE}.
-#' @param tune.threshold.args [\code{list}]\cr
-#'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+#'   Default is `FALSE`.
+#' @param tune.threshold.args ([list])\cr
+#'   Further arguments for threshold tuning that are passed down to [tuneThreshold].
 #'   Default is none.
 #' @template arg_log_fun
-#' @param final.dw.perc [\code{boolean}]\cr
-#'   If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
-#'   Default is \code{NULL} which will not change anything.
-#' @param budget [\code{integer(1)}]\cr
-#'   Maximum budget for tuning. This value restricts the number of function
-#'   evaluations. In case of \code{makeTuneControlGrid} this number must be identical
-#'   to the size of the grid. For \code{makeTuneControlRandom} the
-#'   \code{budget} equals the number of iterations (\code{maxit}) performed by
-#'   the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
-#'   \code{budget} corresponds to the product of the number of generations
-#'   (\code{maxit}) and the number of offsprings per generation
-#'   (\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
-#'   the argument \code{max.call}. However, one should note that this algorithm
-#'   does not stop its local search before its end. This behaviour might lead
-#'   to an extension of the defined budget and will result in a warning. In
-#'   \code{irace}, \code{budget} is passed to \code{maxExperiments}.
-#' @param ... [any]\cr
-#'   Further control parameters passed to the \code{control} arguments of
-#'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
-#'   towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.
-#' @return [\code{\link{TuneControl}}]. The specific subclass is one of
-#'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
-#'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
-#'   \code{\link{TuneControlIrace}}.
-#' @family tune
+#' @param final.dw.perc (`boolean`)\cr
+#'   If a Learner wrapped by a [makeDownsampleWrapper] is used, you can define the value of `dw.perc` which is used to train the Learner with the final parameter setting found by the tuning.
+#'   Default is `NULL` which will not change anything.
+#' @param ... (any)\cr
+#'   Further control parameters passed to the `control` arguments of
+#'   [cmaes::cma_es] or [GenSA::GenSA], as well as
+#'   towards the `tunerConfig` argument of [irace::irace].
 #' @name TuneControl
 #' @rdname TuneControl
-#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
+#' @family tune
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL,

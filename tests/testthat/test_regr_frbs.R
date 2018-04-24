@@ -10,7 +10,7 @@ test_that("regr_frbs", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     pars = parset.list[[i]]
     method.arg = names(pars) == "method"
     if (any(method.arg)) {
@@ -21,7 +21,7 @@ test_that("regr_frbs", {
     pars$data.train = regr.num.train
     m = do.call(frbs::frbs.learn, pars)
     ind = setdiff(names(regr.num.test), regr.num.target)
-    p = predict(m, newdata = regr.num.test[, ind])[,1]
+    p = predict(m, newdata = regr.num.test[, ind])[, 1]
     old.predicts.list[[i]] = p
   }
 

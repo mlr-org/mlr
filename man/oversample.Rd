@@ -10,10 +10,10 @@ oversample(task, rate, cl = NULL)
 undersample(task, rate, cl = NULL)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
-\item{rate}{[\code{numeric(1)}]\cr
+\item{rate}{(\code{numeric(1)})\cr
 Factor to upsample or downsample a class.
 For undersampling: Must be between 0 and 1,
 where 1 means no downsampling, 0.5 implies reduction to 50 percent
@@ -21,12 +21,12 @@ and 0 would imply reduction to 0 observations.
 For oversampling: Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.}
 
-\item{cl}{[\code{character(1)}]\cr
+\item{cl}{(\code{character(1)})\cr
 Which class should be over- or undersampled. If \code{NULL}, \code{oversample}
 will select the smaller and \code{undersample} the larger class.}
 }
 \value{
-[\code{\link{Task}}].
+\link{Task}.
 }
 \description{
 Oversampling: For a given class (usually the smaller one) all existing observations are

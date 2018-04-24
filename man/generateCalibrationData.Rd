@@ -9,48 +9,48 @@ generateCalibrationData(obj, breaks = "Sturges", groups = NULL,
   task.id = NULL)
 }
 \arguments{
-\item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
+\item{obj}{(list of \link{Prediction} | list of \link{ResampleResult} | \link{BenchmarkResult})\cr
 Single prediction object, list of them, single resample result, list of them, or a benchmark result.
 In case of a list probably produced by different learners you want to compare, then
 name the list with the names you want to see in the plots, probably
 learner shortnames or ids.}
 
-\item{breaks}{[\code{character(1)} | \code{numeric}]\cr
+\item{breaks}{(\code{character(1)} | \link{numeric})\cr
 If \code{character(1)}, the algorithm to use in generating probability bins.
-See \code{\link{hist}} for details.
-If \code{numeric}, the cut points for the bins.
+See \link{hist} for details.
+If \link{numeric}, the cut points for the bins.
 Default is \dQuote{Sturges}.}
 
-\item{groups}{[\code{integer(1)}]\cr
+\item{groups}{(\code{integer(1)})\cr
 The number of bins to construct.
 If specified, \code{breaks} is ignored.
 Default is \code{NULL}.}
 
-\item{task.id}{[\code{character(1)}]\cr
-Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+\item{task.id}{(\code{character(1)})\cr
+Selected task in \link{BenchmarkResult} to do plots for, ignored otherwise.
 Default is first task.}
 }
 \value{
-[CalibrationData]. A \code{list} containing:
-  \item{proportion}{[\code{data.frame}] with columns:
-    \itemize{
-      \item \code{Learner} Name of learner.
-      \item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
-      \item \code{Class} Class labels (for binary classification only the positive class).
-      \item \code{Proportion} Proportion of observations from class \code{Class} among all
-        observations with posterior probabilities of class \code{Class} within the
-        interval given in \code{bin}.
-    }}
-  \item{data}{[\code{data.frame}] with columns:
-    \itemize{
-      \item \code{Learner} Name of learner.
-      \item \code{truth} True class label.
-      \item \code{Class} Class labels (for binary classification only the positive class).
-      \item \code{Probability} Predicted posterior probability of \code{Class}.
-      \item \code{bin} Bin corresponding to \code{Probability}.
-    }}
-  \item{task}{[\code{\link{TaskDesc}}]\cr
-    Task description.}
+\link{CalibrationData}. A \link{list} containing:
+\item{proportion}{\link{data.frame} with columns:
+\itemize{
+\item \code{Learner} Name of learner.
+\item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
+\item \code{Class} Class labels (for binary classification only the positive class).
+\item \code{Proportion} Proportion of observations from class \code{Class} among all
+observations with posterior probabilities of class \code{Class} within the
+interval given in \code{bin}.
+}}
+\item{data}{\link{data.frame} with columns:
+\itemize{
+\item \code{Learner} Name of learner.
+\item \code{truth} True class label.
+\item \code{Class} Class labels (for binary classification only the positive class).
+\item \code{Probability} Predicted posterior probability of \code{Class}.
+\item \code{bin} Bin corresponding to \code{Probability}.
+}}
+\item{task}{(\link{TaskDesc})\cr
+Task description.}
 }
 \description{
 A calibrated classifier is one where the predicted probability of a class closely matches the
@@ -67,7 +67,6 @@ Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.
 Other generate_plot_data: \code{\link{generateCritDifferencesData}},
   \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
-  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},

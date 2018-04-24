@@ -11,7 +11,7 @@ of the training data to make predictions.
 Using observation weights is currently not supported.
 
 Method \dQuote{majority} predicts always the majority class for each new
-observation. In the case of ties, one randomly sampled, constant class is predicted 
+observation. In the case of ties, one randomly sampled, constant class is predicted
 for all observations in the test set.
 This method is used as the default. It is very similar to the ZeroR classifier
 from WEKA (see \url{https://weka.wikispaces.com/ZeroR}). The only difference is

@@ -14,7 +14,8 @@ makeRLearner.classif.LiblineaRMultiClassSVC = function() {
     properties = c("twoclass", "multiclass", "numerics", "class.weights"),
     class.weights.param = "wi",
     name = "Support Vector Classification by Crammer and Singer",
-    short.name = "liblinmulticlasssvc"
+    short.name = "liblinmulticlasssvc",
+    callees = "LiblineaR"
   )
 }
 

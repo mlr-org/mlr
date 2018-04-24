@@ -2,30 +2,30 @@
 #'
 #' @description
 #' Plots for model diagnostics. Provides scatterplots of true vs. predicted values
-#' and histograms of the model's residuals. 
+#' and histograms of the model's residuals.
 #'
-#' @param obj [\code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
+#' @param obj ([Prediction] | [BenchmarkResult])\cr
 #'   Input data.
 #' @param type Type of plot. Can be \dQuote{scatterplot}, the default. Or
 #'   \dQuote{hist}, for a histogram, or in case of classification problems
 #'   a barplot, displaying the residuals.
-#' @param loess.smooth [\code{logical(1)}]\cr
-#'   Should a loess smoother be added to the plot? Defaults to \code{TRUE}.
-#'   Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.
-#' @param rug [\code{logical(1)}]\cr
-#'   Should marginal distributions be added to the plot? Defaults to \code{TRUE}.
-#'   Only applicable for regression tasks and if \code{type} is set to \code{scatterplot}.
-#' @param pretty.names [\code{logical(1)}]\cr
+#' @param loess.smooth (`logical(1)`)\cr
+#'   Should a loess smoother be added to the plot? Defaults to `TRUE`.
+#'   Only applicable for regression tasks and if `type` is set to `scatterplot`.
+#' @param rug (`logical(1)`)\cr
+#'   Should marginal distributions be added to the plot? Defaults to `TRUE`.
+#'   Only applicable for regression tasks and if `type` is set to `scatterplot`.
+#' @param pretty.names (`logical(1)`)\cr
 #'   Whether to use the short name of the learner instead of its ID in labels.
-#'   Defaults to \code{TRUE}. \cr
-#'   Only applicable if a \code{\link{BenchmarkResult}}
-#'   is passed to \code{obj} in the function call, ignored otherwise.
+#'   Defaults to `TRUE`. \cr
+#'   Only applicable if a [BenchmarkResult]
+#'   is passed to `obj` in the function call, ignored otherwise.
 #' @template ret_gg2
 #' @family plot
 #' @export
 plotResiduals = function(obj, type = "scatterplot", loess.smooth = TRUE,
   rug = TRUE, pretty.names = TRUE) {
-  
+
   assertChoice(type, c("scatterplot", "hist"))
   assertLogical(loess.smooth, len = 1L)
   assertLogical(rug, len = 1L)
@@ -53,10 +53,10 @@ plotResiduals.BenchmarkResult = function(obj, type = "scatterplot", loess.smooth
   rug = TRUE, pretty.names = TRUE) {
 
   task.type = getBMRObjects(obj, as.df = TRUE, fun = function(X){
-    getRRTaskDescription(X)$type
+    getRRTaskDesc(X)$type
   })
   task.type = unique(task.type$p)
-  
+
   if (task.type %nin% c("regr", "classif"))
     stopf("Task type must be 'regr' or 'classif'. But has type '%s'.", task.type)
 

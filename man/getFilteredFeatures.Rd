@@ -7,11 +7,11 @@
 getFilteredFeatures(model)
 }
 \arguments{
-\item{model}{[\code{\link{WrappedModel}}]\cr
-Trained Model created with \code{\link{makeFilterWrapper}}.}
+\item{model}{(\link{WrappedModel})\cr
+Trained Model created with \link{makeFilterWrapper}.}
 }
 \value{
-[\code{character}].
+(\link{character}).
 }
 \description{
 Returns the filtered features.
@@ -20,7 +20,7 @@ Returns the filtered features.
 Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
+  \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

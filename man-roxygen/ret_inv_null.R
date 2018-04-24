@@ -1,1 +1,2 @@
-#' @return [\code{invisible(NULL)}].
+#' @return (`invisible(NULL)`).
+#' @md

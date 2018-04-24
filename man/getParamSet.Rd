@@ -4,10 +4,10 @@
 \alias{getParamSet}
 \title{Get a description of all possible parameter settings for a learner.}
 \value{
-[\code{\link[ParamHelpers]{ParamSet}}].
+\link{ParamSet}.
 }
 \description{
-Returns the \code{\link[ParamHelpers]{ParamSet}} from a \code{\link{Learner}}.
+Returns the \link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet} from a \link{Learner}.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
@@ -18,7 +18,9 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{getLearnerParamSet}},
   \code{\link{getLearnerPredictType}},
   \code{\link{getLearnerShortName}},
-  \code{\link{getLearnerType}}, \code{\link{makeLearners}},
+  \code{\link{getLearnerType}},
+  \code{\link{helpLearnerParam}},
+  \code{\link{helpLearner}}, \code{\link{makeLearners}},
   \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setLearnerId}},

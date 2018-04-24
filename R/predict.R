@@ -2,25 +2,25 @@
 #'
 #' @description
 #' Predict the target variable of new data using a fitted model.
-#' What is stored exactly in the [\code{\link{Prediction}}] object depends
-#' on the \code{predict.type} setting of the \code{\link{Learner}}.
-#' If \code{predict.type} was set to \dQuote{prob} probability thresholding
-#' can be done calling the \code{\link{setThreshold}} function on the
+#' What is stored exactly in the ([Prediction]) object depends
+#' on the `predict.type` setting of the [Learner].
+#' If `predict.type` was set to \dQuote{prob} probability thresholding
+#' can be done calling the [setThreshold] function on the
 #' prediction object.
 #'
-#' The row names of the input \code{task} or \code{newdata} are preserved in the output.
+#' The row names of the input `task` or `newdata` are preserved in the output.
 #'
-#' @param object [\code{\link{WrappedModel}}]\cr
-#'   Wrapped model, result of \code{\link{train}}.
-#' @param task [\code{\link{Task}}]\cr
+#' @param object ([WrappedModel])\cr
+#'   Wrapped model, result of [train].
+#' @param task ([Task])\cr
 #'   The task. If this is passed, data from this task is predicted.
-#' @param newdata [\code{data.frame}]\cr
+#' @param newdata ([data.frame])\cr
 #'   New observations which should be predicted.
-#'   Pass this alternatively instead of \code{task}.
+#'   Pass this alternatively instead of `task`.
 #' @template arg_subset
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Currently ignored.
-#' @return [\code{\link{Prediction}}].
+#' @return ([Prediction]).
 #' @family predict
 #' @export
 #' @examples
@@ -61,9 +61,15 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   subset = checkTaskSubset(subset, size)
 
   if (missing(newdata)) {
-    newdata = getTaskData(task, subset)
+    # if learner does not support functional, we convert to df cols
+    if (hasLearnerProperties(object$learner, "functionals") ||
+      hasLearnerProperties(object$learner, "single.functional")) {
+      newdata = getTaskData(task, subset, functionals.as = "matrix")
+    } else {
+      newdata = getTaskData(task, subset, functionals.as = "dfcols")
+    }
   } else {
-    newdata = newdata[subset,, drop = FALSE]
+    newdata = newdata[subset, , drop = FALSE]
   }
 
   # if we saved a model and loaded it later just for prediction this is necessary
@@ -83,10 +89,13 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   }
 
   error = NA_character_
+  # default to NULL error dump
+  dump = NULL
   # was there an error in building the model? --> return NAs
   if (isFailureModel(model)) {
     p = predictFailureModel(model, newdata)
     time.predict = NA_real_
+    dump = getFailureModelDump(model)
   } else {
     #FIXME: this copies newdata
     pars = list(
@@ -98,15 +107,19 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
       set.seed(debug.seed)
-    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning"))
+    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning", "on.error.dump"))
     fun1 = if (opts$show.learner.output) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
+    fun3 = if (opts$on.learner.error == "stop" || !opts$on.error.dump) identity else function(x) {
+        withCallingHandlers(x, error = function(c) utils::dump.frames())
+      }
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
-    time.predict = measureTime(fun1(p <- fun2(do.call(predictLearner2, pars))))
+
+    time.predict = measureTime(fun1({p = fun2(fun3(do.call(predictLearner2, pars)))}))
 
     # was there an error during prediction?
     if (is.error(p)) {
@@ -115,6 +128,9 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
       error = as.character(p)
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_
+      if (opts$on.error.dump) {
+        dump = addClasses(get("last.dump", envir = .GlobalEnv), "mlr.dump")
+      }
     }
   }
   if (missing(task))
@@ -122,5 +138,5 @@ predict.WrappedModel = function(object, task, newdata, subset = NULL, ...) {
   else
     ids = subset
   makePrediction(task.desc = td, row.names = rownames(newdata), id = ids, truth = truth,
-    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error)
+    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict, error = error, dump = dump)
 }

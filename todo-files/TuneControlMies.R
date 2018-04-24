@@ -7,7 +7,7 @@
 #
 #setClass(
 #  "TuneControlMies",
-#  contains = c("TuneControl")
+#  contains = "TuneControl"
 #)
 #
 #

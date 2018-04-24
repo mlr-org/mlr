@@ -7,11 +7,11 @@
 getTaskFeatureNames(task)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 }
 \value{
-[\code{character}].
+(\link{character}).
 }
 \description{
 Target column name is not included.
@@ -19,9 +19,9 @@ Target column name is not included.
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},
   \code{\link{getTaskCosts}}, \code{\link{getTaskData}},
-  \code{\link{getTaskDescription}},
-  \code{\link{getTaskFormula}}, \code{\link{getTaskId}},
-  \code{\link{getTaskNFeats}}, \code{\link{getTaskSize}},
+  \code{\link{getTaskDesc}}, \code{\link{getTaskFormula}},
+  \code{\link{getTaskId}}, \code{\link{getTaskNFeats}},
+  \code{\link{getTaskSize}},
   \code{\link{getTaskTargetNames}},
   \code{\link{getTaskTargets}}, \code{\link{getTaskType}},
   \code{\link{subsetTask}}

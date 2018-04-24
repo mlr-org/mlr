@@ -11,9 +11,9 @@ test_that("regr_evtree", {
 
   old.predicts.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(regr.formula, data=regr.train)
+    pars = list(regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(evtree::evtree, pars)

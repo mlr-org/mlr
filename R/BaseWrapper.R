@@ -1,8 +1,26 @@
+#' Exported for internal use only.
+#' @param id (`character(1)`)\cr
+#'   Id string for object. Used to display object.
+#' @param type (`character(1)`)\cr
+#'   Learner type.
+#' @param next.learner ([Learner])\cr
+#'   Learner to wrap.
+#' @param package ([character])\cr
+#'   Packages to load when loading learner.
+#' @param par.set ([ParamSet])\cr
+#'   Parameter set.
+#' @param par.vals ([list])\cr
+#'   Optional list of named (hyper)parameter values.
+#' @param learner.subclass ([character])\cr
+#'   Class to assign the new object.
+#' @param model.subclass ([character])\cr
+#'   Class to assign learner models.
+#' @keywords internal
+#' @export
 makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals = list(), learner.subclass, model.subclass) {
-
-  if (inherits(next.learner, "OptWrapper"))
-    stop("Cannot wrap an optimization wrapper with something else!")
+  if (inherits(next.learner, "OptWrapper") && is.element("TuneWrapper", learner.subclass))
+    stop("Cannot wrap a tuning wrapper around another optimization wrapper!")
   ns = intersect(names(par.set$pars), names(next.learner$par.set$pars))
   if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
@@ -57,7 +75,7 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset = NULL, features, factor.levels, time) {
   x = NextMethod()
   addClasses(x, c(learner$model.subclass, "BaseWrapperModel"))
 }
@@ -72,6 +90,11 @@ isFailureModel.BaseWrapperModel = function(model) {
 #' @export
 getFailureModelMsg.BaseWrapperModel = function(model) {
   return(getFailureModelMsg(model$learner.model$next.model))
+}
+
+#' @export
+getFailureModelDump.BaseWrapperModel = function(model) {
+  return(getFailureModelDump(model$learner.model$next.model))
 }
 
 #' @export

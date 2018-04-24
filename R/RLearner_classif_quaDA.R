@@ -9,7 +9,8 @@ makeRLearner.classif.quaDA = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Quadratic Discriminant Analysis",
-    short.name = "quada"
+    short.name = "quada",
+    callees = c("quaDA", "classify")
   )
 }
 

@@ -14,7 +14,7 @@ test_that("classif_LiblineaRL2LogReg", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1L:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     pars = list(data = binaryclass.train[, -binaryclass.class.col],
       target = binaryclass.train[, binaryclass.target])
@@ -36,7 +36,7 @@ test_that("classif_LiblineaRL2LogReg", {
 
   testSimpleParsets("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
+  testProbParsets("classif.LiblineaRL2LogReg", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list)
 
 })

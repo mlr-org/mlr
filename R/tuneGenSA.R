@@ -1,4 +1,4 @@
-tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
+tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info, resample.fun) {
   requirePackages("GenSA", why = "tuneGenSA", default.method = "load")
 
   low = getLower(par.set)
@@ -13,7 +13,7 @@ tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.
   res = GenSA::GenSA(par = start, fn = tunerFitnFun, lower = low, upper = upp, control = ctrl.gensa,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    convertx = convertXNumeric, remove.nas = FALSE)
+    convertx = convertXNumeric, remove.nas = FALSE, resample.fun = resample.fun)
 
   # FIXME: the following condition can be removed, once we are able to fix the
   # budget in GenSA

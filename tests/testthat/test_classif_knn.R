@@ -11,7 +11,7 @@ test_that("classif_knn", {
   old.predicts.list = list()
   old.probs.list = list()
 
-  for (i in 1:length(parset.list)) {
+  for (i in seq_along(parset.list)) {
     parset = parset.list[[i]]
     train = multiclass.train
     y = train[, multiclass.target]
@@ -28,7 +28,7 @@ test_that("classif_knn", {
   testSimpleParsets("classif.knn", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list)
 
-  tt = function (formula, data, k = 1) {
+  tt = function(formula, data, k = 1) {
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {

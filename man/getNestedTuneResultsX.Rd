@@ -7,14 +7,14 @@
 getNestedTuneResultsX(r)
 }
 \arguments{
-\item{r}{[\code{\link{ResampleResult}}] \cr
+\item{r}{(\link{ResampleResult}) \cr
 The result of resampling of a tuning wrapper.}
 }
 \value{
-[\code{data.frame}]. One column for each tuned hyperparameter and one row for each outer resampling iteration.
+(\link{data.frame}). One column for each tuned hyperparameter and one row for each outer resampling iteration.
 }
 \description{
-After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
+After you resampled a tuning wrapper (see \link{makeTuneWrapper})
 with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
 the the best found hyperparameter settings for each resampling iteration.
 }
@@ -27,6 +27,13 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlMBO}},
+  \code{\link{makeTuneControlRandom}},
   \code{\link{makeTuneWrapper}}, \code{\link{tuneParams}},
   \code{\link{tuneThreshold}}
 }
