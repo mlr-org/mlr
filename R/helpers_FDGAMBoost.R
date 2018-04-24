@@ -47,18 +47,25 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
 
 
 fgam.ps = makeParamSet(
-      makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
-      makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
-      makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),  # mgcv::s:bs "tp"’ for thin plate regression spline, ‘"cr"’ for cubic regression spline
-      makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, special.vals = list(NA)),  # mgcv::s:m The order of the penalty for this term, default: let mgcv choose. The original default is NA but mlr will generate warnings for this.
-      makeIntegerVectorLearnerParam(id = "mgcv.te_ti.m", lower = 1L, special.vals = list(NA)),  # The order of the spline and its penalty (for smooth classes that use this) for each term. The original default is NA but mlr will generate warnings for this.
-      makeIntegerVectorLearnerParam(id = "mgcv.te_ti.k", lower = 1L, special.vals = list(NA)),  # the dimension(s) of the bases used to represent the smooth term.  If not supplied then set to ‘5^d’. The original default is NA but mlr will generate warnings for this.
-      # skipped: argvals(indices of evaluation of ‘X’)
-      makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
-      # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)), # FIXME: currently not used in train
-      # FIXME: skipped args: presmooth.opts, Xrange
-      makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
-    )
+  # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
+  makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),
+  # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
+  makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
+  # mgcv::s:bs "tp" for thin plate regression spline, "cr" for cubic regression spline
+  makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
+  # mgcv::s:m The order of the penalty for this term, default: let mgcv choose. The original default is NA but mlr will generate warnings for this.
+  makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, special.vals = list(NA)),
+  # The order of the spline and its penalty (for smooth classes that use this) for each term. The original default is NA but mlr will generate warnings for this.
+  makeIntegerVectorLearnerParam(id = "mgcv.te_ti.m", lower = 1L, special.vals = list(NA)),
+  # the dimension(s) of the bases used to represent the smooth term.  If not supplied then set to ?5^d?. The original default is NA but mlr will generate warnings for this.
+  makeIntegerVectorLearnerParam(id = "mgcv.te_ti.k", lower = 1L, special.vals = list(NA)),
+  # skipped: argvals(indices of evaluation of ?X?)
+  makeDiscreteLearnerParam(id = "integration", values = c("simpson", "trapezoidal", "riemann"), default = "simpson"),
+  # makeDiscreteLearnerParam(id = "presmooth", values = c("fpca.sc", "fpca.face", "fpca.ssvd", "fpca.bspline", "fpca.interpolate", NULL), default = NULL, special.vals = list(NULL)),
+  # FIXME: currently not used in train
+  # FIXME: skipped args: presmooth.opts, Xrange
+  makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
+)
 
 fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE)
 
@@ -74,23 +81,22 @@ getBinomialTarget = function(.task)  {
 
 
 # FDBoost
-
 fdboost.regr.ps = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
-        "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
-      makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
-      makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),  # the learning rate
-      makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),  # list of parameters for the custom family
-      makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),  # distribution parameters for families
-      makeNumericLearnerParam(id = "d", default = NULL, requires = quote(family == "Huber"), special.vals = list(NULL)), # delta parameter for Huber distribution
-      # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
-      makeNumericLearnerParam(id = "df", default = 4, lower = 0.5),  # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
-      # makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols")),  # we don't use "btree" in FDboost
-      makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
-      makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L),  # degree of the b-spline
-      makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
-      makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
-    )
+  makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
+    "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
+  makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
+  makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),  # the learning rate
+  makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),  # list of parameters for the custom family
+  makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),  # distribution parameters for families
+  makeNumericLearnerParam(id = "d", default = NULL, requires = quote(family == "Huber"), special.vals = list(NULL)), # delta parameter for Huber distribution
+  # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
+  makeNumericLearnerParam(id = "df", default = 4, lower = 0.5),  # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
+  # makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols")),  # we don't use "btree" in FDboost
+  makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
+  makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L),  # degree of the b-spline
+  makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
+  makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
+)
 
 getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, differences) {
   tdata = getTaskData(.task, functionals.as = "matrix")
