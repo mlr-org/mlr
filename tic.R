@@ -29,6 +29,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("install") %>%
     add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>% # favicon creation
+    add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_deploy") %>%
