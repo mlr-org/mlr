@@ -63,4 +63,5 @@ test_that("doTrainPredict works", {
   l2 = doTrainPredict(makeLearner("classif.rpart"), id = "stack", binaryclass.task, save.on.disc = TRUE, show.info = TRUE)
   expect_list(l2, len = 2, names = "named")
   expect_string(l2$base.models, pattern = "saved.model")
+  unlink(l2$base.models)
 })

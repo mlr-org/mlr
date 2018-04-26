@@ -136,14 +136,18 @@ makeStackedLearner = function(id = "stack", method = "superlearner", base.learne
    stop("Predicting standard errors currently not supported.")
   if (length(bm.pt) > 1L)
     stop("Base learner must all have the same predict type!")
-  if ((method %in% c("aggregate", "ensembleselection")) & (!is.null(super.learner) | is.null(predict.type)) )
+  if ((method %in% c("aggregate", "ensembleselection")) & (!is.null(super.learner) | is.null(predict.type)))
+    stop("No super learner needed for this method or the 'predict.type' is not specified.")
+  if (method %in% "superlearner" & is.null(super.learner))
+    stop("You have to specify a super learner for this method.")
+  if ((method %in% c("aggregate", "ensembleselection")) & use.feat)
+    stop("The original features cannot be used for this method")
 
-  # lrn$predict.type is "response" by default change it using setPredictType
   lrn =  makeBaseEnsemble(
     id = id,
     base.learners = base.learners,
-    cl = "StackedLearner"
-  )
+    cl = "StackedLearner")
+
   if (!is.null(super.learner)) {
     lrn = setPredictType(lrn, predict.type = super.learner$predict.type)
   } else {
