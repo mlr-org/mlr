@@ -12,8 +12,8 @@
 #' regarding CV fold number).
 #' This function does four things internally (in that order) to obtain the new predictions:
 #' \describe{
-#' \item{1.}{Use saved base models (from `obj`) on test data to predict level 1 test data.
-#' \item{2.}{Extract level 1 train data (from `obj`).
+#' \item{1.}{Use saved base models (from `obj`) on test data to predict level 1 test data.}
+#' \item{2.}{Extract level 1 train data (from `obj`).}
 #' \item{3.}{Fit new super learner or apply new ensemble selection setting using level 1 train data from (2).}
 #' \item{4.}{Apply model from (3) on level 1 test data from (1) to obtain final prediction.}
 #' }
@@ -77,7 +77,7 @@
 #' sapply(list(res2, re2), function(x) x$runtime)
 #' }
 #' @export
-#' #' @importFrom utils stack
+#' @importFrom utils stack
 resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL,
   super.learner = NULL, use.feat = NULL, es.par.vals = NULL) {
   # checks
