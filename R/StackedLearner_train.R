@@ -217,7 +217,7 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
     metric = metric, tolerance = tolerance))
 
   # return
-  list(method = "hill.climb", base.models = base.models, super.model = NULL,
+  list(method = "ensembleselection", base.models = base.models, super.model = NULL,
     pred.train = pred.list, bls.performance = bls.performance,
     weights = ensel$weights, freq = ensel$freq, freq.list = ensel$freq.list)
 }
