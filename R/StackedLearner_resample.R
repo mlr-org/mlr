@@ -19,8 +19,8 @@
 #' }
 #' Following parameters need to be set for the single methods. For
 #' \describe{
-#' \item{method  = "superlearner"}{`super.learner` and `use.feat` need to be set.`
-#' \item{method = "ensembleselection"}{`es.par.vals` need to be set.`
+#' \item{method  = "superlearner"}{`super.learner` and `use.feat` need to be set.}
+#' \item{method = "ensembleselection"}{`es.par.vals` need to be set.}
 #' \item{method = "aggregate"}{no arguemnt of those abvoe need to be set.}
 #' }
 #' @param id (`character(1)`)\cr Unique ID for object.
