@@ -17,11 +17,11 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
     add_step(step_setup_ssh())
 
   get_stage("script") %>%
+    add_code_step(devtools::document()) %>%
     add_step(step_rcmdcheck())
 
   get_stage("deploy") %>%
     add_code_step(system2("bash", args = c("inst/convert_to_ascii_news.sh"))) %>%
-    add_code_step(devtools::document()) %>%
     add_step(step_push_deploy(orphan = FALSE, branch = "master", commit_paths = c("NAMESPACE", "man/*", "NEWS")))
 }
 
@@ -29,6 +29,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("install") %>%
     add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>% # favicon creation
+    add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_deploy") %>%
