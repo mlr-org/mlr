@@ -18,11 +18,10 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
 # Aggregation method
 ################################################################
 
-#' Train function for simple aggregation of base learner predictions without weights.
-#'
-#' @param learner ([`StackedLearner`]).
-#' @template arg_task
-
+# Train function for simple aggregation of base learner predictions without weights.
+#
+# @param learner ([`StackedLearner`]).
+# @template arg_task
 aggregateBaseLearners = function(learner, task) {
   id = learner$id
   save.on.disc = learner$save.on.disc
