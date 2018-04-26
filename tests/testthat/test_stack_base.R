@@ -11,7 +11,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   }
   if (method == "ensembleselection" && bms.pt == "response" && inherits(task, "ClassifTask")) return()
 
-  stk = makeStackedLearner(id = "stack", base.learner = base, super.learner = super, 
+  stk = makeStackedLearner(id = "stack", base.learner = base, super.learner = super,
     method = method, use.feat = use.feat, predict.type = sm.pt, save.preds = T)
   tr = train(stk, task)
   pr = predict(tr, task)
@@ -28,7 +28,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   }
 }
 
-test_that("Base functions", {
+test_that("Stacking base functions", {
   tasks = list(binaryclass.task, multiclass.task, regr.task)
   for (task in tasks) {
     td = getTaskDescription(task)
@@ -53,4 +53,14 @@ test_that("Base functions", {
       }
     }
   }
+})
+
+
+test_that("doTrainPredict works", {
+  l = doTrainPredict(makeLearner("classif.rpart"), binaryclass.task, save.on.disc = FALSE, show.info = FALSE)
+  expect_list(l, len = 2, names = "named")
+  expect_message(doTrainPredict(makeLearner("classif.rpart"), binaryclass.task, save.on.disc = FALSE, show.info = TRUE))
+  l2 = doTrainPredict(makeLearner("classif.rpart"), id = "stack", binaryclass.task, save.on.disc = TRUE, show.info = TRUE)
+  expect_list(l2, len = 2, names = "named")
+  expect_string(l2$base.models, pattern = "saved.model")
 })

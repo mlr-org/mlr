@@ -68,10 +68,10 @@ aggregateBaseLearners = function(learner, task) {
 # Supervised method as combiner based on cross validated predictions as level 1 data (short: super learner)
 ################################################################
 
-#' Train function for stacking method "Super Learner", which uses meta learner to obtain level 1 data and uses inner cross-validation for prediction.
-#'
-#' @param learner ([`StackedLearner`]).
-#' @template arg_task
+# Train function for stacking method "Super Learner", which uses meta learner to obtain level 1 data and uses inner cross-validation for prediction.
+#
+# @param learner ([`StackedLearner`]).
+# @template arg_task
 
 superlearnerBaseLearners = function(learner, task) {
   # setup
@@ -140,21 +140,19 @@ superlearnerBaseLearners = function(learner, task) {
 ################################################################
 
 
-#' Train function for "Ensemble Selection" method.
-#'
-#' @param learner [\code{StackedLearner}]
-#' @param task [\code{Task}]
-#' @param replace [\code{logical(1)}]
-#' @param init [\code{integer(1)}] init >= 1
-#' @param bagprop [\code{numeric(1)}] 0 < bagprop < 1
-#' @param bagtime [\code{integer(1)}] bagtime >= 1
-#' @param maxiter [\code{integer(1)}] maxiter >= 1
-#' @param tolerance [\code{numeric(1)}] small numeric value.
-#' @param metric [\code{Measure(1)}]
-#' @param ... ...
-#' @export
-
-
+# Train function for "Ensemble Selection" method.
+#
+# @param learner [`StackedLearner`]
+# @param task [`Task`]
+# @param replace [`logical(1)`]
+# @param init [`integer(1)`] init >= 1
+# @param bagprop [`numeric(1)`] 0 < bagprop < 1
+# @param bagtime [`integer(1)`] bagtime >= 1
+# @param maxiter [`integer(1)`] maxiter >= 1
+# @param tolerance [`numeric(1)`] small numeric value.
+# @param metric [`Measure`]
+# @param ... (any)\cr
+# @export
 ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1, bagprop = 1, bagtime = 1,
   maxiter = NULL, tolerance = 1e-8, metric = NULL, ...) {
   # check, defaults
@@ -227,16 +225,16 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 
 
 
-#' Ensemble selection algorithm
-#'
-#' @param pred.list A named list of predictions.
-#' @param bls.performance Named vector of performance results from training
-#'   (note that this should be results from resampled predictions to overcome overfitting issues).
-#' @param es.par.vals list of parameters. See \code{\link{makeStackedLearner}}.
-#' @references Caruana, Rich, et al. "Ensemble selection from libraries of models."
-#'   Proceedings of the twenty-first international conference on Machine learning.
-#'   ACM, 2004. \url{http://www.cs.cornell.edu/~caruana/ctp/ct.papers/caruana.icml04.icdm06long.pdf}
-#' @export
+# Ensemble selection algorithm
+#
+# @param pred.list A named list of predictions.
+# @param bls.performance Named vector of performance results from training
+#   (note that this should be results from resampled predictions to overcome overfitting issues).
+# @param es.par.vals list of parameters. See [`makeStackedLearner`].
+# @references Caruana, Rich, et al. "Ensemble selection from libraries of models."
+#   Proceedings of the twenty-first international conference on Machine learning.
+#   ACM, 2004. \url{http://www.cs.cornell.edu/~caruana/ctp/ct.papers/caruana.icml04.icdm06long.pdf}
+# @export
 
 applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.performance,
   es.par.vals = list(replace = TRUE, init = 1, bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-8, metric = NULL)) {

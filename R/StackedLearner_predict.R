@@ -1,19 +1,20 @@
-#' Predict a Stacked Learner.
-#'
-#' Gets predictions from \code{getStackedBaseLearnerPredictions}. Then apply algo:
-#'  \describe{
-#'   \item{\code{aggregate}}{Aggregate predictions using \code{\link{aggregatePredictions}}.}
-#'   \item{\code{ensembleselection}}{Expand prediction according to frequency chosen in training, then apply aggregation as for 'aggregate'.}
-#'   \item{\code{superlearner}}{Convert list of \code{Prediction} to data.frame
-#'   (for classification with \code{predict.type = "prob"} the first feature
-#'    is removed to overcome mullticollinearity). Add original features if needed.
-#'    Apply meta model from training.}
-#'  }
-#' @param .learner ([`StackedLearner`])
-#' @param .model [`BaseEnsembleModel`]
-#' @param .newdata [`data.frame`]\cr Data to predict on
-#' @param ... ...
-#' @return Predictions are returned in matrix or vector.
+# Predict a Stacked Learner.
+#
+# Gets predictions from `getStackedBaseLearnerPredictions. Then apply algo:
+#  \describe{
+#  \item{`aggregate}}{Aggregate predictions using [`aggregatePredictions`]}.}
+#   \item{`ensembleselection`}{Expand prediction according to frequency chosen in training,
+#         then apply aggregation as for `aggregate`.}
+#   \item{`superlearner}}{Convert list of \code{Prediction` to data.frame
+#   (for classification with `predict.type = "prob"` the first feature
+#    is removed to overcome mullticollinearity). Add original features if needed.
+#    Apply meta model from training.}
+#  }
+# @param .learner ([`StackedLearner`])
+# @param .model [`BaseEnsembleModel`]
+# @param .newdata [`data.frame`]\cr Data to predict on
+# @param ... ...
+# @return Predictions are returned in matrix or vector.
 #' @export
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) { # FIXME actually only .learner$method is needed
   # setup
@@ -56,20 +57,20 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) { # FI
   }
 }
 
-#' @title Returns the predictions for each base learner.
-#'
-#' @description Returns the predictions for each base learner based on \code{newdata}.
-#'   If \code{newdata} is not supported, training prediction will be returned.
-#'   For \code{ensembleselection} prediction is only applyed to base models which were selected.
-#'   Predictions are made based on \code{model$learner.model$base.models}. If \code{save.on.disc = TRUE}
-#'   only a name file is saved which direct to a RDS containing the model.
-#'
-#' @param model [\code{BaseEnsembleModel}]\cr
-#'   BaseEnsembleModel, result of train.
-#' @param newdata [\code{data.frame}]\cr
-#'   New observations, for which the predictions using the specified base learners should be returned.
-#'   Default is \code{NULL} and extracts the base learner predictions that were made during the training.
-#' @export
+# @title Returns the predictions for each base learner.
+#
+# @description Returns the predictions for each base learner based on `newdata`.
+#   If `newdata` is not supported, training prediction will be returned.
+#   For `ensembleselection` prediction is only applyed to base models which were selected.
+#   Predictions are made based on `model$learner.model$base.models}. If \code{save.on.disc = TRUE`
+#   only a name file is saved which direct to a RDS containing the model.
+#
+# @param model [`BaseEnsembleModel`]\cr
+#   BaseEnsembleModel, result of train.
+# @param newdata [`data.frame`]\cr
+#   New observations, for which the predictions using the specified base learners should be returned.
+#   Default is `NULL` and extracts the base learner predictions that were made during the training.
+# @export
 
 getStackedBaseLearnerPredictions = function(model, newdata = NULL){
   stack.id = model$learner$id
