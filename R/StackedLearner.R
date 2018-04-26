@@ -103,7 +103,6 @@
 #'   res = predict(m, tsk)
 #' }
 #' @export
-
 makeStackedLearner = function(id = "stack", method = "superlearner", base.learners,
   predict.type = NULL, resampling = NULL, super.learner = NULL, use.feat = FALSE,
   es.par.vals = list(), save.on.disc = FALSE, save.preds = TRUE) {

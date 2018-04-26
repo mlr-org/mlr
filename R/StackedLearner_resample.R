@@ -1,5 +1,6 @@
 #' Resample a StackedLearner object.
 #'
+#' @description
 #' Instead of rerunning `resample` with a new setting just use
 #' `resampleStackedLearnerAgain`. `resampleStackedLearnerAgain` reuses
 #' the already done work from a `ResampleResult`, i.e.
@@ -22,14 +23,14 @@
 #' \item{method = "ensembleselection"}{`es.par.vals` need to be set.`
 #' \item{method = "aggregate"}{no arguemnt of those abvoe need to be set.}
 #' }
-#' @param id [`character(1)`]\cr Unique ID for object.
+#' @param id (`character(1)`)\cr Unique ID for object.
 #' @param obj [`ResampleResult`]\cr `ResampleResult` from `StackedLearner`.
 #' @param task [`Task`].
 #' @param measures [`Measure`].
 #' @param super.learner [`Learner`]\cr New `super.learner` to apply.
-#' @param use.feat [`logical(1)`]\cr Whether the original features should be passed to the super learner.
-#' @param es.par.vals [`list`]\cr List containing parameters for `ensembleselection`.
-#'   See [`makeStackedLearner`].
+#' @param use.feat (`logical(1)`)\cr Whether the original features should be passed to the super learner.
+#' @param es.par.vals (`list`)\cr
+#' List containing parameters for `ensembleselection`. See [`makeStackedLearner`].
 #' @return Object of classes `RecombinedResampleResult` and `ResampleResult`.
 #'   `RecombinedResampleResult` differ from classical `ResampleResult` in that way, that it
 #'   contains parameters from the StackedLearner (i.e. super.learner, use.feat, es.par.vals),
@@ -76,14 +77,7 @@
 #' sapply(list(res2, re2), function(x) x$runtime)
 #' }
 #' @export
-
-# Nomenclature:
-# 'Singular' indicates objects which contain only one object (e.g. one model from
-#   base models list from one fold).
-# 'Plural' indicates a list of objects (e.g. list of learners, models, data sets).
-# List ends with '_f' if information from all f folds are saved in that object
-#   (may be a list of lists).
-
+#' #' @importFrom utils stack
 resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL,
   super.learner = NULL, use.feat = NULL, es.par.vals = NULL) {
   # checks
@@ -342,8 +336,8 @@ getPreciseTaskType = function(x) {
 # @param task task.
 # @param save.on.disc wether model are present in `bls` or must be loaded using readRDS.
 createPreds = function(fold.i, bls, idx, task, save.on.disc) {
-    bls.len = length(bls)
-    if (save.on.disc) {
+  bls.len = length(bls)
+  if (save.on.disc) {
     # This only works if outer resampling is Holdout (save model does not
     # get infos about the fold figure, therefore only one fold is allowed):
     if (fold.i != 1) {
@@ -413,3 +407,9 @@ print.RecombinedResampleResult = function(x, ...) {
 # [ ] allow tuneParam so that superlearner can be tuned. Should be easy.
 # [ ] run in parallel (but maybe a outer parallelization is more usefull).
 # [x] add aggregate method
+# Nomenclature:
+# 'Singular' indicates objects which contain only one object (e.g. one model from
+#   base models list from one fold).
+# 'Plural' indicates a list of objects (e.g. list of learners, models, data sets).
+# List ends with '_f' if information from all f folds are saved in that object
+#   (may be a list of lists).

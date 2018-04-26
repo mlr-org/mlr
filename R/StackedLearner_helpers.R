@@ -1,11 +1,10 @@
 ### other helpers ###
 
-#' Sets the predict.type for the super learner of a stacked learner
-#' @param learner ([StackedLearner]).
-#' @param predict.type (`character(1)`)\cr
-#'        `prob` for probabilities or `response` for classes.
+# Sets the predict.type for the super learner of a stacked learner
+# @param learner ([StackedLearner]).
+# @param predict.type (`character(1)`)\cr
+#        `prob` for probabilities or `response` for classes.
 #' @export
-
 setPredictType.StackedLearner = function(learner, predict.type) {
   lrn = setPredictType.Learner(learner, predict.type)
   lrn$predict.type = predict.type
