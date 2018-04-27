@@ -228,3 +228,53 @@ expandPredList = function(pred.list, freq) {
   }
   final.pred.list
 }
+
+# Plot the staacked learner and additional available info
+plotStackedLearnerModel = function(mod) {
+  # Create the data.frame
+  bms = mod$learner.model$base.models
+
+  method = mod$learner.model$method
+  df = data.frame(
+    "xcenter" = seq(0, 1, length.out = length(bms)),
+    "names" = names(bms)
+  )
+
+  if (method %in% c("superlearner", "ensembleselection"))
+    df$perf = mod$learner.model$bls.perf
+  if (method == "ensembleselection")
+    df$freq = mod$learner.model$freq
+
+  # Plot depending on method
+  p = ggplot2::ggplot(df)
+  if (method %in% c("superlearner", "ensebleselection")) {
+  # Color boxes by performance and add performance
+    p = p +
+      ggplot2::geom_tile(aes(x = xcenter, y = 0, fill = perf), color = NA,
+        width = 1 / (length(bms) + 1), height = 0.4, alpha = 0.7) +
+      ggplot2::geom_text(aes(x = xcenter, y = - 0.1, label = round(perf, 2), fontface = "bold"))
+  }
+  if (method == "superlearner") {
+    measure = getDefaultMeasure(mod$task.desc)
+    p = p +
+      ggplot2::annotate("tile", x = 0.5, y = 1, width = 0.6, height = 0.4, fill = "white", color = "black") +
+      ggplot2::annotate("text", x = 0.5, y = 1.1, label = "Superlearner:") +
+      ggplot2::annotate("text", x = 0.5, y = 0.9, label = mod$learner.model$super.model$learner$id) +
+      ggplot2::guides(fill=guide_legend(title = measure$id))
+  }
+
+  if (method == "ensembleselection") {
+    measure = mod$learner.model$measure
+    p = p +
+      ggplot2::geom_text(aes(x = xcenter, y = 0.3, label = freq)) +
+      ggplot2::guides(fill=guide_legend(title = measure$id))
+  }
+
+  p = p +
+    ggplot2::geom_tile(aes(x = xcenter, y = 0), color = "black", fill = NA, width = 1 / (length(bms) + 1), height = 0.4) +
+    ggplot2::geom_text(aes(x = xcenter, y = 0.1, label = names), fontface = "bold") +
+    ggplot2::scale_fill_continuous(low = "lightgreen", high = "darkgreen") +
+    ggplot2::coord_cartesian(ylim = c(- 1, 2)) +
+    ggplot2::theme_void()
+  invisible(p)
+}

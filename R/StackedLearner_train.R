@@ -83,6 +83,7 @@ superlearnerBaseLearners = function(learner, task) {
   resres = extractSubList(results, "resres", simplify = FALSE)
   pred.list = extractSubList(resres, "pred", simplify = FALSE)
   pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
+  bls.perf = vnapply(resres, function(x) x$aggr)
 
   # add true target
   tn = getTaskTargetNames(task)
@@ -102,7 +103,7 @@ superlearnerBaseLearners = function(learner, task) {
   super.model = train(learner$super.learner, super.task)
   # return
   list(method = "superlearner", base.models = base.models,
-    super.model = super.model, pred.train = pred.list)
+    super.model = super.model, pred.train = pred.list, bls.perf = bls.perf)
 }
 
 ################################################################
@@ -160,14 +161,15 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 
 
   ensel = applyEnsembleSelection(learner, pred.list = pred.list,
-    bls.perf = bls.per, es.par.vals = list(replace = replace,
+    bls.perf = bls.perf, es.par.vals = list(replace = replace,
     init = init, bagprop = bagprop, bagtime = bagtime, maxiter = maxiter,
     metric = metric, tolerance = tolerance))
 
   # FIXME Florian: Throw out unused learners?
+  # FIXME metric -> measure
   list(method = "ensembleselection", base.models = base.models, super.model = NULL,
-    pred.train = pred.list, bls.performance = bls.performance,
-    weights = ensel$weights, freq = ensel$freq, freq.list = ensel$freq.list)
+    pred.train = pred.list, bls.performance = bls.perf,
+    weights = ensel$weights, freq = ensel$freq, freq.list = ensel$freq.list, measure = metric)
 }
 
 
@@ -184,12 +186,9 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 #   ACM, 2004. \url{http://www.cs.cornell.edu/~caruana/ctp/ct.papers/caruana.icml04.icdm06long.pdf}
 applyEnsembleSelection = function(learner, pred.list = pred.list, bls.performance = bls.performance,
   es.par.vals = list(replace = TRUE, init = 1, bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-8, metric = NULL)) {
-  browser()
-
 
   bls.names = names(pred.list)
   m = length(pred.list)
-
 
   replace = es.par.vals$replace
   init = es.par.vals$init
@@ -200,7 +199,6 @@ applyEnsembleSelection = function(learner, pred.list = pred.list, bls.performanc
   tolerance = es.par.vals$tolerance
 
   # setup
-
   freq = rep(0, m)
   names(freq) = bls.names
   freq.list = vector("list", bagtime)
