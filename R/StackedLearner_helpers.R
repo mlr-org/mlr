@@ -12,59 +12,12 @@ setPredictType.StackedLearner = function(learner, predict.type) {
   return(lrn)
 }
 
-# Returns response from Prediction object
-# @param pred Prediction
-# @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one
-getResponse = function(pred, full.matrix = NULL) {
-  # if classification with probabilities
-  if (pred$predict.type == "prob") {
-    if (full.matrix) {
-      # return matrix of probabilities
-      td = pred$task.desc
-      predReturn = pred$data[, paste("prob", td$class.levels, sep = ".")]
-      colnames(predReturn) = td$class.levels
-      return(predReturn)
-    } else {
-      # return only vector of probabilities for binary classification
-      return(getPredictionProbabilities(pred))
-    }
-  } else {
-    # for regression case
-    getPredictionResponse(pred)
-  }
-}
-
-
-# Returns response or probabilites from Prediction with the speciality that the
-# first feature of a multiclass classification prediction will be removed to
-# overcome multicollinearity problems
-# @param pred Prediction from predict or resample
-getPredictionDataNonMulticoll = function(pred) {
-  if (any(class(pred) == "ResampleResult")) {
-    pred = pred$pred
-  }
-  pt = pred$predict.type
-  td = getTaskDesc(pred)
-  # if classification with probabilities
-  if (pt == "prob") {
-    pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
-    colnames(pred.matrix) = td$class.levels
-    pred.matrix = pred.matrix[, -1, drop = TRUE] #
-    return(pred.matrix)
-  } else {
-    # for perdict.type = "response"
-    getPredictionResponse(pred)
-  }
-}
 
 # Create a super learner task
 #
 # @param type "classif" or "regr"
 # @param data data
 # @param target target as character
-# FIXME: "save" version which rm constant features and features with NAs. BUT
-# might not be useful owing to the fact that predictLearner does not know which
-# features are removed
 makeSuperLearnerTask = function(type, data, target) {
   keep.idx = colSums(is.na(data)) == 0
   data = data[, keep.idx, drop = FALSE]
@@ -76,31 +29,8 @@ makeSuperLearnerTask = function(type, data, target) {
   } else {
     removeConstantFeatures(obj = makeRegrTask(id = "level1data",
       data = data, target = target, fixup.data = "no"))
-
   }
 }
-
-# # Count the ratio (used if base.learner predict.type = "response" and
-# # super.learner predict.type is "prob")
-# # @param pred.data Prediction data
-# # @param levels Target levels of classifiaction task
-# # @param model.weight Model weights, default is 1/number of data points
-# rowWiseRatio = function(pred.data, levels, model.weight = NULL) {
-#   m = length(levels)
-#   p = ncol(pred.data)
-#   if (is.null(model.weight)) {
-#     model.weight = rep(1/p, p)
-#   }
-#   mat = matrix(0,nrow(pred.data), m)
-#   for (i in 1:m) {
-#     ids = matrix(pred.data == levels[i], nrow(pred.data), p)
-#     for (j in 1:p)
-#       ids[, j] = ids[, j] * model.weight[j]
-#     mat[, i] = rowSums(ids)
-#   }
-#   colnames(mat) = levels
-#   return(mat)
-# }
 
 
 # Training and prediction in one function (used for parallelMap)
@@ -163,12 +93,27 @@ doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc)
 }
 
 
-# # Check if NULL or any NA in x
-# checkIfNullOrAnyNA = function(x) {
-#   if (is.null(x)) return(TRUE)
-#   if (any(is.na(x))) return(TRUE)
-#   else FALSE
-# }
+# Returns response or probabilites from Prediction.
+# The first feature of a multiclass classification prediction will be removed
+# in order to overcome multicollinearity problems.
+# @param pred Prediction from predict or resample
+getPredictionDataNonMulticoll = function(pred) {
+  if (any(class(pred) == "ResampleResult")) {
+    pred = pred$pred
+  }
+  pt = pred$predict.type
+  td = getTaskDesc(pred)
+  # if classification with probabilities
+  if (pt == "prob") {
+    pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
+    colnames(pred.matrix) = td$class.levels
+    pred.matrix = pred.matrix[, -1, drop = TRUE] #
+    return(pred.matrix)
+  } else {
+    # for perdict.type = "response"
+    getPredictionResponse(pred)
+  }
+}
 
 
 # Order a scores vector and return the best init numbers
@@ -186,14 +131,6 @@ orderScore = function(scores, minimize, init) {
   }
 }
 
-# # Convert models names (when model was saved on disc) to base learner name
-# # @param base.model.id Unique ID used to save model on disc
-# # @param stack.id ID from makeStackedLearner
-# convertModelNameToBlsName = function(base.model.id, stack.id) {
-#   id = substr(base.model.id, 1, nchar(base.model.id) - 6) # remove .RData
-#   id = substr(id, 13 + nchar(stack.id) + 1, nchar(id))
-#   id
-# }
 
 #' Remove Stacking models from disc.
 #'
@@ -261,7 +198,6 @@ aggregatePredictions = function(.model, pred.list) {
     id = .model$learner$id, truth = pred.list[[1]]$data$truth, predict.type = predict.type,
     predict.threshold = NULL, y, time = NA_real_))
 }
-
 
 
 # Expand Predictions according to frequency argument

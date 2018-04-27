@@ -55,7 +55,6 @@ aggregateBaseLearners = function(learner, task) {
 #
 # @param learner ([`StackedLearner`]).
 # @template arg_task
-
 superlearnerBaseLearners = function(learner, task) {
   # setup
   td = getTaskDesc(task)
@@ -67,37 +66,25 @@ superlearnerBaseLearners = function(learner, task) {
   id = learner$id
   save.on.disc = learner$save.on.disc
 
-  # resampling, training (parallelMap)
+  bls = learner$base.learners
+
+  # Do the resampling (parallelMap)
   rin = makeResampleInstance(learner$resampling, task = task)
   parallelLibrary("mlr", master = FALSE, level = "mlr.stackedLearner", show.info = FALSE)
   exportMlrOptions(level = "mlr.stackedLearner")
   show.info = getMlrOption("show.info")
   results = parallelMap(doTrainResample, bls, more.args = list(task, rin,
-    measures = getDefaultMeasure(task), show.info, id, save.on.disc),
+    measures = getDefaultMeasure(task), show.info, learner$id, learner$save.on.disc),
     impute.error = function(x) x, level = "mlr.stackedLearner")
 
-  base.models = lapply(results, function(x) x[["base.models"]])
-  pred.list = lapply(results, function(x) x[["resres"]])
+  # Extract relevant results
+  names(results) = names(bls)
+  base.models = extractSubList(results, "base.models", simplify = FALSE)
+  resres = extractSubList(results, "resres", simplify = FALSE)
+  pred.list = extractSubList(resres, "pred", simplify = FALSE)
   pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
 
-  names(base.models) = bls.names
-  names(pred.list) = bls.names
-  names(pred.data) = bls.names
-
-  ## Remove broken models/predictions
-  ##broke.idx.bm = which(unlist(lapply(base.models, function(x) any(class(x) == "FailureModel"))))
-  #broke.idx.pd1 = which(unlist(lapply(pred.data, function(x) anyNA(x))))
-  #broke.idx.pd2 = which(unlist(lapply(pred.data, function(x) class(x) %nin% c("numeric", "factor", "data.frame"))))
-  ##broke.idx = unique(broke.idx.bm, broke.idx.pd)
-  #broke.idx = unique(c(broke.idx.pd1, broke.idx.pd2))
-  #
-  #if (length(broke.idx) > 0) {
-  #  messagef("Base Learner %s is broken and will be removed\n", names(bls)[broke.idx])
-  #  base.models = base.models[-broke.idx]
-  #  pred.list = pred.list[-broke.idx]
-  #  pred.data = pred.data[-broke.idx]
-  #}
-  # add true value
+  # add true target
   tn = getTaskTargetNames(task)
   pred.data[[tn]] = results[[1]]$resres$pred$data$truth
   # convert list to data.frame
@@ -220,7 +207,7 @@ applyEnsembleSelection = function(learner, pred.list = pred.list, bls.performanc
 
   # outer loop (bagtimes bagging iterations)
   for (bag.id in seq_len(bagtime)) {
-    # bagging of models
+    # bagging models
     bagsize = ceiling(m * bagprop)
     bagmodel = sample(seq_len(m), bagsize)
 
@@ -276,7 +263,7 @@ applyEnsembleSelection = function(learner, pred.list = pred.list, bls.performanc
         break() # stop inner loop
       } else {
         current.pred.list = append(current.pred.list, pred.list[best.ind])
-        current.pred = aggregatePredictions(current.pred.list, pL = FALSE)
+        current.pred = aggregatePredictions(current.pred.list)
         freq[best.ind] = freq[best.ind] + 1
         inds.selected = c(inds.selected, best.ind)
         bench.score = new.score

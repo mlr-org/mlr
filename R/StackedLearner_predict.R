@@ -18,10 +18,6 @@
 #' @export
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
-  # sm.pt = .model$learner$predict.type
-  # bm.pt = unique(extractSubList(.model$learner$base.learners, "predict.type"))
-  # if (length(bm.pt) > 1) stopf("Prediction types of all base learners must be identical.")
-
   # obtain predictions
   pred.list = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
@@ -68,7 +64,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 # @param newdata [`data.frame`]\cr
 #   New observations, for which the predictions using the specified base learners should be returned.
 #   Default is `NULL` and extracts the base learner predictions that were made during the training.
-# @export
 getStackedBaseLearnerPredictions = function(model, newdata = NULL){
 
   if (is.null(newdata)) {
