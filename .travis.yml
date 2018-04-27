@@ -71,8 +71,7 @@ jobs:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
     - stage: Tutorial
-      env:
-        - TUTORIAL=HTML
+      env: TUTORIAL=HTML
       addons:
         apt:
           packages:
@@ -94,8 +93,7 @@ jobs:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
     - stage: Tutorial
-      env:
-        - TUTORIAL=PDF
+      env: TUTORIAL=PDF
       addons:
         apt:
           packages:
