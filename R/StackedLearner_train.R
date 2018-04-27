@@ -11,6 +11,7 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
     superlearner = superlearnerBaseLearners(.learner, .task),
     ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task), .learner$es.par.vals))
   )
+  # FIXME: We should maybe handle failed learners here generally
 }
 
 # Train function for simple aggregation of base learner predictions without weights.
@@ -33,22 +34,6 @@ aggregateBaseLearners = function(learner, task) {
   names(results) = names(bls)
   base.models = extractSubList(results, "base.models", simplify = FALSE)
   pred.list = extractSubList(results, "pred", simplify = FALSE)
-
-
-  ##FIXME: Find a way to deal with broken models.
-  # Old Code:
-  #broke.idx.bm = which(unlist(lapply(base.models, function(x) any(class(x) == "FailureModel"))))
-  ##broke.idx.pd1 = which(unlist(lapply(pred.data, function(x) anyNA(x)))) # if models is FailesModels and NAs are returend in a Prediction
-  ##broke.idx.pd2 = which(unlist(lapply(pred.data, function(x) class(x) %nin% c("numeric", "factor", "data.frame")))) # if model fails and error message is returned it is not class numeric (regr, binary classif) nor data.frame (multiclassif)
-  ##broke.idx = unique(c(broke.idx.pd1, broke.idx.pd2))
-  #broke.idx = broke.idx.bm
-  #
-  #if (length(broke.idx) > 0) {
-  #  messagef("Base Learner %s is broken and will be removed\n", bls.names[broke.idx])
-  #  base.models = base.models[-broke.idx]
-  #  pred.list = pred.list[-broke.idx]
-  #  #pred.data = pred.data[-broke.idx]
-  #}
 
   # return
   list(
@@ -153,7 +138,8 @@ superlearnerBaseLearners = function(learner, task) {
 # @export
 ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1, bagprop = 1, bagtime = 1,
   maxiter = NULL, tolerance = 1e-8, metric = NULL, ...) {
-  # check, defaults
+
+  # Check Inputs
   assertFlag(replace)
   assertInt(init, lower = 1, upper = length(learner$base.learners)) #807
   assertNumber(bagprop, lower = 0, upper = 1)
@@ -163,59 +149,35 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
   if (is.null(maxiter)) maxiter = length(learner$base.learners)
   assertInt(maxiter, lower = 1)
   assertNumber(tolerance)
-
-  # setup
-  id = learner$id
-  save.on.disc = learner$save.on.disc
-  td = getTaskDesc(task)
-  type = getTaskType(task)
-  bls = learner$base.learners
-  bls.names = names(bls)
-  # check
-  if (type != "regr") {
-    if (any(extractSubList(bls, "predict.type") == "response"))
+  if (getTaskType(task) != "regr") {
+    if (any(extractSubList(learner$base.learners, "predict.type") == "response"))
       stop("Hill climbing algorithm only takes probability predict type for classification.")
   }
+  bls = learner$base.learners
 
-  # resampling, train (parallelMap)
+  # Do the resampling (parallelMap)
   rin = makeResampleInstance(learner$resampling, task = task)
   parallelLibrary("mlr", master = FALSE, level = "mlr.stackedLearner", show.info = FALSE)
   exportMlrOptions(level = "mlr.stackedLearner")
   show.info = getMlrOption("show.info")
   results = parallelMap(doTrainResample, bls, more.args = list(task, rin,
-    measures = metric, show.info, id, save.on.disc),
+    measures = metric, show.info, learner$id, learner$save.on.disc),
     impute.error = function(x) x, level = "mlr.stackedLearner")
-  base.models = lapply(results, function(x) x[["base.models"]])
-  resres = lapply(results, function(x) x[["resres"]])
-  pred.list = lapply(resres, function(x) x[["pred"]])
-  bls.performance = vapply(resres, function(x) x$aggr, numeric(1)) #sapply(resres, function(x) x$aggr)
 
-  names(base.models) = bls.names
-  names(resres) = bls.names
-  names(pred.list) = bls.names
-  names(bls.performance) = bls.names # this will not be removed below!
+  # Extract relevant results
+  names(results) = names(bls)
+  base.models = extractSubList(results, "base.models", simplify = FALSE)
+  resres = extractSubList(results, "resres", simplify = FALSE)
+  pred.list = extractSubList(resres, "pred", simplify = FALSE)
+  bls.perf = vnapply(resres, function(x) x$aggr)
 
-  ## Remove FailureModels which would occur problems later #FIXME!?
-  ##broke.idx.bm = which(unlist(lapply(base.models, function(x) any(class(x) == "FailureModel"))))
-  #broke.idx.pl = which(unlist(lapply(pred.list, function(x) anyNA(x$data))))# FIXME?!
-  #broke.idx.rr = which(unlist(lapply(resres, function(x) is.na(x$aggr[1]))))
-  ##broke.idx = unique(c(broke.idx.bm, broke.idx.rr, broke.idx.pl))
-  #broke.idx = unique(c(broke.idx.rr, broke.idx.pl))
-  #if (length(broke.idx) > 0) {
-  #  messagef("Base Learner %s is broken and will be removed\n", names(bls)[broke.idx])
-  #  resres = resres[-broke.idx]
-  #  #pred.data = pred.data[-broke.idx]
-  #  base.models = base.models[-broke.idx]
-  #  pred.list = pred.list[-broke.idx]
-  #}
 
-  ensel = applyEnsembleSelection(pred.list = pred.list,
-    bls.performance = bls.performance, es.par.vals = list(replace = replace,
-      init = init, bagprop = bagprop, bagtime = bagtime, maxiter = maxiter,
-      metric = metric, tolerance = tolerance))
+  ensel = applyEnsembleSelection(learner, pred.list = pred.list,
+    bls.perf = bls.per, es.par.vals = list(replace = replace,
+    init = init, bagprop = bagprop, bagtime = bagtime, maxiter = maxiter,
+    metric = metric, tolerance = tolerance))
 
-  # FIXME Throw out unused learners?
-  # return
+  # FIXME Florian: Throw out unused learners?
   list(method = "ensembleselection", base.models = base.models, super.model = NULL,
     pred.train = pred.list, bls.performance = bls.performance,
     weights = ensel$weights, freq = ensel$freq, freq.list = ensel$freq.list)
@@ -233,26 +195,15 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 # @references Caruana, Rich, et al. "Ensemble selection from libraries of models."
 #   Proceedings of the twenty-first international conference on Machine learning.
 #   ACM, 2004. \url{http://www.cs.cornell.edu/~caruana/ctp/ct.papers/caruana.icml04.icdm06long.pdf}
-# @export
-
-applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.performance,
+applyEnsembleSelection = function(learner, pred.list = pred.list, bls.performance = bls.performance,
   es.par.vals = list(replace = TRUE, init = 1, bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-8, metric = NULL)) {
-  # check
-  assertClass(es.par.vals, "list")
-  # setup
+  browser()
+
+
   bls.names = names(pred.list)
-  bls.length = length(pred.list)
+  m = length(pred.list)
 
-  # FIXME: Need defaults. should be nicer
-  if (is.null(es.par.vals$replace)) es.par.vals$replace = TRUE
-  if (is.null(es.par.vals$init)) es.par.vals$init = 1
-  if (is.null(es.par.vals$bagprop)) es.par.vals$bagprop = 0.5
-  if (is.null(es.par.vals$bagtime)) es.par.vals$bagtime = 20
-  if (is.null(es.par.vals$metric)) es.par.vals$metric = getDefaultMeasure(pred.list[[1]]$task.desc)
-  if (is.null(es.par.vals$maxiter)) es.par.vals$maxiter = bls.length
-  if (is.null(es.par.vals$tolerance)) es.par.vals$tolerance = 1e-8
 
-  #FIXME: neeeded!? or is es.par.vals$bar ok!?
   replace = es.par.vals$replace
   init = es.par.vals$init
   bagprop = es.par.vals$bagprop
@@ -262,16 +213,16 @@ applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.p
   tolerance = es.par.vals$tolerance
 
   # setup
-  m = bls.length
+
   freq = rep(0, m)
   names(freq) = bls.names
   freq.list = vector("list", bagtime)
 
   # outer loop (bagtimes bagging iterations)
-  for (bagind in seq_len(bagtime)) {
+  for (bag.id in seq_len(bagtime)) {
     # bagging of models
     bagsize = ceiling(m * bagprop)
-    bagmodel = sample(1:m, bagsize)
+    bagmodel = sample(seq_len(m), bagsize)
 
     # Initial selection of strongest learners
     inds.init = NULL
@@ -279,7 +230,6 @@ applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.p
     sel.algo = NULL
     single.scores = rep(ifelse(metric$minimize, Inf, -Inf), m)
 
-    #
     for (i in bagmodel) {
       single.scores[i] = bls.performance[i]
     }
@@ -293,7 +243,7 @@ applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.p
 
     # Create a list of predictions, aggregate them (averaging) and apply metric to the new prediction
     current.pred.list = pred.list[inds.init]
-    current.pred = aggregatePredictions(current.pred.list, pL = FALSE)
+    current.pred = aggregatePredictions(current.pred.list)
     bench.score = metric$fun(pred = current.pred)
 
     inds.selected = inds.init
@@ -304,7 +254,7 @@ applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.p
       # uniquely add every prediction form the bag to the current prediction and calc. performance
       for (i in bagmodel) {
         temp.pred.list = append(current.pred.list, pred.list[i])
-        aggr.pred = aggregatePredictions(temp.pred.list, pL = FALSE)
+        aggr.pred = aggregatePredictions(temp.pred.list)
         temp.score[i] = metric$fun(pred = aggr.pred)
       }
       # order scores

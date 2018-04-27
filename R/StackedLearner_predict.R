@@ -27,13 +27,13 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   # apply aggregate
   if (.learner$method == "aggregate") {
-    final.pred = aggregatePredictions(pred.list, sm.pt = sm.pt, pL = FALSE)
-    # apply ensembleselection
+    final.pred = aggregatePredictions(.model, pred.list)
+
+  # apply ensembleselection
   } else if (.learner$method == "ensembleselection") {
-    freq = .model$learner.model$freq
-    pred.list = expandPredList(pred.list, freq = freq)
-    final.pred = aggregatePredictions(pred.list, sm.pt = sm.pt, pL = FALSE)
-    # apply superlearner
+    final.pred = aggregatePredictions(.model, pred.list)
+
+  # apply superlearner
   } else if (.learner$method == "superlearner") {
     use.feat = .model$learner$use.feat
     pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
@@ -48,8 +48,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     final.pred = predict(sm, newdata = pred.data)
   }
   # return
-  if (sm.pt == "prob") {
-    return(as.matrix(getPredictionProbabilities(final.pred, cl = td$class.levels)))
+  if (.model$learner$predict.type == "prob") {
+    return(as.matrix(getPredictionProbabilities(final.pred, cl = .model$task.desc$class.levels)))
   } else {
     return(final.pred$data$response)
   }

@@ -56,6 +56,8 @@ test_that("Stacking base functions", {
 })
 
 
+
+# New Tests by Florian
 test_that("doTrainPredict works", {
   l = doTrainPredict(makeLearner("classif.rpart"), binaryclass.task, save.on.disc = FALSE, show.info = FALSE)
   expect_list(l, len = 2, names = "named")
@@ -84,4 +86,12 @@ test_that("getStackedBaseLearnerPredictions works", {
   expect_list(prds, len = 1, names = "named")
   expect_set_equal(names(prds), lrns$id)
   unlink(mod$learner.model$base.models)
+
+  # Works if save = FALSE
+  base = c("classif.rpart", "classif.lda")
+  stk = makeStackedLearner(method = "aggregate", base.learners = base, save.on.disc = FALSE, predict.type = "prob")
+  mod = train(stk, tsk)
+  prds = getStackedBaseLearnerPredictions(model = mod, newdata = getTaskData(iris.task))
+  expect_list(prds, len = 2, names = "named")
+  expect_set_equal(names(prds), base)
 })

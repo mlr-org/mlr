@@ -47,10 +47,10 @@ getPredictionDataNonMulticoll = function(pred) {
   td = getTaskDesc(pred)
   # if classification with probabilities
   if (pt == "prob") {
-      pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
-      colnames(pred.matrix) = td$class.levels
-      pred.matrix = pred.matrix[, -1, drop = TRUE] #
-      return(pred.matrix)
+    pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
+    colnames(pred.matrix) = td$class.levels
+    pred.matrix = pred.matrix[, -1, drop = TRUE] #
+    return(pred.matrix)
   } else {
     # for perdict.type = "response"
     getPredictionResponse(pred)
@@ -80,27 +80,27 @@ makeSuperLearnerTask = function(type, data, target) {
   }
 }
 
-# Count the ratio (used if base.learner predict.type = "response" and
-# super.learner predict.type is "prob")
-# @param pred.data Prediction data
-# @param levels Target levels of classifiaction task
-# @param model.weight Model weights, default is 1/number of data points
-rowWiseRatio = function(pred.data, levels, model.weight = NULL) {
-  m = length(levels)
-  p = ncol(pred.data)
-  if (is.null(model.weight)) {
-    model.weight = rep(1/p, p)
-  }
-  mat = matrix(0,nrow(pred.data), m)
-  for (i in 1:m) {
-    ids = matrix(pred.data == levels[i], nrow(pred.data), p)
-    for (j in 1:p)
-      ids[, j] = ids[, j] * model.weight[j]
-    mat[, i] = rowSums(ids)
-  }
-  colnames(mat) = levels
-  return(mat)
-}
+# # Count the ratio (used if base.learner predict.type = "response" and
+# # super.learner predict.type is "prob")
+# # @param pred.data Prediction data
+# # @param levels Target levels of classifiaction task
+# # @param model.weight Model weights, default is 1/number of data points
+# rowWiseRatio = function(pred.data, levels, model.weight = NULL) {
+#   m = length(levels)
+#   p = ncol(pred.data)
+#   if (is.null(model.weight)) {
+#     model.weight = rep(1/p, p)
+#   }
+#   mat = matrix(0,nrow(pred.data), m)
+#   for (i in 1:m) {
+#     ids = matrix(pred.data == levels[i], nrow(pred.data), p)
+#     for (j in 1:p)
+#       ids[, j] = ids[, j] * model.weight[j]
+#     mat[, i] = rowSums(ids)
+#   }
+#   colnames(mat) = levels
+#   return(mat)
+# }
 
 
 # Training and prediction in one function (used for parallelMap)
@@ -124,7 +124,7 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
       messagef("[Base Learner] %s is applied. ", bls$id)
     X = list(base.models = model, pred = pred)
   }
- X
+  X
 }
 
 # Resampling and prediction in one function (used for parallelMap)
@@ -135,32 +135,40 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
 # @param show.info show.info
 # @param id Id needed to create unique model name
 # @param save.on.disc save.on.disc
-doTrainResample = function(bls, task, rin, measures, show.info, id, save.on.disc) {
+doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc) {
+
   setSlaveOptions()
-  model = train(bls, task)
-  r = resample(bls, task, rin, measures, show.info = FALSE)
+  r = resample(bl, task, rin, measures, show.info = FALSE)
+  # Get OOB Predictions
+  oob.preds = r$pred$data[order(r$pred$data$id), ]
+  # And set them as OOB Predictions for the new task
+  new.data = getTaskData(task)
+  new.data[[getTaskTargetNames(task)]] = oob.preds$response
+  new.task = changeData(task, data = new.data)
+  # Train model on OOB Predictions
+  model = train(bl, new.task)
+
   if (save.on.disc) {
-    model.id = paste("saved.model", id, bls$id, "RData", sep = ".")
+    model.id = paste("saved.model", id, bl$id, "RData", sep = ".")
     saveRDS(model, file = model.id)
     if (show.info)
-      messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
-    X = list(base.models = model.id, resres = r)
-  } else { # save.on.disc = FALSE:
+      messagef("[Base Learner] %s applied. Model saved to %s", bl$id, model.id)
+    out = list(base.models = model.id, resres = r)
+  } else {
     if (show.info)
-      messagef("[Base Learner] %s applied.", bls$id)
-    X = list(base.models = model, resres = r)
+      messagef("[Base Learner] %s applied.", bl$id)
+    out = list(base.models = model, resres = r)
   }
-  #print(paste(object.size(r)[1]/1000000, "MB"))
-  X
+  return(out)
 }
 
 
-# Check if NULL or any NA in x
-checkIfNullOrAnyNA = function(x) {
-  if (is.null(x)) return(TRUE)
-  if (any(is.na(x))) return(TRUE)
-  else FALSE
-}
+# # Check if NULL or any NA in x
+# checkIfNullOrAnyNA = function(x) {
+#   if (is.null(x)) return(TRUE)
+#   if (any(is.na(x))) return(TRUE)
+#   else FALSE
+# }
 
 
 # Order a scores vector and return the best init numbers
@@ -178,14 +186,14 @@ orderScore = function(scores, minimize, init) {
   }
 }
 
-# Convert models names (when model was saved on disc) to base learner name
-# @param base.model.id Unique ID used to save model on disc
-# @param stack.id ID from makeStackedLearner
-convertModelNameToBlsName = function(base.model.id, stack.id) {
-  id = substr(base.model.id, 1, nchar(base.model.id) - 6) # remove .RData
-  id = substr(id, 13 + nchar(stack.id) + 1, nchar(id))
-  id
-}
+# # Convert models names (when model was saved on disc) to base learner name
+# # @param base.model.id Unique ID used to save model on disc
+# # @param stack.id ID from makeStackedLearner
+# convertModelNameToBlsName = function(base.model.id, stack.id) {
+#   id = substr(base.model.id, 1, nchar(base.model.id) - 6) # remove .RData
+#   id = substr(id, 13 + nchar(stack.id) + 1, nchar(id))
+#   id
+# }
 
 #' Remove Stacking models from disc.
 #'
@@ -206,81 +214,54 @@ removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
 # (works for regr, classif, multiclass)
 #
 # @param pred.list [list of \code{Predictions}]\cr
-# @param sm.pt Final predict type, "prob" or "response"
+# @param predict.type Final predict type, "prob" or "response"
 # @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
 # FIXME: add more methods (geometric mean, rank specific stuff)
-aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
+aggregatePredictions = function(.model, pred.list) {
+
   # return pred if list only contains one pred
   if (length(pred.list) == 1) {
-    #messagef("'pred.list' has only one prediction and returns that one unlisted. Argument 'sm.pt' will not be applied.")
     return(pred.list[[1]])
   }
-  # Check if "equal"
+
+  assertList(pred.list)
+  # Check if all task.descs are equal
   x = lapply(pred.list, function(x) getTaskDesc(x))
-  task.unequal = unlist(lapply(2:length(x), function(i) !all.equal(x[[1]], x[[i]])))
-  if (any(task.unequal)) stopf("Task descriptions in prediction '1' and '%s' differ. This is not possible!", which(task.unequal)[1])
+  td.equal = unlist(lapply(2:length(x), function(i) all.equal(x[[1]], x[[i]])))
+  if (any(!td.equal)) stopf("Task descriptions in prediction '1' and '%s' differ!", which(task.unequal)[1])
 
-  x = lapply(pred.list, function(x) x$predict.type)
-  pts.unequal = unlist(lapply(2:length(x), function(i) !all.equal(x[[1]], x[[i]])))
-  if (any(pts.unequal)) stopf("Predict type in prediction '1' and '%s' differ. This is not possible!",  which(pts.unequal)[1])
+  predict.type = .model$learner$predict.type
+  class.levels = .model$task.desc$class.levels
 
-  #x = unlist(lapply(pred.list, function(x) checkIfNullOrAnyNA(x$data$response)))
-  #print(which(x))
-  #print(pred.list)
-  #if (any(x)) messagef("Prediction '%s' is broken and will be removed.", which(x))
-  #pred.list = pred.list[!x]
+  # Define weights (1/n for aggregation, weighted for ensembleselection)
+  if(mod$learner.model$method == "ensembleselection") {
+    freq = .model$learner.model$freq
+  } else {
+    freq = rep(1, length(pred.list))
+  }
+  lrn.weights = freq / sum (freq)
 
-  # Body
-  pred1 = pred.list[[1]]
-  type = getTaskType(pred1)
-  td = getTaskDesc(pred1)
-  rn = row.names(pred1$data)
-  pt = pred1$predict.type
-  if (is.null(sm.pt)) sm.pt = pt
-
-  assertChoice(sm.pt, choices = c("prob", "response"))
-  ti = NA_real_
-  pred.length = length(pred.list)
-
-  # Reduce results
-  # type = "classif"
-  if (type == "classif") {
-    # pt = "prob"
-    if (pt == "prob") {
-      # same method for sm.pt response and prob
-      preds = lapply(pred.list, getPredictionProbabilities, cl = td$class.levels)
-      y = Reduce("+", preds) / pred.length
-      if (sm.pt == "response") {
-        y = factor(max.col(y), labels = td$class.levels)
-      }
-    # pt = "response"
-    } else {
-      if (sm.pt == "response") {
-        preds = as.data.frame(lapply(pred.list, getPredictionResponse))
-        y = factor(apply(preds, 1L, computeMode), td$class.levels)
+  if (.model$task.desc$type == "classif") {
+    # Get probabilities as a matrix.
+    preds = lapply(pred.list, function(pred) {
+      if(pred$predict.type == "prob") {
+        as.matrix(getPredictionProbabilities(pred, class.levels))
       } else {
-        # rowWiseRatio copied from Tong He (he said it's not the best solution).
-        # This method should be rarely used, because pt = "response",
-        # sm.pt = "prob" should perfrom worse than setting pt = "prob" (due to
-        # information loss when convertring probs to factors)
-        preds = as.data.frame(lapply(pred.list, function(x) x$data$response))
-        y = rowWiseRatio(preds, td$class.levels, model.weight = NULL)
+        as.matrix(createDummyFeatures(getPredictionResponse(pred))[, class.levels])
       }
-    }
-  # type = "regr"
+    })
+    y = apply(simplify2array(preds), c(1, 2), weighted.mean,  w = lrn.weights, na.rm = TRUE)
+    # In case we want to predict the response, get the max over all columns
+    if (predict.type == "response") y = factor(max.col(y), labels = class.levels)
   } else {
     preds = lapply(pred.list, getPredictionResponse)
-    y = Reduce("+", preds)/pred.length
+    y = apply(simplify2array(preds), c(1, 2), weighted.mean, w = lrn.weights, na.rm = TRUE)
   }
-  if (pL) {
-    nNA = rep(NA, NROW(y))
-      return(makePrediction(task.desc = td, rn, id = nNA, truth = nNA, predict.type = sm.pt, predict.threshold = NULL, y, time = ti))
-  } else {
-    id = pred1$data$id
-    tr = pred1$data$truth
-    return(makePrediction(task.desc = td, rn, id = id, truth = tr, predict.type = sm.pt, predict.threshold = NULL, y, time = ti))
-  }
+  return(makePrediction(task.desc = .model$task.desc, row.names(pred.list[[1]]$data),
+    id = .model$learner$id, truth = pred.list[[1]]$data$truth, predict.type = predict.type,
+    predict.threshold = NULL, y, time = NA_real_))
 }
+
 
 
 # Expand Predictions according to frequency argument
@@ -309,5 +290,5 @@ expandPredList = function(pred.list, freq) {
     use = expand[i]
     final.pred.list[i] = pred.list[use]
   }
- final.pred.list
+  final.pred.list
 }

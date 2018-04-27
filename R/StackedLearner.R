@@ -136,8 +136,8 @@ makeStackedLearner = function(id = "stack", method = "superlearner", base.learne
   if ("se" %in% bm.pt | (!is.null(predict.type) && predict.type == "se") |
        (!is.null(super.learner) && super.learner$predict.type == "se"))
    stop("Predicting standard errors currently not supported.")
-  if (length(bm.pt) > 1L)
-    stop("Base learner must all have the same predict type!")
+  # if (length(bm.pt) > 1L)
+  #   stop("Base learner must all have the same predict type!")
   if ((method %in% c("aggregate", "ensembleselection")) & (!is.null(super.learner) | is.null(predict.type)))
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
   if (method %in% "superlearner" & is.null(super.learner))
