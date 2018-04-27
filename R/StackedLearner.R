@@ -106,7 +106,10 @@
 makeStackedLearner = function(id = "stack", method = "superlearner", base.learners,
   predict.type = NULL, resampling = NULL, super.learner = NULL, use.feat = FALSE,
   es.par.vals = list(), save.on.disc = FALSE, save.preds = TRUE) {
-  # checking
+
+  # Case we have a single base model
+  if ("RLearner" %in% class(base.learners)) base.learners = list(base.learners)
+
   base.learners = lapply(base.learners, checkLearner)
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)

@@ -65,3 +65,23 @@ test_that("doTrainPredict works", {
   expect_string(l2$base.models, pattern = "saved.model")
   unlink(l2$base.models)
 })
+
+test_that("getStackedBaseLearnerPredictions works", {
+  # Works for character vectors
+  base = c("classif.rpart", "classif.lda")
+  stk = makeStackedLearner(method = "aggregate", base.learners = base, save.on.disc = TRUE, predict.type = "prob")
+  mod = train(stk, tsk)
+  prds = getStackedBaseLearnerPredictions(model = mod, newdata = getTaskData(iris.task))
+  expect_list(prds, len = 2, names = "named")
+  expect_set_equal(names(prds), base)
+  unlink(mod$learner.model$base.models)
+
+  # Works with a single learner
+  lrns = makeLearner("classif.rpart")
+  stk = makeStackedLearner(method = "aggregate", base.learners = lrns, save.on.disc = TRUE, predict.type = "prob")
+  mod = train(stk, tsk)
+  prds = getStackedBaseLearnerPredictions(model = mod, newdata = getTaskData(iris.task))
+  expect_list(prds, len = 1, names = "named")
+  expect_set_equal(names(prds), lrns$id)
+  unlink(mod$learner.model$base.models)
+})

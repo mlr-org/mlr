@@ -16,32 +16,30 @@
 # @param ... ...
 # @return Predictions are returned in matrix or vector.
 #' @export
-predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) { # FIXME actually only .learner$method is needed
-  # setup
-  use.feat = .model$learner$use.feat
-  sm.pt = .model$learner$predict.type
-  bm.pt = unique(extractSubList(.model$learner$base.learners, "predict.type"))
-  if (length(bm.pt) > 1) stopf("Prediction types of all base learners must be identical.")
-  td = .model$task.desc
-  method = .learner$method
+predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
+
+  # sm.pt = .model$learner$predict.type
+  # bm.pt = unique(extractSubList(.model$learner$base.learners, "predict.type"))
+  # if (length(bm.pt) > 1) stopf("Prediction types of all base learners must be identical.")
 
   # obtain predictions
   pred.list = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
   # apply aggregate
-  if (method == "aggregate") {
+  if (.learner$method == "aggregate") {
     final.pred = aggregatePredictions(pred.list, sm.pt = sm.pt, pL = FALSE)
-  # apply ensembleselection
-  } else if (method == "ensembleselection") {
+    # apply ensembleselection
+  } else if (.learner$method == "ensembleselection") {
     freq = .model$learner.model$freq
     pred.list = expandPredList(pred.list, freq = freq)
     final.pred = aggregatePredictions(pred.list, sm.pt = sm.pt, pL = FALSE)
-  # apply superlearner
-  } else if (method == "superlearner") {
+    # apply superlearner
+  } else if (.learner$method == "superlearner") {
+    use.feat = .model$learner$use.feat
     pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
     pred.data = as.data.frame(pred.data)
     if (use.feat) {
-      feat = .newdata[, colnames(.newdata) %nin% td$target, drop = FALSE]
+      feat = .newdata[, colnames(.newdata) %nin% getTaskDesc(.model)$target, drop = FALSE]
       pred.data = cbind(pred.data, feat)
     }
     sm = .model$learner.model$super.model
@@ -71,46 +69,20 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) { # FI
 #   New observations, for which the predictions using the specified base learners should be returned.
 #   Default is `NULL` and extracts the base learner predictions that were made during the training.
 # @export
-
 getStackedBaseLearnerPredictions = function(model, newdata = NULL){
-  stack.id = model$learner$id
-  # checking
+
   if (is.null(newdata)) {
     pred = model$learner.model$pred.train
   } else {
-    # get base learner and predict type
-    method = model$learner.model$method
-    if (method == "ensembleselection") {
-      # only apply prediction to models which are relevant for ensembleselection
-      used.bls = names(which(model$learner.model$freq > 0))
-      bms = model$learner.model$base.models[used.bls]
-    } else {
-      bms = model$learner.model$base.models
-    }
-    pred = vector("list", length(bms))
-    # Prediction
-    # 1. models from RDS file
-    if (model$learner$save.on.disc) {
-      for (i in seq_along(bms)) { # FIXME: do in parallel
-        m = readRDS(bms[[i]])
-        pred[[i]] = predict(m, newdata = newdata)
-      }
-      bls.names = sapply(bms, function(x) convertModelNameToBlsName(x, stack.id))
-    } else {
-    # 2. models from object
-      for (i in seq_along(bms)) {
-        pred[[i]] = predict(bms[[i]], newdata = newdata)
-      }
-      bls.names = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
-    }
-    names(pred) = bls.names
-    # FIXME I don
-    #broke.idx.pd = which(unlist(lapply(pred, function(x) checkIfNullOrAnyNA(x))))
-    #if (length(broke.idx.pd) > 0) {
-    #  messagef("Preds '%s' is broken in 'getStackedBaseLearnerPredictions' and will be removed\n", names(bls)[broke.idx])
-    #  pred.data = pred.data[-broke.idx.pd, drop = FALSE]
-    #  pred = pred[-broke.idx.pd, drop = FALSE]
-    #}
+    bms = model$learner.model$base.models
+    # Get predictions from all basemodels
+    pred = lapply(names(bms), function(x) {
+      # Load model if it was saved on disc
+      if (model$learner$save.on.disc)
+        bms[[x]] = readRDS(bms[[x]])
+      # Predict on newdata
+      predict(bms[[x]], newdata = newdata)}
+    )
   }
-  pred
+  return(setNames(pred, names(bms)))
 }

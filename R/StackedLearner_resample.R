@@ -319,7 +319,7 @@ createTask = function(type, data, target, id = deparse(substitute(data))) {
 # @param x `Task} or `TaskDesc`.
 getPreciseTaskType = function(x) {
   if (any(class(x) == "Task"))
-    x = getTaskDescription(x)
+    x = getTaskDesc(x)
   type = getTaskType(x)
   if (type == "classif" & length(x$class.levels) > 2)
     type = "multiclassif"

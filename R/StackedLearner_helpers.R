@@ -12,7 +12,6 @@ setPredictType.StackedLearner = function(learner, predict.type) {
   return(lrn)
 }
 
-
 # Returns response from Prediction object
 # @param pred Prediction
 # @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one
@@ -45,7 +44,7 @@ getPredictionDataNonMulticoll = function(pred) {
     pred = pred$pred
   }
   pt = pred$predict.type
-  td = getTaskDescription(pred)
+  td = getTaskDesc(pred)
   # if classification with probabilities
   if (pt == "prob") {
       pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
@@ -217,7 +216,7 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
     return(pred.list[[1]])
   }
   # Check if "equal"
-  x = lapply(pred.list, function(x) getTaskDescription(x))
+  x = lapply(pred.list, function(x) getTaskDesc(x))
   task.unequal = unlist(lapply(2:length(x), function(i) !all.equal(x[[1]], x[[i]])))
   if (any(task.unequal)) stopf("Task descriptions in prediction '1' and '%s' differ. This is not possible!", which(task.unequal)[1])
 
@@ -234,7 +233,7 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
   # Body
   pred1 = pred.list[[1]]
   type = getTaskType(pred1)
-  td = getTaskDescription(pred1)
+  td = getTaskDesc(pred1)
   rn = row.names(pred1$data)
   pt = pred1$predict.type
   if (is.null(sm.pt)) sm.pt = pt

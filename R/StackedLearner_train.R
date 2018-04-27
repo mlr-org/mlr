@@ -9,14 +9,9 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   switch(.learner$method,
     aggregate = aggregateBaseLearners(.learner, .task),
     superlearner = superlearnerBaseLearners(.learner, .task),
-    # ensembleselection = ensembleselectionBaseLearners(.learner, .task, ...)
     ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task), .learner$es.par.vals))
   )
 }
-
-################################################################
-# Aggregation method
-################################################################
 
 # Train function for simple aggregation of base learner predictions without weights.
 #
@@ -27,7 +22,6 @@ aggregateBaseLearners = function(learner, task) {
   save.on.disc = learner$save.on.disc
   save.preds = learner$save.preds
   bls = learner$base.learners
-  bls.names = names(bls)
 
   # parallelMap: train, predict
   parallelLibrary("mlr", master = FALSE, level = "mlr.stackedLearner", show.info = FALSE)
@@ -36,12 +30,13 @@ aggregateBaseLearners = function(learner, task) {
   results = parallelMap(doTrainPredict, bls, more.args = list(task, show.info, id, save.on.disc),
     impute.error = function(x) x, level = "mlr.stackedLearner")
 
-  base.models = lapply(results, function(x) x[["base.models"]])
-  pred.list = lapply(results, function(x) x[["pred"]])
-  names(base.models) = bls.names
-  names(pred.list) = bls.names
+  names(results) = names(bls)
+  base.models = extractSubList(results, "base.models", simplify = FALSE)
+  pred.list = extractSubList(results, "pred", simplify = FALSE)
 
-  ##FIXME: Ok way to remove bls1?
+
+  ##FIXME: Find a way to deal with broken models.
+  # Old Code:
   #broke.idx.bm = which(unlist(lapply(base.models, function(x) any(class(x) == "FailureModel"))))
   ##broke.idx.pd1 = which(unlist(lapply(pred.data, function(x) anyNA(x)))) # if models is FailesModels and NAs are returend in a Prediction
   ##broke.idx.pd2 = which(unlist(lapply(pred.data, function(x) class(x) %nin% c("numeric", "factor", "data.frame")))) # if model fails and error message is returned it is not class numeric (regr, binary classif) nor data.frame (multiclassif)
@@ -56,9 +51,12 @@ aggregateBaseLearners = function(learner, task) {
   #}
 
   # return
-  if (save.preds == FALSE) pred.list = NULL
-  list(method = "aggregate", base.models = base.models, super.model = NULL,
-    pred.train = pred.list)
+  list(
+    method = "aggregate",
+    base.models = base.models,
+    super.model = NULL,
+    pred.train = ifelse(save.preds, pred.list, NULL)
+  )
 }
 
 
@@ -75,7 +73,7 @@ aggregateBaseLearners = function(learner, task) {
 
 superlearnerBaseLearners = function(learner, task) {
   # setup
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = getPreciseTaskType(td)
   bls = learner$base.learners
   bls.names = names(bls)
@@ -132,7 +130,7 @@ superlearnerBaseLearners = function(learner, task) {
   super.model = train(learner$super.learner, super.task)
   # return
   list(method = "superlearner", base.models = base.models,
-       super.model = super.model, pred.train = pred.list)
+    super.model = super.model, pred.train = pred.list)
 }
 
 ################################################################
@@ -169,7 +167,7 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
   # setup
   id = learner$id
   save.on.disc = learner$save.on.disc
-  td = getTaskDescription(task)
+  td = getTaskDesc(task)
   type = getTaskType(task)
   bls = learner$base.learners
   bls.names = names(bls)
@@ -185,8 +183,8 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
   exportMlrOptions(level = "mlr.stackedLearner")
   show.info = getMlrOption("show.info")
   results = parallelMap(doTrainResample, bls, more.args = list(task, rin,
-      measures = metric, show.info, id, save.on.disc),
-      impute.error = function(x) x, level = "mlr.stackedLearner")
+    measures = metric, show.info, id, save.on.disc),
+    impute.error = function(x) x, level = "mlr.stackedLearner")
   base.models = lapply(results, function(x) x[["base.models"]])
   resres = lapply(results, function(x) x[["resres"]])
   pred.list = lapply(resres, function(x) x[["pred"]])
@@ -213,9 +211,10 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 
   ensel = applyEnsembleSelection(pred.list = pred.list,
     bls.performance = bls.performance, es.par.vals = list(replace = replace,
-    init = init, bagprop = bagprop, bagtime = bagtime, maxiter = maxiter,
-    metric = metric, tolerance = tolerance))
+      init = init, bagprop = bagprop, bagtime = bagtime, maxiter = maxiter,
+      metric = metric, tolerance = tolerance))
 
+  # FIXME Throw out unused learners?
   # return
   list(method = "ensembleselection", base.models = base.models, super.model = NULL,
     pred.train = pred.list, bls.performance = bls.performance,
@@ -338,6 +337,12 @@ applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.p
     freq.list[[bagind]] = selected.innerloop
   }
   weights = freq/sum(freq) #TODO: drop in future?
+
+  # Drop unused learners
+  # only apply prediction to models which are relevant for ensembleselection
+  used.bls = names(which(model$learner.model$freq > 0))
+  bms = model$learner.model$base.models[used.bls]
+
   # return
   list(freq = freq, freq.list = freq.list, weights = weights)
 }
