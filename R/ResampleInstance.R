@@ -15,7 +15,7 @@
 #'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
-#' @param desc ([ResampleDesc] | `character(1)`)\cr
+#' @param desc ([ResampleDesc] | `character(1)`)\cr"oneclass",
 #'   Resampling description object or name of resampling strategy.
 #'   In the latter case [makeResampleDesc] will be called internally on the string.
 #' @param task ([Task])\cr
@@ -94,10 +94,8 @@ makeResampleInstance = function(desc, task, size, ...) {
     if (length(i) > 0L)
       stopf("Columns specified for stratification, but not present in task: %s", collapse(stratify.cols[i]))
     index = getTaskData(task, features = stratify.cols, target.extra = FALSE)[stratify.cols]
-    if (any(vlapply(index, is.numeric)))
-      stop("Stratification on numeric variables not possible")
-
-    # make list with each list element is a class
+    if (any(vlapply(index, is.double)))
+      stop("Stratification on numeric double-precision variables not possible")
     grp = tapply(seq_row(index), index, simplify = FALSE)
     grp = unname(split(seq_row(index), grp))
 

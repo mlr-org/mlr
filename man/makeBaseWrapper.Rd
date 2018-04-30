@@ -15,13 +15,13 @@ Id string for object. Used to display object.}
 \item{type}{(\code{character(1)})\cr
 Learner type.}
 
-\item{next.learner}{([Learner`)\cr
+\item{next.learner}{(\link{Learner})\cr
 Learner to wrap.}
 
 \item{package}{(\link{character})\cr
 Packages to load when loading learner.}
 
-\item{par.set}{([ParamSet`)\cr
+\item{par.set}{(\link{ParamSet})\cr
 Parameter set.}
 
 \item{par.vals}{(\link{list})\cr
