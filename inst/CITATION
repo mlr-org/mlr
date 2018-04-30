@@ -29,7 +29,7 @@ bref = c(
       person("Helena", "Kotthaus"),
       person("Peter", "Marwedel"),
       person("Claus", "Weihs"),
-      person("Jörg", "Rahnenführer"),
+      person("Joerg", "Rahnenfuehrer"),
       person("Bernd", "Bischl")
     ),
     journal = "Journal of Statistical Computation and Simulation",
@@ -45,7 +45,7 @@ bref = c(
     key = 'bischl2016class',
     author = c(
       person("Bernd", "Bischl"),
-      person("Tobias", "Kühn"),
+      person("Tobias", "Kuehn"),
       person("Gero", "Szepannek")
     ),
     booktitle = "Operations Research Proceedings 2014",

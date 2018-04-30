@@ -73,7 +73,7 @@ test_that("plotFilterValues", {
   fv = generateFilterValuesData(regr.num.task, method = filter.regr)
   plotFilterValues(fv)
 
-  path = paste(tempdir(), "test.svg")
+  path = file.path(tempdir(), "test.svg")
   fv2 = generateFilterValuesData(binaryclass.task, method = c("variance", "randomForestSRC.rfsrc"))
   plotFilterValues(fv2)
   ggsave(path)
