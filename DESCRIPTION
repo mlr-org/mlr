@@ -10,32 +10,33 @@ Description: Interface to a large number of classification and regression
     basic learners with additional operations common in machine learning, also
     allowing for easy nested resampling. Most operations can be parallelized.
 Authors@R: c(
-    person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre")),
-    person("Michel", "Lang", email = "michellang@gmail.com", role = "aut"),
+    person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6002-6980")),
+    person("Michel", "Lang", email = "michellang@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-9754-0393")),
     person("Lars", "Kotthoff", email = "larsko@uwyo.edu", role = "aut"),
     person("Julia", "Schiffner", email = "schiffner@math.uni-duesseldorf.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
-    person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut"),
+    person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut", comment = c(ORCID = "0000-0001-5324-5966")),
     person("Mason", "Gallo", email = "masonagallo@gmail.com", role = "aut"),
-    person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb"),
-    person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb"),
+    person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb", comment = c(ORCID = "0000-0002-4121-4668")),
+    person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb", comment = c(ORCID = "0000-0003-4233-0182")),
     person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
     person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "ctb"),
-    person("Pascal", "Kerschke", email = "kerschke@uni-muenster.de", role = "ctb"),
+    person("Pascal", "Kerschke", email = "kerschke@uni-muenster.de", role = "ctb", comment = c(ORCID = "0000-0003-2862-1418")),
     person("Florian", "Fendt", email = "flo_fendt@gmx.de", role = "ctb"),
-    person("Philipp", "Probst", email = "philipp_probst@gmx.de", role = "ctb"),
-    person("Xudong", "Sun", email = "xudong.sun@stat.uni-muenchen.de", role = "ctb"),
-    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb"),
+    person("Philipp", "Probst", email = "philipp_probst@gmx.de", role = "ctb", comment = c(ORCID = "0000-0001-8402-6790")),
+    person("Xudong", "Sun", email = "xudong.sun@stat.uni-muenchen.de", role = "ctb", comment = c(ORCID = "0000-0003-3269-2307")),
+    person("Janek", "Thomas", email = "janek.thomas@stat.uni-muenchen.de", role = "ctb", comment = c(ORCID = "0000-0003-4511-6245")),
     person("Bruno", "Vieira", email = "bruno.hebling.vieira@usp.br", role = "ctb"),
-    person("Laura", "Beggel", email = "laura.beggel@web.de", role = "ctb"),
-    person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb"),
+    person("Laura", "Beggel", email = "laura.beggel@web.de", role = "ctb", comment = c(ORCID = "0000-0002-8872-8535")),
+    person("Quay", "Au", email = "quay.au@stat.uni-muenchen.de", role = "ctb", comment = c(ORCID = "0000-0002-5252-8902")),
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
     person("Minh Anh", "Le", email = "minh-anh.le@cdtm.de", role = "ctb"),
     person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"),
-    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"))
+    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"),
+    person("Alexander", "Engelhardt", email = "alexander.w.engelhardt@gmail.com", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -166,6 +167,6 @@ Suggests:
     xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
-Version: 2.12
+Version: 2.13
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

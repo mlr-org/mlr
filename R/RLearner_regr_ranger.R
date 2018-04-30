@@ -28,7 +28,7 @@ makeRLearner.regr.ranger = function() {
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = "order"),
-    properties = c("numerics", "factors", "ordered", "oobpreds", "featimp", "se"),
+    properties = c("numerics", "factors", "ordered", "oobpreds", "featimp", "se", "weights"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `order` for all splitrules. All settings are changeable. `mtry.perc` sets `mtry` to `mtry.perc*getTaskNFeats(.task)`. Default for `mtry` is the floor of square root of number of features in task.",
@@ -37,7 +37,7 @@ makeRLearner.regr.ranger = function() {
 }
 
 #' @export
-trainLearner.regr.ranger = function(.learner, .task, .subset, .weights, keep.inbag = NULL, mtry, mtry.perc, ...) {
+trainLearner.regr.ranger = function(.learner, .task, .subset, .weights = NULL, keep.inbag = NULL, mtry, mtry.perc, ...) {
   tn = getTaskTargetNames(.task)
   if (missing(mtry)) {
     if (missing(mtry.perc)) {
@@ -48,7 +48,8 @@ trainLearner.regr.ranger = function(.learner, .task, .subset, .weights, keep.inb
   }
   keep.inbag = if (is.null(keep.inbag)) FALSE else keep.inbag
   keep.inbag = if (.learner$predict.type == "se") TRUE else keep.inbag
-  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset), keep.inbag = keep.inbag, mtry = mtry, ...)
+  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
+                 case.weights = .weights, keep.inbag = keep.inbag, mtry = mtry, ...)
 }
 
 #' @export

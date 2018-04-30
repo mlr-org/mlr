@@ -413,7 +413,7 @@
   this is the new API:
   plotBMRSummary, plotBMRBoxplots, plotBMRRanksAsBarChart
 
-# mlr_2.6:
+# mlr 2.6:
 * cluster.kmeans: added support for fuzzy clustering (property "prob")
 * regr.lm: removed some erroneous param settings
 * regr.glmnet: added 'family' param and allowed 'gaussian', but also 'poisson'
@@ -888,9 +888,5 @@
 * makeSurvTask
 * impute, reimpute, makeImputeWrapper, lots of impute<Method>, makeImputeMethod
 
-# mlr 1.1:
+# mlr 1.1-18:
 * Initial release to CRAN
-
-
-
-

@@ -1,5 +1,5 @@
 #' Only exported for internal use.
-#' @param next.model ([WrappedModel`)\cr
+#' @param next.model ([WrappedModel])\cr
 #'   The next model.
 #' @param cl ([character])\cr
 #'   Subclass to assign to the resulting model.
