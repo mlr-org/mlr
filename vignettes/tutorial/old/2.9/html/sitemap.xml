@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>None/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>None/task/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/learner/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/train/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/predict/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/performance/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/resample/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/benchmark_experiments/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/parallelization/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/visualization/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/configureMlr/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/wrapper/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/preproc/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/impute/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/bagging/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/tune/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/feature_selection/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/nested_resampling/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/cost_sensitive_classif/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/over_and_undersampling/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/roc_analysis/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/multilabel/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/learning_curve/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/partial_dependence/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/classifier_calibration/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/create_learner/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/create_measure/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/create_imputation/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/create_filter/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/example_tasks/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/integrated_learners/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/measures/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/filter_methods/index.html</loc>
+     <lastmod>2016-08-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+</urlset>

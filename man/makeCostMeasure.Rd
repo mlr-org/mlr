@@ -17,7 +17,7 @@ Should the measure be minimized?
 Otherwise you are effectively specifying a benefits matrix.
 Default is \code{TRUE}.}
 
-\item{costs}{([matrix`)\cr
+\item{costs}{(\link{matrix})\cr
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.}
 
