@@ -92,8 +92,8 @@ makeResampleInstance = function(desc, task, size, ...) {
     if (length(i) > 0L)
       stopf("Columns specified for stratification, but not present in task: %s", collapse(stratify.cols[i]))
     index = getTaskData(task, features = stratify.cols, target.extra = FALSE)[stratify.cols]
-    if (any(vlapply(index, is.numeric)))
-      stop("Stratification on numeric variables not possible")
+    if (any(vlapply(index, is.double)))
+      stop("Stratification on numeric double-precision variables not possible")
     grp = tapply(seq_row(index), index, simplify = FALSE)
     grp = unname(split(seq_row(index), grp))
 

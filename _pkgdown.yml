@@ -1,0 +1,143 @@
+url: https://mlr-org.github.io/mlr
+
+template:
+  params:
+    bootswatch: cosmo
+    docsearch:
+      api_key: e300ecafdf04fe1199e3339c825ce7d0
+      index_name: mlr
+  path: pkgdown/templates
+  assets: pkgdown/assets
+  default_assets: false
+
+development:
+  mode: auto
+  destination: dev
+  version_label: info
+  version_tooltip: "Github version"
+
+home:
+  links:
+  - text: Cheatsheet
+    href: https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf
+
+navbar:
+  title:
+  type: default
+  left:
+  #- icon: fa-home
+  #  href: index.html
+  - text: Get Started
+    href: articles/mlr.html
+  - text: Basics
+    menu:
+    - text: Tasks
+      href: articles/tutorial/devel/task.html
+    - text: Learners
+      href: articles/tutorial/devel/learner.html
+    - text: Train
+      href: articles/tutorial/devel/train.html
+    - text: Predict
+      href: articles/tutorial/devel/predict.html
+    - text: Preprocessing
+      href: articles/tutorial/devel/preproc.html
+    - text: Performance
+      href: articles/tutorial/devel/performance.html
+    - text: Resampling
+      href: articles/tutorial/devel/resample.html
+    - text: Tuning
+      href: articles/tutorial/devel/tune.html
+    - text: Benchmark Experiments
+      href: articles/tutorial/devel/benchmark_experiments.html
+    - text: Parallelization
+      href: articles/tutorial/devel/parallelization.html
+    - text: Visualization
+      href: articles/tutorial/devel/visualization.html
+
+  - text: Advanced
+    menu:
+    - text: Configuration
+      href: articles/tutorial/devel/configureMlr.html
+    - text: Wrapped Learners
+      href: articles/tutorial/devel/wrapper.html
+    - text: Imputation
+      href: articles/tutorial/devel/impute.html
+    - text: Generic Bagging
+      href: articles/tutorial/devel/bagging.html
+    - text: Advanced Tuning
+      href: articles/tutorial/devel/advanced_tune.html
+    - text: Feature Selection
+      href: articles/tutorial/devel/feature_selection.html
+    - text: Nested Resampling
+      href: articles/tutorial/devel/nested_resampling.html
+    - text: Cost-Sensitive Classification
+      href: articles/tutorial/devel/cost_sensitive_classif.html
+    - text: Imbalanced Classification Problems
+      href: articles/tutorial/devel/over_and_undersampling.html
+    - text: ROC Analysis and Performance Curves
+      href: articles/tutorial/devel/roc_analysis.html
+    - text: Multilabel Classification
+      href: articles/tutorial/devel/multilabel.html
+    - text: Learning Curve Analysis
+      href: articles/tutorial/devel/learning_curve.html
+    - text: Partial Dependence Plots
+      href: articles/tutorial/devel/partial_dependence.html
+    - text: Classifier Calibration
+      href: articles/tutorial/devel/classifier_calibration.html
+    - text: Hyperparameter Tuning Effects
+      href: articles/tutorial/devel/hyperpar_tuning_effects.html
+    - text: Out-of-Bag Predictions
+      href: articles/tutorial/devel/out_of_bag_predictions.html
+    - text: Handling of Spatial Data
+      href: articles/tutorial/devel/handling_of_spatial_data.html
+    - text: Functional Data
+      href: articles/tutorial/devel/functional_data.html
+
+  - text: Extending
+    menu:
+    - text: Create Custom Learners
+      href: articles/tutorial/devel/create_learner.html
+    - text: Create Custom Measures
+      href: articles/tutorial/devel/create_measure.html
+    - text: Create Imputation Methods
+      href: articles/tutorial/devel/create_imputation.html
+    - text: Create Custom Filters
+      href: articles/tutorial/devel/create_filter.html
+
+  - text: Appendix
+    menu:
+    - text: Function Reference
+      href: reference/index.html
+    - text: News
+      href: news/index.html
+    - text: Example Tasks
+      href: articles/tutorial/devel/example_tasks.html
+    - text: Integrated Learners
+      href: articles/tutorial/devel/integrated_learners.html
+    - text: Implemented Measures
+      href: articles/tutorial/devel/measures.html
+    - text: Integrated Filter Methods
+      href: articles/tutorial/devel/filter_methods.html
+
+  - text: mlr-org Packages
+    menu:
+    - text: mlrMBO
+      href: https://github.com/mlr-org/mlrMBO
+    - text: mlrng
+      href: https://github.com/mlr-org/mlrng
+    - text: mlrCPO
+      href: https://github.com/mlr-org/mlrCPO
+    - text: shinyMlr
+      href: https://github.com/mlr-org/shinyMlr
+    - text: mlrHyperopt
+      href: http://jakob-r.de/mlrHyperopt/index.html
+
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/mlr-org/mlr
+  - icon: fa-slack
+    href: https://mlr-org.slack.com
+  - icon: fa-stack-overflow
+    href: https://stackoverflow.com/questions/tagged/mlr
+  - icon: fa-rss
+    href: https://mlr-org.github.io

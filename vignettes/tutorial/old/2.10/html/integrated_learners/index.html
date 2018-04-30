@@ -1,0 +1,2342 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Integrated Learners - mlr tutorial</title>
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="../css/custom_mlr.css" rel="stylesheet">
+        <link href="../css/custom_highlight.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../task/index.html">Tasks</a>
+</li>
+                            
+<li >
+    <a href="../learner/index.html">Learners</a>
+</li>
+                            
+<li >
+    <a href="../train/index.html">Train</a>
+</li>
+                            
+<li >
+    <a href="../predict/index.html">Predict</a>
+</li>
+                            
+<li >
+    <a href="../performance/index.html">Performance</a>
+</li>
+                            
+<li >
+    <a href="../resample/index.html">Resampling</a>
+</li>
+                            
+<li >
+    <a href="../tune/index.html">Tuning</a>
+</li>
+                            
+<li >
+    <a href="../benchmark_experiments/index.html">Benchmark Experiments</a>
+</li>
+                            
+<li >
+    <a href="../parallelization/index.html">Parallelization</a>
+</li>
+                            
+<li >
+    <a href="../visualization/index.html">Visualization</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../configureMlr/index.html">Configuration</a>
+</li>
+                            
+<li >
+    <a href="../wrapper/index.html">Wrapped Learners</a>
+</li>
+                            
+<li >
+    <a href="../preproc/index.html">Preprocessing</a>
+</li>
+                            
+<li >
+    <a href="../impute/index.html">Imputation</a>
+</li>
+                            
+<li >
+    <a href="../bagging/index.html">Bagging</a>
+</li>
+                            
+<li >
+    <a href="../advanced_tune/index.html">Advanced Tuning</a>
+</li>
+                            
+<li >
+    <a href="../feature_selection/index.html">Feature Selection</a>
+</li>
+                            
+<li >
+    <a href="../nested_resampling/index.html">Nested Resampling</a>
+</li>
+                            
+<li >
+    <a href="../cost_sensitive_classif/index.html">Cost-Sensitive Classification</a>
+</li>
+                            
+<li >
+    <a href="../over_and_undersampling/index.html">Imbalanced Classification Problems</a>
+</li>
+                            
+<li >
+    <a href="../roc_analysis/index.html">ROC Analysis</a>
+</li>
+                            
+<li >
+    <a href="../multilabel/index.html">Multilabel Classification</a>
+</li>
+                            
+<li >
+    <a href="../learning_curve/index.html">Learning Curves</a>
+</li>
+                            
+<li >
+    <a href="../partial_dependence/index.html">Partial Dependence Plots</a>
+</li>
+                            
+<li >
+    <a href="../classifier_calibration/index.html">Classifier Calibration Plots</a>
+</li>
+                            
+<li >
+    <a href="../hyperpar_tuning_effects/index.html">Hyperparameter Tuning Effects</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../create_learner/index.html">Create Custom Learners</a>
+</li>
+                            
+<li >
+    <a href="../create_measure/index.html">Create Custom Measures</a>
+</li>
+                            
+<li >
+    <a href="../create_imputation/index.html">Create Imputation Methods</a>
+</li>
+                            
+<li >
+    <a href="../create_filter/index.html">Create Custom Filters</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../example_tasks/index.html">Example Tasks</a>
+</li>
+                            
+<li class="active">
+    <a href="index.html">Integrated Learners</a>
+</li>
+                            
+<li >
+    <a href="../measures/index.html">Implemented Performance Measures</a>
+</li>
+                            
+<li >
+    <a href="../filter_methods/index.html">Integrated Filter Methods</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../example_tasks/index.html">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../measures/index.html">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/mlr-org/mlr/">
+                                <i class="fa fa-github"></i>GitHub
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#integrated-learners">Integrated Learners</a></li>
+            <li><a href="#classification-84">Classification (84)</a></li>
+            <li><a href="#regression-64">Regression (64)</a></li>
+            <li><a href="#survival-analysis-15">Survival analysis (15)</a></li>
+            <li><a href="#cluster-analysis-9">Cluster analysis (9)</a></li>
+            <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
+            <li><a href="#multilabel-classification-3">Multilabel classification (3)</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="integrated-learners">Integrated Learners</h1>
+<p>This page lists the learning methods already integrated in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
+<p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>Ord.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with
+numerical, factor, and ordered factor predictors, if it can deal with missing values in a meaningful way
+(other than simply removing observations with missing values) and if observation
+weights are supported.</p>
+<p>Column <strong>Props</strong> shows further properties of the learning methods specific to the
+type of learning task.
+See also <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">RLearner</a> for details.</p>
+<h3 id="classification-84">Classification (84)</h3>
+<p>For classification the following additional learner properties are relevant and shown in
+column <strong>Props</strong>:</p>
+<ul>
+<li><em>prob</em>: The method can predict probabilities,</li>
+<li><em>oneclass</em>, <em>twoclass</em>, <em>multiclass</em>: One-class, two-class (binary) or multi-class
+  classification problems be handled,</li>
+<li><em>class.weights</em>: Class weights can be handled.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Class / Short Name / Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">Ord.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="left">Props</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>classif.ada</strong> <br /> <em>ada</em> <br /><br />ada Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/ada/">ada</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"><code>xval</code> has been set to <code>0</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.bartMachine</strong> <br /> <em>bartmachine</em> <br /><br />Bayesian Additive Regression Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bartMachine/">bartMachine</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"><code>use_missing_data</code> has been set to <code>TRUE</code> by default to allow missing data support.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.bdk</strong> <br /> <em>bdk</em> <br /><br />Bi-Directional Kohonen map</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>keep.data</code> is set to FALSE to reduce memory requirements.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.binomial</strong> <br /> <em>binomial</em> <br /><br />Binomial Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">Delegates to <code>glm</code> with freely choosable binomial link function via learner parameter <code>link</code>. We set 'model' to FALSE by default to save memory.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.blackboost</strong> <br /> <em>blackboost</em> <br /><br />Gradient Boosting With Regression Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a><br /><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness. <code>family</code> has been set to <code>Binomial</code> by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.boosting</strong> <br /> <em>adabag</em> <br /><br />Adabag Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/adabag/">adabag</a><br /><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp</td>
+<td align="left"><code>xval</code> has been set to <code>0</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.bst</strong> <br /> <em>bst</em> <br /><br />Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bst/">bst</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass</td>
+<td align="left">Renamed parameter <code>learner</code> to <code>Learner</code> due to nameclash with <code>setHyperPars</code>. Default changes: <code>Learner = "ls"</code>, <code>xval = 0</code>, and <code>maxdepth = 1</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.C50</strong> <br /> <em>C50</em> <br /><br />C50</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/C50/">C50</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.cforest</strong> <br /> <em>cforest</em> <br /><br />Random forest based on conditional inference trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp</td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.clusterSVM</strong> <br /> <em>clusterSVM</em> <br /><br />Clustered Support Vector Machines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/SwarmSVM/">SwarmSVM</a><br /><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass</td>
+<td align="left"><code>centers</code> set to <code>2</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.ctree</strong> <br /> <em>ctree</em> <br /><br />Conditional Inference Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.cvglmnet</strong> <br /> <em>cvglmnet</em> <br /><br />GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">The family parameter is set to <code>binomial</code> for two-class problems and to <code>multinomial</code> otherwise. Factors automatically get converted to dummy columns, ordered factors to integer.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.dbnDNN</strong> <br /> <em>dbn.dnn</em> <br /><br />Deep neural network with weights initialized by DBN</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/">deepnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>output</code> set to <code>"softmax"</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.dcSVM</strong> <br /> <em>dcSVM</em> <br /><br />Divided-Conquer Support Vector Machines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/SwarmSVM/">SwarmSVM</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.earth</strong> <br /> <em>fda</em> <br /><br />Flexible Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/earth/">earth</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">This learner performs flexible discriminant analysis using the earth algorithm. na.action is set to na.fail and only this is supported.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.evtree</strong> <br /> <em>evtree</em> <br /><br />Evolutionary learning of globally optimal trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/evtree/">evtree</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>pmutatemajor</code>, <code>pmutateminor</code>, <code>pcrossover</code>, <code>psplit</code>, and <code>pprune</code>,       are scaled internally to sum to 100.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.extraTrees</strong> <br /> <em>extraTrees</em> <br /><br />Extremely Randomized Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/extraTrees/">extraTrees</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.featureless</strong> <br /> <em>featureless</em> <br /><br />Featureless classifier</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.fnn</strong> <br /> <em>fnn</em> <br /><br />Fast k-Nearest Neighbour</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FNN/">FNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.gamboost</strong> <br /> <em>gamboost</em> <br /><br />Gradient boosting with smooth components</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"><code>family</code> has been set to <code>Binomial()</code> by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predicted.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.gaterSVM</strong> <br /> <em>gaterSVM</em> <br /><br />Mixture of SVMs with Neural Network Gater Function</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/SwarmSVM/">SwarmSVM</a><br /><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass</td>
+<td align="left"><code>m</code> set to <code>3</code> and <code>max.iter</code> set to <code>1</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.gausspr</strong> <br /> <em>gausspr</em> <br /><br />Gaussian Processes</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>gausspr</code>.     Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.gbm</strong> <br /> <em>gbm</em> <br /><br />Gradient Boosting Machine</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/gbm/">gbm</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp</td>
+<td align="left"><code>keep.data</code> is set to FALSE to reduce memory requirements. Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for       multiclass problems. The latter is the only setting that works for &gt; 2 classes.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.geoDA</strong> <br /> <em>geoda</em> <br /><br />Geometric Predictive Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.glmboost</strong> <br /> <em>glmboost</em> <br /><br />Boosting for GLMs</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"><code>family</code> has been set to <code>Binomial</code> by default. For 'family' 'AUC' and 'AdaExp' probabilities cannot be predcited.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.glmnet</strong> <br /> <em>glmnet</em> <br /><br />GLM with Lasso or Elasticnet Regularization</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">The family parameter is set to <code>binomial</code> for two-class problems and to <code>multinomial</code> otherwise.       Factors automatically get converted to dummy columns, ordered factors to integer.       Parameter <code>s</code> (value of the regularization parameter used for predictions) is set to <code>0.1</code> by default,       but needs to be tuned by the user.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.h2o.deeplearning</strong> <br /> <em>h2o.dl</em> <br /><br />h2o.deeplearning</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.h2o.gbm</strong> <br /> <em>h2o.gbm</em> <br /><br />h2o.gbm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">'distribution' is set automatically to 'gaussian'.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.h2o.glm</strong> <br /> <em>h2o.glm</em> <br /><br />h2o.glm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">'family' is always set to 'binomial' to get a binary classifier.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.h2o.randomForest</strong> <br /> <em>h2o.rf</em> <br /><br />h2o.randomForest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.hdrda</strong> <br /> <em>hdrda</em> <br /><br />High-Dimensional Regularized Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/sparsediscrim/">sparsediscrim</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.IBk</strong> <br /> <em>ibk</em> <br /><br />k-Nearest Neighbours</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.J48</strong> <br /> <em>j48</em> <br /><br />J48 Decision Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.JRip</strong> <br /> <em>jrip</em> <br /><br />Propositional Rule Learner</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.kknn</strong> <br /> <em>kknn</em> <br /><br />k-Nearest Neighbor</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kknn/">kknn</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.knn</strong> <br /> <em>knn</em> <br /><br />k-Nearest Neighbor</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/class/">class</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.ksvm</strong> <br /> <em>ksvm</em> <br /><br />Support Vector Machines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />class.weights</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>ksvm</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.lda</strong> <br /> <em>lda</em> <br /><br />Linear Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/MASS/">MASS</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">Learner parameter <code>predict.method</code> maps to <code>method</code> in <code>predict.lda</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRL1L2SVC</strong> <br /> <em>liblinl1l2svc</em> <br /><br />L1-Regularized L2-Loss Support Vector Classification</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass<br />class.weights</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRL1LogReg</strong> <br /> <em>liblinl1logreg</em> <br /><br />L1-Regularized Logistic Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />class.weights</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRL2L1SVC</strong> <br /> <em>liblinl2l1svc</em> <br /><br />L2-Regularized L1-Loss Support Vector Classification</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass<br />class.weights</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRL2LogReg</strong> <br /> <em>liblinl2logreg</em> <br /><br />L2-Regularized Logistic Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />class.weights</td>
+<td align="left"><code>type = 0</code> (the default) is primal and <code>type = 7</code> is dual problem.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRL2SVC</strong> <br /> <em>liblinl2svc</em> <br /><br />L2-Regularized L2-Loss Support Vector Classification</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass<br />class.weights</td>
+<td align="left"><code>type = 2</code> (the default) is primal and <code>type = 1</code> is dual problem.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRMultiClassSVC</strong> <br /> <em>liblinmulticlasssvc</em> <br /><br />Support Vector Classification by Crammer and Singer</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass<br />class.weights</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.linDA</strong> <br /> <em>linda</em> <br /><br />Linear Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left">Set <code>validation = NULL</code> by default to disable internal test set validation.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.logreg</strong> <br /> <em>logreg</em> <br /><br />Logistic Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">Delegates to <code>glm</code> with <code>family = binomial(link = 'logit')</code>. We set 'model' to FALSE by default to save memory.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.lqa</strong> <br /> <em>lqa</em> <br /><br />Fitting penalized Generalized Linear Models with the LQA algorithm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/lqa/">lqa</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"><code>penalty</code> has been set to <code>"lasso"</code> and <code>lambda</code> to <code>0.1</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.lssvm</strong> <br /> <em>lssvm</em> <br /><br />Least Squares Support Vector Machine</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"><code>fitted</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.lvq1</strong> <br /> <em>lvq1</em> <br /><br />Learning Vector Quantization</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/class/">class</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.mda</strong> <br /> <em>mda</em> <br /><br />Mixture Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mda/">mda</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>keep.fitted</code> has been set to <code>FALSE</code> by default for speed and we use <code>start.method = "lvq"</code> for more robust behavior / less technical crashes.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.mlp</strong> <br /> <em>mlp</em> <br /><br />Multi-Layer Perceptron</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RSNNS/">RSNNS</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.multinom</strong> <br /> <em>multinom</em> <br /><br />Multinomial Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nnet/">nnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.naiveBayes</strong> <br /> <em>nbayes</em> <br /><br />Naive Bayes</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.neuralnet</strong> <br /> <em>neuralnet</em> <br /><br />Neural Network from neuralnet</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/neuralnet/">neuralnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"><code>err.fct</code> has been set to <code>ce</code> and <code>linear.output</code> to FALSE to do classification.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.nnet</strong> <br /> <em>nnet</em> <br /><br />Neural Network</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nnet/">nnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>size</code> has been set to <code>3</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.nnTrain</strong> <br /> <em>nn.train</em> <br /><br />Training Neural Network by Backpropagation</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/">deepnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>output</code> set to <code>softmax</code> by default. <code>max.number.of.layers</code> can be set to control and tune the maximal number of layers specified via <code>hidden</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.nodeHarvest</strong> <br /> <em>nodeHarvest</em> <br /><br />Node Harvest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/">nodeHarvest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.OneR</strong> <br /> <em>oner</em> <br /><br />1-R Classifier</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.pamr</strong> <br /> <em>pamr</em> <br /><br />Nearest shrunken centroid</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/pamr/">pamr</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">Threshold for prediction (<code>threshold.predict</code>) has been set to <code>1</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.PART</strong> <br /> <em>part</em> <br /><br />PART Decision Lists</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.penalized.fusedlasso</strong> <br /> <em>fusedlasso</em> <br /><br />Logistic Fused Lasso Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">trace=FALSE was set by default to disable logging output. lambda1 and lambda2 have been set to 1 by default, as fusedlasso needs both penalizations &gt; 0.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.penalized.lasso</strong> <br /> <em>lasso</em> <br /><br />Logistic Lasso Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">trace=FALSE was set by default to disable logging output.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.penalized.ridge</strong> <br /> <em>ridge</em> <br /><br />Logistic Ridge Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">trace=FALSE was set by default to disable logging output.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.plr</strong> <br /> <em>plr</em> <br /><br />Logistic Regression with a L2 Penalty</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stepPlr/">stepPlr</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">AIC and BIC penalty types can be selected via the new parameter <code>cp.type</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.plsdaCaret</strong> <br /> <em>plsdacaret</em> <br /><br />Partial Least Squares (PLS) Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/caret/">caret</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.probit</strong> <br /> <em>probit</em> <br /><br />Probit Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass</td>
+<td align="left">Delegates to <code>glm</code> with <code>family = binomial(link = 'probit')</code>. We set 'model' to FALSE by default to save memory.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.qda</strong> <br /> <em>qda</em> <br /><br />Quadratic Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/MASS/">MASS</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">Learner parameter <code>predict.method</code> maps to <code>method</code> in <code>predict.qda</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.quaDA</strong> <br /> <em>quada</em> <br /><br />Quadratic Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.randomForest</strong> <br /> <em>rf</em> <br /><br />Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForest/">randomForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />class.weights<br />featimp<br />oobpreds</td>
+<td align="left">Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.randomForestSRC</strong> <br /> <em>rfsrc</em> <br /><br />Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp<br />oobpreds</td>
+<td align="left"><code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.ranger</strong> <br /> <em>ranger</em> <br /><br />Random Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/ranger/">ranger</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp<br />oobpreds</td>
+<td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>TRUE</code>. All settings are changeable.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.rda</strong> <br /> <em>rda</em> <br /><br />Regularized Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/klaR/">klaR</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>estimate.error</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.rFerns</strong> <br /> <em>rFerns</em> <br /><br />Random ferns</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rFerns/">rFerns</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass<br />oobpreds</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.rknn</strong> <br /> <em>rknn</em> <br /><br />Random k-Nearest-Neighbors</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rknn/">rknn</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left">k restricted to &lt; 99 as the code allocates arrays of static size</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.rotationForest</strong> <br /> <em>rotationForest</em> <br /><br />Rotation Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rotationForest/">rotationForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.rpart</strong> <br /> <em>rpart</em> <br /><br />Decision Tree</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp</td>
+<td align="left"><code>xval</code> has been set to <code>0</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.RRF</strong> <br /> <em>RRF</em> <br /><br />Regularized Random Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RRF/">RRF</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.rrlda</strong> <br /> <em>rrlda</em> <br /><br />Robust Regularized Linear Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rrlda/">rrlda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.saeDNN</strong> <br /> <em>sae.dnn</em> <br /><br />Deep neural network with weights initialized by Stacked AutoEncoder</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/deepnet/">deepnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"><code>output</code> set to <code>"softmax"</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.sda</strong> <br /> <em>sda</em> <br /><br />Shrinkage Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/sda/">sda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.sparseLDA</strong> <br /> <em>sparseLDA</em> <br /><br />Sparse Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/sparseLDA/">sparseLDA</a><br /><a href="http://www.rdocumentation.org/packages/MASS/">MASS</a><br /><a href="http://www.rdocumentation.org/packages/elasticnet/">elasticnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left">Arguments <code>Q</code> and <code>stop</code> are not yet provided as they depend on the task.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.svm</strong> <br /> <em>svm</em> <br /><br />Support Vector Machines (libsvm)</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass<br />class.weights</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.xgboost</strong> <br /> <em>xgboost</em> <br /><br />eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />twoclass<br />multiclass<br />featimp</td>
+<td align="left">All settings are passed directly, rather than through <code>xgboost</code>'s <code>params</code> argument. <code>nrounds</code> has been set to <code>1</code> and <code>verbose</code> to <code>0</code> by default. <code>num_class</code> is set internally, so do not set this manually.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.xyf</strong> <br /> <em>xyf</em> <br /><br />X-Y fused self-organising maps</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob<br />twoclass<br />multiclass</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="regression-64">Regression (64)</h3>
+<p>Additional learner properties:</p>
+<ul>
+<li><em>se</em>: Standard errors can be predicted.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Class / Short Name / Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">Ord.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="left">Props</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>regr.bartMachine</strong> <br /> <em>bartmachine</em> <br /><br />Bayesian Additive Regression Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bartMachine/">bartMachine</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><code>use_missing_data</code> has been set to <code>TRUE</code> by default to allow missing data support.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bcart</strong> <br /> <em>bcart</em> <br /><br />Bayesian CART</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bdk</strong> <br /> <em>bdk</em> <br /><br />Bi-Directional Kohonen map</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><code>keep.data</code> is set to FALSE to reduce memory requirements.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bgp</strong> <br /> <em>bgp</em> <br /><br />Bayesian Gaussian Process</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bgpllm</strong> <br /> <em>bgpllm</em> <br /><br />Bayesian Gaussian Process with jumps to the Limiting Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.blackboost</strong> <br /> <em>blackboost</em> <br /><br />Gradient Boosting with Regression Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a><br /><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.blm</strong> <br /> <em>blm</em> <br /><br />Bayesian Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.brnn</strong> <br /> <em>brnn</em> <br /><br />Bayesian regularization for feed-forward neural networks</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/brnn/">brnn</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bst</strong> <br /> <em>bst</em> <br /><br />Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bst/">bst</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">Renamed parameter <code>learner</code> to <code>Learner</code> due to nameclash with <code>setHyperPars</code>. Default changes: <code>Learner = "ls"</code>, <code>xval = 0</code>, and <code>maxdepth = 1</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.btgp</strong> <br /> <em>btgp</em> <br /><br />Bayesian Treed Gaussian Process</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.btgpllm</strong> <br /> <em>btgpllm</em> <br /><br />Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.btlm</strong> <br /> <em>btlm</em> <br /><br />Bayesian Treed Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.cforest</strong> <br /> <em>cforest</em> <br /><br />Random Forest Based on Conditional Inference Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp</td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.crs</strong> <br /> <em>crs</em> <br /><br />Regression Splines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/crs/">crs</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.ctree</strong> <br /> <em>ctree</em> <br /><br />Conditional Inference Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.cubist</strong> <br /> <em>cubist</em> <br /><br />Cubist</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/Cubist/">Cubist</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.cvglmnet</strong> <br /> <em>cvglmnet</em> <br /><br />GLM with Lasso or Elasticnet Regularization (Cross Validated Lambda)</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.earth</strong> <br /> <em>earth</em> <br /><br />Multivariate Adaptive Regression Splines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/earth/">earth</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.elmNN</strong> <br /> <em>elmNN</em> <br /><br />Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/elmNN/">elmNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><code>nhid</code> has been set to <code>1</code> and <code>actfun</code> has been set to <code>"sig"</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.evtree</strong> <br /> <em>evtree</em> <br /><br />Evolutionary learning of globally optimal trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/evtree/">evtree</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"><code>pmutatemajor</code>, <code>pmutateminor</code>, <code>pcrossover</code>, <code>psplit</code>, and <code>pprune</code>,       are scaled internally to sum to 100.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.extraTrees</strong> <br /> <em>extraTrees</em> <br /><br />Extremely Randomized Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/extraTrees/">extraTrees</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.featureless</strong> <br /> <em>featureless</em> <br /><br />Featureless regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.fnn</strong> <br /> <em>fnn</em> <br /><br />Fast k-Nearest Neighbor</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FNN/">FNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.frbs</strong> <br /> <em>frbs</em> <br /><br />Fuzzy Rule-based Systems</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/frbs/">frbs</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.gamboost</strong> <br /> <em>gamboost</em> <br /><br />Gradient Boosting with Smooth Components</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.gausspr</strong> <br /> <em>gausspr</em> <br /><br />Gaussian Processes</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>gausspr</code>.     Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.gbm</strong> <br /> <em>gbm</em> <br /><br />Gradient Boosting Machine</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/gbm/">gbm</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp</td>
+<td align="left"><code>keep.data</code> is set to FALSE to reduce memory requirements, <code>distribution</code> has been set to <code>"gaussian"</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.glm</strong> <br /> <em>glm</em> <br /><br />Generalized Linear Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">se</td>
+<td align="left">'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default. We set 'model' to FALSE by default to save memory.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.glmboost</strong> <br /> <em>glmboost</em> <br /><br />Boosting for GLMs</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.glmnet</strong> <br /> <em>glmnet</em> <br /><br />GLM with Lasso or Elasticnet Regularization</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer.       Parameter <code>s</code> (value of the regularization parameter used for predictions) is set to <code>0.1</code> by default,       but needs to be tuned by the user.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.GPfit</strong> <br /> <em>GPfit</em> <br /><br />Gaussian Process</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/GPfit/">GPfit</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left">(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d,              the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has             to be set. (2) We replace the GPfit parameter 'corr = list(type='exponential',power=1.95)' to be seperate              parameters 'type' and 'power', in the case of  corr = list(type='matern', nu = 0.5), the seperate parameters             are 'type' and 'matern_nu_k=0', and nu is computed by 'nu=(2*matern_nu_k+1)/2=0.5'</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.h2o.deeplearning</strong> <br /> <em>h2o.dl</em> <br /><br />h2o.deeplearning</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.h2o.gbm</strong> <br /> <em>h2o.gbm</em> <br /><br />h2o.gbm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">'distribution' is set automatically to 'gaussian'.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.h2o.glm</strong> <br /> <em>h2o.glm</em> <br /><br />h2o.glm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left">'family' is always set to 'gaussian'.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.h2o.randomForest</strong> <br /> <em>h2o.rf</em> <br /><br />h2o.randomForest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/h2o/">h2o</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.IBk</strong> <br /> <em>ibk</em> <br /><br />K-Nearest Neighbours</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.kknn</strong> <br /> <em>kknn</em> <br /><br />K-Nearest-Neighbor regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kknn/">kknn</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.km</strong> <br /> <em>km</em> <br /><br />Kriging</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/DiceKriging/">DiceKriging</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left">In predict, we currently always use <code>type = "SK"</code>. The extra parameter <code>jitter</code> (default is <code>FALSE</code>) enables adding a very small jitter (order 1e-12) to the x-values before prediction, as <code>predict.km</code> reproduces the exact y-values of the training data points, when you pass them in, even if the nugget effect is turned on.   We further introduced <code>nugget.stability</code> which sets the <code>nugget</code> to <code>nugget.stability * var(y)</code> before each training to improve numerical stability. We recommend a setting of 10^-8</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.ksvm</strong> <br /> <em>ksvm</em> <br /><br />Support Vector Machines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>ksvm</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.laGP</strong> <br /> <em>laGP</em> <br /><br />Local Approximate Gaussian Process</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/laGP/">laGP</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.LiblineaRL2L1SVR</strong> <br /> <em>liblinl2l1svr</em> <br /><br />L2-Regularized L1-Loss Support Vector Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">Parameter <code>svr_eps</code> has been set to <code>0.1</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.LiblineaRL2L2SVR</strong> <br /> <em>liblinl2l2svr</em> <br /><br />L2-Regularized L2-Loss Support Vector Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><code>type = 11</code> (the default) is primal and <code>type = 12</code> is dual problem. Parameter <code>svr_eps</code> has been set to <code>0.1</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.lm</strong> <br /> <em>lm</em> <br /><br />Simple Linear Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.mars</strong> <br /> <em>mars</em> <br /><br />Multivariate Adaptive Regression Splines</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mda/">mda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.mob</strong> <br /> <em>mob</em> <br /><br />Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.nnet</strong> <br /> <em>nnet</em> <br /><br />Neural Network</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nnet/">nnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"></td>
+<td align="left"><code>size</code> has been set to <code>3</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.nodeHarvest</strong> <br /> <em>nodeHarvest</em> <br /><br />Node Harvest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/">nodeHarvest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.pcr</strong> <br /> <em>pcr</em> <br /><br />Principal Component Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/pls/">pls</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.penalized.fusedlasso</strong> <br /> <em>fusedlasso</em> <br /><br />Fused Lasso Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">trace=FALSE was set by default to disable logging output. lambda1 and lambda2 have been set to 1 by default, as fusedlasso needs both penalizations &gt; 0.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.penalized.lasso</strong> <br /> <em>lasso</em> <br /><br />Lasso Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">trace=FALSE was set by default to disable logging output.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.penalized.ridge</strong> <br /> <em>ridge</em> <br /><br />Ridge Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">trace=FALSE was set by default to disable logging output.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.plsr</strong> <br /> <em>plsr</em> <br /><br />Partial Least Squares Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/pls/">pls</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.randomForest</strong> <br /> <em>rf</em> <br /><br />Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForest/">randomForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">featimp<br />oobpreds<br />se</td>
+<td align="left">See <code>?regr.randomForest</code> for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.randomForestSRC</strong> <br /> <em>rfsrc</em> <br /><br />Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp<br />oobpreds</td>
+<td align="left"><code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.ranger</strong> <br /> <em>ranger</em> <br /><br />Random Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/ranger/">ranger</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">featimp<br />oobpreds</td>
+<td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>TRUE</code>. All settings are changeable.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.rknn</strong> <br /> <em>rknn</em> <br /><br />Random k-Nearest-Neighbors</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rknn/">rknn</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.rpart</strong> <br /> <em>rpart</em> <br /><br />Decision Tree</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp</td>
+<td align="left"><code>xval</code> has been set to <code>0</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.RRF</strong> <br /> <em>RRF</em> <br /><br />Regularized Random Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RRF/">RRF</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">featimp</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.rsm</strong> <br /> <em>rsm</em> <br /><br />Response Surface Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rsm/">rsm</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">You select the order of the regression by using <code>modelfun = "FO"</code> (first order), <code>"TWI"</code> (two-way interactions, this is with 1st oder terms!) and <code>"SO"</code> (full second order).</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.rvm</strong> <br /> <em>rvm</em> <br /><br />Relevance Vector Machine</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>rvm</code>. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.slim</strong> <br /> <em>slim</em> <br /><br />Sparse Linear Regression using Nonsmooth Loss Functions and L1 Regularization</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/flare/">flare</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><code>lambda.idx</code> has been set to <code>3</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.svm</strong> <br /> <em>svm</em> <br /><br />Support Vector Machines (libsvm)</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.xgboost</strong> <br /> <em>xgboost</em> <br /><br />eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">featimp</td>
+<td align="left">All settings are passed directly, rather than through <code>xgboost</code>'s <code>params</code> argument. <code>nrounds</code> has been set to <code>1</code> and <code>verbose</code> to <code>0</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.xyf</strong> <br /> <em>xyf</em> <br /><br />X-Y fused self-organising maps</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="survival-analysis-15">Survival analysis (15)</h3>
+<p>Additional learner properties:</p>
+<ul>
+<li><em>prob</em>: Probabilities can be predicted,</li>
+<li><em>rcens</em>, <em>lcens</em>, <em>icens</em>: The learner can handle right, left and/or interval censored data.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Class / Short Name / Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">Ord.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="left">Props</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>surv.cforest</strong> <br /> <em>crf</em> <br /><br />Random Forest based on Conditional Inference Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a><br /><a href="http://www.rdocumentation.org/packages/survival/">survival</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp<br />rcens</td>
+<td align="left">See <code>?ctree_control</code> for possible breakage for nominal features with missingness.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.CoxBoost</strong> <br /> <em>coxboost</em> <br /><br />Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.coxph</strong> <br /> <em>coxph</em> <br /><br />Cox Proportional Hazard Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>surv.cv.CoxBoost</strong> <br /> <em>cv.CoxBoost</em> <br /><br />Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, tuned for the optimal number of boosting steps</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.cvglmnet</strong> <br /> <em>cvglmnet</em> <br /><br />GLM with Regularization (Cross Validated Lambda)</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.gamboost</strong> <br /> <em>gamboost</em> <br /><br />Gradient boosting with smooth components</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left"><code>family</code> has been set to <code>CoxPH()</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.gbm</strong> <br /> <em>gbm</em> <br /><br />Gradient Boosting Machine</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/gbm/">gbm</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob<br />featimp<br />rcens</td>
+<td align="left"><code>keep.data</code> is set to FALSE to reduce memory requirements.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.glmboost</strong> <br /> <em>glmboost</em> <br /><br />Gradient Boosting with Componentwise Linear Models</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left"><code>family</code> has been set to <code>CoxPH()</code> by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.glmnet</strong> <br /> <em>glmnet</em> <br /><br />GLM with Regularization</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer.       Parameter <code>s</code> (value of the regularization parameter used for predictions) is set to <code>0.1</code> by default,       but needs to be tuned by the user.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.penalized.fusedlasso</strong> <br /> <em>fusedlasso</em> <br /><br />Fused Lasso Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">rcens</td>
+<td align="left">trace=FALSE was set by default to disable logging output. lambda1 and lambda2 have been set to 1 by default, as fusedlasso needs both penalizations &gt; 0.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.penalized.lasso</strong> <br /> <em>lasso</em> <br /><br />LassoRegression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">rcens</td>
+<td align="left">trace=FALSE was set by default to disable logging output.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.penalized.ridge</strong> <br /> <em>ridge</em> <br /><br />Ridge Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">rcens</td>
+<td align="left">trace=FALSE was set by default to disable logging output.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.randomForestSRC</strong> <br /> <em>rfsrc</em> <br /><br />Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp<br />oobpreds<br />rcens</td>
+<td align="left"><code>na.action</code> has been set to <code>"na.impute"</code> by default to allow missing data support.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.ranger</strong> <br /> <em>ranger</em> <br /><br />Random Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/ranger/">ranger</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">featimp<br />rcens</td>
+<td align="left">By default, internal parallelization is switched off (<code>num.threads = 1</code>), <code>verbose</code> output is disabled, <code>respect.unordered.factors</code> is set to <code>TRUE</code>. All settings are changeable.</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.rpart</strong> <br /> <em>rpart</em> <br /><br />Survival Tree</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">featimp<br />rcens</td>
+<td align="left"><code>xval</code> has been set to <code>0</code> by default for speed.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cluster-analysis-9">Cluster analysis (9)</h3>
+<p>Additional learner properties:</p>
+<ul>
+<li><em>prob</em>: Probabilities can be predicted.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Class / Short Name / Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">Ord.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="left">Props</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>cluster.cmeans</strong> <br /> <em>cmeans</em> <br /><br />Fuzzy C-Means Clustering</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a><br /><a href="http://www.rdocumentation.org/packages/clue/">clue</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob</td>
+<td align="left">The <code>predict</code> method uses <code>cl_predict</code> from the <code>clue</code> package to compute the cluster memberships for new data. The default <code>centers = 2</code> is added so the method runs without setting parameters, but this must in reality of course be changed by the user.</td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.Cobweb</strong> <br /> <em>cobweb</em> <br /><br />Cobweb Clustering Algorithm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.dbscan</strong> <br /> <em>dbscan</em> <br /><br />DBScan Clustering</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/fpc/">fpc</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">A cluster index of NA indicates noise points. Specify <code>method = "dist"</code> if the data should be interpreted as dissimilarity matrix or object. Otherwise Euclidean distances will be used.</td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.EM</strong> <br /> <em>em</em> <br /><br />Expectation-Maximization Clustering</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.FarthestFirst</strong> <br /> <em>farthestfirst</em> <br /><br />FarthestFirst Clustering Algorithm</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.kkmeans</strong> <br /> <em>kkmeans</em> <br /><br />Kernel K-Means</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><code>centers</code> has been set to <code>2L</code> by default. The nearest center in kernel distance determines cluster assignment of new data points. Kernel parameters have to be passed directly and not by using the <code>kpar</code> list in <code>kkmeans</code></td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.kmeans</strong> <br /> <em>kmeans</em> <br /><br />K-Means</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a><br /><a href="http://www.rdocumentation.org/packages/clue/">clue</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">prob</td>
+<td align="left">The <code>predict</code> method uses <code>cl_predict</code> from the <code>clue</code> package to compute the cluster memberships for new data. The default <code>centers = 2</code> is added so the method runs without setting parameters, but this must in reality of course be changed by the user.</td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.SimpleKMeans</strong> <br /> <em>simplekmeans</em> <br /><br />K-Means Clustering</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.XMeans</strong> <br /> <em>xmeans</em> <br /><br />XMeans (k-means with automatic determination of k)</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">You may have to install the XMeans Weka package: <code>WPM('install-package', 'XMeans')</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cost-sensitive-classification">Cost-sensitive classification</h3>
+<p>For <em>ordinary misclassification costs</em> you can use all the standard classification methods listed
+above.</p>
+<p>For <em>example-dependent costs</em> there are several ways to generate cost-sensitive learners from
+ordinary regression and classification learners.
+See section <a href="../cost_sensitive_classif/index.html">cost-sensitive classification</a> and the documentation
+of <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostSensClassifWrapper.html">makeCostSensClassifWrapper</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostSensRegrWrapper.html">makeCostSensRegrWrapper</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper</a>
+for details.</p>
+<h3 id="multilabel-classification-3">Multilabel classification (3)</h3>
+<table>
+<thead>
+<tr>
+<th align="left">Class / Short Name / Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">Ord.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="left">Props</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>multilabel.cforest</strong> <br /> <em>cforest</em> <br /><br />Random forest based on conditional inference trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>multilabel.randomForestSRC</strong> <br /> <em>rfsrc</em> <br /><br />Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="left">prob</td>
+<td align="left"><code>na.action</code> has been set to <code>na.impute</code> by default to allow missing data support.</td>
+</tr>
+<tr>
+<td align="left"><strong>multilabel.rFerns</strong> <br /> <em>rFerns</em> <br /><br />Random ferns</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rFerns/">rFerns</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>Moreover, you can use the binary relevance method to apply ordinary classification learners
+to the multilabel problem. See the documentation of function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMultilabelBinaryRelevanceWrapper.html">makeMultilabelBinaryRelevanceWrapper</a>
+and the tutorial section on <a href="../multilabel/index.html">multilabel classification</a> for details.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

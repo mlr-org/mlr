@@ -1032,3 +1032,34 @@ test_that("setMeasurePars", {
   mm = setMeasurePars(mmce, foo = 1, par.vals = list(foo = 2))
   expect_equal(mm$extra.args, list(foo = 1))
 })
+
+test_that("bac works as intended with multiclass tasks (#1834)", {
+  var1 = c(1, 2, 3, 4)
+  var2 = c(3, 4, 1, 2)
+  tar.classif = factor(c(1L, 2L, 0L, 1L))
+  pred.art.classif = factor(c(1L, 1L, 0L, 2L))
+  data.classif = data.frame(var1, var2, tar.classif)
+  task.classif = makeClassifTask(data = data.classif, target = "tar.classif")
+  lrn.classif = makeLearner("classif.rpart", predict.type = "prob")
+  mod.classif = train(lrn.classif, task.classif)
+  pred.classif = predict(mod.classif, task.classif)
+
+  bac.test = mean(diag(table(pred.classif$data$truth, pred.classif$data$response) /
+                       table(pred.classif$data$truth, pred.classif$data$truth)))
+  bac.perf = performance(pred.classif, measures = bac, model = mod.bin)
+  expect_equal(bac.test, bac$fun(pred = pred.classif))
+  expect_equal(bac.test, as.numeric(bac.perf))
+})
+
+test_that("new bac gives the same result as old implementation", {
+  lrn = makeLearner("classif.rpart")
+  task = binaryclass.task
+  mod = train(lrn, task = task)
+  pred = predict(mod, task = task)
+  perf = performance(pred, measures = bac)
+
+  old.bac = mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
+      tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
+
+  expect_equivalent(old.bac, perf)
+})
