@@ -3,11 +3,11 @@
 #'   Id string for object. Used to display object.
 #' @param type (`character(1)`)\cr
 #'   Learner type.
-#' @param next.learner ([Learner`)\cr
+#' @param next.learner ([Learner])\cr
 #'   Learner to wrap.
 #' @param package ([character])\cr
 #'   Packages to load when loading learner.
-#' @param par.set ([ParamSet`)\cr
+#' @param par.set ([ParamSet])\cr
 #'   Parameter set.
 #' @param par.vals ([list])\cr
 #'   Optional list of named (hyper)parameter values.
