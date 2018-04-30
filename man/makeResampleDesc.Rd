@@ -66,7 +66,7 @@ For survival tasks stratification is done on the events, resulting in training s
 censoring rates. Stratification is not working for methods with prefix \dQuote{OC}}
 
 \item{stratify.cols}{(\link{character})\cr
-Stratify on specific columns referenced by name. All columns have to be factors.
+Stratify on specific columns referenced by name. All columns have to be factor or integer.
 Note that you have to ensure yourself that stratification is possible, i.e.
 that each strata contains enough observations.
 This argument and \code{stratify} are mutually exclusive.}
