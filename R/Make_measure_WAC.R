@@ -8,12 +8,12 @@
 #' positive weight (tpr) a greater meaning than the true negative rate (tnr), as in anomaly detection the
 #' detection of anomaly (positive class) is more of an interests than the detection of the normal class (negative class).
 #'
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of measure.
 #'   Default is \dQuote{costs}.
-#' @param w [\code{numeric}] \cr
+#' @param w (`numeric`) \cr
 #'   Weight for the positive class. The weight of the negative class is 1-w.
-#' @return [\code{numeric(1)}]
+#' @return (`numeric(1)`)
 #'  Weighted accuracy (wac)
 #' @inheritParams makeMeasure
 #' @template ret_measure
