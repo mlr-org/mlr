@@ -12,7 +12,7 @@
 #' provided measurements in mlr depend only on the anomaly scores or are invariant
 #' to monotone increasing transformations. Therefore we are using the above sigmoid
 #' function, for now with default parameter A = 0, B = 1 with the goal to normalized
-#' the data to the intervall [0, 1] to enable the user to use all beneficial
+#' the data to the intervall \[0, 1\] to enable the user to use all beneficial
 #' functions of mlr. This function will be updated in the future.
 #' Note: In some methods low anomaly scores are indication for an anomaly, in some other for an normal observation. Therefore after transformation either f(score) or (1-f(score)) is used for the probability column of the mlr output, to ensure a consistent interpretation of the output.
 #'

@@ -20,10 +20,10 @@ test_that("ocbs instance works", {
     #in test are the rest of normal obs and all anomaly data
     expect_equal(length(i2), (normal.size - length(unique(i1)) +  anomaly.size))
     expect_true(min(i1) >= 1)
-    expect_true(max(i1) <= 100)
+    expect_true(max(i1) <= 1000)
     expect_true(min(i2) >= 1)
-    expect_true(max(i2) <= 105)
-    expect_equal(sort(c(unique(i1), i2)), 1:105)
+    expect_true(max(i2) <= 1050)
+    expect_equal(sort(c(unique(i1), i2)), 1:1050)
   }
 })
 
