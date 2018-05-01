@@ -18,18 +18,18 @@
 #' If the performance is 0, that means within the top ranks, no anomalies were detected.
 #' If the performance is NA, that means no anomalies are in the data set.
 #'
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of measure.
 #'   Default is \dQuote{Precision}.
-#' @param p [\code{numeric}] \cr
+#' @param p (`numeric`) \cr
 #'   top p rank, with p element of \{1, 2, ..., number of anomalies in data\}
-#' @param type [\code{character(1)}] \cr
+#' @param type (`character(1)`) \cr
 #'   Set a measure type: rprecision, precisionatp, averageprecision
 #'   Default is \dQuote{averageprecision}
-#' @param adjusted [\code{logical}] \cr
+#' @param adjusted (`logical`) \cr
 #'   adjusted for chances. Recommend to compare different data sets. Default TRUE.
 #'   (index - expected index) / (1- expected index)
-#' @return [\code{numeric(1)}]
+#' @return (`numeric(1)`)
 #'  Return a numeric value of R-Precision, Precision at p (P@p) or Average Precision (AP)
 #' @references Campos, Guilherme O., et al. "On the evaluation of unsupervised outlier detection: measures, datasets, and an empirical study." Data Mining and Knowledge Discovery 30.4 (2016): 891-927.
 #' @inheritParams makeMeasure
