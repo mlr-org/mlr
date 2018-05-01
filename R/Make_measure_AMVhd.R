@@ -8,7 +8,7 @@
 #' to reduce the dimension of the data, therefore AMV can be applied on each
 #' subsamples, yielding partial scores AMV_k. The mean of the partial scores is
 #' the new performancecriteria AMVhd.
-#' @param amv.feats (`code{numeric`) \cr
+#' @param amv.feats (`numeric`) \cr
 #' Number of features to be drawn in the feature subsamples.
 #' Default is 5.
 #' @param amv.iters (`numeric`) \cr
