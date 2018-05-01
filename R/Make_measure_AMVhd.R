@@ -8,14 +8,14 @@
 #' to reduce the dimension of the data, therefore AMV can be applied on each
 #' subsamples, yielding partial scores AMV_k. The mean of the partial scores is
 #' the new performancecriteria AMVhd.
-#' @param amv.feats [\code{numeric}] \cr
+#' @param amv.feats (`code{numeric`) \cr
 #' Number of features to be drawn in the feature subsamples.
 #' Default is 5.
-#' @param amv.iters [\code{numeric}] \cr
+#' @param amv.iters (`numeric`) \cr
 #' Number of subsamples.
 #' Default is 50.
 #' @note the ID of the learner have to to be the default id!
-#' @return [\code{numeric(1)}]
+#' @return (`numeric(1)`)
 #'   Area under the Mass-Volume Curve (AMV) for high dimensional data.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
 #' arXiv preprint arXiv:1607.01152
