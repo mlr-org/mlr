@@ -13,17 +13,17 @@
 #' available in R.
 #' Note: prediction object must have \code{pred.type = 'prob'}
 #'
-#' @param id [\code{character(1)}]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of measure. Note: need to keep the string "AMV" in the ID if doing nested resampling.
 #'   Default is \dQuote{AMV}.
-#' @param alphas [\code{numeric}] \cr
+#' @param alphas (`numeric`) \cr
 #'   Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
 #'   Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.
-#' @param n.alpha [\code{numeric}] \cr
+#' @param n.alpha (`numeric`) \cr
 #'   Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.
-#' @param n.sim [\code{numeric(1)}] \cr
+#' @param n.sim (`numeric(1)`) \cr
 #'   Number of Monte-Carlo Samples, Default is 10^3.
-#' @return [\code{numeric(1)}]
+#' @return (`numeric(1)`)
 #'   Area under the Mass-Volume Curve (AMV).
 #' @references Thomas, A. et al. Learning Hyperparameters for Unsupervised Anomaly Detection,
 #' ICML Anomaly Detection Workshop 2016
