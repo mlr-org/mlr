@@ -79,25 +79,6 @@ getBinomialTarget = function(.task)  {
 }
 
 
-
-# FDBoost
-fdboost.regr.ps = makeParamSet(
-  makeDiscreteLearnerParam(id = "family", default = "Gaussian", values = c("Gaussian", "Laplace",
-    "Huber", "Poisson", "GammaReg", "NBinomial", "Hurdle", "custom.family")),
-  makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
-  makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),  # the learning rate
-  makeUntypedLearnerParam(id = "custom.family.definition", requires = quote(family == "custom.family")),  # list of parameters for the custom family
-  makeNumericVectorLearnerParam(id = "nuirange", default = c(0, 100), requires = quote(family %in% c("GammaReg", "NBinomial", "Hurdle"))),  # distribution parameters for families
-  makeNumericLearnerParam(id = "d", default = NULL, requires = quote(family == "Huber"), special.vals = list(NULL)), # delta parameter for Huber distribution
-  # makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")), we don't need this in FDboost
-  makeNumericLearnerParam(id = "df", default = 4, lower = 0.5),  # effective degrees of freedom, depend on the regularization parameter of the penality matrix and number of splines, must be the same for all base learners(covariates), the maximum value is the rank of the design matrix
-  # makeDiscreteLearnerParam(id = "baselearner", values = c("bbs", "bols")),  # we don't use "btree" in FDboost
-  makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
-  makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L),  # degree of the b-spline
-  makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
-  makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
-)
-
 getFDboostFormulaMat = function(.task, knots, df, bsignal.check.ident, degree, differences) {
   tdata = getTaskData(.task, functionals.as = "matrix")
   tn = getTaskTargetNames(.task)

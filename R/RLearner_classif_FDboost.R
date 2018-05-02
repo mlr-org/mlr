@@ -16,7 +16,8 @@ makeRLearner.classif.FDboost = function() {
       makeIntegerLearnerParam(id = "knots", default = 10L, lower = 1L),  # determine the number of knots of splines, does not matter once there is sufficient number of knots, 30,40, 50 for example
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L),  # degree of the b-spline
       makeIntegerLearnerParam(id = "differences", default = 1L, lower = 1L),  # degree of the penalty
-      makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE)  # identifiability check by testing matrix degeneracy
+      makeLogicalLearnerParam(id = "bsignal.check.ident", default = FALSE, tunable = FALSE),  # identifiability check by testing matrix degeneracy
+      forbidden = expression(df < differences)
     ),
     par.vals = list(family = "Binomial"),
     properties = c("functionals", "numerics", "twoclass", "prob"),
