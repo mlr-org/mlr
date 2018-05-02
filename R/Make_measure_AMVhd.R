@@ -3,7 +3,7 @@
 #' @description
 #' Creates a measure for oneclass classification on high dimensional data
 #' (recommend for dimension greater than 8) called AMVhd, which is based on the
-#' Area under the Mass-Volume Curve (AMV) (see \code{makeAMVMeasure}).
+#' Area under the Mass-Volume Curve (AMV) (see [makeAMVMeasure]).
 #' The basic idea is to do several feature subsamplings (of dimension less than 8)
 #' to reduce the dimension of the data, therefore AMV can be applied on each
 #' subsamples, yielding partial scores AMV_k. The mean of the partial scores is

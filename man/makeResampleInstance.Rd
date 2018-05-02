@@ -8,7 +8,7 @@
 makeResampleInstance(desc, task, size, ...)
 }
 \arguments{
-\item{desc}{(\link{ResampleDesc} | \code{character(1)})\cr
+\item{desc}{(\link{ResampleDesc} | \code{character(1)})\cr"oneclass",
 Resampling description object or name of resampling strategy.
 In the latter case \link{makeResampleDesc} will be called internally on the string.}
 
