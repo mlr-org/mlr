@@ -6,7 +6,7 @@
 #' of the diagonal. It uses the trapezoidal rule as implemented in
 #' package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
 #' the curse of dimensionality applies for high dimensional data
-#' (here: dimension greater than eight, see \code{makeAMVhdMeasure}).
+#' (here: dimension greater than eight, see [makeAMVhdMeasure]).
 #' The implementation is based on the python implementation:
 #' https://github.com/albertcthomas/anomaly_tuning.
 #' The difference is the type of quantile used, as the python default is not
