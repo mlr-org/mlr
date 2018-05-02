@@ -3,12 +3,12 @@
 #'
 #' @description
 #' For prediction on data with dimension higher than eight the AMV should not be
-#' used directly as performance measure (see \code{makeAMVMeasure}).
+#' used directly as performance measure (see [makeAMVMeasure]).
 #' The basic idea is that the wrapper does several feature sub-samplings
 #' (of dimension less than 8) to reduce the dimension of the subsets and applying
 #' the model and the prediction on each subsample.
 #' Afterwards AMV can be applied on each subsamples, yielding partial scores AMV_k.
-#' The mean of the partial scores is the new performance criteria AMVhd (see \code{makeAMVhdMeasure}).
+#' The mean of the partial scores is the new performance criteria AMVhd (see [makeAMVhdMeasure]).
 #'
 #' The wrapper is used within the AMVhd measure.
 #'
@@ -24,21 +24,21 @@
 #' on the test set with the corresponding feature sample. The prediction object
 #' returns the prediction of the model, which is trained on the full data set and
 #' additionally returns an attribute 'AMVhdSubpredict' which contains the prediction
-#' of all subsamples. In \code{makeAMVhdMeasure} AMV is calculated for each subsample
+#' of all subsamples. In [makeAMVhdMeasure] AMV is calculated for each subsample
 #' and aggregated to AMVhd.
 #'
 #' Note that the passed base learner must always have \code{predict.type = 'prob'}.
 #'
 #' @template arg_learner
-#' @param amv.iters [\code{integer(1)}]\cr
+#' @param amv.iters (`integer(1)`)\cr
 #'   Iterations = number of fitted sub models.
 #'   Default is 10.
-#' @param amv.feats [\code{numeric(1)}]\cr
+#' @param amv.feats (`numeric(1)`)\cr
 #'   Size of randomly selected features for the sub models.
 #'   Default is 3.
 #' @references Nicolas, G. How to Evaluate the Quality of Unsupervised Anomaly Detection Algorithms,
 #' arXiv preprint arXiv:1607.01152
-#' @note see example of \code{makeAMVhdMeasure}
+#' @note see example of [makeAMVhdMeasure]
 #' @template ret_learner
 #' @family wrapper
 #' @export
