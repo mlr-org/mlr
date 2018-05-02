@@ -9,7 +9,7 @@ makeAMVMeasure(id = "AMV", minimize = TRUE, alphas = c(0.9, 0.99),
   note = "")
 }
 \arguments{
-\item{id}{\link{\code{character(1)}}\cr
+\item{id}{(\code{character(1)})\cr
 Name of measure. Note: need to keep the string "AMV" in the ID if doing nested resampling.
 Default is \dQuote{AMV}.}
 
@@ -17,14 +17,14 @@ Default is \dQuote{AMV}.}
 Should the measure be minimized?
 Default is `TRUE`.}
 
-\item{alphas}{\link{\code{numeric}} \cr
+\item{alphas}{(\code{numeric}) \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
 Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.}
 
-\item{n.alpha}{\link{\code{numeric}} \cr
+\item{n.alpha}{(\code{numeric}) \cr
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
-\item{n.sim}{\link{\code{numeric(1)}} \cr
+\item{n.sim}{(\code{numeric(1)}) \cr
 Number of Monte-Carlo Samples, Default is 10^3.}
 
 \item{best}{(`numeric(1)`)\cr
@@ -42,10 +42,10 @@ Name of the measure. Default is `id`.}
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-\link{\code{numeric(1)}}
+(\code{numeric(1)})
 Area under the Mass-Volume Curve (AMV).
 
-[Measure].
+\link{Measure}.
 }
 \description{
 Creates a measure for oneclass classification. The measure computes the
@@ -53,7 +53,7 @@ Area under the Mass-Volume Curve via Monte-Carlo approximation
 of the diagonal. It uses the trapezoidal rule as implemented in
 package \code{caTools} for integration. As AMV is based in a Monte-Carlo approximation
 the curse of dimensionality applies for high dimensional data
-(here: dimension greater than eight, see \code{makeAMVhdMeasure}).
+(here: dimension greater than eight, see \link{makeAMVhdMeasure}).
 The implementation is based on the python implementation:
 https://github.com/albertcthomas/anomaly_tuning.
 The difference is the type of quantile used, as the python default is not
