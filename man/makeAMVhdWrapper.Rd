@@ -8,9 +8,9 @@ Area under the Mass Volume Curve for high dimensional data (AMVhd).}
 makeAMVhdWrapper(learner, amv.iters, amv.feats)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
 \item{amv.iters}{\link{\code{integer(1)}}\cr
 Iterations = number of fitted sub models.
@@ -21,7 +21,7 @@ Size of randomly selected features for the sub models.
 Default is 3.}
 }
 \value{
-[Learner].
+\link{Learner}.
 }
 \description{
 For prediction on data with dimension higher than eight the AMV should not be

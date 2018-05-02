@@ -16,22 +16,22 @@ Name of measure.}
 Should the measure be minimized?
 Default is `TRUE`.}
 
-\item{amv.iters}{\link{\code{numeric}} \cr
+\item{amv.iters}{(\code{numeric(1)})\cr
 Number of subsamples.
 Default is 50.}
 
-\item{amv.feats}{\link{\code{numeric}} \cr
+\item{amv.feats}{(\code{numeric(1)})\cr
 Number of features to be drawn in the feature subsamples.
 Default is 5.}
 
-\item{alphas}{\link{\code{numeric}} \cr
+\item{alphas}{(\code{numeric}) \cr
 Numeric vector of alphas, which lies in [0, 1), representing the computed quantiles.
 Default: lower quantile alpha1 = 0.9, upper quantile alpha2 = 0.99 as we are interested in the performance of the scoring function in the the low density regions.}
 
-\item{n.alpha}{\link{\code{numeric}} \cr
+\item{n.alpha}{(\code{numeric}) \cr
 Numeric discretization parameter greater than one, which splits the intervall of alpha1 and alpha2 as follows: {alpha1 + j * (alpha2-alpha1)/(n.alpha-1), j element of {0,...,n.alpha-1}}, Default: n.alpha = 50.}
 
-\item{n.sim}{\link{\code{numeric(1)}} \cr
+\item{n.sim}{(\code{numeric(1)}) \cr
 Number of Monte-Carlo Samples, Default is 10^3.}
 
 \item{best}{(`numeric(1)`)\cr
@@ -49,15 +49,15 @@ Name of the measure. Default is `id`.}
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-\link{\code{numeric(1)}}
+(\link{numeric})
 Area under the Mass-Volume Curve (AMV) for high dimensional data.
 
-[Measure].
+\link{Measure}.
 }
 \description{
 Creates a measure for oneclass classification on high dimensional data
 (recommend for dimension greater than 8) called AMVhd, which is based on the
-Area under the Mass-Volume Curve (AMV) (see \code{makeAMVMeasure}).
+Area under the Mass-Volume Curve (AMV) (see \link{makeAMVMeasure}).
 The basic idea is to do several feature subsamplings (of dimension less than 8)
 to reduce the dimension of the data, therefore AMV can be applied on each
 subsamples, yielding partial scores AMV_k. The mean of the partial scores is
