@@ -68,28 +68,23 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
 doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc) {
 
   setSlaveOptions()
+  # Get OOB Predictions für train step
   r = resample(bl, task, rin, measures, show.info = FALSE)
-  # Get OOB Predictions
-  oob.preds = r$pred$data[order(r$pred$data$id), ]
-  # And set them as OOB Predictions for the new task
-  new.data = getTaskData(task)
-  new.data[[getTaskTargetNames(task)]] = oob.preds$response
-  new.task = changeData(task, data = new.data)
-  # Train model on OOB Predictions
-  model = train(bl, new.task)
+  oob.preds = r$pred$data[order(r$pred$data$id), , drop = FALSE]
+
+  # Model for prediction on newdata
+  model = train(bl, task)
+
+  if (show.info)
+    messagef("[Base Learner] %s applied.", bl$id)
 
   if (save.on.disc) {
     model.id = paste("saved.model", id, bl$id, "RData", sep = ".")
     saveRDS(model, file = model.id)
-    if (show.info)
-      messagef("[Base Learner] %s applied. Model saved to %s", bl$id, model.id)
-    out = list(base.models = model.id, resres = r)
-  } else {
-    if (show.info)
-      messagef("[Base Learner] %s applied.", bl$id)
-    out = list(base.models = model, resres = r)
+    messagef("Model saved to %s", model.id)
   }
-  return(out)
+
+  return(list(base.models = model.id, resres = r))
 }
 
 

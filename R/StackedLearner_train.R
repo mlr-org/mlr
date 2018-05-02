@@ -82,7 +82,9 @@ superlearnerBaseLearners = function(learner, task) {
   base.models = extractSubList(results, "base.models", simplify = FALSE)
   resres = extractSubList(results, "resres", simplify = FALSE)
   pred.list = extractSubList(resres, "pred", simplify = FALSE)
+  # Get predictions, but drop one column to avoid multicolinearity
   pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
+  # Get aggregated performances
   bls.perf = vnapply(resres, function(x) x$aggr)
 
   # add true target
