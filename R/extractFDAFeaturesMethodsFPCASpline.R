@@ -78,7 +78,7 @@ extractFDABsignal = function(bsignal.knots = 10L, bsignal.df = 3) {
   }
   ps = makeParamSet(
     makeIntegerParam("bsignal.knots", lower = 3L, upper = Inf, default = 10L),
-    makeNumericParam("bsignal.df", lower = 0.9, upper = 3, default = 3)
+    makeNumericParam("bsignal.df", lower = 0.9, upper = Inf, default = 3)
   )
   makeExtractFDAFeatMethod(
     learn = lrn,

@@ -98,7 +98,7 @@ extractFDAMultiResFeatures = function(res.level = 3L, shift = 0.5, seg.lens = NU
   }
   ps = makeParamSet(
     makeIntegerParam("res.level", lower = 1L, upper = 5L),
-    makeNumericParam("shift", lower = 0.1, upper = 1.0)
+    makeNumericParam("shift", lower = 0.001, upper = 1.0)
   )
 
   makeExtractFDAFeatMethod(learn = lrn, reextract = lrn,
