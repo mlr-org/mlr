@@ -4,6 +4,8 @@
 # @description
 # FGAM estimate a smooth function for scalar on functional regression. Where the target is a scalar and the covarite is functional covariate, and the regression is an integration with respect to a link function upon the conditional expectation. $g\{E(Y_i|X_i)\} = \theta_0 +\int_{\tau} F\{X_i(\tau), \tau \}d{\tau}$, where the smooth function $F\{X(t), t\}$(estimation surface which is fitted againt all X(t), t pair) is not binded to be linear with the functional predictor $X(t)$ and takes an additive form which could quantify how important each functional point is to the response. The basic form for the smooth function is penalized splines. Typical application for FGAM is Diffusion tensor imaging(DTI) parallel diffusivity on Corpus Callosum where signal is higher for voxels where diffusion is hindered for multiple sclerosis patient PASAT score( A cognitive measure). For each pixel, there could be a tensor of 3*3 symmetric matrix which results from applying gradient from several non-collinear directions. In FGAM, X(t) is transformed to be in the interval of [0,1] by cdf tranform to let the limited observation data to fill all space of the surface and invariant to tranformation of functional predictors. FGAM support multiple functional covariate. Currently, only splines are used as base learner.
 #
+#"s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
+
 getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
   formula.terms = namedList()
   mat.list = namedList(fns)
@@ -27,11 +29,19 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
       mat.list[[fdn]] = mdata[, fdn]
       # ... create a formula item
       # refund::af \int_{T}F(X_i(t),t)dt where refund::af means additive formula(FGAM), while refund::lf means linear Model (FLM)
-      formula.terms[fdn] = switch(parlist$basistype,
-        "s" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, bs='%s', integration = '%s')",
-          fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.s.k, parlist$mgcv.s.bs, parlist$integration),
-        "te" = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
-          fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$mgcv.te_ti.m, parlist$integration))
+      fkm = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, m= %s, integration = '%s')",
+        fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$mgcv.te_ti.m, parlist$integration)
+      fk = sprintf("af(%s, basistype = '%s', Qtransform = %s, k=%s, integration = '%s')",
+        fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.k, parlist$integration)
+      fm = sprintf("af(%s, basistype = '%s', Qtransform = %s, m=%s, integration = '%s')",
+        fdn, parlist$basistype, parlist$Qtransform, parlist$mgcv.te_ti.m, parlist$integration)
+      f0 = sprintf("af(%s, basistype = '%s', Qtransform = %s, integration = '%s')",
+        fdn, parlist$basistype, parlist$Qtransform, parlist$integration)
+      mf = fkm
+      if (is.na(parlist$mgcv.te_ti.k)) mf = fm
+      if (is.na(parlist$mgcv.te_ti.m)) mf = fk
+      if (is.na(parlist$mgcv.te_ti.m) && is.na(parlist$mgcv.te_ti.k)) mf = f0
+      formula.terms[fdn] = mf
     }
     # add grid names
     mat.list = c(mat.list, fdg)
@@ -48,13 +58,13 @@ getFGAMFormulaMat = function(mdata, targetname, fns, parlist) {
 
 fgam.ps = makeParamSet(
   # mgcv::te tensor(Kronecker) product smooths of X and T(mgcv::ti tensor product interaction), mgcv::s solely splines smooths to X
-  makeDiscreteLearnerParam(id = "basistype", values = c("te", "s"), default = "te"),
+  makeDiscreteLearnerParam(id = "basistype", values = c("te", "ti"), default = "te"),
   # mgcv::s:k the dimension of the spline basis(#knots + 2) default: let mgcv choose
-  makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
+  # makeIntegerVectorLearnerParam(id = "mgcv.s.k", default = c(-1L)),
   # mgcv::s:bs "tp" for thin plate regression spline, "cr" for cubic regression spline
-  makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
+  # makeDiscreteLearnerParam(id = "mgcv.s.bs", values = c("tp", "cr"), default = "tp"),
   # mgcv::s:m The order of the penalty for this term, default: let mgcv choose. The original default is NA but mlr will generate warnings for this.
-  makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, special.vals = list(NA)),
+  # makeIntegerVectorLearnerParam(id = "mgcv.s.m", lower = 1L, special.vals = list(NA)),
   # The order of the spline and its penalty (for smooth classes that use this) for each term. The original default is NA but mlr will generate warnings for this.
   makeIntegerVectorLearnerParam(id = "mgcv.te_ti.m", lower = 1L, special.vals = list(NA)),
   # the dimension(s) of the bases used to represent the smooth term.  If not supplied then set to ?5^d?. The original default is NA but mlr will generate warnings for this.
@@ -67,7 +77,7 @@ fgam.ps = makeParamSet(
   makeLogicalLearnerParam(id = "Qtransform", default = TRUE)  # c.d.f transform
 )
 
-fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE)
+fgam.par.vals = list(basistype = "te", integration = "simpson", Qtransform = TRUE, mgcv.te_ti.m = NA, mgcv.te_ti.k = NA)
 
 getBinomialTarget = function(.task)  {
   vt = getTaskTargets(.task)
