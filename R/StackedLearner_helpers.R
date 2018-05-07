@@ -34,6 +34,7 @@ makeSuperLearnerTask = function(type, data, target) {
 
 
 # Training and prediction in one function (used for parallelMap)
+#
 # @param bls [list of base.learner]
 # @param task [Task]
 # @param show.info show.info
@@ -43,7 +44,7 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
   setSlaveOptions()
   model = train(bls, task)
   pred = predict(model, task = task)
-  f (!is.null(save.on.disc)) {
+  if (!is.null(save.on.disc)) {
     model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
     saveRDS(model, file = model.file)
     if (show.info) messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
@@ -89,6 +90,59 @@ doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc)
 }
 
 
+# Aggregate predictions
+#
+# Aggregate predicitons results by averaging (for \code{regr}, and  \code{classif} with prob) or mode ( \code{classif} with response).
+# (works for regr, classif, multiclass)
+#
+# @param pred.list [list of \code{Predictions}]\cr
+# @param predict.type Final predict type, "prob" or "response"
+# @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
+# FIXME: add more methods (geometric mean, rank specific stuff)
+aggregateModelPredictions = function(.model, pred.list, weights = NULL) {
+
+  # return pred if list only contains one pred
+  if (length(pred.list) == 1) {
+    return(pred.list[[1]])
+  }
+  assertList(pred.list)
+
+  # Check if all task.descs are equal
+  x = lapply(pred.list, function(x) getTaskDesc(x))
+  td.equal = unlist(lapply(2:length(x), function(i) all.equal(x[[1]], x[[i]])))
+  if (any(!td.equal)) stopf("Task descriptions in prediction '1' and '%s' differ!", which(task.unequal)[1])
+
+
+
+  # Define weights (1/n for aggregation, weighted for ensembleselection)
+  if (is.null(weights)) {
+    weights = rep(1, length(pred.list)) / sum (freq)
+  }
+
+  predict.type = .model$learner$predict.type
+  class.levels = .model$task.desc$class.levels
+  if (.model$task.desc$type == "classif") {
+    # Get probabilities as a matrix.
+    preds = lapply(pred.list, function(pred) {
+      if(pred$predict.type == "prob") {
+        as.matrix(getPredictionProbabilities(pred, class.levels))
+      } else {
+        as.matrix(createDummyFeatures(getPredictionResponse(pred))[, class.levels])
+      }
+    })
+    y = apply(simplify2array(preds), c(1, 2), weighted.mean,  w = weights, na.rm = TRUE)
+    # In case we want to predict the response, get the max over all columns
+    if (predict.type == "response") y = factor(max.col(y), labels = class.levels)
+  } else {
+    preds = lapply(pred.list, getPredictionResponse)
+    y = apply(simplify2array(preds), c(1, 2), weighted.mean, w = weights, na.rm = TRUE)
+  }
+  return(makePrediction(task.desc = .model$task.desc, row.names(pred.list[[1]]$data),
+    id = .model$learner$id, truth = pred.list[[1]]$data$truth, predict.type = predict.type,
+    predict.threshold = NULL, y, time = NA_real_))
+}
+
+
 # Returns response or probabilites from Prediction.
 # The first feature of a multiclass classification prediction will be removed
 # in order to overcome multicollinearity problems.
@@ -110,94 +164,6 @@ getPredictionDataNonMulticoll = function(pred) {
   }
 }
 
-
-
-
-# Aggregate predictions
-#
-# Aggregate predicitons results by averaging (for \code{regr}, and  \code{classif} with prob) or mode ( \code{classif} with response).
-# (works for regr, classif, multiclass)
-#
-# @param pred.list [list of \code{Predictions}]\cr
-# @param predict.type Final predict type, "prob" or "response"
-# @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
-# FIXME: add more methods (geometric mean, rank specific stuff)
-aggregatePredictions = function(.model, pred.list, lrn.weights = NULL) {
-
-  # return pred if list only contains one pred
-  if (length(pred.list) == 1) {
-    return(pred.list[[1]])
-  }
-
-  assertList(pred.list)
-  # Check if all task.descs are equal
-  x = lapply(pred.list, function(x) getTaskDesc(x))
-  td.equal = unlist(lapply(2:length(x), function(i) all.equal(x[[1]], x[[i]])))
-  if (any(!td.equal)) stopf("Task descriptions in prediction '1' and '%s' differ!", which(task.unequal)[1])
-
-  predict.type = .model$learner$predict.type
-  class.levels = .model$task.desc$class.levels
-
-  # Define weights (1/n for aggregation, weighted for ensembleselection)
-  if (mod$learner.model$method == "ensembleselection") {
-    freq = .model$learner.model$freq
-  } else {
-    freq = rep(1, length(pred.list))
-  }
-  if (is.null(lrn.weights)) {
-    lrn.weights = freq / sum (freq)
-  }
-
-  if (.model$task.desc$type == "classif") {
-    # Get probabilities as a matrix.
-    preds = lapply(pred.list, function(pred) {
-      if(pred$predict.type == "prob") {
-        as.matrix(getPredictionProbabilities(pred, class.levels))
-      } else {
-        as.matrix(createDummyFeatures(getPredictionResponse(pred))[, class.levels])
-      }
-    })
-    y = apply(simplify2array(preds), c(1, 2), weighted.mean,  w = lrn.weights, na.rm = TRUE)
-    # In case we want to predict the response, get the max over all columns
-    if (predict.type == "response") y = factor(max.col(y), labels = class.levels)
-  } else {
-    preds = lapply(pred.list, getPredictionResponse)
-    y = apply(simplify2array(preds), c(1, 2), weighted.mean, w = lrn.weights, na.rm = TRUE)
-  }
-  return(makePrediction(task.desc = .model$task.desc, row.names(pred.list[[1]]$data),
-    id = .model$learner$id, truth = pred.list[[1]]$data$truth, predict.type = predict.type,
-    predict.threshold = NULL, y, time = NA_real_))
-}
-
-
-# Expand Predictions according to frequency argument
-#
-# @param pred.list [\code{list} of \code{Predictions}]\cr
-#  List of Predictions which should be expanded.
-# @param freq [\code{named vector}]\cr
-#  Named vector containing the frequency of the chosen predictions.
-#  Vector names must be set to the model names.
-expandPredList = function(pred.list, freq) {
-  assertClass(pred.list, "list")
-  assertClass(freq, "numeric")
-  # checkListElementClass(pred.list, "Prediction")
-  only.preds = unique(unlist(lapply(pred.list, function(x) any(class(x) == "Prediction"))))
-  if (!only.preds) stopf("List elements in 'pred.list' are not all of class 'Prediction'")
-
-  keep = names(which(freq > 0))
-  freq = freq[keep]
-  pred.list = pred.list[keep]
-  grid = data.frame(model = names(freq), freq, row.names = NULL)
-  expand = as.character(rep(grid$model, grid$freq))
-  final.pred.list = vector("list", length(expand))
-  names(final.pred.list) = paste(expand, 1:length(expand), sep = "_")
-
-  for (i in seq_along(expand)) {
-    use = expand[i]
-    final.pred.list[i] = pred.list[use]
-  }
-  final.pred.list
-}
 
 # Plot the staacked learner and additional available info
 plotStackedLearnerModel = function(mod) {
@@ -249,6 +215,35 @@ plotStackedLearnerModel = function(mod) {
   invisible(p)
 }
 
+
+# # Expand Predictions according to frequency argument
+# #
+# # @param pred.list [\code{list} of \code{Predictions}]\cr
+# #  List of Predictions which should be expanded.
+# # @param freq [\code{named vector}]\cr
+# #  Named vector containing the frequency of the chosen predictions.
+# #  Vector names must be set to the model names.
+# expandPredList = function(pred.list, freq) {
+#   assertClass(pred.list, "list")
+#   assertClass(freq, "numeric")
+#   # checkListElementClass(pred.list, "Prediction")
+#   only.preds = unique(unlist(lapply(pred.list, function(x) any(class(x) == "Prediction"))))
+#   if (!only.preds) stopf("List elements in 'pred.list' are not all of class 'Prediction'")
+#
+#   keep = names(which(freq > 0))
+#   freq = freq[keep]
+#   pred.list = pred.list[keep]
+#   grid = data.frame(model = names(freq), freq, row.names = NULL)
+#   expand = as.character(rep(grid$model, grid$freq))
+#   final.pred.list = vector("list", length(expand))
+#   names(final.pred.list) = paste(expand, 1:length(expand), sep = "_")
+#
+#   for (i in seq_along(expand)) {
+#     use = expand[i]
+#     final.pred.list[i] = pred.list[use]
+#   }
+#   final.pred.list
+#
 
 # # Order a scores vector and return the best init numbers
 # orderScore = function(scores, minimize, init) {

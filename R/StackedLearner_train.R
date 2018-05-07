@@ -28,7 +28,7 @@ aggregateBaseLearners = function(learner, task) {
       list(task, show.info, learner$id, learner$save.on.disc),
     impute.error = function(x) x, level = "mlr.stackedLearner")
 
-  names(results) = names(bls)
+  names(results) = names(learner$base.learners)
   base.models = extractSubList(results, "base.models", simplify = FALSE)
   pred.list = extractSubList(results, "pred", simplify = FALSE)
 
@@ -96,7 +96,8 @@ superlearnerBaseLearners = function(learner, task) {
   }
   super.task = makeSuperLearnerTask(learner$super.learner$type, data = pred.data, target = tn)
   if (show.info)
-    messagef("[Super Learner] Train %s with %s features on %s observations", learner$super.learner$id, getTaskNFeats(super.task), getTaskSize(super.task))
+    messagef("[Super Learner] Train %s with %s features on %s observations", learner$super.learner$id,
+      getTaskNFeats(super.task), getTaskSize(super.task))
   super.model = train(learner$super.learner, super.task)
   # return
   list(method = "superlearner", base.models = base.models,
@@ -179,7 +180,7 @@ doEnsembleBagIter = function(learner, pred.list, bls.perf, replace, init, bagpro
   selected[bag_index][best.init] = selected[bag_index][best.init] + 1
 
   # Compute predictions and performance
-  current.pred = aggregatePredictions(learner, pred.list[rep(seq_len(m)), selected])
+  current.pred = aggregateModelPredictions(learner, pred.list[rep(seq_len(m)), selected])
   current.perf = measure$fun(current.pred)
 
   # Sequentially add maxiter models to the bag
@@ -197,11 +198,10 @@ doEnsembleBagIter = function(learner, pred.list, bls.perf, replace, init, bagpro
     best.perf = ifelse(measure$minimize, min(perfs), max(perfs))
     # Break if delta is smaller then tolerance or performance decreases
     if (abs(best.pe1rf - current.perf) < tolerance |
-       (best.perf > current.perf & measure$minimize) |
-       (best.perf < current.perf & !measure$minimize) ) break
+       ((best.perf > current.perf) == measure$minimize)) break
 
     # Add the best model if adding it increases performance
-    if (best.perf < current.perf  == measure$minimize) {
+    if ((best.perf < current.perf) == measure$minimize) {
       selected[bag_index][which(perfs == best.perf)] = selected[bag_index][which(perfs == best.perf)] + 1
       current.pred = preds
       current.perf = best.perf
@@ -214,7 +214,7 @@ doEnsembleBagIter = function(learner, pred.list, bls.perf, replace, init, bagpro
 # Return performance after adding a new model in the bag
 addModel = function(i, learner, models, selected, current.pred) {
   # Do a weighted mean between current model and new model
-  pred = aggregatePredictions(learner, list(current.pred, pred.list[[i]]),
+  pred = aggregateModelPredictions(learner, list(current.pred, pred.list[[i]]),
     lrn.weights = c(sum(selected), 1) / (sum(selected) + 1))
   measure$fun(pred)
 }

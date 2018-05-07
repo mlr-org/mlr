@@ -22,11 +22,13 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   pred.list = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
   if (.learner$method == "aggregate") {
-    final.pred = aggregatePredictions(.model, pred.list)
+    final.pred = aggregateModelPredictions(.model, pred.list)
 
   } else if (.learner$method == "ensembleselection") {
-    bag.preds = lapply(.model$selected, aggregatePredictions(x, pred.list))
-    final.pred = aggregatePredictions(.model, bag.preds)
+    # Compute the prediction for each bag
+    bag.preds = lapply(.model$selected, function(x) {aggregateModelPredictions(.model, pred.list, weights = x / sum(x))})
+    # Compute the mean over all bags
+    final.pred = aggregateModelPredictions(.model, bag.preds)
 
   } else if (.learner$method == "superlearner") {
     pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
@@ -69,7 +71,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL){
     # Get predictions from all basemodels
     pred = lapply(names(bms), function(x) {
       # Load model if it was saved on disc
-      if (model$learner$save.on.disc)
+      if (!is.null(model$save.on.disc))
         bms[[x]] = readRDS(bms[[x]])
       # Predict on newdata
       predict(bms[[x]], newdata = newdata)}

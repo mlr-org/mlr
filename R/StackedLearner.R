@@ -149,6 +149,7 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
   lrn =  makeBaseEnsemble(
     id = id,
     base.learners = base.learners,
+    par.vals = par.vals,
     cl = "StackedLearner")
 
   if (!is.null(super.learner)) {
@@ -161,9 +162,8 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
   lrn$name = "StackedLearner"
   lrn$method = method
   lrn$resampling = resampling
-  lrn$par.vals = par.vals
-  lrn$fix.factors.prediction = TRUE
-  lrn[c("save.on.disc", "save.preds", "save.resres")] = c(save.on.disc, save.preds, save.resres)
+  lrn$save.on.disc = save.on.disc
+  lrn[c("fix.factors.prediction", "save.preds", "save.resres")] = c(TRUE, save.preds, save.resres)
 
   return(lrn)
 }
