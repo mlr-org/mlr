@@ -140,7 +140,7 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
 
   bm.pt = unique(extractSubList(base.learners, "predict.type"))
   if ("se" %in% bm.pt | (!is.null(predict.type) && predict.type == "se") |
-      (!is.null(super.learner) && super.learner$predict.type == "se"))
+      (!is.null(super.learner) && par.vals$super.learner$predict.type == "se"))
     stop("Predicting standard errors currently not supported.")
   if (length(bm.pt) > 1L)
     stop("Base learner must all have the same predict type!")
@@ -157,7 +157,8 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
       makeNumericLearnerParam("tolerance", lower = .Machine$double.eps, upper = 1)
     )
   } else if (method == "superlearner") {
-    ps = makeParamSet(makeLogicalLearnerParam("use.feates", default = TRUE))
+    ps = makeParamSet(makeLogicalLearnerParam("use.feates", default = TRUE),
+      makeUntypedLearnerParam("super.learner"))
   } else {
     ps = makeParamSet()
   }
@@ -170,7 +171,7 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
     cl = "StackedLearner")
 
   if (!is.null(super.learner)) {
-    lrn = setPredictType(lrn, predict.type = super.learner$predict.type)
+    lrn = setPredictType(lrn, predict.type = par.vals$super.learner$predict.type)
   } else {
     lrn = setPredictType(lrn, predict.type = predict.type)
   }
