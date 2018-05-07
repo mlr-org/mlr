@@ -6,12 +6,12 @@
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   .task = subsetTask(.task, subset = .subset)
+
   switch(.learner$method,
     aggregate = aggregateBaseLearners(.learner, .task),
-    superlearner = superlearnerBaseLearners(.learner, .task),
-    ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task), .learner$es.par.vals))
+    superlearner = superlearnerBaseLearners(.learner, .task, par.vals),
+    ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task, .learner$measure), .learner$par.vals))
   )
-  # FIXME: We should maybe handle failed learners here generally
 }
 
 # Train function for simple aggregation of base learner predictions without weights.
@@ -114,20 +114,20 @@ superlearnerBaseLearners = function(learner, task) {
 # @param replace [`logical(1)`]
 # @param init [`integer(1)`] init >= 1
 # @param bagprop [`numeric(1)`] 0 < bagprop < 1
-# @param bagtime [`integer(1)`] bagtime >= 1
+# @param bagiter [`integer(1)`] bagiter >= 1
 # @param maxiter [`integer(1)`] maxiter >= 1
 # @param tolerance [`numeric(1)`] small numeric value.
 # @param measure [`Measure`]
 # @param ... (any)\cr
 # @export
-ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1, bagprop = 1, bagtime = 1,
-  maxiter = NULL, tolerance = 1e-8, measure = NULL, ...) {
+ensembleselectionBaseLearners = function(learner, task, measure = NULL, replace = TRUE, init = 1, bagprop = 1, bagiter = 1,
+  maxiter = NULL, tolerance = 1e-8) {
 
   # Check Inputs
   assertFlag(replace)
   assertInt(init, lower = 1, upper = length(learner$base.learners)) #807
   assertNumber(bagprop, lower = 0, upper = 1)
-  assertInt(bagtime, lower = 1)
+  assertInt(bagiter, lower = 1)
   if (is.null(measure)) measure = getDefaultMeasure(task)
   assertClass(measure, "Measure")
   if (is.null(maxiter)) maxiter = length(learner$base.learners)
@@ -155,8 +155,10 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
   bls.perf = vnapply(resres, function(x) x$aggr)
 
   # Do the bagging, return a list of selected learners in each bag
-  selected.list = lapply(seq_len(bagtime), doEnsembleBagIter(learner, pred.list, bls.perf, replace = TRUE,
-    init = 1, bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-8, measure = NULL))
+  selected.list = replicate(bagiter,
+    doEnsembleBagIter(learner = learner, task = task, pred.list, bls.perf, replace, init = init,
+      bagprop = bagprop, maxiter = maxiter, tolerance = tolerance, measure = measure),
+    simplify = FALSE)
 
   list(method = "ensembleselection", base.models = base.models, super.model = NULL,
     pred.train = pred.list, bls.performance = bls.perf,
@@ -165,23 +167,26 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 
 
 # Do a single bagging iteration for enseble selection
-doEnsembleBagIter = function(learner, pred.list, bls.perf, replace, init, bagprop, bagtime, maxiter,
+doEnsembleBagIter = function(learner, task, pred.list, bls.perf, replace, init, bagprop, maxiter,
   tolerance, measure) {
 
   # Compute an index of models in this bagging iteration
   m = length(pred.list)
-  bag_index = sample(seq_len(length(pred.list)), m * bagprop, replace = replace)
+  bag_index = sort(sample(seq_len(length(pred.list)), m * bagprop, replace = replace))
 
   # Get #init best models and save into selected
-  best.init = order(models$perf.list[bag_index], decreasing = !measure$minimize)[seq_len(init)]
+
+  best.init = order(bls.perf[bag_index], decreasing = !measure$minimize)[seq_len(init)]
   # Selected is a integer vector, where the entry refers to the number of times a learner was
   # selected, and the position refer to the learner.
   selected = numeric(length(pred.list))
-  selected[bag_index][best.init] = selected[bag_index][best.init] + 1
+  selected[best.init] = 1
 
   # Compute predictions and performance
-  current.pred = aggregateModelPredictions(learner, pred.list[rep(seq_len(m)), selected])
-  current.perf = measure$fun(current.pred)
+  current.pred = aggregateModelPredictions(learner, pred.list[bag_index[rep(seq_len(m), selected)]])
+  current.perf = measure$fun(pred = current.pred)
+
+  sprintf("Initialized with learner %s \n", names(learner$base.learners)[best.init])
 
   # Sequentially add maxiter models to the bag
   for (i in seq_len(maxiter)) {
@@ -191,19 +196,22 @@ doEnsembleBagIter = function(learner, pred.list, bls.perf, replace, init, bagpro
     if (length(bag_index) == 0) break
 
     # Add each model from the bag once and compute performance
-    preds = lapply(seq_len(m)[bag_index], function(x) addModel(models, x, selected, current.pred))
-    perfs = lapply(preds, measure$fun)
+    preds = lapply(seq_len(m)[bag_index], function(x) getHillclimbPred(x, learner, pred.list, selected, current.pred))
+    perfs = sapply(preds, function(x) measure$fun(pred = x))
 
     # Get performance of best model
     best.perf = ifelse(measure$minimize, min(perfs), max(perfs))
     # Break if delta is smaller then tolerance or performance decreases
-    if (abs(best.pe1rf - current.perf) < tolerance |
+    if (abs(best.perf - current.perf) < tolerance |
        ((best.perf > current.perf) == measure$minimize)) break
 
     # Add the best model if adding it increases performance
     if ((best.perf < current.perf) == measure$minimize) {
-      selected[bag_index][which(perfs == best.perf)] = selected[bag_index][which(perfs == best.perf)] + 1
-      current.pred = preds
+      # If there are ties draw randomly from basemodels with best performance
+      best.pred = sample(which(perfs == best.perf), 1)
+
+      selected[bag_index[best.pred]] = selected[bag_index[best.pred]]  + 1
+      current.pred = preds[[best.pred]]
       current.perf = best.perf
     }
   }
@@ -212,9 +220,8 @@ doEnsembleBagIter = function(learner, pred.list, bls.perf, replace, init, bagpro
 
 
 # Return performance after adding a new model in the bag
-addModel = function(i, learner, models, selected, current.pred) {
-  # Do a weighted mean between current model and new model
-  pred = aggregateModelPredictions(learner, list(current.pred, pred.list[[i]]),
-    lrn.weights = c(sum(selected), 1) / (sum(selected) + 1))
-  measure$fun(pred)
+getHillclimbPred = function(i, learner, pred.list, selected, current.pred) {
+  # Do a weighted mean between current prediction (all earlier models) and new prediction
+  aggregateModelPredictions(learner, list(current.pred, pred.list[[i]]),
+    weights = c(sum(selected), 1) / (sum(selected) + 1))
 }

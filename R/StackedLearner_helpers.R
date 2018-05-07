@@ -43,18 +43,20 @@ makeSuperLearnerTask = function(type, data, target) {
 doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
   setSlaveOptions()
   model = train(bls, task)
+
+  if (show.info)
+    messagef("[Base Learner] %s applied.", bl$id)
   pred = predict(model, task = task)
+
   if (!is.null(save.on.disc)) {
     model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
     saveRDS(model, file = model.file)
-    if (show.info) messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
-    X = list(base.models = model.id, pred = pred)
-  } else { # save.on.disc = FALSE:
-    if (show.info)
-      messagef("[Base Learner] %s is applied. ", bls$id)
-    X = list(base.models = model, pred = pred)
+    if (show.info) messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.file)
   }
-  X
+
+  # Either return model or a path to the model
+  if (!is.null(save.on.disc)) model = model.file
+  return(list(base.models = model))
 }
 
 # Resampling and prediction in one function (used for parallelMap)
@@ -83,10 +85,12 @@ doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc)
   if (!is.null(save.on.disc)) {
     model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
     saveRDS(model, file = model.file)
-    messagef("Model saved to %s", model.id)
+    messagef("Model saved to %s", model.file)
   }
 
-  return(list(base.models = model.id, resres = r))
+  # Either return model or a path to the model
+  if (!is.null(save.on.disc)) model = model.file
+  return(list(base.models = model, resres = r))
 }
 
 
@@ -109,27 +113,27 @@ aggregateModelPredictions = function(.model, pred.list, weights = NULL) {
 
   # Check if all task.descs are equal
   x = lapply(pred.list, function(x) getTaskDesc(x))
-  td.equal = unlist(lapply(2:length(x), function(i) all.equal(x[[1]], x[[i]])))
+  task.desc = x[[1]]
+  td.equal = unlist(lapply(2:length(x), function(i) all.equal(task.desc, x[[i]])))
   if (any(!td.equal)) stopf("Task descriptions in prediction '1' and '%s' differ!", which(task.unequal)[1])
-
-
 
   # Define weights (1/n for aggregation, weighted for ensembleselection)
   if (is.null(weights)) {
-    weights = rep(1, length(pred.list)) / sum (freq)
+    weights = rep(1, length(pred.list)) / length(pred.list)
   }
 
-  predict.type = .model$learner$predict.type
-  class.levels = .model$task.desc$class.levels
-  if (.model$task.desc$type == "classif") {
+  predict.type = .model$predict.type
+  class.levels = task.desc$class.levels
+
+  if (.model$type == "classif") {
     # Get probabilities as a matrix.
-    preds = lapply(pred.list, function(pred) {
+    preds = lapply(pred.list, function(pred, class.levels) {
       if(pred$predict.type == "prob") {
         as.matrix(getPredictionProbabilities(pred, class.levels))
       } else {
         as.matrix(createDummyFeatures(getPredictionResponse(pred))[, class.levels])
       }
-    })
+    }, class.levels)
     y = apply(simplify2array(preds), c(1, 2), weighted.mean,  w = weights, na.rm = TRUE)
     # In case we want to predict the response, get the max over all columns
     if (predict.type == "response") y = factor(max.col(y), labels = class.levels)
@@ -137,7 +141,7 @@ aggregateModelPredictions = function(.model, pred.list, weights = NULL) {
     preds = lapply(pred.list, getPredictionResponse)
     y = apply(simplify2array(preds), c(1, 2), weighted.mean, w = weights, na.rm = TRUE)
   }
-  return(makePrediction(task.desc = .model$task.desc, row.names(pred.list[[1]]$data),
+  return(makePrediction(task.desc = task.desc, row.names(pred.list[[1]]$data),
     id = .model$learner$id, truth = pred.list[[1]]$data$truth, predict.type = predict.type,
     predict.threshold = NULL, y, time = NA_real_))
 }

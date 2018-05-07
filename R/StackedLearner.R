@@ -34,7 +34,10 @@
 #'   tasks with `predict.type = 'response'` will use majority vote of the base
 #'   learner predictions to determine the final prediction. For regression
 #'   tasks, the final prediction will be the aggregate of the base learner
-#'   predictions.} }
+#'   predictions.}}
+#' @param `measure` (`Measure`)\cr
+#'  Measure that should be optimized. Currently only used for `method = 'ensembleselection'`.
+#'  Defaults to `getDefaultMeasure(task)`.
 #' @param resampling ([ResampleDesc])\cr Resampling strategy for `method = 'superlearner'` and
 #'  `method = 'ensembleselection'`. Only CV or RepCV is allowed for resampling.
 #'  The default `NULL` uses 5-fold CV.
@@ -56,10 +59,8 @@
 #'   algorithm.}
 #'   \item{`bagprob`(`numeric(1)`)}{The proportion of models being considered in
 #'   one round of selection.}
-#'   \item{`bagtime` (`integer(1)`)}{The number of rounds of the
+#'   \item{`bagiter` (`integer(1)`)}{The number of rounds of the
 #'   bagging selection.}
-#'   \item{`metric` (`Measure`)}{The result evaluation metric function
-#'   taking two parameters `pred` and `true`, the smaller the score the better.}
 #'   \item{`tolerance` (`numeric(1)`)}{Minimum improvement in ensemble performance in order to
 #'   continue adding learners.}}}
 #' @param save.on.disc (`character(1)`)\cr Path to directory, where base models are saved.
@@ -110,7 +111,7 @@
 #' }
 #' @export
 makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
-  predict.type = NULL, resampling = NULL, super.learner = NULL,
+  predict.type = NULL, resampling = NULL, super.learner = NULL, measure = NULL,
   par.vals = list(), save.on.disc = NULL, save.preds = TRUE, save.resres = FALSE) {
 
   # Check user inputs
@@ -123,6 +124,7 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
   }
   baseType = unique(extractSubList(base.learners, "type"))
   assertChoice(method, c("aggregate", "superlearner", "ensembleselection"))
+  assertClass(measure, "Measure", null.ok = TRUE)
   assertCharacter(id, min.chars = 1)
   assertString(save.on.disc, null.ok = TRUE)
   assertFlag(save.preds)
@@ -145,11 +147,26 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
   if ((method %in% c("aggregate", "ensembleselection")) & (!is.null(super.learner) | is.null(predict.type)))
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
 
+  if (method == "ensembleselection") {
+    ps = makeParamSet(
+      makeIntegerLearnerParam("init", default = 3L, lower = 1L, upper = Inf),
+      makeIntegerLearnerParam("maxiter", default = 10L, lower = 1L, upper = Inf),
+      makeIntegerLearnerParam("bagiter", default = 10L, lower = 1L, upper = Inf),
+      makeLogicalLearnerParam("replace", default = TRUE),
+      makeNumericLearnerParam("bagprop", lower = 0, upper = 1),
+      makeNumericLearnerParam("tolerance", lower = .Machine$double.eps, upper = 1)
+    )
+  } else if (method == "superlearner") {
+    ps = makeParamSet(makeLogicalLearnerParam("use.feates", default = TRUE))
+  } else {
+    ps = makeParamSet()
+  }
 
   lrn =  makeBaseEnsemble(
     id = id,
     base.learners = base.learners,
     par.vals = par.vals,
+    par.set = ps,
     cl = "StackedLearner")
 
   if (!is.null(super.learner)) {
@@ -163,6 +180,7 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
   lrn$method = method
   lrn$resampling = resampling
   lrn$save.on.disc = save.on.disc
+  lrn$measure = measure
   lrn[c("fix.factors.prediction", "save.preds", "save.resres")] = c(TRUE, save.preds, save.resres)
 
   return(lrn)
