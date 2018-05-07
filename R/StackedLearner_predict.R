@@ -18,30 +18,26 @@
 #' @export
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
-  # obtain predictions
+  # obtain predictions on newdata
   pred.list = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
-  # apply aggregate
   if (.learner$method == "aggregate") {
     final.pred = aggregatePredictions(.model, pred.list)
 
-  # apply ensembleselection
   } else if (.learner$method == "ensembleselection") {
-    final.pred = aggregatePredictions(.model, pred.list)
+    bag.preds = lapply(.model$selected, aggregatePredictions(x, pred.list))
+    final.pred = aggregatePredictions(.model, bag.preds)
 
-  # apply superlearner
   } else if (.learner$method == "superlearner") {
-    use.feat = .model$learner$use.feat
     pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
     pred.data = as.data.frame(pred.data)
-    if (use.feat) {
+    if (.model$learner$use.feat) {
       feat = .newdata[, colnames(.newdata) %nin% getTaskDesc(.model)$target, drop = FALSE]
       pred.data = cbind(pred.data, feat)
     }
-    sm = .model$learner.model$super.model
     if (getMlrOption("show.info"))
       messagef("[Super Learner] Predict %s with %s features on %s observations", sm$learner$id, ncol(pred.data), nrow(pred.data))
-    final.pred = predict(sm, newdata = pred.data)
+    final.pred = predict(.model$learner.model$super.model, newdata = pred.data)
   }
   # return
   if (.model$learner$predict.type == "prob") {

@@ -15,19 +15,13 @@
 #'
 #' @param id (`character(1)`)`  Id string for object. Used to display object and
 #'   for model saving. Default is "stack".
-#' @param method (`character(1)`)\cr \describe{ \item{`aggregate`}{Averaging of
-#'   base learner predictions without weights.} \item{`superlearner`}{Building a
-#'   super learner using crossvalidated predictions of the base learners.}
-#'   \item{`ensembleselection`}{For averaging the (cross validated) predictions
-#'   of the base learners, with the weights learned from ensemble selection
-#'   algorithm.} }
+#' @param method (`character(1)`)\cr \describe{
+#'  \item{`aggregate`}{Averaging of base learner predictions without weights.}
+#'  \item{`superlearner`}{Building a super learner using crossvalidated predictions of the base learners.}
+#'  \item{`ensembleselection`}{For averaging the (cross validated) predictions of the base learners,
+#'   with the weights learned from ensemble selection algorithm.} Defaults to `aggregate`.}
 #' @param base.learners (list of [Learner] | `character(1)`)\cr A list of learners created with
 #'   ([makeLearner]). The prediction type can be changed using `setPredictType`.
-#' @param super.learner learner ([Learner] | `character(1)`)\cr The super
-#'   learner that makes the final prediction based on the cross validated base
-#'   learners predictions. If you pass a string, the super learner will be
-#'   created via `makeLearner`. Only used for `method = 'superlearner'`. Default
-#'   is `NULL`.
 #' @param predict.type (`character(1)`)\cr Sets the type of the final
 #'   prediction. For method `super.learner` the predict type can also be set
 #'   within `super.learner`. If the type of the base learner prediction, which
@@ -41,36 +35,48 @@
 #'   learner predictions to determine the final prediction. For regression
 #'   tasks, the final prediction will be the aggregate of the base learner
 #'   predictions.} }
-#' @param resampling ([ResampleDesc])\cr Resampling strategy for `method =
-#'   'superlearner'` and `method = 'ensembleselection'`. Only CV is allowed for
-#'   resampling. The default `NULL` uses 5-fold CV.
-#' @param use.feat (`logical(1)`)\cr Whether the original features should also
-#'   be passed to the super learner. Only used for `method = 'superlearner'`.
-#'   Default is `FALSE`.
-#' @param es.par.vals (`list`) the parameters for `ensembleselection` method.
-#'   The following parameter values can be set:\cr \describe{
-#'   \item{`replace`}{Can a base learner be selected more than once?}
-#'   \item{`init`}{Number of best models being included before the selection
-#'   algorithm.} \item{`bagprob`}{The proportion of models being considered in
-#'   one round of selection.} \item{`bagtime`}{The number of rounds of the
-#'   bagging selection.} \item{`metric`}{The result evaluation metric function
+#' @param resampling ([ResampleDesc])\cr Resampling strategy for `method = 'superlearner'` and
+#'  `method = 'ensembleselection'`. Only CV or RepCV is allowed for resampling.
+#'  The default `NULL` uses 5-fold CV.
+#' @param par.vals (`list`) parameters for the different methods.
+#' Depending on method, the following parameter values can be set:\cr
+#' \item{`superlearner`}{
+#'   \describe{
+#'   \item {`super.learner` ([Learner] | `character(1)`)}{
+#'   The super learner that makes the final prediction based on the cross validated base
+#'   learners predictions. If you pass a string, the super learner will be
+#'   created via `makeLearner`. Default is `NULL`.}
+#'   \item{`use.feat` (`logical(1)`)}{
+#'   Whether the original features should also be passed to the super learner.
+#'   Default is `FALSE`.}}}
+#' \item{`ensembleselection`}{
+#'   \describe{
+#'   \item{`replace` (`logical(1)`)}{Can a base learner be selected more than once?}
+#'   \item{`init` (`integer(1)`)}{Number of best models being included before the selection
+#'   algorithm.}
+#'   \item{`bagprob`(`numeric(1)`)}{The proportion of models being considered in
+#'   one round of selection.}
+#'   \item{`bagtime` (`integer(1)`)}{The number of rounds of the
+#'   bagging selection.}
+#'   \item{`metric` (`Measure`)}{The result evaluation metric function
 #'   taking two parameters `pred` and `true`, the smaller the score the better.}
-#'   \item{`tolerance`}{Minimum improvement in ensemble performance in order to
-#'   continue adding learners.} }
-#' @param save.on.disc (`logical(1)`)\cr If set to `TRUE`, base models are saved
-#'   on disc into the working directory. This setting saves memory when huge
-#'   models are fitted but also might take longer. Later, during prediction this
+#'   \item{`tolerance` (`numeric(1)`)}{Minimum improvement in ensemble performance in order to
+#'   continue adding learners.}}}
+#' @param save.on.disc (`character(1)`)\cr Path to directory, where base models are saved.
+#'   This setting saves memory when huge models are fitted but also might take longer.
+#'   Later, during prediction this
 #'   models are loaded. Models are saved with the name
-#'   _saved.models<stack.id>.<base.learner.id>.RData_. Note that this only works
-#'   for train-predict procedures as well as for resampling using holdout.
+#'   _mod.<stack.id>.<base.learner.id>.RData_.
+#'   Note that this only works for train-predict procedures as well as for resampling using holdout.
 #'   Applying outer cross validation will result in wrong predictions due to the
 #'   fact that model names does not seperate between different resample
-#'   iterations. Default is `FALSE`.
+#'   iterations. Default is `NULL`, which does not save anything.
 #' @param save.preds (`logical(1)`)\cr
-#'   If set to `FALSE` models will not contain
-#'   predictions. This reduces the object size. Note that function
-#'   `resampleStackedLearnerAgain` does not work if saving prediction is
-#'   disabled. Default is `TRUE`.
+#'   If set to `FALSE` the functions will not return
+#'   predictions. This reduces the object size. Default is `TRUE`.
+#' @param save.resres (`logical(1)`)\cr
+#'   If set to `TRUE` the function returns resample results. This reduces the object size. Default is `FALSE`.
+#'
 #' @references Wolpert, David H. "Stacked generalization." Neural networks 5.2
 #'   (1992): 241-259.
 #'   \url{http://www.machine-learning.martinsewell.com/ensembles/stacking/Wolpert1992.pdf}
@@ -103,47 +109,42 @@
 #'   res = predict(m, tsk)
 #' }
 #' @export
-makeStackedLearner = function(id = "stack", method = "superlearner", base.learners,
-  predict.type = NULL, resampling = NULL, super.learner = NULL, use.feat = FALSE,
-  es.par.vals = list(), save.on.disc = FALSE, save.preds = TRUE) {
+makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
+  predict.type = NULL, resampling = NULL, super.learner = NULL,
+  par.vals = list(), save.on.disc = NULL, save.preds = TRUE, save.resres = FALSE) {
 
-  # Case we have a single base model
+  # Check user inputs
   if ("RLearner" %in% class(base.learners)) base.learners = list(base.learners)
   base.learners = lapply(base.learners, checkLearner)
 
-  if (!is.null(super.learner)) {
-    super.learner = checkLearner(super.learner)
+  if (!is.null(par.vals$super.learner)) {
+    super.learner = checkLearner(par.vals$super.learner)
     if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
   }
-
   baseType = unique(extractSubList(base.learners, "type"))
   assertChoice(method, c("aggregate", "superlearner", "ensembleselection"))
   assertCharacter(id, min.chars = 1)
-  assertFlag(save.on.disc)
+  assertString(save.on.disc, null.ok = TRUE)
   assertFlag(save.preds)
+  assertFlag(save.resres)
 
   if (method %in% c("superlearner", "ensembleselection")) {
     if (is.null(resampling)) {
       resampling = makeResampleDesc("CV", iters = 5L, stratify = ifelse(baseType == "classif", TRUE, FALSE))
     } else {
-      assertClass(resampling, "CVDesc")
+      assertChoice(class(resampling)[[1]], c("CVDesc", "RepCVDesc"))
     }
-  } else {
-    assertClass(resampling, "NULL")
   }
 
   bm.pt = unique(extractSubList(base.learners, "predict.type"))
   if ("se" %in% bm.pt | (!is.null(predict.type) && predict.type == "se") |
-       (!is.null(super.learner) && super.learner$predict.type == "se"))
-   stop("Predicting standard errors currently not supported.")
+      (!is.null(super.learner) && super.learner$predict.type == "se"))
+    stop("Predicting standard errors currently not supported.")
   if (length(bm.pt) > 1L)
     stop("Base learner must all have the same predict type!")
   if ((method %in% c("aggregate", "ensembleselection")) & (!is.null(super.learner) | is.null(predict.type)))
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
-  if (method %in% "superlearner" & is.null(super.learner))
-    stop("You have to specify a super learner for this method.")
-  if ((method %in% c("aggregate", "ensembleselection")) & use.feat)
-    stop("The original features cannot be used for this method")
+
 
   lrn =  makeBaseEnsemble(
     id = id,
@@ -160,14 +161,9 @@ makeStackedLearner = function(id = "stack", method = "superlearner", base.learne
   lrn$name = "StackedLearner"
   lrn$method = method
   lrn$resampling = resampling
-  lrn$super.learner = super.learner
-  lrn$use.feat = use.feat
-  lrn$es.par.vals = es.par.vals
+  lrn$par.vals = par.vals
   lrn$fix.factors.prediction = TRUE
-  lrn$save.on.disc = save.on.disc
-  lrn$save.preds = save.preds
+  lrn[c("save.on.disc", "save.preds", "save.resres")] = c(save.on.disc, save.preds, save.resres)
 
   return(lrn)
 }
-
-# FIXME: Saving models does not work for outer resampling?

@@ -38,16 +38,15 @@ makeSuperLearnerTask = function(type, data, target) {
 # @param task [Task]
 # @param show.info show.info
 # @param id Id needed to create unique model name
-# @param save.on.disc save.on.disc
+# @param save.on.disc Directory to save models to.
 doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
   setSlaveOptions()
   model = train(bls, task)
   pred = predict(model, task = task)
-  if (save.on.disc) {
-    model.id = paste("saved.model", id, bls$id, "RData", sep = ".")
-    saveRDS(model, file = model.id)
-    if (show.info)
-      messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
+  f (!is.null(save.on.disc)) {
+    model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
+    saveRDS(model, file = model.file)
+    if (show.info) messagef("[Base Learner] %s applied. Model saved as %s", bls$id, model.id)
     X = list(base.models = model.id, pred = pred)
   } else { # save.on.disc = FALSE:
     if (show.info)
@@ -68,6 +67,8 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
 doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc) {
 
   setSlaveOptions()
+  assertClass(rin, "ResampleInstance")
+
   # Get OOB Predictions für train step
   r = resample(bl, task, rin, measures, show.info = FALSE)
   oob.preds = r$pred$data[order(r$pred$data$id), , drop = FALSE]
@@ -78,9 +79,9 @@ doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc)
   if (show.info)
     messagef("[Base Learner] %s applied.", bl$id)
 
-  if (save.on.disc) {
-    model.id = paste("saved.model", id, bl$id, "RData", sep = ".")
-    saveRDS(model, file = model.id)
+  if (!is.null(save.on.disc)) {
+    model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
+    saveRDS(model, file = model.file)
     messagef("Model saved to %s", model.id)
   }
 
@@ -102,8 +103,7 @@ getPredictionDataNonMulticoll = function(pred) {
   if (pt == "prob") {
     pred.matrix = pred$data[, paste("prob", td$class.levels, sep = ".")]
     colnames(pred.matrix) = td$class.levels
-    pred.matrix = pred.matrix[, -1, drop = TRUE] #
-    return(pred.matrix)
+    pred.matrix[, -1, drop = TRUE]
   } else {
     # for perdict.type = "response"
     getPredictionResponse(pred)
@@ -111,33 +111,6 @@ getPredictionDataNonMulticoll = function(pred) {
 }
 
 
-# Order a scores vector and return the best init numbers
-orderScore = function(scores, minimize, init) {
-  # checks
-  assertClass(scores, "numeric")
-  assertChoice(minimize, c(TRUE, FALSE))
-  assertInt(init, lower = 1, upper = length(scores))
-  # body
-  if (is.null(init)) init = length(scores)
-  if (minimize) {
-    order(scores)[1:init]
-  } else {
-    rev(order(scores))[1:init]
-  }
-}
-
-
-#' Remove Stacking models from disc.
-#'
-#' @param stack.id (`character(1)`)\cr
-#' Name of stack.
-#' @param bls.ids (`character(1)`)\cr
-#' Vector of base learner names.
-#' @export
-removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
-  term = paste0("rm saved.model.", stack.id, "*", bls.ids, ".RData")
-  system(term)
-}
 
 
 # Aggregate predictions
@@ -149,7 +122,7 @@ removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
 # @param predict.type Final predict type, "prob" or "response"
 # @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
 # FIXME: add more methods (geometric mean, rank specific stuff)
-aggregatePredictions = function(.model, pred.list) {
+aggregatePredictions = function(.model, pred.list, lrn.weights = NULL) {
 
   # return pred if list only contains one pred
   if (length(pred.list) == 1) {
@@ -166,12 +139,14 @@ aggregatePredictions = function(.model, pred.list) {
   class.levels = .model$task.desc$class.levels
 
   # Define weights (1/n for aggregation, weighted for ensembleselection)
-  if(mod$learner.model$method == "ensembleselection") {
+  if (mod$learner.model$method == "ensembleselection") {
     freq = .model$learner.model$freq
   } else {
     freq = rep(1, length(pred.list))
   }
-  lrn.weights = freq / sum (freq)
+  if (is.null(lrn.weights)) {
+    lrn.weights = freq / sum (freq)
+  }
 
   if (.model$task.desc$type == "classif") {
     # Get probabilities as a matrix.
@@ -273,3 +248,33 @@ plotStackedLearnerModel = function(mod) {
     ggplot2::theme_void()
   invisible(p)
 }
+
+
+# # Order a scores vector and return the best init numbers
+# orderScore = function(scores, minimize, init) {
+#   # checks
+#   assertClass(scores, "numeric")
+#   assertChoice(minimize, c(TRUE, FALSE))
+#   assertInt(init, lower = 1, upper = length(scores))
+#   # body
+#   if (is.null(init)) init = length(scores)
+#   if (minimize) {
+#     order(scores)[1:init]
+#   } else {
+#     rev(order(scores))[1:init]
+#   }
+# }
+
+
+#' #' Remove Stacking models from disc.
+#' #'
+#' #' @param stack.id (`character(1)`)\cr
+#' #' Name of stack.
+#' #' @param bls.ids (`character(1)`)\cr
+#' #' Vector of base learner names.
+#' #' @export
+#' removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
+#'   term = paste0("rm saved.model.", stack.id, "*", bls.ids, ".RData")
+#'   system(term)
+#' }
+#'
