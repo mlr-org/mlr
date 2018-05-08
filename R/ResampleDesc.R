@@ -189,7 +189,7 @@ makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, sk
 }
 
 makeResampleDescBlocking = function(iters = NULL) {
-  makeResampleDescInternal("blocking", iters = NA_integer_)
+  makeResampleDescInternal("blocking", iters = iters)
 }
 
 ##############################################################################################
