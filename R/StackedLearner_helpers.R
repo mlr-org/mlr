@@ -35,26 +35,26 @@ makeSuperLearnerTask = function(type, data, target) {
 
 # Training and prediction in one function (used for parallelMap)
 #
-# @param bls [list of base.learner]
+# @param bl [list of base.learner]
 # @param task [Task]
 # @param show.info show.info
 # @param id Id needed to create unique model name
 # @param save.on.disc Directory to save models to.
-doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
+doTrainPredict = function(bl, task, show.info, id, save.on.disc) {
   setSlaveOptions()
-  model = train(bls, task)
+  model = train(bl, task)
 
   if (isFailureModel(model)) {
-    warning(sprintf("Training learner %s failed and the learner was dropped.", bls$id))
-    return(list(failed.models = bls$id))
+    warning(sprintf("Training learner %s failed and the learner was dropped.", bl$id))
+    return(list(failed.models = bl$id))
   }
 
   if (show.info)
-    messagef("[Base Learner] %s applied.", bls$id)
+    messagef("[Base Learner] %s applied.", bl$id)
   pred = predict(model, task = task)
 
   if (!is.null(save.on.disc)) {
-    model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
+    model.file = tempfile(paste("model", id, bl$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
     saveRDS(model, file = model.file)
     if (show.info) messagef("Model saved as %s", model.file)
   }
@@ -65,7 +65,7 @@ doTrainPredict = function(bls, task, show.info, id, save.on.disc) {
 }
 
 # Resampling and prediction in one function (used for parallelMap)
-# @param bls [list of base.learner]
+# @param bl [list of base.learner]
 # @param task [Task]
 # @param rin Resample Description
 # @param measures Measures for resampling
@@ -86,15 +86,15 @@ doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc)
 
   # Handle cases where training fails
   if (isFailureModel(model)) {
-    warning(sprintf("Training learner %s failed and the learner was dropped.", bls$id))
-    return(list(failed.models = bls$id))
+    warning(sprintf("Training learner %s failed and the learner was dropped.", bl$id))
+    return(list(failed.models = bl$id))
   }
 
   if (show.info)
     messagef("[Base Learner] %s applied.", bl$id)
 
   if (!is.null(save.on.disc)) {
-    model.file = tempfile(paste("model", id, bls$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
+    model.file = tempfile(paste("model", id, bl$id, sep = "."), tmpdir = save.on.disc, fileext = ".RData")
     saveRDS(model, file = model.file)
     messagef("Model saved to %s", model.file)
   }
@@ -147,7 +147,11 @@ aggregateModelPredictions = function(.model, pred.list, weights = NULL) {
     }, class.levels)
     y = apply(simplify2array(preds), c(1, 2), weighted.mean,  w = weights, na.rm = TRUE)
     # In case we want to predict the response, get the max over all columns
-    if (predict.type == "response") y = factor(max.col(y), labels = class.levels)
+    if (predict.type == "response") {
+      cols = max.col(y)
+      y = factor(cols)
+      levels(y) = class.levels
+    }
   } else {
     preds = lapply(pred.list, getPredictionResponse)
 
@@ -197,7 +201,7 @@ getPredictionDataNonMulticoll = function(pred) {
 #   )
 #
 #   if (method %in% c("superlearner", "ensembleselection"))
-#     df$perf = mod$learner.model$bls.perf
+#     df$perf = mod$learner.model$bl.perf
 #   if (method == "ensembleselection")
 #     df$freq = mod$learner.model$freq
 #
@@ -281,15 +285,15 @@ getPredictionDataNonMulticoll = function(pred) {
 # }
 
 
-#' #' Remove Stacking models from disc.
-#' #'
-#' #' @param stack.id (`character(1)`)\cr
-#' #' Name of stack.
-#' #' @param bls.ids (`character(1)`)\cr
-#' #' Vector of base learner names.
-#' #' @export
-#' removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
-#'   term = paste0("rm saved.model.", stack.id, "*", bls.ids, ".RData")
-#'   system(term)
-#' }
-#'
+# #' Remove Stacking models from disc.
+# #'
+# #' @param stack.id (`character(1)`)\cr
+# #' Name of stack.
+# #' @param bl.ids (`character(1)`)\cr
+# #' Vector of base learner names.
+# #' @export
+# removeStackingModelsOnDisc = function(stack.id = NULL, bl.ids = NULL) {
+#   term = paste0("rm saved.model.", stack.id, "*", bl.ids, ".RData")
+#  system(term)
+# }
+#

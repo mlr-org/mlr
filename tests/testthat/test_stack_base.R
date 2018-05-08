@@ -139,7 +139,78 @@ test_that("aggregateModelPredictions works for classification", {
 })
 
 
-test_that("Failuremodels are removed", {
-  makeLearner("")
+test_that("Failuremodels are removed aggregate", {
+  configureMlr(on.learner.error = "quiet", show.learner.output = FALSE)
+  # 1 Failed Learner
+  lrn = makeLearner("classif.qda", predict.type = "prob")
+  stk = makeStackedLearner(method = "aggregate", base.learners = lrn)
+  expect_warning(m <- train(stk, multiclass.task, subset = c(1, 51, 101)))
+  expect_true(unlist(m$learner.model$failed.models) == "classif.qda")
+  expect_true(length(m$learner.model$base.models) == 0)
+  p = predict(m, newdata = iris)
+  expect_true(all(is.na(p$data$response)))
+
+  # 1 Failed Learner 1 Working
+  lrn1 = makeLearner("classif.qda", predict.type = "prob")
+  lrn2 = makeLearner("classif.rpart", predict.type = "prob")
+  stk = makeStackedLearner(method = "aggregate", base.learners = list(lrn1, lrn2))
+  expect_warning(m <- train(stk, multiclass.task, subset = c(1, 51, 101)))
+  expect_true(length(m$learner.model$failed.models) == 1)
+  expect_true(length(m$learner.model$base.models) == 1)
+  p = predict(m, newdata = iris)
+  expect_true(!any(is.na(p$data$response)))
+
+  configureMlr(on.learner.error = "stop", show.learner.output = FALSE)
 })
 
+test_that("Failuremodels are removed ensemblesel", {
+  configureMlr(on.learner.error = "quiet", show.learner.output = FALSE)
+
+  # ResampleDesc Fails
+  lrn = makeLearner("classif.qda", predict.type = "prob")
+  stk = makeStackedLearner(method = "ensembleselection", base.learners = lrn)
+  m = train(stk, multiclass.task, subset = c(1, 51, 101, 102, 52))
+  expect_true(inherits(m, "FailureModel"))
+
+  # 1 Learner fails 1 Works
+  stk = makeStackedLearner(method = "ensembleselection", base.learners = list(lrn1, lrn2),
+    resampling = makeResampleDesc("CV", iters = 2, stratify = TRUE))
+  expect_warning(m <- train(stk, multiclass.task, subset = c(1:2, 51:52, 101:102)))
+  expect_true(unlist(m$learner.model$failed.models) == "classif.qda")
+  expect_true(length(m$learner.model$base.models) == 1)
+  expect_equal(m$learner.model$selected, list(1))
+  p = predict(m, newdata = iris)
+  expect_true(!any(is.na(p$data$response)))
+
+  configureMlr(on.learner.error = "stop", show.learner.output = FALSE)
+})
+
+
+test_that("Ensembleselection works") {
+  lrns = list(
+    makeLearner("classif.rpart", "rpart1", minsplit = 1),
+    makeLearner("classif.rpart", "rpart2", minsplit = 3),
+    makeLearner("classif.rpart", "rpart3", minsplit = 5),
+    makeLearner("classif.rpart", "rpart4", minsplit = 10),
+    makeLearner("classif.rpart", "rpart5", minsplit = 20),
+    makeLearner("classif.ksvm", "ksvm1"),
+    makeLearner("classif.ksvm", "ksvm2", kernel = "rbfdot", sigma = 0.1),
+    makeLearner("classif.ksvm", "ksvm3", kernel = "rbfdot", sigma = 0.01),
+    makeLearner("classif.ksvm", "ksvm4", kernel = "polydot"),
+    makeLearner("classif.ksvm", "ksvm5", kernel = "laplacedot"),
+    makeLearner("classif.lda", "lda")
+  )
+  lrns = lapply(lrns, setPredictType, "prob")
+  stk = makeStackedLearner(method = "ensembleselection",
+    base.learners = lrns,
+    predict.type = "prob",
+    par.vals = list(init = 3, bagprop = 0.7, maxiter = 5L, bagiter = 3L),
+    measure = mmce)
+  mod = train(stk, pid.task)
+  prd = predict(mod, pid.task)
+  expect_class(mod, "BaseEnsembleModel")
+  expect_class(mod, "PredictionClassif")
+  expect_true(length(mod$learner.model$selected) == 3)
+  expect_true(max(sapply(mod$learner.model$selected, sum)) <= 8)
+  expect_true(min(sapply(mod$learner.model$selected, sum)) <= 3)
+}

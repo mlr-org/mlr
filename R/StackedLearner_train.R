@@ -29,10 +29,10 @@ aggregateBaseLearners = function(learner, task) {
     impute.error = function(x) x, level = "mlr.stackedLearner")
 
   names(results) = names(learner$base.learners)
-  base.models = extractSubList(results, "base.models", simplify = FALSE)
-  pred.list = extractSubList(results, "pred", simplify = FALSE)
+  base.models = Filter(Negate(is.null), extractSubList(results, "base.models", simplify = FALSE))
+  pred.list =  Filter(Negate(is.null), extractSubList(results, "pred", simplify = FALSE))
+  failed.models = Filter(Negate(is.null), extractSubList(results, "failed.models", simplify = FALSE))
 
-  failed.models = extractSubList(results, "failed.models", simplify = FALSE)
   # return
   mod = list(method = "aggregate", base.models = base.models, failed.models = failed.models)
   if (learner$save.preds)
@@ -67,15 +67,16 @@ superlearnerBaseLearners = function(learner, task) {
 
   # Extract relevant results
   names(results) = names(bls)
-  base.models = extractSubList(results, "base.models", simplify = FALSE)
-  resres = extractSubList(results, "resres", simplify = FALSE)
-  pred.list = extractSubList(resres, "pred", simplify = FALSE)
+  base.models = Filter(Negate(is.null), extractSubList(results, "base.models", simplify = FALSE))
+  failed.models = Filter(Negate(is.null), extractSubList(results, "failed.models", simplify = FALSE))
+  resres = Filter(Negate(is.null), extractSubList(results, "resres", simplify = FALSE))
+  pred.list = Filter(Negate(is.null), extractSubList(resres, "pred", simplify = FALSE))
   # Get predictions, but drop one column to avoid multicolinearity
   pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
   # Get aggregated performances
   bls.perf = vnapply(resres, function(x) x$aggr)
 
-  failed.models = extractSubList(results, "failed.models", simplify = FALSE)
+
 
   # add true target
   tn = getTaskTargetNames(task)
@@ -152,12 +153,11 @@ ensembleselectionBaseLearners = function(learner, task, measure = NULL, replace 
 
   # Extract relevant results
   names(results) = names(learner$base.learners)
-  base.models = extractSubList(results, "base.models", simplify = FALSE)
-  resres = extractSubList(results, "resres", simplify = FALSE)
-  pred.list = extractSubList(resres, "pred", simplify = FALSE)
+  base.models = Filter(Negate(is.null), extractSubList(results, "base.models", simplify = FALSE))
+  failed.models = Filter(Negate(is.null), extractSubList(results, "failed.models", simplify = FALSE))
+  resres = Filter(Negate(is.null), extractSubList(results, "resres", simplify = FALSE))
+  pred.list = Filter(Negate(is.null), extractSubList(resres, "pred", simplify = FALSE))
   bls.perf = vnapply(resres, function(x) x$aggr)
-
-  failed.models = extractSubList(results, "failed.models", simplify = FALSE)
 
   # Do the bagging, return a list of selected learners in each bag
   selected.list = replicate(bagiter,
