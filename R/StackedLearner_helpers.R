@@ -84,8 +84,8 @@ doTrainResample = function(bl, task, rin, measures, show.info, id, save.on.disc)
   # Model for prediction on newdata
   model = train(bl, task)
 
-  # Handle cases where training fails
-  if (isFailureModel(model)) {
+    # Handle cases where training fails
+  if (isFailureModel(model) |  any(!is.na(r$err.msgs$train))  | any(!is.na(r$err.msgs$predict))) {
     warning(sprintf("Training learner %s failed and the learner was dropped.", bl$id))
     return(list(failed.models = bl$id))
   }
@@ -121,6 +121,13 @@ aggregateModelPredictions = function(.model, pred.list, weights = NULL) {
     return(pred.list[[1]])
   }
   assertList(pred.list)
+
+  # Handle failed predictions
+  failed = sapply(pred.list, function(x) any(is.na(x)))
+  if (sum(failed) > 0) {
+    pred.list = pred.list[[!failed]]
+    weights = weights[!failed]
+  }
 
   # Check if all task.descs are equal
   x = lapply(pred.list, function(x) getTaskDesc(x))

@@ -173,14 +173,18 @@ test_that("Failuremodels are removed ensemblesel", {
   expect_true(inherits(m, "FailureModel"))
 
   # 1 Learner fails 1 Works
+  set.seed(getOption("mlr.debug.seed)"))
   stk = makeStackedLearner(method = "ensembleselection", base.learners = list(lrn1, lrn2),
-    resampling = makeResampleDesc("CV", iters = 2, stratify = TRUE))
+    resampling = makeResampleDesc("CV", iters = 2, stratify = TRUE), save.preds = TRUE, save.resres = TRUE)
   expect_warning(m <- train(stk, multiclass.task, subset = c(1:2, 51:52, 101:102)))
   expect_true(unlist(m$learner.model$failed.models) == "classif.qda")
   expect_true(length(m$learner.model$base.models) == 1)
   expect_equal(m$learner.model$selected, list(1))
   p = predict(m, newdata = iris)
   expect_true(!any(is.na(p$data$response)))
+
+  expect_class(m$learner.model$resres$classif.rpart, "ResampleResult")
+  expect_true(length(m$learner.model$resres) == 1)
 
   configureMlr(on.learner.error = "stop", show.learner.output = FALSE)
 })

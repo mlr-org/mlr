@@ -76,7 +76,8 @@ superlearnerBaseLearners = function(learner, task) {
   # Get aggregated performances
   bls.perf = vnapply(resres, function(x) x$aggr)
 
-
+  # Case all base models fail
+  if(length(base.models) == 0) stop("All base models failed, aborting.")
 
   # add true target
   tn = getTaskTargetNames(task)
@@ -158,6 +159,9 @@ ensembleselectionBaseLearners = function(learner, task, measure = NULL, replace 
   resres = Filter(Negate(is.null), extractSubList(results, "resres", simplify = FALSE))
   pred.list = Filter(Negate(is.null), extractSubList(resres, "pred", simplify = FALSE))
   bls.perf = vnapply(resres, function(x) x$aggr)
+
+  # Case all base models fail
+  if(length(base.models) == 0) stop("All base models failed, aborting.")
 
   # Do the bagging, return a list of selected learners in each bag
   selected.list = replicate(bagiter,
