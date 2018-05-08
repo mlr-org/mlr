@@ -29,6 +29,7 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("install") %>%
     add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>% # favicon creation
+    add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
     add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
 
   get_stage("before_deploy") %>%
@@ -59,5 +60,5 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("deploy") %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")) %>%
     add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf")) %>%
-    add_step(step_push_deploy(orphan = FALSE, commit_paths = "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf", branch = "tutorial_pdf"))
+    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "tutorial_pdf"))
 }

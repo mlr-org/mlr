@@ -20,14 +20,9 @@ r_github_packages:
   - jimhester/lintr
 
 jobs:
-  fast_finish: true
-  allow_failures:
-    - env: TUTORIAL=HTML
-    - env: TUTORIAL=PDF
   include:
     - stage: warmup-1
-      env:
-        - TUTORIAL=PDF
+      env: RCMDCHECK=TRUE
       addons:
         apt:
           packages:
@@ -41,8 +36,7 @@ jobs:
         - R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
-      env:
-        - TUTORIAL=PDF
+      env: RCMDCHECK=TRUE
       addons:
         apt:
           packages:
@@ -73,8 +67,7 @@ jobs:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
     - stage: Tutorial
-      env:
-        - TUTORIAL=HTML
+      env: TUTORIAL=HTML
       addons:
         apt:
           packages:
@@ -96,8 +89,7 @@ jobs:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
     - stage: Tutorial
-      env:
-        - TUTORIAL=PDF
+      env: TUTORIAL=PDF
       addons:
         apt:
           packages:
