@@ -133,7 +133,7 @@ aggregateModelPredictions = function(.model, pred.list, weights = NULL) {
   x = lapply(pred.list, function(x) getTaskDesc(x))
   task.desc = x[[1]]
   td.equal = unlist(lapply(2:length(x), function(i) all.equal(task.desc, x[[i]])))
-  if (any(!td.equal)) stopf("Task descriptions in prediction '1' and '%s' differ!", which(task.unequal)[1])
+  if (any(!td.equal)) stopf("Task descriptions in prediction '1' and '%s' differ!", which(!td.equal)[1])
 
   # Define weights (1/n for aggregation, weighted for ensembleselection)
   if (is.null(weights)) {

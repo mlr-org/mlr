@@ -39,7 +39,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
       pred.data = cbind(pred.data, feat)
     }
     if (getMlrOption("show.info"))
-      messagef("[Super Learner] Predict %s with %s features on %s observations", sm$learner$id, ncol(pred.data), nrow(pred.data))
+      messagef("[Super Learner] Predict %s with %s features on %s observations", learner$super.learner$id, ncol(pred.data), nrow(pred.data))
 
     final.pred = predict(.model$learner.model$super.model, newdata = pred.data)
   }

@@ -15,27 +15,31 @@
 #'
 #' @param id (`character(1)`)`  Id string for object. Used to display object and
 #'   for model saving. Default is "stack".
-#' @param method (`character(1)`)\cr \describe{
+#' @param method (`character(1)`)\cr
+#' \describe{
 #'  \item{`aggregate`}{Averaging of base learner predictions without weights.}
 #'  \item{`superlearner`}{Building a super learner using crossvalidated predictions of the base learners.}
 #'  \item{`ensembleselection`}{For averaging the (cross validated) predictions of the base learners,
-#'   with the weights learned from ensemble selection algorithm.} Defaults to `aggregate`.}
+#'   with the weights learned from ensemble selection algorithm.}}
+#'   Defaults to `aggregate`.
 #' @param base.learners (list of [Learner] | `character(1)`)\cr A list of learners created with
 #'   ([makeLearner]). The prediction type can be changed using `setPredictType`.
 #' @param predict.type (`character(1)`)\cr Sets the type of the final
 #'   prediction. For method `super.learner` the predict type can also be set
 #'   within `super.learner`. If the type of the base learner prediction, which
-#'   is set up within `base.learners`, is \describe{ \item{`prob`}{`predict.type
-#'   = 'prob'` will use the aggregate of all base learner predictions and
-#'   `predict.type = 'response'` will use the class with highest probability as
-#'   final prediction.} \item{`response`}{For classification tasks with
+#'   is set up within `base.learners`, is
+#'   \describe{
+#'   \item{`prob`}{`predict.type = 'prob'` will use the aggregate of all base learner predictions
+#'    and `predict.type = 'response'` will use the class with highest probability as
+#'   final prediction.}
+#'   \item{`response`}{For classification tasks with
 #'   `predict.type = 'prob'`, the final prediction will be the relative
 #'   frequency based on the predicted base learner classes and classification
 #'   tasks with `predict.type = 'response'` will use majority vote of the base
 #'   learner predictions to determine the final prediction. For regression
 #'   tasks, the final prediction will be the aggregate of the base learner
 #'   predictions.}}
-#' @param `measure` (`Measure`)\cr
+#' @param measure (`Measure`)\cr
 #'  Measure that should be optimized. Currently only used for `method = 'ensembleselection'`.
 #'  Defaults to `getDefaultMeasure(task)`.
 #' @param resampling ([ResampleDesc])\cr Resampling strategy for `method = 'superlearner'` and
@@ -43,6 +47,7 @@
 #'  The default `NULL` uses 5-fold CV.
 #' @param par.vals (`list`) parameters for the different methods.
 #' Depending on method, the following parameter values can be set:\cr
+#' \describe{
 #' \item{`superlearner`}{
 #'   \describe{
 #'   \item {`super.learner` ([Learner] | `character(1)`)}{
@@ -62,7 +67,7 @@
 #'   \item{`bagiter` (`integer(1)`)}{The number of rounds of the
 #'   bagging selection.}
 #'   \item{`tolerance` (`numeric(1)`)}{Minimum improvement in ensemble performance in order to
-#'   continue adding learners.}}}
+#'   continue adding learners.}}}}
 #' @param save.on.disc (`character(1)`)\cr Path to directory, where base models are saved.
 #'   This setting saves memory when huge models are fitted but also might take longer.
 #'   Later, during prediction this
