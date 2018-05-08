@@ -9,7 +9,7 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
 
   switch(.learner$method,
     aggregate = aggregateBaseLearners(.learner, .task),
-    superlearner = superlearnerBaseLearners(.learner, .task, par.vals),
+    superlearner = superlearnerBaseLearners(.learner, .task),
     ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task, .learner$measure), .learner$par.vals))
   )
 }
@@ -32,13 +32,13 @@ aggregateBaseLearners = function(learner, task) {
   base.models = extractSubList(results, "base.models", simplify = FALSE)
   pred.list = extractSubList(results, "pred", simplify = FALSE)
 
+  failed.models = extractSubList(results, "failed.models", simplify = FALSE)
   # return
-  list(
-    method = "aggregate",
-    base.models = base.models,
-    super.model = NULL,
-    pred.train = ifelse(learner$save.preds, pred.list, NULL)
-  )
+  mod = list(method = "aggregate", base.models = base.models, failed.models = failed.models)
+  if (learner$save.preds)
+    mod$pred.train = pred.list
+
+  return(mod)
 }
 
 
@@ -51,19 +51,12 @@ aggregateBaseLearners = function(learner, task) {
 # @param learner ([`StackedLearner`]).
 # @param task ([`Task`])
 superlearnerBaseLearners = function(learner, task) {
-  # setup
-  td = getTaskDesc(task)
-  type = getPreciseTaskType(td)
-  bls = learner$base.learners
-  bls.names = names(bls)
-  bpt = unique(extractSubList(bls, "predict.type"))
-  use.feat = learner$use.feat
-  id = learner$id
-  save.on.disc = learner$save.on.disc
 
-  bls = learner$base.learners
+  assertFlag(learner$par.vals$use.feat)
+  assertClass(learner$super.learner, "Learner")
 
-  # Do the resampling (parallelMap)
+  # Compute OOB Predictions (parallelMap)
+  bls = learner$base.learners
   rin = makeResampleInstance(learner$resampling, task = task)
   parallelLibrary("mlr", master = FALSE, level = "mlr.stackedLearner", show.info = FALSE)
   exportMlrOptions(level = "mlr.stackedLearner")
@@ -82,26 +75,36 @@ superlearnerBaseLearners = function(learner, task) {
   # Get aggregated performances
   bls.perf = vnapply(resres, function(x) x$aggr)
 
+  failed.models = extractSubList(results, "failed.models", simplify = FALSE)
+
   # add true target
   tn = getTaskTargetNames(task)
   pred.data[[tn]] = results[[1]]$resres$pred$data$truth
   # convert list to data.frame
   pred.data = as.data.frame(pred.data)
 
-  if (use.feat) {
+  # If we use all features, add them
+  if (learner$par.vals$use.feat) {
     # add data with normal features IN CORRECT ORDER
     org.feat = getTaskData(task)
     org.feat = org.feat[, !colnames(org.feat) %in% tn, drop = FALSE]
     pred.data = cbind(pred.data, org.feat)
   }
+
   super.task = makeSuperLearnerTask(learner$super.learner$type, data = pred.data, target = tn)
   if (show.info)
     messagef("[Super Learner] Train %s with %s features on %s observations", learner$super.learner$id,
       getTaskNFeats(super.task), getTaskSize(super.task))
   super.model = train(learner$super.learner, super.task)
   # return
-  list(method = "superlearner", base.models = base.models,
-    super.model = super.model, pred.train = pred.list, bls.perf = bls.perf)
+  mod = list(method = "superlearner", base.models = base.models, super.model = super.model,
+    bls.perf = bls.perf, failed.models = failed.models)
+  if (learner$save.preds)
+    mod$pred.train = pred.list
+  if (learner$save.resres)
+    mod$resres = resres
+
+  return(mod)
 }
 
 ################################################################
@@ -133,10 +136,10 @@ ensembleselectionBaseLearners = function(learner, task, measure = NULL, replace 
   if (is.null(maxiter)) maxiter = length(learner$base.learners)
   assertInt(maxiter, lower = 1)
   assertNumber(tolerance)
-  if (getTaskType(task) != "regr") {
-    if (any(extractSubList(learner$base.learners, "predict.type") == "response"))
-      stop("Hill climbing algorithm only takes probability predict type for classification.")
-  }
+  # if (getTaskType(task) != "regr") {
+  #   if (any(extractSubList(learner$base.learners, "predict.type") == "response"))
+  #     stop("Hill climbing algorithm only takes probability predict type for classification.")
+  # }
 
   # Do the resampling (parallelMap)
   rin = makeResampleInstance(learner$resampling, task = task)
@@ -154,15 +157,26 @@ ensembleselectionBaseLearners = function(learner, task, measure = NULL, replace 
   pred.list = extractSubList(resres, "pred", simplify = FALSE)
   bls.perf = vnapply(resres, function(x) x$aggr)
 
+  failed.models = extractSubList(results, "failed.models", simplify = FALSE)
+
   # Do the bagging, return a list of selected learners in each bag
   selected.list = replicate(bagiter,
     doEnsembleBagIter(learner = learner, task = task, pred.list, bls.perf, replace, init = init,
       bagprop = bagprop, maxiter = maxiter, tolerance = tolerance, measure = measure),
     simplify = FALSE)
 
-  list(method = "ensembleselection", base.models = base.models, super.model = NULL,
-    pred.train = pred.list, bls.performance = bls.perf,
-    selected = selected.list, measure = measure)
+  mod = list(method = "ensembleselection", base.models = base.models, bls.performance = bls.perf,
+    selected = selected.list, failed.models = failed.models)
+
+  # FIXME: Drop not selected models?
+  # selected.models = which(rowSums(as.data.frame(selected.list)) > 0)
+
+  if (learner$save.preds)
+    mod$pred.train = pred.list
+  if (learner$save.resres)
+    mod$resres = resres
+
+  return(mod)
 }
 
 

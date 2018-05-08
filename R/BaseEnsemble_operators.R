@@ -74,3 +74,16 @@ makeWrappedModel.BaseEnsemble = function(learner, learner.model, task.desc, subs
   x = NextMethod(x)
   addClasses(x, "BaseEnsembleModel")
 }
+
+print.BaseEnsembleModel = function(x, ...) {
+  cat(
+    "Model for learner.id=", x$learner$id, "; learner.class=", getClass1(x$learner), "\n",
+    sprintf("Trained on: task.id = %s; obs = %i; features = %i",
+      x$task.desc$id, length(x$subset), length(x$features)), "\n",
+    sprintf("Base Learners (%i): %s", length(x$learner$base.learners), collapse(names(x$learner$base.learners))), "\n",
+    "Hyperparameters: ", getHyperParsString(x$learner, show.missing.values = TRUE), "\n",
+    sep = ""
+  )
+  if (isFailureModel(x))
+    catf("Training failed: %s", getFailureModelMsg(x))
+}

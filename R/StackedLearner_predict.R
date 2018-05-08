@@ -31,14 +31,16 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     final.pred = aggregateModelPredictions(.model$learner, bag.preds)
 
   } else if (.learner$method == "superlearner") {
+
     pred.data = lapply(pred.list, function(x) getPredictionDataNonMulticoll(x))
     pred.data = as.data.frame(pred.data)
-    if (.model$learner$use.feat) {
+    if (.learner$par.vals$use.feat) {
       feat = .newdata[, colnames(.newdata) %nin% getTaskDesc(.model)$target, drop = FALSE]
       pred.data = cbind(pred.data, feat)
     }
     if (getMlrOption("show.info"))
       messagef("[Super Learner] Predict %s with %s features on %s observations", sm$learner$id, ncol(pred.data), nrow(pred.data))
+
     final.pred = predict(.model$learner.model$super.model, newdata = pred.data)
   }
   # return
@@ -64,10 +66,10 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 #   Default is `NULL` and extracts the base learner predictions that were made during the training.
 getStackedBaseLearnerPredictions = function(model, newdata = NULL){
 
+  bms = model$learner.model$base.models
   if (is.null(newdata)) {
     pred = model$learner.model$pred.train
   } else {
-    bms = model$learner.model$base.models
     # Get predictions from all basemodels
     pred = lapply(names(bms), function(x) {
       if (inherits(bms[[x]], "character")) bms[[x]] = readRDS(bms[[x]])

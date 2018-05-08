@@ -111,24 +111,30 @@
 #' }
 #' @export
 makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
-  predict.type = NULL, resampling = NULL, super.learner = NULL, measure = NULL,
+  predict.type = "response", resampling = NULL, measure = NULL,
   par.vals = list(), save.on.disc = NULL, save.preds = TRUE, save.resres = FALSE) {
 
   # Check user inputs
+  assertCharacter(id, min.chars = 1)
+  assertChoice(method, c("aggregate", "superlearner", "ensembleselection"))
   if ("RLearner" %in% class(base.learners)) base.learners = list(base.learners)
   base.learners = lapply(base.learners, checkLearner)
-
-  if (!is.null(par.vals$super.learner)) {
-    super.learner = checkLearner(par.vals$super.learner)
-    if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
-  }
   baseType = unique(extractSubList(base.learners, "type"))
-  assertChoice(method, c("aggregate", "superlearner", "ensembleselection"))
+  assertChoice(predict.type, c("prob", "response"))
   assertClass(measure, "Measure", null.ok = TRUE)
-  assertCharacter(id, min.chars = 1)
   assertString(save.on.disc, null.ok = TRUE)
   assertFlag(save.preds)
   assertFlag(save.resres)
+
+
+  if (!is.null(par.vals$super.learner)) {
+    super.learner = checkLearner(par.vals$super.learner)
+    par.vals$super.learner = NULL
+    if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
+  }
+
+  if (method == "superlearner" & is.null(par.vals$use.feat))
+    par.vals$use.feat = TRUE
 
   if (method %in% c("superlearner", "ensembleselection")) {
     if (is.null(resampling)) {
@@ -137,15 +143,12 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
       assertChoice(class(resampling)[[1]], c("CVDesc", "RepCVDesc"))
     }
   }
-
+  # Check learners
   bm.pt = unique(extractSubList(base.learners, "predict.type"))
-  if ("se" %in% bm.pt | (!is.null(predict.type) && predict.type == "se") |
-      (!is.null(super.learner) && par.vals$super.learner$predict.type == "se"))
+  if ("se" %in% bm.pt | (!is.null(predict.type) && predict.type == "se"))
     stop("Predicting standard errors currently not supported.")
   if (length(bm.pt) > 1L)
     stop("Base learner must all have the same predict type!")
-  if ((method %in% c("aggregate", "ensembleselection")) & (!is.null(super.learner) | is.null(predict.type)))
-    stop("No super learner needed for this method or the 'predict.type' is not specified.")
 
   if (method == "ensembleselection") {
     ps = makeParamSet(
@@ -157,7 +160,8 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
       makeNumericLearnerParam("tolerance", lower = .Machine$double.eps, upper = 1)
     )
   } else if (method == "superlearner") {
-    ps = makeParamSet(makeLogicalLearnerParam("use.feates", default = TRUE),
+    ps = makeParamSet(
+      makeLogicalLearnerParam("use.feat", default = TRUE),
       makeUntypedLearnerParam("super.learner"))
   } else {
     ps = makeParamSet()
@@ -170,19 +174,17 @@ makeStackedLearner = function(id = "stack", method = "aggregate", base.learners,
     par.set = ps,
     cl = "StackedLearner")
 
-  if (!is.null(super.learner)) {
-    lrn = setPredictType(lrn, predict.type = par.vals$super.learner$predict.type)
-  } else {
-    lrn = setPredictType(lrn, predict.type = predict.type)
-  }
+  lrn = setPredictType(lrn, predict.type = predict.type)
 
   lrn$short.name = "stack"
   lrn$name = "StackedLearner"
   lrn$method = method
   lrn$resampling = resampling
   lrn$save.on.disc = save.on.disc
-  lrn$measure = measure
   lrn[c("fix.factors.prediction", "save.preds", "save.resres")] = c(TRUE, save.preds, save.resres)
+
+  if (method == "ensembleselection") lrn$measure = measure
+  if (method == "superlearner") lrn$super.learner = super.learner
 
   return(lrn)
 }
