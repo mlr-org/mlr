@@ -29,9 +29,8 @@ test_that("blocking in nested resampling", {
   lrn = makeLearner("classif.lda")
   ctrl <- makeTuneControlRandom(maxit = 2)
   ps <- makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
-  inner = makeResampleDesc("Blocking", iters = 2)
-  # outer = makeResampleDesc("CV", iters = 5)
-  outer = makeResampleDesc("Blocking", iters = 3)
+  inner = makeResampleDesc("Blocking")
+  outer = makeResampleDesc("Blocking")
   tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl,
                                  show.info = FALSE)
 
