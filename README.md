@@ -33,8 +33,8 @@ Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](h
 Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately:
 
-* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://dx.doi.org/10.1080/00949655.2014.929131).
-* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://dx.doi.org/10.1007/978-3-319-28697-6_6).
+* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://doi.org/10.1080/00949655.2014.929131).
+* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://doi.org/10.1007/978-3-319-28697-6_6).
 * Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
 * Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/abs/1703.08991)
 * OpenML: [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://arxiv.org/abs/1701.01293)
