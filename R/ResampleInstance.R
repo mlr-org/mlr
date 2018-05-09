@@ -63,6 +63,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (length(blocking)) {
     if (is.null(task))
       stop("Blocking always needs the task!")
+  }
   inst = instantiateResampleInstance(desc, size, task)
   return(inst)
 }
