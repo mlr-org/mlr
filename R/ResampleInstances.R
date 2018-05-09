@@ -80,8 +80,7 @@ instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NU
 
 instantiateResampleInstance.BlockingDesc = function(desc, size, task = NULL) {
 
-   test = 0
-  if (!is.na(desc$iters) && desc$iters != length(levels(droplevels(task$blocking)))) {
+  if (!is.null(desc$iters) && desc$iters != length(levels(droplevels(task$blocking)))) {
     warningf("iters (%i) is not equal to blocking levels (%i)! Setting iters to length of blocking levels.", desc$iters, length(levels(task$blocking)))
     desc$iters = length(levels(droplevels(task$blocking)))
   } else {
