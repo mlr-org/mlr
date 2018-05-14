@@ -34,7 +34,8 @@ Authors@R: c(
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
     person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"),
-    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"))
+    person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"),
+    person("Alexander", "Engelhardt", email = "alexander.w.engelhardt@gmail.com", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -162,6 +163,6 @@ Suggests:
     xgboost (>= 0.6-2)
 LazyData: yes
 ByteCompile: yes
-Version: 2.12
+Version: 2.13
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
