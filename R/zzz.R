@@ -28,6 +28,8 @@ mlr$learner.properties = list(
   multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "functionals", "single.functional"),
   regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "featimp", "oobpreds",
     "functionals", "single.functional"),
+  multivariateregression = c("numerics", "factors", "ordered", "missings", "weights", "se", "functionals", "single.functional"),
+  mixedoutput       = c("numerics", "factors", "ordered", "missings", "weights", "functionals", "single.functional"),
   cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "functionals",
     "single.functional"),
   surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "featimp", "oobpreds", "functionals", "single.functional"),

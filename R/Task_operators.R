@@ -443,7 +443,9 @@ changeData = function(task, data, costs, weights, coordinates) {
     "cluster" = makeClusterTaskDesc(td$id, data, task$weights, task$blocking, task$coordinates),
     "surv" = makeSurvTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
-    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
+    "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "multivariateregression" = makeMultivariateRegressionTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
+    "multioutput" = makeMixedoutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
   )
 
   return(task)
