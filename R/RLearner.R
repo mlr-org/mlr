@@ -178,9 +178,9 @@ makeRLearnerMultivariateRegression = function(cl, package, par.set, par.vals = l
 
 #' @export
 #' @rdname RLearner
-makeRLearnerMixedoutput = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
+makeRLearnerMixedOutput = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "", callees = character(0L)) {
   addClasses(
     makeRLearnerInternal(cl, "mixedoutput", package, par.set, par.vals, properties, name, short.name, note, callees),
-    c(cl, "RLearnerMixedoutput")
+    c(cl, "RLearnerMixedOutput")
   )
 }

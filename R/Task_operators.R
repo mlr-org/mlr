@@ -445,7 +445,7 @@ changeData = function(task, data, costs, weights, coordinates) {
     "costsens" = makeCostSensTaskDesc(td$id, data, td$target, task$blocking, costs, task$coordinates),
     "multilabel" = makeMultilabelTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
     "multivariateregression" = makeMultivariateRegressionTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates),
-    "multioutput" = makeMixedoutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
+    "mixedoutput" = makeMixedOutputTaskDesc(td$id, data, td$target, task$weights, task$blocking, task$coordinates)
   )
 
   return(task)
