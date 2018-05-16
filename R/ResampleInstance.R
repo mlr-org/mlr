@@ -59,10 +59,12 @@ makeResampleInstance = function(desc, task, size, ...) {
     size = asCount(size)
 
   if (length(blocking) && desc$stratify)
-    stop("Blocking can currently not be mixed with stratification in resampling!")
+    stop("Blocking can not be mixed with stratification in resampling!")
   if (length(blocking)) {
     if (is.null(task))
       stop("Blocking always needs the task!")
+    if (length(levels(blocking)) < 2)
+      stop("Blocking requires two or more levels to work correctly.")
   }
   inst = instantiateResampleInstance(desc, size, task)
   return(inst)
