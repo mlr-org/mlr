@@ -1,4 +1,4 @@
-![mlr](https://raw.githubusercontent.com/mlr-org/mlr/master/logo.png) Machine Learning in R
+![mlr](https://raw.githubusercontent.com/mlr-org/mlr/master/man/figures/logo.png) Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
@@ -9,7 +9,7 @@
 * [mlr cheatsheet](https://github.com/mlr-org/mlr-tutorial/raw/gh-pages/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
     * [mlr release](https://mlr-org.github.io/mlr/articles/tutorial/release/index.html) ([online](https://mlr-org.github.io/mlr/articles/tutorial/release/index.html), [download PDF for offline usage](https://github.com/mlr-org/mlr/blob/gh-pages/articles/tutorial/release/mlr-tutorial.pdf))
-    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/master/vignettes/tutorial/devel/pdf/mlr-tutorial.pdf))
+    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial.pdf))
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
@@ -33,8 +33,8 @@ Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](h
 Some parts of the package were created as part of other publications.
 If you use these parts, please cite the relevant work appropriately:
 
-* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://dx.doi.org/10.1080/00949655.2014.929131).
-* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://dx.doi.org/10.1007/978-3-319-28697-6_6).
+* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://doi.org/10.1080/00949655.2014.929131).
+* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://doi.org/10.1007/978-3-319-28697-6_6).
 * Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
 * Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/abs/1703.08991)
 * OpenML: [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://arxiv.org/abs/1701.01293)
