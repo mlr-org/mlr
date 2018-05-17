@@ -181,3 +181,12 @@ multiregr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
 multiregr.train = multiregr.df[regr.train.inds, ]
 multiregr.test  = multiregr.df[regr.test.inds, ]
 multiregr.task = makeMultiRegrTask("multiregrtask", data = multiregr.df, target = multiregr.target)
+
+multiregr.small.df = BostonHousing[150:160, ]
+multiregr.small.formula = medv + lstat ~ .
+multiregr.small.target = c("medv", "lstat")
+multiregr.small.train.inds = 1:7
+multiregr.small.test.inds  = setdiff(seq_len(nrow(multiregr.small.df)), multiregr.small.train.inds)
+multiregr.small.train = multiregr.small.df[multiregr.small.train.inds, ]
+multiregr.small.test  = multiregr.small.df[multiregr.small.test.inds, ]
+multiregr.small.task = makeMultiRegrTask("multiregrtask", data = multiregr.small.df, target = multiregr.small.target)
