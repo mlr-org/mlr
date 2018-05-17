@@ -43,7 +43,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
     res = makeTuneMultiCritResult(learner, ind, removeMissingValues(x), y, control,
       opt.path, measures, mbo.result = or)
   } else {
-    res = makeTuneResult(learner, control, removeMissingValues(x), y, th, opt.path,
+    res = makeTuneResult(learner, control, removeMissingValues(x), y, resampling, th, opt.path,
       mbo.result = or)
   }
 

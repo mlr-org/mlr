@@ -36,8 +36,12 @@ test_that("blocking in nested resampling", {
 
   p = resample(tune_wrapper, ct, outer, show.info = FALSE, extract = getTuneResult)
 
-  # check if all test.inds are unique
+  # check if all outer test.inds are unique
   expect_length(unique(unlist(p$pred$instance$test.inds, use.names = FALSE)), 150)
+
+  # check if all inner test.inds are unique
+  # we only expect 120 since we tune on n-1 folds (n = count(outer folds))
+  expect_length(unique(unlist(getNestedResamplingIndices(p)[[1]]$test.inds)), 120)
 
   # check if we have the correct number of tuning results
   expect_length(p$extract, 5)

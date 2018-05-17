@@ -60,5 +60,5 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
     threshold = getThresholdFromOptPath(opt.path, which(j))
   else
     threshold = NULL
-  makeTuneResult(learner, control, x, y, threshold, opt.path)
+  makeTuneResult(learner, control, x, y, resampling, threshold, opt.path)
 }
