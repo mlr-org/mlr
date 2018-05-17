@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.multivariateregression.randomForestSRC = function() {
-  makeRLearnerMultivariateRegression(
-      cl = "multivariateregression.randomForestSRC",
+makeRLearner.multiregr.randomForestSRC = function() {
+  makeRLearnerMultiRegr(
+      cl = "multiregr.randomForestSRC",
       package = "randomForestSRC",
       par.set = makeParamSet(
         makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
@@ -58,7 +58,7 @@ makeRLearner.multivariateregression.randomForestSRC = function() {
 }
 
 #' @export
-trainLearner.multivariateregression.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.multiregr.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
   d = getTaskData(.task, .subset)
@@ -66,7 +66,7 @@ trainLearner.multivariateregression.randomForestSRC = function(.learner, .task, 
 }
 
 #' @export
-predictLearner.multivariateregression.randomForestSRC = function(.learner, .model, .newdata, ...) {
+predictLearner.multiregr.randomForestSRC = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, importance = "none", ...)
   return(sapply(p$regrOutput, function(x) x$predicted))
 }

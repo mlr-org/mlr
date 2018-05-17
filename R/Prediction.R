@@ -205,7 +205,7 @@ print.Prediction = function(x, ...) {
 }
 
 #' @export
-makePrediction.MultivariateRegressionTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
+makePrediction.MultiRegrTaskDesc = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump = NULL) {
   data = namedList(c("id", "truth", "response", "se"))
   data$id = id
   data$truth = truth
@@ -215,7 +215,7 @@ makePrediction.MultivariateRegressionTaskDesc = function(task.desc, row.names, i
     data$response = y
   }
 
-  p = makeS3Obj(c("PredictionMultivariateRegression", "Prediction"),
+  p = makeS3Obj(c("PredictionMultiRegr", "Prediction"),
     predict.type = predict.type,
     data = setRowNames(as.data.frame(filterNull(data)), row.names),
     threshold = NA_real_,

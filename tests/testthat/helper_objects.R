@@ -172,3 +172,12 @@ mediumblue.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #3366F
 red.line.xpath = "/svg:svg//svg:polyline[contains(@style, 'stroke: #F8766D;')]"
 red.rug.line.xpath = "/svg:svg//svg:line[contains(@style, 'stroke: #FF0000;')]"
 black.bar.xpath = "/svg:svg//svg:rect[contains(@style, 'fill: #595959;')]"
+
+multiregr.df = BostonHousing
+multiregr.formula = medv + lstat ~ .
+multiregr.target = c("medv", "lstat")
+multiregr.train.inds = seq(1, 506, 7)
+multiregr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
+multiregr.train = multiregr.df[regr.train.inds, ]
+multiregr.test  = multiregr.df[regr.test.inds, ]
+multiregr.task = makeMultiRegrTask("multiregrtask", data = regr.df, target = regr.target)
