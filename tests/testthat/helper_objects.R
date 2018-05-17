@@ -180,4 +180,4 @@ multiregr.train.inds = seq(1, 506, 7)
 multiregr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
 multiregr.train = multiregr.df[regr.train.inds, ]
 multiregr.test  = multiregr.df[regr.test.inds, ]
-multiregr.task = makeMultiRegrTask("multiregrtask", data = regr.df, target = regr.target)
+multiregr.task = makeMultiRegrTask("multiregrtask", data = multiregr.df, target = multiregr.target)
