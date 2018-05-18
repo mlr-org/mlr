@@ -5,7 +5,7 @@
 #' with `resample(..., extract = getTuneResult)` this helper returns a `list` with
 #' the resampling indices used for tuning..
 #'
-#' @param r ([ResampleResult]) \cr
+#' @param object ([ResampleResult]) \cr
 #'   The result of resampling of a tuning wrapper.
 #' @return ([list]). One list for each outer resampling fold.
 #' @family tune
