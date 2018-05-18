@@ -35,13 +35,13 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
 
   if (!is.null(ctrl.cmaes$maxit) && ctrl.cmaes$maxit != maxit)
     stopf("Provided setting of maxit = %i does not work with provided budget = %s, lambda = %i",
-      ctrl.cmaes$maxit, ifelse(is.null(budget), "NULL", budget), ctrl.cmaes$lambda)
+          ctrl.cmaes$maxit, ifelse(is.null(budget), "NULL", budget), ctrl.cmaes$lambda)
   ctrl.cmaes$maxit = maxit
 
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
-    learner = learner, task = task, resampling = resampling, measures = measures,
-    par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    convertx = convertXVectorizedMatrixCols, remove.nas = FALSE, resample.fun = resample.fun)
+                learner = learner, task = task, resampling = resampling, measures = measures,
+                par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
+                convertx = convertXVectorizedMatrixCols, remove.nas = FALSE, resample.fun = resample.fun)
 
-  makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
+  makeTuneResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }

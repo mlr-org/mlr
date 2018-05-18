@@ -1,5 +1,5 @@
 tuneMBO = function(learner, task, resampling, measures, par.set, control,
-  opt.path, show.info, resample.fun) {
+                   opt.path, show.info, resample.fun) {
 
   requirePackages("mlrMBO", why = "tuneMBO", default.method = "load")
   mbo.control = control$mbo.control
@@ -10,8 +10,8 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   }
 
   tff = tunerSmoofFun(learner = learner, task = task, resampling = resampling, measures = measures,
-    par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    convertx = convertXIdentity, remove.nas = TRUE, resample.fun = resample.fun)
+                      par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
+                      convertx = convertXIdentity, remove.nas = TRUE, resample.fun = resample.fun)
 
   state = mbo.control$save.file.path
   if (control$continue && file.exists(state)) {
@@ -41,10 +41,10 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   }
   if (multicrit) {
     res = makeTuneMultiCritResult(learner, ind, removeMissingValues(x), y, control,
-      opt.path, measures, mbo.result = or)
+                                  opt.path, measures, mbo.result = or)
   } else {
-    res = makeTuneResult(learner, control, removeMissingValues(x), y, th, opt.path,
-      mbo.result = or)
+    res = makeTuneResult(learner, control, removeMissingValues(x), y, resampling, th, opt.path,
+                         mbo.result = or)
   }
 
   return(res)

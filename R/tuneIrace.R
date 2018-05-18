@@ -6,14 +6,14 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
     # some conversion code
     cands = lapply(cands, as.data.frame)
     cands = lapply(cands, dfRowToList, i = 1, par.set = par.set,
-      enforce.col.types = TRUE)
+                   enforce.col.types = TRUE)
 
     # the instance is always the same for all different param setting
     rin = experiment[[1L]]$instance
 
     ys = tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
-      par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-      convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE, resample.fun)
+                                par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
+                                convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE, resample.fun)
     # FIXME: irace can also use time now, we should add it
     res = lapply(ys, function(y) list(cost = y, time = NA_real_))
     return(res)
@@ -33,7 +33,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   parameters = convertParamSetToIrace(par.set)
   log.file = tempfile()
   tuner.config = c(list(targetRunnerParallel = targetRunnerParallel,
-    instances = instances, logFile = log.file), control$extra.args)
+                        instances = instances, logFile = log.file), control$extra.args)
   g = if (show.irace.output) identity else capture.output
   g({or = irace::irace(scenario = tuner.config, parameters = parameters)})
   unlink(log.file)
@@ -47,7 +47,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   par.names = names(x1)
   # get all lines in opt.path which correspond to x and average their perf values
   j = vlapply(seq_row(d), function(i) isTRUE(all.equal(removeMissingValues(as.list(d[i, par.names, drop = FALSE])),
-      removeMissingValues(x1))))
+                                                       removeMissingValues(x1))))
   if (!any(j))
     stop("No matching rows for final elite configuarion found in opt.path! This cannot be!")
   y = colMeans(d[j, opt.path$y.names, drop = FALSE])
@@ -60,5 +60,5 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
     threshold = getThresholdFromOptPath(opt.path, which(j))
   else
     threshold = NULL
-  makeTuneResult(learner, control, x, y, threshold, opt.path)
+  makeTuneResult(learner, control, x, y, resampling, threshold, opt.path)
 }
