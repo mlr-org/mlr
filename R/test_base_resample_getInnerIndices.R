@@ -1,3 +1,5 @@
+context("resample_cv")
+
 test_that("getNestedResamplingIndices works correctly", {
 
   task = makeClassifTask(data = iris, target = "Species")
