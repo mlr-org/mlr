@@ -102,3 +102,20 @@ test_that("getTaskData multiregr", {
   expect_equal(names(x$target), multiregr.target)
   expect_true(setequal(names(x$data), setdiff(names(multiregr.df), multiregr.target)))
 })
+
+test_that("getTaskData mixedoutput", {
+  df = getTaskData(mixedoutput.task)
+  expect_equal(df, mixedoutput.df)
+  cn = colnames(mixedoutput.df)[3:4]
+  df = getTaskData(mixedoutput.task, subset = 1:10, features = cn)
+  expect_equal(df, mixedoutput.df[1:10, union(cn, mixedoutput.target)])
+
+  x = getTaskData(mixedoutput.task, target.extra = TRUE)
+  expect_true(setequal(names(x), c("data", "target")))
+  expect_true(is.data.frame(x$data))
+  expect_true(is.data.frame(x$target))
+  expect_equal(dim(x$data), c(506L, 12L))
+  expect_equal(dim(x$target), c(506L, 2L))
+  expect_equal(names(x$target), mixedoutput.target)
+  expect_true(setequal(names(x$data), setdiff(names(mixedoutput.df), mixedoutput.target)))
+})
