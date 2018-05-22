@@ -141,21 +141,3 @@ navbar:
     href: https://stackoverflow.com/questions/tagged/mlr
   - icon: fa-rss
     href: https://mlr-org.github.io
-
-reference:
-- title: Get Functions
-  desc:  Retrieve various informations from objects
-  contents:
-  - starts_with("get", internal = TRUE)
-- title: Resample Functions
-  contents:
-  - starts_with("resample", internal = TRUE)
-- title: Train Functions
-  contents:
-  - starts_with("train", internal = TRUE)
-- title: Check Functions
-  contents:
-  - starts_with("check", internal = TRUE)
-- title: Plot Functions
-  contents:
-  - starts_with("plot", internal = TRUE)

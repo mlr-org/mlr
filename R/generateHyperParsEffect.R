@@ -455,6 +455,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
       if (plot.type == "contour")
         plt = plt + geom_contour()
+      plt = plt + scale_fill_gradientn(colors = c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD", "#5E4FA2")) # RColorBrewer::brewer.pal(11, "Spectral")
     } else {
       plt = ggplot(d, aes_string(x = x, y = y, color = z))
       if (na.flag){
