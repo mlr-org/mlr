@@ -77,5 +77,5 @@ trainLearner.classif.classiFunc.knn = function(.learner, .task, .subset, ...) {
 predictLearner.classif.classiFunc.knn = function(.learner, .model, .newdata, ...) {
   # extract data in matrix format
   .newdata = getFunctionalFeatures(.newdata)
-  predict(.model$learner.model, newdata = .newdata, predict.type = .learner$predict.type, ...)
+  classiFunc::predict(.model$learner.model, newdata = .newdata, predict.type = .learner$predict.type, ...)
 }
