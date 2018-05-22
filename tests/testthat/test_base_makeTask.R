@@ -5,6 +5,8 @@ test_that("makeXXTask ignores bad columns if check.data = FALSE", {
     constructor = switch(type,
       classif = makeClassifTask,
       multilabel = makeMultilabelTask,
+      multiregr = makeMultiRegrTask,
+      mixedoutput = makeMultioutputTask,
       regr = makeRegrTask,
       surv = makeSurvTask)
     constructor(id = id, data = data, target = target, fixup.data = "no", check.data = FALSE)
@@ -18,6 +20,8 @@ test_that("makeXXTask ignores bad columns if check.data = FALSE", {
   constructors = list(
     classif = function(...) makeClassifTask("test", cbind(badcoldf, target = "x"), target = "target", ...),
     multilabel = function(...) makeMultilabelTask("test", cbind(badcoldf, target1 = TRUE, target2 = FALSE), target = c("target1", "target2"), ...),
+    multiregr = function(...) makeMultiRegrTask("test", cbind(badcoldf, target1 = 1, target2 = 2), target = c("target1", "target2"), ...),
+    mixedoutput = function(...) makeMultioutputTask("test", cbind(badcoldf, target1 = 1, target2 = TRUE), target = c("target1", "target2"), ...),
     regr = function(...) makeRegrTask("test", cbind(badcoldf, target = 1), target = "target", ...),
     surv = function(...) makeSurvTask("test", cbind(badcoldf, target1 = 1, target2 = FALSE), target = c("target1", "target2"), ...),
     cluster = function(...) makeClusterTask("test", badcoldf, ...))
