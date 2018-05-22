@@ -17,7 +17,7 @@ makeMultioutputTask = function(id = deparse(substitute(data)), data, target, wei
       coordinates = coordinates, fixup.data = fixup.data, check.data = check.data)
   } else {
     if (all(tt == "double")) {
-      task = makeMultiRegr(id = id, data = data, target = target, weights = weights, blocking = blocking,
+      task = makeMultiRegrTask(id = id, data = data, target = target, weights = weights, blocking = blocking,
         coordinates = coordinates, fixup.data = fixup.data, check.data = check.data)
     } else {
       task = makeSupervisedTask("mixedoutput", data = data, target = target,
