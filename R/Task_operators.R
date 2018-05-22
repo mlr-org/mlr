@@ -181,7 +181,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   type = td$type
   if (type == "surv") {
     target = sprintf("Surv(%s, %s, type = \"right\")", target[1L], target[2L])
-  } else if (type == "multilabel") {
+  } else if (type %in% c("multilabel", "multiregr", "mixedoutput")) {
     target = collapse(target, "+")
   } else if (type == "costsens") {
     stop("There is no formula available for cost-sensitive learning.")

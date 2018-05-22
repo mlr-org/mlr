@@ -57,6 +57,7 @@ multilabel.task = makeMultioutputTask("multilabel", data = multilabel.df, target
 multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
 multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
 multilabel.small.inds = c(1, 52, 53, 123)
+multilabel.class.col = c(6, 7)
 
 noclass.df = iris[, -5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
@@ -182,6 +183,7 @@ multiregr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
 multiregr.train = multiregr.df[regr.train.inds, ]
 multiregr.test  = multiregr.df[regr.test.inds, ]
 multiregr.task = makeMultioutputTask("multiregrtask", data = multiregr.df, target = multiregr.target)
+multiregr.class.col = c(13, 14)
 
 multiregr.small.df = BostonHousing[150:160, ]
 multiregr.small.formula = medv + lstat ~ .
@@ -202,6 +204,7 @@ mixedoutput.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
 mixedoutput.train = mixedoutput.df[regr.train.inds, ]
 mixedoutput.test  = mixedoutput.df[regr.test.inds, ]
 mixedoutput.task = makeMultioutputTask("mixedoutputtask", data = mixedoutput.df, target = mixedoutput.target)
+mixedoutput.class.col = c(13, 14)
 
 mixedoutput.small.df = BostonHousing[150:160, ]
 mixedoutput.small.df$medv = as.factor(ifelse(mixedoutput.small.df$medv > 20, "high", "low"))
