@@ -10,6 +10,7 @@ regr.pred = mypredict(regr.task)
 surv.pred = mypredict(surv.task)
 cluster.pred = predict(train("cluster.kmeans", agri.task), agri.task)
 multiregr.pred = predict(train("multiregr.randomForestSRC", multiregr.task), multiregr.task)
+mixedoutput.pred = predict(train("mixedoutput.randomForestSRC", mixedoutput.task), mixedoutput.task)
 
 test_that("getPredictionResponse", {
   expect_true(is.factor(getPredictionResponse(classif.pred)))
@@ -19,6 +20,7 @@ test_that("getPredictionResponse", {
   expect_true(is.numeric(getPredictionResponse(surv.pred)))
   expect_true(is.integer(getPredictionResponse(cluster.pred)))
   expect_true(is.numeric(getPredictionResponse(multiregr.pred)))
+  expect_true(is.data.frame(getPredictionResponse(mixedoutput.pred)))
 })
 
 test_that("getPredictionTruth", {
@@ -29,6 +31,7 @@ test_that("getPredictionTruth", {
   expect_true(is.Surv(getPredictionTruth(surv.pred)))
   expect_error(getPredictionTruth(cluster.pred), "no truth")
   expect_true(is.numeric(getPredictionTruth(multiregr.pred)))
+  expect_true(is.data.frame(getPredictionTruth(mixedoutput.pred)))
 })
 
 test_that("getPredictionProbabilities", {
