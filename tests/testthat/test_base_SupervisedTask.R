@@ -76,6 +76,8 @@ test_that("Task $type and $task.desc$type agree", {
     classif = binaryclass.task,
     multilabel = multilabel.task,
     regr = regr.task,
+    multiregr = multiregr.task,
+    mixedoutput = mixedoutput.task,
     surv = surv.task,
     costsens = costsens.task)
   for (type in names(check)) {
