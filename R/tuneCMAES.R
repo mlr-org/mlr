@@ -35,7 +35,7 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
 
   if (!is.null(ctrl.cmaes$maxit) && ctrl.cmaes$maxit != maxit)
     stopf("Provided setting of maxit = %i does not work with provided budget = %s, lambda = %i",
-          ctrl.cmaes$maxit, ifelse(is.null(budget), "NULL", budget), ctrl.cmaes$lambda)
+      ctrl.cmaes$maxit, ifelse(is.null(budget), "NULL", budget), ctrl.cmaes$lambda)
   ctrl.cmaes$maxit = maxit
 
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,

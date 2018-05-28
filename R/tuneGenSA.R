@@ -19,7 +19,7 @@ tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.
   # budget in GenSA
   if (!is.null(control$budget) && res$counts > control$budget)
     warningf("GenSA used %i function calls, exceededing the given budget of %i evaluations.",
-             res$counts, control$budget)
+      res$counts, control$budget)
 
   makeTuneResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }
