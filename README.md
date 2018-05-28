@@ -83,8 +83,9 @@ Features
 
 News
 ====
-Changes of the packages can be accessed in the [NEWS file](https://github.com/mlr-org/mlr/blob/master/NEWS.md) shipped with the package.
+Changes of the packages can be accessed in the [NEWS file](https://mlr-org.github.io/mlr/news/index.html) shipped with the package.
 
+* 2018-03-10: mlr 2.12 released to CRAN.
 * OpenML has been accepted as a tutorial at useR2017! Blog post is [here](http://mlr-org.github.io/OpenML-tutorial-at-useR/).
 * 2017-03-15: mlr 2.11 released to CRAN. About 1000 smaller fixes and convenience extensions and functions. 
 Larger new features are: Bayesian Optimization with [mlrMBO](https://github.com/mlr-org/mlrMBO), learner API now supports extracting OOB predictions.
