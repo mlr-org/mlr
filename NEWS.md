@@ -1,3 +1,11 @@
+# mlr 2.13:
+
+## general
+* Retrieve the inner indices of a nested resampling setting that was called using `resample(extract = getTuneResult)`
+
+## functions - new
+* getInnerResamplingIndices
+
 # mlr 2.12:
 
 ## general
