@@ -20,5 +20,5 @@ test_that("getNestedResamplingIndices works correctly", {
   r = resample(lrn, task, outer, extract = getTuneResult)
 
   # check if inner test.inds are retrieved correctly
-  expect_length(unique(unlist(getNestedResamplingIndices(r)[[1]]$test.inds)), 25)
+  expect_length(unique(unlist(getInnerResamplingIndices(r)[[1]]$test.inds)), 25)
 })

@@ -12,7 +12,7 @@
 #' @examples
 #' # see example of makeTuneWrapper
 #' @export
-getNestedResamplingIndices = function(object) {
+getInnerResamplingIndices = function(object) {
   assertClass(object, "ResampleResult")
   assertList(object$extract)
   lapply(object$extract, function(x) x$resampling[c("train.inds", "test.inds")])
