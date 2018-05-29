@@ -16,9 +16,9 @@
 #' @family mixedoutput
 #' @export
 #' @example # add example FIXME#inst/examples/MultilabelWrapper.R
-makeMultioutputWrapper = function(learner, type = "mixedoutput", learner.lvl1, learner.meta, true.label = TRUE,
+makeMultioutputWrapper = function(learner, output.type = "mixedoutput", learner.lvl1, learner.meta, true.label = TRUE,
   cv.folds = 2, chaining = FALSE, order = NULL) {
-  if (!type %in% c("mixedoutput", "multilabel", "multiregr")) stop("type must be 'mixedoutput', 'multilabel', or 'multiregr'")
+  if (!output.type %in% c("mixedoutput", "multilabel", "multiregr")) stop("type must be 'mixedoutput', 'multilabel', or 'multiregr'")
   if (!xor(missing(learner), missing(learner.lvl1) & missing(learner.meta)))
     stop("Pass either a learner alone or learner.lvl1 together with learner.meta to predict, but not both!")
 
@@ -33,21 +33,26 @@ makeMultioutputWrapper = function(learner, type = "mixedoutput", learner.lvl1, l
   assertLogical(chaining)
   if (chaining) conditioning = "chaining" else conditioning = "full"
 
-  if (type == "multilabel") {
-    learner = checkLearner(learner, type = "classif", props = "twoclass")
-    id = stri_paste("multilabel", extra.label, conditioning, getLearnerId(learner), sep = ".")
-    packs = getLearnerPackages(learner)
-    type = getLearnerType(learner)
-    x = makeHomogeneousEnsemble(id, type, learner, packs, learner.subclass = stri_paste("multilabel", extra.label, conditioning, "wrapper"),
-      model.subclass = stri_paste("multilabel", extra.label, conditioning, "model"))
-    x$type = type
-    x$cv.folds = cv.folds
-    return(x)
-  }
+
+
+  if (output.type == "multilabel") learner = checkLearner(learner, type = "classif", props = "twoclass")
+  if (output.type == "mixedoutput") learner = checkLearner(learner)
+  if (output.type == "multiregr") learner = checkLearner(learner, type = "regr")
+
+  id = stri_paste(output.type, extra.label, conditioning, getLearnerId(learner), sep = ".")
+  packs = getLearnerPackages(learner)
+  type = getLearnerType(learner)
+  x = makeHomogeneousEnsemble(id, type, learner, packs, learner.subclass = "MultioutputWrapper",
+    model.subclass = "MultioutputModel")
+  x$type = output.type
+  x$extra.label = extra.label
+  x$conditioning = conditioning
+  if (extra.label == "pred.label") x$cv.folds = cv.folds
+  return(x)
 }
 
 #' @export
-trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+trainLearner.MultioutputWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
