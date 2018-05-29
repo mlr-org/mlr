@@ -919,7 +919,7 @@ For this purpose the feature values <script type="math/tex">x</script> and an <s
 <code>cost</code> matrix that contains
 the cost vectors for all <script type="math/tex">n</script> examples in the data set are required.</p>
 <p>We use the <a href="http://www.rdocumentation.org/packages/datasets/functions/iris.html">iris</a> data and generate an artificial cost matrix
-(see <a href="https://doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>).</p>
+(see <a href="http://dx.doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>).</p>
 <pre><code class="r">df = iris
 cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,] + runif(150, 0, 10)
 colnames(cost) = levels(iris$Species)
