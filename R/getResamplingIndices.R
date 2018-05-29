@@ -7,13 +7,22 @@
 #'
 #' @param object ([ResampleResult]) \cr
 #'   The result of resampling of a tuning wrapper.
+#' @param inner ([logical]) \cr
+#'   If `TRUE`, returns the inner indices of a nested resampling setting.
 #' @return ([list]). One list for each outer resampling fold.
 #' @family tune
 #' @examples
 #' # see example of makeTuneWrapper
 #' @export
-getInnerResamplingIndices = function(object) {
+getResamplingIndices = function(object, inner = FALSE) {
   assertClass(object, "ResampleResult")
   assertList(object$extract)
-  lapply(object$extract, function(x) x$resampling[c("train.inds", "test.inds")])
+  if (inner == TRUE) {
+    if (class(object$extract[[1]])[1] != "TuneResult") {
+      stopf("No object of class 'TuneResult' found in slot 'extract'. Did you run 'resample()' with 'extract = getTuneResult'?")
+    }
+    lapply(object$extract, function(x) x$resampling[c("train.inds", "test.inds")])
+  } else {
+    object$pred$instance[c("train.inds", "test.inds")]
+  }
 }
