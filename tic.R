@@ -74,8 +74,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
 
   get_stage("deploy") %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper.Rmd")) %>%
-    add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial.pdf")) %>%
-    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/devel/pdf", branch = "tutorial_pdf"))
+    add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf")) %>%
+    add_step(step_push_deploy(orphan = FALSE, commit_paths = "vignettes/tutorial/release/pdf/mlr-tutorial_dev.pdf", branch = "tutorial_pdf"))
 }
 
 if (Sys.getenv("TUTORIAL") == "PDFrelease") {
@@ -104,6 +104,6 @@ if (Sys.getenv("TUTORIAL") == "PDFrelease") {
 
   get_stage("deploy") %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/release/pdf/_pdf_wrapper.Rmd")) %>%
-    add_code_step(fs::file_move("vignettes/tutorial/release/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/release/pdf/mlr-tutorial.pdf")) %>%
-    add_step(step_push_deploy(orphan = FALSE, path = "vignettes/tutorial/release/pdf", branch = "tutorial_pdf"))
+    add_code_step(fs::file_move("vignettes/tutorial/release/pdf/_pdf_wrapper.pdf", "vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf")) %>%
+    add_step(step_push_deploy(orphan = FALSE, commit_paths = "vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf", branch = "tutorial_pdf"))
 }
