@@ -84,7 +84,7 @@ jobs:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
-           branch: pkgdown-release
+           branch: master
            condition:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
@@ -105,7 +105,7 @@ jobs:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
-           branch: pkgdown-release
+           branch: master
            condition:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
@@ -126,7 +126,7 @@ jobs:
          provider: script
          script: R -q -e 'tic::deploy()'
          on:
-           branch: pkgdown-release
+           branch: master
            condition:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
