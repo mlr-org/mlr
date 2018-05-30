@@ -6,10 +6,10 @@
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
-* [mlr cheatsheet](https://github.com/mlr-org/mlr-tutorial/raw/gh-pages/cheatsheet/MlrCheatsheet.pdf)
+* [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
-    * [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/) ([online](https://mlr-org.github.io/mlr-tutorial/release/html/), [download PDF for offline usage](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/release/mlr-tutorial.pdf))
-    * [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/) ([online](https://mlr-org.github.io/mlr-tutorial/devel/html/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial.pdf))
+    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial_dev.pdf))
+* For the docs of the current CRAN version, replace `devel` by `release` in the URL.
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
