@@ -1,6 +1,6 @@
 context("resample_cv")
 
-test_that("getNestedResamplingIndices works correctly", {
+test_that("getResamplingIndices works correctly", {
 
   task = makeClassifTask(data = iris, target = "Species")
   lrn = makeLearner("classif.rpart")
@@ -15,10 +15,13 @@ test_that("getNestedResamplingIndices works correctly", {
   lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)
   mod = train(lrn, task)
   print(getTuneResult(mod))
+
   # nested resampling for evaluation
-  # we also extract tuned hyper pars in each iteration
   r = resample(lrn, task, outer, extract = getTuneResult)
 
+  # check outer indices
+  expect_equal(length(getResamplingIndices(r)$train.inds[[1]]), 75)
+
   # check if inner test.inds are retrieved correctly
-  expect_length(unique(unlist(getNestedResamplingIndices(r)[[1]]$test.inds)), 25)
+  expect_length(unique(unlist(getResamplingIndices(r, inner = TRUE)[[1]]$test.inds)), 25)
 })
