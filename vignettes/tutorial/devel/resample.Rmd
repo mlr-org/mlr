@@ -261,7 +261,7 @@ r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE, extract = getFeatu
 r$extract
 ```
 
-There is also an convience function `getResamplingIndices()` to extract the resampling indices from the `ResampleResult` object:
+There is also an convenience function `getResamplingIndices()` to extract the resampling indices from the `ResampleResult` object:
 
 ```{r}
 getResamplingIndices(r)
