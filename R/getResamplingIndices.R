@@ -24,7 +24,7 @@
 #' outer = makeResampleDesc("CV", iters = 2)
 #' lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)
 #' # nested resampling for evaluation
-#' we also extract tuned hyper pars in each iteration
+#' # we also extract tuned hyper pars in each iteration and by that the resampling indices
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' # get tuning indices
 #' getResamplingIndices(r, inner = TRUE)
