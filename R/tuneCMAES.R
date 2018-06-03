@@ -43,5 +43,5 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
     convertx = convertXVectorizedMatrixCols, remove.nas = FALSE, resample.fun = resample.fun)
 
-  makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
+  makeTuneResultFromOptPath(learner, par.set, measures, resampling, control, opt.path)
 }
