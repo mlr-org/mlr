@@ -11,6 +11,7 @@ makeMixedOutputTask = function(id = deparse(substitute(data)), data, target, wei
   task = makeSupervisedTask("mixedoutput", data = data, target = target, weights = weights, blocking = blocking,
         coordinates = coordinates, fixup.data = fixup.data, check.data = check.data)
   task$task.desc = makeMixedOutputTaskDesc(id, data, target, weights, blocking, coordinates)
+  task$target.type = sapply(getTaskTargets(task), class)
   task = addClasses(task, c("MixedOutputClass", "MultiOutputClass"))
   return(task)
 }
