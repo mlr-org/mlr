@@ -56,6 +56,6 @@ predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
   if (!se)
     return(rst$Y_hat)
   else
-    cbind(rst$Y_hat, rst$MSE)
+    cbind(rst$Y_hat, sqrt(rst$MSE))
 }
 
