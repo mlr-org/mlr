@@ -53,7 +53,7 @@ multilabel.train.inds = c(1:30, 51:80, 101:130)
 multilabel.test.inds  = setdiff(1:150, multilabel.train.inds)
 multilabel.train = multilabel.df[multilabel.train.inds, ]
 multilabel.test  = multilabel.df[multilabel.test.inds, ]
-multilabel.task = makeMultioutputTask("multilabel", data = multilabel.df, target = multilabel.target)
+multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target = multilabel.target)
 multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
 multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
 multilabel.small.inds = c(1, 52, 53, 123)
@@ -182,7 +182,7 @@ multiregr.train.inds = seq(1, 506, 7)
 multiregr.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
 multiregr.train = multiregr.df[regr.train.inds, ]
 multiregr.test  = multiregr.df[regr.test.inds, ]
-multiregr.task = makeMultioutputTask("multiregrtask", data = multiregr.df, target = multiregr.target)
+multiregr.task = makeMultiRegrTask("multiregrtask", data = multiregr.df, target = multiregr.target)
 multiregr.class.col = c(13, 14)
 
 multiregr.small.df = BostonHousing[150:160, ]
@@ -192,7 +192,7 @@ multiregr.small.train.inds = 1:7
 multiregr.small.test.inds  = setdiff(seq_len(nrow(multiregr.small.df)), multiregr.small.train.inds)
 multiregr.small.train = multiregr.small.df[multiregr.small.train.inds, ]
 multiregr.small.test  = multiregr.small.df[multiregr.small.test.inds, ]
-multiregr.small.task = makeMultioutputTask("multiregrtask", data = multiregr.small.df, target = multiregr.small.target)
+multiregr.small.task = makeMultiRegrTask("multiregrtask", data = multiregr.small.df, target = multiregr.small.target)
 
 #mixedoutput
 mixedoutput.df = BostonHousing
@@ -203,7 +203,7 @@ mixedoutput.train.inds = seq(1, 506, 7)
 mixedoutput.test.inds  = setdiff(seq_len(nrow(regr.df)), regr.train.inds)
 mixedoutput.train = mixedoutput.df[regr.train.inds, ]
 mixedoutput.test  = mixedoutput.df[regr.test.inds, ]
-mixedoutput.task = makeMultioutputTask("mixedoutputtask", data = mixedoutput.df, target = mixedoutput.target)
+mixedoutput.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.df, target = mixedoutput.target)
 mixedoutput.class.col = c(13, 14)
 
 mixedoutput.small.df = BostonHousing[150:160, ]
@@ -214,4 +214,4 @@ mixedoutput.small.train.inds = 1:7
 mixedoutput.small.test.inds  = setdiff(seq_len(nrow(mixedoutput.small.df)), mixedoutput.small.train.inds)
 mixedoutput.small.train = mixedoutput.small.df[mixedoutput.small.train.inds, ]
 mixedoutput.small.test  = mixedoutput.small.df[mixedoutput.small.test.inds, ]
-mixedoutput.small.task = makeMultioutputTask("mixedoutputtask", data = mixedoutput.small.df, target = mixedoutput.small.target)
+mixedoutput.small.task = makeMixedOutputTask("mixedoutputtask", data = mixedoutput.small.df, target = mixedoutput.small.target)
