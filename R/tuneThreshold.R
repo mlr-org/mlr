@@ -3,8 +3,8 @@
 #' @description
 #' Optimizes the threshold of predictions based on probabilities.
 #' Works for classification and multilabel tasks.
-#' Uses \code{\link[BBmisc]{optimizeSubInts}} for normal binary class problems and
-#' \code{\link[GenSA]{GenSA}} for multiclass and multilabel problems.
+#' Uses [BBmisc::optimizeSubInts] for normal binary class problems and
+#' [GenSA::GenSA] for multiclass and multilabel problems.
 #'
 #' @template arg_pred
 #' @param measure ([Measure])\cr
@@ -20,7 +20,7 @@
 #'   Passed to [BBmisc::optimizeSubInts] for 2class problems.
 #'   Default is 20.
 #' @param control ([list])\cr
-#'   Control object for ([GenSA]) when used.
+#'   Control object for [GenSA::GenSA] when used.
 #'   Default is empty list.
 #' @return ([list]). A named list with with the following components:
 #'   `th` is the optimal threshold, `perf` the performance value.
