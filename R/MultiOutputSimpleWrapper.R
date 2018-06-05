@@ -72,10 +72,7 @@ trainLearner.MultioutputSimpleWrapper = function(.learner, .task, .subset = NULL
     level = "mlr.ensemble")
   names(models.regr) = regr.targets
 
-
-  list(regr = makeHomChainModel(.learner$regr, models.regr),
-    classif = makeHomChainModel(.learner$classif, models.classif)
-  )
+  makeHomChainModel(.learner, append(models.regr, models.classif))
 }
 
 doMixedOutputSimpleClassifTrainIteration = function(tn, learner, task, weights) {
@@ -92,56 +89,9 @@ doMixedOutputSimpleRegrTrainIteration = function(tn, learner, task, weights) {
   train(learner, task, weights = weights)
 }
 
-
 #' @export
-trainLearner.MultiOutputWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
-  # targets = getTaskTargetNames(.task)
-  # .task = subsetTask(.task, subset = .subset)
-  # data = getTaskData(.task)
-  # # train level 1 learners
-  # models.lvl1 = getLearnerModel(train(makeMultilabelBinaryRelevanceWrapper(.learner$next.learner), .task, weights = .weights))
-  # # predict labels
-  # f = function(tn) {
-  #   data2 = dropNamed(data, setdiff(targets, tn))
-  #   ctask = makeClassifTask(id = tn, data = data2, target = tn)
-  #   rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
-  #   r = resample(.learner$next.learner, ctask, rdesc, weights = .weights, show.info = FALSE)
-  #   as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
-  # }
-  # pred.labels = sapply(targets, f)
-  # # train meta level learners
-  # g = function(tn) {
-  #   data.meta = dropNamed(data.frame(data, pred.labels), setdiff(targets, tn))
-  #   ctask = makeClassifTask(id = tn, data = data.meta, target = tn)
-  #   train(.learner$next.learner, ctask, weights = .weights)
-  # }
-  # models.meta = lapply(targets, g)
-  # makeHomChainModel(.learner, c(models.lvl1, models.meta))
-}
-
-#' @export
-predictLearner.MultilabelStackingWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
-  # models = getLearnerModel(.model, more.unwrap = FALSE)
-  # # Level 1 prediction (binary relevance)
-  # models.lvl1 = models[seq_along(.model$task.desc$target)]
-  # f = if (.learner$predict.type == "response") {
-  #   function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...)))
-  # } else {
-  #   function(m) getPredictionProbabilities(predict(m, newdata = .newdata, subset = .subset, ...), cl = "TRUE")
-  # }
-  # if (.learner$predict.type == "response") {
-  #   pred.lvl1 = sapply(data.frame(asMatrixCols(lapply(models.lvl1, f))), as.numeric)
-  # } else {
-  #   pred.lvl1 = data.frame(asMatrixCols(lapply(models.lvl1, f)))
-  # }
-  # colnames(pred.lvl1) = paste(.model$task.desc$target, ".1", sep = "")
-  # # Meta level prediction
-  # models.meta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
-  # nd = data.frame(.newdata, pred.lvl1)
-  # g = if (.learner$predict.type == "response") {
-  #   function(m) as.logical(getPredictionResponse(predict(m, newdata = nd, subset = .subset, ...)))
-  # } else {
-  #   function(m) getPredictionProbabilities(predict(m, newdata = nd, subset = .subset, ...), cl = "TRUE")
-  # }
-  # asMatrixCols(lapply(models.meta, g), col.names = .model$task.desc$target)
+predictLearner.MultioutputSimpleWrapper = function(.learner, .model, .newdata, .subset = NULL, ...) {
+  models = getLearnerModel(.model, more.unwrap = FALSE)
+  f = function(m) getPredictionResponse(predict(m, newdata = .newdata, subset = .subset, ...))
+  data.frame(lapply(models, f))
 }
