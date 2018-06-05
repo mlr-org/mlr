@@ -35,17 +35,19 @@ makeMultiOutputSimpleWrapper = function(output.type = "mixedoutput", regr, class
   x.classif = makeHomogeneousEnsemble(id, type, classif, packs, learner.subclass = "MultioutputSimpleWrapper",
     model.subclass = "MultioutputModel")
 
-  x = list(regr = x.regr, classif = x.classif)
-  x = addClasses(x, c("Learner", "MixedOutputSimpleWrapperOneForAll"))
-  x$fix.factors.prediction = FALSE
-  x$package = "stats"
+  packs = "stats" #packages are checked above, this is needed anyhow
+  type = "mixedoutput"
+  id = stri_paste(output.type, "simplewrapper", sep = ".")
+  learner = makeLearner("classif.featureless") #we need a dummy learner for checks...
+  x = makeHomogeneousEnsemble(id, type, learner, packs,
+    learner.subclass = "MultioutputSimpleWrapper", model.subclass = "MultioutputSimpleModel")
   x$type = "mixedoutput"
-
+  x$univ.learners = list(regr = x.regr, classif = x.classif)
   return(x)
 }
 
 #' @export
-trainLearner.MixedOutputSimpleWrapperOneForAll = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
+trainLearner.MultioutputSimpleWrapper = function(.learner, .task, .subset = NULL, .weights = NULL, ...) {
   .task = subsetTask(.task, subset = .subset)
 
   tt = .task$target.type
@@ -57,7 +59,7 @@ trainLearner.MixedOutputSimpleWrapperOneForAll = function(.learner, .task, .subs
   exportMlrOptions(level = "mlr.ensemble")
   models.classif = parallelMap(
     doMixedOutputSimpleClassifTrainIteration, tn = classif.targets,
-    more.args = list(weights = .weights, learner = .learner$classif$next.learner, task = .task),
+    more.args = list(weights = .weights, learner = .learner$univ.learners$classif$next.learner, task = .task),
     level = "mlr.ensemble")
   names(models.classif) = classif.targets
 
@@ -66,7 +68,7 @@ trainLearner.MixedOutputSimpleWrapperOneForAll = function(.learner, .task, .subs
   exportMlrOptions(level = "mlr.ensemble")
   models.regr = parallelMap(
     doMixedOutputSimpleRegrTrainIteration, tn = regr.targets,
-    more.args = list(weights = .weights, learner = .learner$regr$next.learner, task = .task),
+    more.args = list(weights = .weights, learner = .learner$univ.learners$regr$next.learner, task = .task),
     level = "mlr.ensemble")
   names(models.regr) = regr.targets
 
