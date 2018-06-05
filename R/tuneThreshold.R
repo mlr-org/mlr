@@ -19,8 +19,8 @@
 #' @param nsub (`integer(1)`)\cr
 #'   Passed to [BBmisc::optimizeSubInts] for 2class problems.
 #'   Default is 20.
-#' @param control [\code{list}]\cr
-#'   Control object for \code{\link[GenSA]{GenSA}} when used.
+#' @param control ([list])\cr
+#'   Control object for ([GenSA]) when used.
 #'   Default is empty list.
 #' @return ([list]). A named list with with the following components:
 #'   `th` is the optimal threshold, `perf` the performance value.
