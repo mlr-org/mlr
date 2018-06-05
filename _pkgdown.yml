@@ -11,9 +11,9 @@ template:
   default_assets: false
 
 development:
-  mode: auto
-  destination: dev
-  version_label: info
+  mode: unreleased
+  destination: devel
+  version_label: default
   version_tooltip: "Github version"
 
 home:
