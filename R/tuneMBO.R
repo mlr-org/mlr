@@ -40,10 +40,10 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
     th = NULL
   }
   if (multicrit) {
-    res = makeTuneMultiCritResult(learner, ind, removeMissingValues(x), y, control,
+    res = makeTuneMultiCritResult(learner, ind, removeMissingValues(x), y, resampling, control,
       opt.path, measures, mbo.result = or)
   } else {
-    res = makeTuneResult(learner, control, removeMissingValues(x), y, th, opt.path,
+    res = makeTuneResult(learner, control, removeMissingValues(x), y, resampling, th, opt.path,
       mbo.result = or)
   }
 

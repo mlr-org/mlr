@@ -1,0 +1,269 @@
+---
+title: "Functional Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+library("ggplot2")
+library("lattice")
+
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
+
+Functional data provides information about curves varying over a continuum, such as time.
+This type of data is often present when analyzing measurements at various time points.
+Such curves usually are interdependent, which means that the measurement at a point $t_{i + 1}$ usually depends on some measurements ${t_1, ..., t_i}; i \in \mathbb{N}$.
+
+As traditional machine learning techniques usually do not emphasize the interdependence between features, they are often not _well suited_ for such tasks, which can lead to poor performance.
+Functional data analysis on the other hand tries to address this by either using algorithms specifically tailored to functional data, or by transforming the functional covariates into a non time-dependent feature space. 
+For a more in depth introduction to functional data analysis see e.g [When the data are functions](http://rd.springer.com/article/10.1007/BF02293704) (Ramsay, J.O., 1982). 
+
+Each observation of a functional covariate in the data are evaluations of a functional, i.e. measurements of a scalar value at various time points.
+A single observation might then look like this: 
+
+```{r, fig.asp = 0.7, message=FALSE}
+# Load required packages
+library(FDboost)
+library(ggplot2)
+```
+
+```{r}
+# Plot NIR curve for first observarion
+data(fuelSubset, package = "FDboost")
+
+# NIR_Obs_1 are the measurements for NIR of the first functional covariate.
+# lambda are the time points, the data was measured at.
+df = data.frame("NIR_Obs1" = fuelSubset$NIR[1, ],
+                "lambda" = fuelSubset$nir.lambda)
+ggplot(df) + 
+  geom_line(aes(y = NIR_Obs1, x = lambda))
+```
+
+### How to model functional data?
+
+There are two commonly used approaches for analyzing functional data.
+
+* Directly analyze the functional data using a [learner](learner.html) that is suitable for functional data on a [task](task.html). 
+Those learners have the prefixes __classif.fda__ and __regr.fda__.
+
+For more info on learners see [fda learners](functional_data.html#constructing-a-learner).
+For this purpose, the functional data has to be saved as a matrix column in the data.frame used
+for constructing the [task](task.html). For more info on functional tasks consider the following section.
+
+* Transform the task into a format suitable for standard __classification__ or __regression__ [learners](learner.html).
+
+This is done by [extracting](functional_data.html#feature-extraction) non-temporal/non-functional features from the curves. 
+Non-temporal features do not have any interdependence between each other, similarly to features in traditional machine learning. 
+This is explained in more detail [below](functional_data.html#feature-extraction).
+
+### Creating a task that contains functional features
+
+The first step is to get the data in the right format. [%mlr] expects a `base::data.frame` which consists of the functional features and the target variable as input. Functional data in contrast to __numeric__ data have to be stored as a matrix column in the data.frame.
+After that a [task](task.html) that contains the data in a well-defined format is created. [tasks](task.html) come in different flavours, such as `makeClassifTask()` and `makeRegrTask()`, which can be used according to the class of the target variable.
+
+In the following example, the data is first stored as matrix columns using the helper function `makeFunctionalData()` for the [fuelSubset](&fuelSubset.task) data from package `FDboost`.
+
+The data is provided in the following structure:
+
+```{r}
+str(fuelSubset)
+```
+
+* __heatan__ is the target variable, in this case a numeric value.
+* __h2o__ is an additional scalar variable.
+* __NIR__ and __UVVIS__ are matrices containing the curve data. Each column corresponds to a single time point the data was sampled at. Each row indicates a single curve. 
+__NIR__ was measured at $231$ time points, while __UVVIS__ was measured at $129$ time points.
+* __nir.lambda__ and __uvvis.lambda__ are numeric vectors of length $231$ and $129$ indicate the time points the data was measured at. 
+Each entry corresponds to one column of __NIR__ and __UVVIS__ respectively. For now we ignore this additional information in mlr.
+
+Our data already contains functional features as matrices in a list.
+In order to showcase how such a matrix can 
+be created from arbitrary numeric columns, we transform the list into a data.frame with a set of numeric columns for each matrix. These columns refer to the matrix columns in the list, i.e 
+__UVVIS.1__ is the first column of the UVVIS matrix. 
+
+```{r}
+## Put all values into a data.frame
+df = data.frame(fuelSubset[c("heatan", "h2o", "UVVIS", "NIR")])
+str(df[, 1:5])
+```
+
+Before constructing the [task](task.html), the data is again reformated so it contains column matrices. 
+This is done by providing a list __fd.features__, that identifies the functional covariates. 
+All columns not mentioned in the list are kept as-is. 
+In our case the column indices 3:136 correspond to the columns of the UVVIS matrix. 
+Alternatively we could also specify the respective column names.
+
+```{r}
+library(mlr)
+## fd.features is a named list, where each name corresponds to the name of the 
+## functional feature and the values to the respective column indices or column names.
+fd.features = list("UVVIS" = 3:136, "NIR" = 137:367)
+fdf = makeFunctionalData(df, fd.features = fd.features)
+```
+
+`makeFunctionalData()` returns a data.frame, where the functional features are contained as matrices.
+
+```{r}
+str(fdf)
+```
+
+Now with a data.frame containing the functionals as matrices, a [task](task.html) can be created:
+
+```{r}
+## Create a regression task, classification tasks behave analogously
+## In this case we use column indices
+tsk1 = makeRegrTask("fuelsubset", data = fdf, target = "heatan")
+tsk1
+```
+
+### Constructing a learner
+
+For functional data, [learners](learner.html) are constructed using  `makeLearner("classif.<R_method_name>")` or  `makeLearner("regr.<R_method_name>")` depending on the target variable.
+
+Applying learners to a [task](task.html) works in two ways
+
+**Either use a [learner](learner.html) suitable for functional data:**
+
+```{r}
+## The following learners can be used for tsk1 (a regression task).
+listLearners(tsk1, properties = "functionals", warn.missing.packages = FALSE)
+```
+
+```{r}
+## Create a FDboost learner for regression
+fdalrn = makeLearner("regr.FDboost")
+```
+
+```{r}
+## Or alternatively, use knn for classification:
+knn.lrn = makeLearner("classif.fdausc.knn")
+```
+
+**or use a standard [learner](learner.html):**
+
+In this case the temporal structure is disregarded, and the functional data treated as simple numeric features.
+
+```{r}
+## Decision Tree learner
+rpartlrn = makeLearner("classif.rpart")
+```
+
+
+Alternatively, transform the functional data into a non-temporal/non-functional space by [extracting](functional_data.html#feature-extraction) features before training.
+In this case, a normal regression- or classification-[learner](learner.html) can be applied.
+
+This is explained in more detail in the [feature extraction](functional_data.html#feature-extraction) section below.
+
+### Train the learner
+
+The resulting [learner](learner.html) can now be trained on the task created in section [Creating a task](functional_data.html#creating-a-task) above. 
+
+```{r, warning = FALSE, message=FALSE}
+## Train the fdalrn on the constructed task
+m = train(learner = fdalrn, task = tsk1)
+p = predict(m, tsk1)
+performance(p, rmse)
+```
+
+Alternatively, learners that do not specifically treat functional covariates can be applied. 
+In this case the temporal structure is completely disregarded, and all columns are treated as independent.
+
+```{r}
+## Train a normal learner on the constructed task.
+## Note that we get a message, that functionals have been converted to numerics.
+rpart.lrn = makeLearner("regr.rpart")
+m = train(learner = rpart.lrn, task = tsk1)
+m
+```
+
+### Feature extraction
+
+In contrast to applying a learner that works on a [task](task.html) containing functional features, the [task](task.html) can be converted to a normal [task](task.html).
+This works by transforming the functional features into a non-functional domain, e.g by extracting wavelets.
+
+The currently supported preprocessing functions are:
+* discrete wavelet transform
+* fast Fourier transform
+* functional principal component analysis
+* multi-resolution feature extraction
+
+In order to do this, we specify methods for each functional feature in the task in a __list__.
+In this case we simply want to extract the Fourier transform from each __UVVIS__ functional and the Functional PCA Scores from each __NIR__ functional. 
+Variable names can be specified multiple times with different extractors. 
+Additional arguments supplied to the _extract_ functions are passed on.
+
+```{r}
+## feat.methods specifies what to extract from which functional
+## In this example, we extract the Fourier transformation from the first functional.
+## From the second functional, fpca scores are extracted.
+feat.methods = list("UVVIS" = extractFDAFourier(), "NIR" = extractFDAFPCA())
+
+## Either create a new task from an existing task
+extracted = extractFDAFeatures(tsk1, feat.methods = feat.methods)
+extracted
+```
+
+#### Wavelets
+
+In this example, discrete wavelet feature transformation is applied to the data using the function `extractFDAWavelets`.
+Discrete wavelet transform decomposes the functional into several _wavelets_.
+This essentially transforms the time signal to a time-scale representation, where every wavelet captures the data at a different resolution.
+We can specify which additional parameters (i.e. the `filter` (type of wavelet) and the `boundar`) in the pars argument.
+This function returns a regression task of type regr since the raw data contained temporal structure but the transformed data does not inherit temporal structure anymore.
+For more information on wavelets consider the documentation [wavelets](dwt). 
+A more comprehensive guide is for example given [here](https://www.cs.unm.edu/~williams/cs530/arfgtw.pdf).
+
+```{r, eval = FALSE}
+## Specify the feature extraction method and generate new task.
+## Here, we use the Haar filter:
+feat.methods = list("UVVIS" = extractFDAWavelets(filter = "haar"))
+task.w = extractFDAFeatures(tsk1, feat.methods = feat.methods)
+
+## Use the Daubechie wavelet with filter length 4.
+feat.methods = list("NIR" = extractFDAWavelets(filter = "d4"))
+task.wd4 = extractFDAFeatures(tsk1, feat.methods = feat.methods)
+```
+
+#### Fourier transformation
+
+Now, we use the Fourier feature transformation.
+The Fourier transform takes a functional and transforms it to a frequency domain by splitting the signal up into its different frequency components. 
+A more detailed tutorial on Fourier transform can be found [here](http://www0.cs.ucl.ac.uk/teaching/GZ05/03-fourier.pdf).
+Either the amplitude or the phase of the complex Fourier coefficients can be used for analysis.
+This can be specified in the additional `trafo.coeff` argument:
+
+```{r, eval = FALSE}
+## Specify the feature extraction method and generate new task.
+## We use the Fourier features and the amplitude for NIR, as well as the phase for UVVIS
+feat.methods = list("NIR" = extractFDAFourier(trafo.coeff = "amplitude"),
+                    "UVVIS" = extractFDAFourier(trafo.coeff = "phase"))
+task.fourier = extractFDAFeatures(tsk1, feat.methods = feat.methods)
+task.fourier
+```
+
+### Wrappers
+
+Additionally we can wrap the preprocessing around a standard learner such as [classif.rpart](rpart::rpart()).
+For additional information, please consider the [Wrappers](wrapper.html#wrapper) section.
+
+```{r}
+## Use a FDAFeatExtractWrapper
+## In this case we extract the Fourier features from the NIR variable
+feat.methods = list("NIR" = extractFDAFourier())
+wrapped.lrn = makeExtractFDAFeatsWrapper("regr.rpart",  feat.methods = feat.methods)
+
+## And run the learner
+train(wrapped.lrn, fuelsubset.task)
+```
+
