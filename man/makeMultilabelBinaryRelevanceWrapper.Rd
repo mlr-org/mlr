@@ -7,12 +7,12 @@
 makeMultilabelBinaryRelevanceWrapper(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Every learner which is implemented in mlr and which supports binary
@@ -20,13 +20,13 @@ classification can be converted to a wrapped binary relevance multilabel learner
 The multilabel classification problem is converted into simple binary classifications
 for each label/target on which the binary learner is applied.
 
-Models can easily be accessed via \code{\link{getLearnerModel}}.
+Models can easily be accessed via \link{getLearnerModel}.
 
 Note that it does not make sense to set a threshold in the used base \code{learner}
 when you predict probabilities.
-On the other hand, it can make a lot of sense, to call \code{\link{setThreshold}}
+On the other hand, it can make a lot of sense, to call \link{setThreshold}
 on the \code{MultilabelBinaryRelevanceWrapper} for each label indvidually;
-Or to tune these thresholds with \code{\link{tuneThreshold}}; especially when you face very
+Or to tune these thresholds with \link{tuneThreshold}; especially when you face very
 unabalanced class distributions for each binary label.
 }
 \examples{

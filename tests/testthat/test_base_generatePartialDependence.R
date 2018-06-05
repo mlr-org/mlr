@@ -1,7 +1,7 @@
 context("generatePartialDependence")
 
 test_that("generatePartialDependenceData", {
-  m = c(3, 10)
+  m = c(4, 10)
 
   # test regression with interactions, centering, and mixed factor features
   fr = train("regr.rpart", regr.task)
@@ -15,7 +15,7 @@ test_that("generatePartialDependenceData", {
 
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
-  path = paste0(dir, "/test.svg")
+  path = file.path(dir, "test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.rect.xpath, ns.svg)), equals(nfacet))
@@ -112,6 +112,11 @@ test_that("generatePartialDependenceData", {
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
   bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"),
     individual = TRUE, n = m)
+  ## tests for binary classification plotting, discovered whilst trying to merge
+  ## pr #142
+  plotPartialDependence(bc)
+  bc = generatePartialDependenceData(fcpb, input = binaryclass.task, features = c("V11", "V12"), n = m)
+  plotPartialDependence(bc)
 
   # check that derivative estimation works for ICE and pd for classification and regression
   fr = train(makeLearner("regr.ksvm"), regr.task)
@@ -159,4 +164,8 @@ test_that("generatePartialDependenceData", {
   # issue 63 in the tutorial
   pd = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
     individual = TRUE, derivative = TRUE, n = m)
+
+  # test that would have caught a bug that occurs when the jacobian is estimated
+  pd.der.classif = generatePartialDependenceData(fcp, multiclass.task, "Petal.Width",
+    derivative = TRUE, n = m)
 })

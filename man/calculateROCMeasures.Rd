@@ -10,46 +10,44 @@ calculateROCMeasures(pred)
 \method{print}{ROCMeasures}(x, abbreviations = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
-\item{x}{[\code{ROCMeasures}]\cr
-Created by \code{\link{calculateROCMeasures}}.}
+\item{x}{(\code{ROCMeasures})\cr
+Created by \link{calculateROCMeasures}.}
 
-\item{abbreviations}{[\code{logical(1)}]\cr
+\item{abbreviations}{(\code{logical(1)})\cr
 If \code{TRUE} a short paragraph with explanations of the used measures is printed additionally.}
 
-\item{digits}{[\code{integer(1)}]\cr
+\item{digits}{(\code{integer(1)})\cr
 Number of digits the measures are rounded to.}
 
-\item{...}{\code{[any]}\cr
+\item{...}{\code{(any)}\cr
 Currently not used.}
 }
 \value{
-[\code{ROCMeasures}].
-   A list containing two elements \code{confusion.matrix} which is
-   the 2 times 2 confusion matrix of absolute frequencies and \code{measures}, a list of the above mentioned measures.
+(\code{ROCMeasures}).
+A list containing two elements \code{confusion.matrix} which is
+the 2 times 2 confusion matrix of absolute frequencies and \code{measures}, a list of the above mentioned measures.
 }
 \description{
 Calculate the absolute number of correct/incorrect classifications and the following evaluation measures:
-
-
 \itemize{
- \item \code{tpr} True positive rate (Sensitivity, Recall)
- \item \code{fpr} False positive rate (Fall-out)
- \item \code{fnr} False negative rate (Miss rate)
- \item \code{tnr} True negative rate (Specificity)
- \item \code{ppv} Positive predictive value (Precision)
- \item \code{for} False omission rate
- \item \code{lrp} Positive likelihood ratio (LR+)
- \item \code{fdr} False discovery rate
- \item \code{npv} Negative predictive value
- \item \code{acc} Accuracy
- \item \code{lrm} Negative likelihood ratio (LR-)
- \item \code{dor} Diagnostic odds ratio
+\item \code{tpr} True positive rate (Sensitivity, Recall)
+\item \code{fpr} False positive rate (Fall-out)
+\item \code{fnr} False negative rate (Miss rate)
+\item \code{tnr} True negative rate (Specificity)
+\item \code{ppv} Positive predictive value (Precision)
+\item \code{for} False omission rate
+\item \code{lrp} Positive likelihood ratio (LR+)
+\item \code{fdr} False discovery rate
+\item \code{npv} Negative predictive value
+\item \code{acc} Accuracy
+\item \code{lrm} Negative likelihood ratio (LR-)
+\item \code{dor} Diagnostic odds ratio
 }
 
-For details on the used measures see \code{\link{measures}} and also
+For details on the used measures see \link{measures} and also
 \url{https://en.wikipedia.org/wiki/Receiver_operating_characteristic}.
 
 The element for the false omission rate in the resulting object is not called \code{for} but
@@ -68,8 +66,7 @@ calculateROCMeasures(pred)
 
 }
 \seealso{
-Other roc: \code{\link{asROCRPrediction}},
-  \code{\link{plotViperCharts}}
+Other roc: \code{\link{asROCRPrediction}}
 
 Other performance: \code{\link{ConfusionMatrix}},
   \code{\link{calculateConfusionMatrix}},

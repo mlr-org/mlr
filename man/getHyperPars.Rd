@@ -7,17 +7,17 @@
 getHyperPars(learner, for.fun = c("train", "predict", "both"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
+\item{learner}{(\link{Learner})\cr
 The learner.}
 
-\item{for.fun}{[\code{character(1)}]\cr
+\item{for.fun}{(\code{character(1)})\cr
 Restrict the returned settings to hyperparameters corresponding to \code{when}
-the are used (see \code{\link[ParamHelpers]{LearnerParam}}).
+the are used (see \link[ParamHelpers:LearnerParam]{ParamHelpers::LearnerParam}).
 Must be a subset of: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
 Default is \code{c("train", "predict", "both")}.}
 }
 \value{
-[\code{list}]. A named list of values.
+(\link{list}). A named list of values.
 }
 \description{
 Retrieves the current hyperparameter settings of a learner.

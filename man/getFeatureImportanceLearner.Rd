@@ -12,24 +12,24 @@
 getFeatureImportanceLearner(.learner, .model, ...)
 }
 \arguments{
-\item{.learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{.learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.}
 
-\item{.model}{[\code{\link{WrappedModel}}]\cr
+\item{.model}{(\link{WrappedModel})\cr
 The model.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Additional parameters, which are passed to the underlying importance value
 generating function.}
 }
 \value{
-[\code{numeric}] A named vector of variable importance.
+(\link{numeric}) A named vector of variable importance.
 }
 \description{
-This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.
+This function is mostly for internal usage. To calculate feature importance use \link{getFeatureImportance}.
 
 The return value is a named numeric vector. There does not need to be one value for each feature in the dataset.
-In \code{\link{getFeatureImportance}} missing features will get an importance of zero and if the vector contains \code{NA}
+In \link{getFeatureImportance} missing features will get an importance of zero and if the vector contains \code{NA}
 they will also be replaced with zero.
 }
 \keyword{internal}

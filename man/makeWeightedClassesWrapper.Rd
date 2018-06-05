@@ -7,18 +7,18 @@
 makeWeightedClassesWrapper(learner, wcw.param = NULL, wcw.weight = 1)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The classification learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{wcw.param}{[\code{character(1)}]\cr
+\item{wcw.param}{(\code{character(1)})\cr
 Name of already existing learner parameter, which allows class weighting.
 The default (\code{wcw.param = NULL}) will use the parameter defined in
 the learner (\code{class.weights.param}). During training, the parameter
 must accept a named vector of class weights, where length equals the
 number of classes.}
 
-\item{wcw.weight}{[\code{numeric}]\cr
+\item{wcw.weight}{(\link{numeric})\cr
 Weight for each class.
 Must be a vector of the same number of elements as classes are in task,
 and must also be in the same order as the class levels are in
@@ -29,7 +29,7 @@ of 1.
 Default is 1.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Creates a wrapper, which can be used like any other learner object.

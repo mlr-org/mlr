@@ -11,94 +11,94 @@ generatePartialDependenceData(obj, input, features, interaction = FALSE,
   ...)
 }
 \arguments{
-\item{obj}{[\code{\link{WrappedModel}}]\cr
-Result of \code{\link{train}}.}
+\item{obj}{(\link{WrappedModel})\cr
+Result of \link{train}.}
 
-\item{input}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{input}{(\link{data.frame} | \link{Task})\cr
 Input data.}
 
-\item{features}{[\code{character}]\cr
+\item{features}{\link{character}\cr
 A vector of feature names contained in the training data.
 If not specified all features in the \code{input} will be used.}
 
-\item{interaction}{[\code{logical(1)}]\cr
+\item{interaction}{(\code{logical(1)})\cr
 Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
 prediction grid for each feature is taken, and the partial dependence at each unique combination of
 values of the features is estimated. Note that if the length of \code{features} is greater than two,
-\code{\link{plotPartialDependence}} and \code{\link{plotPartialDependenceGGVIS}} cannot be used.
+\link{plotPartialDependence} cannot be used.
 If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
 than two.
 Default is \code{FALSE}.}
 
-\item{derivative}{[\code{logical(1)}]\cr
+\item{derivative}{(\code{logical(1)})\cr
 Whether or not the partial derivative of the learned function with respect to the features should be
 estimated. If \code{TRUE} \code{interaction} must be \code{FALSE}. The partial derivative of individual
 observations may be estimated. Note that computation time increases as the learned prediction function
 is evaluated at \code{gridsize} points * the number of points required to estimate the partial derivative.
-Additional arguments may be passed to \code{\link[numDeriv]{grad}} (for regression or survival tasks) or
-\code{\link[numDeriv]{jacobian}} (for classification tasks). Note that functions which are not smooth may
+Additional arguments may be passed to \link[numDeriv:grad]{numDeriv::grad} (for regression or survival tasks) or
+\link[numDeriv:jacobian]{numDeriv::jacobian} (for classification tasks). Note that functions which are not smooth may
 result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
 or estimates trending towards +/- infinity (at discontinuities).
 Default is \code{FALSE}.}
 
-\item{individual}{[\code{logical(1)}]\cr
+\item{individual}{(\code{logical(1)})\cr
 Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
 rather than aggregating (using \code{fun}) the partial dependences of \code{features}, plot the
 partial dependences of all observations in \code{data} across all values of the \code{features}.
 The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 Default is \code{FALSE}.}
 
-\item{fun}{[\code{function}]\cr
+\item{fun}{\code{function}\cr
 
-  A function which operates on the output on the predictions made on the \code{input} data. For regression
-  this means a numeric vector, and, e.g., for a multiclass classification problem, this migh instead be probabilities
-  which are returned as a numeric matrix. This argument can return vectors of arbitrary length, however,
-  if their length is greater than one, they must by named, e.g., \code{fun = mean} or
-  \code{fun = function(x) c("mean" = mean(x), "variance" = var(x))}.
-  The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
-  in which case the default is the proportion of observations predicted to be in each class.}
+A function which operates on the output on the predictions made on the \code{input} data. For regression
+this means a numeric vector, and, e.g., for a multiclass classification problem, this migh instead be probabilities
+which are returned as a numeric matrix. This argument can return vectors of arbitrary length, however,
+if their length is greater than one, they must by named, e.g., \code{fun = mean} or
+\code{fun = function(x) c("mean" = mean(x), "variance" = var(x))}.
+The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
+in which case the default is the proportion of observations predicted to be in each class.}
 
-\item{bounds}{[\code{numeric(2)}]\cr
+\item{bounds}{(\code{numeric(2)})\cr
 The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
 confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
 Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.}
 
-\item{uniform}{[\code{logical(1)}]\cr
+\item{uniform}{(\code{logical(1)})\cr
 Whether or not the prediction grid for the \code{features} is a uniform grid of size \code{n[1]} or sampled with
 replacement from the \code{input}.
 Default is \code{TRUE}.}
 
-\item{n}{[\code{integer21)}]\cr
+\item{n}{(\code{integer21})\cr
 The first element of \code{n} gives the size of the prediction grid created for each feature.
 The second element of \code{n} gives the size of the sample to be drawn without replacement from the \code{input} data.
 Setting \code{n[2]} less than the number of rows in the \code{input} will decrease computation time.
 The default for \code{n[1]} is 10, and the default for \code{n[2]} is the number of rows in the \code{input}.}
 
-\item{...}{additional arguments to be passed to \code{\link[mmpf]{marginalPrediction}}.}
+\item{...}{additional arguments to be passed to \link[mmpf:marginalPrediction]{mmpf::marginalPrediction}.}
 }
 \value{
-[\code{PartialDependenceData}]. A named list, which contains the partial dependence,
-  input data, target, features, task description, and other arguments controlling the type of
-  partial dependences made.
+\link{PartialDependenceData}. A named list, which contains the partial dependence,
+input data, target, features, task description, and other arguments controlling the type of
+partial dependences made.
 
 Object members:
-  \item{data}{[\code{data.frame}]\cr
-    Has columns for the prediction: one column for regression and
-    survival analysis, and a column for class and the predicted probability for classification as well
-    as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
-    additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
-  \item{task.desc}{[\code{\link{TaskDesc}}]\cr
-    Task description.}
-  \item{target}{Target feature for regression, target feature levels for classification,
-        survival and event indicator for survival.}
-  \item{features}{[\code{character}]\cr
-    Features argument input.}
-  \item{interaction}{[\code{logical(1)}]\cr
-    Whether or not the features were interacted (i.e. conditioning).}
-  \item{derivative}{[\code{logical(1)}]\cr
-    Whether or not the partial derivative was estimated.}
-  \item{individual}{[\code{logical(1)}]\cr
-    Whether the partial dependences were aggregated or the individual curves are retained.}
+\item{data}{\link{data.frame}\cr
+Has columns for the prediction: one column for regression and
+survival analysis, and a column for class and the predicted probability for classification as well
+as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
+additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
+\item{task.desc}{\link{TaskDesc}\cr
+Task description.}
+\item{target}{Target feature for regression, target feature levels for classification,
+survival and event indicator for survival.}
+\item{features}{\link{character}\cr
+Features argument input.}
+\item{interaction}{(\code{logical(1)})\cr
+Whether or not the features were interacted (i.e. conditioning).}
+\item{derivative}{(\code{logical(1)})\cr
+Whether or not the partial derivative was estimated.}
+\item{individual}{(\code{logical(1)})\cr
+Whether the partial dependences were aggregated or the individual curves are retained.}
 }
 \description{
 Estimate how the learned prediction function is affected by one or more features.
@@ -124,8 +124,7 @@ Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking 
 Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 }
 \seealso{
-Other partial_dependence: \code{\link{plotPartialDependenceGGVIS}},
-  \code{\link{plotPartialDependence}}
+Other partial_dependence: \code{\link{plotPartialDependence}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},

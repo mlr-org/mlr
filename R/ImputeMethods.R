@@ -8,18 +8,18 @@
 #' Create a custom imputation method.
 #'
 #' This is a constructor to create your own imputation methods.
-#' @param learn [\code{function(data, target, col, ...)}]\cr
-#'   Function to learn and extract information on column \code{col}
-#'   out of data frame \code{data}. Argument \code{target} specifies
+#' @param learn (`function(data, target, col, ...)`)\cr
+#'   Function to learn and extract information on column `col`
+#'   out of data frame `data`. Argument `target` specifies
 #'   the target column of the learning task.
 #'   The function has to return a named list of values.
-#' @param impute [\code{function(data, target, col, ...)}]\cr
-#'   Function to impute missing values in \code{col} using information
-#'   returned by \code{learn} on the same column.
-#'   All list elements of the return values o \code{learn}
-#'   are passed to this function into \code{...}.
-#' @param args [\code{list}]\cr
-#'   Named list of arguments to pass to \code{learn} via \code{...}.
+#' @param impute (`function(data, target, col, ...)`)\cr
+#'   Function to impute missing values in `col` using information
+#'   returned by `learn` on the same column.
+#'   All list elements of the return values o `learn`
+#'   are passed to this function into `...`.
+#' @param args ([list])\cr
+#'   Named list of arguments to pass to `learn` via `...`.
 #' @family impute
 #' @export
 makeImputeMethod = function(learn, impute, args = list()) {
@@ -50,19 +50,19 @@ simpleImpute = function(data, target, col, const) {
 #'
 #' The built-ins are:
 #' \itemize{
-#'   \item \code{imputeConstant(const)} for imputation using a constant value,
-#'   \item \code{imputeMedian()} for imputation using the median,
-#'   \item \code{imputeMode()} for imputation using the mode,
-#'   \item \code{imputeMin(multiplier)} for imputing constant values shifted below the minimum
-#'     using \code{min(x) - multiplier * diff(range(x))},
-#'   \item \code{imputeMax(multiplier)} for imputing constant values shifted above the maximum
-#'     using \code{max(x) + multiplier * diff(range(x))},
-#'   \item \code{imputeNormal(mean, sd)} for imputation using normally
+#'   \item `imputeConstant(const)` for imputation using a constant value,
+#'   \item `imputeMedian()` for imputation using the median,
+#'   \item `imputeMode()` for imputation using the mode,
+#'   \item `imputeMin(multiplier)` for imputing constant values shifted below the minimum
+#'     using `min(x) - multiplier * diff(range(x))`,
+#'   \item `imputeMax(multiplier)` for imputing constant values shifted above the maximum
+#'     using `max(x) + multiplier * diff(range(x))`,
+#'   \item `imputeNormal(mean, sd)` for imputation using normally
 #'     distributed random values. Mean and standard deviation will be calculated
 #'     from the data if not provided.
-#'   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
-#'     with probabilities calculated using \code{table} or \code{hist}.
-#'   \item \code{imputeLearner(learner, features = NULL)} for imputations using the response
+#'   \item `imputeHist(breaks, use.mids)` for imputation using random values
+#'     with probabilities calculated using `table` or `hist`.
+#'   \item `imputeLearner(learner, features = NULL)` for imputations using the response
 #'     of a classification or regression learner.
 #' }
 #' @name imputations
@@ -71,7 +71,7 @@ simpleImpute = function(data, target, col, const) {
 NULL
 
 #' @export
-#' @param const [any]\cr
+#' @param const (any)\cr
 #'  Constant valued use for imputation.
 #' @rdname imputations
 imputeConstant = function(const) {
@@ -111,7 +111,7 @@ imputeMode = function() {
 }
 
 #' @export
-#' @param multiplier [\code{numeric(1)}]\cr
+#' @param multiplier (`numeric(1)`)\cr
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
 imputeMin = function(multiplier = 1) {
@@ -141,10 +141,10 @@ imputeMax = function(multiplier = 1) {
 }
 
 #' @export
-#' @param min [\code{numeric(1)}]\cr
+#' @param min (`numeric(1)`)\cr
 #'   Lower bound for uniform distribution.
 #'   If NA (default), it will be estimated from the data.
-#' @param max [\code{numeric(1)}]\cr
+#' @param max (`numeric(1)`)\cr
 #'   Upper bound for uniform distribution.
 #'   If NA (default), it will be estimated from the data.
 #' @rdname imputations
@@ -175,9 +175,9 @@ imputeUniform = function(min = NA_real_, max = NA_real_) {
 }
 
 #' @export
-#' @param mu [\code{numeric(1)}]\cr
+#' @param mu (`numeric(1)`)\cr
 #'   Mean of normal distribution. If missing it will be estimated from the data.
-#' @param sd [\code{numeric(1)}]\cr
+#' @param sd (`numeric(1)`)\cr
 #'   Standard deviation of normal distribution. If missing it will be estimated from the data.
 #' @rdname imputations
 imputeNormal = function(mu = NA_real_, sd = NA_real_) {
@@ -208,11 +208,11 @@ imputeNormal = function(mu = NA_real_, sd = NA_real_) {
 }
 
 #' @export
-#' @param breaks [\code{numeric(1)}]\cr
-#'  Number of breaks to use in \code{\link[graphics]{hist}}. If missing,
+#' @param breaks (`numeric(1)`)\cr
+#'  Number of breaks to use in [graphics::hist]. If missing,
 #'  defaults to auto-detection via \dQuote{Sturges}.
-#' @param use.mids [\code{logical(1)}]\cr
-#'  If \code{x} is numeric and a histogram is used, impute with bin mids (default)
+#' @param use.mids (`logical(1)`)\cr
+#'  If `x` is numeric and a histogram is used, impute with bin mids (default)
 #'  or instead draw uniformly distributed samples within bin range.
 #' @rdname imputations
 imputeHist = function(breaks, use.mids = TRUE) {
@@ -260,13 +260,13 @@ imputeHist = function(breaks, use.mids = TRUE) {
   )
 }
 
-#' @param learner [\code{\link{Learner}} | \code{character(1)}]\cr
+#' @param learner ([Learner] | `character(1)`)\cr
 #'  Supervised learner. Its predictions will be used for imputations.
-#'  If you pass a string the learner will be created via \code{\link{makeLearner}}.
+#'  If you pass a string the learner will be created via [makeLearner].
 #'  Note that the target column is not available for this operation.
-#' @param features [\code{character}]\cr
-#'  Features to use in \code{learner} for prediction.
-#'  Default is \code{NULL} which uses all available features except the target column
+#' @param features ([character])\cr
+#'  Features to use in `learner` for prediction.
+#'  Default is `NULL` which uses all available features except the target column
 #'  of the original task.
 #' @rdname imputations
 #' @export

@@ -1,0 +1,12 @@
+{{#yaml}}
+{{#docsearch}}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+ apiKey: '{{api_key}}',
+ indexName: '{{index_name}}',
+ inputSelector: 'input#search-input.form-control',
+ debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+{{/docsearch}}
+{{/yaml}}

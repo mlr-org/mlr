@@ -9,34 +9,34 @@ makeRemoveConstantFeaturesWrapper(learner, perc = 0,
   tol = .Machine$double.eps^0.5)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{perc}{[\code{numeric(1)}]\cr
+\item{perc}{(\code{numeric(1)})\cr
 The percentage of a feature values in [0, 1) that must differ from the mode value.
 Default is 0, which means only constant features with exactly one observed level are removed.}
 
-\item{dont.rm}{[\code{character}]\cr
+\item{dont.rm}{(\link{character})\cr
 Names of the columns which must not be deleted.
 Default is no columns.}
 
-\item{na.ignore}{[\code{logical(1)}]\cr
+\item{na.ignore}{(\code{logical(1)})\cr
 Should NAs be ignored in the percentage calculation?
 (Or should they be treated as a single, extra level in the percentage calculation?)
 Note that if the feature has only missing values, it is always removed.
 Default is \code{FALSE}.}
 
-\item{tol}{[\code{numeric(1)}]\cr
+\item{tol}{(\code{numeric(1)})\cr
 Numerical tolerance to treat two numbers as equal.
 Variables stored as \code{double} will get rounded accordingly before computing the mode.
 Default is \code{sqrt(.Maschine$double.eps)}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
-Fuses a base learner with the preprocessing implemented in \code{\link{removeConstantFeatures}}.
+Fuses a base learner with the preprocessing implemented in \link{removeConstantFeatures}.
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},

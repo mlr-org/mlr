@@ -7,22 +7,22 @@
 getOOBPreds(model, task)
 }
 \arguments{
-\item{model}{[\code{\link{WrappedModel}}]\cr
+\item{model}{(\link{WrappedModel})\cr
 The model.}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 The task.}
 }
 \value{
-[\code{\link{Prediction}}].
+(\link{Prediction}).
 }
 \description{
 Learners like \code{randomForest} produce out-of-bag predictions.
 \code{getOOBPreds} extracts this information from trained models and builds a
 prediction object as provided by predict (with prediction time set to NA).
 In the classification case:
-What is stored exactly in the [\code{\link{Prediction}}] object depends
-on the \code{predict.type} setting of the \code{\link{Learner}}.
+What is stored exactly in the (\link{Prediction}) object depends
+on the \code{predict.type} setting of the \link{Learner}.
 
 You can call \code{listLearners(properties = "oobpreds")} to get a list of learners
 which provide this.

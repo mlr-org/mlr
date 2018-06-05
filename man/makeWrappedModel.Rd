@@ -9,35 +9,35 @@ makeWrappedModel(learner, learner.model, task.desc, subset, features,
   factor.levels, time)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{learner.model}{[any]\cr
+\item{learner.model}{(any)\cr
 Underlying model.}
 
-\item{task.desc}{[\code{\link{TaskDesc}}]\cr
+\item{task.desc}{[TaskDesc]\cr
 Task description object.}
 
-\item{subset}{[\code{integer} | \code{logical} | \code{NULL}]\cr
+\item{subset}{(\link{integer} | \link{logical} | \code{NULL})\cr
 Selected cases. Either a logical or an index vector.
-By default (\code{NULL}) all observations are used.}
+By default \code{NULL} if all observations are used.}
 
-\item{features}{[\code{character}]\cr
+\item{features}{(\link{character})\cr
 Features used for training.}
 
-\item{factor.levels}{[named \code{list} of \code{character}]\cr
+\item{factor.levels}{(named \link{list} of \link{character})\cr
 Levels of factor variables (features and potentially target) in training data.
 Named by variable name, non-factors do not occur in the list.}
 
-\item{time}{[\code{numeric(1)}]\cr
+\item{time}{(\code{numeric(1)})\cr
 Computation time for model fit in seconds.}
 }
 \value{
-[\code{\link{WrappedModel}}].
+\link{WrappedModel}.
 }
 \description{
-Result from \code{\link{train}}.
+Result from \link{train}.
 
 It internally stores the underlying fitted model,
 the subset used for training, features used for training, levels of factors in the

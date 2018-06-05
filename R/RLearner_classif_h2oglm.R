@@ -24,7 +24,7 @@ makeRLearner.classif.h2o.glm = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights", "missings"),
     name = "h2o.glm",
     short.name = "h2o.glm",
-    note = "'family' is always set to 'binomial' to get a binary classifier.",
+    note = '`family` is always set to `"binomial"` to get a binary classifier. The default value of `missing_values_handling` is `"MeanImputation"`, so missing values are automatically mean-imputed.',
     callees = "h2o.glm"
   )
 }

@@ -7,14 +7,14 @@
 getTaskClassLevels(x)
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{(\link{Task} | \link{TaskDesc})\cr
 Task or its description object.}
 }
 \value{
-[\code{character}].
+(\link{character}).
 }
 \description{
-NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
+NB: For multilabel, \link{getTaskTargetNames} and \link{getTaskClassLevels}
 actually return the same thing.
 }
 \seealso{

@@ -7,11 +7,11 @@
 getBMRMeasures(bmr)
 }
 \arguments{
-\item{bmr}{[\code{\link{BenchmarkResult}}]\cr
+\item{bmr}{(\link{BenchmarkResult})\cr
 Benchmark result.}
 }
 \value{
-[\code{list}]. See above.
+(\link{list}). See above.
 }
 \description{
 Gets the measures used in a benchmark experiment.

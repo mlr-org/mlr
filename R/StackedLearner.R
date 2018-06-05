@@ -5,36 +5,36 @@
 #' The following stacking methods are available:
 #'
 #'  \describe{
-#'   \item{\code{average}}{Averaging of base learner predictions without weights.}
-#'   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
-#'   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
-#'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
-#'   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
-#'   \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
+#'   \item{`average`}{Averaging of base learner predictions without weights.}
+#'   \item{`stack.nocv`}{Fits the super learner, where in-sample predictions of the base learners are used.}
+#'   \item{`stack.cv`}{Fits the super learner, where the base learner predictions are computed
+#'   by crossvalidated predictions (the resampling strategy can be set via the `resampling` argument).}
+#'   \item{`hill.climb`}{Select a subset of base learner predictions by hill climbing algorithm.}
+#'   \item{`compress`}{Train a neural network to compress the model from a collection of base learners.}
 #'  }
 #'
-#' @param base.learners [(list of) \code{\link{Learner}}]\cr
-#'   A list of learners created with \code{makeLearner}.
+#' @param base.learners [(list of) [Learner])\cr
+#'   A list of learners created with `makeLearner`.
 #' @param super.learner [\code{\link{Learner} | character(1)}]\cr
 #'   The super learner that makes the final prediction based on the base learners.
-#'   If you pass a string, the super learner will be created via \code{makeLearner}.
-#'   Not used for \code{method = 'average'}. Default is \code{NULL}.
-#' @param predict.type [\code{character(1)}]\cr
-#'   Sets the type of the final prediction for \code{method = 'average'}.
-#'   For other methods, the predict type should be set within \code{super.learner}.
-#'   If the type of the base learner prediction, which is set up within \code{base.learners}, is
+#'   If you pass a string, the super learner will be created via `makeLearner`.
+#'   Not used for `method = 'average'`. Default is `NULL`.
+#' @param predict.type (`character(1)`)\cr
+#'   Sets the type of the final prediction for `method = 'average'`.
+#'   For other methods, the predict type should be set within `super.learner`.
+#'   If the type of the base learner prediction, which is set up within `base.learners`, is
 #'   \describe{
-#'    \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all
-#'    bease learner predictions and \code{predict.type = 'response'} will use
+#'    \item{`"prob"`}{then `predict.type = 'prob'` will use the average of all
+#'    bease learner predictions and `predict.type = 'response'` will use
 #'    the class with highest probability as final prediction.}
-#'    \item{\code{"response"}}{then, for classification tasks with \code{predict.type = 'prob'},
+#'    \item{`"response"`}{then, for classification tasks with `predict.type = 'prob'`,
 #'    the final prediction will be the relative frequency based on the predicted base learner classes
-#'    and classification tasks with \code{predict.type = 'response'} will use majority vote of the base
+#'    and classification tasks with `predict.type = 'response'` will use majority vote of the base
 #'    learner predictions to determine the final prediction.
 #'    For regression tasks, the final prediction will be the average of the base learner predictions.}
 #'   }
 #'
-#' @param method [\code{character(1)}]\cr
+#' @param method (`character(1)`)\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
@@ -43,24 +43,24 @@
 #'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 #'   while speeding up the predictions and reducing the size of the model.
 #'   Default is \dQuote{stack.nocv},
-#' @param use.feat [\code{logical(1)}]\cr
+#' @param use.feat (`logical(1)`)\cr
 #'   Whether the original features should also be passed to the super learner.
-#'   Not used for \code{method = 'average'}.
-#'   Default is \code{FALSE}.
-#' @param resampling [\code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy for \code{method = 'stack.cv'}.
+#'   Not used for `method = 'average'`.
+#'   Default is `FALSE`.
+#' @param resampling ([ResampleDesc])\cr
+#'   Resampling strategy for `method = 'stack.cv'`.
 #'   Currently only CV is allowed for resampling.
-#'   The default \code{NULL} uses 5-fold CV.
-#' @param parset the parameters for \code{hill.climb} method, including
+#'   The default `NULL` uses 5-fold CV.
+#' @param parset the parameters for `hill.climb` method, including
 #' \describe{
-#'   \item{\code{replace}}{Whether a base learner can be selected more than once.}
-#'   \item{\code{init}}{Number of best models being included before the selection algorithm.}
-#'   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
-#'   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
+#'   \item{`replace`}{Whether a base learner can be selected more than once.}
+#'   \item{`init`}{Number of best models being included before the selection algorithm.}
+#'   \item{`bagprob`}{The proportion of models being considered in one round of selection.}
+#'   \item{`bagtime`}{The number of rounds of the bagging selection.}
+#'   \item{`metric`}{The result evaluation metric function taking two parameters `pred` and `true`,
 #'   the smaller the score the better.}
 #' }
-#' the parameters for \code{compress} method, including
+#' the parameters for `compress` method, including
 #' \describe{
 #'    \item{k}{the size multiplier of the generated data}
 #'    \item{prob}{the probability to exchange values}
@@ -87,6 +87,7 @@
 #'     predict.type = "response", method = "compress")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
+#' @noMd
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
@@ -158,10 +159,10 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 #'
 #' @description Returns the predictions for each base learner.
 #'
-#' @param model [\code{WrappedModel}]\cr Wrapped model, result of train.
-#' @param newdata [\code{data.frame}]\cr
+#' @param model ([WrappedModel])\cr Wrapped model, result of train.
+#' @param newdata ([data.frame])\cr
 #' New observations, for which the predictions using the specified base learners should be returned.
-#' Default is \code{NULL} and extracts the base learner predictions that were made during the training.
+#' Default is `NULL` and extracts the base learner predictions that were made during the training.
 #'
 #' @details None.
 #'

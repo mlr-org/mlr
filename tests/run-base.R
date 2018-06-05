@@ -1,2 +1,2 @@
 library(testthat)
-test_check("mlr", filter = "base")
+test_check("mlr", filter = "base_")

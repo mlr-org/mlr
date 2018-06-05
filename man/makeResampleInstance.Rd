@@ -5,32 +5,28 @@
 \alias{ResampleInstance}
 \title{Instantiates a resampling strategy object.}
 \usage{
-makeResampleInstance(desc, task, size, coords, ...)
+makeResampleInstance(desc, task, size, ...)
 }
 \arguments{
-\item{desc}{[\code{\link{ResampleDesc}} | \code{character(1)}]\cr
+\item{desc}{(\link{ResampleDesc} | \code{character(1)})\cr
 Resampling description object or name of resampling strategy.
-In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.}
+In the latter case \link{makeResampleDesc} will be called internally on the string.}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{(\link{Task})\cr
 Data of task to resample from.
 Prefer to pass this instead of \code{size}.}
 
-\item{size}{[\code{\link{integer}}]\cr
+\item{size}{(\link{integer})\cr
 Size of the data set to resample.
 Can be used instead of \code{task}.}
 
-\item{coords}{[\code{\link{data.frame}}]\cr
-Data.frame with two columns named 'x' and 'y' representing spatial coordinates.
-Used only if `desc = 'SpCV'` or `desc = 'SpRepCV'`.}
-
-\item{...}{[any]\cr
-Passed down to \code{\link{makeResampleDesc}} in case
+\item{...}{(any)\cr
+Passed down to \link{makeResampleDesc} in case
 you passed a string in \code{desc}.
 Otherwise ignored.}
 }
 \value{
-[\code{\link{ResampleInstance}}].
+(\link{ResampleInstance}).
 }
 \description{
 This class encapsulates training and test sets generated from the data set for a number
@@ -40,13 +36,13 @@ test examples for each iteration.
 \details{
 Object slots:
 \describe{
-\item{desc [\code{\link{ResampleDesc}}]}{See argument.}
-\item{size [integer(1)]}{See argument.}
-\item{train.inds [list of \code{integer}]}{List of of training indices for all iterations.}
-\item{test.inds [list of \code{integer}]}{List of of test indices for all iterations.}
-\item{group [\code{factor}]}{Optional grouping of resampling iterations. This encodes whether
-  specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
-  aggregate performance values accordingly. Default is 'factor()'.}
+\item{desc (\link{ResampleDesc})}{See argument.}
+\item{size (\code{integer(1)})}{See argument.}
+\item{train.inds (list of \link{integer})}{List of of training indices for all iterations.}
+\item{test.inds (list of \link{integer})}{List of of test indices for all iterations.}
+\item{group (\link{factor})}{Optional grouping of resampling iterations. This encodes whether
+specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
+aggregate performance values accordingly. Default is 'factor()'.}
 }
 }
 \examples{

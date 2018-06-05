@@ -7,10 +7,10 @@
 makeChainModel(next.model, cl)
 }
 \arguments{
-\item{next.model}{[\code{WrappedModel}]\cr
+\item{next.model}{(\link{WrappedModel})\cr
 The next model.}
 
-\item{cl}{[\code{character}]\cr
+\item{cl}{(\link{character})\cr
 Subclass to assign to the resulting model.}
 }
 \description{

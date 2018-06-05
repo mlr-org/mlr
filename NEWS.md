@@ -7,8 +7,9 @@
 * Refactored the resample progress messages to give a better overview and
   distinguish between train and test measures better
 * calculateROCMeasures now returns absolute instead of relative values
-* Added support for spatial data through task attribute "is.spatial" and spatial
-  partitioning methods "SpCV" and "SpRepCV".
+* Added support for spatial data by providing spatial partitioning methods "SpCV" and "SpRepCV".
+* Added new spatial.task classification task.
+* Added new spam.task classification task.
 * Classification tasks now store the class distribution in the
   class.distribution member.
 * mlr now predicts NA for data that contains NA and learners that do not support
@@ -19,16 +20,22 @@
   task descriptions of models in resampling reflect the respective subset, while
   the task description of resample predictions reflect the entire task and not
   necessarily the task of any individual model.
+* Added support for growing and fixed window cross-validation for forecasting
+  through new resample methods "GrowingWindowCV" and "FixedWindowCV".
 
 ## functions - general
-* generatePartialDependenceData: added parameter "range" to allow to specify the
-  range of values for the partial dependencies, integrated with "mmpf" package
+* generatePartialDependenceData: depends now on the "mmpf" package,
+  removed parameter: "center", "resample", "fmin", "fmax" and "gridsize"
+  added parameter: "uniform" and "n" to configure the grid for the partial dependence plot
 * batchmark: allow resample instances and reduction of partial results
 * resample, performance: new flag "na.rm" to remove NAs during aggregation
 * plotTuneMultiCritResultGGVIS: new parameters "point.info" and "point.trafo" to
   control interactivity
 * calculateConfusionMatrix: new parameter "set" to specify whether confusion
   matrix should be computed for "train", "test", or "both" (default)
+* PlotBMRSummary: Add parameter "shape"
+* plotROCCurves: Add faceting argument
+* PreprocWrapperCaret: Add param "ppc.corr", "ppc.zv", "ppc.nzv", "ppc.n.comp", "ppc.cutoff", "ppc.freqCut", "ppc.uniqueCut"
 
 ## functions - new
 * makeClassificationViaRegressionWrapper
@@ -42,11 +49,15 @@
 * extractFDAFourier, extractFDAFPCA, extractFDAMultiResFeatures, extractFDAWavelets
 * makeExtractFDAFeatMethod
 * makeExtractFDAFeatsWrapper
-* getOptPath
+* getTuneResultOptPath
 * makeTuneMultiCritControlMBO: Allows model based multi-critera / multi-objective optimization using mlrMBO
+
+## functions - removed
+* Removed plotViperCharts
 
 ## measures - general
 * measure "arsq" now has ID "arsq"
+* measure "measureMultiLabelF1" was renamed to "measureMultilabelF1" for consistency
 
 ## measures - new
 * measureBER, measureRMSLE, measureF1
@@ -56,6 +67,10 @@
 * unified {classif,regr,surv}.penalized{ridge,lasso,fusedlasso} into {classif,regr,surv}.penalized
 * fixed a bug where surv.cforest gave wrong risk predictions (#1833)
 * fixed bug where classif.xgboost returned NA predictions with multi:softmax
+* classif.lda learner: add 'prior' hyperparameter
+* ranger: update hyperpar 'respect.unordered.factors', add 'extratrees' and 'num.random.splits'
+* h20deeplearning: Rename hyperpar 'MeanSquare' to 'Quadratic'
+* h20*: Add support for "missings" 
 
 ## learners - new
 * classif.adaboostm1
@@ -77,8 +92,8 @@
 * testgroup.sd
 
 ## filter - new
-
 * auc
+* ranger.permutation, ranger.impurity
 
 # mlr 2.11:
 
@@ -394,7 +409,7 @@
   this is the new API:
   plotBMRSummary, plotBMRBoxplots, plotBMRRanksAsBarChart
 
-# mlr_2.6:
+# mlr 2.6:
 * cluster.kmeans: added support for fuzzy clustering (property "prob")
 * regr.lm: removed some erroneous param settings
 * regr.glmnet: added 'family' param and allowed 'gaussian', but also 'poisson'
@@ -869,9 +884,6 @@
 * makeSurvTask
 * impute, reimpute, makeImputeWrapper, lots of impute<Method>, makeImputeMethod
 
-# mlr 1.1:
+# mlr 1.1-18:
 * Initial release to CRAN
-
-
-
 

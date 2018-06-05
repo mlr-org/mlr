@@ -9,42 +9,42 @@ makeFilterWrapper(learner, fw.method = "randomForestSRC.rfsrc",
   fw.mandatory.feat = NULL, ...)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{fw.method}{[\code{character(1)}]\cr
-Filter method. See \code{\link{listFilterMethods}}.
+\item{fw.method}{(\code{character(1)})\cr
+Filter method. See \link{listFilterMethods}.
 Default is \dQuote{randomForestSRC.rfsrc}.}
 
-\item{fw.perc}{[\code{numeric(1)}]\cr
+\item{fw.perc}{(\code{numeric(1)})\cr
 If set, select \code{fw.perc}*100 top scoring features.
 Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
 
-\item{fw.abs}{[\code{numeric(1)}]\cr
+\item{fw.abs}{(\code{numeric(1)})\cr
 If set, select \code{fw.abs} top scoring features.
 Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
 
-\item{fw.threshold}{[\code{numeric(1)}]\cr
+\item{fw.threshold}{(\code{numeric(1)})\cr
 If set, select features whose score exceeds \code{fw.threshold}.
 Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.}
 
-\item{fw.mandatory.feat}{[\code{character}]\cr
+\item{fw.mandatory.feat}{(\link{character})\cr
 Mandatory features which are always included regardless of their scores}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Additional parameters passed down to the filter.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a filter method. Creates a learner object, which can be
 used like any other learner object.
-Internally uses \code{\link{filterFeatures}} before every model fit.
+Internally uses \link{filterFeatures} before every model fit.
 
 After training, the selected features can be retrieved with
-\code{\link{getFilteredFeatures}}.
+\link{getFilteredFeatures}.
 
 Note that observation weights do not influence the filtering and are simply passed
 down to the next learner.
@@ -69,9 +69,7 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
-  \code{\link{makeFilter}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeClassificationViaRegressionWrapper}},

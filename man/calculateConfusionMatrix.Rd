@@ -11,36 +11,36 @@ calculateConfusionMatrix(pred, relative = FALSE, sums = FALSE,
 \method{print}{ConfusionMatrix}(x, both = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
-\item{relative}{[\code{logical(1)}]\cr
+\item{relative}{(\code{logical(1)})\cr
 If \code{TRUE} two additional matrices are calculated. One is normalized by rows and one by
 columns.}
 
-\item{sums}{[\code{logical(1)}]\cr
+\item{sums}{(\code{logical(1)})\cr
 If \code{TRUE} add absolute number of observations in each group.}
 
-\item{set}{[\code{character(1)}]\cr
+\item{set}{(\code{character(1)})\cr
 Specifies which part(s) of the data are used for the calculation.
 If \code{set} equals \code{train} or \code{test}, the \code{pred} object must be the result of a
 resampling, otherwise an error is thrown.
 Defaults to \dQuote{both}. Possible values are \dQuote{train}, \dQuote{test}, or \dQuote{both}.}
 
-\item{x}{[\code{\link{ConfusionMatrix}}]\cr
+\item{x}{(\link{ConfusionMatrix})\cr
 Object to print.}
 
-\item{both}{[\code{logical(1)}]\cr
+\item{both}{(\code{logical(1)})\cr
 If \code{TRUE} both the absolute and relative confusion matrices are printed.}
 
-\item{digits}{[\code{integer(1)}]\cr
+\item{digits}{(\code{integer(1)})\cr
 How many numbers after the decimal point should be printed, only relevant for relative confusion matrices.}
 
-\item{...}{[any]\cr
+\item{...}{(any)\cr
 Currently not used.}
 }
 \value{
-[\code{\link{ConfusionMatrix}}].
+(\link{ConfusionMatrix}).
 }
 \description{
 Calculates the confusion matrix for a (possibly resampled) prediction.
@@ -56,7 +56,7 @@ if \code{FALSE} we only compute the absolute value matrix.
 
 The \code{print} function returns the relative matrices in
 a compact way so that both row and column marginals can be seen in one matrix.
-For details see \code{\link{ConfusionMatrix}}.
+For details see \link{ConfusionMatrix}.
 
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels

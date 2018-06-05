@@ -7,7 +7,7 @@
 getMlrOptions()
 }
 \value{
-[\code{list}].
+(\link{list}).
 }
 \description{
 Gets the options for mlr.

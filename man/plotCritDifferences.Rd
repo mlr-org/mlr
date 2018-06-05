@@ -7,16 +7,16 @@
 plotCritDifferences(obj, baseline = NULL, pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{[\code{critDifferencesData}]
+\item{obj}{([critDifferencesData])
 Result of \link{generateCritDifferencesData} function.}
 
-\item{baseline}{[\code{character(1)}]: [\code{learner.id}] \cr
+\item{baseline}{(`character(1)`): ([learner.id]) \cr
 Overwrites baseline from \link{generateCritDifferencesData}!\cr
-Select a [\code{learner.id} as baseline for the critical difference
+Select a ([learner.id` as baseline for the critical difference
 diagram, the critical difference will be positioned arround this learner.
 Defaults to best performing algorithm.}
 
-\item{pretty.names}{[\code{logical{1}}]\cr
+\item{pretty.names}{(\code{logical(1)})\cr
 Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
@@ -42,13 +42,9 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}}, \code{\link{plotResiduals}},
-  \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 
 Other benchmark: \code{\link{BenchmarkResult}},

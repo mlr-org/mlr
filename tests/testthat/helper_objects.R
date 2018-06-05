@@ -1,5 +1,6 @@
 data(Sonar, package = "mlbench", envir = environment())
 data(BreastCancer, package = "mlbench", envir = environment())
+data(spatial.task, package = "mlr", envir = environment())
 
 binaryclass.df = Sonar
 binaryclass.formula = Class~.
@@ -12,17 +13,17 @@ binaryclass.class.col = 61
 binaryclass.class.levs = levels(binaryclass.df[, binaryclass.class.col])
 binaryclass.task = makeClassifTask("binary", data = binaryclass.df, target = binaryclass.target)
 
-data("bc.task.spatial", package = "mlr")
-binaryclass.spatial.df = bc.task.spatial$env$data
-binaryclass.spatial.formula = diplo01~.
-binaryclass.spatial.target = "diplo01"
+binaryclass.spatial.df = spatial.task$env$data
+coordinates = spatial.task$coordinates
+binaryclass.spatial.formula = slides~.
+binaryclass.spatial.target = "slides"
 binaryclass.spatial.train.inds = c(1:300, 600:900)
 binaryclass.spatial.test.inds  = setdiff(seq_len(nrow(binaryclass.spatial.df)), binaryclass.spatial.train.inds)
 binaryclass.spatial.train = binaryclass.spatial.df[binaryclass.spatial.train.inds, ]
 binaryclass.spatial.test  = binaryclass.spatial.df[binaryclass.spatial.test.inds, ]
 binaryclass.spatial.class.col = 3
 binaryclass.spatial.class.levs = levels(binaryclass.spatial.df[, binaryclass.spatial.class.col])
-binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, spatial = TRUE)
+binaryclass.spatial.task = makeClassifTask("binary", data = binaryclass.spatial.df, target = binaryclass.spatial.target, coordinates = coordinates)
 
 multiclass.df = iris
 multiclass.formula = Species~.

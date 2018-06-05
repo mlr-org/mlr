@@ -7,11 +7,11 @@
 makeMulticlassWrapper(learner, mcw.method = "onevsrest")
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{mcw.method}{[character(1) | function] \cr
+\item{mcw.method}{(\code{character(1)} | \code{function}) \cr
 \dQuote{onevsone} or \dQuote{onevsrest}.
 You can also pass a function, with signature \code{function(task)} and which
 returns a ECOC codematrix with entries +1,-1,0.
@@ -20,7 +20,7 @@ Columns define new binary problems, rows correspond to classes (rows must be nam
 Default is \dQuote{onevsrest}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Fuses a base learner with a multi-class method.

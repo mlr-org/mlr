@@ -7,13 +7,16 @@
 getTuneResultOptPath(tune.result, as.df = TRUE)
 }
 \arguments{
-\item{tune.result}{[\code{\link{TuneResult}}] \cr
-A tuning result of the [\code{\link{tuneParams}}] function.}
+\item{tune.result}{(\link{TuneResult}) \cr
+A tuning result of the (\link{tuneParams}) function.}
 
-\item{as.df}{[\code{logical(1)}]\cr
+\item{as.df}{(\code{logical(1)})\cr
 Should the optimization path be returned as a data frame?
 Default is \code{TRUE}.}
 }
+\value{
+(\link[ParamHelpers:OptPath]{ParamHelpers::OptPath}) or (\link{data.frame}).
+}
 \description{
-Returns the opt.path from a [\code{\link{TuneResult}}] object.
+Returns the opt.path from a (\link{TuneResult}) object.
 }

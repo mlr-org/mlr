@@ -7,70 +7,70 @@
 #' This especially comes in handy during resampling when one wants to perform the
 #' same imputation on the test set as on the training set.
 #'
-#' The function \code{impute} performs the imputation on a data set and returns,
+#' The function `impute` performs the imputation on a data set and returns,
 #' alongside with the imputed data set, an \dQuote{ImputationDesc} object
 #' which can contain \dQuote{learned} coefficients and helpful data.
-#' It can then be passed together with a new data set to \code{\link{reimpute}}.
+#' It can then be passed together with a new data set to [reimpute].
 #'
 #' The imputation techniques can be specified for certain features or for feature classes,
 #' see function arguments.
 #'
 #' You can either provide an arbitrary object, use a built-in imputation method listed
-#' under \code{\link{imputations}} or create one yourself using \code{\link{makeImputeMethod}}.
+#' under [imputations] or create one yourself using [makeImputeMethod].
 #'
 #' @details
 #' The description object contains these slots
 #' \describe{
-#'   \item{target [\code{character}]}{See argument.}
-#'   \item{features [\code{character}]}{Feature names (column names of \code{data}).},
-#'   \item{classes [\code{character}]}{Feature classes (storage type of \code{data}).}
-#'   \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
+#'   \item{target ([character])}{See argument.}
+#'   \item{features ([character])}{Feature names (column names of `data`).},
+#'   \item{classes ([character])}{Feature classes (storage type of `data`).}
+#'   \item{lvls (named [list])}{Mapping of column names of factor features to their levels,
 #'     including newly created ones during imputation.}
-#'   \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
-#'   \item{dummies [\code{named list}]}{Mapping of column names to imputation functions.}
-#'   \item{impute.new.levels [\code{logical(1)}]}{See argument.}
-#'   \item{recode.factor.levels [\code{logical(1)}]}{See argument.}
+#'   \item{impute (named [list])}{Mapping of column names to imputation functions.}
+#'   \item{dummies (named [list])}{Mapping of column names to imputation functions.}
+#'   \item{impute.new.levels (`logical(1)`)}{See argument.}
+#'   \item{recode.factor.levels (`logical(1)`)}{See argument.}
 #' }
 #'
 #' @template arg_taskdf
-#' @param target [\code{character}]\cr
+#' @param target ([character])\cr
 #'   Name of the column(s) specifying the response.
-#'   Default is \code{character(0)}.
-#' @param classes [\code{named list}]\cr
+#'   Default is `character(0)`.
+#' @param classes (named [list])\cr
 #'   Named list containing imputation techniques for classes of columns.
-#'   E.g. \code{list(numeric = imputeMedian())}.
-#' @param cols [\code{named list}]\cr
+#'   E.g. `list(numeric = imputeMedian())`.
+#' @param cols (named [list])\cr
 #'   Named list containing names of imputation methods to impute missing values
 #'   in the data column referenced by the list element's name. Overrules imputation set via
-#'   \code{classes}.
-#' @param dummy.classes [\code{character}]\cr
+#'   `classes`.
+#' @param dummy.classes ([character])\cr
 #'   Classes of columns to create dummy columns for.
-#'   Default is \code{character(0)}.
-#' @param dummy.cols [\code{character}]\cr
+#'   Default is `character(0)`.
+#' @param dummy.cols ([character])\cr
 #'   Column names to create dummy columns (containing binary missing indicator) for.
-#'   Default is \code{character(0)}.
-#' @param dummy.type [\code{character(1)}]\cr
+#'   Default is `character(0)`.
+#' @param dummy.type (`character(1)`)\cr
 #'   How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 #'   or as \dQuote{factor}.
 #'   Default is \dQuote{factor}.
-#' @param force.dummies [\code{logical(1)}]\cr
+#' @param force.dummies (`logical(1)`)\cr
 #'   Force dummy creation even if the respective data column does not
 #'   contain any NAs. Note that (a) most learners will complain about
 #'   constant columns created this way but (b) your feature set might
 #'   be stochastic if you turn this off.
-#'   Default is \code{FALSE}.
-#' @param impute.new.levels [\code{logical(1)}]\cr
+#'   Default is `FALSE`.
+#' @param impute.new.levels (`logical(1)`)\cr
 #'   If new, unencountered factor level occur during reimputation,
 #'   should these be handled as NAs and then be imputed the same way?
-#'   Default is \code{TRUE}.
-#' @param recode.factor.levels [\code{logical(1)}]\cr
+#'   Default is `TRUE`.
+#' @param recode.factor.levels (`logical(1)`)\cr
 #'   Recode factor levels after reimputation, so they match the respective element of
-#'   \code{lvls} (in the description object) and therefore match the levels of the
+#'   `lvls` (in the description object) and therefore match the levels of the
 #'   feature factor in the training data after imputation?.
-#'   Default is \code{TRUE}.
-#' @return [\code{list}]
-#'   \item{data [\code{data.frame}]}{Imputed data.}
-#'   \item{desc [\code{ImputationDesc}]}{Description object.}
+#'   Default is `TRUE`.
+#' @return ([list])
+#'   \item{data ([data.frame])}{Imputed data.}
+#'   \item{desc (`ImputationDesc`)}{Description object.}
 #' @export
 #' @family impute
 #' @examples
@@ -204,20 +204,20 @@ print.ImputationDesc = function(x, ...) {
 #' Re-impute a data set
 #'
 #' This function accepts a data frame or a task and an imputation description
-#' as returned by \code{\link{impute}} to perform the following actions:
+#' as returned by [impute] to perform the following actions:
 #' \enumerate{
-#'   \item Restore dropped columns, setting them to \code{NA}
-#'   \item Add dummy variables for columns as specified in \code{impute}
-#'   \item Optionally check factors for new levels to treat them as \code{NA}s
+#'   \item Restore dropped columns, setting them to `NA`
+#'   \item Add dummy variables for columns as specified in `impute`
+#'   \item Optionally check factors for new levels to treat them as `NA`s
 #'   \item Reorder factor levels to ensure identical integer representation as
 #'     before
 #'   \item Impute missing values using previously collected data
 #' }
 #'
 #' @template arg_taskdf
-#' @param desc [\code{ImputationDesc}]\cr
-#'   Imputation description as returned by \code{\link{impute}}.
-#' @return Imputated \code{data.frame} or task with imputed data.
+#' @param desc (`ImputationDesc`)\cr
+#'   Imputation description as returned by [impute].
+#' @return Imputated `data.frame` or task with imputed data.
 #' @family impute
 #' @export
 reimpute = function(obj, desc) {

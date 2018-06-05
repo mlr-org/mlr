@@ -1,16 +1,16 @@
 #' @title Fuse learner with preprocessing.
 #'
 #' @description
-#' Fuses a learner with preprocessing methods provided by \code{\link[caret]{preProcess}}.
+#' Fuses a learner with preprocessing methods provided by [caret::preProcess].
 #'  Before training the preprocessing will be performed and the preprocessing model will be stored.
 #'  Before prediction the preprocessing model will transform the test data according to the trained model.
 #'
-#'  After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.medianImpute} is set to \code{TRUE}.
+#'  After being wrapped the learner will support missing values although this will only be the case if `ppc.knnImpute`, `ppc.bagImpute` or `ppc.medianImpute` is set to `TRUE`.
 #'
 #' @template arg_learner
-#' @param ... [any]\cr
-#'   See \code{\link[caret]{preProcess}} for parameters not listed above.
-#'   If you use them you might want to define them in the \code{add.par.set} so that they can be tuned.
+#' @param ... (any)\cr
+#'   See [caret::preProcess] for parameters not listed above.
+#'   If you use them you might want to define them in the `add.par.set` so that they can be tuned.
 #' @template ret_learner
 #' @family wrapper
 #' @export

@@ -7,12 +7,12 @@
 makeMultilabelDBRWrapper(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass a string the learner will be created via \link{makeLearner}.}
 }
 \value{
-[\code{\link{Learner}}].
+\link{Learner}.
 }
 \description{
 Every learner which is implemented in mlr and which supports binary
@@ -22,7 +22,7 @@ for each label/target on which the binary learner is applied.
 For each target, actual information of all binary labels (except the target variable) is used as additional features.
 During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 
-Models can easily be accessed via \code{\link{getLearnerModel}}.
+Models can easily be accessed via \link{getLearnerModel}.
 }
 \examples{
 d = getTaskData(yeast.task)

@@ -7,15 +7,15 @@
 getMultilabelBinaryPerformances(pred, measures)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{(\link{Prediction})\cr
 Multilabel Prediction object.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]
+\item{measures}{(\link{Measure} | list of \link{Measure})\cr
 Performance measure(s) to evaluate, must be applicable to binary classification performance.
 Default is \code{mmce}.}
 }
 \value{
-[named \code{matrix}]. Performance value(s), column names are measure(s), row names are labels.
+(named \code{matrix}). Performance value(s), column names are measure(s), row names are labels.
 }
 \description{
 Measures the quality of each binary label prediction w.r.t. some binary classification

@@ -18,26 +18,6 @@ test_that("cv instance works", {
   }
 })
 
-test_that("SpCV instance works", {
-
-  coords = bc.task.spatial$env$data[, 1:2]
-
-  rin = makeResampleInstance(makeResampleDesc("SpCV", iters = 3), coords = coords)
-
-  folds = rin$desc$iters
-  expect_equal(folds, 3)
-
-  for (i in 1:folds) {
-    i1 = rin$train.inds[[i]]
-    i2 = rin$test.inds[[i]]
-    expect_true(min(i1) >= 1)
-    expect_true(max(i1) <= 944)
-    expect_true(min(i2) >= 1)
-    expect_true(max(i2) <= 944)
-    expect_equal(sort(c(unique(i1), i2)), 1:944)
-  }
-})
-
 test_that("cv resampling works", {
   data = multiclass.df
   formula = multiclass.formula
@@ -47,7 +27,9 @@ test_that("cv resampling works", {
   tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
-  testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
+  expect_true({
+    testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
+  })
 })
 
 test_that("cv instance works is stochastic", {

@@ -8,41 +8,41 @@ makeCostMeasure(id = "costs", minimize = TRUE, costs, combine = mean,
   best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(\code{character(1)})\cr
 Name of measure.
 Default is \dQuote{costs}.}
 
-\item{minimize}{[\code{logical(1)}]\cr
+\item{minimize}{(\code{logical(1)})\cr
 Should the measure be minimized?
 Otherwise you are effectively specifying a benefits matrix.
 Default is \code{TRUE}.}
 
-\item{costs}{[\code{matrix}]\cr
+\item{costs}{(\link{matrix})\cr
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.}
 
-\item{combine}{[\code{function}]\cr
+\item{combine}{(\code{function})\cr
 How to combine costs over all cases for a SINGLE test set?
-Note this is not the same as the \code{aggregate} argument in \code{\link{makeMeasure}}
-You can set this as well via \code{\link{setAggregation}}, as for any measure.
-Default is \code{\link{mean}}.}
+Note this is not the same as the \code{aggregate} argument in \link{makeMeasure}
+You can set this as well via \link{setAggregation}, as for any measure.
+Default is \link{mean}.}
 
-\item{best}{[\code{numeric(1)}]\cr
+\item{best}{(`numeric(1)`)\cr
 Best obtainable value for measure.
-Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
+Default is -`Inf` or `Inf`, depending on `minimize`.}
 
-\item{worst}{[\code{numeric(1)}]\cr
+\item{worst}{(`numeric(1)`)\cr
 Worst obtainable value for measure.
-Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
+Default is `Inf` or -`Inf`, depending on `minimize`.}
 
-\item{name}{[\code{character}] \cr
-Name of the measure. Default is \code{id}.}
+\item{name}{([character]) \cr
+Name of the measure. Default is `id`.}
 
-\item{note}{[\code{character}] \cr
+\item{note}{([character]) \cr
 Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
-[\code{\link{Measure}}].
+\link{Measure}.
 }
 \description{
 Creates a cost measure for non-standard classification error costs.

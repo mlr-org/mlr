@@ -3,23 +3,23 @@
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
 #'
-#' @param res [\code{\link{TuneMultiCritResult}}]\cr
-#'   Result of \code{\link{tuneParamsMultiCrit}}.
-#' @param path [\code{logical(1)}]\cr
+#' @param res ([TuneMultiCritResult])\cr
+#'   Result of [tuneParamsMultiCrit].
+#' @param path (`logical(1)`)\cr
 #'   Visualize all evaluated points (or only the non-dominated pareto front)?
 #'   For the full path, the size of the points on the front is slightly increased.
-#'   Default is \code{TRUE}.
-#' @param col [\code{character(1)}]\cr
-#'   Which column of \code{res$opt.path} should be mapped to ggplot2 color?
-#'   Default is \code{NULL}, which means none.
-#' @param shape [\code{character(1)}]\cr
-#'   Which column of \code{res$opt.path} should be mapped to ggplot2 shape?
-#'   Default is \code{NULL}, which means none.
-#' @param pointsize [\code{numeric(1)}]\cr
-#'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+#'   Default is `TRUE`.
+#' @param col (`character(1)`)\cr
+#'   Which column of `res$opt.path` should be mapped to ggplot2 color?
+#'   Default is `NULL`, which means none.
+#' @param shape (`character(1)`)\cr
+#'   Which column of `res$opt.path` should be mapped to ggplot2 shape?
+#'   Default is `NULL`, which means none.
+#' @param pointsize (`numeric(1)`)\cr
+#'   Point size for ggplot2 [ggplot2::geom_point] for data points.
 #'   Default is 2.
-#' @param pretty.names [\code{logical{1}}]\cr
-#'   Whether to use the ID of the measures instead of their name in labels. Defaults to \code{TRUE}.
+#' @param pretty.names (`logical(1)`)\cr
+#'   Whether to use the ID of the measures instead of their name in labels. Defaults to `TRUE`.
 #' @template ret_gg2
 #' @family tune_multicrit
 #' @export
@@ -56,73 +56,4 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
     p = p + labs(x = names.y[1L], y = names.y[2L])
   }
   return(p)
-}
-#' @title Plots multi-criteria results after tuning using ggvis.
-#'
-#' @description
-#' Visualizes the pareto front and possibly the dominated points.
-#'
-#' @param res [\code{\link{TuneMultiCritResult}}]\cr
-#'   Result of \code{\link{tuneParamsMultiCrit}}.
-#' @param path [\code{logical(1)}]\cr
-#'   Visualize all evaluated points (or only the non-dominated pareto front)?
-#'   Points are colored according to their location.
-#'   Default is \code{TRUE}.
-#' @param point.info [\code{character(1)}]\cr
-#'   Show for each point which hyper parameters led to this point?
-#'   For \code{"click"}, information is displayed on mouse click.
-#'   For \code{"hover"}, information is displayed on mouse hover.
-#'   If set to \code{"none"}, no information is displayed.
-#'   Default is \code{"hover"}.
-#' @param point.trafo [\code{logical(1)}]\cr
-#'   Should the information show the transformed hyper parameters?
-#'   Default is \code{TRUE}.
-#'
-#' @template ret_ggv
-#' @family tune_multicrit
-#' @export
-#' @examples
-#' # see tuneParamsMultiCrit
-plotTuneMultiCritResultGGVIS = function(res, path = TRUE, point.info = "hover", point.trafo = TRUE) {
-  requirePackages("_ggvis")
-  assertClass(res, "TuneMultiCritResult")
-  assertFlag(path)
-  assertChoice(point.info, choices = c("click", "hover", "none"))
-  assertFlag(point.trafo)
-
-  plt.data = as.data.frame(res$opt.path)
-  plt.data$location = factor(row.names(plt.data) %in% res$ind, levels = c(TRUE, FALSE),
-                             labels = c("frontier", "interior"))
-  plt.data$id = seq_len(nrow(plt.data))
-
-  if (point.trafo) {
-    for (param in res$opt.path$par.set$pars) {
-      plt.data[, param$id] = trafoValue(param, plt.data[, param$id])
-    }
-  }
-
-  if (!path) {
-    plt.data = plt.data[plt.data$location == "frontier", , drop = FALSE]
-  }
-
-  info = function(x) {
-    if (is.null(x)) {
-      return(NULL)
-    }
-    n = length(res$x[[1]])
-    row = plt.data[plt.data$id == x$id, ][1:n]
-    text = paste0(names(row), ": ", format(row, zero.print = TRUE), collapse = "<br />")
-    return(text)
-  }
-
-  plt = ggvis::ggvis(plt.data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
-    ggvis::prop("y", as.name(colnames(res$y)[2L])),
-    ggvis::prop("key", ~id, scale = FALSE))
-  plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
-
-  if (point.info != "none") {
-    plt = ggvis::add_tooltip(plt, info, point.info)
-  }
-
-  return(plt)
 }
