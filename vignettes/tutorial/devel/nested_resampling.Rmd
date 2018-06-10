@@ -138,6 +138,12 @@ Another useful function is `getNestedTuneResultsX()`, which extracts the best fo
 getNestedTuneResultsX(r)
 ```
 
+You can furthermore access the resampling indices of the inner level using `getResamplingIndices()` if you used either `extract = getTuneResult` or `extract = getFeatSelResult` in the `resample()` call:
+
+```{r}
+getResamplingIndices(r, inner = TRUE)
+```
+
 ### Feature selection
 
 As you might recall from the section about [feature selection](feature_selection.html){target="_blank"}, `mlr` supports the filter and the wrapper approach.

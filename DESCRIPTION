@@ -18,6 +18,7 @@ Authors@R: c(
     person("Zachary", "Jones", email = "zmj@zmjones.com", role = "aut"),
     person("Giuseppe", "Casalicchio", email = "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut", comment = c(ORCID = "0000-0001-5324-5966")),
     person("Mason", "Gallo", email = "masonagallo@gmail.com", role = "aut"),
+    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "aut", comment = c(ORCID = '0000-0003-0748-6624')),
     person("Jakob", "Bossek", email = "jakob.bossek@tu-dortmund.de", role = "ctb", comment = c(ORCID = "0000-0002-4121-4668")),
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "ctb", comment = c(ORCID = "0000-0003-4233-0182")),
     person("Leonard","Judt", email = "leonard.judt@tu-dortmund.de", role = "ctb"),
@@ -33,7 +34,6 @@ Authors@R: c(
     person("Martin", "Binder", email = "ma.binder@campus.lmu.de", role = "ctb"),
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
-    person("Patrick", "Schratz", email = "patrick.schratz@gmail.com", role = "ctb"),
     person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"),
     person("Alexander", "Engelhardt", email = "alexander.w.engelhardt@gmail.com", role = "ctb"))
 URL: https://github.com/mlr-org/mlr

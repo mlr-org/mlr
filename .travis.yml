@@ -75,7 +75,7 @@ jobs:
            - libgsl0-dev
            - imagemagick # for favicon
       latex: false
-      pandoc_version: 2.1.3
+      pandoc_version: 2.2.1
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
@@ -89,14 +89,35 @@ jobs:
              - $TRAVIS_PULL_REQUEST = false
              - $TRAVIS_EVENT_TYPE != cron
     - stage: Tutorial
-      env: TUTORIAL=PDF
+      env: TUTORIAL=PDFdev
       addons:
         apt:
           packages:
            - libgmp-dev
            - libgsl0-dev
            - ghostscript # for mlr-tutorial pdf
-      pandoc_version: 2.1.3
+      pandoc_version: 2.2.1
+      before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+      install: R -q -e 'tic::install()'
+      script:  R -q -e 'tic::script()'
+      before_deploy: R -q -e 'tic::before_deploy()'
+      deploy:
+         provider: script
+         script: R -q -e 'tic::deploy()'
+         on:
+           branch: master
+           condition:
+             - $TRAVIS_PULL_REQUEST = false
+             - $TRAVIS_EVENT_TYPE != cron
+    - stage: Tutorial
+      env: TUTORIAL=PDFrelease
+      addons:
+        apt:
+          packages:
+           - libgmp-dev
+           - libgsl0-dev
+           - ghostscript # for mlr-tutorial pdf
+      pandoc_version: 2.2.1
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
       install: R -q -e 'tic::install()'
       script:  R -q -e 'tic::script()'
