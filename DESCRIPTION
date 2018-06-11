@@ -68,6 +68,7 @@ Suggests:
     care,
     caret (>= 6.0-57),
     class,
+    classiFunc,
     clue,
     cluster,
     clusterSim (>= 0.44-5),
