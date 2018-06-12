@@ -294,6 +294,8 @@ generatePartialDependenceData = function(obj, input, features,
 doDerivativeMarginalPrediction = function(x, z = sample(seq_len(nrow(data)), n[2]),
   target, points, obj, data, uniform, fun, n, individual, ...) {
 
+  requirePackages("numDeriv", why = "PartialDependenceData", default.method = "load")
+
   if (length(target) == 1L) {
     ret = cbind(numDeriv::grad(numDerivWrapper,
       x = points[[x]], model = obj, data = data,
