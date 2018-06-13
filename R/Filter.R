@@ -626,12 +626,12 @@ preprocess.cmi.praznik = function(data) {
     data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
     int.yes = vapply(data, is.integer, FUN.VALUE = TRUE)
     if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
-    numeric.yes = unlist(lapply(data, function(x) class(x) == "numeric"))
+    numeric.yes = vlapply(data, is.numeric)
     df.num = data.frame(data[, numeric.yes])
     interval = min(as.integer(nrow(data) / 3.0), 10L)
     interval = max(interval, 2L)
-    cols.unique.len = unlist(lapply(df.num, function(x) length(unique(x))))
-    const.cols.yes = unlist(lapply(df.num, function(x) length(unique(x)) < 2L))
+    cols.unique.len = viapply(df.num, function(x) length(unique(x)))
+    const.cols.yes = vlapply(df.num, function(x) length(unique(x)) < 2L)
     if (any(const.cols.yes)) {
       df.num.uni =  lapply(df.num[const.cols.yes], as.factor)
       df.num.cut = df.num[!const.cols.yes]
@@ -647,7 +647,7 @@ preprocess.cmi.praznik = function(data) {
 
 helper.cmi.praznik = function(criteria, preprocess = FALSE) {
   candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-  checkmate::assert_choice(criteria, candiates)
+  assert_choice(criteria, candiates)
   criteria = paste0("praznik::", criteria)
   function(task, nselect, ...) {
     org.featnames = getTaskFeatureNames(task)
