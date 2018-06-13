@@ -646,9 +646,6 @@ preprocess.cmi.praznik = function(data) {
 }
 
 helper.cmi.praznik = function(criteria, preprocess = FALSE) {
-  candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-  assert_choice(criteria, candiates)
-  criteria = paste0("praznik::", criteria)
   function(task, nselect, ...) {
     org.featnames = getTaskFeatureNames(task)
     task = removeConstantFeatures(task)  # without removing constant features, praznik will generate Rcpp error
@@ -661,7 +658,7 @@ helper.cmi.praznik = function(criteria, preprocess = FALSE) {
     k = min(nselect, length(featnames))
     k = max(k, 1)
     input = list(X = X, Y = Y, k = k)
-    algo = eval(parse(text = criteria))
+    algo = criteria
     res = do.call(what = algo, args = input)
     res$score
     }}
@@ -683,7 +680,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("MIM")
+  fun = helper.cmi.praznik(praznik::MIM)
   )
 
 #' Filters in the praznik package using mutual information criteria greedy search
@@ -699,7 +696,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("JMI")
+  fun = helper.cmi.praznik(praznik::JMI)
   )
 
 #' Filters in the praznik package using mutual information criteria greedy search
@@ -715,7 +712,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("DISR")
+  fun = helper.cmi.praznik(praznik::DISR)
   )
 
 #' Filters in the praznik package using mutual information criteria greedy search
@@ -731,7 +728,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("JMIM")
+  fun = helper.cmi.praznik(praznik::JMIM)
   )
 
 #' Filters in the praznik package using mutual information criteria greedy search
@@ -747,7 +744,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("NJMIM")
+  fun = helper.cmi.praznik(praznik::NJMIM)
   )
 
 #' Filters in the praznik package using mutual information criteria greedy search
@@ -763,7 +760,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("MRMR")
+  fun = helper.cmi.praznik(praznik::MRMR)
   )
 
 #' Filters in the praznik package using mutual information criteria greedy search
@@ -779,7 +776,7 @@ makeFilter(
   pkg = "praznik",
   supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
   supported.features = c("numerics", "factors", "integer", "character", "logical"),
-  fun = helper.cmi.praznik("CMIM")
+  fun = helper.cmi.praznik(praznik::CMIM)
   )
 
 helper.fun.FSelectorRcpp = function(type = "infogain") {
