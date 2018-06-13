@@ -624,7 +624,7 @@ makeFilter(
 preprocess.cmi.praznik = function(data) {
     colns = colnames(data)
     data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
-    int.yes = vapply(data, is.integer, FUN.VALUE = TRUE)
+    int.yes = vlapply(data, is.integer)
     if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
     numeric.yes = vlapply(data, is.numeric)
     df.num = data.frame(data[, numeric.yes])
@@ -652,7 +652,7 @@ helper.cmi.praznik = function(criteria, preprocess = FALSE) {
     data = getTaskData(task)
     featnames = getTaskFeatureNames(task)
     targetname = getTaskTargetNames(task)
-    if (preprocess) data = preprocess.cmi.praznik(data)
+    if (preprocess) data = preprocess.cmi.praznik(data)  # if the target column is character, it will be transformed to factor here, which is why i pass the whole dataframe here, the split is done on numerical column which will not affect the target column except it transform the character target to factors.
     X = data[, featnames]
     Y = data[, targetname]
     k = min(nselect, length(featnames))
