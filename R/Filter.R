@@ -820,31 +820,6 @@ makeFilter(
   }
 )
 
-makeFilter(
-  name = "glmnet.lasso",
-  desc = "lasso",
-  pkg = "glmnet",
-  supported.tasks = "classif",  # FIXME: still investigating if regression task could be used
-  supported.features = c("numerics"),  #FIXME: other datatype
-  fun = function(task, nselect, ...) {
-    mdata = getTaskData(task)
-    fns = getTaskFeatureNames(task)
-    tns = getTaskTargetNames(task)
-    X = mdata[, fns]
-    y = mdata[[tns]]
-    X = as.matrix(X)
-    family = "binomial"
-    if (length(levels(y)) > 2) family = "multinomial"
-    fit = glmnet::glmnet(X, y, family = family)
-    index = which.min(abs(fit$df - nselect))
-    s = fit$lambda[index]
-    vec = abs(coef(fit, s = s))
-    vec = as.vector(vec)
-    names(vec) = fns
-    return(vec)
-  }
-  )
-
 #' Simple entropy based filter with Rcpp implementation
 #' @rdname makeFilter
 #' @name makeFilter
