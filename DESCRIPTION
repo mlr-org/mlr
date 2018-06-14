@@ -148,6 +148,7 @@ Suggests:
     sparseLDA,
     stepPlr,
     survAUC,
+    svglite,
     SwarmSVM,
     testthat,
     tgp,
