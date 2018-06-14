@@ -12,7 +12,7 @@ makeMixedOutputTask = function(id = deparse(substitute(data)), data, target, wei
         coordinates = coordinates, fixup.data = fixup.data, check.data = check.data)
   task$task.desc = makeMixedOutputTaskDesc(id, data, target, weights, blocking, coordinates)
   task$target.type = sapply(getTaskTargets(task), class)
-  task = addClasses(task, c("MixedOutputClass", "MultiOutputClass"))
+  task = addClasses(task, c("MixedOutputTask", "MultiOutputTask"))
   return(task)
 }
 
