@@ -17,7 +17,7 @@ makeMixedOutputTask = function(id = deparse(substitute(data)), data, target, wei
 }
 
 #' @export
-print.MixedOutputClass = function(x, ...) {
+print.MixedOutputTask = function(x, ...) {
   y = getTaskTargets(x)
   print.SupervisedTask(x)
   catf("Classes: %i", ncol(y))
