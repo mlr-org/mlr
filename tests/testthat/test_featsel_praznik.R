@@ -1,28 +1,34 @@
 context("filterFeatures_praznik")
-  test_that("filterFeatures_praznik", {
-    a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1)  # numeric vector
-    b = c("one", "two", "three")  # character vector
-    c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)  # logical vector
-    d = c(1L, 3L, 5L, 7L, 9L, 17L)
-    f = rep(c("c1", "c2"), 9)
-    df = data.frame(a = a, b = b, c = c, d = d, f = f)
-    df = convertDataFrameCols(df, logicals.as.factor = TRUE)
-    lapply(df, class)
-    task = makeClassifTask(data = df, target = "f")
-    candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-    lapply(candiates, function(x) {
-    generateFilterValuesData(task, method = paste("praznik", x, sep = "."), nselect = 2L)
-    generateFilterValuesData(task, method = paste("praznik", x, sep = "."), nselect = 1L)
-    lrn = makeLearner("classif.randomForest")
-    lrn = makeFilterWrapper(learner = lrn, fw.method = paste("praznik", x, sep = "."), fw.perc = 0.9)
-    res = resample(learner = lrn, task = binaryclass.task, resampling = cv10, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
-    expect_true(TRUE)
-    })
+
+test_that("filterFeatures_praznik", {
+  a = c(1, 2, 5.3, 6, -2, 4, 8.3, 9.2, 10.1)  # numeric vector
+  b = c("one", "two", "three")  # character vector
+  c = c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE)  # logical vector
+  d = c(1L, 3L, 5L, 7L, 9L, 17L)
+  f = rep(c("c1", "c2"), 9)
+  df = data.frame(a = a, b = b, c = c, d = d, f = f)
+  df = convertDataFrameCols(df, logicals.as.factor = TRUE)
+
+  task = makeClassifTask(data = df, target = "f")
+  candidates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+  for (candidate in candidates) {
+    m = paste("praznik", candidate, sep = ".")
+    fv = generateFilterValuesData(task, method = m, nselect = 2L)
+    expect_class(fv, "FilterValues")
+    expect_data_frame(fv$data, nrow = getTaskNFeats(task))
+    expect_set_equal(fv$data$name, getTaskFeatureNames(task))
+    expect_equal(sum(!is.na(fv$data[[m]])), 2L)
+
+    lrn = makeLearner("classif.featureless")
+    lrn = makeFilterWrapper(learner = lrn, fw.method = m, fw.abs = 3L)
+    res = resample(learner = lrn, task = binaryclass.task, resampling = hout, measures = list(mmce, timetrain), extract = getFilteredFeatures, show.info = FALSE)
+    expect_length(res$extract[[1L]], 3L)
+  }
 })
 
 test_that("FilterWrapper with praznik mutual information, resample", {
-  candiates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
-  lapply(candiates, function(x) {
+  candidates = c("JMI", "DISR", "JMIM", "MIM", "NJMIM", "MRMR", "CMIM")
+  lapply(candidates, function(x) {
     lrn1 = makeLearner("classif.lda")
     lrn2 = makeFilterWrapper(lrn1, fw.method = paste("praznik", x, sep = "."), fw.perc = 0.5)
     m = train(lrn2, binaryclass.task)
