@@ -3,7 +3,7 @@
 #' @description
 #' After you resampled a tuning wrapper (see [makeTuneWrapper])
 #' with `resample(..., extract = getTuneResult)` this helper returns a `data.frame` with
-#' the the best found hyperparameter settings for each resampling iteration.
+#' the best found hyperparameter settings for each resampling iteration.
 #'
 #' @param r ([ResampleResult]) \cr
 #'   The result of resampling of a tuning wrapper.

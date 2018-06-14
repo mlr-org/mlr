@@ -261,6 +261,12 @@ r = resample("regr.rpart", bh.task, rdesc, show.info = FALSE, extract = getFeatu
 r$extract
 ```
 
+There is also an convenience function `getResamplingIndices()` to extract the resampling indices from the `ResampleResult` object:
+
+```{r}
+getResamplingIndices(r)
+```
+
 ### Stratification and blocking
 
 * *Stratification* with respect to a categorical variable makes sure that all its values are present in each training and test set in approximately the same proportion as in the original data set.
