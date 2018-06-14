@@ -139,6 +139,7 @@ Suggests:
     rotationForest,
     rpart,
     RRF,
+    rgenoud,
     rrlda,
     rsm,
     RSNNS,
