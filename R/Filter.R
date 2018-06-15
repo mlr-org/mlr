@@ -647,12 +647,19 @@ preprocess.cmi.praznik = function(data) {
 
 helper.cmi.praznik = function(criteria, preprocess = FALSE) {
   function(task, nselect, ...) {
+    org.data = getTaskData(task)
     org.featnames = getTaskFeatureNames(task)
+    const.flag = vlapply(org.data, function(x) length(unique(x)) == 1L)
+    const.pos = which(const.flag)
+    norm.pos = which(!const.flag)
+    feat.score = vector(mode = "numeric", length = nrow(org.data))
+    names(feat.score) = org.featnames
     task = removeConstantFeatures(task)  # without removing constant features, praznik will generate Rcpp error
     data = getTaskData(task)
     featnames = getTaskFeatureNames(task)
     targetname = getTaskTargetNames(task)
-    if (preprocess) data = preprocess.cmi.praznik(data)  # if the target column is character, it will be transformed to factor here, which is why i pass the whole dataframe here, the split is done on numerical column which will not affect the target column except it transform the character target to factors.
+    if (preprocess) data = preprocess.cmi.praznik(data)
+    # if the target column is character, it will be transformed to factor here, which is why i pass the whole dataframe here, the split is done on numerical column which will not affect the target column except it transform the character target to factors.
     X = data[, featnames]
     Y = data[, targetname]
     k = min(nselect, length(featnames))
@@ -660,8 +667,8 @@ helper.cmi.praznik = function(criteria, preprocess = FALSE) {
     input = list(X = X, Y = Y, k = k)
     algo = criteria
     res = do.call(what = algo, args = input)
-    res$score
-    }}
+  }
+}
 
 # fun must return a named vector of feature importance values. By convention the most important features receive the highest scores. If you are making use of the nselect option fun can either return a vector of nselect scores or a vector as long as the total numbers of features in the task filled with NAs for all features whose scores weren't calculated.
 # test consistency: d = generateFilterValuesData(iris.task, method = c("praznik.MIM", "anova.test"), nselect = 2)
