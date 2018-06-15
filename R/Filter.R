@@ -620,7 +620,9 @@ makeFilter(
 )
 
 # Preprocess the data before applying praznik filter. According to Praznik documentation:
-# The best practice is to convert data to factors prior to feeding them in this function. Real attributes are cut into about 10 equally-spaced bins, following the heuristic often used in literature.Precise number of cuts depends on the number of objects; namely, it is n/3, but never less than 2 and never more than 10.
+# The best practice is to convert data to factors prior to feeding them in this function.
+# Real attributes are cut into about 10 equally-spaced bins, following the heuristic often used in literature.
+# Precise number of cuts depends on the number of objects; namely, it is n/3, but never less than 2 and never more than 10.
 preprocess.cmi.praznik = function(data) {
     colns = colnames(data)
     data = convertDataFrameCols(data, logicals.as.factor = TRUE, chars.as.factor = TRUE)
@@ -628,9 +630,8 @@ preprocess.cmi.praznik = function(data) {
     if (any(int.yes)) data[int.yes] = lapply(data[int.yes], as.factor)
     numeric.yes = vlapply(data, is.numeric)
     df.num = data.frame(data[, numeric.yes])
-    interval = min(as.integer(nrow(data) / 3.0), 10L)
-    interval = max(interval, 2L)
-    cols.unique.len = viapply(df.num, function(x) length(unique(x)))
+    interval = max(min(as.integer(nrow(data) / 3L), 10L), 2L)
+	cols.unique.len = viapply(df.num, function(x) length(unique(x)))
     const.cols.yes = vlapply(df.num, function(x) length(unique(x)) < 2L)
     if (any(const.cols.yes)) {
       df.num.uni =  lapply(df.num[const.cols.yes], as.factor)
@@ -645,7 +646,9 @@ preprocess.cmi.praznik = function(data) {
     return(data)
 }
 
-helper.cmi.praznik = function(criteria, preprocess = FALSE) {
+helper.cmi.praznik = function(fun, preprocess = FALSE) {
+  force(fun)
+  force(preprocess)
   function(task, nselect, ...) {
     org.data = getTaskData(task)
     org.featnames = getTaskFeatureNames(task)
@@ -664,9 +667,7 @@ helper.cmi.praznik = function(criteria, preprocess = FALSE) {
     Y = data[, targetname]
     k = min(nselect, length(featnames))
     k = max(k, 1)
-    input = list(X = X, Y = Y, k = k)
-    algo = criteria
-    res = do.call(what = algo, args = input)
+    fun(X = X, Y = Y, k = k)$score
   }
 }
 

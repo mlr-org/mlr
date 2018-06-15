@@ -43,6 +43,7 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
     tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas, resample.fun, always.minimize = FALSE)
   }
   if ("TuneMultiCritControlMBO" %in% class(ctrl)) {
+    requirePackages("smoof", why = "TuneMultiCritControlMBO", default.method = "load")
     # FIXME: Optimization of noisy multi-objective functions not supported at the moment by mlrMBO
     fun = smoof::makeMultiObjectiveFunction(fn = fn, par.set = ps2, has.simple.signature = FALSE,
       n.objectives = ctrl$mbo.control$n.objectives, minimize = extractSubList(measures, "minimize"))

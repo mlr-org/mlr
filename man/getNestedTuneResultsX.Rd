@@ -16,7 +16,7 @@ The result of resampling of a tuning wrapper.}
 \description{
 After you resampled a tuning wrapper (see \link{makeTuneWrapper})
 with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
-the the best found hyperparameter settings for each resampling iteration.
+the best found hyperparameter settings for each resampling iteration.
 }
 \examples{
 # see example of makeTuneWrapper
@@ -24,6 +24,7 @@ the the best found hyperparameter settings for each resampling iteration.
 \seealso{
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},

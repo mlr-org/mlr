@@ -27,17 +27,17 @@
 #' @name TuneResult
 #' @rdname TuneResult
 NULL
-makeTuneResult = function(learner, control, x, y, threshold, opt.path, ...) {
-  makeOptResult(learner, control, x, y, threshold, opt.path, "TuneResult", ...)
+makeTuneResult = function(learner, control, x, y, resampling, threshold, opt.path, ...) {
+  makeOptResult(learner, control, x, y, resampling, threshold, opt.path, "TuneResult", ...)
 }
 
-makeTuneResultFromOptPath = function(learner, par.set, measures, control, opt.path) {
+makeTuneResultFromOptPath = function(learner, par.set, measures, resampling, control, opt.path) {
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)
   x = trafoValue(par.set, e$x)
   x = removeMissingValues(x)
   threshold = if (control$tune.threshold) getThresholdFromOptPath(opt.path, i) else NULL
-  makeTuneResult(learner, control, x, e$y, threshold, opt.path)
+  makeTuneResult(learner, control, x, e$y, resampling, threshold, opt.path)
 }
 
 
