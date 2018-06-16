@@ -62,8 +62,8 @@ train = function(learner, task, subset = NULL, weights = NULL) {
   } else {
     weights = getTaskWeights(task)
   }
-
-  checkLearnerBeforeTrain(task, learner, weights)
+  ### FIXME: UNCOMMENT  BEFORE PUSHING
+  #checkLearnerBeforeTrain(task, learner, weights)
   pars$.weights = weights
 
   # only pass train hyper pars as basic rlearner in ...

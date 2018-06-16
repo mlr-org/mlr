@@ -165,55 +165,54 @@ forecast.WrappedModel = function(object, newdata = NULL, task, h = 10, ...) {
     y = p, time = time.predict, error = error)
 }
 
+.getForecastResponse = function(pred) {
+  if (pred$predict.type == "prob") {
+    colnames(pred$data) = stri_replace_all_regex(colnames(pred$data), "prob", "")
+    colnames(pred$data) = stri_replace_all_regex(colnames(pred$data), "[.]", "")
+  }
+  return(pred$data)
+}
 
 makeForecast = function(.data, .newdata, .proc.vals, .h, .td, .model, ...) {
   forecasts = list()[1:I(.h)]
-  if (!is.null(.proc.vals$grouping))
+  if (!is.null(.proc.vals$grouping)) {
+    if (!is.null(.newdata[, .proc.vals$grouping])) {
+      .data = .data[get(.proc.vals$grouping) %in% unique(.newdata[, c(.proc.vals$grouping),])]
+    }
     group.data = unique(.data[,.proc.vals$grouping, with = FALSE])
+  }
+  # get lag structure
+  lagdiff.func = function(...) {
+    createLagDiffFeatures(obj = .data, ...)
+  }
 
   for (i in seq_len(.h)) {
-    # The dates here will be thrown away later
-    if (!is.null(.proc.vals$grouping)) {
-      times = .data[, .SD[,as.POSIXct("1992-01-14") + 1:.N], by = c(.proc.vals$grouping)][, c(V1), drop = TRUE]
-    } else {
-      times = as.POSIXct("1992-01-14") + 1:(nrow(.data))
-    }
+    times = .data[, .SD[,as.POSIXct("1992-01-14") + 1:.N], by = eval(.proc.vals$grouping)]
+    times = times[, c(V1), drop = TRUE]
     .proc.vals$date.col = times
-    # get lag structure
-    lagdiff.func = function(...) {
-      createLagDiffFeatures(obj = .data, ...)
+    if (!is.null(.newdata) & i != 1) {
+      .newdata = data.table(.newdata)
+      last_rows = .data[, .I[.N], by = eval(.proc.vals$grouping)]$V1
+      new_cols = setdiff(colnames(.newdata), .proc.vals$grouping)
+      new_row = .newdata[, .SD[i - 1, ], by = eval(.proc.vals$grouping)][, c(new_cols), with = FALSE]
+      .data[last_rows, c(colnames(.newdata)) := new_row]
     }
     data.lag = do.call(lagdiff.func, .proc.vals)
     data.step = data.table(data.lag)
-    #data.step = data.step[complete.cases(data.step),]
-    if (!is.null(.proc.vals$grouping)) {
-      data.step = data.step[, .SD[.N,], by = c(.proc.vals$grouping)]
-    } else {
-      data.step = data.step[nrow(data.step), ]
-    }
+    data.step = data.step[, .SD[.N,], by = eval(.proc.vals$grouping)]
     data.step = data.step[, -c(.td$target), with = FALSE]
-    if (!is.null(.newdata)) {
-      .newdata = data.table(.newdata)
-      if (!is.null(.proc.vals$grouping)) {
-        data.step = merge(data.step, .newdata[,.SD[i,] , by = c(.proc.vals$grouping)], by = .proc.vals$grouping)
-      } else {
-        data.step = cbind(data.step, .newdata[i, ])
-      }
-    }
     # predict
     pred = predict(.model, newdata = as.data.frame(data.step))
-
-    if (pred$predict.type == "response") {
-      forecasts[[i]] = pred$data
-    } else if (pred$predict.type == "prob") {
-      colnames(pred$data) = stri_replace_all_regex(colnames(pred$data), "prob", "")
-      colnames(pred$data) = stri_replace_all_regex(colnames(pred$data), "[.]", "")
-      forecasts[[i]] = pred$data
-    } else if (pred$predict.type == "se") {
-      forecasts[[i]] = pred$data
-    }
+    forecasts[[i]] = .getForecastResponse(pred)
     if (!is.null(.proc.vals$grouping)) {
-      .data = rbindlist(l = list(.data[,c(.proc.vals$cols, .proc.vals$target, .proc.vals$grouping), with = FALSE], group.data), fill = TRUE)
+      if (is.null(.proc.vals$cols)) {
+        cols = colnames(.data)
+      } else {
+        cols = .proc.vals$cols
+      }
+      .datalist = list(.data[,c(union(union(cols, .proc.vals$target), .proc.vals$grouping)),
+                             with = FALSE], group.data)
+      .data = rbindlist(l = .datalist, fill = TRUE)
       setkeyv(.data, .proc.vals$grouping)
     } else if (!is.null(.proc.vals$cols)) {
       .data = suppressWarnings(do.call(rbind, list(.data,.data[1E+99,])))

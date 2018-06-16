@@ -90,10 +90,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     data[, dates := date.col]
     suppressWarnings(setkeyv(data, c(grouping, "dates")))
   }
-  cols = cols[!(cols %in% grouping)]
   if (!is.null(cols)) {
-    if (!(target %in% cols))
-      #cols = c(cols, target)
     assertSubset(cols, work.cols)
     x = data[, c(cols, grouping), with = FALSE]
   } else {
@@ -109,6 +106,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   } else {
     seasonal.cols = cols
   }
+  cols = cols[!(cols %in% grouping)]
   seasonal.cols = seasonal.cols[!(seasonal.cols %in% grouping)]
   lag.diff.full.names = vector(mode = "character")
 
