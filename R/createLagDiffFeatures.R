@@ -97,7 +97,6 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     cols = work.cols
     x = data[, cols, with = FALSE]
   }
-
   if (!is.null(seasonal.cols)) {
     if (!(target %in% seasonal.cols))
       #seasonal.cols = c(seasonal.cols, target)
@@ -113,8 +112,8 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   if (any(lag > 0)) {
     lag.vars = cols
     lag.value = lag
-    lag.levels = as.vector(vapply(lag.value, function(levels) rep(levels, length(lag.vars)), c(rep(1.0, length(lag.vars)))))
-    lag.names = paste0(lag.vars, ".lag.", lag.levels)
+    lag.names = do.call("paste", c(CJ(lag.vars, "lag", lag.value,
+      sorted = FALSE), sep = "_"))
     x[, c(lag.names) := shift(.SD, lag.value), by = eval(c(grouping)), .SDcols = lag.vars]
     lag.diff.full.names = c(lag.diff.full.names, lag.names)
   }
@@ -125,7 +124,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
   }
 
   if (add_var) {
-    var.lag.names = paste0("var.",target,".", lag.value)
+    var.lag.names = do.call("paste", c(CJ("var", target, lag.value, sorted = FALSE), sep = "_"))
     x[,(var.lag.names) :=  lapply(.SD, function(x) pad(cumsum(na.omit((get(target) - x)^2)),length(x))) , by = eval(c(grouping)), .SDcols = lag.names]
     lag.diff.full.names = c(lag.diff.full.names, var.lag.names)
   }
@@ -149,9 +148,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
     diff.full.names = list()[seq_len(nrow(diff.table))]
     for (i in seq_len(nrow(diff.table))) {
       diff.iter = as.numeric(diff.table[i, ])
-      diff.lag.names = as.numeric(rep(diff.iter[2], length(diff.vars)))
-      diff.diff.names = as.numeric(rep(diff.iter[1], length(diff.vars)))
-      diff.names = paste0(diff.vars, ".diff.", diff.diff.names, ".lag.", diff.lag.names)
+      diff.names = do.call("paste", c(CJ(diff.vars, "diff", diff.iter[1], "lag", diff.iter[2], sorted = FALSE), sep = "_"))
       x[, c(diff.names) := lapply(.SD,
         function(xx) pad(diff(xx, lag = diff.iter[2], differences = diff.iter[1]), length(xx))),
         by = eval(c(grouping)), .SDcols = diff.vars]
@@ -172,6 +169,9 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
         TTR.arg.iter = TTR.args[j,]
         TTR.arg.list = BBmisc::convertColsToList(TTR.arg.iter)
         TTR.var.names = paste0(TTR.vars, ".", TTR.func.name, ".", paste(TTR.arg.list, collapse = "."))
+        TTR.var.names = diff.names = do.call("paste", c(CJ(TTR.vars, TTR.func.name,
+          paste(TTR.arg.list, collapse = "_"), sorted = FALSE), sep = "_"))
+
         x[, c(TTR.var.names) :=  lapply(.SD, function(xx) {
           do.call(get(TTR.func.name),
                   unlist(list(x = list(xx), TTR.arg.list), recursive = FALSE))
@@ -190,7 +190,7 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
       seasonal.lag.value = seasonal.lag * frequency
       seasonal.lag.levels = as.vector(vapply(seasonal.lag.value, function(levels) rep(levels, length(seasonal.lag.vars)),
         c(rep(1.0, length(seasonal.lag.vars)))))
-      seasonal.lag.names = paste0(seasonal.lag.vars, ".lag.", seasonal.lag.levels)
+      seasonal.lag.names = do.call("paste", c(CJ(seasonal.lag.vars, ".lag.", unique(seasonal.lag.levels), sorted = FALSE), sep = "_"))
       x[, c(seasonal.lag.names) := shift(.SD, seasonal.lag.value), by = eval(c(grouping)), .SDcols = seasonal.lag.vars]
       lag.diff.full.names = c(lag.diff.full.names, seasonal.lag.names)
     }
@@ -219,7 +219,9 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
         seasonal.diff.iter = as.numeric(seasonal.diff.table[i, ])
         seasonal.diff.lag.names = as.numeric(rep(seasonal.diff.iter[2], length(seasonal.diff.vars)))
         seasonal.diff.diff.names = as.numeric(rep(seasonal.diff.iter[1], length(seasonal.diff.vars)))
-        seasonal.diff.names = paste0(seasonal.diff.vars, ".diff.", seasonal.diff.diff.names, ".lag.", seasonal.diff.lag.names)
+        seasonal.diff.names = do.call("paste", c(CJ(seasonal.diff.vars, "diff", seasonal.diff.diff.names,
+          "lag", seasonal.diff.lag.names, sorted = FALSE), sep = "_"))
+
         x[, c(seasonal.diff.names) := lapply(.SD,
           function(xx) pad(diff(xx, lag = seasonal.diff.iter[2], differences = seasonal.diff.iter[1]), length(xx))),
           by = eval(c(grouping)), .SDcols = seasonal.diff.vars]
@@ -249,7 +251,8 @@ createLagDiffFeatures.data.frame = function(obj, target = character(0L),
       data = x
     }
   } else {
-    data = cbind(data[, unique(c(setdiff(work.cols, union(cols, seasonal.cols)), "dates", target)), with = FALSE], x[, c(lag.diff.full.names), with = FALSE])
+    data_cols = unique(c(setdiff(work.cols, union(cols, seasonal.cols)), "dates", target))
+    data = cbind(data[, ..data_cols], x[, c(lag.diff.full.names), with = FALSE])
   }
   if (!na.pad) {
     data = data[, .SD[-max.shift, ], by = eval(c(grouping))]
