@@ -1,32 +1,32 @@
 #' @title Get tuning parameters from a learner of the caret R-package.
 #'
 #' @description
-#' Constructs a grid of tuning parameters from a learner of the \code{caret}
+#' Constructs a grid of tuning parameters from a learner of the `caret`
 #' R-package. These values are then converted into a list of non-tunable
-#' parameters (\code{par.vals}) and a tunable
-#' \code{\link[ParamHelpers]{ParamSet}} (\code{par.set}), which can be used by
-#' \code{\link{tuneParams}} for tuning the learner. Numerical parameters will
+#' parameters (`par.vals`) and a tunable
+#' [ParamHelpers::ParamSet] (`par.set`), which can be used by
+#' [tuneParams] for tuning the learner. Numerical parameters will
 #' either be specified by their lower and upper bounds or they will be
 #' discretized into specific values.
 #'
-#' @param learner [\code{character(1)}]\cr
-#'   The name of the learner from \code{caret}
-#'   (cf. \url{https://topepo.github.io/caret/available-models.html}). Note that the
-#'   names in \code{caret} often differ from the ones in \code{mlr}.
-#' @param length [\code{integer(1)}]\cr
-#'   A length / precision parameter which is used by \code{caret} for
-#'   generating the grid of tuning parameters. \code{caret} generates either as
-#'   many values per tuning parameter / dimension as defined by \code{length}
-#'   or only a single value (in case of non-tunable \code{par.vals}).
-#' @param task [\code{\link{Task}}]\cr
+#' @param learner (`character(1)`)\cr
+#'   The name of the learner from `caret`
+#'   (cf. <https://topepo.github.io/caret/available-models.html>). Note that the
+#'   names in `caret` often differ from the ones in `mlr`.
+#' @param length (`integer(1)`)\cr
+#'   A length / precision parameter which is used by `caret` for
+#'   generating the grid of tuning parameters. `caret` generates either as
+#'   many values per tuning parameter / dimension as defined by `length`
+#'   or only a single value (in case of non-tunable `par.vals`).
+#' @param task ([Task])\cr
 #'   Learning task, which might be requested for creating the tuning grid.
-#' @param discretize [\code{logical(1)}]\cr
+#' @param discretize (`logical(1)`)\cr
 #'   Should the numerical parameters be discretized? Alternatively, they will
-#'   be defined by their lower and upper bounds. The default is \code{TRUE}.
-#' @return [\code{list(2)}]. A list of parameters:
+#'   be defined by their lower and upper bounds. The default is `TRUE`.
+#' @return (`list(2)`). A list of parameters:
 #' \itemize{
-#'   \item{\code{par.vals}} contains a list of all constant tuning parameters
-#'   \item{\code{par.set}} is a \code{\link[ParamHelpers]{ParamSet}}, containing all the configurable
+#'   \item{`par.vals`} contains a list of all constant tuning parameters
+#'   \item{`par.set`} is a [ParamHelpers::ParamSet], containing all the configurable
 #'   tuning parameters
 #' }
 #' @export

@@ -13,7 +13,7 @@ getPredictionSE(pred)
 getPredictionTruth(pred)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}]\cr
+\item{pred}{([Prediction])\cr
 Prediction object.}
 }
 \value{
@@ -21,14 +21,14 @@ See above.
 }
 \description{
 The following types are returned, depending on task type:
- \tabular{ll}{
-   classif     \tab factor\cr
-   regr        \tab numeric\cr
-   se          \tab numeric\cr
-   cluster     \tab integer\cr
-   surv        \tab numeric\cr
-   multilabel  \tab logical matrix, columns named with labels\cr
-   fcregr      \tab numeric\cr
+\tabular{ll}{
+classif     \tab factor\cr
+regr        \tab numeric\cr
+se          \tab numeric\cr
+cluster     \tab integer\cr
+surv        \tab numeric\cr
+multilabel  \tab logical matrix, columns named with labels\cr
+fcregr      \tab numeric\cr
 }
 }
 \seealso{

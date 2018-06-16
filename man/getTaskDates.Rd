@@ -7,11 +7,11 @@
 getTaskDates(x)
 }
 \arguments{
-\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+\item{x}{([Task] | [TaskDesc])\cr
 Task or its description object.}
 }
 \value{
-[\code{character(1)}]
+\link{\code{character(1)}}
 }
 \description{
 Returns the dates from a task if they exist.

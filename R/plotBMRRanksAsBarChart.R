@@ -2,19 +2,19 @@
 #'
 #' @description
 #' Plots a bar chart from the ranks of algorithms. Alternatively,
-#' tiles can be plotted for every rank-task combination, see \code{pos}
+#' tiles can be plotted for every rank-task combination, see `pos`
 #' for details. In all plot variants the ranks of the learning algorithms are displayed on
-#' the x-axis. Areas are always colored according to the \code{learner.id}.
+#' the x-axis. Areas are always colored according to the `learner.id`.
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param ties.method [\code{character(1)}]\cr
-#'   See \code{\link{rank}} for details.
+#' @param ties.method (`character(1)`)\cr
+#'   See [rank] for details.
 #' @template arg_aggregation_method
-#' @param pos [\code{character(1)}]\cr
+#' @param pos (`character(1)`)\cr
 #'   Optionally set how the bars are positioned in ggplot2.
 #'   Ranks are plotted on the x-axis.
-#'   \dQuote{tile} plots a heat map with \code{task} as the y-axis.
+#'   \dQuote{tile} plots a heat map with `task` as the y-axis.
 #'   Allows identification of the performance in a special task.
 #'   \dQuote{stack} plots a stacked bar plot.
 #'   Allows for comparison of learners within and and across ranks.

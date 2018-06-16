@@ -7,16 +7,16 @@
 plotFilterValuesGGVIS(fvalues, feat.type.cols = FALSE)
 }
 \arguments{
-\item{fvalues}{[\code{\link{FilterValues}}]\cr
+\item{fvalues}{(\link{FilterValues})\cr
 Filter values.}
 
-\item{feat.type.cols}{[\code{logical(1)}]\cr
+\item{feat.type.cols}{(\code{logical(1)})\cr
 Colors for factor and numeric features.
 \code{FALSE} means no colors.
 Default is \code{FALSE}.}
 }
 \value{
-a ggvis plot object.
+(`character(1)`) ggvis plot object.
 }
 \description{
 Plot filter values using ggvis.

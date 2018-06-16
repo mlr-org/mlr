@@ -7,27 +7,27 @@
 \method{forecast}{WrappedModel}(object, newdata = NULL, task, h = 10, ...)
 }
 \arguments{
-\item{object}{[\code{\link{WrappedModel}}]\cr
+\item{object}{\link{\code{\link{WrappedModel}}}\cr
 Wrapped model, result of \code{\link{train}}.}
 
-\item{newdata}{[\code{data.frame}]\cr
+\item{newdata}{\link{\code{data.frame}}\cr
 Optional: A data frame of external regressors which must have the same number of rows as your forecast length h}
 
-\item{task}{[\code{\link{Task}}]\cr
+\item{task}{\link{\code{\link{Task}}}\cr
 The task. This is only used for fcregr and mfcregr, in which it's used to gather date information}
 
-\item{h}{[\code{integer(1)}]
+\item{h}{\link{\code{integer(1)}}
 An integer specifying the forecast horizon}
 
-\item{...}{[any]\cr
+\item{...}{\link{any}\cr
 Currently ignored.}
 }
 \value{
-[\code{\link{Prediction}}].
+\link{\code{\link{Prediction}}}.
 }
 \description{
 Forecast the target variable of new data using a fitted model.
-What is stored exactly in the [\code{\link{Prediction}}] object depends
+What is stored exactly in the \link{\code{\link{Prediction}}} object depends
 on the \code{predict.type} setting of the \code{\link{Learner}}.
 If \code{predict.type} was set to \dQuote{prob} probability thresholding
 can be done calling the \code{\link{setThreshold}} function on the

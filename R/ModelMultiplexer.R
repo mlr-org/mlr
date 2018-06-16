@@ -4,8 +4,8 @@
 #' Combines multiple base learners by dispatching
 #' on the hyperparameter \dQuote{selected.learner} to a specific model class.
 #' This allows to tune not only the model class (SVM, random forest, etc) but also
-#' their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
-#' \code{\link{makeTuneControlIrace}} for a very powerful approach, see example below.
+#' their hyperparameters in one go. Combine this with [tuneParams] and
+#' [makeTuneControlIrace] for a very powerful approach, see example below.
 #'
 #' The parameter set is the union of all (unique) base learners.
 #' In order to avoid name clashes all parameter names are prefixed
@@ -14,15 +14,16 @@
 #' The predict.type of the Multiplexer is inherited from the predict.type of the
 #' base learners.
 #'
-#' The getter \code{\link{getLearnerProperties}} returns the properties of the
+#' The getter [getLearnerProperties] returns the properties of the
 #' selected base learner.
 #'
-#' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
+#' @param base.learners ([list` of [Learner])\cr
 #'  List of Learners with unique IDs.
-#' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
+#' @return ([ModelMultiplexer]). A [Learner] specialized as `ModelMultiplexer`.
 #' @aliases ModelMultiplexer
 #' @family multiplexer
 #' @family tune
+#' @noMd
 #' @export
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.

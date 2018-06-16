@@ -4,29 +4,29 @@
 \alias{makeTaskDescInternal}
 \title{Exported for internal use.}
 \usage{
-makeTaskDescInternal(type, id, data, target, weights, blocking, spatial)
+makeTaskDescInternal(type, id, data, target, weights, blocking, coordinates)
 }
 \arguments{
-\item{type}{[\code{character(1)}]\cr
+\item{type}{(\code{character(1)})\cr
 Task type.}
 
-\item{id}{[\code{character(1)}]\cr
+\item{id}{(\code{character(1)})\cr
 task id}
 
-\item{data}{[\code{data.frame}]\cr
+\item{data}{(\link{data.frame})\cr
 data}
 
-\item{target}{[\code{character}]\cr
+\item{target}{(\link{character})\cr
 target columns}
 
-\item{weights}{[\code{numeric}]\cr
+\item{weights}{(\link{numeric})\cr
 weights}
 
-\item{blocking}{[\code{numeric}\cr
+\item{blocking}{(\link{numeric})\cr
 task data blocking}
 
-\item{spatial}{[\code{logical(1)}]\cr
-whether data is spatial}
+\item{coordinates}{(\code{logical(1)})\cr
+whether spatial coordinates have been provided}
 }
 \description{
 Exported for internal use.

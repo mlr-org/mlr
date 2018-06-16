@@ -6,29 +6,29 @@
 #' of the prediction (or maybe only the model, think AIC).
 #' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 #'
-#' All supported measures can be found by \code{\link{listMeasures}} or as a table
-#' in the tutorial appendix: \url{http://mlr-org.github.io/mlr-tutorial/release/html/measures/}.
+#' All supported measures can be found by [listMeasures] or as a table
+#' in the tutorial appendix: <http://mlr-org.github.io/mlr-tutorial/release/html/measures/>.
 #'
-#' If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
-#' If you want to implement your own measure, look at \code{\link{makeMeasure}}.
+#' If you want a measure for a misclassification cost matrix, look at [makeCostMeasure].
+#' If you want to implement your own measure, look at [makeMeasure].
 #'
 #' Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
 #'
 #' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 #' starting with 1. If this is not the case, some of the measures will generate warnings.
 #'
-#' Some measure have parameters. Their defaults are set in the constructor \code{\link{makeMeasure}} and can be
-#' overwritten using \code{\link{setMeasurePars}}.
+#' Some measure have parameters. Their defaults are set in the constructor [makeMeasure] and can be
+#' overwritten using [setMeasurePars].
 #'
-#' @param truth [\code{factor}]\cr
+#' @param truth ([factor])\cr
 #'   Vector of the true class.
-#' @param response [\code{factor}]\cr
+#' @param response ([factor])\cr
 #'   Vector of the predicted class.
-#' @param negative [\code{character(1)}]\cr
+#' @param negative (`character(1)`)\cr
 #'   The name of the negative class.
-#' @param positive [\code{character(1)}]\cr
+#' @param positive (`character(1)`)\cr
 #'   The name of the positive class.
-#' @param probabilities [\code{numeric} | \code{matrix}]\cr
+#' @param probabilities ([numeric] | [matrix])\cr
 #'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
 #'   b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
 #'   columns are named with class labels.
@@ -1221,7 +1221,7 @@ gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
 #' @format none
 #' @references
 #' He, H. & Garcia, E. A. (2009)
-#' \emph{Learning from Imbalanced Data.}
+#' *Learning from Imbalanced Data.*
 #' IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 measureGMEAN = function(truth, response, negative, positive) {
   sqrt(measureTPR(truth, response, positive) * measureTNR(truth, response, negative))
@@ -1300,15 +1300,24 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   definition by Montanes et al.: http: / /www.sciencedirect.com / science / article / pii / S0031320313004019.
   Fractions where the denominator becomes 0 are replaced with 1 before computing the average across all instances.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureMultiLabelF1(getPredictionTruth.PredictionMultilabel(pred),
+    measureMultilabelF1(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
+#' Deprecated, use `measureMultilabelF1` instead.
 #' @export measureMultiLabelF1
 #' @rdname measures
 #' @format none
 measureMultiLabelF1 = function(truth, response) {
+  .Deprecated("measureMultilabelF1")
+  measureMultilabelF1(truth, response)
+}
+
+#' @export measureMultilabelF1
+#' @rdname measures
+#' @format none
+measureMultilabelF1 = function(truth, response) {
   numerator = 2 * rowSums(truth & response)
   denominator = rowSums(truth + response)
   mean(ifelse(denominator == 0, 1, numerator / denominator))
@@ -1411,8 +1420,8 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 #' @format none
 #' @references
 #' H. Uno et al.
-#' \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
-#' Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
+#' *On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data*
+#' Statistics in medicine. 2011;30(10):1105-1117. <http://dx.doi.org/10.1002/sim.4154>.
 cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model"),
   name = "Uno's Concordance index",
@@ -1434,8 +1443,8 @@ cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 
 #' @format none
 #' @references
 #' H. Uno et al.
-#' \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}
-#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. \url{http://www.jstor.org/stable/27639883}.
+#' *Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models*
+#' Journal of the American Statistical Association 102, no. 478 (2007): 527-37. <http://www.jstor.org/stable/27639883>.
 iauc.uno = makeMeasure(id = "iauc.uno", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
   name = "Uno's estimator of cumulative AUC for right censored time-to-event data",

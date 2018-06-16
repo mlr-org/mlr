@@ -7,11 +7,11 @@
 getTuneResult(object)
 }
 \arguments{
-\item{object}{[\code{\link{WrappedModel}}]\cr
-Trained Model created with \code{\link{makeTuneWrapper}}.}
+\item{object}{(\link{WrappedModel})\cr
+Trained Model created with \link{makeTuneWrapper}.}
 }
 \value{
-[\code{\link{TuneResult}}].
+(\link{TuneResult}).
 }
 \description{
 Returns the optimal hyperparameters and optimization path after training.

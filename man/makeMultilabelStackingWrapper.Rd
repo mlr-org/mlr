@@ -7,15 +7,15 @@
 makeMultilabelStackingWrapper(learner, cv.folds = 2)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 
-\item{cv.folds}{[\code{integer(1)}]\cr
-The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.}
+\item{cv.folds}{(`integer(1)`)\cr
+The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is `2`.}
 }
 \value{
-[\code{\link{Learner}}].
+[Learner].
 }
 \description{
 Every learner which is implemented in mlr and which supports binary
@@ -24,7 +24,7 @@ Stacking trains a binary classifier for each label using predicted label informa
 as additional features (by cross validation).
 During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 
-Models can easily be accessed via \code{\link{getLearnerModel}}.
+Models can easily be accessed via \link{getLearnerModel}.
 }
 \examples{
 d = getTaskData(yeast.task)

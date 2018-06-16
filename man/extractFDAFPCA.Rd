@@ -7,16 +7,16 @@
 extractFDAFPCA(pve = 0.99, npc = NULL)
 }
 \arguments{
-\item{pve}{[\code{numeric}]\cr
+\item{pve}{(\link{numeric})\cr
 Fraction of variance explained for the functional principal components.
 Default is 0.99.}
 
-\item{npc}{[\code{integer}]\cr
+\item{npc}{(\link{integer})\cr
 Number of principal components to extract. Overrides \code{pve} param.
 Default is \code{NULL}}
 }
 \value{
-[\code{data.frame}].
+(\link{data.frame}).
 }
 \description{
 The function extracts the functional principal components from a data.frame

@@ -1,1 +1,1 @@
-#' @return [\code{\link{TaskDesc}}].
+#' @return [TaskDesc].

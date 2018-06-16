@@ -1,7 +1,7 @@
 #' @title Induced model of learner.
 #'
 #' @description
-#' Result from \code{\link{train}}.
+#' Result from [train].
 #'
 #' It internally stores the underlying fitted model,
 #' the subset used for training, features used for training, levels of factors in the
@@ -9,19 +9,19 @@
 #'
 #' Object members: See arguments.
 #'
-#' The constructor \code{makeWrappedModel} is mainly for internal use.
+#' The constructor `makeWrappedModel` is mainly for internal use.
 #'
 #' @template arg_learner
-#' @param learner.model [any]\cr
+#' @param learner.model (any)\cr
 #'   Underlying model.
 #' @template arg_taskdesc
 #' @template arg_subset
-#' @param features [\code{character}]\cr
+#' @param features ([character])\cr
 #'   Features used for training.
-#' @param factor.levels [named \code{list} of \code{character}]\cr
+#' @param factor.levels (named [list] of [character])\cr
 #'   Levels of factor variables (features and potentially target) in training data.
 #'   Named by variable name, non-factors do not occur in the list.
-#' @param time [\code{numeric(1)}]\cr
+#' @param time (`numeric(1)`)\cr
 #'   Computation time for model fit in seconds.
 #' @template ret_wmodel
 #' @export
@@ -70,17 +70,17 @@ print.WrappedModel = function(x, ...) {
 
 #' Get underlying R model of learner integrated into mlr.
 #'
-#' @param model [\code{\link{WrappedModel}}]\cr
-#'   The model, returned by e.g., \code{\link{train}}.
-#' @param more.unwrap [\code{logical(1)}]\cr
+#' @param model ([WrappedModel])\cr
+#'   The model, returned by e.g., [train].
+#' @param more.unwrap (`logical(1)`)\cr
 #'   Some learners are not basic learners from R, but implemented in mlr as meta-techniques.
-#'   Examples are everything that inherits from \code{HomogeneousEnsemble}.
-#'   In these cases, the \code{learner.model} is often a list of mlr \code{\link{WrappedModel}}s.
+#'   Examples are everything that inherits from `HomogeneousEnsemble`.
+#'   In these cases, the `learner.model` is often a list of mlr [WrappedModel]s.
 #'   This option allows to strip them further to basic R models.
 #'   The option is simply ignored for basic learner models.
-#'   Default is \code{FALSE}.
-#' @return [any]. A fitted model, depending the learner / wrapped package. E.g., a
-#'   model of class \code{\link[rpart]{rpart}} for learner \dQuote{classif.rpart}.
+#'   Default is `FALSE`.
+#' @return (any). A fitted model, depending the learner / wrapped package. E.g., a
+#'   model of class [rpart::rpart] for learner \dQuote{classif.rpart}.
 #' @export
 getLearnerModel = function(model, more.unwrap = FALSE) {
   assertFlag(more.unwrap)
@@ -95,12 +95,12 @@ getLearnerModel.WrappedModel = function(model, more.unwrap) {
 #' @title Is the model a FailureModel?
 #'
 #' @description
-#' Such a model is created when one sets the corresponding option in \code{\link{configureMlr}}.
+#' Such a model is created when one sets the corresponding option in [configureMlr].
 #'
-#' For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
+#' For complex wrappers this getter returns `TRUE` if ANY model contained in it failed.
 #'
 #' @template arg_wrappedmod
-#' @return [\code{logical(1)}].
+#' @return (`logical(1)`).
 #' @export
 isFailureModel = function(model) {
   UseMethod("isFailureModel")
@@ -115,13 +115,13 @@ isFailureModel.WrappedModel = function(model) {
 #' @title Return error message of FailureModel.
 #'
 #' @description
-#' Such a model is created when one sets the corresponding option in \code{\link{configureMlr}}.
-#' If no failure occurred, \code{NA} is returned.
+#' Such a model is created when one sets the corresponding option in [configureMlr].
+#' If no failure occurred, `NA` is returned.
 #'
 #' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 #'
 #' @template arg_wrappedmod
-#' @return [\code{character(1)}].
+#' @return (`character(1)`).
 #' @export
 getFailureModelMsg = function(model) {
   UseMethod("getFailureModelMsg")
@@ -135,12 +135,12 @@ getFailureModelMsg.WrappedModel = function(model) {
 #' @title Return the error dump of FailureModel.
 #'
 #' @description
-#' Returns the error dump that can be used with \code{debugger()} to evaluate errors.
-#' If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE}, this returns
-#' \code{NULL}.
+#' Returns the error dump that can be used with `debugger()` to evaluate errors.
+#' If [configureMlr] configuration `on.error.dump` is `FALSE`, this returns
+#' `NULL`.
 #'
 #' @template arg_wrappedmod
-#' @return [\code{last.dump}].
+#' @return (`last.dump`).
 #' @export
 getFailureModelDump = function(model) {
   UseMethod("getFailureModelDump")

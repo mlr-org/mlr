@@ -12,7 +12,7 @@
 #' the target feature in training data, respectively.
 #'
 #' The default method is \dQuote{mean} which corresponds to the ZeroR algorithm
-#' from WEKA, see \url{https://weka.wikispaces.com/ZeroR}.
+#' from WEKA, see <https://weka.wikispaces.com/ZeroR>.
 #'
 #' @name regr.featureless
 NULL

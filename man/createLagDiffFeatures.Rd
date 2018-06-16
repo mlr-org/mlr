@@ -7,74 +7,74 @@
 createLagDiffFeatures(obj, target = character(0L), lag = 0L,
   difference = 0L, difference.lag = 0L, cols = NULL,
   seasonal.cols = NULL, seasonal.lag = 0L, seasonal.difference = 0L,
-  seasonal.difference.lag = 0L, frequency = 1L, add_dates = TRUE,
+  seasonal.difference.lag = 0L, frequency = 1L, add_dates = "yday",
   na.pad = FALSE, return.nonlag = FALSE, grouping = NULL,
   add_var = FALSE, TTR.funcs = NULL, date.col)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{([data.frame] | [Task])\cr
 Input data.}
 
-\item{target}{[\code{character(1)} | \code{character(2)} | \code{character(n.classes)}]\cr
+\item{target}{(`character(1)` | `character(2)` | `character(n.classes)`)\cr
 Name(s) of the target variable(s).
-Only used when \code{obj} is a data.frame, otherwise ignored.
+Only used when `obj` is `character(1)` data.frame, otherwise ignored.
 If survival analysis is applicable, these are the names of the survival time and event columns,
 so it has length 2.
 For multilabel classification these are the names of logical columns that indicate whether
-a class label is present and the number of target variables corresponds to the number of
+`character(1)` class label is present and the number of target variables corresponds to the number of
 classes.}
 
-\item{lag}{[\code{integer}]\cr
+\item{lag}{\link{\code{integer}}\cr
 An integer vector of lag lengths.}
 
-\item{difference}{[\code{integer}]\cr
+\item{difference}{\link{\code{integer}}\cr
 An integer of the order of differencing}
 
-\item{difference.lag}{[\code{integer}]\cr
+\item{difference.lag}{\link{\code{integer}}\cr
 An integer denoting the period to difference over}
 
-\item{cols}{[\code{character}]\cr
+\item{cols}{\link{\code{character}}\cr
 A character vector of columns to create lag features for.
 Default is to use all columns.}
 
-\item{seasonal.cols}{[\code{character}]\cr
+\item{seasonal.cols}{\link{\code{character}}\cr
 A character vector of columns to create seasonal lag features for. Defaults to all columns}
 
-\item{seasonal.lag}{[\code{integer}]\cr
+\item{seasonal.lag}{\link{\code{integer}}\cr
 An integer vector of seasonal lag lengths, made as \code{seasonal.lag * frequency}}
 
-\item{seasonal.difference}{[\code{integer}]\cr
+\item{seasonal.difference}{\link{\code{integer}}\cr
 An integer of the seasonal order of difference, made as \code{seasonal.difference * frequency}}
 
-\item{seasonal.difference.lag}{[\code{integer}]\cr
+\item{seasonal.difference.lag}{\link{\code{integer}}\cr
 An integer denoting the period to seasonaly difference over}
 
-\item{frequency}{[\code{integer}]\cr
+\item{frequency}{\link{\code{integer}}\cr
 An integer representing the periodicity in the time series. If frequency is declared in the task,
 the task frequency will be used.}
 
-\item{add_dates}{[\code{logical}]\cr
-Whether date variables should be added}
+\item{add_dates}{\link{\code{character()}}\cr
+A character vector of \code{data.table} date functions used to create date variables}
 
-\item{na.pad}{[\code{logical}]\cr
+\item{na.pad}{\link{\code{logical}}\cr
 A logical to denote whether the data should be padded to the original size with NAs}
 
-\item{return.nonlag}{[\code{logical}]\cr
+\item{return.nonlag}{\link{\code{logical}}\cr
 A logical to denote whether the original unlagged features should be returned}
 
-\item{grouping}{[\code{character}]\cr
+\item{grouping}{\link{\code{character}}\cr
 The name of the column to be passed to data.table's \code{by} function. This will take lags and differences wrt the groups.}
 
-\item{add_var}{[\code{logical}]
+\item{add_var}{\link{\code{logical}}
 When TRUE, creates the lagged rolling variance based on the \code{lag}}
 
-\item{TTR.funcs}{[\code{list}]\cr
+\item{TTR.funcs}{\link{\code{list}}\cr
 A list of TTR functions such as \code{list(runSum = list(n = 1:10, cumulative = TRUE))}}
 
-\item{date.col}{[code{data.frame}]
+\item{date.col}{\link{code{data.frame}}
 The dates for each observation. In the case of a forecasting task, these will be taken from the task description.}
 
-\item{momentum}{[\code{integer}] \cr
+\item{momentum}{\link{\code{integer}} \cr
 An vector of integers denoting the lags for momentum calculation}
 }
 \description{

@@ -1,7 +1,7 @@
 #' @title Fuse learner with dummy feature creator.
 #'
 #' @description
-#' Fuses a base learner with the dummy feature creator (see \code{\link{createDummyFeatures}}).
+#' Fuses a base learner with the dummy feature creator (see [createDummyFeatures]).
 #' Returns a learner which can be used like any other learner.
 #'
 #' @template arg_learner

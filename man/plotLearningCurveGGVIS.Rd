@@ -7,10 +7,10 @@
 plotLearningCurveGGVIS(obj, interaction = "measure", pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{[\code{LearningCurveData}]\cr
-Result of \code{\link{generateLearningCurveData}}.}
+\item{obj}{(\link{LearningCurveData})\cr
+Result of \link{generateLearningCurveData}.}
 
-\item{interaction}{[\code{character(1)}]\cr
+\item{interaction}{(\code{character(1)})\cr
 Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
 making the \code{interaction} variable selectable via a drop-down menu.
 This variable must have more than one unique value, otherwise it will be ignored.
@@ -19,12 +19,12 @@ Note that if there are multiple learners and multiple measures interactivity is
 necessary as ggvis does not currently support facetting or subplots.
 The default is \dQuote{measure}.}
 
-\item{pretty.names}{[\code{logical(1)}]\cr
-Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+\item{pretty.names}{(\code{logical(1)})\cr
+Whether to use the \link{Measure} name instead of the id in the plot.
 Default is \code{TRUE}.}
 }
 \value{
-a ggvis plot object.
+(`character(1)`) ggvis plot object.
 }
 \description{
 Visualizes data size (percentage used for model) vs. performance measure(s).

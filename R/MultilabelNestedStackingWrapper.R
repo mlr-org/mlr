@@ -9,7 +9,7 @@
 #' During the prediction phase, predicted labels are obtained by the classifiers, which have been learned on
 #' all training data.
 #'
-#' Models can easily be accessed via \code{\link{getLearnerModel}}.
+#' Models can easily be accessed via [getLearnerModel].
 #'
 #' @template arg_learner
 #' @template arg_multilabel_order
@@ -17,7 +17,7 @@
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013),
-#' \emph{Dependent binary relevance models for multi-label classification}
+#' *Dependent binary relevance models for multi-label classification*
 #' Artificial Intelligence Center, University of Oviedo at Gijon, Spain.
 #' @family wrapper
 #' @family multilabel

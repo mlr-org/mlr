@@ -56,10 +56,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
   left.assign.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
         parsed = lintr:::with_id(source_file, id)
-        line = source_file$lines[as.character(parsed$line1)]
-        if (substr(line, parsed$col1, parsed$col2) == ":=") {
-          return(NULL)
-        }
+        if (parsed$text == ":=") return(NULL)  # ':=' is also a LEFT_ASSIGN token for some reason
         Lint(filename = source_file$filename, line_number = parsed$line1,
           column_number = parsed$col1, type = "style", message = "Use =, not <-, for assignment.",
           line = source_file$lines[as.character(parsed$line1)],
@@ -244,6 +241,9 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
       # ignore if not an assignment.
       # we check for LEFT_ASSIGN and EQ_ASSIGN since here we are LEFT_ASSIGN tolerant
       return(NULL)
+    }
+    if (sp$text[1] == ":=") {
+      return(NULL)  # ':=' is parsed as LEFT_ASSIGN but does no actual assignment.
     }
     style = ifelse(sp$token[2] == "FUNCTION", "functionCamel.case", "dotted.case")
     name = lintr:::unquote(token[["text"]])

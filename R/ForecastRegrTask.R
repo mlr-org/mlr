@@ -6,8 +6,8 @@
 #'
 #' @export
 makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
-  weights = NULL, blocking = NULL, spatial = FALSE, frequency = 1L, date.col = "dates", fixup.data = "warn",
-  check.data = TRUE) {
+  weights = NULL, blocking = NULL, frequency = 1L, date.col = "dates", fixup.data = "warn",
+  check.data = TRUE, coordinates = NULL) {
 
   assertString(id)
   assertString(target)
@@ -54,13 +54,14 @@ makeForecastRegrTask = function(id = deparse(substitute(data)), data, target,
   # Remove the date column
   data = data[, date.col != colnames(data), drop = FALSE]
 
-  task = makeSupervisedTask("fcregr", data, target, weights, blocking, spatial, fixup.data = fixup.data, check.data = check.data)
-  task$task.desc = makeForecastRegrTaskDesc(id, data, target, weights, blocking, spatial, frequency, dates)
+  task = makeSupervisedTask("fcregr", data, target, weights, blocking,
+    fixup.data = fixup.data, check.data = check.data, coordinates = coordinates)
+  task$task.desc = makeForecastRegrTaskDesc(id, data, target, weights, blocking, frequency, dates, coordinates)
   addClasses(task, c("ForecastRegrTask", "TimeTask"))
 }
 
-makeForecastRegrTaskDesc = function(id, data, target, weights, blocking, spatial, frequency, dates) {
-  td = makeTaskDescInternal("fcregr", id, data, target, weights, blocking, spatial)
+makeForecastRegrTaskDesc = function(id, data, target, weights, blocking, frequency, dates, coordinates) {
+  td = makeTaskDescInternal("fcregr", id, data, target, weights, blocking, coordinates)
   td$dates = dates
   td$frequency = frequency
   addClasses(td, c("ForecastRegrTaskDesc", "SupervisedTaskDesc"))

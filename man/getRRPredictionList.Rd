@@ -7,21 +7,21 @@
 getRRPredictionList(res, ...)
 }
 \arguments{
-\item{res}{[\code{ResampleResult}]\cr
-The result of \code{\link{resample}} run with \code{keep.pred = TRUE}.}
+\item{res}{(\link{ResampleResult})\cr
+The result of \link{resample} run with \code{keep.pred = TRUE}.}
 
-\item{...}{[any]\cr
-Further options passed to \code{\link{makePrediction}}.}
+\item{...}{(any)\cr
+Further options passed to \link{makePrediction}.}
 }
 \value{
-[list].
+\link{list}.
 }
 \description{
 This function creates a list with two slots \code{train} and \code{test} where
-each slot is again a list of \code{\link{Prediction}} objects for each single
+each slot is again a list of \link{Prediction} objects for each single
 resample iteration.
 In case that \code{predict = "train"} was used for the resample description
-(see \code{\link{makeResampleDesc}}), the slot \code{test} will be \code{NULL}
+(see \link{makeResampleDesc}), the slot \code{test} will be \code{NULL}
 and in case that \code{predict = "test"} was used, the slot \code{train} will be
 \code{NULL}.
 }

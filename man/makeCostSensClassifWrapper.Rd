@@ -9,16 +9,16 @@
 makeCostSensClassifWrapper(learner)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+\item{learner}{([Learner] | `character(1)`)\cr
 The classification learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+If you pass (`character(1)`) string the learner will be created via [makeLearner].}
 }
 \value{
-[\code{\link{Learner}}].
+[Learner].
 }
 \description{
 Creates a wrapper, which can be used like any other learner object.
-The classification model can easily be accessed via \code{\link{getLearnerModel}}.
+The classification model can easily be accessed via \link{getLearnerModel}.
 
 This is a very naive learner, where the costs are transformed into classification labels -
 the label for each case is the name of class with minimal costs.

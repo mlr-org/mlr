@@ -7,23 +7,23 @@
 extractFDAWavelets(filter = "la8", boundary = "periodic")
 }
 \arguments{
-\item{filter}{[\code{character}]\cr
+\item{filter}{(\link{character})\cr
 Specifies which filter should be used.
 Default is \dQuote{la8}.}
 
-\item{boundary}{[\code{character}]\cr
+\item{boundary}{(\link{character})\cr
 Boundary to be used.
 \dQuote{periodic} assumes circular time series,
 for \dQuote{reflection} the series is extended to twice its length.
 Default is \dQuote{periodic}.}
 }
 \value{
-[\code{data.frame}].
+(\link{data.frame}).
 }
 \description{
 The function extracts discrete wavelet transform coefficients from the raw
 functional data.
-See \code{\link[wavelets]{dwt}} for more information.
+See \link[wavelets:dwt]{wavelets::dwt} for more information.
 }
 \seealso{
 Other fda_featextractor: \code{\link{extractFDAFPCA}},

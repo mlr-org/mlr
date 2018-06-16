@@ -7,49 +7,49 @@
 updateLearner(.learner, .model, .newdata = NULL, .task, .truth, .weights, ...)
 }
 \arguments{
-\item{.learner}{[\code{\link{RLearner}}]\cr
+\item{.learner}{\link{\code{\link{RLearner}}}\cr
 Wrapped learner.}
 
-\item{.model}{[\code{\link{WrappedModel}}]\cr
+\item{.model}{\link{\code{\link{WrappedModel}}}\cr
 Model produced by training.}
 
-\item{.newdata}{[\code{data.frame}]\cr
+\item{.newdata}{\link{\code{data.frame}}\cr
 New data to predict. Does not include target column.}
 
-\item{.task}{[\code{Task}]
+\item{.task}{\link{\code{Task}}
 The model's task}
 
-\item{.truth}{[\code{data.frame}]
+\item{.truth}{\link{\code{data.frame}}
 A vector of data that is to be predicted.}
 
-\item{.weights}{[\code{data.frame}]
+\item{.weights}{\link{\code{data.frame}}
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
 By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 Weights from the task will be overwritten.}
 
-\item{...}{[any]\cr
+\item{...}{\link{any}\cr
 Additional parameters, which need to be passed to the underlying predict function.}
 }
 \value{
 \itemize{
-  \item For classification: Either a factor with class labels for type
-    \dQuote{response} or, if the learner supports this, a matrix of class probabilities
-    for type \dQuote{prob}. In the latter case the columns must be named with the class
-    labels.
-  \item For regression or forecast regressions: Either a numeric vector for type \dQuote{response} or,
-    if the learner supports this, a matrix with two columns for type \dQuote{se}.
-    In the latter case the first column contains the estimated response (mean value)
-    and the second column the estimated standard errors.
-  \item For survival: Either a numeric vector with some sort of orderable risk
-    for type \dQuote{response} or, if supported, a numeric vector with time dependent
-    probabilities for type \dQuote{prob}.
-  \item For clustering: Either an integer with cluster IDs for type \dQuote{response}
-    or, if supported, a matrix of membership probabilities for type \dQuote{prob}.
-  \item For multilabel: A logical matrix that indicates predicted class labels for type
-    \dQuote{response} or, if supported, a matrix of class probabilities for type
-    \dQuote{prob}. The columns must be named with the class labels.
- }
+\item For classification: Either a factor with class labels for type
+\dQuote{response} or, if the learner supports this, a matrix of class probabilities
+for type \dQuote{prob}. In the latter case the columns must be named with the class
+labels.
+\item For regression or forecast regressions: Either a numeric vector for type \dQuote{response} or,
+if the learner supports this, a matrix with two columns for type \dQuote{se}.
+In the latter case the first column contains the estimated response (mean value)
+and the second column the estimated standard errors.
+\item For survival: Either a numeric vector with some sort of orderable risk
+for type \dQuote{response} or, if supported, a numeric vector with time dependent
+probabilities for type \dQuote{prob}.
+\item For clustering: Either an integer with cluster IDs for type \dQuote{response}
+or, if supported, a matrix of membership probabilities for type \dQuote{prob}.
+\item For multilabel: A logical matrix that indicates predicted class labels for type
+\dQuote{response} or, if supported, a matrix of class probabilities for type
+\dQuote{prob}. The columns must be named with the class labels.
+}
 }
 \description{
 Mainly for internal use. Update a model with new data.

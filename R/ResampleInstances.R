@@ -1,27 +1,29 @@
-instantiateResampleInstance = function(desc, size, task, coords) {
+instantiateResampleInstance = function(desc, size, task) {
   UseMethod("instantiateResampleInstance")
 }
 
-instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL, coords) {
+instantiateResampleInstance.HoldoutDesc = function(desc, size, task = NULL) {
   inds = sample(size, size * desc$split)
   makeResampleInstanceInternal(desc, size, train.inds = list(inds))
 }
 
-instantiateResampleInstance.CVDesc = function(desc, size, task = NULL, coords) {
+instantiateResampleInstance.CVDesc = function(desc, size, task = NULL) {
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
   test.inds = chunk(seq_len(size), shuffle = TRUE, n.chunks = desc$iters)
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL, coords = NULL) {
-  if (is.null(coords)) {
-    coords = data.frame(task$env$data$x, task$env$data$y)
-  } else {
-    coords = coords
+instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL) {
+
+  if (is.null(task)) {
+    stopf("Please provide a task.")
+  }
+  if (is.null(task$coordinates)) {
+    stopf("Please provide suitable coordinates for SpCV. See ?Task for help.")
   }
   # perform kmeans clustering
-  inds = kmeans(coords, centers = desc$iters)
+  inds = kmeans(task$coordinates, centers = desc$iters)
   inds = factor(inds$cluster)
 
   # uses resulting factor levels from kmeans clustering to set up a list of
@@ -33,22 +35,22 @@ instantiateResampleInstance.SpCVDesc = function(desc, size, task = NULL, coords 
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-instantiateResampleInstance.LOODesc = function(desc, size, task = NULL, coords) {
+instantiateResampleInstance.LOODesc = function(desc, size, task = NULL) {
   desc$iters = size
   makeResampleInstanceInternal(desc, size, test.inds = as.list(seq_len(size)))
 }
 
-instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL, coords) {
+instantiateResampleInstance.SubsampleDesc = function(desc, size, task = NULL) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size * desc$split))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL, coords) {
+instantiateResampleInstance.BootstrapDesc = function(desc, size, task = NULL) {
   inds = lapply(seq_len(desc$iters), function(x) sample(size, size, replace = TRUE))
   makeResampleInstanceInternal(desc, size, train.inds = inds)
 }
 
-instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL, coords) {
+instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("CV", iters = folds)
   i = replicate(desc$reps, makeResampleInstance(d, size = size), simplify = FALSE)
@@ -58,86 +60,20 @@ instantiateResampleInstance.RepCVDesc = function(desc, size, task = NULL, coords
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
 
-instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL, coords = NULL) {
+instantiateResampleInstance.SpRepCVDesc = function(desc, size, task = NULL) {
   folds = desc$iters / desc$reps
   d = makeResampleDesc("SpCV", iters = folds)
-  i = replicate(desc$reps, makeResampleInstance(d, task = task, coords = coords), simplify = FALSE)
+  i = replicate(desc$reps, makeResampleInstance(d, task = task), simplify = FALSE)
   train.inds = Reduce(c, lapply(i, function(j) j$train.inds))
   test.inds = Reduce(c, lapply(i, function(j) j$test.inds))
   g = as.factor(rep(seq_len(desc$reps), each = folds))
   makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds, group = g)
 }
 
-instantiateResampleInstance.FixedCVDesc = function(desc, size, task = NULL, coords) {
-  thin = function(x, skip = 0) {
-    n = length(x)
-    x[seq(1, n, by = skip)]
-  }
-
-  initial.window.abs = floor(desc$initial.window * size)
-  assertInt(initial.window.abs, lower = 1)
-  if (size - initial.window.abs < desc$horizon)
-    stop(catf("ERROR: The initial window is %i observations while the data is %i observations. \n
-      There is not enough data left (%i observations) to create a test set for a %i size horizon",
-      initial.window.abs, size, initial.window.abs - size, desc$horizon))
-  skip = desc$skip
-  stops  = (seq(size))[initial.window.abs:(size - desc$horizon)]
-  starts = stops - initial.window.abs + 1
-  if (skip > 0) {
-    stops = thin(stops, skip = skip)
-    starts = thin(starts, skip = skip)
-  }
-
-  train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
-  test.inds  = mapply(seq, stops + 1, stops + desc$horizon, SIMPLIFY = FALSE)
-
-  if (length(test.inds) == 0)
-    stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
-
-  # If the last value is not included, shift everything over by one
-  if (test.inds[[length(test.inds)]][desc$horizon] != size) {
-
-    train.inds = lapply(train.inds, function(x) x + 1)
-    test.inds = lapply(test.inds, function(x) x + 1)
-  }
-  desc$iters = length(test.inds)
-  makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds )
+instantiateResampleInstance.FixedWindowCVDesc = function(desc, size, task = NULL, coords) {
+  makeResamplingWindow(desc, size, task, coords, "FixedWindowCV")
 }
 
-instantiateResampleInstance.GrowingCVDesc = function(desc, size, task = NULL, coords) {
-  thin = function(x, skip = 0) {
-    n = length(x)
-    x[seq(1, n, by = skip)]
-  }
-
-  initial.window.abs = floor(desc$initial.window * size)
-  assertInt(initial.window.abs, lower = 1)
-  if (size - initial.window.abs < desc$horizon)
-    stop(catf("The initial window is %i observations while the data is %i observations. \n
-      There is not enough data left (%i observations) to create a test set for a %i size horizon",
-      initial.window.abs, size, initial.window.abs - size, desc$horizon))
-  skip = desc$skip
-  stops  = (seq(from = 1, to = size))[initial.window.abs:(size - desc$horizon)]
-  starts = rep(1, length(stops))
-
-  if (skip > 0) {
-    stops = thin(stops, skip = skip + 1)
-    starts  = thin(starts, skip = skip + 1)
-  }
-
-  train.inds = mapply(seq, starts, stops, SIMPLIFY = FALSE)
-  test.inds  = mapply(seq, stops + 1, stops + desc$horizon, SIMPLIFY = FALSE)
-
-
-  if (length(test.inds) == 0)
-    stop("Skip is too large and has removed all resampling instances. Please lower the value of skip.")
-
-  # If the last value is not included, shift everything over by one
-  if (test.inds[[length(test.inds)]][desc$horizon] != size) {
-
-    train.inds = lapply(train.inds, function(x) x + 1)
-    test.inds = lapply(test.inds, function(x) x + 1)
-  }
-  desc$iters = length(test.inds)
-  makeResampleInstanceInternal(desc, size, train.inds = train.inds, test.inds = test.inds )
+instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NULL, coords) {
+  makeResamplingWindow(desc, size, task, coords, "GrowingWindowCV")
 }

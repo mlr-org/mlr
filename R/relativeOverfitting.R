@@ -5,16 +5,16 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @param predish [\code{\link{ResampleDesc}} | \code{\link{ResamplePrediction}} | \code{\link{Prediction}}]\cr
+#' @param predish ([ResampleDesc] | [ResamplePrediction] | [Prediction])\cr
 #'   Resampling strategy or resampling prediction or test predictions.
 #' @template arg_measures
 #' @template arg_task
 #' @template arg_learner
-#' @param pred.train [\code{\link{Prediction}}]\cr
+#' @param pred.train ([Prediction])\cr
 #'   Training predictions. Only needed if test predictions are passed.
-#' @param iter [\code{\link{integer}}]\cr
+#' @param iter ([integer])\cr
 #'   Iteration number. Default 1, usually you don't need to specify this. Only needed if test predictions are passed.
-#' @return [\code{data.frame}]. Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
+#' @return ([data.frame]). Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
 #' @export
 #' @family performance
 #' @references Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.

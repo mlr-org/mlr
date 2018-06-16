@@ -4,17 +4,17 @@
 #' You have to implement this method if you want to add another learner to this package.
 #'
 #' Your implementation must adhere to the following:
-#' Predictions for the observations in \code{.newdata} must be made based on the fitted
-#' model (\code{.model$learner.model}).
-#' All parameters in \code{...} must be passed to the underlying predict function.
+#' Predictions for the observations in `.newdata` must be made based on the fitted
+#' model (`.model$learner.model`).
+#' All parameters in `...` must be passed to the underlying predict function.
 #'
-#' @param .learner [\code{\link{RLearner}}]\cr
+#' @param .learner ([RLearner])\cr
 #'   Wrapped learner.
-#' @param .model [\code{\link{WrappedModel}}]\cr
+#' @param .model ([WrappedModel])\cr
 #'   Model produced by training.
-#' @param .newdata [\code{data.frame}]\cr
+#' @param .newdata ([data.frame])\cr
 #'   New data to predict. Does not include target column.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Additional parameters, which need to be passed to the underlying predict function.
 #' @return
 #' \itemize{
@@ -96,17 +96,17 @@ insertLines = function(prediction, inserts) {
 #'
 #' @description
 #' Check the output coming from a Learner's internal
-#' \code{predictLearner} function.
+#' `predictLearner` function.
 #'
 #' This function is for internal use.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
+#' @param learner ([Learner])\cr
 #'   The learner.
-#' @param model [\code{\link{WrappedModel}}]]\cr
+#' @param model ([WrappedModel])]\cr
 #'   Model produced by training.
-#' @param p [any]\cr
-#'   The prediction made by \code{learner}.
-#' @return [any]. A sanitized version of \code{p}.
+#' @param p (any)\cr
+#'   The prediction made by `learner`.
+#' @return (any). A sanitized version of `p`.
 #' @keywords internal
 #' @export
 checkPredictLearnerOutput = function(learner, model, p) {
