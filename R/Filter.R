@@ -631,7 +631,7 @@ preprocess.cmi.praznik = function(data) {
     numeric.yes = vlapply(data, is.numeric)
     df.num = data.frame(data[, numeric.yes])
     interval = max(min(as.integer(nrow(data) / 3L), 10L), 2L)
-	cols.unique.len = viapply(df.num, function(x) length(unique(x)))
+	  cols.unique.len = viapply(df.num, function(x) length(unique(x)))
     const.cols.yes = vlapply(df.num, function(x) length(unique(x)) < 2L)
     if (any(const.cols.yes)) {
       df.num.uni =  lapply(df.num[const.cols.yes], as.factor)
