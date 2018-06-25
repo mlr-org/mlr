@@ -78,3 +78,35 @@ instantiateResampleInstance.GrowingWindowCVDesc = function(desc, size, task = NU
   makeResamplingWindow(desc, size, task, coords, "GrowingWindowCV")
 }
 
+instantiateResampleInstance.BlockingDesc = function(desc, size, task = NULL) {
+
+  if (!is.null(desc$iters) && desc$iters != length(levels(droplevels(task$blocking)))) {
+    warningf("iters (%i) is not equal to blocking levels (%i)! Setting iters to length of blocking levels.", desc$iters, length(levels(task$blocking)))
+    desc$iters = length(levels(droplevels(task$blocking)))
+  } else {
+    desc$iters = length(levels(droplevels(task$blocking)))
+  }
+  desc2 = desc
+  attr(desc2, "class") = c("CVDesc", "ResampleDesc")
+  levs = levels(task$blocking)
+  size2 = length(levels(task$blocking))
+  desc2$iters = length(levels(task$blocking))
+  desc2$id = "cross-validation"
+
+  # create fake ResampleInstance to initialize "blocking"
+  inst = instantiateResampleInstance(desc2, size2, task)
+  # now exchange block indices with indices of elements of this block and shuffle
+
+  test.inds = lapply(inst$test.inds, function(i) sample(which(task$blocking %in% levs[i])))
+
+  # Nested resampling: We need to create a list with length(levels) first.
+  # Then one fold will be length(0) because we are missing one factor level because we are in the inner level
+  # We check for this and remove this fold
+  # There is no other way to do this. If we initially set "desc$iters" to length(levels) - 1, test.inds will not be created correctly
+  length.test.inds = unlist(lapply(test.inds, function(x) length(x)))
+  if (0 %in% length.test.inds) {
+    index = match(0, length.test.inds)
+    test.inds[[index]] = NULL
+  }
+  makeResampleInstanceInternal(desc, size, test.inds = test.inds)
+}

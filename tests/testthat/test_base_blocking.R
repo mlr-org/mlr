@@ -1,33 +1,49 @@
 context("blocking")
 
-test_that("blocking", {
+test_that("blocking in single resampling", {
   df = multiclass.df
   b = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target = multiclass.target, data = multiclass.df, blocking = b)
   expect_true(getTaskDesc(ct)$has.blocking)
-  res = makeResampleInstance(makeResampleDesc("CV", iters = 3), task = ct)
-  for (j in 1:res$desc$iters) {
-    train.j = res$train.inds[[j]]
-    test.j = res$test.inds[[j]]
-    tab = table(b[train.j])
-    expect_true(setequal(c(0, 5), unique(as.numeric(tab))))
-    tab = table(b[test.j])
-    expect_true(setequal(c(0, 5), unique(as.numeric(tab))))
-  }
-  # test blocking in resample
-  lrn = makeLearner("classif.lda")
-  mycheck = function(rdesc, p, b) {
-    for (j in 1:rdesc$iters) {
-      test.j = p$data[p$data$iter == j, "id"]
-      tab = table(b[test.j])
-      expect_true(setequal(c(0, 5), unique(as.numeric(tab))))
-    }
-  }
 
-  rdesc = makeResampleDesc("CV", iters = 3)
+  # test blocking in single resample
+  lrn = makeLearner("classif.lda")
+  rdesc = makeResampleDesc("Blocking")
   p = resample(lrn, ct, rdesc)$pred
-  mycheck(rdesc, p, b)
-  rdesc = makeResampleDesc("RepCV", folds = 3, reps = 2)
-  p = resample(lrn, ct, rdesc)$pred
-  mycheck(rdesc, p, b)
+
+  # check if all test.inds are unique
+  expect_length(unique(unlist(p$instance$test.inds, use.names = FALSE)), 150)
+
+  # warning for wrong iter count
+  rdesc = makeResampleDesc("Blocking", iters = 2)
+  expect_warning(resample(lrn, ct, rdesc))
+})
+
+test_that("blocking in nested resampling", {
+  df = multiclass.df
+  b = as.factor(rep(1:5, rep(30, 5)))
+  ct = makeClassifTask(target = multiclass.target, data = multiclass.df, blocking = b)
+  expect_true(getTaskDesc(ct)$has.blocking)
+
+  # test blocking in nested resampling
+  lrn = makeLearner("classif.lda")
+  ctrl <- makeTuneControlRandom(maxit = 2)
+  ps <- makeParamSet(makeNumericParam("nu", lower = 2, upper = 20))
+  inner = makeResampleDesc("Blocking")
+  outer = makeResampleDesc("Blocking")
+  tune_wrapper = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl,
+                                 show.info = FALSE)
+
+  p = resample(tune_wrapper, ct, outer, show.info = FALSE, extract = getTuneResult)
+
+  # check if all outer test.inds are unique
+  expect_length(unique(unlist(p$pred$instance$test.inds, use.names = FALSE)), 150)
+
+  # check if all inner test.inds are unique
+  # we only expect 120 since we tune on n-1 folds (n = count(outer folds))
+  expect_length(unique(unlist(getNestedResamplingIndices(p)[[1]]$test.inds)), 120)
+
+  # check if we have the correct number of tuning results
+  expect_length(p$extract, 5)
+
 })

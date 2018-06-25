@@ -1,3 +1,9 @@
+# mlr 2.13
+
+## Resampling - new:
+
+* "Blocking" can now be used in a nested resampling setting. Before, it was not possible to use nested resampling when "Blocking" was selected in the Task. No changes in the way how the factor levels required for "Blocking" are supplied (in the Task).
+
 # mlr 2.12:
 
 ## general

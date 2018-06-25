@@ -95,7 +95,7 @@
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV",
                                    "Subsample", "Bootstrap", "SpCV", "SpRepCV",
-                                   "GrowingWindowCV", "FixedWindowCV"))
+                                   "GrowingWindowCV", "FixedWindowCV", "Blocking"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -186,6 +186,10 @@ makeResampleDescGrowingWindowCV = function(horizon = 1L, initial.window = .5, sk
   assertNumeric(skip, lower = 0)
   makeResampleDescInternal("Growing", iters = NA_integer_, horizon = horizon,
                            initial.window = initial.window, skip = skip, stratify = FALSE)
+}
+
+makeResampleDescBlocking = function(iters = NULL) {
+  makeResampleDescInternal("blocking", iters = iters)
 }
 
 ##############################################################################################

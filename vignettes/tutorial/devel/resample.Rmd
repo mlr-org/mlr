@@ -318,6 +318,19 @@ task = makeClassifTask(data = iris, target = "Species", blocking = factor(rep(1:
 task
 ```
 
+A resampling description can be created with
+
+```{r}
+rdesc = makeResampleDesc("Blocking")
+```
+
+The created resampling will consist of as many folds as there are factor levels supplied for "Blocking".
+Blocking can also be used in a [nested resampling](nested_resampling.html) setting. 
+If again "Blocking" is selected in the inner resampling level, fold size will decrease by 1 as the inner resampling will only happen on the training data of the respective fold.
+Currently it is not possible to supply custom groups that differ in the outer and inner setting.
+Note that when using "Blocking", it is not possible to do multiple repetitions (as e.g. in "RepCV") as shuffling is not possible for fixed indices. 
+Hence, there will always be only repetition.
+
 ### Resample descriptions and resample instances
 
 As already mentioned, you can specify a resampling strategy using function `makeResampleDesc()`.
