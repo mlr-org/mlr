@@ -16,9 +16,10 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
 
-  get_stage("script") %>%
+get_stage("script") %>%
+    add_code_step(devtools::install_github("r-lib/rcmdcheck")) %>%
     add_code_step(devtools::document()) %>%
-    add_step(step_rcmdcheck())
+    add_step(step_rcmdcheck(notes_are_errors = FALSE))
 
   get_stage("deploy") %>%
     add_code_step(system2("bash", args = c("inst/convert_to_ascii_news.sh"))) %>%
