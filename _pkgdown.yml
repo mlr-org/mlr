@@ -53,6 +53,8 @@ navbar:
       href: articles/tutorial/devel/parallelization.html
     - text: Visualization
       href: articles/tutorial/devel/visualization.html
+    - text: Use case - Regression
+      href: articles/tutorial/devel/usecase_regression.html
 
   - text: Advanced
     menu:
