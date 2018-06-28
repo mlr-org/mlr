@@ -18,13 +18,3 @@ An overview of our mlr related publications:
 | [R Journal](https://journal.r-project.org/) | [Multilabel Classification with R Package mlr](https://journal.r-project.org/archive/2017/RJ-2017-012/RJ-2017-012.pdf) | Benchmark on multilabel classification algorithms | [bibtex](https://journal.r-project.org/archive/2017/RJ-2017-012/) |
 | [Springer](https://link.springer.com/) | [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://link.springer.com/article/10.1007/s00180-017-0742-2) | Software paper about OpenML | [bibtex](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation) |
 | [JOSS](http://joss.theoj.org/) | [iml: An R package for Interpretable Machine Learning](http://joss.theoj.org/papers/9e8466400de93f5aabfb999f23db5072) | Software paper about iml | [bibtex](https://www.doi2bib.org/bib/https%3A%2F%2Fdoi.org%2F10.21105%2Fjoss.00786) |
-
-
-
-
-
-
-
-
-
-
