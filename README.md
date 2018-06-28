@@ -31,13 +31,8 @@ mlr - How to Cite and Citing Publications
 Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](http://www.jmlr.org/papers/v17/15-066.bib)].
 
 Some parts of the package were created as part of other publications.
-If you use these parts, please cite the relevant work appropriately:
-
-* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://doi.org/10.1080/00949655.2014.929131).
-* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://doi.org/10.1007/978-3-319-28697-6_6).
-* Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
-* Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/abs/1703.08991)
-* OpenML: [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://arxiv.org/abs/1701.01293)
+If you use these parts, please cite the relevant work appropriately. 
+An overview of all mlr related publications can be found [here](http://mlr-org.github.io/mlr/articles/tutorial/devel/mlr_publications.html).
 
 A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).
 
