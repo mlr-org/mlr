@@ -305,8 +305,9 @@ The first plot shows the [mmce](measures.html){target="_blank"} and the second p
 Moreover, in the second plot we color the boxes according to the `learner.id`s.
 
 ```{r, fig.asp=7/9}
-plotBMRBoxplots(bmr, measure = mmce)
-plotBMRBoxplots(bmr, measure = ber, style = "violin", pretty.names = FALSE) +
+plotBMRBoxplots(bmr, measure = mmce, order.lrn = getBMRLearnerIds(bmr))
+plotBMRBoxplots(bmr, measure = ber, style = "violin", pretty.names = FALSE, 
+  order.lrn = getBMRLearnerIds(bmr)) +
   aes(color = learner.id) +
   theme(strip.text.x = element_text(size = 8))
 ```
@@ -332,7 +333,7 @@ Moreover, we want uppercase learner labels.
 Currently, the probably simplest solution is to change the factor levels of the plotted data as shown below.
 
 ```{r, fig.asp = 7/9}
-plt = plotBMRBoxplots(bmr, measure = mmce)
+plt = plotBMRBoxplots(bmr, measure = mmce, order.lrn = getBMRLearnerIds(bmr))
 head(plt$data)
 
 levels(plt$data$task.id) = c("Iris", "Ringnorm", "Waveform", "Diabetes", "Sonar")
@@ -372,7 +373,7 @@ Linear discriminant analysis (`MASS::lda()`) is best for the iris and PimaIndian
 The ranks are displayed on the x-axis and the learners are color-coded.
 
 ```{r, fig.asp = 7/9}
-plotBMRRanksAsBarChart(bmr, pos = "tile")
+plotBMRRanksAsBarChart(bmr, pos = "tile", order.lrn = getBMRLearnerIds(bmr))
 ```
 
 A similar plot can also be obtained via `plotBMRSummary()`. 
@@ -385,8 +386,8 @@ plotBMRSummary(bmr, trafo = "rank", jitter = 0)
 Alternatively, you can draw stacked bar charts (the default) or bar charts with juxtaposed bars (`pos = "dodge"`) that are better suited to compare the frequencies of learners within and across ranks.
 
 ```{r, fig.show = "hold", out.width = '50%'}
-plotBMRRanksAsBarChart(bmr)
-plotBMRRanksAsBarChart(bmr, pos = "dodge")
+plotBMRRanksAsBarChart(bmr, order.lrn = getBMRLearnerIds(bmr))
+plotBMRRanksAsBarChart(bmr, pos = "dodge", order.lrn = getBMRLearnerIds(bmr))
 ```
 
 #### Comparing learners using hypothesis tests
@@ -438,10 +439,12 @@ See the tutorial page about [visualization](visualization.html){target="_blank"}
 ```{r, fig.asp = 0.5}
 ### Nemenyi test
 g = generateCritDifferencesData(bmr, p.value = 0.1, test = "nemenyi")
-plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2))
+plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
+  scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
 ### Bonferroni-Dunn test
 g = generateCritDifferencesData(bmr, p.value = 0.1, test = "bd", baseline = "randomForest")
-plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2))
+plotCritDifferences(g) + coord_cartesian(xlim = c(-1,5), ylim = c(0,2)) +
+    scale_colour_manual(values = c("lda" = "#F8766D", "rpart" = "#00BA38", "randomForest" = "#619CFF"))
 ```
 
 #### Custom plots
