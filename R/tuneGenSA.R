@@ -3,9 +3,7 @@ tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.
 
   low = getLower(par.set)
   upp = getUpper(par.set)
-  start = control$start
-  if (is.null(start))
-    start = sampleValue(par.set, start, trafo = FALSE)
+  start = control$start %??% sampleValue(par.set, trafo = FALSE)
   start = convertStartToNumeric(start, par.set)
   ctrl.gensa = control$extra.args
 

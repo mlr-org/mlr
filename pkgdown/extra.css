@@ -56,8 +56,20 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 }
 
 /* margins of navbar-brand, default 14.5 and 10 */
+
+/* this sets the mlr logo in the navbar */
 .navbar-brand {
-    padding: 7px 7px;
+    /*padding: 7px 7px;
+    font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-weight: normal;
+    font-size: 32px; */
+    padding: 0 0 0 85px;
+    height: 50px;
+    line-height: 50px;
+    background-image: url(logo.png);
+    background-size: 64px auto;
+    background-repeat: no-repeat;
+    background-position: 15px center;
 }
 
 /* relax lower margins of headers, default -60px */
