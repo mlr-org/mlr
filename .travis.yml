@@ -31,7 +31,7 @@ jobs:
       # only stages with the same env share a cache
       # this should be share to other stages via the cache
       before_install: R -q -e 'install.packages("devtools"); devtools::install_github("ropenscilabs/tic@4ad0920c425c0e66809a1ae23837655f4dca997d"); tic::prepare_all_stages()'
-      install: - R -q -e 'tic::install()'
+      install: R -q -e 'tic::install()'
       script: true
     - stage: warmup-2
       env: RCMDCHECK=TRUE
