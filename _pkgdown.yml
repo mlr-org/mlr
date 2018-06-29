@@ -53,6 +53,8 @@ navbar:
       href: articles/tutorial/devel/parallelization.html
     - text: Visualization
       href: articles/tutorial/devel/visualization.html
+    - text: Use case - Regression
+      href: articles/tutorial/devel/usecase_regression.html
 
   - text: Advanced
     menu:
@@ -118,6 +120,8 @@ navbar:
       href: articles/tutorial/devel/measures.html
     - text: Integrated Filter Methods
       href: articles/tutorial/devel/filter_methods.html
+    - text: mlr Publications
+      href: articles/tutorial/devel/mlr_publications.html
 
   - text: mlr-org Packages
     menu:
