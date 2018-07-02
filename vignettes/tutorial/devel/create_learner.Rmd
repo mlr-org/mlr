@@ -99,6 +99,9 @@ Can the learner predict posterior probabilities?
 
 If the learner supports class weights the name of the relevant learner parameter can be specified via argument `class.weights.param`.
 
+If a parameter depends on another one, the `requires` attribute is added as an argument.
+Dependent parameters with a `requires` field must use `quote()` and not `expression()` to define it.
+
 Below is the complete code for the definition of the LDA learner. 
 It has one discrete parameter, ``method``, and two continuous ones, ``nu`` and ``tol``. 
 It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables. 
@@ -118,10 +121,13 @@ makeRLearner.classif.lda = function() {
     cl = "classif.lda",
     package = "MASS",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "method", default = "moment", values = c("moment", "mle", "mve", "t")),
-      makeNumericLearnerParam(id = "nu", lower = 2, requires = quote(method == "t")),
+      makeDiscreteLearnerParam(id = "method", default = "moment", 
+        values = c("moment", "mle", "mve", "t")),
+      makeNumericLearnerParam(id = "nu", lower = 2, 
+        requires = quote(method == "t")),
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0),
-      makeDiscreteLearnerParam(id = "predict.method", values = c("plug-in", "predictive", "debiased"),
+      makeDiscreteLearnerParam(id = "predict.method", 
+        values = c("plug-in", "predictive", "debiased"),
         default = "plug-in", when = "predict"),
       makeLogicalLearnerParam(id = "CV", default = FALSE, tunable = FALSE)
     ),
@@ -258,12 +264,15 @@ makeRLearner.surv.coxph = function() {
     cl = "surv.coxph",
     package = "survival",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "ties", default = "efron", values = c("efron", "breslow", "exact")),
+      makeDiscreteLearnerParam(id = "ties", default = "efron", 
+        values = c("efron", "breslow", "exact")),
       makeLogicalLearnerParam(id = "singular.ok", default = TRUE),
       makeNumericLearnerParam(id = "eps", default = 1e-09, lower = 0),
-      makeNumericLearnerParam(id = "toler.chol", default = .Machine$double.eps^0.75, lower = 0),
+      makeNumericLearnerParam(id = "toler.chol", 
+        default = .Machine$double.eps^0.75, lower = 0),
       makeIntegerLearnerParam(id = "iter.max", default = 20L, lower = 1L),
-      makeNumericLearnerParam(id = "toler.inf", default = sqrt(.Machine$double.eps^0.75), lower = 0),
+      makeNumericLearnerParam(id = "toler.inf", 
+        default = sqrt(.Machine$double.eps^0.75), lower = 0),
       makeIntegerLearnerParam(id = "outer.max", default = 10L, lower = 1L),
       makeLogicalLearnerParam(id = "model", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
@@ -299,7 +308,8 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   } else if (.learner$predict.type == "prob") {
     surv.range = getTrainingInfo(.model$learner.model)$surv.range
     times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
-    t(summary(survival::survfit(.model$learner.model, newdata = .newdata, se.fit = FALSE, conf.int = FALSE), times = times)$surv)
+    t(summary(survival::survfit(.model$learner.model, newdata = .newdata, 
+                se.fit = FALSE, conf.int = FALSE), times = times)$surv)
   } else {
     stop("Unknown predict type")
   }
@@ -324,7 +334,8 @@ makeRLearner.cluster.FarthestFirst = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "N", default = 2L, lower = 1L),
       makeIntegerLearnerParam(id = "S", default = 1L, lower = 1L),
-      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, 
+        tunable = FALSE)
     ),
     properties = c("numerics"),
     name = "FarthestFirst Clustering Algorithm",
@@ -446,9 +457,12 @@ If your interface code to a new learning algorithm exists only locally, i.e., it
 You can do this as follows:
 
 ```{r, eval=FALSE}
-registerS3method("makeRLearner", "<awesome_new_learner_class>", makeRLearner.<awesome_new_learner_class>)
-registerS3method("trainLearner", "<awesome_new_learner_class>", trainLearner.<awesome_new_learner_class>)
-registerS3method("predictLearner", "<awesome_new_learner_class>", predictLearner.<awesome_new_learner_class>)
+registerS3method("makeRLearner", "<awesome_new_learner_class>", 
+  makeRLearner.<awesome_new_learner_class>)
+registerS3method("trainLearner", "<awesome_new_learner_class>", 
+  trainLearner.<awesome_new_learner_class>)
+registerS3method("predictLearner", "<awesome_new_learner_class>", 
+  predictLearner.<awesome_new_learner_class>)
 ```
 
 If you have written more methods, for example in order to extract feature importance values or out-of-bag predictions these also need to be registered in the same manner, for example:
@@ -461,7 +475,8 @@ registerS3method("getFeatureImportanceLearner", "<awesome_new_learner_class>",
 For the new learner to work with parallelization, you may have to export the new methods explicitly:
 
 ```{r, eval=FALSE}
-parallelExport("trainLearner.<awesome_new_learner_class>", "predictLearner.<awesome_new_learner_class>")
+parallelExport("trainLearner.<awesome_new_learner_class>", 
+  "predictLearner.<awesome_new_learner_class>")
 ```
 
 ### Further information for developers
