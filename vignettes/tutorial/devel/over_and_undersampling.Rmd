@@ -19,19 +19,14 @@ knitr::knit_hooks$set(document = function(x){
 })
 ```
 
-In case of *binary classification* strongly imbalanced classes
-often lead to unsatisfactory results regarding the prediction of new
-observations, especially for the small class.
-In this context *imbalanced classes* simply means that the number of
-observations of one class (usu. positive or majority class) by far exceeds
+In case of *binary classification* strongly imbalanced classes often lead to unsatisfactory results regarding the prediction of new observations, especially for the small class.
+In this context *imbalanced classes* simply means that the number of observations of one class (usu. positive or majority class) by far exceeds
 the number of observations of the other class (usu. negative or minority class).
 This setting can be observed fairly often in practice and in various disciplines like credit scoring, fraud detection, medical diagnostics or churn management.
 
-Most classification methods work best when the number of observations per
-class are roughly equal. 
+Most classification methods work best when the number of observations per class are roughly equal. 
 The problem with *imbalanced classes* is that because of the dominance of the majority class classifiers tend to ignore cases of the minority class as noise and therefore predict the majority class far more often. 
-In order to lay more weight on the cases of the minority class, there are
-numerous correction methods which tackle the *imbalanced classification problem*.
+In order to lay more weight on the cases of the minority class, there are numerous correction methods which tackle the *imbalanced classification problem*.
 These methods can generally be divided into *cost- and sampling-based approaches*.
 Below all methods supported by `mlr` are introduced.
 
@@ -58,15 +53,13 @@ In this way the sampling is done as part of the *preprocesssing* and can therefo
 
 #### (Simple) over- and undersampling
 
-As mentioned above *undersampling* always refers to the majority class, while
-*oversampling* affects the minority class. By the use of *undersampling*, randomly chosen observations of the majority class are eliminated. 
+As mentioned above *undersampling* always refers to the majority class, while *oversampling* affects the minority class. 
+By the use of *undersampling*, randomly chosen observations of the majority class are eliminated. 
 Through (simple) *oversampling* all observations of the minority class are considered at least once when fitting the model. 
-In addition, exact copies of minority class cases are created
-by random sampling with repetitions.
+In addition, exact copies of minority class cases are created by random sampling with repetitions.
 
 First, let's take a look at the effect for a classification [task](task.html){target="_blank"}.
-Based on a simulated `ClassifTask` (`Task()`) with imbalanced classes two new
-tasks (`task.over`, `task.under`) are created via `mlr` functions
+Based on a simulated `ClassifTask` (`Task()`) with imbalanced classes two new tasks (`task.over`, `task.under`) are created via `mlr` functions
 `oversample()` and `undersample()`, respectively.
 
 ```{r over-/undersampling_classif}
@@ -86,9 +79,7 @@ table(getTaskTargets(task.under))
 ```
 
 Please note that the *undersampling rate* has to be between 0 and 1, where 1 means no undersampling and 0.5 implies a reduction of the majority class size to 50 percent.
-Correspondingly, the *oversampling rate* must be greater or equal to 1,
-where 1 means no oversampling and 2 would result in doubling the minority
-class size.
+Correspondingly, the *oversampling rate* must be greater or equal to 1, where 1 means no oversampling and 2 would result in doubling the minority  class size.
 
 As a result the [performance](performance.html){target="_blank"} should improve if the model is applied to new data.
 
@@ -110,19 +101,15 @@ performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce,
 ```
 
 In this case the *performance measure* has to be considered very carefully.
-As the *misclassification rate* ([mmce](measures.html){target="_blank"}) evaluates the overall
-accuracy of the predictions, the *balanced error rate* ([ber](measures.html){target="_blank"}) and *area under the ROC Curve* ([auc](measures.html){target="_blank"}) might be more suitable here, as the misclassifications within each class are separately taken into account.
+As the *misclassification rate* ([mmce](measures.html){target="_blank"}) evaluates the overall accuracy of the predictions, the *balanced error rate* ([ber](measures.html){target="_blank"}) and *area under the ROC Curve* ([auc](measures.html){target="_blank"}) might be more suitable here, as the misclassifications within each class are separately taken into account.
 
 #### Over- and undersampling wrappers
 
-Alternatively, `mlr` also offers the integration of over- and undersampling
-via a [wrapper approach](wrapper.html){target="_blank"}. 
+Alternatively, `mlr` also offers the integration of over- and undersampling via a [wrapper approach](wrapper.html){target="_blank"}. 
 This way over- and undersampling can be applied to already [existing learners](learner.html){target="_blank"} to extend their functionality.
 
-The example given above is repeated once again, but this time with extended
-learners instead of modified tasks (see `makeOversampleWrapper()` and `makeUndersampleWrapper()`).
-Just like before the *undersampling rate* has to be between 0 and 1, while the
-*oversampling rate* has a lower boundary of 1.
+The example given above is repeated once again, but this time with extended learners instead of modified tasks (see `makeOversampleWrapper()` and `makeUndersampleWrapper()`).
+Just like before the *undersampling rate* has to be between 0 and 1, while the *oversampling rate* has a lower boundary of 1.
 
 ```{r over-/undersampling_wrapper}
 lrn.over = makeOversampleWrapper(lrn, osw.rate = 8)
@@ -144,14 +131,12 @@ Two extensions to (simple) oversampling are available in `mlr`.
 
 ##### 1. SMOTE (Synthetic Minority Oversampling Technique)
 
-As the duplicating of the minority class observations can lead to overfitting,
-within *SMOTE* the "new cases" are constructed in a different way. 
+As the duplicating of the minority class observations can lead to overfitting, within *SMOTE* the "new cases" are constructed in a different way. 
 For each new observation, one randomly chosen minority class observation as well as one of its *randomly chosen next neighbours* are interpolated, so that finally a new *artificial observation* of the minority class is created.
 The `smote()` function in `mlr` handles numeric as well as factor features, as the gower distance is used for nearest neighbour calculation. 
 The factor level of the new artificial case is sampled from the given levels of the two input observations.
 
-Analogous to oversampling, *SMOTE preprocessing* is possible via modification
-of the task.
+Analogous to oversampling, *SMOTE preprocessing* is possible via modification of the task.
 
 ```{r smote_task}
 task.smote = smote(task, rate = 8, nn = 5)
@@ -168,16 +153,14 @@ mod.smote = train(lrn.smote, task)
 performance(predict(mod.smote, newdata = data.imbal.test), measures = list(mmce, ber, auc))
 ```
 
-By default the number of nearest neighbours considered within the algorithm is
-set to 5.
+By default the number of nearest neighbours considered within the algorithm is set to 5.
 
 ##### 2. Overbagging
 
 Another extension of oversampling consists in the combination of sampling with
 the [bagging approach](bagging.html){target="_blank"}. 
 For each iteration of the bagging process, minority class observations are oversampled with a given rate in `obw.rate`.
-The majority class cases can either all be taken into account for each
-iteration (`obw.maxcl = "all"`) or bootstrapped with replacement to increase
+The majority class cases can either all be taken into account for each iteration (`obw.maxcl = "all"`) or bootstrapped with replacement to increase
 variability between training data sets during iterations (`obw.maxcl = "boot"`).
 
 The construction of the **Overbagging Wrapper** works similar to `makeBaggingWrapper()`.
@@ -189,9 +172,9 @@ lrn = makeLearner("classif.rpart", predict.type = "response")
 obw.lrn = makeOverBaggingWrapper(lrn, obw.rate = 8, obw.iters = 3)
 ```
 
-For *binary classification* the prediction is based on majority voting to create a discrete label. Corresponding probabilities are predicted by considering the proportions of all the predicted labels.
-Please note that the benefit of the sampling process is _highly dependent_
-on the specific learner as shown in the following example.
+For *binary classification* the prediction is based on majority voting to create a discrete label. 
+Corresponding probabilities are predicted by considering the proportions of all the predicted labels.
+Please note that the benefit of the sampling process is _highly dependent_ on the specific learner as shown in the following example.
 
 First, let's take a look at the tree learner with and without overbagging:
 
@@ -211,7 +194,7 @@ r2$aggr
 Now let's consider a *random forest* as initial learner:
 
 ```{r makeOverBaggingWrapper_rf}
-lrn = makeLearner("classif.randomForest")
+lrn = makeLearner("classif.ranger")
 obw.lrn = makeOverBaggingWrapper(lrn, obw.rate = 8, obw.iters = 3)
 
 lrn = setPredictType(lrn, "prob")
@@ -225,8 +208,34 @@ r2 = resample(learner = obw.lrn, task = task, resampling = rdesc, show.info = FA
 r2$aggr
 ```
 
-While *overbagging* slighty improves the performance of the *decision tree*, the auc decreases in the second example when additional overbagging is applied.
-As the *random forest* itself is already a strong learner (and a bagged one as well), a further bagging step isn't very helpful here and usually won't improve the model.
+While *overbagging* slighty improves the performance of the *decision tree*, the AUC decreases in the second example when additional overbagging is applied.
+As RF itself is already a strong learner (and a bagged one as well), a further bagging step isn't very helpful here and usually won't improve the model.
+
+### Tuning the probability threshold
+
+In binary classification, the default probability value at which a prediction is either classified as "1" or "0" is 0.50. 
+This means with an estimate of >= 0.50 the observation is put into class "1" while lower values get assigned class "0".
+To reach a better performance in binary classification, it can be helpful to also optimize the the probability threshold at which this split is made.
+This can be especially helpful if the response is unbalanced.
+To enable this, argument `tune.threshold` needs to be set to `TRUE` in the chosen `makeTuneControl*` function.
+
+```{r}
+lrn = makeLearner("classif.gbm", predict.type = "prob", distribution = "bernoulli")
+ps = makeParamSet(
+  makeIntegerParam("interaction.depth", lower = 1, upper = 5)
+)
+ctrl = makeTuneControlRandom(maxit = 2, tune.threshold = TRUE)
+lrn = makeTuneWrapper(lrn, par.set = ps, control = ctrl, resampling = cv2)
+r = resample(lrn, spam.task, cv3, extract = getTuneResult)
+print(r$extract)
+```
+
+In the above script the tuning is (of course) nested. 
+What happens is:
+The tuner evaluates a certain learner configuration via (inner) two-fold CV. 
+On these predictions then the optimal threshold is selected, for this learner config (by calling `tuneThreshold()` on the `ResamplePrediction` object, which was generated in the configuration evaluation). 
+For the optimal learner config, at the end of tuning, we also know its selected threshold. 
+The model is then trained on the complete outer training data set with the threshold set from the tuning and the prediction is made on the outer test set. 
 
 ### Cost-based approaches
 
@@ -234,11 +243,10 @@ In contrast to sampling, *cost-based approaches* usually require particular lear
 
 #### Weighted classes wrapper
 
-Another approach independent of the underlying classifier is to 
-assign the costs as *class weights*, so that each observation receives a weight, depending on the class it belongs to. Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.
+Another approach independent of the underlying classifier is to assign the costs as *class weights*, so that each observation receives a weight, depending on the class it belongs to. 
+Similar to the sampling-based approaches, the effect of the minority class observations is thereby increased simply by a higher weight of these instances and vice versa for majority class observations.
 
-In this way every learner which supports weights can be extended through
-the [wrapper approach](wrapper.html){target="_blank"}.
+In this way every learner which supports weights can be extended through the [wrapper approach](wrapper.html){target="_blank"}.
 If the learner does not have a direct parameter for class weights, but supports observation weights, the weights depending on the class are internally set in the wrapper.
 
 ```{r makeWeightedClassesWrapper_setup1}
@@ -250,8 +258,7 @@ For binary classification, the single number passed to the classifier correspond
 So actually, no real costs are used within this approach, but the cost ratio is taken into account.
 
 If the underlying learner already has a parameter for class weighting (e.g.,
-`class.weights` in `"classif.ksvm"`), the `wcw.weight` is basically passed
-to the specific class weighting parameter.
+`class.weights` in `"classif.ksvm"`), the `wcw.weight` is basically passed to the specific class weighting parameter.
 
 ```{r makeWeightedClassesWrapper_setup2}
 lrn = makeLearner("classif.ksvm")
