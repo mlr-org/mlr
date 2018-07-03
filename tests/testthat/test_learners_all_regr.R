@@ -53,4 +53,8 @@ test_that("learners work: regr ", {
   # regr with oobpreds
   lrns = mylist(task, properties = "oobpreds", create = TRUE)
   lapply(lrns, testThatGetOOBPredsWorks, task = task)
+
+  # regr with only one feature
+  min.task = makeRegrTask("oneCol", data.frame(x = 1:10, y = 1:10), target = "y")
+  lapply(lrns, testBasicLearnerProperties, task = min.task)
 })
