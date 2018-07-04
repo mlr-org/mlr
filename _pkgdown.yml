@@ -136,7 +136,7 @@ navbar:
     - text: mlrHyperopt
       href: http://jakob-r.de/mlrHyperopt/index.html
     - text: OpenML
-      href: https://openml.org/
+      href: http://openml.github.io/openml-r/vignettes/OpenML.html
 
   right:
   - icon: fa-github fa-lg
