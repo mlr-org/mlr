@@ -99,6 +99,19 @@ Can the learner predict posterior probabilities?
 
 If the learner supports class weights the name of the relevant learner parameter can be specified via argument `class.weights.param`.
 
+Sometimes parameters allow certain values that don't "fit" the formal parameter types. 
+Often, these are also the default values. 
+For example:
+A numeric parameter that accepts values as `NA`, `NULL`, `"auto"`, and so on.
+For these there is the option `special.vals`, which allows to list these extra values as feasible. 
+An example is the `missing` argument in `xgboost`. 
+It accepts numeric values (that's why it's set as a numeric parameter) and `NULL` but the default is `NA`.
+
+```{r, eval = FALSE}
+makeNumericLearnerParam(id = "missing", default = NA, tunable = FALSE, when = "both",
+  special.vals = list(NA, NA_real_, NULL))
+```
+
 If a parameter depends on another one, the `requires` attribute is added as an argument.
 Dependent parameters with a `requires` field must use `quote()` and not `expression()` to define it.
 
