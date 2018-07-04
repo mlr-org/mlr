@@ -66,7 +66,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     padding: 0 0 0 85px;
     height: 50px;
     line-height: 50px;
-    background-image: url(logo.png);
+    background-image: url(reference/figures/logo_navbar.png);
     background-size: 64px auto;
     background-repeat: no-repeat;
     background-position: 15px center;
