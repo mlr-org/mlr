@@ -23,7 +23,7 @@ Check that for each param in \code{...} one param in found in the base learners.
 Default is \code{TRUE}}
 }
 \value{
-[ParamSet].
+\link{ParamSet}.
 }
 \description{
 Handy way to create the param set with less typing.
@@ -45,6 +45,7 @@ Other multiplexer: \code{\link{makeModelMultiplexer}}
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexer}},
   \code{\link{makeTuneControlCMAES}},

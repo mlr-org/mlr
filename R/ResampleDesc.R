@@ -73,7 +73,7 @@
 #'   For survival tasks stratification is done on the events, resulting in training sets with comparable
 #'   censoring rates.
 #' @param stratify.cols ([character])\cr
-#'   Stratify on specific columns referenced by name. All columns have to be factors.
+#'   Stratify on specific columns referenced by name. All columns have to be factor or integer.
 #'   Note that you have to ensure yourself that stratification is possible, i.e.
 #'   that each strata contains enough observations.
 #'   This argument and `stratify` are mutually exclusive.

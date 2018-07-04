@@ -8,7 +8,7 @@ getFilterValues(task, method = "randomForestSRC.rfsrc",
   nselect = getTaskNFeats(task), ...)
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{method}{(\code{character(1)})\cr
@@ -37,9 +37,7 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
@@ -55,7 +53,5 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
   \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}},
-  \code{\link{plotFilterValuesGGVIS}},
-  \code{\link{plotFilterValues}}
+  \code{\link{makeFilter}}, \code{\link{plotFilterValues}}
 }

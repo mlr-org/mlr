@@ -911,23 +911,19 @@ measureBrierScaled = function(probabilities, truth, negative, positive) {
 #' @rdname measures
 #' @format none
 bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "req.pred", "req.truth"),
+  properties = c("classif", "classif.multi", "req.pred", "req.truth"),
   name = "Balanced accuracy",
-  note = "Mean of true positive rate and true negative rate.",
+  note = "For binary tasks, mean of true positive rate and true negative rate.",
   fun = function(task, model, pred, feats, extra.args) {
-    mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
-      tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
+    measureBAC(pred$data$truth, pred$data$response)
   }
 )
 
 #' @export measureBAC
 #' @rdname measures
 #' @format none
-measureBAC = function(truth, response, negative, positive) {
-  mean(c(
-    measureTP(truth, response, positive) / sum(truth == positive),
-    measureTN(truth, response, negative) / sum(truth == negative)
-  ))
+measureBAC = function(truth, response) {
+    mean(diag(table(truth, response) / table(truth, truth)))
 }
 
 #' @export tp
@@ -1305,15 +1301,6 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
   }
 )
 
-#' Deprecated, use `measureMultilabelF1` instead.
-#' @export measureMultiLabelF1
-#' @rdname measures
-#' @format none
-measureMultiLabelF1 = function(truth, response) {
-  .Deprecated("measureMultilabelF1")
-  measureMultilabelF1(truth, response)
-}
-
 #' @export measureMultilabelF1
 #' @rdname measures
 #' @format none
@@ -1421,9 +1408,9 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 #' @references
 #' H. Uno et al.
 #' *On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data*
-#' Statistics in medicine. 2011;30(10):1105-1117. <http://dx.doi.org/10.1002/sim.4154>.
+#' Statistics in medicine. 2011;30(10):1105-1117. <https://doi.org/10.1002/sim.4154>.
 cindex.uno = makeMeasure(id = "cindex.uno", minimize = FALSE, best = 1, worst = 0,
-  properties = c("surv", "req.pred", "req.truth", "req.model"),
+  properties = c("surv", "req.pred", "req.truth", "req.model", "req.task"),
   name = "Uno's Concordance index",
   note = "Fraction of all pairs of subjects whose predicted survival times are correctly ordered among all subjects that can actually be ordered. In other words, it is the probability of concordance between the predicted and the observed survival. Corrected by weighting with IPCW as suggested by Uno. Implemented in survAUC::UnoC.",
   fun = function(task, model, pred, feats, extra.args) {

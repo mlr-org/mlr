@@ -1,0 +1,56 @@
+---
+title: "Integrated Filter Methods"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo = FALSE, message=FALSE}
+library("mlr")
+library("BBmisc")
+library("ParamHelpers")
+urlContribPackages = "http://www.inside-r.org/packages/cran/"
+library("pander")
+
+## show grouped code output instead of single lines
+knitr::opts_chunk$set(collapse = FALSE)
+knitr::knit_hooks$set(document = function(x){
+  gsub("```\n*```r*\n*", "", x)
+})
+```
+
+The following table shows the available methods for calculating the feature importance.
+Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival analysis problems are supported.
+Columns **Fac.**, **Num.** and **Ord.** show if a particular method can deal with `factor`, `numeric` and `ordered factor` features.
+
+### Current methods
+
+```{r, echo = FALSE, results = "asis"}
+## urlContribPackages is defined in build
+linkPkg = function(x) {
+  ifelse(x == "", "", collapse(sprintf("[%1$s](%2$s%1$s/)", x, urlContribPackages), sep = "<br />"))
+}
+df = listFilterMethods(desc = TRUE, tasks = TRUE, features = TRUE, include.deprecated = TRUE)
+df$package = sapply(df$package, linkPkg)
+
+depr = df$deprecated
+df$deprecated = NULL
+
+logicals = vlapply(df, is.logical)
+df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
+names(df) = c("Method", "Package", "Description", "Classif", "Regr", "Surv", "Fac.", "Num.", "Ord.")
+just = rep(c("left", "center"), c(3, ncol(df) - 3))
+dfnd = df[!depr,]
+rownames(dfnd) = seq_len(nrow(dfnd))
+pandoc.table(dfnd, style = "rmarkdown", split.tables = Inf, split.cells = Inf, emphasize.rownames = FALSE, justify = just)
+```
+
+### Deprecated methods
+
+```{r, echo = FALSE, results = "asis"}
+dfd = df[depr,]
+rownames(dfd) = seq_len(nrow(dfd))
+pandoc.table(dfd, style = "rmarkdown", split.tables = Inf, split.cells = Inf, justify = just)
+```

@@ -117,7 +117,7 @@ NULL
 #' Contains the task (`yeast.task`).
 #'
 #' @name yeast.task
-#' @source <http://sourceforge.net/projects/mulan/files/datasets/yeast.rar>
+#' @source <https://archive.ics.uci.edu/ml/datasets/Yeast> (In long instead of wide format)
 #' @references Elisseeff, A., & Weston, J. (2001):
 #' A kernel method for multi-labelled classification.
 #' In Advances in neural information processing systems (pp. 681-687).

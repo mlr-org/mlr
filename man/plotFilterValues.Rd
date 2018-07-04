@@ -25,9 +25,9 @@ Colors for factor and numeric features.
 \code{FALSE} means no colors.
 Default is \code{FALSE}.}
 
-\item{facet.wrap.nrow, facet.wrap.ncol}{([integer])\cr
-Number of rows and columns for facetting. Default for both is `NULL`.
-In this case ggplot's `facet_wrap` will choose the layout itself.}
+\item{facet.wrap.nrow, facet.wrap.ncol}{(\link{integer})\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
@@ -45,9 +45,7 @@ Other filter: \code{\link{filterFeatures}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{listFilterMethods}},
-  \code{\link{makeFilterWrapper}},
-  \code{\link{makeFilter}},
-  \code{\link{plotFilterValuesGGVIS}}
+  \code{\link{makeFilterWrapper}}, \code{\link{makeFilter}}
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},

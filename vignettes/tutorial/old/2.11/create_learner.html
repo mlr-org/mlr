@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Create Custom Learners - mlr tutorial</title>
+        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/highlight.css">
+        <link href="css/custom_mlr.css" rel="stylesheet">
+        <link href="css/custom_highlight.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+	<script src="js/jquery-1.10.2.min.js"></script>
+        <script src="js/bootstrap-3.0.3.min.js"></script>
+        <script src="js/highlight.pack.js"></script>
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+<li >
+    <a href="task.html">Tasks</a>
+</li>
+
+<li >
+    <a href="learner.html">Learners</a>
+</li>
+
+<li >
+    <a href="train.html">Train</a>
+</li>
+
+<li >
+    <a href="predict.html">Predict</a>
+</li>
+
+<li >
+    <a href="performance.html">Performance</a>
+</li>
+
+<li >
+    <a href="resample.html">Resampling</a>
+</li>
+
+<li >
+    <a href="tune.html">Tuning</a>
+</li>
+
+<li >
+    <a href="benchmark_experiments.html">Benchmark Experiments</a>
+</li>
+
+<li >
+    <a href="parallelization.html">Parallelization</a>
+</li>
+
+<li >
+    <a href="visualization.html">Visualization</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+<li >
+    <a href="configureMlr.html">Configuration</a>
+</li>
+
+<li >
+    <a href="wrapper.html">Wrapped Learners</a>
+</li>
+
+<li >
+    <a href="preproc.html">Preprocessing</a>
+</li>
+
+<li >
+    <a href="impute.html">Imputation</a>
+</li>
+
+<li class="active">
+    <a href="bagging.html">Bagging</a>
+</li>
+
+<li >
+    <a href="advanced_tune.html">Advanced Tuning</a>
+</li>
+
+<li >
+    <a href="feature_selection.html">Feature Selection</a>
+</li>
+
+<li >
+    <a href="nested_resampling.html">Nested Resampling</a>
+</li>
+
+<li >
+    <a href="cost_sensitive_classif.html">Cost-Sensitive Classification</a>
+</li>
+
+<li >
+    <a href="over_and_undersampling.html">Imbalanced Classification Problems</a>
+</li>
+
+<li >
+    <a href="roc_analysis.html">ROC Analysis</a>
+</li>
+
+<li >
+    <a href="multilabel.html">Multilabel Classification</a>
+</li>
+
+<li >
+    <a href="learning_curve.html">Learning Curves</a>
+</li>
+
+<li >
+    <a href="partial_dependence.html">Partial Dependence Plots</a>
+</li>
+
+<li >
+    <a href="classifier_calibration.html">Classifier Calibration Plots</a>
+</li>
+
+<li >
+    <a href="hyperpar_tuning_effects.html">Hyperparameter Tuning Effects</a>
+</li>
+
+<li >
+    <a href="out_of_bag_predictions.html">Out-of-Bag Predictions</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+<li >
+    <a href="create_learner.html">Create Custom Learners</a>
+</li>
+
+<li >
+    <a href="create_measure.html">Create Custom Measures</a>
+</li>
+
+<li >
+    <a href="create_imputation.html">Create Imputation Methods</a>
+</li>
+
+<li >
+    <a href="create_filter.html">Create Custom Filters</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+
+<li >
+    <a href="example_tasks.html">Example Tasks</a>
+</li>
+
+<li >
+    <a href="integrated_learners.html">Integrated Learners</a>
+</li>
+
+<li >
+    <a href="measures.html">Implemented Performance Measures</a>
+</li>
+
+<li >
+    <a href="filter_methods.html">Integrated Filter Methods</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../out_of_bag_predictions/index.html">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../create_measure/index.html">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/mlr-org/mlr/">
+                                <i class="fa fa-github"></i>GitHub
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#integrating-another-learner">Integrating Another Learner</a></li>
+            <li><a href="#classes-constructors-and-naming-schemes">Classes, constructors, and naming schemes</a></li>
+            <li><a href="#classification">Classification</a></li>
+            <li><a href="#regression">Regression</a></li>
+            <li><a href="#survival-analysis">Survival analysis</a></li>
+            <li><a href="#clustering">Clustering</a></li>
+            <li><a href="#multilabel-classification">Multilabel classification</a></li>
+            <li><a href="#creating-a-new-method-for-extracting-feature-importance-values">Creating a new method for extracting feature importance values</a></li>
+            <li><a href="#creating-a-new-method-for-extracting-out-of-bag-predictions">Creating a new method for extracting out-of-bag predictions</a></li>
+            <li><a href="#registering-your-learner">Registering your learner</a></li>
+            <li><a href="#further-information-for-developers">Further information for developers</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="integrating-another-learner">Integrating Another Learner</h1>
+<p>In order to integrate a learning algorithm into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> some interface code has to be written.
+Three functions are mandatory for each learner.</p>
+<ul>
+<li>First, define a new learner class with a name, description, capabilities, parameters,
+  and a few other things.
+  (An object of this class can then be generated by <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>.)</li>
+<li>Second, you need to provide a function that calls the learner function and builds the
+  model given data (which makes it possible to invoke training by calling <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
+  function).</li>
+<li>Finally, a prediction function that returns predicted values given new data is required
+  (which enables invoking prediction by calling <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s <a href="http://www.rdocumentation.org/packages/mlr/functions/predict.WrappedModel.html">predict</a>
+  function).</li>
+</ul>
+<p>Technically, integrating a learning method means introducing a new S3 <a href="http://www.rdocumentation.org/packages/base/functions/class.html">class</a>
+and implementing the corresponding methods for the generic functions <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">makeRLerner</a>,
+<a href="http://www.rdocumentation.org/packages/mlr/functions/trainLearner.html">trainLearner</a>, and <a href="http://www.rdocumentation.org/packages/mlr/functions/predictLearner.html">predictLearner</a>.
+Therefore we start with a quick overview of the involved <a href="http://www.rdocumentation.org/packages/base/functions/class.html">classes</a> and
+constructor functions.</p>
+<h2 id="classes-constructors-and-naming-schemes">Classes, constructors, and naming schemes</h2>
+<p>As you already know <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a> generates an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.</p>
+<pre><code class="r">class(makeLearner(cl = &quot;classif.lda&quot;))
+#&gt; [1] &quot;classif.lda&quot;     &quot;RLearnerClassif&quot; &quot;RLearner&quot;        &quot;Learner&quot;
+
+class(makeLearner(cl = &quot;regr.lm&quot;))
+#&gt; [1] &quot;regr.lm&quot;      &quot;RLearnerRegr&quot; &quot;RLearner&quot;     &quot;Learner&quot;
+
+class(makeLearner(cl = &quot;surv.coxph&quot;))
+#&gt; [1] &quot;surv.coxph&quot;   &quot;RLearnerSurv&quot; &quot;RLearner&quot;     &quot;Learner&quot;
+
+class(makeLearner(cl = &quot;cluster.kmeans&quot;))
+#&gt; [1] &quot;cluster.kmeans&quot;  &quot;RLearnerCluster&quot; &quot;RLearner&quot;        &quot;Learner&quot;
+
+class(makeLearner(cl = &quot;multilabel.rFerns&quot;))
+#&gt; [1] &quot;multilabel.rFerns&quot;  &quot;RLearnerMultilabel&quot; &quot;RLearner&quot;
+#&gt; [4] &quot;Learner&quot;
+</code></pre>
+
+<p>The first element of each <a href="http://www.rdocumentation.org/packages/base/functions/class.html">class</a> attribute vector is the name of the learner
+class passed to the <code>cl</code> argument of <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>.
+Obviously, this adheres to the naming conventions</p>
+<ul>
+<li><code>"classif.&lt;R_method_name&gt;"</code> for classification,</li>
+<li><code>"multilabel.&lt;R_method_name&gt;"</code> for multilabel classification,</li>
+<li><code>"regr.&lt;R_method_name&gt;"</code> for regression,</li>
+<li><code>"surv.&lt;R_method_name&gt;"</code> for survival analysis, and</li>
+<li><code>"cluster.&lt;R_method_name&gt;"</code> for clustering.</li>
+</ul>
+<p>Additionally, there exist intermediate classes that reflect the type of learning problem, i.e.,
+all classification learners inherit from <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">RLearnerClassif</a>, all regression learners
+from <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">RLearnerRegr</a> and so on.
+Their superclasses are <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">RLearner</a> and finally <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
+For all these (sub)classes there exist constructor functions <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">makeRLearner</a>,
+<a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">makeRLearnerClassif</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/RLearner.html">makeRLearneRegr</a> etc. that are called
+internally by <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>.</p>
+<p>A short side remark:
+As you might have noticed there does not exist a special learner class for
+<a href="../cost_sensitive_classif/index.html">cost-sensitive classification (costsens)</a> with example-specific
+costs. This type of learning task is currently exclusively handled through <a href="../wrapper/index.html">wrappers</a>
+like <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper</a>.</p>
+<p>In the following we show how to integrate learners for the five types of learning tasks
+mentioned above.
+Defining a completely new type of learner that has special properties and does not fit into
+one of the existing schemes is of course possible, but much more advanced and not covered
+here.</p>
+<p>We use a classification example to explain some general principles (so even if you are
+interested in integrating a learner for another type of learning task you might want to read
+the following section).
+Examples for other types of learning tasks are shown later on.</p>
+<h2 id="classification">Classification</h2>
+<p>We show how the <a href="http://www.rdocumentation.org/packages/MASS/functions/lda.html">Linear Discriminant Analysis</a> from
+package <a href="http://www.rdocumentation.org/packages/MASS/">MASS</a> has been integrated
+into the classification learner <code>classif.lda</code> in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> as an example.</p>
+<h3 id="definition-of-the-learner">Definition of the learner</h3>
+<p>The minimal information required to define a learner is the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> name of the
+learner, its package, the parameter set, and the set of properties of your
+learner. In addition, you may provide a human-readable name, a short name and a
+note with information relevant to users of the learner.</p>
+<p>First, name your learner. According to the naming conventions above the name starts with
+<code>classif.</code> and we choose <code>classif.lda</code>.</p>
+<p>Second, we need to define the parameters of the learner. These are any options
+that can be set when running it to change how it learns, how input is
+interpreted, how and what output is generated, and so on. <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides a
+number of functions to define parameters, a complete list can be found in the
+documentation of <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/LearnerParam.html">LearnerParam</a> of the
+<a href="http://www.rdocumentation.org/packages/ParamHelpers/">ParamHelpers</a> package.</p>
+<p>In our example, we have discrete and numeric parameters, so we use
+<a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/LearnerParam.html">makeDiscreteLearnerParam</a> and
+<a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/LearnerParam.html">makeNumericLearnerParam</a> to incorporate the
+complete description of the parameters. We include all possible values for
+discrete parameters and lower and upper bounds for numeric parameters. Strictly
+speaking it is not necessary to provide bounds for all parameters and if this
+information is not available they can be estimated, but providing accurate and
+specific information here makes it possible to tune the learner much better (see
+the section on <a href="../tune/index.html">tuning</a>).</p>
+<p>Next, we add information on the properties of the learner (see also the section
+on <a href="../learner/index.html">learners</a>). Which types of features are supported (numerics,
+factors)? Are case weights supported? Are class weights supported? Can the method deal
+with missing values in the features and deal with NA's in a meaningful way (not <code>na.omit</code>)?
+Are one-class, two-class, multi-class problems supported? Can the learner predict
+posterior probabilities?</p>
+<p>If the learner supports class weights the name of the relevant learner parameter
+can be specified via argument <code>class.weights.param</code>.</p>
+<p>Below is the complete code for the definition of the LDA learner. It has one
+discrete parameter, <code>method</code>, and two continuous ones, <code>nu</code> and <code>tol</code>. It
+supports classification problems with two or more classes and can deal with
+numeric and factor explanatory variables. It can predict posterior
+probabilities.</p>
+<pre><code class="r">makeRLearner.classif.lda = function() {
+  makeRLearnerClassif(
+    cl = &quot;classif.lda&quot;,
+    package = &quot;MASS&quot;,
+    par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = &quot;method&quot;, default = &quot;moment&quot;, values = c(&quot;moment&quot;, &quot;mle&quot;, &quot;mve&quot;, &quot;t&quot;)),
+      makeNumericLearnerParam(id = &quot;nu&quot;, lower = 2, requires = quote(method == &quot;t&quot;)),
+      makeNumericLearnerParam(id = &quot;tol&quot;, default = 1e-4, lower = 0),
+      makeDiscreteLearnerParam(id = &quot;predict.method&quot;, values = c(&quot;plug-in&quot;, &quot;predictive&quot;, &quot;debiased&quot;),
+        default = &quot;plug-in&quot;, when = &quot;predict&quot;),
+      makeLogicalLearnerParam(id = &quot;CV&quot;, default = FALSE, tunable = FALSE)
+    ),
+    properties = c(&quot;twoclass&quot;, &quot;multiclass&quot;, &quot;numerics&quot;, &quot;factors&quot;, &quot;prob&quot;),
+    name = &quot;Linear Discriminant Analysis&quot;,
+    short.name = &quot;lda&quot;,
+    note = &quot;Learner param 'predict.method' maps to 'method' in predict.lda.&quot;
+  )
+}
+</code></pre>
+
+<h3 id="creating-the-training-function-of-the-learner">Creating the training function of the learner</h3>
+<p>Once the learner has been defined, we need to tell <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> how to call it to
+train a model. The name of the function has to start with <code>trainLearner.</code>,
+followed by the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> name of the learner as defined above (<code>classif.lda</code>
+here). The prototype of the function looks as follows.</p>
+<pre><code class="r">function(.learner, .task, .subset, .weights = NULL, ...) { }
+</code></pre>
+
+<p>This function must fit a model on the data of the task <code>.task</code> with regard to
+the subset defined in the integer vector <code>.subset</code> and the parameters passed
+in the <code>...</code> arguments. Usually, the data should be extracted from the task
+using <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a>. This will take care of any subsetting as well. It must
+return the fitted model. <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> assumes no special data type for the return
+value -- it will be passed to the predict function we are going to define below,
+so any special code the learner may need can be encapsulated there.</p>
+<p>For our example, the definition of the function looks like this. In addition to
+the data of the task, we also need the formula that describes what to predict.
+We use the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormula.html">getTaskFormula</a> to extract this from the task.</p>
+<pre><code class="r">trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL, ...) {
+  f = getTaskFormula(.task)
+  MASS::lda(f, data = getTaskData(.task, .subset), ...)
+}
+</code></pre>
+
+<h3 id="creating-the-prediction-method">Creating the prediction method</h3>
+<p>Finally, the prediction function needs to be defined. The name of this function
+starts with <code>predictLearner.</code>, followed again by the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> name of the
+learner. The prototype of the function is as follows.</p>
+<pre><code class="r">function(.learner, .model, .newdata, ...) { }
+</code></pre>
+
+<p>It must predict for the new observations in the <code>data.frame</code> <code>.newdata</code> with
+the wrapped model <code>.model</code>, which is returned from the training function.
+The actual model the learner built is stored in the <code>$learner.model</code> member
+and can be accessed simply through <code>.model$learner.model</code>.</p>
+<p>For classification, you have to return a factor of predicted classes if
+<code>.learner$predict.type</code> is <code>"response"</code>, or a matrix of predicted
+probabilities if <code>.learner$predict.type</code> is <code>"prob"</code> and this type of
+prediction is supported by the learner. In the latter case the matrix must have
+the same number of columns as there are classes in the task and the columns have
+to be named by the class names.</p>
+<p>The definition for LDA looks like this. It is pretty much just a straight
+pass-through of the arguments to the <a href="http://www.rdocumentation.org/packages/base/functions/predict.html">predict</a> function and some extraction of
+prediction data depending on the type of prediction requested.</p>
+<pre><code class="r">predictLearner.classif.lda = function(.learner, .model, .newdata, predict.method = &quot;plug-in&quot;, ...) {
+  p = predict(.model$learner.model, newdata = .newdata, method = predict.method, ...)
+  if (.learner$predict.type == &quot;response&quot;)
+    return(p$class) else return(p$posterior)
+}
+</code></pre>
+
+<h2 id="regression">Regression</h2>
+<p>The main difference for regression is that the type of predictions are different
+(numeric instead of labels or probabilities) and that not all of the properties
+are relevant. In particular, whether one-, two-, or multi-class problems and
+posterior probabilities are supported is not applicable.</p>
+<p>Apart from this, everything explained above applies. Below is the definition for
+the <a href="http://www.rdocumentation.org/packages/earth/functions/earth.html">earth</a> learner from the
+<a href="http://www.rdocumentation.org/packages/earth/">earth</a> package.</p>
+<pre><code class="r">makeRLearner.regr.earth = function() {
+  makeRLearnerRegr(
+    cl = &quot;regr.earth&quot;,
+    package = &quot;earth&quot;,
+    par.set = makeParamSet(
+      makeLogicalLearnerParam(id = &quot;keepxy&quot;, default = FALSE, tunable = FALSE),
+      makeNumericLearnerParam(id = &quot;trace&quot;, default = 0, upper = 10, tunable = FALSE),
+      makeIntegerLearnerParam(id = &quot;degree&quot;, default = 1L, lower = 1L),
+      makeNumericLearnerParam(id = &quot;penalty&quot;),
+      makeIntegerLearnerParam(id = &quot;nk&quot;, lower = 0L),
+      makeNumericLearnerParam(id = &quot;thres&quot;, default = 0.001),
+      makeIntegerLearnerParam(id = &quot;minspan&quot;, default = 0L),
+      makeIntegerLearnerParam(id = &quot;endspan&quot;, default = 0L),
+      makeNumericLearnerParam(id = &quot;newvar.penalty&quot;, default = 0),
+      makeIntegerLearnerParam(id = &quot;fast.k&quot;, default = 20L, lower = 0L),
+      makeNumericLearnerParam(id = &quot;fast.beta&quot;, default = 1),
+      makeDiscreteLearnerParam(id = &quot;pmethod&quot;, default = &quot;backward&quot;,
+        values = c(&quot;backward&quot;, &quot;none&quot;, &quot;exhaustive&quot;, &quot;forward&quot;, &quot;seqrep&quot;, &quot;cv&quot;)),
+      makeIntegerLearnerParam(id = &quot;nprune&quot;)
+    ),
+    properties = c(&quot;numerics&quot;, &quot;factors&quot;),
+    name = &quot;Multivariate Adaptive Regression Splines&quot;,
+    short.name = &quot;earth&quot;,
+    note = &quot;&quot;
+  )
+}
+</code></pre>
+
+<pre><code class="r">trainLearner.regr.earth = function(.learner, .task, .subset, .weights = NULL, ...) {
+  f = getTaskFormula(.task)
+  earth::earth(f, data = getTaskData(.task, .subset), ...)
+}
+</code></pre>
+
+<pre><code class="r">predictLearner.regr.earth = function(.learner, .model, .newdata, ...) {
+  predict(.model$learner.model, newdata = .newdata)[, 1L]
+}
+</code></pre>
+
+<p>Again most of the data is passed straight through to/from the train/predict
+functions of the learner.</p>
+<h2 id="survival-analysis">Survival analysis</h2>
+<p>For survival analysis, you have to return so-called linear predictors in order to compute
+the default measure for this task type, the <a href="../measures/index.html">cindex</a> (for
+<code>.learner$predict.type</code> == <code>"response"</code>). For <code>.learner$predict.type</code> == <code>"prob"</code>,
+there is no substantially meaningful measure (yet). You may either ignore this case or return
+something like predicted survival curves (cf. example below).</p>
+<p>There are three properties that are specific to survival learners:
+"rcens", "lcens" and "icens", defining the type(s) of censoring a learner can handle -- right,
+left and/or interval censored.</p>
+<p>Let's have a look at how the <a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox Proportional Hazard Model</a> from
+package <a href="http://www.rdocumentation.org/packages/survival/">survival</a> has been integrated
+into the survival learner <code>surv.coxph</code> in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> as an example:</p>
+<pre><code class="r">makeRLearner.surv.coxph = function() {
+  makeRLearnerSurv(
+    cl = &quot;surv.coxph&quot;,
+    package = &quot;survival&quot;,
+    par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = &quot;ties&quot;, default = &quot;efron&quot;, values = c(&quot;efron&quot;, &quot;breslow&quot;, &quot;exact&quot;)),
+      makeLogicalLearnerParam(id = &quot;singular.ok&quot;, default = TRUE),
+      makeNumericLearnerParam(id = &quot;eps&quot;, default = 1e-09, lower = 0),
+      makeNumericLearnerParam(id = &quot;toler.chol&quot;, default = .Machine$double.eps^0.75, lower = 0),
+      makeIntegerLearnerParam(id = &quot;iter.max&quot;, default = 20L, lower = 1L),
+      makeNumericLearnerParam(id = &quot;toler.inf&quot;, default = sqrt(.Machine$double.eps^0.75), lower = 0),
+      makeIntegerLearnerParam(id = &quot;outer.max&quot;, default = 10L, lower = 1L),
+      makeLogicalLearnerParam(id = &quot;model&quot;, default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = &quot;x&quot;, default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = &quot;y&quot;, default = TRUE, tunable = FALSE)
+    ),
+    properties = c(&quot;missings&quot;, &quot;numerics&quot;, &quot;factors&quot;, &quot;weights&quot;, &quot;prob&quot;, &quot;rcens&quot;),
+    name = &quot;Cox Proportional Hazard Model&quot;,
+    short.name = &quot;coxph&quot;,
+    note = &quot;&quot;
+  )
+}
+</code></pre>
+
+<pre><code class="r">trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL, ...) {
+  f = getTaskFormula(.task)
+  data = getTaskData(.task, subset = .subset)
+  if (is.null(.weights)) {
+    mod = survival::coxph(formula = f, data = data, ...)
+  } else {
+    mod = survival::coxph(formula = f, data = data, weights = .weights, ...)
+  }
+  mod
+}
+</code></pre>
+
+<pre><code class="r">predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
+  if (.learner$predict.type == &quot;response&quot;) {
+    predict(.model$learner.model, newdata = .newdata, type = &quot;lp&quot;, ...)
+  }
+}
+</code></pre>
+
+<h2 id="clustering">Clustering</h2>
+<p>For clustering, you have to return a numeric vector with the IDs of the clusters
+that the respective datum has been assigned to. The numbering should start at 1.</p>
+<p>Below is the definition for the <a href="http://www.rdocumentation.org/packages/RWeka/functions/FarthestFirst.html">FarthestFirst</a> learner
+from the <a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a> package. Weka
+starts the IDs of the clusters at 0, so we add 1 to the predicted clusters.
+RWeka has a different way of setting learner parameters; we use the special
+<code>Weka_control</code> function to do this.</p>
+<pre><code class="r">makeRLearner.cluster.FarthestFirst = function() {
+  makeRLearnerCluster(
+    cl = &quot;cluster.FarthestFirst&quot;,
+    package = &quot;RWeka&quot;,
+    par.set = makeParamSet(
+      makeIntegerLearnerParam(id = &quot;N&quot;, default = 2L, lower = 1L),
+      makeIntegerLearnerParam(id = &quot;S&quot;, default = 1L, lower = 1L),
+      makeLogicalLearnerParam(id = &quot;output-debug-info&quot;, default = FALSE, tunable = FALSE)
+    ),
+    properties = c(&quot;numerics&quot;),
+    name = &quot;FarthestFirst Clustering Algorithm&quot;,
+    short.name = &quot;farthestfirst&quot;
+  )
+}
+</code></pre>
+
+<pre><code class="r">trainLearner.cluster.FarthestFirst = function(.learner, .task, .subset, .weights = NULL, ...) {
+  ctrl = RWeka::Weka_control(...)
+  RWeka::FarthestFirst(getTaskData(.task, .subset), control = ctrl)
+}
+</code></pre>
+
+<pre><code class="r">predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...) {
+  as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
+}
+</code></pre>
+
+<h2 id="multilabel-classification">Multilabel classification</h2>
+<p>As stated in the <a href="../multilabel/index.html">multilabel</a> section, multilabel classification
+methods can be divided into problem transformation methods and algorithm adaptation methods.</p>
+<p>At this moment the only problem transformation method implemented in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>
+is the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMultilabelBinaryRelevanceWrapper.html">binary relevance method</a>. Integrating more of
+these methods requires good knowledge of the architecture of the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> package.</p>
+<p>The integration of an algorithm adaptation multilabel classification learner is easier and
+works very similar to the normal multiclass-classification.
+In contrast to the multiclass case, not all of the learner properties are relevant.
+In particular, whether one-, two-, or multi-class problems are supported is not applicable.
+Furthermore the prediction function output must be a matrix
+with each prediction of a label in one column and the names of the labels
+as column names. If <code>.learner$predict.type</code> is <code>"response"</code> the predictions must
+be logical. If <code>.learner$predict.type</code> is <code>"prob"</code> and this type of
+prediction is supported by the learner, the matrix must consist of predicted
+probabilities.</p>
+<p>Below is the definition of the <a href="http://www.rdocumentation.org/packages/rFerns/functions/rFerns.html">rFerns</a> learner from the
+<a href="http://www.rdocumentation.org/packages/rFerns/">rFerns</a> package, which does not support probability predictions.</p>
+<pre><code class="r">makeRLearner.multilabel.rFerns = function() {
+  makeRLearnerMultilabel(
+    cl = &quot;multilabel.rFerns&quot;,
+    package = &quot;rFerns&quot;,
+    par.set = makeParamSet(
+      makeIntegerLearnerParam(id = &quot;depth&quot;, default = 5L),
+      makeIntegerLearnerParam(id = &quot;ferns&quot;, default = 1000L)
+    ),
+    properties = c(&quot;numerics&quot;, &quot;factors&quot;, &quot;ordered&quot;),
+    name = &quot;Random ferns&quot;,
+    short.name = &quot;rFerns&quot;,
+    note = &quot;&quot;
+  )
+}
+</code></pre>
+
+<pre><code class="r">trainLearner.multilabel.rFerns = function(.learner, .task, .subset, .weights = NULL, ...) {
+  d = getTaskData(.task, .subset, target.extra = TRUE)
+  rFerns::rFerns(x = d$data, y = as.matrix(d$target), ...)
+}
+</code></pre>
+
+<pre><code class="r">predictLearner.multilabel.rFerns = function(.learner, .model, .newdata, ...) {
+  as.matrix(predict(.model$learner.model, .newdata, ...))
+}
+</code></pre>
+
+<h2 id="creating-a-new-method-for-extracting-feature-importance-values">Creating a new method for extracting feature importance values</h2>
+<p>Some learners, for example decision trees and random forests, can calculate feature importance
+values, which can be extracted from a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">fitted model</a> using function
+<a href="http://www.rdocumentation.org/packages/mlr/functions/getFeatureImportance.html">getFeatureImportance</a>.</p>
+<p>If your newly integrated learner supports this you need to</p>
+<ul>
+<li>add <code>"featimp"</code> to the learner properties and</li>
+<li>implement a new S3 method for function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFeatureImportanceLearner.html">getFeatureImportanceLearner</a> (which later is called
+  internally by <a href="http://www.rdocumentation.org/packages/mlr/functions/getFeatureImportance.html">getFeatureImportance</a>)</li>
+</ul>
+<p>in order to make this work.</p>
+<p>This method takes the <a href="http://www.rdocumentation.org/packages/mlr/functions/Learner.html">Learner</a> <code>.learner</code>, the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a> <code>.model</code>
+and potential further arguments and calculates or extracts the feature importance.
+It must return a named vector of importance values.</p>
+<p>Below are two simple examples.
+In case of <code>"classif.rpart"</code> the feature importance values can be easily extracted from the
+fitted model.</p>
+<pre><code class="r">getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  mod$variable.importance
+}
+</code></pre>
+
+<p>For the <a href="http://www.rdocumentation.org/packages/randomForestSRC/functions/rfsrc.html">random forest</a> from package <a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a> function
+<a href="http://www.rdocumentation.org/packages/randomForestSRC/functions/vimp.html">vimp</a> is called.</p>
+<pre><code class="r">getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  randomForestSRC::vimp(mod, ...)$importance[, &quot;all&quot;]
+}
+</code></pre>
+
+<h2 id="creating-a-new-method-for-extracting-out-of-bag-predictions">Creating a new method for extracting out-of-bag predictions</h2>
+<p>Many ensemble learners generate out-of-bag predictions (OOB predictions) automatically.
+<a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getOOBPreds.html">getOOBPreds</a> to access these predictions in the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> framework.</p>
+<p>If your newly integrated learner is able to calculate OOB predictions and you want to be
+able to access them in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> via <a href="http://www.rdocumentation.org/packages/mlr/functions/getOOBPreds.html">getOOBPreds</a> you need to</p>
+<ul>
+<li>add <code>"oobpreds"</code> to the learner properties and</li>
+<li>implement a new S3 method for function <a href="http://www.rdocumentation.org/packages/mlr/functions/getOOBPredsLearner.html">getOOBPredsLearner</a> (which later is called
+  internally by <a href="http://www.rdocumentation.org/packages/mlr/functions/getOOBPreds.html">getOOBPreds</a>).</li>
+</ul>
+<p>This method takes the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> <code>.learner</code> and the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a>
+<code>.model</code> and extracts the OOB predictions.
+It must return the predictions in the same format as the <a href="http://www.rdocumentation.org/packages/mlr/functions/predictLearner.html">predictLearner</a> function.</p>
+<pre><code class="r">getOOBPredsLearner.classif.randomForest = function(.learner, .model) {
+  if (.learner$predict.type == &quot;response&quot;) {
+    unname(.model$learner.model$predicted)
+  } else {
+    .model$learner.model$votes
+  }
+}
+</code></pre>
+
+<h2 id="registering-your-learner">Registering your learner</h2>
+<p>If your interface code to a new learning algorithm exists only locally, i.e., it is not (yet)
+merged into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> or does not live in an extra package with a proper namespace you might want
+to register the new S3 methods to make sure that these are found by, e.g., <a href="http://www.rdocumentation.org/packages/mlr/functions/listLearners.html">listLearners</a>.
+You can do this as follows:</p>
+<pre><code class="r">registerS3method(&quot;makeRLearner&quot;, &quot;&lt;awesome_new_learner_class&gt;&quot;, makeRLearner.&lt;awesome_new_learner_class&gt;)
+registerS3method(&quot;trainLearner&quot;, &quot;&lt;awesome_new_learner_class&gt;&quot;, trainLearner.&lt;awesome_new_learner_class&gt;)
+registerS3method(&quot;predictLearner&quot;, &quot;&lt;awesome_new_learner_class&gt;&quot;, predictLearner.&lt;awesome_new_learner_class&gt;)
+</code></pre>
+
+<p>If you have written more methods, for example in order to extract feature importance values
+or out-of-bag predictions these also need to be registered in the same manner, for example:</p>
+<pre><code class="r">registerS3method(&quot;getFeatureImportanceLearner&quot;, &quot;&lt;awesome_new_learner_class&gt;&quot;,
+  getFeatureImportanceLearner.&lt;awesome_new_learner_class&gt;)
+</code></pre>
+
+<h2 id="further-information-for-developers">Further information for developers</h2>
+<p>If you haven't written a learner interface for private use only, but intend to send a pull
+request to have it included in the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> package there are a few things to take care of,
+most importantly unit testing!</p>
+<p>For general information about contributing to the package, unit testing, version control setup
+and the like please also read the
+<a href="https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines">coding guidelines in the mlr Wiki</a>.</p>
+<ul>
+<li>
+<p>The R file containing the interface code should adhere to the naming convention
+<code>RLearner_&lt;type&gt;_&lt;learner_name&gt;.R</code>, e.g., <code>RLearner_classif_lda.R</code>, see for example
+<a href="https://github.com/mlr-org/mlr/blob/master/R/RLearner_classif_lda.R">https://github.com/mlr-org/mlr/blob/master/R/RLearner_classif_lda.R</a> and contain the
+necessary roxygen <code>@export</code> tags to register the S3 methods in the NAMESPACE.</p>
+</li>
+<li>
+<p>The learner interfaces should work out of the box without requiring any parameters to be set,
+e.g., <code>train("classif.lda", iris.task)</code> should run.
+Sometimes, this makes it necessary to change or set some additional defaults as explained above
+and -- very important -- informing the user about this in the <code>note</code>.</p>
+</li>
+<li>
+<p>The parameter set of the learner should be as complete as possible.</p>
+</li>
+<li>
+<p>Every learner interface must be unit tested.</p>
+</li>
+</ul>
+<h3 id="unit-testing">Unit testing</h3>
+<p>The tests make sure that we get the same results when the learner is invoked through the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>
+interface and when using the original functions.
+If you are not familiar or want to learn more about unit testing and package <a href="http://www.rdocumentation.org/packages/testthat/">testthat</a>
+have a look at <a href="http://r-pkgs.had.co.nz/tests.html">the Testing chapter in Hadley Wickham's R packages</a>.</p>
+<p>In <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> all unit tests are in the following directory:
+<a href="https://github.com/mlr-org/mlr/tree/master/tests/testthat">https://github.com/mlr-org/mlr/tree/master/tests/testthat</a>.
+For each learner interface there is an individual file whose name follows the scheme
+<code>test_&lt;type&gt;_&lt;learner_name&gt;.R</code>, for example
+<a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R</a>.</p>
+<p>Below is a snippet from the tests of the lda interface
+<a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_classif_lda.R</a>.</p>
+<pre><code class="r">test_that(&quot;classif_lda&quot;, {
+  requirePackagesOrSkip(&quot;MASS&quot;, default.method = &quot;load&quot;)
+
+  set.seed(getOption(&quot;mlr.debug.seed&quot;))
+  m = MASS::lda(formula = multiclass.formula, data = multiclass.train)
+  set.seed(getOption(&quot;mlr.debug.seed&quot;))
+  p = predict(m, newdata = multiclass.test)
+
+  testSimple(&quot;classif.lda&quot;, multiclass.df, multiclass.target, multiclass.train.inds, p$class)
+  testProb(&quot;classif.lda&quot;, multiclass.df, multiclass.target, multiclass.train.inds, p$posterior)
+})
+</code></pre>
+
+<p>The tests make use of numerous helper objects and helper functions.
+All of these are defined in the <code>helper_</code> files in
+<a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/">https://github.com/mlr-org/mlr/blob/master/tests/testthat/</a>.</p>
+<p>In the above code the first line just loads package <a href="http://www.rdocumentation.org/packages/MASS/">MASS</a> or skips the test if the package is
+not available.
+The objects <code>multiclass.formula</code>, <code>multiclass.train</code>, <code>multiclass.test</code> etc. are defined
+in <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_objects.R">https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_objects.R</a>.
+We tried to choose fairly self-explanatory names:
+For example <code>multiclass</code> indicates a multi-class classification problem, <code>multiclass.train</code>
+contains data for training, <code>multiclass.formula</code> a <a href="http://www.rdocumentation.org/packages/stats/functions/formula.html">formula</a> object etc.</p>
+<p>The test fits an lda model on the training set and makes predictions on the test set
+using the original functions <a href="http://www.rdocumentation.org/packages/MASS/functions/lda.html">lda</a> and <a href="http://www.rdocumentation.org/packages/MASS/functions/predict.lda.html">predict.lda</a>.
+The helper functions <code>testSimple</code> and <code>testProb</code> perform training and prediction on the same
+data using the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> interface -- <code>testSimple</code> for <code>predict.type = "response</code> and <code>testProbs</code> for
+<code>predict.type = "prob"</code> -- and check if the predicted class labels and probabilities coincide
+with the outcomes <code>p$class</code> and <code>p$posterior</code>.</p>
+<p>In order to get reproducible results seeding is required for many learners.
+The <code>"mlr.debug.seed"</code> works as follows:
+When invoking the tests the option <code>"mlr.debug.seed"</code> is set
+(see <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_zzz.R">https://github.com/mlr-org/mlr/blob/master/tests/testthat/helper_zzz.R</a>), and
+<code>set.seed(getOption("mlr.debug.seed"))</code> is used to specify the seed.
+Internally, <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s
+<a href="https://github.com/mlr-org/mlr/blob/master/R/train.R#L73">train</a> and
+<a href="https://github.com/mlr-org/mlr/blob/master/R/predict.R#L100">predict.WrappedModel</a>
+functions check if the <code>"mlr.debug.seed"</code> option is set and if yes, also specify the seed.</p>
+<p>Note that the option <code>"mlr.debug.seed"</code> is only set for testing, so no seeding happens in
+normal usage of <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
+<p>Let's look at a second example.
+Many learners have parameters that are commonly changed or tuned and it is important to make
+sure that these are passed through correctly.
+Below is a snippet from <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_regr_randomForest.R">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_regr_randomForest.R</a>.</p>
+<pre><code class="r">test_that(&quot;regr_randomForest&quot;, {
+  requirePackagesOrSkip(&quot;randomForest&quot;, default.method = &quot;load&quot;)
+
+  parset.list = list(
+    list(),
+    list(ntree = 5, mtry = 2),
+    list(ntree = 5, mtry = 4),
+    list(proximity = TRUE, oob.prox = TRUE),
+    list(nPerm = 3)
+  )
+
+  old.predicts.list = list()
+
+  for (i in 1:length(parset.list)) {
+    parset = parset.list[[i]]
+    pars = list(formula = regr.formula, data = regr.train)
+    pars = c(pars, parset)
+    set.seed(getOption(&quot;mlr.debug.seed&quot;))
+    m = do.call(randomForest::randomForest, pars)
+    set.seed(getOption(&quot;mlr.debug.seed&quot;))
+    p = predict(m, newdata = regr.test, type = &quot;response&quot;)
+    old.predicts.list[[i]] = p
+  }
+
+  testSimpleParsets(&quot;regr.randomForest&quot;, regr.df, regr.target,
+    regr.train.inds, old.predicts.list, parset.list)
+})
+</code></pre>
+
+<p>All tested parameter configurations are collected in the <code>parset.list</code>.
+In order to make sure that the default parameter configuration is tested the first element
+of the <code>parset.list</code> is an empty <a href="base::list">list</a>.
+Then we simply loop over all parameter settings and store the resulting predictions in
+<code>old.predicts.list</code>.
+Again the helper function <code>testSimpleParsets</code> does the same using the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> interface
+and compares the outcomes.</p>
+<p>Additional to tests for individual learners we also have general tests that loop through all
+integrated learners and make for example sure that learners have the correct properties
+(e.g. a learner with property <code>"factors"</code> can cope with <a href="base::factor">factor</a> features,
+a learner with property <code>"weights"</code> takes observation weights into account properly etc.).
+For example <a href="https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R">https://github.com/mlr-org/mlr/blob/master/tests/testthat/test_learners_all_classif.R</a>
+runs through all classification learners.
+Similar tests exist for all types of learning methods like regression, cluster and survival analysis
+as well as multilabel classification.</p>
+<p>In order to run all tests for, e.g., classification learners on your machine you can invoke
+the tests from within <strong>R</strong> by</p>
+<pre><code class="r">devtools::test(&quot;mlr&quot;, filter = &quot;classif&quot;)
+</code></pre>
+
+<p>or from the command line using <a href="https://github.com/rdatsci/rt">Michel's rt tool</a></p>
+<pre><code>rtest --filter=classif
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

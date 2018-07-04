@@ -8,11 +8,11 @@ tuneParams(learner, task, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"), resample.fun = resample)
 }
 \arguments{
-\item{learner}{([Learner] | `character(1)`)\cr
+\item{learner}{(\link{Learner} | \code{character(1)})\cr
 The learner.
-If you pass (`character(1)`) string the learner will be created via [makeLearner].}
+If you pass a string the learner will be created via \link{makeLearner}.}
 
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{resampling}{(\link{ResampleInstance} | \link{ResampleDesc})\cr
@@ -21,10 +21,10 @@ it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
 If you want to change that behavior, look at \link{TuneControl}.}
 
-\item{measures}{(list of [Measure] | [Measure])\cr
+\item{measures}{(list of \link{Measure} | \link{Measure})\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 is optimized, others are simply evaluated.
-Default is the default measure for the task, see here [getDefaultMeasure].}
+Default is the default measure for the task, see here \link{getDefaultMeasure}.}
 
 \item{par.set}{(\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet})\cr
 Collection of parameters and their constraints for optimization.
@@ -34,9 +34,9 @@ Dependent parameters with a \code{requires} field must use \code{quote} and not
 \item{control}{(\link{TuneControl})\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
-\item{show.info}{(`logical(1)`)\cr
+\item{show.info}{(\code{logical(1)})\cr
 Print verbose output on console?
-Default is set via [configureMlr].}
+Default is set via \link{configureMlr}.}
 
 \item{resample.fun}{(\link{closure})\cr
 The function to use for resampling. Defaults to \link{resample}. If a user-given function
@@ -115,6 +115,7 @@ print(head(as.data.frame(res$opt.path)))
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},

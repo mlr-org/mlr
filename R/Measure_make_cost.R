@@ -10,7 +10,7 @@
 #'   Should the measure be minimized?
 #'   Otherwise you are effectively specifying a benefits matrix.
 #'   Default is `TRUE`.
-#' @param costs ([matrix`)\cr
+#' @param costs ([matrix])\cr
 #'   Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 #'   Rows indicate true classes, columns predicted classes.
 #' @param combine (`function`)\cr
@@ -32,7 +32,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
   assertString(note)
 
 
-  makeMeasure(id = id, minimize = minimize, extra.args = list(costs, combine),
+  makeMeasure(id = id, minimize = minimize, extra.args = list(costs = costs, combine = combine),
     properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {

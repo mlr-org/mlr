@@ -27,7 +27,9 @@ test_that("cv resampling works", {
   tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
-  testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
+  expect_true({
+    testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
+  })
 })
 
 test_that("cv instance works is stochastic", {

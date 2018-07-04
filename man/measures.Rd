@@ -113,7 +113,6 @@
 \alias{multilabel.subset01}
 \alias{measureMultilabelSubset01}
 \alias{multilabel.f1}
-\alias{measureMultiLabelF1}
 \alias{measureMultilabelF1}
 \alias{multilabel.acc}
 \alias{measureMultilabelACC}
@@ -284,7 +283,7 @@ measureBrierScaled(probabilities, truth, negative, positive)
 
 bac
 
-measureBAC(truth, response, negative, positive)
+measureBAC(truth, response)
 
 tp
 
@@ -355,8 +354,6 @@ multilabel.subset01
 measureMultilabelSubset01(truth, response)
 
 multilabel.f1
-
-measureMultiLabelF1(truth, response)
 
 measureMultilabelF1(truth, response)
 
@@ -437,8 +434,6 @@ starting with 1. If this is not the case, some of the measures will generate war
 
 Some measure have parameters. Their defaults are set in the constructor \link{makeMeasure} and can be
 overwritten using \link{setMeasurePars}.
-
-Deprecated, use \code{measureMultilabelF1} instead.
 }
 \references{
 He, H. & Garcia, E. A. (2009)
@@ -447,7 +442,7 @@ IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-12
 
 H. Uno et al.
 \emph{On the C-statistics for Evaluating Overall Adequacy of Risk Prediction Procedures with Censored Survival Data}
-Statistics in medicine. 2011;30(10):1105-1117. \url{http://dx.doi.org/10.1002/sim.4154}.
+Statistics in medicine. 2011;30(10):1105-1117. \url{https://doi.org/10.1002/sim.4154}.
 
 H. Uno et al.
 \emph{Evaluating Prediction Rules for T-Year Survivors with Censored Regression Models}

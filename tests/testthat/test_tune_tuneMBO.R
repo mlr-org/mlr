@@ -25,7 +25,7 @@ test_that("tuneMBO", {
   # Problem 1 with manually defined mbo.ctrl and sur.lrn
   mbo.ctrl = mlrMBO::makeMBOControl()
   mbo.ctrl = mlrMBO::setMBOControlTermination(mbo.ctrl, iters = 2)
-  mbo.ctrl = mlrMBO::setMBOControlInfill(mbo.ctrl, crit = crit.ei)
+  mbo.ctrl = mlrMBO::setMBOControlInfill(mbo.ctrl, crit = mlrMBO::crit.ei)
   ctrl = makeTuneControlMBO(learner = sur.lrn, mbo.control = mbo.ctrl)
   tr = tuneParams(lrn1, multiclass.task, res, par.set = ps1, control = ctrl, measures = acc)
   expect_equal(getOptPathLength(tr$opt.path), n.des + n.iter)
@@ -55,4 +55,3 @@ test_that("tuneMBO works with tune.threshold", {
   mod = train(lrn, sonar.task)
   expect_number(mod$learner.model$opt.result$threshold, lower = 0, upper = 1)
 })
-

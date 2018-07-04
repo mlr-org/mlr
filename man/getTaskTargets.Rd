@@ -7,7 +7,7 @@
 getTaskTargets(task, recode.target = "no")
 }
 \arguments{
-\item{task}{([Task])\cr
+\item{task}{(\link{Task})\cr
 The task.}
 
 \item{recode.target}{(\code{character(1)})\cr

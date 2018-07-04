@@ -7,7 +7,7 @@
 getPredictionProbabilities(pred, cl)
 }
 \arguments{
-\item{pred}{([Prediction])\cr
+\item{pred}{(\link{Prediction})\cr
 Prediction object.}
 
 \item{cl}{(\link{character})\cr
@@ -39,7 +39,6 @@ Other predict: \code{\link{asROCRPrediction}},
   \code{\link{forecast.WrappedModel}},
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTaskDesc}},
-  \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}

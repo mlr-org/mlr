@@ -117,7 +117,6 @@ forecast.WrappedModel = function(object, newdata = NULL, task, h = 10, ...) {
         group.names = unique(newdata[[proc.vals$grouping]])
       }
       row.names = rep(seq.POSIXt(start, end - 1, by = diff.time), each = length(group.names))
-      row.names = paste0(rep(group.names, h),".", row.names)
     } else {
       row.names = seq.POSIXt(start, end - 1, by = diff.time)
     }
@@ -159,6 +158,11 @@ forecast.WrappedModel = function(object, newdata = NULL, task, h = 10, ...) {
   }
 
   ids = NULL
+  if (!is.null(p$grouping)) {
+    row.names = unique(do.call("paste", c(CJ(p$grouping, "lag", row.names,
+      sorted = FALSE), sep = ".")))
+    p$grouping = NULL
+  }
   makePrediction(task.desc = td, row.names = row.names, id = ids, truth = truth,
     predict.type = learner$predict.type,
     predict.threshold = learner$predict.threshold,
@@ -203,7 +207,11 @@ makeForecast = function(.data, .newdata, .proc.vals, .h, .td, .model, ...) {
     data.step = data.step[, -c(.td$target), with = FALSE]
     # predict
     pred = predict(.model, newdata = as.data.frame(data.step))
-    forecasts[[i]] = .getForecastResponse(pred)
+    forcast_df = .getForecastResponse(pred)
+    if (!is.null(group.data)) {
+      forcast_df[, "grouping"] = group.data
+    }
+    forecasts[[i]] = forcast_df
     if (!is.null(.proc.vals$grouping)) {
       if (is.null(.proc.vals$cols)) {
         cols = colnames(.data)
@@ -224,5 +232,6 @@ makeForecast = function(.data, .newdata, .proc.vals, .h, .td, .model, ...) {
 
   p = do.call(rbind, forecasts)
   p$truth = NULL
+  p
   p
 }

@@ -11,6 +11,7 @@
 #' @import stringi
 #' @import data.table
 #' @importFrom xts xts
+"_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
   backports::import(pkgname)

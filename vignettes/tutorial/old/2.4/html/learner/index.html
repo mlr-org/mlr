@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Learners - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../index.html">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../task/index.html">Tasks</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="index.html">Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../train/index.html">Train</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../predict/index.html">Predict</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../performance/index.html">Performance</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../resample/index.html">Resampling</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../benchmark_experiments/index.html">Benchmark Experiments</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../parallelization/index.html">Parallelization</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../configureMlr/index.html">Configuration</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../wrapper/index.html">Wrapped Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../preproc/index.html">Preprocessing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../impute/index.html">Imputations</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../bagging/index.html">Bagging</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../tune/index.html">Tuning</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../feature_selection/index.html">Feature Selection</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../cost_sensitive_classif/index.html">Cost-Sensitive Classification</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../over_and_undersampling/index.html">Imbalanced Classification Problems</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../roc_analysis/index.html">ROC Analysis</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../learning_curve/index.html">Learning Curve</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../create_learner/index.html">Create Custom Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../create_measure/index.html">Create Custom Measures</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../create_imputation/index.html">Create an Imputation Method</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../example_tasks/index.html">Example Tasks</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../integrated_learners/index.html">Integrated Learners</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../measures/index.html">Implemented Performance Measures</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../filter_methods/index.html">Integrated Filter Methods</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../task/index.html">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../train/index.html">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+                    <li>
+                        <a href="https://github.com/berndbischl/mlr/">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#learners">Learners</a></li>
+        
+            <li><a href="#constructing-a-learner">Constructing a learner</a></li>
+        
+            <li><a href="#accessing-a-learner">Accessing a learner</a></li>
+        
+            <li><a href="#modifying-a-learner">Modifying a learner</a></li>
+        
+            <li><a href="#listing-learners">Listing learners</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="learners">Learners</h1>
+<p>The following classes provide a unified interface to all popular machine learning methods in <strong>R</strong>:
+(cost-sensitive) classification, regression, survival analysis, and clustering.
+Many are already integrated in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, others are not, but the package is specifically designed to make extensions simple.</p>
+<p>Section <a href="../integrated_learners/index.html">integrated learners</a> shows the already
+implemented machine learning methods and their properties.
+If your favorite method is missing, either <a href="https://github.com/berndbischl/mlr/issues">open an issue</a> or take
+a look at <a href="../create_learner/index.html">how to integrate a learning method yourself</a>.
+This basic introduction demonstrates how to use already implemented learners.</p>
+<h2 id="constructing-a-learner">Constructing a learner</h2>
+<p>A learner in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is generated by calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>.
+In the constructor you need to specify which learning method you want to use.
+Moreover, you can:</p>
+<ul>
+<li>Set hyperparameters.</li>
+<li>Control the output for later prediction, e.g., for classification
+  whether you want a factor of predicted class labels or probabilities.</li>
+<li>Set an ID to name the object (some methods will later use this ID to name results or annotate plots).</li>
+</ul>
+<pre><code class="r">## Classification tree, set it up for predicting probabilities
+classif.lrn = makeLearner(&quot;classif.randomForest&quot;, predict.type = &quot;prob&quot;, fix.factors.prediction = TRUE)
+
+## Regression gradient boosting machine, specify hyperparameters via a list
+regr.lrn = makeLearner(&quot;regr.gbm&quot;, par.vals = list(n.trees = 500, interaction.depth = 3))
+
+## Cox proportional hazards model with custom name
+surv.lrn = makeLearner(&quot;surv.coxph&quot;, id = &quot;cph&quot;)
+
+## K-means with 5 clusters
+cluster.lrn = makeLearner(&quot;cluster.SimpleKMeans&quot;, N = 5)
+</code></pre>
+
+<p>The first argument specifies which algorithm to use.
+The naming convention is <code>classif.&lt;R_method_name&gt;</code> for
+classification methods, <code>regr.&lt;R_method_name&gt;</code> for regression methods,
+<code>surv.&lt;R_method_name&gt;</code> for survival analysis, and <code>cluster.&lt;R_method_name&gt;</code>
+for clustering methods.</p>
+<p>Hyperparameter values can be specified either via the <code>...</code> argument or as a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a>
+via <code>par.vals</code>.</p>
+<p>Occasionally, <a href="http://www.rdocumentation.org/packages/base/functions/factor.html">factor</a> features may cause problems when fewer levels are present in the
+test data set than in the training data.
+By setting <code>fix.factors.prediction = TRUE</code> these are avoided by adding a factor level for missing data in the test data set.</p>
+<p>Let's have a look at two of the learners created above.</p>
+<pre><code class="r">classif.lrn
+#&gt; Learner classif.randomForest from package randomForest
+#&gt; Type: classif
+#&gt; Name: Random Forest; Short name: rf
+#&gt; Class: classif.randomForest
+#&gt; Properties: twoclass,multiclass,numerics,factors,ordered,prob
+#&gt; Predict-Type: prob
+#&gt; Hyperparameters:
+
+surv.lrn
+#&gt; Learner cph from package survival
+#&gt; Type: surv
+#&gt; Name: Cox Proportional Hazard Model; Short name: coxph
+#&gt; Class: surv.coxph
+#&gt; Properties: missings,numerics,factors,weights,prob,rcens
+#&gt; Predict-Type: response
+#&gt; Hyperparameters:
+</code></pre>
+
+<p>All generated learners are objects of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
+This class contains the properties of the method, e.g., which types of features it can handle,
+what kind of output is possible during prediction, and whether multi-class problems,
+observations weights or missing values are supported.</p>
+<p>As you might have noticed, there is currently no special learner class for cost-sensitive classification.
+For ordinary misclassification costs you can use standard classification methods.
+For example-dependent costs there are several ways to generate cost-sensitive learners from ordinary
+regression and classification learners. This is explained in greater detail in the section about
+<a href="../cost_sensitive_classif/index.html">cost-sensitive classification</a>.</p>
+<h2 id="accessing-a-learner">Accessing a learner</h2>
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> object is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> and the following elements contain
+information regarding the hyperparameters and the type of prediction.</p>
+<pre><code class="r">## Get the configured hyperparameter settings that deviate from the defaults
+cluster.lrn$par.vals
+#&gt; $N
+#&gt; [1] 5
+
+## Get the set of hyperparameters
+classif.lrn$par.set
+#&gt;                     Type  len   Def   Constr Req Tunable Trafo
+#&gt; ntree            integer    -   500 1 to Inf   -    TRUE     -
+#&gt; mtry             integer    -     - 1 to Inf   -    TRUE     -
+#&gt; replace          logical    -  TRUE        -   -    TRUE     -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -
+#&gt; sampsize   integervector &lt;NA&gt;     - 0 to Inf   -    TRUE     -
+#&gt; nodesize         integer    -     1 1 to Inf   -    TRUE     -
+#&gt; maxnodes         integer    -     - 1 to Inf   -    TRUE     -
+#&gt; importance       logical    - FALSE        -   -    TRUE     -
+#&gt; localImp         logical    - FALSE        -   -    TRUE     -
+#&gt; norm.votes       logical    -  TRUE        -   -    TRUE     -
+#&gt; keep.inbag       logical    - FALSE        -   -    TRUE     -
+
+## Get the type of prediction
+regr.lrn$predict.type
+#&gt; [1] &quot;response&quot;
+</code></pre>
+
+<p>Slot <code>$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
+It contains, among others, the type of hyperparameters (e.g., numeric, logical), potential
+default values and the range of allowed values.</p>
+<p>Moreover, <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides function <a href="http://www.rdocumentation.org/packages/mlr/functions/getHyperPars.html">getHyperPars</a> to access the current hyperparameter setting
+of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> to get a description of all possible settings.
+These are particularly useful in case of wrapped <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>s,
+for example if a learner is fused with a feature selection strategy, and both, the learner
+as well the feature selection method, have hyperparameters.
+For details see the section on <a href="../wrapper/index.html">wrapped learners</a>.</p>
+<pre><code class="r">## Get current hyperparameter settings
+getHyperPars(cluster.lrn)
+#&gt; $N
+#&gt; [1] 5
+
+## Get a description of all possible hyperparameter settings
+getParamSet(classif.lrn)
+#&gt;                     Type  len   Def   Constr Req Tunable Trafo
+#&gt; ntree            integer    -   500 1 to Inf   -    TRUE     -
+#&gt; mtry             integer    -     - 1 to Inf   -    TRUE     -
+#&gt; replace          logical    -  TRUE        -   -    TRUE     -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -
+#&gt; sampsize   integervector &lt;NA&gt;     - 0 to Inf   -    TRUE     -
+#&gt; nodesize         integer    -     1 1 to Inf   -    TRUE     -
+#&gt; maxnodes         integer    -     - 1 to Inf   -    TRUE     -
+#&gt; importance       logical    - FALSE        -   -    TRUE     -
+#&gt; localImp         logical    - FALSE        -   -    TRUE     -
+#&gt; norm.votes       logical    -  TRUE        -   -    TRUE     -
+#&gt; keep.inbag       logical    - FALSE        -   -    TRUE     -
+</code></pre>
+
+<p>We can also use <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> to get a quick overview about the available hyperparameters
+and defaults of a learning method without explicitly constructing it (by calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>).</p>
+<pre><code class="r">getParamSet(&quot;classif.randomForest&quot;)
+#&gt;                     Type  len   Def   Constr Req Tunable Trafo
+#&gt; ntree            integer    -   500 1 to Inf   -    TRUE     -
+#&gt; mtry             integer    -     - 1 to Inf   -    TRUE     -
+#&gt; replace          logical    -  TRUE        -   -    TRUE     -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -    TRUE     -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -    TRUE     -
+#&gt; sampsize   integervector &lt;NA&gt;     - 0 to Inf   -    TRUE     -
+#&gt; nodesize         integer    -     1 1 to Inf   -    TRUE     -
+#&gt; maxnodes         integer    -     - 1 to Inf   -    TRUE     -
+#&gt; importance       logical    - FALSE        -   -    TRUE     -
+#&gt; localImp         logical    - FALSE        -   -    TRUE     -
+#&gt; norm.votes       logical    -  TRUE        -   -    TRUE     -
+#&gt; keep.inbag       logical    - FALSE        -   -    TRUE     -
+</code></pre>
+
+<h2 id="modifying-a-learner">Modifying a learner</h2>
+<p>There are also some functions that enable you to change certain aspects
+of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> without needing to create a new <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> from scratch.
+Here are some examples.</p>
+<pre><code class="r">## Change the ID
+surv.lrn = setId(surv.lrn, &quot;CoxModel&quot;)
+surv.lrn
+#&gt; Learner CoxModel from package survival
+#&gt; Type: surv
+#&gt; Name: Cox Proportional Hazard Model; Short name: coxph
+#&gt; Class: surv.coxph
+#&gt; Properties: missings,numerics,factors,weights,prob,rcens
+#&gt; Predict-Type: response
+#&gt; Hyperparameters:
+
+## Change the prediction type, predict a factor with class labels instead of probabilities
+classif.lrn = setPredictType(classif.lrn, &quot;response&quot;)
+
+## Change hyperparameter values
+cluster.lrn = setHyperPars(cluster.lrn, N = 4)
+
+## Go back to default hyperparameter values
+regr.lrn = removeHyperPars(regr.lrn, c(&quot;n.trees&quot;, &quot;interaction.depth&quot;))
+</code></pre>
+
+<h2 id="listing-learners">Listing learners</h2>
+<p>A list of all learners integrated in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> and their respective properties is shown in the <a href="../integrated_learners/index.html">Appendix</a>.</p>
+<p>If you would like a list of available learners, maybe only with certain properties or suitable for a
+certain learning <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> use function <a href="http://www.rdocumentation.org/packages/mlr/functions/listLearners.html">listLearners</a>.</p>
+<pre><code class="r">## List everything in mlr
+head(listLearners())
+#&gt;           classif.ada   classif.bartMachine           classif.bdk 
+#&gt;         &quot;classif.ada&quot; &quot;classif.bartMachine&quot;         &quot;classif.bdk&quot; 
+#&gt;      classif.binomial    classif.blackboost      classif.boosting 
+#&gt;    &quot;classif.binomial&quot;  &quot;classif.blackboost&quot;    &quot;classif.boosting&quot;
+
+## List classifiers that can output probabilities
+head(listLearners(&quot;classif&quot;, properties = &quot;prob&quot;))
+#&gt;           classif.ada   classif.bartMachine           classif.bdk 
+#&gt;         &quot;classif.ada&quot; &quot;classif.bartMachine&quot;         &quot;classif.bdk&quot; 
+#&gt;      classif.binomial    classif.blackboost      classif.boosting 
+#&gt;    &quot;classif.binomial&quot;  &quot;classif.blackboost&quot;    &quot;classif.boosting&quot;
+
+## List classifiers that can be applied to iris (i.e., multiclass) and output probabilities
+head(listLearners(iris.task, properties = &quot;prob&quot;))
+#&gt;          classif.bdk     classif.boosting      classif.cforest 
+#&gt;        &quot;classif.bdk&quot;   &quot;classif.boosting&quot;    &quot;classif.cforest&quot; 
+#&gt;        classif.ctree   classif.extraTrees          classif.gbm 
+#&gt;      &quot;classif.ctree&quot; &quot;classif.extraTrees&quot;        &quot;classif.gbm&quot;
+
+## The calls above return character vectors, but you can also create learner objects
+head(listLearners(&quot;cluster&quot;, create = TRUE), 2)
+#&gt; $cluster.cmeans
+#&gt; Learner cluster.cmeans from package e1071,clue
+#&gt; Type: cluster
+#&gt; Name: Fuzzy C-Means Clustering; Short name: cmeans
+#&gt; Class: cluster.cmeans
+#&gt; Properties: numerics,prob
+#&gt; Predict-Type: response
+#&gt; Hyperparameters: centers=&lt;integer&gt;
+#&gt; 
+#&gt; 
+#&gt; $cluster.EM
+#&gt; Learner cluster.EM from package RWeka
+#&gt; Type: cluster
+#&gt; Name: Expectation-Maximization Clustering; Short name: em
+#&gt; Class: cluster.EM
+#&gt; Properties: numerics
+#&gt; Predict-Type: response
+#&gt; Hyperparameters:
+</code></pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

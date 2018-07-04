@@ -17,13 +17,13 @@ Default is \code{TRUE}.}
 \item{impute.val}{(\link{numeric})\cr
 If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
-It is not stored in the optimization path, an NA and (\code{character(1)}) corresponding error message are
+It is not stored in the optimization path, an NA and a corresponding error message are
 logged instead.
 Note that this value is later multiplied by -1 for maximization measures internally, so you
-need to enter \code{character(1)} larger positive value for maximization here as well.
+need to enter a larger positive value for maximization here as well.
 Default is the worst obtainable value of the performance measure you optimize for when
 you aggregate by mean value, or \code{Inf} instead.
-For multi-criteria optimization pass \code{character(1)} vector of imputation values, one for each of your measures,
+For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
 in the same order as your measures.}
 
 \item{resolution}{(\link{integer})\cr
@@ -77,6 +77,7 @@ in the \code{par.set} passed to \link{tuneParams}.
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},
+  \code{\link{getResamplingIndices}},
   \code{\link{getTuneResult}},
   \code{\link{makeModelMultiplexerParamSet}},
   \code{\link{makeModelMultiplexer}},
