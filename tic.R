@@ -69,8 +69,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("deploy") %>%
     add_code_step(devtools::install_github("mlr-org/mlr")) %>%
     add_code_step(rmarkdown::render("vignettes/tutorial/devel/pdf/_pdf_wrapper_dev.Rmd")) %>%
-    add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper_dev.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf")) %>%
-    add_step(step_push_deploy(orphan = FALSE, commit_paths = "vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf", branch = "tutorial_pdf"))
+    add_code_step(fs::file_move("vignettes/tutorial/devel/pdf/_pdf_wrapper_dev.pdf", "vignettes/tutorial/devel/pdf/mlr-tutorial_devel.pdf")) %>%
+    add_step(step_push_deploy(orphan = FALSE, commit_paths = "vignettes/tutorial/devel/pdf/mlr-tutorial_devel.pdf", branch = "tutorial_pdf"))
 }
 
 if (Sys.getenv("TUTORIAL") == "PDFrelease") {

@@ -8,7 +8,7 @@
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
 * [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
-    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial_dev.pdf))
+    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial_devel.pdf))
 * For the docs of the current CRAN version, replace `devel` by `release` in the URL.
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
