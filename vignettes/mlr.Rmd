@@ -19,11 +19,9 @@ library("ParamHelpers")
 This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
 
-- [Project Page](https://github.com/mlr-org/mlr/)
-- Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
-- Download the online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip) as zip for offline usage
+* Detailed Tutorial:
+  * [Main: Online as HTML](https://mlr-org.github.io/mlr/)
+  * [Download PDF for offline usage](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
 
 ## Purpose
 
@@ -83,12 +81,8 @@ More features are covered in the tutorial which can be found online on the `mlr`
 It covers among others: *benchmarking*, *preprocessing*, *imputation*, *feature selection*, *ROC analysis*, how to implement your own learner and the list of all supported learners.
 Reading is highly recommended!
 
-* [Project Page](https://github.com/mlr-org/mlr/)
-* Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
-* Offline Tutorial: online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip)
-  as zip for offline usage
+* [Project Page and Tutorial](https://github.com/mlr-org/mlr/)
+* [Offline Tutorial](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
 * [Wiki](https://github.com/mlr-org/mlr/wiki) with additional information for developers
 
 ## Thanks
