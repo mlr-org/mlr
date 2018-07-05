@@ -16,7 +16,6 @@
 
 ## learners - removed
 * {classif,regr}.blackboost: broke API with new release
-* regr.elmNN : package was removed from CRAN
 
 
 # mlr 2.12:
