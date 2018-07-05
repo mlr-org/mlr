@@ -17,7 +17,7 @@ test_that("tuneMBO", {
     makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x)
   )
   lrn2 = makeLearner("classif.ksvm")
-  des2 = generateDesign(n.des, ps2, fun = lhs::maximinLHS)
+  des2 = generateDesign(n.des, ps2)
 
   # surrogate learner
   sur.lrn = makeLearner("regr.lm", predict.type = "se")
