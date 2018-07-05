@@ -83,7 +83,6 @@ Suggests:
     e1071,
     earth,
     elasticnet,
-    elmNN,
     emoa,
     evtree,
     extraTrees,
