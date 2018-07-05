@@ -1,4 +1,4 @@
-![mlr](https://raw.githubusercontent.com/mlr-org/mlr/master/man/figures/logo.png) Machine Learning in R
+![mlr](https://raw.githubusercontent.com/mlr-org/mlr/master/man/figures/logo_navbar.png) Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
@@ -8,8 +8,9 @@
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
 * [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
-    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial_dev.pdf))
-* For the docs of the current CRAN version, replace `devel` by `release` in the URL.
+    * [Main: Online as HTML (devel)](https://mlr-org.github.io/mlr/) (For the HTML docs of the current CRAN version, replace `devel` by `release` in the URL.)
+    * [Download PDF for offline usage (CRAN)](https://github.com/mlr-org/mlr/blob/tutorial_pdf_release/vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf))
+    * [Download PDF for offline usage (devel)](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf))
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
