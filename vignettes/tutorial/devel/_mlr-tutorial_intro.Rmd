@@ -13,17 +13,17 @@ More detailed technical information can be found in the [manual pages](https://m
 
 Offline versions of this tutorial are also available for download:
 
-* [current mlr release on CRAN](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
-* [the mlr devel version on GitHub](https://github.com/mlr-org/mlr/tree/master/vignettes/tutorial/pdf/mlr-tutorial.pdf)
+* [current mlr release on CRAN](https://github.com/mlr-org/mlr/blob/tutorial_pdf_release/vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf)
+* [the mlr devel version on GitHub](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
 
-The tutorial aims to walkthrough basic data analysis tasks step by step. 
+The tutorial aims to walkthrough basic data analysis tasks step by step.
 We will use simple examples from classification, regression, cluster and survival analysis to illustrate the main features of the package.
 
 Enjoy reading!
 
 ## Quick start
 
-Here we show the `mlr` workflow to train, make predictions, and evaluate a learner on a classification problem. 
+Here we show the `mlr` workflow to train, make predictions, and evaluate a learner on a classification problem.
 We walk through 5 basic steps that work on any learning problem or method supported by `mlr`.
 
 ```{r}

@@ -22,7 +22,7 @@ test_that("generate data", {
     par.set = ps, control = ctrl, measures = acc)
   orig = as.data.frame(trafoOptPath(res$opt.path))
   orig = dropNamed(orig, c("eol", "error.message"))
-  orig = plyr::rename(orig, c(dob = "iteration"))
+  names(orig)[names(orig) == "dob"] = "iteration"
   new = generateHyperParsEffectData(res, trafo = TRUE)
   expect_equivalent(new$data, orig)
 })

@@ -2,7 +2,7 @@
 #'
 #' @description
 #' All supported learners can be found by [listLearners] or as a table
-#' in the tutorial appendix: <http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/>.
+#' in the tutorial appendix: <https://mlr-org.github.io/mlr/articles/tutorial/devel/integrated_learners.html>.
 #'
 #' @name learners
 #' @rdname learners
