@@ -34,12 +34,12 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
   high = apply(d$data, 2, max)
   not.const = colnames(d$data)[high != low]
   if (scale) {
-    d$data[, not.const] = apply(d$data[, not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
+    d$data[, not.const] = apply(d$data[, not.const, drop = FALSE], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     mlist = list(scaled = TRUE, not.const = not.const, high = high, low = low)
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
   }
-  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k + 0.5), ...)
+  res = GPfit::GP_fit(d$data[, not.const, drop = FALSE], d$target, corr = list(type = type, power = power, nu = matern_nu_k + 0.5), ...)
   res = attachTrainingInfo(res, mlist)
   return(res)
 }
@@ -56,6 +56,6 @@ predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
   if (!se)
     return(rst$Y_hat)
   else
-    cbind(rst$Y_hat, rst$MSE)
+    cbind(rst$Y_hat, sqrt(rst$MSE))
 }
 

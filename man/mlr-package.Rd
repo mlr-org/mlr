@@ -58,6 +58,7 @@ Other contributors:
   \item Stefan Coors \email{stefan.coors@gmx.net} [contributor]
   \item Steve Bronder \email{sab2287@columbia.edu} [contributor]
   \item Alexander Engelhardt \email{alexander.w.engelhardt@gmail.com} [contributor]
+  \item Christoph Molnar \email{christoph.molnar@stat.uni-muenchen.de} [contributor]
 }
 
 }

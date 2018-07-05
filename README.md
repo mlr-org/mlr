@@ -1,5 +1,5 @@
-![mlr](https://raw.githubusercontent.com/mlr-org/mlr/master/man/figures/logo.png) Machine Learning in R
-==========================
+# Machine Learning in R <img src="man/figures/logo_navbar.png" align="right" />
+
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://CRAN.R-project.org/package=mlr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
@@ -8,8 +8,9 @@
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
 * [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
-    * [mlr devel](https://mlr-org.github.io/mlr/) ([online](https://mlr-org.github.io/mlr/), [download PDF for offline usage](https://github.com/mlr-org/mlr/tree/tutorial_pdf/mlr-tutorial_dev.pdf))
-* For the docs of the current CRAN version, replace `devel` by `release` in the URL.
+    * [Main: Online as HTML (devel)](https://mlr-org.github.io/mlr/) (For the HTML docs of the current CRAN version, replace `devel` by `release` in the URL.)
+    * [Download PDF for offline usage (CRAN)](https://github.com/mlr-org/mlr/blob/tutorial_pdf_release/vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf)
+    * [Download PDF for offline usage (devel)](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
@@ -31,13 +32,8 @@ mlr - How to Cite and Citing Publications
 Please cite our [JMLR paper](http://jmlr.org/papers/v17/15-066.html) [[bibtex](http://www.jmlr.org/papers/v17/15-066.bib)].
 
 Some parts of the package were created as part of other publications.
-If you use these parts, please cite the relevant work appropriately:
-
-* Tuning with Iterated F-Racing: [Automatic model selection for high-dimensional survival analysis.](https://doi.org/10.1080/00949655.2014.929131).
-* Class Imbalance Correction Algorithms: [On Class Imbalance Correction for Classification Algorithms in Credit Scoring](https://doi.org/10.1007/978-3-319-28697-6_6).
-* Bayesian Optimization with mlrMBO: [mlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions](https://arxiv.org/abs/1703.03373)
-* Multilabel Classification: [Multilabel Classification with R Package mlr](https://arxiv.org/abs/1703.08991)
-* OpenML: [OpenML: An R Package to Connect to the Machine Learning Platform OpenML](https://arxiv.org/abs/1701.01293)
+If you use these parts, please cite the relevant work appropriately. 
+An overview of all mlr related publications can be found [here](http://mlr-org.github.io/mlr/articles/tutorial/devel/mlr_publications.html).
 
 A list of publications that cite mlr can be found in the [wiki](https://github.com/mlr-org/mlr/wiki/Publications-that-use-mlr).
 
@@ -190,15 +186,19 @@ If you want to modify/add a tutorial section, please follow these steps:
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
      - Referencing images is a bit tricky since we need to ensure that they look good in both the HTML and PDF version.
        Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/resampling.Rmd), [nested_resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/handling_of_spatial_data.Rmd).
-3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using the `knit` button in RStudio) and see if everything works.
+3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using `build_article("tutorial/devel/<vignette-name>")`) and see if everything works.
    Put required packages in the setup chunk at the beginning of the tutorial.
    
-**Preview the changes**:
+**Rendering the tutorial locally**:
 
-If you want to view the complete `pkgdown` site locally, run `pkgdown::build_site()`.
+If you want to view the complete `pkgdown` site locally, run `pkgdown::build_site(lazy = TRUE)`.
 You don't have to render the complete site every time you change one tutorial. 
-Just edit the `.Rmd` under your local `docs/` directory and preview the tutorial again in the browser.
-Important: Do not commit the changed `.Rmd` file under `docs/` but copy the changes to the respective file in the `vignettes/` directory and commit only this file.
+The `lazy = TRUE` argument ensures that only pages are rebuilt that have changed.
+Also, if you have built the whole site once, you can just build the vignettes again by using `build_articles(lazy = TRUE)`.
+More specific, if you are working on one vignette, you can run `build_article("tutorial/devel/<vignette-name>")`.
+You do not need to pass the `.Rmd` extension when using `build_article()`.
+
+Important: Do not commit any file in `docs/` as the rendering will be done by Travis!
 
 **Adding a new section**:
 

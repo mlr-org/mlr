@@ -35,7 +35,8 @@ Authors@R: c(
     person("Florian", "Pfisterer", email = "pfistererf@googlemail.com", role = "ctb"),
     person("Stefan", "Coors", email = "stefan.coors@gmx.net", role = "ctb"),
     person("Steve", "Bronder", email = "sab2287@columbia.edu", role = "ctb"),
-    person("Alexander", "Engelhardt", email = "alexander.w.engelhardt@gmail.com", role = "ctb"))
+    person("Alexander", "Engelhardt", email = "alexander.w.engelhardt@gmail.com", role = "ctb"),
+    person("Christoph", "Molnar", email = "christoph.molnar@stat.uni-muenchen.de", role = "ctb"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -82,7 +83,6 @@ Suggests:
     e1071,
     earth,
     elasticnet,
-    elmNN,
     emoa,
     evtree,
     extraTrees,
@@ -139,6 +139,7 @@ Suggests:
     rotationForest,
     rpart,
     RRF,
+    rgenoud,
     rrlda,
     rsm,
     RSNNS,
@@ -148,6 +149,7 @@ Suggests:
     sparseLDA,
     stepPlr,
     survAUC,
+    svglite,
     SwarmSVM,
     testthat,
     tgp,
