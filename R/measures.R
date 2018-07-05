@@ -7,7 +7,7 @@
 #' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 #'
 #' All supported measures can be found by [listMeasures] or as a table
-#' in the tutorial appendix: <http://mlr-org.github.io/mlr-tutorial/release/html/measures/>.
+#' in the tutorial appendix: <https://mlr-org.github.io/mlr/articles/tutorial/devel/measures.html>.
 #'
 #' If you want a measure for a misclassification cost matrix, look at [makeCostMeasure].
 #' If you want to implement your own measure, look at [makeMeasure].
