@@ -6,11 +6,10 @@
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
 * [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
-* [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/cheatsheet/MlrCheatsheet.pdf)
+* [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/inst/cheatsheet/MlrCheatsheet.pdf)
 * Detailed Tutorial:
-    * [Main: Online as HTML (devel)](https://mlr-org.github.io/mlr/) (For the HTML docs of the current CRAN version, replace `devel` by `release` in the URL.)
-    * [Download PDF for offline usage (CRAN)](https://github.com/mlr-org/mlr/blob/tutorial_pdf_release/vignettes/tutorial/release/pdf/mlr-tutorial_release.pdf)
-    * [Download PDF for offline usage (devel)](https://github.com/mlr-org/mlr/blob/tutorial_pdf_dev/vignettes/tutorial/devel/pdf/mlr-tutorial_dev.pdf)
+    * [Main: Online as HTML](https://mlr-org.github.io/mlr/) 
+    * [Download PDF for offline usage (CRAN)](https://github.com/mlr-org/mlr/blob/tutorial_pdf/vignettes/pdf/mlr-tutorial.pdf)
 * [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
 * Install the development version
 
@@ -22,7 +21,7 @@ devtools::install_github("mlr-org/mlr")
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 * [We are on Slack](https://mlr-org.slack.com/) (Request invitation: code{at}jakob-r.de)
 * [We have a blog on mlr](https://mlr-org.github.io/)
-* A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/List-of-Possible-Enhancements-to-mlr) - contributors welcome!
+* A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#list-of-possible-enhancements-to-mlr) - contributors welcome!
 * We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
 * **If you like the package, please "star" it on Github.**
 
@@ -169,7 +168,7 @@ mlr-tutorial
 ====
 
 With the start of v2.13 we switched from [mkdocs](https://github.com/mkdocs/mkdocs) to [pkgdown](https://github.com/r-lib/pkgdown).
-With this change, all source files are now located in this repo under `vignettes/tutorial`.
+With this change, all source files are now located in this repo under `vignettes/`.
 
 **Modification of a tutorial section**:
 
@@ -185,8 +184,8 @@ If you want to modify/add a tutorial section, please follow these steps:
      - The most up-level header starts with `###` and is subsequently followed by `####` and `#####` etc.
      - Always insert *exactly one* empty line *before and after* a code chunk, header, figure or a table. 
      - Referencing images is a bit tricky since we need to ensure that they look good in both the HTML and PDF version.
-       Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/resampling.Rmd), [nested_resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/tutorial/devel/handling_of_spatial_data.Rmd).
-3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using `build_article("tutorial/devel/<vignette-name>")`) and see if everything works.
+       Put your image into `vignettes/tutorial/devel/pdf/img/` and see the examples in [resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/resampling.Rmd), [nested_resampling.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/nested_resampling.Rmd) or [handling_of_spatial_data.Rmd](https://github.com/mlr-org/mlr/blob/master/vignettes/handling_of_spatial_data.Rmd).
+3. Make sure that the `.Rmd` file is working on its own, i.e. compile it as a single file (preferably using `build_article("<vignette-name>")`) and see if everything works.
    Put required packages in the setup chunk at the beginning of the tutorial.
    
 **Rendering the tutorial locally**:
@@ -195,7 +194,7 @@ If you want to view the complete `pkgdown` site locally, run `pkgdown::build_sit
 You don't have to render the complete site every time you change one tutorial. 
 The `lazy = TRUE` argument ensures that only pages are rebuilt that have changed.
 Also, if you have built the whole site once, you can just build the vignettes again by using `build_articles(lazy = TRUE)`.
-More specific, if you are working on one vignette, you can run `build_article("tutorial/devel/<vignette-name>")`.
+More specific, if you are working on one vignette, you can run `build_article("<vignette-name>")`.
 You do not need to pass the `.Rmd` extension when using `build_article()`.
 
 Important: Do not commit any file in `docs/` as the rendering will be done by Travis!
