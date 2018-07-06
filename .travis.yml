@@ -55,15 +55,24 @@ jobs:
       warnings_are_errors: false
       before_script: R -q -e 'tic::before_script()'
       script: R -q -e 'tic::script()'
-      before_deploy: R -q -e 'tic::before_deploy()'
-      deploy:
-         provider: script
-         script: R -q -e 'tic::deploy()'
-         on:
-           branch: master
-           condition:
-             - $TRAVIS_PULL_REQUEST = false
-             - $TRAVIS_EVENT_TYPE != cron
+      after_success:
+        - git checkout master
+        - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
+        - R --no-save <<< 'library("devtools"); document()'
+        - ./thirdparty/gen_families.sh > man/mlrFamilies.Rd
+        - git config user.name $GN
+        - git config user.email $GM
+        - git config credential.helper "store --file=.git/credentials"
+        - bash inst/convert_to_ascii_news.sh
+        - echo "https://$GT:@github.com" >> .git/credentials
+        - git config push.default matching
+        - git add --force NEWS
+        - git add --force man/*
+        - git add --force NAMESPACE
+        - git commit man DESCRIPTION NAMESPACE NEWS -m "update auto-generated documentation [ci skip]" || true
+        - git push
+        - "[ $TRAVIS_PULL_REQUEST == \"false\" -a $TRAVIS_BRANCH == \"master\" ] && curl -s -X POST -H \"Content-Type:application/json\" -H \"Accept:application/json\" -H \"Travis-API-Version:3\" -H \"Authorization:token $TT\" -d \"{\\\"request\\\":{\\\"branch\\\":\\\"gh-pages\\\", \\\"message\\\":\\\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\\\"}}\" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests"
+
     - stage: Tutorial
       env: TUTORIAL=HTML
       addons:

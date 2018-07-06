@@ -135,6 +135,8 @@ navbar:
       href: https://github.com/mlr-org/shinyMlr
     - text: mlrHyperopt
       href: http://jakob-r.de/mlrHyperopt/index.html
+    - text: OpenML
+      href: http://openml.github.io/openml-r/vignettes/OpenML.html
 
   right:
   - icon: fa-github fa-lg

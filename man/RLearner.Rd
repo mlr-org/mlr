@@ -105,7 +105,7 @@ features of the learner.
 
 For a general overview on how to integrate a learning algorithm into mlr's system, please read the
 section in the online tutorial:
-\url{http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html}
+\url{https://mlr-org.github.io/mlr/articles/tutorial/devel/create_learner.html}
 
 To see all possible properties of a learner, go to: \link{LearnerProperties}.
 }
