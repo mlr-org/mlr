@@ -5,12 +5,10 @@
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
-* [Offical CRAN release site](https://CRAN.R-project.org/package=mlr)
+* [CRAN release site](https://CRAN.R-project.org/package=mlr)
+* Detailed Tutorial: [Online as HTML](https://mlr-org.github.io/mlr/) 
 * [mlr cheatsheet](https://github.com/mlr-org/mlr/blob/master/inst/cheatsheet/MlrCheatsheet.pdf)
-* Detailed Tutorial:
-    * [Main: Online as HTML](https://mlr-org.github.io/mlr/) 
-    * [Download PDF for offline usage (CRAN)](https://github.com/mlr-org/mlr/blob/tutorial_pdf/vignettes/pdf/mlr-tutorial.pdf)
-* [R Documentation in HTML](https://mlr-org.github.io/mlr/reference/index.html)
+
 * Install the development version
 
 ```R
@@ -23,7 +21,6 @@ devtools::install_github("mlr-org/mlr")
 * [We have a blog on mlr](https://mlr-org.github.io/)
 * A list of possible enhancements to mlr is available on the [wiki](https://github.com/mlr-org/mlr/wiki/Developer-Instructions#list-of-possible-enhancements-to-mlr) - contributors welcome!
 * We are in the top 20 of the most starred R packages on Github, as reported by [metacran](http://www.r-pkg.org/starred).
-* **If you like the package, please "star" it on Github.**
 
 mlr - How to Cite and Citing Publications
 =========================================
