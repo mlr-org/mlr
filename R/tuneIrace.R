@@ -10,9 +10,6 @@ targetRunnerParallel = function(experiment, exec.target.runner, scenario, target
 
     # the instance is always the same for all different param setting
     rin = experiment[[1L]]$instance
-    eee <<- experiment
-    ccc <<- cands
-    rrr <<- rin
     ys = tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
       convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE, resample.fun)
@@ -25,7 +22,6 @@ targetRunnerParallel = function(experiment, exec.target.runner, scenario, target
   control$extra.args$n.instances = NULL
   show.irace.output = control$extra.args$show.irace.output
   control$extra.args$show.irace.output = NULL
-  print(n.instances)
   instances = lapply(seq_len(n.instances), function(i) makeResampleInstance(resampling, task = task))
   if (is.null(control$extra.args$digits)) {
     control$extra.args$digits = .Machine$integer.max
