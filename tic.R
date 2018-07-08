@@ -7,7 +7,8 @@ if (Sys.getenv("RCMDCHECK") == "TRUE") {
       install.packages(trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]])[!trimws(strsplit(Sys.getenv("WARMUPPKGS"), " ")[[1]]) %in% installed.packages()])) %>%
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
                                            "-install-package", "thirdparty/XMeans1.0.4.zip"))) %>%
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
+    add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
 
   get_stage("before_script") %>%
     add_code_step(system2("java", args = c("-cp", "$HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager",
@@ -37,7 +38,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
   get_stage("install") %>%
     add_code_step(if (length(find.package("magick", quiet = TRUE)) == 0) install.packages("magick")) %>% # favicon creation
     add_code_step(if (length(find.package("pander", quiet = TRUE)) == 0) install.packages("pander")) %>%
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
+    add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
@@ -61,7 +63,8 @@ if (Sys.getenv("TUTORIAL") == "HTML") {
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown")) %>%
     add_code_step(if (length(find.package("bookdown", quiet = TRUE)) == 0) install.packages("bookdown")) %>%
     add_code_step(if (length(find.package("roxygen2", quiet = TRUE)) == 0) devtools::install_github("klutometis/roxygen")) %>%
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
+    add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
@@ -87,7 +90,8 @@ if (Sys.getenv("TUTORIAL") == "PDFrelease") {
     add_code_step(if (length(find.package("rmarkdown", quiet = TRUE)) == 0) install.packages("rmarkdown")) %>%
     add_code_step(if (length(find.package("bookdown", quiet = TRUE)) == 0) install.packages("bookdown")) %>%
     add_code_step(if (length(find.package("roxygen2", quiet = TRUE)) == 0) devtools::install_github("klutometis/roxygen")) %>%
-    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE))
+    add_code_step(devtools::install_deps(upgrade = TRUE, dependencies = TRUE)) %>%
+    add_code_step(devtools::install_version("irace", 2.4)) # FIXME:  irace 3.1 is released
 
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
