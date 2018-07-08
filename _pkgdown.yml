@@ -122,6 +122,8 @@ navbar:
       href: articles/filter_methods.html
     - text: mlr Publications
       href: articles/mlr_publications.html
+    - text: Talk, Videos and Workshops
+      href: articles/talks_videos_workshops.html
 
   - text: mlr-org Packages
     menu:
